@@ -232,6 +232,17 @@ definition {
 			value1 = "${requestsTitle}");
 	}
 
+	macro viewReviewContent {
+		AssertTextEquals(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE",
+			value1 = "${user} needs to review the document.");
+
+		AssertTextEquals(
+			key_contentBody = "${contentBody}",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
+			value1 = "${contentBody}");
+	}
+
 	macro viewSpecificNotificationDetails {
 		AssertTextEquals(
 			key_notificationsTitle = "${notificationsTitle}",

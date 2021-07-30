@@ -1860,6 +1860,30 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro reviewDocument {
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${dmDocumentTitle}");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			checkboxName = "Never Review",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		if (isSet(disableReviewDate)) {
+			Check(
+				checkboxName = "Never Review",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertElementPresent(locator1 = "TextInput#REVIEW_DATE_DISABLED");
+
+			AssertElementPresent(locator1 = "TextInput#REVIEW_DATE_TIME_DISABLED");
+		}
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro saveAndCheckinEditedDocumentPG {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -1933,6 +1957,42 @@ definition {
 		Click(
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DDMField#COLOR_PICKER");
+	}
+
+	macro setReviewDate {
+		Panel.expandPanel(panel = "Expiration Date");
+
+		if (isSet(enableReviewDate)) {
+			Uncheck(
+				checkboxName = "Never Review",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
+		var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+
+		if (isSet(increaseMinutes)) {
+			var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
+		}
+
+		var reviewDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
+
+		var reviewDateTime = "${displayDateHour}:${displayDateMinute}";
+
+		Type(
+			locator1 = "TextInput#REVIEW_DATE",
+			value1 = "${reviewDate}");
+
+		Type(
+			locator1 = "TextInput#REVIEW_DATE_TIME",
+			value1 = "${reviewDateTime}");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro setRootFolder {
@@ -2048,6 +2108,17 @@ definition {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
 		Uncheck(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+	}
+
+	macro updateCheckInterval {
+		DMNavigator.openToConfigInSystemSettings(portlet = "Service");
+
+		Type(
+			key_text = "Check Interval",
+			locator1 = "TextInput#ANY",
+			value1 = "${fieldValue}");
+
+		SystemSettings.saveConfiguration();
 	}
 
 	macro viewAllPG {
@@ -2260,6 +2331,19 @@ definition {
 				key_dmDocumentType = "${dmDocumentType}",
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DOCUMENT_TYPE",
 				value1 = "${dmDocumentType}");
+		}
+
+		if (isSet(reviewDate)) {
+			if (isSet(disabledReviewDate)) {
+				AssertElementPresent(
+					key_reviewDateField = "Never Review",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_REVIEW_DATE");
+			}
+			else {
+				AssertElementPresent(
+					key_reviewDateField = "${user}",
+					locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_REVIEW_DATE");
+			}
 		}
 	}
 

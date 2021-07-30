@@ -148,34 +148,9 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 
 	const getContentSelectTitle = (view) => {
 		if (view === VIEW_LEFT) {
-			if (
-				state.renderData.changeType === CHANGE_TYPE_ADDED &&
-				state.renderData.versioned
-			) {
-				return (
-					state.renderData.leftTitle +
-					' (' +
-					Liferay.Language.get('previous') +
-					')'
-				);
-			}
-
 			return state.renderData.leftTitle;
 		}
 		else if (view === VIEW_RIGHT) {
-			if (
-				state.renderData.changeType === CHANGE_TYPE_ADDED &&
-				state.renderData.versioned &&
-				state.renderData.leftTitle
-			) {
-				return (
-					state.renderData.rightTitle +
-					' (' +
-					Liferay.Language.get('current') +
-					')'
-				);
-			}
-
 			return state.renderData.rightTitle;
 		}
 		else if (view === VIEW_SPLIT) {

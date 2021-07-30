@@ -152,8 +152,6 @@ public class GetEntryRenderDataMVCResourceCommand
 			"changeType", changeType
 		).put(
 			"content", ctDisplayRenderer.hasContent()
-		).put(
-			"versioned", ctDisplayRenderer.isVersioned()
 		);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
@@ -223,63 +221,83 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		if ((ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) &&
-			(rightModel != null) && ctDisplayRenderer.isVersioned()) {
+			(rightModel != null)) {
 
-			T leftModel = null;
+			String rightVersionName = ctDisplayRenderer.getVersionName(
+				rightModel);
 
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						rightCtCollectionId)) {
+			if (Validator.isNotNull(rightVersionName)) {
+				T leftModel = null;
 
-				leftModel = ctDisplayRenderer.getPreviousVersionedModel(
-					rightModel);
-			}
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
-			if (leftModel != null) {
-				jsonObject.put(
-					"leftTitle",
-					StringBundler.concat(
-						_language.get(httpServletRequest, "version"), ": ",
-						ctDisplayRenderer.getVersionName(leftModel))
-				).put(
-					"rightTitle",
-					StringBundler.concat(
-						_language.get(httpServletRequest, "version"), ": ",
-						ctDisplayRenderer.getVersionName(rightModel))
-				);
-
-				if (ctDisplayRenderer.hasContent()) {
-					String leftContent = _getPreviousContent(
-						liferayPortletRequest, liferayPortletResponse,
-						ctDisplayRenderer, rightModel, leftModel);
-
-					if (leftContent != null) {
-						jsonObject.put("leftContent", leftContent);
-
-						if (rightContent != null) {
-							jsonObject.put(
-								"unifiedContent",
-								DiffHtmlUtil.diff(
-									new UnsyncStringReader(leftContent),
-									new UnsyncStringReader(rightContent)));
-						}
-					}
+					leftModel = ctDisplayRenderer.fetchLatestVersionedModel(
+						rightModel);
 				}
 
-				String leftRender = _getRender(
-					httpServletRequest, httpServletResponse,
-					rightCtCollectionId, ctDisplayRenderer, ctEntryId,
-					CTSQLModeThreadLocal.CTSQLMode.DEFAULT, leftModel,
-					CTConstants.TYPE_AFTER);
+				if (leftModel != null) {
+					String leftVersionName = ctDisplayRenderer.getVersionName(
+						leftModel);
 
-				jsonObject.put("leftRender", leftRender);
+					if (Validator.isNull(leftVersionName)) {
+						jsonObject.put(
+							"leftTitle",
+							_language.get(httpServletRequest, "production"));
+					}
+					else {
+						jsonObject.put(
+							"leftTitle",
+							StringBundler.concat(
+								_language.get(httpServletRequest, "version"),
+								": ", leftVersionName, " (",
+								_language.get(httpServletRequest, "production"),
+								")"));
+					}
 
-				if (rightRender != null) {
 					jsonObject.put(
-						"unifiedRender",
-						DiffHtmlUtil.diff(
-							new UnsyncStringReader(leftRender),
-							new UnsyncStringReader(rightRender)));
+						"rightTitle",
+						StringBundler.concat(
+							_language.get(httpServletRequest, "version"), ": ",
+							rightVersionName, " (",
+							_language.get(httpServletRequest, "publication"),
+							")"));
+
+					if (ctDisplayRenderer.hasContent()) {
+						String leftContent = _getPreviousContent(
+							liferayPortletRequest, liferayPortletResponse,
+							ctDisplayRenderer, rightModel, leftModel);
+
+						if (leftContent != null) {
+							jsonObject.put("leftContent", leftContent);
+
+							if (rightContent != null) {
+								jsonObject.put(
+									"unifiedContent",
+									DiffHtmlUtil.diff(
+										new UnsyncStringReader(leftContent),
+										new UnsyncStringReader(rightContent)));
+							}
+						}
+					}
+
+					String leftRender = _getRender(
+						httpServletRequest, httpServletResponse,
+						rightCtCollectionId, ctDisplayRenderer, ctEntryId,
+						CTSQLModeThreadLocal.CTSQLMode.DEFAULT, leftModel,
+						CTConstants.TYPE_AFTER);
+
+					jsonObject.put("leftRender", leftRender);
+
+					if (rightRender != null) {
+						jsonObject.put(
+							"unifiedRender",
+							DiffHtmlUtil.diff(
+								new UnsyncStringReader(leftRender),
+								new UnsyncStringReader(rightRender)));
+					}
 				}
 			}
 		}

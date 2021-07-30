@@ -84,6 +84,10 @@ definition {
 	test CanApproveQuestion {
 		property test.name.skip.portal.instance = "QuestionsWidgetActions#CanApproveQuestion";
 
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "test@liferay.com");
+
 		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
 
 		SystemSettings.configureSystemSetting(
@@ -229,6 +233,11 @@ definition {
 			groupName = "Guest",
 			roleTitle = "Site Administrator",
 			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Content Reviewer",
+			userEmailAddress = "test@liferay.com");
 
 		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
 

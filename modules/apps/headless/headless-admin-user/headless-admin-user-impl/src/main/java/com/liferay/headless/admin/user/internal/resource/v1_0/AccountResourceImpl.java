@@ -128,7 +128,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			).build(),
 			booleanQuery -> {
 			},
-			filter, AccountEntry.class, keywords, pagination,
+			filter, AccountEntry.class.getName(), keywords, pagination,
 			queryConfig -> {
 			},
 			searchContext -> {

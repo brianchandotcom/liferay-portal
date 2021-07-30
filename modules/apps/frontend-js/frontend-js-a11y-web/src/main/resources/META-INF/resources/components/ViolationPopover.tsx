@@ -31,6 +31,7 @@ const Overlay = React.forwardRef<
 		<div className="a11y-indicator">
 			<ClayIcon symbol="info-circle" />
 		</div>
+
 		<div className="a11y-backdrop" />
 	</div>
 ));
@@ -81,6 +82,7 @@ export function ViolationPopover({
 							symbol="info-circle"
 						/>
 					</div>
+
 					<div className="inline-item inline-item-after">
 						<span>
 							{Liferay.Language.get('accessibility-violations')}
@@ -104,10 +106,12 @@ export function ViolationPopover({
 								{ruleId}{' '}
 								<span className="text-secondary">{`- ${rules[ruleId].impact}`}</span>
 							</ClayList.ItemTitle>
+
 							<ClayList.ItemText subtext>
 								{rules[ruleId].help}
 							</ClayList.ItemText>
 						</ClayList.ItemField>
+
 						<ClayList.ItemField>
 							<ClayIcon
 								className="text-secondary"

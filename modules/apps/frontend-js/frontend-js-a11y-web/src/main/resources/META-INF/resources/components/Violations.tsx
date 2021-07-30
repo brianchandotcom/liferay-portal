@@ -162,11 +162,13 @@ export default function ViolationsPanel({
 							symbol="info-circle"
 						/>
 					</div>
+
 					<div className="inline-item">
 						<span className="list-group-title">
 							{Liferay.Language.get('accessibility-violations')}
 						</span>
 					</div>
+
 					<div className="inline-item inline-item-after">
 						<ClayDropDownWithItems
 							closeOnClickOutside

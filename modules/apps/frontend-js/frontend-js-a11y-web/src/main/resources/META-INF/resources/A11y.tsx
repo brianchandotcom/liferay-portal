@@ -133,6 +133,7 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 						}
 						{...state}
 					/>
+
 					<ErrorBoundary
 						fallback={
 							<NotFound
@@ -158,6 +159,7 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 					>
 						<Violation violations={state.violations} />
 					</ErrorBoundary>
+
 					<ErrorBoundary
 						fallback={
 							<NotFound

@@ -51,6 +51,7 @@ declare class Channel<T, S> {
  * and the main window.
  */
 export declare class SDK<T, S> {
+	private channelRx;
 	channel: Channel<T, S>;
 	constructor(onRecv: Recv<T, S>, side: boolean);
 	observe(): void;

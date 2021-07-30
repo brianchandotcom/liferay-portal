@@ -77,17 +77,20 @@ class Channel<T, S> {
  * and the main window.
  */
 export class SDK<T, S> {
+	private channelRx: (event: MessageEvent<ChannelEvent<T, S>>) => void;
 	public channel: Channel<T, S>;
 
 	constructor(onRecv: Recv<T, S>, side: boolean) {
 		this.channel = new Channel(onRecv, side);
+
+		this.channelRx = this.channel.rx.bind(this.channel);
 	}
 
 	public observe() {
-		window.addEventListener('message', this.channel.rx);
+		window.addEventListener('message', this.channelRx);
 	}
 
 	public unobserve() {
-		window.removeEventListener('message', this.channel.rx);
+		window.removeEventListener('message', this.channelRx);
 	}
 }

@@ -1,0 +1,181 @@
+@component-name = "portal-document-management"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.document.library.web.internal.configuration.FFExpirationDateReviewDateConfiguration.config";
+	property osgi.module.configurations = "reviewDateEnabled=B&quot;true&quot;${line.separator}expirationDateEnabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This test ensures that the user can review a document when the date is changed."
+	@priority = "4"
+	test CanReviewDocumentWhenDateIsChanged {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsChanged";
+
+		DMDocument.updateCheckInterval(fieldValue = "2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			increaseMinutes = "10",
+			mimeType = "text/plain",
+			reviewDate = "true",
+			sourceFileName = "Document_5.txt");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.setReviewDate(increaseMinutes = "2");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		Pause(locator1 = "120000");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewReviewContent(
+			contentBody = "Document_5.txt",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Document_5.txt");
+
+		DMDocument.reviewDocument(dmDocumentTitle = "Document_5.txt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "Document_5.txt",
+			reviewDate = "true",
+			user = "Test Test");
+	}
+
+	@description = "This test ensures that the user can review a document when the date is disabled."
+	@priority = "4"
+	test CanReviewDocumentWhenDateIsDisabled {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsDisabled";
+
+		DMDocument.updateCheckInterval(fieldValue = "2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_5.txt");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.setReviewDate(
+			enableReviewDate = "true",
+			increaseMinutes = "2");
+
+		Pause(locator1 = "120000");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewReviewContent(
+			contentBody = "Document_5.txt",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Document_5.txt");
+
+		DMDocument.reviewDocument(
+			disableReviewDate = "true",
+			dmDocumentTitle = "Document_5.txt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(
+			disabledReviewDate = "true",
+			dmDocumentTitle = "Document_5.txt",
+			reviewDate = "true");
+	}
+
+	@description = "This test ensures that the user can review a document when the date is set."
+	@priority = "5"
+	test CanReviewDocumentWhenDateIsSet {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsSet";
+
+		DMDocument.updateCheckInterval(fieldValue = "2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			increaseMinutes = "2",
+			mimeType = "text/plain",
+			reviewDate = "true",
+			sourceFileName = "Document_5.txt");
+
+		Pause(locator1 = "120000");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewReviewContent(
+			contentBody = "Document_5.txt",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Document_5.txt");
+
+		DMDocument.reviewDocument(dmDocumentTitle = "Document_5.txt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "Document_5.txt",
+			reviewDate = "true",
+			user = "Test Test");
+	}
+
+}

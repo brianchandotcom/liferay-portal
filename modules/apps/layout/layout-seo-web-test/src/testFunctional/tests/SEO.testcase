@@ -143,10 +143,9 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
-
-		var siteID = Site.getSiteId();
-
+		
 		var portalURL = PropsUtil.get("portal.url");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 

@@ -14,10 +14,12 @@
  */
 --%>
 
-<%@ page import="com.liferay.object.model.ObjectDefinition" %><%@
-page import="com.liferay.object.model.ObjectEntry" %><%@
-page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<%@ page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.util.Map" %>
+
+<liferay-theme:defineObjects />

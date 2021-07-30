@@ -16,12 +16,25 @@ package com.liferay.object.web.internal.info.item.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.io.Serializable;
+
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -35,15 +48,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	enabled = false, property = "service.ranking:Integer=100",
+	enabled = true, property = "service.ranking:Integer=100",
 	service = InfoItemRenderer.class
 )
-public class ObjectEntryBasicInfoItemRenderer
+public class ObjectEntryRowInfoItemRenderer
 	implements InfoItemRenderer<ObjectEntry> {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "basic");
+		return LanguageUtil.get(locale, "row");
 	}
 
 	@Override
@@ -58,9 +71,9 @@ public class ObjectEntryBasicInfoItemRenderer
 					objectEntry.getObjectDefinitionId()));
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY, objectEntry);
+
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_VALUES,
-				_objectEntryLocalService.getValues(objectEntry));
+				ObjectWebKeys.OBJECT_ENTRY_VALUES, _getValues(objectEntry));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -80,11 +93,55 @@ public class ObjectEntryBasicInfoItemRenderer
 		_servletContext = servletContext;
 	}
 
+	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
+		throws PortalException {
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry);
+
+		Set<Map.Entry<String, Serializable>> entries = values.entrySet();
+
+		Stream<Map.Entry<String, Serializable>> stream1 = entries.stream();
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectEntry.getObjectDefinitionId());
+
+		Supplier<Stream<ObjectField>> streamSupplier =
+			() -> objectFields.stream();
+
+		return stream1.filter(
+			entry -> {
+				Stream<ObjectField> stream2 = streamSupplier.get();
+
+				return stream2.anyMatch(
+					objectField -> objectField.getName(
+					).equals(
+						entry.getKey()
+					));
+			}
+		).sorted(
+			Map.Entry.comparingByKey()
+		).collect(
+			Collectors.toMap(
+				entry -> entry.getKey(),
+				entry -> Optional.ofNullable(
+					entry.getValue()
+				).orElse(
+					""
+				),
+				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
+		);
+	}
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private ServletContext _servletContext;
 

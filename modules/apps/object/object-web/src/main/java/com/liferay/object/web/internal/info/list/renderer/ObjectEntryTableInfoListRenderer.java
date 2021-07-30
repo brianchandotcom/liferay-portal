@@ -19,16 +19,21 @@ import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
-import com.liferay.info.taglib.list.renderer.BorderedBasicInfoListRenderer;
-import com.liferay.info.taglib.servlet.taglib.InfoListBasicListTag;
+import com.liferay.info.taglib.servlet.taglib.InfoListBasicTableTag;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.web.internal.info.item.renderer.ObjectEntryBasicInfoItemRenderer;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItemRenderer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,17 +42,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
- * @author Pavel Savinov
+ * @author Guilherme Camacho
  */
 @Component(immediate = true, service = InfoListRenderer.class)
-public class ObjectEntryBorderedBasicInfoListRenderer
-	implements BorderedBasicInfoListRenderer<ObjectEntry> {
+public class ObjectEntryTableInfoListRenderer
+	implements InfoListRenderer<ObjectEntry> {
 
 	@Override
 	public List<InfoItemRenderer<?>> getAvailableInfoItemRenderers() {
 		return infoItemRendererTracker.getInfoItemRenderers(
 			ObjectEntry.class.getName());
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "table");
 	}
 
 	@Override
@@ -66,9 +75,27 @@ public class ObjectEntryBorderedBasicInfoListRenderer
 		List<ObjectEntry> objectEntries,
 		InfoListRendererContext infoListRendererContext) {
 
-		InfoListBasicListTag infoListBasicListTag = new InfoListBasicListTag();
+		InfoListBasicTableTag infoListBasicTableTag =
+			new InfoListBasicTableTag();
 
-		infoListBasicListTag.setInfoListObjects(objectEntries);
+		infoListBasicTableTag.setInfoListObjects(objectEntries);
+
+		if ((objectEntries != null) && !objectEntries.isEmpty()) {
+			ObjectEntry objectEntry = objectEntries.get(0);
+
+			List<ObjectField> objectFields =
+				_objectFieldLocalService.getObjectFields(
+					objectEntry.getObjectDefinitionId());
+
+			Stream<ObjectField> stream = objectFields.stream();
+
+			infoListBasicTableTag.setInfoListObjectColumnNames(
+				stream.map(
+					ObjectField::getName
+				).collect(
+					Collectors.toList()
+				));
+		}
 
 		Optional<String> infoListItemRendererKeyOptional =
 			infoListRendererContext.getListItemRendererKeyOptional();
@@ -76,27 +103,16 @@ public class ObjectEntryBorderedBasicInfoListRenderer
 		if (infoListItemRendererKeyOptional.isPresent() &&
 			Validator.isNotNull(infoListItemRendererKeyOptional.get())) {
 
-			infoListBasicListTag.setItemRendererKey(
+			infoListBasicTableTag.setItemRendererKey(
 				infoListItemRendererKeyOptional.get());
 		}
 		else {
-			infoListBasicListTag.setItemRendererKey(
-				ObjectEntryBasicInfoItemRenderer.class.getName());
-		}
-
-		infoListBasicListTag.setListStyleKey(getListStyle());
-
-		Optional<String> templateKeyOptional =
-			infoListRendererContext.getTemplateKeyOptional();
-
-		if (templateKeyOptional.isPresent() &&
-			Validator.isNotNull(templateKeyOptional.get())) {
-
-			infoListBasicListTag.setTemplateKey(templateKeyOptional.get());
+			infoListBasicTableTag.setItemRendererKey(
+				ObjectEntryRowInfoItemRenderer.class.getName());
 		}
 
 		try {
-			infoListBasicListTag.doTag(
+			infoListBasicTableTag.doTag(
 				infoListRendererContext.getHttpServletRequest(),
 				infoListRendererContext.getHttpServletResponse());
 		}
@@ -109,6 +125,9 @@ public class ObjectEntryBorderedBasicInfoListRenderer
 	protected InfoItemRendererTracker infoItemRendererTracker;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryBorderedBasicInfoListRenderer.class);
+		ObjectEntryTableInfoListRenderer.class);
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

@@ -17,29 +17,15 @@
 <%@ include file="/info/item/renderer/init.jsp" %>
 
 <%
-ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
-ObjectEntry objectEntry = (ObjectEntry)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY);
 Map<String, Serializable> objectEntryValues = (Map<String, Serializable>)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY_VALUES);
+
+for (Map.Entry<String, Serializable> entry : objectEntryValues.entrySet()) {
 %>
 
-<h3>
-	<%= objectDefinition.getName() %> <%= objectEntry.getObjectEntryId() %>
-</h3>
+	<td class="table-cell-expand-smallest">
+		<%= entry.getValue() %>
+	</td>
 
-<p>
-	<ul>
-
-		<%
-		for (Map.Entry<String, Serializable> entry : objectEntryValues.entrySet()) {
-		%>
-
-			<li>
-				<b><%= entry.getKey() %></b>: <%= entry.getValue() %>
-			</li>
-
-		<%
-		}
-		%>
-
-	</ul>
-</p>
+<%
+}
+%>

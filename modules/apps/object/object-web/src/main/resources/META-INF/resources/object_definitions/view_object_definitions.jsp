@@ -20,10 +20,6 @@
 ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewObjectDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div id="<portlet:namespace />addObjectDefinition" style="display: none;">
-	<aui:input name="name" required="<%= true %>" />
-</div>
-
 <clay:headless-data-set-display
 	apiURL="<%= viewObjectDefinitionsDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= viewObjectDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
@@ -37,71 +33,23 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 	style="fluid"
 />
 
+<div id="<portlet:namespace />addObjectDefinition">
+	<react:component
+		module="js/components/ModalAddObjectDefinition"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", viewObjectDefinitionsDisplayContext.getAPIURL()
+			).put(
+				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			).build()
+		%>'
+	/>
+</div>
+
 <script>
-	function handleCreateObjectDefinitionClick(event) {
-		event.preventDefault();
-
-		const addObjectDefinition = document.querySelector(
-			'#<portlet:namespace />addObjectDefinition'
-		);
-
-		Liferay.Util.openModal({
-			title: '<liferay-ui:message key="create-new-object" />',
-			bodyHTML: addObjectDefinition.innerHTML,
-			buttons: [
-				{
-					displayType: 'secondary',
-					label: '<liferay-ui:message key="cancel" />',
-					type: 'cancel',
-				},
-				{
-					label: '<liferay-ui:message key="save" />',
-					onClick: () => {
-						const name = document.querySelector(
-							'.modal-body #<portlet:namespace />name'
-						);
-
-						const formattedData = {
-							name: name.value,
-							objectFields: [],
-						};
-
-						Liferay.Util.fetch(
-							'<%= viewObjectDefinitionsDisplayContext.getAPIURL() %>',
-							{
-								headers: new Headers({
-									Accept: 'application/json',
-									'Content-Type': 'application/json',
-								}),
-								body: JSON.stringify(formattedData),
-								method: 'POST',
-							}
-						)
-							.then((response) => {
-								if (response.ok) {
-									window.location.reload();
-								}
-								else {
-									return response.json();
-								}
-							})
-							.then(({title}) => {
-								Liferay.Util.openToast({
-									message: title,
-									type: 'danger',
-								});
-							});
-					},
-				},
-			],
-		});
-	}
-
 	function handleDestroyPortlet() {
-		Liferay.detach('addObjectDefinition', handleCreateObjectDefinitionClick);
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}
 
-	Liferay.on('addObjectDefinition', handleCreateObjectDefinitionClick);
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </script>

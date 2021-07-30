@@ -416,4 +416,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-131984. The user could view the description of vocabulary in Categories admin."
+	@priority = "5"
+	@uitest
+	test ViewDescriptionOfVocabulary {
+		task ("Navigate to the Categories admin") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Add the first vocabulary with a short description") {
+			Vocabulary.addCP(
+				vocabularyDescription = "2021 Camry",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("View the short description of the first vocabulary in Categories admin") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name 1",
+				info = "Description: 2021 Camry",
+				locator1 = "Message#ASSET_INFO");
+		}
+
+		task ("View the associated asset type of the first vocabulary in Categories admin") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name 1",
+				info = "Asset Types: All Asset Types",
+				locator1 = "Message#ASSET_INFO");
+		}
+
+		task ("Add the second vocabulary with a long description more than 150 charactors") {
+			Vocabulary.addCP(
+				vocabularyDescription = "The powerful, stylish 2021 Camry Hybrid gives up nothing with its optimized fuel economy, advanced tech and stirring drive. We have expanded our hybrid battery warranty to reflect our confidence in the quality, dependability and reliability of our products. From the 2020 model year forward, every Toyota hybrid battery warranty will cover 10 years from date of first use or 150,000 miles, whichever comes first (previously 8 years or 100,000 miles).",
+				vocabularyName = "Vocabulary Name 2");
+		}
+
+		task ("View the full description of the second vocabulary in Categories admin") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name 2",
+				info = "Description: The powerful, stylish 2021 Camry Hybrid gives up nothing with its optimized fuel economy, advanced tech and stirring drive. We have expanded our hybrid battery warranty to reflect our confidence in the quality, dependability and reliability of our products. From the 2020 model year forward, every Toyota hybrid battery warranty will cover 10 years from date of first use or 150,000 miles, whichever comes first (previously 8 years or 100,000 miles).",
+				locator1 = "Message#ASSET_INFO");
+		}
+
+		task ("View the associated asset type of the second vocabulary in Categories admin") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name 2",
+				info = "Asset Types: All Asset Types",
+				locator1 = "Message#ASSET_INFO");
+		}
+	}
+
 }

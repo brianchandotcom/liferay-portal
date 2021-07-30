@@ -22,6 +22,32 @@ definition {
 		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
+	macro selectDisplayPageTemplateForAsset {
+		if ("${assetType}" == "Blogs Entry") {
+			BlogsNavigator.openToEditEntryInSite(
+				entryTitle = "${entryTitle}",
+				groupName = "${groupName}",
+				siteURLKey = "${siteURLKey}");
+		}
+		else if ("${assetType}" == "Document") {
+			DMNavigator.openToEditEntryInSite(
+				dmDocumentTitle = "${entryTitle}",
+				groupName = "${groupName}",
+				siteURLKey = "${siteURLKey}");
+			
+		}
+		else if ("${assetType}" == "Web Content") {
+			WebContentNavigator.openToEditWCInSite(
+				groupName = "${groupName}",
+				siteURLKey = "${siteURLKey}",
+				webContentTitle = "${entryTitle}");	
+		}
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		PortletEntry.publish();
+	}
+
 	macro selectPreviewItem {
 		if (isSet(modal)) {
 			Click(locator1 = "Modal#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");

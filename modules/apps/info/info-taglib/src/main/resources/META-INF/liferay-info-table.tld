@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<description>Provides the Liferay Info component tags, prefixed with <![CDATA[<code>liferay-info-table:</code>]]>. These tags are used for managing Info Framework entities.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-info-table</short-name>
+	<uri>http://liferay.com/tld/info-table</uri>
+	<tag>
+		<name>info-list-table</name>
+		<tag-class>com.liferay.info.taglib.servlet.taglib.InfoListBasicTableTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>infoListObjectColumnNames</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>infoListObjects</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>itemRendererKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

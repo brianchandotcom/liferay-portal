@@ -33,7 +33,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8154 | Test Summary: Delete a Liferay DXP data source and ensure contacts and ensure analytics events are no longer being synced"
-	@ignore = "true"
 	@priority = "5"
 	test DeleteLiferayDXPDataSourceEnsureContactsAndEventsNoBeingSynced {
 		ACUtils.addSiteAndPage();

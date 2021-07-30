@@ -87,11 +87,8 @@ definition {
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	}
 
-	@summary = "Deletes a specific data source \
-	@param dataSourceName the name of the data source you want to delete"
-	macro deleteDataSource {
-		var itemName = "${dataSourceName}";
-
+	@summary = "Deletes all data source"
+	macro deleteAllDataSource {
 		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
 			ACNavigation.goToSettings();
 		}
@@ -99,18 +96,34 @@ definition {
 		ACSettings.goToDataSources();
 
 		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
-			Click(locator1 = "ACSettings#ITEM_TABLE");
-
-			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-
-			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+			ACSettings.deleteDataSource();
 		}
+	}
+
+	@summary = "Deletes a specific data source \
+	@param dataSourceName the name of the data source you want to delete"
+	macro deleteDataSource {
+		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+			ACNavigation.goToSettings();
+		}
+
+		if (!(isSet(dataSourceName))) {
+			Click(locator1 = "ACSettings#ITEM_TABLE");
+		}
+
+		if (isSet(dataSourceName)) {
+			ACNavigation.openItem(itemName = "${dataSourceName}");
+		}
+
+		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+
+		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	}
 
 	macro deleteKeywordCheckbox {

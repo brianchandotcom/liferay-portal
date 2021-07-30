@@ -1825,14 +1825,7 @@ AUI.add(
 							layoutValue && layoutValue.privateLayout
 						);
 
-						var groupIdNode = A.one(
-							'#' + this.get('portletNamespace') + 'groupId'
-						);
-
-						var groupId =
-							(groupIdNode &&
-								groupIdNode.getAttribute('value')) ||
-							themeDisplay.getScopeGroupId();
+						var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 						var layoutsRoot = {
 							groupId,
@@ -2218,13 +2211,7 @@ AUI.add(
 
 					var delta = instance.get('delta');
 
-					var groupIdNode = A.one(
-						'#' + this.get('portletNamespace') + 'groupId'
-					);
-
-					var groupId =
-						(groupIdNode && groupIdNode.getAttribute('value')) ||
-						themeDisplay.getScopeGroupId();
+					var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 					var parentLayoutId = instance._currentParentLayoutId;
 
@@ -2537,13 +2524,7 @@ AUI.add(
 
 					var selectedLayout = instance.get('selectedLayout');
 
-					var groupIdNode = A.one(
-						'#' + this.get('portletNamespace') + 'groupId'
-					);
-
-					var groupId =
-						(groupIdNode && groupIdNode.getAttribute('value')) ||
-						themeDisplay.getScopeGroupId();
+					var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 					if (selectedLayout && selectedLayout.layoutId) {
 						instance._requestSiblingLayouts(

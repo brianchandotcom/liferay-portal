@@ -22,6 +22,7 @@ Export-Package:\
 	com.liferay.commerce.payment.request,\
 	com.liferay.commerce.payment.result,\
 	com.liferay.commerce.percentage,\
+	com.liferay.commerce.permission,\
 	com.liferay.commerce.price,\
 	com.liferay.commerce.search.facet,\
 	com.liferay.commerce.service,\

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
@@ -91,6 +93,7 @@ else {
 
 			<react:component
 				componentId="ddmTemplateEditor"
+				data="<%= editDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
 				module="js/ddm_template_editor/components/App"
 			/>
 		</div>

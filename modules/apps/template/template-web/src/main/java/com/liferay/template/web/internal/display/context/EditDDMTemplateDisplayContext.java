@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -66,6 +69,10 @@ public class EditDDMTemplateDisplayContext {
 			getDDMTemplateId());
 
 		return _ddmTemplate;
+	}
+
+	public Map<String, Object> getDDMTemplateEditorContext() {
+		return Collections.emptyMap();
 	}
 
 	public String getLanguageType() {

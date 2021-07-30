@@ -19,8 +19,8 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
-import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -28,20 +28,27 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,18 +63,19 @@ public class CommerceOrderTypeDisplayContext {
 			commerceOrderTypeModelResourcePermission,
 		CommerceOrderTypeService commerceOrderTypeService, Portal portal) {
 
-		_commerceOrderRequestHelper = new CommerceOrderRequestHelper(
-			httpServletRequest);
-
+		this.httpServletRequest = httpServletRequest;
 		_commerceOrderTypeModelResourcePermission =
 			commerceOrderTypeModelResourcePermission;
 		_commerceOrderTypeService = commerceOrderTypeService;
 		_portal = portal;
+
+		commerceOrderRequestHelper = new CommerceOrderRequestHelper(
+			httpServletRequest);
 	}
 
 	public String getAddCommerceOrderTypeRenderURL() throws Exception {
 		return PortletURLBuilder.createRenderURL(
-			_commerceOrderRequestHelper.getLiferayPortletResponse()
+			commerceOrderRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_order_type/add_commerce_order_type"
 		).setWindowState(
@@ -77,7 +85,7 @@ public class CommerceOrderTypeDisplayContext {
 
 	public CommerceOrderType getCommerceOrderType() throws PortalException {
 		long commerceOrderTypeId = ParamUtil.getLong(
-			_commerceOrderRequestHelper.getRequest(), "commerceOrderTypeId");
+			commerceOrderRequestHelper.getRequest(), "commerceOrderTypeId");
 
 		if (commerceOrderTypeId == 0) {
 			return null;
@@ -85,6 +93,44 @@ public class CommerceOrderTypeDisplayContext {
 
 		return _commerceOrderTypeService.fetchCommerceOrderType(
 			commerceOrderTypeId);
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getCommerceOrderTypeClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						httpServletRequest, CommerceOrderType.class.getName(),
+						PortletProvider.Action.MANAGE)
+				).setMVCRenderCommandName(
+					"/commerce_order_type/edit_commerce_order_type"
+				).setRedirect(
+					commerceOrderRequestHelper.getCurrentURL()
+				).setParameter(
+					"commerceOrderTypeId", "{id}"
+				).buildString(),
+				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
+				"get", null, null));
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "headless"));
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				_getManagePermissionsURL(), null, "permissions",
+				LanguageUtil.get(httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"));
+
+		return clayDataSetActionDropdownItems;
 	}
 
 	public long getCommerceOrderTypeId() throws PortalException {
@@ -106,7 +152,7 @@ public class CommerceOrderTypeDisplayContext {
 					dropdownItem.setHref(getAddCommerceOrderTypeRenderURL());
 					dropdownItem.setLabel(
 						LanguageUtil.get(
-							_commerceOrderRequestHelper.getRequest(),
+							commerceOrderRequestHelper.getRequest(),
 							"add-order-type"));
 					dropdownItem.setTarget("modal");
 				});
@@ -124,8 +170,8 @@ public class CommerceOrderTypeDisplayContext {
 
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				_commerceOrderRequestHelper.getRequest(),
-				CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
+				commerceOrderRequestHelper.getRequest(),
+				CommercePortletKeys.COMMERCE_ORDER_TYPE,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/commerce_order_type/edit_commerce_order_type"
@@ -141,7 +187,7 @@ public class CommerceOrderTypeDisplayContext {
 	public PortletURL getEditCommerceOrderTypeRenderURL() {
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				_commerceOrderRequestHelper.getRequest(),
+				commerceOrderRequestHelper.getRequest(),
 				CommercePortletKeys.COMMERCE_ORDER_TYPE,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
@@ -153,7 +199,7 @@ public class CommerceOrderTypeDisplayContext {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
 		RenderResponse renderResponse =
-			_commerceOrderRequestHelper.getRenderResponse();
+			commerceOrderRequestHelper.getRenderResponse();
 
 		RenderURL cancelURL = renderResponse.createRenderURL();
 
@@ -162,17 +208,80 @@ public class CommerceOrderTypeDisplayContext {
 
 		headerActionModels.add(cancelHeaderActionModel);
 
-		if (hasPermission(ActionKeys.UPDATE)) {
-			LiferayPortletResponse liferayPortletResponse =
-				_commerceOrderRequestHelper.getLiferayPortletResponse();
+		String saveButtonLabel = "save";
 
-			headerActionModels.add(
-				new HeaderActionModel(
-					"btn-primary", liferayPortletResponse.getNamespace() + "fm",
-					getEditCommerceOrderTypeActionURL(), null, "save"));
+		CommerceOrderType commerceOrderType = getCommerceOrderType();
+
+		if ((commerceOrderType == null) || commerceOrderType.isDraft() ||
+			commerceOrderType.isApproved() || commerceOrderType.isExpired() ||
+			commerceOrderType.isScheduled()) {
+
+			saveButtonLabel = "save-as-draft";
 		}
 
+		ActionURL actionURL = renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/commerce_discount/edit_commerce_discount");
+
+		LiferayPortletResponse liferayPortletResponse =
+			commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		HeaderActionModel saveAsDraftHeaderActionModel = new HeaderActionModel(
+			null, liferayPortletResponse.getNamespace() + "fm",
+			actionURL.toString(), null, saveButtonLabel);
+
+		headerActionModels.add(saveAsDraftHeaderActionModel);
+
+		String publishButtonLabel = "publish";
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				commerceOrderRequestHelper.getCompanyId(),
+				commerceOrderRequestHelper.getScopeGroupId(),
+				CommerceOrderType.class.getName())) {
+
+			publishButtonLabel = "submit-for-publication";
+		}
+
+		String additionalClasses = "btn-primary";
+
+		if ((commerceOrderType != null) && commerceOrderType.isPending()) {
+			additionalClasses = additionalClasses + " disabled";
+		}
+
+		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
+			additionalClasses, liferayPortletResponse.getNamespace() + "fm",
+			actionURL.toString(),
+			liferayPortletResponse.getNamespace() + "publishButton",
+			publishButtonLabel);
+
+		headerActionModels.add(publishHeaderActionModel);
+
 		return headerActionModels;
+	}
+
+	public PortletURL getPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		long commerceOrderTypeId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderTypeId");
+
+		if (commerceOrderTypeId > 0) {
+			portletURL.setParameter(
+				"commerceOrderTypeId", String.valueOf(commerceOrderTypeId));
+		}
+
+		return portletURL;
 	}
 
 	public boolean hasAddPermission() throws PortalException {
@@ -181,17 +290,54 @@ public class CommerceOrderTypeDisplayContext {
 				getPortletResourcePermission();
 
 		return portletResourcePermission.contains(
-			_commerceOrderRequestHelper.getPermissionChecker(), null,
+			commerceOrderRequestHelper.getPermissionChecker(), null,
 			CommerceOrderActionKeys.ADD_COMMERCE_ORDER_TYPE);
+	}
+
+	public boolean hasCustomAttributesAvailable() throws Exception {
+		return CustomAttributesUtil.hasCustomAttributes(
+			commerceOrderRequestHelper.getCompanyId(),
+			CommerceOrderType.class.getName(), getCommerceOrderTypeId(), null);
 	}
 
 	public boolean hasPermission(String actionId) throws PortalException {
 		return _commerceOrderTypeModelResourcePermission.contains(
-			_commerceOrderRequestHelper.getPermissionChecker(),
+			commerceOrderRequestHelper.getPermissionChecker(),
 			getCommerceOrderTypeId(), actionId);
 	}
 
-	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
+	protected final CommerceOrderRequestHelper commerceOrderRequestHelper;
+	protected final HttpServletRequest httpServletRequest;
+
+	private String _getManagePermissionsURL() throws PortalException {
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			commerceOrderRequestHelper.getCurrentURL()
+		).setParameter(
+			"modelResource", CommerceOrderType.class.getName()
+		).setParameter(
+			"modelResourceDescription", "{name}"
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).buildPortletURL();
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
+
+		return portletURL.toString();
+	}
+
 	private final ModelResourcePermission<CommerceOrderType>
 		_commerceOrderTypeModelResourcePermission;
 	private final CommerceOrderTypeService _commerceOrderTypeService;

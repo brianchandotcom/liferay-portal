@@ -285,8 +285,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanMapDocumentToDisplayPage {
-		property test.name.skip.portal.instance = "OpenGraph#MapDocumentToDisplayPage";
-
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
 			displayPageTemplateEntryName = "Display Page Template Name",
@@ -389,7 +387,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanMapSiteImageToDisplayPage {
-		property test.name.skip.portal.instance = "OpenGraph#MapSiteImageToDisplayPage";
 
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
@@ -459,8 +456,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanMapWebContentToDisplayPage {
-		property test.name.skip.portal.instance = "OpenGraph#MapWebContentToDisplayPage";
-
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
 			displayPageTemplateEntryName = "Display Page Template Name",

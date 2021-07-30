@@ -30,12 +30,41 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8147 | Test Summary: Anonymous individuals are not counted towards usage"
-	@ignore = "true"
 	@priority = "5"
 	test AnonymousIndividualsDoNotCountAsIndividualsForUsage {
+		ACUtils.addSiteAndPage();
 
-		// TODO LRAC-8147 Usage#AnonymousIndividualsDoNotCountAsIndividualsForUsage pending implementation
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		var currentIndividuals = selenium.getText("ACUsage#USAGE_CURRENT_INDIVIDUALS");
+
+		ACUtils.launchDXP();
+
+		User.logoutPG();
+		
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		AssertTextEquals(
+			locator1 = "ACUsage#USAGE_CURRENT_INDIVIDUALS",
+			value1 = "${currentIndividuals}");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"

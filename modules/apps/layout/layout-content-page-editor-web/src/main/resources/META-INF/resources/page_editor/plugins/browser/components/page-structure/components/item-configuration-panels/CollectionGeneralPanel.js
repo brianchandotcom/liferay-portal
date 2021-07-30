@@ -20,7 +20,7 @@ import ClayForm, {
 } from '@clayui/form';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {config} from '../../../../../../app/config/index';
 import {
@@ -144,15 +144,18 @@ export const CollectionGeneralPanel = ({item}) => {
 			numberOfItemsPerPage: event.target.value,
 		});
 
-	const handleConfigurationChanged = (itemConfig) => {
-		dispatch(
-			updateItemConfig({
-				itemConfig,
-				itemId: item.itemId,
-				segmentsExperienceId,
-			})
-		);
-	};
+	const handleConfigurationChanged = useCallback(
+		(itemConfig) => {
+			dispatch(
+				updateItemConfig({
+					itemConfig,
+					itemId: item.itemId,
+					segmentsExperienceId,
+				})
+			);
+		},
+		[item.itemId, dispatch, segmentsExperienceId]
+	);
 
 	const handleShowAllItemsChanged = (event) => {
 		setShowAllItems(event.target.checked);
@@ -234,10 +237,27 @@ export const CollectionGeneralPanel = ({item}) => {
 			}).then(({totalNumberOfItems}) => {
 				if (isMounted()) {
 					setTotalNumberOfItems(totalNumberOfItems);
+
+					if (showAllItems) {
+						handleConfigurationChanged({
+							numberOfItems: totalNumberOfItems,
+						});
+
+						setNextValue((prevValue) => ({
+							...prevValue,
+							numberOfItems: totalNumberOfItems,
+						}));
+						setNumberOfItemsError(null);
+					}
 				}
 			});
 		}
-	}, [item.config.collection, isMounted]);
+	}, [
+		item.config.collection,
+		isMounted,
+		showAllItems,
+		handleConfigurationChanged,
+	]);
 
 	useEffect(() => {
 		if (

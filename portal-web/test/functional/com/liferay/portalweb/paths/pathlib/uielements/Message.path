@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_INFO</td>
+	<td>//*[contains(@class,'sheet-title')][.//*[normalize-space(text())='${assetTitle}']]/parent::div//*[contains(@class,'mb-2') or contains(@class,'mr-2')][normalize-space()='${info}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_ALERT</td>
 	<td>//div[contains(@id,'categorization')]/div[contains(@class,'alert-danger')]</td>
 	<td></td>

@@ -585,18 +585,18 @@ public class DLReferencesExportImportContentProcessor
 				String urlWithoutUUID = url.substring(
 					0, url.lastIndexOf(StringPool.SLASH));
 
-				String exportedReferenceWithUUID =
-					"[$dl-reference=" + path + "$,$include-uuid=false$]";
 				String exportedReferenceWithoutUUID =
+					"[$dl-reference=" + path + "$,$include-uuid=false$]";
+				String exportedReferenceWithUUID =
 					"[$dl-reference=" + path + "$,$include-uuid=true$]";
 
 				if (content.startsWith("[#dl-reference=", endPos)) {
 					endPos = content.indexOf("#,#include-uuid=", beginPos) + 2;
 
-					exportedReferenceWithUUID =
+					exportedReferenceWithoutUUID =
 						content.substring(beginPos, endPos) +
 							"#include-uuid=false#]";
-					exportedReferenceWithoutUUID =
+					exportedReferenceWithUUID =
 						content.substring(beginPos, endPos) +
 							"#include-uuid=true#]";
 				}

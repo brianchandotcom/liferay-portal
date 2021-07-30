@@ -89,10 +89,17 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
 
-		accountEntry.setExternalReferenceCode(
-			ParamUtil.getString(actionRequest, "externalReferenceCode"));
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 
-		return _accountEntryLocalService.updateAccountEntry(accountEntry);
+		if (Validator.isNotNull(externalReferenceCode)) {
+			accountEntry.setExternalReferenceCode(externalReferenceCode);
+
+			accountEntry = _accountEntryLocalService.updateAccountEntry(
+				accountEntry);
+		}
+
+		return accountEntry;
 	}
 
 	@Override
@@ -164,9 +171,11 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		String externalReferenceCode = ParamUtil.getString(
 			actionRequest, "externalReferenceCode");
 
-		accountEntry.setExternalReferenceCode(externalReferenceCode);
+		if (Validator.isNotNull(externalReferenceCode)) {
+			accountEntry.setExternalReferenceCode(externalReferenceCode);
 
-		_accountEntryLocalService.updateAccountEntry(accountEntry);
+			_accountEntryLocalService.updateAccountEntry(accountEntry);
+		}
 
 		if (Objects.equals(
 				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,

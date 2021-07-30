@@ -36,9 +36,65 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test DeleteLiferayDXPDataSourceEnsureContactsAndEventsNoBeingSynced {
+		ACUtils.addSiteAndPage();
 
-		// TODO LRAC-8154 DeleteLiferayDXPDataSourceEnsureContactsAndEventsNoBeingSynced pending implementation
+		ACUtils.createWCAndAddToPage();
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		var itemName = StringUtil.replace("${propertyName}", " Combined Property", "");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		ACUtils.launchAC();
+
+		ACSettings.deleteDataSource(dataSourceName = "${itemName}");
+
+		ACNavigation.exitSettings();
+
+		ACNavigation.goToSettings();
+
+		AssertElementNotPresent(locator1 = "ACSettings#ITEM_ON_LIST");
+
+		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACTimeFilter.clickTimeFilterButton(cardName = "${propertyName} Activities");
+
+		ACTimeFilter.setLast24Hours();
+
+		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Web Content");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		AssertElementNotPresent(
+			key_assetName = "Web Content AC Title",
+			locator1 = "ACAssets#ASSETS_TABLE");
 	}
 
 }

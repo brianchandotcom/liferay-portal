@@ -41,12 +41,13 @@ public class DDMTemplateActionDropdownItemsProvider {
 	public DDMTemplateActionDropdownItemsProvider(
 		boolean addDDMTemplateEnabled, DDMTemplate ddmTemplate,
 		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, String tabs1) {
 
 		_addDDMTemplateEnabled = addDDMTemplateEnabled;
 		_ddmTemplate = ddmTemplate;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_tabs1 = tabs1;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -131,6 +132,8 @@ public class DDMTemplateActionDropdownItemsProvider {
 					"/edit_ddm_template.jsp"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
+				).setTabs1(
+					_tabs1
 				).setParameter(
 					"ddmTemplateId", _ddmTemplate.getTemplateId()
 				).buildPortletURL());
@@ -162,6 +165,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 	private final DDMTemplate _ddmTemplate;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 
 }

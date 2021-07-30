@@ -86,7 +86,7 @@ public abstract class BaseTemplateDisplayContext
 			ddmTemplateActionDropdownItemsProvider =
 				new DDMTemplateActionDropdownItemsProvider(
 					isAddDDMTemplateEnabled(), ddmTemplate, _httpServletRequest,
-					_liferayPortletResponse);
+					_liferayPortletResponse, getTabs1());
 
 		return ddmTemplateActionDropdownItemsProvider.getActionDropdownItems();
 	}
@@ -107,6 +107,8 @@ public abstract class BaseTemplateDisplayContext
 			"/edit_ddm_template.jsp"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
+		).setTabs1(
+			getTabs1()
 		).setParameter(
 			"ddmTemplateId", ddmTemplate.getTemplateId()
 		).buildString();
@@ -125,7 +127,7 @@ public abstract class BaseTemplateDisplayContext
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "information-templates"));
+					Objects.equals(getTabs1(), "information-templates"));
 				navigationItem.setHref(
 					_liferayPortletResponse.createRenderURL(), "tabs1",
 					"information-templates");
@@ -136,7 +138,7 @@ public abstract class BaseTemplateDisplayContext
 		).add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "widget-templates"));
+					Objects.equals(getTabs1(), "widget-templates"));
 				navigationItem.setHref(
 					_liferayPortletResponse.createRenderURL(), "tabs1",
 					"widget-templates");
@@ -149,6 +151,17 @@ public abstract class BaseTemplateDisplayContext
 	public abstract long getResourceClassNameId();
 
 	public abstract String getResourceName(long classNameId);
+
+	public String getTabs1() {
+		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		_tabs1 = ParamUtil.getString(
+			liferayPortletRequest, "tabs1", "information-templates");
+
+		return _tabs1;
+	}
 
 	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
 		if (_ddmTemplateSearchContainer != null) {
@@ -249,19 +262,8 @@ public abstract class BaseTemplateDisplayContext
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setTabs1(
-			_getTabs1()
+			getTabs1()
 		).buildPortletURL();
-	}
-
-	private String _getTabs1() {
-		if (_tabs1 != null) {
-			return _tabs1;
-		}
-
-		_tabs1 = ParamUtil.getString(
-			liferayPortletRequest, "tabs1", "information-templates");
-
-		return _tabs1;
 	}
 
 	private OrderByComparator<DDMTemplate> _getTemplateOrderByComparator() {

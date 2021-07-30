@@ -123,6 +123,8 @@ public class TemplateManagementToolbarDisplayContext
 			"/edit_ddm_template.jsp"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
+		).setTabs1(
+			_templateDisplayContext.getTabs1()
 		).setParameter(
 			"groupId", _themeDisplay.getScopeGroupId()
 		).setParameter(

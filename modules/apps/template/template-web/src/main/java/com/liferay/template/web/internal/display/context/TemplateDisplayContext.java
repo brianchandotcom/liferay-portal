@@ -47,6 +47,8 @@ public interface TemplateDisplayContext {
 
 	public String getResourceName(long classNameId);
 
+	public String getTabs1();
+
 	public SearchContainer<DDMTemplate> getTemplateSearchContainer();
 
 	public String getTemplateTypeLabel(long classNameId);

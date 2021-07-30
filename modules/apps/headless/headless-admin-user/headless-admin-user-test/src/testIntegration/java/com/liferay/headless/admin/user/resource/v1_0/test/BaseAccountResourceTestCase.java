@@ -472,20 +472,6 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertEquals(randomAccount, postAccount);
 		assertValid(postAccount);
-
-		randomAccount = randomAccount();
-
-		assertHttpResponseStatusCode(
-			404,
-			accountResource.getAccountByExternalReferenceCodeHttpResponse(
-				randomAccount.getExternalReferenceCode()));
-
-		testPostAccount_addAccount(randomAccount);
-
-		assertHttpResponseStatusCode(
-			200,
-			accountResource.getAccountByExternalReferenceCodeHttpResponse(
-				randomAccount.getExternalReferenceCode()));
 	}
 
 	protected Account testPostAccount_addAccount(Account account)
@@ -644,6 +630,30 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertEquals(randomAccount, getAccount);
 		assertValid(getAccount);
+
+		Account newAccount =
+			testPutAccountByExternalReferenceCode_createAccount();
+
+		putAccount = accountResource.putAccountByExternalReferenceCode(
+			newAccount.getExternalReferenceCode(), newAccount);
+
+		assertEquals(newAccount, putAccount);
+		assertValid(putAccount);
+
+		getAccount = accountResource.getAccountByExternalReferenceCode(
+			putAccount.getExternalReferenceCode());
+
+		assertEquals(newAccount, getAccount);
+
+		Assert.assertEquals(
+			newAccount.getExternalReferenceCode(),
+			putAccount.getExternalReferenceCode());
+	}
+
+	protected Account testPutAccountByExternalReferenceCode_createAccount()
+		throws Exception {
+
+		return randomAccount();
 	}
 
 	protected Account testPutAccountByExternalReferenceCode_addAccount()

@@ -793,7 +793,6 @@ definition {
 	@description = "Verify that pagination follows in asc/desc sequence in the Assigned to Me tab"
 	@priority = "2"
 	test PaginationFollowsAscDescSequence {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -805,91 +804,85 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		JSONBlog.addEntry( 
-			entryContent = "Blogs Entry Content", 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
 
-		JSONBlog.addEntry( 
-			entryContent = "Blogs Entry Content", 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 2");
-		
-		JSONBlog.addEntry( 
-			entryContent = "Blogs Entry Content", 
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 3");
 
-		JSONBlog.addEntry( 
-			entryContent = "Blogs Entry Content", 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 4");
 
-		JSONBlog.addEntry( 
-			entryContent = "Blogs Entry Content", 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 5");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		 Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title 1",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title 2",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
-		
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
-		Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title 3",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title 4",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
+			workflowAssetTitle = "Blogs Entry Title 3",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title 5",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");	
+			workflowAssetTitle = "Blogs Entry Title 4",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 5",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
 		AssertTextEquals(
 			key_rowNumber = "2",
 			locator1 = "MyWorkflowTasks#PROCESS_NAME_TABLE_ROW",
-			value1 = "Blogs Entry Title 1");	
+			value1 = "Blogs Entry Title 1");
 
 		AssertTextEquals(
 			key_rowNumber = "3",
 			locator1 = "MyWorkflowTasks#PROCESS_NAME_TABLE_ROW",
-			value1 = "Blogs Entry Title 2");	
+			value1 = "Blogs Entry Title 2");
 
 		AssertTextEquals(
 			key_rowNumber = "4",
 			locator1 = "MyWorkflowTasks#PROCESS_NAME_TABLE_ROW",
-			value1 = "Blogs Entry Title 3");	
+			value1 = "Blogs Entry Title 3");
 
 		AssertTextEquals(
 			key_rowNumber = "5",
 			locator1 = "MyWorkflowTasks#PROCESS_NAME_TABLE_ROW",
-			value1 = "Blogs Entry Title 4");	
+			value1 = "Blogs Entry Title 4");
 
 		AssertTextEquals(
 			key_rowNumber = "6",
 			locator1 = "MyWorkflowTasks#PROCESS_NAME_TABLE_ROW",
-			value1 = "Blogs Entry Title 5");	
-
-
-
-		
-
-
+			value1 = "Blogs Entry Title 5");
 	}
 
 	@description = "Verify that the pagination component is displayed when the table has 5 items or more"

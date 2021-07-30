@@ -1,0 +1,2034 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple categories in multiple filters."
+	@priority = "5"
+	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {
+		property portal.acceptance = "true";
+
+		task ("Add two vocabularies") {
+			for (var title : list "Vocabulary A,Vocabulary B") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "${title}");
+			}
+		}
+
+		task ("Add a category in Vocabulary A") {
+			var categoryAId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category A",
+				vocabularyName = "Vocabulary A");
+		}
+
+		task ("Add a category in Vocabulary B") {
+			var categoryBId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category B",
+				vocabularyName = "Vocabulary B");
+		}
+
+		task ("Add a web content based on Basic Web Content with Category A") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryAId}",
+				content = "Web Content Content With Category A",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Category A");
+		}
+
+		task ("Add a web content based on Basic Web Content with Category A and Category B") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryAId},${categoryBId}",
+				content = "Web Content Content With Both Categories",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Both Categories");
+		}
+
+		task ("Add a blogs entry with Category A") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryAId}",
+				entryContent = "Blogs Entry Content With Category A",
+				entryTitle = "Blogs Entry Title With Category A",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a blogs entry with Both Categories") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryAId},${categoryBId}",
+				entryContent = "Blogs Entry Content With Both Categories",
+				entryTitle = "Blogs Entry Title With Both Categories",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document with Category A") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryAId}",
+				dmDocumentTitle = "Document Title With Category A",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a document with Both Categories") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryAId},${categoryBId}",
+				dmDocumentTitle = "Document Title With Both Categories",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Set up List Style and Change Max Number of Items to 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Inline List",
+				maxNumberOfItems = "6",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Add a Grid above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Header",
+				fragmentName = "Grid",
+				targetFragmentName = "Container");
+		}
+
+		task ("Change Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Filter to each module of Grid") {
+			for (var columnNumber : list "1,2") {
+				PageEditor.addElementToColumn(
+					collectionName = "Content Display",
+					columnNumber = "${columnNumber}",
+					fragmentName = "Collection Filter",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("Select the Vocabulary A in Collection Filter inside first module") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Category A",
+				columnNumber = "1",
+				fragmentName = "Collection Filter",
+				singleSelection = "true",
+				vocabularyName = "Vocabulary A");
+
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
+				value1 = "Vocabulary A");
+		}
+
+		task ("Select the Vocabulary B in Collection Filter inside second module and choose Multiple Selection") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Category B",
+				columnNumber = "2",
+				fragmentName = "Collection Filter",
+				vocabularyName = "Vocabulary B");
+
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
+				value1 = "Vocabulary B");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("View the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
+		}
+
+		task ("View Contains All Categories works in preview modal") {
+			var n = "1";
+
+			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "1",
+				filterName = "Category A",
+				selectedName = "Category A",
+				title = "Vocabulary A");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category B",
+				columnNumber = "2",
+				multipleSelection = "true",
+				selectedName = "Category B",
+				title = "Vocabulary B");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Both Categories,Blogs Entry Title With Both Categories,Web Content Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
+		}
+
+		task ("Assert Contains All Categories works in view mode") {
+			var n = "1";
+
+			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "1",
+				filterName = "Category A",
+				selectedName = "Category A",
+				title = "Vocabulary A");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category B",
+				columnNumber = "2",
+				multipleSelection = "true",
+				selectedName = "Category B",
+				title = "Vocabulary B");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Both Categories,Blogs Entry Title With Both Categories,Web Content Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple subcategories in one filter."
+	@priority = "5"
+	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add three subcategories in category") {
+			var subcategoryAId = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory A",
+				vocabularyName = "Vocabulary Name");
+
+			var subcategoryBId = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory B",
+				vocabularyName = "Vocabulary Name");
+
+			var subcategoryCId = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "Subcategory C",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content based on Basic Web Content without category") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a web content based on Basic Web Content with Subcategory A") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${subcategoryAId}",
+				content = "Web Content Content With Subcategory",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Subcategory");
+		}
+
+		task ("Add a blogs entry without category") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a blogs entry with Subcategory B") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${subcategoryBId}",
+				entryContent = "Blogs Entry Content With Subcategory",
+				entryTitle = "Blogs Entry Title With Subcategory",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document without category") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a document with Subcategory C") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${subcategoryCId}",
+				dmDocumentTitle = "Document Title With Subcategory",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Change Max Number of Items to 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				maxNumberOfItems = "6",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Add a Heading fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Document Title With Subcategory",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title of collection items to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Add a Collection Filter above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Container");
+		}
+
+		task ("Select the category in Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryName = "Category Name",
+				categoryNameList = "Category Name",
+				fragmentName = "Collection Filter",
+				subcategoryNameList = "Subcategory A,Subcategory B,Subcategory C",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the category name is shown in Collection Filter") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "Collection Filter",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Category Name");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("View the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//div[contains(@class,'row')]");
+		}
+
+		task ("View Contains Any Subcategories works in preview modal") {
+			var n = "1";
+
+			for (var title : list "Document Title With Subcategory,Document Title,Blogs Entry Title With Subcategory,Blogs Entry Title,Web Content Title With Subcategory,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Subcategory A",
+				multipleSelection = "true",
+				selectedName = "Subcategory A",
+				title = "Category Name");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+				value1 = "Web Content Title With Subcategory");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "2",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Subcategory A,Subcategory B",
+				multipleSelection = "true",
+				selectedName = "2 Selected",
+				title = "Category Name");
+
+			var n = "1";
+
+			for (var title : list "Blogs Entry Title With Subcategory,Web Content Title With Subcategory") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "3",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Subcategory A,Subcategory B,Subcategory C",
+				multipleSelection = "true",
+				selectedName = "3 Selected",
+				title = "Category Name");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Subcategory,Blogs Entry Title With Subcategory,Web Content Title With Subcategory") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "4",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//div[contains(@class,'row')]");
+		}
+
+		task ("View Contains Any Subcategories works at view mode") {
+			var n = "1";
+
+			for (var title : list "Document Title With Subcategory,Document Title,Blogs Entry Title With Subcategory,Blogs Entry Title,Web Content Title With Subcategory,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Subcategory A",
+				multipleSelection = "true",
+				selectedName = "Subcategory A",
+				title = "Category Name");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+				value1 = "Web Content Title With Subcategory");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "2",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Subcategory A,Subcategory B",
+				multipleSelection = "true",
+				selectedName = "2 Selected",
+				title = "Category Name");
+
+			var n = "1";
+
+			for (var title : list "Blogs Entry Title With Subcategory,Web Content Title With Subcategory") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "3",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Subcategory A,Subcategory B,Subcategory C",
+				multipleSelection = "true",
+				selectedName = "3 Selected",
+				title = "Category Name");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Subcategory,Blogs Entry Title With Subcategory,Web Content Title With Subcategory") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "4",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+	}
+
+	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting single category."
+	@priority = "5"
+	test FilterResultsOfCollectionPageBasedOnDynamicCollectionBySingleCategory {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content based on Basic Web Content without category") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a web content based on Basic Web Content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content With Category",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Category");
+		}
+
+		task ("Add a blogs entry without category") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a blogs entry with category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content With Category",
+				entryTitle = "Blogs Entry Title With Category",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document without category") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a document with category") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title With Category",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Set up List Style and Change Max Number of Items to 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bordered List",
+				maxNumberOfItems = "6",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Filter above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Container");
+		}
+
+		task ("Select the vocabulary in Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Category Name",
+				fragmentName = "Collection Filter",
+				singleSelection = "true",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the vocabulary name shown in Collection Filter") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "Collection Filter",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Vocabulary Name");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("View the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
+		}
+
+		task ("View the filter works in preview modal") {
+			var n = "1";
+
+			for (var title : list "Document Title With Category,Document Title,Blogs Entry Title With Category,Blogs Entry Title,Web Content Title With Category,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				filterName = "Category Name",
+				selectedName = "Category Name",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Category,Blogs Entry Title With Category,Web Content Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
+		}
+
+		task ("View the filter works at view mode") {
+			var n = "1";
+
+			for (var title : list "Document Title With Category,Document Title,Blogs Entry Title With Category,Blogs Entry Title,Web Content Title With Category,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				filterName = "Category Name",
+				selectedName = "Category Name",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Document Title With Category,Blogs Entry Title With Category,Web Content Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting multiple categories in multiple filters."
+	@priority = "4"
+	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAllCategories {
+		task ("Add two vocabularies") {
+			for (var title : list "Vocabulary A,Vocabulary B") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "${title}");
+			}
+		}
+
+		task ("Add a category in Vocabulary A") {
+			var categoryAId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category A",
+				vocabularyName = "Vocabulary A");
+		}
+
+		task ("Add a category in Vocabulary B") {
+			var categoryBId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category B",
+				vocabularyName = "Vocabulary B");
+		}
+
+		task ("Add a web content based on Basic Web Content with Category A") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryAId}",
+				content = "Web Content Content With Category A",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Category A");
+		}
+
+		task ("Add a web content based on Basic Web Content with Category A and Category B") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryAId},${categoryBId}",
+				content = "Web Content Content With Both Categories",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Both Categories");
+		}
+
+		task ("Add a blogs entry with Category A") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryAId}",
+				entryContent = "Blogs Entry Content With Category A",
+				entryTitle = "Blogs Entry Title With Category A",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a blogs entry with Both Categories") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryAId},${categoryBId}",
+				entryContent = "Blogs Entry Content With Both Categories",
+				entryTitle = "Blogs Entry Title With Both Categories",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document with Category A") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryAId}",
+				dmDocumentTitle = "Document Title With Category A",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a document with Both Categories") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryAId},${categoryBId}",
+				dmDocumentTitle = "Document Title With Both Categories",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a manual collection with All Types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Select all assets as collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			for (var assetName : list "Web Content Title With Category A,Web Content Title With Both Categories") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Web Content");
+			}
+
+			for (var assetName : list "Blogs Entry Title With Category A,Blogs Entry Title With Both Categories") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Blogs Entry");
+			}
+
+			for (var assetName : list "Document Title With Category A,Document Title With Both Categories") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Document");
+			}
+		}
+
+		task ("Add a collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Set up List Style and Change Max Number of Items to 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Inline List",
+				maxNumberOfItems = "6",
+				selectedName = "Manual Collection");
+		}
+
+		task ("Add a Grid above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Header",
+				fragmentName = "Grid",
+				targetFragmentName = "Container");
+		}
+
+		task ("Change Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Filter to each module of Grid") {
+			for (var columnNumber : list "1,2") {
+				PageEditor.addElementToColumn(
+					collectionName = "Content Display",
+					columnNumber = "${columnNumber}",
+					fragmentName = "Collection Filter",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("Select the Vocabulary A in Collection Filter inside first module") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Category A",
+				columnNumber = "1",
+				fragmentName = "Collection Filter",
+				singleSelection = "true",
+				vocabularyName = "Vocabulary A");
+
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
+				value1 = "Vocabulary A");
+		}
+
+		task ("Select the Vocabulary B in Collection Filter inside second module and choose Multiple Selection") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Category B",
+				columnNumber = "2",
+				fragmentName = "Collection Filter",
+				vocabularyName = "Vocabulary B");
+
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
+				value1 = "Vocabulary B");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
+		}
+
+		task ("Assert Contains All Categories works in preview mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category A,Web Content Title With Both Categories,Blogs Entry Title With Category A,Blogs Entry Title With Both Categories,Document Title With Category A,Document Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "1",
+				filterName = "Category A",
+				selectedName = "Category A",
+				title = "Vocabulary A");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category A,Web Content Title With Both Categories,Blogs Entry Title With Category A,Blogs Entry Title With Both Categories,Document Title With Category A,Document Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category B",
+				columnNumber = "2",
+				multipleSelection = "true",
+				selectedName = "Category B",
+				title = "Vocabulary B");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Both Categories,Blogs Entry Title With Both Categories,Document Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
+		}
+
+		task ("Assert Contains All Categories works in view mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category A,Web Content Title With Both Categories,Blogs Entry Title With Category A,Blogs Entry Title With Both Categories,Document Title With Category A,Document Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "1",
+				filterName = "Category A",
+				selectedName = "Category A",
+				title = "Vocabulary A");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category A,Web Content Title With Both Categories,Blogs Entry Title With Category A,Blogs Entry Title With Both Categories,Document Title With Category A,Document Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category B",
+				columnNumber = "2",
+				multipleSelection = "true",
+				selectedName = "Category B",
+				title = "Vocabulary B");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Both Categories,Blogs Entry Title With Both Categories,Document Title With Both Categories") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting multiple categories in one filter."
+	@priority = "5"
+	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAnyCategories {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add three categories") {
+			var categoryAId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category A",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryBId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category B",
+				vocabularyName = "Vocabulary Name");
+
+			var categoryCId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category C",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content based on Basic Web Content without category") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a web content based on Basic Web Content with Category A") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryAId}",
+				content = "Web Content Content With Category",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Category");
+		}
+
+		task ("Add a blogs entry without category") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a blogs entry with Category B") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryBId}",
+				entryContent = "Blogs Entry Content With Category",
+				entryTitle = "Blogs Entry Title With Category",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document without category") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a document with Category C") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryCId}",
+				dmDocumentTitle = "Document Title With Category",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a manual collection with All Types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Select all assets as collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			for (var assetName : list "Web Content Title,Web Content Title With Category") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Web Content");
+			}
+
+			for (var assetName : list "Blogs Entry Title,Blogs Entry Title With Category") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Blogs Entry");
+			}
+
+			for (var assetName : list "Document Title,Document Title With Category") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Document");
+			}
+		}
+
+		task ("Add a collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Set up List Style and Change Max Number of Items to 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bulleted List",
+				maxNumberOfItems = "6",
+				selectedName = "Manual Collection");
+		}
+
+		task ("Add a Collection Filter above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Container");
+		}
+
+		task ("Select the Vocabulary Name in Collection Filter and choose Multiple Selection") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Category A,Category B,Category C",
+				fragmentName = "Collection Filter",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Assert Vocabulary Name is shown in Collection Filter") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "Collection Filter",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Vocabulary Name");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[not(contains(@class,'list-group'))]");
+		}
+
+		task ("Assert Contains Any Categories works in preview mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category A",
+				multipleSelection = "true",
+				selectedName = "Category A",
+				title = "Vocabulary Name");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Web Content Title With Category']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category A,Category B",
+				multipleSelection = "true",
+				selectedName = "2 Selected",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category A,Category B,Category C",
+				multipleSelection = "true",
+				selectedName = "3 Selected",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[not(contains(@class,'list-group'))]");
+		}
+
+		task ("Assert Contains Any Categories works in view mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category A",
+				multipleSelection = "true",
+				selectedName = "Category A",
+				title = "Vocabulary Name");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Web Content Title With Category']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category A,Category B",
+				multipleSelection = "true",
+				selectedName = "2 Selected",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Category A,Category B,Category C",
+				multipleSelection = "true",
+				selectedName = "3 Selected",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting single category."
+	@priority = "5"
+	test FilterResultsOfCollectionPageBasedOnManualCollectionBySingleCategory {
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content based on Basic Web Content without category") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a web content based on Basic Web Content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content With Category",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Category");
+		}
+
+		task ("Add a blogs entry without category") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a blogs entry with category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content With Category",
+				entryTitle = "Blogs Entry Title With Category",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document without category") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a document with category") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title With Category",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a manual collection with All Types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Select all assets as collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			for (var assetName : list "Web Content Title,Web Content Title With Category") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Web Content");
+			}
+
+			for (var assetName : list "Blogs Entry Title,Blogs Entry Title With Category") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Blogs Entry");
+			}
+
+			for (var assetName : list "Document Title,Document Title With Category") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Document");
+			}
+		}
+
+		task ("Add a collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Set up List Style and Change Max Number of Items to 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bordered List",
+				maxNumberOfItems = "6",
+				selectedName = "Manual Collection");
+		}
+
+		task ("Add a Collection Filter above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Container");
+		}
+
+		task ("Select the Vocabulary Name in Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Category Name",
+				fragmentName = "Collection Filter",
+				singleSelection = "true",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Assert Vocabulary Name is shown in Collection Filter") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "Collection Filter",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Vocabulary Name");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
+		}
+
+		task ("Assert filter works in preview mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				filterName = "Category Name",
+				selectedName = "Category Name",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
+		}
+
+		task ("Assert filter works in view mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				filterName = "Category Name",
+				selectedName = "Category Name",
+				title = "Vocabulary Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category,Document Title With Category") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection with via selecting subcategories from Global site."
+	@priority = "4"
+	test FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite {
+		task ("Add a category in Topic from Global site") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Category Name",
+				vocabularyName = "Topic");
+		}
+
+		task ("Add a subcategory") {
+			var subcategoryId = JSONCategory.addSubcategory(
+				groupName = "Global",
+				parentCategoryName = "Category Name",
+				title = "Subcategory Name",
+				vocabularyName = "Topic");
+		}
+
+		task ("Add a web content based on Basic Web Content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content With Category",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Category");
+		}
+
+		task ("Add a web content based on Basic Web Content with subcategory") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${subcategoryId}",
+				content = "Web Content Content With Subcategory",
+				groupName = "Test Site Name",
+				title = "Web Content Title With Subcategory");
+		}
+
+		task ("Add a blogs entry with category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content With Category",
+				entryTitle = "Blogs Entry Title With Category",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a blogs entry with subcategory") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${subcategoryId}",
+				entryContent = "Blogs Entry Content With Subcategory",
+				entryTitle = "Blogs Entry Title With Subcategory",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document with category") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title With Category",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a document with subcategory") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${subcategoryId}",
+				dmDocumentTitle = "Document Title With Subcategory",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a manual collection with All Types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Select all assets as collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			for (var assetName : list "Web Content Title With Category,Web Content Title With Subcategory") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Web Content");
+			}
+
+			for (var assetName : list "Blogs Entry Title With Category,Blogs Entry Title With Subcategory") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Blogs Entry");
+			}
+
+			for (var assetName : list "Document Title With Category,Document Title With Subcategory") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Document");
+			}
+		}
+
+		task ("Add a collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Set up List Style and Change Max Number of Items to 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Numbered List",
+				maxNumberOfItems = "6",
+				selectedName = "Manual Collection");
+		}
+
+		task ("Add a Collection Filter above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Container");
+		}
+
+		task ("Select the Category Name in Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryName = "Category Name",
+				categoryNameList = "Category Name",
+				fragmentName = "Collection Filter",
+				singleSelection = "true",
+				subcategoryNameList = "Subcategory Name",
+				vocabularyName = "Topic");
+		}
+
+		task ("Assert Category Name is shown in Collection Filter") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "Collection Filter",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Category Name");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ol");
+		}
+
+		task ("Assert filter works in preview mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Web Content Title With Subcategory,Blogs Entry Title With Category,Blogs Entry Title With Subcategory,Document Title With Category,Document Title With Subcategory") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				filterName = "Subcategory Name",
+				selectedName = "Subcategory Name",
+				title = "Category Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Subcategory,Blogs Entry Title With Subcategory,Document Title With Subcategory") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Assert the order of elements inside of Container") {
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ol");
+		}
+
+		task ("Assert filter works in view mode") {
+			var n = "1";
+
+			for (var title : list "Web Content Title With Category,Web Content Title With Subcategory,Blogs Entry Title With Category,Blogs Entry Title With Subcategory,Document Title With Category,Document Title With Subcategory") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				filterName = "Subcategory Name",
+				selectedName = "Subcategory Name",
+				title = "Category Name");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title With Subcategory,Blogs Entry Title With Subcategory,Document Title With Subcategory") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
+		}
+	}
+
+}

@@ -126,7 +126,7 @@ definition {
 
 	@description = "This test ensures that an asset library document entry created with a type stored in the global site can be displayed with the default display page template on the generic site."
 	@priority = "5"
-	test CanViewDepotDMUsingGolbalType {
+	test CanViewDepotDMUsingGlobalType {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -310,7 +310,7 @@ definition {
 
 	@description = "This test ensures that an asset library article created with a structure stored in the global site can be displayed with the default display page template on the generic site."
 	@priority = "5"
-	test CanViewDepotWCUsingGolbalStructure {
+	test CanViewDepotWCUsingGlobalStructure {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");

@@ -49,7 +49,7 @@ definition {
 		ACUtils.launchDXP();
 
 		User.logoutPG();
-		
+
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");

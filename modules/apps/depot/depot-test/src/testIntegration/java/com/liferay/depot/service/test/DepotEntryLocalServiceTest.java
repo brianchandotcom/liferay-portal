@@ -24,15 +24,21 @@ import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -109,6 +115,30 @@ public class DepotEntryLocalServiceTest {
 	@Test(expected = DepotEntryNameException.class)
 	public void testAddDepotEntryWithNullName() throws Exception {
 		_addDepotEntry(null, null);
+	}
+
+	@Test
+	public void testCleanUpDepotEntries() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "name"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "description"
+			).build(),
+			_getServiceContext(user));
+
+		Assert.assertEquals(company.getCompanyId(), depotEntry.getCompanyId());
+
+		_companyLocalService.deleteCompany(company);
+
+		Assert.assertNull(
+			_depotEntryLocalService.fetchDepotEntry(
+				depotEntry.getDepotEntryId()));
 	}
 
 	@Test(expected = NoSuchGroupException.class)
@@ -345,6 +375,19 @@ public class DepotEntryLocalServiceTest {
 
 		return depotEntry;
 	}
+
+	private ServiceContext _getServiceContext(User user) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setUserId(user.getUserId());
+
+		return serviceContext;
+	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();

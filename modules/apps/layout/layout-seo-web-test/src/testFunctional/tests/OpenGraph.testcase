@@ -374,9 +374,8 @@ definition {
 
 		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Document Title");
 
-		var siteID = Site.getSiteId();
-
 		var portalURL = PropsUtil.get("portal.url");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
@@ -448,9 +447,8 @@ definition {
 			pageName = "Display Page Template Name",
 			siteURLKey = "test-site-name");
 
-		var siteID = Site.getSiteId();
-
 		var portalURL = PropsUtil.get("portal.url");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 

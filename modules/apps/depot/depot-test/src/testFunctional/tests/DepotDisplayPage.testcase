@@ -684,11 +684,8 @@ definition {
 			pageName = "Display Page Template Name",
 			siteURLKey = "test-site-name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
 		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
-
-		var siteID = Site.getSiteId();
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
 
 		User.logoutPG();
 

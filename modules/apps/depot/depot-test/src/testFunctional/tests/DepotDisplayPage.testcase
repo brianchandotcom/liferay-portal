@@ -587,6 +587,9 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapDMWithOpenGraph {
+		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -616,6 +619,12 @@ definition {
 			displayPageName = "Display Page Template Name",
 			subType = "DM Document Type Name");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -626,47 +635,47 @@ definition {
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
-			mappedField = "Title");
+			mappedField = "Title",
+			mappedFieldName = "Title",
+			mappedFieldText = "Title is ",
+			textTpye = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "MIME Type",
-			mappedField = "Description");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Preview Image",
-			mappedField = "Image");
+			mappedField = "Description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Author Name",
-			mappedField = "Image Alt Description");
+			mappedField = "ImageAlt",
+			mappedFieldName = "Image Alt Description",
+			mappedFieldText = "Image Alt is ",
+			textTpye = "TextArea");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Preview Image",
+			mappedFieldName = "Image");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Document: File Name");
+			mappedFieldValue = "Title is File Name: ${fileName}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Document: MIME Type");
+			mappedFieldValue = "Description is MIME Type: ${mimeType}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Image",
 			mappedFieldValue = "Document: Preview Image");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "Document: Author Name");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
+			mappedField = "ImageAlt",
+			mappedFieldValue = "Image Alt is Author Name: ${authorName}",
+			textTpye = "TextArea");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -693,15 +702,18 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Document_1.jpg","og:description" content="image/jpeg"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is File Name: Document_1.jpg","og:description" content="Description is MIME Type: image/jpeg"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test Test","og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
 	}
 
 	@description = "This test ensures that a user can map the display page with SEO when using the DM type from AL on a connect site."
 	@priority = "5"
 	@refactorneeded
 	test MapDMWithSEO {
+		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentType();
@@ -737,27 +749,37 @@ definition {
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
-			mappedField = "HTML Title");
+			mappedField = "HTML Title",
+			mappedFieldName = "HTML Title",
+			mappedFieldText = "HTML Title is ",
+			textTpye = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "MIME Type",
-			mappedField = "Description");
+			mappedField = "description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Document: File Name");
+			mappedField = "title",
+			mappedFieldValue = "HTML Title is File Name: ${fileName}");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Document: MIME Type");
+			mappedField = "description",
+			mappedFieldValue = "Description is MIME Type: ${mimeType}",
+			textTpye = "TextArea");
 	}
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the WC structure from AL on a connect site."
 	@priority = "5"
 	@refactorneeded
 	test MapWCWithOpenGraph {
+		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
@@ -802,6 +824,12 @@ definition {
 			displayPageName = "Display Page Template Name",
 			subType = "WC Structure Name");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -812,47 +840,47 @@ definition {
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
-			mappedField = "Title");
+			mappedField = "Title",
+			mappedFieldName = "Title",
+			mappedFieldText = "Title is ",
+			textTpye = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
-			mappedField = "Description");
+			mappedField = "Description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Text",
+			mappedField = "ImageAlt",
+			mappedFieldName = "Image Alt Description",
+			mappedFieldText = "Image Alt is ",
+			textTpye = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Small Image",
-			mappedField = "Image");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Text",
-			mappedField = "Image Alt Description");
+			mappedFieldName = "Image");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "WC Structure Name: Text");
+			mappedFieldValue = "Title is Text: ${text}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "WC Structure Name: Text");
+			mappedFieldValue = "Description is Text: ${text}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Image",
-			mappedFieldValue = "WC Structure Name: Small Image");
+			mappedFieldValue = "Document: Small Image");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "WC Structure Name: Text");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
+			mappedField = "ImageAlt",
+			mappedFieldValue = "Image Alt is Text: ${text}",
+			textTpye = "TextArea");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -877,19 +905,22 @@ definition {
 
 		PortletEntry.publish();
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Asset Library Text","og:description" content="Asset Library Text"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is Text: Asset Library Text","og:description" content="Description is Text: Asset Library Text"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Asset Library Text","og:image" content="https://dummyimage.com/600x400/000/fff.jpg"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Text: Asset Library Text","og:image" content="https://dummyimage.com/600x400/000/fff.jpg"''');
 	}
 
 	@description = "This test ensures that a user can map the display page with SEO when using the WC structure from AL on a connect site."
 	@priority = "5"
 	@refactorneeded
 	test MapWCWithSEO {
+		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();
@@ -940,21 +971,28 @@ definition {
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
-			mappedField = "HTML Title");
+			mappedField = "HTML Title",
+			mappedFieldName = "HTML Title",
+			mappedFieldText = "HTML Title is ",
+			textTpye = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
-			mappedField = "Description");
+			mappedField = "description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "WC Structure Name: Text");
+			mappedField = "title",
+			mappedFieldValue = "HTML Title is Text: ${text}");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "WC Structure Name: Text");
+			mappedField = "description",
+			mappedFieldValue = "Description is Text: ${text}",
+			textTpye = "TextArea");
 	}
 
 	@description = "This test ensures that a user can view the image using display page template with DM type from AL on a connect site."
@@ -992,15 +1030,11 @@ definition {
 			displayPageName = "Display Page Template Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
+		DisplayPageTemplate.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -1079,15 +1113,11 @@ definition {
 			displayPageName = "Display Page Template Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
+		DisplayPageTemplate.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

@@ -16,10 +16,13 @@ package com.liferay.journal.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -59,7 +63,9 @@ public class ImportDataDefinitionMVCActionCommandTest {
 			_createMockLiferayPortletActionRequest(
 				"invalid_data_definition.json", "Imported Structure");
 
-		_mvcActionCommand.processAction(mockLiferayPortletActionRequest, null);
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		_assertFailure(mockLiferayPortletActionRequest);
 	}
@@ -70,7 +76,9 @@ public class ImportDataDefinitionMVCActionCommandTest {
 			_createMockLiferayPortletActionRequest(
 				"valid_data_definition.json", null);
 
-		_mvcActionCommand.processAction(mockLiferayPortletActionRequest, null);
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		_assertFailure(mockLiferayPortletActionRequest);
 	}
@@ -83,8 +91,15 @@ public class ImportDataDefinitionMVCActionCommandTest {
 			_createMockLiferayPortletActionRequest(
 				"valid_data_definition.json", "Imported Structure");
 
-		_mvcActionCommand.processAction(mockLiferayPortletActionRequest, null);
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				_portal.getPortletId(mockLiferayPortletActionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
 		Assert.assertNotNull(
 			SessionMessages.get(
 				mockLiferayPortletActionRequest,
@@ -114,6 +129,7 @@ public class ImportDataDefinitionMVCActionCommandTest {
 				_createMockMultipartHttpServletRequest(fileName));
 
 		mockLiferayPortletActionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter("redirect", "fakeURL");
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
@@ -160,8 +176,13 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
+		Layout layout = new LayoutImpl();
+
+		layout.setType(LayoutConstants.TYPE_CONTROL_PANEL);
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setLayout(layout);
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
 		themeDisplay.setUser(TestPropsValues.getUser());

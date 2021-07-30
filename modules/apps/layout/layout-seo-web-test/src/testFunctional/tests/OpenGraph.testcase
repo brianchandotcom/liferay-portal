@@ -428,8 +428,9 @@ definition {
 			mappedFieldValue = "-- Unmapped --");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "-- Unmapped --");
+			mappedField = "ImageAlt",
+			mappedFieldValue = "",
+			textTpye = "TextArea");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

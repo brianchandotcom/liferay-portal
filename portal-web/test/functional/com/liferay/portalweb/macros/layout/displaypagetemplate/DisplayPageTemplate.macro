@@ -34,13 +34,12 @@ definition {
 				dmDocumentTitle = "${entryTitle}",
 				groupName = "${groupName}",
 				siteURLKey = "${siteURLKey}");
-			
 		}
 		else if ("${assetType}" == "Web Content") {
 			WebContentNavigator.openToEditWCInSite(
 				groupName = "${groupName}",
 				siteURLKey = "${siteURLKey}",
-				webContentTitle = "${entryTitle}");	
+				webContentTitle = "${entryTitle}");
 		}
 
 		WebContent.editDisplayPage(pageName = "Display Page Template Name");

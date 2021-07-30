@@ -38,6 +38,13 @@ public class CommerceOrderDataSetConstants {
 	public static final String COMMERCE_DATA_SET_KEY_ORDER_ITEMS =
 		"commerceOrderItems";
 
+	public static final String
+		COMMERCE_DATA_SET_KEY_ORDER_TYPE_QUALIFIER_CHANNELS =
+			"commerceOrderTypeQualifierChannels";
+
+	public static final String COMMERCE_DATA_SET_KEY_ORDER_TYPES =
+		"commerceOrderTypes";
+
 	public static final String COMMERCE_DATA_SET_KEY_PAYMENT_METHODS =
 		"CommerceOrderPaymentMethods";
 

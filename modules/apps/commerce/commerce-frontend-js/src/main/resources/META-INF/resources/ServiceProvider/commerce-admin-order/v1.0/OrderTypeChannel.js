@@ -12,6 +12,19 @@
  * details.
  */
 
-export {default as orderAPI} from './Order';
-export {default as orderTypeAPI} from './OrderType';
-export {default as orderTypeChannelAPI} from './OrderTypeChannel';
+import AJAX from '../../../utilities/AJAX/index';
+
+const ORDER_TYPE_PATH = '/order-types';
+
+const ORDER_TYPE_RULES_PATH = '/order-type-channels';
+
+const VERSION = 'v1.0';
+
+function resolvePath(basePath = '', orderTypeId = '', orderTypeChannelId = '') {
+	return `${basePath}${VERSION}${ORDER_TYPE_PATH}/${orderTypeId}${ORDER_TYPE_RULES_PATH}/${orderTypeChannelId}`;
+}
+
+export default (basePath) => ({
+	addOrderTypeChannel: (orderTypeId, json) =>
+		AJAX.POST(resolvePath(basePath, orderTypeId), json),
+});

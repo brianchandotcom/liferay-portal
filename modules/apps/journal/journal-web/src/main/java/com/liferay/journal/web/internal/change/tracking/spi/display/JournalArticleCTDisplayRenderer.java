@@ -56,6 +56,14 @@ public class JournalArticleCTDisplayRenderer
 	extends BaseCTDisplayRenderer<JournalArticle> {
 
 	@Override
+	public JournalArticle fetchLatestVersionedModel(
+		JournalArticle currentJournalArticle) {
+
+		return _journalArticleLocalService.fetchLatestArticle(
+			currentJournalArticle.getResourcePrimKey());
+	}
+
+	@Override
 	public String getContent(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
@@ -121,29 +129,6 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
-	public JournalArticle getPreviousVersionedModel(
-		JournalArticle currentJournalArticle) {
-
-		boolean found = false;
-
-		for (JournalArticle journalArticle :
-				_journalArticleLocalService.getArticlesByResourcePrimKey(
-					currentJournalArticle.getResourcePrimKey())) {
-
-			if (found) {
-				return journalArticle;
-			}
-			else if (journalArticle.getVersion() ==
-						currentJournalArticle.getVersion()) {
-
-				found = true;
-			}
-		}
-
-		return null;
-	}
-
-	@Override
 	public String getTitle(Locale locale, JournalArticle journalArticle) {
 		return journalArticle.getTitle(locale);
 	}
@@ -155,11 +140,6 @@ public class JournalArticleCTDisplayRenderer
 
 	@Override
 	public boolean hasContent() {
-		return true;
-	}
-
-	@Override
-	public boolean isVersioned() {
 		return true;
 	}
 

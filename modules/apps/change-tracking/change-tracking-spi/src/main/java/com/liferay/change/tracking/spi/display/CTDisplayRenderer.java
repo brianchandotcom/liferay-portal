@@ -34,6 +34,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface CTDisplayRenderer<T> {
 
+	public default T fetchLatestVersionedModel(T model) {
+		return null;
+	}
+
 	public default String getContent(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, T model)
@@ -84,8 +88,13 @@ public interface CTDisplayRenderer<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #fetchLatestVersionedModel(Object)}
+	 */
+	@Deprecated
 	public default T getPreviousVersionedModel(T model) throws PortalException {
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	/**
@@ -125,6 +134,10 @@ public interface CTDisplayRenderer<T> {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public default boolean isVersioned() {
 		return false;
 	}

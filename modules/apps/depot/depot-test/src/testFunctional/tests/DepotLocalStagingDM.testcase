@@ -1635,9 +1635,12 @@ definition {
 			image = "true",
 			key_image = "Document_1.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name",
+			staging = "true",
+			webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
 			depotName = "Test Depot Name",

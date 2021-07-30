@@ -511,6 +511,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVIEW_DATE</td>
+	<td>//span[contains(@id,'displayDate')]//input[contains(@id,'reviewDate')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_DATE_DISABLED</td>
+	<td>//span[contains(@id,'displayDate')]//input[contains(@class,'disabled') and contains(@id,'reviewDate')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_DATE_TIME</td>
+	<td>//input[contains(@id,'reviewDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_DATE_TIME_DISABLED</td>
+	<td>//input[contains(@class,'disabled') and contains(@id,'reviewDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAML_METADATA_URL_FIELD</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_metadataUrl')]</td>
 	<td></td>

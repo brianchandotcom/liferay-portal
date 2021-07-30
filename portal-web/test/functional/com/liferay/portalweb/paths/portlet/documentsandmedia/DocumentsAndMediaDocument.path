@@ -88,6 +88,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_REVIEW_DATE</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Review Date')]/following-sibling::dd[contains(.,'${key_reviewDateField}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_TITLE</td>
 	<td>//div[contains(@class,'tbar-section')]/h2[contains(@title,'${key_dmDocumentTitle}')] | //h3[contains(@class,'header-title')]/span[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>

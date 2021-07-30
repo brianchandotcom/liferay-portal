@@ -74,6 +74,48 @@ public class Transition implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getSourceNodeName() {
+		return sourceNodeName;
+	}
+
+	public void setSourceNodeName(String sourceNodeName) {
+		this.sourceNodeName = sourceNodeName;
+	}
+
+	public void setSourceNodeName(
+		UnsafeSupplier<String, Exception> sourceNodeNameUnsafeSupplier) {
+
+		try {
+			sourceNodeName = sourceNodeNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String sourceNodeName;
+
+	public String getTargetNodeName() {
+		return targetNodeName;
+	}
+
+	public void setTargetNodeName(String targetNodeName) {
+		this.targetNodeName = targetNodeName;
+	}
+
+	public void setTargetNodeName(
+		UnsafeSupplier<String, Exception> targetNodeNameUnsafeSupplier) {
+
+		try {
+			targetNodeName = targetNodeNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String targetNodeName;
+
 	@Override
 	public Transition clone() throws CloneNotSupportedException {
 		return (Transition)super.clone();

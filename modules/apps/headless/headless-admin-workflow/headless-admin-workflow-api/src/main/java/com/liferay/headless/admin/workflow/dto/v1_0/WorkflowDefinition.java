@@ -282,6 +282,35 @@ public class WorkflowDefinition implements Serializable {
 	protected Map<String, String> title_i18n;
 
 	@Schema
+	@Valid
+	public Transition[] getTransitions() {
+		return transitions;
+	}
+
+	public void setTransitions(Transition[] transitions) {
+		this.transitions = transitions;
+	}
+
+	@JsonIgnore
+	public void setTransitions(
+		UnsafeSupplier<Transition[], Exception> transitionsUnsafeSupplier) {
+
+		try {
+			transitions = transitionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Transition[] transitions;
+
+	@Schema
 	public String getVersion() {
 		return version;
 	}
@@ -441,6 +470,26 @@ public class WorkflowDefinition implements Serializable {
 			sb.append("\"title_i18n\": ");
 
 			sb.append(_toJSON(title_i18n));
+		}
+
+		if (transitions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"transitions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < transitions.length; i++) {
+				sb.append(String.valueOf(transitions[i]));
+
+				if ((i + 1) < transitions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (version != null) {

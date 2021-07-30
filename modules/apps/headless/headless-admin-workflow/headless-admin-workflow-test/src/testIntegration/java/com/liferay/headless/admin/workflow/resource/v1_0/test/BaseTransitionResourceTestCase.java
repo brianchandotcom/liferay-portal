@@ -182,6 +182,8 @@ public abstract class BaseTransitionResourceTestCase {
 
 		transition.setLabel(regex);
 		transition.setName(regex);
+		transition.setSourceNodeName(regex);
+		transition.setTargetNodeName(regex);
 
 		String json = TransitionSerDes.toJSON(transition);
 
@@ -191,6 +193,8 @@ public abstract class BaseTransitionResourceTestCase {
 
 		Assert.assertEquals(regex, transition.getLabel());
 		Assert.assertEquals(regex, transition.getName());
+		Assert.assertEquals(regex, transition.getSourceNodeName());
+		Assert.assertEquals(regex, transition.getTargetNodeName());
 	}
 
 	@Test
@@ -501,6 +505,22 @@ public abstract class BaseTransitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("sourceNodeName", additionalAssertFieldName)) {
+				if (transition.getSourceNodeName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("targetNodeName", additionalAssertFieldName)) {
+				if (transition.getTargetNodeName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -604,6 +624,28 @@ public abstract class BaseTransitionResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						transition1.getName(), transition2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sourceNodeName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						transition1.getSourceNodeName(),
+						transition2.getSourceNodeName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("targetNodeName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						transition1.getTargetNodeName(),
+						transition2.getTargetNodeName())) {
 
 					return false;
 				}
@@ -722,6 +764,22 @@ public abstract class BaseTransitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("sourceNodeName")) {
+			sb.append("'");
+			sb.append(String.valueOf(transition.getSourceNodeName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("targetNodeName")) {
+			sb.append("'");
+			sb.append(String.valueOf(transition.getTargetNodeName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -768,6 +826,10 @@ public abstract class BaseTransitionResourceTestCase {
 			{
 				label = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				sourceNodeName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				targetNodeName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

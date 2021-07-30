@@ -637,6 +637,14 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("transitions", additionalAssertFieldName)) {
+				if (workflowDefinition.getTransitions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("version", additionalAssertFieldName)) {
 				if (workflowDefinition.getVersion() == null) {
 					valid = false;
@@ -820,6 +828,17 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				if (!equals(
 						(Map)workflowDefinition1.getTitle_i18n(),
 						(Map)workflowDefinition2.getTitle_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("transitions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowDefinition1.getTransitions(),
+						workflowDefinition2.getTransitions())) {
 
 					return false;
 				}
@@ -1040,6 +1059,11 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("title_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("transitions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

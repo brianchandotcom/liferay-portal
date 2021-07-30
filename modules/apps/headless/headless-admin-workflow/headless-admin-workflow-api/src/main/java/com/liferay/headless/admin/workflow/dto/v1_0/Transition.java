@@ -108,6 +108,62 @@ public class Transition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema
+	public String getSourceNodeName() {
+		return sourceNodeName;
+	}
+
+	public void setSourceNodeName(String sourceNodeName) {
+		this.sourceNodeName = sourceNodeName;
+	}
+
+	@JsonIgnore
+	public void setSourceNodeName(
+		UnsafeSupplier<String, Exception> sourceNodeNameUnsafeSupplier) {
+
+		try {
+			sourceNodeName = sourceNodeNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String sourceNodeName;
+
+	@Schema
+	public String getTargetNodeName() {
+		return targetNodeName;
+	}
+
+	public void setTargetNodeName(String targetNodeName) {
+		this.targetNodeName = targetNodeName;
+	}
+
+	@JsonIgnore
+	public void setTargetNodeName(
+		UnsafeSupplier<String, Exception> targetNodeNameUnsafeSupplier) {
+
+		try {
+			targetNodeName = targetNodeNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String targetNodeName;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -159,6 +215,34 @@ public class Transition implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		if (sourceNodeName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sourceNodeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sourceNodeName));
+
+			sb.append("\"");
+		}
+
+		if (targetNodeName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"targetNodeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(targetNodeName));
 
 			sb.append("\"");
 		}

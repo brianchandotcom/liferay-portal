@@ -203,6 +203,27 @@ public class WorkflowDefinition implements Cloneable, Serializable {
 
 	protected Map<String, String> title_i18n;
 
+	public Transition[] getTransitions() {
+		return transitions;
+	}
+
+	public void setTransitions(Transition[] transitions) {
+		this.transitions = transitions;
+	}
+
+	public void setTransitions(
+		UnsafeSupplier<Transition[], Exception> transitionsUnsafeSupplier) {
+
+		try {
+			transitions = transitionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Transition[] transitions;
+
 	public String getVersion() {
 		return version;
 	}

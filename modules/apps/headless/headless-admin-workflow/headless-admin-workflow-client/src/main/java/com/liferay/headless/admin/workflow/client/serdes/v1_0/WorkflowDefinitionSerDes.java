@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -169,6 +171,29 @@ public class WorkflowDefinitionSerDes {
 			sb.append(_toJSON(workflowDefinition.getTitle_i18n()));
 		}
 
+		if (workflowDefinition.getTransitions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"transitions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < workflowDefinition.getTransitions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(workflowDefinition.getTransitions()[i]));
+
+				if ((i + 1) < workflowDefinition.getTransitions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (workflowDefinition.getVersion() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -273,6 +298,15 @@ public class WorkflowDefinitionSerDes {
 				String.valueOf(workflowDefinition.getTitle_i18n()));
 		}
 
+		if (workflowDefinition.getTransitions() == null) {
+			map.put("transitions", null);
+		}
+		else {
+			map.put(
+				"transitions",
+				String.valueOf(workflowDefinition.getTransitions()));
+		}
+
 		if (workflowDefinition.getVersion() == null) {
 			map.put("version", null);
 		}
@@ -344,6 +378,18 @@ public class WorkflowDefinitionSerDes {
 					workflowDefinition.setTitle_i18n(
 						(Map)WorkflowDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "transitions")) {
+				if (jsonParserFieldValue != null) {
+					workflowDefinition.setTransitions(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> TransitionSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Transition[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "version")) {

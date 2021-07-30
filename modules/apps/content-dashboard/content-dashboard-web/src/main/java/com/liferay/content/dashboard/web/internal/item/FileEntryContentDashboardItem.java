@@ -22,18 +22,17 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -312,10 +311,10 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public String getType(Locale locale) {
-		String modelResourceNamePrefix =
-			ResourceActionsUtil.getModelResourceNamePrefix();
-		String key = modelResourceNamePrefix.concat(FileEntry.class.getName());
-		return LanguageUtil.get(locale, key, StringPool.BLANK);
+		InfoItemClassDetails infoItemClassDetails = new InfoItemClassDetails(
+			FileEntry.class.getName());
+
+		return infoItemClassDetails.getLabel(locale);
 	}
 
 	@Override
@@ -429,8 +428,6 @@ public class FileEntryContentDashboardItem
 				curFileVersion.getVersion())
 		);
 	}
-
-	private static final String _FILE_ENTRY_TYPE = "Document";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryContentDashboardItem.class);

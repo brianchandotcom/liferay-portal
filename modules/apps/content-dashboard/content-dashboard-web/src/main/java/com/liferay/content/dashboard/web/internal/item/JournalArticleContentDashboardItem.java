@@ -22,17 +22,16 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -317,10 +316,10 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public String getType(Locale locale) {
-		String modelResourceNamePrefix =
-			ResourceActionsUtil.getModelResourceNamePrefix();
-		String key = modelResourceNamePrefix.concat(JournalArticle.class.getName());
-		return LanguageUtil.get(locale, key, StringPool.BLANK);
+		InfoItemClassDetails infoItemClassDetails = new InfoItemClassDetails(
+			JournalArticle.class.getName());
+
+		return infoItemClassDetails.getLabel(locale);
 	}
 
 	@Override
@@ -420,8 +419,6 @@ public class JournalArticleContentDashboardItem
 				String.valueOf(curJournalArticle.getVersion()))
 		);
 	}
-
-	private static final String _JOURNAL_ARTICLE_TYPE = "Web Content";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleContentDashboardItem.class);

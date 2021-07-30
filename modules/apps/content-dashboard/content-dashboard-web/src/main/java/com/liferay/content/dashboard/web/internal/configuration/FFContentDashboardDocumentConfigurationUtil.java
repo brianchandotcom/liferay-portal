@@ -14,7 +14,6 @@
 
 package com.liferay.content.dashboard.web.internal.configuration;
 
-import com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;

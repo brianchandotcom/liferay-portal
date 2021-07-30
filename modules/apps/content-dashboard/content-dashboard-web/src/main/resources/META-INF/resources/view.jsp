@@ -170,6 +170,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					<%
 					String contentDashboardItemType = contentDashboardItem.getType(locale);
 					%>
+
 					<c:if test="<%= FFContentDashboardDocumentConfigurationUtil.documentEnabled() %>">
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smaller text-truncate"

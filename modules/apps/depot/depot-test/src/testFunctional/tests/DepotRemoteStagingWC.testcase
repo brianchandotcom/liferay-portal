@@ -139,9 +139,10 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "WC WebContent Title");
 
 		CKEditor.addSourceContent(content = " ");
 
@@ -247,9 +248,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		DepotNavigator.openToEditWCEntry(
+			depotName = "Test Depot Name",
+			webContentTitle = "Web Content Title");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "friendlyUrledit");
 
@@ -581,9 +582,10 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
 			webContentTitle = "Web Content Title",

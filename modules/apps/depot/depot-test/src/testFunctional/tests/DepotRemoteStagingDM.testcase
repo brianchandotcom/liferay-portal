@@ -2095,9 +2095,10 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "Web Content Title");
 
 		WebContent.editCP(
 			depotName = "Test Depot Name",

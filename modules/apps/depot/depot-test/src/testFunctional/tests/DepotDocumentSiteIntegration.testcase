@@ -357,7 +357,10 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "WC WebContent Title");
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Document_1.jpg",

@@ -1591,6 +1591,10 @@ definition {
 	macro expandInfo {
 		WaitForPageLoad();
 
+		WaitForVisible(
+			key_tagName = "infoPanel",
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+
 		if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {
 			ManagementBar.clickInfo();
 		}

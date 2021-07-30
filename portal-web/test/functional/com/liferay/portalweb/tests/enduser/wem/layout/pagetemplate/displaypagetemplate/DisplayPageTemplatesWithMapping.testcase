@@ -192,9 +192,9 @@ definition {
 		}
 
 		task ("Assert the mapped custom field is shown in display page template") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			var fileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Title");
+			var dmFileEntryID = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "DM Title",
+				groupName = "Test Site Name");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${fileEntryID}");
 

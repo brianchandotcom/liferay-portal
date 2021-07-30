@@ -372,8 +372,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Document Title");
-
+		var dmFileEntryID = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name");
 		var portalURL = PropsUtil.get("portal.url");
 		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
 

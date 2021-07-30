@@ -261,8 +261,9 @@ export const CollectionGeneralPanel = ({item}) => {
 
 	useEffect(() => {
 		if (
-			(item.config.collection,
-			item.config.listStyle && item.config.listStyle !== LIST_STYLE_GRID)
+			item.config.collection &&
+			item.config.listStyle &&
+			item.config.listStyle !== LIST_STYLE_GRID
 		) {
 			InfoItemService.getAvailableListItemRenderers({
 				itemSubtype: item.config.collection.itemSubtype,

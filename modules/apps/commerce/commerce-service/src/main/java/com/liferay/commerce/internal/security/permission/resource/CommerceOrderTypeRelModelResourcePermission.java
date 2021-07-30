@@ -14,17 +14,14 @@
 
 package com.liferay.commerce.internal.security.permission.resource;
 
-import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeRel;
 import com.liferay.commerce.permission.CommerceOrderTypePermission;
 import com.liferay.commerce.service.CommerceOrderTypeRelLocalService;
-import com.liferay.commerce.service.CommerceOrderTypeRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,8 +42,9 @@ public class CommerceOrderTypeRelModelResourcePermission
 			CommerceOrderTypeRel commerceOrderTypeRel, String actionId)
 		throws PortalException {
 
-		commerceOrderTypePermission.check(
-			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(), actionId);
+		_commerceOrderTypePermission.check(
+			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(),
+			actionId);
 	}
 
 	@Override
@@ -56,10 +54,12 @@ public class CommerceOrderTypeRelModelResourcePermission
 		throws PortalException {
 
 		CommerceOrderTypeRel commerceOrderTypeRel =
-			_commerceOrderTypeRelLocalService.getCommerceOrderTypeRel(commerceOrderTypeRelId);
+			_commerceOrderTypeRelLocalService.getCommerceOrderTypeRel(
+				commerceOrderTypeRelId);
 
-		commerceOrderTypePermission.check(
-			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(), actionId);
+		_commerceOrderTypePermission.check(
+			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(),
+			actionId);
 	}
 
 	@Override
@@ -68,8 +68,9 @@ public class CommerceOrderTypeRelModelResourcePermission
 			CommerceOrderTypeRel commerceOrderTypeRel, String actionId)
 		throws PortalException {
 
-		return commerceOrderTypePermission.contains(
-			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(), actionId);
+		return _commerceOrderTypePermission.contains(
+			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(),
+			actionId);
 	}
 
 	@Override
@@ -79,10 +80,12 @@ public class CommerceOrderTypeRelModelResourcePermission
 		throws PortalException {
 
 		CommerceOrderTypeRel commerceOrderTypeRel =
-			_commerceOrderTypeRelLocalService.getCommerceOrderTypeRel(commerceOrderTypeRelId);
+			_commerceOrderTypeRelLocalService.getCommerceOrderTypeRel(
+				commerceOrderTypeRelId);
 
-		return commerceOrderTypePermission.contains(
-			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(), actionId);
+		return _commerceOrderTypePermission.contains(
+			permissionChecker, commerceOrderTypeRel.getCommerceOrderTypeId(),
+			actionId);
 	}
 
 	@Override
@@ -96,8 +99,9 @@ public class CommerceOrderTypeRelModelResourcePermission
 	}
 
 	@Reference
-	protected CommerceOrderTypePermission commerceOrderTypePermission;
+	private CommerceOrderTypePermission _commerceOrderTypePermission;
 
 	@Reference
-	protected CommerceOrderTypeRelLocalService _commerceOrderTypeRelLocalService;
+	private CommerceOrderTypeRelLocalService _commerceOrderTypeRelLocalService;
+
 }

@@ -16,9 +16,12 @@ package com.liferay.asset.categories.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
+import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -27,12 +30,16 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -62,6 +69,8 @@ public class AssetCategoryActionDropdownItemsProvider {
 				_httpServletRequest.getAttribute(
 					AssetCategoriesAdminWebKeys.
 						ASSET_DISPLAY_PAGE_FRIENDLY_URL_PROVIDER);
+
+		_assetCategoriesLimitExceeded = _isAssetCategoriesLimitExceeded();
 	}
 
 	public List<DropdownItem> getActionDropdownItems(AssetCategory category) {
@@ -92,7 +101,9 @@ public class AssetCategoryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> _hasPermission(category, ActionKeys.ADD_CATEGORY),
+						() ->
+							!_assetCategoriesLimitExceeded &&
+							_hasPermission(category, ActionKeys.ADD_CATEGORY),
 						dropdownItem -> {
 							dropdownItem.setHref(
 								PortletURLBuilder.createRenderURL(
@@ -260,6 +271,48 @@ public class AssetCategoryActionDropdownItemsProvider {
 			_themeDisplay.getPermissionChecker(), category, actionId);
 	}
 
+	private boolean _isAssetCategoriesLimitExceeded() {
+		long vocabularyId = ParamUtil.getLong(
+			_httpServletRequest, "vocabularyId");
+
+		if (vocabularyId <= 0) {
+			return false;
+		}
+
+		try {
+			AssetVocabulary vocabulary =
+				AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
+
+			int vocabularyCategoriesCount =
+				AssetCategoryLocalServiceUtil.getVocabularyCategoriesCount(
+					vocabulary.getVocabularyId());
+
+			AssetCategoriesCompanyConfiguration
+				assetCategoriesCompanyConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						AssetCategoriesCompanyConfiguration.class,
+						_themeDisplay.getCompanyId());
+
+			if (vocabularyCategoriesCount >=
+					assetCategoriesCompanyConfiguration.
+						maximumNumberOfCategoriesPerVocabulary()) {
+
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryActionDropdownItemsProvider.class);
+
+	private final boolean _assetCategoriesLimitExceeded;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final HttpServletRequest _httpServletRequest;

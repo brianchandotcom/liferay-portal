@@ -1298,17 +1298,16 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			textField = "DM Document Text");
 
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Document",
+			entryTitle = "Document_1.jpg",
+			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "test-site-name");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Document_1.jpg");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
 

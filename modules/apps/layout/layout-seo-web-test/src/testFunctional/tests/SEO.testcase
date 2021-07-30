@@ -59,13 +59,12 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "test-site-name");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -134,17 +133,16 @@ definition {
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "Document_1.jpg");
 
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Document",
+			entryTitle = "Document_1.jpg",
+			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "test-site-name");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Document_1.jpg");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
 
 		var siteID = Site.getSiteId();
 
@@ -215,13 +213,12 @@ definition {
 			groupName = "Test Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Web Content",
+			entryTitle = "Web Content Title",
+			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "test-site-name");
 
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -265,14 +265,12 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openToEditEntryInSite(
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Blogs Entry",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
 			siteURLKey = "test-site-name");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
@@ -365,17 +363,16 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Document",
+			entryTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "test-site-name");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Document Title");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
 
 		var siteID = Site.getSiteId();
 
@@ -444,13 +441,12 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Test Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "test-site-name");
 
 		var siteID = Site.getSiteId();
 
@@ -499,13 +495,12 @@ definition {
 			groupName = "Test Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
-
-		PortletEntry.publish();
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Web Content",
+			entryTitle = "Web Content Title",
+			groupName = "Test Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "test-site-name");
 
 		var portalURL = PropsUtil.get("portal.url");
 

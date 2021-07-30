@@ -28,7 +28,7 @@ definition {
 
 	@description = "This test ensures that user can map the blogs with SEO meta tags for display pages."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanMapBlogsToDisplayPage {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -77,7 +77,7 @@ definition {
 
 	@description = "This test ensures that user can map the document with SEO meta tags for display pages."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanMapDocumentToDisplayPage {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -157,7 +157,7 @@ definition {
 
 	@description = "This test ensures that user can map the web content with SEO meta tags for display pages."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanMapWebContentToDisplayPage {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

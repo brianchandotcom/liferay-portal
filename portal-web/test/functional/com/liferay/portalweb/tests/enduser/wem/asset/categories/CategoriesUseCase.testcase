@@ -1330,7 +1330,7 @@ definition {
 		}
 	}
 
-	@description = "View vocabulary for specific Asset Types in asset editor."
+	@description = "This is a test for LPS-131984. View vocabulary for specific Asset Types in asset editor."
 	@priority = "4"
 	test ViewVocabularyForSpecificAssetTypesInAssetEditor {
 		task ("Add a vocabulary for specific assets types") {
@@ -1340,9 +1340,7 @@ definition {
 
 			PortletEntry.inputName(name = "Vocabulary Name");
 
-			Vocabulary.addAssociatedAssetType(
-				assetType = "Blogs Entry",
-				required = "true");
+			Vocabulary.addAssociatedAssetType(assetType = "Blogs Entry");
 
 			Button.clickAddRow();
 
@@ -1356,6 +1354,13 @@ definition {
 			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary with public visibility?");
 
 			Alert.viewSuccessMessage();
+		}
+
+		task ("View associated asset types of vocabulary in Categories admin") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name",
+				info = "Asset Types: Blogs Entry, Web Content Article *(Required)",
+				locator1 = "Message#ASSET_INFO");
 		}
 
 		task ("Add a category") {

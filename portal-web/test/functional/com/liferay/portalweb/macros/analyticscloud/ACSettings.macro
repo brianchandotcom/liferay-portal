@@ -63,6 +63,19 @@ definition {
 			value1 = "${userEmail}");
 	}
 
+	@summary = "Deletes all data source"
+	macro deleteAllDataSource {
+		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+			ACNavigation.goToSettings();
+		}
+
+		ACSettings.goToDataSources();
+
+		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
+			ACSettings.deleteDataSource();
+		}
+	}
+
 	@summary = "Deletes all properties \
 	@param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {
@@ -85,19 +98,6 @@ definition {
 		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-	}
-
-	@summary = "Deletes all data source"
-	macro deleteAllDataSource {
-		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-			ACNavigation.goToSettings();
-		}
-
-		ACSettings.goToDataSources();
-
-		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
-			ACSettings.deleteDataSource();
-		}
 	}
 
 	@summary = "Deletes a specific data source \

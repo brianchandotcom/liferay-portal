@@ -543,6 +543,8 @@ definition {
 	test RolesPermissionsDynamicDataLists {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONRole.addSiteRole(
 			roleKey = "Data Recorder Name",
 			roleTitle = "Data Recorder Name");
@@ -615,21 +617,11 @@ definition {
 			roleTitle = "Records Manager Name",
 			userEmailAddress = "userea2@liferay.com");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Dynamic Data Lists Page");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
-			layoutName = "Dynamic Data Lists Page",
-			layoutTemplate = "1 Column");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Dynamic Data Lists Page",
-			widgetName = "Dynamic Data Lists Display");
+		SitePages.addPublicPage(pageName = "Dynamic Data Lists Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		Portlet.addPG(portletName = "Dynamic Data Lists Display");
 
 		DDLList.addViaDDLDisplayPG(
 			ddlListDescription = "Liferay Employee Profiles",

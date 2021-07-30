@@ -20,12 +20,6 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
-	macro assertDataSourceName {
-		var itemName = "${dataSourceName}";
-
-		AssertElementPresent(locator1 = "ACSettings#ITEM_ON_LIST");
-	}
-
 	@summary = "Asserts the individuals usage value \
 	@param individualUsageValue"
 	macro assertIndividualsUsage() {

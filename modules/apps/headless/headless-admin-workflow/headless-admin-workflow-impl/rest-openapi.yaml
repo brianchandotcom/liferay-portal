@@ -172,6 +172,12 @@ components:
                 name:
                     readOnly: true
                     type: string
+                sourceNodeName:
+                    readOnly: true
+                    type: string
+                targetNodeName:
+                    readOnly: true
+                    type: string
             type: object
         WorkflowDefinition:
             properties:

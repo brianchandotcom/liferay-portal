@@ -31,42 +31,51 @@ export default function ContainerGeneralPanel({item}) {
 	const languageId = useSelector((state) => state.languageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
+	const [linkConfig, setLinkConfig] = useState({});
 	const [linkValue, setLinkValue] = useState({});
 
-	useEffect(
-		() =>
-			setLinkValue(
-				item.config?.link[languageId] ||
-					item.config?.link[config.defaultLanguageId] ||
-					item.config?.link ||
-					{}
-			),
-		[item.config?.link, languageId]
-	);
+	useEffect(() => {
+		setLinkConfig(item.config.link || {});
 
-	const handleValueSelect = (_, linkConfig) => {
-		let nextLinkConfig = linkConfig;
+		setLinkValue({
+			...(item.config.link || {}),
+			href:
+				item.config.link?.href?.[languageId] ||
+				item.config.link?.href?.[config.defaultLanguageId] ||
+				(typeof item.config.link?.href === 'string'
+					? item.config.link.href
+					: ''),
+			target: item.config.link?.target || '',
+		});
+	}, [item.config.link, languageId]);
 
-		if (!isMapped(linkConfig)) {
-			if (!isMapped(item.config?.link)) {
-				nextLinkConfig = {
-					...(item.config?.link || {}),
-					[languageId]: linkConfig,
-				};
-			}
-			else {
-				nextLinkConfig = {
-					[languageId]: linkConfig,
+	const handleValueSelect = (_, nextLinkConfig) => {
+		let nextConfig;
+
+		if (isMapped(nextLinkConfig) || isMapped(linkConfig)) {
+			nextConfig = {link: nextLinkConfig};
+		}
+		else {
+			nextConfig = {
+				link: linkConfig,
+			};
+
+			if (Object.keys(nextLinkConfig).length) {
+				nextConfig = {
+					link: {
+						href: {
+							...(linkConfig.href || {}),
+							[languageId]: nextLinkConfig.href,
+						},
+						target: nextLinkConfig.target || '',
+					},
 				};
 			}
 		}
 
 		dispatch(
 			updateItemConfig({
-				itemConfig: {
-					...item.config,
-					link: nextLinkConfig,
-				},
+				itemConfig: nextConfig,
 				itemId: item.itemId,
 				segmentsExperienceId,
 			})

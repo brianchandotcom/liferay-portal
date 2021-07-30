@@ -1653,14 +1653,6 @@ definition {
 		return "${dmDocumentURL}";
 	}
 
-	macro getFileEntryID {
-		var dmFileEntryID = selenium.getAttribute("//li[contains(.,'${dmDocumentTitle}')]//input[contains(@class,'entry-selector')]@value");
-
-		echo("## * Document File Entry ID: ${dmFileEntryID}");
-
-		return "${dmFileEntryID}";
-	}
-
 	macro gotoEntry {
 		LexiconCard.clickCardTitle(card = "${dmDocumentTitle}");
 	}

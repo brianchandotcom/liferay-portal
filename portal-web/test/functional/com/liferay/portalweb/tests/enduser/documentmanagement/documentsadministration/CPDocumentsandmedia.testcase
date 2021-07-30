@@ -1305,9 +1305,9 @@ definition {
 			pageName = "Display Page Template Name",
 			siteURLKey = "test-site-name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
+		var dmFileEntryID = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Site Name");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
 

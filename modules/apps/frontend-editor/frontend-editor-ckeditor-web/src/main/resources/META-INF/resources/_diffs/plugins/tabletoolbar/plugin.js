@@ -954,6 +954,8 @@
 
 				let panelBlock;
 
+				panel.className = `${panel.className ?? ''} cke_combopanel`;
+
 				editor.ui.add(name, CKEDITOR.UI_PANELBUTTON, {
 					command: commandName,
 					editorFocus,

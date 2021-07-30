@@ -43,10 +43,10 @@ public class ViewObjectFieldsDisplayContext {
 		CreationMenu creationMenu = new CreationMenu();
 
 		//TODO Check permissions
-		
+
 		creationMenu.addDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref("eventName");
+				dropdownItem.setHref("addObjectField");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_objectRequestHelper.getRequest(), "add-object-field"));

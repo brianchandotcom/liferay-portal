@@ -40,3 +40,24 @@ renderResponse.setTitle(objectDefinition.getName());
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 	style="fluid"
 />
+
+<div id="<portlet:namespace />AddObjectField">
+	<react:component
+		module="js/components/ModalAddObjectField"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", viewObjectFieldsDisplayContext.getAPIURL()
+			).put(
+				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			).build()
+		%>'
+	/>
+</div>
+
+<script>
+	function handleDestroyPortlet() {
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
+</script>

@@ -50,7 +50,9 @@ import com.liferay.layout.admin.web.internal.exportimport.data.handler.helper.La
 import com.liferay.layout.configuration.LayoutExportImportConfiguration;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
@@ -792,6 +794,26 @@ public class LayoutStagedModelDataHandler
 				layoutPlids, masterLayoutPlid, masterLayoutPlid);
 
 			importedLayout.setMasterLayoutPlid(importedMasterLayoutPlid);
+
+			if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+				String masterLayoutLayoutPageTemplateEntryUuid =
+					layoutElement.attributeValue(
+						"master-layout-layout-page-template-entry-uuid");
+
+				if (Validator.isNotNull(
+						masterLayoutLayoutPageTemplateEntryUuid)) {
+
+					Element masterLayoutLayoutPageTemplateEntryElement =
+						portletDataContext.getReferenceDataElement(
+							layout, LayoutPageTemplateEntry.class,
+							layout.getGroupId(),
+							masterLayoutLayoutPageTemplateEntryUuid);
+
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext,
+						masterLayoutLayoutPageTemplateEntryElement);
+				}
+			}
 		}
 
 		long parentPlid = layout.getParentPlid();
@@ -2621,6 +2643,26 @@ public class LayoutStagedModelDataHandler
 			"master-layout-uuid", masterLayout.getUuid());
 		layoutElement.addAttribute(
 			"master-layout-plid", String.valueOf(masterLayout.getPlid()));
+
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(masterLayout.getPlid());
+
+			if ((layoutPageTemplateEntry != null) &&
+				Validator.isNull(
+					layoutElement.attributeValue(
+						"master-layout-layout-page-template-entry-uuid"))) {
+
+				layoutElement.addAttribute(
+					"master-layout-layout-page-template-entry-uuid",
+					layoutPageTemplateEntry.getUuid());
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, layout, layoutPageTemplateEntry,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
+		}
 	}
 
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(
@@ -2814,6 +2856,10 @@ public class LayoutStagedModelDataHandler
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureDataHandlerHelper

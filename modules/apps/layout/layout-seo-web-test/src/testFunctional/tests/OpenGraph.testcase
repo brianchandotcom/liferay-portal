@@ -287,8 +287,6 @@ definition {
 	test CanMapDocumentToDisplayPage {
 		property test.name.skip.portal.instance = "OpenGraph#MapDocumentToDisplayPage";
 
-		var portalURL = PropsUtil.get("portal.url");
-
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
 			displayPageTemplateEntryName = "Display Page Template Name",
@@ -393,8 +391,6 @@ definition {
 	test CanMapSiteImageToDisplayPage {
 		property test.name.skip.portal.instance = "OpenGraph#MapSiteImageToDisplayPage";
 
-		var portalURL = PropsUtil.get("portal.url");
-
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
@@ -463,8 +459,6 @@ definition {
 	@refactorneeded
 	test CanMapWebContentToDisplayPage {
 		property test.name.skip.portal.instance = "OpenGraph#MapWebContentToDisplayPage";
-
-		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",

@@ -62,6 +62,11 @@ public interface CPDefinitionDiagramEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionDiagramEntry fetchCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionDiagramEntry> getCPDefinitionDiagramEntries(
 			long cpDefinitionId, int start, int end)
 		throws PortalException;

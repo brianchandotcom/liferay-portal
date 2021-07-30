@@ -56,6 +56,15 @@ public class CPDefinitionDiagramEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			fetchCPDefinitionDiagramEntry(long cpDefinitionId, int number)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryService.fetchCPDefinitionDiagramEntry(
+			cpDefinitionId, number);
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry>
 				getCPDefinitionDiagramEntries(

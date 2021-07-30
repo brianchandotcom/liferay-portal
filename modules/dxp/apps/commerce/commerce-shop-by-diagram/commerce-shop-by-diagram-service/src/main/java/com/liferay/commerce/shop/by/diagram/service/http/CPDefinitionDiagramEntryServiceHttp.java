@@ -271,6 +271,51 @@ public class CPDefinitionDiagramEntryServiceHttp {
 
 	public static
 		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+				fetchCPDefinitionDiagramEntry(
+					HttpPrincipal httpPrincipal, long cpDefinitionId,
+					int number)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDefinitionDiagramEntryServiceUtil.class,
+				"fetchCPDefinitionDiagramEntry",
+				_fetchCPDefinitionDiagramEntryParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDefinitionId, number);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
 				getCPDefinitionDiagramEntry(
 					HttpPrincipal httpPrincipal, long cpDefinitionId,
 					int number)
@@ -280,7 +325,7 @@ public class CPDefinitionDiagramEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionDiagramEntryServiceUtil.class,
 				"getCPDefinitionDiagramEntry",
-				_getCPDefinitionDiagramEntryParameterTypes5);
+				_getCPDefinitionDiagramEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, number);
@@ -329,7 +374,7 @@ public class CPDefinitionDiagramEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionDiagramEntryServiceUtil.class,
 				"updateCPDefinitionDiagramEntry",
-				_updateCPDefinitionDiagramEntryParameterTypes6);
+				_updateCPDefinitionDiagramEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionDiagramEntryId, cpInstanceUuid,
@@ -388,11 +433,15 @@ public class CPDefinitionDiagramEntryServiceHttp {
 	private static final Class<?>[]
 		_getCPDefinitionDiagramEntryParameterTypes4 = new Class[] {long.class};
 	private static final Class<?>[]
-		_getCPDefinitionDiagramEntryParameterTypes5 = new Class[] {
+		_fetchCPDefinitionDiagramEntryParameterTypes5 = new Class[] {
 			long.class, int.class
 		};
 	private static final Class<?>[]
-		_updateCPDefinitionDiagramEntryParameterTypes6 = new Class[] {
+		_getCPDefinitionDiagramEntryParameterTypes6 = new Class[] {
+			long.class, int.class
+		};
+	private static final Class<?>[]
+		_updateCPDefinitionDiagramEntryParameterTypes7 = new Class[] {
 			long.class, String.class, long.class, boolean.class, int.class,
 			int.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

@@ -57,6 +57,14 @@ public class CPDefinitionDiagramEntryServiceUtil {
 		getService().deleteCPDefinitionDiagramEntry(cpDefinitionDiagramEntryId);
 	}
 
+	public static CPDefinitionDiagramEntry fetchCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException {
+
+		return getService().fetchCPDefinitionDiagramEntry(
+			cpDefinitionId, number);
+	}
+
 	public static List<CPDefinitionDiagramEntry> getCPDefinitionDiagramEntries(
 			long cpDefinitionId, int start, int end)
 		throws PortalException {

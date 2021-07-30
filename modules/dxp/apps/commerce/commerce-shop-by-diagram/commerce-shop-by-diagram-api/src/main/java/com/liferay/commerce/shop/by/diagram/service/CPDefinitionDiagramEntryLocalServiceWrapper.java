@@ -267,6 +267,15 @@ public class CPDefinitionDiagramEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			fetchCPDefinitionDiagramEntry(long cpDefinitionId, int number)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryLocalService.
+			fetchCPDefinitionDiagramEntry(cpDefinitionId, number);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

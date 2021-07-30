@@ -40,6 +40,7 @@ import React, {useCallback, useRef, useState} from 'react';
 
 const CollaboratorRow = ({
 	handleSelect,
+	readOnly,
 	roles,
 	selectedItems,
 	spritemap,
@@ -171,30 +172,34 @@ const CollaboratorRow = ({
 				{user.emailAddress}
 			</ClayTable.Cell>
 			<ClayTable.Cell className="table-column-text-end">
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={dropdownItems}
-					spritemap={spritemap}
-					trigger={
-						<ClayButton
-							borderless
-							data-tooltip-align="top"
-							disabled={title}
-							displayType="secondary"
-							small
-							title={title}
-						>
-							{label}
+				{readOnly ? (
+					<div className="role-read-only">{label}</div>
+				) : (
+					<ClayDropDownWithItems
+						alignmentPosition={Align.BottomLeft}
+						items={dropdownItems}
+						spritemap={spritemap}
+						trigger={
+							<ClayButton
+								borderless
+								data-tooltip-align="top"
+								disabled={title}
+								displayType="secondary"
+								small
+								title={title}
+							>
+								{label}
 
-							<span className="inline-item inline-item-after">
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="caret-bottom"
-								/>
-							</span>
-						</ClayButton>
-					}
-				/>
+								<span className="inline-item inline-item-after">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="caret-bottom"
+									/>
+								</span>
+							</ClayButton>
+						}
+					/>
+				)}
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);
@@ -267,6 +272,7 @@ const ManageCollaborators = ({
 	getCollaboratorsURL,
 	inviteUsersURL,
 	namespace,
+	readOnly,
 	roles,
 	setShowModal,
 	showModal,
@@ -716,6 +722,7 @@ const ManageCollaborators = ({
 										updateRole(role, user)
 									}
 									key={user.userId}
+									readOnly={readOnly}
 									roles={roles}
 									selectedItems={selectedItems}
 									spritemap={spritemap}
@@ -730,6 +737,10 @@ const ManageCollaborators = ({
 	};
 
 	const renderSelect = () => {
+		if (readOnly) {
+			return '';
+		}
+
 		const dropdownItems = [];
 
 		for (let i = 0; i < roles.length; i++) {
@@ -869,7 +880,11 @@ const ManageCollaborators = ({
 							</div>
 							<div className="autofit-col">
 								<div className="modal-title">
-									{Liferay.Language.get('invite-users')}
+									{readOnly
+										? Liferay.Language.get(
+												'view-collaborators'
+										  )
+										: Liferay.Language.get('invite-users')}
 								</div>
 							</div>
 						</div>
@@ -878,34 +893,36 @@ const ManageCollaborators = ({
 						{renderSelect()}
 						{renderCollaborators()}
 					</div>
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									displayType="secondary"
-									onClick={() => {
-										if (
-											(Object.keys(selectedItems)
-												.length === 0 &&
-												Object.keys(updatedRoles)
-													.length === 0) ||
-											confirm(
-												Liferay.Language.get(
-													'discard-unsaved-changes'
+					{readOnly || (
+						<ClayModal.Footer
+							last={
+								<ClayButton.Group spaced>
+									<ClayButton
+										displayType="secondary"
+										onClick={() => {
+											if (
+												(Object.keys(selectedItems)
+													.length === 0 &&
+													Object.keys(updatedRoles)
+														.length === 0) ||
+												confirm(
+													Liferay.Language.get(
+														'discard-unsaved-changes'
+													)
 												)
-											)
-										) {
-											onClose();
-											resetForm();
-										}
-									}}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-								{renderSubmit()}
-							</ClayButton.Group>
-						}
-					/>
+											) {
+												onClose();
+												resetForm();
+											}
+										}}
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayButton>
+									{renderSubmit()}
+								</ClayButton.Group>
+							}
+						/>
+					)}
 				</ClayForm>
 			</ClayModal>
 		);
@@ -932,18 +949,20 @@ const ManageCollaborators = ({
 
 		const columns = [];
 
-		columns.push(
-			<div className="autofit-col">
-				<ClaySticker
-					className="sticker-user-icon user-icon-color-0"
-					data-tooltip-align="top"
-					size="md"
-					title={Liferay.Language.get('invite-users')}
-				>
-					<ClayIcon symbol="plus" />
-				</ClaySticker>
-			</div>
-		);
+		if (!readOnly) {
+			columns.push(
+				<div className="autofit-col">
+					<ClaySticker
+						className="sticker-user-icon user-icon-color-0"
+						data-tooltip-align="top"
+						size="md"
+						title={Liferay.Language.get('invite-users')}
+					>
+						<ClayIcon symbol="plus" />
+					</ClaySticker>
+				</div>
+			);
+		}
 
 		const users = collaborators.sort((a, b) => {
 			if (a.isOwner) {
@@ -997,10 +1016,37 @@ const ManageCollaborators = ({
 			);
 		}
 
-		if (users.length > 3) {
+		if (users.length === 0) {
 			columns.push(
 				<div className="autofit-col">
-					<ClaySticker className="btn-secondary" size="md">
+					<ClaySticker
+						className="sticker-user-icon user-icon-color-0"
+						data-tooltip-align="top"
+						size="md"
+						title={
+							readOnly
+								? Liferay.Language.get('view-collaborators')
+								: Liferay.Language.get('invite-users')
+						}
+					>
+						<ClayIcon symbol="users" />
+					</ClaySticker>
+				</div>
+			);
+		}
+		else if (users.length > 3) {
+			columns.push(
+				<div className="autofit-col">
+					<ClaySticker
+						className="btn-secondary"
+						data-tooltip-align="top"
+						size="md"
+						title={
+							readOnly
+								? Liferay.Language.get('view-collaborators')
+								: Liferay.Language.get('invite-users')
+						}
+					>
 						{'+' + (users.length - 3)}
 					</ClaySticker>
 				</div>

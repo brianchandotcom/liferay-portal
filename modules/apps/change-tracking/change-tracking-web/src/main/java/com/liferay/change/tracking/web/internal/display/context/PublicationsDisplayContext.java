@@ -31,6 +31,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -96,7 +97,8 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	}
 
 	public Map<String, Object> getCollaboratorsReactData(
-		CTCollection ctCollection) {
+			CTCollection ctCollection)
+		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
 			"autocompleteUserURL",
@@ -144,6 +146,11 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 			}
 		).put(
 			"namespace", _renderResponse.getNamespace()
+		).put(
+			"readOnly",
+			!CTCollectionPermission.contains(
+				_themeDisplay.getPermissionChecker(), ctCollection,
+				ActionKeys.PERMISSIONS)
 		).put(
 			"roles",
 			JSONUtil.putAll(

@@ -169,6 +169,13 @@
 	.table-responsive {
 		margin-bottom: 0;
 
+		.role-read-only {
+			color: #6b6c7e;
+			font-weight: 600;
+			padding-right: 0.75rem;
+			text-align: left;
+		}
+
 		.table-add,
 		.table-list .table-add td {
 			background-color: #edf9f0;

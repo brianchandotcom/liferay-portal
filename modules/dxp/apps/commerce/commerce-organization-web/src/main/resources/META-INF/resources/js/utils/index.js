@@ -243,8 +243,28 @@ export const formatAccountDescription = (d) => {
 	return `${d.data.numberOfUsers} ${Liferay.Language.get('users')}`;
 };
 
+const briefsMap = {
+	account: 'accountBriefs',
+	organization: 'organizationBriefs'
+}
+
 export const formatUserDescription = (d) => {
-	return d.data.jobTitle || Liferay.Language.get('user');
+	const parentBriefsKey = briefsMap[d.parent.data.type];
+	const parentBrief = d.data[parentBriefsKey].find(
+		parent => Number(parent.id) === Number(d.parent.data.id)
+	);
+
+	let description = Liferay.Language.get('guest')
+
+	if (parentBrief.roleBriefs.length) {
+		description = trimString(parentBrief.roleBriefs[0].name, 'user')
+	} 
+
+	if (parentBrief.roleBriefs.length > 1) {
+		description += ` (+${parentBrief.roleBriefs.length - 1})`
+	}
+
+	return description;
 };
 
 const formatDescriptionMap = {
@@ -253,14 +273,14 @@ const formatDescriptionMap = {
 	user: formatUserDescription,
 };
 
+export const trimString = (string, nodeType) => string.length > MAX_NAME_LENGTH[nodeType] 
+	? string.slice(0, MAX_NAME_LENGTH[nodeType] - 1).trim() + '…' 
+	: string;
+
 export const formatItemName = (d) => {
 	const name = d.data.name || d.data.emailAddress;
 
-	if (name.length > MAX_NAME_LENGTH[d.data.type]) {
-		return name.slice(0, MAX_NAME_LENGTH[d.data.type] - 1).trim() + '…';
-	}
-
-	return name;
+	return trimString(name, d.data.type);
 };
 
 export const formatItemDescription = (d) => {

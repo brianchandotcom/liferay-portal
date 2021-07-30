@@ -24,6 +24,18 @@ export function getAccounts(query) {
 	return fetchFromHeadless(url);
 }
 
+export function addUserEmailsToAccount(accountId, roleIds, emails) {
+	const url = new URL(
+		`${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/account-users/by-email-address/${roleIds}`,
+		themeDisplay.getPortalURL()
+	);
+
+	return fetchFromHeadless(url, {
+		body: JSON.stringify(emails),
+		method: 'POST',
+	}).then((response) => response.items);
+}
+
 export function deleteAccount(id) {
 	const url = new URL(
 		`${ACCOUNTS_ROOT_ENDPOINT}/${id}`,

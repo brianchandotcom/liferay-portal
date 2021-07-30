@@ -14,10 +14,10 @@ import * as d3 from 'd3';
 import D3OrganizationChart from '../src/main/resources/META-INF/resources/js/D3OrganizationChart';
 import {
 	ACCOUNTS_PROPERTY_NAME,
+	BRIEFS_KEYS_MAP,
 	ORGANIZATIONS_PROPERTY_NAME,
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
 } from '../src/main/resources/META-INF/resources/js/utils/constants';
-import {USER_INVITATION_ENABLED} from '../src/main/resources/META-INF/resources/js/utils/flags';
 
 jest.mock(
 	'../src/main/resources/META-INF/resources/js/data/organizations',
@@ -48,16 +48,22 @@ jest.mock(
 				type: 'organization',
 				userAccounts: [
 					{
+						accountBriefs: [],
 						id: '2000',
 						name: `User Child 1`,
+						organizationBriefs: [],
 					},
 					{
+						accountBriefs: [],
 						id: '2001',
 						name: `User Child 2`,
+						organizationBriefs: [],
 					},
 					{
+						accountBriefs: [],
 						id: '2002',
 						name: `User Child 3`,
+						organizationBriefs: [],
 					},
 				],
 			});
@@ -68,19 +74,25 @@ jest.mock(
 jest.mock('../src/main/resources/META-INF/resources/js/data/accounts', () => ({
 	getAccount: () =>
 		Promise.resolve({
-			type: 'account',
+			type: 'accountUserAccounts',
 			userAccounts: [
 				{
+					accountBriefs: [],
 					id: '2000',
 					name: `User Child 1`,
+					organizationBriefs: [],
 				},
 				{
+					accountBriefs: [],
 					id: '2001',
 					name: `User Child 2`,
+					organizationBriefs: [],
 				},
 				{
+					accountBriefs: [],
 					id: '2002',
 					name: `User Child 3`,
+					organizationBriefs: [],
 				},
 			],
 		}),
@@ -135,10 +147,14 @@ const INITIAL_DATA = {
 		{
 			id: '1',
 			name: `Mark`,
+			[BRIEFS_KEYS_MAP.organization]: [],
+			[BRIEFS_KEYS_MAP.account]: [],
 		},
 		{
 			id: '2',
 			name: `John`,
+			[BRIEFS_KEYS_MAP.organization]: [],
+			[BRIEFS_KEYS_MAP.account]: [],
 		},
 	],
 	id: '0',
@@ -400,14 +416,11 @@ describe('D3OrganizationChart implementation', () => {
 			const inviteUserButton = addButton.querySelector(
 				'.add-action-wrapper.user'
 			);
-			expect(!!inviteUserButton).toBe(USER_INVITATION_ENABLED);
 
-			if (USER_INVITATION_ENABLED) {
-				await d3click(inviteUserButton);
+			await d3click(inviteUserButton);
 
-				expect(lastActionPerformed.name).toBe('modal opened');
-				expect(lastActionPerformed.details.type).toBe('user');
-			}
+			expect(lastActionPerformed.name).toBe('modal opened');
+			expect(lastActionPerformed.details.type).toBe('user');
 		});
 	});
 

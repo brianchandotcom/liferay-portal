@@ -555,17 +555,13 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
 		for (var dmDocumentTitle : list "Document_1.docx,Document_1.jpeg,Document_1.jpg,Document_1.mp4,Document_1.pdf,Document_1.png,Document_1.ppt,Document_1.pptx,Document_1.txt,Document_1.xls,Document_1.xlsx") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Documents and Media");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(
 				dmDocumentFile = "${dmDocumentTitle}",
 				dmDocumentTitle = "${dmDocumentTitle}",
-				validationError = "Please enter a file with a valid extension (.doc).");
+				validationError = "Document names must end with one of the following extensions: .doc");
 		}
 	}
 

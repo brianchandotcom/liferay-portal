@@ -272,6 +272,10 @@ definition {
 
 		Questions.viewNoRelatedQuestions();
 
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");

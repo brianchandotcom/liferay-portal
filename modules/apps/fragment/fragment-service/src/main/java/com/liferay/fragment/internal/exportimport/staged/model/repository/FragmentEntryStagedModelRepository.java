@@ -141,10 +141,12 @@ public class FragmentEntryStagedModelRepository
 
 		return _fragmentEntryLocalService.updateFragmentEntry(
 			portletDataContext.getUserId(fragmentEntry.getUserUuid()),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getName(),
+			fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getStatus());
+			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
+			fragmentEntry.getConfiguration(),
+			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getStatus());
 	}
 
 	@Reference

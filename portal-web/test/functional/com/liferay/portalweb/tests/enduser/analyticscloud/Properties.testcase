@@ -86,12 +86,35 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"
-	@ignore = "true"
 	@priority = "5"
 	test PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace {
+		
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		
+		ACUtils.launchAC();
+		
+		ACNavigation.goToSettings();
+		
+		ACSettings.goToProperties();
+		
+		ACProperties.addNewProperty(propertyName = "New property 1");
+		
+		ACSettings.goToProperties();
+		
+		ACProperties.addNewProperty(propertyName = "New property 2");
+		
+		ACSettings.goToProperties();
+		
+		ACProperties.addNewProperty(propertyName = "New property 3");
 
-		// TODO LRAC-8159 PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace pending implementation
+		ACNavigation.exitSettings();
 
+		ACNavigation.goToSettings();
+
+		ACSettings.goToProperties();
+
+		ACUtils.assertItemsName(itemList = "${propertyName},New property 1,New property 2,New property 3");
+	
 	}
 
 }

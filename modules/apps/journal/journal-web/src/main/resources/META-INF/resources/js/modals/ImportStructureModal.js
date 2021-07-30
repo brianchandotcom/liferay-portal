@@ -19,7 +19,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-const ImportStructureModal = ({portletNamespace}) => {
+const ImportStructureModal = ({importDataDefinitionURL, portletNamespace}) => {
 	const [visible, setVisible] = useState(false);
 	const inputFileRef = useRef();
 	const [structureName, setStructureName] = useState('');
@@ -64,102 +64,112 @@ const ImportStructureModal = ({portletNamespace}) => {
 			<ClayModal.Header>
 				{Liferay.Language.get('import-structure')}
 			</ClayModal.Header>
-			<ClayModal.Body>
-				<ClayAlert
-					displayType="info"
-					title={`${Liferay.Language.get('info')}:`}
-				>
-					{Liferay.Language.get(
-						'the-import-process-will-run-in-the-background-and-may-take-a-few-minutes'
-					)}
-				</ClayAlert>
-				<ClayForm.Group>
-					<label htmlFor={nameInputId}>
-						{Liferay.Language.get('name')}
-					</label>
-					<ClayInput
-						id={nameInputId}
-						name={nameInputId}
-						onChange={(event) =>
-							setStructureName(event.target.value)
-						}
-						type="text"
-						value={structureName}
-					/>
-					<label htmlFor={jsonFileInputId}>
-						{Liferay.Language.get('json-file')}
-					</label>
-					<ClayInput.Group>
-						<ClayInput.GroupItem prepend>
-							<ClayInput
-								disabled
-								id={jsonFileInputId}
-								type="text"
-								value={fileName}
-							/>
-						</ClayInput.GroupItem>
-						<ClayInput.GroupItem append shrink>
-							<ClayButton
-								displayType="secondary"
-								onClick={() => inputFileRef.current.click()}
-							>
-								{Liferay.Language.get('select')}
-							</ClayButton>
-						</ClayInput.GroupItem>
-						{inputFile && (
-							<ClayInput.GroupItem shrink>
+			<form
+				action={importDataDefinitionURL}
+				encType="multipart/form-data"
+				method="post"
+			>
+				<ClayModal.Body>
+					<ClayAlert
+						displayType="info"
+						title={`${Liferay.Language.get('info')}:`}
+					>
+						{Liferay.Language.get(
+							'the-import-process-will-run-in-the-background-and-may-take-a-few-minutes'
+						)}
+					</ClayAlert>
+					<ClayForm.Group>
+						<label htmlFor={nameInputId}>
+							{Liferay.Language.get('name')}
+						</label>
+						<ClayInput
+							id={nameInputId}
+							name={nameInputId}
+							onChange={(event) =>
+								setStructureName(event.target.value)
+							}
+							type="text"
+							value={structureName}
+						/>
+						<label htmlFor={jsonFileInputId}>
+							{Liferay.Language.get('json-file')}
+						</label>
+						<ClayInput.Group>
+							<ClayInput.GroupItem prepend>
+								<ClayInput
+									disabled
+									id={jsonFileInputId}
+									type="text"
+									value={fileName}
+								/>
+							</ClayInput.GroupItem>
+							<ClayInput.GroupItem append shrink>
 								<ClayButton
 									displayType="secondary"
-									onClick={() => {
-										setFile({
-											fileName: '',
-											inputFile: null,
-											inputFileValue: '',
-										});
-									}}
+									onClick={() => inputFileRef.current.click()}
 								>
-									{Liferay.Language.get('clear')}
+									{Liferay.Language.get('select')}
 								</ClayButton>
 							</ClayInput.GroupItem>
-						)}
-					</ClayInput.Group>
-				</ClayForm.Group>
-				<input
-					className="d-none"
-					name={jsonFileInputId}
-					onChange={({target}) => {
-						const [file] = target.files;
-						setFile({
-							fileName: file.name,
-							inputFile: file,
-							inputFileValue: target.value,
-						});
-					}}
-					ref={inputFileRef}
-					type="file"
-					value={inputFileValue}
+							{inputFile && (
+								<ClayInput.GroupItem shrink>
+									<ClayButton
+										displayType="secondary"
+										onClick={() => {
+											setFile({
+												fileName: '',
+												inputFile: null,
+												inputFileValue: '',
+											});
+										}}
+									>
+										{Liferay.Language.get('clear')}
+									</ClayButton>
+								</ClayInput.GroupItem>
+							)}
+						</ClayInput.Group>
+					</ClayForm.Group>
+					<input
+						className="d-none"
+						name={jsonFileInputId}
+						onChange={({target}) => {
+							const [file] = target.files;
+							setFile({
+								fileName: file.name,
+								inputFile: file,
+								inputFileValue: target.value,
+							});
+						}}
+						ref={inputFileRef}
+						type="file"
+						value={inputFileValue}
+					/>
+				</ClayModal.Body>
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={onClose}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+							<ClayButton
+								disabled={!inputFile || !structureName}
+								type="submit"
+							>
+								{Liferay.Language.get('import')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
 				/>
-			</ClayModal.Body>
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton displayType="secondary" onClick={onClose}>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-						<ClayButton
-							disabled={!inputFile || !structureName}
-							type="submit"
-						>
-							{Liferay.Language.get('import')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
+			</form>
 		</ClayModal>
 	) : null;
 };
 
 ImportStructureModal.propTypes = {
+	importDataDefinitionURL: PropTypes.string,
 	portletNamespace: PropTypes.string,
 };
 

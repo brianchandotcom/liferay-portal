@@ -26,6 +26,18 @@
 <div>
 	<react:component
 		module="js/modals/ImportStructureModal"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"importDataDefinitionURL",
+				PortletURLBuilder.createActionURL(
+					renderResponse
+				).setActionName(
+					"/journal/import_data_definition"
+				).setRedirect(
+					currentURL
+				).buildString()
+			).build()
+		%>'
 	/>
 </div>
 

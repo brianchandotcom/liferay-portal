@@ -42,7 +42,7 @@ public class CommerceOrderTypeModelResourcePermission
 			CommerceOrderType commerceOrderType, String actionId)
 		throws PortalException {
 
-		commerceOrderTypePermission.check(
+		_commerceOrderTypePermission.check(
 			permissionChecker, commerceOrderType, actionId);
 	}
 
@@ -52,7 +52,7 @@ public class CommerceOrderTypeModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		commerceOrderTypePermission.check(
+		_commerceOrderTypePermission.check(
 			permissionChecker, commerceOrderTypeId, actionId);
 	}
 
@@ -62,7 +62,7 @@ public class CommerceOrderTypeModelResourcePermission
 			CommerceOrderType commerceOrderType, String actionId)
 		throws PortalException {
 
-		return commerceOrderTypePermission.contains(
+		return _commerceOrderTypePermission.contains(
 			permissionChecker, commerceOrderType, actionId);
 	}
 
@@ -72,7 +72,7 @@ public class CommerceOrderTypeModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return commerceOrderTypePermission.contains(
+		return _commerceOrderTypePermission.contains(
 			permissionChecker, commerceOrderTypeId, actionId);
 	}
 
@@ -87,7 +87,7 @@ public class CommerceOrderTypeModelResourcePermission
 	}
 
 	@Reference
-	protected CommerceOrderTypePermission commerceOrderTypePermission;
+	private CommerceOrderTypePermission _commerceOrderTypePermission;
 
 	@Reference(
 		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_ORDER_TYPE + ")"

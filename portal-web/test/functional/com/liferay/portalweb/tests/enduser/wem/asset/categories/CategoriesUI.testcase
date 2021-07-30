@@ -94,7 +94,7 @@ definition {
 		}
 	}
 
-	@description = "Add three vocabularies in Categories admin."
+	@description = "This is a test for LPS-131984. Add three vocabularies in Categories admin."
 	@priority = "5"
 	@uitest
 	test AddVocabularies {
@@ -116,7 +116,17 @@ definition {
 
 		task ("View the new vocabularies") {
 			for (var n : list "1,2,3") {
-				Vocabulary.viewCP(vocabularyName = "Vocabulary Name ${n}");
+				Navigator.gotoNavNested(navNested = "Vocabulary Name ${n}");
+
+				AssertVisible(
+					assetTitle = "Vocabulary Name ${n}",
+					info = "Asset Types: All Asset Types",
+					locator1 = "Message#ASSET_INFO");
+
+				AssertElementNotPresent(
+					assetTitle = "Vocabulary Name ${n}",
+					info = "Description:",
+					locator1 = "Message#ASSET_INFO");
 			}
 		}
 	}

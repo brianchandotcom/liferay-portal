@@ -22,7 +22,14 @@ definition {
 			layoutName = "${layoutName}",
 			widgetName = "${widgetName}");
 	}
-
+	@summary = "Asserts a list of items by the name"
+	macro assertItemsName {
+		for (var key_itemName : list "${itemList}") {
+			AssertElementPresent(
+				itemName = "${key_itemName}",
+				locator1 = "ACSettings#ITEM_ON_LIST");
+		}
+	}
 	macro assertXAxisTimedGraph {
 		var key_parentName = "${parentName}";
 		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");

@@ -38,9 +38,9 @@ export const createOrganizations = (names, parentOrganizationId) => {
 	);
 };
 
-export function addUserEmailsToOrganization(organizationId, roleId, emails) {
+export function addUserEmailsToOrganization(organizationId, roleIds, emails) {
 	const url = new URL(
-		`${ORGANIZATIONS_ROOT_ENDPOINT}/${organizationId}/user-accounts/by-email-address/${roleId}`,
+		`${ORGANIZATIONS_ROOT_ENDPOINT}/${organizationId}/user-accounts/by-email-address/${roleIds}`,
 		themeDisplay.getPortalURL()
 	)
 

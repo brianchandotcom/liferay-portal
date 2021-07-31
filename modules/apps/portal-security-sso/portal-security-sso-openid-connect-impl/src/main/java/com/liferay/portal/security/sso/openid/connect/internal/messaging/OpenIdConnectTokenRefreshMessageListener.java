@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.messaging;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -26,8 +29,11 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegis
 import com.liferay.portal.security.sso.openid.connect.internal.constants.OpenIdConnectDestinationNames;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
+import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
 import com.liferay.portal.security.sso.openid.connect.session.manager.OpenIdConnectSessionManager;
 
+import com.nimbusds.oauth2.sdk.token.RefreshToken;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
@@ -91,23 +97,49 @@ public class OpenIdConnectTokenRefreshMessageListener
 		_requestTokenRefresh((int)message.getPayload());
 	}
 
-	private void _requestTokenRefresh(long openIdConnectionSessionId)
+	private void _requestTokenRefresh(long openIdConnectSessionId)
 		throws Exception {
+
+		OpenIdConnectSession openIdConnectSession;
+
+		try {
+			openIdConnectSession =
+				_openIdConnectSessionLocalService.getOpenIdConnectSession(
+					openIdConnectSessionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find OpenIdConnectSession with Id " +
+						openIdConnectSessionId,
+					portalException);
+			}
+
+			return;
+		}
+
+		if (openIdConnectSession.getRefreshToken() == null) {
+			return;
+		}
 
 		OfflineOpenIdConnectSessionManager offlineOpenIdConnectSessionManager =
 			(OfflineOpenIdConnectSessionManager)_openIdConnectSessionManager;
 
+		RefreshToken refreshToken = new RefreshToken(
+			openIdConnectSession.getRefreshToken());
+
 		OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
 				CompanyThreadLocal.getCompanyId(),
-				offlineOpenIdConnectSessionManager.getProviderName(
-					openIdConnectionSessionId)),
-			offlineOpenIdConnectSessionManager.getRefreshToken(
-				openIdConnectionSessionId));
+				openIdConnectSession.getProviderName()),
+			refreshToken);
 
 		offlineOpenIdConnectSessionManager.extendOpenIdConnectSession(
-			openIdConnectionSessionId, oidcTokens);
+			openIdConnectSessionId, oidcTokens);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OpenIdConnectTokenRefreshMessageListener.class);
 
 	private volatile BundleContext _bundleContext;
 
@@ -118,6 +150,9 @@ public class OpenIdConnectTokenRefreshMessageListener
 	private OpenIdConnectProviderRegistry
 		<OIDCClientMetadata, OIDCProviderMetadata>
 			_openIdConnectProviderRegistry;
+
+	@Reference
+	private OpenIdConnectSessionLocalService _openIdConnectSessionLocalService;
 
 	@Reference
 	private OpenIdConnectSessionManager _openIdConnectSessionManager;

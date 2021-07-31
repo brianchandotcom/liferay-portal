@@ -69,14 +69,12 @@ public class OfflineOpenIdConnectSessionManager {
 	}
 
 	public void extendOpenIdConnectSession(
-		long openIdConnectSessionId, OIDCTokens oidcTokens) {
+			long openIdConnectSessionId, OIDCTokens oidcTokens)
+		throws PortalException {
 
-		OpenIdConnectSession openIdConnectSession = _getOpenIdConnectSession(
-			openIdConnectSessionId);
-
-		if (openIdConnectSession == null) {
-			return;
-		}
+		OpenIdConnectSession openIdConnectSession =
+			_openIdConnectSessionLocalService.getOpenIdConnectSession(
+				openIdConnectSessionId);
 
 		AccessToken oldAccessToken = _getAccessToken(openIdConnectSession);
 
@@ -100,85 +98,6 @@ public class OfflineOpenIdConnectSessionManager {
 				}
 			}
 		}
-	}
-
-	public AccessToken getAccessToken(long openIdConnectSessionId) {
-		OpenIdConnectSession openIdConnectSession = _getOpenIdConnectSession(
-			openIdConnectSessionId);
-
-		if (openIdConnectSession == null) {
-			return null;
-		}
-
-		return _getAccessToken(openIdConnectSession);
-	}
-
-	public OIDCTokens getOIDCTokens(long openIdConnectSessionId) {
-		OpenIdConnectSession openIdConnectSession = _getOpenIdConnectSession(
-			openIdConnectSessionId);
-
-		if (openIdConnectSession == null) {
-			return null;
-		}
-
-		AccessToken accessToken;
-
-		try {
-			accessToken = AccessToken.parse(
-				JSONObjectUtils.parse(openIdConnectSession.getAccessToken()));
-		}
-		catch (ParseException parseException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(parseException, parseException);
-			}
-
-			return null;
-		}
-
-		if (openIdConnectSession.getRefreshToken() == null) {
-			if (openIdConnectSession.getIdToken() == null) {
-				return new OIDCTokens(accessToken, null);
-			}
-
-			return new OIDCTokens(
-				openIdConnectSession.getIdToken(), accessToken, null);
-		}
-
-		RefreshToken refreshToken = new RefreshToken(
-			openIdConnectSession.getRefreshToken());
-
-		if (openIdConnectSession.getIdToken() == null) {
-			return new OIDCTokens(accessToken, refreshToken);
-		}
-
-		return new OIDCTokens(
-			openIdConnectSession.getIdToken(), accessToken, refreshToken);
-	}
-
-	public String getProviderName(long openIdConnectSessionId) {
-		OpenIdConnectSession openIdConnectSession = _getOpenIdConnectSession(
-			openIdConnectSessionId);
-
-		if (openIdConnectSession == null) {
-			return null;
-		}
-
-		return openIdConnectSession.getProviderName();
-	}
-
-	public RefreshToken getRefreshToken(long openIdConnectSessionId) {
-		OpenIdConnectSession openIdConnectSession = _getOpenIdConnectSession(
-			openIdConnectSessionId);
-
-		if (openIdConnectSession == null) {
-			return null;
-		}
-
-		if (openIdConnectSession.getRefreshToken() == null) {
-			return null;
-		}
-
-		return new RefreshToken(openIdConnectSession.getRefreshToken());
 	}
 
 	public boolean isOpenIdConnectSession(HttpSession httpSession) {
@@ -283,24 +202,6 @@ public class OfflineOpenIdConnectSessionManager {
 
 			return null;
 		}
-	}
-
-	private OpenIdConnectSession _getOpenIdConnectSession(
-		long openIdConnectSessionId) {
-
-		OpenIdConnectSession openIdConnectSession =
-			_openIdConnectSessionLocalService.fetchOpenIdConnectSession(
-				openIdConnectSessionId);
-
-		if (openIdConnectSession == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find openIdConnectSession with Id " +
-						openIdConnectSessionId);
-			}
-		}
-
-		return openIdConnectSession;
 	}
 
 	private void _updateOpenIdConnectSession(

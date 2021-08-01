@@ -46,8 +46,8 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 	<aui:input label="" name="smallImageURL" title="small-image-url" wrapperCssClass="mb-3" />
 
 	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && Validator.isNotNull(ddmTemplate.getSmallImageURL()) %>">
-		<p>
-			<strong><liferay-ui:message key="preview" /></strong>
+		<p class="control-label font-weight-semi-bold">
+			<liferay-ui:message key="preview" />
 		</p>
 
 		<div class="aspect-ratio aspect-ratio-16-to-9">
@@ -60,8 +60,8 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 	<aui:input label="" name="smallImageFile" type="file" wrapperCssClass="mb-3" />
 
 	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0) %>">
-		<p>
-			<strong><liferay-ui:message key="preview" /></strong>
+		<p class="control-label font-weight-semi-bold">
+			<liferay-ui:message key="preview" />
 		</p>
 
 		<div class="aspect-ratio aspect-ratio-16-to-9">

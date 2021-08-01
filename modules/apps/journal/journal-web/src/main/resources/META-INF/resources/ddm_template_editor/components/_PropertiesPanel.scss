@@ -3,6 +3,10 @@
 .journal-ddm-template-properties {
 	.control-label {
 		font-size: 0.75rem;
+
+		.taglib-icon-help {
+			margin-left: 0.5rem;
+		}
 	}
 
 	.article-structure {
@@ -26,6 +30,14 @@
 
 		.lexicon-icon {
 			width: 8px;
+		}
+	}
+
+	.input-boolean-wrapper .control-label {
+		display: flex;
+		
+		.field {
+			margin-right: 0.5rem;
 		}
 	}
 

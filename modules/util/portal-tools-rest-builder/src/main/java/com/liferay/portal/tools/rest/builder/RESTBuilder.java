@@ -254,7 +254,9 @@ public class RESTBuilder {
 
 			context.put("schemaName", "openapi");
 
-			if (_configYAML.isGenerateOpenAPI()) {
+			if (_configYAML.isGenerateOpenAPI() &&
+				(_configYAML.getResourceApplicationSelect() == null)) {
+
 				_createOpenAPIResourceFile(context, escapedVersion);
 				_createPropertiesFile(context, escapedVersion, "openapi");
 			}

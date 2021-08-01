@@ -79,6 +79,11 @@ $toolbarHeight: 6.875rem;
 			.btn {
 				height: 32px;
 				width: 32px;
+
+				&:hover,
+				&.active {
+					background-color: $light-d1;
+				}
 			}
 
 			.lexicon-icon {

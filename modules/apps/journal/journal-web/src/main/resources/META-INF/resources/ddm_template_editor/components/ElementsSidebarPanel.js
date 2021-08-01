@@ -12,7 +12,9 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
@@ -24,8 +26,6 @@ import {CollapsableButtonList} from './CollapsableButtonList';
 const SEARCH_INPUT_ID = 'ddm_template_editor_Sidebar-SearchInputId';
 
 export const ElementsSidebarPanel = ({className}) => {
-	const [filteredItems, setFilteredItems] = useState(null);
-
 	const {
 		inputChannel,
 		templateVariableGroups: initialTemplateVariableGroups,
@@ -44,25 +44,23 @@ export const ElementsSidebarPanel = ({className}) => {
 
 	const onButtonClick = (item) => inputChannel.sendData(item.content);
 
-	const handleSearchInputChange = (event) => {
+	const [searchValue, setSearchValue] = useState('');
+
+	const filteredItems = useMemo(() => {
 		const slugify = (str) => str.toLowerCase().replace(/\s/g, '');
-		const query = slugify(event.target.value);
+		const query = slugify(searchValue);
 
 		if (query) {
-			setFilteredItems(
-				templateVariableGroups
-					.map(({items}) =>
-						items.filter((item) =>
-							slugify(item.label).includes(query)
-						)
-					)
-					.reduce((a, b) => a.concat(b), [])
-			);
+			return templateVariableGroups
+				.map(({items}) =>
+					items.filter((item) => slugify(item.label).includes(query))
+				)
+				.reduce((a, b) => a.concat(b), []);
 		}
 		else {
-			setFilteredItems(null);
+			return null;
 		}
-	};
+	}, [searchValue, templateVariableGroups]);
 
 	return (
 		<div className={classNames(className, 'px-3')}>
@@ -74,12 +72,36 @@ export const ElementsSidebarPanel = ({className}) => {
 					{Liferay.Language.get('search')}
 				</label>
 
-				<ClayInput
-					id={SEARCH_INPUT_ID}
-					onChange={handleSearchInputChange}
-					placeholder={`${Liferay.Language.get('search')}...`}
-					type="search"
-				/>
+				<ClayInput.Group>
+					<ClayInput.GroupItem>
+						<ClayInput
+							id={SEARCH_INPUT_ID}
+							insetAfter
+							onChange={(event) =>
+								setSearchValue(event.target.value)
+							}
+							placeholder={`${Liferay.Language.get('search')}...`}
+							value={searchValue}
+						/>
+						<ClayInput.GroupInsetItem after tag="span">
+							{searchValue ? (
+								<ClayButtonWithIcon
+									borderless
+									displayType="secondary"
+									monospaced={false}
+									onClick={() => setSearchValue('')}
+									symbol={searchValue ? 'times' : 'search'}
+									title={Liferay.Language.get('clear')}
+								/>
+							) : (
+								<ClayIcon
+									className="search-icon"
+									symbol="search"
+								/>
+							)}
+						</ClayInput.GroupInsetItem>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 			</ClayForm.Group>
 
 			{filteredItems ? (

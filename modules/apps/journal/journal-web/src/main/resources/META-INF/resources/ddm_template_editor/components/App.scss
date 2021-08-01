@@ -116,6 +116,10 @@ $toolbarHeight: 6.875rem;
 			&.open {
 				transform: translateX(0);
 			}
+
+			.search-icon {
+				margin-right: 12px;
+			}
 		}
 
 		&-title {

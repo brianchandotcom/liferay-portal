@@ -3,7 +3,12 @@
 #
 
 api.version=${openAPIYAML.info.version}
-<#if !stringUtil.equals(schemaName, "openapi") && configYAML.generateBatch>
+<#assign
+	javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
+
+	generateBatch = configYAML.generateBatch && javaDataType?has_content
+/>
+<#if !stringUtil.equals(schemaName, "openapi") && generateBatch>
 batch.engine.task.item.delegate=true
 </#if>
 <#if configYAML.resourceApplicationSelect??>

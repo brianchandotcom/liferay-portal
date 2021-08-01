@@ -69,11 +69,13 @@ export default function Sidebar({
 					})}
 				/>
 			</div>
-			<div className="ddm_template_editor__App-sidebar-buttons pt-2">
+			<div className="ddm_template_editor__App-sidebar-buttons pt-3">
 				<ClayButtonWithIcon
 					aria-pressed={PANEL_IDS.elements === selectedSidebarPanelId}
 					borderless
-					className="mb-2"
+					className={classNames('mb-2', {
+						active: PANEL_IDS.elements === selectedSidebarPanelId,
+					})}
 					data-tooltip-align="left"
 					displayType="secondary"
 					monospaced
@@ -94,7 +96,9 @@ export default function Sidebar({
 						PANEL_IDS.properties === selectedSidebarPanelId
 					}
 					borderless
-					className="mb-2"
+					className={classNames('mb-2', {
+						active: PANEL_IDS.properties === selectedSidebarPanelId,
+					})}
 					data-tooltip-align="left"
 					displayType="secondary"
 					monospaced

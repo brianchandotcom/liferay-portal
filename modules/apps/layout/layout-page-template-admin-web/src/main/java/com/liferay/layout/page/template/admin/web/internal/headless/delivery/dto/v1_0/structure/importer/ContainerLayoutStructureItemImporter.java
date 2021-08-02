@@ -242,10 +242,10 @@ public class ContainerLayoutStructureItemImporter
 					(Map<String, Object>)fragmentLinkMap.get("href");
 
 				if (hrefMap != null) {
-					String hrefValue = (String)hrefMap.get("value");
+					Object localizedValue = getLocalizedValue(hrefMap);
 
-					if (hrefValue != null) {
-						jsonObject.put("href", hrefValue);
+					if (localizedValue != null) {
+						jsonObject.put("href", localizedValue);
 					}
 
 					processMapping(

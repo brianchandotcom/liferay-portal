@@ -966,6 +966,12 @@ public class PortalImpl implements Portal {
 
 		String domain = uri.getHost();
 
+		// Is not a relative URL, also has not domain. Invalid.
+
+		if (Validator.isNull(domain)) {
+			return null;
+		}
+
 		if (!_validPortalDomainCheckDisabled && isValidPortalDomain(domain)) {
 			return url;
 		}

@@ -42,14 +42,15 @@ public class DynamicObjectDefinitionTable
 	extends BaseTable<DynamicObjectDefinitionTable> {
 
 	public DynamicObjectDefinitionTable(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields,
+		String tableName) {
 
-		super(objectDefinition.getDBTableName(), () -> null);
+		super(tableName, () -> null);
 
 		_objectFields = objectFields;
+		_tableName = tableName;
 
 		_primaryKeyColumnName = objectDefinition.getPKObjectFieldDBColumnName();
-		_tableName = objectDefinition.getDBTableName();
 
 		createColumn(
 			_primaryKeyColumnName, Long.class, Types.BIGINT,

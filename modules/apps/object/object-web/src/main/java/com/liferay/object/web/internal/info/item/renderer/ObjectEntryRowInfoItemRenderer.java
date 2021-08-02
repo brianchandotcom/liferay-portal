@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -120,10 +121,8 @@ public class ObjectEntryRowInfoItemRenderer
 					objectFieldStreamSupplier.get();
 
 				return objectFieldStream.anyMatch(
-					objectField -> objectField.getName(
-					).equals(
-						entry.getKey()
-					));
+					objectField ->
+						Objects.equals(objectField.getName(), entry.getKey()));
 			}
 		).sorted(
 			Map.Entry.comparingByKey()

@@ -714,11 +714,11 @@ public class ObjectEntryLocalServiceImpl
 			count++;
 		}
 
-		if (count == 1) {
+		/*if (count == 1) {
 			throw new ObjectEntryValuesException(
 				"No values were provided for object definition " +
-					objectDefinition.getObjectDefinitionId());
-		}
+					objectDefinitionId);
+		}*/
 
 		sb.append(") values (?");
 

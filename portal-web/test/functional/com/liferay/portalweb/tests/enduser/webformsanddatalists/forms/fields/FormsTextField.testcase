@@ -31,6 +31,158 @@ definition {
 		}
 	}
 
+	@description = "Verify that a Text Field can be Autocompleted from a Data Provider"
+	@priority = "4"
+	test CanBeAutocompletedUsingADataProvider {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsTextField#CanBeAutocompletedUsingADataProvider";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Data Providers");
+
+		FormsAdminNavigator.gotoAddDataProvider();
+
+		FormsAdmin.editDataProvider(
+			name = "Country Names",
+			outputParameterLabel = "Countries Full Name",
+			outputParameterLabel2 = "Countries A2",
+			outputParameterName = "Countries Full Name",
+			outputParameterName2 = "Countries A2",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterPath2 = "a2",
+			outputParameterType = "List",
+			outputParameterType2 = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com");
+
+		FormsAdmin.saveDataProvider();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldNameTextFieldAuto = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field With Autocomplete");
+
+		Form.gotoAutocompleteTab();
+
+		Form.enableAutocompleteConfiguration();
+
+		Form.editTextFieldDataProvider(
+			dataProvider = "Country Names",
+			dataProviderOutput = "Countries A2");
+
+		Form.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Created Form Name");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextFieldAuto}");
+
+		Form.gotoAutocompleteTab();
+
+		Form.editTextFieldDataProvider(
+			dataProvider = "Country Names",
+			dataProviderOutput = "Countries Full Name");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.editTextWithDataProvider(
+			fieldName = "${fieldNameTextFieldAuto}",
+			fieldValue = "Bra");
+
+		FormFields.selectAutoCompleteOption(autocompleteOption = "Brazil");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field With Autocomplete",
+			fieldValue = "Brazil");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextFieldAuto}");
+
+		Form.gotoAutocompleteTab();
+
+		AssertElementPresent(
+			key_fieldName = "dataSourceType",
+			key_radioOption = "From Data Provider",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
+
+		Form.disableAutocompleteSwitcherTextField();
+
+		AssertNotVisible(
+			key_fieldName = "dataSourceType",
+			key_radioOption = "From Data Provider",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.editText(
+			fieldName = "${fieldNameTextFieldAuto}",
+			fieldValue = "Br");
+
+		AssertElementNotPresent(
+			key_autocompleteOption = "Brazil",
+			locator1 = "FormFields#AUTOCOMPLETE_OPTION");
+	}
+
 	@description = "Verify that a Text Field can be Autocompleted from a list of options"
 	@priority = "4"
 	test CanBeAutocompletedUsingAList {
@@ -197,6 +349,201 @@ definition {
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
 	}
 
+	@description = "LPS-58829 - Verify that a Text Field can be required"
+	@priority = "5"
+	test CanBeRequired {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsTextField#CanBeRequired";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		FormFields.enableSwitcher(fieldName = "Required");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.submitWithValidationError();
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field",
+			fieldValue = "Text Field Value");
+	}
+
+	@description = "LPS-59335 - Verify that a Text Field can be set to Repeatable "
+	@priority = "5"
+	test CanBeSetAsRepeatable {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsTextField#CanBeSetAsRepeatable";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		FormFields.enableSwitcher(fieldName = "Required");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Repeatable");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.addRepeatableField(
+			fieldName = "${fieldTextField}",
+			repeatableFieldNumber = "1");
+
+		FormFields.editRepeatingText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value",
+			fieldValueRepeat = "Text Field Value Repeat");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text",
+			fieldValue = "Text Field Value, Text Field Value Repeat");
+	}
+
+	@description = "LPS-59997 - Verify that a Text Field can be set to Multiple Lines"
+	@priority = "3"
+	test CanBeSetToMultipleLines {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsTextField#CanBeSetToMultipleLines";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
+
+		FormFields.enableSwitcher(fieldName = "Required");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "TextField");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormFields.editBlankMultiTextFieldWithEnterKey(fieldName = "${fieldTextField}");
+
+		FormPortlet.submitWithValidationError();
+
+		FormFields.editTextMultiline(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field",
+			fieldValue = "Text Field Value");
+	}
+
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheContainsOption {
@@ -258,6 +605,69 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
+	}
+
+	@description = "Verify that the Does Not Contain option can be used to validate a Text Field"
+	@priority = "4"
+	test CanBeValidatedUsingTheDoesNotContainOption {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsTextField#CanBeValidatedUsingTheDoesNotContainOption";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Validation");
+
+		FormFields.editValidation(
+			validationArgument = "Contains",
+			validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;",
+			validationInput = "Test");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "test");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdmin.viewForm();
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text",
+			fieldValue = "test");
 	}
 
 	@description = "Verify that the Does Not Match option can be used to validate a Text Field"
@@ -436,9 +846,80 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
-	@description = "Verify that a Text Field can require Confirmation"
+	@description = "LPS-125860 - Verify that Confirmation field property is working as expected"
 	@priority = "5"
 	test CanRequireConfirmation {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Require Confirmation");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.viewConfirmationFieldTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "The information does not match.");
+
+		FormFields.editConfirmationFieldText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "The information does not match.");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field",
+			fieldValue = "Text Field Value");
+	}
+
+	@description = "Verify that a Text Field can require Confirmation"
+	@priority = "5"
+	test CanRequireConfirmationWithValidation {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 

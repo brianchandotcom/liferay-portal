@@ -192,10 +192,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	}, [totalNumberOfItems, item.config.numberOfItems]);
 
 	useEffect(() => {
-		if (
-			config.collectionDisplayFragmentPaginationEnabled &&
-			isMaximumValuePerPageError
-		) {
+		if (isMaximumValuePerPageError) {
 			setNumberOfItemsPerPageError(
 				Liferay.Util.sub(
 					Liferay.Language.get('only-x-items-will-be-displayed'),
@@ -227,10 +224,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	}, [collectionItemType]);
 
 	useEffect(() => {
-		if (
-			config.collectionDisplayFragmentPaginationEnabled &&
-			item.config.collection
-		) {
+		if (item.config.collection) {
 			CollectionService.getCollectionItemCount({
 				collection: item.config.collection,
 				onNetworkStatus: () => {},
@@ -357,39 +351,33 @@ export const CollectionGeneralPanel = ({item}) => {
 							</ClayForm.Group>
 						)}
 
-					{config.collectionDisplayFragmentPaginationEnabled && (
-						<>
-							<ClayForm.Group small>
-								<label htmlFor={collectionPaginationTypeId}>
-									{Liferay.Language.get('pagination')}
-								</label>
-								<ClaySelectWithOption
-									aria-label={Liferay.Language.get(
-										'pagination'
-									)}
-									id={collectionPaginationTypeId}
-									onChange={(event) =>
-										handleConfigurationChanged({
-											paginationType: event.target.value,
-										})
-									}
-									options={PAGINATION_TYPE_OPTIONS}
-									value={item.config.paginationType}
-								/>
-							</ClayForm.Group>
+					<ClayForm.Group small>
+						<label htmlFor={collectionPaginationTypeId}>
+							{Liferay.Language.get('pagination')}
+						</label>
+						<ClaySelectWithOption
+							aria-label={Liferay.Language.get('pagination')}
+							id={collectionPaginationTypeId}
+							onChange={(event) =>
+								handleConfigurationChanged({
+									paginationType: event.target.value,
+								})
+							}
+							options={PAGINATION_TYPE_OPTIONS}
+							value={item.config.paginationType}
+						/>
+					</ClayForm.Group>
 
-							{item.config.paginationType && (
-								<div className="mb-1 pt-1">
-									<ClayCheckbox
-										checked={showAllItems}
-										label={Liferay.Language.get(
-											'display-all-collection-items'
-										)}
-										onChange={handleShowAllItemsChanged}
-									/>
-								</div>
-							)}
-						</>
+					{item.config.paginationType && (
+						<div className="mb-1 pt-1">
+							<ClayCheckbox
+								checked={showAllItems}
+								label={Liferay.Language.get(
+									'display-all-collection-items'
+								)}
+								onChange={handleShowAllItemsChanged}
+							/>
+						</div>
 					)}
 
 					<ClayForm.Group small>
@@ -405,72 +393,65 @@ export const CollectionGeneralPanel = ({item}) => {
 							value={nextValue.numberOfItems}
 						/>
 
-						{config.collectionDisplayFragmentPaginationEnabled &&
-							item.config.paginationType &&
-							numberOfItemsError && (
-								<p className="mt-2 small text-warning">
-									{numberOfItemsError}
-								</p>
-							)}
+						{item.config.paginationType && numberOfItemsError && (
+							<p className="mt-2 small text-warning">
+								{numberOfItemsError}
+							</p>
+						)}
 					</ClayForm.Group>
 
-					{config.collectionDisplayFragmentPaginationEnabled &&
-						item.config.paginationType && (
-							<ClayForm.Group small>
-								<label
-									htmlFor={collectionNumberOfItemsPerPageId}
-								>
-									{Liferay.Language.get(
-										'maximum-number-of-items-per-page'
-									)}
-								</label>
-								<ClayInput
-									id={collectionNumberOfItemsPerPageId}
-									min="1"
-									onBlur={
-										handleCollectionNumberOfItemsPerPageBlurred
-									}
-									onChange={
-										handleCollectionNumberOfItemsPerPageChanged
-									}
-									type="number"
-									value={nextValue.numberOfItemsPerPage}
-								/>
+					{item.config.paginationType && (
+						<ClayForm.Group small>
+							<label htmlFor={collectionNumberOfItemsPerPageId}>
+								{Liferay.Language.get(
+									'maximum-number-of-items-per-page'
+								)}
+							</label>
+							<ClayInput
+								id={collectionNumberOfItemsPerPageId}
+								min="1"
+								onBlur={
+									handleCollectionNumberOfItemsPerPageBlurred
+								}
+								onChange={
+									handleCollectionNumberOfItemsPerPageChanged
+								}
+								type="number"
+								value={nextValue.numberOfItemsPerPage}
+							/>
 
-								<p
-									className={classNames(
-										'mb-2 mt-2 small',
-										isMaximumValuePerPageError &&
-											numberOfItemsPerPageError
-											? 'text-warning'
-											: 'text-secondary'
-									)}
-								>
-									<span
-										className={classNames('mr-1', {
-											'font-weight-bold':
-												isMaximumValuePerPageError &&
-												numberOfItemsPerPageError,
-										})}
-									>
-										{Liferay.Util.sub(
-											Liferay.Language.get(
-												'x-items-maximum'
-											),
-											config.searchContainerPageMaxDelta
-										)}
-									</span>
-
-									{isMaximumValuePerPageError ? (
+							<p
+								className={classNames(
+									'mb-2 mt-2 small',
+									isMaximumValuePerPageError &&
 										numberOfItemsPerPageError
-									) : (
-										<span className="d-block mb-2 mt-2 text-warning">
-											{numberOfItemsPerPageError}
-										</span>
+										? 'text-warning'
+										: 'text-secondary'
+								)}
+							>
+								<span
+									className={classNames('mr-1', {
+										'font-weight-bold':
+											isMaximumValuePerPageError &&
+											numberOfItemsPerPageError,
+									})}
+								>
+									{Liferay.Util.sub(
+										Liferay.Language.get('x-items-maximum'),
+										config.searchContainerPageMaxDelta
 									)}
-								</p>
-							</ClayForm.Group>
-						)}
+								</span>
+
+								{isMaximumValuePerPageError ? (
+									numberOfItemsPerPageError
+								) : (
+									<span className="d-block mb-2 mt-2 text-warning">
+										{numberOfItemsPerPageError}
+									</span>
+								)}
+							</p>
+						</ClayForm.Group>
+					)}
 				</>
 			)}
 		</>

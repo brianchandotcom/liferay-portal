@@ -28,7 +28,6 @@ page import="com.liferay.info.list.renderer.InfoListRenderer" %><%@
 page import="com.liferay.layout.display.page.LayoutDisplayPageProvider" %><%@
 page import="com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys" %><%@
 page import="com.liferay.layout.responsive.ResponsiveLayoutStructureUtil" %><%@
-page import="com.liferay.layout.taglib.internal.FFRenderLayoutStructureConfigurationUtil" %><%@
 page import="com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext" %><%@
 page import="com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.ColumnLayoutStructureItem" %><%@

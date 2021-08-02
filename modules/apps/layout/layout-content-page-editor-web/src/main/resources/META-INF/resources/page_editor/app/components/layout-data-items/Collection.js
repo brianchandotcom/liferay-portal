@@ -17,7 +17,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
-import {config} from '../../config/index';
 import {
 	CollectionItemContext,
 	CollectionItemContextProvider,
@@ -86,8 +85,7 @@ const Grid = ({
 }) => {
 	const maxNumberOfItems = Math.min(
 		collectionLength,
-		config.collectionDisplayFragmentPaginationEnabled &&
-			collectionConfig.paginationType
+		collectionConfig.paginationType
 			? collectionConfig.numberOfItemsPerPage
 			: collectionConfig.numberOfItems
 	);
@@ -215,11 +213,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 	const itemClassPK = classPK || displayPagePreviewItemData.classPK;
 
 	useEffect(() => {
-		if (
-			config.collectionDisplayFragmentPaginationEnabled
-				? collectionConfig.collection && activePage <= totalPages
-				: collectionConfig.collection
-		) {
+		if (collectionConfig.collection && activePage <= totalPages) {
 			setLoading(true);
 
 			CollectionService.getCollectionField({
@@ -233,9 +227,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				numberOfItems: collectionConfig.numberOfItems,
 				numberOfItemsPerPage: collectionConfig.numberOfItemsPerPage,
 				onNetworkStatus: dispatch,
-				paginationType: config.collectionDisplayFragmentPaginationEnabled
-					? collectionConfig.paginationType
-					: '',
+				paginationType: collectionConfig.paginationType,
 				templateKey: collectionConfig.templateKey || null,
 			})
 				.then((response) => {
@@ -296,17 +288,16 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				/>
 			)}
 
-			{config.collectionDisplayFragmentPaginationEnabled &&
-				collectionConfig.paginationType && (
-					<CollectionPagination
-						activePage={activePage}
-						collectionConfig={collectionConfig}
-						collectionId={item.itemId}
-						onPageChange={setActivePage}
-						totalNumberOfItems={collection.totalNumberOfItems || 0}
-						totalPages={totalPages}
-					/>
-				)}
+			{collectionConfig.paginationType && (
+				<CollectionPagination
+					activePage={activePage}
+					collectionConfig={collectionConfig}
+					collectionId={item.itemId}
+					onPageChange={setActivePage}
+					totalNumberOfItems={collection.totalNumberOfItems || 0}
+					totalPages={totalPages}
+				/>
+			)}
 		</div>
 	);
 });

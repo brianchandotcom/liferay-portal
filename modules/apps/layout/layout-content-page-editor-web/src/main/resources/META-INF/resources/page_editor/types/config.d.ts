@@ -56,7 +56,6 @@ export interface Config {
 
 	changeMasterLayoutURL: string;
 	changeStyleBookEntryURL: string;
-	collectionDisplayFragmentPaginationEnabled: boolean;
 	collectionSelectorURL: string;
 
 	commonStyles: Array<{

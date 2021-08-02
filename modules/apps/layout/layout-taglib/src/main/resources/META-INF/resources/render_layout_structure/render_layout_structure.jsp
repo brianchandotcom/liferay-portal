@@ -38,8 +38,6 @@ for (String childrenItemId : childrenItemIds) {
 			int collectionCount = renderLayoutStructureDisplayContext.getCollectionCount(collectionStyledLayoutStructureItem);
 
 			String paginationType = collectionStyledLayoutStructureItem.getPaginationType();
-
-			boolean paginationEnabled = FFRenderLayoutStructureConfigurationUtil.collectionDisplayFragmentPaginationEnabled() && (Objects.equals(paginationType, "numeric") || Objects.equals(paginationType, "simple"));
 			%>
 
 			<div class="<%= renderLayoutStructureDisplayContext.getCssClass(collectionStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(collectionStyledLayoutStructureItem) %>">
@@ -61,11 +59,7 @@ for (String childrenItemId : childrenItemIds) {
 
 							List<Object> collection = renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem);
 
-							int maxNumberOfItemsPerPage = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItems());
-
-							if (paginationEnabled) {
-								maxNumberOfItemsPerPage = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
-							}
+							int maxNumberOfItemsPerPage = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
 
 							int numberOfRows = (int)Math.ceil((double)maxNumberOfItemsPerPage / collectionStyledLayoutStructureItem.getNumberOfColumns());
 
@@ -117,28 +111,26 @@ for (String childrenItemId : childrenItemIds) {
 				int numberOfPages = (int)Math.ceil((double)maxNumberOfItems / collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
 				%>
 
-				<c:if test="<%= paginationEnabled %>">
-					<div>
-						<react:component
-							module="render_layout_structure/js/CollectionPagination"
-							props='<%=
-								HashMapBuilder.<String, Object>put(
-									"collectionId", collectionStyledLayoutStructureItem.getItemId()
-								).put(
-									"numberOfItems", collectionStyledLayoutStructureItem.getNumberOfItems()
-								).put(
-									"numberOfItemsPerPage", collectionStyledLayoutStructureItem.getNumberOfItemsPerPage()
-								).put(
-									"paginationType", paginationType
-								).put(
-									"totalItems", collectionCount
-								).put(
-									"totalPages", numberOfPages
-								).build()
-							%>'
-						/>
-					</div>
-				</c:if>
+				<div>
+					<react:component
+						module="render_layout_structure/js/CollectionPagination"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"collectionId", collectionStyledLayoutStructureItem.getItemId()
+							).put(
+								"numberOfItems", collectionStyledLayoutStructureItem.getNumberOfItems()
+							).put(
+								"numberOfItemsPerPage", collectionStyledLayoutStructureItem.getNumberOfItemsPerPage()
+							).put(
+								"paginationType", paginationType
+							).put(
+								"totalItems", collectionCount
+							).put(
+								"totalPages", numberOfPages
+							).build()
+						%>'
+					/>
+				</div>
 			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">

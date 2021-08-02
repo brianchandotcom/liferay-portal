@@ -51,8 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	enabled = true, property = "service.ranking:Integer=100",
-	service = InfoItemRenderer.class
+	property = "service.ranking:Integer=100", service = InfoItemRenderer.class
 )
 public class ObjectEntryRowInfoItemRenderer
 	implements InfoItemRenderer<ObjectEntry> {

@@ -21,6 +21,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -132,7 +133,7 @@ public class ObjectEntryRowInfoItemRenderer
 				entry -> Optional.ofNullable(
 					entry.getValue()
 				).orElse(
-					""
+					StringPool.BLANK
 				),
 				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
 		);

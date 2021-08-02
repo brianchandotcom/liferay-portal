@@ -15,6 +15,8 @@
 package com.liferay.portal.remote.jaxrs.security.internal.exception.mapper;
 
 import com.liferay.petra.reflect.AnnotationLocator;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
@@ -114,6 +116,12 @@ public class AccessControlledContainerRequestResponseFilterExceptionMapper
 			mediaType = MediaType.APPLICATION_XML_TYPE;
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(securityException, securityException);
+		}
+
+		securityException = new SecurityException("Access Denied");
+
 		return Response.status(
 			Response.Status.FORBIDDEN
 		).entity(
@@ -191,6 +199,10 @@ public class AccessControlledContainerRequestResponseFilterExceptionMapper
 			}
 
 		};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccessControlledContainerRequestResponseFilterExceptionMapper.class.
+			getName());
 
 	private final AccessControlAdvisor _accessControlAdvisor =
 		new AccessControlAdvisorImpl();

@@ -564,11 +564,22 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {
-				_objectFieldLocalService.addObjectField(
-					userId, objectDefinitionId, objectField.getDBColumnName(),
-					objectField.getIndexed(), objectField.getIndexedAsKeyword(),
-					objectField.getIndexedLanguageId(), objectField.getName(),
-					objectField.isRequired(), objectField.getType());
+
+				if(system) {
+					_objectFieldLocalService.addSystemObjectField(
+						userId, objectDefinitionId,
+						objectField.getDBColumnName(), objectField.getIndexed(),
+						objectField.getIndexedAsKeyword(),
+						objectField.getIndexedLanguageId(), objectField.getName(),
+						objectField.isRequired(), objectField.getType());
+				}
+				else {
+					_objectFieldLocalService.addCustomObjectField(
+						userId, objectDefinitionId, objectField.getIndexed(),
+						objectField.getIndexedAsKeyword(),
+						objectField.getIndexedLanguageId(), objectField.getName(),
+						objectField.isRequired(), objectField.getType());
+				}
 			}
 		}
 

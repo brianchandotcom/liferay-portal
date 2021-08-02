@@ -55,10 +55,9 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 		throws Exception {
 
 		return ObjectFieldUtil.toObjectField(
-			_objectFieldLocalService.addObjectField(
+			_objectFieldLocalService.addCustomObjectField(
 				contextUser.getUserId(), objectDefinitionId,
-				objectField.getName(), objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(), objectField.getName(),
 				objectField.getRequired(), objectField.getType()));
 	}

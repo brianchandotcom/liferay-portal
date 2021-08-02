@@ -788,9 +788,6 @@ definition {
 		AssertElementPresent(
 			key_pageNumber = "1",
 			locator1 = "MyWorkflowTasks#COMPLETED_TABLE_PAGINATION");
-
-
-			
 	}
 
 	@description = "Verify that pagination follows in asc/desc sequence in the Assigned to Me tab"

@@ -130,8 +130,9 @@ public class ObjectDefinitionLocalServiceImpl
 			systemObjectDefinitionMetadata.getObjectFields();
 
 		List<ObjectField> oldObjectFields =
-			_objectFieldPersistence.findByObjectDefinitionId(
-				objectDefinition.getObjectDefinitionId());
+			_objectFieldPersistence.findByODI_DTN(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getDBTableName());
 
 		for (ObjectField oldObjectField : oldObjectFields) {
 			if (!_hasObjectField(newObjectFields, oldObjectField)) {
@@ -160,6 +161,13 @@ public class ObjectDefinitionLocalServiceImpl
 				}
 			}
 		}
+
+		List<ObjectField> objectFields =
+			_objectFieldPersistence.findByODI_DTN(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getExtensionDBTableName());
+
+		_createExtensionTable(objectDefinition, objectFields);
 
 		return objectDefinition;
 	}
@@ -340,10 +348,16 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
 		List<ObjectField> objectFields =
-			_objectFieldPersistence.findByObjectDefinitionId(
-				objectDefinitionId);
+			_objectFieldPersistence.findByODI_DTN(
+				objectDefinitionId, objectDefinition.getDBTableName());
 
 		_createTable(objectDefinition, objectFields);
+
+		objectFields =
+			_objectFieldPersistence.findByODI_DTN(
+				objectDefinitionId, objectDefinition.getExtensionDBTableName());
+
+		_createExtensionTable(objectDefinition, objectFields);
 
 		ObjectDefinition finalObjectDefinition = objectDefinition;
 

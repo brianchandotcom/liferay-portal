@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.workflow.DefaultWorkflowDefinition;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowInstance;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowLog;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
+import com.liferay.portal.kernel.workflow.DefaultWorkflowTransition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
@@ -42,17 +43,21 @@ import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.LazyWorkflowTaskAssigneeList;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.WorkflowTaskAssigneesSupplier;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -118,6 +123,46 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowDefinition.setVersion(kaleoDefinition.getVersion());
 		defaultWorkflowDefinition.setWorkflowDefinitionId(
 			kaleoDefinition.getKaleoDefinitionId());
+
+		try {
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
+					kaleoDefinition.getVersion() + StringPool.PERIOD + 0);
+
+			List<KaleoTransition> kaleoTransitions =
+				_kaleoTransitionLocalService.
+					getKaleoDefinitionVersionKaleoTransitions(
+						kaleoDefinitionVersion.getKaleoDefinitionVersionId());
+
+			defaultWorkflowDefinition.setWorkflowTransitions(
+				Stream.of(
+					kaleoTransitions
+				).flatMap(
+					List::stream
+				).map(
+					kaleoTransition -> {
+						DefaultWorkflowTransition defaultWorkflowTransition =
+							new DefaultWorkflowTransition();
+
+						defaultWorkflowTransition.setName(
+							kaleoTransition.getName());
+						defaultWorkflowTransition.setSourceNodeName(
+							kaleoTransition.getSourceKaleoNodeName());
+						defaultWorkflowTransition.setTargetNodeName(
+							kaleoTransition.getTargetKaleoNodeName());
+
+						return defaultWorkflowTransition;
+					}
+				).collect(
+					Collectors.toList()
+				));
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+		}
 
 		return defaultWorkflowDefinition;
 	}
@@ -364,5 +409,8 @@ public class KaleoWorkflowModelConverterImpl
 	@Reference
 	private KaleoTaskAssignmentInstanceLocalService
 		_kaleoTaskAssignmentInstanceLocalService;
+
+	@Reference
+	private KaleoTransitionLocalService _kaleoTransitionLocalService;
 
 }

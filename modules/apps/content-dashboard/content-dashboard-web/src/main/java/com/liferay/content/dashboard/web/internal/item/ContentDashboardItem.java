@@ -59,6 +59,8 @@ public interface ContentDashboardItem<T> {
 
 	public Object getDisplayFieldValue(String fieldName, Locale locale);
 
+	public String getDownloadURL();
+
 	public InfoItemReference getInfoItemReference();
 
 	public Date getModifiedDate();

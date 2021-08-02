@@ -23,6 +23,7 @@ import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardIt
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
@@ -271,6 +272,19 @@ public class FileEntryContentDashboardItem
 		}
 
 		return infoFieldValue.getValue(locale);
+	}
+
+	@Override
+	public String getDownloadURL() {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("downloadURL");
+
+		Object downloadURL = infoFieldValue.getValue();
+
+		return downloadURL.toString();
 	}
 
 	@Override

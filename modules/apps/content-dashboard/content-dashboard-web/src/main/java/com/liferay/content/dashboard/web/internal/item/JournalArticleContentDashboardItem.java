@@ -278,6 +278,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public String getDownloadURL() {
+		return null;
+	}
+
+	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			JournalArticle.class.getName(),

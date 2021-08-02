@@ -803,15 +803,22 @@ public class LayoutStagedModelDataHandler
 				if (Validator.isNotNull(
 						masterLayoutLayoutPageTemplateEntryUuid)) {
 
-					Element masterLayoutLayoutPageTemplateEntryElement =
-						portletDataContext.getReferenceDataElement(
-							layout, LayoutPageTemplateEntry.class,
-							layout.getGroupId(),
-							masterLayoutLayoutPageTemplateEntryUuid);
+					LayoutPageTemplateEntry layoutPageTemplateEntry =
+						_layoutPageTemplateEntryLocalService.
+							fetchLayoutPageTemplateEntryByPlid(
+								importedMasterLayoutPlid);
 
-					StagedModelDataHandlerUtil.importStagedModel(
-						portletDataContext,
-						masterLayoutLayoutPageTemplateEntryElement);
+					if (layoutPageTemplateEntry == null) {
+						Element masterLayoutLayoutPageTemplateEntryElement =
+							portletDataContext.getReferenceDataElement(
+								layout, LayoutPageTemplateEntry.class,
+								layout.getGroupId(),
+								masterLayoutLayoutPageTemplateEntryUuid);
+
+						StagedModelDataHandlerUtil.importStagedModel(
+							portletDataContext,
+							masterLayoutLayoutPageTemplateEntryElement);
+					}
 				}
 			}
 		}

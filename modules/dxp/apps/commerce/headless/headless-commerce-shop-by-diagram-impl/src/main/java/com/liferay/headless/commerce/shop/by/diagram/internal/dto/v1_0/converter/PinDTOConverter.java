@@ -63,7 +63,7 @@ public class PinDTOConverter
 									cpDefinitionDiagramPin.getCPDefinitionId(),
 									cpDefinitionDiagramPin.getNumber());
 
-						if(cpDefinitionDiagramEntry == null) {
+						if (cpDefinitionDiagramEntry == null) {
 							return null;
 						}
 

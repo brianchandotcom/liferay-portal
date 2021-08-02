@@ -75,6 +75,18 @@ public class CPDefinitionDiagramEntryServiceImpl
 	}
 
 	@Override
+	public CPDefinitionDiagramEntry fetchCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionDiagramEntryLocalService.
+			fetchCPDefinitionDiagramEntry(cpDefinitionId, number);
+	}
+
+	@Override
 	public List<CPDefinitionDiagramEntry> getCPDefinitionDiagramEntries(
 			long cpDefinitionId, int start, int end)
 		throws PortalException {
@@ -111,18 +123,6 @@ public class CPDefinitionDiagramEntryServiceImpl
 			cpDefinitionDiagramEntry.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionDiagramEntry;
-	}
-
-	@Override
-	public CPDefinitionDiagramEntry fetchCPDefinitionDiagramEntry(
-		long cpDefinitionId, int number)
-		throws PortalException {
-
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
-
-		return cpDefinitionDiagramEntryLocalService.fetchCPDefinitionDiagramEntry(
-			cpDefinitionId, number);
 	}
 
 	@Override

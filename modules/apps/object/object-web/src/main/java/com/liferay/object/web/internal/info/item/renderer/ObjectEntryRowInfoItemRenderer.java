@@ -76,7 +76,6 @@ public class ObjectEntryRowInfoItemRenderer
 					objectEntry.getObjectDefinitionId()));
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY, objectEntry);
-
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY_VALUES, _getValues(objectEntry));
 

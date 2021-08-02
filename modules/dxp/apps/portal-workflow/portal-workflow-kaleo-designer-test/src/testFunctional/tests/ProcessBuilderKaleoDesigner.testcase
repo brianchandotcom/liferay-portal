@@ -211,6 +211,15 @@ definition {
 			locator1 = "KaleoDesigner#TRANSLATED_ICON_COUNTRY");
 	}
 
+	@description = "LPS-135888 - Verify that is possible to select Account role type for role assignments"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignAccountRole {
+
+		// TODO LRQA-69104 CanAssignAccountRole pending implementation
+
+	}
+
 	@description = "Verify that user can create transition between nodes from the edge of node"
 	@priority = "5"
 	test CanCreateTransition {
@@ -826,6 +835,24 @@ definition {
 		KaleoDesigner.viewNodePresent(key_nodeNodeLabel = "Task");
 
 		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
+	}
+
+	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SingleApproverComesWithAccountMemberAndAdmRoleName {
+
+		// TODO LRQA-69103 SingleApproverComesWithAccountMemberAndAdmRoleName pending implementation
+
+	}
+
+	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account role assigned"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SingleApproverComesWithAccountRole {
+
+		// TODO LRQA-69102 SingleApproverComesWithAccountRole pending implementation
+
 	}
 
 	@description = "Verify that the Start Node must have an outgoing transition"

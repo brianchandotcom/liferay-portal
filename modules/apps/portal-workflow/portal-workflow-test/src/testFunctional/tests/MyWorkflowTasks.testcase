@@ -47,6 +47,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AccountUserCanApproveTask {
+
+		// TODO LRQA-69107 AccountUserCanApproveTask pending implementation
+
+	}
+
+	@description = "LPS-135888 - Verify that the user with Account role can view the order details through the My Workflow Tasks page"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AccountUserCanViewOrderDetails {
+
+		// TODO LRQA-69109 AccountUserCanViewOrderDetails pending implementation
+
+	}
+
 	@priority = "4"
 	test AddCommentToTaskAssignedToMe {
 		Navigator.openURL();
@@ -257,6 +275,15 @@ definition {
 	test CanAssignTaskToOtherUser {
 
 		// TODO LRQA-68843 CanAssignTaskToOtherUser pending implementation
+
+	}
+
+	@description = "LPS-135888 - Verify that the task is assigned to the user with Account role type"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAssignTaskToUserWithAccountRole {
+
+		// TODO LRQA-69106 CanAssignTaskToUserWithAccountRole pending implementation
 
 	}
 
@@ -789,6 +816,15 @@ definition {
 	test TableShowsTimeLeft {
 
 		// TODO LRQA-68863 TableShowsTimeLeft pending implementation
+
+	}
+
+	@description = "LPS-135888 - Verify that when the user delete the order, the task is not displayed under My Workflow Tasks"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TaskIsNotDisplayedAfterOrderIsDeleted {
+
+		// TODO LRQA-69108 TaskIsNotDisplayedAfterOrderIsDeleted pending implementation
 
 	}
 

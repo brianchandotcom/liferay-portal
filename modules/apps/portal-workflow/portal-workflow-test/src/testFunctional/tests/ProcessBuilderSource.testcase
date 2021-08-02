@@ -24,6 +24,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-135888 - Verify that is possible to assign Account role type for role assignments trough XML Source"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignAccoutRoleTroughtSource {
+
+		// TODO LRQA-69112 CanAssignAccoutRoleTroughtSource pending implementation
+
+	}
+
 	@description = "Verify that the user can delete a Not Published process"
 	@priority = "3"
 	test CanDeleteUnpublishedWorkflow {
@@ -591,6 +600,24 @@ definition {
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 	}
 
+	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SingleApproverSourceComesWithAccountMemberAndAdminAssigned {
+
+		// TODO LRQA-69111 SingleApproverSourceComesWithAccountMemberAndAdminAssigned pending implementation
+
+	}
+
+	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account role assigned"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SingleApproverSourceComesWithAccountRoleAssigned {
+
+		// TODO LRQA-69110 SingleApproverSourceComesWithAccountRoleAssigned pending implementation
+
+	}
+
 	@description = "Verify that the time format in Details tab is following the system language"
 	@priority = "3"
 	test TimeFormatFollowsSystemLanguageInDetails {
@@ -701,6 +728,24 @@ definition {
 			key_rowNumber = "1",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW",
 			value1 = "PM");
+	}
+
+	@description = "LPS-135888 - Verify that the XML source version is updated for a new workflow"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test XMLSourceVersionIsUpdatedForNewWorkfow {
+
+		// TODO LRQA-69114 XMLSourceVersionIsUpdatedForNewWorkfow pending implementation
+
+	}
+
+	@description = "LPS-135888 - Verify that the XML source version is updated for Single Approver"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test XMLSourceVersionIsUpdatedForSingleApprover {
+
+		// TODO LRQA-69113 XMLSourceVersionIsUpdatedForSingleApprover pending implementation
+
 	}
 
 }

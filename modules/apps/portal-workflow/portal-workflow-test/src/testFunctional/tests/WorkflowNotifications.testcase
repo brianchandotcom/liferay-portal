@@ -1,0 +1,58 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+
+	var workflowAssetType = "Web Content Article";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WebContent.tearDownCP();
+
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownSiteWorkflow();
+		}
+	}
+
+	@description = "LPS-135888 - Verify that the user with Account role type receives the notification for review"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AccountUserReceivesNotification {
+
+		// TODO LRQA-69117 AccountUserReceivesNotification pending implementation
+
+	}
+
+	@description = "LPS-135888 - Verify that when the user delete the order, the notifications are not displayed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test NotificationIsNotAvailableWhenOrderIsDeleted {
+
+		// TODO LRQA-69118 NotificationIsNotAvailableWhenOrderIsDeleted pending implementation
+
+	}
+
+}

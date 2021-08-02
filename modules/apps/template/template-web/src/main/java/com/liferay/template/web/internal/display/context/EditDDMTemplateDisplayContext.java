@@ -44,6 +44,7 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.template.web.internal.util.TemplateUtil;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -192,7 +193,15 @@ public class EditDDMTemplateDisplayContext {
 				getTemplateHandlerClassNameId(), getClassPK(), getLanguage(),
 				_themeDisplay.getLocale());
 
+		templateVariableGroups.putAll(getAdditionalTemplateVariableGroups());
+
 		return templateVariableGroups.values();
+	}
+
+	protected Map<String, TemplateVariableGroup>
+		getAdditionalTemplateVariableGroups() {
+
+		return Collections.emptyMap();
 	}
 
 	protected long getClassNameId() {

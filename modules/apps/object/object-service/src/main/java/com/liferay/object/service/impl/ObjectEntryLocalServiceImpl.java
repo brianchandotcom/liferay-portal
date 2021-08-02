@@ -121,7 +121,11 @@ public class ObjectEntryLocalServiceImpl
 		long objectEntryId = counterLocalService.increment();
 
 		_insertIntoTable(
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId),
+			_getDynamicObjectDefinitionTable(objectDefinitionId), objectEntryId,
+			values);
+
+		_insertIntoTable(
+			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId),
 			objectEntryId, values);
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
@@ -641,22 +645,21 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _insertIntoTable(
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Map<String, Serializable> values)
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			long objectEntryId, Map<String, Serializable> values)
 		throws PortalException {
+
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("insert into ");
-		sb.append(objectDefinition.getDBTableName());
+		sb.append(dynamicObjectDefinitionTable.getName());
 		sb.append(" (");
-		sb.append(objectDefinition.getPKObjectFieldDBColumnName());
+		sb.append(primaryKeyColumn.getName());
 
 		int count = 1;
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(
-				objectDefinition.getObjectDefinitionId());
 
 		List<ObjectField> objectFields =
 			dynamicObjectDefinitionTable.getObjectFields();

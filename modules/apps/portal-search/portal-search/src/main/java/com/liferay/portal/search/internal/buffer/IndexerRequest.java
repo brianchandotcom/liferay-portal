@@ -42,6 +42,7 @@ public class IndexerRequest {
 		_indexer = new NoAutoCommitIndexer<>(indexer);
 
 		_forceSync = forceSync;
+
 		_modelClassName = classedModel.getModelClassName();
 		_modelPrimaryKey = (Long)_classedModel.getPrimaryKeyObj();
 	}
@@ -54,9 +55,9 @@ public class IndexerRequest {
 		_indexer = new NoAutoCommitIndexer<>(indexer);
 		_modelClassName = modelClassName;
 		_modelPrimaryKey = modelPrimaryKey;
+		_forceSync = forceSync;
 
 		_classedModel = null;
-		_forceSync = forceSync;
 	}
 
 	@Override

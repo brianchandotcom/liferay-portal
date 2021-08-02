@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,8 +51,50 @@ public class ObjectFieldLocalServiceImpl
 	extends ObjectFieldLocalServiceBaseImpl {
 
 	@Override
-	public ObjectField addObjectField(
+	public ObjectField addCustomObjectField(
+			long userId, long objectDefinitionId,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String name, boolean required, String type)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		String dbTableName = objectDefinition.getDBTableName();
+
+		if(objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED){
+			dbTableName = objectDefinition.getExtensionDBTableName();
+		}
+
+		return _addObjectField(
+			userId, objectDefinitionId, name + StringPool.UNDERLINE, dbTableName, indexed,
+			indexedAsKeyword, indexedLanguageId, name, required, type);
+
+	}
+
+	@Override
+	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String name, boolean required, String type)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if(Validator.isNull(dbColumnName)){
+			dbColumnName = name;
+		}
+
+		return _addObjectField(
+			userId, objectDefinitionId, dbColumnName,
+			objectDefinition.getDBTableName(), indexed, indexedAsKeyword,
+			indexedLanguageId, name, required, type);
+	}
+
+
+	private ObjectField _addObjectField(
+			long userId, long objectDefinitionId, String dbColumnName, String dbTableName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			String name, boolean required, String type)
 		throws PortalException {
@@ -61,14 +104,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isSystem()) {
-			if (Validator.isNull(dbColumnName)) {
-				dbColumnName = name;
-			}
-		}
-		else {
-			dbColumnName = name + StringPool.UNDERLINE;
-		}
+
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 		_validateName(objectDefinition, name);

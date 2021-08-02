@@ -105,19 +105,21 @@ public class ObjectEntryRowInfoItemRenderer
 
 		Set<Map.Entry<String, Serializable>> entries = values.entrySet();
 
-		Stream<Map.Entry<String, Serializable>> stream1 = entries.stream();
+		Stream<Map.Entry<String, Serializable>> entryStream = entries.stream();
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId());
 
-		Supplier<Stream<ObjectField>> streamSupplier = objectFields::stream;
+		Supplier<Stream<ObjectField>> objectFieldStreamSupplier =
+			objectFields::stream;
 
-		return stream1.filter(
+		return entryStream.filter(
 			entry -> {
-				Stream<ObjectField> stream2 = streamSupplier.get();
+				Stream<ObjectField> objectFieldStream =
+					objectFieldStreamSupplier.get();
 
-				return stream2.anyMatch(
+				return objectFieldStream.anyMatch(
 					objectField -> objectField.getName(
 					).equals(
 						entry.getKey()

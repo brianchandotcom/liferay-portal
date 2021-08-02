@@ -22,11 +22,11 @@
 			<tr>
 
 				<%
-				for (String objectColumnName : infoListObjectColumnNames) {
+				for (String infoListObjectColumnName : infoListObjectColumnNames) {
 				%>
 
 					<th class="table-cell-expand-smallest">
-						<liferay-ui:message key="<%= objectColumnName %>" />
+						<liferay-ui:message key="<%= infoListObjectColumnName %>" />
 					</th>
 
 				<%

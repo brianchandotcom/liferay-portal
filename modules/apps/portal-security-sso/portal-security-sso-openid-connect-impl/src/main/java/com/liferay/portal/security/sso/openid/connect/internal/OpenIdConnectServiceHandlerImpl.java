@@ -35,24 +35,13 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 import com.liferay.portal.security.sso.openid.connect.internal.auto.login.OpenIdConnectAutoLogin;
 import com.liferay.portal.security.sso.openid.connect.internal.provider.OpenIdConnectSessionProviderImpl;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
+import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
 
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.proc.BadJOSEException;
-import com.nimbusds.jose.util.DefaultResourceRetriever;
 import com.nimbusds.jwt.JWT;
-import com.nimbusds.oauth2.sdk.AuthorizationCodeGrant;
-import com.nimbusds.oauth2.sdk.AuthorizationGrant;
 import com.nimbusds.oauth2.sdk.ErrorObject;
 import com.nimbusds.oauth2.sdk.ParseException;
-import com.nimbusds.oauth2.sdk.RefreshTokenGrant;
 import com.nimbusds.oauth2.sdk.ResponseType;
 import com.nimbusds.oauth2.sdk.Scope;
-import com.nimbusds.oauth2.sdk.TokenErrorResponse;
-import com.nimbusds.oauth2.sdk.TokenRequest;
-import com.nimbusds.oauth2.sdk.TokenResponse;
-import com.nimbusds.oauth2.sdk.auth.ClientAuthentication;
-import com.nimbusds.oauth2.sdk.auth.ClientSecretBasic;
-import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.ClientID;
@@ -66,22 +55,17 @@ import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
 import com.nimbusds.openid.connect.sdk.AuthenticationResponseParser;
 import com.nimbusds.openid.connect.sdk.AuthenticationSuccessResponse;
 import com.nimbusds.openid.connect.sdk.Nonce;
-import com.nimbusds.openid.connect.sdk.OIDCTokenResponse;
-import com.nimbusds.openid.connect.sdk.OIDCTokenResponseParser;
 import com.nimbusds.openid.connect.sdk.UserInfoErrorResponse;
 import com.nimbusds.openid.connect.sdk.UserInfoRequest;
 import com.nimbusds.openid.connect.sdk.UserInfoResponse;
 import com.nimbusds.openid.connect.sdk.UserInfoSuccessResponse;
-import com.nimbusds.openid.connect.sdk.claims.IDTokenClaimsSet;
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
-import com.nimbusds.openid.connect.sdk.validators.IDTokenValidator;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -161,7 +145,7 @@ public class OpenIdConnectServiceHandlerImpl
 					_portal.getCompanyId(httpServletRequest),
 					openIdConnectAuthenticationSession.getProviderName());
 
-		OIDCTokens oidcTokens = _requestTokensWithAuthCode(
+		OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 			authenticationSuccessResponse,
 			openIdConnectAuthenticationSession.getNonce(),
 			openIdConnectProvider, _getLoginRedirectURI(httpServletRequest));
@@ -365,7 +349,7 @@ public class OpenIdConnectServiceHandlerImpl
 			return false;
 		}
 
-		OIDCTokens oidcTokens = _requestTokensWithRefreshToken(
+		OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
 				CompanyThreadLocal.getCompanyId(),
 				openIdConnectSessionImpl.getOpenIdProviderName()),
@@ -375,104 +359,6 @@ public class OpenIdConnectServiceHandlerImpl
 			System.currentTimeMillis(), oidcTokens, openIdConnectSessionImpl);
 
 		return true;
-	}
-
-	private OIDCTokens _requestTokens(
-			AuthorizationGrant authorizationCodeGrant, Nonce nonce,
-			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
-				openIdConnectProvider)
-		throws OpenIdConnectServiceException.ProviderException,
-			   OpenIdConnectServiceException.TokenException {
-
-		ClientID clientID = new ClientID(openIdConnectProvider.getClientId());
-
-		Secret secret = new Secret(openIdConnectProvider.getClientSecret());
-
-		ClientAuthentication clientAuthentication = new ClientSecretBasic(
-			clientID, secret);
-
-		OIDCProviderMetadata oidcProviderMetadata =
-			openIdConnectProvider.getOIDCProviderMetadata();
-
-		URI tokenEndpoint = oidcProviderMetadata.getTokenEndpointURI();
-
-		TokenRequest tokenRequest = new TokenRequest(
-			tokenEndpoint, clientAuthentication, authorizationCodeGrant);
-
-		HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
-
-		try {
-			HTTPResponse httpResponse = httpRequest.send();
-
-			TokenResponse tokenResponse = OIDCTokenResponseParser.parse(
-				httpResponse);
-
-			if (tokenResponse instanceof TokenErrorResponse) {
-				TokenErrorResponse tokenErrorResponse =
-					(TokenErrorResponse)tokenResponse;
-
-				ErrorObject errorObject = tokenErrorResponse.getErrorObject();
-
-				JSONObject jsonObject = errorObject.toJSONObject();
-
-				throw new OpenIdConnectServiceException.TokenException(
-					jsonObject.toString());
-			}
-
-			OIDCTokenResponse oidcTokenResponse =
-				(OIDCTokenResponse)tokenResponse;
-
-			OIDCTokens oidcTokens = oidcTokenResponse.getOIDCTokens();
-
-			_validateToken(
-				clientID, nonce, openIdConnectProvider.getOIDCClientMetadata(),
-				oidcProviderMetadata, oidcTokens,
-				openIdConnectProvider.geTokenConnectionTimeout());
-
-			return oidcTokens;
-		}
-		catch (IOException ioException) {
-			throw new OpenIdConnectServiceException.TokenException(
-				StringBundler.concat(
-					"Unable to get tokens from ", tokenEndpoint, ": ",
-					ioException.getMessage()),
-				ioException);
-		}
-		catch (ParseException parseException) {
-			throw new OpenIdConnectServiceException.TokenException(
-				StringBundler.concat(
-					"Unable to parse tokens response from ", tokenEndpoint,
-					": ", parseException.getMessage()),
-				parseException);
-		}
-	}
-
-	private OIDCTokens _requestTokensWithAuthCode(
-			AuthenticationSuccessResponse authenticationSuccessResponse,
-			Nonce nonce,
-			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
-				openIdConnectProvider,
-			URI redirectURI)
-		throws OpenIdConnectServiceException.ProviderException,
-			   OpenIdConnectServiceException.TokenException {
-
-		AuthorizationGrant authorizationCodeGrant = new AuthorizationCodeGrant(
-			authenticationSuccessResponse.getAuthorizationCode(), redirectURI);
-
-		return _requestTokens(
-			authorizationCodeGrant, nonce, openIdConnectProvider);
-	}
-
-	private OIDCTokens _requestTokensWithRefreshToken(
-			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
-				openIdConnectProvider,
-			RefreshToken refreshToken)
-		throws OpenIdConnectServiceException {
-
-		AuthorizationGrant refreshTokenGrant = new RefreshTokenGrant(
-			refreshToken);
-
-		return _requestTokens(refreshTokenGrant, null, openIdConnectProvider);
 	}
 
 	private UserInfo _requestUserInfo(
@@ -547,37 +433,6 @@ public class OpenIdConnectServiceHandlerImpl
 					"Requested value \"", requestedState.getValue(),
 					"\" and approved state \"", state.getValue(),
 					"\" do not match"));
-		}
-	}
-
-	private IDTokenClaimsSet _validateToken(
-			ClientID clientID, Nonce nonce,
-			OIDCClientMetadata oidcClientMetadata,
-			OIDCProviderMetadata oidcProviderMetadata, OIDCTokens oidcTokens,
-			int tokenConnectionTimeout)
-		throws OpenIdConnectServiceException.TokenException {
-
-		try {
-			URI jwkSetURI = oidcProviderMetadata.getJWKSetURI();
-
-			IDTokenValidator idTokenValidator = new IDTokenValidator(
-				oidcProviderMetadata.getIssuer(), clientID,
-				oidcClientMetadata.getIDTokenJWSAlg(), jwkSetURI.toURL(),
-				new DefaultResourceRetriever(
-					tokenConnectionTimeout, tokenConnectionTimeout));
-
-			return idTokenValidator.validate(oidcTokens.getIDToken(), nonce);
-		}
-		catch (BadJOSEException | JOSEException exception) {
-			throw new OpenIdConnectServiceException.TokenException(
-				"Unable to validate tokens: " + exception.getMessage(),
-				exception);
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new OpenIdConnectServiceException.TokenException(
-				"Invalid JSON web key URL: " +
-					malformedURLException.getMessage(),
-				malformedURLException);
 		}
 	}
 

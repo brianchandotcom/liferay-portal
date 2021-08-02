@@ -112,8 +112,7 @@ public class ObjectEntryRowInfoItemRenderer
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId());
 
-		Supplier<Stream<ObjectField>> streamSupplier =
-			() -> objectFields.stream();
+		Supplier<Stream<ObjectField>> streamSupplier = objectFields::stream;
 
 		return stream1.filter(
 			entry -> {
@@ -129,7 +128,7 @@ public class ObjectEntryRowInfoItemRenderer
 			Map.Entry.comparingByKey()
 		).collect(
 			Collectors.toMap(
-				entry -> entry.getKey(),
+				Map.Entry::getKey,
 				entry -> Optional.ofNullable(
 					entry.getValue()
 				).orElse(

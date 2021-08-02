@@ -85,13 +85,13 @@ public class InfoListBasicTableTag extends IncludeTag {
 		super.setAttributes(httpServletRequest);
 
 		httpServletRequest.setAttribute(
-			"liferay-info-table:info-list-table:infoItemRenderer",
+			"liferay-info:info-list-basic-table:infoItemRenderer",
 			_getInfoItemRenderer());
 		httpServletRequest.setAttribute(
-			"liferay-info-table:info-list-table:infoListObjectColumnNames",
+			"liferay-info:info-list-basic-table:infoListObjectColumnNames",
 			getInfoListObjectColumnNames());
 		httpServletRequest.setAttribute(
-			"liferay-info-table:info-list-table:infoListObjects",
+			"liferay-info:info-list-basic-table:infoListObjects",
 			getInfoListObjects());
 	}
 
@@ -103,7 +103,7 @@ public class InfoListBasicTableTag extends IncludeTag {
 			getItemRendererKey());
 	}
 
-	private static final String _PAGE = "/info_list_table/page.jsp";
+	private static final String _PAGE = "/info_list_basic_table/page.jsp";
 
 	private List<String> _infoListObjectColumnNames;
 	private List<?> _infoListObjects;

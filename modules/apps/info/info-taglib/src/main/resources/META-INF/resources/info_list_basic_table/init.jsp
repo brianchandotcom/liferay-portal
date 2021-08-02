@@ -25,7 +25,7 @@ page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 <liferay-theme:defineObjects />
 
 <%
-InfoItemRenderer<Object> infoItemRenderer = (InfoItemRenderer<Object>)request.getAttribute("liferay-info-table:info-list-table:infoItemRenderer");
-List<String> infoListObjectColumnNames = (List<String>)request.getAttribute("liferay-info-table:info-list-table:infoListObjectColumnNames");
-List<Object> infoListObjects = (List<Object>)request.getAttribute("liferay-info-table:info-list-table:infoListObjects");
+InfoItemRenderer<Object> infoItemRenderer = (InfoItemRenderer<Object>)request.getAttribute("liferay-info:info-list-basic-table:infoItemRenderer");
+List<String> infoListObjectColumnNames = (List<String>)request.getAttribute("liferay-info:info-list-basic-table:infoListObjectColumnNames");
+List<Object> infoListObjects = (List<Object>)request.getAttribute("liferay-info:info-list-basic-table:infoListObjects");
 %>

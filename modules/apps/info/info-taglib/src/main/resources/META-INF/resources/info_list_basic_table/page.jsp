@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/info_list_table/init.jsp" %>
+<%@ include file="/info_list_basic_table/init.jsp" %>
 
 <div class="table-responsive">
 	<table class="table table-autofit">

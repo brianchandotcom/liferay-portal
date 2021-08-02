@@ -546,6 +546,12 @@ public class ObjectEntryLocalServiceImpl
 				"delete from ", objectDefinition.getDBTableName(), " where ",
 				objectDefinition.getPKObjectFieldDBColumnName(), " = ",
 				objectEntry.getObjectEntryId()));
+
+		runSQL(
+			StringBundler.concat(
+				"delete from ", objectDefinition.getExtensionDBTableName(),
+				" where ", objectDefinition.getPKObjectFieldDBColumnName(),
+				" = ", objectEntry.getObjectEntryId()));
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(

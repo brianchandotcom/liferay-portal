@@ -132,6 +132,10 @@
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="ODI_DTN" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="dbTableName" />
+		</finder>
 		<finder name="ODI_N" return-type="ObjectDefinition">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />

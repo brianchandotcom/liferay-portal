@@ -590,7 +590,20 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			new DynamicObjectDefinitionTable(objectDefinition, objectFields);
+			new DynamicObjectDefinitionTable(
+				objectDefinition, objectFields,
+				objectDefinition.getDBTableName());
+
+		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
+	}
+
+	private void _createExtensionTable(
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			new DynamicObjectDefinitionTable(
+				objectDefinition, objectFields,
+				objectDefinition.getExtensionDBTableName());
 
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}

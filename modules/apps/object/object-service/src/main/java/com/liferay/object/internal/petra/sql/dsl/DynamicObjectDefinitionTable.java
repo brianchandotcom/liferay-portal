@@ -79,7 +79,7 @@ public class DynamicObjectDefinitionTable
 	public String getCreateTableSQL() {
 		StringBundler sb = new StringBundler();
 
-		sb.append("create table ");
+		sb.append("create table if not exists ");
 		sb.append(_tableName);
 		sb.append(" (");
 		sb.append(_primaryKeyColumnName);

@@ -1,0 +1,15 @@
+/*
+ * This CSS template can be retrieved from the path:
+ *
+ * @root_path@/c/dynamic_data_mapping/get_template?groupId=@group_id@&templateId=@template_id@
+ *
+ * The content type is properly returned as "text/css". As a result, you can
+ * reference this template with the following snippets:
+ *
+ * <link rel="stylesheet" type="text/css" href="@root_path@/c/dynamic_data_mapping/get_template?groupId=@group_id@&templateId=@template_id@" />
+ *
+ * or
+ *
+ * @import url(@root_path@/c/dynamic_data_mapping/get_template?groupId=@group_id@&templateId=@template_id@);
+ *
+ */

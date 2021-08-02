@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
@@ -71,6 +72,20 @@ import java.util.List;
  * @author Zsolt Berentey
  */
 public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
+
+	public void addAssetEntryAssetTagsPersistedSubscribers(
+			String className, long classPK,
+			SubscriptionSender subscriptionSender)
+		throws PortalException {
+
+		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+			className, classPK);
+
+		for (AssetTag assetTag : assetEntry.getTags()) {
+			subscriptionSender.addPersistedSubscribers(
+				AssetTag.class.getName(), assetTag.getTagId());
+		}
+	}
 
 	@Override
 	public void deleteEntry(AssetEntry entry) throws PortalException {

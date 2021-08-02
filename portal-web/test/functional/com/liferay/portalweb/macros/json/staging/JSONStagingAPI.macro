@@ -5,7 +5,7 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var attributes = JSONStagingSetter.setAttributes();
+		var attributes = JSONStagingSetter.setAttributes(unCheckedContent = "${unCheckedContent}");
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(attributes = "${attributes}");
 

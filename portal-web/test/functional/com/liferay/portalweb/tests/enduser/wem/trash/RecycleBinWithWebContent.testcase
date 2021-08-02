@@ -65,7 +65,7 @@ definition {
 	@priority = "3"
 	test DisableRecycleBin {
 		task ("Go to site to disable recycle bin") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 			RecycleBin.disableRecycleBinViaSiteSettings();
 		}
@@ -73,10 +73,10 @@ definition {
 		task ("Add a web content and delete it") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Site Name",
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.deleteWithDisabledRB(entryTitle = "Web Content Title");
 		}
@@ -122,12 +122,12 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Site Name",
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("Navigate to Web Content admin") {
-			ApplicationsMenu.gotoSite(site = "Site Name");
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
@@ -156,7 +156,7 @@ definition {
 		}
 
 		task ("Assert the web content is shown in Recycle Bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 			RecycleBin.viewCP(
 				assetName = "Web Content Title",
@@ -167,9 +167,13 @@ definition {
 
 	@priority = "3"
 	test RecycleBinStaging {
-		task ("Add a WCD to page") {
+		task ("Add a page and add WCD to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page");
+
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name",
+				groupName = "Test Site Name",
 				layoutName = "Test Page",
 				widgetName = "Web Content Display");
 		}
@@ -177,7 +181,7 @@ definition {
 		task ("Go to page and add a web content via WCD") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page",
-				siteName = "Site Name");
+				siteName = "Test Site Name");
 
 			WebContent.addPGViaWCD(
 				webContentContent = "WC Content",
@@ -187,16 +191,14 @@ definition {
 		}
 
 		task ("Enbale local staging without web content") {
-			Staging.openStagingAdmin(siteURLKey = "site-name");
-
-			Staging.activateStagingCP(
-				siteName = "Site Name",
-				uncheckContent = "Web Content");
+			JSONStaging.enableLocalStaging(
+				groupName = "Test Site Name",
+				unCheckedContent = "com_liferay_journal_web_portlet_JournalPortlet");
 		}
 
 		task ("Add a blogs widget and entry to blogs in staging site") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name (Staging)",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page",
 				site = "false",
 				widgetName = "Blogs");
@@ -204,12 +206,12 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
-				groupName = "Site Name (Staging)",
+				groupName = "Test Site Name (Staging)",
 				site = "false");
 		}
 
 		task ("Move web content and blog entry to recycle bin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.moveToRecycleBinCP(
 				assetType = "Web Content Article",
@@ -217,7 +219,7 @@ definition {
 
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page",
-				siteName = "Site Name");
+				siteName = "Test Site Name");
 
 			BlogsEntry.moveToRecycleBinPG(
 				assetType = "Blogs Entry",
@@ -226,14 +228,14 @@ definition {
 		}
 
 		task ("View blog and WC in recycle bin") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name-staging");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name-staging");
 
 			RecycleBin.viewCP(
 				assetName = "Blogs Entry Title",
 				assetType = "Blogs Entry",
 				deleteUser = "Test Test");
 
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 			RecycleBin.viewCP(
 				assetName = "WC Title",
@@ -245,7 +247,7 @@ definition {
 	@priority = "3"
 	test RecycleBinWebContent {
 		task ("Add a structure with text field and save") {
-			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",
@@ -259,7 +261,7 @@ definition {
 		}
 
 		task ("Add a template to that structure") {
-			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 
 			WebContentTemplates.addCP(
 				structureName = "WC Structure Name",
@@ -269,7 +271,7 @@ definition {
 		}
 
 		task ("Add a WC basing on the created structure and publish") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -285,7 +287,7 @@ definition {
 				assetType = "Web Content Article",
 				webContentTitle = "WC WebContent Title");
 
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 			RecycleBin.viewCP(
 				assetName = "WC WebContent Title",
@@ -298,13 +300,13 @@ definition {
 				assetRestoreLocation = "Home",
 				assetType = "Web Content Article");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.viewWithStructureCP(
 				webContentText = "WC WebContent Text",
 				webContentTitle = "WC WebContent Title");
 
-			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
 			WebContentStructures.viewCP(
 				structureDescription = "WC Structure Description",
@@ -316,7 +318,7 @@ definition {
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
 
-			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 
 			WebContentTemplates.viewCP(
 				structureName = "WC Structure Name",
@@ -406,23 +408,23 @@ definition {
 		task ("Add a WC folder and a web content to it") {
 			JSONWebcontent.addFolder(
 				folderName = "WC Folder Name",
-				groupName = "Site Name");
+				groupName = "Test Site Name");
 
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
 				folderName = "WC Folder Name",
-				groupName = "Site Name",
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("Move WC folder to recycle bin and restore the WC") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentFolder.moveToRecycleBinCP(
 				assetType = "Web Content Folder",
 				folderName = "WC Folder Name");
 
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 			RecycleBin.restoreContentFromFolderCP(
 				assetName = "WC Folder Name",
@@ -433,7 +435,7 @@ definition {
 		}
 
 		task ("Assert WC is restored") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -448,17 +450,17 @@ definition {
 		task ("Add a WC folder and WC to the folder") {
 			JSONWebcontent.addFolder(
 				folderName = "WC Folder Name",
-				groupName = "Site Name");
+				groupName = "Test Site Name");
 
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
 				folderName = "WC Folder Name",
-				groupName = "Site Name",
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("Edit the web content 3 times") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "WC Folder Name",
@@ -493,7 +495,7 @@ definition {
 		}
 
 		task ("Save the web content as draft") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "WC Folder Name",
@@ -509,13 +511,13 @@ definition {
 		}
 
 		task ("Move WC folder to recycle bin and restore in recycle bin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentFolder.moveToRecycleBinCP(
 				assetType = "Web Content Folder",
 				folderName = "WC Folder Name");
 
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 			RecycleBin.restoreCP(
 				assetName = "WC Folder Name",
@@ -524,7 +526,7 @@ definition {
 		}
 
 		task ("View WC status in specific version") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "WC Folder Name",

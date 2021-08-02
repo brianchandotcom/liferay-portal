@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Activate local staging with or without page versioning with all content"
+	@summary = "Activate local staging with or without page versioning with all content or unchecked content"
 	macro enableLocalStaging {
 		Variables.assertDefined(parameterList = "${groupName}");
 
@@ -21,7 +21,8 @@ definition {
 		JSONStagingAPI._enableLocalStaging(
 			branchingPrivate = "${branchingPrivate}",
 			branchingPublic = "${branchingPublic}",
-			groupId = "${groupId}");
+			groupId = "${groupId}",
+			unCheckedContent = "${unCheckedContent}");
 
 		Pause(locator1 = "3000");
 	}

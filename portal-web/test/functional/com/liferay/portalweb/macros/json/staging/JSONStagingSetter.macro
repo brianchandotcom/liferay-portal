@@ -26,7 +26,13 @@ definition {
 		for (var portletId : list "${portletIds}") {
 			var result = JSONPortlet.hasPortlet(portletId = "${portletId}");
 
-			var attribute = '''"staged--staged-portlet_${portletId}--" : "true"''';
+			if ("${portletId}" == "${unCheckedContent}") {
+				var attribute = '''"staged--staged-portlet_${portletId}--" : "false"''';
+			}
+
+			else {
+				var attribute = '''"staged--staged-portlet_${portletId}--" : "true"''';
+			}
 
 			if ("${result}" == "true") {
 				ListUtil.add("${list}","${attribute}");

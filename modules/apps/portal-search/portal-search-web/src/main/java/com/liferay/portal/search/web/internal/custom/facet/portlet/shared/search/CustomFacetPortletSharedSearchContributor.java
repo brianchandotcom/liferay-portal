@@ -17,7 +17,7 @@ package com.liferay.portal.search.web.internal.custom.facet.portlet.shared.searc
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.custom.CustomFacetSearchContributor;
 import com.liferay.portal.search.facet.nested.NestedFacetSearchContributor;
@@ -28,6 +28,7 @@ import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPo
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -109,13 +110,8 @@ public class CustomFacetPortletSharedSearchContributor
 		String[] ddmStructureParts = StringUtil.split(
 			fieldToAggregate, DDMIndexer.DDM_FIELD_SEPARATOR);
 
-		String[] ddmFieldParts = StringUtil.split(
-			ddmStructureParts[3], StringPool.UNDERLINE);
-
 		String nestedFieldToAggregate = ddmIndexer.getValueFieldName(
-			ddmStructureParts[1],
-			LocaleUtil.fromLanguageId(
-				ddmFieldParts[1] + "_" + ddmFieldParts[2]));
+			ddmStructureParts[1], _getSuffixLocale(ddmStructureParts[3]));
 
 		nestedFacetSearchContributor.contribute(
 			searchRequestBuilder,
@@ -166,5 +162,18 @@ public class CustomFacetPortletSharedSearchContributor
 
 	@Reference
 	protected NestedFacetSearchContributor nestedFacetSearchContributor;
+
+	private Locale _getSuffixLocale(String string) {
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+			String availableLanguageId = LanguageUtil.getLanguageId(
+				availableLocale);
+
+			if (string.endsWith(availableLanguageId)) {
+				return availableLocale;
+			}
+		}
+
+		return null;
+	}
 
 }

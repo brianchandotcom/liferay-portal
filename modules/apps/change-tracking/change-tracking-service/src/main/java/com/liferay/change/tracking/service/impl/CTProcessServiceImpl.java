@@ -72,11 +72,11 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 			orderByStep -> {
 				if (orderByComparator != null) {
 					LimitStep limitStep = orderByStep.orderBy(
-						CTCollectionTable.INSTANCE, orderByComparator);
+						CTProcessTable.INSTANCE, orderByComparator);
 
 					if (limitStep == orderByStep) {
 						return orderByStep.orderBy(
-							CTProcessTable.INSTANCE, orderByComparator);
+							CTCollectionTable.INSTANCE, orderByComparator);
 					}
 
 					return limitStep;

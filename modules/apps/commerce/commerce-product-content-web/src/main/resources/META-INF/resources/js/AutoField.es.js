@@ -79,9 +79,8 @@ class AutoField extends Component {
 
 	deleteRule_(event) {
 		const itemIndex = event.delegateTarget.getAttribute('data-rule-id');
-		const list = this.rules;
 
-		list.splice(itemIndex, 1);
+		this.rules = this.rules.filter((_rule, i) => i !== Number(itemIndex));
 	}
 
 	/**

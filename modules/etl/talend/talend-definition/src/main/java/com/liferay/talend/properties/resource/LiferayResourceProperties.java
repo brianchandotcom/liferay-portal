@@ -390,7 +390,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		String version = openAPIModuleValue.substring(
 			openAPIModuleValue.lastIndexOf("/"));
 
-		if (version.matches("/v[0-9.]")) {
+		if (version.matches("/v[0-9.]+")) {
 			return version;
 		}
 

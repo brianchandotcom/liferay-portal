@@ -19,8 +19,10 @@
 		return;
 	}
 
+	const BUTTON_SIDE_OFFSET = 14;
+
 	const template = new CKEDITOR.template(
-		'<button class="lfr-ballon-editor-insert-button">+</button>'
+		'<button class="lfr-balloon-editor-insert-button">+</button>'
 	);
 
 	CKEDITOR.plugins.add(pluginName, {
@@ -220,98 +222,53 @@
 
 			const type = selection.getType();
 
-			if (type === CKEDITOR.SELECTION_ELEMENT || selection.isHidden()) {
-				this.hide();
-
-				return;
-			}
+			const startElement = selection.getStartElement();
 
 			if (
 				type === CKEDITOR.SELECTION_TEXT &&
-				selection.getSelectedText()
+				selection.getSelectedText() === '' &&
+				startElement.getText() === '\n'
 			) {
+				this._positionButton();
+
+				this.show();
+			}
+			else {
 				this.hide();
-
-				return;
 			}
-
-			const ranges = selection.getRanges();
-
-			const rangesNotCollapsed = CKEDITOR.tools.array.some(
-				ranges,
-				(range) => {
-					return !range.collapsed;
-				}
-			);
-
-			if (rangesNotCollapsed) {
-				this.hide();
-
-				return;
-			}
-
-			const range = ranges[ranges.length - 1];
-
-			const startContainer = range.startContainer;
-
-			if (
-				typeof startContainer.getName === 'function' &&
-				startContainer.getName() === 'td'
-			) {
-				this.hide();
-
-				return;
-			}
-
-			const nodeType = startContainer.$.nodeType;
-
-			if (nodeType === CKEDITOR.NODE_ELEMENT) {
-				if (startContainer.getChildCount() !== 1) {
-					this.hide();
-
-					return;
-				}
-				else if (startContainer.getChild(0)) {
-					const child = startContainer.getChild(0);
-
-					if (
-						typeof child.getName === 'function' &&
-						child.getName() !== 'br'
-					) {
-						this.hide();
-
-						return;
-					}
-				}
-			}
-			else if (
-				nodeType === CKEDITOR.NODE_TEXT &&
-				!startContainer.isEmpty()
-			) {
-				this.hide();
-
-				return;
-			}
-
-			const rangeClientRects = range.getClientRects(true);
-
-			const rangeClientRect =
-				rangeClientRects[rangeClientRects.length - 1];
-
-			this._positionButton(rangeClientRect);
-
-			this.show();
 		},
 
-		_positionButton(rangeClientRect) {
-			if (!this._buttonClientRect) {
-				this._buttonClientRect = this._button.getClientRect(true);
+		_positionButton() {
+			const selection = this.editor.getSelection();
+
+			const startElement = selection.getStartElement();
+
+			const selectionClientRect = startElement.getClientRect();
+
+			const button = this._button;
+
+			const buttonStyles = window.getComputedStyle(button.$);
+
+			const buttonHeight = parseInt(buttonStyles.height, 10);
+
+			let sideOffset = selectionClientRect.x + BUTTON_SIDE_OFFSET;
+
+			if (this.editor.config.contentsLangDirection === 'rtl') {
+				const buttonWidth = parseInt(buttonStyles.width, 10);
+
+				sideOffset =
+					selectionClientRect.x +
+					selectionClientRect.width -
+					buttonWidth -
+					BUTTON_SIDE_OFFSET;
 			}
 
-			this._button.setStyles({
-				left:
-					rangeClientRect.x - this._buttonClientRect.width / 2 + 'px',
-				top: rangeClientRect.y + 'px',
+			button.setStyles({
+				left: `${sideOffset}px`,
+				top: `${
+					selectionClientRect.y +
+					(selectionClientRect.height - buttonHeight) / 2
+				}px`,
 			});
 		},
 

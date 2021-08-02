@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -118,6 +119,7 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 			mockHttpServletRequest);
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+		ddmFormFieldRenderingContext.setProperty("groupId", _GROUP_ID);
 
 		return ddmFormFieldRenderingContext;
 	}
@@ -136,7 +138,7 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 
 		PowerMockito.when(
 			GooglePlacesUtil.getGooglePlacesAPIKey(
-				Matchers.anyLong(), Matchers.anyLong(),
+				Matchers.anyLong(), Matchers.eq(_GROUP_ID),
 				Matchers.any(GroupLocalService.class))
 		).thenReturn(
 			"googlePlacesAPIKey"
@@ -179,6 +181,8 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 			PowerMockito.mock(ResourceBundle.class)
 		);
 	}
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	private final SearchLocationDDMFormFieldTemplateContextContributor
 		_searchLocationDDMFormFieldTemplateContextContributor =

@@ -115,6 +115,21 @@ public class VariableNameCheck extends BaseCheck {
 
 				if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
 					methodName = getMethodName(firstChildDetailAST);
+
+					if (methodName.equals("stream")) {
+						firstChildDetailAST =
+							firstChildDetailAST.getFirstChild();
+
+						if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+							firstChildDetailAST =
+								firstChildDetailAST.getFirstChild();
+
+							_checkTypo(
+								detailAST, name,
+								firstChildDetailAST.getText() + "Stream",
+								false);
+						}
+					}
 				}
 			}
 			else if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&

@@ -15,6 +15,11 @@
 package com.liferay.object.rest.internal.jaxrs.context.provider;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.internal.ObjectDefinitionRESTContextPathRegistry;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.ext.Provider;
 
@@ -28,15 +33,33 @@ import org.apache.cxf.message.Message;
 public class ObjectDefinitionContextProvider
 	implements ContextProvider<ObjectDefinition> {
 
-	public ObjectDefinitionContextProvider(ObjectDefinition objectDefinition) {
-		_objectDefinition = objectDefinition;
+	public ObjectDefinitionContextProvider(
+		ObjectDefinitionRESTContextPathRegistry
+			objectDefinitionRESTContextPathRegistry,
+		Portal portal) {
+
+		_objectDefinitionRESTContextPathRegistry =
+			objectDefinitionRESTContextPathRegistry;
+		_portal = portal;
 	}
 
 	@Override
 	public ObjectDefinition createContext(Message message) {
-		return _objectDefinition;
+		long companyId = _portal.getCompanyId(
+			(HttpServletRequest)message.getContextualProperty("HTTP.REQUEST"));
+
+		String restContextPath = (String)message.getContextualProperty(
+			"org.apache.cxf.message.Message.BASE_PATH");
+
+		restContextPath = StringUtil.removeSubstring(restContextPath, "/o/");
+		restContextPath = StringUtil.replaceLast(restContextPath, '/', "");
+
+		return _objectDefinitionRESTContextPathRegistry.getObjectDefinition(
+			companyId, restContextPath);
 	}
 
-	private final ObjectDefinition _objectDefinition;
+	private final ObjectDefinitionRESTContextPathRegistry
+		_objectDefinitionRESTContextPathRegistry;
+	private final Portal _portal;
 
 }

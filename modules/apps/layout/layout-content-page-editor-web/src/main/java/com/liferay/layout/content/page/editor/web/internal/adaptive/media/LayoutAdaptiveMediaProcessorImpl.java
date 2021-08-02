@@ -25,11 +25,9 @@ import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
-import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,7 +40,6 @@ import java.net.URI;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,16 +50,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
-@Component(
-	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration",
-	immediate = true, service = LayoutAdaptiveMediaProcessor.class
-)
+@Component(immediate = true, service = LayoutAdaptiveMediaProcessor.class)
 public class LayoutAdaptiveMediaProcessorImpl
 	implements LayoutAdaptiveMediaProcessor {
 
@@ -137,13 +130,6 @@ public class LayoutAdaptiveMediaProcessorImpl
 		Element bodyElement = document.body();
 
 		return bodyElement.html();
-	}
-
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffLayoutContentPageEditorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFLayoutContentPageEditorConfiguration.class, properties);
 	}
 
 	private void _appendSourceElement(
@@ -266,9 +252,6 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	private volatile FFLayoutContentPageEditorConfiguration
-		_ffLayoutContentPageEditorConfiguration;
 
 	@Reference
 	private MediaQueryProvider _mediaQueryProvider;

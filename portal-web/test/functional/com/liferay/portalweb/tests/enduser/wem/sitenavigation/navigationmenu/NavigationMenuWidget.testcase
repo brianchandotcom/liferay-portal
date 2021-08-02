@@ -279,6 +279,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-87134. The user could hide pages from the Navigation Menu widget."
+	@priority = "4"
+	test HidePages {
+		task ("Add two pages") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}");
+			}
+		}
+
+		task ("Hide the second page from Navigation Menu widget") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name 2");
+
+			Page.toggleHiddenFromNavigationMenuWidget(toggleValue = "enable");
+
+			PortletEntry.save();
+		}
+
+		task ("View only the first page shown in the Navigation Menu widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_pageName = "Test Page Name 1",
+				locator1 = "Home#PAGE");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page Name 2",
+				locator1 = "Home#PAGE");
+		}
+	}
+
+	@description = "This is a test for LPS-87134. The user could navigate to pages via the Navigation Menu widget."
+	@priority = "5"
+	@uitest
+	test NavigateToPages {
+		property portal.acceptance = "true";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page");
+		}
+
+		task ("Add a child page under the widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page",
+				parentLayoutName = "Test Widget Page");
+		}
+
+		task ("Navigate to pages via the Navigation Menu widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Widget Page",
+				siteName = "Test Site Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Widget Page");
+
+			Page.gotoChildPagePG(
+				childPageName = "Test Child Page",
+				pageName = "Test Widget Page",
+				siteName = "Test Site Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Child Page");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Content Page",
+				siteName = "Test Site Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page");
+		}
+	}
+
 	@description = "This is a test for LPS-107833. Can select Global Navigation Menu via Navigation Menu widget in normal site."
 	@priority = "5"
 	test SelectGlobalNavigationMenuInNormalSite {
@@ -752,6 +842,30 @@ definition {
 					locator1 = "ManagementBar#PORTLET_BODY",
 					value1 = "${fieldValue}");
 			}
+		}
+	}
+
+	@description = "This is a test for LPS-87134. The selected navigation is Pages Hierarchy in the Navigation Menu widget by default."
+	@priority = "3"
+	test ViewDefaultSelectedNavigation {
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Site Page");
+		}
+
+		task ("Navigate to the page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Site Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the default selected navigation") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			AssertSelectedLabel(
+				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				value1 = "Public Pages Hierarchy");
 		}
 	}
 

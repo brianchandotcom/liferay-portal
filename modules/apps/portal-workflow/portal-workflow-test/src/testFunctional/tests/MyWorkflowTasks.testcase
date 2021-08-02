@@ -748,12 +748,49 @@ definition {
 	}
 
 	@description = "Verify that the pagination button indicates the selected page, even when there is only 1 page"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test PaginationButtonIndicatesSelectedPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68855 PaginationButtonIndicatesSelectedPage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 3");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 4");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 5");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		AssertElementPresent(
+			key_pageNumber = "1",
+			locator1 = "MyWorkflowTasks#COMPLETED_TABLE_PAGINATION");
+
+
+			
 	}
 
 	@description = "Verify that pagination follows in asc/desc sequence in the Assigned to Me tab"

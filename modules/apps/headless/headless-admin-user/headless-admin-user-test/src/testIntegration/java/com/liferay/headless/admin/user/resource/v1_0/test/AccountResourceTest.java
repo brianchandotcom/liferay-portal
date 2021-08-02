@@ -327,6 +327,47 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		}
 	}
 
+	@Test
+	public void testPutAccountByExternalReferenceCode() throws Exception {
+		Account postAccount =
+			testPutAccountByExternalReferenceCode_addAccount();
+
+		String externalReferenceCode = postAccount.getExternalReferenceCode();
+
+		Account randomAccount = randomAccount();
+
+		Account putAccount = accountResource.putAccountByExternalReferenceCode(
+			externalReferenceCode, randomAccount);
+
+		assertEquals(randomAccount, putAccount);
+		assertValid(putAccount);
+
+		Account getAccount = accountResource.getAccountByExternalReferenceCode(
+			externalReferenceCode);
+
+		assertEquals(randomAccount, getAccount);
+		assertValid(getAccount);
+
+		Account newAccount =
+			testPutAccountByExternalReferenceCode_createAccount();
+
+		newAccount.setExternalReferenceCode(externalReferenceCode);
+
+		putAccount = accountResource.putAccountByExternalReferenceCode(
+			newAccount.getExternalReferenceCode(), newAccount);
+
+		assertEquals(newAccount, putAccount);
+		assertValid(putAccount);
+
+		getAccount = accountResource.getAccountByExternalReferenceCode(
+			externalReferenceCode);
+
+		assertEquals(newAccount, getAccount);
+
+		Assert.assertEquals(
+			externalReferenceCode, putAccount.getExternalReferenceCode());
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};

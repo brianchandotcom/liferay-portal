@@ -17,6 +17,7 @@ package com.liferay.users.admin.web.internal.portlet.action;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
@@ -112,10 +113,12 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			String mvcPath = "/edit_organization.jsp";
 
-			if (exception instanceof NoSuchOrganizationException ||
+			if (exception instanceof DataLimitExceededException ||
+				exception instanceof NoSuchOrganizationException ||
 				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, exception.getClass());
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
 				mvcPath = "/error.jsp";
 			}

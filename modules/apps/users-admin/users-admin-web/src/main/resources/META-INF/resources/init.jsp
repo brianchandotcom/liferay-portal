@@ -50,6 +50,7 @@ page import="com.liferay.portal.kernel.exception.AddressStreetException" %><%@
 page import="com.liferay.portal.kernel.exception.AddressZipException" %><%@
 page import="com.liferay.portal.kernel.exception.CompanyMaxUsersException" %><%@
 page import="com.liferay.portal.kernel.exception.ContactBirthdayException" %><%@
+page import="com.liferay.portal.kernel.exception.DataLimitExceededException" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateOrganizationException" %><%@
 page import="com.liferay.portal.kernel.exception.EmailAddressException" %><%@

@@ -146,9 +146,10 @@ public class ObjectDefinitionLocalServiceImpl
 				newObjectField.getName());
 
 			if (oldObjectField == null) {
-				_objectFieldLocalService.addObjectField(
+				_objectFieldLocalService.addSystemObjectField(
 					userId, objectDefinition.getObjectDefinitionId(),
-					newObjectField.getDBColumnName(), false, false, "",
+					newObjectField.getDBColumnName(),
+					false, false, "",
 					newObjectField.getName(), newObjectField.isRequired(),
 					newObjectField.getType());
 			}

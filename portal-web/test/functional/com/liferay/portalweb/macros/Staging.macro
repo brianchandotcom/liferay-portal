@@ -1359,10 +1359,18 @@ definition {
 			}
 		}
 
+		if (isSet(pagesNotToPublish)) {
+			AssertHTMLSourceTextNotPresent(value1 = "${pagesNotToPublish}");
+		}
+
 		if (isSet(pagesOption)) {
 			AssertTextEquals(
 				locator1 = "Staging#PUBLICATION_PAGE_OPTION",
 				value1 = "${pagesOption}");
+		}
+
+		if (isSet(pagesToPublish)) {
+			AssertHTMLSourceTextPresent(value1 = "${pagesToPublish}");
 		}
 
 		if (isSet(permissions)) {

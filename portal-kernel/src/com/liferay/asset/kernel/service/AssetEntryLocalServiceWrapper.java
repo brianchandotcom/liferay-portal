@@ -51,6 +51,17 @@ public class AssetEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void addAssetEntryAssetTagsPersistedSubscribers(
+			String className, long classPK,
+			com.liferay.portal.kernel.util.SubscriptionSender
+				subscriptionSender)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetEntryLocalService.addAssetEntryAssetTagsPersistedSubscribers(
+			className, classPK, subscriptionSender);
+	}
+
+	@Override
 	public void addAssetTagAssetEntries(
 		long tagId, java.util.List<AssetEntry> assetEntries) {
 

@@ -59,6 +59,16 @@ public class AssetEntryLocalServiceUtil {
 		return getService().addAssetEntry(assetEntry);
 	}
 
+	public static void addAssetEntryAssetTagsPersistedSubscribers(
+			String className, long classPK,
+			com.liferay.portal.kernel.util.SubscriptionSender
+				subscriptionSender)
+		throws PortalException {
+
+		getService().addAssetEntryAssetTagsPersistedSubscribers(
+			className, classPK, subscriptionSender);
+	}
+
 	public static void addAssetTagAssetEntries(
 		long tagId, List<AssetEntry> assetEntries) {
 

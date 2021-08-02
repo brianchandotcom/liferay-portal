@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 
 import java.io.Serializable;
 
@@ -84,6 +85,11 @@ public interface AssetEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetEntry addAssetEntry(AssetEntry assetEntry);
+
+	public void addAssetEntryAssetTagsPersistedSubscribers(
+			String className, long classPK,
+			SubscriptionSender subscriptionSender)
+		throws PortalException;
 
 	public void addAssetTagAssetEntries(
 		long tagId, List<AssetEntry> assetEntries);

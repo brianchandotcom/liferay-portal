@@ -34,7 +34,7 @@ public class InfoListBasicTableTag extends IncludeTag {
 		return _infoListObjectColumnNames;
 	}
 
-	public List<? extends Object> getInfoListObjects() {
+	public List<?> getInfoListObjects() {
 		return _infoListObjects;
 	}
 
@@ -48,7 +48,7 @@ public class InfoListBasicTableTag extends IncludeTag {
 		_infoListObjectColumnNames = infoListObjectColumnNames;
 	}
 
-	public void setInfoListObjects(List<? extends Object> infoListObjects) {
+	public void setInfoListObjects(List<?> infoListObjects) {
 		_infoListObjects = infoListObjects;
 	}
 
@@ -106,7 +106,7 @@ public class InfoListBasicTableTag extends IncludeTag {
 	private static final String _PAGE = "/info_list_table/page.jsp";
 
 	private List<String> _infoListObjectColumnNames;
-	private List<? extends Object> _infoListObjects;
+	private List<?> _infoListObjects;
 	private String _itemRendererKey;
 
 }

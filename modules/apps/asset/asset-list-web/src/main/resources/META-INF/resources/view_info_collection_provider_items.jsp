@@ -43,7 +43,7 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 					String displayPageURL = StringPool.BLANK;
 
 					if (infoCollectionProviderItemsDisplayContext.isShowActions()) {
-						displayPageURL = listItemsActionDropdownItems.getViewDisplayPageURL(AssetEntry.class.getName(), result);
+						displayPageURL = listItemsActionDropdownItems.getViewDisplayPageURL(infoCollectionProviderItemsDisplayContext.getInfoCollectionProviderClassName(), result);
 					}
 					%>
 

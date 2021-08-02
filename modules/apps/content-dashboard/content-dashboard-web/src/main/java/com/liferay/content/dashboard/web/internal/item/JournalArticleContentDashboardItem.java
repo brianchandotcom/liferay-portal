@@ -22,6 +22,7 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -265,6 +266,20 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(
+				_journalArticle);
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("description");
+
+		Object description = infoFieldValue.getValue();
+
+		return description.toString();
+	}
+
+	@Override
 	public Object getDisplayFieldValue(String fieldName, Locale locale) {
 		InfoFieldValue<Object> infoFieldValue =
 			_infoItemFieldValuesProvider.getInfoFieldValue(
@@ -283,6 +298,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public String getExtension() {
+		return null;
+	}
+
+	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			JournalArticle.class.getName(),
@@ -292,6 +312,11 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public Date getModifiedDate() {
 		return _journalArticle.getModifiedDate();
+	}
+
+	@Override
+	public Object getPreviewImage() {
+		return null;
 	}
 
 	@Override
@@ -312,6 +337,11 @@ public class JournalArticleContentDashboardItem
 		).orElse(
 			StringPool.BLANK
 		);
+	}
+
+	@Override
+	public String getSize() {
+		return null;
 	}
 
 	@Override

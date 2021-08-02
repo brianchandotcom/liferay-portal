@@ -57,15 +57,23 @@ public interface ContentDashboardItem<T> {
 
 	public Locale getDefaultLocale();
 
+	public String getDescription(Locale locale);
+
 	public Object getDisplayFieldValue(String fieldName, Locale locale);
 
 	public String getDownloadURL();
+
+	public String getExtension();
 
 	public InfoItemReference getInfoItemReference();
 
 	public Date getModifiedDate();
 
+	public Object getPreviewImage();
+
 	public String getScopeName(Locale locale);
+
+	public String getSize();
 
 	public String getTitle(Locale locale);
 

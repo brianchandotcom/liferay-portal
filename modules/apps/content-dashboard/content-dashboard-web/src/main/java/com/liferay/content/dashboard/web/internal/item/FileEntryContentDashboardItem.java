@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -262,6 +263,19 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("description");
+
+		Object description = infoFieldValue.getValue();
+
+		return description.toString();
+	}
+
+	@Override
 	public Object getDisplayFieldValue(String fieldName, Locale locale) {
 		InfoFieldValue<Object> infoFieldValue =
 			_infoItemFieldValuesProvider.getInfoFieldValue(
@@ -288,6 +302,19 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public String getExtension() {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("file-name");
+
+		Object extension = infoFieldValue.getValue();
+
+		return FileUtil.getExtension(extension.toString());
+	}
+
+	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			FileEntry.class.getName(), _fileEntry.getFileEntryId());
@@ -296,6 +323,17 @@ public class FileEntryContentDashboardItem
 	@Override
 	public Date getModifiedDate() {
 		return _fileEntry.getModifiedDate();
+	}
+
+	@Override
+	public Object getPreviewImage() {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("preview-image");
+
+		return infoFieldValue.getValue();
 	}
 
 	@Override
@@ -316,6 +354,19 @@ public class FileEntryContentDashboardItem
 		).orElse(
 			StringPool.BLANK
 		);
+	}
+
+	@Override
+	public String getSize() {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("size");
+
+		Object size = infoFieldValue.getValue();
+
+		return size.toString();
 	}
 
 	@Override

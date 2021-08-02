@@ -212,6 +212,162 @@ definition {
 		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Grid");
 	}
 
+	@description = "LPS-78697 - Verify that a Grid that has been translated can be edited"
+	@priority = "4"
+	test CanBeEditedAfterTranslation {
+		property test.name.skip.portal.instance = "FormsGridField#CanBeEditedAfterTranslation";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		Form.editFieldLabelMetal(fieldValue = "Grid Field Translated");
+
+		for (var optionNumber : list "1,2,3,4") {
+			FormFields.editGridOptions(
+				gridField = "Rows",
+				optionValue = "Row ${optionNumber}",
+				rowNumber = "${optionNumber}");
+
+			FormFields.editGridOptions(
+				gridField = "Columns",
+				optionValue = "Column ${optionNumber}",
+				rowNumber = "${optionNumber}");
+		}
+
+		Form.closeSidebar();
+
+		Form.addTranslation(localizedLanguage = "Japanese (Japan)");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
+
+		for (var optionNumber : list "1,2,3,4") {
+			FormFields.editGridOptions(
+				gridField = "Rows",
+				optionValue = "日本語 Row ${optionNumber}",
+				rowNumber = "${optionNumber}");
+			FormFields.editGridOptions(
+				gridField = "Columns",
+				optionValue = "日本語 Column ${optionNumber}",
+				rowNumber = "${optionNumber}");
+		}
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		for (var optionNumber : list "1,2,3,4") {
+			FormFields.editGridOptions(
+				gridField = "Rows",
+				optionValue = "Português Row ${optionNumber}",
+				rowNumber = "${optionNumber}");
+			FormFields.editGridOptions(
+				gridField = "Columns",
+				optionValue = "Português Column ${optionNumber}",
+				rowNumber = "${optionNumber}");
+		}
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
+
+		FormFields.deleteGridOptionsRow(
+			gridField = "Rows",
+			rowNumber = "2");
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
+
+		FormFields.moveGridOptionsRow(
+			gridField = "Rows",
+			rowNumberEnd = "1",
+			rowNumberStart = "3");
+
+		FormFields.moveGridOptionsRow(
+			gridField = "Columns",
+			rowNumberEnd = "2",
+			rowNumberStart = "4");
+
+		FormFields.deleteGridOptionsRow(
+			gridField = "Columns",
+			rowNumber = "1");
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		Form.selectTranslation(localizedLanguage = "Japanese (Japan)");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
+
+		for (var optionNumber : list "1:4,2:1,3:3") {
+			var fieldOptionNumber = StringUtil.extractLast("${optionNumber}", ":");
+			var rowNumber = StringUtil.extractFirst("${optionNumber}", ":");
+
+			FormFields.viewGridOptionsFieldValue(
+				fieldValue = "日本語 Row ${fieldOptionNumber}",
+				gridField = "Rows",
+				rowNumber = "${rowNumber}");
+		}
+
+		for (var optionNumber : list "1:4,2:2,3:3") {
+			var fieldOptionNumber = StringUtil.extractLast("${optionNumber}", ":");
+			var rowNumber = StringUtil.extractFirst("${optionNumber}", ":");
+
+			FormFields.viewGridOptionsFieldValue(
+				fieldValue = "日本語 Column ${fieldOptionNumber}",
+				gridField = "Columns",
+				rowNumber = "${rowNumber}");
+		}
+
+		Form.selectTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		for (var optionNumber : list "1:4,2:1,3:3") {
+			var fieldOptionNumber = StringUtil.extractLast("${optionNumber}", ":");
+			var rowNumber = StringUtil.extractFirst("${optionNumber}", ":");
+
+			FormFields.viewGridOptionsFieldValue(
+				fieldValue = "Português Row ${fieldOptionNumber}",
+				gridField = "Rows",
+				rowNumber = "${rowNumber}");
+		}
+
+		for (var optionNumber : list "1:4,2:2,3:3") {
+			var fieldOptionNumber = StringUtil.extractLast("${optionNumber}", ":");
+			var rowNumber = StringUtil.extractFirst("${optionNumber}", ":");
+
+			FormFields.viewGridOptionsFieldValue(
+				fieldValue = "Português Column ${fieldOptionNumber}",
+				gridField = "Columns",
+				rowNumber = "${rowNumber}");
+		}
+	}
+
 	@description = "Verify that a Grid can be required"
 	@priority = "5"
 	test CanBeRequired {

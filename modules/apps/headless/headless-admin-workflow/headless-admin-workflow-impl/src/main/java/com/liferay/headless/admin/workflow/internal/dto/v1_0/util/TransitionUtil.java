@@ -27,10 +27,19 @@ public class TransitionUtil {
 	public static Transition toTransition(
 		Language language, String name, ResourceBundle resourceBundle) {
 
+		return toTransition(language, name, resourceBundle, null, null);
+	}
+
+	public static Transition toTransition(
+		Language language, String name, ResourceBundle resourceBundle,
+		String sourceNodeName, String targetNodeName) {
+
 		Transition transition = new Transition();
 
 		transition.setLabel(language.get(resourceBundle, name));
 		transition.setName(name);
+		transition.setSourceNodeName(sourceNodeName);
+		transition.setTargetNodeName(targetNodeName);
 
 		return transition;
 	}

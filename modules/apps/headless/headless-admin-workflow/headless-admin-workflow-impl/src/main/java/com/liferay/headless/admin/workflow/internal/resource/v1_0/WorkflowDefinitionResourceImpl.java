@@ -14,14 +14,18 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
+import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
+import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.TransitionUtil;
 import com.liferay.headless.admin.workflow.internal.odata.entity.v1_0.WorkflowDefinitionEntityModel;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
@@ -170,6 +174,16 @@ public class WorkflowDefinitionResourceImpl
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					LocalizationUtil.getLocalizationMap(
 						workflowDefinition.getTitle()));
+				transitions = transformToArray(
+					workflowDefinition.getWorkflowTransitions(),
+					workflowTransition -> TransitionUtil.toTransition(
+						_language, workflowTransition.getName(),
+						ResourceBundleUtil.getModuleAndPortalResourceBundle(
+							contextAcceptLanguage.getPreferredLocale(),
+							WorkflowDefinitionResourceImpl.class),
+						workflowTransition.getSourceNodeName(),
+						workflowTransition.getTargetNodeName()),
+					Transition.class);
 				version = String.valueOf(workflowDefinition.getVersion());
 			}
 		};
@@ -177,6 +191,9 @@ public class WorkflowDefinitionResourceImpl
 
 	private static final EntityModel _entityModel =
 		new WorkflowDefinitionEntityModel();
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;

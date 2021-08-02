@@ -124,11 +124,9 @@ public class CommerceCatalogPermissionImpl
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				permissionChecker.getCompanyId(),
-				CommerceCatalog.class.getName(),
+				commerceCatalog.getCompanyId(), CommerceCatalog.class.getName(),
 				commerceCatalog.getCommerceCatalogId(),
-				permissionChecker.getUserId(), actionId) &&
-			(commerceCatalog.getUserId() == permissionChecker.getUserId())) {
+				commerceCatalog.getUserId(), actionId)) {
 
 			return true;
 		}

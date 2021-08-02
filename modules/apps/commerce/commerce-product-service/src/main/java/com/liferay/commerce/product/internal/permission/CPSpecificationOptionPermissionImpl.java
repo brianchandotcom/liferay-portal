@@ -128,12 +128,10 @@ public class CPSpecificationOptionPermissionImpl
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				permissionChecker.getCompanyId(),
+				cpSpecificationOption.getCompanyId(),
 				CPSpecificationOption.class.getName(),
 				cpSpecificationOption.getCPSpecificationOptionId(),
-				permissionChecker.getUserId(), actionId) &&
-			(cpSpecificationOption.getUserId() ==
-				permissionChecker.getUserId())) {
+				cpSpecificationOption.getUserId(), actionId)) {
 
 			return true;
 		}

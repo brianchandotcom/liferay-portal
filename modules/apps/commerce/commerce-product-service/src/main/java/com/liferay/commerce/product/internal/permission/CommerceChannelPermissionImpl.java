@@ -125,11 +125,9 @@ public class CommerceChannelPermissionImpl
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				permissionChecker.getCompanyId(),
-				CommerceChannel.class.getName(),
+				commerceChannel.getCompanyId(), CommerceChannel.class.getName(),
 				commerceChannel.getCommerceChannelId(),
-				permissionChecker.getUserId(), actionId) &&
-			(commerceChannel.getUserId() == permissionChecker.getUserId())) {
+				commerceChannel.getUserId(), actionId)) {
 
 			return true;
 		}

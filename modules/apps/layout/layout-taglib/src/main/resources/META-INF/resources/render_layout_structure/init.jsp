@@ -45,6 +45,5 @@ page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
-<%@ page import="java.util.Collections" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Objects" %>

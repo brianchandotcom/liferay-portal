@@ -131,7 +131,6 @@ for (String childrenItemId : childrenItemIds) {
 							).build()
 						%>'
 						cssClass="pb-2 pt-3"
-						paginationBarDeltas="<%= Collections.emptyList() %>"
 						propsTransformer="render_layout_structure/js/NumericCollectionPaginationPropsTransformer"
 						totalItems="<%= collectionStyledLayoutStructureItem.getNumberOfItems() %>"
 					/>

@@ -54,6 +54,11 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getExtensionDBTableName() {
+		return getDBTableName() + "_x";
+	}
+
+	@Override
 	public String getResourceName() {
 		if (isSystem()) {
 			throw new UnsupportedOperationException();

@@ -25,7 +25,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -85,15 +84,9 @@ public class FragmentEntryStagedModelDataHandler
 
 		if (fragmentCollection == null) {
 			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("FragmentEntry ");
-				sb.append(fragmentEntry.getFragmentEntryId());
-				sb.append(" - ");
-				sb.append(fragmentEntry.getFragmentEntryKey());
-				sb.append(" has invalid fragment collection, unable to export");
-
-				_log.warn(sb.toString());
+				_log.warn(
+					"Unable to export fragment entry with key " +
+						fragmentEntry.getFragmentEntryKey());
 			}
 
 			return;

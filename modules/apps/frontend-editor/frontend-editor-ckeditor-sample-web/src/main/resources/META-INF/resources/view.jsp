@@ -32,11 +32,9 @@
 	<img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?fit=crop&w=300" />
 </liferay-util:buffer>
 
-<div>
-	<liferay-editor:editor
-		contents="<%= sampleEditorContents %>"
-		editorName="ballooneditor"
-		name="contentEditor"
-		placeholder="content"
-	/>
-</div>
+<liferay-editor:editor
+	contents="<%= sampleEditorContents %>"
+	editorName="ballooneditor"
+	name="contentEditor"
+	placeholder="content"
+/>

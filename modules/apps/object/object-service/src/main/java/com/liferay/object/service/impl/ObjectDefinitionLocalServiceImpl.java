@@ -253,7 +253,8 @@ public class ObjectDefinitionLocalServiceImpl
 					resourceAction);
 			}
 
-			_dropTable(objectDefinition);
+			_dropTable(objectDefinition.getDBTableName());
+			_dropTable(objectDefinition.getExtensionDBTableName());
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -608,8 +609,8 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}
 
-	private void _dropTable(ObjectDefinition objectDefinition) {
-		String sql = "drop table " + objectDefinition.getDBTableName();
+	private void _dropTable(String tableName) {
+		String sql = "drop table " + tableName;
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + sql);

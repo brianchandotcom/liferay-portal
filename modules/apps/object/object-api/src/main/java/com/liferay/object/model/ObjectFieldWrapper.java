@@ -53,6 +53,7 @@ public class ObjectFieldWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("dbColumnName", getDBColumnName());
+		attributes.put("dbTableName", getDBTableName());
 		attributes.put("indexed", isIndexed());
 		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
 		attributes.put("indexedLanguageId", getIndexedLanguageId());
@@ -125,6 +126,12 @@ public class ObjectFieldWrapper
 			setDBColumnName(dbColumnName);
 		}
 
+		String dbTableName = (String)attributes.get("dbTableName");
+
+		if (dbTableName != null) {
+			setDBTableName(dbTableName);
+		}
+
 		Boolean indexed = (Boolean)attributes.get("indexed");
 
 		if (indexed != null) {
@@ -190,6 +197,16 @@ public class ObjectFieldWrapper
 	@Override
 	public String getDBColumnName() {
 		return model.getDBColumnName();
+	}
+
+	/**
+	 * Returns the db table name of this object field.
+	 *
+	 * @return the db table name of this object field
+	 */
+	@Override
+	public String getDBTableName() {
+		return model.getDBTableName();
 	}
 
 	/**
@@ -405,6 +422,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setDBColumnName(String dbColumnName) {
 		model.setDBColumnName(dbColumnName);
+	}
+
+	/**
+	 * Sets the db table name of this object field.
+	 *
+	 * @param dbTableName the db table name of this object field
+	 */
+	@Override
+	public void setDBTableName(String dbTableName) {
+		model.setDBTableName(dbTableName);
 	}
 
 	/**

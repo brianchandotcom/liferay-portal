@@ -234,6 +234,21 @@ public interface ObjectFieldModel
 	public void setDBColumnName(String dbColumnName);
 
 	/**
+	 * Returns the db table name of this object field.
+	 *
+	 * @return the db table name of this object field
+	 */
+	@AutoEscape
+	public String getDBTableName();
+
+	/**
+	 * Sets the db table name of this object field.
+	 *
+	 * @param dbTableName the db table name of this object field
+	 */
+	public void setDBTableName(String dbTableName);
+
+	/**
 	 * Returns the indexed of this object field.
 	 *
 	 * @return the indexed of this object field

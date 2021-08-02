@@ -47,6 +47,7 @@ create table ObjectField (
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
 	dbColumnName VARCHAR(75) null,
+	dbTableName VARCHAR(75) null,
 	indexed BOOLEAN,
 	indexedAsKeyword BOOLEAN,
 	indexedLanguageId VARCHAR(75) null,

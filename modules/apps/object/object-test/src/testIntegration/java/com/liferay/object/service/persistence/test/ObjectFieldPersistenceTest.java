@@ -142,6 +142,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setDBColumnName(RandomTestUtil.randomString());
 
+		newObjectField.setDBTableName(RandomTestUtil.randomString());
+
 		newObjectField.setIndexed(RandomTestUtil.randomBoolean());
 
 		newObjectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
@@ -186,6 +188,9 @@ public class ObjectFieldPersistenceTest {
 			existingObjectField.getDBColumnName(),
 			newObjectField.getDBColumnName());
 		Assert.assertEquals(
+			existingObjectField.getDBTableName(),
+			newObjectField.getDBTableName());
+		Assert.assertEquals(
 			existingObjectField.isIndexed(), newObjectField.isIndexed());
 		Assert.assertEquals(
 			existingObjectField.isIndexedAsKeyword(),
@@ -227,6 +232,15 @@ public class ObjectFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI_DTN() throws Exception {
+		_persistence.countByODI_DTN(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByODI_DTN(0L, "null");
+
+		_persistence.countByODI_DTN(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByODI_N() throws Exception {
 		_persistence.countByODI_N(RandomTestUtil.nextLong(), "");
 
@@ -263,9 +277,9 @@ public class ObjectFieldPersistenceTest {
 			"ObjectField", "mvccVersion", true, "uuid", true, "objectFieldId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "dbColumnName", true, "indexed", true, "indexedAsKeyword",
-			true, "indexedLanguageId", true, "name", true, "required", true,
-			"type", true);
+			true, "dbColumnName", true, "dbTableName", true, "indexed", true,
+			"indexedAsKeyword", true, "indexedLanguageId", true, "name", true,
+			"required", true, "type", true);
 	}
 
 	@Test
@@ -562,6 +576,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setObjectDefinitionId(RandomTestUtil.nextLong());
 
 		objectField.setDBColumnName(RandomTestUtil.randomString());
+
+		objectField.setDBTableName(RandomTestUtil.randomString());
 
 		objectField.setIndexed(RandomTestUtil.randomBoolean());
 

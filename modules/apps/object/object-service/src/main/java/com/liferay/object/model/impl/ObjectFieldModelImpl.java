@@ -80,7 +80,8 @@ public class ObjectFieldModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectDefinitionId", Types.BIGINT}, {"dbColumnName", Types.VARCHAR},
-		{"indexed", Types.BOOLEAN}, {"indexedAsKeyword", Types.BOOLEAN},
+		{"dbTableName", Types.VARCHAR}, {"indexed", Types.BOOLEAN},
+		{"indexedAsKeyword", Types.BOOLEAN},
 		{"indexedLanguageId", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"required", Types.BOOLEAN}, {"type_", Types.VARCHAR}
 	};
@@ -99,6 +100,7 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dbColumnName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("indexed", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("indexedAsKeyword", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("indexedLanguageId", Types.VARCHAR);
@@ -108,7 +110,7 @@ public class ObjectFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,name VARCHAR(75) null,required BOOLEAN,type_ VARCHAR(75) null)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,name VARCHAR(75) null,required BOOLEAN,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -132,19 +134,25 @@ public class ObjectFieldModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long DBTABLENAME_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -185,6 +193,7 @@ public class ObjectFieldModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setObjectDefinitionId(soapModel.getObjectDefinitionId());
 		model.setDBColumnName(soapModel.getDBColumnName());
+		model.setDBTableName(soapModel.getDBTableName());
 		model.setIndexed(soapModel.isIndexed());
 		model.setIndexedAsKeyword(soapModel.isIndexedAsKeyword());
 		model.setIndexedLanguageId(soapModel.getIndexedLanguageId());
@@ -385,6 +394,11 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"dbColumnName",
 			(BiConsumer<ObjectField, String>)ObjectField::setDBColumnName);
+		attributeGetterFunctions.put(
+			"dbTableName", ObjectField::getDBTableName);
+		attributeSetterBiConsumers.put(
+			"dbTableName",
+			(BiConsumer<ObjectField, String>)ObjectField::setDBTableName);
 		attributeGetterFunctions.put("indexed", ObjectField::getIndexed);
 		attributeSetterBiConsumers.put(
 			"indexed",
@@ -634,6 +648,35 @@ public class ObjectFieldModelImpl
 
 	@JSON
 	@Override
+	public String getDBTableName() {
+		if (_dbTableName == null) {
+			return "";
+		}
+		else {
+			return _dbTableName;
+		}
+	}
+
+	@Override
+	public void setDBTableName(String dbTableName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_dbTableName = dbTableName;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalDBTableName() {
+		return getColumnOriginalValue("dbTableName");
+	}
+
+	@JSON
+	@Override
 	public boolean getIndexed() {
 		return _indexed;
 	}
@@ -836,6 +879,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setModifiedDate(getModifiedDate());
 		objectFieldImpl.setObjectDefinitionId(getObjectDefinitionId());
 		objectFieldImpl.setDBColumnName(getDBColumnName());
+		objectFieldImpl.setDBTableName(getDBTableName());
 		objectFieldImpl.setIndexed(isIndexed());
 		objectFieldImpl.setIndexedAsKeyword(isIndexedAsKeyword());
 		objectFieldImpl.setIndexedLanguageId(getIndexedLanguageId());
@@ -972,6 +1016,14 @@ public class ObjectFieldModelImpl
 			objectFieldCacheModel.dbColumnName = null;
 		}
 
+		objectFieldCacheModel.dbTableName = getDBTableName();
+
+		String dbTableName = objectFieldCacheModel.dbTableName;
+
+		if ((dbTableName != null) && (dbTableName.length() == 0)) {
+			objectFieldCacheModel.dbTableName = null;
+		}
+
 		objectFieldCacheModel.indexed = isIndexed();
 
 		objectFieldCacheModel.indexedAsKeyword = isIndexedAsKeyword();
@@ -1086,6 +1138,7 @@ public class ObjectFieldModelImpl
 	private boolean _setModifiedDate;
 	private long _objectDefinitionId;
 	private String _dbColumnName;
+	private String _dbTableName;
 	private boolean _indexed;
 	private boolean _indexedAsKeyword;
 	private String _indexedLanguageId;
@@ -1132,6 +1185,7 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
 		_columnOriginalValues.put("dbColumnName", _dbColumnName);
+		_columnOriginalValues.put("dbTableName", _dbTableName);
 		_columnOriginalValues.put("indexed", _indexed);
 		_columnOriginalValues.put("indexedAsKeyword", _indexedAsKeyword);
 		_columnOriginalValues.put("indexedLanguageId", _indexedLanguageId);
@@ -1182,17 +1236,19 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("dbColumnName", 512L);
 
-		columnBitmasks.put("indexed", 1024L);
+		columnBitmasks.put("dbTableName", 1024L);
 
-		columnBitmasks.put("indexedAsKeyword", 2048L);
+		columnBitmasks.put("indexed", 2048L);
 
-		columnBitmasks.put("indexedLanguageId", 4096L);
+		columnBitmasks.put("indexedAsKeyword", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("indexedLanguageId", 8192L);
 
-		columnBitmasks.put("required", 16384L);
+		columnBitmasks.put("name", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("required", 32768L);
+
+		columnBitmasks.put("type_", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

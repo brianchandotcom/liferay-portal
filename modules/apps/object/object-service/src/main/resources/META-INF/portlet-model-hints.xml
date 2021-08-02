@@ -48,6 +48,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="dbColumnName" type="String" />
+		<field name="dbTableName" type="String" />
 		<field name="indexed" type="boolean" />
 		<field name="indexedAsKeyword" type="boolean" />
 		<field name="indexedLanguageId" type="String" />

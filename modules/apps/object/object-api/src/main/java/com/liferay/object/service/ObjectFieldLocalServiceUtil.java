@@ -44,14 +44,14 @@ public class ObjectFieldLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static ObjectField addObjectField(
-			long userId, long objectDefinitionId, String dbColumnName,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
+	public static ObjectField addCustomObjectField(
+			long userId, long objectDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId, String name,
+			boolean required, String type)
 		throws PortalException {
 
-		return getService().addObjectField(
-			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
+		return getService().addCustomObjectField(
+			userId, objectDefinitionId, indexed, indexedAsKeyword,
 			indexedLanguageId, name, required, type);
 	}
 
@@ -67,6 +67,17 @@ public class ObjectFieldLocalServiceUtil {
 	 */
 	public static ObjectField addObjectField(ObjectField objectField) {
 		return getService().addObjectField(objectField);
+	}
+
+	public static ObjectField addSystemObjectField(
+			long userId, long objectDefinitionId, String dbColumnName,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String name, boolean required, String type)
+		throws PortalException {
+
+		return getService().addSystemObjectField(
+			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
+			indexedLanguageId, name, required, type);
 	}
 
 	/**

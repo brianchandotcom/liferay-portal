@@ -199,6 +199,11 @@ public class ObjectDefinitionWrapper
 		return model.getDBTableName();
 	}
 
+	@Override
+	public String getExtensionDBTableName() {
+		return model.getExtensionDBTableName();
+	}
+
 	/**
 	 * Returns the modified date of this object definition.
 	 *

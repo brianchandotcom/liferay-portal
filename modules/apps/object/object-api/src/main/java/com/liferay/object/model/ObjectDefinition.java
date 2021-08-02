@@ -61,6 +61,8 @@ public interface ObjectDefinition
 
 	public String getPortletId();
 
+	public String getExtensionDBTableName();
+
 	public String getResourceName();
 
 	public String getRESTContextPath();

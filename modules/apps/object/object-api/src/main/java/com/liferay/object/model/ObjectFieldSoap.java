@@ -43,6 +43,7 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setObjectDefinitionId(model.getObjectDefinitionId());
 		soapModel.setDBColumnName(model.getDBColumnName());
+		soapModel.setDBTableName(model.getDBTableName());
 		soapModel.setIndexed(model.isIndexed());
 		soapModel.setIndexedAsKeyword(model.isIndexedAsKeyword());
 		soapModel.setIndexedLanguageId(model.getIndexedLanguageId());
@@ -182,6 +183,14 @@ public class ObjectFieldSoap implements Serializable {
 		_dbColumnName = dbColumnName;
 	}
 
+	public String getDBTableName() {
+		return _dbTableName;
+	}
+
+	public void setDBTableName(String dbTableName) {
+		_dbTableName = dbTableName;
+	}
+
 	public boolean getIndexed() {
 		return _indexed;
 	}
@@ -252,6 +261,7 @@ public class ObjectFieldSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _objectDefinitionId;
 	private String _dbColumnName;
+	private String _dbTableName;
 	private boolean _indexed;
 	private boolean _indexedAsKeyword;
 	private String _indexedLanguageId;

@@ -34,14 +34,14 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectField addObjectField(
-			long userId, long objectDefinitionId, String dbColumnName,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
+	public com.liferay.object.model.ObjectField addCustomObjectField(
+			long userId, long objectDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId, String name,
+			boolean required, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectFieldLocalService.addObjectField(
-			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
+		return _objectFieldLocalService.addCustomObjectField(
+			userId, objectDefinitionId, indexed, indexedAsKeyword,
 			indexedLanguageId, name, required, type);
 	}
 
@@ -60,6 +60,18 @@ public class ObjectFieldLocalServiceWrapper
 		com.liferay.object.model.ObjectField objectField) {
 
 		return _objectFieldLocalService.addObjectField(objectField);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectField addSystemObjectField(
+			long userId, long objectDefinitionId, String dbColumnName,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String name, boolean required, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.addSystemObjectField(
+			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
+			indexedLanguageId, name, required, type);
 	}
 
 	/**

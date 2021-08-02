@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class ObjectFieldCacheModel
 		sb.append(objectDefinitionId);
 		sb.append(", dbColumnName=");
 		sb.append(dbColumnName);
+		sb.append(", dbTableName=");
+		sb.append(dbTableName);
 		sb.append(", indexed=");
 		sb.append(indexed);
 		sb.append(", indexedAsKeyword=");
@@ -163,6 +165,13 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setDBColumnName(dbColumnName);
 		}
 
+		if (dbTableName == null) {
+			objectFieldImpl.setDBTableName("");
+		}
+		else {
+			objectFieldImpl.setDBTableName(dbTableName);
+		}
+
 		objectFieldImpl.setIndexed(indexed);
 		objectFieldImpl.setIndexedAsKeyword(indexedAsKeyword);
 
@@ -210,6 +219,7 @@ public class ObjectFieldCacheModel
 
 		objectDefinitionId = objectInput.readLong();
 		dbColumnName = objectInput.readUTF();
+		dbTableName = objectInput.readUTF();
 
 		indexed = objectInput.readBoolean();
 
@@ -257,6 +267,13 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(dbColumnName);
 		}
 
+		if (dbTableName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(dbTableName);
+		}
+
 		objectOutput.writeBoolean(indexed);
 
 		objectOutput.writeBoolean(indexedAsKeyword);
@@ -295,6 +312,7 @@ public class ObjectFieldCacheModel
 	public long modifiedDate;
 	public long objectDefinitionId;
 	public String dbColumnName;
+	public String dbTableName;
 	public boolean indexed;
 	public boolean indexedAsKeyword;
 	public String indexedLanguageId;

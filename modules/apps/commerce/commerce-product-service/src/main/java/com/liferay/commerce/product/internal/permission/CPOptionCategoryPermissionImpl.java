@@ -118,9 +118,7 @@ public class CPOptionCategoryPermissionImpl
 			CPOptionCategory cpOptionCategory, String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isCompanyAdmin(cpOptionCategory.getCompanyId()) ||
-			permissionChecker.isOmniadmin()) {
-
+		if (permissionChecker.isCompanyAdmin(cpOptionCategory.getCompanyId())) {
 			return true;
 		}
 

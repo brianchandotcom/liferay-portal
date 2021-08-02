@@ -118,9 +118,7 @@ public class CommerceChannelPermissionImpl
 			CommerceChannel commerceChannel, String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isCompanyAdmin(commerceChannel.getCompanyId()) ||
-			permissionChecker.isOmniadmin()) {
-
+		if (permissionChecker.isCompanyAdmin(commerceChannel.getCompanyId())) {
 			return true;
 		}
 

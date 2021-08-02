@@ -121,8 +121,7 @@ public class CPSpecificationOptionPermissionImpl
 		throws PortalException {
 
 		if (permissionChecker.isCompanyAdmin(
-				cpSpecificationOption.getCompanyId()) ||
-			permissionChecker.isOmniadmin()) {
+				cpSpecificationOption.getCompanyId())) {
 
 			return true;
 		}

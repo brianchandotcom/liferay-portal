@@ -7975,6 +7975,10 @@ public class JournalArticleLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.fetchByPrimaryKey(
 			article.getFolderId());
 
+		assetEntryLocalService.addAssetEntryAssetTagsPersistedSubscribers(
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
+			subscriptionSender);
+
 		subscriptionSender.addPersistedSubscribers(
 			JournalFolder.class.getName(), article.getGroupId());
 

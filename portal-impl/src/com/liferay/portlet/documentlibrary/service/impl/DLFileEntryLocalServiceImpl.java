@@ -3423,6 +3423,10 @@ public class DLFileEntryLocalServiceImpl
 		subscriptionSender.setScopeGroupId(fileVersion.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 
+		assetEntryLocalService.addAssetEntryAssetTagsPersistedSubscribers(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
+			subscriptionSender);
+
 		subscriptionSender.addPersistedSubscribers(
 			DLFolder.class.getName(), fileVersion.getGroupId());
 

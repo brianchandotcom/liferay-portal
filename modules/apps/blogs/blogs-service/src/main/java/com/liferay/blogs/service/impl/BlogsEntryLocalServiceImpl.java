@@ -2030,6 +2030,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		_unsubscribeHelper.registerHooks(subscriptionSender);
 
+		assetEntryLocalService.addAssetEntryAssetTagsPersistedSubscribers(
+			BlogsEntry.class.getName(), entry.getEntryId(), subscriptionSender);
+
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
 

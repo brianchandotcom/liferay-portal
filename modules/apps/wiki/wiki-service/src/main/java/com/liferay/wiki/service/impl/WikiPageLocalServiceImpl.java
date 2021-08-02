@@ -3129,6 +3129,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setScopeGroupId(page.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 
+		assetEntryLocalService.addAssetEntryAssetTagsPersistedSubscribers(
+			WikiPage.class.getName(), page.getResourcePrimKey(),
+			subscriptionSender);
+
 		subscriptionSender.addPersistedSubscribers(
 			WikiNode.class.getName(), page.getNodeId());
 

@@ -1839,6 +1839,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		subscriptionSender.setScopeGroupId(kbArticle.getGroupId());
 		subscriptionSender.setSubject(subject);
 
+		assetEntryLocalService.addAssetEntryAssetTagsPersistedSubscribers(
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
+			subscriptionSender);
+
 		subscriptionSender.addPersistedSubscribers(
 			KBArticle.class.getName(), kbArticle.getGroupId());
 		subscriptionSender.addPersistedSubscribers(

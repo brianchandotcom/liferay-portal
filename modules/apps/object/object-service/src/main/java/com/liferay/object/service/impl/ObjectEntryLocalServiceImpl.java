@@ -296,11 +296,21 @@ public class ObjectEntryLocalServiceImpl
 			_getDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId());
 
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(
+				objectEntry.getObjectDefinitionId());
+
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.selectDistinct(
 				dynamicObjectDefinitionTable.getSelectExpressions()
 			).from(
 				dynamicObjectDefinitionTable
+			).innerJoinON(
+				extensionDynamicObjectDefinitionTable,
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
+				)
 			).where(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
 				).eq(
@@ -325,6 +335,9 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(objectDefinitionId);
+
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
 
 		Predicate predicate = ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 			objectDefinitionId);
@@ -351,6 +364,12 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE,
 				ObjectEntryTable.INSTANCE.objectEntryId.eq(
 					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
+			).innerJoinON(
+				extensionDynamicObjectDefinitionTable,
+				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+				)
 			).where(
 				predicate
 			).limit(

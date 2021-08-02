@@ -76,9 +76,7 @@ public class JournalArticleContentDashboardItemFactory
 
 		Optional<ContentDashboardItemSubtypeFactory>
 			contentDashboardItemSubtypeFactoryOptional =
-				_contentDashboardItemSubtypeFactoryTracker.
-					getContentDashboardItemSubtypeFactoryOptional(
-						DDMStructure.class.getName());
+				getContentDashboardItemSubtypeFactoryOptional();
 
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
 			contentDashboardItemSubtypeFactoryOptional.orElseThrow(
@@ -104,6 +102,15 @@ public class JournalArticleContentDashboardItemFactory
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
 			infoItemFieldValuesProvider, journalArticle, _language,
 			latestApprovedJournalArticle, _portal);
+	}
+
+	@Override
+	public Optional<ContentDashboardItemSubtypeFactory>
+		getContentDashboardItemSubtypeFactoryOptional() {
+
+		return _contentDashboardItemSubtypeFactoryTracker.
+			getContentDashboardItemSubtypeFactoryOptional(
+				DDMStructure.class.getName());
 	}
 
 	@Reference

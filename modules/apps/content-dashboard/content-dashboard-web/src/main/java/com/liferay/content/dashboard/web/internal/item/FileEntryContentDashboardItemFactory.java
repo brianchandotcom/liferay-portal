@@ -73,9 +73,7 @@ public class FileEntryContentDashboardItemFactory
 
 		Optional<ContentDashboardItemSubtypeFactory>
 			contentDashboardItemSubtypeFactoryOptional =
-				_contentDashboardItemSubtypeFactoryTracker.
-					getContentDashboardItemSubtypeFactoryOptional(
-						DLFileEntryType.class.getName());
+				getContentDashboardItemSubtypeFactoryOptional();
 
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
 			contentDashboardItemSubtypeFactoryOptional.orElseThrow(
@@ -90,6 +88,15 @@ public class FileEntryContentDashboardItemFactory
 				dlFileEntry.getFileEntryTypeId()),
 			fileEntry, _groupLocalService.fetchGroup(fileEntry.getGroupId()),
 			infoItemFieldValuesProvider, _language, _portal);
+	}
+
+	@Override
+	public Optional<ContentDashboardItemSubtypeFactory>
+		getContentDashboardItemSubtypeFactoryOptional() {
+
+		return _contentDashboardItemSubtypeFactoryTracker.
+			getContentDashboardItemSubtypeFactoryOptional(
+				DLFileEntryType.class.getName());
 	}
 
 	@Override

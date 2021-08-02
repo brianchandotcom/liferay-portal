@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile project(":apps:item-selector:item-selector-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

@@ -27,4 +27,5 @@ ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSu
 		rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<react:component module="js/SelectTypeAndSubtype" />
+<react:component module="js/SelectTypeAndSubtype"
+	props="<%= contentDashboardItemSubtypeItemSelectorViewDisplayContext.getData() %>" />

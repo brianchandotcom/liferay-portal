@@ -25,6 +25,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.model.AssetVocabularyMetric;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -230,9 +231,12 @@ public class ContentDashboardAdminDisplayContext {
 					contentDashboardItemSubtypes.stream();
 
 				return stream.map(
-					contentDashboardItemSubtype ->
-						contentDashboardItemSubtype.toJSONString(
-							_portal.getLocale(_liferayPortletRequest))
+					contentDashboardItemSubtype -> {
+						InfoItemReference infoItemReference =
+							contentDashboardItemSubtype.getInfoItemReference();
+
+						return String.valueOf(infoItemReference.getClassPK());
+					}
 				).toArray(
 					String[]::new
 				);

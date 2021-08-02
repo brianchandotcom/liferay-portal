@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -329,20 +330,33 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 					getContentDashboardItemFactoryOptional(String className) {
 
 					return Optional.ofNullable(
-						classPK -> {
-							InfoItemReference infoItemReference =
-								contentDashboardItem.getInfoItemReference();
+						new ContentDashboardItemFactory() {
 
-							if (Objects.equals(
-									className,
-									infoItemReference.getClassName()) &&
-								Objects.equals(
-									classPK, infoItemReference.getClassPK())) {
+							@Override
+							public ContentDashboardItem create(long classPK) {
+								InfoItemReference infoItemReference =
+									contentDashboardItem.getInfoItemReference();
 
-								return contentDashboardItem;
+								if (Objects.equals(
+										className,
+										infoItemReference.getClassName()) &&
+									Objects.equals(
+										classPK,
+										infoItemReference.getClassPK())) {
+
+									return contentDashboardItem;
+								}
+
+								return null;
 							}
 
-							return null;
+							@Override
+							public Optional<ContentDashboardItemSubtypeFactory>
+								getContentDashboardItemSubtypeFactoryOptional() {
+
+								return Optional.empty();
+							}
+
 						});
 				}
 

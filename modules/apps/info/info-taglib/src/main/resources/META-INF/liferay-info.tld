@@ -35,4 +35,24 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>info-list-table</name>
+		<tag-class>com.liferay.info.taglib.servlet.taglib.InfoListBasicTableTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>infoListObjectColumnNames</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>infoListObjects</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>itemRendererKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

@@ -37,15 +37,6 @@ jest.mock(
 	})
 );
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			collectionDisplayFragmentPaginationEnabled: true,
-		},
-	})
-);
-
 function renderCollection(itemConfig = {}) {
 	Liferay.Util.sub.mockImplementation((langKey, args) =>
 		[langKey, ...args].join('-')

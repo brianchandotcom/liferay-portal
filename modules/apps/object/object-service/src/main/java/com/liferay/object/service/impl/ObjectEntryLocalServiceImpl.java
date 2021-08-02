@@ -532,10 +532,31 @@ public class ObjectEntryLocalServiceImpl
 		// TODO Cache this across the cluster with proper invalidation when the
 		// object definition or its object fields are updated
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		return new DynamicObjectDefinitionTable(
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId),
-			_objectFieldPersistence.findByObjectDefinitionId(
-				objectDefinitionId));
+			objectDefinition,
+			_objectFieldPersistence.findByODI_DTN(
+				objectDefinitionId, objectDefinition.getDBTableName()),
+			objectDefinition.getDBTableName());
+	}
+
+	private DynamicObjectDefinitionTable
+			_getExtensionDynamicObjectDefinitionTable(long objectDefinitionId)
+		throws PortalException {
+
+		// TODO Cache this across the cluster with proper invalidation when the
+		// object definition or its object fields are updated
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		return new DynamicObjectDefinitionTable(
+			objectDefinition,
+			_objectFieldPersistence.findByODI_DTN(
+				objectDefinitionId, objectDefinition.getExtensionDBTableName()),
+			objectDefinition.getExtensionDBTableName());
 	}
 
 	private long _getGroupId(ObjectEntry objectEntry) throws PortalException {

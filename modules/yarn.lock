@@ -9561,10 +9561,10 @@ liferay-ckeditor@4.16.1-liferay.2:
   resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.16.1-liferay.2.tgz#b3dfbaa2fc8c873393e107fb10c9c451cfefd40e"
   integrity sha512-hL2JOoUSBphtBn/5rfmE9rCRFfZKWPhZFcDU/t7kA7iDpxxaQ/j/2PIkSicYfRnX/fIZymXK+dIbF5M/HvFszw==
 
-liferay-font-awesome@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.4.0.tgz#5b7c7f24d8ffd0820c2c3af38f2d9d6c3e653af5"
-  integrity sha512-c05FMUGkFTjtoJGGFCOzlMd7Jebb03f8lGPS7dnrBLv+IHayryBQakFMmo4cbJBSGquE8DgP15ywPyMpLPPPeA==
+liferay-font-awesome@3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.4.1.tgz#a53e12af499f7f68395168b5eebbab0d8d396e6e"
+  integrity sha512-43g2Iyr/BvCMKPNlbob7I8TIZZ480K/pQP2EfPabmgvMQG/VLZJALMauxd8OgV0IxdgJJ4IDQU7wW7gOiu7scQ==
   dependencies:
     less "1.4.1"
 

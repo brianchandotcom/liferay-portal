@@ -28,6 +28,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
@@ -572,7 +573,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 			include("/edit_role.jsp", renderRequest, renderResponse);
 		}
 		else if (SessionErrors.contains(
-					renderRequest, NoSuchRoleException.class.getName()) ||
+					renderRequest,
+					DataLimitExceededException.class.getName()) ||
+				 SessionErrors.contains(
+					 renderRequest, NoSuchRoleException.class.getName()) ||
 				 SessionErrors.contains(
 					 renderRequest, PrincipalException.getNestedClasses()) ||
 				 SessionErrors.contains(
@@ -597,7 +601,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {
-		if (throwable instanceof DuplicateRoleException ||
+		if (throwable instanceof DataLimitExceededException ||
+			throwable instanceof DuplicateRoleException ||
 			throwable instanceof NoSuchRoleException ||
 			throwable instanceof PrincipalException ||
 			throwable instanceof RequiredRoleException ||

@@ -18,6 +18,7 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= DataLimitExceededException.class %>" message="unable-to-create-role-because-the-maximum-number-of-roles-has-been-reached" />
 <liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
 <liferay-ui:error exception="<%= RequiredRoleException.MustNotRemoveLastAdministator.class %>" message="at-least-one-administrator-is-required" />
 <liferay-ui:error exception="<%= RequiredRoleException.MustNotRemoveUserRole.class %>" message="user-role-could-not-be-removed" />

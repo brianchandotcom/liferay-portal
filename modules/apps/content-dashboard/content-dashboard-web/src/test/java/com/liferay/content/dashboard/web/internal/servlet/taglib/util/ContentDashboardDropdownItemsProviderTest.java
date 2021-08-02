@@ -289,10 +289,25 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public String getDescription(Locale locale) {
+				return "Description";
+			}
+
+			@Override
 			public Object getDisplayFieldValue(
 				String fieldName, Locale locale) {
 
 				return null;
+			}
+
+			@Override
+			public String getDownloadURL() {
+				return "download/url/test";
+			}
+
+			@Override
+			public String getExtension() {
+				return "extension";
 			}
 
 			@Override
@@ -307,8 +322,18 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public Object getPreviewImage() {
+				return new Object();
+			}
+
+			@Override
 			public String getScopeName(Locale locale) {
 				return null;
+			}
+
+			@Override
+			public String getSize() {
+				return "123";
 			}
 
 			@Override
@@ -319,6 +344,12 @@ public class ContentDashboardDropdownItemsProviderTest {
 			@Override
 			public String getTypeLabel(Locale locale) {
 				return "Web Content";
+			}
+
+			@Override
+			public String getUserAvatarURL(
+				HttpServletRequest httpServletRequest) {
+				return "avatar/url/test";
 			}
 
 			@Override

@@ -256,6 +256,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
+			public String getDescription(Locale locale) {
+				return "Web Content description";
+			}
+
+			@Override
 			public Object getDisplayFieldValue(
 				String fieldName, Locale locale) {
 
@@ -264,6 +269,16 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				return null;
+			}
+
+			@Override
+			public String getDownloadURL() {
+				return "Download/url/test";
+			}
+
+			@Override
+			public String getExtension() {
+				return "extension";
 			}
 
 			@Override
@@ -277,13 +292,29 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
+			public Object getPreviewImage() {
+				return new Object();
+			}
+
+			@Override
 			public String getScopeName(Locale locale) {
 				return RandomTestUtil.randomString();
 			}
 
 			@Override
+			public String getSize() {
+				return "123";
+			}
+
+			@Override
 			public String getTitle(Locale locale) {
 				return "title";
+			}
+
+			@Override
+			public String getUserAvatarURL(
+				HttpServletRequest httpServletRequest) {
+				return "avatar/url/test";
 			}
 
 			@Override

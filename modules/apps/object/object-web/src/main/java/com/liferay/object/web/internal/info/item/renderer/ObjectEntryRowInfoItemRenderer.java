@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.Serializable;
 
@@ -32,11 +33,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -108,22 +107,13 @@ public class ObjectEntryRowInfoItemRenderer
 
 		Stream<Map.Entry<String, Serializable>> entryStream = entries.stream();
 
-		List<ObjectField> objectFields =
+		List<String> objectFieldNames = ListUtil.toList(
 			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId());
-
-		Supplier<Stream<ObjectField>> objectFieldStreamSupplier =
-			objectFields::stream;
+				objectEntry.getObjectDefinitionId()),
+			ObjectField::getName);
 
 		return entryStream.filter(
-			entry -> {
-				Stream<ObjectField> objectFieldStream =
-					objectFieldStreamSupplier.get();
-
-				return objectFieldStream.anyMatch(
-					objectField ->
-						Objects.equals(objectField.getName(), entry.getKey()));
-			}
+			entry -> objectFieldNames.contains(entry.getKey())
 		).sorted(
 			Map.Entry.comparingByKey()
 		).collect(

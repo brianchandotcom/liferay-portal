@@ -27,13 +27,12 @@ import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItem
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,18 +80,11 @@ public class ObjectEntryTableInfoListRenderer
 		if ((objectEntries != null) && !objectEntries.isEmpty()) {
 			ObjectEntry objectEntry = objectEntries.get(0);
 
-			List<ObjectField> objectFields =
-				_objectFieldLocalService.getObjectFields(
-					objectEntry.getObjectDefinitionId());
-
-			Stream<ObjectField> stream = objectFields.stream();
-
 			infoListBasicTableTag.setInfoListObjectColumnNames(
-				stream.map(
-					ObjectField::getName
-				).collect(
-					Collectors.toList()
-				));
+				ListUtil.toList(
+					_objectFieldLocalService.getObjectFields(
+						objectEntry.getObjectDefinitionId()),
+					ObjectField::getName));
 		}
 
 		infoListBasicTableTag.setInfoListObjects(objectEntries);

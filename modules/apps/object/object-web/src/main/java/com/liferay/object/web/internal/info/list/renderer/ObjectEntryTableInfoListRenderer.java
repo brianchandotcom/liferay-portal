@@ -78,8 +78,6 @@ public class ObjectEntryTableInfoListRenderer
 		InfoListBasicTableTag infoListBasicTableTag =
 			new InfoListBasicTableTag();
 
-		infoListBasicTableTag.setInfoListObjects(objectEntries);
-
 		if ((objectEntries != null) && !objectEntries.isEmpty()) {
 			ObjectEntry objectEntry = objectEntries.get(0);
 
@@ -96,6 +94,8 @@ public class ObjectEntryTableInfoListRenderer
 					Collectors.toList()
 				));
 		}
+
+		infoListBasicTableTag.setInfoListObjects(objectEntries);
 
 		Optional<String> infoListItemRendererKeyOptional =
 			infoListRendererContext.getListItemRendererKeyOptional();

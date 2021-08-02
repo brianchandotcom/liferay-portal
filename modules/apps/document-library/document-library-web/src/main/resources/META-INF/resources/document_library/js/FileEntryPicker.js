@@ -92,7 +92,9 @@ const FileNamePicker = ({
 							Liferay.Language.get(
 								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 							),
-							Liferay.Util.formatStorage(maxFileSize)
+							Liferay.Util.formatStorage(maxFileSize, {
+								addSpaceBeforeSuffix: true,
+							})
 						)}
 					</ClayForm.FeedbackItem>
 				</ClayForm.FeedbackGroup>

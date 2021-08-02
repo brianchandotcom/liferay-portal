@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {Editor} from './Editor';
 
@@ -21,8 +21,6 @@ import '../css/main.scss';
 
 const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 	const defaultExtraPlugins = 'ballooneditor,videoembed';
-
-	const [cssClass, setCssClass] = useState('');
 
 	const extraPlugins = config.extraPlugins ? `${config.extraPlugins},` : '';
 
@@ -57,18 +55,11 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 
 				CKEDITOR.disableAutoInline = true;
 
-				setCssClass(CKEDITOR.env.cssClass);
-
-				CKEDITOR.env.cssClass = `${CKEDITOR.env.cssClass} lfr-balloon-editor lfr-tooltip-scope`;
-
 				CKEDITOR.getNextZIndex = function () {
 					return CKEDITOR.dialog._.currentZIndex
 						? CKEDITOR.dialog._.currentZIndex + 10
 						: Liferay.zIndex.WINDOW + 10;
 				};
-			}}
-			onDestroy={() => {
-				CKEDITOR.env.cssClass = cssClass;
 			}}
 			onInstanceReady={(event) => {
 				const editor = event.editor;

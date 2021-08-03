@@ -127,17 +127,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"osgi.jaxrs.name",
 						objectDefinition.getRESTContextPath() +
 							"RequiredObjectFieldExceptionMapper"
-					).build()),
-				_bundleContext.registerService(
-					GraphQLDTOContributor.class,
-					ObjectDefinitionGraphQLDTOContributor.of(
-						objectDefinition, _objectEntryManager,
-						_objectFieldLocalService.getObjectFields(
-							objectDefinition.getObjectDefinitionId())),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"dto.name", objectDefinition.getDBTableName()
 					).build()));
 		}
+
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				GraphQLDTOContributor.class,
+				ObjectDefinitionGraphQLDTOContributor.of(
+					objectDefinition, _objectEntryManager,
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition.getObjectDefinitionId())),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"dto.name", objectDefinition.getDBTableName()
+				).build()));
 
 		_objectDefinitionAPIRegistry.register(objectDefinition);
 

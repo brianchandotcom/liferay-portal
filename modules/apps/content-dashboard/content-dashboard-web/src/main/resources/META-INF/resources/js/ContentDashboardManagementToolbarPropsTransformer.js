@@ -98,31 +98,22 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
 			onSelect: (selectedItems) => {
-				if (selectedItems.length) {
-					const values = selectedItems.map((item) => {
-						const payload = JSON.parse(
-							Liferay.Util.unescape(item.value)
-						);
-
-						return {
-							className: payload.className,
-							classPK: payload.classPK,
-						};
-					});
-
-					let redirectURL = itemData?.redirectURL;
-
-					values.forEach((item) => {
-						redirectURL = addParams(
-							`${portletNamespace}contentDashboardItemSubtypePayload=${JSON.stringify(
-								item
-							)}`,
-							redirectURL
-						);
-					});
-
-					navigate(redirectURL);
+				if (!selectedItems.length) {
+					return;
 				}
+
+				let redirectURL = itemData?.redirectURL;
+
+				selectedItems.forEach((item) => {
+					redirectURL = addParams(
+						`${portletNamespace}contentDashboardItemSubtypePayload=${JSON.stringify(
+							item
+						)}`,
+						redirectURL
+					);
+				});
+
+				navigate(redirectURL);
 			},
 			selectEventName: `${portletNamespace}selectedContentDashboardItemSubtypeItem`,
 			title: itemData?.dialogTitle,

@@ -31,6 +31,7 @@ const Text = ({
 	id,
 	localizable,
 	localizedValue,
+	maxLength,
 	name,
 	onBlur,
 	onChange,
@@ -94,6 +95,7 @@ const Text = ({
 			disabled={disabled}
 			id={id}
 			lang={editingLanguageId}
+			maxLength={maxLength}
 			name={name}
 			onBlur={(event) => {
 				if (fieldName == 'fieldReference') {
@@ -347,6 +349,7 @@ const Main = ({
 	id,
 	localizable,
 	localizedValue = {},
+	maxLength,
 	name,
 	onBlur,
 	onChange,
@@ -391,6 +394,7 @@ const Main = ({
 				id={fieldDetailsId}
 				localizable={localizable}
 				localizedValue={localizedValue}
+				maxLength={maxLength}
 				name={name}
 				onBlur={onBlur}
 				onChange={onChange}

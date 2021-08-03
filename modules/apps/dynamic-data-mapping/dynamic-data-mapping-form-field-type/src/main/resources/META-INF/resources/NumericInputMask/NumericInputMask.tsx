@@ -201,6 +201,7 @@ const NumericInputMask: React.FC<IProps> = ({
 			</div>
 			<Text
 				label={Liferay.Language.get('prefix-or-suffix')}
+				maxLength={10}
 				name="append"
 				onBlur={onBlur}
 				onChange={(event: any) => {

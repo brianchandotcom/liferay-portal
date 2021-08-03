@@ -33,6 +33,8 @@ import {ISymbols} from '../NumericInputMask/NumericInputMask';
 
 import withConfirmationField from '../util/withConfirmationField.es';
 
+const NON_NUMERIC_REGEX = /[\D]/g;
+
 const adaptiveMask = (rawValue: string, inputMaskFormat: string) => {
 	const generateMask = (mask: string): string => {
 		if (!mask.includes('0')) {
@@ -210,12 +212,14 @@ const Numeric: React.FC<IProps> = ({
 	const handleChange: ChangeEventHandler<HTMLInputElement> = ({
 		target: {value},
 	}) => {
-		const rawValue = value.replace(/\D/g, '');
+		const inputValueRaw = inputValue.raw.replace(NON_NUMERIC_REGEX, '');
+		const rawValue = value.replace(NON_NUMERIC_REGEX, '');
+
 		if (
-			(inputValue.masked?.length ?? 0) - value.length === 1 &&
-			(inputValue.raw?.length ?? 0) === rawValue.length
+			inputValue.masked?.length > value.length &&
+			(inputValueRaw?.length ?? 0) === rawValue.length
 		) {
-			value = inputValue.raw.slice(0, -1);
+			value = inputValueRaw.slice(0, -1);
 		}
 
 		if (inputMask && dataType === 'double') {

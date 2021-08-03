@@ -52,10 +52,10 @@ public class CPAttachmentFileEntryServiceImpl
 
 	@Override
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
-			long userId, long groupId, long classNameId, long classPK,
-			long fileEntryId, boolean cdnEnabled, String cdnURL,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			long groupId, long classNameId, long classPK, long fileEntryId,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
@@ -66,7 +66,7 @@ public class CPAttachmentFileEntryServiceImpl
 			serviceContext.getScopeGroupId(), classNameId, classPK, type);
 
 		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-			null, userId, groupId, classNameId, classPK, fileEntryId,
+			null, getUserId(), groupId, classNameId, classPK, fileEntryId,
 			cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -317,24 +317,25 @@ public class CPAttachmentFileEntryServiceImpl
 
 	@Override
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
-			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnURL, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			long cpAttachmentFileEntryId, long fileEntryId, boolean cdnEnabled,
+			String cdnURL, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
 		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-			userId, cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			getUserId(), cpAttachmentFileEntryId, fileEntryId, cdnEnabled,
+			cdnURL, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	protected void checkCPAttachmentFileEntryPermissions(

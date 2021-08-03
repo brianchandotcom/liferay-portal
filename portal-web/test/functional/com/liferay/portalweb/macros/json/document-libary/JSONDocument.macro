@@ -118,7 +118,7 @@ definition {
 		}
 
 		if (!(isSet(expirationDate))) {
-			var expirationDate = "2023-01-25 01:00";
+			var expirationDate = "2099-01-25 01:00";
 		}
 
 		if (isSet(reviewDate)) {

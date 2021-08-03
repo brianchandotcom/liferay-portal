@@ -1,8 +1,17 @@
 @import 'state-node';
+@import 'task-node';
 
 .node {
 	align-items: center;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+
+	.current-icon,
+	.done-icon {
+		color: #5aca75;
+		height: 16px;
+		margin-top: 0.8px;
+		width: 16px;
+	}
 }

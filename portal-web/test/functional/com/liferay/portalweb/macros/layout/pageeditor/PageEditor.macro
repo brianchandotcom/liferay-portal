@@ -1573,7 +1573,7 @@ definition {
 
 		if (isSet(maxNumberOfItems)) {
 			Type(
-				key_fieldLabel = "Maximum Number Of Items",
+				key_fieldLabel = "Maximum Number of Items",
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "${maxNumberOfItems}");
 
@@ -1582,7 +1582,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertTextEquals(
-				key_fieldLabel = "Maximum Number Of Items",
+				key_fieldLabel = "Maximum Number of Items",
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "${maxNumberOfItems}");
 		}

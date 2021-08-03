@@ -209,6 +209,9 @@ public class AnnotationsExtendedObjectClassDefinition
 		).put(
 			"name-arguments",
 			StringUtil.merge(extendedObjectClassDefinition.nameArguments())
+		).put(
+			"strictScope",
+			Boolean.toString(extendedObjectClassDefinition.strictScope())
 		).build();
 
 		ExtendedObjectClassDefinition.Scope scope =

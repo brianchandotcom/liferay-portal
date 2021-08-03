@@ -25,6 +25,8 @@ import {selectPageContentDropdownItems} from '../../app/selectors/selectPageCont
 import {useId} from '../../app/utils/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
+const EMPTY_ARRAY = [];
+
 export default function ItemSelector({
 	className,
 	eventName,
@@ -32,7 +34,8 @@ export default function ItemSelector({
 	label,
 	modalProps,
 	onItemSelect,
-	quickMappedInfoItems = [],
+	optionsMenuItems = EMPTY_ARRAY,
+	quickMappedInfoItems = EMPTY_ARRAY,
 	selectedItem,
 	showEditControls = true,
 	showMappedItems = true,
@@ -127,6 +130,10 @@ export default function ItemSelector({
 				}
 			}
 
+			if (optionsMenuItems.length) {
+				menuItems.push(...optionsMenuItems, {type: 'divider'});
+			}
+
 			menuItems.push({
 				label: Liferay.Util.sub(
 					Liferay.Language.get('remove-x'),
@@ -137,7 +144,7 @@ export default function ItemSelector({
 
 			return menuItems;
 		},
-		[label, onItemSelect, selectedItem]
+		[label, onItemSelect, optionsMenuItems, selectedItem]
 	);
 
 	const selectedItemTitle = useSelectorCallback(
@@ -264,6 +271,12 @@ ItemSelector.propTypes = {
 	label: PropTypes.string.isRequired,
 	modalProps: PropTypes.object,
 	onItemSelect: PropTypes.func.isRequired,
+	optionsMenuItems: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string.isRequired,
+			onClick: PropTypes.func.isRequired,
+		})
+	),
 	quickMappedInfoItems: PropTypes.arrayOf(
 		PropTypes.shape({
 			classNameId: PropTypes.string,

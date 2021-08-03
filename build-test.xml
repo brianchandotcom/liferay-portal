@@ -1985,6 +1985,8 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 				</else>
 			</if>
 
+			<propertycopy from="selenium.chrome.driver.version[${browser.chrome.version}]" name="selenium.chrome.driver.version" silent="true" />
+
 			<mirrors-get
 				dest="tools/selenium/${selenium.chrome.driver.zip}"
 				src="http://chromedriver.storage.googleapis.com/${selenium.chrome.driver.version}/${selenium.chrome.driver.zip}"

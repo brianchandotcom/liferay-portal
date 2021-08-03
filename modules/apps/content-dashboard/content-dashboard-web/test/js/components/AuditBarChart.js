@@ -226,7 +226,11 @@ describe('AuditBarChart', () => {
 
 	it('renders audit bar chart from one vocabulary', () => {
 		const {container, getByText} = render(
-			<AuditBarChart rtl={false} vocabularies={mockOneVocabulary} />
+			<AuditBarChart
+				namespace="demo_namespace"
+				rtl={false}
+				vocabularies={mockOneVocabulary}
+			/>
 		);
 
 		expect(getByText('Audience')).toBeInTheDocument();
@@ -244,7 +248,11 @@ describe('AuditBarChart', () => {
 
 	it('renders audit bar chart from two vocabularies', () => {
 		const {container, getByText} = render(
-			<AuditBarChart rtl={false} vocabularies={mockTwoVocabularies} />
+			<AuditBarChart
+				namespace="demo_namespace"
+				rtl={false}
+				vocabularies={mockTwoVocabularies}
+			/>
 		);
 
 		expect(getByText('Stage:')).toBeInTheDocument();
@@ -267,6 +275,7 @@ describe('AuditBarChart', () => {
 	it('renders audit bar chart from two vocabularies without categories in the first one', () => {
 		const {container, getByText} = render(
 			<AuditBarChart
+				namespace="demo_namespace"
 				rtl={false}
 				vocabularies={
 					mockTwoVocabulariesWithCategoriesInTheFirstVocabulary
@@ -291,6 +300,7 @@ describe('AuditBarChart', () => {
 	it('renders audit bar chart from two vocabularies with none category', () => {
 		const {container, getByText} = render(
 			<AuditBarChart
+				namespace="demo_namespace"
 				rtl={false}
 				vocabularies={mockTwoVocabulariesWithNoneCategory}
 			/>
@@ -313,7 +323,11 @@ describe('AuditBarChart', () => {
 
 	it('renders audit bar chart only from checked categories from legend', () => {
 		const {container, getByLabelText} = render(
-			<AuditBarChart rtl={false} vocabularies={mockTwoVocabularies} />
+			<AuditBarChart
+				namespace="demo_namespace"
+				rtl={false}
+				vocabularies={mockTwoVocabularies}
+			/>
 		);
 
 		const bars = container.getElementsByClassName(
@@ -339,7 +353,11 @@ describe('AuditBarChart', () => {
 
 	it('renders audit bar chart message when there are no vocabularies selected', () => {
 		const {getByLabelText, getByText} = render(
-			<AuditBarChart rtl={false} vocabularies={mockTwoVocabularies} />
+			<AuditBarChart
+				namespace="demo_namespace"
+				rtl={false}
+				vocabularies={mockTwoVocabularies}
+			/>
 		);
 
 		const educationCheckbox = getByLabelText('Education');

@@ -245,8 +245,6 @@ definition {
 	test RemoveAnAttachment {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -257,16 +255,25 @@ definition {
 			productType = "Simple");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
 		CommerceProductImages.addAttachmentImages(imageTitles = "Black");
+		
 		Alert.viewSuccessMessage();
 
 		Click(
-			key_value = "Commerce_Black.jpg",
+			key_value = "Commerce_Black",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			key_table = "Attachments",
+			key_entryName = "Commerce_Black",
+			locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
+
+		echo("Commerce_Black is not present");
 	}
 
 	@description = "This is a test for COMMERCE-6026. RemoveAnImage"

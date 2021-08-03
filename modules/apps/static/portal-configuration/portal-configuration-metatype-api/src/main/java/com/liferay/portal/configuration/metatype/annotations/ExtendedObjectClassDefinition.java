@@ -54,6 +54,20 @@ public @interface ExtendedObjectClassDefinition {
 
 	public String settingsId() default "";
 
+	/**
+	 * Whether or not the configuration's visibility will be limited to the
+	 * declared scope.
+	 *
+	 * If true, the configuration will only be visible at the declared scope.
+	 *
+	 * If false, the configuration will be visible at the declared scope and all
+	 * broader scopes, unless otherwise restricted by a
+	 * ConfigurationVisibilityController.
+	 *
+	 * The default value is false.
+	 */
+	public boolean strictScope() default false;
+
 	public enum Scope {
 
 		COMPANY("companyId", "company"), GROUP("groupId", "group"),

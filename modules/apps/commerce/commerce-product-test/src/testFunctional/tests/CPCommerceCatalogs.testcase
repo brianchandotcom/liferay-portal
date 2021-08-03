@@ -124,8 +124,6 @@ definition {
 	test EditACatalog {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Catalogs");
@@ -191,7 +189,7 @@ definition {
 			value1 = "Euro");
 
 		AssertElementPresent(
-			key_imageTitle = "Commerce_Black.jpg",
+			key_imageTitle = "Commerce_Black",
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}
 

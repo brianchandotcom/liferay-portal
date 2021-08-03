@@ -201,6 +201,52 @@ definition {
 			assetTitle = "Web Content Title");
 	}
 
+	@description = "This is a use case for LPS-128736."
+	@priority = "4"
+	test AssertContentNotBePublishedByDefault {
+		property test.name.skip.portal.instance = "StagingUsecase#AssertContentNotBePublishedByDefault";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Publisher",
+			configurationScope = "System Scope");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_settingFieldName = "Enable Dynamic Export",
+			locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(uncheckContentNameList = "Web Content");
+
+		Staging.publishToLive();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+	}
+
 	@description = "This is a use case for LPS-71786"
 	@priority = "3"
 	test AssertDeletedAssetLinkRemovedFromLiveSite {

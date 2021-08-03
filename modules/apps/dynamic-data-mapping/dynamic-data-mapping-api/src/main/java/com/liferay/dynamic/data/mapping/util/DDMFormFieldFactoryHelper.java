@@ -23,8 +23,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -241,8 +244,46 @@ public class DDMFormFieldFactoryHelper {
 
 			localizedValue.addString(_defaultLocale, predefinedValue);
 		}
-		else if (fieldType.equals("checkbox")) {
+		else if (StringUtil.equals(fieldType, "checkbox")) {
 			localizedValue.addString(_defaultLocale, Boolean.FALSE.toString());
+		}
+		else if (StringUtil.equals(fieldType, "validation") &&
+				 StringUtil.equals(getDDMFormFieldDataType(), "date")) {
+
+			localizedValue.addString(
+				_defaultLocale,
+				JSONUtil.put(
+					"errorMessage", JSONFactoryUtil.createJSONObject()
+				).put(
+					"expression", JSONFactoryUtil.createJSONObject()
+				).put(
+					"parameter",
+					JSONUtil.put(
+						LocaleUtil.toLanguageId(_defaultLocale),
+						JSONUtil.put(
+							"endsOn",
+							JSONUtil.put(
+								"date", "responseDate"
+							).put(
+								"quantity", 1
+							).put(
+								"type", "responseDate"
+							).put(
+								"unit", "days"
+							)
+						).put(
+							"startsFrom",
+							JSONUtil.put(
+								"date", "responseDate"
+							).put(
+								"quantity", 1
+							).put(
+								"type", "responseDate"
+							).put(
+								"unit", "days"
+							)
+						))
+				).toString());
 		}
 
 		return localizedValue;

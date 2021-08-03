@@ -18,6 +18,22 @@ import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useRef, useState} from 'react';
 
+const nodeTreeArrayMapper = (nodesArray) => {
+	return nodesArray.map((node, index) => {
+		const hasChildren = !!node.itemTypes?.length;
+
+		return {
+			...node,
+			children: hasChildren ? nodeTreeArrayMapper(node.itemTypes) : null,
+			className: node.className || null,
+			expanded: !index && hasChildren ? true : false,
+			icon: node.icon || null,
+			id: node.classPK || `_${index}`,
+			name: node.label,
+		};
+	});
+};
+
 const visit = (nodes, callback) => {
 	nodes.forEach((node) => {
 		callback(node);
@@ -40,7 +56,13 @@ const getFilter = (filterQuery) => {
 		node.name.toLowerCase().indexOf(filterQueryLowerCase) !== -1;
 };
 
-const SelectTypeAndSubtype = ({itemSelectorSaveEvent, namespace, nodes}) => {
+const SelectTypeAndSubtype = ({
+	contentDashboardItemTypes,
+	itemSelectorSaveEvent,
+	portletNamespace,
+}) => {
+	const nodes = nodeTreeArrayMapper(contentDashboardItemTypes);
+
 	const [filterQuery, setFilterQuery] = useState('');
 
 	const selectedNodesRef = useRef(null);
@@ -120,9 +142,12 @@ const SelectTypeAndSubtype = ({itemSelectorSaveEvent, namespace, nodes}) => {
 				</ClayLayout.ContainerFluid>
 			</form>
 
-			<form name={`${namespace}selectSelectTypeAndSubtypeFm`}>
+			<form name={`${portletNamespace}selectSelectTypeAndSubtypeFm`}>
 				<ClayLayout.ContainerFluid containerElement="fieldset">
-					<div className="type-tree" id={`${namespace}typeContainer`}>
+					<div
+						className="type-tree"
+						id={`${portletNamespace}typeContainer`}
+					>
 						{nodes.length > 0 ? (
 							<Treeview
 								NodeComponent={Treeview.Card}
@@ -150,16 +175,10 @@ const SelectTypeAndSubtype = ({itemSelectorSaveEvent, namespace, nodes}) => {
 	);
 };
 
-SelectTypeAndSubtype.defaultProps = {
-	itemSelectorSaveEvent: '',
-	namespace: '',
-	nodes: [],
-};
-
 SelectTypeAndSubtype.propTypes = {
-	itemSelectorSaveEvent: PropTypes.string,
-	namespace: PropTypes.string,
-	nodes: PropTypes.array,
+	contentDashboardItemTypes: PropTypes.array.isRequired,
+	itemSelectorSaveEvent: PropTypes.string.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
 };
 
 export default SelectTypeAndSubtype;

@@ -20,9 +20,15 @@
 	<td>//tr[contains(.,'${key_accountName}')]/td[3]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
+<!--ASSIGN_USER-->
 <tr>
-	<td>CHOOSE_ACCOUNT_USER</td>
+	<td>ASSIGN_USER_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_accountUserName}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--DEFAULT_ACCOUNT_ADDRESSES-->

@@ -197,9 +197,6 @@ definition {
 	@priority = "3"
 	test EditAPermissionOnACatalog {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceCatalogs#EditAPermissionOnACatalog";
-
-		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -173,9 +173,7 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			expect(
-				getByText(
-					'collection-display-pagination-requires-at-least-one-item'
-				)
+				getByText('you-need-at-least-one-item-to-use-pagination')
 			).toBeInTheDocument();
 		});
 
@@ -241,9 +239,7 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			expect(
-				getByText(
-					'collection-display-pagination-requires-at-least-one-item'
-				)
+				getByText('you-need-at-least-one-item-to-use-pagination')
 			).toBeInTheDocument();
 		});
 
@@ -256,7 +252,9 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			const label = await waitForElement(() =>
-				getByText('only-x-items-will-be-displayed-50')
+				getByText(
+					'you-can-only-display-a-maximum-of-x-items-per-page-50'
+				)
 			);
 
 			expect(label).toBeInTheDocument();

@@ -11,7 +11,9 @@
 						"collectionType": "Collection"
 					},
 					"numberOfColumns": 2,
-					"numberOfItems": 4
+					"numberOfItems": 4,
+					"numberOfItemsPerPage": 1,
+					"paginationType": "Simple"
 				},
 				"pageElements": [
 					{

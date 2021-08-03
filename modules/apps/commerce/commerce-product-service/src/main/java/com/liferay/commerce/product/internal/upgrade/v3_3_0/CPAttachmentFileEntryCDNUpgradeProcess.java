@@ -31,7 +31,7 @@ public class CPAttachmentFileEntryCDNUpgradeProcess
 
 		addColumn(
 			CPAttachmentFileEntryTable.class,
-			CPAttachmentFileEntryTable.TABLE_NAME, "cdnUrl", "VARCHAR(255)");
+			CPAttachmentFileEntryTable.TABLE_NAME, "cdnURL", "VARCHAR(255)");
 	}
 
 }

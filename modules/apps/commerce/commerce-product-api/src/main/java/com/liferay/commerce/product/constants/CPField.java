@@ -31,7 +31,7 @@ public class CPField {
 
 	public static final String CDN = "cdn";
 
-	public static final String CDN_URL = "cdnUrl";
+	public static final String CDN_URL = "cdnURL";
 
 	public static final String CHANNEL_FILTER_ENABLED = "channelFilterEnabled";
 

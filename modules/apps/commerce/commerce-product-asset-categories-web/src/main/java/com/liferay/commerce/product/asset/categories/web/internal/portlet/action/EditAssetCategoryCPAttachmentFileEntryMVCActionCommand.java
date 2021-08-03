@@ -153,12 +153,12 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 
 		if (cpAttachmentFileEntryId > 0) {
 			_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
-				serviceContext.getUserId(), cpAttachmentFileEntryId,
-				fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, titleMap, null, priority, type, serviceContext);
+				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, titleMap, null, priority,
+				type, serviceContext);
 		}
 		else {
 			long classNameId = _portal.getClassNameId(AssetCategory.class);
@@ -169,13 +169,12 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 				_assetCategoryLocalService.getAssetCategory(categoryId);
 
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
-				serviceContext.getUserId(), assetCategory.getGroupId(),
-				classNameId, categoryId, fileEntryId, cdnEnabled, cdnURL,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, null, priority,
-				type, serviceContext);
+				assetCategory.getGroupId(), classNameId, categoryId,
+				fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, titleMap, null, priority, type, serviceContext);
 		}
 	}
 

@@ -122,9 +122,9 @@ public class EditCPDefinitionDiagramSettingMVCActionCommand
 
 		if (cpDefinitionDiagramSetting == null) {
 			return _cpAttachmentFileEntryService.addCPAttachmentFileEntry(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
-				fileEntryId, displayCalendar.get(Calendar.MONTH),
+				fileEntryId, false, null, displayCalendar.get(Calendar.MONTH),
 				displayCalendar.get(Calendar.DAY_OF_MONTH),
 				displayCalendar.get(Calendar.YEAR),
 				displayCalendar.get(Calendar.HOUR),
@@ -148,7 +148,7 @@ public class EditCPDefinitionDiagramSettingMVCActionCommand
 
 		return _cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId(), fileEntryId,
-			displayCalendar.get(Calendar.MONTH),
+			false, null, displayCalendar.get(Calendar.MONTH),
 			displayCalendar.get(Calendar.DAY_OF_MONTH),
 			displayCalendar.get(Calendar.YEAR),
 			displayCalendar.get(Calendar.HOUR),

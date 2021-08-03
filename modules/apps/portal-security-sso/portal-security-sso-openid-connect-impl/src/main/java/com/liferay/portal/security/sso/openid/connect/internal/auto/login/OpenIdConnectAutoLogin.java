@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
+import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,9 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AutoLogin.class)
 public class OpenIdConnectAutoLogin extends BaseAutoLogin {
-
-	public static final String USER_ID =
-		OpenIdConnectAutoLogin.class.getName() + "#USER_ID";
 
 	@Override
 	protected String[] doLogin(
@@ -55,7 +53,8 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		Long userId = (Long)httpSession.getAttribute(USER_ID);
+		Long userId = (Long)httpSession.getAttribute(
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_AUTHENTICATING_USER_ID);
 
 		if (userId != null) {
 			User user = _userLocalService.getUserById(userId);

@@ -28,7 +28,6 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegis
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
-import com.liferay.portal.security.sso.openid.connect.internal.auto.login.OpenIdConnectAutoLogin;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
 
@@ -126,7 +125,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			httpServletRequest);
 
 		httpSession.setAttribute(
-			OpenIdConnectAutoLogin.USER_ID,
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_AUTHENTICATING_USER_ID,
 			_openIdConnectUserInfoProcessor.processUserInfo(
 				userInfo, _portal.getCompanyId(httpServletRequest),
 				serviceContext.getPathMain(), serviceContext.getPortalURL()));
@@ -146,7 +145,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				openIdConnectAuthenticationSession.getNonce(),
 				openIdConnectAuthenticationSession.getState(),
 				(Long)httpSession.getAttribute(
-					OpenIdConnectAutoLogin.USER_ID)));
+					OpenIdConnectWebKeys.
+						OPEN_ID_CONNECT_AUTHENTICATING_USER_ID)));
 	}
 
 	@Override

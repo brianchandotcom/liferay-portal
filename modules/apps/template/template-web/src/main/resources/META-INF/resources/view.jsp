@@ -16,11 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= templateDisplayContext.getNavigationItems() %>"
-/>
-
 <c:choose>
 	<c:when test='<%= Objects.equals(templateDisplayContext.getTabs1(), "information-templates") %>'>
 		<liferay-util:include page="/view_information_templates.jsp" servletContext="<%= application %>" />

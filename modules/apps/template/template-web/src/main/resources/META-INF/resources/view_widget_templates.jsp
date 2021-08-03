@@ -20,6 +20,11 @@
 TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext = new TemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext);
 %>
 
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems="<%= templateDisplayContext.getNavigationItems() %>"
+/>
+
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= templateManagementToolbarDisplayContext %>"
 	propsTransformer="js/TemplateManagementToolbarPropsTransformer"

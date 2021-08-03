@@ -79,7 +79,7 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 					<div class="col-12 h-100">
 
 						<%
-						FileEntry fileEntry = cpDefinitionDiagramSettingDisplayContext.getFileEntry();
+						FileEntry fileEntry = cpDefinitionDiagramSettingDisplayContext.fetchFileEntry();
 						%>
 
 						<aui:model-context bean="<%= fileEntry %>" model="<%= FileEntry.class %>" />

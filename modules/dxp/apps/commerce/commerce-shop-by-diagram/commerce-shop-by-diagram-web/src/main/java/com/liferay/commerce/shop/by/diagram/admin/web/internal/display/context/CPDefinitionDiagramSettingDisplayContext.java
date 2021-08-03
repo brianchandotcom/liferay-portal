@@ -83,28 +83,19 @@ public class CPDefinitionDiagramSettingDisplayContext
 		return _cpDefinitionDiagramSetting;
 	}
 
-	public CPDefinitionDiagramType getCPDefinitionDiagramType(String type) {
-		return _cpDefinitionDiagramTypeRegistry.getCPDefinitionDiagramType(
-			type);
-	}
-
-	public List<CPDefinitionDiagramType> getCPDefinitionDiagramTypes() {
-		return _cpDefinitionDiagramTypeRegistry.getCPDefinitionDiagramTypes();
-	}
-
-	public FileEntry getFileEntry() throws PortalException {
-		CPDefinitionDiagramSetting cpDefinitionVirtualSetting =
+	public FileEntry fetchFileEntry() throws PortalException {
+		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
 			fetchCPDefinitionDiagramSetting();
 
-		if (cpDefinitionVirtualSetting == null) {
+		if (cpDefinitionDiagramSetting == null) {
 			return null;
 		}
 
 		try {
 			CPAttachmentFileEntry cpAttachmentFileEntry =
-				cpDefinitionVirtualSetting.getCPAttachmentFileEntry();
+				cpDefinitionDiagramSetting.getCPAttachmentFileEntry();
 
-			return cpAttachmentFileEntry.getFileEntry();
+			return cpAttachmentFileEntry.fetchFileEntry();
 		}
 		catch (NoSuchCPAttachmentFileEntryException
 					noSuchCPAttachmentFileEntryException) {
@@ -117,6 +108,15 @@ public class CPDefinitionDiagramSettingDisplayContext
 
 			return null;
 		}
+	}
+
+	public CPDefinitionDiagramType getCPDefinitionDiagramType(String type) {
+		return _cpDefinitionDiagramTypeRegistry.getCPDefinitionDiagramType(
+			type);
+	}
+
+	public List<CPDefinitionDiagramType> getCPDefinitionDiagramTypes() {
+		return _cpDefinitionDiagramTypeRegistry.getCPDefinitionDiagramTypes();
 	}
 
 	public String[] getImageExtensions() {

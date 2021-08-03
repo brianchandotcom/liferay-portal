@@ -1,0 +1,53 @@
+.border-state-node {
+	border-radius: 16px;
+	font-size: 12px;
+	height: 22px;
+	padding: 2px 10px;
+	width: 50px;
+}
+
+.end-state {
+	background: #a5abb3;
+
+	&:hover {
+		border: 1px solid #dadee3;
+	}
+}
+
+.start-state {
+	background: #a7a9bc;
+
+	&:hover {
+		border: 1px solid #cdced9;
+	}
+}
+
+.state-node {
+	background: #e7e7ed;
+	border: 1px solid #a7a9bc;
+	border-radius: 47px;
+	height: 40px;
+	padding: 9.5px 16px;
+	width: fit-content;
+
+	&:hover:not(.current-state) {
+		border: 2px solid #a7a9bc;
+		color: #272833 !important;
+	}
+}
+
+.state-node.current-state {
+	background: #0b5fff;
+	border: none;
+
+	&:hover {
+		background: #004ad7;
+	}
+
+	.current-icon {
+		color: #5aca75;
+		height: 16px;
+		margin-top: 0.8px;
+		width: 16px;
+	}
+}

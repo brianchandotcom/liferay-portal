@@ -1154,7 +1154,7 @@ definition {
 		Refresh();
 
 		CommerceChannels.assertMercanetConfigurationEnvironment(
-			key_value = "Simulation",
+			key_value = "Production",
 			paymentMethod = "Mercanet");
 	}
 

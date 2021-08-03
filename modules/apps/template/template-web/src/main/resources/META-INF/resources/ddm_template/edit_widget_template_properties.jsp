@@ -20,6 +20,8 @@
 EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
+
+String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
 %>
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
@@ -59,6 +61,10 @@ DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
 		</portlet:resourceURL>
 
 		<aui:input name="url" type="resource" value="<%= getTemplateURL %>" />
+
+		<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
+			<aui:input name="webDavURL" type="resource" value="<%= ddmTemplate.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+		</c:if>
 	</c:if>
 
 	<aui:input name="description" />

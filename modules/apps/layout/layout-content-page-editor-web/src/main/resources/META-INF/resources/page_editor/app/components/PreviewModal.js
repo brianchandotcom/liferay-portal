@@ -89,6 +89,7 @@ const PreviewModal = ({observer}) => {
 	return (
 		<ClayModal
 			className="page-editor__preview-modal"
+			containerProps={{className: 'cadmin'}}
 			observer={observer}
 			size="full-screen"
 		>

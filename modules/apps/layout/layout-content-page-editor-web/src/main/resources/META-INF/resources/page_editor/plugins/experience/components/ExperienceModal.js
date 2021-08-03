@@ -138,7 +138,11 @@ const ExperienceModal = ({
 		: Liferay.Language.get('new-experience');
 
 	return (
-		<ClayModal observer={observer} size="md">
+		<ClayModal
+			containerProps={{className: 'cadmin'}}
+			observer={observer}
+			size="md"
+		>
 			<ClayModal.Header>{modalTitle}</ClayModal.Header>
 
 			<ClayModal.Body>

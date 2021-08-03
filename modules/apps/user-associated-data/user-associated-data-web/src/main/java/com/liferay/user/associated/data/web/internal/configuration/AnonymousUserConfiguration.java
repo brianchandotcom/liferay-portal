@@ -22,7 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Drew Brokke
  */
 @ExtendedObjectClassDefinition(
-	category = "users", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "users", scope = ExtendedObjectClassDefinition.Scope.COMPANY,
+	strictScope = true
 )
 @Meta.OCD(
 	id = "com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfiguration",

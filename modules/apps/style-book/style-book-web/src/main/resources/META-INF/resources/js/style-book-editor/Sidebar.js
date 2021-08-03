@@ -15,15 +15,32 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import FrontendTokenSet from './FrontendTokenSet';
+import {StyleBookContext} from './StyleBookContext';
 import Toolbar from './Toolbar';
 import {config} from './config';
 
 export default function Sidebar() {
+	const {frontendTokensValues = {}} = useContext(StyleBookContext);
+	const sidebarRef = useRef();
+
+	useEffect(() => {
+		if (sidebarRef.current) {
+			Object.values(frontendTokensValues).forEach(
+				({cssVariableMapping, value}) => {
+					sidebarRef.current.style.setProperty(
+						`--${cssVariableMapping}`,
+						value
+					);
+				}
+			);
+		}
+	}, [frontendTokensValues]);
+
 	return (
-		<div className="style-book-editor__sidebar">
+		<div className="style-book-editor__sidebar" ref={sidebarRef}>
 			<Toolbar />
 			<div className="style-book-editor__sidebar-content">
 				<ThemeInformation />

@@ -264,6 +264,13 @@ definition {
 			key_assetTitle = "Document Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Document Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.deleteAllCP();
 	}
 
 	@description = "This ensures that the scope can be changed through dynamic selection in a depot."

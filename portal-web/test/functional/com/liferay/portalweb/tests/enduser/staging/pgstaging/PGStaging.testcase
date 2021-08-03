@@ -153,6 +153,18 @@ definition {
 			remotePort = "9080",
 			remoteStaging = "true",
 			siteName = "Site Name");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.deleteAllCP();
 	}
 
 	@priority = "5"

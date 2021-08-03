@@ -298,11 +298,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "Document Title",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			siteURLKey = "site-name-staging");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document Title");
 

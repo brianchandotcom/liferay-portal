@@ -68,12 +68,27 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
-	@ignore = "true"
 	@priority = "5"
 	test CurrentACPlanLevelShownInCard {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
 
-		// TODO LRAC-8156 CurrentACPlanLevelShownInCard pending implementation
+		ACUtils.launchAC();
 
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		ACSettings.assertPlanDetails(
+			individualsAddOns = "5,000",
+			individualsAddOnsPrice = "500 USD",
+			individualsLimit = "100,000",
+			pageViews = "60,000,000",
+			pageViewsAddOns = "5,000,000",
+			pageViewsAddOnsPrice = "250 USD",
+			planName = "Enterprise",
+			usersLimit = "Unlimited");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8157 | Test Summary: Current add-ons are displayed in a card"

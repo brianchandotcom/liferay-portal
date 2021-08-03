@@ -161,6 +161,10 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		httpServletResponse.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	protected static void setXXSSProtection(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -173,16 +177,7 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			session.removeAttribute(_DISABLE_XSS_AUDITOR);
 
 			httpServletResponse.setHeader(HttpHeaders.X_XSS_PROTECTION, "0");
-
-			return;
 		}
-
-		if (_X_XSS_PROTECTION == null) {
-			return;
-		}
-
-		httpServletResponse.setHeader(
-			HttpHeaders.X_XSS_PROTECTION, _X_XSS_PROTECTION);
 	}
 
 	private SanitizedServletResponse(HttpServletResponse httpServletResponse) {
@@ -203,8 +198,6 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 				"http.header.secure.x.content.type.options.urls.excludes"));
 
 	private static final boolean _X_FRAME_OPTIONS;
-
-	private static final String _X_XSS_PROTECTION;
 
 	private static final KeyValuePair[] _xFrameOptionKVPs;
 
@@ -264,16 +257,6 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		else {
 			_X_FRAME_OPTIONS = GetterUtil.getBoolean(
 				SystemProperties.get(httpHeaderSecureXFrameOptionsKey), true);
-		}
-
-		String xXssProtection = SystemProperties.get(
-			"http.header.secure.x.xss.protection");
-
-		if (Validator.isNull(xXssProtection)) {
-			_X_XSS_PROTECTION = null;
-		}
-		else {
-			_X_XSS_PROTECTION = xXssProtection;
 		}
 	}
 

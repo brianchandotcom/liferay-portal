@@ -90,6 +90,10 @@ public interface HttpHeaders {
 
 	public static final String X_REQUESTED_WITH = "X-Requested-With";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String X_XSS_PROTECTION = "X-XSS-Protection";
 
 	// Values

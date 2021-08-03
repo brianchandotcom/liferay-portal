@@ -286,10 +286,6 @@ public class VerifyProperties extends VerifyProcess {
 		{
 			"http.header.secure.x.frame.options.255",
 			"http.header.secure.x.frame.options.255"
-		},
-		{
-			"http.header.secure.x.xss.protection",
-			"http.header.secure.x.xss.protection"
 		}
 	};
 

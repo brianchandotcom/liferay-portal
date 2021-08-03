@@ -17,6 +17,7 @@ package com.liferay.template.web.internal.webdav;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.constants.TemplatePortletKeys;
 
@@ -96,20 +98,26 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest) {
-		List<Resource> resources = new ArrayList<>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
-		List<DDMTemplate> ddmTemplates =
-				_ddmTemplateLocalService.getTemplatesByClassPK(
-						webDAVRequest.getGroupId(), 0);
+		ddmTemplates.addAll(
+			_ddmTemplateLocalService.getTemplates(
+				webDAVRequest.getCompanyId(),
+				new long[] {webDAVRequest.getGroupId()}, null, null,
+				_portal.getClassNameId(InfoItemFormProvider.class), -1, -1,
+				null));
 
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmTemplate, getRootPath(), true);
+		ddmTemplates.addAll(
+			_ddmTemplateLocalService.getTemplates(
+				webDAVRequest.getCompanyId(),
+				new long[] {webDAVRequest.getGroupId()}, null, null,
+				_portal.getClassNameId(PortletDisplayTemplate.class), -1, -1,
+				null));
 
-			resources.add(resource);
-		}
-
-		return resources;
+		return TransformUtil.transform(
+			ddmTemplates,
+			ddmTemplate -> _ddmWebDAV.toResource(
+				webDAVRequest, ddmTemplate, getRootPath(), true));
 	}
 
 	@Reference
@@ -117,4 +125,8 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Reference
 	private DDMWebDAV _ddmWebDAV;
+
+	@Reference
+	private Portal _portal;
+
 }

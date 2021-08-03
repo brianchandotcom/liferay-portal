@@ -14,6 +14,7 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
@@ -64,6 +65,9 @@ public class EditDDMTemplateDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_ddmGroupServiceConfiguration =
+			(DDMGroupServiceConfiguration)liferayPortletRequest.getAttribute(
+				DDMGroupServiceConfiguration.class.getName());
 		_ddmTemplateHelper =
 			(DDMTemplateHelper)liferayPortletRequest.getAttribute(
 				DDMTemplateHelper.class.getName());
@@ -71,6 +75,21 @@ public class EditDDMTemplateDisplayContext {
 			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public boolean autogenerateTemplateKey() {
+		return false;
+	}
+
+	public long getClassNameId() {
+		if (_classNameId != null) {
+			return _classNameId;
+		}
+
+		_classNameId = BeanParamUtil.getLong(
+			getDDMTemplate(), _httpServletRequest, "classNameId");
+
+		return _classNameId;
 	}
 
 	public DDMTemplate getDDMTemplate() {
@@ -124,6 +143,63 @@ public class EditDDMTemplateDisplayContext {
 		).put(
 			"templateVariableGroups", getTemplateVariableGroupJSONArray()
 		).build();
+	}
+
+	public String getLanguage() {
+		if (_language != null) {
+			return _language;
+		}
+
+		String language = TemplateConstants.LANG_TYPE_FTL;
+
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate != null) {
+			language = ddmTemplate.getLanguage();
+		}
+
+		_language = language;
+
+		return _language;
+	}
+
+	public String getSmallImageSource() {
+		if (Validator.isNotNull(_smallImageSource)) {
+			return _smallImageSource;
+		}
+
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate == null) {
+			_smallImageSource = "none";
+
+			return _smallImageSource;
+		}
+
+		_smallImageSource = ParamUtil.getString(
+			_httpServletRequest, "smallImageSource");
+
+		if (Validator.isNotNull(_smallImageSource)) {
+			return _smallImageSource;
+		}
+
+		if (!ddmTemplate.isSmallImage()) {
+			_smallImageSource = "none";
+		}
+		else if (Validator.isNotNull(ddmTemplate.getSmallImageURL())) {
+			_smallImageSource = "url";
+		}
+		else if ((ddmTemplate.getSmallImageId() > 0) &&
+				 Validator.isNull(ddmTemplate.getSmallImageURL())) {
+
+			_smallImageSource = "file";
+		}
+
+		return _smallImageSource;
+	}
+
+	public String getTemplateSubtypeLocalizedLabel() {
+		return StringPool.BLANK;
 	}
 
 	public String getTemplateTypeLabel(long classNameId) {
@@ -198,21 +274,29 @@ public class EditDDMTemplateDisplayContext {
 		return templateVariableGroups.values();
 	}
 
+	public String[] imageExtensions() {
+		return _ddmGroupServiceConfiguration.smallImageExtensions();
+	}
+
+	public boolean isSmallImage() {
+		if (_smallImage != null) {
+			return _smallImage;
+		}
+
+		_smallImage = BeanParamUtil.getBoolean(
+			getDDMTemplate(), _httpServletRequest, "smallImage");
+
+		return _smallImage;
+	}
+
+	public long smallImageMaxSize() {
+		return _ddmGroupServiceConfiguration.smallImageMaxSize();
+	}
+
 	protected Map<String, TemplateVariableGroup>
 		getAdditionalTemplateVariableGroups() {
 
 		return Collections.emptyMap();
-	}
-
-	protected long getClassNameId() {
-		if (_classNameId != null) {
-			return _classNameId;
-		}
-
-		_classNameId = BeanParamUtil.getLong(
-			getDDMTemplate(), _httpServletRequest, "classNameId");
-
-		return _classNameId;
 	}
 
 	protected long getClassPK() {
@@ -238,24 +322,6 @@ public class EditDDMTemplateDisplayContext {
 
 	protected String getDefaultScript(long classNameId) {
 		return StringPool.BLANK;
-	}
-
-	protected String getLanguage() {
-		if (_language != null) {
-			return _language;
-		}
-
-		String language = TemplateConstants.LANG_TYPE_FTL;
-
-		DDMTemplate ddmTemplate = getDDMTemplate();
-
-		if (ddmTemplate != null) {
-			language = ddmTemplate.getLanguage();
-		}
-
-		_language = language;
-
-		return _language;
 	}
 
 	protected long getTemplateHandlerClassNameId() {
@@ -334,6 +400,7 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	private Long _classNameId;
+	private final DDMGroupServiceConfiguration _ddmGroupServiceConfiguration;
 	private DDMTemplate _ddmTemplate;
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;
@@ -342,6 +409,8 @@ public class EditDDMTemplateDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _script;
+	private Boolean _smallImage;
+	private String _smallImageSource;
 	private final ThemeDisplay _themeDisplay;
 
 }

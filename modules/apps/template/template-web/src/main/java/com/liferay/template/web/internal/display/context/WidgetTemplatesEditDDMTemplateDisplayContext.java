@@ -14,6 +14,7 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -31,6 +32,15 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
+
+		_ddmWebConfiguration =
+			(DDMWebConfiguration)liferayPortletRequest.getAttribute(
+				DDMWebConfiguration.class.getName());
+	}
+
+	@Override
+	public boolean autogenerateTemplateKey() {
+		return _ddmWebConfiguration.autogenerateTemplateKey();
 	}
 
 	@Override
@@ -53,5 +63,7 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 			TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM
 		};
 	}
+
+	private final DDMWebConfiguration _ddmWebConfiguration;
 
 }

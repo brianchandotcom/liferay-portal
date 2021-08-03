@@ -23,6 +23,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 /**
@@ -58,6 +60,25 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 				InfoItemServiceTracker.class.getName());
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public String getTemplateSubtypeLocalizedLabel() {
+		return Optional.ofNullable(
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				PortalUtil.getClassName(getClassNameId()))
+		).map(
+			infoItemFormVariationsProvider ->
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					_themeDisplay.getScopeGroupId(),
+					String.valueOf(getClassPK()))
+		).map(
+			infoItemFormVariation -> infoItemFormVariation.getLabel(
+				_themeDisplay.getLocale())
+		).orElse(
+			StringPool.BLANK
+		);
 	}
 
 	@Override

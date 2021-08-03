@@ -83,6 +83,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _extendedObjectClassDefinition.getAttributeDefinitions(filter);
 	}
 
+	public String getBaseID() {
+		return _extendedObjectClassDefinition.getID();
+	}
+
 	public String getBundleLocation() {
 		return _bundleLocation;
 	}
@@ -316,6 +320,15 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	public boolean isPortletInstanceScope() {
 		return isScope(Scope.PORTLET_INSTANCE);
+	}
+
+	public boolean isStrictScope() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
+
+		return GetterUtil.get(extensionAttributes.get("strictScope"), false);
 	}
 
 	public boolean isSystemScope() {

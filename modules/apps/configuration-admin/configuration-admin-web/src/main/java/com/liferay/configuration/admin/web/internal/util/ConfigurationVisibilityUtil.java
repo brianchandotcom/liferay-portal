@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
+import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -28,6 +29,19 @@ import org.osgi.framework.FrameworkUtil;
  * @author Drew Brokke
  */
 public class ConfigurationVisibilityUtil {
+
+	public static boolean isVisible(
+		ConfigurationModel configurationModel,
+		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
+
+		if (configurationModel.isStrictScope() &&
+			!scope.equals(configurationModel.getScope())) {
+
+			return false;
+		}
+
+		return isVisible(configurationModel.getBaseID(), scope, scopePK);
+	}
 
 	public static boolean isVisible(
 		String pid, ExtendedObjectClassDefinition.Scope scope,

@@ -112,7 +112,7 @@ public class FilterVisibilityConfigurationModelRetrieverWrapper
 
 		configurationModels.removeIf(
 			configurationModel -> !ConfigurationVisibilityUtil.isVisible(
-				configurationModel.getFactoryPid(), scope, scopePK));
+				configurationModel, scope, scopePK));
 
 		return configurationModels;
 	}
@@ -124,7 +124,7 @@ public class FilterVisibilityConfigurationModelRetrieverWrapper
 		throws IOException {
 
 		if (!ConfigurationVisibilityUtil.isVisible(
-				factoryConfigurationModel.getFactoryPid(), scope, scopePK)) {
+				factoryConfigurationModel, scope, scopePK)) {
 
 			return Collections.emptyList();
 		}
@@ -137,10 +137,12 @@ public class FilterVisibilityConfigurationModelRetrieverWrapper
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
 		Map<String, ConfigurationModel> configurationModelMap) {
 
-		Set<String> set = configurationModelMap.keySet();
+		Set<Map.Entry<String, ConfigurationModel>> set =
+			configurationModelMap.entrySet();
 
 		set.removeIf(
-			key -> !ConfigurationVisibilityUtil.isVisible(key, scope, scopePK));
+			entry -> !ConfigurationVisibilityUtil.isVisible(
+				entry.getValue(), scope, scopePK));
 	}
 
 	@Reference(target = "(!(filter.visibility=*))")

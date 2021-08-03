@@ -788,7 +788,7 @@
 </tr>
 <tr>
 	<td>VALUE_PRODUCT_RELATIONS</td>
-	<td>//a[contains(text(),'${key_productName}')]/../../..//div[contains(@class,'dnd-td') and contains(text(),'${key_Value}')]</td>
+	<td>//a[contains(text(),'${key_productName}')]/../../..//div[contains(@class,'dnd-td') and (text()='${key_Value}')]</td>
 	<td></td>
 </tr>
 <tr>

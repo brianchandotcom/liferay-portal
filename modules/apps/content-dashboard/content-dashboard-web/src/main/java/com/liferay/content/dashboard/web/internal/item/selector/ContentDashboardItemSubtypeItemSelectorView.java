@@ -14,11 +14,11 @@
 
 package com.liferay.content.dashboard.web.internal.item.selector;
 
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemTypeItemSelectorViewDisplayContext;
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext;
-import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemTypeItemSelectorCriterion;
-import com.liferay.content.dashboard.web.internal.item.selector.provider.ContentDashboardItemTypeItemSelectorProvider;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext;
+import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext;
+import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
+import com.liferay.content.dashboard.web.internal.item.selector.provider.ContentDashboardItemSubtypeItemSelectorProvider;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -52,14 +52,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(service = ItemSelectorView.class)
-public class ContentDashboardItemTypeItemSelectorView
-	implements ItemSelectorView<ContentDashboardItemTypeItemSelectorCriterion> {
+public class ContentDashboardItemSubtypeItemSelectorView
+	implements ItemSelectorView
+		<ContentDashboardItemSubtypeItemSelectorCriterion> {
 
 	@Override
-	public Class<ContentDashboardItemTypeItemSelectorCriterion>
+	public Class<ContentDashboardItemSubtypeItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return ContentDashboardItemTypeItemSelectorCriterion.class;
+		return ContentDashboardItemSubtypeItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -78,8 +79,8 @@ public class ContentDashboardItemTypeItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			ContentDashboardItemTypeItemSelectorCriterion
-				contentDashboardItemTypeItemSelectorCriterion,
+			ContentDashboardItemSubtypeItemSelectorCriterion
+				contentDashboardItemSubtypeItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -94,20 +95,20 @@ public class ContentDashboardItemTypeItemSelectorView
 			(PortletResponse)servletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		SearchContainer<? extends ContentDashboardItemType> searchContainer =
-			_contentDashboardItemTypeItemSelectorProvider.getSearchContainer(
+		SearchContainer<? extends ContentDashboardItemSubtype> searchContainer =
+			_contentDashboardItemSubtypeItemSelectorProvider.getSearchContainer(
 				portletRequest, portletResponse, portletURL);
 
 		servletRequest.setAttribute(
-			ContentDashboardItemTypeItemSelectorViewDisplayContext.class.
+			ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.
 				getName(),
-			new ContentDashboardItemTypeItemSelectorViewDisplayContext(
+			new ContentDashboardItemSubtypeItemSelectorViewDisplayContext(
 				searchContainer));
 
 		servletRequest.setAttribute(
-			ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext.class.
+			ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext.class.
 				getName(),
-			new ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext(
+			new ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext(
 				_portal.getHttpServletRequest(portletRequest),
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse),
@@ -121,8 +122,8 @@ public class ContentDashboardItemTypeItemSelectorView
 			new UUIDItemSelectorReturnType());
 
 	@Reference
-	private ContentDashboardItemTypeItemSelectorProvider
-		_contentDashboardItemTypeItemSelectorProvider;
+	private ContentDashboardItemSubtypeItemSelectorProvider
+		_contentDashboardItemSubtypeItemSelectorProvider;
 
 	@Reference
 	private Portal _portal;

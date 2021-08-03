@@ -429,7 +429,7 @@ public class ContentDashboardAdminPortletTest {
 	}
 
 	@Test
-	public void testGetSearchContainerWithContentDashboardItemType()
+	public void testGetSearchContainerWithContentDashboardItemSubtype()
 		throws Exception {
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
@@ -464,7 +464,7 @@ public class ContentDashboardAdminPortletTest {
 			_getMockLiferayPortletRenderRequest();
 
 		mockLiferayPortletRenderRequest.setParameter(
-			"contentDashboardItemTypePayload",
+			"contentDashboardItemSubtypePayload",
 			JSONUtil.put(
 				"className", DDMStructure.class.getName()
 			).put(
@@ -840,7 +840,7 @@ public class ContentDashboardAdminPortletTest {
 	}
 
 	@Test
-	public void testGetSearchContainerWithMultipleContentDashboardItemType()
+	public void testGetSearchContainerWithMultipleContentDashboardItemSubtype()
 		throws Exception {
 
 		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
@@ -878,7 +878,7 @@ public class ContentDashboardAdminPortletTest {
 			_getMockLiferayPortletRenderRequest();
 
 		mockLiferayPortletRenderRequest.setParameter(
-			"contentDashboardItemTypePayload",
+			"contentDashboardItemSubtypePayload",
 			new String[] {
 				JSONUtil.put(
 					"className", DDMStructure.class.getName()

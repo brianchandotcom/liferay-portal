@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.web.internal.item;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -46,7 +46,7 @@ public interface ContentDashboardItem<T> {
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types);
 
-	public ContentDashboardItemType getContentDashboardItemType();
+	public ContentDashboardItemSubtype getContentDashboardItemSubtype();
 
 	public Date getCreateDate();
 

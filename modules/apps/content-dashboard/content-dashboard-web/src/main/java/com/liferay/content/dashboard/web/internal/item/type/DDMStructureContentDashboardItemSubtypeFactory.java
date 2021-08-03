@@ -25,18 +25,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemTypeFactory.class)
-public class DDMStructureContentDashboardItemTypeFactory
-	implements ContentDashboardItemTypeFactory<DDMStructure> {
+@Component(service = ContentDashboardItemSubtypeFactory.class)
+public class DDMStructureContentDashboardItemSubtypeFactory
+	implements ContentDashboardItemSubtypeFactory<DDMStructure> {
 
 	@Override
-	public ContentDashboardItemType<DDMStructure> create(long classPK)
+	public ContentDashboardItemSubtype<DDMStructure> create(long classPK)
 		throws PortalException {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			classPK);
 
-		return new DDMStructureContentDashboardItemType(
+		return new DDMStructureContentDashboardItemSubtype(
 			ddmStructure,
 			_groupLocalService.fetchGroup(ddmStructure.getGroupId()));
 	}

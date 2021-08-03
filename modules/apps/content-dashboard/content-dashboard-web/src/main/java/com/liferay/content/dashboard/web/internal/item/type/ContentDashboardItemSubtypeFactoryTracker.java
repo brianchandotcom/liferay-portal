@@ -31,15 +31,15 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemTypeFactoryTracker.class)
-public class ContentDashboardItemTypeFactoryTracker {
+@Component(service = ContentDashboardItemSubtypeFactoryTracker.class)
+public class ContentDashboardItemSubtypeFactoryTracker {
 
 	public Collection<String> getClassNames() {
 		return Collections.unmodifiableCollection(_serviceTrackerMap.keySet());
 	}
 
-	public Optional<ContentDashboardItemTypeFactory>
-		getContentDashboardItemTypeFactoryOptional(String className) {
+	public Optional<ContentDashboardItemSubtypeFactory>
+		getContentDashboardItemSubtypeFactoryOptional(String className) {
 
 		return Optional.ofNullable(_serviceTrackerMap.getService(className));
 	}
@@ -47,7 +47,7 @@ public class ContentDashboardItemTypeFactoryTracker {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ContentDashboardItemTypeFactory.class, null,
+			bundleContext, ContentDashboardItemSubtypeFactory.class, null,
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
 				(contentDashboardItem, emitter) -> {
@@ -64,7 +64,7 @@ public class ContentDashboardItemTypeFactoryTracker {
 		_serviceTrackerMap.close();
 	}
 
-	private volatile ServiceTrackerMap<String, ContentDashboardItemTypeFactory>
-		_serviceTrackerMap;
+	private volatile ServiceTrackerMap
+		<String, ContentDashboardItemSubtypeFactory> _serviceTrackerMap;
 
 }

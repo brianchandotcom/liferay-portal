@@ -18,8 +18,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactory;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -71,14 +71,14 @@ public class FileEntryContentDashboardItemFactory
 			infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
 
-		Optional<ContentDashboardItemTypeFactory>
-			contentDashboardItemTypeFactoryOptional =
-				_contentDashboardItemTypeFactoryTracker.
-					getContentDashboardItemTypeFactoryOptional(
+		Optional<ContentDashboardItemSubtypeFactory>
+			contentDashboardItemSubtypeFactoryOptional =
+				_contentDashboardItemSubtypeFactoryTracker.
+					getContentDashboardItemSubtypeFactoryOptional(
 						DLFileEntryType.class.getName());
 
-		ContentDashboardItemTypeFactory contentDashboardItemTypeFactory =
-			contentDashboardItemTypeFactoryOptional.orElseThrow(
+		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
+			contentDashboardItemSubtypeFactoryOptional.orElseThrow(
 				NoSuchModelException::new);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -86,7 +86,7 @@ public class FileEntryContentDashboardItemFactory
 		return new FileEntryContentDashboardItem(
 			assetEntry.getCategories(), assetEntry.getTags(),
 			_contentDashboardItemActionProviderTracker,
-			contentDashboardItemTypeFactory.create(
+			contentDashboardItemSubtypeFactory.create(
 				dlFileEntry.getFileEntryTypeId()),
 			fileEntry, _groupLocalService.fetchGroup(fileEntry.getGroupId()),
 			infoItemFieldValuesProvider, _language, _portal);
@@ -116,8 +116,8 @@ public class FileEntryContentDashboardItemFactory
 		_contentDashboardItemActionProviderTracker;
 
 	@Reference
-	private ContentDashboardItemTypeFactoryTracker
-		_contentDashboardItemTypeFactoryTracker;
+	private ContentDashboardItemSubtypeFactoryTracker
+		_contentDashboardItemSubtypeFactoryTracker;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

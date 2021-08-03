@@ -88,21 +88,21 @@ public class ContentDashboardSearchContextBuilder {
 				ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
 				ParamUtil.getLongValues(_httpServletRequest, "authorIds")));
 
-		String[] contentDashboardItemTypePayloads =
+		String[] contentDashboardItemSubtypePayloads =
 			ParamUtil.getParameterValues(
-				_httpServletRequest, "contentDashboardItemTypePayload",
+				_httpServletRequest, "contentDashboardItemSubtypePayload",
 				new String[0], false);
 
-		if (!ArrayUtil.isEmpty(contentDashboardItemTypePayloads)) {
+		if (!ArrayUtil.isEmpty(contentDashboardItemSubtypePayloads)) {
 			searchContext.setClassTypeIds(
 				Stream.of(
-					contentDashboardItemTypePayloads
+					contentDashboardItemSubtypePayloads
 				).map(
-					contentDashboardItemTypePayload -> {
+					contentDashboardItemSubtypePayload -> {
 						try {
 							return Optional.of(
 								JSONFactoryUtil.createJSONObject(
-									contentDashboardItemTypePayload));
+									contentDashboardItemSubtypePayload));
 						}
 						catch (JSONException jsonException) {
 							_log.error(jsonException, jsonException);

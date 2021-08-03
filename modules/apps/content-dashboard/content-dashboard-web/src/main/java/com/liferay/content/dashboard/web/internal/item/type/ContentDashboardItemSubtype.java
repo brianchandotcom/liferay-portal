@@ -14,18 +14,26 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.info.item.InfoItemReference;
+
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Cristina González
  */
-public interface ContentDashboardItemTypeFactory<T> {
+public interface ContentDashboardItemSubtype<T> {
 
-	public ContentDashboardItemType<T> create(long classPK)
-		throws PortalException;
+	public String getFullLabel(Locale locale);
 
-	public default boolean isEnabled() {
-		return true;
-	}
+	public InfoItemReference getInfoItemReference();
+
+	public String getLabel(Locale locale);
+
+	public Date getModifiedDate();
+
+	public long getUserId();
+
+	public String toJSONString(Locale locale);
 
 }

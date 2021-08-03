@@ -17,27 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext contentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext = (ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext)request.getAttribute(ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext.class.getName());
+ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext contentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext = (ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext)request.getAttribute(ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext.class.getName());
 
-ContentDashboardItemTypeItemSelectorViewDisplayContext contentDashboardItemTypeItemSelectorViewDisplayContext = (ContentDashboardItemTypeItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardItemTypeItemSelectorViewDisplayContext.class.getName());
+ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSubtypeItemSelectorViewDisplayContext = (ContentDashboardItemSubtypeItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.getName());
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= contentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= contentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext %>"
 />
 
 <clay:container-fluid>
 	<liferay-ui:search-container
-		id="contentDashboardItemTypes"
-		searchContainer="<%= contentDashboardItemTypeItemSelectorViewDisplayContext.getSearchContainer() %>"
+		id="contentDashboardItemSubtypes"
+		searchContainer="<%= contentDashboardItemSubtypeItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType"
-			modelVar="contentDashboardItemType"
+			className="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype"
+			modelVar="contentDashboardItemSubtype"
 		>
 
 			<%
-			InfoItemReference infoItemReference = contentDashboardItemType.getInfoItemReference();
+			InfoItemReference infoItemReference = contentDashboardItemSubtype.getInfoItemReference();
 
 			row.setPrimaryKey(
 				HtmlUtil.toInputSafe(
@@ -51,7 +51,7 @@ ContentDashboardItemTypeItemSelectorViewDisplayContext contentDashboardItemTypeI
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="name"
-				value="<%= contentDashboardItemType.getFullLabel(locale) %>"
+				value="<%= contentDashboardItemSubtype.getFullLabel(locale) %>"
 			/>
 		</liferay-ui:search-container-row>
 

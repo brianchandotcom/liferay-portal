@@ -176,13 +176,13 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					</c:if>
 
 					<%
-					ContentDashboardItemType contentDashboardItemType = contentDashboardItem.getContentDashboardItemType();
+					ContentDashboardItemSubtype contentDashboardItemSubtype = contentDashboardItem.getContentDashboardItemSubtype();
 					%>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-smaller text-truncate"
 						name="subtype"
-						value="<%= HtmlUtil.escape(contentDashboardItemType.getLabel(locale)) %>"
+						value="<%= HtmlUtil.escape(contentDashboardItemSubtype.getLabel(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

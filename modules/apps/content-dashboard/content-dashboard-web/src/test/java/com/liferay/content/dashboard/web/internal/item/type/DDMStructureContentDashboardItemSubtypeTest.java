@@ -36,7 +36,7 @@ import org.mockito.Mockito;
 /**
  * @author Cristina González
  */
-public class DDMStructureContentDashboardItemTypeTest {
+public class DDMStructureContentDashboardItemSubtypeTest {
 
 	@ClassRule
 	@Rule
@@ -47,26 +47,27 @@ public class DDMStructureContentDashboardItemTypeTest {
 	public void testCreation() throws PortalException {
 		DDMStructure ddmStructure = _getDDMStructure("structureName");
 
-		DDMStructureContentDashboardItemType
-			ddmStructureContentDashboardItemType =
-				new DDMStructureContentDashboardItemType(
+		DDMStructureContentDashboardItemSubtype
+			ddmStructureContentDashboardItemSubtype =
+				new DDMStructureContentDashboardItemSubtype(
 					ddmStructure, _getGroup("groupName"));
 
 		Assert.assertEquals(
 			"structureName (groupName)",
-			ddmStructureContentDashboardItemType.getFullLabel(LocaleUtil.US));
+			ddmStructureContentDashboardItemSubtype.getFullLabel(
+				LocaleUtil.US));
 		Assert.assertEquals(
 			"structureName",
-			ddmStructureContentDashboardItemType.getLabel(LocaleUtil.US));
+			ddmStructureContentDashboardItemSubtype.getLabel(LocaleUtil.US));
 		Assert.assertEquals(
 			ddmStructure.getModifiedDate(),
-			ddmStructureContentDashboardItemType.getModifiedDate());
+			ddmStructureContentDashboardItemSubtype.getModifiedDate());
 		Assert.assertEquals(
 			ddmStructure.getUserId(),
-			ddmStructureContentDashboardItemType.getUserId());
+			ddmStructureContentDashboardItemSubtype.getUserId());
 
 		InfoItemReference infoItemReference =
-			ddmStructureContentDashboardItemType.getInfoItemReference();
+			ddmStructureContentDashboardItemSubtype.getInfoItemReference();
 
 		Assert.assertEquals(
 			DDMStructure.class.getName(), infoItemReference.getClassName());
@@ -78,52 +79,52 @@ public class DDMStructureContentDashboardItemTypeTest {
 	public void testEquals() throws PortalException {
 		DDMStructure ddmStructure = _getDDMStructure("structureName");
 
-		DDMStructureContentDashboardItemType
-			ddmStructureContentDashboardItemType1 =
-				new DDMStructureContentDashboardItemType(
+		DDMStructureContentDashboardItemSubtype
+			ddmStructureContentDashboardItemSubtype1 =
+				new DDMStructureContentDashboardItemSubtype(
 					ddmStructure, _getGroup("groupName"));
-		DDMStructureContentDashboardItemType
-			ddmStructureContentDashboardItemType2 =
-				new DDMStructureContentDashboardItemType(
+		DDMStructureContentDashboardItemSubtype
+			ddmStructureContentDashboardItemSubtype2 =
+				new DDMStructureContentDashboardItemSubtype(
 					ddmStructure, _getGroup("groupName"));
 
 		Assert.assertTrue(
-			ddmStructureContentDashboardItemType1.equals(
-				ddmStructureContentDashboardItemType2));
+			ddmStructureContentDashboardItemSubtype1.equals(
+				ddmStructureContentDashboardItemSubtype2));
 	}
 
 	@Test
 	public void testNoEquals() throws PortalException {
 		DDMStructure ddmStructure1 = _getDDMStructure("structureName");
 
-		DDMStructureContentDashboardItemType
-			ddmStructureContentDashboardItemType1 =
-				new DDMStructureContentDashboardItemType(
+		DDMStructureContentDashboardItemSubtype
+			ddmStructureContentDashboardItemSubtype1 =
+				new DDMStructureContentDashboardItemSubtype(
 					ddmStructure1, _getGroup("groupName"));
 
 		DDMStructure ddmStructure2 = _getDDMStructure("structureName");
 
-		DDMStructureContentDashboardItemType
-			ddmStructureContentDashboardItemType2 =
-				new DDMStructureContentDashboardItemType(
+		DDMStructureContentDashboardItemSubtype
+			ddmStructureContentDashboardItemSubtype2 =
+				new DDMStructureContentDashboardItemSubtype(
 					ddmStructure2, _getGroup("groupName"));
 
 		Assert.assertFalse(
-			ddmStructureContentDashboardItemType1.equals(
-				ddmStructureContentDashboardItemType2));
+			ddmStructureContentDashboardItemSubtype1.equals(
+				ddmStructureContentDashboardItemSubtype2));
 	}
 
 	@Test
 	public void testToJSONString() throws PortalException {
 		DDMStructure ddmStructure = _getDDMStructure("structureName");
 
-		DDMStructureContentDashboardItemType
-			ddmStructureContentDashboardItemType =
-				new DDMStructureContentDashboardItemType(
+		DDMStructureContentDashboardItemSubtype
+			ddmStructureContentDashboardItemSubtype =
+				new DDMStructureContentDashboardItemSubtype(
 					ddmStructure, _getGroup("groupName"));
 
 		InfoItemReference infoItemReference =
-			ddmStructureContentDashboardItemType.getInfoItemReference();
+			ddmStructureContentDashboardItemSubtype.getInfoItemReference();
 
 		Assert.assertEquals(
 			JSONUtil.put(
@@ -132,9 +133,11 @@ public class DDMStructureContentDashboardItemTypeTest {
 				"classPK", infoItemReference.getClassPK()
 			).put(
 				"title",
-				ddmStructureContentDashboardItemType.getFullLabel(LocaleUtil.US)
+				ddmStructureContentDashboardItemSubtype.getFullLabel(
+					LocaleUtil.US)
 			).toJSONString(),
-			ddmStructureContentDashboardItemType.toJSONString(LocaleUtil.US));
+			ddmStructureContentDashboardItemSubtype.toJSONString(
+				LocaleUtil.US));
 	}
 
 	private DDMStructure _getDDMStructure(String name) {

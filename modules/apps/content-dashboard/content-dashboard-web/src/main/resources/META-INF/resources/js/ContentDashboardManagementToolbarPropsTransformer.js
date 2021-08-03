@@ -93,7 +93,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
-	const selectContentDashboardItemType = (itemData) => {
+	const selectContentDashboardItemSubtype = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
@@ -114,7 +114,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 					values.forEach((item) => {
 						redirectURL = addParams(
-							`${portletNamespace}contentDashboardItemTypePayload=${JSON.stringify(
+							`${portletNamespace}contentDashboardItemSubtypePayload=${JSON.stringify(
 								item
 							)}`,
 							redirectURL
@@ -125,7 +125,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				}
 			},
 			title: itemData?.dialogTitle,
-			url: itemData?.selectContentDashboardItemTypeURL,
+			url: itemData?.selectContentDashboardItemSubtypeURL,
 		});
 	};
 
@@ -162,8 +162,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			else if (action === 'selectAuthor') {
 				selectAuthor(data);
 			}
-			else if (action === 'selectContentDashboardItemType') {
-				selectContentDashboardItemType(data);
+			else if (action === 'selectContentDashboardItemSubtype') {
+				selectContentDashboardItemSubtype(data);
 			}
 			else if (action === 'selectScope') {
 				selectScope(data);

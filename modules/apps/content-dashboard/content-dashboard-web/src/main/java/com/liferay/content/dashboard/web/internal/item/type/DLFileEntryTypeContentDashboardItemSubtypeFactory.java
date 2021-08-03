@@ -33,19 +33,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration",
-	service = ContentDashboardItemTypeFactory.class
+	service = ContentDashboardItemSubtypeFactory.class
 )
-public class DLFileEntryTypeContentDashboardItemTypeFactory
-	implements ContentDashboardItemTypeFactory<DLFileEntryType> {
+public class DLFileEntryTypeContentDashboardItemSubtypeFactory
+	implements ContentDashboardItemSubtypeFactory<DLFileEntryType> {
 
 	@Override
-	public ContentDashboardItemType<DLFileEntryType> create(long classPK)
+	public ContentDashboardItemSubtype<DLFileEntryType> create(long classPK)
 		throws PortalException {
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.getFileEntryType(classPK);
 
-		return new DLFileEntryTypeContentDashboardItemType(
+		return new DLFileEntryTypeContentDashboardItemSubtype(
 			dlFileEntryType,
 			_groupLocalService.fetchGroup(dlFileEntryType.getGroupId()));
 	}

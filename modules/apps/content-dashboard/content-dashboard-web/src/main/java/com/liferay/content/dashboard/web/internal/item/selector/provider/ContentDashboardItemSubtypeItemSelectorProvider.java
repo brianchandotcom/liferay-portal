@@ -15,10 +15,10 @@
 package com.liferay.content.dashboard.web.internal.item.selector.provider;
 
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactoryTracker;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeUtil;
-import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemTypeChecker;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeUtil;
+import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSubtypeChecker;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -59,14 +59,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemTypeItemSelectorProvider.class)
-public class ContentDashboardItemTypeItemSelectorProvider {
+@Component(service = ContentDashboardItemSubtypeItemSelectorProvider.class)
+public class ContentDashboardItemSubtypeItemSelectorProvider {
 
-	public SearchContainer<ContentDashboardItemType> getSearchContainer(
+	public SearchContainer<ContentDashboardItemSubtype> getSearchContainer(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		PortletURL portletURL) {
 
-		SearchContainer<ContentDashboardItemType> searchContainer =
+		SearchContainer<ContentDashboardItemSubtype> searchContainer =
 			new SearchContainer<>(
 				portletRequest, portletURL, null, "there-is-no-subtype");
 
@@ -78,11 +78,11 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 			searchContainer.getStart());
 
 		searchContainer.setResults(
-			_toContentDashboardItemTypes(searchResponse.getDocuments71()));
+			_toContentDashboardItemSubtypes(searchResponse.getDocuments71()));
 
 		searchContainer.setRowChecker(
-			new ContentDashboardItemTypeChecker(
-				_getCheckedContentDashboardItemTypes(portletRequest),
+			new ContentDashboardItemSubtypeChecker(
+				_getCheckedContentDashboardItemSubtypes(portletRequest),
 				(RenderResponse)portletResponse));
 		searchContainer.setTotal(searchResponse.getTotalHits());
 
@@ -132,25 +132,26 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		};
 	}
 
-	private List<? extends ContentDashboardItemType>
-		_getCheckedContentDashboardItemTypes(PortletRequest portletRequest) {
+	private List<? extends ContentDashboardItemSubtype>
+		_getCheckedContentDashboardItemSubtypes(PortletRequest portletRequest) {
 
-		String[] checkedContentDashboardItemTypes =
+		String[] checkedContentDashboardItemSubtypes =
 			ParamUtil.getParameterValues(
-				portletRequest, "checkedContentDashboardItemTypes", null,
+				portletRequest, "checkedContentDashboardItemSubtypes", null,
 				false);
 
-		if (ArrayUtil.isEmpty(checkedContentDashboardItemTypes)) {
+		if (ArrayUtil.isEmpty(checkedContentDashboardItemSubtypes)) {
 			return Collections.emptyList();
 		}
 
 		return Stream.of(
-			checkedContentDashboardItemTypes
+			checkedContentDashboardItemSubtypes
 		).map(
-			checkedContentDashboardItemType ->
-				ContentDashboardItemTypeUtil.toContentDashboardItemTypeOptional(
-					_contentDashboardItemTypeFactoryTracker,
-					checkedContentDashboardItemType)
+			checkedContentDashboardItemSubtype ->
+				ContentDashboardItemSubtypeUtil.
+					toContentDashboardItemSubtypeOptional(
+						_contentDashboardItemSubtypeFactoryTracker,
+						checkedContentDashboardItemSubtype)
 		).filter(
 			Optional::isPresent
 		).map(
@@ -180,7 +181,7 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		PortletRequest portletRequest, int end, int start) {
 
 		Collection<String> classNames =
-			_contentDashboardItemTypeFactoryTracker.getClassNames();
+			_contentDashboardItemSubtypeFactoryTracker.getClassNames();
 
 		return _searcher.search(
 			_searchRequestBuilderFactory.builder(
@@ -233,15 +234,16 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		return new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 	}
 
-	private List<ContentDashboardItemType> _toContentDashboardItemTypes(
+	private List<ContentDashboardItemSubtype> _toContentDashboardItemSubtypes(
 		List<Document> documents) {
 
 		Stream<Document> stream = documents.stream();
 
 		return stream.map(
 			document ->
-				ContentDashboardItemTypeUtil.toContentDashboardItemTypeOptional(
-					_contentDashboardItemTypeFactoryTracker, document)
+				ContentDashboardItemSubtypeUtil.
+					toContentDashboardItemSubtypeOptional(
+						_contentDashboardItemSubtypeFactoryTracker, document)
 		).filter(
 			Optional::isPresent
 		).map(
@@ -256,8 +258,8 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		_contentDashboardItemFactoryTracker;
 
 	@Reference
-	private ContentDashboardItemTypeFactoryTracker
-		_contentDashboardItemTypeFactoryTracker;
+	private ContentDashboardItemSubtypeFactoryTracker
+		_contentDashboardItemSubtypeFactoryTracker;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -107,7 +107,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).setParameter(
 			"authorIds", (String)null
 		).setParameter(
-			"contentDashboardItemTypePayload", (String)null
+			"contentDashboardItemSubtypePayload", (String)null
 		).setParameter(
 			"scopeId", (String)null
 		).setParameter(
@@ -217,11 +217,13 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						": ", _getScopeLabel(scopeId)));
 			});
 
-		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
-			_contentDashboardAdminDisplayContext.getContentDashboardItemTypes();
+		List<? extends ContentDashboardItemSubtype>
+			contentDashboardItemSubtypes =
+				_contentDashboardAdminDisplayContext.
+					getContentDashboardItemSubtypes();
 
-		for (ContentDashboardItemType contentDashboardItemType :
-				contentDashboardItemTypes) {
+		for (ContentDashboardItemSubtype contentDashboardItemSubtype :
+				contentDashboardItemSubtypes) {
 
 			labelItemListWrapper.add(
 				labelItem -> {
@@ -232,21 +234,23 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 								PortletURLUtil.clone(
 									currentURLObj, liferayPortletResponse)
 							).setParameter(
-								"contentDashboardItemTypePayload",
+								"contentDashboardItemSubtypePayload",
 								() -> {
-									Stream<? extends ContentDashboardItemType>
-										stream =
-											contentDashboardItemTypes.stream();
+									Stream
+										<? extends ContentDashboardItemSubtype>
+											stream =
+												contentDashboardItemSubtypes.
+													stream();
 
 									InfoItemReference infoItemReference =
-										contentDashboardItemType.
+										contentDashboardItemSubtype.
 											getInfoItemReference();
 
 									return stream.filter(
-										curContentDashboardItemType -> {
+										curContentDashboardItemSubtype -> {
 											InfoItemReference
 												curInfoItemReference =
-													curContentDashboardItemType.
+													curContentDashboardItemSubtype.
 														getInfoItemReference();
 
 											return !Objects.equals(
@@ -255,8 +259,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 												infoItemReference.getClassPK());
 										}
 									).map(
-										curContentDashboardItemType ->
-											curContentDashboardItemType.
+										curContentDashboardItemSubtype ->
+											curContentDashboardItemSubtype.
 												toJSONString(_locale)
 									).toArray(
 										String[]::new
@@ -269,7 +273,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						StringBundler.concat(
 							LanguageUtil.get(httpServletRequest, "subtype"),
 							": ",
-							contentDashboardItemType.getFullLabel(_locale)));
+							contentDashboardItemSubtype.getFullLabel(_locale)));
 				});
 		}
 
@@ -432,18 +436,20 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				));
 		}
 
-		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
-			_contentDashboardAdminDisplayContext.getContentDashboardItemTypes();
+		List<? extends ContentDashboardItemSubtype>
+			contentDashboardItemSubtypes =
+				_contentDashboardAdminDisplayContext.
+					getContentDashboardItemSubtypes();
 
-		if (!ListUtil.isEmpty(contentDashboardItemTypes)) {
-			Stream<? extends ContentDashboardItemType> stream =
-				contentDashboardItemTypes.stream();
+		if (!ListUtil.isEmpty(contentDashboardItemSubtypes)) {
+			Stream<? extends ContentDashboardItemSubtype> stream =
+				contentDashboardItemSubtypes.stream();
 
 			portletURL.setParameter(
-				"contentDashboardItemTypePayload",
+				"contentDashboardItemSubtypePayload",
 				stream.map(
-					contentDashboardItemType ->
-						contentDashboardItemType.toJSONString(_locale)
+					contentDashboardItemSubtype ->
+						contentDashboardItemSubtype.toJSONString(_locale)
 				).toArray(
 					String[]::new
 				));
@@ -723,18 +729,18 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				return dropdownItem;
 			},
 			() -> {
-				List<? extends ContentDashboardItemType>
-					contentDashboardItemTypes =
+				List<? extends ContentDashboardItemSubtype>
+					contentDashboardItemSubtypes =
 						_contentDashboardAdminDisplayContext.
-							getContentDashboardItemTypes();
+							getContentDashboardItemSubtypes();
 
 				DropdownItem dropdownItem = new DropdownItem();
 
 				dropdownItem.setActive(
-					!ListUtil.isEmpty(contentDashboardItemTypes));
+					!ListUtil.isEmpty(contentDashboardItemSubtypes));
 
 				dropdownItem.putData(
-					"action", "selectContentDashboardItemType");
+					"action", "selectContentDashboardItemSubtype");
 				dropdownItem.putData(
 					"dialogTitle",
 					LanguageUtil.get(httpServletRequest, "select-subtype"));
@@ -744,14 +750,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					PortletURLBuilder.create(
 						getPortletURL()
 					).setParameter(
-						"contentDashboardItemTypePayload", (String)null
+						"contentDashboardItemSubtypePayload", (String)null
 					).buildString());
 
 				dropdownItem.putData(
-					"selectContentDashboardItemTypeURL",
+					"selectContentDashboardItemSubtypeURL",
 					String.valueOf(
 						_contentDashboardAdminDisplayContext.
-							getContentDashboardItemTypeItemSelectorURL()));
+							getContentDashboardItemSubtypeItemSelectorURL()));
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "subtype") +

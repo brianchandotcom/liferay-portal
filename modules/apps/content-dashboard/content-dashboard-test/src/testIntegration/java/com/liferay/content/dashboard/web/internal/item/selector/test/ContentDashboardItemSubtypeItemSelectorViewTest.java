@@ -58,7 +58,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class ContentDashboardItemTypeItemSelectorViewTest {
+public class ContentDashboardItemSubtypeItemSelectorViewTest {
 
 	@ClassRule
 	@Rule
@@ -179,26 +179,27 @@ public class ContentDashboardItemTypeItemSelectorViewTest {
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 
-		_contentDashboardItemTypeItemSelectorView.renderHTML(
+		_contentDashboardItemSubtypeItemSelectorView.renderHTML(
 			mockHttpServletRequest, new MockHttpServletResponse(), null,
 			new MockLiferayPortletURL(), RandomTestUtil.randomString(), true);
 
-		Object contentDashboardItemTypeItemSelectorViewDisplayContext =
+		Object contentDashboardItemSubtypeItemSelectorViewDisplayContext =
 			mockHttpServletRequest.getAttribute(
 				"com.liferay.content.dashboard.web.internal.display.context." +
-					"ContentDashboardItemTypeItemSelectorViewDisplayContext");
+					"ContentDashboardItemSubtypeItemSelectorViewDisplay" +
+						"Context");
 
 		return ReflectionTestUtil.invoke(
-			contentDashboardItemTypeItemSelectorViewDisplayContext,
+			contentDashboardItemSubtypeItemSelectorViewDisplayContext,
 			"getSearchContainer", new Class<?>[0], null);
 	}
 
 	@Inject(
-		filter = "component.name=*.ContentDashboardItemTypeItemSelectorView",
+		filter = "component.name=*.ContentDashboardItemSubtypeItemSelectorView",
 		type = ItemSelectorView.class
 	)
 	private ItemSelectorView<ItemSelectorCriterion>
-		_contentDashboardItemTypeItemSelectorView;
+		_contentDashboardItemSubtypeItemSelectorView;
 
 	@DeleteAfterTestRun
 	private Group _group;

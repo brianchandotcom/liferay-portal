@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.item.selector;
 
-import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemTypeItemSelectorCriterion;
+import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 
@@ -27,15 +27,15 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Cristina González
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class ContentDashboardItemTypeItemSelectorCriterionHandler
+public class ContentDashboardItemSubtypeItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler
-		<ContentDashboardItemTypeItemSelectorCriterion> {
+		<ContentDashboardItemSubtypeItemSelectorCriterion> {
 
 	@Override
-	public Class<ContentDashboardItemTypeItemSelectorCriterion>
+	public Class<ContentDashboardItemSubtypeItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return ContentDashboardItemTypeItemSelectorCriterion.class;
+		return ContentDashboardItemSubtypeItemSelectorCriterion.class;
 	}
 
 	@Activate

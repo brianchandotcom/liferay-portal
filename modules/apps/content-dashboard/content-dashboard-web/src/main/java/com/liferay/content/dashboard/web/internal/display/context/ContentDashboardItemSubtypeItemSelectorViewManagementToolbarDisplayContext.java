@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.display.context;
 
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -28,14 +28,15 @@ import javax.servlet.http.HttpServletRequest;
  * @author Cristina González
  */
 public class
-	ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext
+	ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext
 		extends SearchContainerManagementToolbarDisplayContext {
 
-	public ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext(
+	public ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<? extends ContentDashboardItemType> searchContainer) {
+		SearchContainer<? extends ContentDashboardItemSubtype>
+			searchContainer) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
@@ -63,7 +64,7 @@ public class
 
 	@Override
 	public String getSearchContainerId() {
-		return "contentDashboardItemTypes";
+		return "contentDashboardItemSubtypes";
 	}
 
 	@Override

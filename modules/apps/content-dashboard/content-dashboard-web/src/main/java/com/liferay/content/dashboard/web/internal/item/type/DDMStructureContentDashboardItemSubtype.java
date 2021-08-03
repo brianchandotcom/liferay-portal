@@ -31,10 +31,10 @@ import java.util.Objects;
 /**
  * @author Cristina González
  */
-public class DDMStructureContentDashboardItemType
-	implements ContentDashboardItemType<DDMStructure> {
+public class DDMStructureContentDashboardItemSubtype
+	implements ContentDashboardItemSubtype<DDMStructure> {
 
-	public DDMStructureContentDashboardItemType(
+	public DDMStructureContentDashboardItemSubtype(
 		DDMStructure ddmStructure, Group group) {
 
 		_ddmStructure = ddmStructure;
@@ -50,15 +50,15 @@ public class DDMStructureContentDashboardItemType
 			return true;
 		}
 
-		if (!(object instanceof ContentDashboardItemType)) {
+		if (!(object instanceof ContentDashboardItemSubtype)) {
 			return false;
 		}
 
-		ContentDashboardItemType contentDashboardItemType =
-			(ContentDashboardItemType)object;
+		ContentDashboardItemSubtype contentDashboardItemSubtype =
+			(ContentDashboardItemSubtype)object;
 
 		InfoItemReference infoItemReference =
-			contentDashboardItemType.getInfoItemReference();
+			contentDashboardItemSubtype.getInfoItemReference();
 
 		if (Objects.equals(
 				_infoItemReference.getClassName(),
@@ -129,7 +129,7 @@ public class DDMStructureContentDashboardItemType
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMStructureContentDashboardItemType.class);
+		DDMStructureContentDashboardItemSubtype.class);
 
 	private final DDMStructure _ddmStructure;
 	private final Group _group;

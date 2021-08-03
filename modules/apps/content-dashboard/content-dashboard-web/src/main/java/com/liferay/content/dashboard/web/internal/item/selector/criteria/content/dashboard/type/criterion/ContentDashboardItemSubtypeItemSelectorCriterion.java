@@ -12,28 +12,13 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.type;
+package com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion;
 
-import com.liferay.info.item.InfoItemReference;
-
-import java.util.Date;
-import java.util.Locale;
+import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
  * @author Cristina González
  */
-public interface ContentDashboardItemType<T> {
-
-	public String getFullLabel(Locale locale);
-
-	public InfoItemReference getInfoItemReference();
-
-	public String getLabel(Locale locale);
-
-	public Date getModifiedDate();
-
-	public long getUserId();
-
-	public String toJSONString(Locale locale);
-
+public class ContentDashboardItemSubtypeItemSelectorCriterion
+	extends BaseItemSelectorCriterion {
 }

@@ -14,27 +14,28 @@
 
 package com.liferay.content.dashboard.web.internal.display.context;
 
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
 /**
  * @author Cristina González
  */
-public class ContentDashboardItemTypeItemSelectorViewDisplayContext {
+public class ContentDashboardItemSubtypeItemSelectorViewDisplayContext {
 
-	public ContentDashboardItemTypeItemSelectorViewDisplayContext(
-		SearchContainer<? extends ContentDashboardItemType> searchContainer) {
+	public ContentDashboardItemSubtypeItemSelectorViewDisplayContext(
+		SearchContainer<? extends ContentDashboardItemSubtype>
+			searchContainer) {
 
 		_searchContainer = searchContainer;
 	}
 
-	public SearchContainer<? extends ContentDashboardItemType>
+	public SearchContainer<? extends ContentDashboardItemSubtype>
 		getSearchContainer() {
 
 		return _searchContainer;
 	}
 
-	private final SearchContainer<? extends ContentDashboardItemType>
+	private final SearchContainer<? extends ContentDashboardItemSubtype>
 		_searchContainer;
 
 }

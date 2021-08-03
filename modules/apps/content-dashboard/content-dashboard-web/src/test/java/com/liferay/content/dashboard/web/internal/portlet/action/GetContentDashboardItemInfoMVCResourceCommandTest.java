@@ -20,7 +20,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -140,11 +140,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItem.getTitle(LocaleUtil.US),
 			jsonObject.getString("title"));
 
-		ContentDashboardItemType contentDashboardItemType =
-			contentDashboardItem.getContentDashboardItemType();
+		ContentDashboardItemSubtype contentDashboardItemSubtype =
+			contentDashboardItem.getContentDashboardItemSubtype();
 
 		Assert.assertEquals(
-			contentDashboardItemType.getLabel(LocaleUtil.US),
+			contentDashboardItemSubtype.getLabel(LocaleUtil.US),
 			jsonObject.getString("subType"));
 
 		List<ContentDashboardItem.Version> versions =
@@ -215,17 +215,20 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public ContentDashboardItemType getContentDashboardItemType() {
-				ContentDashboardItemType contentDashboardItemType =
-					Mockito.mock(ContentDashboardItemType.class);
+			public ContentDashboardItemSubtype
+				getContentDashboardItemSubtype() {
+
+				ContentDashboardItemSubtype contentDashboardItemSubtype =
+					Mockito.mock(ContentDashboardItemSubtype.class);
 
 				Mockito.when(
-					contentDashboardItemType.getLabel(Mockito.any(Locale.class))
+					contentDashboardItemSubtype.getLabel(
+						Mockito.any(Locale.class))
 				).thenReturn(
 					"subType"
 				);
 
-				return contentDashboardItemType;
+				return contentDashboardItemSubtype;
 			}
 
 			@Override

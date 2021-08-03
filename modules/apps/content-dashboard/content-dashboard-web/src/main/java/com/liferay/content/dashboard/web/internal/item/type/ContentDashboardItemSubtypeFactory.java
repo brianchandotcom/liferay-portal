@@ -12,13 +12,20 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion;
+package com.liferay.content.dashboard.web.internal.item.type;
 
-import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Cristina González
  */
-public class ContentDashboardItemTypeItemSelectorCriterion
-	extends BaseItemSelectorCriterion {
+public interface ContentDashboardItemSubtypeFactory<T> {
+
+	public ContentDashboardItemSubtype<T> create(long classPK)
+		throws PortalException;
+
+	public default boolean isEnabled() {
+		return true;
+	}
+
 }

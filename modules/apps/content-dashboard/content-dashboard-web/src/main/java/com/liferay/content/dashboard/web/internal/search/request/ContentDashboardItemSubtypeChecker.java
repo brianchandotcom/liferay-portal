@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.search.request;
 
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 
 import java.util.List;
@@ -26,16 +26,17 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Cristina Goonzález
  */
-public class ContentDashboardItemTypeChecker extends EmptyOnClickRowChecker {
+public class ContentDashboardItemSubtypeChecker extends EmptyOnClickRowChecker {
 
-	public ContentDashboardItemTypeChecker(
-		List<? extends ContentDashboardItemType>
-			checkedContentDashboardItemTypes,
+	public ContentDashboardItemSubtypeChecker(
+		List<? extends ContentDashboardItemSubtype>
+			checkedContentDashboardItemSubtypes,
 		RenderResponse renderResponse) {
 
 		super(renderResponse);
 
-		_checkedContentDashboardItemTypes = checkedContentDashboardItemTypes;
+		_checkedContentDashboardItemSubtypes =
+			checkedContentDashboardItemSubtypes;
 	}
 
 	@Override
@@ -50,14 +51,14 @@ public class ContentDashboardItemTypeChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object object) {
-		ContentDashboardItemType contentDashboardItemType =
-			(ContentDashboardItemType)object;
+		ContentDashboardItemSubtype contentDashboardItemSubtype =
+			(ContentDashboardItemSubtype)object;
 
-		return _checkedContentDashboardItemTypes.contains(
-			contentDashboardItemType);
+		return _checkedContentDashboardItemSubtypes.contains(
+			contentDashboardItemSubtype);
 	}
 
-	private final List<? extends ContentDashboardItemType>
-		_checkedContentDashboardItemTypes;
+	private final List<? extends ContentDashboardItemSubtype>
+		_checkedContentDashboardItemSubtypes;
 
 }

@@ -20,7 +20,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
@@ -63,8 +63,8 @@ public class FileEntryContentDashboardItem
 		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
-		ContentDashboardItemType contentDashboardItemType, FileEntry fileEntry,
-		Group group,
+		ContentDashboardItemSubtype contentDashboardItemSubtype,
+		FileEntry fileEntry, Group group,
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
 		Language language, Portal portal) {
 
@@ -84,7 +84,7 @@ public class FileEntryContentDashboardItem
 
 		_contentDashboardItemActionProviderTracker =
 			contentDashboardItemActionProviderTracker;
-		_contentDashboardItemType = contentDashboardItemType;
+		_contentDashboardItemSubtype = contentDashboardItemSubtype;
 		_fileEntry = fileEntry;
 		_group = group;
 		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
@@ -169,8 +169,8 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public ContentDashboardItemType getContentDashboardItemType() {
-		return _contentDashboardItemType;
+	public ContentDashboardItemSubtype getContentDashboardItemSubtype() {
+		return _contentDashboardItemSubtype;
 	}
 
 	@Override
@@ -436,7 +436,7 @@ public class FileEntryContentDashboardItem
 	private final List<AssetTag> _assetTags;
 	private final ContentDashboardItemActionProviderTracker
 		_contentDashboardItemActionProviderTracker;
-	private final ContentDashboardItemType _contentDashboardItemType;
+	private final ContentDashboardItemSubtype _contentDashboardItemSubtype;
 	private final FileEntry _fileEntry;
 	private final Group _group;
 	private final InfoItemFieldValuesProvider<FileEntry>

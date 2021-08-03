@@ -21,7 +21,7 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPort
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -240,10 +240,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private String _getSubtype(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
-		ContentDashboardItemType contentDashboardItemType =
-			contentDashboardItem.getContentDashboardItemType();
+		ContentDashboardItemSubtype contentDashboardItemSubtype =
+			contentDashboardItem.getContentDashboardItemSubtype();
 
-		return contentDashboardItemType.getLabel(locale);
+		return contentDashboardItemSubtype.getLabel(locale);
 	}
 
 	private JSONObject _getUserJSONObject(

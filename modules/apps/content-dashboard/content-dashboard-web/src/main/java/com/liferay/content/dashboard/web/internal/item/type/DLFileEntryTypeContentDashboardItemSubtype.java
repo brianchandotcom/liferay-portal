@@ -31,10 +31,10 @@ import java.util.Objects;
 /**
  * @author Alejandro Tardín
  */
-public class DLFileEntryTypeContentDashboardItemType
-	implements ContentDashboardItemType<DLFileEntryType> {
+public class DLFileEntryTypeContentDashboardItemSubtype
+	implements ContentDashboardItemSubtype<DLFileEntryType> {
 
-	public DLFileEntryTypeContentDashboardItemType(
+	public DLFileEntryTypeContentDashboardItemSubtype(
 		DLFileEntryType dlFileEntryType, Group group) {
 
 		_dlFileEntryType = dlFileEntryType;
@@ -51,15 +51,15 @@ public class DLFileEntryTypeContentDashboardItemType
 			return true;
 		}
 
-		if (!(object instanceof ContentDashboardItemType)) {
+		if (!(object instanceof ContentDashboardItemSubtype)) {
 			return false;
 		}
 
-		ContentDashboardItemType contentDashboardItemType =
-			(ContentDashboardItemType)object;
+		ContentDashboardItemSubtype contentDashboardItemSubtype =
+			(ContentDashboardItemSubtype)object;
 
 		InfoItemReference infoItemReference =
-			contentDashboardItemType.getInfoItemReference();
+			contentDashboardItemSubtype.getInfoItemReference();
 
 		if (Objects.equals(
 				_infoItemReference.getClassName(),
@@ -130,7 +130,7 @@ public class DLFileEntryTypeContentDashboardItemType
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryTypeContentDashboardItemType.class);
+		DLFileEntryTypeContentDashboardItemSubtype.class);
 
 	private final DLFileEntryType _dlFileEntryType;
 	private final Group _group;

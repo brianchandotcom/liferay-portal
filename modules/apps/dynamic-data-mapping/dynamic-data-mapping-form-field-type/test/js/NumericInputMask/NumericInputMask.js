@@ -58,7 +58,9 @@ describe('Field Numeric Input Mask', () => {
 		const appendField = container.querySelector(
 			'[data-field-name="append"]'
 		);
-
+		const appendFieldInput = container.querySelector(
+			'input[name="append"]'
+		);
 		const appendTypeField = container.querySelector(
 			'[data-field-name="appendType"]'
 		);
@@ -70,9 +72,10 @@ describe('Field Numeric Input Mask', () => {
 		);
 
 		expect(appendField).toBeInTheDocument();
-		expect(thousandsSeparatorField).toBeInTheDocument();
+		expect(appendFieldInput.maxLength).toBe(10);
 		expect(appendTypeField).not.toBeInTheDocument();
 		expect(decimalSymbolField).toBeInTheDocument();
+		expect(thousandsSeparatorField).toBeInTheDocument();
 	});
 
 	it('shows the radio selector to choose the append type when there is a suffix or preffix text', () => {

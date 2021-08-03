@@ -821,14 +821,14 @@ definition {
 	}
 
 	macro setDefaultAddress {
-		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SECTION");
+		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_HEADING");
 
 		if (IsElementPresent(key_addressDataType = "${addressDataType}",key_text = "Set Default Address", locator1 = "Account#SET_ACCOUNT_DEFAULT_ADDRESS")) {
 			AssertClick(
 				key_addressDataType = "${addressDataType}",
 				key_text = "Set Default Address",
-				locator1 = "Account#SET_ACCOUNT_DEFAULT_ADDRESS",
-				value1 = "Set Default Address");
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_BILLING",
+			value1 = "Set Default Address");
 		}
 		else {
 			AssertClick(
@@ -851,12 +851,12 @@ definition {
 
 		Click(
 			key_addressName = "${addressName}",
-			locator1 = "Account#SELECT_ADDRESS_RADIO");
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
 
 		SelectFrameTop();
 
 		AssertClick(
-			locator1 = "Account#SAVE_BUTTON",
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
 			value1 = "Save");
 
 		Alert.viewSuccessMessage();
@@ -941,18 +941,15 @@ definition {
 		}
 
 		AssertTextEquals.assertPartialText(
-			key_addressDataType = "${addressDataType}",
-			locator1 = "Account#ACCOUNT_ADDRESSES",
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_DEFAULT_BILLING_ADDRESS",
 			value1 = "${addressName}");
 
 		AssertTextEquals.assertPartialText(
-			key_addressDataType = "${addressDataType}",
-			locator1 = "Account#ACCOUNT_ADDRESSES",
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_DEFAULT_BILLING_ADDRESS",
 			value1 = "${addressStreet1}");
 
 		AssertTextEquals.assertPartialText(
-			key_addressDataType = "${addressDataType}",
-			locator1 = "Account#ACCOUNT_ADDRESSES",
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_DEFAULT_BILLING_ADDRESS",
 			value1 = "${addressCountry}");
 
 		AssertTextEquals.assertPartialText(
@@ -967,7 +964,6 @@ definition {
 
 		if (isSet(addressRegion)) {
 			AssertTextEquals.assertPartialText(
-				key_addressDataType = "${addressDataType}",
 				locator1 = "Account#ACCOUNT_ADDRESSES",
 				value1 = "${addressRegion}");
 		}
@@ -975,21 +971,21 @@ definition {
 		if (isSet(addressStreet2)) {
 			AssertTextEquals.assertPartialText(
 				key_addressDataType = "${addressDataType}",
-				locator1 = "Account#ACCOUNT_ADDRESSES",
+				locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_DEFAULT_BILLING_ADDRESS",
 				value1 = "${addressStreet2}");
 		}
 
 		if (isSet(addressStreet3)) {
 			AssertTextEquals.assertPartialText(
 				key_addressDataType = "${addressDataType}",
-				locator1 = "Account#ACCOUNT_ADDRESSES",
+				locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_DEFAULT_BILLING_ADDRESS",
 				value1 = "${addressStreet3}");
 		}
 
 		if (isSet(phoneNumber)) {
 			AssertTextEquals.assertPartialText(
 				key_addressDataType = "${addressDataType}",
-				locator1 = "Account#ACCOUNT_ADDRESSES",
+				locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_DEFAULT_BILLING_ADDRESS",
 				value1 = "${phoneNumber}");
 		}
 	}

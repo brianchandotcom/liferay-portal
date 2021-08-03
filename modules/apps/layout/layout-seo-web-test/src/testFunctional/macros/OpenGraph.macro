@@ -139,13 +139,13 @@ definition {
 	}
 
 	macro mapEditableTextToField {
-		if ("${textTpye}" == "TextInput") {
+		if ("${textType}" == "TextInput") {
 			Type(
 				key_text = "${mappedField}",
 				locator1 = "TextInput#ANY",
 				value1 = "${mappedFieldText}");
 		}
-		else if ("${textTpye}" == "TextArea") {
+		else if ("${textType}" == "TextArea") {
 			Type(
 				key_text = "${mappedField}",
 				locator1 = "TextArea#ANY",
@@ -157,13 +157,13 @@ definition {
 			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
 
 		for (var field : list "${field}" ) {
-			if ("${textTpye}" == "TextInput") {
+			if ("${textType}" == "TextInput") {
 				Type.sendKeys(
 					key_text = "${mappedField}",
 					locator1 = "TextInput#ANY",
 					value1 = "${field}:");
 			}
-			else if ("${textTpye}" == "TextArea") {
+			else if ("${textType}" == "TextArea") {
 				Type.sendKeys(
 					key_text = "${mappedField}",
 					locator1 = "TextArea#ANY",
@@ -293,7 +293,7 @@ definition {
 	}
 
 	macro viewMappedField {
-		if (isSet(textTpye)) {
+		if (isSet(textType)) {
 			AssertTextEquals(
 				key_mappedField = "${mappedField}",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",

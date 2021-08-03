@@ -106,14 +106,14 @@ definition {
 			mappedField = "HTML Title",
 			mappedFieldName = "HTML Title",
 			mappedFieldText = "HTML Title is ",
-			textTpye = "TextInput");
+			textType = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "MIME Type,Version",
 			mappedField = "description",
 			mappedFieldName = "Description",
 			mappedFieldText = "Description is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		Button.clickSave();
 
@@ -124,7 +124,7 @@ definition {
 		OpenGraph.viewMappedField(
 			mappedField = "description",
 			mappedFieldValue = "Description is MIME Type: ${mimeType} Version: ${version}",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -186,14 +186,14 @@ definition {
 			mappedField = "HTML Title",
 			mappedFieldName = "HTML Title",
 			mappedFieldText = "HTML Title is ",
-			textTpye = "TextInput");
+			textType = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Content",
 			mappedField = "description",
 			mappedFieldName = "Description",
 			mappedFieldText = "Description is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		Button.clickSave();
 
@@ -204,7 +204,7 @@ definition {
 		OpenGraph.viewMappedField(
 			mappedField = "description",
 			mappedFieldValue = "Description is Content: ${Content}",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",

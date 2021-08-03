@@ -638,21 +638,21 @@ definition {
 			mappedField = "Title",
 			mappedFieldName = "Title",
 			mappedFieldText = "Title is ",
-			textTpye = "TextInput");
+			textType = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "MIME Type",
 			mappedField = "Description",
 			mappedFieldName = "Description",
 			mappedFieldText = "Description is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Author Name",
 			mappedField = "ImageAlt",
 			mappedFieldName = "Image Alt Description",
 			mappedFieldText = "Image Alt is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Preview Image",
@@ -675,7 +675,7 @@ definition {
 		OpenGraph.viewMappedField(
 			mappedField = "ImageAlt",
 			mappedFieldValue = "Image Alt is Author Name: ${authorName}",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -752,14 +752,14 @@ definition {
 			mappedField = "HTML Title",
 			mappedFieldName = "HTML Title",
 			mappedFieldText = "HTML Title is ",
-			textTpye = "TextInput");
+			textType = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "MIME Type",
 			mappedField = "description",
 			mappedFieldName = "Description",
 			mappedFieldText = "Description is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		Button.clickSave();
 
@@ -770,7 +770,7 @@ definition {
 		OpenGraph.viewMappedField(
 			mappedField = "description",
 			mappedFieldValue = "Description is MIME Type: ${mimeType}",
-			textTpye = "TextArea");
+			textType = "TextArea");
 	}
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the WC structure from AL on a connect site."
@@ -843,21 +843,21 @@ definition {
 			mappedField = "Title",
 			mappedFieldName = "Title",
 			mappedFieldText = "Title is ",
-			textTpye = "TextInput");
+			textType = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
 			mappedField = "Description",
 			mappedFieldName = "Description",
 			mappedFieldText = "Description is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
 			mappedField = "ImageAlt",
 			mappedFieldName = "Image Alt Description",
 			mappedFieldText = "Image Alt is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Small Image",
@@ -880,7 +880,7 @@ definition {
 		OpenGraph.viewMappedField(
 			mappedField = "ImageAlt",
 			mappedFieldValue = "Image Alt is Text: ${text}",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -974,14 +974,14 @@ definition {
 			mappedField = "HTML Title",
 			mappedFieldName = "HTML Title",
 			mappedFieldText = "HTML Title is ",
-			textTpye = "TextInput");
+			textType = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
 			mappedField = "description",
 			mappedFieldName = "Description",
 			mappedFieldText = "Description is ",
-			textTpye = "TextArea");
+			textType = "TextArea");
 
 		Button.clickSave();
 
@@ -992,7 +992,7 @@ definition {
 		OpenGraph.viewMappedField(
 			mappedField = "description",
 			mappedFieldValue = "Description is Text: ${text}",
-			textTpye = "TextArea");
+			textType = "TextArea");
 	}
 
 	@description = "This test ensures that a user can view the image using display page template with DM type from AL on a connect site."

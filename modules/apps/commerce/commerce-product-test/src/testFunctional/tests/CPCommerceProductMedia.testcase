@@ -281,8 +281,6 @@ definition {
 	test RemoveAnImage {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -299,12 +297,17 @@ definition {
 			validationImage = "true");
 
 		Click(
-			key_value = "Commerce_Black.jpg",
+			key_value = "Commerce_Black",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			key_table = "Images",
+			key_entryName = "Commerce_Black",
+			locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
 	}
 
 }

@@ -362,7 +362,9 @@ export const FormBuilder = () => {
 		if (!objectFields.length) {
 			addObjectFields(dispatch);
 		}
-	}, [dispatch, objectFields]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<>

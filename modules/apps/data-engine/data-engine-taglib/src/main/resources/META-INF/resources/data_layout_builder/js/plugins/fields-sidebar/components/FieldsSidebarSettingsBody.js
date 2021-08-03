@@ -26,17 +26,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
 /**
- * This component will override the Column from Form Renderer and will
- * check if field to be rendered has a custom field.
- * If the field has a custom field, render it instead of children.
- * @param {customFields} Object
- *
- * You can override fields passing as parameter the customFields:
- * const customFields = {
- *     required: (props) => <NewRequiredComponent {...props} />
- * }
+ * This component will override the Column from Form Renderer.
  */
-const getColumn = ({customFields = {}}) => ({children, column, index}) => {
+const getColumn = ({objectFields}) => ({children, column, index}) => {
 	if (column.fields.length === 0) {
 		return null;
 	}
@@ -45,14 +37,11 @@ const getColumn = ({customFields = {}}) => ({children, column, index}) => {
 		<ClayLayout.Col key={index} md={column.size}>
 			{column.fields.map((field, index) => {
 				const {fieldName} = field;
-				const CustomField = customFields[fieldName];
 
-				if (CustomField) {
-					return (
-						<CustomField field={field} index={index} key={index}>
-							{children}
-						</CustomField>
-					);
+				// Avoid using repeatable field when object storage type is selected
+
+				if (objectFields.length && fieldName === 'repeatable') {
+					return <React.Fragment key={index} />;
 				}
 
 				return children({field, index});
@@ -64,7 +53,6 @@ const getColumn = ({customFields = {}}) => ({children, column, index}) => {
 export default function FieldsSidebarSettingsBody() {
 	const [activePage, setActivePage] = useState(0);
 	const {
-		customFields,
 		defaultLanguageId,
 		editingLanguageId,
 		focusedField,
@@ -75,7 +63,7 @@ export default function FieldsSidebarSettingsBody() {
 	const config = useConfig();
 	const dispatch = useForm();
 
-	const Column = useMemo(() => getColumn({customFields}), [customFields]);
+	const Column = useMemo(() => getColumn({objectFields}), [objectFields]);
 
 	const {settingsContext} = focusedField;
 

@@ -954,9 +954,7 @@
 
 				let panelBlock;
 
-				panel.className = panel.className
-					? `${panel.className} lfr-cke_table_panel`
-					: 'lfr-cke_table_panel';
+				panel.className = 'lfr-table-panel';
 
 				editor.ui.add(name, CKEDITOR.UI_PANELBUTTON, {
 					command: commandName,

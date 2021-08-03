@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -47,6 +45,7 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,8 +59,8 @@ public class DDMFormInstanceRecordCTDisplayRenderer
 
 	@Override
 	public String getContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale locale,
 			DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws PortalException {
 
@@ -78,14 +77,13 @@ public class DDMFormInstanceRecordCTDisplayRenderer
 		htmlTag.setDdmFormValues(ddmFormInstanceRecord.getDDMFormValues());
 		htmlTag.setGroupId(ddmFormInstanceRecord.getGroupId());
 		htmlTag.setReadOnly(true);
-		htmlTag.setRequestedLocale(liferayPortletRequest.getLocale());
+		htmlTag.setRequestedLocale(locale);
 
 		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
 			htmlTag.doTag(
-				liferayPortletRequest.getHttpServletRequest(),
+				httpServletRequest,
 				new PipingServletResponse(
-					liferayPortletResponse.getHttpServletResponse(),
-					unsyncStringWriter));
+					httpServletResponse, unsyncStringWriter));
 
 			return unsyncStringWriter.toString();
 		}
@@ -140,27 +138,10 @@ public class DDMFormInstanceRecordCTDisplayRenderer
 	}
 
 	@Override
-	public String getPreviousContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			DDMFormInstanceRecord currentModel,
-			DDMFormInstanceRecord previousModel)
-		throws PortalException {
-
-		return getContent(
-			liferayPortletRequest, liferayPortletResponse, previousModel);
-	}
-
-	@Override
 	public String getTitle(
 		Locale locale, DDMFormInstanceRecord ddmFormInstanceRecord) {
 
 		return String.valueOf(ddmFormInstanceRecord.getPrimaryKey());
-	}
-
-	@Override
-	public boolean hasContent() {
-		return true;
 	}
 
 	@Override

@@ -29,12 +29,11 @@ import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,8 +41,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,23 +58,23 @@ public class JournalArticleCTDisplayRenderer
 
 	@Override
 	public JournalArticle fetchLatestVersionedModel(
-		JournalArticle currentJournalArticle) {
+		JournalArticle journalArticle) {
 
 		return _journalArticleLocalService.fetchLatestArticle(
-			currentJournalArticle.getResourcePrimKey());
+			journalArticle.getResourcePrimKey());
 	}
 
 	@Override
 	public String getContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale locale,
 			JournalArticle journalArticle)
 		throws Exception {
 
 		return getJournalArticleContent(
 			journalArticle, _journalArticleLocalService,
-			journalArticle.getDefaultLanguageId(), liferayPortletRequest,
-			liferayPortletResponse);
+			_language.getLanguageId(locale), httpServletRequest,
+			httpServletResponse);
 	}
 
 	@Override
@@ -115,20 +116,6 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
-	public String getPreviousContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			JournalArticle currentJournalArticle,
-			JournalArticle previousJournalArticle)
-		throws Exception {
-
-		return getJournalArticleContent(
-			previousJournalArticle, _journalArticleLocalService,
-			currentJournalArticle.getDefaultLanguageId(), liferayPortletRequest,
-			liferayPortletResponse);
-	}
-
-	@Override
 	public String getTitle(Locale locale, JournalArticle journalArticle) {
 		return journalArticle.getTitle(locale);
 	}
@@ -138,22 +125,25 @@ public class JournalArticleCTDisplayRenderer
 		return String.valueOf(journalArticle.getVersion());
 	}
 
-	@Override
-	public boolean hasContent() {
-		return true;
-	}
-
 	protected static String getJournalArticleContent(
 			JournalArticle journalArticle,
 			JournalArticleLocalService journalArticleLocalService,
-			String languageId, LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			String languageId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		PortletRequestModel portletRequestModel = new PortletRequestModel(
-			liferayPortletRequest, liferayPortletResponse);
+			portletRequest, portletResponse);
+
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
+			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		if (!journalArticleLocalService.isRenderable(

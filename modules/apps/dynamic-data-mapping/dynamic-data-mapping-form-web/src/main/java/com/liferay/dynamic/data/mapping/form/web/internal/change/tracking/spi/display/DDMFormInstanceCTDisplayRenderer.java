@@ -23,10 +23,9 @@ import com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -34,8 +33,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,22 +50,26 @@ public class DDMFormInstanceCTDisplayRenderer
 
 	@Override
 	public String getContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale locale,
 			DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		ddmFormFieldRenderingContext.setHttpServletRequest(
-			liferayPortletRequest.getHttpServletRequest());
+		ddmFormFieldRenderingContext.setHttpServletRequest(httpServletRequest);
 		ddmFormFieldRenderingContext.setHttpServletResponse(
-			liferayPortletResponse.getHttpServletResponse());
-		ddmFormFieldRenderingContext.setLocale(
-			liferayPortletRequest.getLocale());
+			httpServletResponse);
+		ddmFormFieldRenderingContext.setLocale(locale);
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		ddmFormFieldRenderingContext.setPortletNamespace(
-			liferayPortletResponse.getNamespace());
+			portletResponse.getNamespace());
+
 		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
 		ddmFormFieldRenderingContext.setReturnFullContext(true);
 		ddmFormFieldRenderingContext.setViewMode(true);
@@ -115,24 +120,8 @@ public class DDMFormInstanceCTDisplayRenderer
 	}
 
 	@Override
-	public String getPreviousContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			DDMFormInstance currentModel, DDMFormInstance previousModel)
-		throws PortalException {
-
-		return getContent(
-			liferayPortletRequest, liferayPortletResponse, previousModel);
-	}
-
-	@Override
 	public String getTitle(Locale locale, DDMFormInstance ddmFormInstance) {
 		return ddmFormInstance.getName(locale);
-	}
-
-	@Override
-	public boolean hasContent() {
-		return true;
 	}
 
 	@Override

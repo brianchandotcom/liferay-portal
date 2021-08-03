@@ -28,8 +28,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -43,6 +41,7 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,13 +56,14 @@ public class MBMessageCTDisplayRenderer
 
 	@Override
 	public String getContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, MBMessage mbMessage)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale locale,
+			MBMessage mbMessage)
 		throws Exception {
 
 		if (mbMessage.isFormatBBCode()) {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
+				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			return MBUtil.getBBCodeHTML(
@@ -107,24 +107,8 @@ public class MBMessageCTDisplayRenderer
 	}
 
 	@Override
-	public String getPreviousContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			MBMessage currentMBMessage, MBMessage previousMBMessage)
-		throws Exception {
-
-		return getContent(
-			liferayPortletRequest, liferayPortletResponse, previousMBMessage);
-	}
-
-	@Override
 	public String getTitle(Locale locale, MBMessage mbMessage) {
 		return mbMessage.getSubject();
-	}
-
-	@Override
-	public boolean hasContent() {
-		return true;
 	}
 
 	@Override

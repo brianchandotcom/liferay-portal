@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Display renderer used to describe and render models of a given type. If an
@@ -39,11 +40,26 @@ public interface CTDisplayRenderer<T> {
 	}
 
 	public default String getContent(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale locale, T model)
+		throws Exception {
+
+		return null;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getContent(
+	 *             		HttpServletRequest, HttpServletResponse, Locale,
+	 *             		Object)}
+	 */
+	@Deprecated
+	public default String getContent(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, T model)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	/**
@@ -79,13 +95,17 @@ public interface CTDisplayRenderer<T> {
 	 */
 	public Class<T> getModelClass();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public default String getPreviousContent(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, T currentModel,
 			T previousModel)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	/**
@@ -116,9 +136,13 @@ public interface CTDisplayRenderer<T> {
 	public String getTypeName(Locale locale);
 
 	public default String getVersionName(T model) {
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public default boolean hasContent() {
 		return false;
 	}

@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -42,6 +40,7 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,8 +54,9 @@ public class DDLRecordCTDisplayRenderer
 
 	@Override
 	public String getContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, DDLRecord ddlRecord)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale locale,
+			DDLRecord ddlRecord)
 		throws Exception {
 
 		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
@@ -69,14 +69,13 @@ public class DDLRecordCTDisplayRenderer
 		htmlTag.setDdmFormValues(ddlRecord.getDDMFormValues());
 		htmlTag.setGroupId(ddlRecord.getGroupId());
 		htmlTag.setReadOnly(true);
-		htmlTag.setRequestedLocale(_portal.getLocale(liferayPortletRequest));
+		htmlTag.setRequestedLocale(locale);
 
 		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
 			htmlTag.doTag(
-				liferayPortletRequest.getHttpServletRequest(),
+				httpServletRequest,
 				new PipingServletResponse(
-					liferayPortletResponse.getHttpServletResponse(),
-					unsyncStringWriter));
+					httpServletResponse, unsyncStringWriter));
 
 			return unsyncStringWriter.toString();
 		}
@@ -127,24 +126,8 @@ public class DDLRecordCTDisplayRenderer
 	}
 
 	@Override
-	public String getPreviousContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			DDLRecord currentModel, DDLRecord previousModel)
-		throws Exception {
-
-		return getContent(
-			liferayPortletRequest, liferayPortletResponse, previousModel);
-	}
-
-	@Override
 	public String getTitle(Locale locale, DDLRecord ddlRecord) {
 		return String.valueOf(ddlRecord.getPrimaryKey());
-	}
-
-	@Override
-	public boolean hasContent() {
-		return true;
 	}
 
 	@Override

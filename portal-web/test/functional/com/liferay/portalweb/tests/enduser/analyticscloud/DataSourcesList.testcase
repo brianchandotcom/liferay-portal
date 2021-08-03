@@ -43,11 +43,11 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			ACSettings.assertDataSourceName(dataSourceName = "${dataSource}");
+			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
 		}
 
 		for (var dataSourceName : list "${dataSourceList}") {
-			ACSettings.assertDataSourceName(dataSourceName = "${dataSourceName}");
+			ACUtils.assertDataSourceName(dataSourceName = "${dataSourceName}");
 		}
 	}
 

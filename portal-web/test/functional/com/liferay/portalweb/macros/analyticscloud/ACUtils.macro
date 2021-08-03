@@ -23,6 +23,12 @@ definition {
 			widgetName = "${widgetName}");
 	}
 
+	macro assertDataSourceName {
+		var itemName = "${dataSourceName}";
+
+		AssertElementPresent(locator1 = "ACSettings#ITEM_ON_LIST");
+	}
+
 	@summary = "Asserts a list of items by the name"
 	macro assertItemsName {
 		for (var key_itemName : list "${itemList}") {

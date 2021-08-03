@@ -10,6 +10,16 @@
 </thead>
 
 <tbody>
+<tr>
+	<td>ACCOUNT_MANAGEMENT</td>
+	<td>//div[contains(@class, 'dnd-tbody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSIGN_USER-->
 <tr>
 	<td>ASSIGN_USER_CHOOSE_BUTTON</td>
@@ -132,11 +142,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACCOUNT_MANAGEMENT</td>
-	<td>//div[contains(@class, 'dnd-tbody')]</td>
 	<td></td>
 </tr>
 </tbody>

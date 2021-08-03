@@ -99,7 +99,7 @@ describe('A11yChecker', () => {
 			scheduler.scheduleCallback(fn, 'baz');
 		});
 
-		it('yield to host when the deadline is finished', (done) => {
+		it.skip('yield to host when the deadline is finished', (done) => {
 			const callbacksCalled: Array<{
 				deadline: number;
 				start: number;

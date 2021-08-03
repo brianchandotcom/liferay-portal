@@ -92,12 +92,27 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8157 | Test Summary: Current add-ons are displayed in a card"
-	@ignore = "true"
 	@priority = "5"
 	test CurrentAddonsDisplayedInCard {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8157 CurrentAddonsDisplayedInCard pending implementation
+		ACUtils.launchAC();
 
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		ACSettings.assertAddonsDetails(
+			key_planLimit = "5,000",
+			key_planName = "Individuals",
+			key_planValue = "500 USD");
+
+		ACSettings.assertAddonsDetails(
+			key_planLimit = "5,000,000",
+			key_planName = "Page Views",
+			key_planValue = "250 USD");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"

@@ -15,8 +15,8 @@
 package com.liferay.portal.security.sso.openid.connect.internal.messaging;
 
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
+import com.liferay.portal.security.sso.openid.connect.internal.auto.login.OpenIdConnectAutoLogin;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
 
 import javax.servlet.http.HttpSession;
@@ -42,12 +42,10 @@ public class OpenIdConnectHttpSessionListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
 		HttpSession httpSession = httpSessionEvent.getSession();
 
-		if (httpSession.getAttribute(WebKeys.RENEW_SESSION) != null) {
-			return;
-		}
-
 		if (!_offlineOpenIdConnectSessionManager.isOpenIdConnectSession(
-				httpSession)) {
+				httpSession) ||
+			(httpSession.getAttribute(OpenIdConnectAutoLogin.USER_ID) !=
+				null)) {
 
 			return;
 		}

@@ -57,8 +57,6 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 
 		Long userId = (Long)httpSession.getAttribute(USER_ID);
 
-		httpSession.removeAttribute(USER_ID);
-
 		if (userId != null) {
 			User user = _userLocalService.getUserById(userId);
 

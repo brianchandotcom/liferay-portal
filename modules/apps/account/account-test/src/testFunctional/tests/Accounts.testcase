@@ -841,35 +841,43 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
 
-		for (var addressDataType : list "shipping,billing") {
-			Accounts.setDefaultAddress(
-				addressDataType = "${addressDataType}",
-				addressName = "Liferay Dalian Software Co., Ltd.");
+		Accounts.setDefaultShippingAddress(
+			addressDataType = "${addressDataType}",
+			addressName = "Liferay Dalian Software Co., Ltd.");
 
-			Accounts.viewAddress(
-				addressCity = "Dalian",
-				addressCountry = "China",
-				addressDataType = "${addressDataType}",
-				addressName = "Liferay Dalian Software Co., Ltd.",
-				addressPostalCode = "116023",
-				addressRegion = "Liaoning Sheng",
-				addressStreet1 = "537 Huangpu Road Taide Building,",
-				addressStreet2 = "High-Tech Zone",
-				addressStreet3 = "1005",
-				phoneNumber = "+86 (0)411 88120855");
-		}
+		Accounts.viewDefaultShippingAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
 
-		Accounts.removeAddress(
-			accountName = "Account Remove Address",
-			addressDataType = "billing");
+		Accounts.setDefaultBillingAddress(
+			addressDataType = "${addressDataType}",
+			addressName = "Liferay Dalian Software Co., Ltd.");
+
+		Accounts.viewDefaultBillingAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
+
+		Accounts.removeDefaultBillingAddress(accountName = "Account Remove Address");
 
 		Accounts.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
 
-		Accounts.removeAddress(
-			accountName = "Account Remove Address",
-			addressDataType = "shipping");
+		Accounts.removeDefaultShippingAddress(accountName = "Account Remove Address");
 
 		Accounts.openAccountsAdmin();
 
@@ -1102,14 +1110,11 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with Default Address");
 
-		Accounts.setDefaultAddress(
-			addressDataType = "shipping",
-			addressName = "Liferay Japan K. K.");
+		Accounts.setDefaultShippingAddress(addressName = "Liferay Japan K. K.");
 
-		Accounts.viewAddress(
+		Accounts.viewDefaultShippingAddress(
 			addressCity = "Shibuya-ku",
 			addressCountry = "Japan",
-			addressDataType = "shipping",
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
@@ -1117,41 +1122,42 @@ definition {
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			phoneNumber = "+81 3-5456-5796");
 
-		Accounts.setDefaultAddress(
-			addressDataType = "billing",
-			addressName = "Liferay, Inc.");
+		Accounts.setDefaultBillingAddress(addressName = "Liferay, Inc.");
 
-		Accounts.viewAddress(
+		Accounts.viewDefaultBillingAddress(
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
-			addressDataType = "billing",
 			addressName = "Liferay, Inc.",
 			addressPostalCode = "91765",
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
 
-		Accounts.setDefaultAddress(
-			addressDataType = "shipping",
-			addressName = "Liferay Dalian Software Co., Ltd.");
+		Accounts.changeDefaultShippingAddress(addressName = "Liferay Dalian Software Co., Ltd.");
 
-		Accounts.setDefaultAddress(
-			addressDataType = "billing",
-			addressName = "Liferay Dalian Software Co., Ltd.");
+		Accounts.changeDefaultBillingAddress(addressName = "Liferay Dalian Software Co., Ltd.");
 
-		for (var addressDataType : list "shipping,billing") {
-			Accounts.viewAddress(
-				addressCity = "Dalian",
-				addressCountry = "China",
-				addressDataType = "${addressDataType}",
-				addressName = "Liferay Dalian Software Co., Ltd.",
-				addressPostalCode = "116023",
-				addressRegion = "Liaoning Sheng",
-				addressStreet1 = "537 Huangpu Road Taide Building,",
-				addressStreet2 = "High-Tech Zone",
-				addressStreet3 = "1005",
-				phoneNumber = "+86 (0)411 88120855");
-		}
+		Accounts.viewDefaultBillingAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
+
+		Accounts.viewDefaultShippingAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
 	}
 
 	@description = "This tests canceling account creation will not save it."

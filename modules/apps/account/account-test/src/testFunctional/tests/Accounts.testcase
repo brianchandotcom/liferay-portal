@@ -291,7 +291,7 @@ definition {
 		for (var domainName : list "liferay.com,Google.com,si-na.com,9teen.com") {
 			AssertElementPresent(
 				key_domainName = "${domainName}",
-				locator1 = "Account#DOMAIN_TABLE_NAME");
+				locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
 		}
 	}
 
@@ -912,11 +912,11 @@ definition {
 
 		AssertElementPresent(
 			key_domainName = "liferay.com",
-			locator1 = "Account#DOMAIN_TABLE_NAME");
+			locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
 
 		AssertElementNotPresent(
 			key_domainName = "Google.com",
-			locator1 = "Account#DOMAIN_TABLE_NAME");
+			locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
 	}
 
 	@description = "This test removes a blocked domain in Instance Settings."
@@ -1270,7 +1270,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Business Account");
 
-		AssertElementNotPresent(locator1 = "Account#DOMAIN_SECTION");
+		AssertElementNotPresent(locator1 = "Account#VALID_DOMAINS_HEADING");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 

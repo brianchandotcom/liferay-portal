@@ -26,7 +26,7 @@ definition {
 		PortletEntry.inputName(name = "${accountName}");
 
 		AssertClick(
-			locator1 = "Account#ACCOUNT_DOMAIN_ADD_LINK",
+			locator1 = "Account#VALID_DOMAINS_ADD_BUTTON",
 			value1 = "Add");
 
 		SelectFrame(locator1 = "IFrame#ADD_DOMAIN");
@@ -40,7 +40,7 @@ definition {
 		for (var domainName : list "${domainNames}") {
 			AssertElementPresent(
 				key_domainName = "${domainName}",
-				locator1 = "Account#DOMAIN_TABLE_NAME");
+				locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
 		}
 
 		Button.clickSave();
@@ -870,13 +870,13 @@ definition {
 
 		Click(
 			key_domainName = "${domainName}",
-			locator1 = "Account#DOMAIN_REMOVE_DOMAIN");
+			locator1 = "Account#VALID_DOMAINS_REMOVE_TOOLTIP");
 
 		PortletEntry.save();
 
 		AssertElementNotPresent(
 			key_domainName = "${domainName}",
-			locator1 = "Account#DOMAIN_REMOVE_DOMAIN");
+			locator1 = "Account#VALID_DOMAINS_REMOVE_TOOLTIP");
 	}
 
 	macro setDefaultBillingAddress {

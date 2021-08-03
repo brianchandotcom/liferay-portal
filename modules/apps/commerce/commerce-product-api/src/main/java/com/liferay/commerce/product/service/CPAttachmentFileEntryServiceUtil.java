@@ -42,7 +42,7 @@ public class CPAttachmentFileEntryServiceUtil {
 	 */
 	public static CPAttachmentFileEntry addCPAttachmentFileEntry(
 			long userId, long groupId, long classNameId, long classPK,
-			long fileEntryId, boolean cdnEnabled, String cdnUrl,
+			long fileEntryId, boolean cdnEnabled, String cdnURL,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -54,7 +54,7 @@ public class CPAttachmentFileEntryServiceUtil {
 
 		return getService().addCPAttachmentFileEntry(
 			userId, groupId, classNameId, classPK, fileEntryId, cdnEnabled,
-			cdnUrl, displayDateMonth, displayDateDay, displayDateYear,
+			cdnURL, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, titleMap, json, priority, type,
@@ -64,7 +64,7 @@ public class CPAttachmentFileEntryServiceUtil {
 	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -76,7 +76,7 @@ public class CPAttachmentFileEntryServiceUtil {
 
 		return getService().addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK,
-			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -148,7 +148,7 @@ public class CPAttachmentFileEntryServiceUtil {
 
 	public static CPAttachmentFileEntry updateCPAttachmentFileEntry(
 			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -159,7 +159,7 @@ public class CPAttachmentFileEntryServiceUtil {
 		throws PortalException {
 
 		return getService().updateCPAttachmentFileEntry(
-			userId, cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+			userId, cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

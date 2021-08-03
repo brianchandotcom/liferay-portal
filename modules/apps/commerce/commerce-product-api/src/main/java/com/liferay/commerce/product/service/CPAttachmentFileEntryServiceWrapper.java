@@ -37,7 +37,7 @@ public class CPAttachmentFileEntryServiceWrapper
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry
 			addCPAttachmentFileEntry(
 				long userId, long groupId, long classNameId, long classPK,
-				long fileEntryId, boolean cdnEnabled, String cdnUrl,
+				long fileEntryId, boolean cdnEnabled, String cdnURL,
 				int displayDateMonth, int displayDateDay, int displayDateYear,
 				int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
@@ -50,7 +50,7 @@ public class CPAttachmentFileEntryServiceWrapper
 
 		return _cpAttachmentFileEntryService.addCPAttachmentFileEntry(
 			userId, groupId, classNameId, classPK, fileEntryId, cdnEnabled,
-			cdnUrl, displayDateMonth, displayDateDay, displayDateYear,
+			cdnURL, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, titleMap, json, priority, type,
@@ -62,7 +62,7 @@ public class CPAttachmentFileEntryServiceWrapper
 			addOrUpdateCPAttachmentFileEntry(
 				String externalReferenceCode, long groupId, long classNameId,
 				long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -75,7 +75,7 @@ public class CPAttachmentFileEntryServiceWrapper
 
 		return _cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK,
-			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -168,7 +168,7 @@ public class CPAttachmentFileEntryServiceWrapper
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry
 			updateCPAttachmentFileEntry(
 				long userId, long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -180,7 +180,7 @@ public class CPAttachmentFileEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
-			userId, cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+			userId, cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

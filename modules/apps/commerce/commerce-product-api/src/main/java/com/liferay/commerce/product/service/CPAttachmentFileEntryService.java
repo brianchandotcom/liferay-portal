@@ -65,7 +65,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	 */
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
 			long userId, long groupId, long classNameId, long classPK,
-			long fileEntryId, boolean cdnEnabled, String cdnUrl,
+			long fileEntryId, boolean cdnEnabled, String cdnURL,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -77,7 +77,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -130,7 +130,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,

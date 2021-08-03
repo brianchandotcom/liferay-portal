@@ -55,7 +55,7 @@ public class CPAttachmentFileEntryServiceHttp {
 			addCPAttachmentFileEntry(
 				HttpPrincipal httpPrincipal, long userId, long groupId,
 				long classNameId, long classPK, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -74,7 +74,7 @@ public class CPAttachmentFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, classNameId, classPK, fileEntryId,
-				cdnEnabled, cdnUrl, displayDateMonth, displayDateDay,
+				cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire, titleMap,
@@ -114,7 +114,7 @@ public class CPAttachmentFileEntryServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long groupId, long classNameId, long classPK,
 				long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -133,7 +133,7 @@ public class CPAttachmentFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, classNameId, classPK,
-				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
@@ -478,7 +478,7 @@ public class CPAttachmentFileEntryServiceHttp {
 			updateCPAttachmentFileEntry(
 				HttpPrincipal httpPrincipal, long userId,
 				long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -497,7 +497,7 @@ public class CPAttachmentFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, cpAttachmentFileEntryId, fileEntryId,
-				cdnEnabled, cdnUrl, displayDateMonth, displayDateDay,
+				cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire, titleMap,

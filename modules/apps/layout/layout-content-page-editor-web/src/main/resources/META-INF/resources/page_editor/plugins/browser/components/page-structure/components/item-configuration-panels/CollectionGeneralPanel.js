@@ -18,6 +18,7 @@ import ClayForm, {
 	ClaySelect,
 	ClaySelectWithOption,
 } from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useState} from 'react';
@@ -399,9 +400,7 @@ export const CollectionGeneralPanel = ({item}) => {
 						/>
 
 						{numberOfItemsError && (
-							<p className="mt-2 small text-warning">
-								{numberOfItemsError}
-							</p>
+							<FeedbackMessage message={numberOfItemsError} />
 						)}
 					</ClayForm.Group>
 
@@ -430,21 +429,20 @@ export const CollectionGeneralPanel = ({item}) => {
 								value={nextValue.numberOfItemsPerPage}
 							/>
 
-							<p
-								className={classNames(
-									'mb-2 mt-2 small',
-									isMaximumValuePerPageError &&
-										numberOfItemsPerPageError
-										? 'text-warning'
-										: 'text-secondary'
-								)}
-							>
+							<div className="mb-2 mt-2">
 								<span
-									className={classNames('mr-1', {
-										'font-weight-bold':
-											isMaximumValuePerPageError &&
-											numberOfItemsPerPageError,
-									})}
+									className={classNames(
+										'mr-1 small',
+										isMaximumValuePerPageError &&
+											numberOfItemsPerPageError
+											? 'text-warning'
+											: 'text-secondary',
+										{
+											'font-weight-bold':
+												isMaximumValuePerPageError &&
+												numberOfItemsPerPageError,
+										}
+									)}
 								>
 									{Liferay.Util.sub(
 										Liferay.Language.get('x-items-maximum'),
@@ -453,11 +451,11 @@ export const CollectionGeneralPanel = ({item}) => {
 								</span>
 
 								{numberOfItemsPerPageError && (
-									<span className="d-block mb-2 mt-2 text-warning">
-										{numberOfItemsPerPageError}
-									</span>
+									<FeedbackMessage
+										message={numberOfItemsPerPageError}
+									/>
 								)}
-							</p>
+							</div>
 						</ClayForm.Group>
 					)}
 				</>
@@ -497,3 +495,16 @@ const ListItemStylesOptions = ({item, listItemStyles}) =>
 			/>
 		)
 	);
+
+const FeedbackMessage = ({message}) => (
+	<div className="autofit-row mt-2 small text-warning">
+		<div className="autofit-col">
+			<div className="autofit-section mr-2">
+				<ClayIcon symbol="warning-full" />
+			</div>
+		</div>
+		<div className="autofit-col autofit-col-expand">
+			<div className="autofit-section">{message}</div>
+		</div>
+	</div>
+);

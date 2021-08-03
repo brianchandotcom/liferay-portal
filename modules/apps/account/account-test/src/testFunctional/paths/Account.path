@@ -25,16 +25,6 @@
 	<td>//tr[contains(.,'${key_accountUserName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>USER_SELECT</td>
-	<td>//span[normalize-space(text())='User']//../following-sibling::span//*[normalize-space(text())='Select']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_userName}')]/td[1]</td>
-	<td></td>
-</tr>
 <!--DEFAULT_ACCOUNT_ADDRESSES-->
 <tr>
 	<td>DEFAULT_ACCOUNT_ADDRESSES_HEADING</td>
@@ -99,6 +89,22 @@
 <tr>
 	<td>DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO</td>
 	<td>//input[contains(@name,'selectAddress')]//following-sibling::span/span[normalize-space()='${key_addressName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER-->
+<tr>
+	<td>USER_SELECT_BUTTON</td>
+	<td>//span[normalize-space(text())='User']//../following-sibling::span//*[normalize-space(text())='Select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

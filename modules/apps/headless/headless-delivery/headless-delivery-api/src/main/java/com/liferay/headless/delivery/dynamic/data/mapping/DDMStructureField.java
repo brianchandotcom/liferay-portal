@@ -64,35 +64,28 @@ public class DDMStructureField {
 		return StringBundler.concat(
 			DDMIndexer.DDM_FIELD_PREFIX, _indexType,
 			DDMIndexer.DDM_FIELD_SEPARATOR, _ddmStructureId,
-			DDMIndexer.DDM_FIELD_SEPARATOR, _fieldReference, getLocaleSuffix());
+			DDMIndexer.DDM_FIELD_SEPARATOR, _fieldReference,
+			_getLocaleSuffix());
 	}
 
 	public String getDDMStructureNestedFieldName() {
 		return StringBundler.concat(
 			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
 			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
-			StringUtil.upperCaseFirstLetter(_indexType), getLocaleSuffix());
+			StringUtil.upperCaseFirstLetter(_indexType), _getLocaleSuffix());
 	}
 
 	public String getDDMStructureNestedTypeSortableFieldName() {
 		return StringBundler.concat(
 			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
 			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
-			StringUtil.upperCaseFirstLetter(_indexType), getLocaleSuffix(),
+			StringUtil.upperCaseFirstLetter(_indexType), _getLocaleSuffix(),
 			StringPool.UNDERLINE, _type, StringPool.UNDERLINE,
 			Field.SORTABLE_FIELD_SUFFIX);
 	}
 
 	public String getLocale() {
 		return _locale;
-	}
-
-	public String getLocaleSuffix() {
-		if (_locale == null) {
-			return StringPool.BLANK;
-		}
-
-		return StringPool.UNDERLINE.concat(_locale);
 	}
 
 	private static String _getSuffixLocale(String string) {
@@ -117,6 +110,14 @@ public class DDMStructureField {
 		_indexType = indexType;
 		_locale = locale;
 		_type = type;
+	}
+
+	private String _getLocaleSuffix() {
+		if (_locale == null) {
+			return StringPool.BLANK;
+		}
+
+		return StringPool.UNDERLINE.concat(_locale);
 	}
 
 	private final String _ddmStructureId;

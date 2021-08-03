@@ -50,7 +50,7 @@ definition {
 
 			Refresh();
 
-			if (isSet(validationImage)) {
+			if (isSet(validationImage) && ("${validationImage}" == "true")) {
 				CommerceEntry.checkImageName(
 					image = "${image}",
 					number = "${number}",

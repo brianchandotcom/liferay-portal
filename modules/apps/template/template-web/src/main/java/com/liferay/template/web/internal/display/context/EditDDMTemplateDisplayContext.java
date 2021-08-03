@@ -116,6 +116,10 @@ public class EditDDMTemplateDisplayContext {
 				_liferayPortletResponse
 			).setMVCPath(
 				"/ddm_template_properties.jsp"
+			).setTabs1(
+				_getTabs1()
+			).setParameter(
+				"classNameId", getClassNameId()
 			).setParameter(
 				"classPK", getClassPK()
 			).setParameter(
@@ -386,6 +390,17 @@ public class EditDDMTemplateDisplayContext {
 		return false;
 	}
 
+	private String _getTabs1() {
+		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		_tabs1 = ParamUtil.getString(
+			_liferayPortletRequest, "tabs1", "information-templates");
+
+		return _tabs1;
+	}
+
 	private Long _classNameId;
 	private final DDMGroupServiceConfiguration _ddmGroupServiceConfiguration;
 	private DDMTemplate _ddmTemplate;
@@ -398,6 +413,7 @@ public class EditDDMTemplateDisplayContext {
 	private String _script;
 	private Boolean _smallImage;
 	private String _smallImageSource;
+	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 
 }

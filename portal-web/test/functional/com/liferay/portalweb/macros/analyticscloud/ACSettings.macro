@@ -44,6 +44,28 @@ definition {
 			value1 = "${pageViewsUsageValue}");
 	}
 
+	macro assertRequestLog {
+		for (var emailAdress : list "${emailAdresses}",) {
+			if ("${jobType}" == "Delete") {
+				AssertElementPresent(
+					key_emailAdress = "${emailAdress}",
+					key_requestType = "${jobType}",
+					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
+
+				AssertElementPresent(
+					key_emailAdress = "${emailAdress}",
+					key_requestType = "Suppress",
+					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
+			}
+			else {
+				AssertElementPresent(
+					key_emailAdress = "${emailAdress}",
+					key_requestType = "${jobType}",
+					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
+			}
+		}
+	}
+
 	@summary = "Asserts the users shown in list"
 	macro assertUserList() {
 		AssertTextEquals(
@@ -71,7 +93,7 @@ definition {
 				key_jobType = "${jobType}",
 				locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
 		}
-		
+
 		Click(
 			key_fieldType = "Find by Email",
 			locator1 = "ACDataControlAndPrivacy#DATA_ID");
@@ -87,28 +109,6 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro assertRequestLog {
-		for (var emailAdress : list "${emailAdresses}",) {
-			if ("${jobType}" == "Delete") {
-				AssertElementPresent(
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "${jobType}",
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
-
-				AssertElementPresent(
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "Suppress",
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
-			}
-			else {
-				AssertElementPresent(
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "${jobType}",
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
-			}
-		}
 	}
 
 	@summary = "Deletes all data source"

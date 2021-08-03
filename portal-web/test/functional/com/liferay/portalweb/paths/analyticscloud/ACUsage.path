@@ -25,6 +25,16 @@
 	<td>//div[@class='${key_tableName}']//ul//li[contains(.,'${key_planLimits}') and contains(.,'${key_planItem}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USAGE_ADDONS_LIMITS</td>
+	<td>//h4[contains(.,'Add-ons')]/..//b[contains(@class,'details-label')and contains(.,'${key_planName}')]/../..//span[contains(@class,'limit-amount') and contains(.,'${key_planLimit}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USAGE_ADDONS_PRICE</td>
+	<td>//b[contains(@class,'details-label')and contains(.,'${key_planName}')]/../../../..//div[contains(@class,'annual-price') and contains(.,'${key_planValue}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -47,6 +47,9 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 		if (manageSitesLink) {
 			manageSitesLink.addEventListener('click', (event) => {
 				Liferay.Util.openSelectionModal({
+					containerProps: {
+						className: 'cadmin',
+					},
 					id: '<portlet:namespace />selectSite',
 					onSelect: function (selectedItem) {
 						Liferay.Util.navigate(selectedItem.url);

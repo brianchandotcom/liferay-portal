@@ -27,6 +27,7 @@ import navigate from '../util/navigate.es';
 const Modal = ({
 	bodyHTML,
 	buttons,
+	containerProps = {},
 	customEvents,
 	headerHTML,
 	height,
@@ -171,6 +172,7 @@ const Modal = ({
 			{visible && (
 				<ClayModal
 					className="liferay-modal"
+					containerProps={{...containerProps}}
 					id={id}
 					observer={observer}
 					size={url && !size ? 'full-screen' : size}
@@ -330,6 +332,7 @@ const openPortletWindow = ({bodyCssClass, portlet, uri, ...otherProps}) => {
 const openSelectionModal = ({
 	buttonAddLabel = Liferay.Language.get('add'),
 	buttonCancelLabel = Liferay.Language.get('cancel'),
+	containerProps = {},
 	customSelectEvent = false,
 	height,
 	id,
@@ -405,6 +408,7 @@ const openSelectionModal = ({
 					},
 			  ]
 			: null,
+		containerProps,
 		height,
 		id: id || selectEventName,
 		onClose: () => {
@@ -586,6 +590,7 @@ Modal.propTypes = {
 			type: PropTypes.oneOf(['cancel', 'submit']),
 		})
 	),
+	containerProps: PropTypes.object,
 	customEvents: PropTypes.arrayOf(
 		PropTypes.shape({
 			name: PropTypes.string,

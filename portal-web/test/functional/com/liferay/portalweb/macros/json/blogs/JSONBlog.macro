@@ -261,6 +261,91 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to update a blog entry"
+	macro updateEntry {
+		Variables.assertDefined(parameterList = "${entryContent},${entryTitle},${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var contentXML = JSONBlogSetter.setContentXML(content = "${entryContent}");
+
+		var entryId = JSONBlog.getBlogEntryId(
+			friendlyURL = "${friendlyURL}",
+			entryTitle = "${entryTitle}",
+			groupName = "${groupName}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if (!(isSet(entrySubtitle))) {
+			var entrySubtitle = "";
+		}
+
+		var serviceContext = JSONBlogSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			groupName = "${groupName}",
+			serviceContext = "${serviceContext}",
+			site = "${site}",
+			workflowAction = "${workflowAction}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (isSet(displayDate)) {
+			var displayDateMinute = DateUtil.getFormattedCurrentDate("m");
+			var displayDateHour = DateUtil.getFormattedCurrentDate("H");
+			var displayDateDay = DateUtil.getCurrentDate();
+			var displayDateYear = DateUtil.getCurrentYear();
+			var displayDateMonth = DateUtil.getCurrentMonth();
+
+			var displayDateMonth = ${displayDateMonth} - 1;
+
+			if (isSet(increaseMinutes)) {
+				var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
+			}
+		}
+		else {
+			var displayDateMinute = "01";
+			var displayDateHour = "01";
+			var displayDateDay = "01";
+			var displayDateMonth = "01";
+			var displayDateYear = "2004";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/blogs.blogsentry/update-entry \
+			-u ${userEmailAddress}:${userPassword} \
+			-d entryId=${entryId} \
+			-d title=${entryTitle} \
+			-d subtitle=${entrySubtitle} \
+			-d description= \
+			-d content=${contentXML} \
+			-d displayDateMonth=${displayDateMonth} \
+			-d displayDateDay=${displayDateDay} \
+			-d displayDateYear=${displayDateYear} \
+			-d displayDateHour=${displayDateHour} \
+			-d displayDateMinute=${displayDateMinute} \
+			-d allowPingbacks=true \
+			-d allowTrackbacks=true \
+			-d trackbacks= \
+			-d coverImageCaption='' \
+			-d -coverImageImageSelector= \
+			-d -smallImageImageSelector= \
+			-d serviceContext=${serviceContext}
+		''';
+
+		echo("## Updating a 'Blog' with the following info using JSONWS:");
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro uploadBlogImage {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 

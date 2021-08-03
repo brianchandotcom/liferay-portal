@@ -136,8 +136,8 @@ definition {
 	}
 
 	macro viewDDLRecordChangeDiff {
-		if (IsElementNotPresent(locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM", key_displayItem = "Unified")) {
-			Publications.changeDiffDisplayItem(displayItem = "Unified");
+		if (IsElementNotPresent(locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM", key_displayItem = "Unified View")) {
+			Publications.changeDiffDisplayItem(displayItem = "Unified View");
 		}
 
 		var key_fieldName = "${fieldName}";

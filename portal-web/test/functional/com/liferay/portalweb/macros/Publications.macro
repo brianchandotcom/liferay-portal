@@ -486,9 +486,9 @@ definition {
 
 	macro viewChangeDiff {
 		AssertTextEquals(
-			key_displayItem = "Unified",
+			key_displayItem = "Unified View",
 			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
-			value1 = "Unified");
+			value1 = "Unified View");
 
 		var key_columnName = "${columnName}";
 

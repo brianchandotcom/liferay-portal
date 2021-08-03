@@ -378,7 +378,12 @@ export const CollectionGeneralPanel = ({item}) => {
 						/>
 					</div>
 
-					<ClayForm.Group small>
+					<ClayForm.Group
+						className={classNames({
+							'has-warning': numberOfItemsError,
+						})}
+						small
+					>
 						<label htmlFor={collectionNumberOfItemsId}>
 							{Liferay.Language.get('maximum-number-of-items')}
 						</label>
@@ -399,7 +404,12 @@ export const CollectionGeneralPanel = ({item}) => {
 					</ClayForm.Group>
 
 					{item.config.paginationType && (
-						<ClayForm.Group small>
+						<ClayForm.Group
+							className={classNames({
+								'has-warning': numberOfItemsPerPageError,
+							})}
+							small
+						>
 							<label htmlFor={collectionNumberOfItemsPerPageId}>
 								{Liferay.Language.get(
 									'maximum-number-of-items-per-page'

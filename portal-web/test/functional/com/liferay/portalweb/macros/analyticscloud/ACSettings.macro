@@ -44,6 +44,12 @@ definition {
 			value1 = "${pageViewsUsageValue}");
 	}
 
+	macro assertAddonsDetails {
+		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_LIMITS");
+
+		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_PRICE");
+	}
+
 	macro assertPlanDetails {
 		var key_planName = "${planName}";
 		AssertElementPresent(locator1 = "ACUsage#PLAN_NAME");

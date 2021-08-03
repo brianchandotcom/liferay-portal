@@ -96,6 +96,16 @@
 		display: inline;
 	}
 
+	.sheet {
+		> *:last-child,
+		.custom-control:last-of-type,
+		.form-group:last-of-type,
+		.tree-item:last-child,
+		ul:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+
 	input.file-selector {
 		display: block;
 		margin: 0.5em 0 1.5em;

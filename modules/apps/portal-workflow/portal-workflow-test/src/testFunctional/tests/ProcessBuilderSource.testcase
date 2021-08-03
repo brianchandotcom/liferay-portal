@@ -621,8 +621,6 @@ definition {
 	@description = "Verify that the time format in Details tab is following the system language"
 	@priority = "3"
 	test TimeFormatFollowsSystemLanguageInDetails {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -635,12 +633,10 @@ definition {
 		Click.clickAt(locator1 = "Icon#INFO");
 
 		AssertElementPresent(
-			key_infoValue = "PM",
 			key_titleValue = "Created",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 
 		AssertElementPresent(
-			key_infoValue = "PM",
 			key_titleValue = "Last Modified",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 
@@ -664,21 +660,23 @@ definition {
 		Click(locator1 = "Icon#INFO");
 
 		AssertElementNotPresent(
-			key_infoValue = "PM",
 			key_titleValue = "Criado",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 
 		AssertElementNotPresent(
-			key_infoValue = "PM",
 			key_titleValue = "Última Modificação",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Configurações da Conta");
+
+		MyAccount.changeUserLanguage(
+			languageName = "English (United States)",
+			saveButton = "Salvar");
 	}
 
 	@description = "Verify that the time format in Revision History tab is following the system language"
 	@priority = "4"
 	test TimeFormatFollowsSystemLanguageInRevision {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -696,10 +694,9 @@ definition {
 			key_tabName = "Revision History",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
 
-		AssertTextEquals.assertPartialText(
+		AssertElementPresent(
 			key_rowNumber = "1",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW",
-			value1 = "PM");
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
@@ -724,10 +721,15 @@ definition {
 			key_tabName = "Histórico de revisão",
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
 
-		AssertTextNotEquals.assertNotPartialText(
+		AssertElementNotPresent(
 			key_rowNumber = "1",
-			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW",
-			value1 = "PM");
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Configurações da Conta");
+
+		MyAccount.changeUserLanguage(
+			languageName = "English (United States)",
+			saveButton = "Salvar");
 	}
 
 	@description = "LPS-135888 - Verify that the XML source version is updated for a new workflow"

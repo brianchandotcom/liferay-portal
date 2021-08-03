@@ -330,6 +330,15 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
 	}
 
+	protected UserAccount
+			testDeleteUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		return userAccountResource.putUserAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomUserAccount());
+	}
+
 	@Override
 	protected UserAccount testGetMyUserAccount_addUserAccount()
 		throws Exception {
@@ -375,6 +384,15 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testGetSiteUserAccountsPage_getSiteId(), randomUserAccount());
 	}
 
+	protected UserAccount
+			testGetUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		return userAccountResource.putUserAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomUserAccount());
+	}
+
 	@Override
 	protected UserAccount testGetUserAccountsPage_addUserAccount(
 			UserAccount userAccount)
@@ -409,6 +427,15 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
 		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
+	}
+
+	protected UserAccount
+			testPutUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		return userAccountResource.putUserAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomUserAccount());
 	}
 
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)

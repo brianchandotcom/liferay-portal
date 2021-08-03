@@ -98,9 +98,21 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest) {
 		List<Resource> resources = new ArrayList<>();
 
-		List<DDMTemplate> ddmTemplates =
-				_ddmTemplateLocalService.getTemplatesByClassPK(
-						webDAVRequest.getGroupId(), 0);
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
+
+		ddmTemplates.addAll(
+			_ddmTemplateLocalService.getTemplates(
+				webDAVRequest.getCompanyId(),
+				new long[] {webDAVRequest.getGroupId()}, null, null,
+				_portal.getClassNameId(PortletDisplayTemplate.class), -1, -1,
+				null));
+
+		ddmTemplates.addAll(
+			_ddmTemplateLocalService.getTemplates(
+				webDAVRequest.getCompanyId(),
+				new long[] {webDAVRequest.getGroupId()}, null, null,
+				_portal.getClassNameId(PortletDisplayTemplate.class), -1, -1,
+				null));
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			Resource resource = _ddmWebDAV.toResource(
@@ -117,4 +129,8 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Reference
 	private DDMWebDAV _ddmWebDAV;
+
+	@Reference
+	private Portal _portal;
+
 }

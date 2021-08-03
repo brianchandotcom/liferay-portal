@@ -16,11 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String tabs1 = ParamUtil.getString(request, "tabs1", "information-templates");
+%>
+
 <c:choose>
-	<c:when test='<%= Objects.equals(templateDisplayContext.getTabs1(), "information-templates") %>'>
+	<c:when test='<%= Objects.equals(tabs1, "information-templates") %>'>
 		<liferay-util:include page="/view_information_templates.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= Objects.equals(templateDisplayContext.getTabs1(), "widget-templates") %>'>
+	<c:when test='<%= Objects.equals(tabs1, "widget-templates") %>'>
 		<liferay-util:include page="/view_widget_templates.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

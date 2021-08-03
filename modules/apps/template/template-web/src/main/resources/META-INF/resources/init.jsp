@@ -47,8 +47,4 @@ page import="com.liferay.template.web.internal.display.context.TemplateManagemen
 
 <portlet:defineObjects />
 
-<%
-TemplateDisplayContext templateDisplayContext = (TemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>
-
 <%@ include file="/init-ext.jsp" %>

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+TemplateDisplayContext templateDisplayContext = (TemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");

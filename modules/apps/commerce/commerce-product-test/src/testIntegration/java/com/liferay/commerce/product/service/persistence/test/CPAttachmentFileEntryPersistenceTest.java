@@ -152,9 +152,9 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setFileEntryId(RandomTestUtil.nextLong());
 
-		newCPAttachmentFileEntry.setCdnEnabled(RandomTestUtil.randomBoolean());
+		newCPAttachmentFileEntry.setCDNEnabled(RandomTestUtil.randomBoolean());
 
-		newCPAttachmentFileEntry.setCdnURL(RandomTestUtil.randomString());
+		newCPAttachmentFileEntry.setCDNURL(RandomTestUtil.randomString());
 
 		newCPAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
 
@@ -225,11 +225,11 @@ public class CPAttachmentFileEntryPersistenceTest {
 			existingCPAttachmentFileEntry.getFileEntryId(),
 			newCPAttachmentFileEntry.getFileEntryId());
 		Assert.assertEquals(
-			existingCPAttachmentFileEntry.isCdnEnabled(),
-			newCPAttachmentFileEntry.isCdnEnabled());
+			existingCPAttachmentFileEntry.isCDNEnabled(),
+			newCPAttachmentFileEntry.isCDNEnabled());
 		Assert.assertEquals(
-			existingCPAttachmentFileEntry.getCdnURL(),
-			newCPAttachmentFileEntry.getCdnURL());
+			existingCPAttachmentFileEntry.getCDNURL(),
+			newCPAttachmentFileEntry.getCDNURL());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCPAttachmentFileEntry.getDisplayDate()),
@@ -754,9 +754,9 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		cpAttachmentFileEntry.setFileEntryId(RandomTestUtil.nextLong());
 
-		cpAttachmentFileEntry.setCdnEnabled(RandomTestUtil.randomBoolean());
+		cpAttachmentFileEntry.setCDNEnabled(RandomTestUtil.randomBoolean());
 
-		cpAttachmentFileEntry.setCdnURL(RandomTestUtil.randomString());
+		cpAttachmentFileEntry.setCDNURL(RandomTestUtil.randomString());
 
 		cpAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
 

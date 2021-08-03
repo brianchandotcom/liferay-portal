@@ -57,8 +57,8 @@ public class CPAttachmentFileEntryWrapper
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("cdnEnabled", isCdnEnabled());
-		attributes.put("cdnURL", getCdnURL());
+		attributes.put("cdnEnabled", isCDNEnabled());
+		attributes.put("cdnURL", getCDNURL());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("title", getTitle());
@@ -153,13 +153,13 @@ public class CPAttachmentFileEntryWrapper
 		Boolean cdnEnabled = (Boolean)attributes.get("cdnEnabled");
 
 		if (cdnEnabled != null) {
-			setCdnEnabled(cdnEnabled);
+			setCDNEnabled(cdnEnabled);
 		}
 
 		String cdnURL = (String)attributes.get("cdnURL");
 
 		if (cdnURL != null) {
-			setCdnURL(cdnURL);
+			setCDNURL(cdnURL);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -247,8 +247,8 @@ public class CPAttachmentFileEntryWrapper
 	 * @return the cdn enabled of this cp attachment file entry
 	 */
 	@Override
-	public boolean getCdnEnabled() {
-		return model.getCdnEnabled();
+	public boolean getCDNEnabled() {
+		return model.getCDNEnabled();
 	}
 
 	/**
@@ -257,8 +257,8 @@ public class CPAttachmentFileEntryWrapper
 	 * @return the cdn url of this cp attachment file entry
 	 */
 	@Override
-	public String getCdnURL() {
-		return model.getCdnURL();
+	public String getCDNURL() {
+		return model.getCDNURL();
 	}
 
 	/**
@@ -618,8 +618,8 @@ public class CPAttachmentFileEntryWrapper
 	 * @return <code>true</code> if this cp attachment file entry is cdn enabled; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isCdnEnabled() {
-		return model.isCdnEnabled();
+	public boolean isCDNEnabled() {
+		return model.isCDNEnabled();
 	}
 
 	/**
@@ -718,8 +718,8 @@ public class CPAttachmentFileEntryWrapper
 	 * @param cdnEnabled the cdn enabled of this cp attachment file entry
 	 */
 	@Override
-	public void setCdnEnabled(boolean cdnEnabled) {
-		model.setCdnEnabled(cdnEnabled);
+	public void setCDNEnabled(boolean cdnEnabled) {
+		model.setCDNEnabled(cdnEnabled);
 	}
 
 	/**
@@ -728,8 +728,8 @@ public class CPAttachmentFileEntryWrapper
 	 * @param cdnURL the cdn url of this cp attachment file entry
 	 */
 	@Override
-	public void setCdnURL(String cdnURL) {
-		model.setCdnURL(cdnURL);
+	public void setCDNURL(String cdnURL) {
+		model.setCDNURL(cdnURL);
 	}
 
 	@Override

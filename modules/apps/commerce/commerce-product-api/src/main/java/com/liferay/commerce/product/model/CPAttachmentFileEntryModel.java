@@ -285,21 +285,21 @@ public interface CPAttachmentFileEntryModel
 	 *
 	 * @return the cdn enabled of this cp attachment file entry
 	 */
-	public boolean getCdnEnabled();
+	public boolean getCDNEnabled();
 
 	/**
 	 * Returns <code>true</code> if this cp attachment file entry is cdn enabled.
 	 *
 	 * @return <code>true</code> if this cp attachment file entry is cdn enabled; <code>false</code> otherwise
 	 */
-	public boolean isCdnEnabled();
+	public boolean isCDNEnabled();
 
 	/**
 	 * Sets whether this cp attachment file entry is cdn enabled.
 	 *
 	 * @param cdnEnabled the cdn enabled of this cp attachment file entry
 	 */
-	public void setCdnEnabled(boolean cdnEnabled);
+	public void setCDNEnabled(boolean cdnEnabled);
 
 	/**
 	 * Returns the cdn url of this cp attachment file entry.
@@ -307,14 +307,14 @@ public interface CPAttachmentFileEntryModel
 	 * @return the cdn url of this cp attachment file entry
 	 */
 	@AutoEscape
-	public String getCdnURL();
+	public String getCDNURL();
 
 	/**
 	 * Sets the cdn url of this cp attachment file entry.
 	 *
 	 * @param cdnURL the cdn url of this cp attachment file entry
 	 */
-	public void setCdnURL(String cdnURL);
+	public void setCDNURL(String cdnURL);
 
 	/**
 	 * Returns the display date of this cp attachment file entry.

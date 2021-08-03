@@ -269,8 +269,8 @@ public class CPAttachmentFileEntryModelImpl
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setFileEntryId(soapModel.getFileEntryId());
-		model.setCdnEnabled(soapModel.isCdnEnabled());
-		model.setCdnURL(soapModel.getCdnURL());
+		model.setCDNEnabled(soapModel.isCDNEnabled());
+		model.setCDNURL(soapModel.getCDNURL());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setTitle(soapModel.getTitle());
@@ -518,17 +518,17 @@ public class CPAttachmentFileEntryModelImpl
 			(BiConsumer<CPAttachmentFileEntry, Long>)
 				CPAttachmentFileEntry::setFileEntryId);
 		attributeGetterFunctions.put(
-			"cdnEnabled", CPAttachmentFileEntry::getCdnEnabled);
+			"cdnEnabled", CPAttachmentFileEntry::getCDNEnabled);
 		attributeSetterBiConsumers.put(
 			"cdnEnabled",
 			(BiConsumer<CPAttachmentFileEntry, Boolean>)
-				CPAttachmentFileEntry::setCdnEnabled);
+				CPAttachmentFileEntry::setCDNEnabled);
 		attributeGetterFunctions.put(
-			"cdnURL", CPAttachmentFileEntry::getCdnURL);
+			"cdnURL", CPAttachmentFileEntry::getCDNURL);
 		attributeSetterBiConsumers.put(
 			"cdnURL",
 			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setCdnURL);
+				CPAttachmentFileEntry::setCDNURL);
 		attributeGetterFunctions.put(
 			"displayDate", CPAttachmentFileEntry::getDisplayDate);
 		attributeSetterBiConsumers.put(
@@ -904,18 +904,18 @@ public class CPAttachmentFileEntryModelImpl
 
 	@JSON
 	@Override
-	public boolean getCdnEnabled() {
+	public boolean getCDNEnabled() {
 		return _cdnEnabled;
 	}
 
 	@JSON
 	@Override
-	public boolean isCdnEnabled() {
+	public boolean isCDNEnabled() {
 		return _cdnEnabled;
 	}
 
 	@Override
-	public void setCdnEnabled(boolean cdnEnabled) {
+	public void setCDNEnabled(boolean cdnEnabled) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -925,7 +925,7 @@ public class CPAttachmentFileEntryModelImpl
 
 	@JSON
 	@Override
-	public String getCdnURL() {
+	public String getCDNURL() {
 		if (_cdnURL == null) {
 			return "";
 		}
@@ -935,7 +935,7 @@ public class CPAttachmentFileEntryModelImpl
 	}
 
 	@Override
-	public void setCdnURL(String cdnURL) {
+	public void setCDNURL(String cdnURL) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -948,7 +948,7 @@ public class CPAttachmentFileEntryModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalCdnURL() {
+	public String getOriginalCDNURL() {
 		return getColumnOriginalValue("cdnURL");
 	}
 
@@ -1491,8 +1491,8 @@ public class CPAttachmentFileEntryModelImpl
 		cpAttachmentFileEntryImpl.setClassNameId(getClassNameId());
 		cpAttachmentFileEntryImpl.setClassPK(getClassPK());
 		cpAttachmentFileEntryImpl.setFileEntryId(getFileEntryId());
-		cpAttachmentFileEntryImpl.setCdnEnabled(isCdnEnabled());
-		cpAttachmentFileEntryImpl.setCdnURL(getCdnURL());
+		cpAttachmentFileEntryImpl.setCDNEnabled(isCDNEnabled());
+		cpAttachmentFileEntryImpl.setCDNURL(getCDNURL());
 		cpAttachmentFileEntryImpl.setDisplayDate(getDisplayDate());
 		cpAttachmentFileEntryImpl.setExpirationDate(getExpirationDate());
 		cpAttachmentFileEntryImpl.setTitle(getTitle());
@@ -1653,9 +1653,9 @@ public class CPAttachmentFileEntryModelImpl
 
 		cpAttachmentFileEntryCacheModel.fileEntryId = getFileEntryId();
 
-		cpAttachmentFileEntryCacheModel.cdnEnabled = isCdnEnabled();
+		cpAttachmentFileEntryCacheModel.cdnEnabled = isCDNEnabled();
 
-		cpAttachmentFileEntryCacheModel.cdnURL = getCdnURL();
+		cpAttachmentFileEntryCacheModel.cdnURL = getCDNURL();
 
 		String cdnURL = cpAttachmentFileEntryCacheModel.cdnURL;
 

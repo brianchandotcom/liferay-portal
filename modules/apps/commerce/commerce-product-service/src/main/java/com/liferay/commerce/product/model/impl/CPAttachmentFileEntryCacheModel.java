@@ -171,13 +171,13 @@ public class CPAttachmentFileEntryCacheModel
 		cpAttachmentFileEntryImpl.setClassNameId(classNameId);
 		cpAttachmentFileEntryImpl.setClassPK(classPK);
 		cpAttachmentFileEntryImpl.setFileEntryId(fileEntryId);
-		cpAttachmentFileEntryImpl.setCdnEnabled(cdnEnabled);
+		cpAttachmentFileEntryImpl.setCDNEnabled(cdnEnabled);
 
 		if (cdnURL == null) {
-			cpAttachmentFileEntryImpl.setCdnURL("");
+			cpAttachmentFileEntryImpl.setCDNURL("");
 		}
 		else {
-			cpAttachmentFileEntryImpl.setCdnURL(cdnURL);
+			cpAttachmentFileEntryImpl.setCDNURL(cdnURL);
 		}
 
 		if (displayDate == Long.MIN_VALUE) {

@@ -1841,6 +1841,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test ReorderEntriesClickingDueDateColumn {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

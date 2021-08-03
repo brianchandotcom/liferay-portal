@@ -1137,6 +1137,8 @@ definition {
 	}
 
 	macro viewPaginationResults {
+		var results = selenium.getText("CommerceEntry#PAGINATION_RESULTS");
+
 		AssertTextEquals(
 			locator1 = "CommerceEntry#PAGINATION_RESULTS",
 			value1 = "${results}");

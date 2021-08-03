@@ -30,8 +30,6 @@ definition {
 
 			SelectFrameTop();
 
-			Button.clickAdd();
-
 			if (isSet(optionValues)) {
 				var optionValue = StringUtil.extractFirst("${optionValues}", ",");
 

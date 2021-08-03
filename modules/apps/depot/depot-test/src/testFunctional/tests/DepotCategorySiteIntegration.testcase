@@ -336,7 +336,9 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		DMNavigator.openToAddBasicFile(siteURLKey = "site-name");
+		DMNavigator.openToAddEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		AssetCategorization.viewNoAddPermissions(vocabularyName = "Vocabulary Name");
 	}
@@ -360,15 +362,21 @@ definition {
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
-		DMNavigator.openToAddBasicFile(siteURLKey = "site-name");
+		DMNavigator.openToAddEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
-		WebContentNavigator.openToAddBasicArticle(siteURLKey = "site-name");
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
-		KBArticle.openToAddKBArticle(siteURLKey = "site-name");
+		KBArticle.openToAddKBArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 

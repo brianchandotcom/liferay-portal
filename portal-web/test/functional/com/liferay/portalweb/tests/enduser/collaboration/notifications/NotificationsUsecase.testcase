@@ -166,8 +166,8 @@ definition {
 
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Subscribe Site (Staging)",
-			siteURLKey = "subscribe-site",
-			staging = "true");
+			site = "false",
+			siteURLKey = "subscribe-site-staging");
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",

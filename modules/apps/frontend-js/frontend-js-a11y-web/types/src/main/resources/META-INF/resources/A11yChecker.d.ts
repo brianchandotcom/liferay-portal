@@ -145,6 +145,16 @@ export declare class A11yChecker {
 	}: A11yCheckerOptions);
 	private run;
 	private recordCallback;
+
+	/**
+	 * Search for any iframe that is within the element to monitor mutations
+	 * within the iframe that may trigger further analysis.
+	 *
+	 * Searching for iframes when the checker is initialized is not good
+	 * because iframes can appear at any time on the page, like opening a
+	 * Modal, we need to monitor iframes as they appear during their lifecycle.
+	 */
+	private observeIframes;
 	private mutationCallback;
 	observe(): void;
 	unobserve(): void;

@@ -230,6 +230,130 @@ export class Scheduler<T> {
 	}
 }
 
+type ObserverObject = {
+
+	/**
+	 * Element is the reference of an element in the DOM when the object is
+	 * initialized.
+	 */
+	element: Element | null | undefined;
+
+	mutation: MutationObserver;
+
+	/**
+	 * Observed is a flag of the monitoring status. If the target and element
+	 * do not exist when the observation is started then `observed` is false.
+	 */
+	observed: boolean;
+
+	/**
+	 * Target is the CSS selector that matches the element in the DOM.
+	 */
+	target: string;
+};
+
+type ObserverCallback = (records: Array<MutationRecord>) => void;
+
+/**
+ * Observer Pool is to maintain a list of elements being monitored, avoid
+ * duplicates and add elements on demand.
+ */
+class ObserverPool {
+	private observers: Array<ObserverObject>;
+	private callback: ObserverCallback;
+
+	constructor(targets: Array<string>, callback: ObserverCallback) {
+		this.callback = callback;
+		this.observers = targets.map((target: string) => ({
+			element: document.querySelector(target),
+			mutation: new MutationObserver(this.callback),
+			observed: false,
+			target,
+		}));
+	}
+
+	/**
+	 * Observe mutation in the element. If the element already exists and is
+	 * stale it will save the new reference and start the observation otherwise
+	 * it will add a new one.
+	 */
+	add(target: string) {
+		const hasTarget = this.observers.find(
+			(observer) => observer.target === target
+		);
+
+		const element = document.querySelector(target);
+
+		if (hasTarget && element !== hasTarget.element) {
+			hasTarget.mutation.disconnect();
+			hasTarget.observed = false;
+			hasTarget.element = element;
+		}
+		else if (!hasTarget) {
+			this.observers.push({
+				element,
+				mutation: new MutationObserver(this.callback),
+				observed: false,
+				target,
+			});
+		}
+
+		this.observe();
+	}
+
+	observe() {
+		this.observers = this.observers.map(
+			({element, mutation, observed, target}) => {
+				if (observed) {
+					return {
+						element,
+						mutation,
+						observed,
+						target,
+					};
+				}
+
+				element = element ?? document.querySelector(target);
+
+				// If the element is an iframe it monitors the body instead of
+				// monitoring the iframe element which will not detect
+				// mutations.
+
+				element =
+					element?.nodeName === 'IFRAME'
+						? (element as HTMLIFrameElement).contentDocument?.body
+						: element;
+
+				if (element) {
+					observed = true;
+
+					mutation.observe(element, {
+						attributes: true,
+						childList: true,
+						subtree: true,
+					});
+				}
+				else {
+					console.error(
+						`A11y: Target ${target} was not found in the DOM.`
+					);
+				}
+
+				return {
+					element,
+					mutation,
+					observed,
+					target,
+				};
+			}
+		);
+	}
+
+	unobserve() {
+		this.observers.forEach(({mutation}) => mutation.disconnect());
+	}
+}
+
 /**
  * Attributes are the attributes of a node. The array is considered a
  * conditional `or`, the same for the values of an attribute.
@@ -270,10 +394,7 @@ export interface A11yCheckerOptions {
 export class A11yChecker {
 	private callback: A11yCheckerOptions['callback'];
 	private scheduler: Scheduler<Node>;
-	private observers: Array<{
-		target: string;
-		mutation: MutationObserver;
-	}>;
+	private observers: ObserverPool;
 	private mutations: Record<string, Attributes>;
 	readonly axeOptions: RunOptions;
 	readonly denylist?: Array<Array<string>>;
@@ -314,10 +435,10 @@ export class A11yChecker {
 
 		this.mutations = mutations;
 
-		this.observers = targets.map((target: string) => ({
-			mutation: new MutationObserver(this.mutationCallback.bind(this)),
-			target,
-		}));
+		this.observers = new ObserverPool(
+			targets,
+			this.mutationCallback.bind(this)
+		);
 	}
 
 	private async run(target: HTMLElement) {
@@ -359,6 +480,22 @@ export class A11yChecker {
 		}
 	}
 
+	/**
+	 * Search for any iframe that is within the element to monitor mutations
+	 * within the iframe that may trigger further analysis.
+	 *
+	 * Searching for iframes when the checker is initialized is not good
+	 * because iframes can appear at any time on the page, like opening a
+	 * Modal, we need to monitor iframes as they appear during their lifecycle.
+	 */
+	private observeIframes(node: Node) {
+		const iframes = (node as Element).querySelectorAll('iframe');
+
+		iframes.forEach((iframe) =>
+			this.observers.add(`#${iframe.getAttribute('id')}`)
+		);
+	}
+
 	private mutationCallback(records: Array<MutationRecord>) {
 		const denylistTargets = this.denylist?.map((selector) => [
 			...document.querySelectorAll(selector.join(' ')),
@@ -373,7 +510,7 @@ export class A11yChecker {
 				type,
 			} = record;
 
-			const node =
+			let node =
 				type === 'attributes' || removedNodes.length > 0
 					? target
 					: addedNodes[0];
@@ -407,31 +544,26 @@ export class A11yChecker {
 				return;
 			}
 
+			// If the node belongs to an iframe analyze the iframe instead of
+			// the element. `axe-core` cannot directly analyze the element.
+
+			if (node.ownerDocument !== document) {
+				node = ((node.ownerDocument as Document).defaultView as Window)
+					.frameElement as Node;
+			}
+
+			this.observeIframes(node);
+
 			this.recordCallback(node);
 		});
 	}
 
 	observe() {
-		this.observers.forEach(({mutation, target}) => {
-			const element = document.querySelector(target);
-
-			if (element) {
-				mutation.observe(element, {
-					attributes: true,
-					childList: true,
-					subtree: true,
-				});
-			}
-			else {
-				console.error(
-					`A11y: Target ${target} was not found in the DOM.`
-				);
-			}
-		});
+		this.observers.observe();
 	}
 
 	unobserve() {
 		this.scheduler.cancelHostCallback();
-		this.observers.forEach(({mutation}) => mutation.disconnect());
+		this.observers.unobserve();
 	}
 }

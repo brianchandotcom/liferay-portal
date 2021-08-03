@@ -124,6 +124,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					navigate(redirectURL);
 				}
 			},
+			selectEventName: `${portletNamespace}selectedContentDashboardItemSubtypeItem`,
 			title: itemData?.dialogTitle,
 			url: itemData?.selectContentDashboardItemSubtypeURL,
 		});

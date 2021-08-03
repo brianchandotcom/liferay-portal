@@ -760,7 +760,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							getContentDashboardItemSubtypeItemSelectorURL()));
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "subtype") +
+					LanguageUtil.get(httpServletRequest, "type") +
 						StringPool.TRIPLE_PERIOD);
 
 				return dropdownItem;

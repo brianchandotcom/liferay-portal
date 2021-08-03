@@ -99,6 +99,24 @@ definition {
 			productFullDescription = "Simple T-Shirt Full Description",
 			productName = "Simple T-Shirt",
 			productShortDescription = "Simple T-Shirt Short Description");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
+
+		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+
+		Click(
+			filterOption = "Delete",
+			locator1 = "ContentDashboard#FILTER_BY_OPTION");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertElementNotPresent(
+			key_entryName = "Simple T-Shirt",
+			locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+
+
 	}
 
 }

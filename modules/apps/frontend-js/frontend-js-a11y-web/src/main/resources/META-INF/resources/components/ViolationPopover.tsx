@@ -57,7 +57,12 @@ export function ViolationPopover({
 		const node = targets[targets.length - 1];
 
 		return document.querySelector(node);
-	}, [target]);
+
+		// Force search for element again when violations change, node may be
+		// stale by some interaction that removed the element and added it
+		// back to the canvas.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [target, violations]);
 
 	useObserveRect(
 		useCallback(

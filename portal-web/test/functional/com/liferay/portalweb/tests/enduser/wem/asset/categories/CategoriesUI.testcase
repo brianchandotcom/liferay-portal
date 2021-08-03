@@ -416,6 +416,37 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-118305. The maximum number of categories per vocabulary is 150 shown below vocabulary name in Categories admin by default."
+	@priority = "5"
+	@uitest
+	test ViewDefaultMaximumNumberOfCategoriesPerVocabulary {
+		task ("Navigate to the Categories admin") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the default Maximum Number of categories of existing vocabularies") {
+			for (var vocabularyName : list "Topic,Audience,Stage") {
+				Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+				AssertVisible(
+					assetTitle = "${vocabularyName}",
+					info = "The maximum number of categories per vocabulary is 150.",
+					locator1 = "Message#ASSET_INFO");
+			}
+		}
+
+		task ("Add a new vocabulary") {
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the default Maximum Number of categories of new vocabulary") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name",
+				info = "The maximum number of categories per vocabulary is 150.",
+				locator1 = "Message#ASSET_INFO");
+		}
+	}
+
 	@description = "This is a test for LPS-131984. The user could view the description of vocabulary in Categories admin."
 	@priority = "5"
 	@uitest

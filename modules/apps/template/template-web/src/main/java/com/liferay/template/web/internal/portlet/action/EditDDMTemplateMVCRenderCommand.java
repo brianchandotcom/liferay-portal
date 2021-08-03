@@ -14,8 +14,14 @@
 
 package com.liferay.template.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
@@ -46,6 +52,13 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		renderRequest.setAttribute(
+			DDMGroupServiceConfiguration.class.getName(),
+			_getDDMGroupServiceConfiguration(themeDisplay.getScopeGroupId()));
+
 		renderRequest.setAttribute(
 			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 		renderRequest.setAttribute(
@@ -56,6 +69,23 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_ddm_template.jsp";
 	}
+
+	private DDMGroupServiceConfiguration _getDDMGroupServiceConfiguration(
+		long groupId) {
+
+		try {
+			return _configurationProvider.getConfiguration(
+				DDMGroupServiceConfiguration.class,
+				new GroupServiceSettingsLocator(
+					groupId, DDMConstants.SERVICE_NAME));
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMTemplateHelper _ddmTemplateHelper;

@@ -39,9 +39,21 @@ definition {
 	test CanCreateAccessRequest {
 		ACUtils.launchAC();
 
+		ACNavigation.goToSettings();
+
 		ACSettings.createRequestLogByEmail(
-			emailAdresses = "Alana.Nicolas@hotmail.com",
+			emailAdresses = "Alton.Jacobi@gmail.com",
 			jobTypes = "Access");
+
+		ACSettings.goToProperties();
+
+		ACSettings.goToDataControlAndPrivacy();
+
+		Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
+
+		ACSettings.assertRequestLog(
+			emailAdresses = "Alton.Jacobi@gmail.com",
+			jobType = "Access");
 	}
 
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"
@@ -49,9 +61,21 @@ definition {
 	test CanCreateDeleteRequest {
 		ACUtils.launchAC();
 
+		ACNavigation.goToSettings();
+
 		ACSettings.createRequestLogByEmail(
-			emailAdresses = "Adelina.Kohler@hotmail.com",
+			emailAdresses = "Alena.Will@gmail.com",
 			jobTypes = "Delete");
+
+		ACSettings.goToProperties();
+
+		ACSettings.goToDataControlAndPrivacy();
+
+		Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
+
+		ACSettings.assertRequestLog(
+			emailAdresses = "Alena.Will@gmail.com",
+			jobType = "Delete");
 	}
 
 	@description = "Automation ID: LRAC-8109 | Test Summary: Create Suppress Request"

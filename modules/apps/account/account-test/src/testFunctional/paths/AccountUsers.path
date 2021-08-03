@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>AccountUsers</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AccountUsers</td></tr>
+</thead>
+
+<tbody>
+<!--ADD_NEW_USER-->
+<tr>
+	<td>ADD_NEW_USER_HEADER</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'Add New User to ${key_accountName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_AN_ACCOUNT-->
+<tr>
+	<td>SELECT_AN_ACCOUNT_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_accountName}')]/td[3]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -575,7 +575,7 @@ public class GraphQLServletExtender {
 						GraphQLDTOContributor serviceGraphQLDTOContributor,
 						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_servlet = null;
+						_companyServletMap.clear();
 					}
 
 					@Override
@@ -586,7 +586,7 @@ public class GraphQLServletExtender {
 						GraphQLDTOContributor serviceGraphQLDTOContributor,
 						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_servlet = null;
+						_companyServletMap.clear();
 					}
 
 				});
@@ -630,6 +630,10 @@ public class GraphQLServletExtender {
 							return null;
 						}
 
+						if (methodName.equals("getServletConfig")) {
+							return _servletConfig;
+						}
+
 						if (methodName.equals("getServletInfo")) {
 							return StringPool.BLANK;
 						}
@@ -646,7 +650,10 @@ public class GraphQLServletExtender {
 							return null;
 						}
 
-						Servlet servlet = _createServlet();
+						long companyId = _portal.getCompanyId(
+							(HttpServletRequest)arguments[0]);
+
+						Servlet servlet = _createServlet(companyId);
 
 						servlet.init(_servletConfig);
 
@@ -1059,16 +1066,16 @@ public class GraphQLServletExtender {
 		return method.invoke(instance, arguments);
 	}
 
-	private Servlet _createServlet() throws Exception {
-		Servlet servlet = _servlet;
+	private Servlet _createServlet(long companyId) throws Exception {
+		Servlet servlet = _companyServletMap.get(companyId);
 
 		if (servlet != null) {
 			return servlet;
 		}
 
 		synchronized (_servletDataList) {
-			if (_servlet != null) {
-				return _servlet;
+			if (_companyServletMap.containsKey(companyId)) {
+				return _companyServletMap.get(companyId);
 			}
 
 			PropertyDataFetcher.clearReflectionCache();
@@ -1140,8 +1147,9 @@ public class GraphQLServletExtender {
 				GraphQLSchema.newSchema();
 
 			_registerGraphQLDTOContributors(
-				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder,
-				processingElementsContainer, queryGraphQLObjectTypeBuilder);
+				companyId, graphQLSchemaBuilder,
+				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				queryGraphQLObjectTypeBuilder);
 			_registerInterfaces(
 				graphQLSchemaBuilder, processingElementsContainer,
 				queryGraphQLObjectTypeBuilder);
@@ -1198,10 +1206,11 @@ public class GraphQLServletExtender {
 
 			graphQLConfigurationBuilder.with(objectMapperBuilder.build());
 
-			_servlet = GraphQLHttpServlet.with(
-				graphQLConfigurationBuilder.build());
+			_companyServletMap.put(
+				companyId,
+				GraphQLHttpServlet.with(graphQLConfigurationBuilder.build()));
 
-			return _servlet;
+			return _companyServletMap.get(companyId);
 		}
 	}
 
@@ -1902,13 +1911,17 @@ public class GraphQLServletExtender {
 	}
 
 	private void _registerGraphQLDTOContributors(
-		GraphQLSchema.Builder graphQLSchemaBuilder,
+		long companyId, GraphQLSchema.Builder graphQLSchemaBuilder,
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
 		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder) {
 
 		for (GraphQLDTOContributor graphQLDTOContributor :
 				_graphQLDTOContributorServiceTrackerMap.values()) {
+
+			if (companyId != graphQLDTOContributor.getCompanyId()) {
+				continue;
+			}
 
 			_registerGraphQLDTOContributor(
 				graphQLDTOContributor, graphQLSchemaBuilder,
@@ -2349,6 +2362,9 @@ public class GraphQLServletExtender {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	private final Map<Long, Servlet> _companyServletMap =
+		new ConcurrentHashMap<>();
+
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
@@ -2394,7 +2410,6 @@ public class GraphQLServletExtender {
 	@Reference
 	private RoleLocalService _roleLocalService;
 
-	private volatile Servlet _servlet;
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final List<ServletData> _servletDataList = new ArrayList<>();
@@ -3038,7 +3053,7 @@ public class GraphQLServletExtender {
 			synchronized (_servletDataList) {
 				_servletDataList.add(servletData);
 
-				_servlet = null;
+				_companyServletMap.clear();
 			}
 
 			return servletData;
@@ -3058,7 +3073,7 @@ public class GraphQLServletExtender {
 			synchronized (_servletDataList) {
 				_servletDataList.remove(servletData);
 
-				_servlet = null;
+				_companyServletMap.clear();
 			}
 
 			_bundleContext.ungetService(serviceReference);

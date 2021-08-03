@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>ACCOUNT_DOMAIN_ADD_LINK</td>
-	<td>//a[contains(@id,'addDomains')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_USER_HEADER</td>
 	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'Add New User to ${key_accountName}')]</td>
 	<td></td>
@@ -38,21 +33,6 @@
 <tr>
 	<td>USER_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_userName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOMAIN_REMOVE_DOMAIN</td>
-	<td>//tr[contains(.,'${key_domainName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOMAIN_SECTION</td>
-	<td>//div[contains(@class,'section')]//span[normalize-space(text())='Valid Domains']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOMAIN_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_domainName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,6 +104,32 @@
 <tr>
 	<td>DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO</td>
 	<td>//input[contains(@name,'selectAddress')]//following-sibling::span/span[normalize-space()='${key_addressName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VALID_DOMAINS-->
+<tr>
+	<td>VALID_DOMAINS_ADD_BUTTON</td>
+	<td>//a[contains(@id,'addDomains')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALID_DOMAINS_DOMAIN_NAME</td>
+	<td>//tr[contains(.,'${key_domainName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALID_DOMAINS_HEADING</td>
+	<td>//div[contains(@class,'section')]//span[normalize-space(text())='Valid Domains']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALID_DOMAINS_REMOVE_TOOLTIP</td>
+	<td>//tr[contains(.,'${key_domainName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
 	<td></td>
 </tr>
 <tr>

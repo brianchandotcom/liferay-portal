@@ -85,8 +85,6 @@ definition {
 	test AddAnImageToAnOption {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Options");

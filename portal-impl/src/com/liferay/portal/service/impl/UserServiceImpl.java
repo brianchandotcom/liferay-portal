@@ -179,6 +179,91 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			userIds, new long[] {organizationId}, null);
 	}
 
+	@Override
+	public User addOrUpdateUser(
+			String externalReferenceCode, long creatorUserId, long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			Locale locale, String firstName, String middleName, String lastName,
+			long prefixId, long suffixId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String jobTitle,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<Phone> phones, List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(false);
+
+			User user = userLocalService.fetchUserByExternalReferenceCode(
+				companyId, externalReferenceCode);
+
+			if (user == null) {
+				checkAddUserPermission(
+					creatorUserId, companyId, emailAddress, new long[0],
+					new long[0], new long[0], new long[0], serviceContext);
+			}
+			else {
+				UserPermissionUtil.check(
+					getPermissionChecker(), user.getUserId(), null,
+					ActionKeys.UPDATE);
+
+				validateUpdatePermission(
+					user, screenName, emailAddress, firstName, middleName,
+					lastName, prefixId, suffixId, birthdayMonth, birthdayDay,
+					birthdayYear, male, jobTitle);
+
+				long curUserId = getUserId();
+
+				if (curUserId == user.getUserId()) {
+					emailAddress = StringUtil.toLowerCase(
+						StringUtil.trim(emailAddress));
+
+					if (!StringUtil.equalsIgnoreCase(
+							emailAddress, user.getEmailAddress())) {
+
+						validateEmailAddress(user, emailAddress);
+					}
+				}
+			}
+
+			user = userLocalService.addOrUpdateUser(
+				externalReferenceCode, creatorUserId, companyId, autoPassword,
+				password1, password2, autoScreenName, screenName, emailAddress,
+				locale, firstName, middleName, lastName, prefixId, suffixId,
+				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+				sendEmail, serviceContext);
+
+			if (addresses != null) {
+				UsersAdminUtil.updateAddresses(
+					Contact.class.getName(), user.getContactId(), addresses);
+			}
+
+			if (emailAddresses != null) {
+				UsersAdminUtil.updateEmailAddresses(
+					Contact.class.getName(), user.getContactId(),
+					emailAddresses);
+			}
+
+			if (phones != null) {
+				UsersAdminUtil.updatePhones(
+					Contact.class.getName(), user.getContactId(), phones);
+			}
+
+			if (websites != null) {
+				UsersAdminUtil.updateWebsites(
+					Contact.class.getName(), user.getContactId(), websites);
+			}
+
+			return user;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
+
 	/**
 	 * Assigns the password policy to the users, removing any other currently
 	 * assigned password policies.
@@ -1396,6 +1481,27 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		User user = userLocalService.getUserByEmailAddress(
 			companyId, emailAddress);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
+		return user;
+	}
+
+	/**
+	 * Returns the user with the external reference code.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  externalReferenceCode the user's external reference code
+	 * @return the user with the external reference code
+	 */
+	@Override
+	public User getUserByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		User user = userLocalService.getUserByExternalReferenceCode(
+			companyId, externalReferenceCode);
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);

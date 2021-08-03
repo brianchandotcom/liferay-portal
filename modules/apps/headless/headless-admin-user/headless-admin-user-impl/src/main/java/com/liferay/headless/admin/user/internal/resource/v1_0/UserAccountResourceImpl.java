@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -104,6 +105,17 @@ public class UserAccountResourceImpl
 	@Override
 	public void deleteUserAccount(Long userAccountId) throws Exception {
 		_userService.deleteUser(userAccountId);
+	}
+
+	@Override
+	public void deleteUserAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		User user = _userLocalService.getUserByExternalReferenceCode(
+			contextCompany.getCompanyId(), externalReferenceCode);
+
+		deleteUserAccount(user.getUserId());
 	}
 
 	@Override
@@ -166,6 +178,16 @@ public class UserAccountResourceImpl
 	@Override
 	public UserAccount getUserAccount(Long userAccountId) throws Exception {
 		return _toUserAccount(_userService.getUserById(userAccountId));
+	}
+
+	@Override
+	public UserAccount getUserAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _toUserAccount(
+			_userService.getUserByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode));
 	}
 
 	@Override
@@ -288,6 +310,51 @@ public class UserAccountResourceImpl
 						contextAcceptLanguage.getPreferredLocale()),
 					contextCompany.getGroupId(), contextHttpServletRequest,
 					null)));
+	}
+
+	@Override
+	public UserAccount putUserAccountByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
+		throws Exception {
+
+		User user = _userService.addOrUpdateUser(
+			externalReferenceCode, contextUser.getUserId(),
+			contextCompany.getCompanyId(), true, null, null, false,
+			userAccount.getAlternateName(), userAccount.getEmailAddress(),
+			contextAcceptLanguage.getPreferredLocale(),
+			userAccount.getGivenName(), userAccount.getAdditionalName(),
+			userAccount.getFamilyName(), _getPrefixId(userAccount),
+			_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+			_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
+			userAccount.getJobTitle(), _getAddresses(userAccount),
+			_getServiceBuilderEmailAddresses(userAccount),
+			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
+			false,
+			ServiceContextRequestUtil.createServiceContext(
+				CustomFieldsUtil.toMap(
+					User.class.getName(), contextCompany.getCompanyId(),
+					userAccount.getCustomFields(),
+					contextAcceptLanguage.getPreferredLocale()),
+				contextCompany.getGroupId(), contextHttpServletRequest, null));
+
+		UserAccountContactInformation userAccountContactInformation =
+			userAccount.getUserAccountContactInformation();
+
+		if (userAccountContactInformation != null) {
+			Contact contact = user.getContact();
+
+			contact.setSmsSn(userAccountContactInformation.getSms());
+			contact.setFacebookSn(userAccountContactInformation.getFacebook());
+			contact.setJabberSn(userAccountContactInformation.getJabber());
+			contact.setSkypeSn(userAccountContactInformation.getSkype());
+			contact.setTwitterSn(userAccountContactInformation.getTwitter());
+
+			_contactLocalService.updateContact(contact);
+
+			user = _userService.getUserById(user.getUserId());
+		}
+
+		return _toUserAccount(user);
 	}
 
 	@Override
@@ -569,6 +636,7 @@ public class UserAccountResourceImpl
 				dateCreated = user.getCreateDate();
 				dateModified = user.getModifiedDate();
 				emailAddress = user.getEmailAddress();
+				externalReferenceCode = user.getExternalReferenceCode();
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
 				honorificPrefix =
@@ -693,6 +761,9 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

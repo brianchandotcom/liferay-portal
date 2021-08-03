@@ -603,6 +603,59 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		reindex(userIds);
 	}
 
+	@Override
+	public User addOrUpdateUser(
+			String externalReferenceCode, long creatorUserId, long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			Locale locale, String firstName, String middleName, String lastName,
+			long prefixId, long suffixId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String jobTitle,
+			boolean sendEmail, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+
+		if (user == null) {
+			user = addUserWithWorkflow(
+				creatorUserId, companyId, autoPassword, password1, password2,
+				autoScreenName, screenName, emailAddress, locale, firstName,
+				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				birthdayDay, birthdayYear, jobTitle, new long[0], new long[0],
+				new long[0], new long[0], sendEmail, serviceContext);
+
+			user.setExternalReferenceCode(externalReferenceCode);
+
+			user = userPersistence.update(user);
+		}
+		else {
+			Contact contact = user.getContact();
+
+			boolean hasPortrait = false;
+
+			if (user.getPortraitId() > 0) {
+				hasPortrait = true;
+			}
+
+			user = updateUser(
+				user.getUserId(), null, password1, password2, false,
+				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
+				screenName, emailAddress, hasPortrait, null,
+				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
+				user.getComments(), firstName, middleName, lastName, prefixId,
+				suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+				contact.getSmsSn(), contact.getFacebookSn(),
+				contact.getJabberSn(), contact.getSkypeSn(),
+				contact.getTwitterSn(), jobTitle, user.getGroupIds(),
+				user.getOrganizationIds(), user.getRoleIds(),
+				userGroupRoleLocalService.getUserGroupRoles(user.getUserId()),
+				user.getUserGroupIds(), serviceContext);
+		}
+
+		return user;
+	}
+
 	/**
 	 * Assigns the password policy to the users, removing any other currently
 	 * assigned password policies.

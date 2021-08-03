@@ -675,6 +675,12 @@ components:
                     description:
                         The user's main email address.
                     type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The optional external key of this user account.
+                    readOnly: true
+                    type: string
                 familyName:
                     description:
                         The user's surname (last name).
@@ -2022,6 +2028,70 @@ paths:
                             $ref: "#/components/schemas/UserAccount"
             responses:
                 201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description:
+                        ""
+    "/user-accounts/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteUserAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["UserAccount"]
+        get:
+            operationId: getUserAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description:
+                        ""
+            tags: ["UserAccount"]
+        put:
+            operationId: putUserAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+            responses:
+                200:
                     content:
                         application/json:
                             schema:

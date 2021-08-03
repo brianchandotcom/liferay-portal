@@ -222,7 +222,7 @@ public class DepotEntryLocalServiceTest {
 				typeSettingsUnicodeProperties.getProperty("inheritLocales")));
 		Assert.assertEquals(
 			StringUtil.merge(
-				LocaleUtil.toLanguageIds(_languaje.getAvailableLocales())),
+				LocaleUtil.toLanguageIds(_language.getAvailableLocales())),
 			typeSettingsUnicodeProperties.getProperty("locales"));
 	}
 
@@ -356,7 +356,7 @@ public class DepotEntryLocalServiceTest {
 	private GroupLocalService _groupLocalService;
 
 	@Inject
-	private Language _languaje;
+	private Language _language;
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

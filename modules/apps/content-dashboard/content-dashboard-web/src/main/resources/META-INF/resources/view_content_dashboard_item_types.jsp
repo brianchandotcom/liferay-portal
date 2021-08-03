@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext contentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext = (ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext)request.getAttribute(ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext.class.getName());
-
 ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSubtypeItemSelectorViewDisplayContext = (ContentDashboardItemSubtypeItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.getName());
 %>
 

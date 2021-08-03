@@ -17,11 +17,9 @@ package com.liferay.content.dashboard.web.internal.item.selector;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext;
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
-import com.liferay.content.dashboard.web.internal.item.selector.provider.ContentDashboardItemSubtypeItemSelectorProvider;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardSearchClassNameUtil;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -33,7 +31,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,8 +38,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -57,8 +52,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
@@ -110,17 +103,6 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			_servletContext.getRequestDispatcher(
 				"/view_content_dashboard_item_types.jsp");
 
-		PortletRequest portletRequest =
-			(PortletRequest)servletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse =
-			(PortletResponse)servletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		SearchContainer<? extends ContentDashboardItemSubtype> searchContainer =
-			_contentDashboardItemSubtypeItemSelectorProvider.getSearchContainer(
-				portletRequest, portletResponse, portletURL);
-
 		servletRequest.setAttribute(
 			ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.
 				getName(),
@@ -129,16 +111,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					servletRequest,
 					(ThemeDisplay)servletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)),
-				itemSelectedEventName, searchContainer));
-
-		servletRequest.setAttribute(
-			ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext.class.
-				getName(),
-			new ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext(
-				_portal.getHttpServletRequest(portletRequest),
-				_portal.getLiferayPortletRequest(portletRequest),
-				_portal.getLiferayPortletResponse(portletResponse),
-				searchContainer));
+				itemSelectedEventName));
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
@@ -277,14 +250,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		_contentDashboardItemFactoryTracker;
 
 	@Reference
-	private ContentDashboardItemSubtypeItemSelectorProvider
-		_contentDashboardItemSubtypeItemSelectorProvider;
-
-	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.content.dashboard.web)"

@@ -14,8 +14,6 @@
 
 package com.liferay.content.dashboard.web.internal.display.context;
 
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -28,14 +26,11 @@ public class ContentDashboardItemSubtypeItemSelectorViewDisplayContext {
 
 	public ContentDashboardItemSubtypeItemSelectorViewDisplayContext(
 		JSONArray contentDashboardItemTypesJSONArray,
-		String itemSelectedEventName,
-		SearchContainer<? extends ContentDashboardItemSubtype>
-			searchContainer) {
+		String itemSelectedEventName) {
 
 		_contentDashboardItemTypesJSONArray =
 			contentDashboardItemTypesJSONArray;
 		_itemSelectedEventName = itemSelectedEventName;
-		_searchContainer = searchContainer;
 	}
 
 	public Map<String, Object> getData() {
@@ -46,15 +41,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewDisplayContext {
 		).build();
 	}
 
-	public SearchContainer<? extends ContentDashboardItemSubtype>
-		getSearchContainer() {
-
-		return _searchContainer;
-	}
-
 	private final JSONArray _contentDashboardItemTypesJSONArray;
 	private final String _itemSelectedEventName;
-	private final SearchContainer<? extends ContentDashboardItemSubtype>
-		_searchContainer;
 
 }

@@ -16,7 +16,9 @@
 
 <%@ include file="/portlet_list/init.jsp" %>
 
-<ul class="portlet-list">
+<liferay-util:buffer
+	var="portletList"
+>
 
 	<%
 	DateRange dateRange = null;
@@ -227,6 +229,14 @@
 	}
 	%>
 
+</liferay-util:buffer>
+
+<%
+portletList = portletList.trim();
+%>
+
+<ul class="portlet-list <%= portletList.isEmpty() ? "hide" : "" %>">
+	<%= portletList %>
 </ul>
 
 <c:if test="<%= type.equals(Constants.EXPORT) %>">

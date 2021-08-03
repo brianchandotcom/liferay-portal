@@ -184,7 +184,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 			null,
 			booleanQuery -> {
 			},
-			null, CPDefinitionDiagramEntry.class, search, pagination,
+			null, CPDefinitionDiagramEntry.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {

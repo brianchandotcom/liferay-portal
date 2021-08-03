@@ -304,15 +304,15 @@ definition {
 			locator1 = "CommerceEntry#MENU_TAB");
 
 		for (var fixIssueButtonName : list "Product Detail,Product Compare,Commerce Cart,Checkout") {
-			WaitForElementPresent(
-				key_fixIssueButtonName = "${fixIssueButtonName}",
-				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
 
-			Click(
-				key_fixIssueButtonName = "${fixIssueButtonName}",
-				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
+			if (IsElementPresent(locator1 = "CommerceEntry#FIX_ISSUE_BUTTON", key_fixIssueButtonName = "${fixIssueButtonName}")) {
 
-			Alert.viewSuccessMessage();
+				Click(
+					key_fixIssueButtonName = "${fixIssueButtonName}",
+					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
+
+				Alert.viewSuccessMessage();
+			}	
 		}
 	}
 

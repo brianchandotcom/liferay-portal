@@ -67,7 +67,7 @@ public interface ContentDashboardItem<T> {
 
 	public String getTitle(Locale locale);
 
-	public String getType(Locale locale);
+	public String getTypeLabel(Locale locale);
 
 	public long getUserId();
 

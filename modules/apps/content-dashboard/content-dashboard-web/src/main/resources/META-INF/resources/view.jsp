@@ -171,7 +171,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smaller text-truncate"
 							name="type"
-							value="<%= HtmlUtil.escape(contentDashboardItem.getType(locale)) %>"
+							value="<%= HtmlUtil.escape(contentDashboardItem.getTypeLabel(locale)) %>"
 						/>
 					</c:if>
 

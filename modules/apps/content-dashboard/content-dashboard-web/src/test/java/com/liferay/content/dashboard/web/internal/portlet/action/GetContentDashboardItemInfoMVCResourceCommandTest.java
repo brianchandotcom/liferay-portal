@@ -283,7 +283,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public String getType(Locale locale) {
+			public String getTypeLabel(Locale locale) {
 				return "Web Content";
 			}
 

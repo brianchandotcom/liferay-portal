@@ -310,7 +310,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public String getType(Locale locale) {
+	public String getTypeLabel(Locale locale) {
 		InfoItemClassDetails infoItemClassDetails = new InfoItemClassDetails(
 			FileEntry.class.getName());
 

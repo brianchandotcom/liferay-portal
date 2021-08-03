@@ -315,7 +315,7 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public String getType(Locale locale) {
+	public String getTypeLabel(Locale locale) {
 		InfoItemClassDetails infoItemClassDetails = new InfoItemClassDetails(
 			JournalArticle.class.getName());
 

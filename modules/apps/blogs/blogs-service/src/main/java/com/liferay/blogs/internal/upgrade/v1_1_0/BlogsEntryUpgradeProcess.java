@@ -19,6 +19,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
@@ -58,6 +59,10 @@ public class BlogsEntryUpgradeProcess extends UpgradeProcess {
 					urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 						groupId, classNameId, classPK, urlTitle);
 				}
+
+				urlTitle =
+					FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+						urlTitle);
 
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(
 					groupId, BlogsEntry.class, classPK, urlTitle,

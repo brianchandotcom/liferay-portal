@@ -17,13 +17,28 @@
 <%@ include file="/info/item/renderer/init.jsp" %>
 
 <%
+ObjectEntry objectEntry = (ObjectEntry)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY);
+
+String friendlyURL = assetDisplayPageFriendlyURLProvider.getFriendlyURL(ObjectEntry.class.getName(), objectEntry.getObjectEntryId(), themeDisplay);
+
 Map<String, Serializable> objectEntryValues = (Map<String, Serializable>)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY_VALUES);
 
 for (Map.Entry<String, Serializable> entry : objectEntryValues.entrySet()) {
 %>
 
 	<td class="table-cell-expand-smallest">
-		<%= entry.getValue() %>
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(friendlyURL) %>">
+				<a class="text-truncate-inline" href="<%= friendlyURL %>">
+					<span class="text-truncate"><%= entry.getValue() %></span>
+				</a>
+			</c:when>
+			<c:otherwise>
+				<span class="text-truncate-inline">
+					<span class="text-truncate"><%= entry.getValue() %></span>
+				</span>
+			</c:otherwise>
+		</c:choose>
 	</td>
 
 <%

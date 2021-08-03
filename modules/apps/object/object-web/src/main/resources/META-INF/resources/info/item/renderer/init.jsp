@@ -14,8 +14,21 @@
  */
 --%>
 
-<%@ page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<%@ page import="com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider" %><%@
+page import="com.liferay.object.model.ObjectEntry" %><%@
+page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.util.Map" %>
+
+<liferay-theme:defineObjects />
+
+<%
+AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider = (AssetDisplayPageFriendlyURLProvider)request.getAttribute(AssetDisplayPageFriendlyURLProvider.class.getName());
+%>

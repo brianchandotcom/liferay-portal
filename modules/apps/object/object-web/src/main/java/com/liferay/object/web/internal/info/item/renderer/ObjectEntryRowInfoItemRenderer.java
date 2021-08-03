@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.info.item.renderer;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -70,6 +71,9 @@ public class ObjectEntryRowInfoItemRenderer
 		HttpServletResponse httpServletResponse) {
 
 		try {
+			httpServletRequest.setAttribute(
+				AssetDisplayPageFriendlyURLProvider.class.getName(),
+				_assetDisplayPageFriendlyURLProvider);
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_DEFINITION,
 				_objectDefinitionLocalService.getObjectDefinition(
@@ -128,6 +132,10 @@ public class ObjectEntryRowInfoItemRenderer
 				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
 		);
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

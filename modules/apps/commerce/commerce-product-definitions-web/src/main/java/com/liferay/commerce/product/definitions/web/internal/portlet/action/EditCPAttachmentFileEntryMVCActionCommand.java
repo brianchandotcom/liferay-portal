@@ -189,9 +189,9 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
-		String cdnUrl = ParamUtil.getString(actionRequest, "cdnUrl");
+		String cdnURL = ParamUtil.getString(actionRequest, "cdnURL");
 
-		boolean cdnEnabled = Validator.isNotNull(cdnUrl);
+		boolean cdnEnabled = Validator.isNotNull(cdnURL);
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
@@ -204,7 +204,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		if (cpAttachmentFileEntryId > 0) {
 			_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
 				serviceContext.getUserId(), cpAttachmentFileEntryId,
-				fileEntryId, cdnEnabled, cdnUrl, displayDateMonth,
+				fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -215,7 +215,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
-				fileEntryId, cdnEnabled, cdnUrl, displayDateMonth,
+				fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,

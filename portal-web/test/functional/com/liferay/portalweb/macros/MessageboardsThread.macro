@@ -669,12 +669,16 @@ definition {
 			value1 = "There are no threads or categories.");
 	}
 
+	// Usually used (openTo) navigations for refactoring or adding new tests with SACRED model
+
 	macro openToAddThread {
 		var baseURL = "${baseURL}";
 
 		if (contains("${baseURL}", "{baseURL}")) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
+
+		// Threads accessed in site pages will be redirected back to the page after publishing. Those accessed in admin will stay in admin after publishing.
 
 		if (isSet(layoutName)) {
 			if (isSet(categoryName)) {

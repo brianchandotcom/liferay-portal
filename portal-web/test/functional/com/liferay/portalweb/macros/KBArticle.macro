@@ -905,6 +905,8 @@ definition {
 			value1 = "Select");
 	}
 
+	// Usually used (openTo) navigations for refactoring or adding new tests with SACRED model
+
 	macro openToAddKBArticle {
 		var baseURL = "${baseURL}";
 
@@ -912,7 +914,19 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fedit_article.jsp");
+		var groupId = JSONWebcontentSetter.setGroupId(
+			site = "${site}",
+			groupName = "${groupName}");
+
+		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
+
+		if (!(isSet(parentResourcePrimKey))) {
+			var parentResourcePrimKey = "0";
+		}
+
+		// Articles accessed in admin will stay in admin after publishing.
+
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fedit_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3D6eOinWLB&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourceClassNameId=${parentResourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourcePrimKey=${parentResourcePrimKey}");
 	}
 
 	macro selectAllCP {

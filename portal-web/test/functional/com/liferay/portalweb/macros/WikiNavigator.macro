@@ -176,6 +176,8 @@ definition {
 			urlAppend = "web/${siteURLKey}/${layoutURLKey}/-/wiki/${wikiNodeName}/${tabURLKey}?wiki_nodeName=${wikiNodeName}");
 	}
 
+	// Usually used (openTo) navigations for refactoring or adding new tests with SACRED model
+
 	macro openToAddChildPage {
 		var baseURL = "${baseURL}";
 
@@ -205,6 +207,8 @@ definition {
 		var nodeId = JSONWikiSetter.setNodeId(
 			groupName = "${groupName}",
 			name = "${wikiNodeName}");
+
+		// Pages accessed in site pages will be redirected back to the page after publishing. Those accessed in admin will stay in admin after publishing.
 
 		if (isSet(layoutURLKey)) {
 			Open(locator1 = "${baseURL}/web/guest/${layoutURLKey}?p_p_id=com_liferay_wiki_web_portlet_WikiPortlet&_com_liferay_wiki_web_portlet_WikiPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiPortlet_editTitle=1&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_nodeId=${nodeId}&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_title=");

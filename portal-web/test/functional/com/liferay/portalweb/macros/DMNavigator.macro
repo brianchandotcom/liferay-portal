@@ -288,15 +288,7 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_navigation=file_entry_metadata_sets");
 	}
 
-	macro openToAddBasicFile {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fedit_file_entry");
-	}
+	// Usually used (openTo) navigations for refactoring or adding new tests with SACRED model
 
 	macro openToAddDocumentType {
 		Navigator.openWithAppendToBaseURL(
@@ -331,6 +323,8 @@ definition {
 		else {
 			var folderId = "0";
 		}
+
+		// Entries accessed in admin will stay in admin after publishing.
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fedit_file_entry&_com_liferay_document_library_web_portlet_DLAdminPortlet_cmd=add&_com_liferay_document_library_web_portlet_DLAdminPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F%7E%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_document_library_web_portlet_DLAdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}&_com_liferay_document_library_web_portlet_DLAdminPortlet_fileEntryTypeId=${typeId}&_com_liferay_document_library_web_portlet_DLAdminPortlet_folderId=${folderId}&_com_liferay_document_library_web_portlet_DLAdminPortlet_portletResource=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_repositoryId=${groupId}");
 	}

@@ -201,6 +201,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet");
 	}
 
+	// Usually used (openTo) navigations for refactoring or adding new tests with SACRED model
+
 	macro openToAddEntry {
 		var baseURL = "${baseURL}";
 

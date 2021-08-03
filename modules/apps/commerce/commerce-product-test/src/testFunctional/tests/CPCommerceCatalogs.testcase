@@ -32,9 +32,6 @@ definition {
 	@priority = "3"
 	test AddAnImageToCatalogAndRemove {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
-
-		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -63,15 +60,31 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Click(
+		Click.clickNoWaitForVisible(
 			key_value = "Test Catalog",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 
-		Click(
+		Click.clickNoMouseOver(
 			key_value = "Remove Image",
 			locator1 = "Button#SECONDARY_BY_TITLE");
+
+		AssertElementNotPresent(
+			key_imageTitle = "Commerce_Black.jpg",
+			locator1 = "WCPreview#PREVIEW_IMAGE");
+
+		Button.clickSave();
+
+		Click.clickNoWaitForVisible(
+			key_value = "Test Catalog",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		AssertElementNotPresent(
+			key_imageTitle = "Commerce_Black.jpg",
+			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}
 
 	test CreateNewCatalog {

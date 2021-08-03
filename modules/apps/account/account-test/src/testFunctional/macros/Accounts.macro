@@ -474,7 +474,7 @@ definition {
 
 		AssertClick(
 			key_accountUserName = "${accountUserName}",
-			locator1 = "Account#CHOOSE_ACCOUNT_USER",
+			locator1 = "Account#ASSIGN_USER_CHOOSE_BUTTON",
 			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");

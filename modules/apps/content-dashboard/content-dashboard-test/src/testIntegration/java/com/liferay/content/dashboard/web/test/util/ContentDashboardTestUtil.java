@@ -14,17 +14,12 @@
 
 package com.liferay.content.dashboard.web.test.util;
 
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Dictionary;
 
 /**
  * @author Yurena Cabrera
@@ -44,25 +39,6 @@ public class ContentDashboardTestUtil {
 			PermissionThreadLocal.getPermissionChecker());
 
 		return themeDisplay;
-	}
-
-	public static void withFFContentDashboardDocumentConfigurationEnabled(
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.content.dashboard.web.internal." +
-						"configuration.FFContentDashboardDocumentConfiguration",
-					dictionary)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 }

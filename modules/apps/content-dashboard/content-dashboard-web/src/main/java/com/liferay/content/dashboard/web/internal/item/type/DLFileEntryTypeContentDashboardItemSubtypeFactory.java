@@ -14,27 +14,18 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
-import com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	configurationPid = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration",
-	service = ContentDashboardItemSubtypeFactory.class
-)
+@Component(service = ContentDashboardItemSubtypeFactory.class)
 public class DLFileEntryTypeContentDashboardItemSubtypeFactory
 	implements ContentDashboardItemSubtypeFactory<DLFileEntryType> {
 
@@ -50,24 +41,8 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactory
 			_groupLocalService.fetchGroup(dlFileEntryType.getGroupId()));
 	}
 
-	@Override
-	public boolean isEnabled() {
-		return _ffContentDashboardDocumentConfiguration.enabled();
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffContentDashboardDocumentConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFContentDashboardDocumentConfiguration.class, properties);
-	}
-
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	private volatile FFContentDashboardDocumentConfiguration
-		_ffContentDashboardDocumentConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

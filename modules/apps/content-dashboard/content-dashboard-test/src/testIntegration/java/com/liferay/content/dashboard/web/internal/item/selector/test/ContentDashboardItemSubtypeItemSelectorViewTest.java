@@ -367,12 +367,9 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			WebKeys.THEME_DISPLAY,
 			ContentDashboardTestUtil.getThemeDisplay(_group));
 
-		ContentDashboardTestUtil.
-			withFFContentDashboardDocumentConfigurationEnabled(
-				() -> _contentDashboardItemSubtypeItemSelectorView.renderHTML(
-					mockHttpServletRequest, new MockHttpServletResponse(), null,
-					new MockLiferayPortletURL(), RandomTestUtil.randomString(),
-					true));
+		_contentDashboardItemSubtypeItemSelectorView.renderHTML(
+			mockHttpServletRequest, new MockHttpServletResponse(), null,
+			new MockLiferayPortletURL(), RandomTestUtil.randomString(), true);
 
 		Object contentDashboardItemSubtypeItemSelectorViewDisplayContext =
 			mockHttpServletRequest.getAttribute(

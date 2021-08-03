@@ -24,8 +24,4 @@ public interface ContentDashboardItemSubtypeFactory<T> {
 	public ContentDashboardItemSubtype<T> create(long classPK)
 		throws PortalException;
 
-	public default boolean isEnabled() {
-		return true;
-	}
-
 }

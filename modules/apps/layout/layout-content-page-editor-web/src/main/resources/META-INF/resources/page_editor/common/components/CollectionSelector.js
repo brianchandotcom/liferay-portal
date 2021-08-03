@@ -20,11 +20,14 @@ import {useCustomCollectionSelectorURL} from '../../app/contexts/CollectionItemC
 import itemSelectorValueToCollection from '../../app/utils/item-selector-value/itemSelectorValueToCollection';
 import ItemSelector from './ItemSelector';
 
+const DEFAULT_OPTION_MENU_ITEMS = [];
+
 export default function CollectionSelector({
 	collectionItem,
 	itemSelectorURL,
 	label,
 	onCollectionSelect,
+	optionsMenuItems = DEFAULT_OPTION_MENU_ITEMS,
 }) {
 	const eventName = `${config.portletNamespace}selectInfoList`;
 
@@ -40,6 +43,7 @@ export default function CollectionSelector({
 			}
 			label={label}
 			onItemSelect={onCollectionSelect}
+			optionsMenuItems={optionsMenuItems}
 			quickMappedInfoItems={config.selectedMappingTypes?.linkedCollection}
 			selectedItem={collectionItem}
 			showMappedItems={!!config.selectedMappingTypes?.linkedCollection}

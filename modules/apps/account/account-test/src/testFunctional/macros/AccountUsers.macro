@@ -127,9 +127,9 @@ definition {
 
 	macro viewEntryAccounts {
 		AssertElementPresent(
-			key_rowEntry = "${accountUserName}",
-			key_rowEntryAccount = "${accountName}",
-			locator1 = "Account#ENTRY_CONTENT_ENTRY_ACCOUNTS");
+			key_rowNumber = "${accountRowNumber}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_5",
+			value1 = "${accountName}");
 	}
 
 	macro viewValidDomains {

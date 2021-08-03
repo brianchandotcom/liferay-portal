@@ -113,11 +113,11 @@ definition {
 
 		AccountUsers.viewEntryAccounts(
 			accountName = "Person Account",
-			accountUserName = "userfn2");
+			accountRowNumber = "2");
 
 		AccountUsers.viewEntryAccounts(
 			accountName = "No Assigned Account",
-			accountUserName = "userfn1");
+			accountRowNumber = "1");
 	}
 
 	@description = "This test adds and removes a user assignee to an account specific role."

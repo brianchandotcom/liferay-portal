@@ -501,6 +501,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_NAME_NOT_CONTAINS</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[(text()='${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ELIGIBILITY_ACCOUNT_GROUPS</td>
 	<td>//div[@class='dnd-td' and contains(text(),'${key_entryName}')]</td>
 	<td></td>

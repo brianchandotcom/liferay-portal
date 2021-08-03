@@ -248,12 +248,12 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Alice's Adventures in Wonderland.docx");
+			siteURLKey = "guest");
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document DOCX",
@@ -404,12 +404,12 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Alice's Adventures in Wonderland.docx");
+			siteURLKey = "guest");
 
 		JSONDocument.deleteFile(
 			dmDocumentTitle = "DM Document DOCX",
@@ -492,12 +492,12 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX",
 			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Alice's Adventures in Wonderland.docx");
+			siteURLKey = "guest");
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "DM Document DOCX",

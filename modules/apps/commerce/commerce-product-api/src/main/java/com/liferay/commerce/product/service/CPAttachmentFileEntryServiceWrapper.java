@@ -36,25 +36,24 @@ public class CPAttachmentFileEntryServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry
 			addCPAttachmentFileEntry(
-				long userId, long groupId, long classNameId, long classPK,
-				long fileEntryId, boolean cdnEnabled, String cdnUrl,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
+				long groupId, long classNameId, long classPK, long fileEntryId,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire,
 				java.util.Map<java.util.Locale, String> titleMap, String json,
 				double priority, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.addCPAttachmentFileEntry(
-			userId, groupId, classNameId, classPK, fileEntryId, cdnEnabled,
-			cdnUrl, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, titleMap, json, priority, type,
-			serviceContext);
+			groupId, classNameId, classPK, fileEntryId, cdnEnabled, cdnURL,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class CPAttachmentFileEntryServiceWrapper
 			addOrUpdateCPAttachmentFileEntry(
 				String externalReferenceCode, long groupId, long classNameId,
 				long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -75,7 +74,7 @@ public class CPAttachmentFileEntryServiceWrapper
 
 		return _cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK,
-			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -167,8 +166,8 @@ public class CPAttachmentFileEntryServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry
 			updateCPAttachmentFileEntry(
-				long userId, long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				long cpAttachmentFileEntryId, long fileEntryId,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -180,7 +179,7 @@ public class CPAttachmentFileEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
-			userId, cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

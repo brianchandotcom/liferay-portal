@@ -53,14 +53,13 @@ public class CPAttachmentFileEntryServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
 			addCPAttachmentFileEntry(
-				HttpPrincipal httpPrincipal, long userId, long groupId,
-				long classNameId, long classPK, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				HttpPrincipal httpPrincipal, long groupId, long classNameId,
+				long classPK, long fileEntryId, boolean cdnEnabled,
+				String cdnURL, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
 				java.util.Map<java.util.Locale, String> titleMap, String json,
 				double priority, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -73,8 +72,8 @@ public class CPAttachmentFileEntryServiceHttp {
 				_addCPAttachmentFileEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, classNameId, classPK, fileEntryId,
-				cdnEnabled, cdnUrl, displayDateMonth, displayDateDay,
+				methodKey, groupId, classNameId, classPK, fileEntryId,
+				cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire, titleMap,
@@ -114,7 +113,7 @@ public class CPAttachmentFileEntryServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long groupId, long classNameId, long classPK,
 				long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
+				boolean cdnEnabled, String cdnURL, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
@@ -133,7 +132,7 @@ public class CPAttachmentFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, classNameId, classPK,
-				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
+				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
@@ -476,14 +475,13 @@ public class CPAttachmentFileEntryServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
 			updateCPAttachmentFileEntry(
-				HttpPrincipal httpPrincipal, long userId,
-				long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnUrl, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				HttpPrincipal httpPrincipal, long cpAttachmentFileEntryId,
+				long fileEntryId, boolean cdnEnabled, String cdnURL,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
 				java.util.Map<java.util.Locale, String> titleMap, String json,
 				double priority, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -496,12 +494,12 @@ public class CPAttachmentFileEntryServiceHttp {
 				_updateCPAttachmentFileEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, cpAttachmentFileEntryId, fileEntryId,
-				cdnEnabled, cdnUrl, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-				json, priority, type, serviceContext);
+				methodKey, cpAttachmentFileEntryId, fileEntryId, cdnEnabled,
+				cdnURL, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, titleMap, json, priority,
+				type, serviceContext);
 
 			Object returnObj = null;
 
@@ -537,12 +535,11 @@ public class CPAttachmentFileEntryServiceHttp {
 
 	private static final Class<?>[] _addCPAttachmentFileEntryParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, long.class, long.class,
-			boolean.class, String.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, java.util.Map.class, String.class,
-			double.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, long.class, long.class, boolean.class,
+			String.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class,
+			boolean.class, java.util.Map.class, String.class, double.class,
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCPAttachmentFileEntryParameterTypes1 = new Class[] {
@@ -578,10 +575,10 @@ public class CPAttachmentFileEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_updateCPAttachmentFileEntryParameterTypes9 = new Class[] {
-			long.class, long.class, long.class, boolean.class, String.class,
+			long.class, long.class, boolean.class, String.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, boolean.class,
-			java.util.Map.class, String.class, double.class, int.class,
+			int.class, int.class, int.class, boolean.class, java.util.Map.class,
+			String.class, double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

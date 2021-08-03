@@ -256,14 +256,14 @@ definition {
 	}
 
 	macro addNewUserToPersonAccount {
-		AssertElementPresent(locator1 = "Account#USER_SELECT");
+		AssertElementPresent(locator1 = "Account#USER_SELECT_BUTTON");
 
 		if (!(IsElementPresent(locator1 = "Message#EMPTY_INFO_DEPOT_HIDE"))) {
 			Alert.viewMutedMessage(muteMessage = "Assign a user to this person account.");
 		}
 
 		AssertClick(
-			locator1 = "Account#USER_SELECT",
+			locator1 = "Account#USER_SELECT_BUTTON",
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#ASSIGN_USER");
@@ -458,14 +458,14 @@ definition {
 	}
 
 	macro assignExistingUserToPersonAccount {
-		AssertElementPresent(locator1 = "Account#USER_SELECT");
+		AssertElementPresent(locator1 = "Account#USER_SELECT_BUTTON");
 
 		if (!(IsElementPresent(locator1 = "Message#EMPTY_INFO_DEPOT_HIDE"))) {
 			Alert.viewMutedMessage(muteMessage = "Assign a user to this person account.");
 		}
 
 		AssertClick(
-			locator1 = "Account#USER_SELECT",
+			locator1 = "Account#USER_SELECT_BUTTON",
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#ASSIGN_USER");

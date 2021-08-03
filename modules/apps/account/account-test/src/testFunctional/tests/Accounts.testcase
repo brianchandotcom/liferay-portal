@@ -1341,7 +1341,7 @@ definition {
 		Accounts.gotoEdit(accountName = "Person Account");
 
 		AssertClick(
-			locator1 = "Account#USER_SELECT",
+			locator1 = "Account#USER_SELECT_BUTTON",
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#ASSIGN_USER");

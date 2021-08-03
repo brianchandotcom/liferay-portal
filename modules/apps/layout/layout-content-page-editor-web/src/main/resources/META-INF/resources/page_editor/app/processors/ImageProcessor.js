@@ -13,7 +13,8 @@
  */
 
 import {openImageSelector} from '../../core/openImageSelector';
-import {config} from '../config/index';
+import {getEditableLinkValue} from '../utils/getEditableLinkValue';
+import {getEditableLocalizedValue} from '../utils/getEditableLocalizedValue';
 
 /**
  * @param {HTMLElement} element HTMLElement where the editor
@@ -63,34 +64,20 @@ function render(element, value, editableConfig = {}, languageId) {
 	}
 
 	if (image) {
-		if (editableConfig.alt && typeof editableConfig.alt === 'object') {
-			image.alt =
-				editableConfig.alt[languageId] ||
-				editableConfig.alt[config.defaultLanguageId] ||
-				'';
-		}
-		else if (typeof editableConfig.alt === 'string') {
-			image.alt = editableConfig.alt;
-		}
-		else {
-			image.alt = '';
-		}
+		image.alt = getEditableLocalizedValue(editableConfig.alt, languageId);
 
-		const link =
-			editableConfig[languageId] ||
-			editableConfig[config.defaultLanguageId] ||
-			editableConfig;
+		const link = getEditableLinkValue(editableConfig, languageId);
 
 		if (link.href) {
 			if (image.parentElement instanceof HTMLAnchorElement) {
 				image.parentElement.href = link.href;
-				image.parentElement.target = link.target || '';
+				image.parentElement.target = link.target;
 			}
 			else {
 				const anchorElement = document.createElement('a');
 
 				anchorElement.href = link.href;
-				anchorElement.target = link.target || '';
+				anchorElement.target = link.target;
 
 				image.parentElement.replaceChild(anchorElement, image);
 				anchorElement.appendChild(image);

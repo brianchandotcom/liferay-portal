@@ -12,7 +12,7 @@
  * details.
  */
 
-import {config} from '../config/index';
+import {getEditableLocalizedValue} from '../utils/getEditableLocalizedValue';
 import selectEditableValue from './selectEditableValue';
 
 export default function selectEditableValueContent(
@@ -21,25 +21,13 @@ export default function selectEditableValueContent(
 	editableId,
 	processorType
 ) {
-	const data = selectEditableValue(
-		{fragmentEntryLinks},
-		fragmentEntryLinkId,
-		editableId,
-		processorType
+	return getEditableLocalizedValue(
+		selectEditableValue(
+			{fragmentEntryLinks},
+			fragmentEntryLinkId,
+			editableId,
+			processorType
+		),
+		languageId
 	);
-
-	let content = data;
-
-	if (content[languageId]) {
-		content = content[languageId];
-	}
-	else if (content[config.defaultLanguageId]) {
-		content = content[config.defaultLanguageId];
-	}
-
-	if (content == null || content.defaultValue) {
-		content = data.defaultValue;
-	}
-
-	return content;
 }

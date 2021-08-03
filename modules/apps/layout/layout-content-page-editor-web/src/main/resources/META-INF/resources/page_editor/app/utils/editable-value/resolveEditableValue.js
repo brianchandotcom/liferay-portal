@@ -12,8 +12,8 @@
  * details.
  */
 
-import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
+import {getEditableLocalizedValue} from '../getEditableLocalizedValue';
 import isMapped from './isMapped';
 
 export default function resolveEditableValue(
@@ -23,34 +23,19 @@ export default function resolveEditableValue(
 ) {
 	return isMapped(editableValue) && getFieldValue
 		? getFieldValue({...editableValue, languageId}).catch(() =>
-				resolveRawEditableValue(editableValue, languageId)
+				Promise.resolve(
+					getEditableLocalizedValue(
+						editableValue,
+						languageId,
+						editableValue
+					)
+				)
 		  )
-		: resolveRawEditableValue(editableValue, languageId);
-}
-
-function resolveRawEditableValue(editableValue, languageId = null) {
-	let content = editableValue;
-
-	if (!content) {
-		return Promise.resolve(null);
-	}
-
-	if (languageId) {
-		if (content[languageId] || content[languageId] === '') {
-			content = content[languageId];
-		}
-		else if (content[config.defaultLanguageId]) {
-			content = content[config.defaultLanguageId];
-		}
-	}
-
-	if (
-		content === null ||
-		content.defaultValue ||
-		content.defaultValue === ''
-	) {
-		content = editableValue.defaultValue;
-	}
-
-	return Promise.resolve(content);
+		: Promise.resolve(
+				getEditableLocalizedValue(
+					editableValue,
+					languageId,
+					editableValue
+				)
+		  );
 }

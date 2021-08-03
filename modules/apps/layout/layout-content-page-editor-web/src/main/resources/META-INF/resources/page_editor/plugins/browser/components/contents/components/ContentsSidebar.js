@@ -16,11 +16,11 @@ import React, {useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
-import {config} from '../../../../../app/config/index';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
 import {selectPageContents} from '../../../../../app/selectors/selectPageContents';
 import isMapped from '../../../../../app/utils/editable-value/isMapped';
+import {getEditableLocalizedValue} from '../../../../../app/utils/getEditableLocalizedValue';
 import SidebarPanelContent from '../../../../../common/components/SidebarPanelContent';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
@@ -28,10 +28,7 @@ import PageContents from './PageContents';
 const getEditableTitle = (editable, languageId) => {
 	const div = document.createElement('div');
 
-	div.innerHTML =
-		editable[languageId] ||
-		editable[config.defaultLanguageId] ||
-		editable.defaultValue;
+	div.innerHTML = getEditableLocalizedValue(editable, languageId);
 
 	return div.textContent.trim();
 };

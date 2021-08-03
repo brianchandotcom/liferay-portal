@@ -126,20 +126,7 @@ public class EditDDMTemplateDisplayContext {
 		).put(
 			"script", _getScript()
 		).put(
-			"showCacheableWarning", false
-		).put(
 			"showLanguageChangeWarning", _getShowLanguageChangeWarning()
-		).put(
-			"showPropertiesPanel",
-			() -> {
-				DDMTemplate ddmTemplate = getDDMTemplate();
-
-				if ((ddmTemplate == null) || (ddmTemplate.getClassPK() <= 0)) {
-					return true;
-				}
-
-				return false;
-			}
 		).put(
 			"templateVariableGroups", getTemplateVariableGroupJSONArray()
 		).build();

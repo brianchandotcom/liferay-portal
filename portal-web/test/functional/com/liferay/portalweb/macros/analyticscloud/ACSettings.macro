@@ -44,6 +44,41 @@ definition {
 			value1 = "${pageViewsUsageValue}");
 	}
 
+	macro assertPlanDetails {
+		var key_planName = "${planName}";
+		AssertElementPresent(locator1 = "ACUsage#PLAN_NAME");
+
+		AssertElementPresent(
+			key_planItem = "Individuals",
+			key_planLimits = "${individualsLimit}",
+			key_tableName = "limits",
+			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+
+		AssertElementPresent(
+			key_planItem = "Page Views",
+			key_planLimits = "${pageViews}",
+			key_tableName = "limits",
+			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+
+		AssertElementPresent(
+			key_planItem = "Users",
+			key_planLimits = "${usersLimit}",
+			key_tableName = "limits",
+			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+
+		AssertElementPresent(
+			key_planItem = "${individualsAddOns}",
+			key_planLimits = "${individualsAddOnsPrice}",
+			key_tableName = "addons",
+			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+
+		AssertElementPresent(
+			key_planItem = "${pageViewsAddOns}",
+			key_planLimits = "${pageViewsAddOnsPrice}",
+			key_tableName = "addons",
+			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+	}
+
 	@summary = "Asserts the users shown in list"
 	macro assertUserList() {
 		AssertTextEquals(

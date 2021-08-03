@@ -39,8 +39,14 @@ definition {
 	@priority = "5"
 	test CanCreateAccessRequest {
 
+<<<<<<< HEAD
 		// TODO LRAC-8119 CanCreateAccessRequest
 
+=======
+		ACSettings.createRequestLogByEmail(
+			emailAdresses = "Alana.Nicolas@hotmail.com",
+			jobTypes = "Access");
+>>>>>>> 0684398 (LRAC-8119 SF)
 	}
 
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"

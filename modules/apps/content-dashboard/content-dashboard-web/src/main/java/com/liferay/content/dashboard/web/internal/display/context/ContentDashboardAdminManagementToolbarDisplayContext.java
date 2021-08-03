@@ -743,7 +743,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					"action", "selectContentDashboardItemSubtype");
 				dropdownItem.putData(
 					"dialogTitle",
-					LanguageUtil.get(httpServletRequest, "select-subtype"));
+					LanguageUtil.get(httpServletRequest, "filter-by-type"));
 
 				dropdownItem.putData(
 					"redirectURL",

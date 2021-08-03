@@ -368,17 +368,15 @@ export const CollectionGeneralPanel = ({item}) => {
 						/>
 					</ClayForm.Group>
 
-					{item.config.paginationType && (
-						<div className="mb-1 pt-1">
-							<ClayCheckbox
-								checked={showAllItems}
-								label={Liferay.Language.get(
-									'display-all-collection-items'
-								)}
-								onChange={handleShowAllItemsChanged}
-							/>
-						</div>
-					)}
+					<div className="mb-1 pt-1">
+						<ClayCheckbox
+							checked={showAllItems}
+							label={Liferay.Language.get(
+								'display-all-collection-items'
+							)}
+							onChange={handleShowAllItemsChanged}
+						/>
+					</div>
 
 					<ClayForm.Group small>
 						<label htmlFor={collectionNumberOfItemsId}>
@@ -393,7 +391,7 @@ export const CollectionGeneralPanel = ({item}) => {
 							value={nextValue.numberOfItems}
 						/>
 
-						{item.config.paginationType && numberOfItemsError && (
+						{numberOfItemsError && (
 							<p className="mt-2 small text-warning">
 								{numberOfItemsError}
 							</p>

@@ -56,19 +56,7 @@ definition {
 			locator1 = "ACSettings#USER_LIST_EMAIL",
 			value1 = "${userEmail}");
 	}
-
-<<<<<<< HEAD
-	@summary = "Deletes all data source"
-	macro deleteAllDataSource {
-		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-			ACNavigation.goToSettings();
-		}
-
-		ACSettings.goToDataSources();
-
-		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
-			ACSettings.deleteDataSource();
-=======
+	
 	macro createRequestLogByEmail {
 		var key_fieldType = "${fieldType}";
 
@@ -120,7 +108,6 @@ definition {
 					key_requestType = "${jobType}",
 					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
 			}
->>>>>>> 0684398 (LRAC-8119 SF)
 		}
 =======
 >>>>>>> c1eab9d (LRAC-8117 Fix macro createRequestLogByEmail)
@@ -138,60 +125,6 @@ definition {
 
 		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
 			ACSettings.deleteDataSource();
-		}
-	}
-	
-	macro createRequestLogByEmail {
-		var key_fieldType = "${fieldType}";
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToDataControlAndPrivacy();
-
-		Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
-
-		Click(locator1 = "ACDataControlAndPrivacy#CREATE_REQUEST");
-
-		for (var jobType : list "${jobTypes}") {
-			Click(
-				locator1 = "ACDataControlAndPrivacy#JOB_TYPE",
-				key_jobType = "${jobType}");
-		}
-
-		Click(
-			locator1 = "ACDataControlAndPrivacy#DATA_ID",
-			key_fieldType = "Find by Email");
-
-		Click(locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD");
-
-		for (var emailAdress : list "${emailAdresses}") {
-			Click(
-				locator1 = "ACDataControlAndPrivacy#FIND_EMAIL_FIELD",
-				key_emailAdress = "${emailAdress}");
-		}
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		for (var emailAdress : list "${emailAdresses}",) {
-			if ("${jobType}" == "Delete") {
-				AssertElementPresent(
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE",
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "${jobType}");
-					
-				AssertElementPresent(
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE",
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "Suppress");
-			}
-			else {
-				AssertElementPresent(
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE",
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "${jobType}");
-			}
 		}
 	}
 

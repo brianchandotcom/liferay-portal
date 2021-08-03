@@ -170,6 +170,89 @@ definition {
 			key_position2 = "3");
 	}
 
+	@description = "Verify that a Form can be created with Spanish as the default portal language"
+	@priority = "5"
+	test CanBeCreatedWithSpanishAsDefaultLanguage {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsTranslations#CanBeCreatedWithSpanishAsDefaultLanguage";
+
+		Navigator.openURL();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Type(
+			locator1 = "Form#NAME_FIELD",
+			value1 = "Formulario");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field On Spanish Portal");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Enviar");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field On Spanish Portal",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Enviar");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field On Spanish Portal",
+			fieldValue = "Text Field Value");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Text Field On Spanish Portal",
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		Navigator.openURL();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
 	@description = "Verify that a translation can be deactivated"
 	@priority = "5"
 	test CanBeDeleted {
@@ -507,6 +590,284 @@ definition {
 		FormViewBuilder.assertHelpTextPresent(
 			fieldName = "Fecha",
 			fieldValue = "Texto de Ayuda");
+	}
+
+	@description = "Verify that Fieldsets can be translated"
+	@priority = "5"
+	test ElementSetsCanBeTranslated {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.editDescription(formDescription = "Element Set Description");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editElementSetFieldLabel(fieldValue = "Text Field Required");
+
+		FormFields.enableSwitcher(fieldName = "required");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Select from List");
+
+		Form.editElementSetFieldLabel(fieldValue = "Select Repeatable");
+
+		for (var number : list "1,2,3") {
+			FormFields.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "repeatable");
+
+		Form.closeSidebar();
+
+		Form.saveElementSet();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Element Set 1");
+
+		Form.addTranslation(localizedLanguage = "Chinese (China)");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
+
+		Form.editElementSetFieldLabel(fieldValue = "表格文本");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
+
+		Form.editElementSetFieldLabel(fieldValue = "表单选择");
+
+		Form.closeSidebar();
+
+		Form.saveElementSet();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Date");
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
+
+		Form.gotoAdvancedTab();
+
+		var textFieldRequiredName1 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
+
+		Form.gotoAdvancedTab();
+
+		var selectRepeatableName1 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		Form.addTranslation(localizedLanguage = "Chinese (China)");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "表格文本",
+			fieldName = "${textFieldRequiredName1}");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "表单选择",
+			fieldName = "${selectRepeatableName1}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "${selectRepeatableName1}");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.viewSwitcherChecked(fieldName = "repeatable");
+
+		Form.closeSidebar();
+
+		Form.selectTranslation(localizedLanguage = "English (United States)");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "3");
+
+		FormsAdminNavigator.gotoEditField(
+			fieldName = "Text Field Required",
+			fieldPositionNumber = "3");
+
+		Form.gotoAdvancedTab();
+
+		var textFieldRequiredName2 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(
+			fieldName = "Select Repeatable",
+			fieldPositionNumber = "4");
+
+		Form.gotoAdvancedTab();
+
+		var selectRepeatableName2 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field Required",
+			fieldName = "${textFieldRequiredName1}");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "Select Repeatable",
+			fieldName = "${selectRepeatableName1}");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field Required",
+			fieldName = "${textFieldRequiredName2}");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "Select Repeatable",
+			fieldName = "${selectRepeatableName2}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.changeLocale(locale = "中文-中国");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "表格文本",
+			fieldName = "${textFieldRequiredName1}");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "表单选择",
+			fieldName = "${selectRepeatableName1}");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "表格文本",
+			fieldName = "${textFieldRequiredName2}");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "表单选择",
+			fieldName = "${selectRepeatableName2}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormFields.editText(
+			fieldName = "${textFieldRequiredName1}",
+			fieldValue = "文本输入中文");
+
+		FormFields.editText(
+			fieldName = "${textFieldRequiredName2}",
+			fieldValue = "文本再次输入中文");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "提交");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 2");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
+
+		Form.gotoAdvancedTab();
+
+		var textFieldRequiredName3 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
+
+		Form.gotoAdvancedTab();
+
+		var selectRepeatableName3 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		Form.addTranslation(localizedLanguage = "Chinese (China)");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "表格文本",
+			fieldName = "${textFieldRequiredName3}");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "表单选择",
+			fieldName = "${selectRepeatableName3}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "表单选择");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.viewSwitcherChecked(fieldName = "repeatable");
+
+		Form.closeSidebar();
+
+		Form.selectTranslation(localizedLanguage = "English (United States)");
+
+		Form.addTextField(fieldPositionNumber = "2");
+
+		Form.editElementSetFieldLabel(fieldValue = "Text Field New");
+
+		Form.closeSidebar();
+
+		Form.saveElementSet();
 	}
 
 	@description = "Verify that Forms submitted in different languages show the appropriate country flags in View Entries"
@@ -1320,6 +1681,79 @@ definition {
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Opción Dos",
 			fieldName = "Selección Única");
+	}
+
+	@description = "LPS-116866 - Verify the Submit Button Label can be translated to multiple languages"
+	@priority = "4"
+	test SubmitButtonLabelCanBeTranslated {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var textFieldName = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "Enviar Personalizado");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.editText(
+			fieldName = "${textFieldName}",
+			fieldValue = "Campo de Texto");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Enviar Personalizado");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		Form.addTranslation(localizedLanguage = "Japanese (Japan)");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "参加する");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormPortlet.changeLocale(locale = "日本語-日本");
+
+		FormFields.editText(
+			fieldName = "${textFieldName}",
+			fieldValue = "テキストフィールド");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "参加する");
 	}
 
 	@description = "Verify that a Text field's Autocomplete Options can be translated"

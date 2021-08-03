@@ -125,13 +125,18 @@ export const CollectionGeneralPanel = ({item}) => {
 		if (
 			nextValue.numberOfItemsPerPage !== item.config.numberOfItemsPerPage
 		) {
-			setNumberOfItemsPerPageError(
-				Number(event.target.value) < 1
-					? Liferay.Language.get(
-							'you-need-at-least-one-item-to-use-pagination'
-					  )
-					: null
-			);
+			if (Number(event.target.value) < 1) {
+				setNumberOfItemsPerPageError(
+					Liferay.Language.get(
+						'you-need-at-least-one-item-to-use-pagination'
+					)
+				);
+			}
+			else if (
+				Number(event.target.value) < config.searchContainerPageMaxDelta
+			) {
+				setNumberOfItemsPerPageError(null);
+			}
 
 			handleConfigurationChanged({
 				numberOfItemsPerPage: Number(event.target.value) || 1,

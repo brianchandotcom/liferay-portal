@@ -56,7 +56,7 @@ definition {
 			locator1 = "ACSettings#USER_LIST_EMAIL",
 			value1 = "${userEmail}");
 	}
-	
+
 	macro createRequestLogByEmail {
 		var key_fieldType = "${fieldType}";
 

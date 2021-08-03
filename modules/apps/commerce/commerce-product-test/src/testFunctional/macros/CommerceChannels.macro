@@ -42,6 +42,11 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		AssertElementPresent(
+			key_fieldLabel = "Environment",
+			key_value = "${key_value}",
+			locator1 = "CommerceEntry#SELECT_ASSERT_SELECTED_VALUE");
+
 		Click(locator1 = "Icon#CLOSE");
 	}
 

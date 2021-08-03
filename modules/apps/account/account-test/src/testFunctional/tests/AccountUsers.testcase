@@ -457,7 +457,7 @@ definition {
 
 		AssertClick(
 			key_accountName = "Account with User",
-			locator1 = "Account#CHOOSE_ACCOUNT",
+			locator1 = "AccountUsers#SELECT_AN_ACCOUNT_CHOOSE_BUTTON",
 			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");
@@ -492,7 +492,7 @@ definition {
 
 		AssertClick(
 			key_accountName = "Account with User",
-			locator1 = "Account#CHOOSE_ACCOUNT",
+			locator1 = "AccountUsers#SELECT_AN_ACCOUNT_CHOOSE_BUTTON",
 			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");

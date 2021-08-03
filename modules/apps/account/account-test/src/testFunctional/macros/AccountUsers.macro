@@ -9,14 +9,14 @@ definition {
 
 		AssertClick(
 			key_accountName = "${accountName}",
-			locator1 = "Account#CHOOSE_ACCOUNT",
+			locator1 = "AccountUsers#SELECT_AN_ACCOUNT_CHOOSE_BUTTON",
 			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");
 
 		WaitForElementPresent(
 			key_accountName = "${accountName}",
-			locator1 = "Account#ADD_USER_HEADER");
+			locator1 = "AccountUsers#ADD_NEW_USER_HEADER");
 
 		Type(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",

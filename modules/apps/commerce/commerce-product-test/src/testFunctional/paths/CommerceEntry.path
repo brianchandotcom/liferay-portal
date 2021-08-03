@@ -664,6 +664,11 @@
 	<td>//a[contains(text(),'${key_nameColumn}')]/../../..//span[contains(text(),'')]//span</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_ASSERT_SELECTED_VALUE</td>
+	<td>//label[contains(.,'${key_fieldLabel}')]/../select/option[@selected and contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
 <!--PRODUCT-->
 <tr>
 	<td>ANY_AUTOCOMPLETE_TEXT_FIELD</td>

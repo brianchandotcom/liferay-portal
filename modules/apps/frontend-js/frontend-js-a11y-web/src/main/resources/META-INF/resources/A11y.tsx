@@ -132,17 +132,19 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 
 	return (
 		<>
-			{Object.keys(state.violations.nodes).map((target, index) => (
-				<ViolationPopover
-					key={`${target}:${index}`}
-					onClick={(target, ruleId) =>
-						navigateToOccurrence(ruleId, target)
-					}
-					rules={state.violations.rules}
-					target={target}
-					violations={Object.keys(state.violations.nodes[target])}
-				/>
-			))}
+			{Object.keys(state.violations.nodes)
+				.filter((target) => !target.includes('/'))
+				.map((target, index) => (
+					<ViolationPopover
+						key={`${target}:${index}`}
+						onClick={(target, ruleId) =>
+							navigateToOccurrence(ruleId, target)
+						}
+						rules={state.violations.rules}
+						target={target}
+						violations={Object.keys(state.violations.nodes[target])}
+					/>
+				))}
 
 			<div className="a11y-panel__sidebar sidebar sidebar-light">
 				<StackNavigator<Params>

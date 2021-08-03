@@ -189,9 +189,6 @@ definition {
 	@priority = "3"
 	test EditAnImage {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductMedia#EditAnImage";
-
-		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -206,10 +203,10 @@ definition {
 
 		CommerceProductImages.addProductImages(
 			imageTitles = "Black",
-			validationImage = "true");
+			validationImage = "false");
 
 		Click(
-			key_value = "Commerce_Black.jpg",
+			key_value = "Commerce_Black",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
@@ -223,6 +220,24 @@ definition {
 		Button.clickPublish();
 
 		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			key_table = "Images",
+			key_entryName = "Commerce_Black",
+			locator1 = "CommerceEntry#TABLE_ENTRY_NAME_NOT_CONTAINS");
+
+		echo("Commerce_Black is not present");
+
+		AssertElementPresent(
+			key_table = "Images",
+			key_entryName = "Commerce_Black_Edit",
+			locator1 = "CommerceEntry#TABLE_ENTRY_NAME_NOT_CONTAINS");
+
+		echo("Commerce_Black_Edit is present");
 	}
 
 	@description = "This is a test for COMMERCE-6033. RemoveAnAttachment"

@@ -98,7 +98,7 @@ export const CollectionGeneralPanel = ({item}) => {
 			setNumberOfItemsError(
 				Number(event.target.value) < 1
 					? Liferay.Language.get(
-							'collection-display-pagination-requires-at-least-one-item'
+							'you-need-at-least-one-item-to-use-pagination'
 					  )
 					: null
 			);
@@ -127,7 +127,7 @@ export const CollectionGeneralPanel = ({item}) => {
 			setNumberOfItemsPerPageError(
 				Number(event.target.value) < 1
 					? Liferay.Language.get(
-							'collection-display-pagination-requires-at-least-one-item'
+							'you-need-at-least-one-item-to-use-pagination'
 					  )
 					: null
 			);
@@ -195,7 +195,9 @@ export const CollectionGeneralPanel = ({item}) => {
 		if (isMaximumValuePerPageError) {
 			setNumberOfItemsPerPageError(
 				Liferay.Util.sub(
-					Liferay.Language.get('only-x-items-will-be-displayed'),
+					Liferay.Language.get(
+						'you-can-only-display-a-maximum-of-x-items-per-page'
+					),
 					config.searchContainerPageMaxDelta
 				)
 			);
@@ -450,9 +452,7 @@ export const CollectionGeneralPanel = ({item}) => {
 									)}
 								</span>
 
-								{isMaximumValuePerPageError ? (
-									numberOfItemsPerPageError
-								) : (
+								{numberOfItemsPerPageError && (
 									<span className="d-block mb-2 mt-2 text-warning">
 										{numberOfItemsPerPageError}
 									</span>

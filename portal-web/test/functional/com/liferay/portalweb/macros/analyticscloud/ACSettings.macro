@@ -71,7 +71,7 @@ definition {
 				key_jobType = "${jobType}",
 				locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
 		}
-
+		
 		Click(
 			key_fieldType = "Find by Email",
 			locator1 = "ACDataControlAndPrivacy#DATA_ID");
@@ -87,9 +87,9 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-<<<<<<< HEAD
-<<<<<<< HEAD
+	}
 
+	macro assertRequestLog {
 		for (var emailAdress : list "${emailAdresses}",) {
 			if ("${jobType}" == "Delete") {
 				AssertElementPresent(
@@ -109,10 +109,6 @@ definition {
 					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
 			}
 		}
-=======
->>>>>>> c1eab9d (LRAC-8117 Fix macro createRequestLogByEmail)
-=======
->>>>>>> 7ba96b0 (LRAC-8117 Fix macro createRequestLogByEmail)
 	}
 
 	@summary = "Deletes all data source"

@@ -73,6 +73,18 @@ public interface UserAccountResource {
 	public Response postUserAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteUserAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public UserAccount getUserAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public UserAccount putUserAccountByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
+		throws Exception;
+
 	public void deleteUserAccount(Long userAccountId) throws Exception;
 
 	public Response deleteUserAccountBatch(String callbackURL, Object object)

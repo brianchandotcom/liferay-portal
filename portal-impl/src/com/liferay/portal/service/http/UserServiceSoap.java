@@ -106,6 +106,49 @@ public class UserServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.UserSoap addOrUpdateUser(
+			String externalReferenceCode, long creatorUserId, long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			String locale, String firstName, String middleName, String lastName,
+			long prefixId, long suffixId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String jobTitle,
+			com.liferay.portal.kernel.model.AddressSoap[] addresses,
+			com.liferay.portal.kernel.model.EmailAddressSoap[] emailAddresses,
+			com.liferay.portal.kernel.model.PhoneSoap[] phones,
+			com.liferay.portal.kernel.model.WebsiteSoap[] websites,
+			boolean sendEmail,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.User returnValue =
+				UserServiceUtil.addOrUpdateUser(
+					externalReferenceCode, creatorUserId, companyId,
+					autoPassword, password1, password2, autoScreenName,
+					screenName, emailAddress, LocaleUtil.fromLanguageId(locale),
+					firstName, middleName, lastName, prefixId, suffixId, male,
+					birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+					com.liferay.portal.model.impl.AddressModelImpl.toModels(
+						addresses),
+					com.liferay.portal.model.impl.EmailAddressModelImpl.
+						toModels(emailAddresses),
+					com.liferay.portal.model.impl.PhoneModelImpl.toModels(
+						phones),
+					com.liferay.portal.model.impl.WebsiteModelImpl.toModels(
+						websites),
+					sendEmail, serviceContext);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Assigns the password policy to the users, removing any other currently
 	 * assigned password policies.
@@ -1381,6 +1424,33 @@ public class UserServiceSoap {
 		try {
 			com.liferay.portal.kernel.model.User returnValue =
 				UserServiceUtil.getUserByEmailAddress(companyId, emailAddress);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * Returns the user with the external reference code.
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param externalReferenceCode the user's external reference code
+	 * @return the user with the external reference code
+	 */
+	public static com.liferay.portal.kernel.model.UserSoap
+			getUserByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.User returnValue =
+				UserServiceUtil.getUserByExternalReferenceCode(
+					companyId, externalReferenceCode);
 
 			return com.liferay.portal.kernel.model.UserSoap.toSoapModel(
 				returnValue);

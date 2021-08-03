@@ -192,6 +192,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccount.setAlternateName(regex);
 		userAccount.setDashboardURL(regex);
 		userAccount.setEmailAddress(regex);
+		userAccount.setExternalReferenceCode(regex);
 		userAccount.setFamilyName(regex);
 		userAccount.setGivenName(regex);
 		userAccount.setHonorificPrefix(regex);
@@ -211,6 +212,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		Assert.assertEquals(regex, userAccount.getAlternateName());
 		Assert.assertEquals(regex, userAccount.getDashboardURL());
 		Assert.assertEquals(regex, userAccount.getEmailAddress());
+		Assert.assertEquals(regex, userAccount.getExternalReferenceCode());
 		Assert.assertEquals(regex, userAccount.getFamilyName());
 		Assert.assertEquals(regex, userAccount.getGivenName());
 		Assert.assertEquals(regex, userAccount.getHonorificPrefix());
@@ -1164,6 +1166,173 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteUserAccountByExternalReferenceCode_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				deleteUserAccountByExternalReferenceCodeHttpResponse(
+					userAccount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				getUserAccountByExternalReferenceCodeHttpResponse(
+					userAccount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				getUserAccountByExternalReferenceCodeHttpResponse(
+					userAccount.getExternalReferenceCode()));
+	}
+
+	protected UserAccount
+			testDeleteUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetUserAccountByExternalReferenceCode() throws Exception {
+		UserAccount postUserAccount =
+			testGetUserAccountByExternalReferenceCode_addUserAccount();
+
+		UserAccount getUserAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				postUserAccount.getExternalReferenceCode());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount
+			testGetUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		UserAccount userAccount = testGraphQLUserAccount_addUserAccount();
+
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"userAccountByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												userAccount.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/userAccountByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetUserAccountByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"userAccountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutUserAccountByExternalReferenceCode() throws Exception {
+		UserAccount postUserAccount =
+			testPutUserAccountByExternalReferenceCode_addUserAccount();
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount putUserAccount =
+			userAccountResource.putUserAccountByExternalReferenceCode(
+				postUserAccount.getExternalReferenceCode(), randomUserAccount);
+
+		assertEquals(randomUserAccount, putUserAccount);
+		assertValid(putUserAccount);
+
+		UserAccount getUserAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				putUserAccount.getExternalReferenceCode());
+
+		assertEquals(randomUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+
+		UserAccount newUserAccount =
+			testPutUserAccountByExternalReferenceCode_createUserAccount();
+
+		putUserAccount =
+			userAccountResource.putUserAccountByExternalReferenceCode(
+				newUserAccount.getExternalReferenceCode(), newUserAccount);
+
+		assertEquals(newUserAccount, putUserAccount);
+		assertValid(putUserAccount);
+
+		getUserAccount =
+			userAccountResource.getUserAccountByExternalReferenceCode(
+				putUserAccount.getExternalReferenceCode());
+
+		assertEquals(newUserAccount, getUserAccount);
+
+		Assert.assertEquals(
+			newUserAccount.getExternalReferenceCode(),
+			putUserAccount.getExternalReferenceCode());
+	}
+
+	protected UserAccount
+			testPutUserAccountByExternalReferenceCode_createUserAccount()
+		throws Exception {
+
+		return randomUserAccount();
+	}
+
+	protected UserAccount
+			testPutUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteUserAccount() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
@@ -1466,6 +1635,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (userAccount.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("familyName", additionalAssertFieldName)) {
 				if (userAccount.getFamilyName() == null) {
 					valid = false;
@@ -1759,6 +1938,19 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getEmailAddress(),
 						userAccount2.getEmailAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getExternalReferenceCode(),
+						userAccount2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2155,6 +2347,14 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(userAccount.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("familyName")) {
 			sb.append("'");
 			sb.append(String.valueOf(userAccount.getFamilyName()));
@@ -2305,6 +2505,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				emailAddress =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				familyName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				givenName = StringUtil.toLowerCase(

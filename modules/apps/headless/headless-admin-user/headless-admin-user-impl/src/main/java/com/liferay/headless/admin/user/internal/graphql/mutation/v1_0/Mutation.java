@@ -390,6 +390,35 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean deleteUserAccountByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource ->
+				userAccountResource.deleteUserAccountByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public UserAccount updateUserAccountByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("userAccount") UserAccount userAccount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource ->
+				userAccountResource.putUserAccountByExternalReferenceCode(
+					externalReferenceCode, userAccount));
+	}
+
 	@GraphQLField(description = "Deletes the user account")
 	public boolean deleteUserAccount(
 			@GraphQLName("userAccountId") Long userAccountId)

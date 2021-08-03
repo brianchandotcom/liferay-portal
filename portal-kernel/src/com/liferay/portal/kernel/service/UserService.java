@@ -84,6 +84,18 @@ public interface UserService extends BaseService {
 	public void addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException;
 
+	public User addOrUpdateUser(
+			String externalReferenceCode, long creatorUserId, long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			Locale locale, String firstName, String middleName, String lastName,
+			long prefixId, long suffixId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String jobTitle,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<Phone> phones, List<Website> websites, boolean sendEmail,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Assigns the password policy to the users, removing any other currently
 	 * assigned password policies.
@@ -818,6 +830,18 @@ public interface UserService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User getUserByEmailAddress(long companyId, String emailAddress)
+		throws PortalException;
+
+	/**
+	 * Returns the user with the external reference code.
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param externalReferenceCode the user's external reference code
+	 * @return the user with the external reference code
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public User getUserByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

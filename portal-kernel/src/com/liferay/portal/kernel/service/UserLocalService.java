@@ -161,6 +161,16 @@ public interface UserLocalService
 	public void addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException;
 
+	public User addOrUpdateUser(
+			String externalReferenceCode, long creatorUserId, long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			Locale locale, String firstName, String middleName, String lastName,
+			long prefixId, long suffixId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String jobTitle,
+			boolean sendEmail, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Assigns the password policy to the users, removing any other currently
 	 * assigned password policies.

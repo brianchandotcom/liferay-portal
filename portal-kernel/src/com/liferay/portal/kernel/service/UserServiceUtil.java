@@ -67,6 +67,29 @@ public class UserServiceUtil {
 		getService().addOrganizationUsers(organizationId, userIds);
 	}
 
+	public static User addOrUpdateUser(
+			String externalReferenceCode, long creatorUserId, long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			java.util.Locale locale, String firstName, String middleName,
+			String lastName, long prefixId, long suffixId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle,
+			List<com.liferay.portal.kernel.model.Address> addresses,
+			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+			List<com.liferay.portal.kernel.model.Phone> phones,
+			List<com.liferay.portal.kernel.model.Website> websites,
+			boolean sendEmail, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateUser(
+			externalReferenceCode, creatorUserId, companyId, autoPassword,
+			password1, password2, autoScreenName, screenName, emailAddress,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, addresses,
+			emailAddresses, phones, websites, sendEmail, serviceContext);
+	}
+
 	/**
 	 * Assigns the password policy to the users, removing any other currently
 	 * assigned password policies.
@@ -952,6 +975,21 @@ public class UserServiceUtil {
 		throws PortalException {
 
 		return getService().getUserByEmailAddress(companyId, emailAddress);
+	}
+
+	/**
+	 * Returns the user with the external reference code.
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param externalReferenceCode the user's external reference code
+	 * @return the user with the external reference code
+	 */
+	public static User getUserByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getUserByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

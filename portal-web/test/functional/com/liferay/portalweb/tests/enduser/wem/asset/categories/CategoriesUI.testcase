@@ -131,6 +131,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-118305. The user could change the maximum number of categories per vocabuary."
+	@priority = "5"
+	@uitest
+	test ConfigureMaximumNumberOfCategoriesPerVocabulary {
+		property test.name.skip.portal.instance = "CategoriesUI#ConfigureMaximumNumberOfCategoriesPerVocabulary";
+
+		task ("Change the Maximum Number of Categories per Vocabulary in System Settings") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Categorization",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.editTextSetting(
+				settingName = "Maximum Number of Categories per Vocabulary",
+				settingValue = "300");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Navigate to the Categories admin") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the Maximum Number of categories of existing vocabularies is 300") {
+			for (var vocabularyName : list "Topic,Audience,Stage") {
+				Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+				AssertVisible(
+					assetTitle = "${vocabularyName}",
+					info = "The maximum number of categories per vocabulary is 300.",
+					locator1 = "Message#ASSET_INFO");
+			}
+		}
+
+		task ("Add a new vocabulary") {
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the Maximum Number of categories of new vocabulary is 300") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name",
+				info = "The maximum number of categories per vocabulary is 300.",
+				locator1 = "Message#ASSET_INFO");
+		}
+	}
+
 	@description = "Delete a category by icon."
 	@priority = "5"
 	@uitest

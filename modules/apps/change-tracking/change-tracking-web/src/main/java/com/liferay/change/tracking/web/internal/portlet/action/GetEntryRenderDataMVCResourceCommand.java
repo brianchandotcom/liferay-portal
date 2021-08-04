@@ -39,8 +39,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -48,6 +46,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -108,13 +108,13 @@ public class GetEntryRenderDataMVCResourceCommand
 	}
 
 	private <T extends BaseModel<T>> String _getContent(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		CTDisplayRenderer<T> ctDisplayRenderer, T model) {
+		CTDisplayRenderer<T> ctDisplayRenderer,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Locale locale, T model) {
 
 		try {
 			return ctDisplayRenderer.getContent(
-				liferayPortletRequest, liferayPortletResponse, model);
+				httpServletRequest, httpServletResponse, locale, model);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -148,20 +148,14 @@ public class GetEntryRenderDataMVCResourceCommand
 			changeType = "deleted";
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
-			"changeType", changeType
-		).put(
-			"content", ctDisplayRenderer.hasContent()
-		);
+		JSONObject jsonObject = JSONUtil.put("changeType", changeType);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(resourceRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(resourceResponse);
+
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		long rightCtCollectionId = ctCollection.getCtCollectionId();
 		String rightContent = null;
@@ -201,22 +195,24 @@ public class GetEntryRenderDataMVCResourceCommand
 					}
 				}
 
+				rightContent = _getContent(
+					ctDisplayRenderer, httpServletRequest, httpServletResponse,
+					locale, rightModel);
+
+				if (rightContent != null) {
+					jsonObject.put(
+						"content", true
+					).put(
+						"rightContent", rightContent
+					);
+				}
+
 				rightRender = _getRender(
 					httpServletRequest, httpServletResponse,
 					rightCtCollectionId, ctDisplayRenderer, ctEntryId,
 					ctSQLMode, rightModel, CTConstants.TYPE_AFTER);
 
 				jsonObject.put("rightRender", rightRender);
-
-				if (ctDisplayRenderer.hasContent()) {
-					rightContent = _getContent(
-						liferayPortletRequest, liferayPortletResponse,
-						ctDisplayRenderer, rightModel);
-
-					if (rightContent != null) {
-						jsonObject.put("rightContent", rightContent);
-					}
-				}
 			}
 		}
 
@@ -265,21 +261,23 @@ public class GetEntryRenderDataMVCResourceCommand
 							_language.get(httpServletRequest, "publication"),
 							")"));
 
-					if (ctDisplayRenderer.hasContent()) {
-						String leftContent = _getPreviousContent(
-							liferayPortletRequest, liferayPortletResponse,
-							ctDisplayRenderer, rightModel, leftModel);
+					String leftContent = _getContent(
+						ctDisplayRenderer, httpServletRequest,
+						httpServletResponse, locale, leftModel);
 
-						if (leftContent != null) {
-							jsonObject.put("leftContent", leftContent);
+					if (leftContent != null) {
+						jsonObject.put(
+							"content", true
+						).put(
+							"leftContent", leftContent
+						);
 
-							if (rightContent != null) {
-								jsonObject.put(
-									"unifiedContent",
-									DiffHtmlUtil.diff(
-										new UnsyncStringReader(leftContent),
-										new UnsyncStringReader(rightContent)));
-							}
+						if (rightContent != null) {
+							jsonObject.put(
+								"unifiedContent",
+								DiffHtmlUtil.diff(
+									new UnsyncStringReader(leftContent),
+									new UnsyncStringReader(rightContent)));
 						}
 					}
 
@@ -322,23 +320,16 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassPK());
 
 			if (leftModel != null) {
-				String leftContent = null;
-
-				if (ctDisplayRenderer.hasContent()) {
-					if (rightModel != null) {
-						leftContent = _getPreviousContent(
-							liferayPortletRequest, liferayPortletResponse,
-							ctDisplayRenderer, rightModel, leftModel);
-					}
-					else {
-						leftContent = _getContent(
-							liferayPortletRequest, liferayPortletResponse,
-							ctDisplayRenderer, leftModel);
-					}
-				}
+				String leftContent = _getContent(
+					ctDisplayRenderer, httpServletRequest, httpServletResponse,
+					locale, leftModel);
 
 				if (leftContent != null) {
-					jsonObject.put("leftContent", leftContent);
+					jsonObject.put(
+						"content", true
+					).put(
+						"leftContent", leftContent
+					);
 
 					if (rightContent != null) {
 						jsonObject.put(
@@ -367,24 +358,6 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		return jsonObject;
-	}
-
-	private <T extends BaseModel<T>> String _getPreviousContent(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		CTDisplayRenderer<T> ctDisplayRenderer, T currentModel,
-		T previousModel) {
-
-		try {
-			return ctDisplayRenderer.getPreviousContent(
-				liferayPortletRequest, liferayPortletResponse, currentModel,
-				previousModel);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-
-		return null;
 	}
 
 	private <T extends BaseModel<T>> JSONObject

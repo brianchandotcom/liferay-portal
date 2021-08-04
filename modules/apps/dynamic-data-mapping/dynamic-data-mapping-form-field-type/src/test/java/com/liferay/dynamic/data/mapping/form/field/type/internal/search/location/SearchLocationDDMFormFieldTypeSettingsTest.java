@@ -111,10 +111,11 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(visibleFieldsDDMFormField);
 		Assert.assertNotNull(visibleFieldsDDMFormField.getLabel());
+		Assert.assertNotNull(
+			visibleFieldsDDMFormField.getProperty("initialValue"));
 		Assert.assertEquals(
 			"multi_language_option_select",
 			visibleFieldsDDMFormField.getType());
-		Assert.assertNotNull(visibleFieldsDDMFormField.getPredefinedValue());
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 

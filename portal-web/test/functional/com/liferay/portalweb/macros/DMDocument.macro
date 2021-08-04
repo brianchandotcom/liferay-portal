@@ -1966,6 +1966,42 @@ definition {
 			locator1 = "DDMField#COLOR_PICKER");
 	}
 
+	macro setExpirationDate {
+		Panel.expandPanel(panel = "Expiration Date");
+
+		if (isSet(enableExpirationDate)) {
+			Uncheck(
+				checkboxName = "Never Expire",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
+		var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+
+		if (isSet(increaseMinutes)) {
+			var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
+		}
+
+		var expirationDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
+
+		var expirationDateTime = "${displayDateHour}:${displayDateMinute}";
+
+		Type(
+			locator1 = "TextInput#EXPIRATION_DATE",
+			value1 = "${expirationDate}");
+
+		Type(
+			locator1 = "TextInput#EXPIRATION_DATE_TIME",
+			value1 = "${expirationDateTime}");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro setReviewDate {
 		Panel.expandPanel(panel = "Expiration Date");
 
@@ -2387,7 +2423,7 @@ definition {
 		}
 	}
 
-	macro viewDefaultCP {
+	macro viewDefault {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC");
 
 		AssertTextEquals(

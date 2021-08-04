@@ -44,10 +44,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Lourdes Fernández Besada
  */
-public class TemplateManagementToolbarDisplayContext
+public abstract class BaseTemplateManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public TemplateManagementToolbarDisplayContext(
+	public BaseTemplateManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -212,7 +212,7 @@ public class TemplateManagementToolbarDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TemplateManagementToolbarDisplayContext.class);
+		BaseTemplateManagementToolbarDisplayContext.class);
 
 	private final TemplateDisplayContext _templateDisplayContext;
 	private final ThemeDisplay _themeDisplay;

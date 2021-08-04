@@ -108,19 +108,25 @@ public class GetEntryRenderDataMVCResourceCommand
 	}
 
 	private <T extends BaseModel<T>> String _getContent(
-		CTDisplayRenderer<T> ctDisplayRenderer,
+		long ctCollectionId, CTDisplayRenderer<T> ctDisplayRenderer,
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Locale locale, T model) {
 
-		try {
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId);
+			SafeCloseable safeCloseable2 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
+
 			return ctDisplayRenderer.getContent(
 				httpServletRequest, httpServletResponse, locale, model);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-		}
 
-		return null;
+			return null;
+		}
 	}
 
 	private <T extends BaseModel<T>> JSONObject _getCTEntryRenderDataJSONObject(
@@ -157,7 +163,6 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		long rightCtCollectionId = ctCollection.getCtCollectionId();
 		String rightContent = null;
 		String rightRender = null;
 		T rightModel = null;
@@ -169,17 +174,19 @@ public class GetEntryRenderDataMVCResourceCommand
 					_language.get(httpServletRequest, "publication"), ": ",
 					ctCollection.getName()));
 
+			long ctCollectionId = ctCollection.getCtCollectionId();
+
 			if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				rightCtCollectionId =
-					_ctEntryLocalService.getCTRowCTCollectionId(ctEntry);
+				ctCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
+					ctEntry);
 			}
 
 			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
 				_ctDisplayRendererRegistry.getCTSQLMode(
-					rightCtCollectionId, ctEntry);
+					ctCollectionId, ctEntry);
 
 			rightModel = _ctDisplayRendererRegistry.fetchCTModel(
-				rightCtCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
+				ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
 				ctEntry.getModelClassPK());
 
 			if (rightModel != null) {
@@ -196,25 +203,32 @@ public class GetEntryRenderDataMVCResourceCommand
 				}
 
 				rightContent = _getContent(
-					ctDisplayRenderer, httpServletRequest, httpServletResponse,
-					locale, rightModel);
+					ctCollectionId, ctDisplayRenderer, ctSQLMode,
+					httpServletRequest, httpServletResponse, locale,
+					rightModel);
 
 				if (rightContent != null) {
-					jsonObject.put(
-						"content", true
-					).put(
-						"rightContent", rightContent
-					);
+					jsonObject.put("rightContent", rightContent);
 				}
 
 				rightRender = _getRender(
-					httpServletRequest, httpServletResponse,
-					rightCtCollectionId, ctDisplayRenderer, ctEntryId,
-					ctSQLMode, rightModel, CTConstants.TYPE_AFTER);
+					httpServletRequest, httpServletResponse, ctCollectionId,
+					ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
+					CTConstants.TYPE_AFTER);
 
 				jsonObject.put("rightRender", rightRender);
 			}
 		}
+
+		long leftCtCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			leftCtCollectionId = ctEntry.getCtCollectionId();
+		}
+
+		CTSQLModeThreadLocal.CTSQLMode leftCTSQLMode =
+			_ctDisplayRendererRegistry.getCTSQLMode(
+				leftCtCollectionId, ctEntry);
 
 		if ((ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) &&
 			(rightModel != null)) {
@@ -225,10 +239,13 @@ public class GetEntryRenderDataMVCResourceCommand
 			if (Validator.isNotNull(rightVersionName)) {
 				T leftModel = null;
 
-				try (SafeCloseable safeCloseable =
+				try (SafeCloseable safeCloseable1 =
 						CTCollectionThreadLocal.
 							setCTCollectionIdWithSafeCloseable(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+								leftCtCollectionId);
+					SafeCloseable safeCloseable2 =
+						CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
+							leftCTSQLMode)) {
 
 					leftModel = ctDisplayRenderer.fetchLatestVersionedModel(
 						rightModel);
@@ -262,15 +279,12 @@ public class GetEntryRenderDataMVCResourceCommand
 							")"));
 
 					String leftContent = _getContent(
-						ctDisplayRenderer, httpServletRequest,
-						httpServletResponse, locale, leftModel);
+						leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
+						httpServletRequest, httpServletResponse, locale,
+						leftModel);
 
 					if (leftContent != null) {
-						jsonObject.put(
-							"content", true
-						).put(
-							"leftContent", leftContent
-						);
+						jsonObject.put("leftContent", leftContent);
 
 						if (rightContent != null) {
 							jsonObject.put(
@@ -283,9 +297,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 					String leftRender = _getRender(
 						httpServletRequest, httpServletResponse,
-						rightCtCollectionId, ctDisplayRenderer, ctEntryId,
-						CTSQLModeThreadLocal.CTSQLMode.DEFAULT, leftModel,
-						CTConstants.TYPE_AFTER);
+						leftCtCollectionId, ctDisplayRenderer, ctEntryId,
+						leftCTSQLMode, leftModel, CTConstants.TYPE_AFTER);
 
 					jsonObject.put("leftRender", leftRender);
 
@@ -305,31 +318,17 @@ public class GetEntryRenderDataMVCResourceCommand
 			jsonObject.put(
 				"leftTitle", _language.get(httpServletRequest, "production"));
 
-			long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-
-			if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				ctCollectionId = ctEntry.getCtCollectionId();
-			}
-
-			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-				_ctDisplayRendererRegistry.getCTSQLMode(
-					ctCollectionId, ctEntry);
-
 			T leftModel = _ctDisplayRendererRegistry.fetchCTModel(
-				ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
-				ctEntry.getModelClassPK());
+				leftCtCollectionId, leftCTSQLMode,
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 			if (leftModel != null) {
 				String leftContent = _getContent(
-					ctDisplayRenderer, httpServletRequest, httpServletResponse,
-					locale, leftModel);
+					leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
+					httpServletRequest, httpServletResponse, locale, leftModel);
 
 				if (leftContent != null) {
-					jsonObject.put(
-						"content", true
-					).put(
-						"leftContent", leftContent
-					);
+					jsonObject.put("leftContent", leftContent);
 
 					if (rightContent != null) {
 						jsonObject.put(
@@ -341,8 +340,8 @@ public class GetEntryRenderDataMVCResourceCommand
 				}
 
 				String leftRender = _getRender(
-					httpServletRequest, httpServletResponse, ctCollectionId,
-					ctDisplayRenderer, ctEntryId, ctSQLMode, leftModel,
+					httpServletRequest, httpServletResponse, leftCtCollectionId,
+					ctDisplayRenderer, ctEntryId, leftCTSQLMode, leftModel,
 					CTConstants.TYPE_BEFORE);
 
 				jsonObject.put("leftRender", leftRender);

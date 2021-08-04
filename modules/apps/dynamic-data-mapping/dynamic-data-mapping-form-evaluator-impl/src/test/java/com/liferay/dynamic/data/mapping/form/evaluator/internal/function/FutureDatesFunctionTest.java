@@ -49,9 +49,7 @@ public class FutureDatesFunctionTest {
 
 	@Test
 	public void testApplyFalse1() {
-		LocalDate todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
-
-		LocalDate yesterdayLocalDate = todayLocalDate.minusDays(1);
+		LocalDate yesterdayLocalDate = _todayLocalDate.minusDays(1);
 
 		Assert.assertFalse(
 			_futureDatesFunction.apply(
@@ -72,10 +70,33 @@ public class FutureDatesFunctionTest {
 	}
 
 	@Test
-	public void testApplyTrue() {
-		LocalDate todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
+	public void testApplyFalseCustomDays() {
+		Assert.assertFalse(_apply(_todayLocalDate.minusDays(14), "days", -12));
+		Assert.assertFalse(_apply(_todayLocalDate.plusDays(10), "days", 12));
+		Assert.assertFalse(_apply(_todayLocalDate.plusDays(11), "days", 12));
+	}
 
-		LocalDate tomorrowLocalDate = todayLocalDate.plusDays(1);
+	@Test
+	public void testApplyFalseCustomMonths() {
+		Assert.assertFalse(
+			_apply(_todayLocalDate.minusMonths(14), "months", -12));
+		Assert.assertFalse(
+			_apply(_todayLocalDate.plusMonths(10), "months", 12));
+		Assert.assertFalse(
+			_apply(_todayLocalDate.plusMonths(11), "months", 12));
+	}
+
+	@Test
+	public void testApplyFalseCustomYears() {
+		Assert.assertFalse(
+			_apply(_todayLocalDate.minusYears(14), "years", -12));
+		Assert.assertFalse(_apply(_todayLocalDate.plusYears(10), "years", 12));
+		Assert.assertFalse(_apply(_todayLocalDate.plusYears(11), "years", 12));
+	}
+
+	@Test
+	public void testApplyTrue() {
+		LocalDate tomorrowLocalDate = _todayLocalDate.plusDays(1);
 
 		Assert.assertTrue(
 			_futureDatesFunction.apply(
@@ -83,6 +104,46 @@ public class FutureDatesFunctionTest {
 				JSONUtil.put(
 					"startsFrom", JSONUtil.put("type", "responseDate")
 				).toString()));
+	}
+
+	@Test
+	public void testApplyTrueCustomDays() {
+		Assert.assertTrue(_apply(_todayLocalDate.minusDays(10), "days", -12));
+		Assert.assertTrue(_apply(_todayLocalDate.plusDays(14), "days", 12));
+		Assert.assertTrue(_apply(_todayLocalDate.plusDays(999), "days", 999));
+	}
+
+	@Test
+	public void testApplyTrueCustomMonths() {
+		Assert.assertTrue(
+			_apply(_todayLocalDate.minusMonths(10), "months", -12));
+		Assert.assertTrue(_apply(_todayLocalDate.plusMonths(14), "months", 12));
+		Assert.assertTrue(
+			_apply(_todayLocalDate.plusMonths(999), "months", 999));
+	}
+
+	@Test
+	public void testApplyTrueCustomYears() {
+		Assert.assertTrue(_apply(_todayLocalDate.minusYears(10), "years", -12));
+		Assert.assertTrue(_apply(_todayLocalDate.plusYears(14), "years", 12));
+		Assert.assertTrue(_apply(_todayLocalDate.plusYears(999), "years", 999));
+	}
+
+	private Boolean _apply(LocalDate localDate, String unit, int quantity) {
+		return _futureDatesFunction.apply(
+			localDate.toString(),
+			JSONUtil.put(
+				"startsFrom",
+				JSONUtil.put(
+					"date", "responseDate"
+				).put(
+					"quantity", quantity
+				).put(
+					"type", "customDate"
+				).put(
+					"unit", unit
+				)
+			).toString());
 	}
 
 	private void _setUpDateFormatFactoryUtil() {
@@ -94,5 +155,6 @@ public class FutureDatesFunctionTest {
 
 	private final FutureDatesFunction _futureDatesFunction =
 		new FutureDatesFunction();
+	private final LocalDate _todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
 
 }

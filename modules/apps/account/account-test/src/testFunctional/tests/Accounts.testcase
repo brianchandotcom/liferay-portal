@@ -26,8 +26,6 @@ definition {
 	@priority = "4"
 	test AccountsDisplayWhenChangingPagination {
 		for (var accountNum : list "1,2,3,4,5,6") {
-			Accounts.openAccountsAdmin();
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Accounts Name ${accountNum}",
 				accountEntryType = "Business");
@@ -194,11 +192,13 @@ definition {
 				orgType = "Organization");
 		}
 
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with Organization",
 			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
 
 		Accounts.assignMultipleOrganizations(
 			accountName = "Account with Organization",
@@ -305,11 +305,13 @@ definition {
 			organizationName = "Organization for Account",
 			organizationSite = "true");
 
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with Organization",
 			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
 
 		Accounts.assignOrganizations(
 			accountName = "Account with Organization",
@@ -329,11 +331,13 @@ definition {
 	test CanChangeAddressType {
 		property portal.acceptance = "true";
 
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Change Account Address Type",
 			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Change Account Address Type");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -400,8 +404,6 @@ definition {
 		property portal.acceptance = "true";
 
 		for (var accountNumber : list "1,2,3") {
-			Accounts.openAccountsAdmin();
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Accounts Name ${accountNumber} for Test",
 				accountEntryType = "Business");
@@ -434,8 +436,6 @@ definition {
 	@priority = "4"
 	test CanDeactivateAndActivateAccountsInBulk {
 		for (var accountNumber : list "1,2,3,4,5,6") {
-			Accounts.openAccountsAdmin();
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account ${accountNumber}",
 				accountEntryType = "Business");
@@ -494,8 +494,6 @@ definition {
 		property portal.acceptance = "true";
 
 		for (var accountNumber : list "1,2,3") {
-			Accounts.openAccountsAdmin();
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Delete Accounts Name ${accountNumber} for Test",
 				accountEntryType = "Business");
@@ -536,8 +534,6 @@ definition {
 	@priority = "3"
 	test CanDeleteAccountsInBulk {
 		for (var accountNumber : list "1,2,3") {
-			Accounts.openAccountsAdmin();
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account ${accountNumber}",
 				accountEntryType = "Business");
@@ -581,11 +577,13 @@ definition {
 	@description = "This test asserts address deletes successfully."
 	@priority = "3"
 	test CanDeleteAddress {
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Delete Address",
 			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Delete Address");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -789,8 +787,6 @@ definition {
 	@description = "This test asserts accounts are filtered by All Accounts by default. Changing filter to Business and Person shows accurate results."
 	@priority = "3"
 	test CanFilterAccountsByType {
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
@@ -823,11 +819,13 @@ definition {
 	@description = "This test adds an address, sets it as default, and removes it as default"
 	@priority = "3"
 	test CanRemoveAddressAsDefault {
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Remove Address",
 			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -954,11 +952,13 @@ definition {
 			organizationName = "Organization for Account",
 			organizationSite = "true");
 
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Unassign Organization from Account",
 			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Unassign Organization from Account");
 
 		Accounts.assignOrganizations(
 			accountName = "Unassign Organization from Account",
@@ -1018,8 +1018,6 @@ definition {
 	@description = "This test removes multiple users from an account in bulk via management toolbar"
 	@priority = "3"
 	test CanRemoveUsersFromAccountsInBulk {
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
@@ -1317,8 +1315,6 @@ definition {
 	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
 	@priority = "3"
 	test NoFilterByNavigationForPersonAccount {
-		Accounts.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
@@ -1407,8 +1403,6 @@ definition {
 	@priority = "5"
 	test SelectingUserWillReplaceExistingUserInPersonAccount {
 		property portal.acceptance = "true";
-
-		Accounts.openAccountsAdmin();
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
@@ -1530,8 +1524,6 @@ definition {
 		Accounts.addAccountWithDomain(
 			accountName = "Account with Domain",
 			domainNames = "liferay.com");
-
-		Navigator.gotoBack();
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account no Domain",

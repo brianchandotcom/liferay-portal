@@ -292,6 +292,47 @@ public class FileEntryContentDashboardItemTest {
 	}
 
 	@Test
+	public void testGetSize() {
+		FileEntry fileEntry = _getFileEntry();
+		long sizeTest = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			fileEntry.getSize()
+		).thenReturn(
+			sizeTest
+		);
+
+		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
+			Mockito.mock(InfoItemFieldValuesProvider.class);
+
+		Mockito.when(
+			infoItemFieldValuesProvider.getInfoItemFieldValues(fileEntry)
+		).thenReturn(
+			InfoItemFieldValues.builder(
+			).infoFieldValue(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						DateInfoFieldType.INSTANCE
+					).name(
+						"size"
+					).labelInfoLocalizedValue(
+						null
+					).build(),
+					sizeTest)
+			).build()
+		);
+
+		FileEntryContentDashboardItem fileEntryContentDashboardItem =
+			new FileEntryContentDashboardItem(
+				null, null, null, null, fileEntry, null,
+				infoItemFieldValuesProvider, null, null);
+
+		Assert.assertEquals(
+			String.valueOf(sizeTest), fileEntryContentDashboardItem.getSize());
+	}
+
+	@Test
 	public void testGetSubtype() {
 		FileEntry fileEntry = _getFileEntry();
 

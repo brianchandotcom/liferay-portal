@@ -489,9 +489,15 @@ export class A11yChecker {
 	 * Modal, we need to monitor iframes as they appear during their lifecycle.
 	 */
 	private observeIframes(node: Node) {
-		const iframes = (node as Element).querySelectorAll('iframe');
 
-		iframes.forEach((iframe) =>
+		// The Node can be a text element without properties or attributes, we
+		// just ignored it for this case.
+
+		const iframes = (node as Element).querySelectorAll
+			? (node as Element).querySelectorAll('iframe')
+			: [];
+
+		iframes.forEach((iframe: HTMLIFrameElement) =>
 			this.observers.add(`#${iframe.getAttribute('id')}`)
 		);
 	}

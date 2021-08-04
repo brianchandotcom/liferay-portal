@@ -95,15 +95,15 @@ definition {
 
 		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
-			accountUserName = "userfn1",
 			userEmailAddress = "userfn1@liferay.com",
+			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
 		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
-			accountUserName = "userfn2",
 			userEmailAddress = "userfn2@liferay.com",
+			userFirstName = "userfn2",
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 

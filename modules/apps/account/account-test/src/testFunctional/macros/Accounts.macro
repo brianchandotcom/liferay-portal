@@ -293,7 +293,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertElementPresent(
-			key_userName = "${accountUserName}",
+			key_userName = "${userFirstName}",
 			locator1 = "Account#USER_TABLE_NAME");
 
 		Button.clickSave();
@@ -301,7 +301,7 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertElementPresent(
-			key_userName = "${accountUserName}",
+			key_userName = "${userFirstName}",
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 

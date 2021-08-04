@@ -664,6 +664,42 @@ public class LayoutReferencesExportImportContentProcessor
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_COMPANY_URL, companyPortalURL);
 
+		String virtualHostPrivateLayoutFriendlyURLReplacement =
+			StringPool.BLANK;
+		String virtualHostPublicLayoutFriendlyURLReplacement = StringPool.BLANK;
+
+		TreeMap<String, String> privateVirtualHostnames =
+			privateLayoutSet.getVirtualHostnames();
+
+		if (privateVirtualHostnames.isEmpty()) {
+			if (group.isUser()) {
+				virtualHostPrivateLayoutFriendlyURLReplacement =
+					PropsValues.
+						LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
+			}
+			else {
+				virtualHostPrivateLayoutFriendlyURLReplacement =
+					PropsValues.
+						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
+			}
+
+			virtualHostPrivateLayoutFriendlyURLReplacement +=
+				group.getFriendlyURL();
+		}
+
+		TreeMap<String, String> publicVirtualHostnames =
+			publicLayoutSet.getVirtualHostnames();
+
+		if (publicVirtualHostnames.isEmpty() &&
+			!StringUtil.equals(
+				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME,
+				group.getGroupKey())) {
+
+			virtualHostPublicLayoutFriendlyURLReplacement =
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+					group.getFriendlyURL();
+		}
+
 		// Group friendly URLs
 
 		while (true) {
@@ -761,6 +797,12 @@ public class LayoutReferencesExportImportContentProcessor
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_SITE_ADMIN_URL, sb.toString());
+		content = StringUtil.replace(
+			content, _DATA_HANDLER_VIRTUAL_HOST_PRIVATE_LAYOUT_FRIENDLY_URL,
+			virtualHostPrivateLayoutFriendlyURLReplacement);
+		content = StringUtil.replace(
+			content, _DATA_HANDLER_VIRTUAL_HOST_PUBLIC_LAYOUT_FRIENDLY_URL,
+			virtualHostPublicLayoutFriendlyURLReplacement);
 
 		return content;
 	}

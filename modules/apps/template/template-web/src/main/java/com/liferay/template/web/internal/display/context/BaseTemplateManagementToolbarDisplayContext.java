@@ -172,21 +172,19 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 	}
 
 	protected boolean containsAddPortletDisplayTemplatePermission(
-		long classNameId) {
+		String resourceName, String actionId) {
 
 		try {
 			return PortletPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
-				templateDisplayContext.getResourceName(classNameId),
-				templateDisplayContext.getAddPermissionActionId(), false,
-				false);
+				resourceName, actionId, false, false);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to check permission for resource name " +
-						templateDisplayContext.getResourceName(classNameId),
+						resourceName,
 					portalException);
 			}
 		}

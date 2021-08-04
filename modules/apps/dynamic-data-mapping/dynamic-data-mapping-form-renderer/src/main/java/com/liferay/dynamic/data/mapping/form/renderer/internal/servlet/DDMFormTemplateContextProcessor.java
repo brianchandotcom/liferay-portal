@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -127,6 +128,8 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getString("numericInputMask"), ddmFormField);
 		setDDMFormFieldOptions(
 			jsonObject.getJSONArray("options"), ddmFormField);
+		setDDMFormFieldPredefinedValue(
+			jsonObject.getString("predefinedValue"), ddmFormField);
 		setDDMFormFieldPlaceholder(
 			jsonObject.getString("placeholder"), ddmFormField);
 		setDDMFormFieldProperty(
@@ -383,6 +386,18 @@ public class DDMFormTemplateContextProcessor {
 		ddmFormField.setProperty(
 			"placeholder",
 			getLocalizedValue(GetterUtil.getString(placeholder)));
+	}
+
+	protected void setDDMFormFieldPredefinedValue(
+		String predefinedValue, DDMFormField ddmFormField) {
+
+		if (Validator.isNull(predefinedValue)) {
+			return;
+		}
+
+		ddmFormField.setProperty(
+			"predefinedValue",
+			getLocalizedValue(GetterUtil.getString(predefinedValue)));
 	}
 
 	protected void setDDMFormFieldProperty(

@@ -38,9 +38,6 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.tools.service.builder.test.model.CacheMissEntry;
 import com.liferay.portal.tools.service.builder.test.service.persistence.CacheMissEntryPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.CacheMissEntryUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
@@ -55,6 +52,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Minhchau Dang
@@ -75,20 +77,26 @@ public class CacheMissPersistenceImplTest {
 	public static void setUpClass() throws Exception {
 		_persistence = CacheMissEntryUtil.getPersistence();
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			CacheMissPersistenceImplTest.class);
 
-		_serviceRegistration = registry.registerService(
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
 			CTService.class,
 			new CTService<CacheMissEntry>() {
 
+				@Override
 				public CTPersistence<CacheMissEntry> getCTPersistence() {
 					return _persistence;
 				}
 
+				@Override
 				public Class<CacheMissEntry> getModelClass() {
 					return CacheMissEntry.class;
 				}
 
+				@Override
 				public <R, E extends Throwable> R updateWithUnsafeFunction(
 					UnsafeFunction<CTPersistence<CacheMissEntry>, R, E>
 						updateUnsafeFunction) {
@@ -96,7 +104,8 @@ public class CacheMissPersistenceImplTest {
 					return null;
 				}
 
-			});
+			},
+			null);
 	}
 
 	@AfterClass

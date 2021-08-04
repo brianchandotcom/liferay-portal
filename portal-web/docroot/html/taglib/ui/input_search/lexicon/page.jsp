@@ -35,19 +35,17 @@ String value = ParamUtil.getString(request, name);
 %>
 
 <div class="<%= cssClass %> input-group lfr-input-search">
-	<div class="input-group-item input-group-prepend">
-		<label class="hide-accessible" for="<%= namespace + id %>"><%= title %></label>
+	<div class="input-group-item">
+		<input aria-label="<%= title %>" class="form-control <%= showButton ? "input-group-inset input-group-inset-after" : null %> search-query" data-qa-id="searchInput" id="<%= namespace + id %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
 
-		<input class="form-control search-query" data-qa-id="searchInput" id="<%= namespace + id %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
+		<c:if test="<%= showButton %>">
+			<div class="input-group-inset-item input-group-inset-item-after">
+				<button class="btn btn-unstyled" data-qa-id="searchButton" type="submit">
+					<aui:icon image="search" markupView="lexicon" />
+				</button>
+			</div>
+		</c:if>
 	</div>
-
-	<c:if test="<%= showButton %>">
-		<div class="input-group-append input-group-item input-group-item-shrink">
-			<button class="btn btn-monospaced btn-secondary" data-qa-id="searchButton" type="submit">
-				<aui:icon image="search" markupView="lexicon" />
-			</button>
-		</div>
-	</c:if>
 </div>
 
 <c:if test="<%= autoFocus %>">

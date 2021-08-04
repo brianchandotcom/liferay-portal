@@ -770,11 +770,9 @@ definition {
 		task ("Assert can change master from Blank to custom master") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
-
-			MenuItem.click(menuItem = "Configure");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
@@ -823,11 +821,9 @@ definition {
 		task ("Assert can change master from custom master to Blank") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
-
-			MenuItem.click(menuItem = "Configure");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 

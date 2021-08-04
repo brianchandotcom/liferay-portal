@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:icon
-	id="importStructureIcon"
+	id="importDataDefinitionIcon"
 	message="import-structure"
-	onClick='<%= liferayPortletResponse.getNamespace() + "openImportStructureModal();" %>'
+	onClick='<%= liferayPortletResponse.getNamespace() + "openImportDataDefinitionModal();" %>'
 	url="javascript:;"
 />
 
 <div>
 	<react:component
-		module="js/modals/ImportStructureModal"
+		module="js/modals/ImportDataDefinitionModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"importDataDefinitionURL",
@@ -42,11 +42,11 @@
 </div>
 
 <aui:script>
-	function <portlet:namespace />openImportStructureModal() {
-		Liferay.componentReady('<portlet:namespace />importStructureModal').then(
-			(importStructureModal) => {
-				importStructureModal.open();
-			}
-		);
+	function <portlet:namespace />openImportDataDefinitionModal() {
+		Liferay.componentReady(
+			'<portlet:namespace />importDataDefinitionModal'
+		).then((importDataDefinitionModal) => {
+			importDataDefinitionModal.open();
+		});
 	}
 </aui:script>

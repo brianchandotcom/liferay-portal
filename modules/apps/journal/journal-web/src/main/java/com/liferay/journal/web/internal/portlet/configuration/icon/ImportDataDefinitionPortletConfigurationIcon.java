@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.web.internal.configuration.FFImportStructureConfiguration;
+import com.liferay.journal.web.internal.configuration.FFImportDataDefinitionConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  */
 @Component(
-	configurationPid = "com.liferay.journal.web.internal.configuration.FFImportStructureConfiguration",
+	configurationPid = "com.liferay.journal.web.internal.configuration.FFImportDataDefinitionConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
@@ -42,17 +42,17 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class ImportStructurePortletConfigurationIcon
+public class ImportDataDefinitionPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
 	public String getJspPath() {
-		return "/configuration/icon/import_structure.jsp";
+		return "/configuration/icon/import_data_definition.jsp";
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return _ffImportStructureConfiguration.enabled();
+		return _ffImportDataDefinitionConfiguration.enabled();
 	}
 
 	@Override
@@ -65,10 +65,12 @@ public class ImportStructurePortletConfigurationIcon
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_ffImportStructureConfiguration = ConfigurableUtil.createConfigurable(
-			FFImportStructureConfiguration.class, properties);
+		_ffImportDataDefinitionConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFImportDataDefinitionConfiguration.class, properties);
 	}
 
-	private FFImportStructureConfiguration _ffImportStructureConfiguration;
+	private FFImportDataDefinitionConfiguration
+		_ffImportDataDefinitionConfiguration;
 
 }

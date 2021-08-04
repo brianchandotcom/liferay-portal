@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.configuration.icon;
 
-import com.liferay.journal.web.internal.configuration.FFImportStructureConfiguration;
+import com.liferay.journal.web.internal.configuration.FFImportDataDefinitionConfiguration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,52 +36,55 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({ResourceBundleUtil.class, LanguageUtil.class})
 @RunWith(PowerMockRunner.class)
-public class ImportStructurePortletConfigurationIconTest {
+public class ImportDataDefinitionPortletConfigurationIconTest {
 
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_importStructurePortletConfigurationIcon,
-			"_ffImportStructureConfiguration", _ffImportStructureConfiguration);
+			_importDataDefinitionPortletConfigurationIcon,
+			"_ffImportDataDefinitionConfiguration",
+			_ffImportDataDefinitionConfiguration);
 	}
 
 	@Test
 	public void testGetJspPath() {
 		Assert.assertEquals(
-			"/configuration/icon/import_structure.jsp",
-			_importStructurePortletConfigurationIcon.getJspPath());
+			"/configuration/icon/import_data_definition.jsp",
+			_importDataDefinitionPortletConfigurationIcon.getJspPath());
 	}
 
 	@Test
 	public void testIsShowWithFFImportStructureConfigurationDisabled() {
-		mockFFImportStructureConfiguration(false);
+		mockFFImportDataDefinitionConfiguration(false);
 
 		Assert.assertFalse(
-			_importStructurePortletConfigurationIcon.isShow(_portletRequest));
+			_importDataDefinitionPortletConfigurationIcon.isShow(
+				_portletRequest));
 	}
 
 	@Test
 	public void testIsShowWithFFImportStructureConfigurationEnabled() {
-		mockFFImportStructureConfiguration(true);
+		mockFFImportDataDefinitionConfiguration(true);
 
 		Assert.assertTrue(
-			_importStructurePortletConfigurationIcon.isShow(_portletRequest));
+			_importDataDefinitionPortletConfigurationIcon.isShow(
+				_portletRequest));
 	}
 
-	protected void mockFFImportStructureConfiguration(boolean enabled) {
+	protected void mockFFImportDataDefinitionConfiguration(boolean enabled) {
 		Mockito.when(
-			_ffImportStructureConfiguration.enabled()
+			_ffImportDataDefinitionConfiguration.enabled()
 		).thenReturn(
 			enabled
 		);
 	}
 
-	private final FFImportStructureConfiguration
-		_ffImportStructureConfiguration = Mockito.mock(
-			FFImportStructureConfiguration.class);
-	private final ImportStructurePortletConfigurationIcon
-		_importStructurePortletConfigurationIcon =
-			new ImportStructurePortletConfigurationIcon();
+	private final FFImportDataDefinitionConfiguration
+		_ffImportDataDefinitionConfiguration = Mockito.mock(
+			FFImportDataDefinitionConfiguration.class);
+	private final ImportDataDefinitionPortletConfigurationIcon
+		_importDataDefinitionPortletConfigurationIcon =
+			new ImportDataDefinitionPortletConfigurationIcon();
 	private final PortletRequest _portletRequest = Mockito.mock(
 		PortletRequest.class);
 

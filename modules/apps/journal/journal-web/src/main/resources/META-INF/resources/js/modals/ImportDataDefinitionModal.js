@@ -19,11 +19,14 @@ import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-const ImportStructureModal = ({importDataDefinitionURL, portletNamespace}) => {
+const ImportDataDefinitionModal = ({
+	importDataDefinitionURL,
+	portletNamespace,
+}) => {
 	const [visible, setVisible] = useState(false);
 	const inputFileRef = useRef();
-	const [structureName, setStructureName] = useState('');
-	const importStructureModalComponentId = `${portletNamespace}importStructureModal`;
+	const [name, setName] = useState('');
+	const importDataDefinitionModalComponentId = `${portletNamespace}importDataDefinitionModal`;
 	const jsonFileInputId = `${portletNamespace}jsonFile`;
 	const nameInputId = `${portletNamespace}name`;
 	const [{fileName, inputFile, inputFileValue}, setFile] = useState({
@@ -39,13 +42,13 @@ const ImportStructureModal = ({importDataDefinitionURL, portletNamespace}) => {
 				inputFile: null,
 				inputFileValue: '',
 			});
-			setStructureName('');
+			setName('');
 		},
 	});
 
 	useEffect(() => {
 		Liferay.component(
-			importStructureModalComponentId,
+			importDataDefinitionModalComponentId,
 			{
 				open: () => {
 					setVisible(true);
@@ -56,8 +59,9 @@ const ImportStructureModal = ({importDataDefinitionURL, portletNamespace}) => {
 			}
 		);
 
-		return () => Liferay.destroyComponent(importStructureModalComponentId);
-	}, [importStructureModalComponentId, setVisible]);
+		return () =>
+			Liferay.destroyComponent(importDataDefinitionModalComponentId);
+	}, [importDataDefinitionModalComponentId, setVisible]);
 
 	return visible ? (
 		<ClayModal observer={observer} size="md">
@@ -85,11 +89,9 @@ const ImportStructureModal = ({importDataDefinitionURL, portletNamespace}) => {
 						<ClayInput
 							id={nameInputId}
 							name={nameInputId}
-							onChange={(event) =>
-								setStructureName(event.target.value)
-							}
+							onChange={(event) => setName(event.target.value)}
 							type="text"
-							value={structureName}
+							value={name}
 						/>
 						<label htmlFor={jsonFileInputId}>
 							{Liferay.Language.get('json-file')}
@@ -155,7 +157,7 @@ const ImportStructureModal = ({importDataDefinitionURL, portletNamespace}) => {
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 							<ClayButton
-								disabled={!inputFile || !structureName}
+								disabled={!inputFile || !name}
 								type="submit"
 							>
 								{Liferay.Language.get('import')}
@@ -168,9 +170,9 @@ const ImportStructureModal = ({importDataDefinitionURL, portletNamespace}) => {
 	) : null;
 };
 
-ImportStructureModal.propTypes = {
+ImportDataDefinitionModal.propTypes = {
 	importDataDefinitionURL: PropTypes.string,
 	portletNamespace: PropTypes.string,
 };
 
-export default ImportStructureModal;
+export default ImportDataDefinitionModal;

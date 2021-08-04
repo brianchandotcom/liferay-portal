@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.journal.web.internal.configuration.FFImportStructureConfiguration"
+	id = "com.liferay.journal.web.internal.configuration.FFImportDataDefinitionConfiguration"
 )
-public interface FFImportStructureConfiguration {
+public interface FFImportDataDefinitionConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();

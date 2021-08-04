@@ -19,11 +19,11 @@ import React, {useEffect, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
-import {config} from '../../config/index';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
+import {getEditableLinkValue} from '../../utils/getEditableLinkValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
@@ -88,14 +88,10 @@ const Container = React.forwardRef(
 				return;
 			}
 
-			const linkConfig =
-				itemConfig.link[languageId] ||
-				itemConfig.link[config.defaultLanguageId] ||
-				itemConfig.link;
-
-			if (!linkConfig) {
-				return;
-			}
+			const linkConfig = getEditableLinkValue(
+				itemConfig.link,
+				languageId
+			);
 
 			resolveEditableValue(linkConfig, languageId, getFieldValue).then(
 				(linkHref) => {

@@ -17,7 +17,6 @@ import React, {useEffect, useState} from 'react';
 import LinkField from '../../../../../../app/components/fragment-configuration-fields/LinkField';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
-import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -29,6 +28,7 @@ import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSe
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
+import {getEditableLinkValue} from '../../../../../../app/utils/getEditableLinkValue';
 import {getEditableItemPropTypes} from '../../../../../../prop-types/index';
 
 export default function EditableLinkPanel({item}) {
@@ -72,17 +72,7 @@ export default function EditableLinkPanel({item}) {
 			delete linkConfig.imageConfiguration;
 
 			setLinkConfig(linkConfig);
-
-			setLinkValue({
-				...linkConfig,
-				href:
-					linkConfig.href?.[languageId] ||
-					linkConfig.href?.[config.defaultLanguageId] ||
-					(typeof linkConfig.href === 'string'
-						? linkConfig.href
-						: ''),
-				target: linkConfig.target || '',
-			});
+			setLinkValue(getEditableLinkValue(linkConfig, languageId));
 		}
 		else {
 			setImageConfig({});

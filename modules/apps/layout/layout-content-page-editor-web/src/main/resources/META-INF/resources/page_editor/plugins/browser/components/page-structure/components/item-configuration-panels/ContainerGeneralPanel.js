@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import LinkField from '../../../../../../app/components/fragment-configuration-fields/LinkField';
-import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -24,6 +23,7 @@ import {
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
+import {getEditableLinkValue} from '../../../../../../app/utils/getEditableLinkValue';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 
 export default function ContainerGeneralPanel({item}) {
@@ -36,17 +36,7 @@ export default function ContainerGeneralPanel({item}) {
 
 	useEffect(() => {
 		setLinkConfig(item.config.link || {});
-
-		setLinkValue({
-			...(item.config.link || {}),
-			href:
-				item.config.link?.href?.[languageId] ||
-				item.config.link?.href?.[config.defaultLanguageId] ||
-				(typeof item.config.link?.href === 'string'
-					? item.config.link.href
-					: ''),
-			target: item.config.link?.target || '',
-		});
+		setLinkValue(getEditableLinkValue(item.config.link, languageId));
 	}, [item.config.link, languageId]);
 
 	const handleValueSelect = (_, nextLinkConfig) => {

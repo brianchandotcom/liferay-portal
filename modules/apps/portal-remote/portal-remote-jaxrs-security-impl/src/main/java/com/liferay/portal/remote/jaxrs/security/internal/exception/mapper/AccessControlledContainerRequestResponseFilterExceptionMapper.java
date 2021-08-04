@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.remote.jaxrs.security.internal.entity.ForbiddenEntity;
 import com.liferay.portal.security.access.control.AccessControlAdvisor;
 import com.liferay.portal.security.access.control.AccessControlAdvisorImpl;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -120,7 +121,9 @@ public class AccessControlledContainerRequestResponseFilterExceptionMapper
 			_log.debug(securityException, securityException);
 		}
 
-		securityException = new SecurityException("Access Denied");
+		if (!PropsValues.SAP_SHOW_SECURITY_EXCEPTIONS) {
+			securityException = new SecurityException("Access Denied");
+		}
 
 		return Response.status(
 			Response.Status.FORBIDDEN

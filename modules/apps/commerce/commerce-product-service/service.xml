@@ -153,8 +153,8 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="fileEntryId" type="long" />
-		<column name="cdnEnabled" type="boolean" />
-		<column name="cdnURL" type="String" />
+		<column method-name="CDNEnabled" name="cdnEnabled" type="boolean" />
+		<column method-name="CDNURL" name="cdnURL" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column localized="true" name="title" type="String" />

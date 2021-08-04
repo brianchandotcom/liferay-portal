@@ -157,6 +157,15 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 	.btn-link {
 		color: $nav-link-color;
 	}
+
+	.btn,
+	.dropdown-toggle {
+		.c-inner {
+			display: initial;
+			margin: 0;
+			padding: 0;
+		}
+	}
 }
 
 .management-bar-container {
@@ -266,11 +275,6 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 		.input-group-btn .btn-secondary {
 			background-color: #f1f2f5;
 			border-color: #e7e7ed;
-		}
-
-		.form-control {
-			border-right-color: transparent;
-			width: 100%;
 		}
 	}
 }

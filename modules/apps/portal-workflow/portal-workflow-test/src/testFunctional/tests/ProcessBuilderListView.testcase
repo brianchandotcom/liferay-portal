@@ -103,15 +103,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Duplicated Process");
 
 		Navigator.gotoBack();
 
-		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Copy of Single Approver");
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Duplicated Process");
 
 		ProcessBuilderListView.filterAndOrder(filterOption = "Not Published");
 
-		ProcessBuilderListView.viewWorkflowIsPresent(workflowDefinitionTitle = "Copy of Single Approver");
+		ProcessBuilderListView.viewWorkflowIsPresent(workflowDefinitionTitle = "Duplicated Process");
 
 		ProcessBuilderListView.viewWorkflowIsNotPresent(workflowDefinitionTitle = "Single Approver");
 	}

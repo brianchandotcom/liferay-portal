@@ -1041,6 +1041,29 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(UserAccount.class)
+	public class GetAccountByExternalReferenceCodeTypeExtension {
+
+		public GetAccountByExternalReferenceCodeTypeExtension(
+			UserAccount userAccount) {
+
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField(description = "")
+		public Account accountByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_accountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountResource ->
+					accountResource.getAccountByExternalReferenceCode(
+						_userAccount.getExternalReferenceCode()));
+		}
+
+		private UserAccount _userAccount;
+
+	}
+
 	@GraphQLTypeExtension(Account.class)
 	public class GetAccountUsersByExternalReferenceCodePageTypeExtension {
 
@@ -1171,6 +1194,31 @@ public class Query {
 		}
 
 		private UserAccount _userAccount;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetUserAccountByExternalReferenceCodeTypeExtension {
+
+		public GetUserAccountByExternalReferenceCodeTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField
+		public UserAccount userAccountByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_userAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				userAccountResource ->
+					userAccountResource.getUserAccountByExternalReferenceCode(
+						_account.getExternalReferenceCode()));
+		}
+
+		private Account _account;
 
 	}
 

@@ -436,7 +436,10 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowRestriction = "Default Workflow");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.addWithWorkflowCP(
 			dmDocumentDescription = "DM Document 1 in Folder",

@@ -1621,6 +1621,8 @@ definition {
 
 	@priority = "4"
 	test ViewAutomaticAssignedRoles {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

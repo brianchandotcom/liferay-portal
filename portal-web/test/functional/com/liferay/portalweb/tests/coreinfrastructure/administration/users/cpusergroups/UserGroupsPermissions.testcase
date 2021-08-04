@@ -602,6 +602,7 @@ definition {
 	@priority = "4"
 	test ViewUserGroupPermissionsNoAsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",

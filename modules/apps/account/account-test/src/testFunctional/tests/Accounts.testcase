@@ -53,6 +53,8 @@ definition {
 	@description = "This test adds an account specific role and ensures this role is not shared across accounts"
 	@priority = "4"
 	test AccountSpecificRoleIsNotSharedAcrossAccounts {
+		property portal.acceptance = "true";
+
 		JSONAccountEntry.addAccountEntry(
 			accountEntryDescription = "Account with Role",
 			accountEntryName = "Account with Role",
@@ -89,6 +91,8 @@ definition {
 	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
 	@priority = "4"
 	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
+		property portal.acceptance = "true";
+
 		Accounts.openAccountsAdmin();
 
 		Accounts.addPersonAccount(
@@ -123,6 +127,8 @@ definition {
 	@description = "This test adds and removes a user assignee to an account specific role."
 	@priority = "4"
 	test CanAddAndRemoveAssigneeToAccountSpecificRole {
+		property portal.acceptance = "true";
+
 		JSONAccountEntry.addAccountEntry(
 			accountEntryDescription = "Account Description",
 			accountEntryName = "Account Name",
@@ -275,6 +281,8 @@ definition {
 	@description = "This test asserts that users can add more than one domain to a business account."
 	@priority = "4"
 	test CanAddMultipleDomainsToAccount {
+		property portal.acceptance = "true";
+
 		AccountConfiguration.enableAccountEmailDomain();
 
 		Accounts.openAccountsAdmin();
@@ -395,6 +403,8 @@ definition {
 	@description = "This test deactivates an active account and asserts account displays in correct filter."
 	@priority = "4"
 	test CanDeactivateAccount {
+		property portal.acceptance = "true";
+
 		for (var accountNumber : list "1,2,3") {
 			Accounts.openAccountsAdmin();
 
@@ -717,6 +727,8 @@ definition {
 	@description = "This test updates an account's name and description and asserts change saves successfully."
 	@priority = "5"
 	test CanEditNameAndDescription {
+		property portal.acceptance = "true";
+
 		Accounts.openAccountsAdmin();
 
 		Accounts.addBusinessAccount(
@@ -972,6 +984,8 @@ definition {
 	@description = "This test removes a user from a person account"
 	@priority = "4"
 	test CanRemoveUserFromPersonAccount {
+		property portal.acceptance = "true";
+
 		Accounts.openAccountsAdmin();
 
 		Accounts.addPersonAccount(
@@ -1205,6 +1219,8 @@ definition {
 	@description = "This test makes sure the default account roles are present in Roles Admin."
 	@priority = "4"
 	test DefaultAccountRolesArePresent {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1347,6 +1363,7 @@ definition {
 	@priority = "3"
 	test NoWarningDisplaysWhenAddingAUserWithValidDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		AccountConfiguration.enableAccountEmailDomain();
 
@@ -1398,6 +1415,8 @@ definition {
 	@description = "This test replaces user in Person Account with another existing user. It asserts that first user was replaced by the second user and isn't assigned to the account anymore."
 	@priority = "5"
 	test SelectingUserWillReplaceExistingUserInPersonAccount {
+		property portal.acceptance = "true";
+
 		Accounts.openAccountsAdmin();
 
 		Accounts.addBusinessAccount(

@@ -129,7 +129,12 @@ export default function FieldsSidebarSettingsBody() {
 				}}
 				submitButtonId={config.submitButtonId}
 			>
-				<Pages editable={false} overrides={{Column}} />
+				<Pages
+					editable={false}
+					overrides={{
+						...(objectFields && {Column}),
+					}}
+				/>
 			</FormFieldSettings>
 		</form>
 	);

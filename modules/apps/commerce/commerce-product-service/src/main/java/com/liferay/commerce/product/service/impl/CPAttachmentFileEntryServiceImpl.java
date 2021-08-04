@@ -221,7 +221,7 @@ public class CPAttachmentFileEntryServiceImpl
 
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
-			else if (cpAttachmentFileEntry.isCdnEnabled()) {
+			else if (cpAttachmentFileEntry.isCDNEnabled()) {
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
 		}
@@ -258,7 +258,7 @@ public class CPAttachmentFileEntryServiceImpl
 
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
-			else if (cpAttachmentFileEntry.isCdnEnabled()) {
+			else if (cpAttachmentFileEntry.isCDNEnabled()) {
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
 		}

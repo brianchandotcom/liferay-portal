@@ -164,8 +164,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setClassNameId(classNameId);
 		cpAttachmentFileEntry.setClassPK(classPK);
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
-		cpAttachmentFileEntry.setCdnEnabled(cdnEnabled);
-		cpAttachmentFileEntry.setCdnURL(cdnURL);
+		cpAttachmentFileEntry.setCDNEnabled(cdnEnabled);
+		cpAttachmentFileEntry.setCDNURL(cdnURL);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
 
@@ -327,12 +327,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpDefinitionLocalService.copyCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
-			if (cpAttachmentFileEntry.isCdnEnabled()) {
+			if (cpAttachmentFileEntry.isCDNEnabled()) {
 				cpAttachmentFileEntry =
 					cpAttachmentFileEntryPersistence.findByC_C_C_First(
 						cpDefinitionClassNameId,
 						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getCdnURL(), null);
+						cpAttachmentFileEntry.getCDNURL(), null);
 			}
 			else {
 				cpAttachmentFileEntry =
@@ -584,7 +584,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					cpAttachmentFileEntryPersistence.findByC_C_C_First(
 						cpDefinitionClassNameId,
 						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getCdnURL(), null);
+						cpAttachmentFileEntry.getCDNURL(), null);
 			}
 			else {
 				cpAttachmentFileEntry =
@@ -610,7 +610,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry.getClassNameId(),
 			cpAttachmentFileEntry.getClassPK(), fileEntryId, cdnEnabled, cdnURL,
 			cpAttachmentFileEntry.getFileEntryId(),
-			cpAttachmentFileEntry.getCdnURL(), true);
+			cpAttachmentFileEntry.getCDNURL(), true);
 
 		Date expirationDate = null;
 		Date now = new Date();
@@ -646,8 +646,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
-		cpAttachmentFileEntry.setCdnEnabled(cdnEnabled);
-		cpAttachmentFileEntry.setCdnURL(cdnURL);
+		cpAttachmentFileEntry.setCDNEnabled(cdnEnabled);
+		cpAttachmentFileEntry.setCDNURL(cdnURL);
 		cpAttachmentFileEntry.setTitleMap(
 			_getValidLocalizedMap(
 				LocaleUtil.getSiteDefault(), fileEntry, titleMap));

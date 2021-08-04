@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -140,6 +142,22 @@ public class DisplaySettingsDisplayContext {
 	private JSONArray _getCurrentLanguagesJSONArray() {
 		JSONArray currentLanguagesJSONArray = JSONFactoryUtil.createJSONArray();
 
+		for (Locale currentLocale : _getCurrentLocales()) {
+			currentLanguagesJSONArray.put(
+				JSONUtil.put(
+					"label",
+					currentLocale.getDisplayName(_themeDisplay.getLocale())
+				).put(
+					"value", LanguageUtil.getLanguageId(currentLocale)
+				));
+		}
+
+		return currentLanguagesJSONArray;
+	}
+
+	private List<Locale> _getCurrentLocales() {
+		List<Locale> currentLocales = new ArrayList<>();
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			_getTypeSettingsUnicodeProperties();
 
@@ -162,31 +180,14 @@ public class DisplaySettingsDisplayContext {
 					continue;
 				}
 
-				currentLanguagesJSONArray.put(
-					JSONUtil.put(
-						"label",
-						currentLocale.getDisplayName(_themeDisplay.getLocale())
-					).put(
-						"value", LanguageUtil.getLanguageId(currentLocale)
-					));
+				currentLocales.add(currentLocale);
 			}
 		}
 		else {
-			Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
-
-			for (Locale siteAvailableLocale : siteAvailableLocales) {
-				currentLanguagesJSONArray.put(
-					JSONUtil.put(
-						"label",
-						siteAvailableLocale.getDisplayName(
-							_themeDisplay.getLocale())
-					).put(
-						"value", LanguageUtil.getLanguageId(siteAvailableLocale)
-					));
-			}
+			currentLocales.addAll(_getSiteAvailableLocales());
 		}
 
-		return currentLanguagesJSONArray;
+		return currentLocales;
 	}
 
 	private Group _getLiveGroup() {

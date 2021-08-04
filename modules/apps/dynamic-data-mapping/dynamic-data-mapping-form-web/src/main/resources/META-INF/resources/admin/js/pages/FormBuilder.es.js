@@ -48,6 +48,7 @@ import {useValidateFormWithObjects} from '../hooks/useValidateFormWithObjects';
 import fieldDelete from '../thunks/fieldDelete.es';
 import {createFormURL} from '../util/form.es';
 import {submitEmailContent} from '../util/submitEmailContent.es';
+import ErrorList from './ErrorList';
 
 export const FormBuilder = () => {
 	const {
@@ -73,12 +74,18 @@ export const FormBuilder = () => {
 		pages,
 		rules,
 	} = useFormState();
+
+	const {dataDefinition} = useFormState({schema: ['dataDefinition']});
+
+	const [errorList, setErrorList] = useState([]);
+
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
 
 	const [{sidebarOpen, sidebarPanelId}, setSidebarState] = useState({
 		sidebarOpen: true,
 		sidebarPanelId: 'fields',
 	});
+
 	const [visibleFormSettings, setVisibleFormSettings] = useState(false);
 
 	const dispatch = useForm();
@@ -100,6 +107,16 @@ export const FormBuilder = () => {
 	// is selected in the Forms settings
 
 	const validateFormWithObjects = useValidateFormWithObjects();
+
+	const removeErrorMessage = useCallback(
+		(index) => {
+			const errorMessages = [...errorList].splice(index, 1);
+
+			setErrorList(errorMessages);
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[setErrorList]
+	);
 
 	useEffect(() => {
 		const sessionLength = Liferay.Session
@@ -214,6 +231,18 @@ export const FormBuilder = () => {
 		async (event) => {
 			event.preventDefault();
 
+			if (!dataDefinition.dataDefinitionFields.length) {
+				setErrorList([
+					Liferay.Language.get('please-add-at-least-one-field'),
+				]);
+
+				return;
+			}
+
+			if (errorList.length) {
+				setErrorList([]);
+			}
+
 			try {
 				await doSave(true);
 
@@ -231,7 +260,7 @@ export const FormBuilder = () => {
 				});
 			}
 		},
-		[addToast, doSave, getFormUrl]
+		[addToast, dataDefinition, doSave, errorList, getFormUrl]
 	);
 
 	const subtmitForm = useCallback(
@@ -377,6 +406,11 @@ export const FormBuilder = () => {
 				portletNamespace={portletNamespace}
 			/>
 			<TranslationManager />
+			<ErrorList
+				errorMessages={errorList}
+				onRemove={removeErrorMessage}
+				sidebarOpen={sidebarOpen}
+			/>
 			<FormInfo />
 			<div className="ddm-form-builder">
 				<div className="container ddm-paginated-builder top">

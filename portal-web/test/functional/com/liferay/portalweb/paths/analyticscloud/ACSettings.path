@@ -79,6 +79,11 @@
 	<td>//input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DXP_DATA_SOURCE_CHOOSE_OPTION</td>
+	<td>//h4[contains(@class,'section-title') and contains(.,'Choose Source')]/..//*[contains(@class,'data-source-item') and contains(.,'${key_sourceType}')]</td>
+	<td></td>
+</tr>
 <!-- DELETE DATA SOURCE SCREEN -->
 <tr>
 	<td>DELETE_BUTTON_DATA_SOURCE</td>

@@ -212,6 +212,12 @@
 					<location>util-taglib/src</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
+				<source-folder>
+					<label>util-taglib\test\unit</label>
+					<type>java</type>
+					<location>util-taglib/test/unit</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
 			</folders>
 			<ide-actions>
 				<action name="All">

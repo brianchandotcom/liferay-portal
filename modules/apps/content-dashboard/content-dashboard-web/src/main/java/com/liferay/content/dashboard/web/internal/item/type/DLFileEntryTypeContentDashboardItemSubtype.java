@@ -78,14 +78,16 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 	public String getFullLabel(Locale locale) {
 		String groupName = StringPool.BLANK;
 
-		try {
-			groupName =
-				StringPool.OPEN_PARENTHESIS +
-					_group.getDescriptiveName(locale) +
-						StringPool.CLOSE_PARENTHESIS;
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+		if (_group != null) {
+			try {
+				groupName =
+					StringPool.OPEN_PARENTHESIS +
+						_group.getDescriptiveName(locale) +
+							StringPool.CLOSE_PARENTHESIS;
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+			}
 		}
 
 		return getLabel(locale) + StringPool.SPACE + groupName;

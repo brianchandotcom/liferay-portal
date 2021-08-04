@@ -57,7 +57,7 @@
 							"type": "String"
 						}
 					],
-					"label": "brand-color-olors",
+					"label": "brand-colors",
 					"name": "brandColors"
 				},
 				{

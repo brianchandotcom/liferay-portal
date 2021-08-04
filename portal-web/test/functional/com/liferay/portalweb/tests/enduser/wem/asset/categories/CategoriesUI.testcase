@@ -131,6 +131,84 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-118305. The user cannot add a category to a vocabulary if the limit was exceeded."
+	@priority = "5"
+	test CannotAddCategoriesWhenReachTheLimit {
+		property test.name.skip.portal.instance = "CategoriesUI#CannotAddCategoriesWhenReachTheLimit";
+
+		task ("Change the Maximum Number of Categories per Vocabulary to 3") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Categorization",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.editTextSetting(
+				settingName = "Maximum Number of Categories per Vocabulary",
+				settingValue = "3");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add a new vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add two categories in new vocabulary") {
+			for (var n : list "1,2") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
+
+		task ("Add the third category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputTitle(title = "Category Name 3");
+		}
+
+		task ("View the Save and Add a New one button is disabled") {
+			AssertVisible(
+				key_text = "Save and Add a New One",
+				locator1 = "Button#ANY_DISABLED");
+
+			PortletEntry.save();
+		}
+
+		task ("View three categories shown in vocabulary") {
+			for (var n : list "1,2,3") {
+				Category.viewCP(
+					categoryName = "Category Name ${n}",
+					vocabularyName = "Vocabulary Name");
+			}
+		}
+
+		task ("View the special warning message") {
+			Alert.viewWarningSpecific(warningMessage = "You have reached the limit of 3 categories for this vocabulary.");
+		}
+
+		task ("View the plus icon button disappear") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+
+		task ("View the Add Subcategory action disappear") {
+			LexiconEntry.openEntryMenu(rowEntry = "Category Name 1");
+
+			MenuItem.viewNotPresent(menuItem = "Add Subcategory");
+
+			MenuItem.viewPresent(menuItem = "Edit");
+		}
+	}
+
 	@description = "This is a test for LPS-118305. The user could change the maximum number of categories per vocabuary."
 	@priority = "5"
 	@uitest

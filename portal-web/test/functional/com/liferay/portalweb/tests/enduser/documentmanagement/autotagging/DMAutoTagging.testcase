@@ -417,7 +417,7 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 	@description = "This test asserts that no auto-tags are generated for manually tagged images."

@@ -1289,7 +1289,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 	@description = "This ensures that the document title can be displayed correctly in the different views."
@@ -1426,11 +1426,11 @@ definition {
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 	@description = "This ensures that the shortcut target is not deleted after deleting the shortcut."
@@ -1464,7 +1464,7 @@ definition {
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.jpg",

@@ -220,7 +220,7 @@ definition {
 
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.doc");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 	}

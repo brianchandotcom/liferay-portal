@@ -122,7 +122,7 @@ definition {
 			baseURL = "http://localhost:9080",
 			siteURLKey = "remote-site");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 	@description = "This test covers LPS-99853. It ensures that a user can republish a document that has been checked out again when enabling remote staging."

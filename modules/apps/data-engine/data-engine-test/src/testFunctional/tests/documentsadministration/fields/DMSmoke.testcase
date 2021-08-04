@@ -76,7 +76,7 @@ definition {
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 }

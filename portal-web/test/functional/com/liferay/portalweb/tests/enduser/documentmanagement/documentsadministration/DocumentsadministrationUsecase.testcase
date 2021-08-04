@@ -1205,7 +1205,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."

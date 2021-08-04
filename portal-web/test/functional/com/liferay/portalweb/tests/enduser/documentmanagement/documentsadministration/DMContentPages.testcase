@@ -203,13 +203,13 @@ definition {
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 

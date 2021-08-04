@@ -866,7 +866,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

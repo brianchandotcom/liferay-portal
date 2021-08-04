@@ -121,7 +121,7 @@ definition {
 
 		DMFolder.deleteCP(dmFolderName = "DM Folder Name");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 	@description = "This test makes sure that all files are deleted when user selects all in a depot."
@@ -142,7 +142,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 	}
 
 	@description = "This test edits the title and description of a document in a depot."
@@ -300,7 +300,7 @@ definition {
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewDefaultCP();
+		DMDocument.viewDefault();
 
 		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 

@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.object.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Jorge Ferrer
- */
-public class ObjectWebKeys {
-
-	public static final String OBJECT_DEFINITION = "OBJECT_DEFINITION";
-
-	public static final String OBJECT_ENTRY = "OBJECT_ENTRY";
-
-	public static final String OBJECT_ENTRY_VALUES = "OBJECT_ENTRY_VALUES";
-
-	public static final String OBJECT_FIELD = "OBJECT_FIELD";
-
-}
+<liferay-frontend:side-panel-content
+	screenNavigatorKey="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_FIELD %>"
+	screenNavigatorModelBean="<%= (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD) %>"
+	screenNavigatorPortletURL="<%= currentURLObj %>"
+	title='<%= LanguageUtil.get(request, "add-object-field") %>'
+/>

@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.object.model.ObjectDefinition" %><%@
+page import="com.liferay.object.model.ObjectField" %><%@
 page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
 page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsClayDataSetDisplayNames" %><%@
 page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants" %><%@

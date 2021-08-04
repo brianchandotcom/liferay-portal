@@ -31,6 +31,7 @@ renderResponse.setTitle(objectDefinition.getName());
 
 <clay:headless-data-set-display
 	apiURL="<%= viewObjectFieldsDisplayContext.getAPIURL() %>"
+	clayDataSetActionDropdownItems="<%= viewObjectFieldsDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= viewObjectFieldsDisplayContext.getCreationMenu() %>"
 	formId="fm"
 	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_FIELDS %>"

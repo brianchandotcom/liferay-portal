@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -189,6 +191,13 @@ public class StagedExpandoTableStagedModelRepository
 		exportActionableDynamicQuery.setModelClass(ExpandoTable.class);
 		exportActionableDynamicQuery.setPerformActionMethod(
 			(ExpandoTable expandoTable) -> {
+				ClassName className = _classNameLocalService.fetchClassName(
+					expandoTable.getClassNameId());
+
+				if (className == null) {
+					return;
+				}
+
 				StagedExpandoTable stagedExpandoTable = ModelAdapterUtil.adapt(
 					expandoTable, ExpandoTable.class, StagedExpandoTable.class);
 
@@ -237,6 +246,9 @@ public class StagedExpandoTableStagedModelRepository
 	private String _parseName(String uuid) {
 		return uuid.substring(uuid.indexOf(StringPool.POUND) + 1);
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;

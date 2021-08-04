@@ -419,6 +419,64 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "#0b5fff",
+							"editorType": "ColorPicker",
+							"label": "brand-color-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "brand-color-1"
+								}
+							],
+							"name": "brandColor1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#6b6c7e",
+							"editorType": "ColorPicker",
+							"label": "brand-color-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "brand-color-2"
+								}
+							],
+							"name": "brandColor2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#2e5aac",
+							"editorType": "ColorPicker",
+							"label": "brand-color-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "brand-color-3"
+								}
+							],
+							"name": "brandColor3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#30313f",
+							"editorType": "ColorPicker",
+							"label": "brand-color-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "brand-color-4"
+								}
+							],
+							"name": "brandColor4",
+							"type": "String"
+						}
+					],
+					"label": "brand-colors",
+					"name": "brandColors"
+				},
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
 							"label": "white",

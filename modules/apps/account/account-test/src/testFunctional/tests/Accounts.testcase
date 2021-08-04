@@ -675,13 +675,12 @@ definition {
 	@description = "This is a use case for LPS-101221. It updates an inactive account by clicking on its link and asserts user stays on the Inactive filter when you go back to Accounts list."
 	@priority = "4"
 	test CanEditInactiveAccount {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Accounts Name for Test",
+			accountEntryStatus = "Inactive",
+			accountEntryType = "Business");
+
 		Accounts.openAccountsAdmin();
-
-		Accounts.addInactiveBusinessAccount(
-			accountDescription = "Accounts Name Description for Test",
-			accountName = "Accounts Name for Test");
-
-		Navigator.gotoBack();
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 

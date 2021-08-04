@@ -139,13 +139,13 @@ public class AlloyEditorConfigContributor
 				_CKEDITOR_STYLE_INLINE),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "info-message"), "div",
-				"portlet-msg-info", _CKEDITOR_STYLE_BLOCK),
+				"overflow-auto portlet-msg-info", _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "alert-message"), "div",
-				"portlet-msg-alert", _CKEDITOR_STYLE_BLOCK),
+				"overflow-auto portlet-msg-alert", _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "error-message"), "div",
-				"portlet-msg-error", _CKEDITOR_STYLE_BLOCK));
+				"overflow-auto portlet-msg-error", _CKEDITOR_STYLE_BLOCK));
 	}
 
 	protected JSONObject getStyleFormatsJSONObject(Locale locale) {

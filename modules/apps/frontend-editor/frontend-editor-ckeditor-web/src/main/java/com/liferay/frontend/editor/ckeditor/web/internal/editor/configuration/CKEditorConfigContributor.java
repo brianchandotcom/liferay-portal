@@ -196,13 +196,13 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 				null),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "info-message"), "div",
-				"portlet-msg-info"),
+				"overflow-auto portlet-msg-info"),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "alert-message"), "div",
-				"portlet-msg-alert"),
+				"overflow-auto portlet-msg-alert"),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "error-message"), "div",
-				"portlet-msg-error"));
+				"overflow-auto portlet-msg-error"));
 	}
 
 	protected JSONArray getToolbarSimpleJSONArray(

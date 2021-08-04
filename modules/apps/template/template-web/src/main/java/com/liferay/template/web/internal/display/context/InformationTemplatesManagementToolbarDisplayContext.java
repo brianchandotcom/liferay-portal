@@ -122,11 +122,11 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			InfoItemFormProvider::getInfoForm
 		).filter(
 			infoForm -> Validator.isNotNull(infoForm.getName())
+		).sorted(
+			Comparator.comparing(InfoForm::getName)
 		).collect(
 			Collectors.toList()
 		);
-
-		infoForms.sort(Comparator.comparing(infoForm -> infoForm.getName()));
 
 		for (InfoForm infoForm : infoForms) {
 			JSONArray itemSubtypesJSONArray = JSONFactoryUtil.createJSONArray();

@@ -19,7 +19,7 @@
 <%
 TemplateDisplayContext templateDisplayContext = (TemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext = new TemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext);
+InformationTemplatesManagementToolbarDisplayContext informationTemplatesManagementToolbarDisplayContext = new InformationTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext);
 %>
 
 <clay:navigation-bar
@@ -28,7 +28,7 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 />
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= templateManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= informationTemplatesManagementToolbarDisplayContext %>"
 	propsTransformer="js/TemplateManagementToolbarPropsTransformer"
 />
 
@@ -39,7 +39,7 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 <clay:container-fluid>
 	<aui:form action="<%= deleteDDMTemplateURL %>" name="fm">
 		<liferay-ui:search-container
-			id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"
+			id="<%= informationTemplatesManagementToolbarDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
@@ -51,7 +51,7 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 				<%
 				row.setData(
 					HashMapBuilder.<String, Object>put(
-						"actions", templateManagementToolbarDisplayContext.getAvailableActions(ddmTemplate)
+						"actions", informationTemplatesManagementToolbarDisplayContext.getAvailableActions(ddmTemplate)
 					).build());
 				%>
 

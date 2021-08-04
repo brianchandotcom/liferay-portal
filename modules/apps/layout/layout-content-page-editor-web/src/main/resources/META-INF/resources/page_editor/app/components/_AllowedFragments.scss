@@ -62,6 +62,14 @@ html#{$cadmin-selector} {
 					}
 				}
 
+				.lfr-treeview-node-list-item__node {
+					cursor: $cadmin-link-cursor;
+				}
+
+				.lfr-treeview-label {
+					pointer-events: none;
+				}
+
 				.lfr-treeview-node-list {
 					border-left: 1px solid $cadmin-secondary-l2;
 				}

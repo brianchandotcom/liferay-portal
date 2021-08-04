@@ -921,7 +921,7 @@ definition {
 				item = "Edit",
 				pageTemplateName = "Page Template Name");
 
-			Pause(locator1 = "3000");
+			WaitForPageLoad();
 		}
 
 		task ("Assert can change master from Blank to custom master") {

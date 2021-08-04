@@ -16,6 +16,7 @@ package com.liferay.asset.categories.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
+import com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext;
 import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -56,7 +56,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetCategoryActionDropdownItemsProvider {
 
 	public AssetCategoryActionDropdownItemsProvider(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+			HttpServletRequest httpServletRequest,
+			RenderResponse renderResponse,
+			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
+		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
@@ -64,7 +67,8 @@ public class AssetCategoryActionDropdownItemsProvider {
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_assetCategoriesLimitExceeded = _isAssetCategoriesLimitExceeded();
+		_assetCategoriesLimitExceeded = _isAssetCategoriesLimitExceeded(
+			assetCategoriesDisplayContext);
 		_assetDisplayPageFriendlyURLProvider =
 			(AssetDisplayPageFriendlyURLProvider)
 				_httpServletRequest.getAttribute(
@@ -270,9 +274,11 @@ public class AssetCategoryActionDropdownItemsProvider {
 			_themeDisplay.getPermissionChecker(), category, actionId);
 	}
 
-	private boolean _isAssetCategoriesLimitExceeded() {
-		long vocabularyId = ParamUtil.getLong(
-			_httpServletRequest, "vocabularyId");
+	private boolean _isAssetCategoriesLimitExceeded(
+			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
+		throws PortalException {
+
+		long vocabularyId = assetCategoriesDisplayContext.getVocabularyId();
 
 		if (vocabularyId <= 0) {
 			return false;

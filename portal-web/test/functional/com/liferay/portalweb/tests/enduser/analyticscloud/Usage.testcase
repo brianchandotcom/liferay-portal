@@ -146,7 +146,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
 	@priority = "5"
-	test TotalNumberOfIndividualsIsShown {
+	test PlanLimitNumberOfIndividualsIsShown {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();

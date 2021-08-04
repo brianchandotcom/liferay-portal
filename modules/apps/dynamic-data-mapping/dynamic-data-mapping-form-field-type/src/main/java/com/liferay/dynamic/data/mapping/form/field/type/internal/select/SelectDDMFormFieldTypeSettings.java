@@ -115,7 +115,8 @@ public interface SelectDDMFormFieldTypeSettings
 		label = "%create-list",
 		optionLabels = {"%manually", "%from-data-provider", "%from-autofill"},
 		optionValues = {"manual", "data-provider", "from-autofill"},
-		predefinedValue = "[\"manual\"]", type = "select"
+		predefinedValue = "[\"manual\"]", properties = "showEmptyOption=false",
+		type = "select"
 	)
 	public String dataSourceType();
 

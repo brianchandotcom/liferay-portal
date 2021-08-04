@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.constants.TemplateConstants;
 
@@ -99,16 +98,6 @@ public class InformationTemplatesTemplateHandler extends BaseTemplateHandler {
 
 				utilTemplateVariableGroup.addVariable(
 					"http-request", HttpServletRequest.class, "request");
-
-				if (language.equals(
-						com.liferay.portal.kernel.template.TemplateConstants.
-							LANG_TYPE_VM)) {
-
-					utilTemplateVariableGroup.addVariable(
-						"liferay-taglib", VelocityTaglib.class,
-						"taglibLiferay");
-				}
-
 				utilTemplateVariableGroup.addVariable(
 					"render-request", RenderRequest.class, "renderRequest");
 				utilTemplateVariableGroup.addVariable(

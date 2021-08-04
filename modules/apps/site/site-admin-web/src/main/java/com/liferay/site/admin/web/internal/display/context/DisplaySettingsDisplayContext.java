@@ -115,10 +115,10 @@ public class DisplaySettingsDisplayContext {
 				return value1.compareTo(value2);
 			});
 
-		Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
+		List<Locale> siteCurrentLocales = _getCurrentLocales();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			if (!siteAvailableLocales.contains(availableLocale)) {
+			if (!siteCurrentLocales.contains(availableLocale)) {
 				availableLanguagesJSONObjects.add(
 					JSONUtil.put(
 						"label",

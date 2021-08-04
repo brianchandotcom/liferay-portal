@@ -19,7 +19,7 @@ $a11y-panel-width: 320px;
 
 	.applications-menu-modal {
 		.modal-body {
-			padding-right: $a11y-panel-width;
+			padding-right: $a11y-panel-width !important;
 		}
 
 		.modal-dialog {

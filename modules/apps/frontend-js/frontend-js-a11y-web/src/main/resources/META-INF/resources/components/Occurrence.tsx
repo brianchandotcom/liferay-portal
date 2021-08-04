@@ -19,7 +19,7 @@ import React from 'react';
 
 import PanelNavigator from './PanelNavigator';
 
-import type {ImpactValue} from 'axe-core';
+import type {CheckResult, ImpactValue} from 'axe-core';
 
 import type {Violations} from '../hooks/useA11y';
 
@@ -31,6 +31,20 @@ const CodeBlock = ({children, ...otherProps}: ICodeBlock) => (
 	<div className="a11y-panel--code-block" role="textbox" {...otherProps}>
 		<div className="a11y-panel--code-text p-2">{children}</div>
 	</div>
+);
+
+type CheckProps = {
+	data: Array<CheckResult>;
+	title: string;
+};
+
+const Check = ({data, title}: CheckProps) => (
+	<>
+		<p className="text-secondary">{title}</p>
+		{data.map(({id, message}) => (
+			<div key={id}>{`- ${message}`}</div>
+		))}
+	</>
 );
 
 type Params = {
@@ -54,7 +68,7 @@ function Occurrence({params, previous, violations}: OccurrenceProps) {
 
 	const {helpUrl, tags} = violations.rules[ruleId];
 
-	const {html, impact} = violations.nodes[target][ruleId];
+	const {all, any, html, impact} = violations.nodes[target][ruleId];
 
 	return (
 		<>
@@ -89,6 +103,32 @@ function Occurrence({params, previous, violations}: OccurrenceProps) {
 				>
 					{html}
 				</CodeBlock>
+				<ClayPanel
+					className="mt-4"
+					displayTitle={Liferay.Language.get('how-to-fix')}
+					displayType="unstyled"
+					role="tab"
+					showCollapseIcon={false}
+				>
+					<ClayPanel.Body>
+						{Boolean(any.length) && (
+							<Check
+								data={any}
+								title={Liferay.Language.get(
+									'fix-at-least-one-of-the-following'
+								)}
+							/>
+						)}
+						{Boolean(all.length) && (
+							<Check
+								data={all}
+								title={Liferay.Language.get(
+									'fix-all-of-the-following-checks'
+								)}
+							/>
+						)}
+					</ClayPanel.Body>
+				</ClayPanel>
 			</div>
 		</>
 	);

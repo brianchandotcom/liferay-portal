@@ -97,26 +97,6 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			className, classPK, themeDisplay.getLocale(), themeDisplay);
 	}
 
-	protected void setThemeDisplayI18n(
-		ThemeDisplay themeDisplay, Locale locale) {
-
-		String i18nPath = null;
-
-		Set<String> languageIds = I18nFilter.getLanguageIds();
-
-		if ((languageIds.contains(locale.toString()) &&
-			 (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
-			 !locale.equals(LocaleUtil.getDefault())) ||
-			(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
-
-			i18nPath = _getI18nPath(locale);
-		}
-
-		themeDisplay.setI18nLanguageId(locale.toString());
-		themeDisplay.setI18nPath(i18nPath);
-		themeDisplay.setLocale(locale);
-	}
-
 	private String _getFriendlyURL(
 			long groupId,
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
@@ -181,6 +161,26 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		}
 
 		return StringPool.SLASH + locale.toLanguageTag();
+	}
+
+	private void _setThemeDisplayI18n(
+		ThemeDisplay themeDisplay, Locale locale) {
+
+		String i18nPath = null;
+
+		Set<String> languageIds = I18nFilter.getLanguageIds();
+
+		if ((languageIds.contains(locale.toString()) &&
+			 (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
+			 !locale.equals(LocaleUtil.getDefault())) ||
+			(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
+
+			i18nPath = _getI18nPath(locale);
+		}
+
+		themeDisplay.setI18nLanguageId(locale.toString());
+		themeDisplay.setI18nPath(i18nPath);
+		themeDisplay.setLocale(locale);
 	}
 
 	@Reference

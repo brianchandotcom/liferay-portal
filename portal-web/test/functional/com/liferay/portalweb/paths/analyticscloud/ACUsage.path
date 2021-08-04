@@ -11,13 +11,13 @@
 
 <tbody>
 <tr>
-<<<<<<< HEAD
 	<td>USAGE_CURRENT_INDIVIDUALS</td>
 	<td>//h3[contains(.,'Individuals')]/..//span[contains(@class,'metric-current')]</td>
-=======
+	<td></td>
+</tr>
+<tr>
 	<td>USAGE_TOTAL_NUMBER_METRICS</td>
 	<td>//h3[contains(.,'${key_metricName}')]/..//span[contains(@class,'metric-limit') and contains(.,'${key_totalNumber}')]</td>
->>>>>>> 634aa00 (LRAC-8149 Adding ACUsage.path file and USAGE_TOTAL_NUMBER_METRICS path)
 	<td></td>
 </tr>
 </tbody>

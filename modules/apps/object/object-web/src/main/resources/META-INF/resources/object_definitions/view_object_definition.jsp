@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewObjectDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
@@ -28,13 +30,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 %>
 
 <liferay-frontend:edit-form
-	action='<%=
-		PortletURLBuilder.createActionURL(
-			renderResponse
-		).setActionName(
-			"/object_definitions/edit_object_definition"
-		).buildPortletURL()
-	%>'
+	action="javascript:;"
+	onSubmit='<%= liferayPortletResponse.getNamespace() + "submitObjectDefinition();" %>'
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -70,8 +67,59 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
+		<aui:button disabled="<%= true %>" name="save" onClick='<%= liferayPortletResponse.getNamespace() + "saveObjectDefinition();" %>' value='<%= LanguageUtil.get(request, "save") %>' />
+
+		<aui:button disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="publish" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
 
 		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<script>
+	function <portlet:namespace />submitObjectDefinition() {
+		const objectDefinitionId =
+			'<%= objectDefinition.getObjectDefinitionId() %>';
+
+		Liferay.Util.fetch(
+			'<%= viewObjectDefinitionsDisplayContext.getAPIURL() %>/' +
+				objectDefinitionId,
+			{
+				body: JSON.stringify({id: objectDefinitionId}),
+				headers: new Headers({
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				}),
+				method: 'PUT',
+			}
+		)
+			.then((response) => {
+				if (response.status === 401) {
+					window.location.reload();
+				}
+				else if (response.ok) {
+					Liferay.Util.openToast({
+						message: Liferay.Language.get(
+							'the-object-was-published-successfully'
+						),
+						type: 'success',
+					});
+
+					const publishButton = document.querySelector(
+						'#<portlet:namespace />publish'
+					);
+					publishButton.setAttribute('disabled', true);
+				}
+				else {
+					return response.json();
+				}
+			})
+			.then(({title}) => {
+				Liferay.Util.openToast({
+					message: title,
+					type: 'danger',
+				});
+			});
+	}
+
+	function <portlet:namespace />saveObjectDefinition() {}
+</script>

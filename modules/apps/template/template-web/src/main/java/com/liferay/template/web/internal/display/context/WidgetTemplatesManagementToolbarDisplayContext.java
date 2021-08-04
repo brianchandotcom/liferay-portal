@@ -20,6 +20,9 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +103,13 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 		List<Long> addAllowedClassNameIds = new ArrayList<>();
 
 		for (long classNameId : templateDisplayContext.getClassNameIds()) {
-			if (containsAddPortletDisplayTemplatePermission(classNameId)) {
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+			if (containsAddPortletDisplayTemplatePermission(
+					templateHandler.getResourceName(),
+					ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+
 				addAllowedClassNameIds.add(classNameId);
 			}
 		}

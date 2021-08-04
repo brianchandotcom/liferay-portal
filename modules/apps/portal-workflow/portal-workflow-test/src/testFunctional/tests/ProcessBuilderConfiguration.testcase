@@ -44,7 +44,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Content Page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToContentPage {
 		ApplicationsMenu.gotoPortlet(
@@ -79,7 +78,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Page Revision"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToPageRevision {
 		ApplicationsMenu.gotoPortlet(
@@ -270,7 +268,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to search by Asset Type"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchByAssetType {
 		ApplicationsMenu.gotoPortlet(
@@ -362,7 +359,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to unassign a Workflow from an Asset Type"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUnassignWorkflow {
 		ApplicationsMenu.gotoPortlet(

@@ -27,7 +27,6 @@ definition {
 	}
 
 	@description = "Verify that the user can select Duplicate option in the kebab menu for a Not Published process"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDuplicateNonPublishedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanDuplicateNonPublishedProcess";
@@ -58,7 +57,6 @@ definition {
 	}
 
 	@description = "Verify that the user can select Duplicate option in the kebab menu for a particular row"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDuplicateProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanDuplicateProcess";
@@ -76,7 +74,6 @@ definition {
 	}
 
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditTitleOfDuplicatedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanEditTitleOfDuplicatedProcess";
@@ -117,7 +114,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to filter by Published processes"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByPublishedProcesses {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanFilterByPublishedProcesses";
@@ -147,7 +143,6 @@ definition {
 	}
 
 	@description = "Verify that the user can not delete a published process"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanNotDeletePublishedProcess {
 		ApplicationsMenu.gotoPortlet(
@@ -170,7 +165,6 @@ definition {
 	}
 
 	@description = "Verify that the user is not able to search by Workflow description"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanNotSearchByDescription {
 		ApplicationsMenu.gotoPortlet(
@@ -190,7 +184,6 @@ definition {
 	}
 
 	@description = "Verify that the user can not unpublish a Workflow in use and system displays an error message"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanNotUnpublishWorkflowInUse {
 		ApplicationsMenu.gotoPortlet(
@@ -319,7 +312,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to search by Workflow title"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchByTitle {
 		ApplicationsMenu.gotoPortlet(
@@ -337,7 +329,6 @@ definition {
 	}
 
 	@description = "Verify that search can be done using non-ASCII character"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchNonAsciiChar {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSearchNonAsciiChar";
@@ -358,7 +349,6 @@ definition {
 	}
 
 	@description = "Verify that the user can select Edit option in the kebab menu for a particular row"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectEditOption {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectEditOption";
@@ -426,7 +416,6 @@ definition {
 	}
 
 	@description = "Verify that the user can select Permissions option in the kebab menu for a Not Published process"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectPermissionsOptionForNonPublishedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectPermissionsOptionForNonPublishedProcess";
@@ -466,7 +455,6 @@ definition {
 	}
 
 	@description = "Verify that a duplicated definition can be Unpublished"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUnpublishDuplicatedDefinition {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanUnpublishDuplicatedDefinition";
@@ -510,7 +498,6 @@ definition {
 	}
 
 	@description = "Verify that the Clear option cleans the search results"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ClearSearchResults {
 		ApplicationsMenu.gotoPortlet(
@@ -549,7 +536,6 @@ definition {
 	}
 
 	@description = "Verify that Not Published processes are displayed on table"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaysNonPublishedProcessesOnTable {
 		ApplicationsMenu.gotoPortlet(
@@ -583,7 +569,6 @@ definition {
 	}
 
 	@description = "Verify that the pagination component is displayed when the table has 5 items or more"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PaginationComponentIsDisplayed {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#PaginationComponentIsDisplayed";
@@ -617,7 +602,6 @@ definition {
 	}
 
 	@description = "Verify that the users are able to click on the + button and be directed to the New Workflow page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test RedirectToNewWorkflowPage {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#RedirectToNewWorkflowPage";

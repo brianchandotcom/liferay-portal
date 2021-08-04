@@ -109,7 +109,6 @@ definition {
 	}
 
 	@description = "Verify can filter by pending tasks"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByPendingTasks {
 		ApplicationsMenu.gotoPortlet(
@@ -533,7 +532,6 @@ definition {
 	}
 
 	@description = "Verify that a task can be withdrawn"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TaskCanBeWithdrawn {
 		ApplicationsMenu.gotoPortlet(
@@ -817,7 +815,6 @@ definition {
 	}
 
 	@description = "Verify that the message 'There are no publication requested by me.' when there is no task"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test ViewNoPublicationRequestedByMeMessage {
 		Navigator.openURL();

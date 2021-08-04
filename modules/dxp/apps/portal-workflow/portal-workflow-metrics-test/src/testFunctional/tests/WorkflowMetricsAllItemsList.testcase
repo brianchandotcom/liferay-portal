@@ -122,7 +122,6 @@ definition {
 	}
 
 	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanOrderByAssignee {
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanOrderByAssignee";
@@ -287,7 +286,6 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ClickOnProcessIdColumnToSeeItemDetailsPage {
 		ApplicationsMenu.gotoPortlet(
@@ -595,7 +593,6 @@ definition {
 	}
 
 	@description = "LPS-86652 - Verify that the correct columns are displayed ID, Due Date, Item Subject, Process Step, Assignee, Created By, Creation Date"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DisplayColumns {
 		ApplicationsMenu.gotoPortlet(
@@ -781,7 +778,6 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, Resolved each due date has an icon according to the status On Time or Overdue, SLA name, due date and resolution status resolved on time or overdue"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DueDateHasIconSlaNameDueDateAndResolutionStatus {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -886,7 +882,6 @@ definition {
 	}
 
 	@description = "LPS-94146 - Verify that user can close the filters shown as tags clicking on x and the result is applied on items list"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FiltersCanBeClosedAndResultAppliedOnList {
 		ApplicationsMenu.gotoPortlet(
@@ -941,7 +936,6 @@ definition {
 	}
 
 	@description = "LPS-87571 - Verify that when user reaches the page through Dashboard tab, the filter options are: SLA Status, Process Status, Process Step and Assignee"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test FiltersDisplayedWhenReachingPageThroughDashboardTab {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
@@ -996,7 +990,6 @@ definition {
 	}
 
 	@description = "LPS-86652 - Verify that hovering the cursor on a ellipsis text will display a tooltip that contains the rest of the text"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test HoveringCursorDisplayTooltip {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1315,7 +1308,6 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: No SLA"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ItemModalPlacesIconReferringToSlaStatusNoSla {
 		ApplicationsMenu.gotoPortlet(
@@ -1584,7 +1576,6 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that the Go to submission page button opens the submission page in another tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test OpenSubmissionPageInAnotherTab {
 		ApplicationsMenu.gotoPortlet(
@@ -1654,7 +1645,6 @@ definition {
 	}
 
 	@description = "LPS-130166 - Verify that popover for Due Date will display up to 2 SLAs and the order should be from the most to the least critical SLA"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1731,7 +1721,6 @@ definition {
 	}
 
 	@description = "LPS-130166 - Verify that the popover is not displayd when hovering untracked items on Due Date column item"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PopoverIsNotDisplayedForUntrackedItems {
 		ApplicationsMenu.gotoPortlet(
@@ -1768,7 +1757,6 @@ definition {
 	}
 
 	@description = "LPS-130217 - Verify that user is able to click on the table header title to order items by Creation Date: old-new / new-old"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ReorderEntriesClickingCreationDateColumn {
 		ApplicationsMenu.gotoPortlet(
@@ -1838,7 +1826,6 @@ definition {
 	}
 
 	@description = "LPS-130167 - Verify that the user is able to reorder entries by clicking the Due Date column title"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ReorderEntriesClickingDueDateColumn {
 		property portal.upstream = "quarantine";
@@ -1909,7 +1896,6 @@ definition {
 	}
 
 	@description = "LPS-98517 - Verify that if Assignee dropdown menu is higher than 496px a search bar is added on it as specified on Figma"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px {
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px";
@@ -1950,7 +1936,6 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, when one of the sections has no entries, the section title is completely removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SectionIsRemovedWhenItHasNoEntries {
 		ApplicationsMenu.gotoPortlet(
@@ -2180,7 +2165,6 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed, the summary section should hide the info Current Step and replace it with End Date"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SummarySectionDisplaysEndDateInsteadOfCurrentStep {
 		ApplicationsMenu.gotoPortlet(
@@ -2470,7 +2454,6 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, Pause instead of due date, the UI will inform SLA Paused sentence next to the SLA name"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test WhenSlaIsPausedSlaPausedIsDisplayedInsteadOfDueDate {
 		property portal.upstream = "quarantine";

@@ -1000,7 +1000,6 @@ definition {
 	}
 
 	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
 		property portal.upstream = "quarantine";
@@ -1178,7 +1177,6 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify the options for stop field are: Process ends: [task-name], Enters task: [task-name], and Leaves task: [task-name]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StopFieldOptions {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");

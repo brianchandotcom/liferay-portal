@@ -121,7 +121,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to import a XML file"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportXMLFile {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanImportXMLFile";
@@ -312,7 +311,6 @@ definition {
 	}
 
 	@description = "Verify that the user is able to save a untitled Workflow"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanSaveUntitledWorkflow {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanSaveUntitledWorkflow";

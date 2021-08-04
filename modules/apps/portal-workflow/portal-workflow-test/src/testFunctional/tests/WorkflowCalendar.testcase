@@ -175,7 +175,6 @@ definition {
 	}
 
 	@description = "Verify that a calendar event created on the pop up can be approved"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CalendarPopUpCanBeApproved {
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");

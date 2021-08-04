@@ -74,10 +74,6 @@ public abstract class BaseTemplateDisplayContext
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public abstract String getAddPermissionActionId();
-
-	public abstract long[] getClassNameIds();
-
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
 			DDMTemplate ddmTemplate)
 		throws Exception {
@@ -148,10 +144,6 @@ public abstract class BaseTemplateDisplayContext
 		).build();
 	}
 
-	public abstract long getResourceClassNameId();
-
-	public abstract String getResourceName(long classNameId);
-
 	public String getTabs1() {
 		if (_tabs1 != null) {
 			return _tabs1;
@@ -202,8 +194,6 @@ public abstract class BaseTemplateDisplayContext
 
 		return _ddmTemplateSearchContainer;
 	}
-
-	public abstract String getTemplateTypeLabel(long classNameId);
 
 	public boolean isAddDDMTemplateEnabled() {
 		if (!_ddmWebConfiguration.enableTemplateCreation()) {

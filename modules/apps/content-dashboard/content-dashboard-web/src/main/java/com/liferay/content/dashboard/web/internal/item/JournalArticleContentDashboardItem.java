@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -341,6 +342,11 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public String getSize() {
+		return null;
+	}
+
+	@Override
+	public List<DDMStructure> getSpecificFieldsInDDMStructure() {
 		return null;
 	}
 

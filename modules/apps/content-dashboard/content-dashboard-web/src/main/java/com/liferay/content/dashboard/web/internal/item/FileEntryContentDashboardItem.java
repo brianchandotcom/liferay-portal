@@ -21,6 +21,8 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -270,6 +272,10 @@ public class FileEntryContentDashboardItem
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("description");
 
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
 		Object description = infoFieldValue.getValue();
 
 		return description.toString();
@@ -296,6 +302,10 @@ public class FileEntryContentDashboardItem
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("downloadURL");
 
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
 		Object downloadURL = infoFieldValue.getValue();
 
 		return downloadURL.toString();
@@ -309,9 +319,13 @@ public class FileEntryContentDashboardItem
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("file-name");
 
-		Object extension = infoFieldValue.getValue();
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
 
-		return FileUtil.getExtension(extension.toString());
+		Object fileName = infoFieldValue.getValue();
+
+		return FileUtil.getExtension(fileName.toString());
 	}
 
 	@Override
@@ -332,6 +346,10 @@ public class FileEntryContentDashboardItem
 
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("preview-image");
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
 
 		return infoFieldValue.getValue();
 	}
@@ -364,9 +382,29 @@ public class FileEntryContentDashboardItem
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("size");
 
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
 		Object size = infoFieldValue.getValue();
 
 		return size.toString();
+	}
+
+	@Override
+	public List<DDMStructure> getSpecificFieldsInDDMStructure() {
+		try {
+			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
+
+			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+
+			return dlFileVersion.getDDMStructures();
+		}
+		catch (PortalException portalException) {
+			portalException.printStackTrace();
+		}
+
+		return null;
 	}
 
 	@Override

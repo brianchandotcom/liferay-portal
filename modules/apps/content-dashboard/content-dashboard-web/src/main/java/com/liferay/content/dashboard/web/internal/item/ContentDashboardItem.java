@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -74,6 +75,8 @@ public interface ContentDashboardItem<T> {
 	public String getScopeName(Locale locale);
 
 	public String getSize();
+
+	public List<DDMStructure> getSpecificFieldsInDDMStructure();
 
 	public String getTitle(Locale locale);
 

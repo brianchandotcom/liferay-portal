@@ -147,8 +147,10 @@ public interface SearchLocationDDMFormFieldTypeSettings
 			"%address", "%city", "%state", "%postal-code", "%country"
 		},
 		optionValues = {"address", "city", "state", "postal-code", "country"},
-		predefinedValue = "[\"address\",\"city\",\"state\",\"postal-code\",\"country\"]",
-		properties = "multiple=true",
+		properties = {
+			"initialValue=%[\"address\",\"city\",\"state\",\"postal-code\",\"country\"]",
+			"multiple=true"
+		},
 		type = DDMFormFieldTypeConstants.MULTI_LANGUAGE_OPTION_SELECT
 	)
 	public LocalizedValue visibleFields();

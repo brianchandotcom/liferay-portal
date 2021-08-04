@@ -137,6 +137,51 @@ public class CPDefinitionDiagramEntryServiceHttp {
 		}
 	}
 
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+				fetchCPDefinitionDiagramEntry(
+					HttpPrincipal httpPrincipal, long cpDefinitionId,
+					int number)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDefinitionDiagramEntryServiceUtil.class,
+				"fetchCPDefinitionDiagramEntry",
+				_fetchCPDefinitionDiagramEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDefinitionId, number);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry>
 				getCPDefinitionDiagramEntries(
@@ -148,7 +193,7 @@ public class CPDefinitionDiagramEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionDiagramEntryServiceUtil.class,
 				"getCPDefinitionDiagramEntries",
-				_getCPDefinitionDiagramEntriesParameterTypes2);
+				_getCPDefinitionDiagramEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, start, end);
@@ -191,7 +236,7 @@ public class CPDefinitionDiagramEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionDiagramEntryServiceUtil.class,
 				"getCPDefinitionDiagramEntriesCount",
-				_getCPDefinitionDiagramEntriesCountParameterTypes3);
+				_getCPDefinitionDiagramEntriesCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId);
@@ -235,55 +280,10 @@ public class CPDefinitionDiagramEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDefinitionDiagramEntryServiceUtil.class,
 				"getCPDefinitionDiagramEntry",
-				_getCPDefinitionDiagramEntryParameterTypes4);
+				_getCPDefinitionDiagramEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionDiagramEntryId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.shop.by.diagram.model.
-				CPDefinitionDiagramEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static
-		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
-				fetchCPDefinitionDiagramEntry(
-					HttpPrincipal httpPrincipal, long cpDefinitionId,
-					int number)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CPDefinitionDiagramEntryServiceUtil.class,
-				"fetchCPDefinitionDiagramEntry",
-				_fetchCPDefinitionDiagramEntryParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionId, number);
 
 			Object returnObj = null;
 
@@ -423,19 +423,19 @@ public class CPDefinitionDiagramEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[]
-		_getCPDefinitionDiagramEntriesParameterTypes2 = new Class[] {
+		_fetchCPDefinitionDiagramEntryParameterTypes2 = new Class[] {
+			long.class, int.class
+		};
+	private static final Class<?>[]
+		_getCPDefinitionDiagramEntriesParameterTypes3 = new Class[] {
 			long.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getCPDefinitionDiagramEntriesCountParameterTypes3 = new Class[] {
+		_getCPDefinitionDiagramEntriesCountParameterTypes4 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_getCPDefinitionDiagramEntryParameterTypes4 = new Class[] {long.class};
-	private static final Class<?>[]
-		_fetchCPDefinitionDiagramEntryParameterTypes5 = new Class[] {
-			long.class, int.class
-		};
+		_getCPDefinitionDiagramEntryParameterTypes5 = new Class[] {long.class};
 	private static final Class<?>[]
 		_getCPDefinitionDiagramEntryParameterTypes6 = new Class[] {
 			long.class, int.class

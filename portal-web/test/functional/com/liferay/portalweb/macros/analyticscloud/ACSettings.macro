@@ -34,6 +34,18 @@ definition {
 			value1 = "${individualUsageValue}");
 	}
 
+	macro assertDataSource {
+		ACSettings.goToDataSources();
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		for (var dataSource : list "${dataSources}"){
+			AssertElementPresent(
+				locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION",
+				key_sourceType = "${dataSource}");
+		}
+	}
+
 	macro assertKeywords {
 		var key_KeywordName = "${keyword}";
 

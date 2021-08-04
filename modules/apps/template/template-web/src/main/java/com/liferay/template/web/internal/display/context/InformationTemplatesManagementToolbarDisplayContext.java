@@ -119,7 +119,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemFormProvider.class, infoItemClassName)
 		).map(
-			infoItemFormProvider -> infoItemFormProvider.getInfoForm()
+			InfoItemFormProvider::getInfoForm
 		).filter(
 			infoForm -> Validator.isNotNull(infoForm.getName())
 		).collect(

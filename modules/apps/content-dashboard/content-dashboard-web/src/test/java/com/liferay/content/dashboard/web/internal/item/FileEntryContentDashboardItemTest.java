@@ -20,14 +20,17 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -42,7 +45,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -56,8 +58,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-
-import static org.mockito.Matchers.eq;
 
 /**
  * @author Yurena Cabrera
@@ -174,6 +174,87 @@ public class FileEntryContentDashboardItemTest {
 		Assert.assertEquals(
 			Collections.singletonList(assetTag),
 			fileEntryContentDashboardItem.getAssetTags());
+	}
+
+	@Test
+	public void testGetDescription() {
+		FileEntry fileEntry = _getFileEntry();
+
+		Mockito.when(
+			fileEntry.getDescription()
+		).thenReturn(
+			"description"
+		);
+
+		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
+			Mockito.mock(InfoItemFieldValuesProvider.class);
+
+		Mockito.when(
+			infoItemFieldValuesProvider.getInfoItemFieldValues(fileEntry)
+		).thenReturn(
+			InfoItemFieldValues.builder(
+			).infoFieldValue(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						DateInfoFieldType.INSTANCE
+					).name(
+						"description"
+					).labelInfoLocalizedValue(
+						null
+					).build(),
+					"description")
+			).build()
+		);
+
+		FileEntryContentDashboardItem fileEntryContentDashboardItem =
+			new FileEntryContentDashboardItem(
+				null, null, null, null, fileEntry, null,
+				infoItemFieldValuesProvider, null, null);
+
+		Assert.assertEquals(
+			"description",
+			fileEntryContentDashboardItem.getDescription(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetExtension() {
+		FileEntry fileEntry = _getFileEntry();
+
+		Mockito.when(
+			fileEntry.getExtension()
+		).thenReturn(
+			"extension"
+		);
+
+		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
+			Mockito.mock(InfoItemFieldValuesProvider.class);
+
+		Mockito.when(
+			infoItemFieldValuesProvider.getInfoItemFieldValues(fileEntry)
+		).thenReturn(
+			InfoItemFieldValues.builder(
+			).infoFieldValue(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						DateInfoFieldType.INSTANCE
+					).name(
+						"file-name"
+					).labelInfoLocalizedValue(
+						null
+					).build(),
+					"fileName.extension")
+			).build()
+		);
+
+		FileEntryContentDashboardItem fileEntryContentDashboardItem =
+			new FileEntryContentDashboardItem(
+				null, null, null, null, fileEntry, null,
+				infoItemFieldValuesProvider, null, null);
+
+		Assert.assertEquals(
+			"extension", fileEntryContentDashboardItem.getExtension());
 	}
 
 	@Test

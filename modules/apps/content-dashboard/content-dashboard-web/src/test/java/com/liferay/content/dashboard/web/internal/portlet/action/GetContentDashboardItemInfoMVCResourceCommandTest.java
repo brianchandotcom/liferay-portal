@@ -312,14 +312,15 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public String getUserAvatarURL(
-				HttpServletRequest httpServletRequest) {
-				return "avatar/url/test";
+			public String getTypeLabel(Locale locale) {
+				return "Web Content";
 			}
 
 			@Override
-			public String getTypeLabel(Locale locale) {
-				return "Web Content";
+			public String getUserAvatarURL(
+				HttpServletRequest httpServletRequest) {
+
+				return "avatar/url/test";
 			}
 
 			@Override

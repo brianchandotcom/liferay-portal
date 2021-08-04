@@ -77,9 +77,9 @@ public interface ContentDashboardItem<T> {
 
 	public String getTitle(Locale locale);
 
-	public String getUserAvatarURL(HttpServletRequest httpServletRequest);
-
 	public String getTypeLabel(Locale locale);
+
+	public String getUserAvatarURL(HttpServletRequest httpServletRequest);
 
 	public long getUserId();
 

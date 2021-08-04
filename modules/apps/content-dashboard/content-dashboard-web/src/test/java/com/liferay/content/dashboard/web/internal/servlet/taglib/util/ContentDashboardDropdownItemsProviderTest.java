@@ -349,6 +349,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 			@Override
 			public String getUserAvatarURL(
 				HttpServletRequest httpServletRequest) {
+
 				return "avatar/url/test";
 			}
 

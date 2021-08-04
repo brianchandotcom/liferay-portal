@@ -12,69 +12,13 @@
  * details.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import ValidationDate from '../../../src/main/resources/META-INF/resources/Validation/ValidationDate';
 
 const globalLanguageDirection = Liferay.Language.direction;
-
-const parameters = {
-	dateRange: [
-		{
-			label: Liferay.Language.get('starts-from'),
-			name: 'startsFrom',
-			options: [
-				{
-					checked: false,
-					label: Liferay.Language.get('response-date'),
-					name: 'responseDate',
-					value: 'responseDate',
-				},
-			],
-		},
-		{
-			label: Liferay.Language.get('ends-on'),
-			name: 'endsOn',
-			options: [
-				{
-					checked: false,
-					label: Liferay.Language.get('response-date'),
-					name: 'responseDate',
-					value: 'responseDate',
-				},
-			],
-		},
-	],
-	futureDates: [
-		{
-			label: Liferay.Language.get('starts-from'),
-			name: 'startsFrom',
-			options: [
-				{
-					checked: false,
-					label: Liferay.Language.get('response-date'),
-					name: 'responseDate',
-					value: 'responseDate',
-				},
-			],
-		},
-	],
-	pastDates: [
-		{
-			label: Liferay.Language.get('ends-on'),
-			name: 'endsOn',
-			options: [
-				{
-					checked: false,
-					label: Liferay.Language.get('response-date'),
-					name: 'responseDate',
-					value: 'responseDate',
-				},
-			],
-		},
-	],
-};
 
 const validations = [
 	{
@@ -124,7 +68,6 @@ describe('ValidationDate', () => {
 				localizedValue={() => {}}
 				name="validationDate"
 				onChange={() => {}}
-				parameters={parameters}
 				selectedValidation={{
 					label: '',
 					name: 'futureDates',
@@ -147,7 +90,6 @@ describe('ValidationDate', () => {
 				localizedValue={() => {}}
 				name="validationDate"
 				onChange={() => {}}
-				parameters={parameters}
 				selectedValidation={{
 					label: '',
 					name: 'pastDates',
@@ -170,7 +112,6 @@ describe('ValidationDate', () => {
 				localizedValue={() => {}}
 				name="validationDate"
 				onChange={() => {}}
-				parameters={parameters}
 				selectedValidation={{
 					label: '',
 					name: 'dateRange',
@@ -183,5 +124,117 @@ describe('ValidationDate', () => {
 		);
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('shows custom date fields for Future dates', () => {
+		const parameter = {
+			en_US: {
+				startsFrom: {
+					date: 'responseDate',
+					quantity: 1,
+					type: 'customDate',
+					unit: 'days',
+				},
+			},
+		};
+
+		const localizedValue = jest.fn(() => parameter['en_US']);
+		const {container} = render(
+			<ValidationDate
+				defaultLanguageId="en_US"
+				editingLanguageId="en_US"
+				localizedValue={localizedValue}
+				name="validationDate"
+				onChange={() => {}}
+				parameter={parameter}
+				selectedValidation={{
+					label: '',
+					name: 'futureDates',
+					parameterMessage: '',
+					template: 'futureDates({name}, "{parameter}")',
+				}}
+				validations={validations}
+				visible={true}
+			/>
+		);
+
+		const startDate = container.querySelector(
+			'select[name="selectedDate_startsFrom_field"]'
+		);
+
+		const startOperation = container.querySelector(
+			'select[name="selectedOperation_startsFrom_field"]'
+		);
+
+		const startQuantity = container.querySelector(
+			'input[name="inputedQuantity_startsFrom"]'
+		);
+
+		const startUnit = container.querySelector(
+			'input[name="selectedUnit_startsFrom"]'
+		);
+
+		expect(startDate).toBeInTheDocument();
+		expect(startOperation).toBeInTheDocument();
+		expect(startOperation.value).toBe('plus');
+		expect(startQuantity).toBeInTheDocument();
+		expect(startQuantity.value).toBe('1');
+		expect(startUnit).toBeInTheDocument();
+		expect(startUnit.value).toBe('days');
+	});
+
+	it('shows custom date fields for Past dates and operation minus when quantity is negative', () => {
+		const parameter = {
+			en_US: {
+				endsOn: {
+					date: 'responseDate',
+					quantity: -1,
+					type: 'customDate',
+					unit: 'days',
+				},
+			},
+		};
+
+		const localizedValue = jest.fn(() => parameter['en_US']);
+		const {container} = render(
+			<ValidationDate
+				defaultLanguageId="en_US"
+				editingLanguageId="en_US"
+				localizedValue={localizedValue}
+				name="validationDate"
+				onChange={() => {}}
+				parameter={parameter}
+				selectedValidation={{
+					label: '',
+					name: 'pastDates',
+					parameterMessage: '',
+					template: 'pastDates({name}, "{parameter}")',
+				}}
+				validations={validations}
+				visible={true}
+			/>
+		);
+
+		const endDate = container.querySelector(
+			'select[name="selectedDate_endsOn_field"]'
+		);
+
+		const endOperation = container.querySelector(
+			'select[name="selectedOperation_endsOn_field"]'
+		);
+
+		const endQuantity = container.querySelector(
+			'input[name="inputedQuantity_endsOn"]'
+		);
+
+		const endUnit = container.querySelector(
+			'input[name="selectedUnit_endsOn"]'
+		);
+
+		expect(endDate).toBeInTheDocument();
+		expect(endOperation).toBeInTheDocument();
+		expect(endOperation.value).toBe('minus');
+		expect(endQuantity).toBeInTheDocument();
+		expect(endUnit).toBeInTheDocument();
 	});
 });

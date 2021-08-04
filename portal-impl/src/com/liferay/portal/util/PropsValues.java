@@ -2580,6 +2580,10 @@ public class PropsValues {
 	public static String[] RTL_CSS_EXCLUDED_PATHS_REGEXP = PropsUtil.getArray(
 		PropsKeys.RTL_CSS_EXCLUDED_PATHS_REGEXP);
 
+	public static final boolean SAP_SHOW_SECURITY_EXCEPTIONS =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SAP_SHOW_SECURITY_EXCEPTIONS));
+
 	public static final boolean SCHEDULER_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.SCHEDULER_ENABLED));
 

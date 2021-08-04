@@ -2874,6 +2874,9 @@ public interface PropsKeys {
 
 	public static final String SANITIZER_IMPL = "sanitizer.impl";
 
+	public static final String SAP_SHOW_SECURITY_EXCEPTIONS =
+		"sap.show.security.exceptions";
+
 	public static final String SCHEDULER_DESCRIPTION_MAX_LENGTH =
 		"scheduler.description.max.length";
 

@@ -59,14 +59,15 @@ public abstract class BaseTemplateDisplayContext
 	implements TemplateDisplayContext {
 
 	public BaseTemplateDisplayContext(
-		DDMWebConfiguration ddmWebConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_ddmWebConfiguration = ddmWebConfiguration;
 		this.liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_ddmWebConfiguration =
+			(DDMWebConfiguration)liferayPortletRequest.getAttribute(
+				DDMWebConfiguration.class.getName());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
 

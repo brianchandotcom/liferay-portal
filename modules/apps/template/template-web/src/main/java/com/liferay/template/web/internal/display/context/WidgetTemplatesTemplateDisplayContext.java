@@ -14,7 +14,6 @@
 
 package com.liferay.template.web.internal.display.context;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -32,15 +31,14 @@ public class WidgetTemplatesTemplateDisplayContext
 	extends BaseTemplateDisplayContext {
 
 	public WidgetTemplatesTemplateDisplayContext(
-		DDMWebConfiguration ddmWebConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletDisplayTemplate portletDisplayTemplate) {
+		LiferayPortletResponse liferayPortletResponse) {
 
-		super(
-			ddmWebConfiguration, liferayPortletRequest, liferayPortletResponse);
+		super(liferayPortletRequest, liferayPortletResponse);
 
-		_portletDisplayTemplate = portletDisplayTemplate;
+		_portletDisplayTemplate =
+			(PortletDisplayTemplate)liferayPortletRequest.getAttribute(
+				PortletDisplayTemplate.class.getName());
 	}
 
 	@Override

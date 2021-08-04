@@ -14,7 +14,6 @@
 
 package com.liferay.template.web.internal.display.context;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -33,15 +32,14 @@ public class InformationTemplatesTemplateDisplayContext
 	extends BaseTemplateDisplayContext {
 
 	public InformationTemplatesTemplateDisplayContext(
-		DDMWebConfiguration ddmWebConfiguration,
-		InfoItemServiceTracker infoItemServiceTracker,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		super(
-			ddmWebConfiguration, liferayPortletRequest, liferayPortletResponse);
+		super(liferayPortletRequest, liferayPortletResponse);
 
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)liferayPortletRequest.getAttribute(
+				InfoItemServiceTracker.class.getName());
 	}
 
 	@Override

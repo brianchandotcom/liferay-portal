@@ -56,15 +56,11 @@ definition {
 		property portal.acceptance = "true";
 
 		JSONAccountEntry.addAccountEntry(
-			accountEntryDescription = "Account with Role",
 			accountEntryName = "Account with Role",
-			accountEntryStatus = "Active",
 			accountEntryType = "Business");
 
 		JSONAccountEntry.addAccountEntry(
-			accountEntryDescription = "Account without Role",
 			accountEntryName = "Account without Role",
-			accountEntryStatus = "Active",
 			accountEntryType = "Business");
 
 		Accounts.openAccountsAdmin();
@@ -95,9 +91,7 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
+		Accounts.addPersonAccount(accountName = "Person Account");
 
 		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
@@ -130,9 +124,7 @@ definition {
 		property portal.acceptance = "true";
 
 		JSONAccountEntry.addAccountEntry(
-			accountEntryDescription = "Account Description",
 			accountEntryName = "Account Name",
-			accountEntryStatus = "Active",
 			accountEntryType = "Business");
 
 		Accounts.openAccountsAdmin();
@@ -288,7 +280,6 @@ definition {
 		Accounts.openAccountsAdmin();
 
 		Accounts.addAccountWithDomain(
-			accountDescription = "This is an Account with Multi Domains",
 			accountName = "Account with Multi Domains",
 			domainNames = "liferay.com,Google.com,si-na.com,9teen.com");
 
@@ -312,9 +303,7 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a test for adding organization to account.",
-			accountName = "Account with Organization");
+		Accounts.addBusinessAccount(accountName = "Account with Organization");
 
 		Accounts.assignOrganizations(
 			accountName = "Account with Organization",
@@ -336,16 +325,13 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a test of changing account address type.",
-			accountName = "Change Account Address Type");
+		Accounts.addBusinessAccount(accountName = "Change Account Address Type");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
 		Accounts.addAddress(
 			addressCity = "Dalian",
 			addressCountry = "China",
-			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
@@ -408,9 +394,7 @@ definition {
 		for (var accountNumber : list "1,2,3") {
 			Accounts.openAccountsAdmin();
 
-			Accounts.addBusinessAccount(
-				accountDescription = "Accounts Name ${accountNumber} Description",
-				accountName = "Accounts Name ${accountNumber} for Test");
+			Accounts.addBusinessAccount(accountName = "Accounts Name ${accountNumber} for Test");
 		}
 
 		Accounts.openAccountsAdmin();
@@ -500,9 +484,7 @@ definition {
 		for (var accountNumber : list "1,2,3") {
 			Accounts.openAccountsAdmin();
 
-			Accounts.addBusinessAccount(
-				accountDescription = "Accounts Name ${accountNumber} Description",
-				accountName = "Delete Accounts Name ${accountNumber} for Test");
+			Accounts.addBusinessAccount(accountName = "Delete Accounts Name ${accountNumber} for Test");
 		}
 
 		Accounts.openAccountsAdmin();
@@ -585,9 +567,7 @@ definition {
 	test CanDeleteAddress {
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "Delete address for account.",
-			accountName = "Account Delete Address");
+		Accounts.addBusinessAccount(accountName = "Account Delete Address");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -659,9 +639,7 @@ definition {
 			resourceName = "Account Entry");
 
 		JSONAccountEntry.addAccountEntry(
-			accountEntryDescription = "This is a test try to update the custom field of Account.",
 			accountEntryName = "Accounts Name with Custom Field",
-			accountEntryStatus = "Active",
 			accountEntryType = "Business");
 
 		Accounts.openAccountsAdmin();
@@ -795,15 +773,11 @@ definition {
 	test CanFilterAccountsByType {
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a Business Account.",
-			accountName = "Business Account");
+		Accounts.addBusinessAccount(accountName = "Business Account");
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
+		Accounts.addPersonAccount(accountName = "Person Account");
 
 		Accounts.openAccountsAdmin();
 
@@ -831,16 +805,13 @@ definition {
 	test CanRemoveAddressAsDefault {
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "Remove address for account.",
-			accountName = "Account Remove Address");
+		Accounts.addBusinessAccount(accountName = "Account Remove Address");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
 		Accounts.addAddress(
 			addressCity = "Dalian",
 			addressCountry = "China",
-			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
@@ -908,7 +879,6 @@ definition {
 		Accounts.openAccountsAdmin();
 
 		Accounts.addAccountWithDomain(
-			accountDescription = "Remove Domain from the Account",
 			accountName = "Remove Account Domain",
 			domainNames = "liferay.com,Google.com");
 
@@ -964,9 +934,7 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a test for unassign organization from account.",
-			accountName = "Unassign Organization from Account");
+		Accounts.addBusinessAccount(accountName = "Unassign Organization from Account");
 
 		Accounts.assignOrganizations(
 			accountName = "Unassign Organization from Account",
@@ -996,9 +964,7 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
+		Accounts.addPersonAccount(accountName = "Person Account");
 
 		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
@@ -1079,16 +1045,13 @@ definition {
 	test CanSetDefaultAddresses {
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "Set default address for account.",
-			accountName = "Account with Default Address");
+		Accounts.addBusinessAccount(accountName = "Account with Default Address");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
 
 		Accounts.addAddress(
 			addressCity = "Dalian",
 			addressCountry = "China",
-			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
 			addressPostalCode = "116023",
 			addressRegion = "Liaoning Sheng",
@@ -1100,7 +1063,6 @@ definition {
 		Accounts.addAddress(
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
-			addressDescription = "Address of Los Angeles (Global HQ) office.",
 			addressName = "Liferay, Inc.",
 			addressPostalCode = "91765",
 			addressRegion = "California",
@@ -1111,7 +1073,6 @@ definition {
 		Accounts.addAddress(
 			addressCity = "Shibuya-ku",
 			addressCountry = "Japan",
-			addressDescription = "Address of Japan office.",
 			addressName = "Liferay Japan K. K.",
 			addressPostalCode = "150-0021",
 			addressRegion = "Tokyo",
@@ -1331,15 +1292,11 @@ definition {
 	test NoFilterByNavigationForPersonAccount {
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a Business Account.",
-			accountName = "Business Account");
+		Accounts.addBusinessAccount(accountName = "Business Account");
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
+		Accounts.addPersonAccount(accountName = "Person Account");
 
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
@@ -1376,7 +1333,6 @@ definition {
 		Accounts.openAccountsAdmin();
 
 		Accounts.addAccountWithDomain(
-			accountDescription = "This is an Account with Multi Domains",
 			accountName = "AM Account",
 			domainNames = "liferay.com,Google.com,9teen.com");
 
@@ -1425,15 +1381,11 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a Business Account.",
-			accountName = "Business Account");
+		Accounts.addBusinessAccount(accountName = "Business Account");
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
+		Accounts.addPersonAccount(accountName = "Person Account");
 
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
@@ -1488,15 +1440,11 @@ definition {
 		Alert.viewSuccessMessage();
 
 		JSONAccountEntry.addAccountEntry(
-			accountEntryDescription = "Account 1",
 			accountEntryName = "Account 1",
-			accountEntryStatus = "Active",
 			accountEntryType = "Business");
 
 		JSONAccountEntry.addAccountEntry(
-			accountEntryDescription = "Account 2",
 			accountEntryName = "Account 2",
-			accountEntryStatus = "Active",
 			accountEntryType = "Business");
 
 		Accounts.openAccountsAdmin();
@@ -1552,15 +1500,12 @@ definition {
 		Accounts.openAccountsAdmin();
 
 		Accounts.addAccountWithDomain(
-			accountDescription = "This is an account with domain",
 			accountName = "Account with Domain",
 			domainNames = "liferay.com");
 
 		Navigator.gotoBack();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is an account without domain",
-			accountName = "Account no Domain");
+		Accounts.addBusinessAccount(accountName = "Account no Domain");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -1643,7 +1588,6 @@ definition {
 		Accounts.openAccountsAdmin();
 
 		Accounts.addAccountWithDomain(
-			accountDescription = "This is an Account with Multi Domains",
 			accountName = "AM Account",
 			domainNames = "liferay.com,Google.com,9teen.com");
 
@@ -1696,7 +1640,6 @@ definition {
 		Accounts.openAccountsAdmin();
 
 		Accounts.addAccountWithDomain(
-			accountDescription = "This is an Account with Multi Domains",
 			accountName = "AM Account",
 			domainNames = "liferay.com,Google.com");
 

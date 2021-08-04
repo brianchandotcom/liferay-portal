@@ -89,9 +89,13 @@ definition {
 	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
 		property portal.acceptance = "true";
 
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
+
 		Accounts.openAccountsAdmin();
 
-		Accounts.addPersonAccount(accountName = "Person Account");
+		LexiconEntry.gotoEntry(rowEntry = "Person Account");
 
 		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
@@ -540,9 +544,9 @@ definition {
 		}
 
 		for (var accountNumber : list "4,5,6") {
-			Accounts.openAccountsAdmin();
-
-			Accounts.addPersonAccount(accountName = "Account ${accountNumber}");
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account ${accountNumber}",
+				accountEntryType = "Person");
 		}
 
 		Accounts.openAccountsAdmin();
@@ -790,9 +794,9 @@ definition {
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
 
-		Accounts.openAccountsAdmin();
-
-		Accounts.addPersonAccount(accountName = "Person Account");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
 
 		Accounts.openAccountsAdmin();
 
@@ -985,9 +989,13 @@ definition {
 	test CanRemoveUserFromPersonAccount {
 		property portal.acceptance = "true";
 
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
+
 		Accounts.openAccountsAdmin();
 
-		Accounts.addPersonAccount(accountName = "Person Account");
+		LexiconEntry.gotoEntry(rowEntry = "Person Account");
 
 		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
@@ -1318,9 +1326,9 @@ definition {
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
 
-		Accounts.openAccountsAdmin();
-
-		Accounts.addPersonAccount(accountName = "Person Account");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
 
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
@@ -1407,9 +1415,9 @@ definition {
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
 
-		Accounts.openAccountsAdmin();
-
-		Accounts.addPersonAccount(accountName = "Person Account");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
 
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();

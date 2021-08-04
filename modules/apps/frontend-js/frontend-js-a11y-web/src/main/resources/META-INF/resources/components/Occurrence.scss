@@ -1,10 +1,10 @@
-.a11y-panel__sidebar {
-	&--occurrence-panel-code-block {
+.a11y-panel {
+	&--code-block {
 		background: #393a4a;
 		border-radius: 4px;
 	}
 
-	&--occurrence-panel-code-text {
+	&--code-text {
 		color: white;
 		word-wrap: break-word;
 	}

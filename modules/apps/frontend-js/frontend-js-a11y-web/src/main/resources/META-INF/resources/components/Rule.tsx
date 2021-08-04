@@ -16,6 +16,7 @@ import './Rule.scss';
 
 import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import React from 'react';
 
@@ -41,25 +42,28 @@ function Rule({
 			role="tab"
 			{...otherProps}
 		>
-			<ClayList.ItemField
-				className="a11y-panel__sidebar--rule-list-item"
-				expand
-			>
+			<ClayList.ItemField className="a11y-panel--rule-list-item" expand>
 				{ruleTitle && (
 					<ClayList.ItemTitle>{ruleTitle}</ClayList.ItemTitle>
 				)}
 				{ruleSubtext && (
-					<ClayList.ItemText subtext>{ruleSubtext}</ClayList.ItemText>
+					<ClayList.ItemText className="text-capitalize" subtext>
+						{ruleSubtext}
+					</ClayList.ItemText>
 				)}
 				{ruleText && <ClayList.ItemText>{ruleText}</ClayList.ItemText>}
 			</ClayList.ItemField>
 			{quantity && (
 				<ClayList.ItemField className="align-self-center">
-					<ClayBadge label={quantity} />
+					<ClayLayout.ContentSection>
+						<ClayBadge displayType="info" label={quantity} />
+					</ClayLayout.ContentSection>
 				</ClayList.ItemField>
 			)}
 			<ClayList.ItemField className="align-self-center">
-				<ClayIcon symbol="angle-right-small" />
+				<ClayLayout.ContentSection>
+					<ClayIcon symbol="angle-right-small" />
+				</ClayLayout.ContentSection>
 			</ClayList.ItemField>
 		</button>
 	);

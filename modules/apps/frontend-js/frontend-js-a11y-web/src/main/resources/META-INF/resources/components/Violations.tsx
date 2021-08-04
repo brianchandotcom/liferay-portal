@@ -17,6 +17,7 @@ import './Violations.scss';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import React from 'react';
 
@@ -155,46 +156,54 @@ export default function ViolationsPanel({
 	return (
 		<>
 			<div className="sidebar-section">
-				<div className="a11y-panel__sidebar--violations-panel-header-title">
-					<div className="inline-item inline-item-before">
-						<ClayIcon
-							className="text-danger"
-							symbol="info-circle"
-						/>
-					</div>
-
-					<div className="inline-item">
-						<span className="list-group-title">
-							{Liferay.Language.get('accessibility-violations')}
-						</span>
-					</div>
-
-					<div className="inline-item inline-item-after">
-						<ClayDropDownWithItems
-							closeOnClickOutside
-							items={getItems(
-								onFilterChange,
-								(value) =>
-									filters.impact?.includes(value) ||
-									filters.tags?.includes(value)
-							)}
-							menuElementAttrs={{className: 'a11y-dropdown'}}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'open-violations-filter'
-									)}
-									displayType="unstyled"
-									small
-									symbol="filter"
+				<div className="a11y-panel--violations-header">
+					<ClayLayout.ContentRow noGutters verticalAlign="center">
+						<ClayLayout.ContentCol>
+							<ClayLayout.ContentSection>
+								<ClayIcon
+									className="text-danger"
+									symbol="info-circle"
 								/>
-							}
-						/>
-					</div>
+							</ClayLayout.ContentSection>
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol expand>
+							<ClayLayout.ContentSection>
+								<span className="component-title">
+									{Liferay.Language.get(
+										'accessibility-violations'
+									)}
+								</span>
+							</ClayLayout.ContentSection>
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol>
+							<ClayDropDownWithItems
+								closeOnClickOutside
+								items={getItems(
+									onFilterChange,
+									(value) =>
+										filters.impact?.includes(value) ||
+										filters.tags?.includes(value)
+								)}
+								menuElementAttrs={{className: 'a11y-dropdown'}}
+								trigger={
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'open-violations-filter'
+										)}
+										displayType="unstyled"
+										small
+										symbol="filter"
+									/>
+								}
+							/>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
 				</div>
 			</div>
 
-			<div className="a11y-panel__sidebar--violations-panel-header-description">
+			<div className="a11y-panel--violations-description">
 				{!hasViolations
 					? Liferay.Language.get(
 							'there-are-no-accessibility-violations-in-this-page'
@@ -209,6 +218,7 @@ export default function ViolationsPanel({
 					aria-label={Liferay.Language.get('violations-list')}
 					className="list-group-flush"
 					role="tablist"
+					showQuickActionsOnHover={false}
 				>
 					{rules.map(({id, impact, nodes}) => (
 						<Rule

@@ -32,28 +32,44 @@ $a11y-panel-width: 320px;
 	z-index: 1070 !important;
 }
 
-.a11y-panel__sidebar {
+.a11y-panel {
 	position: fixed !important;
 	right: 0;
 	top: 0;
 	width: $a11y-panel-width;
 	z-index: 1060;
 
-	&--violations-panel-header-title {
+	&--violations-header {
 		border-bottom: 0.0625rem solid #f2f2f2;
 		border-color: #e7e7ed;
 		margin-left: 1rem;
 		margin-right: 1rem;
 		margin-top: 0;
 		padding: 0.5rem 0;
+
+		.lexicon-icon {
+			color: #6b6c7e;
+		}
+
+		.component-title {
+			font-size: 0.875rem;
+			font-weight: 600;
+		}
 	}
 
-	&--violations-panel-header-description {
+	&--violations-description {
+		font-size: 0.875rem;
 		padding: 1rem;
 	}
 
 	&--body {
+		font-size: 0.875rem;
 		padding: 0.1875rem 1rem;
+	}
+
+	.panel-header {
+		color: #6b6c7e;
+		border-color: #cdced9;
 	}
 
 	.list-group-item {

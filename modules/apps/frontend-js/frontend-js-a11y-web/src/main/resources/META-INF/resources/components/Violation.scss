@@ -1,5 +1,10 @@
-.a11y-panel__sidebar {
-	&--violation-panel-wrapper {
+.a11y-panel {
+	&--violation-body {
 		padding: 0 1rem;
+
+		.panel-no-padding {
+			margin-left: -1rem;
+			margin-right: -1rem;
+		}
 	}
 }

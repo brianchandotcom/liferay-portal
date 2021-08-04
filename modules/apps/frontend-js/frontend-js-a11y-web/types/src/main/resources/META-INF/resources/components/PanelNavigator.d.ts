@@ -12,6 +12,7 @@
  * details.
  */
 
+import './PanelNavigator.scss';
 import React from 'react';
 import type {ImpactValue} from 'axe-core';
 declare type PanelNavigatorProps = {

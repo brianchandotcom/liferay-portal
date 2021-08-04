@@ -12,12 +12,13 @@
  * details.
  */
 
+import './PanelNavigator.scss';
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import ClayList from '@clayui/list';
 import React from 'react';
 
 import type {ImpactValue} from 'axe-core';
@@ -38,38 +39,45 @@ function PanelNavigator({
 	title,
 }: PanelNavigatorProps) {
 	return (
-		<div className="sidebar-header">
+		<div className="a11y-panel--header sidebar-header">
 			<ClayButton
-				className="autofit-row sidebar-section"
+				className="sidebar-section"
 				displayType="unstyled"
 				onClick={onBack}
 			>
-				<div className="mr-2">
-					<ClayIcon symbol="angle-left" />
-				</div>
-				<ClayLayout.ContentCol expand>
-					<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
-					{impact && (
-						<ClayList.ItemText className="text-secondary">
-							{`${impact} - `}
-							<ClayLink
-								className="text-primary"
-								displayType="unstyled"
-								href={helpUrl}
-								onClick={(event) => event.stopPropagation()}
-							>
-								{Liferay.Language.get('more-info')}
-							</ClayLink>
-						</ClayList.ItemText>
-					)}
-					<div className="list-group-detail">
-						{tags.map((tag) => (
-							<ClayLabel displayType="info" key={tag}>
-								{tag}
-							</ClayLabel>
-						))}
-					</div>
-				</ClayLayout.ContentCol>
+				<ClayLayout.ContentRow noGutters padded>
+					<ClayLayout.ContentCol>
+						<ClayLayout.ContentSection>
+							<ClayIcon symbol="angle-left" />
+						</ClayLayout.ContentSection>
+					</ClayLayout.ContentCol>
+
+					<ClayLayout.ContentCol expand>
+						<div className="component-title">{title}</div>
+
+						{impact && (
+							<div className="component-subtitle text-capitalize text-secondary">
+								{`${impact} - `}
+								<ClayLink
+									className="text-primary"
+									displayType="unstyled"
+									href={helpUrl}
+									onClick={(event) => event.stopPropagation()}
+								>
+									{Liferay.Language.get('more-info')}
+								</ClayLink>
+							</div>
+						)}
+
+						<div className="component-tags">
+							{tags.map((tag) => (
+								<ClayLabel displayType="info" key={tag}>
+									{tag}
+								</ClayLabel>
+							))}
+						</div>
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
 			</ClayButton>
 		</div>
 	);

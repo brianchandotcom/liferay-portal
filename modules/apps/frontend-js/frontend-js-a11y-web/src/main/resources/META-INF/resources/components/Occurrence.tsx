@@ -14,6 +14,7 @@
 
 import './Occurrence.scss';
 
+import ClayPanel from '@clayui/panel';
 import React from 'react';
 
 import PanelNavigator from './PanelNavigator';
@@ -26,19 +27,11 @@ interface ICodeBlock extends React.HTMLAttributes<HTMLDivElement> {
 	children: React.ReactNode;
 }
 
-function CodeBlock({children, ...otherProps}: ICodeBlock) {
-	return (
-		<div
-			className="a11y-panel__sidebar--occurrence-panel-code-block"
-			role="textbox"
-			{...otherProps}
-		>
-			<div className="a11y-panel__sidebar--occurrence-panel-code-text p-2">
-				{children}
-			</div>
-		</div>
-	);
-}
+const CodeBlock = ({children, ...otherProps}: ICodeBlock) => (
+	<div className="a11y-panel--code-block" role="textbox" {...otherProps}>
+		<div className="a11y-panel--code-text p-2">{children}</div>
+	</div>
+);
 
 type Params = {
 	name: string;
@@ -76,20 +69,20 @@ function Occurrence({params, previous, violations}: OccurrenceProps) {
 				tags={tags}
 				title={name}
 			/>
-			<div className="a11y-panel__sidebar--body">
-				<p className="text-secondary">
+			<div className="a11y-panel--body">
+				<p className="mt-2 text-secondary">
 					{Liferay.Language.get(
 						'open-developer-tools-in-the-browser-to-see-the-selected-occurrence'
 					)}
 				</p>
 				<div className="my-3">
-					<strong>{Liferay.Language.get('target')}</strong>
+					<span>{Liferay.Language.get('target')}</span>
 				</div>
 				<CodeBlock aria-label={Liferay.Language.get('target-selector')}>
 					{target}
 				</CodeBlock>
 				<div className="my-3">
-					<strong>{Liferay.Language.get('code')}</strong>
+					<span>{Liferay.Language.get('code')}</span>
 				</div>
 				<CodeBlock
 					aria-label={Liferay.Language.get('code-of-the-element')}

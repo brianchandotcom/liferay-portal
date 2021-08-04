@@ -23,24 +23,6 @@ import Rule from './Rule';
 
 import type {Violations} from '../hooks/useA11y';
 
-type PanelSectionProps = {
-	children: React.ReactNode;
-	title: React.ReactNode;
-};
-
-function PanelSection({children, title}: PanelSectionProps) {
-	return (
-		<ClayPanel
-			displayTitle={title}
-			displayType="unstyled"
-			role="tab"
-			showCollapseIcon={false}
-		>
-			<ClayPanel.Body>{children}</ClayPanel.Body>
-		</ClayPanel>
-	);
-}
-
 type Params = {
 	name: string;
 	ruleId: string;
@@ -78,38 +60,50 @@ function Violation({next, params, previous, violations}: ViolationProps) {
 				tags={tags}
 				title={id}
 			/>
-			<div className="a11y-panel__sidebar--violation-panel-wrapper">
+			<div className="a11y-panel--violation-body">
 				<ClayPanel.Group flush>
-					<PanelSection title={Liferay.Language.get('details')}>
-						{description}
-					</PanelSection>
-					<PanelSection title={Liferay.Language.get('occurrences')}>
-						<ClayList className="list-group-flush">
-							{nodes.map((target, index) => {
-								const name = Liferay.Util.sub(
-									Liferay.Language.get('occurrence-x'),
-									String(index + 1)
-								);
+					<ClayPanel
+						displayTitle={Liferay.Language.get('details')}
+						displayType="unstyled"
+						role="tab"
+						showCollapseIcon={false}
+					>
+						<ClayPanel.Body>{description}</ClayPanel.Body>
+					</ClayPanel>
+					<ClayPanel
+						displayTitle={Liferay.Language.get('occurrences')}
+						displayType="unstyled"
+						role="tab"
+						showCollapseIcon={false}
+					>
+						<ClayPanel.Body className="panel-no-padding">
+							<ClayList className="list-group-flush">
+								{nodes.map((target, index) => {
+									const name = Liferay.Util.sub(
+										Liferay.Language.get('occurrence-x'),
+										String(index + 1)
+									);
 
-								return (
-									<Rule
-										aria-label={name}
-										key={index}
-										onClick={() => {
-											if (next) {
-												next({
-													name,
-													ruleId,
-													target,
-												});
-											}
-										}}
-										ruleText={name}
-									/>
-								);
-							})}
-						</ClayList>
-					</PanelSection>
+									return (
+										<Rule
+											aria-label={name}
+											key={index}
+											onClick={() => {
+												if (next) {
+													next({
+														name,
+														ruleId,
+														target,
+													});
+												}
+											}}
+											ruleText={name}
+										/>
+									);
+								})}
+							</ClayList>
+						</ClayPanel.Body>
+					</ClayPanel>
 				</ClayPanel.Group>
 			</div>
 		</>

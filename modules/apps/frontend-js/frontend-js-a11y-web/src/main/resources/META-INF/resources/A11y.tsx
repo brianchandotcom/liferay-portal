@@ -120,7 +120,7 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 				/>
 			))}
 
-			<div className="a11y-panel__sidebar sidebar sidebar-light">
+			<div className="a11y-panel sidebar sidebar-light">
 				<StackNavigator<Params>
 					activePage={activePage}
 					onActiveChange={setActivePage}

@@ -1,5 +1,13 @@
-.a11y-panel__sidebar {
+.a11y-panel {
 	&--rule-list-item {
 		padding-left: inherit !important;
+
+		p:first-child {
+			margin-bottom: 0.4rem;
+		}
+
+		p:last-child {
+			margin-bottom: 0;
+		}
 	}
 }

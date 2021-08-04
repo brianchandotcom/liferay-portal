@@ -1,0 +1,17 @@
+.a11y-panel {
+	&--header {
+		.lexicon-icon {
+			color: #6b6c7e;
+		}
+
+		.component-subtitle,
+		.component-title {
+			font-size: 0.875rem;
+			margin-top: 0;
+		}
+
+		.component-subtitle {
+			margin-bottom: 0.5rem;
+		}
+	}
+}

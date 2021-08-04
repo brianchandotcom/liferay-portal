@@ -430,20 +430,13 @@ public class LayoutReferencesExportImportContentProcessor
 					}
 
 					if (privateLayout) {
-						if (group.isUser()) {
-							urlSB.append(
-								_DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
-						}
-						else {
-							urlSB.append(
-								_DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
-						}
+						urlSB.append(
+							_DATA_HANDLER_VIRTUAL_HOST_PRIVATE_LAYOUT_FRIENDLY_URL);
 					}
 					else {
-						urlSB.append(_DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
+						urlSB.append(
+							_DATA_HANDLER_VIRTUAL_HOST_PUBLIC_LAYOUT_FRIENDLY_URL);
 					}
-
-					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
 
 					continue;
 				}
@@ -1166,6 +1159,14 @@ public class LayoutReferencesExportImportContentProcessor
 
 	private static final String _DATA_HANDLER_SITE_ADMIN_URL =
 		"@data_handler_site_admin_url@";
+
+	private static final String
+		_DATA_HANDLER_VIRTUAL_HOST_PRIVATE_LAYOUT_FRIENDLY_URL =
+			"@data_handler_virtual_host_private_layout_friendly_url@";
+
+	private static final String
+		_DATA_HANDLER_VIRTUAL_HOST_PUBLIC_LAYOUT_FRIENDLY_URL =
+			"@data_handler_virtual_host_public_layout_friendly_url@";
 
 	private static final char[] _LAYOUT_REFERENCE_STOP_CHARS = {
 		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,

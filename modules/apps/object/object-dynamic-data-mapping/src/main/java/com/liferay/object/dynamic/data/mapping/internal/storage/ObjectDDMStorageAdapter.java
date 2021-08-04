@@ -48,6 +48,9 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.math.BigDecimal;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -177,6 +180,14 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					ddmForm.getDefaultLocale(),
 					new String((byte[])objectFieldValue));
 			}
+			else if (objectFieldValue instanceof Double) {
+				NumberFormat numberFormat = NumberFormat.getInstance(
+					ddmForm.getDefaultLocale());
+
+				value.addString(
+					ddmForm.getDefaultLocale(),
+					numberFormat.format(objectFieldValue));
+			}
 			else {
 				value.addString(
 					ddmForm.getDefaultLocale(),
@@ -217,8 +228,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 	}
 
 	private Map<String, Object> _getObjectEntryProperties(
-		List<DDMFormFieldValue> ddmFormFieldValues,
-		List<ObjectField> objectFields) {
+			List<DDMFormFieldValue> ddmFormFieldValues,
+			List<ObjectField> objectFields)
+		throws ParseException {
 
 		Map<String, Object> properties = new HashMap<>();
 
@@ -243,13 +255,15 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 				Value value = ddmFormFieldValue.getValue();
 
+				Locale defaultLocale = value.getDefaultLocale();
+
 				Map<Locale, String> values = value.getValues();
 
 				properties.put(
 					objectFieldName,
 					_getValue(
-						objectFieldTypes.get(objectFieldName),
-						values.get(value.getDefaultLocale())));
+						defaultLocale, objectFieldTypes.get(objectFieldName),
+						values.get(defaultLocale)));
 			}
 		}
 
@@ -272,7 +286,10 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		}
 	}
 
-	private Object _getValue(String objectFieldType, String value) {
+	private Object _getValue(
+			Locale defaultLocale, String objectFieldType, String value)
+		throws ParseException {
+
 		if (Objects.equals(objectFieldType, "BigDecimal")) {
 			return GetterUtil.get(value, BigDecimal.ZERO);
 		}
@@ -283,7 +300,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			return GetterUtil.getBoolean(value);
 		}
 		else if (Objects.equals(objectFieldType, "Double")) {
-			return GetterUtil.getDouble(value);
+			NumberFormat numberFormat = NumberFormat.getInstance(defaultLocale);
+
+			return GetterUtil.getDouble(numberFormat.parse(value));
 		}
 		else if (Objects.equals(objectFieldType, "Integer")) {
 			return GetterUtil.getInteger(value);

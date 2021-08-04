@@ -68,6 +68,9 @@ export const CollectionGeneralPanel = ({item}) => {
 	const [availableListStyles, setAvailableListStyles] = useState([
 		DEFAULT_LIST_STYLE,
 	]);
+	const [collectionConfiguration, setCollectionConfiguration] = useState(
+		null
+	);
 	const collectionItemType = item.config.collection?.itemType || null;
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
@@ -100,13 +103,16 @@ export const CollectionGeneralPanel = ({item}) => {
 	] = useState(false);
 
 	const optionsMenuItems = useMemo(
-		() => [
-			{
-				label: Liferay.Language.get('filter-collection'),
-				onClick: () => setFilterConfigurationVisible(true),
-			},
-		],
-		[setFilterConfigurationVisible]
+		() =>
+			collectionConfiguration
+				? [
+						{
+							label: Liferay.Language.get('filter-collection'),
+							onClick: () => setFilterConfigurationVisible(true),
+						},
+				  ]
+				: [],
+		[collectionConfiguration, setFilterConfigurationVisible]
 	);
 
 	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
@@ -308,6 +314,28 @@ export const CollectionGeneralPanel = ({item}) => {
 		}
 	}, [item.config.collection, item.config.listStyle]);
 
+	useEffect(() => {
+		if (item.config.collection?.key) {
+			CollectionService.getCollectionConfiguration(item.config.collection)
+				.then((nextCollectionConfiguration) => {
+					if (
+						nextCollectionConfiguration?.fieldSets.some(
+							(fieldSet) => fieldSet?.fields?.length
+						)
+					) {
+						setCollectionConfiguration(nextCollectionConfiguration);
+					}
+					else {
+						setCollectionConfiguration(null);
+					}
+				})
+				.catch(() => setCollectionConfiguration(null));
+		}
+		else {
+			setCollectionConfiguration(null);
+		}
+	}, [item.config.collection]);
+
 	return (
 		<>
 			<CollectionSelector
@@ -496,6 +524,7 @@ export const CollectionGeneralPanel = ({item}) => {
 
 			{filterConfigurationVisible ? (
 				<CollectionFilterConfigurationModal
+					collectionConfiguration={collectionConfiguration}
 					handleConfigurationChanged={handleConfigurationChanged}
 					item={item}
 					observer={filterConfigurationObserver}
@@ -508,15 +537,13 @@ export const CollectionGeneralPanel = ({item}) => {
 };
 
 function CollectionFilterConfigurationModal({
+	collectionConfiguration,
 	handleConfigurationChanged,
 	item,
 	observer,
 	onClose,
 	visible,
 }) {
-	const [collectionConfiguration, setCollectionConfiguration] = useState(
-		null
-	);
 	const languageId = useSelector(selectLanguageId);
 	const [itemConfig, setItemConfig] = useState(item.config);
 
@@ -555,17 +582,6 @@ function CollectionFilterConfigurationModal({
 			setItemConfig(item.config);
 		}
 	}, [item.config, visible]);
-
-	useEffect(() => {
-		if (visible && item.config.collection?.key) {
-			CollectionService.getCollectionConfiguration(
-				item.config.collection
-			).then(setCollectionConfiguration);
-		}
-		else {
-			setCollectionConfiguration(null);
-		}
-	}, [item.config.collection, visible]);
 
 	return (
 		<ClayModal observer={observer}>

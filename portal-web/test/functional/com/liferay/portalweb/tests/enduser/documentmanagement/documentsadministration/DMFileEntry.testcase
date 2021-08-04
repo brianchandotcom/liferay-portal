@@ -26,6 +26,61 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that the guest can see an expired document."
+	@priority = "4"
+	test CannotViewExpiredDocumentAsGuest {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.name.skip.portal.instance = "DMFileEntry#CannotViewExpiredDocumentAsGuest";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		DMDocument.updateCheckInterval(fieldValue = "2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_5.txt");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.setExpirationDate(
+			enableExpirationDate = "true",
+			increaseMinutes = "2");
+
+		Pause(locator1 = "120000");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewCPStatus(
+			dmDocumentStatus = "Expired",
+			dmDocumentTitle = "Document_5.txt");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/documents-and-media-page");
+
+		DMDocument.viewDefault();
+	}
+
 	@description = "This test ensures that the user can review a document when the date is changed."
 	@priority = "4"
 	test CanReviewDocumentWhenDateIsChanged {

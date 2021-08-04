@@ -100,7 +100,7 @@ const PreviewModal = ({observer}) => {
 							<li className="mr-2 nav-item">
 								<div className="align-middle d-inline-flex">
 									<label
-										className="mr-2 mt-1"
+										className="mr-2 mt-1 w-100"
 										htmlFor={experienceSelectId}
 									>
 										{Liferay.Language.get('experience')}

@@ -60,6 +60,7 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 	return (
 		<ClayModal
 			className="page-editor__allowed-fragment__modal"
+			containerProps={{className: 'cadmin'}}
 			observer={observer}
 			size="md"
 		>

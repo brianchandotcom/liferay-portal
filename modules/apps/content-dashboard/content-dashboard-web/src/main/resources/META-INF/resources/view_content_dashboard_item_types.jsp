@@ -21,9 +21,14 @@ ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSu
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/tree.css") %>"
-		rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/tree.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<react:component module="js/SelectTypeAndSubtype"
-	props="<%= contentDashboardItemSubtypeItemSelectorViewDisplayContext.getData() %>" />
+<section class="h-100">
+	<span aria-hidden="true" class="loading-animation mt-0 select-type-and-subtype-loader"></span>
+
+	<react:component
+		module="js/SelectTypeAndSubtype"
+		props="<%= contentDashboardItemSubtypeItemSelectorViewDisplayContext.getData() %>"
+	/>
+</section>

@@ -1,5 +1,11 @@
 @import 'atlas-variables';
 
-.select-type-and-subtype-filter {
-	border-bottom: 1px solid $gray-300;
+.select-type-and-subtype {
+	&-filter {
+		border-bottom: 1px solid $gray-300;
+	}
+	&-loader {
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }

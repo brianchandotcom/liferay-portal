@@ -77,6 +77,13 @@ function removeValue({value, valueToBeRemoved}) {
 function toArray(value = '') {
 	let newValue = value;
 
+	if (newValue && typeof newValue === 'string') {
+		try {
+			newValue = JSON.parse(newValue);
+		}
+		catch (error) {}
+	}
+
 	if (!Array.isArray(newValue)) {
 		newValue = [newValue];
 	}

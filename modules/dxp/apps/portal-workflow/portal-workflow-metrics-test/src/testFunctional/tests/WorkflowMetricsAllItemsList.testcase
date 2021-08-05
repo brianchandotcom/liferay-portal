@@ -2436,6 +2436,50 @@ definition {
 			value1 = "Test Test, Unassigned, User User");
 	}
 
+	@description = "This is a use case for LPS-98825."
+	@priority = "5"
+	test ViewSortDirectionChanged {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		for (var webContentNumber : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "Web Content Title ${webContentNumber}");
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		ContentDashboard.orderByModificationDate(filterOption = "Last Activity Date");
+
+		for (var rowNumber : list "1,2,3") {
+			AssertElementPresent(
+				key_rowNumber = "${rowNumber} + 1",
+				locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+				value1 = "Web Content Title ${rowNumber}");
+		}
+
+		Workflow.clickRevertSortDirection();
+
+		for (var rowNumber : list "3,2,1") {
+			AssertElementPresent(
+				key_rowNumber = "5 - ${rowNumber}",
+				locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+				value1 = "Web Content Title ${rowNumber}");
+		}
+	}
+
 	@description = "LPS-92053 - Verify that, in the item detail modal, Pause instead of due date, the UI will inform SLA Paused sentence next to the SLA name"
 	@priority = "4"
 	test WhenSlaIsPausedSlaPausedIsDisplayedInsteadOfDueDate {

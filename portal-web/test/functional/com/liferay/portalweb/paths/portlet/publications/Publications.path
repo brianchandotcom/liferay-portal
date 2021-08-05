@@ -151,6 +151,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATION_ORDER_IN_HISTORY</td>
+	<td>//ul[contains(@class,'publications-table')]//li[${resultOrder}]/div/p/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td></td>

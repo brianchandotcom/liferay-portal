@@ -546,6 +546,32 @@ definition {
 		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
 	}
 
+	macro viewPublicationOrderInHistory {
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		var key_navBarTitle = "History";
+
+		Click(
+			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE",
+			value1 = "History");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var resultOrder = "0";
+
+		for (var publicationName : list "${publicationList}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#PUBLICATION_ORDER_IN_HISTORY",
+				resultOrder = "${resultOrder}",
+				value1 = "${publicationName}");
+		}
+	}
+
 	macro viewPublicationPublished {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",

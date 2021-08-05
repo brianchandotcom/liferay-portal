@@ -591,16 +591,12 @@ function CollectionFilterConfigurationModal({
 			<ClayModal.Body>
 				{collectionConfiguration ? (
 					collectionConfiguration.fieldSets
-						.filter(
-							(fieldSet) =>
-								fieldSet.configurationRole &&
-								fieldSet.fields.length
-						)
-						.map((fieldSet) => (
+						.filter((fieldSet) => fieldSet.fields.length)
+						.map((fieldSet, index) => (
 							<FieldSet
 								fields={fieldSet.fields}
-								key={fieldSet.configurationRole}
-								label={fieldSet.configurationRole}
+								key={`${fieldSet.label || ''}-${index}`}
+								label={fieldSet.label}
 								languageId={languageId}
 								onValueSelect={(name, value) =>
 									handleFieldValueSelect(

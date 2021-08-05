@@ -18,7 +18,6 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -26,9 +25,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -55,30 +51,19 @@ public class GetCollectionConfigurationMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String collectionKey = ParamUtil.getString(
 			resourceRequest, "collectionKey", themeDisplay.getLanguageId());
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			(List<InfoCollectionProvider<?>>)
-				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
-					InfoCollectionProvider.class);
+		InfoCollectionProvider infoCollectionProvider =
+			_infoItemServiceTracker.getInfoItemService(
+				InfoCollectionProvider.class, collectionKey);
 
-		for (InfoCollectionProvider infoCollectionProvider :
-				infoCollectionProviders) {
-
-			if (Objects.equals(
-					infoCollectionProvider.getKey(), collectionKey)) {
-
-				jsonObject = InfoFormUtil.getConfigurationJSONObject(
-					infoCollectionProvider.getConfigurationInfoForm(),
-					themeDisplay.getLocale());
-			}
-		}
+		JSONObject jsonObject = InfoFormUtil.getConfigurationJSONObject(
+			infoCollectionProvider.getConfigurationInfoForm(),
+			themeDisplay.getLocale());
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

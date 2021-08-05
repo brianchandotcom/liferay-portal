@@ -186,14 +186,9 @@ definition {
 	@priority = "4"
 	test CanAddAndRemoveOrganizationsInBulk {
 		for (var organizationNumber : list "1,2,3,4") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.addCP(
-				orgName = "Organization ${organizationNumber}",
-				orgType = "Organization");
+			JSONOrganization.addOrganization(
+				organizationName = "Organization ${organizationNumber}",
+				organizationSite = "true");
 		}
 
 		JSONAccountEntry.addAccountEntry(

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenIdConnectTokenRefreshScheduler {
 
 	public void reschedule(
-			long lifeTime, Date refreshDate, long openIdConnectSessionId)
+			long lifeTime, long openIdConnectSessionId, Date refreshDate)
 		throws SchedulerException {
 
 		if (_tokenRefreshOffset > lifeTime) {
@@ -80,7 +80,7 @@ public class OpenIdConnectTokenRefreshScheduler {
 	}
 
 	public void schedule(
-			long lifeTime, Date refreshDate, long openIdConnectSessionId)
+			long lifeTime, long openIdConnectSessionId, Date refreshDate)
 		throws SchedulerException {
 
 		if (_tokenRefreshOffset > lifeTime) {

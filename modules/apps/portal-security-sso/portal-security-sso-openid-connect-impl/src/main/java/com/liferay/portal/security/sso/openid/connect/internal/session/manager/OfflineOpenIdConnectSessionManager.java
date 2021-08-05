@@ -150,8 +150,8 @@ public class OfflineOpenIdConnectSessionManager {
 			try {
 				_openIdConnectTokenRefreshScheduler.schedule(
 					accessToken.getLifetime(),
-					openIdConnectSession.getModifiedDate(),
-					openIdConnectSession.getOpenIdConnectSessionId());
+					openIdConnectSession.getOpenIdConnectSessionId(),
+					openIdConnectSession.getModifiedDate());
 			}
 			catch (SchedulerException schedulerException) {
 				if (_log.isWarnEnabled()) {
@@ -243,8 +243,8 @@ public class OfflineOpenIdConnectSessionManager {
 			try {
 				_openIdConnectTokenRefreshScheduler.reschedule(
 					accessToken.getLifetime(),
-					openIdConnectSession.getModifiedDate(),
-					openIdConnectSession.getOpenIdConnectSessionId());
+					openIdConnectSession.getOpenIdConnectSessionId(),
+					openIdConnectSession.getModifiedDate());
 			}
 			catch (SchedulerException schedulerException) {
 				if (_log.isWarnEnabled()) {

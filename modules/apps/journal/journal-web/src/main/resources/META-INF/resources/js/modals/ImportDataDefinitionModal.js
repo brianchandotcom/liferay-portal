@@ -93,6 +93,8 @@ const ImportDataDefinitionModal = ({
 							type="text"
 							value={name}
 						/>
+					</ClayForm.Group>
+					<ClayForm.Group>
 						<label htmlFor={jsonFileInputId}>
 							{Liferay.Language.get('json-file')}
 						</label>

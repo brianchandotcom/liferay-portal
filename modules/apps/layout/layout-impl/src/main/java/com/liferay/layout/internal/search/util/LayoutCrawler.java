@@ -22,8 +22,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.net.InetAddress;
 
@@ -73,7 +76,8 @@ public class LayoutCrawler {
 			themeDisplay.setLocale(locale);
 			themeDisplay.setScopeGroupId(layout.getGroupId());
 			themeDisplay.setServerName(inetAddress.getHostName());
-			themeDisplay.setServerPort(_portal.getPortalServerPort(false));
+			themeDisplay.setServerPort(
+				_portal.getPortalServerPort(_isHttpsEnabled()));
 			themeDisplay.setSiteGroupId(layout.getGroupId());
 
 			HttpGet httpGet = new HttpGet(
@@ -112,6 +116,17 @@ public class LayoutCrawler {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private boolean _isHttpsEnabled() {
+		if (Http.HTTPS.equals(PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL)) ||
+			Http.HTTPS.equals(
+				PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _USER_AGENT = "Liferay Page Crawler";

@@ -326,6 +326,15 @@ definition {
 					collectionName = "Collection Name");
 		}
 
+		task ("Assert the actions order of a collection") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewOrder(menuItemList = "Edit,-,Export,Import,-,Delete");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		}
+
 		task ("Assert the actions order of a draft fragment") {
 			LexiconEntry.openEntryMenu(rowEntry = "Draft Fragment Example");
 

@@ -14,30 +14,14 @@
 
 package com.liferay.info.collection.provider;
 
-import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.type.Keyed;
-import com.liferay.info.type.Labeled;
-import com.liferay.petra.reflect.GenericUtil;
+import com.liferay.info.form.InfoForm;
 
 /**
- * @author Jorge Ferrer
+ * @author Eudaldo Alonso
  */
-public interface InfoCollectionProvider<T> extends Keyed, Labeled {
+public interface ConfigurableInfoCollectionProvider<T>
+	extends InfoCollectionProvider<T> {
 
-	public InfoPage<T> getCollectionInfoPage(CollectionQuery collectionQuery);
-
-	public default Class<?> getCollectionItemClass() {
-		return GenericUtil.getGenericClass(this);
-	}
-
-	public default String getCollectionItemClassName() {
-		Class<?> clazz = getCollectionItemClass();
-
-		return clazz.getName();
-	}
-
-	public default boolean isAvailable() {
-		return true;
-	}
+	public InfoForm getConfigurationInfoForm();
 
 }

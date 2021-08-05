@@ -1700,6 +1700,19 @@ definition {
 
 			PageEditor.waitForAutoSave();
 		}
+
+		if (isSet(label)) {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "${label}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	macro editComment {

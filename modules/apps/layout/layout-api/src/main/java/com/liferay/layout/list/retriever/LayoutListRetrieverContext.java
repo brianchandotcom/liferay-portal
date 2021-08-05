@@ -35,7 +35,7 @@ public interface LayoutListRetrieverContext {
 	@Deprecated
 	public Optional<long[][]> getAssetCategoryIdsOptional();
 
-	public Optional<Map<String, String[]>> getCollectionConfigurationOptional();
+	public Optional<Map<String, String[]>> getConfigurationOptional();
 
 	public Optional<Object> getContextObjectOptional();
 

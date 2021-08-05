@@ -37,10 +37,8 @@ public class DefaultLayoutListRetrieverContext
 	}
 
 	@Override
-	public Optional<Map<String, String[]>>
-		getCollectionConfigurationOptional() {
-
-		return Optional.ofNullable(_collectionConfiguration);
+	public Optional<Map<String, String[]>> getConfigurationOptional() {
+		return Optional.ofNullable(_configuration);
 	}
 
 	@Override
@@ -80,10 +78,8 @@ public class DefaultLayoutListRetrieverContext
 		_assetCategoryIds = assetCategoryIds;
 	}
 
-	public void setCollectionConfiguration(
-		Map<String, String[]> collectionConfiguration) {
-
-		_collectionConfiguration = collectionConfiguration;
+	public void setConfiguration(Map<String, String[]> configuration) {
+		_configuration = configuration;
 	}
 
 	public void setContextObject(Object contextObject) {
@@ -120,7 +116,7 @@ public class DefaultLayoutListRetrieverContext
 	}
 
 	private long[][] _assetCategoryIds;
-	private Map<String, String[]> _collectionConfiguration;
+	private Map<String, String[]> _configuration;
 	private Object _contextObject;
 	private HttpServletRequest _httpServletRequest;
 	private Pagination _pagination;

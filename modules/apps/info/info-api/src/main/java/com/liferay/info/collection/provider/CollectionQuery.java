@@ -27,8 +27,8 @@ import java.util.Optional;
  */
 public class CollectionQuery {
 
-	public Optional<Map<String, String[]>> getCollectionConfiguration() {
-		return Optional.ofNullable(_collectionConfiguration);
+	public Optional<Map<String, String[]>> getConfigurationOptional() {
+		return Optional.ofNullable(_configuration);
 	}
 
 	public Optional<InfoFilter> getInfoFilterOptional() {
@@ -51,10 +51,8 @@ public class CollectionQuery {
 		return Optional.ofNullable(_sort);
 	}
 
-	public void setCollectionConfiguration(
-		Map<String, String[]> collectionConfiguration) {
-
-		_collectionConfiguration = collectionConfiguration;
+	public void setConfiguration(Map<String, String[]> configuration) {
+		_configuration = configuration;
 	}
 
 	public void setInfoFilter(InfoFilter infoFilter) {
@@ -73,7 +71,7 @@ public class CollectionQuery {
 		_sort = sort;
 	}
 
-	private Map<String, String[]> _collectionConfiguration;
+	private Map<String, String[]> _configuration;
 	private InfoFilter _infoFilter;
 	private Pagination _pagination;
 	private Object _relatedItemObject;

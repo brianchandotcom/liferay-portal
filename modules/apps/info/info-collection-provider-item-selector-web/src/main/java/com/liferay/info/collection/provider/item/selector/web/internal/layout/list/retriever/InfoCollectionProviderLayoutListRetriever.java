@@ -108,11 +108,10 @@ public class InfoCollectionProviderLayoutListRetriever
 			collectionQuery.setRelatedItemObject(relatedItem);
 		}
 
-		Optional<Map<String, String[]>> collectionConfigurationOptional =
-			layoutListRetrieverContext.getCollectionConfigurationOptional();
+		Optional<Map<String, String[]>> configurationOptional =
+			layoutListRetrieverContext.getConfigurationOptional();
 
-		collectionQuery.setCollectionConfiguration(
-			collectionConfigurationOptional.orElse(null));
+		collectionQuery.setConfiguration(configurationOptional.orElse(null));
 
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
@@ -158,11 +157,10 @@ public class InfoCollectionProviderLayoutListRetriever
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 
-		Optional<Map<String, String[]>> collectionConfigurationOptional =
-			layoutListRetrieverContext.getCollectionConfigurationOptional();
+		Optional<Map<String, String[]>> configurationOptional =
+			layoutListRetrieverContext.getConfigurationOptional();
 
-		collectionQuery.setCollectionConfiguration(
-			collectionConfigurationOptional.orElse(null));
+		collectionQuery.setConfiguration(configurationOptional.orElse(null));
 
 		if (infoCollectionProvider instanceof
 				RelatedInfoItemCollectionProvider) {

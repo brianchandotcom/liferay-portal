@@ -159,38 +159,6 @@ public class GetCollectionFieldMVCResourceCommand
 			resourceRequest, resourceResponse, jsonObject);
 	}
 
-	private Map<String, String[]> _getCollectionConfiguration(
-		JSONObject collectionConfigurationJSONObject) {
-
-		if (collectionConfigurationJSONObject == null) {
-			return null;
-		}
-
-		Map<String, String[]> collectionConfiguration = new HashMap<>();
-
-		for (String key : collectionConfigurationJSONObject.keySet()) {
-			List<String> values = new ArrayList<>();
-
-			Object object = collectionConfigurationJSONObject.get(key);
-
-			if (object instanceof JSONArray) {
-				JSONArray jsonArray =
-					collectionConfigurationJSONObject.getJSONArray(key);
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					values.add(jsonArray.getString(i));
-				}
-			}
-			else {
-				values.add(String.valueOf(object));
-			}
-
-			collectionConfiguration.put(key, values.toArray(new String[0]));
-		}
-
-		return collectionConfiguration;
-	}
-
 	private JSONObject _getCollectionFieldsJSONObject(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, int activePage,
@@ -222,12 +190,12 @@ public class GetCollectionFieldMVCResourceCommand
 				JSONObject configJSONObject =
 					layoutObjectReferenceJSONObject.getJSONObject("config");
 
-				Map<String, String[]> collectionConfiguration =
-					_getCollectionConfiguration(configJSONObject);
+				Map<String, String[]> configuration = _getConfiguration(
+					configJSONObject);
 
-				if (collectionConfiguration != null) {
-					defaultLayoutListRetrieverContext.
-						setCollectionConfiguration(collectionConfiguration);
+				if (configuration != null) {
+					defaultLayoutListRetrieverContext.setConfiguration(
+						configuration);
 				}
 
 				Object infoItem = _getInfoItem(httpServletRequest);
@@ -347,6 +315,37 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		return jsonObject;
+	}
+
+	private Map<String, String[]> _getConfiguration(
+		JSONObject configurationJSONObject) {
+
+		if (configurationJSONObject == null) {
+			return null;
+		}
+
+		Map<String, String[]> configuration = new HashMap<>();
+
+		for (String key : configurationJSONObject.keySet()) {
+			List<String> values = new ArrayList<>();
+
+			Object object = configurationJSONObject.get(key);
+
+			if (object instanceof JSONArray) {
+				JSONArray jsonArray = configurationJSONObject.getJSONArray(key);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					values.add(jsonArray.getString(i));
+				}
+			}
+			else {
+				values.add(String.valueOf(object));
+			}
+
+			configuration.put(key, values.toArray(new String[0]));
+		}
+
+		return configuration;
 	}
 
 	private String _getCustomCollectionSelectorURL(

@@ -189,16 +189,14 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 				"latest", true
 			).build());
 
-		Optional<Map<String, String[]>> collectionConfigurationOptional =
-			collectionQuery.getCollectionConfiguration();
+		Optional<Map<String, String[]>> configurationOptional =
+			collectionQuery.getConfigurationOptional();
 
-		Map<String, String[]> collectionConfiguration =
-			collectionConfigurationOptional.orElse(null);
+		Map<String, String[]> configuration = configurationOptional.orElse(
+			null);
 
-		if (collectionConfiguration != null) {
-			for (Map.Entry<String, String[]> entry :
-					collectionConfiguration.entrySet()) {
-
+		if (configuration != null) {
+			for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
 				String value = entry.getValue()[0];
 
 				if (Validator.isNotNull(value)) {

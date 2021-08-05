@@ -177,15 +177,14 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
 
-		JSONObject collectionConfigurationJSONObject =
-			collectionJSONObject.getJSONObject("config");
+		JSONObject configurationJSONObject = collectionJSONObject.getJSONObject(
+			"config");
 
-		Map<String, String[]> collectionConfiguration =
-			_getCollectionConfiguration(collectionConfigurationJSONObject);
+		Map<String, String[]> configuration = _getConfiguration(
+			configurationJSONObject);
 
-		if (collectionConfiguration != null) {
-			defaultLayoutListRetrieverContext.setCollectionConfiguration(
-				collectionConfiguration);
+		if (configuration != null) {
+			defaultLayoutListRetrieverContext.setConfiguration(configuration);
 		}
 
 		defaultLayoutListRetrieverContext.setContextObject(
@@ -283,15 +282,14 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
 
-		JSONObject collectionConfigurationJSONObject =
-			collectionJSONObject.getJSONObject("config");
+		JSONObject configurationJSONObject = collectionJSONObject.getJSONObject(
+			"config");
 
-		Map<String, String[]> collectionConfiguration =
-			_getCollectionConfiguration(collectionConfigurationJSONObject);
+		Map<String, String[]> configuration = _getConfiguration(
+			configurationJSONObject);
 
-		if (collectionConfiguration != null) {
-			defaultLayoutListRetrieverContext.setCollectionConfiguration(
-				collectionConfiguration);
+		if (configuration != null) {
+			defaultLayoutListRetrieverContext.setConfiguration(configuration);
 		}
 
 		defaultLayoutListRetrieverContext.setContextObject(
@@ -1096,23 +1094,22 @@ public class RenderLayoutStructureDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private Map<String, String[]> _getCollectionConfiguration(
-		JSONObject collectionConfigurationJSONObject) {
+	private Map<String, String[]> _getConfiguration(
+		JSONObject configurationJSONObject) {
 
-		if (collectionConfigurationJSONObject == null) {
+		if (configurationJSONObject == null) {
 			return null;
 		}
 
-		Map<String, String[]> collectionConfiguration = new HashMap<>();
+		Map<String, String[]> configuration = new HashMap<>();
 
-		for (String key : collectionConfigurationJSONObject.keySet()) {
+		for (String key : configurationJSONObject.keySet()) {
 			List<String> values = new ArrayList<>();
 
-			Object object = collectionConfigurationJSONObject.get(key);
+			Object object = configurationJSONObject.get(key);
 
 			if (object instanceof JSONArray) {
-				JSONArray jsonArray =
-					collectionConfigurationJSONObject.getJSONArray(key);
+				JSONArray jsonArray = configurationJSONObject.getJSONArray(key);
 
 				for (int i = 0; i < jsonArray.length(); i++) {
 					values.add(jsonArray.getString(i));
@@ -1122,10 +1119,10 @@ public class RenderLayoutStructureDisplayContext {
 				values.add(String.valueOf(object));
 			}
 
-			collectionConfiguration.put(key, values.toArray(new String[0]));
+			configuration.put(key, values.toArray(new String[0]));
 		}
 
-		return collectionConfiguration;
+		return configuration;
 	}
 
 	private long _getFileEntryId(String fieldId, Locale locale)

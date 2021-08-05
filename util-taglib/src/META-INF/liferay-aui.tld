@@ -631,6 +631,19 @@
 		<tag-class>com.liferay.taglib.aui.InputTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description><![CDATA[Whether to pass the active translations.]]></description>
+			<name>activeLocales</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to use admin mode to manage translations.]]></description>
+			<name>adminMode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether to focus on the input component by default.]]></description>
 			<name>autoFocus</name>
 			<required>false</required>

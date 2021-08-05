@@ -766,6 +766,10 @@ definition {
 
 		var key_tagName = "${tagName}";
 
+		if (IsElementNotPresent(locator1 = "BlogsEntry#TAG")) {
+			Refresh();
+		}
+
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TAG",
 			value1 = "${tagName}");

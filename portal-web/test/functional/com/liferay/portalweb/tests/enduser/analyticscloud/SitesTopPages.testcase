@@ -1,0 +1,96 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8294 | Test Summary: Show Top 5 Visited Pages"
+    @ignore = "true"
+    @priority = "5"
+    test ShowTop5VisitedPages {
+
+        // TODO LRAC-8294 ShowTop5VisitedPages pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8296 | Test Summary: Show Top 5 Entrance Pages"
+    @ignore = "true"
+    @priority = "5"
+    test ShowTop5EntrancePages {
+
+        // TODO LRAC-8296 ShowTop5EntrancePages pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8297 | Test Summary: Show Top 5 Exit Pages"
+    @ignore = "true"
+    @priority = "5"
+    test ShowTop5ExitPages {
+
+        // TODO LRAC-8297 ShowTop5ExitPages pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"
+    @ignore = "true"
+    @priority = "3"
+    test AssertSitesTopPagesCardVisitedPagesHighestViews {
+
+        // TODO LRAC-8301 AssertSitesTopPagesCardVisitedPagesHighestViews pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8302 | Test Summary: Assert Sites Top Pages Card Exit Pages Highest Exits"
+    @ignore = "true"
+    @priority = "3"
+    test AssertSitesTopPagesCardExitPagesHighestExits {
+
+        // TODO LRAC-8302 AssertSitesTopPagesCardExitPagesHighestExits pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8304 | Test Summary: Assert Sites Top Pages Card Entrance Pages Highest Entrances"
+    @ignore = "true"
+    @priority = "3"
+    test AssertSitesTopPagesCardEntrancePagesHighestEntrances {
+
+        // TODO LRAC-8304 AssertSitesTopPagesCardEntrancePagesHighestEntrances pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8305 | Test Summary: Assert Sites Top Pages Change Time Filter"
+    @ignore = "true"
+    @priority = "3"
+    test AssertSitesTopPagesChangeTimeFilter {
+
+        // TODO LRAC-8305 AssertSitesTopPagesChangeTimeFilter pending implementation
+
+    }
+
+}

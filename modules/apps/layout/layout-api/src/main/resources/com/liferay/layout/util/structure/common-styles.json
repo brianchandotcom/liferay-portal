@@ -1,5 +1,26 @@
 [
 	{
+		"styles": [
+			{
+				"dataType": "string",
+				"defaultValue": "",
+				"dependencies": [
+				],
+				"label": "hide-fragment",
+				"name": "display",
+				"responsive": true,
+				"responsiveTemplate": "d{viewport}{value}",
+				"type": "checkbox",
+				"typeOptions": {
+					"customValues": {
+						"checked": "none",
+						"unchecked": "block"
+					}
+				}
+			}
+		]
+	},
+	{
 		"label": "margin",
 		"styles": [
 			{

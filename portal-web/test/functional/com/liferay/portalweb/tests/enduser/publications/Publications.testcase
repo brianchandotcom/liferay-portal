@@ -246,6 +246,45 @@ definition {
 		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 	}
 
+	@description = "Assert Publication history is sorted by publish date."
+	@priority = "5"
+	test AssertPublicationHistoryIsSortedByPublishDate {
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 1",
+			groupName = "Guest",
+			title = "WC WebContent Title 1");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 2",
+			groupName = "Guest",
+			title = "WC WebContent Title 2");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 3");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 3");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 3",
+			groupName = "Guest",
+			title = "WC WebContent Title 3");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 3");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 2,Publication Name 3,Publication Name 1");
+	}
+
 	@priority = "5"
 	test ConflictingPublicationsAutomaticallyResolved {
 		JSONWebcontent.addWebContent(

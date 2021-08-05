@@ -242,17 +242,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 			String propertyValue = properties.getProperty(propertyName);
 
-			propertyValue = propertyValue.replaceAll(" ", "\\\\ ");
-			propertyValue = propertyValue.replaceAll("'", "\\\\\\\'");
-			propertyValue = propertyValue.replaceAll("<", "\\\\\\<");
-			propertyValue = propertyValue.replaceAll(">", "\\\\\\>");
-			propertyValue = propertyValue.replaceAll("\"", "\\\\\\\"");
-			propertyValue = propertyValue.replaceAll("\\$", "\\\\\\$");
-			propertyValue = propertyValue.replaceAll("\\(", "\\\\\\(");
-			propertyValue = propertyValue.replaceAll("\\)", "\\\\\\)");
-			propertyValue = propertyValue.replaceAll("\\n", "\\\\n");
-
-			sb.append(propertyValue);
+			sb.append(JenkinsResultsParserUtil.escapeForBash(propertyValue));
 
 			sb.append("\n");
 		}

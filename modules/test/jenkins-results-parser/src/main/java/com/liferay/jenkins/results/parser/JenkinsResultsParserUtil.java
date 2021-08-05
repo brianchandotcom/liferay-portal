@@ -383,6 +383,20 @@ public class JenkinsResultsParserUtil {
 		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
+	public static String escapeForBash(String string) {
+		string = string.replaceAll(" ", "\\\\ ");
+		string = string.replaceAll("'", "\\\\\\\'");
+		string = string.replaceAll("<", "\\\\\\<");
+		string = string.replaceAll(">", "\\\\\\>");
+		string = string.replaceAll("\"", "\\\\\\\"");
+		string = string.replaceAll("\\$", "\\\\\\$");
+		string = string.replaceAll("\\(", "\\\\\\(");
+		string = string.replaceAll("\\)", "\\\\\\)");
+		string = string.replaceAll("\\n", "\\\\n");
+
+		return string;
+	}
+
 	public static Process executeBashCommands(
 			boolean exitOnFirstFail, File baseDir, long timeout,
 			String... commands)

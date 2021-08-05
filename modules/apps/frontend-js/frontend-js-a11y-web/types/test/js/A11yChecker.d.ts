@@ -12,4 +12,14 @@
  * details.
  */
 
+declare global {
+	namespace NodeJS {
+		interface Performance {
+			now: () => number;
+		}
+		interface Global {
+			performance?: Performance;
+		}
+	}
+}
 export {};

@@ -14,119 +14,243 @@
 
 import {Scheduler} from '../../src/main/resources/META-INF/resources/A11yChecker';
 
-// A simplified mock for requestIdleCallback, this does not implement a queuing
-// system but only simulates scheduling over timeout.
+declare global {
+	namespace NodeJS {
+		interface Performance {
+			now: () => number;
+		}
 
-window.requestIdleCallback = (callback: Function) =>
-	setTimeout(() => callback(), 40);
-window.cancelIdleCallback = (handle: number) => clearTimeout(handle);
+		interface Global {
+			performance?: Performance;
+		}
+	}
+}
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+type Runtime = {
+	advanceTime: (ms: number) => void;
+	assertLog: (expected: Array<string>) => void;
+	fireIdleCallback: () => Promise<void>;
+	isLogEmpty: () => boolean;
+	log: (value: string) => void;
+};
 
+let runtime: Runtime;
+let scheduler: Scheduler<string>;
+
+/**
+ * The Scheduler implementation uses browser APIs like `requestIdleCallback`
+ * and `cancelIdleCallback` to schedule work on the main thread. Our testing
+ * treats this as an implementation detail, however, these APIs are not
+ * supported in Node.js or are not very easy to mock, time also varies between
+ * browsers and there is no way to accurately measure or rely on time.
+ *
+ * The test suite for Scheduler mocks all browser APIs used in the
+ * implementation. Instead of worrying about when the event will be called or
+ * if the host is busy, it simulates behaviors based on events happening in
+ * specific cases, think of it as a timeline that we have control, like advance
+ * time, pause... we assume control the browser APIs and decide when to call
+ * them to simulate situations.
+ */
 describe('A11yChecker', () => {
+	function installMockBrowserRuntime() {
+		let hasPendingCallback = false;
+		let callback: () => Promise<void>;
+
+		let eventLog: Array<string> = [];
+
+		let currentTime = 0;
+
+		delete global.performance;
+
+		global.performance = {
+			now() {
+				return currentTime;
+			},
+		};
+
+		// A simplified mock for requestIdleCallback, this does not implement a queuing
+		// system but only simulates scheduling.
+
+		window.requestIdleCallback = (callbackFn: () => Promise<void>) => {
+			if (hasPendingCallback) {
+				throw Error('Callback already scheduled');
+			}
+
+			log('Request Callback');
+
+			callback = callbackFn;
+			hasPendingCallback = true;
+		};
+
+		window.cancelIdleCallback = () => {
+			log('Cancel Callback');
+
+			hasPendingCallback = false;
+		};
+
+		function log(value: string) {
+			eventLog.push(value);
+		}
+
+		function isLogEmpty() {
+			return eventLog.length === 0;
+		}
+
+		function advanceTime(ms: number) {
+			currentTime += ms;
+		}
+
+		function fireIdleCallback() {
+			if (eventLog.length !== 0) {
+				throw Error(
+					'Log is not empty. Call assertLog before continuing.'
+				);
+			}
+
+			if (!hasPendingCallback) {
+				throw Error('No callback was scheduled');
+			}
+
+			hasPendingCallback = false;
+			log('Callback');
+
+			return callback();
+		}
+
+		function assertLog(expected: Array<string>) {
+			const actual = eventLog;
+
+			eventLog = [];
+
+			expect(actual).toEqual(expected);
+		}
+
+		return {
+			advanceTime,
+			assertLog,
+			fireIdleCallback,
+			isLogEmpty,
+			log,
+		};
+	}
+
 	describe('Scheduler', () => {
-		let scheduler: Scheduler<string>;
-
-		afterEach(() => {
-			scheduler.cancelHostCallback();
-		});
-
 		beforeEach(() => {
+			runtime = installMockBrowserRuntime();
 			scheduler = new Scheduler();
 		});
 
-		it('schedule a callback and execute when possible', (done) => {
-			const fn = jest.fn((target: string) => {
-				expect(target).toBe('foo');
-				done();
-			});
-
-			scheduler.scheduleCallback(fn, 'foo');
+		afterEach(() => {
+			if (!runtime.isLogEmpty()) {
+				throw Error('Test exited without clearing log.');
+			}
 		});
 
-		it('callbacks are called sequentially', (done) => {
-			const callbacksCalled: Array<string> = [];
+		it('schedule a callback and execute when possible', async () => {
+			const callback = () => {
+				runtime.log('Task');
+			};
 
-			const fn = jest.fn((target: string) => {
-				callbacksCalled.push(target);
+			scheduler.scheduleCallback(callback, 'foo');
 
-				if (callbacksCalled.length === 3) {
-					expect(callbacksCalled).toEqual(['foo', 'bar', 'baz']);
-					done();
-				}
-			});
-
-			scheduler.scheduleCallback(fn, 'foo');
-			scheduler.scheduleCallback(fn, 'bar');
-			scheduler.scheduleCallback(fn, 'baz');
+			runtime.assertLog(['Request Callback']);
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Task']);
 		});
 
-		/**
-		 * This test when run on CI is flaky, when the test is run in some
-		 * moments there is a fight for resource causing the instance of
-		 * Node.js to be "frozen" for longer than expected, the test needs
-		 * a high level of accuracy of frame time to know if the task was
-		 * executed within the same deadline.
-		 */
-		it.skip('execute many callbacks within the 100ms deadline', (done) => {
-			const callbacksCalled: Array<{
-				deadline: number;
-				target: string;
-			}> = [];
+		it('callbacks are called sequentially', async () => {
+			scheduler.scheduleCallback(() => {
+				runtime.log('Foo');
+			}, 'foo');
+			scheduler.scheduleCallback(() => {
+				runtime.log('Bar');
+			}, 'bar');
+			scheduler.scheduleCallback(() => {
+				runtime.log('Baz');
+			}, 'baz');
 
-			const fn = jest.fn(async (target: string) => {
-				callbacksCalled.push({deadline: scheduler.deadline, target});
-
-				await sleep(80);
-
-				if (callbacksCalled.length === 3) {
-					const [foo, bar, baz] = callbacksCalled;
-
-					// Callbacks that were executed within the 100ms deadline.
-
-					expect(foo.deadline).toBe(bar.deadline);
-
-					// Callback executed in different deadlines is because they
-					// were executed in different frames.
-
-					expect(bar.deadline).not.toBe(baz.deadline);
-					done();
-				}
-			});
-
-			scheduler.scheduleCallback(fn, 'foo');
-			scheduler.scheduleCallback(fn, 'bar');
-			scheduler.scheduleCallback(fn, 'baz');
+			runtime.assertLog(['Request Callback']);
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Foo', 'Bar', 'Baz']);
 		});
 
-		it.skip('yield to host when the deadline is finished', (done) => {
-			const callbacksCalled: Array<{
-				deadline: number;
-				start: number;
-				target: string;
-			}> = [];
+		it('execute many callbacks within the 100ms deadline', async () => {
+			scheduler.scheduleCallback(() => {
+				runtime.log('Foo');
+			}, 'foo');
+			scheduler.scheduleCallback(() => {
+				runtime.log('Bar');
+				runtime.advanceTime(5000);
+			}, 'bar');
+			scheduler.scheduleCallback(() => {
+				runtime.log('Baz');
+			}, 'baz');
 
-			const fn = jest.fn(async (target: string) => {
-				callbacksCalled.push({
-					deadline: scheduler.deadline,
-					start: performance.now(),
-					target,
-				});
+			runtime.assertLog(['Request Callback']);
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Foo', 'Bar', 'Request Callback']);
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Request Callback']);
+		});
 
-				await sleep(100);
+		it('yield to host when the deadline is finished', async () => {
+			scheduler.scheduleCallback(() => {
+				runtime.log('Foo');
+				runtime.advanceTime(5000);
+			}, 'foo');
+			scheduler.scheduleCallback(() => {
+				runtime.log('Bar');
+			}, 'bar');
 
-				if (callbacksCalled.length === 2) {
-					const [foo, bar] = callbacksCalled;
+			runtime.assertLog(['Request Callback']);
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Foo', 'Request Callback']);
+			await runtime.fireIdleCallback();
 
-					// The next execution frame is started after running 100ms.
+			// When the deadline expires, the Scheduler gives a fixed time to
+			// the host of 100ms.
 
-					expect(bar.start - foo.deadline).toBeGreaterThan(100);
-					done();
-				}
-			});
+			runtime.assertLog(['Callback', 'Request Callback']);
+			runtime.advanceTime(100);
 
-			scheduler.scheduleCallback(fn, 'foo');
-			scheduler.scheduleCallback(fn, 'bar');
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Bar']);
+		});
+
+		it('schedule new task after queue has emptied', async () => {
+			scheduler.scheduleCallback(() => {
+				runtime.log('Foo');
+			}, 'foo');
+			scheduler.scheduleCallback(() => {
+				runtime.log('Bar');
+			}, 'bar');
+
+			runtime.assertLog(['Request Callback']);
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Foo', 'Bar']);
+
+			scheduler.scheduleCallback(() => {
+				runtime.log('Baz');
+			}, 'baz');
+
+			runtime.assertLog(['Request Callback']);
+			await runtime.fireIdleCallback();
+			runtime.assertLog(['Callback', 'Baz']);
+		});
+
+		it('cancel host callback', () => {
+			scheduler.scheduleCallback(() => {
+				runtime.log('Foo');
+			}, 'foo');
+
+			runtime.assertLog(['Request Callback']);
+
+			scheduler.cancelHostCallback();
+			runtime.assertLog(['Cancel Callback']);
+
+			expect(() => runtime.fireIdleCallback()).toThrow(
+				'No callback was scheduled'
+			);
 		});
 	});
 });

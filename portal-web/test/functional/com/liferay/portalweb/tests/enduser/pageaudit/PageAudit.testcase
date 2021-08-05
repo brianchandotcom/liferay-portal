@@ -160,6 +160,41 @@ definition {
 		}
 	}
 
+	@description = "LPS-136430 Given the Page Audit panel in its initial state (no API Key configured)
+    When the user clicks on the Configure button
+    Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
+	@priority = "4"
+	test NavigateToSiteSettingsWhenApiKeyNotConfigured {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#NavigateToSiteSettingsWhenApiKeyNotConfigured";
+
+		task ("Open Page Audit panel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			
+			PageAudit.openPanelBeforeConfiguration();
+
+			AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
+
+		task ("Go to Site settings > Pages throught the 'Configure' button in panel and Assert page") {
+			PageAudit.connectToGooglePageAudit();
+
+			AssertElementPresent(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				key_breadcrumbName = "Site Settings");
+
+			AssertTextPresent(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+				value1 = "Pages");
+			
+			AssertTextPresent(
+				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+				value1 = "Google PageSpeed Insights");
+		}
+	}
+
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
 	@priority = "3"
 	test PageAuditCancelButton {

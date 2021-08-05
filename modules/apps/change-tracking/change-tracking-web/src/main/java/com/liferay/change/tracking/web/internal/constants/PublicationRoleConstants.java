@@ -42,7 +42,7 @@ public class PublicationRoleConstants {
 	public static final String NAME_VIEWER =
 		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.viewer";
 
-	public static final int ROLE_EDITER = 1;
+	public static final int ROLE_EDITOR = 1;
 
 	public static final int ROLE_INVITER = 2;
 
@@ -51,7 +51,7 @@ public class PublicationRoleConstants {
 	public static final int ROLE_VIEWER = 0;
 
 	public static String[] getModelResourceActions(int role) {
-		if (role == ROLE_EDITER) {
+		if (role == ROLE_EDITOR) {
 			return new String[] {ActionKeys.UPDATE, ActionKeys.VIEW};
 		}
 		else if (role == ROLE_INVITER) {
@@ -85,7 +85,7 @@ public class PublicationRoleConstants {
 
 	public static int getNameRole(String name) {
 		if (name.equals(NAME_EDITOR)) {
-			return ROLE_EDITER;
+			return ROLE_EDITOR;
 		}
 		else if (name.equals(NAME_INVITER)) {
 			return ROLE_INVITER;
@@ -98,7 +98,7 @@ public class PublicationRoleConstants {
 	}
 
 	public static String getRoleLabel(int role) {
-		if (role == ROLE_EDITER) {
+		if (role == ROLE_EDITOR) {
 			return LABEL_EDITOR;
 		}
 		else if (role == ROLE_INVITER) {
@@ -112,7 +112,7 @@ public class PublicationRoleConstants {
 	}
 
 	public static String getRoleName(int role) {
-		if (role == ROLE_EDITER) {
+		if (role == ROLE_EDITOR) {
 			return NAME_EDITOR;
 		}
 		else if (role == ROLE_INVITER) {

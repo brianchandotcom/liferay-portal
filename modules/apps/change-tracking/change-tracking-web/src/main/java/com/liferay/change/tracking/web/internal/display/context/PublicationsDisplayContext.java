@@ -155,38 +155,69 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 			"roles",
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"label",
-					_language.get(
-						_httpServletRequest,
-						PublicationRoleConstants.LABEL_EDITOR)
-				).put(
-					"value", PublicationRoleConstants.ROLE_EDITER
-				),
-				JSONUtil.put(
-					"label",
-					_language.get(
-						_httpServletRequest,
-						PublicationRoleConstants.LABEL_INVITER)
-				).put(
-					"value", PublicationRoleConstants.ROLE_INVITER
-				),
-				JSONUtil.put(
-					"label",
-					_language.get(
-						_httpServletRequest,
-						PublicationRoleConstants.LABEL_PUBLISHER)
-				).put(
-					"value", PublicationRoleConstants.ROLE_PUBLISHER
-				),
-				JSONUtil.put(
 					"default", true
+				).put(
+					"helpText", _language.get(_httpServletRequest, "can-view")
 				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_VIEWER)
 				).put(
+					"tooltip",
+					_language.get(_httpServletRequest, "viewers-can-view")
+				).put(
 					"value", PublicationRoleConstants.ROLE_VIEWER
+				),
+				JSONUtil.put(
+					"helpText",
+					_language.get(_httpServletRequest, "can-view-and-edit")
+				).put(
+					"label",
+					_language.get(
+						_httpServletRequest,
+						PublicationRoleConstants.LABEL_EDITOR)
+				).put(
+					"tooltip",
+					_language.get(
+						_httpServletRequest, "editors-can-view-and-edit")
+				).put(
+					"value", PublicationRoleConstants.ROLE_EDITOR
+				),
+				JSONUtil.put(
+					"helpText",
+					_language.get(
+						_httpServletRequest, "can-view-edit-and-publish")
+				).put(
+					"label",
+					_language.get(
+						_httpServletRequest,
+						PublicationRoleConstants.LABEL_PUBLISHER)
+				).put(
+					"tooltip",
+					_language.get(
+						_httpServletRequest,
+						"publishers-can-view-edit-and-publish")
+				).put(
+					"value", PublicationRoleConstants.ROLE_PUBLISHER
+				),
+				JSONUtil.put(
+					"helpText",
+					_language.get(
+						_httpServletRequest,
+						"can-view-edit-publish-and-invite-other-users")
+				).put(
+					"label",
+					_language.get(
+						_httpServletRequest,
+						PublicationRoleConstants.LABEL_INVITER)
+				).put(
+					"tooltip",
+					_language.get(
+						_httpServletRequest,
+						"inviters-can-view-edit-publish-and-invite-other-users")
+				).put(
+					"value", PublicationRoleConstants.ROLE_INVITER
 				))
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"

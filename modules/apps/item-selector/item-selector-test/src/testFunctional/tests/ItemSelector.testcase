@@ -456,7 +456,9 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CannotPreviewVideosWithInvalidURL {
-		KBArticle.openToAddKBArticle(siteURLKey = "guest");
+		KBArticle.openToAddKBArticle(
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
@@ -689,7 +691,9 @@ definition {
 			videoShortcutTitle = "Test Twitch Video",
 			videoURL = "https://www.twitch.tv/videos/806178790");
 
-		KBArticle.openToAddKBArticle(siteURLKey = "site-name");
+		KBArticle.openToAddKBArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
@@ -714,7 +718,9 @@ definition {
 			videoShortcutTitle = "Test Vimeo Video",
 			videoURL = "https://vimeo.com/483035084");
 
-		WebContentNavigator.openToAddBasicArticle(siteURLKey = "guest");
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
@@ -738,7 +744,9 @@ definition {
 			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
 
-		KBArticle.openToAddKBArticle(siteURLKey = "guest");
+		KBArticle.openToAddKBArticle(
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
@@ -1151,7 +1159,9 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		WebContentNavigator.openToAddBasicArticle(siteURLKey = "site-name");
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
@@ -1160,7 +1170,9 @@ definition {
 			depotName = "Test Depot Name",
 			navTab = "Documents and Media");
 
-		WebContentNavigator.openToAddBasicArticle(siteURLKey = "site-name");
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 

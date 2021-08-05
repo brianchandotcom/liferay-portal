@@ -2031,4 +2031,363 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-111807. The user could show the label of selected vocabulary or category in Collection Filter."
+	@priority = "5"
+	test ShowLabelOfSelectedSource {
+		task ("Add two vocabularies") {
+			for (var vocabularyName : list "Size,Color") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "${vocabularyName}");
+			}
+		}
+
+		task ("Add three categories in Size vocabulary") {
+			var largeId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Large",
+				vocabularyName = "Size");
+
+			var mediumId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Medium",
+				vocabularyName = "Size");
+
+			var smallId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Small",
+				vocabularyName = "Size");
+		}
+
+		task ("Add a category in Color vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Pure Color",
+				vocabularyName = "Color");
+		}
+
+		task ("Add three subcategories in Pure Color cabulary") {
+			var blueId = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Pure Color",
+				title = "Blue",
+				vocabularyName = "Color");
+
+			var redId = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Pure Color",
+				title = "Red",
+				vocabularyName = "Color");
+
+			var greenId = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Pure Color",
+				title = "Green",
+				vocabularyName = "Color");
+		}
+
+		task ("Add the first web content with Large and Green") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${largeId},${greenId}",
+				content = "T-shirt 1",
+				groupName = "Test Site Name",
+				title = "T-shirt 1");
+		}
+
+		task ("Add the second web content with Medium and Green") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${mediumId},${greenId}",
+				content = "T-shirt 2",
+				groupName = "Test Site Name",
+				title = "T-shirt 2");
+		}
+
+		task ("Add the third web content with Small and Red") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${smallId},${redId}",
+				content = "T-shirt 3",
+				groupName = "Test Site Name",
+				title = "T-shirt 3");
+		}
+
+		task ("Add the fourth web content with Large and Blue") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${largeId},${blueId}",
+				content = "T-shirt 4",
+				groupName = "Test Site Name",
+				title = "T-shirt 4");
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Select the Bordered List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bordered List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Add a Grid above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Header",
+				fragmentName = "Grid",
+				targetFragmentName = "Container");
+		}
+
+		task ("Change Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add the first Collection Filter to first module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "1",
+				fragmentName = "Collection Filter",
+				navTab = "Fragments");
+		}
+
+		task ("Check the Show Label in Collection Filter") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Filter");
+
+			Check.checkNotVisible(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("View the empty source label shown in Collection Filter") {
+			AssertElementPresent(
+				locator1 = "PageEditor#COLLECTION_FILTER_SOURCE_LABEL_VISIBLE",
+				sourceLabel = "");
+		}
+
+		task ("Select the Size vocabulary in Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Large,Medium,Small",
+				columnNumber = "1",
+				fragmentName = "Collection Filter",
+				vocabularyName = "Size");
+
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
+				value1 = "Size");
+		}
+
+		task ("View the source label of Collection Filter is Size") {
+			AssertElementPresent(
+				locator1 = "PageEditor#COLLECTION_FILTER_SOURCE_LABEL_VISIBLE",
+				sourceLabel = "Size");
+		}
+
+		task ("Add the second Collection Filter to second module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "2",
+				fragmentName = "Collection Filter",
+				navTab = "Fragments");
+		}
+
+		task ("Select the Pure Color category and Single Selection in the second Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryName = "Pure Color",
+				categoryNameList = "Pure Color",
+				columnNumber = "2",
+				fragmentName = "Collection Filter",
+				singleSelection = "true",
+				subcategoryNameList = "Blue,Red,Green",
+				vocabularyName = "Color");
+
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
+				value1 = "Pure Color");
+		}
+
+		task ("View the source label of second Collection Filter is not shown") {
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-bold')][normalize-space(text())='Pure Color'][contains(@class,'sr-only')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Check the Show Label in the second Collection Filter") {
+			PageEditor.editCollectionFilter(
+				columnNumber = "2",
+				fragmentName = "Collection Filter",
+				selectedName = "Pure Color",
+				showLabel = "true");
+		}
+
+		task ("View the source label of the second Collection Filter is Pure Color") {
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-bold')][normalize-space(text())='Pure Color'][not(contains(@class,'sr-only'))]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Edit the source label of the second Collection Filter") {
+			PageEditor.editCollectionFilter(
+				columnNumber = "2",
+				fragmentName = "Collection Filter",
+				label = "T-shirt Color",
+				selectedName = "Pure Color");
+		}
+
+		task ("View the source label of the second Collection Filter is T-shirt Color") {
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-bold')][normalize-space(text())='T-shirt Color'][not(contains(@class,'sr-only'))]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("View the source label of the first Collection Filter is Size") {
+			AssertElementPresent(
+				locator1 = "PageEditor#COLLECTION_FILTER_SOURCE_LABEL_VISIBLE",
+				sourceLabel = "Size");
+		}
+
+		task ("Select the Large and Medium in the first Collection Filter") {
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Large,Medium",
+				multipleSelection = "true",
+				selectedName = "2 Selected",
+				title = "Size");
+		}
+
+		task ("View only the T-shirt 1, T-shirt 2 and T-shirt 4 shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "T-shirt 4,T-shirt 2,T-shirt 1") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the source label of the second Collection Filter is T-shirt Color") {
+			AssertElementPresent(
+				locator1 = "PageEditor#COLLECTION_FILTER_SOURCE_LABEL_VISIBLE",
+				sourceLabel = "T-shirt Color");
+		}
+
+		task ("Select the Green in the second Collection Filter") {
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "2",
+				filterName = "Green",
+				selectedName = "Green",
+				title = "T-shirt Color");
+		}
+
+		task ("View only the T-shirt 1 and T-shirt 2 shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "T-shirt 2,T-shirt 1") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the source label of the second Collection Filter is T-shirt Color") {
+			AssertElementPresent(
+				locator1 = "PageEditor#COLLECTION_FILTER_SOURCE_LABEL_VISIBLE",
+				sourceLabel = "T-shirt Color");
+		}
+
+		task ("Select the Green in the second Collection Filter") {
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "2",
+				filterName = "Green",
+				selectedName = "Green",
+				title = "T-shirt Color");
+		}
+
+		task ("View only the T-shirt 1 and T-shirt 2 shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "T-shirt 2,T-shirt 1") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the source label of the first Collection Filter is Size") {
+			AssertElementPresent(
+				locator1 = "PageEditor#COLLECTION_FILTER_SOURCE_LABEL_VISIBLE",
+				sourceLabel = "Size");
+		}
+
+		task ("Select the Large and Small in the first Collection Filter") {
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Large,Small",
+				multipleSelection = "true",
+				selectedName = "2 Selected",
+				title = "Size");
+		}
+
+		task ("View only the T-shirt 1 shown in Collection Display") {
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='T-shirt 1']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+	}
+
 }

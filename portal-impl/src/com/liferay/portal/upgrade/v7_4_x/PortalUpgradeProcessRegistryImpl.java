@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -74,6 +75,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(13, 1, 0), new UpgradeAssetVocabulary());
 
 		upgradeProcesses.put(new Version(13, 2, 0), new UpgradeAssetCategory());
+
+		upgradeProcesses.put(
+			new Version(13, 3, 0),
+			new CTModelUpgradeProcess("Repository", "RepositoryEntry"));
 	}
 
 }

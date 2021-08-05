@@ -348,6 +348,7 @@ const ExperienceSelector = ({
 		<>
 			<ClayButton
 				className="form-control-select pr-4 text-left text-truncate"
+				disabled={!canUpdateExperiences}
 				displayType="secondary"
 				id={selectId}
 				onBlur={handleDropdownButtonBlur}

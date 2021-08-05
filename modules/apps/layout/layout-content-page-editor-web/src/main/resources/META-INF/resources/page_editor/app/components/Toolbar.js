@@ -29,6 +29,7 @@ import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
+import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
@@ -53,6 +54,8 @@ function ToolbarBody({className}) {
 	const load = useLoad();
 	const selectItem = useSelectItem();
 	const store = useSelector((state) => state);
+
+	const canPublish = selectCanPublish(store);
 
 	const [publishPending, setPublishPending] = useState(false);
 
@@ -314,7 +317,7 @@ function ToolbarBody({className}) {
 						/>
 
 						<ClayButton
-							disabled={config.pending}
+							disabled={config.pending || !canPublish}
 							displayType="primary"
 							onClick={handleSubmit}
 							small

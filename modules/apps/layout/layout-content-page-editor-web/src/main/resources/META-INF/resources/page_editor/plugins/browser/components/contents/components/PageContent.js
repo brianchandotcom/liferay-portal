@@ -37,6 +37,7 @@ import {
 	useSelector,
 	useSelectorCallback,
 } from '../../../../../app/contexts/StoreContext';
+import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import {selectPageContentDropdownItems} from '../../../../../app/selectors/selectPageContentDropdownItems';
 import ImageEditorModal from './ImageEditorModal';
 
@@ -51,6 +52,7 @@ export default function PageContent({
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
+	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
 	const [
@@ -225,9 +227,9 @@ export default function PageContent({
 				) : (
 					<ClayButton
 						className={classNames('btn-sm mr-2 text-secondary', {
-							'not-allowed': isBeingEdited,
+							'not-allowed': isBeingEdited || !canUpdateEditables,
 						})}
-						disabled={isBeingEdited}
+						disabled={isBeingEdited || !canUpdateEditables}
 						displayType="unstyled"
 						onClick={onClickEditInlineText}
 					>

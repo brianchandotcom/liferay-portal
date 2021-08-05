@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -25,9 +24,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -49,11 +46,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the eager blob entry service.
@@ -1403,15 +1395,6 @@ public class EagerBlobEntryPersistenceImpl
 	 * Initializes the eager blob entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		Bundle bundle = FrameworkUtil.getBundle(
-			EagerBlobEntryPersistenceImpl.class);
-
-		_bundleContext = bundle.getBundleContext();
-
-		_argumentsResolverServiceRegistration = _bundleContext.registerService(
-			ArgumentsResolver.class, new EagerBlobEntryModelArgumentsResolver(),
-			new HashMapDictionary<>());
-
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
@@ -1455,11 +1438,7 @@ public class EagerBlobEntryPersistenceImpl
 
 	public void destroy() {
 		dummyEntityCache.removeCache(EagerBlobEntryImpl.class.getName());
-
-		_argumentsResolverServiceRegistration.unregister();
 	}
-
-	private BundleContext _bundleContext;
 
 	private static final String _SQL_SELECT_EAGERBLOBENTRY =
 		"SELECT eagerBlobEntry FROM EagerBlobEntry eagerBlobEntry";
@@ -1490,96 +1469,6 @@ public class EagerBlobEntryPersistenceImpl
 	@Override
 	protected FinderCache getFinderCache() {
 		return dummyFinderCache;
-	}
-
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
-
-	private static class EagerBlobEntryModelArgumentsResolver
-		implements ArgumentsResolver {
-
-		@Override
-		public Object[] getArguments(
-			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
-			boolean original) {
-
-			String[] columnNames = finderPath.getColumnNames();
-
-			if ((columnNames == null) || (columnNames.length == 0)) {
-				if (baseModel.isNew()) {
-					return FINDER_ARGS_EMPTY;
-				}
-
-				return null;
-			}
-
-			EagerBlobEntryModelImpl eagerBlobEntryModelImpl =
-				(EagerBlobEntryModelImpl)baseModel;
-
-			if (!checkColumn ||
-				_hasModifiedColumns(eagerBlobEntryModelImpl, columnNames)) {
-
-				return _getValue(
-					eagerBlobEntryModelImpl, columnNames, original);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String getClassName() {
-			return EagerBlobEntryImpl.class.getName();
-		}
-
-		@Override
-		public String getTableName() {
-			return EagerBlobEntryTable.INSTANCE.getTableName();
-		}
-
-		private static Object[] _getValue(
-			EagerBlobEntryModelImpl eagerBlobEntryModelImpl,
-			String[] columnNames, boolean original) {
-
-			Object[] arguments = new Object[columnNames.length];
-
-			for (int i = 0; i < arguments.length; i++) {
-				String columnName = columnNames[i];
-
-				if (original) {
-					arguments[i] =
-						eagerBlobEntryModelImpl.getColumnOriginalValue(
-							columnName);
-				}
-				else {
-					arguments[i] = eagerBlobEntryModelImpl.getColumnValue(
-						columnName);
-				}
-			}
-
-			return arguments;
-		}
-
-		private static boolean _hasModifiedColumns(
-			EagerBlobEntryModelImpl eagerBlobEntryModelImpl,
-			String[] columnNames) {
-
-			if (columnNames.length == 0) {
-				return false;
-			}
-
-			for (String columnName : columnNames) {
-				if (!Objects.equals(
-						eagerBlobEntryModelImpl.getColumnOriginalValue(
-							columnName),
-						eagerBlobEntryModelImpl.getColumnValue(columnName))) {
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
 	}
 
 }

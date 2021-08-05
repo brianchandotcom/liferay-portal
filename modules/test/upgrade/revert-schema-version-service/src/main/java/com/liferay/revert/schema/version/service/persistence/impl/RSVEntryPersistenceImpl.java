@@ -16,7 +16,6 @@ package com.liferay.revert.schema.version.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -26,11 +25,9 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.revert.schema.version.exception.NoSuchEntryException;
 import com.liferay.revert.schema.version.model.RSVEntry;
@@ -45,12 +42,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -554,13 +548,7 @@ public class RSVEntryPersistenceImpl
 	 * Initializes the rsv entry persistence.
 	 */
 	@Activate
-	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_argumentsResolverServiceRegistration = _bundleContext.registerService(
-			ArgumentsResolver.class, new RSVEntryModelArgumentsResolver(),
-			new HashMapDictionary<>());
-
+	public void activate() {
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
@@ -577,8 +565,6 @@ public class RSVEntryPersistenceImpl
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(RSVEntryImpl.class.getName());
-
-		_argumentsResolverServiceRegistration.unregister();
 	}
 
 	@Override
@@ -607,8 +593,6 @@ public class RSVEntryPersistenceImpl
 		super.setSessionFactory(sessionFactory);
 	}
 
-	private BundleContext _bundleContext;
-
 	@Reference
 	protected EntityCache entityCache;
 
@@ -634,91 +618,7 @@ public class RSVEntryPersistenceImpl
 		return finderCache;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
-
-	private static class RSVEntryModelArgumentsResolver
-		implements ArgumentsResolver {
-
-		@Override
-		public Object[] getArguments(
-			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
-			boolean original) {
-
-			String[] columnNames = finderPath.getColumnNames();
-
-			if ((columnNames == null) || (columnNames.length == 0)) {
-				if (baseModel.isNew()) {
-					return FINDER_ARGS_EMPTY;
-				}
-
-				return null;
-			}
-
-			RSVEntryModelImpl rsvEntryModelImpl = (RSVEntryModelImpl)baseModel;
-
-			long columnBitmask = rsvEntryModelImpl.getColumnBitmask();
-
-			if (!checkColumn || (columnBitmask == 0)) {
-				return _getValue(rsvEntryModelImpl, columnNames, original);
-			}
-
-			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
-				finderPath);
-
-			if (finderPathColumnBitmask == null) {
-				finderPathColumnBitmask = 0L;
-
-				for (String columnName : columnNames) {
-					finderPathColumnBitmask |=
-						rsvEntryModelImpl.getColumnBitmask(columnName);
-				}
-
-				_finderPathColumnBitmasksCache.put(
-					finderPath, finderPathColumnBitmask);
-			}
-
-			if ((columnBitmask & finderPathColumnBitmask) != 0) {
-				return _getValue(rsvEntryModelImpl, columnNames, original);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String getClassName() {
-			return RSVEntryImpl.class.getName();
-		}
-
-		@Override
-		public String getTableName() {
-			return RSVEntryTable.INSTANCE.getTableName();
-		}
-
-		private static Object[] _getValue(
-			RSVEntryModelImpl rsvEntryModelImpl, String[] columnNames,
-			boolean original) {
-
-			Object[] arguments = new Object[columnNames.length];
-
-			for (int i = 0; i < arguments.length; i++) {
-				String columnName = columnNames[i];
-
-				if (original) {
-					arguments[i] = rsvEntryModelImpl.getColumnOriginalValue(
-						columnName);
-				}
-				else {
-					arguments[i] = rsvEntryModelImpl.getColumnValue(columnName);
-				}
-			}
-
-			return arguments;
-		}
-
-		private static final Map<FinderPath, Long>
-			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
-
-	}
+	@Reference
+	private RSVEntryModelArgumentsResolver _rsvEntryModelArgumentsResolver;
 
 }

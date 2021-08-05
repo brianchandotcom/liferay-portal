@@ -7,6 +7,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationAttachmentModelArgumentsResolver" id="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationAttachmentModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationQueueEntryModelArgumentsResolver" id="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationQueueEntryModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationTemplateModelArgumentsResolver" id="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationTemplateModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelArgumentsResolver" id="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.notification.service.impl.CommerceNotificationAttachmentLocalServiceImpl" id="com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalService" />
 	<bean class="com.liferay.commerce.notification.service.impl.CommerceNotificationQueueEntryLocalServiceImpl" id="com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService" />
 	<bean class="com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateLocalServiceImpl" id="com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService" />

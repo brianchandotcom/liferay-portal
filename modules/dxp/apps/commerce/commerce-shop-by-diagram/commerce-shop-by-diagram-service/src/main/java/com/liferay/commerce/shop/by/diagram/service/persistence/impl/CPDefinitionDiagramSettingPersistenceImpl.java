@@ -23,7 +23,6 @@ import com.liferay.commerce.shop.by.diagram.service.persistence.CPDefinitionDiag
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,13 +33,11 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -57,12 +54,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -2054,14 +2048,7 @@ public class CPDefinitionDiagramSettingPersistenceImpl
 	 * Initializes the cp definition diagram setting persistence.
 	 */
 	@Activate
-	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_argumentsResolverServiceRegistration = _bundleContext.registerService(
-			ArgumentsResolver.class,
-			new CPDefinitionDiagramSettingModelArgumentsResolver(),
-			new HashMapDictionary<>());
-
+	public void activate() {
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
@@ -2125,8 +2112,6 @@ public class CPDefinitionDiagramSettingPersistenceImpl
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(CPDefinitionDiagramSettingImpl.class.getName());
-
-		_argumentsResolverServiceRegistration.unregister();
 	}
 
 	@Override
@@ -2154,8 +2139,6 @@ public class CPDefinitionDiagramSettingPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	protected EntityCache entityCache;
@@ -2195,101 +2178,8 @@ public class CPDefinitionDiagramSettingPersistenceImpl
 		return finderCache;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
-
-	private static class CPDefinitionDiagramSettingModelArgumentsResolver
-		implements ArgumentsResolver {
-
-		@Override
-		public Object[] getArguments(
-			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
-			boolean original) {
-
-			String[] columnNames = finderPath.getColumnNames();
-
-			if ((columnNames == null) || (columnNames.length == 0)) {
-				if (baseModel.isNew()) {
-					return FINDER_ARGS_EMPTY;
-				}
-
-				return null;
-			}
-
-			CPDefinitionDiagramSettingModelImpl
-				cpDefinitionDiagramSettingModelImpl =
-					(CPDefinitionDiagramSettingModelImpl)baseModel;
-
-			long columnBitmask =
-				cpDefinitionDiagramSettingModelImpl.getColumnBitmask();
-
-			if (!checkColumn || (columnBitmask == 0)) {
-				return _getValue(
-					cpDefinitionDiagramSettingModelImpl, columnNames, original);
-			}
-
-			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
-				finderPath);
-
-			if (finderPathColumnBitmask == null) {
-				finderPathColumnBitmask = 0L;
-
-				for (String columnName : columnNames) {
-					finderPathColumnBitmask |=
-						cpDefinitionDiagramSettingModelImpl.getColumnBitmask(
-							columnName);
-				}
-
-				_finderPathColumnBitmasksCache.put(
-					finderPath, finderPathColumnBitmask);
-			}
-
-			if ((columnBitmask & finderPathColumnBitmask) != 0) {
-				return _getValue(
-					cpDefinitionDiagramSettingModelImpl, columnNames, original);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String getClassName() {
-			return CPDefinitionDiagramSettingImpl.class.getName();
-		}
-
-		@Override
-		public String getTableName() {
-			return CPDefinitionDiagramSettingTable.INSTANCE.getTableName();
-		}
-
-		private static Object[] _getValue(
-			CPDefinitionDiagramSettingModelImpl
-				cpDefinitionDiagramSettingModelImpl,
-			String[] columnNames, boolean original) {
-
-			Object[] arguments = new Object[columnNames.length];
-
-			for (int i = 0; i < arguments.length; i++) {
-				String columnName = columnNames[i];
-
-				if (original) {
-					arguments[i] =
-						cpDefinitionDiagramSettingModelImpl.
-							getColumnOriginalValue(columnName);
-				}
-				else {
-					arguments[i] =
-						cpDefinitionDiagramSettingModelImpl.getColumnValue(
-							columnName);
-				}
-			}
-
-			return arguments;
-		}
-
-		private static final Map<FinderPath, Long>
-			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
-
-	}
+	@Reference
+	private CPDefinitionDiagramSettingModelArgumentsResolver
+		_cpDefinitionDiagramSettingModelArgumentsResolver;
 
 }

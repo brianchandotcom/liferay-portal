@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCompanyInfoException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.kernel.model.CompanyInfoTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -39,9 +37,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.CompanyInfoImpl;
 import com.liferay.portal.model.impl.CompanyInfoModelImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
@@ -51,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The persistence implementation for the company info service.
@@ -798,11 +792,6 @@ public class CompanyInfoPersistenceImpl
 	 * Initializes the company info persistence.
 	 */
 	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new CompanyInfoModelArgumentsResolver());
-
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
@@ -828,8 +817,6 @@ public class CompanyInfoPersistenceImpl
 
 	public void destroy() {
 		EntityCacheUtil.removeCache(CompanyInfoImpl.class.getName());
-
-		_argumentsResolverServiceRegistration.unregister();
 	}
 
 	private static final String _SQL_SELECT_COMPANYINFO =
@@ -861,95 +848,6 @@ public class CompanyInfoPersistenceImpl
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
-	}
-
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
-
-	private static class CompanyInfoModelArgumentsResolver
-		implements ArgumentsResolver {
-
-		@Override
-		public Object[] getArguments(
-			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
-			boolean original) {
-
-			String[] columnNames = finderPath.getColumnNames();
-
-			if ((columnNames == null) || (columnNames.length == 0)) {
-				if (baseModel.isNew()) {
-					return FINDER_ARGS_EMPTY;
-				}
-
-				return null;
-			}
-
-			CompanyInfoModelImpl companyInfoModelImpl =
-				(CompanyInfoModelImpl)baseModel;
-
-			long columnBitmask = companyInfoModelImpl.getColumnBitmask();
-
-			if (!checkColumn || (columnBitmask == 0)) {
-				return _getValue(companyInfoModelImpl, columnNames, original);
-			}
-
-			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
-				finderPath);
-
-			if (finderPathColumnBitmask == null) {
-				finderPathColumnBitmask = 0L;
-
-				for (String columnName : columnNames) {
-					finderPathColumnBitmask |=
-						companyInfoModelImpl.getColumnBitmask(columnName);
-				}
-
-				_finderPathColumnBitmasksCache.put(
-					finderPath, finderPathColumnBitmask);
-			}
-
-			if ((columnBitmask & finderPathColumnBitmask) != 0) {
-				return _getValue(companyInfoModelImpl, columnNames, original);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String getClassName() {
-			return CompanyInfoImpl.class.getName();
-		}
-
-		@Override
-		public String getTableName() {
-			return CompanyInfoTable.INSTANCE.getTableName();
-		}
-
-		private static Object[] _getValue(
-			CompanyInfoModelImpl companyInfoModelImpl, String[] columnNames,
-			boolean original) {
-
-			Object[] arguments = new Object[columnNames.length];
-
-			for (int i = 0; i < arguments.length; i++) {
-				String columnName = columnNames[i];
-
-				if (original) {
-					arguments[i] = companyInfoModelImpl.getColumnOriginalValue(
-						columnName);
-				}
-				else {
-					arguments[i] = companyInfoModelImpl.getColumnValue(
-						columnName);
-				}
-			}
-
-			return arguments;
-		}
-
-		private static final Map<FinderPath, Long>
-			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
-
 	}
 
 }

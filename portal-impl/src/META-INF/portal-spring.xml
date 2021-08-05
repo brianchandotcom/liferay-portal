@@ -7,6 +7,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryModelArgumentsResolver" id="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryModelArgumentsResolver" id="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagModelArgumentsResolver" id="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService" />
 	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService" />
 	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService" />
@@ -17,6 +20,12 @@
 	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence" />
 	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence" />
 	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryFinderImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryFinder" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetEntryModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetLinkModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetLinkModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetTagModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryLocalService" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryPropertyLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetEntryLocalService" />
@@ -40,6 +49,12 @@
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetLinkFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetLinkFinder" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagFinder" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryModelArgumentsResolver" id="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataModelArgumentsResolver" id="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypeModelArgumentsResolver" id="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypeModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileShortcutModelArgumentsResolver" id="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileShortcutModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileVersionModelArgumentsResolver" id="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileVersionModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderModelArgumentsResolver" id="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppHelperLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryLocalService" />
@@ -66,6 +81,10 @@
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypeFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnModelArgumentsResolver" id="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoRowModelArgumentsResolver" id="com.liferay.portlet.expando.service.persistence.impl.ExpandoRowModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoTableModelArgumentsResolver" id="com.liferay.portlet.expando.service.persistence.impl.ExpandoTableModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoValueModelArgumentsResolver" id="com.liferay.portlet.expando.service.persistence.impl.ExpandoValueModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoColumnLocalService" />
 	<bean class="com.liferay.portlet.expando.service.impl.ExpandoRowLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoRowLocalService" />
 	<bean class="com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoTableLocalService" />
@@ -76,6 +95,7 @@
 	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoRowPersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence" />
 	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoTablePersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence" />
 	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoValuePersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence" />
+	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationModelArgumentsResolver" id="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
@@ -84,6 +104,72 @@
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationPersistenceImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence" />
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" />
+	<bean class="com.liferay.portal.service.persistence.impl.AccountModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.AccountModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.AddressModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.AddressModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.BrowserTrackerModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.BrowserTrackerModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ClassNameModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ClassNameModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.CompanyModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.CompanyModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.CompanyInfoModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.CompanyInfoModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ContactModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ContactModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.CountryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.CountryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.CountryLocalizationModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.CountryLocalizationModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.EmailAddressModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.EmailAddressModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.GroupModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.GroupModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ImageModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ImageModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutBranchModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutBranchModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutFriendlyURLModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutFriendlyURLModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutPrototypeModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutPrototypeModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutRevisionModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutRevisionModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutSetModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutSetModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutSetBranchModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutSetBranchModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutSetPrototypeModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.LayoutSetPrototypeModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ListTypeModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ListTypeModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.MembershipRequestModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.MembershipRequestModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrganizationModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.OrganizationModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrgGroupRoleModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.OrgGroupRoleModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrgLaborModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.OrgLaborModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PasswordPolicyModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PasswordPolicyModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PasswordPolicyRelModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PasswordPolicyRelModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PasswordTrackerModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PasswordTrackerModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PhoneModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PhoneModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PluginSettingModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PluginSettingModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortalPreferencesModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PortalPreferencesModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortalPreferenceValueModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PortalPreferenceValueModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PortletModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletItemModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PortletItemModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletPreferencesModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PortletPreferencesModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletPreferenceValueModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PortletPreferenceValueModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutBranchModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RecentLayoutBranchModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutRevisionModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RecentLayoutRevisionModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutSetBranchModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RecentLayoutSetBranchModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RegionModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RegionModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RegionLocalizationModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RegionLocalizationModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ReleaseModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ReleaseModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RepositoryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RepositoryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RepositoryEntryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RepositoryEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourceActionModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ResourceActionModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourcePermissionModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ResourcePermissionModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RoleModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RoleModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ServiceComponentModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.SubscriptionModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.SubscriptionModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.SystemEventModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.SystemEventModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.TeamModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.TeamModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.TicketModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.TicketModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserGroupModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupGroupRoleModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserGroupGroupRoleModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupRoleModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserGroupRoleModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserIdMapperModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserIdMapperModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationDeliveryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserNotificationDeliveryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationEventModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserNotificationEventModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserTrackerModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserTrackerModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserTrackerPathModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.UserTrackerPathModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.VirtualHostModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.VirtualHostModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.WebDAVPropsModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WebDAVPropsModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.WebsiteModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WebsiteModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.impl.AccountLocalServiceImpl" id="com.liferay.portal.kernel.service.AccountLocalService" />
 	<bean class="com.liferay.portal.service.impl.AddressLocalServiceImpl" id="com.liferay.portal.kernel.service.AddressLocalService" />
 	<bean class="com.liferay.portal.service.impl.BrowserTrackerLocalServiceImpl" id="com.liferay.portal.kernel.service.BrowserTrackerLocalService" />
@@ -268,11 +354,21 @@
 	<bean class="com.liferay.portal.service.persistence.impl.UserGroupFinderImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupFinder" />
 	<bean class="com.liferay.portal.service.persistence.impl.UserGroupGroupRoleFinderImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder" />
 	<bean class="com.liferay.portal.service.persistence.impl.UserGroupRoleFinderImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder" />
+	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryModelArgumentsResolver" id="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsModelArgumentsResolver" id="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" />
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsStatsLocalService" />
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryService" />
 	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" />
 	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialActivityModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityAchievementModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialActivityAchievementModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityLimitModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialActivityLimitModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySettingModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialActivitySettingModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRelationModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialRelationModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRequestModelArgumentsResolver" id="com.liferay.portlet.social.service.persistence.impl.SocialRequestModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityLocalService" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityAchievementLocalService" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialActivityCounterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityCounterLocalService" />

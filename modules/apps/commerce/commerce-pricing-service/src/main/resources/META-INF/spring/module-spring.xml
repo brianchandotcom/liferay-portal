@@ -7,6 +7,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierRelModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePriceModifierLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePriceModifierLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePriceModifierRelLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassLocalService" />

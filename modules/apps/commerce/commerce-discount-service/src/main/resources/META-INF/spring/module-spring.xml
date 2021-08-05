@@ -7,6 +7,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountAccountRelModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountAccountRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRelModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRuleModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRuleModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountUsageEntryModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountUsageEntryModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountLocalService" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountAccountRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountAccountRelLocalService" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountCommerceAccountGroupRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalService" />

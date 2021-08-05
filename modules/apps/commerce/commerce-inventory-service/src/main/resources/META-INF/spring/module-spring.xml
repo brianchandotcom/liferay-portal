@@ -7,6 +7,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryAuditModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryAuditModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryBookedQuantityModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryBookedQuantityModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryReplenishmentItemModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryReplenishmentItemModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseItemModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseItemModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryAuditLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryBookedQuantityLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryReplenishmentItemLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService" />

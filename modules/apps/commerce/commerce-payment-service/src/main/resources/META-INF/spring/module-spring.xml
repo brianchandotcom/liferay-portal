@@ -7,6 +7,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.payment.service.persistence.impl.CommercePaymentMethodGroupRelModelArgumentsResolver" id="com.liferay.commerce.payment.service.persistence.impl.CommercePaymentMethodGroupRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.payment.service.impl.CommercePaymentMethodGroupRelLocalServiceImpl" id="com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService" />
 	<bean class="com.liferay.commerce.payment.service.impl.CommercePaymentMethodGroupRelServiceImpl" id="com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService" />
 	<bean class="com.liferay.commerce.payment.service.persistence.impl.CommercePaymentMethodGroupRelPersistenceImpl" id="com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelPersistence" />

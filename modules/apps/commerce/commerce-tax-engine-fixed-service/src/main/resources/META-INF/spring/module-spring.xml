@@ -7,6 +7,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateModelArgumentsResolver" id="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateAddressRelModelArgumentsResolver" id="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateAddressRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateLocalServiceImpl" id="com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelLocalServiceImpl" id="com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateServiceImpl" id="com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService" />

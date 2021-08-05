@@ -7,6 +7,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionModelArgumentsResolver" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelModelArgumentsResolver" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService" />

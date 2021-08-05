@@ -23,7 +23,6 @@ import com.liferay.batch.planner.service.persistence.BatchPlannerMappingPersiste
 import com.liferay.batch.planner.service.persistence.impl.constants.BatchPlannerPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,13 +33,11 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -53,12 +50,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -1493,14 +1487,7 @@ public class BatchPlannerMappingPersistenceImpl
 	 * Initializes the batch planner mapping persistence.
 	 */
 	@Activate
-	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_argumentsResolverServiceRegistration = _bundleContext.registerService(
-			ArgumentsResolver.class,
-			new BatchPlannerMappingModelArgumentsResolver(),
-			new HashMapDictionary<>());
-
+	public void activate() {
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
@@ -1557,8 +1544,6 @@ public class BatchPlannerMappingPersistenceImpl
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(BatchPlannerMappingImpl.class.getName());
-
-		_argumentsResolverServiceRegistration.unregister();
 	}
 
 	@Override
@@ -1586,8 +1571,6 @@ public class BatchPlannerMappingPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	protected EntityCache entityCache;
@@ -1623,116 +1606,8 @@ public class BatchPlannerMappingPersistenceImpl
 		return finderCache;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
-
-	private static class BatchPlannerMappingModelArgumentsResolver
-		implements ArgumentsResolver {
-
-		@Override
-		public Object[] getArguments(
-			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
-			boolean original) {
-
-			String[] columnNames = finderPath.getColumnNames();
-
-			if ((columnNames == null) || (columnNames.length == 0)) {
-				if (baseModel.isNew()) {
-					return FINDER_ARGS_EMPTY;
-				}
-
-				return null;
-			}
-
-			BatchPlannerMappingModelImpl batchPlannerMappingModelImpl =
-				(BatchPlannerMappingModelImpl)baseModel;
-
-			long columnBitmask =
-				batchPlannerMappingModelImpl.getColumnBitmask();
-
-			if (!checkColumn || (columnBitmask == 0)) {
-				return _getValue(
-					batchPlannerMappingModelImpl, columnNames, original);
-			}
-
-			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
-				finderPath);
-
-			if (finderPathColumnBitmask == null) {
-				finderPathColumnBitmask = 0L;
-
-				for (String columnName : columnNames) {
-					finderPathColumnBitmask |=
-						batchPlannerMappingModelImpl.getColumnBitmask(
-							columnName);
-				}
-
-				if (finderPath.isBaseModelResult() &&
-					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
-						finderPath.getCacheName())) {
-
-					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
-				}
-
-				_finderPathColumnBitmasksCache.put(
-					finderPath, finderPathColumnBitmask);
-			}
-
-			if ((columnBitmask & finderPathColumnBitmask) != 0) {
-				return _getValue(
-					batchPlannerMappingModelImpl, columnNames, original);
-			}
-
-			return null;
-		}
-
-		@Override
-		public String getClassName() {
-			return BatchPlannerMappingImpl.class.getName();
-		}
-
-		@Override
-		public String getTableName() {
-			return BatchPlannerMappingTable.INSTANCE.getTableName();
-		}
-
-		private static Object[] _getValue(
-			BatchPlannerMappingModelImpl batchPlannerMappingModelImpl,
-			String[] columnNames, boolean original) {
-
-			Object[] arguments = new Object[columnNames.length];
-
-			for (int i = 0; i < arguments.length; i++) {
-				String columnName = columnNames[i];
-
-				if (original) {
-					arguments[i] =
-						batchPlannerMappingModelImpl.getColumnOriginalValue(
-							columnName);
-				}
-				else {
-					arguments[i] = batchPlannerMappingModelImpl.getColumnValue(
-						columnName);
-				}
-			}
-
-			return arguments;
-		}
-
-		private static final Map<FinderPath, Long>
-			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
-
-		private static final long _ORDER_BY_COLUMNS_BITMASK;
-
-		static {
-			long orderByColumnsBitmask = 0;
-
-			orderByColumnsBitmask |=
-				BatchPlannerMappingModelImpl.getColumnBitmask("modifiedDate");
-
-			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
-		}
-
-	}
+	@Reference
+	private BatchPlannerMappingModelArgumentsResolver
+		_batchPlannerMappingModelArgumentsResolver;
 
 }

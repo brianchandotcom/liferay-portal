@@ -645,3 +645,34 @@ No manual updates are required.
 This change was made to remove deprecated legacy code from Portal and improve the code consistency and performance
 
 ---------------------------------------
+
+### Some static methods in `com.liferay.portal.kernel.servlet.SanitizedServletResponse` have been removed because these relate to the X-Xss-Protection header which is not supported by modern browsers.
+- **Date:** 2021-Aug-05
+- **JIRA Ticket:** [LPS-134188](https://issues.liferay.com/browse/LPS-134188)
+
+#### What changed?
+
+The following methods have been removed:
+
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
+
+A related constant has been removed also:
+
+- com.liferay.portal.kernel.servlet.HttpHeaders#X_XSS_PROTECTION
+
+#### Who is affected?
+
+Everyone calling one of these methods or referencing the constant. However, such calling code should be removed anyway, because it will have no effect on modern browsers and might give a false sense of security.
+
+#### How should I update my code?
+
+Remove the calling code.
+
+#### Why was this change made?
+
+The X-Xss-Protection header is no longer supported by modern browsers.
+
+---------------------------------------

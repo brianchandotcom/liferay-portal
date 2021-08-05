@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -48,13 +49,11 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		TemplateDisplayContext templateDisplayContext) {
+		SearchContainer<?> searchContainer) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			templateDisplayContext.getTemplateSearchContainer());
-
-		this.templateDisplayContext = templateDisplayContext;
+			searchContainer);
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -143,7 +142,6 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 		return new String[] {"modified-date", "id"};
 	}
 
-	protected final TemplateDisplayContext templateDisplayContext;
 	protected final ThemeDisplay themeDisplay;
 
 	private static final Log _log = LogFactoryUtil.getLog(

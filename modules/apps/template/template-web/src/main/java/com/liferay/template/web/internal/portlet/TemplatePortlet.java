@@ -18,18 +18,13 @@ import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.constants.TemplatePortletKeys;
-import com.liferay.template.web.internal.display.context.InformationTemplatesTemplateDisplayContext;
-import com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext;
 
 import java.io.IOException;
 
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -70,32 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class TemplatePortlet extends MVCPortlet {
-
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		String tabs1 = ParamUtil.getString(
-			renderRequest, "tabs1", "information-templates");
-
-		if (Objects.equals(tabs1, "information-templates")) {
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				new InformationTemplatesTemplateDisplayContext(
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
-		}
-		else if (Objects.equals(tabs1, "widget-templates")) {
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				new WidgetTemplatesTemplateDisplayContext(
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
-		}
-
-		super.render(renderRequest, renderResponse);
-	}
 
 	@Activate
 	@Modified

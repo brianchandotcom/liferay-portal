@@ -39,8 +39,9 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.template.web.internal.display.context.EditDDMTemplateDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.InformationTemplatesManagementToolbarDisplayContext" %><%@
-page import="com.liferay.template.web.internal.display.context.TemplateDisplayContext" %><%@
-page import="com.liferay.template.web.internal.display.context.WidgetTemplatesManagementToolbarDisplayContext" %>
+page import="com.liferay.template.web.internal.display.context.InformationTemplatesTemplateDisplayContext" %><%@
+page import="com.liferay.template.web.internal.display.context.WidgetTemplatesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext" %>
 
 <%@ page import="java.util.Objects" %>
 

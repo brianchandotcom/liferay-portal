@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -192,18 +193,16 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 			collectionQuery.getConfigurationOptional();
 
 		Map<String, String[]> configuration = configurationOptional.orElse(
-			null);
+			Collections.emptyMap());
 
-		if (configuration != null) {
-			for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
-				String value = entry.getValue()[0];
+		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
+			String value = entry.getValue()[0];
 
-				if (Validator.isNotNull(value)) {
-					String localizedName = Field.getLocalizedName(
-						LocaleUtil.getSiteDefault(), entry.getKey());
+			if (Validator.isNotNull(value)) {
+				String localizedName = Field.getLocalizedName(
+					LocaleUtil.getSiteDefault(), entry.getKey());
 
-					searchContext.setAttribute(localizedName, value);
-				}
+				searchContext.setAttribute(localizedName, value);
 			}
 		}
 

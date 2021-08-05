@@ -584,7 +584,7 @@ function CollectionFilterConfigurationModal({
 	}, [item.config, visible]);
 
 	return (
-		<ClayModal observer={observer}>
+		<ClayModal containerProps={{className: 'cadmin'}} observer={observer}>
 			<ClayModal.Header>
 				{Liferay.Language.get('filter-collection')}
 			</ClayModal.Header>

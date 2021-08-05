@@ -37,6 +37,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.template.web.internal.display.context.EditDDMTemplateDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.InformationTemplatesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.TemplateDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.WidgetTemplatesManagementToolbarDisplayContext" %>

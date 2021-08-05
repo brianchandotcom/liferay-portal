@@ -147,7 +147,7 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 			implements Comparable<SpringBeanServiceElement> {
 
 			public SpringBeanServiceElement(String name) {
-				_beanObjectName = StringPool.BLANK;
+				_beanObjectName = name;
 				_type = -1;
 
 				Matcher matcher = _localServicePattern.matcher(name);
@@ -189,9 +189,7 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 			public int compareTo(
 				SpringBeanServiceElement springBeanServiceElement) {
 
-				if (_beanObjectName.equals(
-						springBeanServiceElement.getBeanObjectName())) {
-
+				if (_type != springBeanServiceElement.getType()) {
 					return _type - springBeanServiceElement.getType();
 				}
 

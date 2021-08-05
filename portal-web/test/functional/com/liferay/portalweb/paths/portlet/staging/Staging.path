@@ -43,6 +43,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROCESS_TITLE</td>
+	<td>//strong[contains(@class,'process-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LATEST_PROCESS_RESULT</td>
 	<td>xpath=(//span[contains(@data-qa-id,'processResult')])[1]</td>
 	<td></td>

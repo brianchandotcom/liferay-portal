@@ -462,6 +462,18 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro deletePublishTask {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Clear",
+			rowEntry = "${publicationTitle}");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			locator1 = "Staging#PROCESS_TITLE",
+			value1 = "${publicationTitle}");
+	}
+
 	macro deletePublishTemplate {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
@@ -1394,6 +1406,12 @@ definition {
 			value1 = "${contentInformation}");
 
 		IFrame.closeFrame();
+	}
+
+	macro viewPublishTask {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Staging#PROCESS_TITLE",
+			value1 = "${publicationTitle}");
 	}
 
 	macro viewPublishTemplate {

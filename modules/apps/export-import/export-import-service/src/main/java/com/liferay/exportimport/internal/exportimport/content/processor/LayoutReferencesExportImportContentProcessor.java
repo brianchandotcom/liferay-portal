@@ -593,6 +593,7 @@ public class LayoutReferencesExportImportContentProcessor
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
+		String companyDefaultGroupPortalURL = StringPool.BLANK;
 		String companyPortalURL = StringPool.BLANK;
 		String privateLayoutSetPortalURL = StringPool.BLANK;
 		String publicLayoutSetPortalURL = StringPool.BLANK;
@@ -634,10 +635,21 @@ public class LayoutReferencesExportImportContentProcessor
 			else {
 				publicLayoutSetPortalURL = companyPortalURL;
 			}
+
+			if (StringUtil.equals(
+					group.getGroupKey(),
+					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+
+				companyDefaultGroupPortalURL = companyPortalURL;
+			}
+			else {
+				companyDefaultGroupPortalURL = publicLayoutSetPortalURL;
+			}
 		}
 
 		int secureSecurePort = _portal.getPortalServerPort(true);
 
+		String companySecureDefaultGroupPortalURL = StringPool.BLANK;
 		String companySecurePortalURL = StringPool.BLANK;
 		String privateLayoutSetSecurePortalURL = StringPool.BLANK;
 		String publicLayoutSetSecurePortalURL = StringPool.BLANK;
@@ -663,6 +675,17 @@ public class LayoutReferencesExportImportContentProcessor
 				publicLayoutSetSecurePortalURL = _portal.getPortalURL(
 					publicVirtualHostnames.firstKey(), secureSecurePort, true);
 			}
+
+			if (StringUtil.equals(
+					group.getGroupKey(),
+					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+
+				companySecureDefaultGroupPortalURL = companySecurePortalURL;
+			}
+			else {
+				companySecureDefaultGroupPortalURL =
+					publicLayoutSetSecurePortalURL;
+			}
 		}
 
 		StringBundler sb = new StringBundler(3);
@@ -671,6 +694,12 @@ public class LayoutReferencesExportImportContentProcessor
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
+		content = StringUtil.replace(
+			content, _DATA_HANDLER_COMPANY_DEFAULT_GROUP_URL,
+			companyDefaultGroupPortalURL);
+		content = StringUtil.replace(
+			content, _DATA_HANDLER_COMPANY_SECURE_DEFAULT_GROUP_URL,
+			companySecureDefaultGroupPortalURL);
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
 		content = StringUtil.replace(

@@ -184,7 +184,19 @@ public class LayoutReferencesExportImportContentProcessor
 					companyVirtualHostname, serverPort, secure));
 
 			if (url.startsWith(portalURL)) {
-				if (secure) {
+				if (StringUtil.equals(
+						group.getGroupKey(),
+						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+
+					if (secure) {
+						urlSB.append(
+							_DATA_HANDLER_COMPANY_SECURE_DEFAULT_GROUP_URL);
+					}
+					else {
+						urlSB.append(_DATA_HANDLER_COMPANY_DEFAULT_GROUP_URL);
+					}
+				}
+				else if (secure) {
 					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
 				}
 				else {
@@ -1165,6 +1177,12 @@ public class LayoutReferencesExportImportContentProcessor
 
 		return content;
 	}
+
+	private static final String _DATA_HANDLER_COMPANY_DEFAULT_GROUP_URL =
+		"@data_handler_company_default_group_url@";
+
+	private static final String _DATA_HANDLER_COMPANY_SECURE_DEFAULT_GROUP_URL =
+		"@data_handler_company_secure_default_group_url@";
 
 	private static final String _DATA_HANDLER_COMPANY_SECURE_URL =
 		"@data_handler_company_secure_url@";

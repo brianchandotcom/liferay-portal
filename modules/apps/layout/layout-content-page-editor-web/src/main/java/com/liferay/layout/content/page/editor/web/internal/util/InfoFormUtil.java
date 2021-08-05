@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -77,9 +76,7 @@ public class InfoFormUtil {
 
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-				List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
-
-				for (InfoField<?> infoField : infoFields) {
+				for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
 					InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 					if (!_isValidInfoFieldType(infoFieldType)) {

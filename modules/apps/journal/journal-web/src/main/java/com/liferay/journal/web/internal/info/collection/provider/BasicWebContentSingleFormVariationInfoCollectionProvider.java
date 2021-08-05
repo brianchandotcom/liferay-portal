@@ -85,9 +85,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 			List<JournalArticle> articles = new ArrayList<>();
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
+			for (Document document : hits.getDocs()) {
 				String className = document.get(Field.ENTRY_CLASS_NAME);
 
 				if (className.equals(JournalArticle.class.getName())) {

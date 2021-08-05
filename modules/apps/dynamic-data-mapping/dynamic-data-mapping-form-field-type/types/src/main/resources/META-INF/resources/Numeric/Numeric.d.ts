@@ -14,6 +14,7 @@
 
 import React, {FocusEventHandler} from 'react';
 import {ISymbols} from '../NumericInputMask/NumericInputMask';
+import './Numeric.scss';
 declare const Numeric: React.FC<IProps>;
 export {Numeric};
 declare const _default: any;

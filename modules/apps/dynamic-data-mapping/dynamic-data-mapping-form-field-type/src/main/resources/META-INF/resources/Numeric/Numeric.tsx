@@ -13,6 +13,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 
 // @ts-ignore
 
@@ -32,6 +33,8 @@ import {ISymbols} from '../NumericInputMask/NumericInputMask';
 // @ts-ignore
 
 import withConfirmationField from '../util/withConfirmationField.es';
+
+import './Numeric.scss';
 
 const NON_NUMERIC_REGEX = /[\D]/g;
 
@@ -290,10 +293,12 @@ const Numeric: React.FC<IProps> = ({
 			readOnly={readOnly}
 		>
 			<ClayInput
-				dir={Liferay.Language.direction[editingLanguageId]}
+				className={classNames({
+					'ddm-form-field-type__numeric--rtl':
+						Liferay.Language.direction[editingLanguageId] === 'rtl',
+				})}
 				disabled={readOnly}
 				id={id}
-				lang={editingLanguageId}
 				name={`${name}${inputMask ? '_masked' : ''}`}
 				onBlur={onBlur}
 				onChange={handleChange}

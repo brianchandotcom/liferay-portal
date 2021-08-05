@@ -2420,32 +2420,15 @@ definition {
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 
-		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
-
-		Click(
-			key_processName = "task1",
-			locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
-		Click(
-			key_processName = "task2",
-			locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
-
-		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
-
-		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
-
-		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+		WorkflowMetrics.selectReassignTasks(taskList = "task1");
 
 		WorkflowMetrics.selectNewAssignee(
 			nameOfAssignee = "User User",
 			taskList = "task1");
 
-		WorkflowMetrics.selectNewAssignee(
-			nameOfAssignee = "User User",
-			taskList = "task2");
-
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 
-		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+		WorkflowMetrics.selectReassignTasks(taskList = "task3");
 
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 
@@ -2460,10 +2443,10 @@ definition {
 			Refresh();
 		}
 
-		AssertTextEquals(
-			key_workflowInstanceAssignee = "Test Test, Unassigned, User User",
-			key_workflowInstanceName = "Blogs Entry",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE",
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		AssertElementPresent(
+			locator1 = "WorkflowAllItems#DETAIL_PAGE_CURRENT_ASSIGNEE",
 			value1 = "Test Test, Unassigned, User User");
 	}
 

@@ -90,9 +90,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		OpenIdConnectAuthenticationSession openIdConnectAuthenticationSession =
 			(OpenIdConnectAuthenticationSession)httpSession.getAttribute(
-				OpenIdConnectAuthenticationSession.SESSION);
+				_OPEN_ID_CONNECT_AUTHENTICATION_SESSION);
 
-		httpSession.removeAttribute(OpenIdConnectAuthenticationSession.SESSION);
+		httpSession.removeAttribute(_OPEN_ID_CONNECT_AUTHENTICATION_SESSION);
 
 		if (openIdConnectAuthenticationSession == null) {
 			throw new OpenIdConnectServiceException.AuthenticationException(
@@ -188,7 +188,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				authenticationRequestURI.toString());
 
 			httpSession.setAttribute(
-				OpenIdConnectAuthenticationSession.SESSION,
+				_OPEN_ID_CONNECT_AUTHENTICATION_SESSION,
 				new OpenIdConnectAuthenticationSession(
 					openIdConnectProviderName, nonce, state));
 		}
@@ -355,6 +355,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 					"\" do not match"));
 		}
 	}
+
+	private static final String _OPEN_ID_CONNECT_AUTHENTICATION_SESSION =
+		"OPEN_ID_CONNECT_AUTHENTICATION_SESSION";
 
 	@Reference
 	private OfflineOpenIdConnectSessionManager

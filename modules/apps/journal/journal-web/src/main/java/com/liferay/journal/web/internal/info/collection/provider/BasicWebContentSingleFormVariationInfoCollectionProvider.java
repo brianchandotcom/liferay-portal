@@ -222,24 +222,14 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
 
-		com.liferay.portal.kernel.search.Sort searchSort = null;
-
 		if (sortOptional.isPresent()) {
-			boolean orderByAsc = true;
-
 			Sort sort = sortOptional.get();
 
-			if (sort.isReverse()) {
-				orderByAsc = false;
-			}
-
-			searchSort = new com.liferay.portal.kernel.search.Sort(
-				sort.getFieldName(),
-				com.liferay.portal.kernel.search.Sort.LONG_TYPE, !orderByAsc);
-		}
-
-		if (searchSort != null) {
-			searchContext.setSorts(searchSort);
+			searchContext.setSorts(
+				new com.liferay.portal.kernel.search.Sort(
+					sort.getFieldName(),
+					com.liferay.portal.kernel.search.Sort.LONG_TYPE,
+					sort.isReverse()));
 		}
 
 		searchContext.setStart(pagination.getStart());

@@ -27,21 +27,6 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
-		task ("Add a section fragment that uses the Button fragment code") {
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
-
-			FragmentsEditor.waitForAutoSave();
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
-
-			FragmentsEditor.waitForAutoSave();
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
-
-			FragmentsEditor.waitForAutoSave();
-		}
 	}
 
 	tearDown {
@@ -63,7 +48,21 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		task ("Publish the fragment") {
+		task ("Add a section fragment that uses the Button fragment code") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
+
+			FragmentsEditor.waitForAutoSave();
+
 			PortletEntry.publish();
 		}
 
@@ -119,7 +118,21 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		task ("Publish the section fragment") {
+		task ("Add a section fragment that uses the Button fragment code") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
+
+			FragmentsEditor.waitForAutoSave();
+
 			PortletEntry.publish();
 		}
 
@@ -268,14 +281,17 @@ definition {
 	@priority = "3"
 	test ViewOrderOfFragmentsActions {
 
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
 		Pause(locator1 = "30000");
 	}
 
 	@description = "This is a test for LPS-89251. When creating fragments there should be a visible reference to the Liferay Fragments Toolkit."
 	@priority = "4"
 	test ViewReferenceToFragmentsToolkit {
+
+		task ("Add a section fragment that uses the Button fragment code") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+		}
+
 		task ("Click on the Fragments Toolkit link") {
 			Click(locator1 = "FragmentEditor#FRAGMENTS_TOOLKIT_LINK");
 		}

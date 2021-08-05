@@ -1679,6 +1679,14 @@ definition {
 			}
 		}
 
+		if (isSet(includeSearchField)) {
+			Check.checkNotVisible(
+				checkboxName = "Include Search Field",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(singleSelection)) {
 			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Single Selection", locator1 = "Checkbox#ANY_CHECKBOX")) {
 				Click.clickAtNotVisible(

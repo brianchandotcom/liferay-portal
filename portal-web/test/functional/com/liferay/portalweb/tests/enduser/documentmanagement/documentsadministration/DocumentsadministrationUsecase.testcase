@@ -401,6 +401,10 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page");

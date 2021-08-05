@@ -35,6 +35,9 @@ public class RepositoryEntryTable extends BaseTable<RepositoryEntryTable> {
 
 	public final Column<RepositoryEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<RepositoryEntryTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<RepositoryEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RepositoryEntryTable, Long> repositoryEntryId =

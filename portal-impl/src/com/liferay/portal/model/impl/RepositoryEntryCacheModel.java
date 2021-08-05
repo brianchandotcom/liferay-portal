@@ -78,10 +78,12 @@ public class RepositoryEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", repositoryEntryId=");
@@ -116,6 +118,7 @@ public class RepositoryEntryCacheModel
 		RepositoryEntryImpl repositoryEntryImpl = new RepositoryEntryImpl();
 
 		repositoryEntryImpl.setMvccVersion(mvccVersion);
+		repositoryEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			repositoryEntryImpl.setUuid("");
@@ -176,6 +179,8 @@ public class RepositoryEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		repositoryEntryId = objectInput.readLong();
@@ -199,6 +204,8 @@ public class RepositoryEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -239,6 +246,7 @@ public class RepositoryEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long repositoryEntryId;
 	public long groupId;

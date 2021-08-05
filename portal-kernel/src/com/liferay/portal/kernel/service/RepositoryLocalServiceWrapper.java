@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+
 /**
  * Provides a wrapper for {@link RepositoryLocalService}.
  *
@@ -35,10 +39,9 @@ public class RepositoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository addRepository(
+	public Repository addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
-			java.lang.String name, java.lang.String description,
-			java.lang.String portletId,
+			String name, String description, String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			boolean hidden, ServiceContext serviceContext)
@@ -60,9 +63,7 @@ public class RepositoryLocalServiceWrapper
 	 * @return the repository that was added
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository addRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-
+	public Repository addRepository(Repository repository) {
 		return _repositoryLocalService.addRepository(repository);
 	}
 
@@ -89,9 +90,7 @@ public class RepositoryLocalServiceWrapper
 	 * @return the new repository
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository createRepository(
-		long repositoryId) {
-
+	public Repository createRepository(long repositoryId) {
 		return _repositoryLocalService.createRepository(repositoryId);
 	}
 
@@ -125,8 +124,7 @@ public class RepositoryLocalServiceWrapper
 	 * @throws PortalException if a repository with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository deleteRepository(
-			long repositoryId)
+	public Repository deleteRepository(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryLocalService.deleteRepository(repositoryId);
@@ -143,9 +141,7 @@ public class RepositoryLocalServiceWrapper
 	 * @return the repository that was removed
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository deleteRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-
+	public Repository deleteRepository(Repository repository) {
 		return _repositoryLocalService.deleteRepository(repository);
 	}
 
@@ -252,22 +248,18 @@ public class RepositoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository fetchRepository(
-		long repositoryId) {
-
+	public Repository fetchRepository(long repositoryId) {
 		return _repositoryLocalService.fetchRepository(repositoryId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository fetchRepository(
-		long groupId, java.lang.String portletId) {
-
+	public Repository fetchRepository(long groupId, String portletId) {
 		return _repositoryLocalService.fetchRepository(groupId, portletId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository fetchRepository(
-		long groupId, java.lang.String name, java.lang.String portletId) {
+	public Repository fetchRepository(
+		long groupId, String name, String portletId) {
 
 		return _repositoryLocalService.fetchRepository(
 			groupId, name, portletId);
@@ -281,8 +273,8 @@ public class RepositoryLocalServiceWrapper
 	 * @return the matching repository, or <code>null</code> if a matching repository could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository
-		fetchRepositoryByUuidAndGroupId(java.lang.String uuid, long groupId) {
+	public Repository fetchRepositoryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _repositoryLocalService.fetchRepositoryByUuidAndGroupId(
 			uuid, groupId);
@@ -306,9 +298,7 @@ public class RepositoryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Repository>
-		getGroupRepositories(long groupId) {
-
+	public java.util.List<Repository> getGroupRepositories(long groupId) {
 		return _repositoryLocalService.getGroupRepositories(groupId);
 	}
 
@@ -325,7 +315,7 @@ public class RepositoryLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _repositoryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -352,9 +342,7 @@ public class RepositoryLocalServiceWrapper
 	 * @return the range of repositories
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Repository>
-		getRepositories(int start, int end) {
-
+	public java.util.List<Repository> getRepositories(int start, int end) {
 		return _repositoryLocalService.getRepositories(start, end);
 	}
 
@@ -366,9 +354,8 @@ public class RepositoryLocalServiceWrapper
 	 * @return the matching repositories, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Repository>
-		getRepositoriesByUuidAndCompanyId(
-			java.lang.String uuid, long companyId) {
+	public java.util.List<Repository> getRepositoriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _repositoryLocalService.getRepositoriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -385,12 +372,10 @@ public class RepositoryLocalServiceWrapper
 	 * @return the range of matching repositories, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Repository>
-		getRepositoriesByUuidAndCompanyId(
-			java.lang.String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Repository>
-					orderByComparator) {
+	public java.util.List<Repository> getRepositoriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Repository>
+			orderByComparator) {
 
 		return _repositoryLocalService.getRepositoriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -414,24 +399,21 @@ public class RepositoryLocalServiceWrapper
 	 * @throws PortalException if a repository with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository getRepository(
-			long repositoryId)
+	public Repository getRepository(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryLocalService.getRepository(repositoryId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository getRepository(
-			long groupId, java.lang.String portletId)
+	public Repository getRepository(long groupId, String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryLocalService.getRepository(groupId, portletId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository getRepository(
-			long groupId, java.lang.String name, java.lang.String portletId)
+	public Repository getRepository(long groupId, String name, String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryLocalService.getRepository(groupId, name, portletId);
@@ -446,8 +428,7 @@ public class RepositoryLocalServiceWrapper
 	 * @throws PortalException if a matching repository could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository
-			getRepositoryByUuidAndGroupId(java.lang.String uuid, long groupId)
+	public Repository getRepositoryByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _repositoryLocalService.getRepositoryByUuidAndGroupId(
@@ -464,8 +445,7 @@ public class RepositoryLocalServiceWrapper
 
 	@Override
 	public void updateRepository(
-			long repositoryId, java.lang.String name,
-			java.lang.String description)
+			long repositoryId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_repositoryLocalService.updateRepository(
@@ -494,10 +474,28 @@ public class RepositoryLocalServiceWrapper
 	 * @return the repository that was updated
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Repository updateRepository(
-		com.liferay.portal.kernel.model.Repository repository) {
-
+	public Repository updateRepository(Repository repository) {
 		return _repositoryLocalService.updateRepository(repository);
+	}
+
+	@Override
+	public CTPersistence<Repository> getCTPersistence() {
+		return _repositoryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<Repository> getModelClass() {
+		return _repositoryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<Repository>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _repositoryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

@@ -405,13 +405,17 @@ create unique index IX_A149763D on RegionLocalization (regionId, languageId[$COL
 
 create unique index IX_8BD6BCA7 on Release_ (servletContextName[$COLUMN_LENGTH:75$]);
 
-create unique index IX_60C8634C on Repository (groupId, name[$COLUMN_LENGTH:200$], portletId[$COLUMN_LENGTH:200$]);
-create index IX_F543EA4 on Repository (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_11641E26 on Repository (uuid_[$COLUMN_LENGTH:75$], groupId);
+create index IX_1A1F5458 on Repository (groupId, ctCollectionId);
+create unique index IX_97B21AA on Repository (groupId, name[$COLUMN_LENGTH:200$], portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_4D554D02 on Repository (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_487DC962 on Repository (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_4009E884 on Repository (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create unique index IX_9BDCF489 on RepositoryEntry (repositoryId, mappedId[$COLUMN_LENGTH:255$]);
-create index IX_D3B9AF62 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_354AA664 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
+create index IX_F458F385 on RepositoryEntry (repositoryId, ctCollectionId);
+create unique index IX_BC798E7 on RepositoryEntry (repositoryId, mappedId[$COLUMN_LENGTH:255$], ctCollectionId);
+create index IX_D6ED81C0 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_DE371F64 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_9F0434C2 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create unique index IX_EDB9986E on ResourceAction (name[$COLUMN_LENGTH:255$], actionId[$COLUMN_LENGTH:75$]);
 

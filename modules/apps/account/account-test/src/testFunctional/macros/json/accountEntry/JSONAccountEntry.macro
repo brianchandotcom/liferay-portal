@@ -11,8 +11,12 @@ definition {
 			var creatorPassword = "test";
 		}
 
+		if (!(isSet(accountEntryDescription))) {
+			var accountEntryDescription = "Account Entry Description";
+		}
+
 		var accountEntryStatus = JSONAccountEntrySetter.setStatus(
-			fragmentStatus = "${accountEntryStatus}");
+			accountEntryStatus = "${accountEntryStatus}");
 
 		var accountEntryType = JSONAccountEntrySetter.setType(
 			accountEntryType = "${accountEntryType}");

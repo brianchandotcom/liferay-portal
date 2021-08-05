@@ -15,6 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.DuplicateObjectFieldException;
+import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.ReservedObjectFieldException;
@@ -27,12 +28,15 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -53,8 +57,9 @@ public class ObjectFieldLocalServiceImpl
 	@Override
 	public ObjectField addCustomObjectField(
 			long userId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId, String name,
-			boolean required, String type)
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			String type)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -70,15 +75,16 @@ public class ObjectFieldLocalServiceImpl
 
 		return _addObjectField(
 			userId, objectDefinitionId, name + StringPool.UNDERLINE,
-			dbTableName, indexed, indexedAsKeyword, indexedLanguageId, name,
-			required, type);
+			dbTableName, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+			name, required, type);
 	}
 
 	@Override
 	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
+			Map<Locale, String> labelMap, String name, boolean required,
+			String type)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -93,7 +99,7 @@ public class ObjectFieldLocalServiceImpl
 		return _addObjectField(
 			userId, objectDefinitionId, dbColumnName,
 			objectDefinition.getDBTableName(), indexed, indexedAsKeyword,
-			indexedLanguageId, name, required, type);
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	@Override
@@ -125,14 +131,15 @@ public class ObjectFieldLocalServiceImpl
 	private ObjectField _addObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			String dbTableName, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, String name, boolean required,
-			String type)
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
+		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validateName(objectDefinition, name);
 		validateType(type);
 
@@ -151,6 +158,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(name);
 		objectField.setRequired(required);
 		objectField.setType(type);
@@ -175,6 +183,18 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldTypeException(
 				"Indexed language ID can only be applied with type " +
 					"\"String\" that is not indexed as a keyword");
+		}
+	}
+
+	private void _validateLabel(
+			Map<Locale, String> labelMap, Locale defaultLocale)
+		throws PortalException {
+
+		if ((labelMap == null) ||
+			Validator.isNull(labelMap.get(defaultLocale))) {
+
+			throw new ObjectFieldLabelException(
+				"Label is null for locale " + defaultLocale.getDisplayName());
 		}
 	}
 

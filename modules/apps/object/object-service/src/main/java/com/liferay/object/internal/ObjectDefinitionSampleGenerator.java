@@ -26,12 +26,14 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.Serializable;
 
 import java.math.BigDecimal;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -83,18 +85,24 @@ public class ObjectDefinitionSampleGenerator {
 
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				user.getUserId(), "SampleObjectDefinition",
+				user.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), "Sample Object Definition"),
+				"SampleObjectDefinition",
 				Arrays.asList(
-					_createObjectField("able", "Long"),
-					_createObjectField("baker", "Boolean"),
-					_createObjectField("charlie", "Date"),
-					_createObjectField("dog", "String"),
-					_createObjectField(true, true, null, "easy", "String"),
-					_createObjectField(true, false, "en_US", "fox", "String"),
-					_createObjectField(false, false, null, "george", "String"),
-					_createObjectField("how", "Double"),
-					_createObjectField("item", "Integer"),
-					_createObjectField("jig", "BigDecimal")));
+					_createObjectField("Able", "able", "Long"),
+					_createObjectField("Baker", "baker", "Boolean"),
+					_createObjectField("Charlie", "charlie", "Date"),
+					_createObjectField("Dog", "dog", "String"),
+					_createObjectField(
+						true, true, null, "Easy", "easy", "String"),
+					_createObjectField(
+						true, false, "en_US", "Fox", "fox", "String"),
+					_createObjectField(
+						false, false, null, "George", "george", "String"),
+					_createObjectField("How", "how", "Double"),
+					_createObjectField("Item", "item", "Integer"),
+					_createObjectField("Jig", "jig", "BigDecimal")));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -133,21 +141,25 @@ public class ObjectDefinitionSampleGenerator {
 
 	private ObjectField _createObjectField(
 		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-		String name, String type) {
+		String label, String name, String type) {
 
 		ObjectField objectField = _objectFieldLocalService.createObjectField(0);
 
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setLabelMap(
+			Collections.singletonMap(LocaleUtil.getSiteDefault(), label));
 		objectField.setName(name);
 		objectField.setType(type);
 
 		return objectField;
 	}
 
-	private ObjectField _createObjectField(String name, String type) {
-		return _createObjectField(true, false, null, name, type);
+	private ObjectField _createObjectField(
+		String label, String name, String type) {
+
+		return _createObjectField(true, false, null, label, name, type);
 	}
 
 	@Reference

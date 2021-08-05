@@ -12,38 +12,28 @@
  * details.
  */
 
-package com.liferay.object.system;
+package com.liferay.object.exception;
 
-import com.liferay.object.model.ObjectField;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
- * @author Brian Wing Shun Chan
  */
-public interface SystemObjectDefinitionMetadata {
+public class ObjectFieldLabelException extends PortalException {
 
-	public default String getDBTableName() {
-		return null;
+	public ObjectFieldLabelException() {
 	}
 
-	public Map<Locale, String> getLabelMap();
-
-	public String getName();
-
-	public List<ObjectField> getObjectFields();
-
-	public default String getPKObjectFieldDBColumnName() {
-		return null;
+	public ObjectFieldLabelException(String msg) {
+		super(msg);
 	}
 
-	public default String getPKObjectFieldName() {
-		return null;
+	public ObjectFieldLabelException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public int getVersion();
+	public ObjectFieldLabelException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

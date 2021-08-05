@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
+import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,6 +59,7 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -84,11 +87,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
-			long userId, String name, List<ObjectField> objectFields)
+			long userId, Map<Locale, String> labelMap, String name,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, null, name, null, null, false, 0,
+			userId, null, labelMap, name, null, null, false, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -114,6 +118,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinition == null) {
 			return addSystemObjectDefinition(
 				userId, systemObjectDefinitionMetadata.getDBTableName(),
+				systemObjectDefinitionMetadata.getLabelMap(),
 				systemObjectDefinitionMetadata.getName(),
 				systemObjectDefinitionMetadata.getPKObjectFieldDBColumnName(),
 				systemObjectDefinitionMetadata.getPKObjectFieldName(),
@@ -149,8 +154,8 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectFieldLocalService.addSystemObjectField(
 					userId, objectDefinition.getObjectDefinitionId(),
 					newObjectField.getDBColumnName(), false, false, "",
-					newObjectField.getName(), newObjectField.isRequired(),
-					newObjectField.getType());
+					newObjectField.getLabelMap(), newObjectField.getName(),
+					newObjectField.isRequired(), newObjectField.getType());
 			}
 			else {
 				if (!Objects.equals(oldObjectField, newObjectField.getType())) {
@@ -167,13 +172,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, String dbTableName, String name,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			int version, List<ObjectField> objectFields)
+			long userId, String dbTableName, Map<Locale, String> labelMap,
+			String name, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, int version,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, dbTableName, name, pkObjectFieldDBColumnName,
+			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
 			pkObjectFieldName, true, version, WorkflowConstants.STATUS_APPROVED,
 			objectFields);
 	}
@@ -492,9 +498,9 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private ObjectDefinition _addObjectDefinition(
-			long userId, String dbTableName, String name,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			boolean system, int version, int status,
+			long userId, String dbTableName, Map<Locale, String> labelMap,
+			String name, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, boolean system, int version, int status,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
@@ -537,6 +543,7 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
+		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validateName(user.getCompanyId(), name, system);
 		_validateVersion(system, version);
 
@@ -549,6 +556,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setDBTableName(dbTableName);
+		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setName(name);
 		objectDefinition.setPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName);
@@ -572,16 +580,16 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.getDBColumnName(), objectField.getIndexed(),
 						objectField.getIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
-						objectField.getName(), objectField.isRequired(),
-						objectField.getType());
+						objectField.getLabelMap(), objectField.getName(),
+						objectField.isRequired(), objectField.getType());
 				}
 				else {
 					_objectFieldLocalService.addCustomObjectField(
 						userId, objectDefinitionId, objectField.getIndexed(),
 						objectField.getIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
-						objectField.getName(), objectField.isRequired(),
-						objectField.getType());
+						objectField.getLabelMap(), objectField.getName(),
+						objectField.isRequired(), objectField.getType());
 				}
 			}
 		}
@@ -629,6 +637,18 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _validateLabel(
+			Map<Locale, String> labelMap, Locale defaultLocale)
+		throws PortalException {
+
+		if ((labelMap == null) ||
+			Validator.isNull(labelMap.get(defaultLocale))) {
+
+			throw new ObjectDefinitionLabelException(
+				"Label is null for locale " + defaultLocale.getDisplayName());
+		}
 	}
 
 	private void _validateName(long companyId, String name, boolean system)

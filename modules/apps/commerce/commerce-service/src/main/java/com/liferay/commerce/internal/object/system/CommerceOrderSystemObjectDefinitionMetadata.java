@@ -17,9 +17,13 @@ package com.liferay.commerce.internal.object.system;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,6 +39,12 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
+	public Map<Locale, String> getLabelMap() {
+		return Collections.singletonMap(
+			LocaleUtil.getSiteDefault(), "Commerce Order");
+	}
+
+	@Override
 	public String getName() {
 		return "CommerceOrder";
 	}
@@ -42,8 +52,14 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("orderStatus", true, "Integer"),
-			createObjectField("shippingAmount", true, "BigDecimal"));
+			createObjectField(
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), "Order Status"),
+				"orderStatus", true, "Integer"),
+			createObjectField(
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), "Shipping Amount"),
+				"shippingAmount", true, "BigDecimal"));
 	}
 
 	@Override

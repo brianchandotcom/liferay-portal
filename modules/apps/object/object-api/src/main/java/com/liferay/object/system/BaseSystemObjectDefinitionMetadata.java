@@ -16,6 +16,11 @@ package com.liferay.object.system;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -27,24 +32,35 @@ public abstract class BaseSystemObjectDefinitionMetadata
 	implements SystemObjectDefinitionMetadata {
 
 	protected ObjectField createObjectField(
-		String name, boolean required, String type) {
+		Map<Locale, String> labelMap, String name, boolean required,
+		String type) {
 
-		return createObjectField(null, name, required, type);
+		return createObjectField(null, labelMap, name, required, type);
 	}
 
 	protected ObjectField createObjectField(
-		String dbColumnName, String name, boolean required, String type) {
+		String dbColumnName, Map<Locale, String> labelMap, String name,
+		boolean required, String type) {
 
 		ObjectField objectField = objectFieldLocalService.createObjectField(0);
 
 		objectField.setDBColumnName(dbColumnName);
 		objectField.setIndexed(false);
 		objectField.setIndexedAsKeyword(false);
+		objectField.setLabelMap(labelMap);
 		objectField.setName(name);
 		objectField.setRequired(required);
 		objectField.setType(type);
 
 		return objectField;
+	}
+
+	protected ObjectField createObjectField(
+		String label, String name, boolean required, String type) {
+
+		return createObjectField(
+			null, Collections.singletonMap(LocaleUtil.getSiteDefault(), label),
+			name, required, type);
 	}
 
 	@Reference

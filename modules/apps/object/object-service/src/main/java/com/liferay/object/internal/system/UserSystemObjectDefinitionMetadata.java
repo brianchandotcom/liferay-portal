@@ -17,9 +17,13 @@ package com.liferay.object.internal.system;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,6 +41,11 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public Map<Locale, String> getLabelMap() {
+		return Collections.singletonMap(LocaleUtil.getSiteDefault(), "User");
+	}
+
+	@Override
 	public String getName() {
 		return "User";
 	}
@@ -44,10 +53,13 @@ public class UserSystemObjectDefinitionMetadata
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("emailAddress", true, "String"),
-			createObjectField("firstName", true, "String"),
-			createObjectField("middleName", false, "String"),
-			createObjectField("uuid_", "uuid", false, "String"));
+			createObjectField("Email Address", "emailAddress", true, "String"),
+			createObjectField("First Name", "firstName", true, "String"),
+			createObjectField("Middle Name", "middleName", false, "String"),
+			createObjectField(
+				"uuid_",
+				Collections.singletonMap(LocaleUtil.getSiteDefault(), "UUID"),
+				"uuid", false, "String"));
 	}
 
 	@Override

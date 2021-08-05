@@ -52,7 +52,7 @@ public class InfoFormUtil {
 				infoForm.getInfoFieldSetEntries()) {
 
 			if (infoFieldSetEntry instanceof InfoField) {
-				InfoField infoField = (InfoField)infoFieldSetEntry;
+				InfoField<?> infoField = (InfoField<?>)infoFieldSetEntry;
 
 				InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
@@ -79,7 +79,7 @@ public class InfoFormUtil {
 
 				List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
 
-				for (InfoField infoField : infoFields) {
+				for (InfoField<?> infoField : infoFields) {
 					InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 					if (!_isValidInfoFieldType(infoFieldType)) {

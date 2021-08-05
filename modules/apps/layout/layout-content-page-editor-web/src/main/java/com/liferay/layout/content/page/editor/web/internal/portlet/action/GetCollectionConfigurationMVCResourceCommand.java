@@ -57,7 +57,7 @@ public class GetCollectionConfigurationMVCResourceCommand
 		String collectionKey = ParamUtil.getString(
 			resourceRequest, "collectionKey", themeDisplay.getLanguageId());
 
-		InfoCollectionProvider infoCollectionProvider =
+		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
 				InfoCollectionProvider.class, collectionKey);
 

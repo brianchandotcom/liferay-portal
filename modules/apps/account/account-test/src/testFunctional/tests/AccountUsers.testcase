@@ -27,11 +27,9 @@ definition {
 	test CanAddAccountUser {
 		property portal.acceptance = "true";
 
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "This is an Account with User.",
-			accountName = "Account with User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with User",
+			accountEntryType = "Business");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -53,11 +51,13 @@ definition {
 	@description = "This test adds a new user via the Users tab of an Account"
 	@priority = "4"
 	test CanAddAccountUserViaAssignUser {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Assign Account User",
+			accountEntryType = "Business");
+
 		Accounts.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
-			accountDescription = "Add account user via assign user.",
-			accountName = "Assign Account User");
+		LexiconEntry.gotoEntry(rowEntry = "Assign Account User");
 
 		Accounts.addNewUserToBusinessAccount(
 			accountName = "Assign Account User",
@@ -79,11 +79,9 @@ definition {
 	@description = "This test assigns an existing user to account through the Users tab"
 	@priority = "4"
 	test CanAssignExistingUserToAccount {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "This is an account with user.",
-			accountName = "Account Name");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -119,11 +117,9 @@ definition {
 	@description = "This test deactivates an active user"
 	@priority = "4"
 	test CanDeactivateUser {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "This is an Account with User.",
-			accountName = "Account with User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with User",
+			accountEntryType = "Business");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -191,11 +187,9 @@ definition {
 	@description = "This is a use case for LPS-107598 and LPS-129713"
 	@priority = "3"
 	test CanFilterAccountUserInTheUsersAdminPortlet {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "This is an Account with User.",
-			accountName = "Account with User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with User",
+			accountEntryType = "Business");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -234,17 +228,13 @@ definition {
 	@description = "This filters users by accounts, choosing a specific account to view"
 	@priority = "3"
 	test CanFilterByAccounts {
-		Accounts.openAccountsAdmin();
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Business Account",
+			accountEntryType = "Business");
 
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a Business Account.",
-			accountName = "Business Account");
-
-		Accounts.openAccountsAdmin();
-
-		Accounts.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -299,11 +289,9 @@ definition {
 	@description = "This filters users that do not have any assigned account"
 	@priority = "3"
 	test CanFilterByNoAssignedAccount {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "This is an Account with User.",
-			accountName = "Account with User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with User",
+			accountEntryType = "Business");
 
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
@@ -340,11 +328,9 @@ definition {
 	@description = "This filters users by status: active and inactive"
 	@priority = "3"
 	test CanFilterByStatus {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "Filter AccountUser in Account By Navigation.",
-			accountName = "Filter Account User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Filter Account User",
+			accountEntryType = "Business");
 
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
@@ -383,11 +369,9 @@ definition {
 	test CanImpersonateUser {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "This is an Account with User.",
-			accountName = "Account with User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with User",
+			accountEntryType = "Business");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -410,11 +394,9 @@ definition {
 	@description = "This test removes a user from account via Users tab"
 	@priority = "5"
 	test CanRemoveUserFromAccount {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(
-			accountDescription = "This is a test to remove account user.",
-			accountName = "Remove Account User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Remove Account User",
+			accountEntryType = "Business");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -445,9 +427,9 @@ definition {
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."
 	@priority = "3"
 	test ClickingCancelOrBackWillNotSaveAccountUser {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addBusinessAccount(accountName = "Account with User");
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with User",
+			accountEntryType = "Business");
 
 		AccountUsers.openAccountUsersAdmin();
 

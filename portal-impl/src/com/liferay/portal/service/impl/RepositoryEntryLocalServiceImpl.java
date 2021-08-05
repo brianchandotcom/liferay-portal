@@ -104,7 +104,7 @@ public class RepositoryEntryLocalServiceImpl
 			return repositoryEntry;
 		}
 
-		return addRepositoryEntry(
+		return repositoryEntryLocalService.addRepositoryEntry(
 			userId, groupId, repositoryId, objectId, new ServiceContext());
 	}
 

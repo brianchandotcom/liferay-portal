@@ -142,6 +142,17 @@
 	<td>//div[contains(@class,'ratings-stars-dropdown show')]//button[contains(@class,'dropdown-item disabled') and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
+<!--COLLECTION_FILTER-->
+<tr>
+	<td>COLLECTION_FILTER_SOURCE_LABEL_INVISIBLE</td>
+	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-bold')][normalize-space(text())='${sourceLabel}'][contains(@class,'sr-only')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLECTION_FILTER_SOURCE_LABEL_VISIBLE</td>
+	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-bold')][normalize-space(text())='${sourceLabel}'][not(contains(@class,'sr-only'))]</td>
+	<td></td>
+</tr>
 <!--CONTENT_PAGE-->
 <tr>
 	<td>CONTENT_PAGE_DISABLED_HEADER</td>

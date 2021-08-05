@@ -120,19 +120,19 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getLocale(), AddDDMTemplateMVCActionCommand.class);
 
 			if (portalException instanceof TemplateNameException) {
-				errorJSONObject = JSONUtil.put(
+				errorJSONObject.put(
 					"name",
 					ResourceBundleUtil.getString(
 						resourceBundle, "please-enter-a-valid-name"));
 			}
 			else if (portalException instanceof TemplateScriptException) {
-				errorJSONObject = JSONUtil.put(
+				errorJSONObject.put(
 					"other",
 					ResourceBundleUtil.getString(
 						resourceBundle, "please-enter-a-valid-script"));
 			}
 			else {
-				errorJSONObject = JSONUtil.put(
+				errorJSONObject.put(
 					"other",
 					ResourceBundleUtil.getString(
 						resourceBundle, "an-unexpected-error-occurred"));

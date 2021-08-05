@@ -95,7 +95,12 @@ const inlineText = {
 
 const renderPageContent = (props = contents[0], pageContents = contents) =>
 	render(
-		<StoreContextProvider initialState={{pageContents}}>
+		<StoreContextProvider
+			initialState={{
+				pageContents,
+				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
+			}}
+		>
 			<PageContent {...props} />
 		</StoreContextProvider>
 	);

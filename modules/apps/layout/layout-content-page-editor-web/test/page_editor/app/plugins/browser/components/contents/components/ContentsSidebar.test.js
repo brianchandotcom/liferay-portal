@@ -89,6 +89,7 @@ const renderPageContent = ({
 				fragmentEntryLinks,
 				languageId,
 				pageContents,
+				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
 				segmentsExperienceId,
 			}}
 		>

@@ -68,7 +68,11 @@ const contents = {
 
 const renderPageContents = ({pageContents = contents}) =>
 	render(
-		<StoreContextProvider initialState={[{}, {}]}>
+		<StoreContextProvider
+			initialState={{
+				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
+			}}
+		>
 			<PageContents pageContents={pageContents} />
 		</StoreContextProvider>
 	);

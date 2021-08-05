@@ -16,14 +16,18 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import {StoreAPIContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {StoreContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import ItemConfiguration from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/ItemConfiguration';
 
 const renderComponent = () =>
 	render(
-		<StoreAPIContextProvider>
+		<StoreContextProvider
+			initialState={{
+				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
+			}}
+		>
 			<ItemConfiguration />
-		</StoreAPIContextProvider>
+		</StoreContextProvider>
 	);
 
 describe('ItemConfiguration', () => {

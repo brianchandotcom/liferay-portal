@@ -16,8 +16,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SWITCH_TO_SIMPLE_PUBLICATION</td>
+	<td>//a[contains(.,'Switch to Simple Publish Process')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGES_SINCE_LAST_PUBLISH_PROCESS</td>
+	<td>//span[contains(.,'Changes Since Last Publish Process')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_EVENT_BUTTON</td>
 	<td>//button[contains(@id,'addButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_SIMPLE_HELP_TEXT</td>
+	<td>//span[contains(@class,'publish-simple-help-text')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowDefinitionSerDes;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
@@ -155,8 +156,26 @@ public class WorkflowDefinitionResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostWorkflowDefinitionSave() throws Exception {
+		WorkflowDefinition randomWorkflowDefinition =
+			randomWorkflowDefinition();
+
+		randomWorkflowDefinition.setTransitions(new Transition[0]);
+
+		WorkflowDefinition postWorkflowDefinition =
+			testPostWorkflowDefinitionSave_addWorkflowDefinition(
+				randomWorkflowDefinition);
+
+		assertEquals(randomWorkflowDefinition, postWorkflowDefinition);
+		assertValid(postWorkflowDefinition);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"active", "name", "title", "version"};
+		return new String[] {
+			"active", "name", "title", "transitions", "version"
+		};
 	}
 
 	@Override
@@ -170,6 +189,41 @@ public class WorkflowDefinitionResourceTest
 				workflowDefinition.getDescription(),
 				workflowDefinition.getName()));
 		workflowDefinition.setVersion("1");
+		workflowDefinition.setTransitions(
+			new Transition[] {
+				new Transition() {
+					{
+						label = "Review";
+						name = "review";
+						sourceNodeName = "created";
+						targetNodeName = "review";
+					}
+				},
+				new Transition() {
+					{
+						label = "Approve";
+						name = "approve";
+						sourceNodeName = "review";
+						targetNodeName = "approved";
+					}
+				},
+				new Transition() {
+					{
+						label = "Reject";
+						name = "reject";
+						sourceNodeName = "review";
+						targetNodeName = "update";
+					}
+				},
+				new Transition() {
+					{
+						label = "Resubmit";
+						name = "resubmit";
+						sourceNodeName = "update";
+						targetNodeName = "review";
+					}
+				}
+			});
 
 		return workflowDefinition;
 	}

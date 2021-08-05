@@ -46,17 +46,17 @@ const loadScript = (readOnly, elementId, googlePlacesAPIKey, callback) => {
 	element && !readOnly ? element.appendChild(script) : null;
 };
 
-function handleScriptLoad(autoComplete, elementId, setListener, onChange) {
+function handleScriptLoad(autoComplete, elementId, setListener, setValue) {
 	const element = document.getElementById(elementId);
 	autoComplete.current = new window.google.maps.places.Autocomplete(element);
 	autoComplete.current.setFields(['address_component', 'formatted_address']);
 	const listener = autoComplete.current.addListener('place_changed', () =>
-		handlePlaceSelect(autoComplete, onChange)
+		handlePlaceSelect(autoComplete, setValue)
 	);
 	setListener(listener);
 }
 
-async function handlePlaceSelect(autoComplete, onChange) {
+async function handlePlaceSelect(autoComplete, setValue) {
 	const place = autoComplete.current.getPlace();
 	const addressComponents = place?.address_components;
 	const addressTypes = {
@@ -81,7 +81,7 @@ async function handlePlaceSelect(autoComplete, onChange) {
 		address[addressType] = addressComponents[i][addressTypes[addressType]];
 	}
 
-	onChange({
+	setValue({
 		target: {
 			value: JSON.stringify({
 				address: address.route,
@@ -98,10 +98,11 @@ async function handlePlaceSelect(autoComplete, onChange) {
 const usePlaces = ({elementId, googlePlacesAPIKey, isReadOnly, onChange}) => {
 	const autoComplete = useRef();
 	const [listener, setListener] = useState();
+	const [value, setValue] = useState();
 
 	useEffect(() => {
 		loadScript(isReadOnly, elementId, googlePlacesAPIKey, () =>
-			handleScriptLoad(autoComplete, elementId, setListener, onChange)
+			handleScriptLoad(autoComplete, elementId, setListener, setValue)
 		);
 
 		return () => {
@@ -109,6 +110,13 @@ const usePlaces = ({elementId, googlePlacesAPIKey, isReadOnly, onChange}) => {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (value) {
+			onChange(value);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [value]);
 };
 
 export default usePlaces;

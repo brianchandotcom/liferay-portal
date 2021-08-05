@@ -25,7 +25,9 @@ import {selectPageContentDropdownItems} from '../../app/selectors/selectPageCont
 import {useId} from '../../app/utils/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
-const EMPTY_ARRAY = [];
+const DEFAULT_OPTIONS_MENU_ITEMS = [];
+
+const DEFAULT_QUICK_MAPPED_INFO_ITEMS = [];
 
 export default function ItemSelector({
 	className,
@@ -34,8 +36,8 @@ export default function ItemSelector({
 	label,
 	modalProps,
 	onItemSelect,
-	optionsMenuItems = EMPTY_ARRAY,
-	quickMappedInfoItems = EMPTY_ARRAY,
+	optionsMenuItems = DEFAULT_OPTIONS_MENU_ITEMS,
+	quickMappedInfoItems = DEFAULT_QUICK_MAPPED_INFO_ITEMS,
 	selectedItem,
 	showEditControls = true,
 	showMappedItems = true,

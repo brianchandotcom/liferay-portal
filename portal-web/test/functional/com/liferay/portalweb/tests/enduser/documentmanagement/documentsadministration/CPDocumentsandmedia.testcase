@@ -335,7 +335,7 @@ definition {
 			dmDocumentTitleEdit = "DM Document Title",
 			dmDocumentVersionNumber = "1.1");
 	}
- 
+
 	@description = "This test covers LPS-124959. It ensures that a user can upload documents with a document type via multiple upload."
 	@priority = "4"
 	@refactorneeded

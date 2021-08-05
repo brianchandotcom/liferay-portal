@@ -819,11 +819,12 @@ definition {
 	@description = "LPS-136345 Given a document created in an Asset Library
 	When the user goes to the content dashboard
 	Then the user can see the document listed"
+
 	@priority = "5"
 	test DocumentFromAssetLibraryIsListed {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add an Asset Library") {
 			JSONDepot.addDepot(
@@ -861,12 +862,13 @@ definition {
 	@description = "LPS-136345 Given a document created in site A in the instance and another one created in the site B
 	When the user goes to the content dashboard
 	Then the user can see both listed"
+
 	@priority = "5"
 	test DocumentsFromDifferentSitesAreListed {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		
+		property portal.acceptance = "true";
+
 		task ("Add two different sites") {
 			JSONGroup.addGroup(groupName = "Site Name 1");
 

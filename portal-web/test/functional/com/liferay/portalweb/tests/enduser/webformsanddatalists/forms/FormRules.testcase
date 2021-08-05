@@ -96,6 +96,139 @@ definition {
 			ruleNumber = "1");
 	}
 
+	@description = "LPS-73332 - Verify that when a Form is duplicated, the Rules in that Form are also duplicated"
+	@priority = "2"
+	test AreDuplicatedWhenTheFormIsDuplicated {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormRules#AreDuplicatedWhenTheFormIsDuplicated";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Test Form");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Form.duplicate(formName = "Test Form");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Copy of Test Form");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Text Field 2",
+			conditionField = "Text Field 1",
+			conditionFieldConstant = "test",
+			conditionOperator = "Is equal to",
+			ruleNumber = "1");
+	}
+
+	@description = "LPS-73332 - Verify that when creating a new Form, rules from a pre-existing Form are not copied into the new Form"
+	@priority = "2"
+	test AreNotCopiedIntoANewForm {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.viewNoRules();
+	}
+
 	@description = "Verify that a Rule is autosaved when exiting the Form without saving the Rule"
 	@priority = "5"
 	test AreSavedWhenExitingTheForm {
@@ -200,6 +333,98 @@ definition {
 			ruleNumber = "1");
 	}
 
+	@description = "LPS-71466 - Verify that a Rule can be created using a Field with a Predefined Value"
+	@priority = "2"
+	test CanBeCreatedUsingAFieldWithAPredefinedValue {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormRules#CanBeCreatedUsingAFieldWithAPredefinedValue";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Test Form");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldNameTextField1 = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.editText(
+			fieldName = "predefinedValue",
+			fieldValue = "test");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		var fieldNameTextField2 = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text Field 2",
+			conditionField = "Text Field 1",
+			conditionFieldConstant = "test",
+			conditionOperator = "Is equal to",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.submit();
+
+		FormFields.viewFieldValidationErrorMessage(
+			fieldName = "${fieldNameTextField2}",
+			fieldValidationErrorMessage = "This field is required.");
+
+		Refresh();
+
+		FormFields.editText(
+			fieldName = "${fieldNameTextField1}",
+			fieldValue = "testing");
+
+		FormFields.viewRequiredAsteriskNotPresent();
+
+		FormPortlet.submitSuccessfully();
+	}
+
 	@description = "Verify that a Rule can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
@@ -249,10 +474,13 @@ definition {
 		FormRules.viewNoRules();
 	}
 
-	@description = "This is a use case for LPS-80771."
-	@ignore = "true"
+	@description = "LPS-79095 - Verify that a Rule can be edited"
 	@priority = "5"
-	test ChangeFieldTypeThatBelongsToARule {
+	test CanBeEdited {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormRules#CanBeEdited";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -265,9 +493,90 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "0");
 
-		var fieldNameTextField = FormFields.getFieldName();
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		AssertVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.gotoEdit(ruleNumber = "1");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionFieldValue = "test edit",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Text Field 2");
+
+		FormRules.save();
+	}
+
+	@description = "LPS-119818 - Verify that it is not possible to save a Form when a field that was used in a rule is deleted"
+	@priority = "5"
+	test CannotBeSavedWhenFieldThatBelongsToARuleIsDeleted {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.addTextField(fieldPositionNumber = "0");
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		var fieldNameTextField = FormFields.getFieldName();
 
 		Form.closeSidebar();
 
@@ -299,94 +608,9 @@ definition {
 
 		Form.save();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextField}");
-
-		Form.changeFieldTypeModalConfirmation(selectOption = "Select from List");
-
-		FormFields.viewTextLabel(
+		Form.deleteFieldModalConfirmation(
 			fieldLabel = "Text Field",
 			fieldName = "${fieldNameTextField}");
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.viewBrokenRule(ruleNumber = "1");
-	}
-
-	@description = "This is a use case for LPS-80771."
-	@ignore = "true"
-	@priority = "5"
-	test ChangeFieldTypeThatBelongsToCalculatorExpression {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		var fieldNameNumericField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Numeric Field");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "1",
-			fieldType = "Numeric");
-
-		Form.editFieldLabelMetal(fieldValue = "Numeric Field 2");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "2",
-			fieldType = "Numeric");
-
-		Form.editFieldLabelMetal(fieldValue = "Total");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.selectConditionField(
-			conditionField = "Numeric Field",
-			conditionRowNumber = "1");
-
-		FormRules.selectConditionOperator(
-			conditionOperator = "Is not empty",
-			conditionRowNumber = "1");
-
-		FormRules.selectAction(
-			action = "Calculate",
-			actionRowNumber = "1");
-
-		FormRules.selectActionTarget(
-			actionRowNumber = "1",
-			actionTarget = "Total");
-
-		FormRules.selectCalculateField(calculateFieldOption = "Numeric Field");
-
-		FormRules.chooseCalculateOperator(calculateOperator = "*");
-
-		FormRules.selectCalculateField(calculateFieldOption = "Numeric Field 2");
-
-		FormRules.save();
-
-		FormsAdminNavigator.gotoFormBuilder();
-
-		Form.save();
-
-		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameNumericField}");
-
-		Form.changeFieldTypeModalConfirmation(selectOption = "Select from List");
 
 		FormsAdminNavigator.gotoRules();
 
@@ -693,95 +917,6 @@ definition {
 		FormFields.viewTextValue(
 			fieldName = "${fieldNameTotal}",
 			fieldValue = "50");
-	}
-
-	@description = "This is a use case for LPS-122103."
-	@priority = "5"
-	test ConfigureCalculateRuleExpression {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Numeric");
-
-		var fieldNameQuantity = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Quantity");
-
-		Form.gotoAdvancedTab();
-
-		Form.editFieldReferenceMetal(fieldValue = "QuantityReference");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "1",
-			fieldType = "Numeric");
-
-		var fieldNameValue = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Value");
-
-		Form.gotoAdvancedTab();
-
-		Form.editFieldReferenceMetal(fieldValue = "ValueReference");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "2",
-			fieldType = "Numeric");
-
-		var fieldNameTotal = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Total");
-
-		Form.gotoAdvancedTab();
-
-		Form.editFieldReferenceMetal(fieldValue = "TotalReference");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.selectConditionField(
-			conditionField = "Quantity",
-			conditionRowNumber = "1");
-
-		FormRules.selectConditionOperator(
-			conditionOperator = "Is not empty",
-			conditionRowNumber = "1");
-
-		FormRules.selectAction(
-			action = "Calculate",
-			actionRowNumber = "1");
-
-		FormRules.selectActionTarget(
-			actionRowNumber = "1",
-			actionTarget = "Total");
-
-		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "ValueReference");
-
-		FormRules.chooseCalculateOperator(calculateOperator = "*");
-
-		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "QuantityReference");
-
-		FormRules.viewCalculatorExpression(calculatorExpression = "Value*Quantity");
-
-		FormRules.save();
 	}
 
 	@priority = "5"
@@ -1213,12 +1348,10 @@ definition {
 		FormRules.viewNoRules();
 	}
 
-	@description = "This is a use case for LPS-119818."
+	@description = "LPS-80771 - Verify if an alert message is shown when the user tries to change the type of field that is being used on a Rule"
+	@ignore = "true"
 	@priority = "5"
-	test DeleteFieldThatBelongsToARule {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-
+	test DisplaysAWarningWhenChangingAFieldUsedInARule {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1231,9 +1364,9 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "0");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
 		var fieldNameTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -1265,7 +1398,11 @@ definition {
 
 		Form.save();
 
-		Form.deleteFieldModalConfirmation(
+		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextField}");
+
+		Form.changeFieldTypeModalConfirmation(selectOption = "Select from List");
+
+		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
 			fieldName = "${fieldNameTextField}");
 
@@ -1274,12 +1411,11 @@ definition {
 		FormRules.viewBrokenRule(ruleNumber = "1");
 	}
 
-	@description = "This is a use case for LPS-79095."
+	@description = "LPS-122103 - Verify that the calculator displays the Field Reference instead of Field ID"
 	@priority = "5"
-	test EditRule {
+	test DisplaysFieldReferenceInCalculator {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#EditRule";
 
 		Navigator.openURL();
 
@@ -1291,15 +1427,45 @@ definition {
 
 		Form.editName();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
+		var fieldNameQuantity = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Quantity");
+
+		Form.gotoAdvancedTab();
+
+		Form.editFieldReferenceMetal(fieldValue = "QuantityReference");
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+		var fieldNameValue = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Value");
+
+		Form.gotoAdvancedTab();
+
+		Form.editFieldReferenceMetal(fieldValue = "ValueReference");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Numeric");
+
+		var fieldNameTotal = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Total");
+
+		Form.gotoAdvancedTab();
+
+		Form.editFieldReferenceMetal(fieldValue = "TotalReference");
 
 		Form.closeSidebar();
 
@@ -1307,23 +1473,98 @@ definition {
 
 		FormRules.addRule();
 
-		FormRules.configureConditionOptions(
-			conditionField = "Text Field",
-			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
-			conditionRowNumber = "1",
-			conditionValueType = "Value");
+		FormRules.selectConditionField(
+			conditionField = "Quantity",
+			conditionRowNumber = "1");
 
-		FormRules.configureActionOptions(
-			action = "Require",
+		FormRules.selectConditionOperator(
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.selectAction(
+			action = "Calculate",
+			actionRowNumber = "1");
+
+		FormRules.selectActionTarget(
 			actionRowNumber = "1",
-			actionTarget = "Text Field 2");
+			actionTarget = "Total");
 
-		FormsAdminNavigator.gotoFormBuilder();
+		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "ValueReference");
 
-		AssertVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
+		FormRules.chooseCalculateOperator(calculateOperator = "*");
+
+		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "QuantityReference");
+
+		FormRules.viewCalculatorExpression(calculatorExpression = "Value*Quantity");
+
+		FormRules.save();
+	}
+
+	@description = "LPS-80771 - Verify if an alert message is shown when the user tries to change the type of field that is being used in a Calculator Expression"
+	@ignore = "true"
+	@priority = "5"
+	test DisplaysWarningWhenChangingFieldUsedInCalculatorExpression {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		var fieldNameNumericField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric Field");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric Field 2");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Total");
+
+		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.selectConditionField(
+			conditionField = "Numeric Field",
+			conditionRowNumber = "1");
+
+		FormRules.selectConditionOperator(
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.selectAction(
+			action = "Calculate",
+			actionRowNumber = "1");
+
+		FormRules.selectActionTarget(
+			actionRowNumber = "1",
+			actionTarget = "Total");
+
+		FormRules.selectCalculateField(calculateFieldOption = "Numeric Field");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "*");
+
+		FormRules.selectCalculateField(calculateFieldOption = "Numeric Field 2");
 
 		FormRules.save();
 
@@ -1331,29 +1572,13 @@ definition {
 
 		Form.save();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
+		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameNumericField}");
 
-		FormsAdminNavigator.gotoEditFormByName();
+		Form.changeFieldTypeModalConfirmation(selectOption = "Select from List");
 
 		FormsAdminNavigator.gotoRules();
 
-		FormRules.gotoEdit(ruleNumber = "1");
-
-		FormRules.configureConditionOptions(
-			conditionField = "Text Field",
-			conditionFieldValue = "test edit",
-			conditionOperator = "Is equal to",
-			conditionRowNumber = "1",
-			conditionValueType = "Value");
-
-		FormRules.configureActionOptions(
-			action = "Show",
-			actionRowNumber = "1",
-			actionTarget = "Text Field 2");
-
-		FormRules.save();
+		FormRules.viewBrokenRule(ruleNumber = "1");
 	}
 
 	@description = "This is a use case for LPS-71399."
@@ -1456,231 +1681,6 @@ definition {
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
 			fieldName = "${fieldNameDateField}");
-	}
-
-	@description = "This is a use case for LPS-73332."
-	@priority = "2"
-	test ViewExistingFormRuleIsNotCopiedToNewForm {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
-
-		Form.closeSidebar();
-
-		Form.addTextField(fieldPositionNumber = "1");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.configureConditionOptions(
-			conditionField = "Text Field 1",
-			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
-			conditionRowNumber = "1",
-			conditionValueType = "Value");
-
-		FormRules.configureActionOptions(
-			action = "Show",
-			actionRowNumber = "1",
-			actionTarget = "Text Field 2");
-
-		FormRules.save();
-
-		FormsAdminNavigator.gotoFormBuilder();
-
-		Form.save();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.viewNoRules();
-	}
-
-	@description = "This is a use case for LPS-71466."
-	@priority = "2"
-	test ViewPredefinedValueCanBeUsedToRequireAnotherField {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#ViewPredefinedValueCanBeUsedToRequireAnotherField";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName(formName = "Test Form");
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		var fieldNameTextField1 = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
-
-		Form.gotoAdvancedTab();
-
-		FormFields.editText(
-			fieldName = "predefinedValue",
-			fieldValue = "test");
-
-		Form.closeSidebar();
-
-		Form.addTextField(fieldPositionNumber = "1");
-
-		var fieldNameTextField2 = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.configureConditionOptions(
-			conditionField = "Text Field 1",
-			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
-			conditionRowNumber = "1",
-			conditionValueType = "Value");
-
-		FormRules.configureActionOptions(
-			action = "Require",
-			actionRowNumber = "1",
-			actionTarget = "Text Field 2");
-
-		FormRules.save();
-
-		FormRules.viewSummary(
-			action = "Require",
-			actionTarget = "Text Field 2",
-			conditionField = "Text Field 1",
-			conditionFieldConstant = "test",
-			conditionOperator = "Is equal to",
-			ruleNumber = "1");
-
-		FormsAdminNavigator.gotoFormBuilder();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormPortlet.waitFormRenderer(text = "Submit");
-
-		FormFields.viewRequiredAsterisk();
-
-		FormPortlet.submit();
-
-		FormFields.viewFieldValidationErrorMessage(
-			fieldName = "${fieldNameTextField2}",
-			fieldValidationErrorMessage = "This field is required.");
-
-		Refresh();
-
-		FormFields.editText(
-			fieldName = "${fieldNameTextField1}",
-			fieldValue = "testing");
-
-		FormFields.viewRequiredAsteriskNotPresent();
-
-		FormPortlet.submitSuccessfully();
-	}
-
-	@description = "This is a use case for LPS-73332."
-	@priority = "2"
-	test ViewPreviousFormRuleIsCopiedToNewDuplicatedForm {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#ViewPreviousFormRuleIsCopiedToNewDuplicatedForm";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName(formName = "Test Form");
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
-
-		Form.closeSidebar();
-
-		Form.addTextField(fieldPositionNumber = "1");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.configureConditionOptions(
-			conditionField = "Text Field 1",
-			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
-			conditionRowNumber = "1",
-			conditionValueType = "Value");
-
-		FormRules.configureActionOptions(
-			action = "Show",
-			actionRowNumber = "1",
-			actionTarget = "Text Field 2");
-
-		FormRules.save();
-
-		FormsAdminNavigator.gotoFormBuilder();
-
-		Form.save();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		Form.duplicate(formName = "Test Form");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Copy of Test Form");
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.viewSummary(
-			action = "Show",
-			actionTarget = "Text Field 2",
-			conditionField = "Text Field 1",
-			conditionFieldConstant = "test",
-			conditionOperator = "Is equal to",
-			ruleNumber = "1");
 	}
 
 	@description = "This is a use case for LPS-69733."

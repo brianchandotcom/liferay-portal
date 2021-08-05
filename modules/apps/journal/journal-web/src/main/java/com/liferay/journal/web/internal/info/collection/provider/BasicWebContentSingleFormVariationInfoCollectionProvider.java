@@ -177,7 +177,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(true);
-
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
@@ -196,13 +195,13 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 			Collections.emptyMap());
 
 		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
-			String value = entry.getValue()[0];
+			String[] values = entry.getValue();
 
-			if (Validator.isNotNull(value)) {
+			if (Validator.isNotNull(values[0])) {
 				String localizedName = Field.getLocalizedName(
 					LocaleUtil.getSiteDefault(), entry.getKey());
 
-				searchContext.setAttribute(localizedName, value);
+				searchContext.setAttribute(localizedName, values[0]);
 			}
 		}
 

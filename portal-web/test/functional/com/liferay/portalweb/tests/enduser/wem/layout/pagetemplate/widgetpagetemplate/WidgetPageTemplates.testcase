@@ -25,7 +25,9 @@ definition {
 		}
 	}
 
+	@description = "Add a page template in global site."
 	@priority = "4"
+	@uitest
 	test AddGlobalPageTemplate {
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
@@ -34,6 +36,7 @@ definition {
 			pageTemplateName = "Page Template Name");
 	}
 
+	@description = "Add a page using gloabl page template, disable inherit changes and check it works."
 	@priority = "5"
 	test AddPageBasedOnGlobalPageTemplate {
 		property portal.acceptance = "true";
@@ -194,6 +197,7 @@ definition {
 		}
 	}
 
+	@description = "Add a active page template in global site, deactive and active it."
 	@priority = "4"
 	test DeactivateAndActivateGlobalPageTemplate {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -239,6 +243,7 @@ definition {
 		Page.viewPageTemplateTypePresent(pageTemplateName = "Page Template Name");
 	}
 
+	@description = "Delete a page template in global site."
 	@priority = "5"
 	test DeleteGlobalPageTemplate {
 		property portal.acceptance = "true";
@@ -319,6 +324,7 @@ definition {
 			pageTemplateName = "Page Template Name");
 	}
 
+	@description = "Edit page template description in global site."
 	@priority = "4"
 	test EditGlobalPageTemplateDescription {
 		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
@@ -376,6 +382,7 @@ definition {
 		}
 	}
 
+	@description = "Export lar with global page templates and check all persist after importing."
 	@priority = "5"
 	test ImportLAR {
 		property portal.acceptance = "true";
@@ -471,6 +478,7 @@ definition {
 		Portlet.viewSpecificPG(portletName = "Navigation Menu");
 	}
 
+	@description = "View page template in Spanish and English."
 	@priority = "4"
 	test LocalizeGlobalDefaultPageTemplates {
 		property test.name.skip.portal.instance = "WidgetPageTemplates#LocalizeDefaultPageTemplates";
@@ -512,6 +520,7 @@ definition {
 		PageTemplatesAdminGlobalSite.viewDefaultCP();
 	}
 
+	@description = "Rename page template in global site."
 	@priority = "4"
 	test RenameGlobalPageTemplate {
 		property testray.component.names = "Page Templates";

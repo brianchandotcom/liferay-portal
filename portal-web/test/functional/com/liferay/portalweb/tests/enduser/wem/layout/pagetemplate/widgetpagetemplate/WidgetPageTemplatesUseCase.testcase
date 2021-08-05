@@ -23,6 +23,7 @@ definition {
 		}
 	}
 
+	@description = "Assert could not add page via page template action."
 	@priority = "3"
 	test ViewNoAddPageTabViaPageTemplatesCP {
 		property test.name.skip.portal.instance = "WidgetPageTemplatesUseCase#ViewNoAddPageTabViaPageTemplatesCP";

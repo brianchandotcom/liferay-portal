@@ -35,12 +35,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-109854. View the sitemap is not available to guest in staging site via incognito tab."
+	@description = "This is a test for LPS-109854. Cannot view the sitemap of staging site as Guest."
 	@priority = "4"
 	test CannotViewSiteMapOfStagingSiteAsGuest {
 		property test.name.skip.portal.instance = "ContentPagesWithStaging#CannotViewSiteMapOfStagingSiteAsGuest";
 
-		task ("Add a page") {
+		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name (Staging)",
 				layoutName = "Public Page Name",
@@ -48,17 +48,17 @@ definition {
 				type = "content");
 		}
 
-		task ("Fill out the Staging Public Pages field in site configuration settings") {
+		task ("Configure the Staging Public Pages in site configuration") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-staging");
 
 			Site.addVirtualHostsURLCP(stagingPublicPages = "test.test");
 		}
 
-		task ("Sign out the user") {
+		task ("Sign out") {
 			User.logoutPG();
 		}
 
-		task ("View the sitemap is not available to guest in incognito tab") {
+		task ("Cannot view sitemap of staging site as Guest") {
 			Navigator.openSpecificURL(url = "http://test.test:8080/sitemap.xml");
 
 			AssertTextEquals(

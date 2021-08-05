@@ -304,7 +304,27 @@ definition {
 					name = "Approved Fragment Example");
 		}
 
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		task ("Add a content page with approved fragment") {
+			JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Content Page Name",
+					type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+					collectionName = "Collection Name",
+					fragmentName = "Approved Fragment Example");
+		}
+
+		task ("Navigate to fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(
+					siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.gotoCollection(
+					collectionName = "Collection Name");
+		}
 
 		Pause(locator1 = "30000");
 	}

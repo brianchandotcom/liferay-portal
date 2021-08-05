@@ -3676,6 +3676,53 @@ definition {
 			fieldValidationErrorMessage = "This field is required.");
 	}
 
+	@description = "This is a use case for LPS-126817."
+	@priority = "5"
+	test ViewSelectFromListOptionValueWithCharacter {
+		property test.name.skip.portal.instance = "Forms#ViewSelectFromListOptionValueWithCharacter";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		Form.editFieldLabelMetal(fieldValue = "Select");
+
+		for (var number : list "1,2") {
+			FormFields.editOptionsRow(
+				optionName = "<test${number}",
+				optionValue = "<test ${number}",
+				rowNumber = "${number}");
+		}
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Multiple");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "<test 1",
+			rowNumber = "1");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "<test 2",
+			rowNumber = "2");
+	}
+
 	@description = "Verify that a Form autosaves after 1 minute by default"
 	@priority = "5"
 	test WillAutosaveAfterOneMinute {

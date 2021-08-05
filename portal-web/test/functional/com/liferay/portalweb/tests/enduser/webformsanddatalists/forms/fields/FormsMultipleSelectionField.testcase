@@ -499,7 +499,6 @@ definition {
 	}
 
 	@description = "LPS-85026 - Veriy that the Field Label can be hidden"
-	@ignore = "true"
 	@priority = "5"
 	test LabelCanBeHidden {
 		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHidden";
@@ -540,7 +539,6 @@ definition {
 	}
 
 	@description = "LPS-66513 - Verify that the Field Label can be hidden when options are displayed as switchers"
-	@ignore = "true"
 	@priority = "3"
 	test LabelCanBeHiddenWithSwitcherEnabled {
 		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHiddenWithSwitcherEnabled";

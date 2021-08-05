@@ -32,7 +32,6 @@ definition {
 	}
 
 	@description = "LPS-64798 - Verify that adding the Paragraph Field does not prevent page navigation"
-	@ignore = "true"
 	@priority = "4"
 	test CanBeAddedWithoutAffectingNavigation {
 		property test.name.skip.portal.instance = "FormsParagraphField#CanBeAddedWithoutAffectingNavigation";
@@ -638,7 +637,6 @@ definition {
 	}
 
 	@description = "Verify that a Table can be deleted in the Body Text by highlighting the table and pressing backspace"
-	@ignore = "true"
 	@priority = "4"
 	test CanDeleteATableUsingBackspace {
 		property forms.functional = "false";

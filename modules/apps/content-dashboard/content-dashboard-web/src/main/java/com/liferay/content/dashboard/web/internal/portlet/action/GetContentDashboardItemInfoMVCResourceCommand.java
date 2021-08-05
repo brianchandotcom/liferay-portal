@@ -143,6 +143,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
+					"preview", contentDashboardItem.getPreviewImage()
+				).put(
 					"size", contentDashboardItem.getSize()
 				).put(
 					"subType", _getSubtype(contentDashboardItem, locale)

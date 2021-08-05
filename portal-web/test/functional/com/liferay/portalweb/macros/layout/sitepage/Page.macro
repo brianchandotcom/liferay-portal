@@ -484,7 +484,7 @@ definition {
 		else {
 			Click(
 				key_title = "${title}",
-				locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE");
+				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE");
 		}
 
 		if (isSet(multipleSelection)) {
@@ -517,7 +517,7 @@ definition {
 		else {
 			AssertTextEquals(
 				key_title = "${title}",
-				locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE",
+				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE",
 				value1 = "${selectedName}");
 		}
 	}

@@ -17,16 +17,14 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
+		task ("Add a fragment collection via JSON") {
+			JSONFragment.addFragmentCollection(
+					groupName = "Test Site Name",
+					name = "Collection Name");
+		}
+
 		task ("Navigate to fragments admin") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Add a fragment collection") {
-			FragmentsAdmin.addCollection(collectionName = "Collection Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a section fragment that uses the Button fragment code") {

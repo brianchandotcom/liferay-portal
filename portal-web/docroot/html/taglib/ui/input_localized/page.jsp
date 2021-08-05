@@ -217,6 +217,18 @@
 						}
 						%>
 
+						<c:if test="<%= Validator.isNotNull(activeLocales) && adminMode %>">
+							<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
+							<li>
+								<button class="dropdown-item" id="manage-translations">
+									<svg class="lexicon-icon lexicon-icon-automatic-translate" role="presentation">
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#automatic-translate" />
+									</svg>
+
+									<span><liferay-ui:message key="manage-translations" /></span>
+								</button>
+							</li>
+						</c:if>
 					</div>
 				</div>
 			</liferay-ui:icon-menu>
@@ -291,6 +303,14 @@
 			Liferay.InputLocalized.register(
 				'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
 				{
+					<c:if test="<%= Validator.isNotNull(activeLocales) %>">
+						activeLocales: <%= JSONFactoryUtil.createJSONArray(activeLocales) %>,
+					</c:if>
+
+					<c:if test="<%= adminMode %>">
+						adminMode: true,
+					</c:if>
+					availableLocales: available,
 					boundingBox: '#<%= namespace + id %>PaletteBoundingBox',
 					columns: 20,
 					contentBox: '#<%= namespace + id %>PaletteContentBox',

@@ -326,6 +326,14 @@ definition {
 					collectionName = "Collection Name");
 		}
 
+		task ("Assert the actions order of collections menu") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+			MenuItem.viewOrder(menuItemList = "Export,Import,-,Delete");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		}
+
 		task ("Assert the actions order of a collection") {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 

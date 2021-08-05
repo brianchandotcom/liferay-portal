@@ -25,10 +25,10 @@ import java.io.Serializable;
 public class OpenIdConnectAuthenticationSession implements Serializable {
 
 	public OpenIdConnectAuthenticationSession(
-		String providerName, Nonce nonce, State state) {
+		Nonce nonce, String providerName, State state) {
 
-		_providerName = providerName;
 		_nonce = nonce;
+		_providerName = providerName;
 		_state = state;
 	}
 

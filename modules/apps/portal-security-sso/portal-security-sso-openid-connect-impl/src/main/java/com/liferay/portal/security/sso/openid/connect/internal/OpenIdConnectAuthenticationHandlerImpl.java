@@ -190,7 +190,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			httpSession.setAttribute(
 				_OPEN_ID_CONNECT_AUTHENTICATION_SESSION,
 				new OpenIdConnectAuthenticationSession(
-					openIdConnectProviderName, nonce, state));
+					nonce, openIdConnectProviderName, state));
 		}
 		catch (IOException ioException) {
 			throw new SystemException(

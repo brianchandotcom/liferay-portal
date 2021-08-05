@@ -326,6 +326,15 @@ definition {
 					collectionName = "Collection Name");
 		}
 
+		task ("Assert the actions order of a draft fragment") {
+			LexiconEntry.openEntryMenu(rowEntry = "Draft Fragment Example");
+
+			MenuItem.viewOrder(menuItemList = "Edit,-,Change Thumbnail,Discard Draft,Rename,-,Export,Make a Copy,Move,-,Delete");
+
+			LexiconEntry.openEntryMenu(rowEntry = "Draft Fragment Example");
+
+		}
+
 		task ("Assert the actions order of a published and in use fragment") {
 			LexiconEntry.openEntryMenu(rowEntry = "Approved Fragment Example");
 

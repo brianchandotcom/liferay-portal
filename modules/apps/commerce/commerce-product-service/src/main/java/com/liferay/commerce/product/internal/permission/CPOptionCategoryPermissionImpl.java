@@ -118,11 +118,8 @@ public class CPOptionCategoryPermissionImpl
 			CPOptionCategory cpOptionCategory, String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isCompanyAdmin(cpOptionCategory.getCompanyId())) {
-			return true;
-		}
-
-		if (permissionChecker.hasOwnerPermission(
+		if (permissionChecker.isCompanyAdmin(cpOptionCategory.getCompanyId()) ||
+			permissionChecker.hasOwnerPermission(
 				cpOptionCategory.getCompanyId(),
 				CPOptionCategory.class.getName(),
 				cpOptionCategory.getCPOptionCategoryId(),

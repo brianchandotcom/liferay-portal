@@ -19,17 +19,31 @@ import React, {useState} from 'react';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const CheckboxField = ({field, onValueSelect, value}) => {
-	const [nextValue, setNextValue] = useState(!!value);
+	const [nextValue, setNextValue] = useState(value);
+
+	const customValues = field.typeOptions?.customValues;
 
 	return (
 		<ClayForm.Group className="mt-1">
 			<ClayCheckbox
 				aria-label={field.label}
-				checked={nextValue}
+				checked={
+					customValues
+						? nextValue === customValues.checked
+						: nextValue
+				}
 				label={field.label}
 				onChange={(event) => {
-					setNextValue(event.target.checked);
-					onValueSelect(field.name, event.target.checked);
+					let eventValue = event.target.checked;
+
+					if (customValues) {
+						eventValue = eventValue
+							? customValues.checked
+							: customValues.unchecked;
+					}
+
+					setNextValue(eventValue);
+					onValueSelect(field.name, eventValue);
 				}}
 			/>
 		</ClayForm.Group>

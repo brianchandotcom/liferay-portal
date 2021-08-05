@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -88,6 +89,16 @@ public class DataEngineDLFileEntryTypeLocalServiceWrapper
 		_updateDDMStructure(dataDefinitionId);
 
 		return fileEntryType;
+	}
+
+	@Override
+	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
+		throws PortalException {
+
+		super.deleteFileEntryType(dlFileEntryType);
+
+		updateDDMStructureLinks(
+			dlFileEntryType.getFileEntryTypeId(), Collections.emptySet());
 	}
 
 	private void _updateDDMStructure(long structureId) {

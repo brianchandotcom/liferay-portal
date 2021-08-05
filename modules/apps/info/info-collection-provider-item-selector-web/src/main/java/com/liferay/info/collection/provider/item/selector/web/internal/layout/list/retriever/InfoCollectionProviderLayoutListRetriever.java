@@ -83,6 +83,16 @@ public class InfoCollectionProviderLayoutListRetriever
 		CollectionQuery collectionQuery = new CollectionQuery();
 
 		if (infoCollectionProvider instanceof
+				ConfigurableInfoCollectionProvider) {
+
+			Optional<Map<String, String[]>> configurationOptional =
+				layoutListRetrieverContext.getConfigurationOptional();
+
+			collectionQuery.setConfiguration(
+				configurationOptional.orElse(null));
+		}
+
+		if (infoCollectionProvider instanceof
 				RelatedInfoItemCollectionProvider) {
 
 			Optional<Object> contextObjectOptional =
@@ -107,16 +117,6 @@ public class InfoCollectionProviderLayoutListRetriever
 			}
 
 			collectionQuery.setRelatedItemObject(relatedItem);
-		}
-
-		if (infoCollectionProvider instanceof
-				ConfigurableInfoCollectionProvider) {
-
-			Optional<Map<String, String[]>> configurationOptional =
-				layoutListRetrieverContext.getConfigurationOptional();
-
-			collectionQuery.setConfiguration(
-				configurationOptional.orElse(null));
 		}
 
 		Optional<Pagination> paginationOptional =

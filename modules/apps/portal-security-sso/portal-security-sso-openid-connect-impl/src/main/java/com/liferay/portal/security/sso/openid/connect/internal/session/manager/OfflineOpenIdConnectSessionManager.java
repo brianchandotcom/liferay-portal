@@ -235,7 +235,7 @@ public class OfflineOpenIdConnectSessionManager {
 		AccessToken accessToken = oidcTokens.getAccessToken();
 
 		_updateOpenIdConnectSession(
-			accessToken, oidcTokens.getRefreshToken(), openIdConnectSession);
+			accessToken, openIdConnectSession, oidcTokens.getRefreshToken());
 
 		if ((openIdConnectSession.getRefreshToken() != null) &&
 			(oldAccessToken.getLifetime() != accessToken.getLifetime())) {
@@ -271,8 +271,8 @@ public class OfflineOpenIdConnectSessionManager {
 	}
 
 	private void _updateOpenIdConnectSession(
-		AccessToken accessToken, RefreshToken refreshToken,
-		OpenIdConnectSession openIdConnectSession) {
+		AccessToken accessToken, OpenIdConnectSession openIdConnectSession,
+		RefreshToken refreshToken) {
 
 		openIdConnectSession.setAccessToken(accessToken.toJSONString());
 
@@ -296,7 +296,7 @@ public class OfflineOpenIdConnectSessionManager {
 		openIdConnectSession.setProviderName(providerName);
 
 		_updateOpenIdConnectSession(
-			accessToken, refreshToken, openIdConnectSession);
+			accessToken, openIdConnectSession, refreshToken);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

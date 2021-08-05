@@ -1,0 +1,10 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.search-icon {
+			font-size: 0.875rem;
+			margin-right: 12px;
+		}
+	}
+}

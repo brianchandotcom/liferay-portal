@@ -12,7 +12,9 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
@@ -29,17 +31,42 @@ export default function SearchForm({className, onChange}) {
 			<label className="sr-only" htmlFor={id}>
 				{Liferay.Language.get('search-form')}
 			</label>
-			<ClayInput
-				id={id}
-				onChange={(event) => {
-					setSearchValue(event.target.value);
-					onChangeDebounce.current(event.target.value);
-				}}
-				placeholder={`${Liferay.Language.get('search')}...`}
-				sizing="sm"
-				type="search"
-				value={searchValue}
-			/>
+			<ClayInput.Group>
+				<ClayInput.GroupItem>
+					<ClayInput
+						id={id}
+						insetAfter
+						onChange={(event) => {
+							setSearchValue(event.target.value);
+							onChangeDebounce.current(event.target.value);
+						}}
+						placeholder={`${Liferay.Language.get('search')}...`}
+						sizing="sm"
+						value={searchValue}
+					/>
+					<ClayInput.GroupInsetItem after tag="span">
+						{searchValue ? (
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								monospaced={false}
+								onClick={() => {
+									setSearchValue('');
+									onChangeDebounce.current('');
+								}}
+								small
+								symbol={searchValue ? 'times' : 'search'}
+								title={Liferay.Language.get('clear')}
+							/>
+						) : (
+							<ClayIcon
+								className="mt-0 search-icon"
+								symbol="search"
+							/>
+						)}
+					</ClayInput.GroupInsetItem>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 		</ClayForm.Group>
 	);
 }

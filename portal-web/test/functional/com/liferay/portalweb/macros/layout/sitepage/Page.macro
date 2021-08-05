@@ -487,6 +487,12 @@ definition {
 				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE");
 		}
 
+		if (isSet(searchTerm)) {
+			Type(
+				locator1 = "MenuItem#SEARCH_FIELD",
+				value1 = "${searchTerm}");
+		}
+
 		if (isSet(multipleSelection)) {
 			for (var categoryName : list "${categoryNameList}") {
 				Check.checkNotVisible(

@@ -1692,6 +1692,14 @@ definition {
 				checkboxName = "Single Selection",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
+
+		if (isSet(showLabel)) {
+			Check.checkNotVisible(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	macro editComment {

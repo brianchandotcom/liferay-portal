@@ -191,6 +191,8 @@ while (manageableCalendarsIterator.hasNext()) {
 		manageableCalendarsIterator.remove();
 	}
 }
+
+String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
 %>
 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
@@ -276,7 +278,7 @@ while (manageableCalendarsIterator.hasNext()) {
 			<aui:model-context bean="<%= calendarBooking %>" model="<%= CalendarBooking.class %>" />
 
 			<aui:fieldset markupView="lexicon">
-				<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="title" />
+				<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="title" />
 
 				<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
 					<aui:input ignoreRequestValue="<%= true %>" label="starts" name="startTime" timeFormat="<%= timeFormat %>" value="<%= startTimeJCalendar %>" />
@@ -294,7 +296,7 @@ while (manageableCalendarsIterator.hasNext()) {
 					<a class="calendar-portlet-recurrence-summary" href="javascript:;" id="<portlet:namespace />summary"></a>
 				</aui:field-wrapper>
 
-				<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="description" />
+				<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="description" />
 			</aui:fieldset>
 
 			<aui:fieldset markupView="lexicon">
@@ -613,7 +615,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	<c:if test="<%= Validator.isNotNull(titleCurrentValue) && ((calendarBooking == null) || !Objects.equals(titleCurrentValue, calendarBooking.getTitle(locale))) %>">
 		document.<portlet:namespace />fm.<portlet:namespace />title.value =
 			'<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
-		document.<portlet:namespace />fm.<portlet:namespace />title_<%= themeDisplay.getLanguageId() %>.value =
+		document.<portlet:namespace />fm.<portlet:namespace />title_<%= defaultLanguageId %>.value =
 			'<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
 	</c:if>
 </aui:script>

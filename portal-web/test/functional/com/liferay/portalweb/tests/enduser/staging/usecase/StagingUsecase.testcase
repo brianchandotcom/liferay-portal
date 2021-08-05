@@ -405,6 +405,38 @@ definition {
 			pollsQuestionVotePercent = "0%");
 	}
 
+	@description = "This is a use case for LPS-123156"
+	@priority = "4"
+	test AssertStagingPublicationAndProcessesMessage {
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.viewPublishTask(publicationTitle = "Initial Publish Process");
+
+		Staging.deletePublishTask(publicationTitle = "Initial Publish Process");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No publish processes were found.");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		AssertElementPresent(locator1 = "StagingPublishToLive#CHANGES_SINCE_LAST_PUBLISH_PROCESS");
+
+		AssertTextEquals(
+			locator1 = "StagingPublishToLive#PUBLISH_SIMPLE_HELP_TEXT",
+			value1 = "Simple publish process includes the publishing of theme and site pages settings, logo, deletions, and permissions.");
+
+		Staging.configurePublishToLive();
+
+		AssertTextEquals(
+			locator1 = "StagingPublishToLive#SWITCH_TO_SIMPLE_PUBLICATION",
+			value1 = "Switch to Simple Publish Process");
+
+		AssertElementNotPresent(locator1 = "Staging#LIVE_BUTTON");
+	}
+
 	@description = "This is a use case for LPS-95516."
 	@priority = "3"
 	test AssertWebContentNotBeDeletedOnLiveViaSAP {

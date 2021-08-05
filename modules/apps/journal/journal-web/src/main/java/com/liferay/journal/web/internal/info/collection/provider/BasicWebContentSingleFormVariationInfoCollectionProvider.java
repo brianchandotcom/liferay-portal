@@ -173,9 +173,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery) {
 		Pagination pagination = collectionQuery.getPagination();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(true);
@@ -210,7 +207,11 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 			}
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		searchContext.setCompanyId(serviceContext.getCompanyId());
+
 		searchContext.setEnd(pagination.getEnd());
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});

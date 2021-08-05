@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -62,7 +63,7 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"googlePlacesAPIKey",
-			_getGooglePlacesAPIKey(ddmFormFieldRenderingContext)
+			_getGooglePlacesAPIKey(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"labels",
 			_getLabelsJSONObject(
@@ -82,7 +83,15 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 	}
 
 	private String _getGooglePlacesAPIKey(
+		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		String googlePlacesAPIKey = GetterUtil.getString(
+			ddmFormField.getProperty("googlePlacesAPIKey"));
+
+		if (Validator.isNotNull(googlePlacesAPIKey)) {
+			return googlePlacesAPIKey;
+		}
 
 		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();

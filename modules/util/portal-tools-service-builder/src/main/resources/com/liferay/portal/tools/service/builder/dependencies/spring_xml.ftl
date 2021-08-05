@@ -12,13 +12,17 @@
 	<#elseif entity.hasEntityColumns() && entity.hasPersistence() && entity.isChangeTrackingEnabled()>
 		<bean class="${packagePath}.service.impl.${entity.name}CTServiceImpl" id="${entity.name}CTService" />
 	</#if>
+</#list>
 
+<#list entities as entity>
 	<#if entity.hasRemoteService()>
 		<#assign sessionType = "" />
 
 		<#include "spring_xml_session.ftl">
 	</#if>
+</#list>
 
+<#list entities as entity>
 	<#if entity.hasEntityColumns() && entity.hasPersistence()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 			<bean class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"${parent}>
@@ -34,7 +38,9 @@
 			<bean class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"${parent} />
 		</#if>
 	</#if>
+</#list>
 
+<#list entities as entity>
 	<#if entity.hasFinderClassName() && entity.hasPersistence()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 			<bean class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"${parent}>

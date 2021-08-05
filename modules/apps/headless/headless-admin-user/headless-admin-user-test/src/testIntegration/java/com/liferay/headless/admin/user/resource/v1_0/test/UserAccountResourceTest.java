@@ -389,16 +389,21 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		UserAccount randomUserAccount = randomUserAccount();
 
 		Assert.assertNull(
-			_userLocalService.fetchUserByExternalReferenceCode(
+			_userLocalService.fetchUserByEmailAddress(
 				TestPropsValues.getCompanyId(),
-				randomUserAccount.getExternalReferenceCode()));
+				randomUserAccount.getEmailAddress()));
 
-		testPostAccountUser_addAccountUser(randomUserAccount);
+		randomUserAccount = testPostAccountUser_addAccountUser(
+			randomUserAccount);
 
 		Assert.assertNotNull(
-			_userLocalService.fetchUserByExternalReferenceCode(
+			_userLocalService.fetchUserByEmailAddress(
 				TestPropsValues.getCompanyId(),
-				randomUserAccount.getExternalReferenceCode()));
+				randomUserAccount.getEmailAddress()));
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_getAccountEntryId(), randomUserAccount.getId()));
 	}
 
 	@Override

@@ -73,10 +73,6 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
-
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		long resourceClassNameId = ParamUtil.getLong(
@@ -95,9 +91,6 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(), AddDDMTemplateMVCActionCommand.class);
-
 		try {
 			DDMTemplate ddmTemplate = _ddmTemplateService.addTemplate(
 				themeDisplay.getScopeGroupId(), classNameId, classPK,
@@ -106,19 +99,26 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				TemplateConstants.LANG_TYPE_FTL,
 				_getScript(classNameId, resourceClassNameId), serviceContext);
 
-			jsonObject.put(
-				"redirectURL",
-				PortletURLBuilder.createRenderURL(
-					_portal.getLiferayPortletResponse(actionResponse)
-				).setMVCRenderCommandName(
-					"/template/edit_ddm_template"
-				).setRedirect(
-					ParamUtil.getString(actionRequest, "redirect")
-				).setParameter(
-					"ddmTemplateId", ddmTemplate.getTemplateId()
-				).buildString());
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"redirectURL",
+					PortletURLBuilder.createRenderURL(
+						_portal.getLiferayPortletResponse(actionResponse)
+					).setMVCRenderCommandName(
+						"/template/edit_ddm_template"
+					).setRedirect(
+						ParamUtil.getString(actionRequest, "redirect")
+					).setParameter(
+						"ddmTemplateId", ddmTemplate.getTemplateId()
+					).buildString()));
 		}
 		catch (PortalException portalException) {
+			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				themeDisplay.getLocale(), AddDDMTemplateMVCActionCommand.class);
+
 			if (portalException instanceof TemplateNameException) {
 				errorJSONObject = JSONUtil.put(
 					"name",
@@ -140,11 +140,10 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				_log.error(portalException.getMessage(), portalException);
 			}
 
-			jsonObject.put("error", errorJSONObject);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("error", errorJSONObject));
 		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private String _getScript(long classNameId, long resourceClassNameId) {

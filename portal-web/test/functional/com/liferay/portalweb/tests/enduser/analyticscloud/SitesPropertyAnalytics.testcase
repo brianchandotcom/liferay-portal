@@ -29,15 +29,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
-	@ignore = "true"
-	@priority = "5"
-	test AssertChartTicksSiteMetricsStandardized {
-
-		// TODO LRAC-8329 AssertChartTicksSiteMetricsStandardized
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8330 | Test Summary: Assert Chart ticks for pages Visitor Behavior standardized"
 	@ignore = "true"
 	@priority = "5"
@@ -47,7 +38,16 @@ definition {
 
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8331 | Test Summary: Assert Site Metrics select Sessions/Visitor card tab"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
+	@ignore = "true"
+	@priority = "5"
+	test AssertChartTicksSiteMetricsStandardized {
+
+		// TODO LRAC-8329 AssertChartTicksSiteMetricsStandardized
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8331 | Test Summary: Assert Site Metrics select Sessions/Visitor card tab"
 	@ignore = "true"
 	@priority = "5"
 	test AssertSiteMetricsSelectSessionsPerVisitorCardTab {
@@ -56,13 +56,4 @@ definition {
 
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8332 | Test Summary: Assert Site Metrics select Visitors card tab"
-	@ignore = "true"
-	@priority = "5"
-	test AssertSiteMetricsSelectVisitorsCardTab {
-
-		// TODO LRAC-8332 AssertSiteMetricsSelectVisitorsCardTab
-
-	}
-
-} 
+}

@@ -64,7 +64,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 			.then((users) => {
 				openToast({
 					message: Liferay.Util.sub(
-						Liferay.Language.get('x-users-added-to-x'),
+						Liferay.Language.get('x-users-were-added-to-x'),
 						users.length,
 						parentData.name
 					),

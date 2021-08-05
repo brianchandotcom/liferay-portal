@@ -154,7 +154,11 @@ definition {
 	macro getPlid {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		if (!(isSet(privateLayout))) {
 			privateLayout = "false";
@@ -173,7 +177,8 @@ definition {
 		var plid = JSONLayout.getPlid(
 			groupName = "${groupName}",
 			layoutName = "${layoutName}",
-			privateLayout = "${privateLayout}");
+			privateLayout = "${privateLayout}",
+			site = "${site}");
 
 		JSONLayoutAPI._publishLayoutByPlid(plid = "${plid}");
 	}

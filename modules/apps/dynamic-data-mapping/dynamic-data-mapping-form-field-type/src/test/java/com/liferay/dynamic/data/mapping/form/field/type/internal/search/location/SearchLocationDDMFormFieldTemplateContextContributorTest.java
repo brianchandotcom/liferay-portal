@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.search.location;
 
 import com.liferay.dynamic.data.mapping.form.field.type.internal.searchLocation.SearchLocationDDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
@@ -69,6 +70,30 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 		_setUpResourceBundleUtil();
+	}
+
+	@Test
+	public void testGetGooglePlacesAPIKey() throws Exception {
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createSearchLocationDDMFormField(
+				DDMFormValuesTestUtil.createLocalizedValue(
+					Arrays.toString(new String[] {"two-columns"}),
+					LocaleUtil.US),
+				StringUtil.randomString(),
+				DDMFormValuesTestUtil.createLocalizedValue(
+					Arrays.toString(new String[] {"city", "country"}),
+					LocaleUtil.US));
+
+		ddmFormField.setProperty(
+			"googlePlacesAPIKey", "googlePlacesAPIKeyDDMFormField");
+
+		Map<String, Object> parameters =
+			_searchLocationDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, _createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(
+			"googlePlacesAPIKeyDDMFormField",
+			parameters.get("googlePlacesAPIKey"));
 	}
 
 	@Test

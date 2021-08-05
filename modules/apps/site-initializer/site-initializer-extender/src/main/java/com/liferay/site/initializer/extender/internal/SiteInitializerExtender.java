@@ -14,17 +14,13 @@
 
 package com.liferay.site.initializer.extender.internal;
 
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.site.initializer.SiteInitializer;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
@@ -38,10 +34,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class SiteInitializerExtender
-	implements BundleTrackerCustomizer<List<ServiceRegistration<?>>> {
+	implements BundleTrackerCustomizer<SiteInitializerExtension> {
 
 	@Override
-	public List<ServiceRegistration<?>> addingBundle(
+	public SiteInitializerExtension addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
@@ -53,30 +49,26 @@ public class SiteInitializerExtender
 			return null;
 		}
 
-		return Collections.singletonList(
-			_bundleContext.registerService(
-				SiteInitializer.class, new BundleSiteInitializer(bundle),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"site.initializer.key", bundle.getSymbolicName()
-				).build()));
+		SiteInitializerExtension siteInitializerExtension =
+			new SiteInitializerExtension(bundle, _bundleContext);
+
+		siteInitializerExtension.start();
+
+		return siteInitializerExtension;
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		List<ServiceRegistration<?>> serviceRegistrations) {
+		SiteInitializerExtension siteInitializerExtension) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		List<ServiceRegistration<?>> serviceRegistrations) {
+		SiteInitializerExtension siteInitializerExtension) {
 
-		for (ServiceRegistration<?> serviceRegistration :
-				serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
+		siteInitializerExtension.destroy();
 	}
 
 	@Activate

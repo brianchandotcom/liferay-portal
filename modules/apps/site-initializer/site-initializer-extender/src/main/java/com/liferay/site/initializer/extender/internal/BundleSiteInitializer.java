@@ -22,6 +22,8 @@ import com.liferay.site.initializer.SiteInitializer;
 import java.util.Dictionary;
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.Bundle;
 
 /**
@@ -29,8 +31,9 @@ import org.osgi.framework.Bundle;
  */
 public class BundleSiteInitializer implements SiteInitializer {
 
-	public BundleSiteInitializer(Bundle bundle) {
+	public BundleSiteInitializer(Bundle bundle, ServletContext servletContext) {
 		_bundle = bundle;
+		_servletContext = servletContext;
 	}
 
 	@Override
@@ -66,5 +69,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private final Bundle _bundle;
+	private final ServletContext _servletContext;
 
 }

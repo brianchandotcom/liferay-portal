@@ -25,6 +25,7 @@ definition {
 		}
 	}
 
+	@description = "Delete web content in recycle bin."
 	@priority = "4"
 	test DeleteWebcontent {
 		task ("Add a web content and move it to recycle bin") {
@@ -62,6 +63,7 @@ definition {
 		}
 	}
 
+	@description = "Disable recycle bin and assert could not go to recycle bin after deleting."
 	@priority = "3"
 	test DisableRecycleBin {
 		task ("Go to site to disable recycle bin") {
@@ -82,6 +84,7 @@ definition {
 		}
 	}
 
+	@description = "Move folder with web content to recycle bin."
 	@priority = "3"
 	test MoveFolderWithWebContentToRecycleBin {
 		task ("Add a wc folder and web content in the folder") {
@@ -165,6 +168,7 @@ definition {
 		}
 	}
 
+	@description = "Check the staging in recycle bin with and without staged content"
 	@priority = "3"
 	test RecycleBinStaging {
 		task ("Add a page and add WCD to the page") {
@@ -244,6 +248,7 @@ definition {
 		}
 	}
 
+	@description = "Move a structured web content to recycle bin and restore it."
 	@priority = "3"
 	test RecycleBinWebContent {
 		task ("Add a structure with text field and save") {
@@ -328,6 +333,7 @@ definition {
 		}
 	}
 
+	@description = "Can move web content to recycle bin via delete icon."
 	@priority = "3"
 	test RecycleWebContentViaDeleteIcon {
 		task ("Add a web content") {
@@ -359,6 +365,7 @@ definition {
 		}
 	}
 
+	@description = "Can restore a basic web content in recycle bin."
 	@priority = "5"
 	test RestoreWebcontent {
 		property portal.acceptance = "true";
@@ -403,6 +410,7 @@ definition {
 		}
 	}
 
+	@description = "Can restore web content within WC folder in recycle bin."
 	@priority = "3"
 	test RestoreWebContentFromFolderCP {
 		task ("Add a WC folder and a web content to it") {
@@ -445,6 +453,7 @@ definition {
 		}
 	}
 
+	@description = "Can restore web content with versions in recycle bin."
 	@priority = "3"
 	test RestoreWebContentWithArticleVersions {
 		task ("Add a WC folder and WC to the folder") {
@@ -558,6 +567,7 @@ definition {
 		}
 	}
 
+	@description = "Can undo move to recycle bin action."
 	@priority = "3"
 	test UndoMoveToRecycleBin {
 		task ("Add a web conent") {
@@ -590,6 +600,7 @@ definition {
 		}
 	}
 
+	@description = "Can have 2 duplicate asset names in recycle bin."
 	@priority = "3"
 	test ViewDuplicateAssetNamesInRecycleBin {
 		task ("Add a web content and move it to recycle bin via delete icon") {
@@ -630,6 +641,7 @@ definition {
 		}
 	}
 
+	@description = "Can have 2 duplicate folder names in recycle bin."
 	@priority = "4"
 	test ViewDuplicateFolderNamesInRecycleBin {
 		task ("View 2 web content with same title exist") {
@@ -672,6 +684,7 @@ definition {
 		}
 	}
 
+	@description = "Can click success link to view the web content moved to recycle bin."
 	@priority = "3"
 	test ViewRecycleBinEntryViaSuccessMessageLink {
 		task ("Add a web content") {

@@ -107,6 +107,7 @@ definition {
 		}
 	}
 
+	@description = "Restore blog entry from recycle bin."
 	@priority = "3"
 	test RecycleBinBlogs {
 		task ("Add a blogs widget to page and an entry to blogs") {
@@ -161,6 +162,7 @@ definition {
 		}
 	}
 
+	@description = "Restore bookmark subfolder and bookmark from recycle bin."
 	@priority = "3"
 	test RecycleBinBookmarks {
 		property portal.release = "false";
@@ -266,6 +268,7 @@ definition {
 		}
 	}
 
+	@description = "Restore MB attachment from recycle bin."
 	@priority = "3"
 	test RecycleBinMBAttachment {
 		task ("Add a message and attachement to mb") {
@@ -318,6 +321,7 @@ definition {
 		}
 	}
 
+	@description = "Assert scheduled clean up in recycle bin works."
 	@priority = "3"
 	test RecycleBinScheduledCleanup {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
@@ -363,6 +367,7 @@ definition {
 		}
 	}
 
+	@description = "Assert 3 blog entries moved to recycle bin are searchable."
 	@priority = "3"
 	test RecycleBinSearchBlogsEntries {
 		task ("Add blogs to page and 3 blog entries") {
@@ -405,6 +410,7 @@ definition {
 		}
 	}
 
+	@description = "Assert 2 documents moved to recycle bin are searchable."
 	@priority = "3"
 	test RecycleBinSearchDMEntriesInFolder {
 		property custom.properties = "default.layout.template.id=1_column";
@@ -488,6 +494,7 @@ definition {
 		}
 	}
 
+	@description = "Restore Wiki node and Wiki page in recycle bin."
 	@priority = "3"
 	test RecycleBinWiki {
 		task ("Add 2 wiki node and a wiki page") {
@@ -633,6 +640,7 @@ definition {
 		}
 	}
 
+	@description = "Restore DM document in DM folder in recycle bin."
 	@priority = "5"
 	test RestoreDMDocumentFromFolderCP {
 		property portal.acceptance = "true";

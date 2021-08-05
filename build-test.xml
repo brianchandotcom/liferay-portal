@@ -6259,11 +6259,52 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<wait-for-app-server-log-message log.message="${dxp.license.product.name} license validation passed" />
 
+			<get-testcase-property property.name="data.archive.type" />
+			<get-testcase-property property.name="portal.version" />
+
 			<if>
-				<equals arg1="${poshi.method.name}" arg2="DeployCommerceLicenseBinaryFile" />
+				<isset property="data.archive.type" />
+				<then>
+					<loadfile
+						failonerror="false"
+						property="have.binary.commerce.license"
+					>
+						<zipentry name="data/license/LiferayCommerceSubscriptionDevelopment_developercluster.li" zipfile="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip" />
+					</loadfile>
+
+					<loadfile
+						failonerror="false"
+						property="have.binary.portal.license"
+					>
+						<zipentry name="data/license/Liferaycom_PortalDevelopment_developercluster.li" zipfile="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip" />
+					</loadfile>
+				</then>
+			</if>
+
+			<if>
+				<or>
+					<equals arg1="${poshi.method.name}" arg2="DeployCommerceLicenseBinaryFile" />
+					<and>
+						<isset property="data.archive.type" />
+						<isset property="have.binary.commerce.license" />
+						<isset property="have.binary.portal.license" />
+					</and>
+				</or>
 				<then>
 					<echo>Using license binary, not waiting for license registration</echo>
 				</then>
+				<elseif>
+					<and>
+						<isset property="data.archive.type" />
+						<isset property="have.binary.commerce.license" />
+						<not>
+							<isset property="have.binary.portal.license" />
+						</not>
+					</and>
+					<then>
+						<wait-for-app-server-log-message log.message="License registered for ${dxp.license.product.name}" />
+					</then>
+				</elseif>
 				<else>
 					<wait-for-app-server-log-message log.message="License registered for ${commerce.license.product.name}" />
 

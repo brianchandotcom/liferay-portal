@@ -29,22 +29,22 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8298 | Test Summary: Site overview search terms shows what keywords are being searched for"
-    @ignore = "true"
-    @priority = "5"
-    test ShowsKeywordsBeingSearched {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8300 | Test Summary: Search for a property when assigning sites to a property"
+	@ignore = "true"
+	@priority = "5"
+	test SearchPropertyToAssignSite {
 
-        // TODO LRAC-8298 ShowsKeywordsBeingSearched
+		// TODO LRAC-8300 SearchPropertyToAssignSite
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8300 | Test Summary: Search for a property when assigning sites to a property"
-    @ignore = "true"
-    @priority = "5"
-    test SearchPropertyToAssignSite {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8298 | Test Summary: Site overview search terms shows what keywords are being searched for"
+	@ignore = "true"
+	@priority = "5"
+	test ShowsKeywordsBeingSearched {
 
-        // TODO LRAC-8300 SearchPropertyToAssignSite
+		// TODO LRAC-8298 ShowsKeywordsBeingSearched
 
-    }
+	}
 
 }

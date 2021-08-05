@@ -14,10 +14,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -61,8 +63,22 @@ public class GetCollectionConfigurationMVCResourceCommand
 			_infoItemServiceTracker.getInfoItemService(
 				InfoCollectionProvider.class, collectionKey);
 
+		if (!(infoCollectionProvider instanceof
+				ConfigurableInfoCollectionProvider)) {
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONObject());
+
+			return;
+		}
+
+		ConfigurableInfoCollectionProvider<?>
+			configurableInfoCollectionProvider =
+				(ConfigurableInfoCollectionProvider<?>)infoCollectionProvider;
+
 		JSONObject jsonObject = InfoFormUtil.getConfigurationJSONObject(
-			infoCollectionProvider.getConfigurationInfoForm(),
+			configurableInfoCollectionProvider.getConfigurationInfoForm(),
 			themeDisplay.getLocale());
 
 		JSONPortletResponseUtil.writeJSON(

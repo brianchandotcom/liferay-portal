@@ -17,6 +17,7 @@ package com.liferay.journal.web.internal.info.collection.provider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
@@ -70,7 +71,8 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true, service = InfoCollectionProvider.class
 )
 public class BasicWebContentSingleFormVariationInfoCollectionProvider
-	implements SingleFormVariationInfoCollectionProvider<JournalArticle> {
+	implements ConfigurableInfoCollectionProvider<JournalArticle>,
+			   SingleFormVariationInfoCollectionProvider<JournalArticle> {
 
 	@Override
 	public InfoPage<JournalArticle> getCollectionInfoPage(

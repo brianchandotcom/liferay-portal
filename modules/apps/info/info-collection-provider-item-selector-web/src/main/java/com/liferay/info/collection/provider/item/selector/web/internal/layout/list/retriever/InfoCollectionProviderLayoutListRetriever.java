@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
@@ -108,10 +109,15 @@ public class InfoCollectionProviderLayoutListRetriever
 			collectionQuery.setRelatedItemObject(relatedItem);
 		}
 
-		Optional<Map<String, String[]>> configurationOptional =
-			layoutListRetrieverContext.getConfigurationOptional();
+		if (infoCollectionProvider instanceof
+				ConfigurableInfoCollectionProvider) {
 
-		collectionQuery.setConfiguration(configurationOptional.orElse(null));
+			Optional<Map<String, String[]>> configurationOptional =
+				layoutListRetrieverContext.getConfigurationOptional();
+
+			collectionQuery.setConfiguration(
+				configurationOptional.orElse(null));
+		}
 
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
@@ -157,10 +163,15 @@ public class InfoCollectionProviderLayoutListRetriever
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 
-		Optional<Map<String, String[]>> configurationOptional =
-			layoutListRetrieverContext.getConfigurationOptional();
+		if (infoCollectionProvider instanceof
+				ConfigurableInfoCollectionProvider) {
 
-		collectionQuery.setConfiguration(configurationOptional.orElse(null));
+			Optional<Map<String, String[]>> configurationOptional =
+				layoutListRetrieverContext.getConfigurationOptional();
+
+			collectionQuery.setConfiguration(
+				configurationOptional.orElse(null));
+		}
 
 		if (infoCollectionProvider instanceof
 				RelatedInfoItemCollectionProvider) {

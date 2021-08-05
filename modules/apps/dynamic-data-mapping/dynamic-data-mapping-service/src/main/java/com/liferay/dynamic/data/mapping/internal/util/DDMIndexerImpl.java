@@ -533,8 +533,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 			String indexType, Locale locale)
 		throws Exception {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
 		boolean localizable = false;
 
 		if (ddmStructure.hasFieldByFieldReference(fieldReference)) {
@@ -552,6 +550,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 			locale = null;
 		}
 
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
 		if (!isLegacyDDMIndexFieldsEnabled()) {
 			booleanQuery.addRequiredTerm(
 				StringBundler.concat(
@@ -563,25 +563,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 				getValueFieldName(indexType, locale));
 		}
 
-		if (ddmStructureFieldValue instanceof String[]) {
-			String[] ddmStructureFieldValueArray =
-				(String[])ddmStructureFieldValue;
-
-			for (String ddmStructureFieldValueString :
-					ddmStructureFieldValueArray) {
-
-				booleanQuery.addRequiredTerm(
-					ddmStructureFieldName,
-					StringPool.QUOTE + ddmStructureFieldValueString +
-						StringPool.QUOTE);
-			}
-		}
-		else {
-			booleanQuery.addRequiredTerm(
-				ddmStructureFieldName,
-				StringPool.QUOTE + String.valueOf(ddmStructureFieldValue) +
-					StringPool.QUOTE);
-		}
+		_addFieldValueRequiredTerm(
+			booleanQuery, ddmStructureFieldName, ddmStructureFieldValue);
 
 		if (isLegacyDDMIndexFieldsEnabled()) {
 			return new QueryFilter(booleanQuery);
@@ -642,6 +625,26 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	@Reference
 	protected Sorts sorts;
+
+	private void _addFieldValueRequiredTerm(
+		BooleanQuery booleanQuery, String fieldName, Serializable fieldValue) {
+
+		if (fieldValue instanceof String[]) {
+			String[] fieldValueArray = (String[])fieldValue;
+
+			for (String fieldValueString : fieldValueArray) {
+				booleanQuery.addRequiredTerm(
+					fieldName,
+					StringPool.QUOTE + fieldValueString + StringPool.QUOTE);
+			}
+		}
+		else {
+			booleanQuery.addRequiredTerm(
+				fieldName,
+				StringPool.QUOTE + String.valueOf(fieldValue) +
+					StringPool.QUOTE);
+		}
+	}
 
 	private void _addToDocument(
 			Document document, Field field, String indexType, String name,

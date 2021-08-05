@@ -1,0 +1,68 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
+	@ignore = "true"
+	@priority = "5"
+	test AssertChartTicksSiteMetricsStandardized {
+
+		// TODO LRAC-8329 AssertChartTicksSiteMetricsStandardized
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8330 | Test Summary: Assert Chart ticks for pages Visitor Behavior standardized"
+	@ignore = "true"
+	@priority = "5"
+	test AssertChartTicksPagesVisitorBehaviorStandardized {
+
+		// TODO LRAC-8330 AssertChartTicksPagesVisitorBehaviorStandardized
+
+	}
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8331 | Test Summary: Assert Site Metrics select Sessions/Visitor card tab"
+	@ignore = "true"
+	@priority = "5"
+	test AssertSiteMetricsSelectSessionsPerVisitorCardTab {
+
+		// TODO LRAC-8331 AssertSiteMetricsSelectSessionsPerVisitorCardTab
+
+	}
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8332 | Test Summary: Assert Site Metrics select Visitors card tab"
+	@ignore = "true"
+	@priority = "5"
+	test AssertSiteMetricsSelectVisitorsCardTab {
+
+		// TODO LRAC-8332 AssertSiteMetricsSelectVisitorsCardTab
+
+	}
+
+} 

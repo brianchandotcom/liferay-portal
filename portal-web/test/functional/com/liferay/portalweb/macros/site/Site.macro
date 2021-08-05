@@ -169,10 +169,6 @@ definition {
 		Navigator.gotoNavTab(navTab = "Site URL");
 
 		if (isSet(publicVirtualHosts)) {
-			AssertTextEquals(
-				locator1 = "SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL",
-				value1 = "Public Pages Virtual Host");
-
 			Type(
 				key_text = "Public Pages Virtual Host",
 				locator1 = "TextInput#ANY",
@@ -180,10 +176,6 @@ definition {
 		}
 
 		if (isSet(privateVirtualHosts)) {
-			AssertTextEquals(
-				locator1 = "SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL",
-				value1 = "Private Pages Virtual Host");
-
 			Type(
 				key_text = "Private Pages Virtual Host",
 				locator1 = "TextInput#ANY",
@@ -191,11 +183,6 @@ definition {
 		}
 
 		if (isSet(stagingPublicPages)) {
-			AssertTextEquals(
-				key_fieldLabel = "stagingPublicVirtualHostname",
-				locator1 = "SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_LABEL",
-				value1 = "Staging Public Pages");
-
 			Type(
 				key_text = "Staging Public Pages",
 				locator1 = "TextInput#ANY",
@@ -203,11 +190,6 @@ definition {
 		}
 
 		if (isSet(stagingPrivatePages)) {
-			AssertTextEquals(
-				key_fieldLabel = "stagingPrivateVirtualHostname",
-				locator1 = "SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_LABEL",
-				value1 = "Staging Private Pages");
-
 			Type(
 				key_text = "Staging Private Pages",
 				locator1 = "TextInput#ANY",

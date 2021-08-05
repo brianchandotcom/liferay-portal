@@ -14,7 +14,8 @@ import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
 import {deleteAccount, updateAccount} from '../data/accounts';
-import {PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS} from '../utils/flags';
+import {ACTION_KEYS} from '../utils/constants';
+import {hasPermission} from '../utils/index';
 
 export default function AccountMenuContent({closeMenu, data, parentData}) {
 	const {chartInstanceRef} = useContext(ChartContext);
@@ -30,13 +31,6 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 		) {
 			deleteAccount(data.id).then(() => {
 				chartInstanceRef.current.deleteNodes([data], true);
-
-				if (parentData) {
-					chartInstanceRef.current.updateNodeContent({
-						...parentData,
-						numberOfAccounts: parentData.numberOfAccounts - 1,
-					});
-				}
 
 				closeMenu();
 			});
@@ -61,13 +55,6 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 			}).then(() => {
 				chartInstanceRef.current.deleteNodes([data], false);
 
-				if (parentData) {
-					chartInstanceRef.current.updateNodeContent({
-						...parentData,
-						numberOfAccounts: parentData.numberOfAccounts - 1,
-					});
-				}
-
 				closeMenu();
 			});
 		}
@@ -75,12 +62,15 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 
 	const actions = [];
 
-	if (!PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS) {
+	if (hasPermission(data, ACTION_KEYS.account.REMOVE_ACCOUNT)) {
 		actions.push(
 			<ClayDropDown.Item key="remove" onClick={handleRemove}>
 				{Liferay.Language.get('remove')}
 			</ClayDropDown.Item>
 		);
+	}
+
+	if (hasPermission(data, ACTION_KEYS.account.DELETE_ACCOUNT)) {
 		actions.push(
 			<ClayDropDown.Item key="delete" onClick={handleDelete}>
 				{Liferay.Language.get('delete')}

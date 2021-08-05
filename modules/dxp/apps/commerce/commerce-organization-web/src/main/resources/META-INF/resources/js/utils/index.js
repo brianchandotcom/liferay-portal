@@ -15,16 +15,18 @@ import {changeOrganizationParent} from '../data/accounts';
 import {updateOrganization} from '../data/organizations';
 import {
 	ACCOUNTS_PROPERTY_NAME,
+	ACTION_KEYS,
+	BRIEFS_KEYS_MAP,
+	COUNTER_KEYS_MAP,
 	DX,
 	DY,
-	ID_PROPERTY_NAME_DEFINITIONS,
 	MAX_NAME_LENGTH,
 	ORGANIZATIONS_PROPERTY_NAME,
 	RECT_SIZES,
 	USERS_PROPERTY_NAME_IN_ACCOUNT,
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
 } from './constants';
-import {ACCOUNTS_ADD_BUTTON_ENABLED} from './flags';
+import {PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS} from './flags';
 
 let chartNodesCounter = 0;
 
@@ -157,8 +159,8 @@ export function insertAddButtons(root, selectedNodesIds) {
 	root.each((d) => {
 		if (
 			selectedNodesIds.has(d.data.chartNodeId) &&
-			(d.data.type !== 'user' ||
-				(ACCOUNTS_ADD_BUTTON_ENABLED && d.data.type === 'account'))
+			d.data.type !== 'user' &&
+			hasPermission(d.data, ACTION_KEYS[d.data.type].ADD_ENTITIES)
 		) {
 			showChildren(d);
 
@@ -197,9 +199,6 @@ export function insertAddButtons(root, selectedNodesIds) {
 
 export const tree = d3Tree().nodeSize([DX, DY]);
 
-export const getEntityId = (data) =>
-	data[ID_PROPERTY_NAME_DEFINITIONS[data.type]];
-
 export const getChartNodeId = (data) => {
 	if (!(data.id || data.id === 0) || !data.type) {
 		throw new Error(
@@ -232,36 +231,54 @@ export const formatRootData = (rootData) => {
 };
 
 export const formatOrganizationDescription = (d) => {
-	return `${d.data.numberOfOrganizations} ${Liferay.Language.get(
+	return `${d.data[COUNTER_KEYS_MAP.organization]} ${Liferay.Language.get(
 		'organizations-short-name'
-	)} | ${d.data.numberOfAccounts} ${Liferay.Language.get(
+	)} | ${d.data[COUNTER_KEYS_MAP.account]} ${Liferay.Language.get(
 		'accounts-short-name'
-	)} | ${d.data.numberOfUsers} ${Liferay.Language.get('users-short-name')}`;
+	)} | ${d.data[COUNTER_KEYS_MAP.user]} ${Liferay.Language.get(
+		'users-short-name'
+	)}`;
 };
 
 export const formatAccountDescription = (d) => {
-	return `${d.data.numberOfUsers} ${Liferay.Language.get('users')}`;
+	return `${d.data[COUNTER_KEYS_MAP.user]} ${Liferay.Language.get('users')}`;
 };
 
-const briefsMap = {
-	account: 'accountBriefs',
-	organization: 'organizationBriefs'
+export function hasPermission(data, actionKey) {
+	if (!PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS) {
+		return true;
+	}
+
+	return Boolean(
+		data.actions &&
+			data.actions[actionKey] &&
+			data.actions[actionKey].href &&
+			data.actions[actionKey].method
+	);
+}
+
+export function hasPermissions(data, actionsKeys) {
+	return actionsKeys.reduce(
+		(result, key) => result && hasPermission(data, key),
+		true
+	);
 }
 
 export const formatUserDescription = (d) => {
-	const parentBriefsKey = briefsMap[d.parent.data.type];
+	const parentBriefsKey = BRIEFS_KEYS_MAP[d.parent.data.type];
+
 	const parentBrief = d.data[parentBriefsKey].find(
-		parent => Number(parent.id) === Number(d.parent.data.id)
+		(parent) => Number(parent.id) === Number(d.parent.data.id)
 	);
 
-	let description = Liferay.Language.get('guest')
+	let description = Liferay.Language.get('guest');
 
-	if (parentBrief.roleBriefs.length) {
-		description = trimString(parentBrief.roleBriefs[0].name, 'user')
-	} 
+	if (parentBrief?.roleBriefs?.length) {
+		description = trimString(parentBrief.roleBriefs[0].name, 'user');
+	}
 
-	if (parentBrief.roleBriefs.length > 1) {
-		description += ` (+${parentBrief.roleBriefs.length - 1})`
+	if (parentBrief?.roleBriefs?.length > 1) {
+		description += ` (+${parentBrief.roleBriefs.length - 1})`;
 	}
 
 	return description;
@@ -273,9 +290,10 @@ const formatDescriptionMap = {
 	user: formatUserDescription,
 };
 
-export const trimString = (string, nodeType) => string.length > MAX_NAME_LENGTH[nodeType] 
-	? string.slice(0, MAX_NAME_LENGTH[nodeType] - 1).trim() + '…' 
-	: string;
+export const trimString = (string, nodeType) =>
+	string.length > MAX_NAME_LENGTH[nodeType]
+		? string.slice(0, MAX_NAME_LENGTH[nodeType] - 1).trim() + '…'
+		: string;
 
 export const formatItemName = (d) => {
 	const name = d.data.name || d.data.emailAddress;

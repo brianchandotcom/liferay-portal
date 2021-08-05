@@ -13,6 +13,7 @@ import {fetch, openToast} from 'frontend-js-web';
 
 const headers = new Headers({
 	Accept: 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 });
 
@@ -40,7 +41,7 @@ export function handleFetchResponse(response) {
 		.catch((error) =>
 			response.ok
 				? Promise.resolve(null)
-				: Promise.reject({...error, title: error.status})
+				: Promise.reject({...error, title: error.title || error.status})
 		);
 }
 

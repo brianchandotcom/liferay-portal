@@ -9,9 +9,4 @@
  * distribution rights of the Software.
  */
 
-export const ACCOUNTS_ADD_BUTTON_ENABLED = false;
-export const ACCOUNTS_DND_ENABLED = true;
-export const ACCOUNTS_CREATION_ENABLED = false;
 export const PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS = false;
-export const USER_INVITATION_ENABLED = false;
-export const USER_ROLES_DEFINITION_ENABLED = false;

@@ -14,9 +14,10 @@ import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
 import {deleteOrganization, updateOrganization} from '../data/organizations';
-import {PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS} from '../utils/flags';
+import {ACTION_KEYS} from '../utils/constants';
+import {hasPermission} from '../utils/index';
 
-export default function OrganizationMenuContent({closeMenu, data, parentData}) {
+export default function OrganizationMenuContent({closeMenu, data}) {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	function handleDelete() {
@@ -30,10 +31,6 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 		) {
 			deleteOrganization(data.id).then(() => {
 				chartInstanceRef.current.deleteNodes([data], true);
-				chartInstanceRef.current.updateNodeContent({
-					...parentData,
-					numberOfOrganizations: parentData.numberOfOrganizations - 1,
-				});
 
 				closeMenu();
 			});
@@ -54,15 +51,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 			updateOrganization(data.id, {
 				parentOrganization: {},
 			}).then(() => {
-				chartInstanceRef.current.deleteNodes([data], true);
-
-				if (parentData) {
-					chartInstanceRef.current.updateNodeContent({
-						...parentData,
-						numberOfOrganizations:
-							parentData.numberOfOrganizations - 1,
-					});
-				}
+				chartInstanceRef.current.deleteNodes([data], false);
 
 				closeMenu();
 			});
@@ -71,7 +60,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 
 	const actions = [];
 
-	if (!PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS) {
+	if (hasPermission(data, ACTION_KEYS.organization.REMOVE_ORGANIZATION)) {
 		actions.push(
 			<ClayDropDown.Item key="remove" onClick={handleRemove}>
 				{Liferay.Language.get('remove')}
@@ -79,7 +68,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 		);
 	}
 
-	if (!PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS) {
+	if (hasPermission(data, ACTION_KEYS.organization.DELETE_ORGANIZATION)) {
 		actions.push(
 			<ClayDropDown.Item key="delete" onClick={handleDelete}>
 				{Liferay.Language.get('delete')}

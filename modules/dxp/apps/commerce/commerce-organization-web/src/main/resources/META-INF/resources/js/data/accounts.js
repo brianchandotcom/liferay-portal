@@ -16,24 +16,23 @@ const ACCOUNTS_MOVING_ENDPOINT =
 	'/o/headless-admin-user/v1.0/organizations/move-accounts';
 const ACCOUNTS_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/accounts';
 
-export function getAccounts(query) {
+export function getAccounts(query, organizationIds = []) {
 	const url = new URL(ACCOUNTS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
 
-	url.searchParams.append('search', query);
+	if (query) {
+		url.searchParams.append('search', query);
+	}
+
+	if (organizationIds.length) {
+		url.searchParams.append(
+			'filter',
+			`${organizationIds
+				.map((id) => `(organizationIds eq '${id}')`)
+				.join(' or ')}`
+		);
+	}
 
 	return fetchFromHeadless(url);
-}
-
-export function addUserEmailsToAccount(accountId, roleIds, emails) {
-	const url = new URL(
-		`${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/account-users/by-email-address/${roleIds}`,
-		themeDisplay.getPortalURL()
-	);
-
-	return fetchFromHeadless(url, {
-		body: JSON.stringify(emails),
-		method: 'POST',
-	}).then((response) => response.items);
 }
 
 export function deleteAccount(id) {

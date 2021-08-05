@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -175,6 +176,43 @@ public class FileEntryContentDashboardItemTest {
 		Assert.assertEquals(
 			Collections.singletonList(assetTag),
 			fileEntryContentDashboardItem.getAssetTags());
+	}
+	@Test
+	public void testGetAuthorAvatar() throws Exception {
+
+		User user = Mockito.mock(User.class);
+
+		Mockito.when(
+			user.getUserId()
+		).thenReturn(
+			1L
+		);
+
+		Mockito.when(
+			user.getScreenName()
+		).thenReturn(
+			"Screen Name"
+		);
+
+		Mockito.when(
+			user.getCompanyId()
+		).thenReturn(
+			123L
+		);
+
+		FileEntry fileEntry = _getFileEntry();
+		fileEntry.setCompanyId(123L);
+		fileEntry.setUserId(1L);
+
+		FileEntryContentDashboardItem fileEntryContentDashboardItem =
+			new FileEntryContentDashboardItem(
+				null, null, null, null,
+				fileEntry, null, null, null, null);
+
+		String expectedResult = "aaa";
+		Assert.assertEquals(
+			expectedResult,
+			fileEntryContentDashboardItem.getUserAvatarURL(_getHttpServletRequest(1L)));
 	}
 
 	@Test

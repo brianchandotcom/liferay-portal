@@ -26,9 +26,6 @@ import java.io.Serializable;
  */
 public class OpenIdConnectAuthenticationSession implements Serializable {
 
-	public static final String SESSION =
-		"OPEN_ID_CONNECT_AUTHENTICATION_SESSION";
-
 	public OpenIdConnectAuthenticationSession(
 		String providerName, Nonce nonce, State state) {
 

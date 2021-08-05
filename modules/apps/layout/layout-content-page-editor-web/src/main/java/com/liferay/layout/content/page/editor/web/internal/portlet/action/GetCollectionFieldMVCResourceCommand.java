@@ -187,16 +187,8 @@ public class GetCollectionFieldMVCResourceCommand
 					defaultLayoutListRetrieverContext =
 						new DefaultLayoutListRetrieverContext();
 
-				JSONObject configJSONObject =
-					layoutObjectReferenceJSONObject.getJSONObject("config");
-
-				Map<String, String[]> configuration = _getConfiguration(
-					configJSONObject);
-
-				if (configuration != null) {
-					defaultLayoutListRetrieverContext.setConfiguration(
-						configuration);
-				}
+				defaultLayoutListRetrieverContext.setConfiguration(
+					_getConfiguration(layoutObjectReferenceJSONObject));
 
 				Object infoItem = _getInfoItem(httpServletRequest);
 
@@ -318,7 +310,10 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private Map<String, String[]> _getConfiguration(
-		JSONObject configurationJSONObject) {
+		JSONObject layoutObjectReferenceJSONObject) {
+
+		JSONObject configurationJSONObject =
+			layoutObjectReferenceJSONObject.getJSONObject("config");
 
 		if (configurationJSONObject == null) {
 			return null;

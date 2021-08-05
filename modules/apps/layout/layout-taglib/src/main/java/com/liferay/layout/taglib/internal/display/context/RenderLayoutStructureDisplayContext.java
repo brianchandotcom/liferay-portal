@@ -177,16 +177,8 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
 
-		JSONObject configurationJSONObject = collectionJSONObject.getJSONObject(
-			"config");
-
-		Map<String, String[]> configuration = _getConfiguration(
-			configurationJSONObject);
-
-		if (configuration != null) {
-			defaultLayoutListRetrieverContext.setConfiguration(configuration);
-		}
-
+		defaultLayoutListRetrieverContext.setConfiguration(
+			_getConfiguration(collectionJSONObject));
 		defaultLayoutListRetrieverContext.setContextObject(
 			Optional.ofNullable(
 				_httpServletRequest.getAttribute(
@@ -282,16 +274,8 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
 
-		JSONObject configurationJSONObject = collectionJSONObject.getJSONObject(
-			"config");
-
-		Map<String, String[]> configuration = _getConfiguration(
-			configurationJSONObject);
-
-		if (configuration != null) {
-			defaultLayoutListRetrieverContext.setConfiguration(configuration);
-		}
-
+		defaultLayoutListRetrieverContext.setConfiguration(
+			_getConfiguration(collectionJSONObject));
 		defaultLayoutListRetrieverContext.setContextObject(
 			Optional.ofNullable(
 				_httpServletRequest.getAttribute(
@@ -1095,7 +1079,10 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	private Map<String, String[]> _getConfiguration(
-		JSONObject configurationJSONObject) {
+		JSONObject collectionJSONObject) {
+
+		JSONObject configurationJSONObject = collectionJSONObject.getJSONObject(
+			"config");
 
 		if (configurationJSONObject == null) {
 			return null;

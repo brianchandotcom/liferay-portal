@@ -150,6 +150,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setIndexedLanguageId(RandomTestUtil.randomString());
 
+		newObjectField.setLabel(RandomTestUtil.randomString());
+
 		newObjectField.setName(RandomTestUtil.randomString());
 
 		newObjectField.setRequired(RandomTestUtil.randomBoolean());
@@ -198,6 +200,8 @@ public class ObjectFieldPersistenceTest {
 		Assert.assertEquals(
 			existingObjectField.getIndexedLanguageId(),
 			newObjectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			existingObjectField.getLabel(), newObjectField.getLabel());
 		Assert.assertEquals(
 			existingObjectField.getName(), newObjectField.getName());
 		Assert.assertEquals(
@@ -278,8 +282,8 @@ public class ObjectFieldPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
 			true, "dbColumnName", true, "dbTableName", true, "indexed", true,
-			"indexedAsKeyword", true, "indexedLanguageId", true, "name", true,
-			"required", true, "type", true);
+			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
+			"name", true, "required", true, "type", true);
 	}
 
 	@Test
@@ -584,6 +588,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
 
 		objectField.setIndexedLanguageId(RandomTestUtil.randomString());
+
+		objectField.setLabel(RandomTestUtil.randomString());
 
 		objectField.setName(RandomTestUtil.randomString());
 

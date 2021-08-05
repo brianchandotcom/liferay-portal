@@ -140,6 +140,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setDBTableName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setLabel(RandomTestUtil.randomString());
+
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setPKObjectFieldDBColumnName(
@@ -186,6 +188,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getDBTableName(),
 			newObjectDefinition.getDBTableName());
+		Assert.assertEquals(
+			existingObjectDefinition.getLabel(),
+			newObjectDefinition.getLabel());
 		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
 		Assert.assertEquals(
@@ -285,9 +290,9 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"dbTableName", true, "name", true, "pkObjectFieldDBColumnName",
-			true, "pkObjectFieldName", true, "scope", true, "system", true,
-			"version", true, "status", true);
+			"dbTableName", true, "label", true, "name", true,
+			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
+			"scope", true, "system", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -591,6 +596,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
 		objectDefinition.setDBTableName(RandomTestUtil.randomString());
+
+		objectDefinition.setLabel(RandomTestUtil.randomString());
 
 		objectDefinition.setName(RandomTestUtil.randomString());
 

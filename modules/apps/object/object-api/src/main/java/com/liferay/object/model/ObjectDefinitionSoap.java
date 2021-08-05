@@ -42,6 +42,7 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDBTableName(model.getDBTableName());
+		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
 		soapModel.setPKObjectFieldDBColumnName(
 			model.getPKObjectFieldDBColumnName());
@@ -183,6 +184,14 @@ public class ObjectDefinitionSoap implements Serializable {
 		_dbTableName = dbTableName;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -252,6 +261,7 @@ public class ObjectDefinitionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _dbTableName;
+	private String _label;
 	private String _name;
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;

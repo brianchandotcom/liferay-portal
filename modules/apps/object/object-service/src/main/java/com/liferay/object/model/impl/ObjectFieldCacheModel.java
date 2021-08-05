@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class ObjectFieldCacheModel
 		sb.append(indexedAsKeyword);
 		sb.append(", indexedLanguageId=");
 		sb.append(indexedLanguageId);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", required=");
@@ -182,6 +184,13 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setIndexedLanguageId(indexedLanguageId);
 		}
 
+		if (label == null) {
+			objectFieldImpl.setLabel("");
+		}
+		else {
+			objectFieldImpl.setLabel(label);
+		}
+
 		if (name == null) {
 			objectFieldImpl.setName("");
 		}
@@ -225,6 +234,7 @@ public class ObjectFieldCacheModel
 
 		indexedAsKeyword = objectInput.readBoolean();
 		indexedLanguageId = objectInput.readUTF();
+		label = objectInput.readUTF();
 		name = objectInput.readUTF();
 
 		required = objectInput.readBoolean();
@@ -285,6 +295,13 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(indexedLanguageId);
 		}
 
+		if (label == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -316,6 +333,7 @@ public class ObjectFieldCacheModel
 	public boolean indexed;
 	public boolean indexedAsKeyword;
 	public String indexedLanguageId;
+	public String label;
 	public String name;
 	public boolean required;
 	public String type;

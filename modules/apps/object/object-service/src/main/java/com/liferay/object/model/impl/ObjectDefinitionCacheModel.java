@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", dbTableName=");
 		sb.append(dbTableName);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", pkObjectFieldDBColumnName=");
@@ -162,6 +164,13 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setDBTableName(dbTableName);
 		}
 
+		if (label == null) {
+			objectDefinitionImpl.setLabel("");
+		}
+		else {
+			objectDefinitionImpl.setLabel(label);
+		}
+
 		if (name == null) {
 			objectDefinitionImpl.setName("");
 		}
@@ -214,6 +223,7 @@ public class ObjectDefinitionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		dbTableName = objectInput.readUTF();
+		label = objectInput.readUTF();
 		name = objectInput.readUTF();
 		pkObjectFieldDBColumnName = objectInput.readUTF();
 		pkObjectFieldName = objectInput.readUTF();
@@ -260,6 +270,13 @@ public class ObjectDefinitionCacheModel
 			objectOutput.writeUTF(dbTableName);
 		}
 
+		if (label == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -304,6 +321,7 @@ public class ObjectDefinitionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String dbTableName;
+	public String label;
 	public String name;
 	public String pkObjectFieldDBColumnName;
 	public String pkObjectFieldName;

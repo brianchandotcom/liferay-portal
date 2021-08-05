@@ -809,9 +809,7 @@ definition {
 
 		FormsAdminNavigator.gotoPreviewForm();
 
-		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
-
-		Form.viewFormTemporarilyNotAvailableMessage();
+		Alert.viewErrorMessage(errorMessage = "Error:Please add at least one field.");
 	}
 
 	@description = "Verify that a rule with an (Is empty) condition can be previewed"

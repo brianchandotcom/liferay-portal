@@ -137,7 +137,9 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 					ResourceBundleUtil.getString(
 						resourceBundle, "an-unexpected-error-occurred"));
 
-				_log.error(portalException.getMessage(), portalException);
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException.getMessage(), portalException);
+				}
 			}
 
 			JSONPortletResponseUtil.writeJSON(

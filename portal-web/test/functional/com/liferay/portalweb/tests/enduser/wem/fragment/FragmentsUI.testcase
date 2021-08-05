@@ -281,6 +281,31 @@ definition {
 	@priority = "3"
 	test ViewOrderOfFragmentsActions {
 
+		var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
+		var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
+
+		task ("Add a draft fragment") {
+			JSONFragment.addSection(
+					collectionName = "Collection Name",
+					configuration = "${jsonSnippet}",
+					fragmentStatus = "Draft",
+					groupName = "Test Site Name",
+					html = "${htmlSnippet}",
+					name = "Draft Fragment Example");
+		}
+
+		task ("Add an approved fragment") {
+			JSONFragment.addSection(
+					collectionName = "Collection Name",
+					configuration = "${jsonSnippet}",
+					fragmentStatus = "Approved",
+					groupName = "Test Site Name",
+					html = "${htmlSnippet}",
+					name = "Approved Fragment Example");
+		}
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
 		Pause(locator1 = "30000");
 	}
 

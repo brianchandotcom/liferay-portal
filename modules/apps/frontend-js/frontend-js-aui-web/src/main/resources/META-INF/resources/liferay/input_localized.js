@@ -45,9 +45,23 @@ AUI.add(
 			_instances: {},
 
 			ATTRS: {
+				activeLocales: {
+					validator: Lang.isArray,
+				},
+
+				adminMode: {
+					validator: Lang.isBoolean,
+					value: false,
+				},
+
 				animateClass: {
 					validator: Lang.isString,
 					value: 'highlight-animation',
+				},
+
+				availableLocales: {
+					validator: Lang.isObject,
+					value: [],
 				},
 
 				defaultLanguageId: {
@@ -141,6 +155,10 @@ AUI.add(
 			NAME: 'input-localized',
 
 			prototype: {
+				_State: null,
+
+				_activeLocalesAtom: null,
+
 				_animate(input, shouldFocus) {
 					var instance = this;
 
@@ -169,6 +187,27 @@ AUI.add(
 
 				_animating: null,
 
+				_availableLanguagesSubscription: null,
+
+				_bindManageTranslationsButton() {
+					var instance = this;
+
+					var boundingBox = instance.get('boundingBox');
+
+					if (instance.get('adminMode')) {
+						var manageTranslationsButton = boundingBox.one(
+							'#manage-translations'
+						);
+
+						instance._eventHandles.push(
+							manageTranslationsButton.on(
+								'click',
+								A.bind('_onManageTranslationsClick', instance)
+							)
+						);
+					}
+				},
+
 				_clearFormValidator(input) {
 					var form = input.get('form');
 
@@ -184,6 +223,8 @@ AUI.add(
 				},
 
 				_flags: null,
+
+				_flagsInitialContent: null,
 
 				_getInputLanguage(languageId) {
 					var instance = this;
@@ -255,6 +296,14 @@ AUI.add(
 					}
 				},
 
+				_onActiveLocalesChange(activeLocales) {
+					var instance = this;
+
+					instance.set('activeLocales', activeLocales);
+
+					instance._renderActiveLocales();
+				},
+
 				_onDefaultLocaleChanged(event) {
 					var instance = this;
 
@@ -319,6 +368,76 @@ AUI.add(
 					instance.selectFlag(languageId, event.source === instance);
 				},
 
+				_onManageTranslationsClick() {
+					var instance = this;
+
+					Liferay.Loader.require(
+						['frontend-js-components-web@2.0.7/index'],
+
+						(frontendJsComponentsWebModule) => {
+							var modalContainerId =
+								instance.get('namespace') + 'modal-container';
+
+							if (!document.getElementById(modalContainerId)) {
+								var modalContainer = document.createElement(
+									'div'
+								);
+								document.body.appendChild(modalContainer);
+							}
+
+							var availableLocales = Object.entries(
+								instance.get('availableLocales')
+							).map((entry) => {
+								var key = entry[0];
+								var value = entry[1];
+
+								var label = key.replace(/_/, '-');
+
+								return {
+									displayName: value,
+									id: key,
+									label,
+									symbol: label.toLowerCase(),
+								};
+							});
+
+							var translations = instance
+								.get('translatedLanguages')
+								.values()
+								.reduce((accumulator, item) => {
+									var language = item.replace(/_/, '-');
+
+									if (!accumulator[language]) {
+										accumulator[language] = language;
+									}
+
+									return accumulator;
+								}, {});
+
+							var props = {
+								activeLocales: instance.get('activeLocales'),
+								availableLocales,
+								defaultLocaleId: instance.get(
+									'defaultLanguageId'
+								),
+								onClose(newActiveLocales) {
+									instance._State.writeAtom(
+										instance._activeLocalesAtom,
+										newActiveLocales
+									);
+								},
+								translations,
+								visible: true,
+							};
+
+							frontendJsComponentsWebModule.renderTranslationAdminModal(
+								modalContainer,
+								props
+							);
+						}
+					);
+				},
+
 				_onSelectFlag(event) {
 					var instance = this;
 
@@ -337,6 +456,63 @@ AUI.add(
 						instance._onInputValueChange.apply(instance, arguments);
 
 						InputLocalized.unregister(input.attr('id'));
+					}
+				},
+
+				_renderActiveLocales() {
+					var instance = this;
+
+					var activeLocales = instance.get('activeLocales');
+
+					var selectedLanguageId = instance.getSelectedLanguageId();
+
+					var currentFlagsNode = instance._flags.getDOMNode();
+
+					var newFlagsNode = instance._flagsInitialContent
+						.cloneNode(true)
+						.getDOMNode();
+
+					Object.entries(instance.get('availableLocales')).forEach(
+						(entry) => {
+							var key = entry[0];
+
+							var localeNode = newFlagsNode.querySelector(
+								'[data-languageid="' + key + '"]'
+							)?.parentElement;
+
+							if (!activeLocales.includes(key)) {
+								if (localeNode) {
+									newFlagsNode.removeChild(localeNode);
+								}
+
+								instance.removeInputLanguage(key);
+
+								if (key === selectedLanguageId) {
+									instance.selectFlag(
+										instance.get('defaultLanguageId')
+									);
+								}
+							}
+							else {
+								var currentlocaleNode = currentFlagsNode.querySelector(
+									'[data-languageid="' + key + '"]'
+								)?.parentElement;
+
+								if (currentlocaleNode) {
+									localeNode.innerHTML =
+										currentlocaleNode.innerHTML;
+								}
+							}
+						}
+					);
+
+					currentFlagsNode.innerHTML = newFlagsNode.innerHTML;
+
+					var boundingBox = instance.get('boundingBox');
+					instance._flags = boundingBox.one('.palette-container');
+
+					if (instance.get('adminMode')) {
+						instance._bindManageTranslationsButton();
 					}
 				},
 
@@ -470,6 +646,10 @@ AUI.add(
 					InputLocalized.unregister(instance.get('instanceId'));
 
 					new A.EventHandle(instance._eventHandles).detach();
+
+					if (instance._availableLanguagesSubscription) {
+						instance._availableLanguagesSubscription.dispose();
+					}
 				},
 
 				getSelectedLanguageId() {
@@ -549,6 +729,43 @@ AUI.add(
 						'#' + inputPlaceholder.attr('id') + '_desc'
 					);
 					instance._flags = boundingBox.one('.palette-container');
+
+					var activeLocales = instance.get('activeLocales');
+
+					if (activeLocales) {
+						instance._flagsInitialContent = instance._flags.cloneNode(
+							true
+						);
+
+						instance._renderActiveLocales();
+
+						Liferay.Loader.require(
+							[
+								'@liferay/frontend-js-state-web@1.0.6/index',
+								'frontend-js-components-web@2.0.7/index',
+							],
+
+							(stateModule, frontendJsComponentsWebModule) => {
+								instance._State = stateModule.State;
+								instance._activeLocalesAtom =
+									frontendJsComponentsWebModule.activeLocalesAtom;
+
+								var State = instance._State;
+								var activeLocalesAtom =
+									instance._activeLocalesAtom;
+
+								State.writeAtom(
+									activeLocalesAtom,
+									activeLocales
+								);
+
+								instance._availableLanguagesSubscription = State.subscribe(
+									activeLocalesAtom,
+									A.bind('_onActiveLocalesChange', instance)
+								);
+							}
+						);
+					}
 				},
 
 				removeInputLanguage(languageId) {

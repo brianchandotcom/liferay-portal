@@ -166,12 +166,35 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
-	@ignore = "true"
 	@priority = "5"
 	test PageViewsUpdateInRealTime {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8150 Usage#PageViewsUpdateInRealTime pending implementation
+		ACUtils.launchAC();
 
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		var currentPageViews = selenium.getText(locator1 = "ACUsage#USAGE_CURRENT_PAGE_VIEWS");
+
+		ACUtils.launchDXP();
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		AssertTextNotEquals(
+			locator1 = "ACUsage#USAGE_CURRENT_PAGE_VIEWS",
+			value1 = "${currentPageViews}");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"

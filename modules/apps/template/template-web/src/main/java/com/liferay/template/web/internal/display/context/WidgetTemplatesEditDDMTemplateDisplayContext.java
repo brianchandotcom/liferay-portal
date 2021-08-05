@@ -48,13 +48,11 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-		String script = "<#-- Empty script -->";
-
 		if (templateHandler != null) {
-			script = templateHandler.getTemplatesHelpContent(getLanguage());
+			return templateHandler.getTemplatesHelpContent(getLanguage());
 		}
 
-		return script;
+		return "<#-- Empty script -->";
 	}
 
 	@Override

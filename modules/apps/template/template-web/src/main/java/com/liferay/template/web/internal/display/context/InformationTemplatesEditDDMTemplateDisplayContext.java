@@ -138,28 +138,30 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				infoForm.getInfoFieldSetEntries()) {
 
-			if (infoFieldSetEntry instanceof InfoFieldSet) {
-				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
-
-				TemplateVariableGroup templateVariableGroup =
-					new TemplateVariableGroup(
-						infoFieldSet.getLabel(_themeDisplay.getLocale()));
-
-				for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
-					InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-					templateVariableGroup.addFieldVariable(
-						infoField.getLabel(_themeDisplay.getLocale()),
-						TemplateNode.class, infoField.getName(),
-						infoField.getLabel(_themeDisplay.getLocale()),
-						infoFieldType.getName(), infoField.isMultivalued(),
-						_templateVariableCodeHandler);
-				}
-
-				additionalTemplateVariableGroups.put(
-					infoFieldSet.getLabel(_themeDisplay.getLocale()),
-					templateVariableGroup);
+			if (!(infoFieldSetEntry instanceof InfoFieldSet)) {
+				continue;
 			}
+
+			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+			TemplateVariableGroup templateVariableGroup =
+				new TemplateVariableGroup(
+					infoFieldSet.getLabel(_themeDisplay.getLocale()));
+
+			for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
+				InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+				templateVariableGroup.addFieldVariable(
+					infoField.getLabel(_themeDisplay.getLocale()),
+					TemplateNode.class, infoField.getName(),
+					infoField.getLabel(_themeDisplay.getLocale()),
+					infoFieldType.getName(), infoField.isMultivalued(),
+					_templateVariableCodeHandler);
+			}
+
+			additionalTemplateVariableGroups.put(
+				infoFieldSet.getLabel(_themeDisplay.getLocale()),
+				templateVariableGroup);
 		}
 
 		return additionalTemplateVariableGroups;

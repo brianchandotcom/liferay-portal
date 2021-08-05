@@ -816,6 +816,99 @@ definition {
 		}
 	}
 
+	@description = "LPS-136345 Given a document created in an Asset Library
+	When the user goes to the content dashboard
+	Then the user can see the document listed"
+	@priority = "5"
+	test DocumentFromAssetLibraryIsListed {
+		property portal.acceptance = "true";
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Add an Asset Library") {
+			JSONDepot.addDepot(
+				depotDescription = "This is the description",
+				depotName = "Test Depot Name");
+		}
+
+		task ("Add a document to the previous Asset Library created") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Asset Library 1",
+				groupName = "Test Depot Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Go to the Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Assert that both documents appear in the table") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "DM Document Asset Library 1");
+		}
+
+		task ("Delete the Asset Library") {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	@description = "LPS-136345 Given a document created in site A in the instance and another one created in the site B
+	When the user goes to the content dashboard
+	Then the user can see both listed"
+	@priority = "5"
+	test DocumentsFromDifferentSitesAreListed {
+		property portal.acceptance = "true";
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		
+		task ("Add two different sites") {
+			JSONGroup.addGroup(groupName = "Site Name 1");
+
+			JSONGroup.addGroup(groupName = "Site Name 2");
+		}
+
+		task ("Add a document for each site") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-1");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Site 1");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-2");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_2.txt",
+				dmDocumentTitle = "DM Document Site 2");
+		}
+
+		task ("Go to the Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Assert that both documents appear in the table") {
+			ContentDashboard.searchValue(webContentTitle = "DM Document Site 1");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "DM Document Site 1");
+
+			ContentDashboard.searchValue(webContentTitle = "DM Document Site 2");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "DM Document Site 2");
+		}
+	}
+
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
 	test EditWebContent {

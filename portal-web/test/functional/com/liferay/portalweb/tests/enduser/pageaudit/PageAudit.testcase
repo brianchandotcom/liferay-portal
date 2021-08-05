@@ -63,10 +63,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-127668: Given the page audit panel
-	When the users access the second level
-	Then they can see the title of the issue, the description and tips sections"
-
 	@priority = "4"
 	@uitest
 	test NavigateToSecondLevel {
@@ -115,6 +111,42 @@ definition {
 				value1 = "color-contrast");
 		}
 	}
+	
+	@description = "LPS-135681 Given the Page Audit panel in its initial state (no API Key configured)
+    When the user clicks on the Configure button
+    Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
+
+	@priority = "4"
+	test NavigateToSiteSettingsWhenApiKeyNotConfigured {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#NavigateToSiteSettingsWhenApiKeyNotConfigured";
+
+		task ("Open Page Audit panel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelBeforeConfiguration();
+
+			AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
+
+		task ("Go to Site settings > Pages throught the 'Configure' button in panel and Assert page") {
+			PageAudit.connectToGooglePageAudit();
+
+			AssertElementPresent(
+				key_breadcrumbName = "Site Settings",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+			AssertTextPresent(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
+				value1 = "Pages");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+				value1 = "Google PageSpeed Insights");
+		}
+	}
 
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
 	@priority = "3"
@@ -157,41 +189,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
-		}
-	}
-
-	@description = "LPS-136430 Given the Page Audit panel in its initial state (no API Key configured)
-    When the user clicks on the Configure button
-    Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
-	@priority = "4"
-	test NavigateToSiteSettingsWhenApiKeyNotConfigured {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#NavigateToSiteSettingsWhenApiKeyNotConfigured";
-
-		task ("Open Page Audit panel") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-			
-			PageAudit.openPanelBeforeConfiguration();
-
-			AssertTextPresent(
-				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-				value1 = "Check issues that impact on your page's accessibility and SEO.");
-		}
-
-		task ("Go to Site settings > Pages throught the 'Configure' button in panel and Assert page") {
-			PageAudit.connectToGooglePageAudit();
-
-			AssertElementPresent(
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
-				key_breadcrumbName = "Site Settings");
-
-			AssertTextPresent(
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
-				value1 = "Pages");
-			
-			AssertTextPresent(
-				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-				value1 = "Google PageSpeed Insights");
 		}
 	}
 
@@ -466,10 +463,6 @@ definition {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
-
-	@description = "LPS-132232: Given the Page Audit Panel
-	When the user opens it and there are no failing elements retrieved for any of the checks
-	Then a message "Your page has no issues" and the matching image show, the two sections SEO and Accessibility show and they are collapsed by default"
 
 	@priority = "3"
 	@uitest

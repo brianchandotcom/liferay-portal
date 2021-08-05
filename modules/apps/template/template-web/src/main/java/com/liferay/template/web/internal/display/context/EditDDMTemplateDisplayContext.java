@@ -330,11 +330,11 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	private String _getEditorMode() {
-		if (Objects.equals(getLanguage(), "ftl")) {
-			return "ftl";
+		if (Objects.equals(getLanguage(), TemplateConstants.LANG_TYPE_FTL)) {
+			return TemplateConstants.LANG_TYPE_FTL;
 		}
 
-		return "velocity";
+		return TemplateConstants.LANG_TYPE_VM;
 	}
 
 	private ResourceBundle _getResourceBundle() {

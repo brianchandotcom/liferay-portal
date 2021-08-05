@@ -191,8 +191,6 @@ while (manageableCalendarsIterator.hasNext()) {
 		manageableCalendarsIterator.remove();
 	}
 }
-
-String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
 %>
 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
@@ -278,7 +276,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLo
 			<aui:model-context bean="<%= calendarBooking %>" model="<%= CalendarBooking.class %>" />
 
 			<aui:fieldset markupView="lexicon">
-				<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="title" />
+				<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="title" />
 
 				<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
 					<aui:input ignoreRequestValue="<%= true %>" label="starts" name="startTime" timeFormat="<%= timeFormat %>" value="<%= startTimeJCalendar %>" />
@@ -296,7 +294,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLo
 					<a class="calendar-portlet-recurrence-summary" href="javascript:;" id="<portlet:namespace />summary"></a>
 				</aui:field-wrapper>
 
-				<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="description" />
+				<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="description" />
 			</aui:fieldset>
 
 			<aui:fieldset markupView="lexicon">
@@ -615,7 +613,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLo
 	<c:if test="<%= Validator.isNotNull(titleCurrentValue) && ((calendarBooking == null) || !Objects.equals(titleCurrentValue, calendarBooking.getTitle(locale))) %>">
 		document.<portlet:namespace />fm.<portlet:namespace />title.value =
 			'<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
-		document.<portlet:namespace />fm.<portlet:namespace />title_<%= defaultLanguageId %>.value =
+		document.<portlet:namespace />fm.<portlet:namespace />title_<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>.value =
 			'<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
 	</c:if>
 </aui:script>

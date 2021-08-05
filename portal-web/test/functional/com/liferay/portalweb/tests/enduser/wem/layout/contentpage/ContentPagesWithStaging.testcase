@@ -66,9 +66,7 @@ definition {
 		task ("Cannot view sitemap of staging site as Guest") {
 			Navigator.openSpecificURL(url = "http://test.test:8080/sitemap.xml");
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Forbidden");
+			AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
 		}
 	}
 

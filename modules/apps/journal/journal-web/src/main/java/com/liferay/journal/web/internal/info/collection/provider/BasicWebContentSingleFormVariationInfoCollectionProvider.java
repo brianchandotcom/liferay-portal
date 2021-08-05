@@ -215,11 +215,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
 		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
 
 		if (sortOptional.isPresent()) {
@@ -233,6 +228,11 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		}
 
 		searchContext.setStart(pagination.getStart());
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
 	}

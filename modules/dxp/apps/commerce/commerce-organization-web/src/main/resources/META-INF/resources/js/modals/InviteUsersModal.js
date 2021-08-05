@@ -19,10 +19,12 @@ import {openToast} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ChartContext from '../ChartContext';
-import { addUserEmailsToAccount } from '../data/accounts';
-import {addUserEmailsToOrganization} from '../data/organizations';
-import {getAccountRoles, getOrganizationRoles} from '../data/users';
-import {USER_ROLES_DEFINITION_ENABLED} from '../utils/flags';
+import {
+	addUserEmailsToAccount,
+	addUserEmailsToOrganization,
+	getAccountRoles,
+	getOrganizationRoles,
+} from '../data/users';
 
 export default function InviteUserModal({closeModal, observer, parentData}) {
 	const [emailsQuery, setEmailsQuery] = useState('');
@@ -35,9 +37,10 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 
 	useEffect(() => {
 		if (parentData) {
-			const getRoles = parentData.type === 'organization' 
-				? getOrganizationRoles()
-				: getAccountRoles(parentData.id)
+			const getRoles =
+				parentData.type === 'organization'
+					? getOrganizationRoles()
+					: getAccountRoles(parentData.id);
 
 			getRoles.then(setRoles);
 		}
@@ -48,7 +51,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 			.map((email) => email.emailAddress)
 			.sort();
 
-		if(emailsQuery) {
+		if (emailsQuery) {
 			typedEmails.push(emailsQuery);
 		}
 
@@ -57,29 +60,29 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 				? addUserEmailsToOrganization
 				: addUserEmailsToAccount;
 
-		inviteUser(
-			parentData.id,
-			selectedRoleIds.join(','),
-			typedEmails
-		).then((users) => {
-			openToast({
-				message: Liferay.Util.sub(
-					Liferay.Language.get('x-users-added-to-x'),
-					users.length,
-					parentData.name
-				),
-				type: 'success',
+		inviteUser(parentData.id, selectedRoleIds.join(','), typedEmails)
+			.then((users) => {
+				openToast({
+					message: Liferay.Util.sub(
+						Liferay.Language.get('x-users-added-to-x'),
+						users.length,
+						parentData.name
+					),
+					type: 'success',
+				});
+
+				chartInstanceRef.current.addNodes(users, 'user', parentData);
+
+				chartInstanceRef.current.updateNodeContent({
+					...parentData,
+					numberOfUsers: parentData.numberOfUsers + users.length,
+				});
+
+				closeModal();
+			})
+			.catch((error) => {
+				setErrors([error.title]);
 			});
-
-			chartInstanceRef.current.addNodes(users, 'user', parentData);
-
-			chartInstanceRef.current.updateNodeContent({
-				...parentData,
-				numberOfUsers: parentData.numberOfUsers + users.length,
-			});
-
-			closeModal();
-		});
 	}
 
 	return (
@@ -94,6 +97,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 				>
 					<label htmlFor="inviteUsersEmailInput">
 						{Liferay.Language.get('email')}
+
 						<ClayIcon
 							className="ml-1 reference-mark"
 							symbol="asterisk"
@@ -119,46 +123,45 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</ClayForm.Group>
-				{USER_ROLES_DEFINITION_ENABLED && (
-					<ClayForm.Group
-						className={classNames(errors.length && 'has-error')}
-					>
-						<label htmlFor="inviteUsersRoleInput">
-							{Liferay.Language.get('roles')}
-							<ClayIcon
-								className="ml-1 reference-mark"
-								symbol="asterisk"
-							/>
-						</label>
 
-						<ClaySelectBox
-							id="inviteUsersRoleInput"
-							items={roles.map((role) => ({
-								label: role.name,
-								value: role.id,
-							}))}
-							multiple
-							onSelectChange={setSelectedRoleIds}
-							size={5}
-							value={selectedRoleIds}
+				<ClayForm.Group
+					className={classNames(errors.length && 'has-error')}
+				>
+					<label htmlFor="inviteUsersRoleInput">
+						{Liferay.Language.get('roles')}
+						<ClayIcon
+							className="ml-1 reference-mark"
+							symbol="asterisk"
 						/>
+					</label>
 
-						<ClayInput.Group>
-							<ClayInput.GroupItem>
-								{!!errors.length && (
-									<ClayForm.FeedbackGroup>
-										{errors.map((error, i) => (
-											<ClayForm.FeedbackItem key={i}>
-												<ClayForm.FeedbackIndicator symbol="info-circle" />
-												{error}
-											</ClayForm.FeedbackItem>
-										))}
-									</ClayForm.FeedbackGroup>
-								)}
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</ClayForm.Group>
-				)}
+					<ClaySelectBox
+						id="inviteUsersRoleInput"
+						items={roles.map((role) => ({
+							label: role.name,
+							value: role.id,
+						}))}
+						multiple
+						onSelectChange={setSelectedRoleIds}
+						size={5}
+						value={selectedRoleIds}
+					/>
+
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							{!!errors.length && (
+								<ClayForm.FeedbackGroup>
+									{errors.map((error, i) => (
+										<ClayForm.FeedbackItem key={i}>
+											<ClayForm.FeedbackIndicator symbol="info-circle" />
+											{error}
+										</ClayForm.FeedbackItem>
+									))}
+								</ClayForm.FeedbackGroup>
+							)}
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

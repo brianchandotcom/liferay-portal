@@ -15,6 +15,7 @@ import {
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
 } from '../utils/constants';
 import {fetchFromHeadless} from '../utils/fetch';
+import {getAccounts} from './accounts';
 
 export const ORGANIZATIONS_ROOT_ENDPOINT =
 	'/o/headless-admin-user/v1.0/organizations';
@@ -38,19 +39,6 @@ export const createOrganizations = (names, parentOrganizationId) => {
 	);
 };
 
-export function addUserEmailsToOrganization(organizationId, roleIds, emails) {
-	const url = new URL(
-		`${ORGANIZATIONS_ROOT_ENDPOINT}/${organizationId}/user-accounts/by-email-address/${roleIds}`,
-		themeDisplay.getPortalURL()
-	)
-
-	return fetchFromHeadless(url, {
-		body: JSON.stringify(emails),
-		method: 'POST',
-	})
-		.then(response => response.items)
-}
-
 export function getOrganization(id) {
 	const url = new URL(
 		`${ORGANIZATIONS_ROOT_ENDPOINT}/${id}`,
@@ -62,7 +50,14 @@ export function getOrganization(id) {
 		`${ORGANIZATIONS_PROPERTY_NAME},${ACCOUNTS_PROPERTY_NAME},${USERS_PROPERTY_NAME_IN_ORGANIZATION}`
 	);
 
-	return fetchFromHeadless(url);
+	return fetchFromHeadless(url).then((organization) => {
+		return getAccounts(null, [organization.id]).then(
+			(accountsResponse) => ({
+				...organization,
+				[ACCOUNTS_PROPERTY_NAME]: accountsResponse.items,
+			})
+		);
+	});
 }
 
 export function getOrganizations(pageSize) {

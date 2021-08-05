@@ -10,25 +10,25 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
-import Autocomplete from 'commerce-frontend-js/components/autocomplete/Autocomplete'
+import Autocomplete from 'commerce-frontend-js/components/autocomplete/Autocomplete';
 
-export default function({
-    namespace,
-    rootOrganizationId,
-    rootOrganizationName,
-    wrapperId
+export default function ({
+	namespace,
+	rootOrganizationId,
+	rootOrganizationName,
+	wrapperId,
 }) {
-    render(
-        Autocomplete,
-        {
-            apiUrl: "/o/headless-admin-user/v1.0/organizations?flatten=true",
-            initialLabel: rootOrganizationName,
-            initialValue: rootOrganizationId,
-            inputName: `${namespace}preferences--rootOrganizationId--`,
-            itemsKey: "id",
-            itemsLabel: "name",
-            required: true
-        },
-        document.getElementById(wrapperId)
-    )
+	render(
+		Autocomplete,
+		{
+			apiUrl: '/o/headless-admin-user/v1.0/organizations?flatten=true',
+			initialLabel: rootOrganizationName,
+			initialValue: rootOrganizationId,
+			inputName: `${namespace}preferences--rootOrganizationId--`,
+			itemsKey: 'id',
+			itemsLabel: 'name',
+			required: false,
+		},
+		document.getElementById(wrapperId)
+	);
 }

@@ -12,13 +12,13 @@
 import {event as d3event, linkHorizontal} from 'd3';
 
 import {
+	ACTION_KEYS,
 	NODE_BUTTON_WIDTH,
 	NODE_PADDING,
 	RECT_SIZES,
 	SYMBOLS_MAP,
 } from './constants';
-import {USER_INVITATION_ENABLED} from './flags';
-import {formatItemDescription, formatItemName} from './index';
+import {formatItemDescription, formatItemName, hasPermissions} from './index';
 
 export function appendIcon(node, symbol, size, className) {
 	return node
@@ -106,10 +106,7 @@ export function fillAddButtons(nodeEnter, spritemap, openModal) {
 
 	createAddActionButton(actionsWrapper, 'account', openModal, spritemap);
 	createAddActionButton(actionsWrapper, 'organization', openModal, spritemap);
-
-	if (USER_INVITATION_ENABLED) {
-		createAddActionButton(actionsWrapper, 'user', openModal, spritemap);
-	}
+	createAddActionButton(actionsWrapper, 'user', openModal, spritemap);
 }
 
 export function fillEntityNode(nodeEnter, spritemap, openMenu) {
@@ -144,7 +141,14 @@ export function fillEntityNode(nodeEnter, spritemap, openMenu) {
 		.attr('class', 'node-description')
 		.text(formatItemDescription);
 
-	const menuWrapper = nodeEnter
+	const nodesWithMenu = nodeEnter.filter((chartItem) =>
+		hasPermissions(chartItem.data, [
+			ACTION_KEYS[chartItem.data.type].REMOVE,
+			ACTION_KEYS[chartItem.data.type].DELETE,
+		])
+	);
+
+	const menuWrapper = nodesWithMenu
 		.append('g')
 		.attr('class', 'node-menu-wrapper')
 		.attr('transform', (d) => {

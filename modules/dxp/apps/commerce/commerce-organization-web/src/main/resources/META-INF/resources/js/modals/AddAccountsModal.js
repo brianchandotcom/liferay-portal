@@ -19,7 +19,6 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import ChartContext from '../ChartContext';
 import {createAccount, getAccounts, updateAccount} from '../data/accounts';
-import {ACCOUNTS_CREATION_ENABLED} from '../utils/flags';
 
 function showNotFoundError(name) {
 	openToast({
@@ -176,25 +175,22 @@ export default function AddOrganizationModal({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{ACCOUNTS_CREATION_ENABLED && (
-					<ClayRadioGroup
-						className="mb-4"
-						onSelectedValueChange={updateNewAccountMode}
-						selectedValue={newAccountMode}
-					>
-						<ClayRadio
-							label={Liferay.Language.get(
-								'select-existing-accounts'
-							)}
-							value={false}
-						/>
+				<ClayRadioGroup
+					className="mb-4"
+					onSelectedValueChange={updateNewAccountMode}
+					selectedValue={newAccountMode}
+				>
+					<ClayRadio
+						label={Liferay.Language.get('select-existing-accounts')}
+						value={false}
+					/>
 
-						<ClayRadio
-							label={Liferay.Language.get('create-new-account')}
-							value={true}
-						/>
-					</ClayRadioGroup>
-				)}
+					<ClayRadio
+						label={Liferay.Language.get('create-new-account')}
+						value={true}
+					/>
+				</ClayRadioGroup>
+
 				{newAccountMode ? (
 					<ClayForm.Group
 						className={classNames(errors.length && 'has-error')}

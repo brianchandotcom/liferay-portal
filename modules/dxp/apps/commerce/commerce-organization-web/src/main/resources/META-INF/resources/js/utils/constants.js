@@ -9,25 +9,50 @@
  * distribution rights of the Software.
  */
 
-export const TRANSITIONS_DISABLED =
-	process.env.NODE_ENV === 'test' ? true : false;
-
-export const ID_PROPERTY_NAME_DEFINITIONS = {
-	account: 'id',
-	organization: 'id',
-	user: 'id',
+export const COUNTER_KEYS_MAP = {
+	account: 'numberOfAccounts',
+	organization: 'numberOfOrganizations',
+	user: 'numberOfUsers',
 };
 
+export const BRIEFS_KEYS_MAP = {
+	account: 'accountBriefs',
+	organization: 'organizationBriefs',
+};
+
+export const ACTION_KEYS = {
+	account: {
+		ADD_ENTITIES: 'update',
+		DELETE: 'delete',
+		MOVE: 'update',
+		REMOVE: 'update',
+	},
+	organization: {
+		ADD_ENTITIES: 'update',
+		DELETE: 'delete',
+		MOVE: 'update',
+		REMOVE: 'update',
+	},
+	user: {
+		ADD_ENTITIES: 'update',
+		DELETE: 'delete',
+		REMOVE: 'update',
+	},
+};
+
+export const TRANSITIONS_DISABLED = process.env.NODE_ENV === 'test';
 export const TRANSITION_TIME = 800;
+
 export const ORGANIZATIONS_PROPERTY_NAME = 'childOrganizations';
 export const ACCOUNTS_PROPERTY_NAME = 'organizationAccounts';
 export const USERS_PROPERTY_NAME_IN_ORGANIZATION = 'userAccounts';
 export const USERS_PROPERTY_NAME_IN_ACCOUNT = 'accountUserAccounts';
+
 export const MAX_NAME_LENGTH = {
 	account: 16,
 	organization: 18,
 	user: 14,
-} 
+};
 
 export const VIEWS = [
 	{

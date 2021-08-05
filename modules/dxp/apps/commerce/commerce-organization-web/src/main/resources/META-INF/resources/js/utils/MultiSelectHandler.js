@@ -9,11 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {ACCOUNTS_DND_ENABLED} from './flags';
+import {ACTION_KEYS} from './constants';
+import {hasPermission} from './index';
 
 export default class MultiSelectHandler {
 	constructor() {
-		this.items = null;
+		this.selectable = [];
+		this.unselectable = [];
 	}
 
 	updateSelectableItems(selectedNodes, nodesGroup) {
@@ -33,35 +35,56 @@ export default class MultiSelectHandler {
 			});
 		});
 
-		this.items = nodesGroup.selectAll('.chart-item');
+		const items = nodesGroup.selectAll('.chart-item');
 
-		this.items.each((d, index, nodeList) => {
+		items.each((d, index, nodeList) => {
 			if (
-				unselectableItemIds.has(d.data.chartNodeId) ||
-				d.data.type === 'user' ||
-				(d.data.type === 'account' && !ACCOUNTS_DND_ENABLED)
+				!unselectableItemIds.has(d.data.chartNodeId) &&
+				d.data.type !== 'user' &&
+				d.data.type !== 'add' &&
+				hasPermission(d.data, ACTION_KEYS[d.data.type].MOVE)
 			) {
-				nodeList[index].classList.add('unselectable');
-
-				d.data.selectable = false;
-			}
-			else {
 				nodeList[index].classList.add('selectable');
 
 				d.data.selectable = true;
+
+				this.selectable.push({
+					data: d.data,
+					node: nodeList[index],
+				});
+			}
+			else {
+				nodeList[index].classList.add('unselectable');
+
+				d.data.selectable = false;
+
+				this.unselectable.push({
+					data: d.data,
+					node: nodeList[index],
+				});
 			}
 		});
 	}
 
 	resetSelectableItems() {
-		if (this.items) {
-			this.items.each((d, index, nodeList) => {
-				nodeList[index].classList.remove('unselectable');
+		if (this.selectable.length) {
+			this.selectable.forEach((selectableNode) => {
+				selectableNode.node.classList.remove('selectable');
 
-				d.data.selectable = undefined;
+				selectableNode.data.selectable = undefined;
 			});
+
+			this.selectable = [];
 		}
 
-		this.items = null;
+		if (this.unselectable.length) {
+			this.unselectable.forEach((unselectableNode) => {
+				unselectableNode.node.classList.remove('unselectable');
+
+				unselectableNode.data.selectable = undefined;
+			});
+
+			this.unselectable = [];
+		}
 	}
 }

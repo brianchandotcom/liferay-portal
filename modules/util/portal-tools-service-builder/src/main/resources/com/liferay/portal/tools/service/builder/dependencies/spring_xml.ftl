@@ -5,6 +5,12 @@
 </#if>
 
 <#list entities as entity>
+	<#if entity.hasEntityColumns() && entity.hasPersistence() && serviceBuilder.isVersionGTE_7_3_0()>
+		<bean class="${packagePath}.service.persistence.impl.${entity.name}ModelArgumentsResolver" id="${packagePath}.service.persistence.impl.${entity.name}ModelArgumentsResolver" />
+	</#if>
+</#list>
+
+<#list entities as entity>
 	<#if entity.hasLocalService()>
 		<#assign sessionType = "Local" />
 

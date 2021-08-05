@@ -66,6 +66,8 @@ public interface ContentDashboardItem<T> {
 
 	public String getExtension();
 
+	public String getFileName();
+
 	public InfoItemReference getInfoItemReference();
 
 	public Date getModifiedDate();

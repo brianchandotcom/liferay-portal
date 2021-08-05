@@ -317,7 +317,7 @@ public class FileEntryContentDashboardItem
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("file-name");
+			infoItemFieldValues.getInfoFieldValue("fileName");
 
 		if (infoFieldValue == null) {
 			return StringPool.BLANK;
@@ -326,6 +326,11 @@ public class FileEntryContentDashboardItem
 		Object fileName = infoFieldValue.getValue();
 
 		return FileUtil.getExtension(fileName.toString());
+	}
+
+	@Override
+	public String getFileName() {
+		return _fileEntry.getFileName();
 	}
 
 	@Override

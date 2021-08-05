@@ -138,6 +138,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"extension", contentDashboardItem.getExtension()
 				).put(
+					"fileName", contentDashboardItem.getFileName()
+				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",

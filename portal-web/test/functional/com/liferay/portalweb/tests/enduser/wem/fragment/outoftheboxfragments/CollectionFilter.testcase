@@ -30,6 +30,186 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-111807. The user could enable search field in dropdown list of Collection Filter."
+	@priority = "5"
+	test EnableSearchFieldInDropdownList {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Size");
+		}
+
+		task ("Add 8 categories") {
+			for (var categoryName : list "6.5 inch,7 inch,7.5 inch,8 inch,8.5 inch") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "${categoryName}",
+					vocabularyName = "Size");
+			}
+
+			var 90inchId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "9 inch",
+				vocabularyName = "Size");
+
+			var 95inchId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "9.5 inch",
+				vocabularyName = "Size");
+
+			var 100inchId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "10 inch",
+				vocabularyName = "Size");
+		}
+
+		task ("Add the first web content with 10 inch") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${100inchId}",
+				content = "Air Force 1",
+				groupName = "Test Site Name",
+				title = "Air Force 1");
+		}
+
+		task ("Add the second web content with 9.5 inch") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${95inchId}",
+				content = "Air Jordan 1",
+				groupName = "Test Site Name",
+				title = "Air Jordan 1");
+		}
+
+		task ("Add the third web content with 9 inch") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${90inchId}",
+				content = "Air Max 1",
+				groupName = "Test Site Name",
+				title = "Air Max 1");
+		}
+
+		task ("Add a manual collection with All Types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Select all assets as collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			for (var assetName : list "Air Max 1,Air Jordan 1,Air Force 1") {
+				AssetListsAdmin.selectAsset(
+					assetName = "${assetName}",
+					assetType = "Basic Web Content");
+			}
+		}
+
+		task ("Add a collection page based on manual collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Select the Bordered List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bordered List",
+				selectedName = "Manual Collection");
+		}
+
+		task ("Add a Collection Filter above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Container");
+		}
+
+		task ("Select the Size vocabulary and Include Search Field in Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "6.5 inch,7 inch,7.5 inch,8 inch,8.5 inch,9 inch,9.5 inch,10 inch",
+				fragmentName = "Collection Filter",
+				includeSearchField = "true",
+				vocabularyName = "Size");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("View all web contents shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "Air Max 1,Air Jordan 1,Air Force 1") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Search 10 inch and select it in Collection Filter") {
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "10 inch",
+				multipleSelection = "true",
+				searchTerm = "10 inch",
+				selectedName = "10 inch",
+				title = "Size");
+		}
+
+		task ("View only the Air Force 1 shown in Collection Display") {
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Air Force 1']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Search 9 inch and select it in Collection Filter") {
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "9 inch",
+				multipleSelection = "true",
+				searchTerm = "9 inch",
+				selectedName = "9 inch",
+				title = "Size");
+		}
+
+		task ("View only the Air Max 1 shown in Collection Display") {
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Air Max 1']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "[normalize-space(text())='Air Jordan 1']",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+	}
+
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple categories in multiple filters."
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {

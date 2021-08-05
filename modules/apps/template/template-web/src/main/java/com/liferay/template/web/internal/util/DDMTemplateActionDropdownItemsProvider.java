@@ -128,8 +128,8 @@ public class DDMTemplateActionDropdownItemsProvider {
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).setMVCPath(
-					"/edit_ddm_template.jsp"
+				).setMVCRenderCommandName(
+					"/template/edit_ddm_template"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setTabs1(

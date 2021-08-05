@@ -133,8 +133,8 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				WebKeys.REDIRECT,
 				PortletURLBuilder.createRenderURL(
 					_portal.getLiferayPortletResponse(actionResponse)
-				).setMVCPath(
-					"/edit_ddm_template.jsp"
+				).setMVCRenderCommandName(
+					"/template/edit_ddm_template"
 				).setRedirect(
 					ParamUtil.getString(uploadPortletRequest, "redirect")
 				).setParameter(

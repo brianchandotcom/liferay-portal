@@ -95,8 +95,8 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				"redirectURL",
 				PortletURLBuilder.createRenderURL(
 					_portal.getLiferayPortletResponse(actionResponse)
-				).setMVCPath(
-					"/edit_ddm_template.jsp"
+				).setMVCRenderCommandName(
+					"/template/edit_ddm_template"
 				).setRedirect(
 					ParamUtil.getString(actionRequest, "redirect")
 				).setParameter(

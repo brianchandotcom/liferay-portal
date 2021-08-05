@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -67,7 +69,8 @@ public interface ObjectDefinitionLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object definition local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectDefinitionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectDefinition addCustomObjectDefinition(
-			long userId, String name, List<ObjectField> objectFields)
+			long userId, Map<Locale, String> labelMap, String name,
+			List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**
@@ -90,9 +93,10 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, String dbTableName, String name,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			int version, List<ObjectField> objectFields)
+			long userId, String dbTableName, Map<Locale, String> labelMap,
+			String name, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, int version,
+			List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**

@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -65,8 +67,9 @@ public interface ObjectFieldLocalService
 	 */
 	public ObjectField addCustomObjectField(
 			long userId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId, String name,
-			boolean required, String type)
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			String type)
 		throws PortalException;
 
 	/**
@@ -85,7 +88,8 @@ public interface ObjectFieldLocalService
 	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
+			Map<Locale, String> labelMap, String name, boolean required,
+			String type)
 		throws PortalException;
 
 	/**

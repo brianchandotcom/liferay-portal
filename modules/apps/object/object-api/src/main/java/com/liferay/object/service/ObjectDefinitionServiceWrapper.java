@@ -35,12 +35,12 @@ public class ObjectDefinitionServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
-			String name,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.addCustomObjectDefinition(
-			name, objectFields);
+			labelMap, name, objectFields);
 	}
 
 	@Override

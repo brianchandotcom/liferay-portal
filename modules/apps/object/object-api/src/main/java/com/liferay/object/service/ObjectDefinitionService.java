@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -53,7 +55,8 @@ public interface ObjectDefinitionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object definition remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectDefinitionServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectDefinition addCustomObjectDefinition(
-			String name, List<ObjectField> objectFields)
+			Map<Locale, String> labelMap, String name,
+			List<ObjectField> objectFields)
 		throws PortalException;
 
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)

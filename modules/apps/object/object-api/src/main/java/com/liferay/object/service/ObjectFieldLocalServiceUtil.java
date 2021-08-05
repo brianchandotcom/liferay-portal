@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectField. This utility wraps
@@ -46,13 +47,14 @@ public class ObjectFieldLocalServiceUtil {
 	 */
 	public static ObjectField addCustomObjectField(
 			long userId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId, String name,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
 			boolean required, String type)
 		throws PortalException {
 
 		return getService().addCustomObjectField(
 			userId, objectDefinitionId, indexed, indexedAsKeyword,
-			indexedLanguageId, name, required, type);
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	/**
@@ -72,12 +74,13 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws PortalException {
 
 		return getService().addSystemObjectField(
 			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
-			indexedLanguageId, name, required, type);
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	/**

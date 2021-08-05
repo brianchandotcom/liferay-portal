@@ -17,8 +17,12 @@ package com.liferay.object.service.http;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
@@ -65,14 +69,18 @@ public class ObjectDefinitionServiceSoap {
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
 			addCustomObjectDefinition(
+				String[] labelMapLanguageIds, String[] labelMapValues,
 				String name,
 				com.liferay.object.model.ObjectFieldSoap[] objectFields)
 		throws RemoteException {
 
 		try {
+			Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
+				labelMapLanguageIds, labelMapValues);
+
 			com.liferay.object.model.ObjectDefinition returnValue =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					name,
+					labelMap, name,
 					com.liferay.object.model.impl.ObjectFieldModelImpl.toModels(
 						objectFields));
 

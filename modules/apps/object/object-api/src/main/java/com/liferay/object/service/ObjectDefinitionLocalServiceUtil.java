@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectDefinition. This utility wraps
@@ -45,12 +46,12 @@ public class ObjectDefinitionLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
-			long userId, String name,
+			long userId, Map<java.util.Locale, String> labelMap, String name,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			userId, name, objectFields);
+			userId, labelMap, name, objectFields);
 	}
 
 	/**
@@ -80,14 +81,15 @@ public class ObjectDefinitionLocalServiceUtil {
 	}
 
 	public static ObjectDefinition addSystemObjectDefinition(
-			long userId, String dbTableName, String name,
+			long userId, String dbTableName,
+			Map<java.util.Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			int version,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addSystemObjectDefinition(
-			userId, dbTableName, name, pkObjectFieldDBColumnName,
+			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
 			pkObjectFieldName, version, objectFields);
 	}
 

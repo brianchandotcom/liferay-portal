@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for ObjectDefinition. This utility wraps
@@ -39,11 +40,12 @@ public class ObjectDefinitionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
-			String name,
+			Map<java.util.Locale, String> labelMap, String name,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
-		return getService().addCustomObjectDefinition(name, objectFields);
+		return getService().addCustomObjectDefinition(
+			labelMap, name, objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(

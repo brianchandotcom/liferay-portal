@@ -36,13 +36,14 @@ public class ObjectFieldLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectField addCustomObjectField(
 			long userId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId, String name,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addCustomObjectField(
 			userId, objectDefinitionId, indexed, indexedAsKeyword,
-			indexedLanguageId, name, required, type);
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	/**
@@ -66,12 +67,13 @@ public class ObjectFieldLocalServiceWrapper
 	public com.liferay.object.model.ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addSystemObjectField(
 			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
-			indexedLanguageId, name, required, type);
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	/**

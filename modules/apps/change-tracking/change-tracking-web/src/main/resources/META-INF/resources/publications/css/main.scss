@@ -172,8 +172,14 @@
 		.role-read-only {
 			color: #6b6c7e;
 			font-weight: 600;
-			padding-right: 0.75rem;
-			text-align: left;
+			margin-right: 3px;
+			text-align: right;
+			white-space: nowrap;
+
+			.lexicon-icon {
+				margin-left: 5px;
+				margin-top: -2px;
+			}
 		}
 
 		.table-add,

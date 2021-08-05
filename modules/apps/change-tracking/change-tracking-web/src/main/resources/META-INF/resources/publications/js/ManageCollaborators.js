@@ -93,7 +93,7 @@ const CollaboratorRow = ({
 				user.roleValue === roles[i].value
 					? 'font-italic'
 					: '',
-			label: roles[i].label,
+			label: roles[i].label + ' (' + roles[i].helpText + ')',
 			onClick: () => handleSelect(roles[i]),
 			symbolLeft: activeRole.value === roles[i].value ? 'check' : '',
 		});
@@ -117,12 +117,12 @@ const CollaboratorRow = ({
 	let title = null;
 
 	if (user.isOwner) {
-		title = Liferay.Language.get('cannot-update-permissions-for-an-owner');
-	}
-	else if (user.isCurrentUser) {
 		title = Liferay.Language.get(
-			'you-cannot-update-permissions-for-yourself'
+			'owners-can-view-edit-publish-and-invite-other-users'
 		);
+	}
+	else if (activeRole.tooltip) {
+		title = activeRole.tooltip;
 	}
 
 	let label = activeRole.label;
@@ -173,7 +173,18 @@ const CollaboratorRow = ({
 			</ClayTable.Cell>
 			<ClayTable.Cell className="table-column-text-end">
 				{readOnly ? (
-					<div className="role-read-only">{label}</div>
+					<div
+						className="role-read-only"
+						data-tooltip-align="top"
+						title={title}
+					>
+						{label}
+
+						<ClayIcon
+							spritemap={spritemap}
+							symbol="exclamation-circle"
+						/>
+					</div>
 				) : (
 					<ClayDropDownWithItems
 						alignmentPosition={Align.BottomLeft}
@@ -183,7 +194,7 @@ const CollaboratorRow = ({
 							<ClayButton
 								borderless
 								data-tooltip-align="top"
-								disabled={title}
+								disabled={user.isCurrent || user.isOwner}
 								displayType="secondary"
 								small
 								title={title}
@@ -745,7 +756,7 @@ const ManageCollaborators = ({
 
 		for (let i = 0; i < roles.length; i++) {
 			dropdownItems.push({
-				label: roles[i].label,
+				label: roles[i].label + ' (' + roles[i].helpText + ')',
 				onClick: () => setSelectedRole(roles[i]),
 				symbolLeft:
 					selectedRole.value === roles[i].value ? 'check' : '',
@@ -803,7 +814,11 @@ const ManageCollaborators = ({
 									items={dropdownItems}
 									spritemap={spritemap}
 									trigger={
-										<ClayButton displayType="secondary">
+										<ClayButton
+											data-tooltip-align="top"
+											displayType="secondary"
+											title={selectedRole.tooltip}
+										>
 											{selectedRole.label}
 
 											<span className="inline-item inline-item-after">

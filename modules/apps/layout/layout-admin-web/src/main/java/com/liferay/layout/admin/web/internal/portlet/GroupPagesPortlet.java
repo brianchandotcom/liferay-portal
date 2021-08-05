@@ -21,7 +21,6 @@ import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration;
-import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
@@ -91,10 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	configurationPid = {
-		"com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration",
-		"com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration"
-	},
+	configurationPid = "com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -141,8 +137,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_ffLayoutTranslationConfiguration = ConfigurableUtil.createConfigurable(
 			FFLayoutTranslationConfiguration.class, properties);
-		_layoutConverterConfiguration = ConfigurableUtil.createConfigurable(
-			LayoutConverterConfiguration.class, properties);
 	}
 
 	@Override
@@ -197,8 +191,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
-					_layoutConverterConfiguration, _layoutConverterRegistry,
-					_layoutCopyHelper,
+					_layoutConverterRegistry, _layoutCopyHelper,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_stagingGroupHelper);
@@ -286,8 +279,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	private volatile LayoutConverterConfiguration _layoutConverterConfiguration;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

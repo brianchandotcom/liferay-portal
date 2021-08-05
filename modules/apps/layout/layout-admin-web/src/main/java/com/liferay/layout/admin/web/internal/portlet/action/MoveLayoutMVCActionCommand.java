@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration;
-import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
@@ -56,10 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = {
-		"com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration",
-		"com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration"
-	},
+	configurationPid = "com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
@@ -74,8 +70,6 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 	protected void activate(Map<String, Object> properties) {
 		_ffLayoutTranslationConfiguration = ConfigurableUtil.createConfigurable(
 			FFLayoutTranslationConfiguration.class, properties);
-		_layoutConverterConfiguration = ConfigurableUtil.createConfigurable(
-			LayoutConverterConfiguration.class, properties);
 	}
 
 	@Override
@@ -117,9 +111,9 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
-					_layoutConverterConfiguration, _layoutConverterRegistry,
-					_layoutCopyHelper, liferayPortletRequest,
-					liferayPortletResponse, _stagingGroupHelper);
+					_layoutConverterRegistry, _layoutCopyHelper,
+					liferayPortletRequest, liferayPortletResponse,
+					_stagingGroupHelper);
 
 			MillerColumnsDisplayContext millerColumnsDisplayContext =
 				new MillerColumnsDisplayContext(
@@ -149,7 +143,6 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 	private volatile FFLayoutTranslationConfiguration
 		_ffLayoutTranslationConfiguration;
-	private volatile LayoutConverterConfiguration _layoutConverterConfiguration;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

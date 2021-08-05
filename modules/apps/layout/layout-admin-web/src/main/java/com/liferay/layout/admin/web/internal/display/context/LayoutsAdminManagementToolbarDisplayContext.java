@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,17 +66,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
-			() -> {
-				LayoutConverterConfiguration layoutConverterConfiguration =
-					_layoutsAdminDisplayContext.
-						getLayoutConverterConfiguration();
-
-				if (layoutConverterConfiguration.enabled()) {
-					return true;
-				}
-
-				return false;
-			},
 			dropdownItem -> {
 				dropdownItem.putData("action", "convertSelectedPages");
 

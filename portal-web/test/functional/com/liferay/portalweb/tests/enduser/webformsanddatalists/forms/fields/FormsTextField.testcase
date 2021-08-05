@@ -684,24 +684,20 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Text");
+		Form.addTextField(fieldPositionNumber = "0");
 
-		Navigator.gotoNavTab(navTab = "Advanced");
+		Form.gotoAdvancedTab();
 
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Validation",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		FormFields.enableSwitcher(fieldName = "Validation");
 
 		FormFields.editValidation(
-			selectOption = "Test Error",
 			validationArgument = "Matches",
+			validationErrorMessage = "Test Error",
 			validationInput = "Test");
 
-		Click(locator1 = "Button#SAVE");
+		Form.save();
 
-		Button.clickPublish();
+		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
 

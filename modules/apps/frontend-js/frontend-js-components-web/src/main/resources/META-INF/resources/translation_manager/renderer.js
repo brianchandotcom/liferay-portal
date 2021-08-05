@@ -12,7 +12,11 @@
  * details.
  */
 
-export {default as Treeview} from './treeview/Treeview';
+import {render} from '@liferay/frontend-js-react-web';
+import React from 'react';
 
-export {renderTranslationAdminModal} from './translation_manager/renderer';
-export {activeLocalesAtom} from './translation_manager/state';
+import TranslationAdminModal from './TranslationAdminModal';
+
+export function renderTranslationAdminModal(container, props) {
+	render(<TranslationAdminModal {...props} />, {}, container);
+}

@@ -663,13 +663,15 @@ A related constant has been removed also:
 
 - com.liferay.portal.kernel.servlet.HttpHeaders#X_XSS_PROTECTION
 
+Finally, the `http.header.secure.x.xss.protection` portal property has been removed.
+
 #### Who is affected?
 
 Everyone calling one of these methods or referencing the constant. However, such calling code should be removed anyway, because it will have no effect on modern browsers and might give a false sense of security.
 
 #### How should I update my code?
 
-Remove the calling code.
+Remove the calling code. Remove `http.header.secure.x.xss.protection` from `portal-ext.properties` if it exists there.  
 
 #### Why was this change made?
 

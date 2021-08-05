@@ -20,11 +20,6 @@
 EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
-
-String smallImageSource = editDDMTemplateDisplayContext.getSmallImageSource();
-
-List<String> templateLanguageTypes = Arrays.asList(TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM);
-String templateSubtypeLocalizedLabel = editDDMTemplateDisplayContext.getTemplateSubtypeLocalizedLabel();
 %>
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
@@ -33,6 +28,8 @@ String templateSubtypeLocalizedLabel = editDDMTemplateDisplayContext.getTemplate
 	<aui:select changesContext="<%= true %>" cssClass="form-control-sm" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
 		<%
+		List<String> templateLanguageTypes = Arrays.asList(TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM);
+
 		for (String curLangType : templateLanguageTypes) {
 			StringBundler sb = new StringBundler(6);
 
@@ -60,13 +57,13 @@ String templateSubtypeLocalizedLabel = editDDMTemplateDisplayContext.getTemplate
 		<%= editDDMTemplateDisplayContext.getTemplateTypeLabel(editDDMTemplateDisplayContext.getClassNameId()) %>
 	</p>
 
-	<c:if test="<%= Validator.isNotNull(templateSubtypeLocalizedLabel) %>">
+	<c:if test="<%= Validator.isNotNull(editDDMTemplateDisplayContext.getTemplateSubtypeLocalizedLabel()) %>">
 		<p class="control-label mb-1">
 			<b><liferay-ui:message key="item-subtype" /></b>
 		</p>
 
 		<p class="small">
-			<%= templateSubtypeLocalizedLabel %>
+			<%= editDDMTemplateDisplayContext.getTemplateSubtypeLocalizedLabel() %>
 		</p>
 	</c:if>
 
@@ -81,10 +78,14 @@ String templateSubtypeLocalizedLabel = editDDMTemplateDisplayContext.getTemplate
 			<portlet:param name="templateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
 		</portlet:resourceURL>
 
-		<aui:input name="url" type="resource" value="<%= getTemplateURL.toString() %>" />
+		<aui:input name="url" type="resource" value="<%= getTemplateURL %>" />
 	</c:if>
 
 	<aui:input name="description" />
+
+	<%
+	String smallImageSource = editDDMTemplateDisplayContext.getSmallImageSource();
+	%>
 
 	<aui:select label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
 		<aui:option label="no-image" value="none" />

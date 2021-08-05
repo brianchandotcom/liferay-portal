@@ -64,8 +64,8 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 
 		PortletURL addDDMTemplateURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
-		).setMVCPath(
-			"/edit_ddm_template.jsp"
+		).setMVCRenderCommandName(
+			"/template/edit_ddm_template"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setTabs1(

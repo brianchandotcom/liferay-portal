@@ -41,7 +41,7 @@ else {
 %>
 
 <portlet:actionURL name="/template/update_ddm_template" var="updateDDMTemplateURL">
-	<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/template/edit_ddm_template" />
 </portlet:actionURL>
 
 <aui:form action="<%= updateDDMTemplateURL %>" enctype="multipart/form-data" method="post" name="fm">

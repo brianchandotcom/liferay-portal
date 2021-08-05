@@ -282,8 +282,14 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	private UserAccount _addAccountUser(Account account) throws Exception {
-		return _userAccountResource.postAccountUser(
-			account.getId(), _randomAccountUser());
+		UserAccount userAccount =
+			_userAccountResource.putUserAccountByExternalReferenceCode(
+				RandomTestUtil.randomString(), _randomAccountUser());
+
+		_userAccountResource.postAccountUserByEmailAddress(
+			account.getId(), userAccount.getEmailAddress());
+
+		return userAccount;
 	}
 
 	private void _assertAccountRoleUserAssociation(

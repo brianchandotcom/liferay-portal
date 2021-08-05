@@ -42,6 +42,8 @@ const SidebarPanelInfoView = ({
 	classPK,
 	createDate,
 	data = {},
+	description,
+	fileName,
 	languageTag = 'en',
 	modifiedDate,
 	subType,
@@ -76,26 +78,19 @@ const SidebarPanelInfoView = ({
 	);
 
 	const stickerColor = parseInt(user.userId, 10) % 10;
+	const itemIsFile = subType === 'Basic Document';
 
 	return (
 		<>
-			<Sidebar.Header title={Liferay.Language.get('content-info')} />
+			<Sidebar.Header title={title} />
 
 			<Sidebar.Body>
-				<div className="c-mb-4">
-					<div className="component-title text-truncate-inline">
-						<span
-							className="text-truncate"
-							data-tooltip-align="top"
-							title={title}
-						>
-							{title}
-						</span>
-					</div>
+				<div className="c-mb-4 sidebar-section">
+					{itemIsFile && (
+						<p className="mb-2 text-secondary">{fileName}</p>
+					)}
 
-					<p className="component-subtitle font-weight-normal">
-						{subType}
-					</p>
+					<p className="text-secondary">{subType}</p>
 
 					{versions.map((version) => (
 						<div key={version.version}>
@@ -128,8 +123,15 @@ const SidebarPanelInfoView = ({
 							<ClayIcon symbol="user" />
 						)}
 					</ClaySticker>
-					<span className="c-ml-2 h5">{user.name}</span>
+					<span className="ml-2 text-secondary">{user.name}</span>
 				</div>
+
+				{description && (
+					<div className="c-mb-4 sidebar-section">
+						<h5>{Liferay.Language.get('description')}</h5>
+						<p className="text-secondary">{description}</p>
+					</div>
+				)}
 
 				{!!sortedViewURLS.length && (
 					<div className="c-mb-4 sidebar-dl sidebar-section">

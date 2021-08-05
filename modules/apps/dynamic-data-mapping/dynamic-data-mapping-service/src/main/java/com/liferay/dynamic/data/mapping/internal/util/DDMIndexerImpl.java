@@ -552,23 +552,24 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
-		if (!isLegacyDDMIndexFieldsEnabled()) {
-			booleanQuery.addRequiredTerm(
-				StringBundler.concat(
-					DDM_FIELD_ARRAY, StringPool.PERIOD, DDM_FIELD_NAME),
-				ddmStructureFieldName);
-
-			ddmStructureFieldName = StringBundler.concat(
-				DDM_FIELD_ARRAY, StringPool.PERIOD,
-				getValueFieldName(indexType, locale));
-		}
-
-		_addFieldValueRequiredTerm(
-			booleanQuery, ddmStructureFieldName, ddmStructureFieldValue);
-
 		if (isLegacyDDMIndexFieldsEnabled()) {
+			_addFieldValueRequiredTerm(
+				booleanQuery, ddmStructureFieldName, ddmStructureFieldValue);
+
 			return new QueryFilter(booleanQuery);
 		}
+
+		booleanQuery.addRequiredTerm(
+			StringBundler.concat(
+				DDM_FIELD_ARRAY, StringPool.PERIOD, DDM_FIELD_NAME),
+			ddmStructureFieldName);
+
+		_addFieldValueRequiredTerm(
+			booleanQuery,
+			StringBundler.concat(
+				DDM_FIELD_ARRAY, StringPool.PERIOD,
+				getValueFieldName(indexType, locale)),
+			ddmStructureFieldValue);
 
 		return new QueryFilter(new NestedQuery(DDM_FIELD_ARRAY, booleanQuery));
 	}

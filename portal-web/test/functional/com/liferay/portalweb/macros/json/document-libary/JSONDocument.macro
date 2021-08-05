@@ -155,8 +155,8 @@ definition {
 				-F title=${dmDocumentTitle} \
 			 	-F description=${description} \
 				-F changeLog='' \
-				-F expirationDate=${expirationDate} \
-				-F reviewDate=${reviewDate} \
+				-F <CURL_DATA[expirationDate=${expirationDate}]CURL_DATA> \
+				-F <CURL_DATA[reviewDate=${reviewDate}]CURL_DATA> \
 				-F file=@${filePath} \
 				-F serviceContext=${serviceContext}
 			''';

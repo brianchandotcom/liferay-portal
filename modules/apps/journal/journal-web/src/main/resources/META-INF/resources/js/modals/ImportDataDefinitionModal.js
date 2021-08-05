@@ -27,6 +27,7 @@ const ImportDataDefinitionModal = ({
 	const inputFileRef = useRef();
 	const [name, setName] = useState('');
 	const importDataDefinitionModalComponentId = `${portletNamespace}importDataDefinitionModal`;
+	const importDataDefinitionFormId = `${portletNamespace}importDataDefinitionForm`;
 	const jsonFileInputId = `${portletNamespace}jsonFile`;
 	const nameInputId = `${portletNamespace}name`;
 	const [{fileName, inputFile, inputFileValue}, setFile] = useState({
@@ -68,12 +69,13 @@ const ImportDataDefinitionModal = ({
 			<ClayModal.Header>
 				{Liferay.Language.get('import-structure')}
 			</ClayModal.Header>
-			<form
-				action={importDataDefinitionURL}
-				encType="multipart/form-data"
-				method="post"
-			>
-				<ClayModal.Body>
+			<ClayModal.Body>
+				<ClayForm
+					action={importDataDefinitionURL}
+					encType="multipart/form-data"
+					id={importDataDefinitionFormId}
+					method="POST"
+				>
 					<ClayAlert
 						displayType="info"
 						title={`${Liferay.Language.get('info')}:`}
@@ -148,26 +150,24 @@ const ImportDataDefinitionModal = ({
 						type="file"
 						value={inputFileValue}
 					/>
-				</ClayModal.Body>
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={onClose}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-							<ClayButton
-								disabled={!inputFile || !name}
-								type="submit"
-							>
-								{Liferay.Language.get('import')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</form>
+				</ClayForm>
+			</ClayModal.Body>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton displayType="secondary" onClick={onClose}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+						<ClayButton
+							disabled={!inputFile || !name}
+							form={importDataDefinitionFormId}
+							type="submit"
+						>
+							{Liferay.Language.get('import')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</ClayModal>
 	) : null;
 };

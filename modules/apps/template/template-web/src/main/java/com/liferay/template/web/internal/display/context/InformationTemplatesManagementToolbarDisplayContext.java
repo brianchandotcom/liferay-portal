@@ -53,11 +53,16 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		TemplateDisplayContext templateDisplayContext) {
+		InformationTemplatesTemplateDisplayContext
+			informationTemplatesTemplateDisplayContext) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			templateDisplayContext);
+			informationTemplatesTemplateDisplayContext.
+				getTemplateSearchContainer());
+
+		_informationTemplatesTemplateDisplayContext =
+			informationTemplatesTemplateDisplayContext;
 
 		_infoItemServiceTracker =
 			(InfoItemServiceTracker)liferayPortletRequest.getAttribute(
@@ -75,7 +80,8 @@ public class InformationTemplatesManagementToolbarDisplayContext
 				themeDisplay.getURLCurrent()
 			).setParameter(
 				"resourceClassNameId",
-				templateDisplayContext.getResourceClassNameId()
+				_informationTemplatesTemplateDisplayContext.
+					getResourceClassNameId()
 			).buildString()
 		).put(
 			"itemTypes", _getItemTypesJSONArray()
@@ -170,5 +176,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 	}
 
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InformationTemplatesTemplateDisplayContext
+		_informationTemplatesTemplateDisplayContext;
 
 }

@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-TemplateDisplayContext templateDisplayContext = (TemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+InformationTemplatesTemplateDisplayContext informationTemplatesTemplateDisplayContext = new InformationTemplatesTemplateDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-InformationTemplatesManagementToolbarDisplayContext informationTemplatesManagementToolbarDisplayContext = new InformationTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext);
+InformationTemplatesManagementToolbarDisplayContext informationTemplatesManagementToolbarDisplayContext = new InformationTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, informationTemplatesTemplateDisplayContext);
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= templateDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= informationTemplatesTemplateDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
@@ -41,7 +41,7 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 	<aui:form action="<%= deleteDDMTemplateURL %>" name="fm">
 		<liferay-ui:search-container
 			id="<%= informationTemplatesManagementToolbarDisplayContext.getSearchContainerId() %>"
-			searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"
+			searchContainer="<%= informationTemplatesTemplateDisplayContext.getTemplateSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
@@ -63,7 +63,7 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
-					href="<%= templateDisplayContext.getDDMTemplateEditURL(ddmTemplate) %>"
+					href="<%= informationTemplatesTemplateDisplayContext.getDDMTemplateEditURL(ddmTemplate) %>"
 					name="name"
 					value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
 				/>
@@ -77,13 +77,13 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest"
 					name="type"
-					value="<%= HtmlUtil.escape(templateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"
+					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest"
 					name="scope"
-					value="<%= HtmlUtil.escape(templateDisplayContext.getDDMTemplateScope(ddmTemplate)) %>"
+					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getDDMTemplateScope(ddmTemplate)) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
@@ -93,7 +93,7 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						dropdownItems="<%= templateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+						dropdownItems="<%= informationTemplatesTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
 						propsTransformer="js/TemplateDropdownPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>

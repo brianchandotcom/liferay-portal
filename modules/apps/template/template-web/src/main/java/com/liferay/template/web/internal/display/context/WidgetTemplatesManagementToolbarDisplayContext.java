@@ -41,16 +41,20 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		TemplateDisplayContext templateDisplayContext) {
+		WidgetTemplatesTemplateDisplayContext
+			widgetTemplatesTemplateDisplayContext) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			templateDisplayContext);
+			widgetTemplatesTemplateDisplayContext.getTemplateSearchContainer());
+
+		_widgetTemplatesTemplateDisplayContext =
+			widgetTemplatesTemplateDisplayContext;
 	}
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!templateDisplayContext.isAddDDMTemplateEnabled()) {
+		if (!_widgetTemplatesTemplateDisplayContext.isAddDDMTemplateEnabled()) {
 			return null;
 		}
 
@@ -69,7 +73,7 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setTabs1(
-			templateDisplayContext.getTabs1()
+			_widgetTemplatesTemplateDisplayContext.getTabs1()
 		).setParameter(
 			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
@@ -83,7 +87,8 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 			addDDMTemplateURL.setParameter(
 				"resourceClassNameId",
 				String.valueOf(
-					templateDisplayContext.getResourceClassNameId()));
+					_widgetTemplatesTemplateDisplayContext.
+						getResourceClassNameId()));
 
 			creationMenu.addPrimaryDropdownItem(
 				dropdownItem -> {
@@ -91,8 +96,8 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest,
-							templateDisplayContext.getTemplateTypeLabel(
-								addAllowedClassNameId)));
+							_widgetTemplatesTemplateDisplayContext.
+								getTemplateTypeLabel(addAllowedClassNameId)));
 				});
 		}
 
@@ -102,7 +107,9 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 	private List<Long> _getAddAllowedClassNameIds() {
 		List<Long> addAllowedClassNameIds = new ArrayList<>();
 
-		for (long classNameId : templateDisplayContext.getClassNameIds()) {
+		for (long classNameId :
+				_widgetTemplatesTemplateDisplayContext.getClassNameIds()) {
+
 			TemplateHandler templateHandler =
 				TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
@@ -116,5 +123,8 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 
 		return addAllowedClassNameIds;
 	}
+
+	private final WidgetTemplatesTemplateDisplayContext
+		_widgetTemplatesTemplateDisplayContext;
 
 }

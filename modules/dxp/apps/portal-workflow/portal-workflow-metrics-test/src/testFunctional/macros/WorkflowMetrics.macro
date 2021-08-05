@@ -781,12 +781,6 @@ definition {
 				value1 = "${key_slaDefinitionEnd}");
 		}
 
-		if (isSet(slaDefinitionPause)) {
-			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
-
-			Click(locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
-		}
-
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
 			value1 = "${key_slaDefinitionDays}");

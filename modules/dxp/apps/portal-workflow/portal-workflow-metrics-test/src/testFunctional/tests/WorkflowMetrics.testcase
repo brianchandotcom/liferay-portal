@@ -2428,7 +2428,6 @@ definition {
 	@description = "LRQA-53650 Automate LPS-89015: [SLA] Verify the SLA Time Frame Start Pause Stop behaviour"
 	@priority = "5"
 	test VerifySLATimeFrameStartPauseStop {
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -2456,7 +2455,7 @@ definition {
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0001",
+			slaDefinitionHours = "0002",
 			slaDefinitionName = "SLAName",
 			slaDefinitionStart = "Process Begins");
 
@@ -2571,7 +2570,7 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "SLA Description",
-			slaDefinitionHours = "0001",
+			slaDefinitionHours = "0002",
 			slaDefinitionName = "SLAName",
 			slaDefinitionPause = "On Task: Review");
 

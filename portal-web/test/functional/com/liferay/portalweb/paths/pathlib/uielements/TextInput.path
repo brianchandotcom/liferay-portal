@@ -486,11 +486,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRIVATE_VIRTUAL_HOST_URL</td>
-	<td>//input[contains(@id,'privateVirtualHost')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REDIRECT_DESTINATION_URL</td>
 	<td>//input[contains(@id,'destinationURL')]</td>
 	<td></td>
@@ -553,11 +548,6 @@
 <tr>
 	<td>STRUCTURE_KEY_FIELD</td>
 	<td>//input[contains(@id,'structureKey')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLIC_VIRTUAL_HOST_URL</td>
-	<td>//input[contains(@id,'publicVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>

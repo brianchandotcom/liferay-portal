@@ -49,10 +49,10 @@ public class CommerceOrderTypeClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"displayOrder", "display-order");
 
-		ClayTableSchemaField activeField =
+		ClayTableSchemaField activeClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");
 
-		activeField.setContentRenderer("boolean");
+		activeClayTableSchemaField.setContentRenderer("boolean");
 
 		ClayTableSchemaField startDateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
@@ -68,11 +68,11 @@ public class CommerceOrderTypeClayTableDataSetDisplayView
 		endDateClayTableSchemaField.setContentRenderer("date");
 		endDateClayTableSchemaField.setSortable(true);
 
-		ClayTableSchemaField clayTableSchemaField =
+		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"workflowStatusInfo", "status");
 
-		clayTableSchemaField.setContentRenderer("status");
+		statusClayTableSchemaField.setContentRenderer("status");
 
 		return clayTableSchemaBuilder.build();
 	}

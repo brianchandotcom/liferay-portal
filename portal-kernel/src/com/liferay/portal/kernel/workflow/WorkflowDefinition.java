@@ -70,6 +70,8 @@ public interface WorkflowDefinition extends WorkflowModel {
 		return 0;
 	}
 
+	public List<WorkflowNode> getWorkflowNodes();
+
 	public List<WorkflowTransition> getWorkflowTransitions();
 
 	public boolean isActive();

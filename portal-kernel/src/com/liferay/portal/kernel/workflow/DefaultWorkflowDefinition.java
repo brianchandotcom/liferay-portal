@@ -111,6 +111,11 @@ public class DefaultWorkflowDefinition
 	}
 
 	@Override
+	public List<WorkflowNode> getWorkflowNodes() {
+		return _workflowNodes;
+	}
+
+	@Override
 	public List<WorkflowTransition> getWorkflowTransitions() {
 		return _workflowTransitions;
 	}
@@ -176,6 +181,10 @@ public class DefaultWorkflowDefinition
 		_workflowDefinitionId = workflowDefinitionId;
 	}
 
+	public void setWorkflowNodes(List<WorkflowNode> workflowNodes) {
+		_workflowNodes = workflowNodes;
+	}
+
 	public void setWorkflowTransitions(
 		List<WorkflowTransition> workflowTransitions) {
 
@@ -196,6 +205,7 @@ public class DefaultWorkflowDefinition
 	private long _userId;
 	private int _version;
 	private long _workflowDefinitionId;
+	private List<WorkflowNode> _workflowNodes;
 	private List<WorkflowTransition> _workflowTransitions;
 
 }

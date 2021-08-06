@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Node;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
@@ -145,6 +146,26 @@ public class WorkflowDefinitionSerDes {
 			sb.append(_escape(workflowDefinition.getName()));
 
 			sb.append("\"");
+		}
+
+		if (workflowDefinition.getNodes() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nodes\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < workflowDefinition.getNodes().length; i++) {
+				sb.append(String.valueOf(workflowDefinition.getNodes()[i]));
+
+				if ((i + 1) < workflowDefinition.getNodes().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (workflowDefinition.getTitle() != null) {
@@ -282,6 +303,13 @@ public class WorkflowDefinitionSerDes {
 			map.put("name", String.valueOf(workflowDefinition.getName()));
 		}
 
+		if (workflowDefinition.getNodes() == null) {
+			map.put("nodes", null);
+		}
+		else {
+			map.put("nodes", String.valueOf(workflowDefinition.getNodes()));
+		}
+
 		if (workflowDefinition.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -366,6 +394,18 @@ public class WorkflowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					workflowDefinition.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "nodes")) {
+				if (jsonParserFieldValue != null) {
+					workflowDefinition.setNodes(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> NodeSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Node[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

@@ -193,7 +193,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowDefinitionByName(name: ___){active, content, dateCreated, dateModified, description, name, title, title_i18n, transitions, version}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowDefinitionByName(name: ___){active, content, dateCreated, dateModified, description, name, nodes, title, title_i18n, transitions, version}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowDefinition workflowDefinitionByName(

@@ -224,6 +224,35 @@ public class WorkflowDefinition implements Serializable {
 	protected String name;
 
 	@Schema
+	@Valid
+	public Node[] getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(Node[] nodes) {
+		this.nodes = nodes;
+	}
+
+	@JsonIgnore
+	public void setNodes(
+		UnsafeSupplier<Node[], Exception> nodesUnsafeSupplier) {
+
+		try {
+			nodes = nodesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Node[] nodes;
+
+	@Schema
 	public String getTitle() {
 		return title;
 	}
@@ -446,6 +475,26 @@ public class WorkflowDefinition implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (nodes != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nodes\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < nodes.length; i++) {
+				sb.append(String.valueOf(nodes[i]));
+
+				if ((i + 1) < nodes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (title != null) {

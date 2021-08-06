@@ -621,6 +621,14 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("nodes", additionalAssertFieldName)) {
+				if (workflowDefinition.getNodes() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (workflowDefinition.getTitle() == null) {
 					valid = false;
@@ -806,6 +814,17 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						workflowDefinition1.getName(),
 						workflowDefinition2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("nodes", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowDefinition1.getNodes(),
+						workflowDefinition2.getNodes())) {
 
 					return false;
 				}
@@ -1048,6 +1067,11 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("nodes")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("title")) {

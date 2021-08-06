@@ -160,6 +160,27 @@ public class WorkflowDefinition implements Cloneable, Serializable {
 
 	protected String name;
 
+	public Node[] getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(Node[] nodes) {
+		this.nodes = nodes;
+	}
+
+	public void setNodes(
+		UnsafeSupplier<Node[], Exception> nodesUnsafeSupplier) {
+
+		try {
+			nodes = nodesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Node[] nodes;
+
 	public String getTitle() {
 		return title;
 	}

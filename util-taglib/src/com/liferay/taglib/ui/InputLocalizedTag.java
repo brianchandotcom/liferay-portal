@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -238,7 +239,7 @@ public class InputLocalizedTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_activeLocales = null;
+		_activeLocales = new ArrayList<>();
 		_adminMode = false;
 		_autoFocus = false;
 		_autoSize = false;
@@ -357,7 +358,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_localized/page.jsp";
 
-	private List<String> _activeLocales;
+	private List<String> _activeLocales = new ArrayList<>();
 	private boolean _adminMode;
 	private boolean _autoFocus;
 	private boolean _autoSize;

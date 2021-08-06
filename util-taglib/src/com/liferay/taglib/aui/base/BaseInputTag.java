@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.aui.base;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -471,7 +472,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_activeLocales = null;
+		_activeLocales = new ArrayList<>();
 		_adminMode = false;
 		_autoFocus = false;
 		_autoSize = false;
@@ -595,7 +596,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private static final String _PAGE =
 		"/html/taglib/aui/input/page.jsp";
 
-	private List<String> _activeLocales = null;
+	private List<String> _activeLocales = new ArrayList<>();
 	private boolean _adminMode = false;
 	private boolean _autoFocus = false;
 	private boolean _autoSize = false;

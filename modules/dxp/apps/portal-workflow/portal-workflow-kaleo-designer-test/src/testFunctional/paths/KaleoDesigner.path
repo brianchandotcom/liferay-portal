@@ -16,6 +16,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLE_TYPE_ACCOUNT</td>
+	<td>//select[contains(@name,'roleType')]/option[contains(.,'Account')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TYPE_OPTION</td>
+	<td>//td[contains(.,'Role Type')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save') and not (contains(@class,'toolbar'))]</td>
 	<td></td>

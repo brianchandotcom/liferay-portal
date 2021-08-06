@@ -901,11 +901,25 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account role assigned"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SingleApproverComesWithAccountRole {
 
-		// TODO LRQA-69102 SingleApproverComesWithAccountRole pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "review");
+
+		DoubleClick(locator1 = "KaleoDesigner#ROLE_TYPE_OPTION");
+
+		AssertElementPresent(
+			locator1 = "KaleoDesigner#ROLE_TYPE_ACCOUNT"
+		);
+
+
 
 	}
 

@@ -587,13 +587,18 @@
 </tr>
 <!--PAGE-->
 <tr>
-	<td>PAGE_MOVE_ACTIVATED</td>
-	<td>//input[contains(@class,'page-header-title') and @value='${key_fieldName}']/../../../../..//button[contains(@class,'page-button') and @title='${key_movePage}']</td>
+	<td>PAGE_MOVE_DISABLED</td>
+	<td>//input[contains(@class,'page-header-title') and @value='${key_formPageName}']/../../../../..//button[@disabled and @title='${key_movePage}']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_MOVE_DISABLED</td>
-	<td>//input[contains(@class,'page-header-title') and @value='${key_fieldName}']/../../../../..//button[@disabled and @title='${key_movePage}']</td>
+	<td>PAGE_MOVE_DOWN_ENABLED</td>
+	<td>//input[contains(@class,'page-header-title') and @value='${key_formPageName}']/../../../../..//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-down')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_MOVE_UP_ENABLED</td>
+	<td>//input[contains(@class,'page-header-title') and @value='${key_formPageName}']/../../../../..//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-up')]]</td>
 	<td></td>
 </tr>
 <tr>

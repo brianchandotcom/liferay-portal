@@ -654,6 +654,18 @@ definition {
 			locator2 = "Form#ADD_FIELD_POSITION");
 	}
 
+	macro movePageDown {
+		Click(
+			key_formPageName = "${formPageName}",
+			locator1 = "Form#PAGE_MOVE_DOWN_ENABLED");
+	}
+
+	macro movePageUp {
+		Click(
+			key_formPageName = "${formPageName}",
+			locator1 = "Form#PAGE_MOVE_UP_ENABLED");
+	}
+
 	macro pageReset {
 		Click(
 			key_formPageNumber = "${pageIndex}",
@@ -847,6 +859,25 @@ definition {
 
 	macro viewAltSuccessPagePagination {
 		AssertElementPresent(locator1 = "Form#ALT_PAGINATION_SUCCESS_PAGE");
+	}
+
+	macro viewButtonPageDisabled {
+		AssertElementPresent(
+			key_formPageName = "${formPageName}",
+			key_movePage = "Move Page ${pageMove}",
+			locator1 = "Form#PAGE_MOVE_DISABLED");
+	}
+
+	macro viewButtonPageDownEnabled {
+		AssertElementPresent(
+			key_formPageName = "${formPageName}",
+			locator1 = "Form#PAGE_MOVE_DOWN_ENABLED");
+	}
+
+	macro viewButtonPageUpEnabled {
+		AssertElementPresent(
+			key_formPageName = "${formPageName}",
+			locator1 = "Form#PAGE_MOVE_UP_ENABLED");
 	}
 
 	macro viewCollapsedCollapseButton {

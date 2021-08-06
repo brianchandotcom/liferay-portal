@@ -16,17 +16,19 @@ package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -72,7 +74,24 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	public Map<String, Object> getDDMTemplateEditorContext() {
-		return Collections.emptyMap();
+		return HashMapBuilder.<String, Object>put(
+			"propertiesViewURL",
+			() -> PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/ddm_template_properties.jsp"
+			).setTabs1(
+				_getTabs1()
+			).setParameter(
+				"classNameId", getClassNameId()
+			).setParameter(
+				"classPK", _getClassPK()
+			).setParameter(
+				"ddmTemplateId", getDDMTemplateId()
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
+		).build();
 	}
 
 	public String getLanguageType() {
@@ -150,6 +169,27 @@ public class EditDDMTemplateDisplayContext {
 		return _ddmTemplateId;
 	}
 
+	private long _getClassPK() {
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate != null) {
+			return ddmTemplate.getClassPK();
+		}
+
+		return 0;
+	}
+
+	private String _getTabs1() {
+		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		_tabs1 = ParamUtil.getString(
+			_liferayPortletRequest, "tabs1", "information-templates");
+
+		return _tabs1;
+	}
+
 	private Long _classNameId;
 	private DDMTemplate _ddmTemplate;
 	private Long _ddmTemplateId;
@@ -157,6 +197,7 @@ public class EditDDMTemplateDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _smallImage;
 	private String _smallImageSource;
+	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 
 }

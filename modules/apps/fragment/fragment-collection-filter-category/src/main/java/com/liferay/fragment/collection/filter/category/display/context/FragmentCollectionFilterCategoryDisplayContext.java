@@ -21,22 +21,15 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,43 +91,6 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public List<DropdownItem> getDropdownItems() throws PortalException {
-		String parameterName = _getParameterName();
-
-		String url = HttpUtil.removeParameter(
-			_themeDisplay.getURLCurrent(), parameterName);
-
-		DropdownItemListBuilder.DropdownItemListWrapper
-			dropdownItemListWrapper = DropdownItemListBuilder.add(
-				dropdownItem -> {
-					dropdownItem.setHref(url);
-					dropdownItem.setLabel(
-						LanguageUtil.get(_httpServletRequest, "all"));
-				});
-
-		for (AssetCategory assetCategory : _getAssetCategories()) {
-			dropdownItemListWrapper.add(
-				dropdownItem -> {
-					if (!Objects.equals(
-							ParamUtil.getString(
-								_httpServletRequest, "p_l_mode"),
-							Constants.EDIT)) {
-
-						dropdownItem.setHref(
-							HttpUtil.addParameter(
-								url, parameterName,
-								assetCategory.getCategoryId()));
-					}
-
-					dropdownItem.setLabel(
-						assetCategory.getTitle(
-							_fragmentRendererContext.getLocale()));
-				});
-		}
-
-		return dropdownItemListWrapper.build();
-	}
-
 	public String getLabel() throws PortalException {
 		String label = GetterUtil.getString(_getFieldValue("label"));
 
@@ -190,37 +146,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 		return _props;
 	}
 
-	public String getSelectedAssetCategoryTitle() {
-		long assetCategoryId = ParamUtil.get(
-			PortalUtil.getOriginalServletRequest(_httpServletRequest),
-			_getParameterName(), 0);
-
-		if (assetCategoryId != 0) {
-			AssetCategory assetCategory = null;
-
-			try {
-				assetCategory = AssetCategoryServiceUtil.fetchCategory(
-					assetCategoryId);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
-			}
-
-			if (assetCategory != null) {
-				return assetCategory.getTitle(
-					_fragmentRendererContext.getLocale());
-			}
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "select");
-	}
-
 	public boolean isShowLabel() {
 		return GetterUtil.getBoolean(_getFieldValue("showLabel"));
-	}
-
-	public boolean isSingleSelection() {
-		return GetterUtil.getBoolean(_getFieldValue("singleSelection"));
 	}
 
 	private List<AssetCategory> _getAssetCategories() throws PortalException {
@@ -293,10 +220,6 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			_fragmentRendererContext.getLocale(), fieldName);
 	}
 
-	private String _getParameterName() {
-		return "categoryId_" + _fragmentEntryLink.getFragmentEntryLinkId();
-	}
-
 	private JSONObject _getSourceJSONObject() {
 		if (_sourceJSONObject != null) {
 			return _sourceJSONObject;
@@ -322,9 +245,6 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	private boolean _isSingleSelection() {
 		return GetterUtil.getBoolean(_getFieldValue("singleSelection"));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentCollectionFilterCategoryDisplayContext.class);
 
 	private List<AssetCategory> _assetCategories;
 	private Long _assetCategoryTreeNodeId;

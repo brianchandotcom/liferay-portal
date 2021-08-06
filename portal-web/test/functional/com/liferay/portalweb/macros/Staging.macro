@@ -1509,7 +1509,7 @@ definition {
 	}
 
 	macro viewValidationError {
-		Click(locator1 = "Message#SEE_MORE_DETAILS_LINK");
+		Click.javaScriptClick(locator1 = "Message#SEE_MORE_DETAILS_LINK");
 
 		SelectFrameTop();
 

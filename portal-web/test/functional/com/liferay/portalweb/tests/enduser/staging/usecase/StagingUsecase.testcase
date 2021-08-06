@@ -1763,6 +1763,7 @@ definition {
 		WebContent.subscribeToCurrentFolderCP();
 	}
 
+	@description = "This is a use case for LPS-123156"
 	@priority = "5"
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "true";
@@ -1846,7 +1847,9 @@ definition {
 			uncheckPages = "true",
 			uncheckSubContent = "Referenced Content");
 
-		Staging.publishToLive(failureExpected = "true");
+		Staging.publishToLive(
+			failureExpected = "true",
+			validateErrorMessage = "The publish process did not start due to validation errors.");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

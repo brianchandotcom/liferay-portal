@@ -31,6 +31,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -177,6 +178,45 @@ public class FileEntryContentDashboardItemTest {
 	}
 
 	@Test
+	public void testGetAuthorAvatar() throws Exception {
+		User user = Mockito.mock(User.class);
+
+		Mockito.when(
+			user.getUserId()
+		).thenReturn(
+			1L
+		);
+
+		Mockito.when(
+			user.getScreenName()
+		).thenReturn(
+			"Screen Name"
+		);
+
+		Mockito.when(
+			user.getCompanyId()
+		).thenReturn(
+			123L
+		);
+
+		FileEntry fileEntry = _getFileEntry();
+
+		fileEntry.setCompanyId(123L);
+		fileEntry.setUserId(1L);
+
+		FileEntryContentDashboardItem fileEntryContentDashboardItem =
+			new FileEntryContentDashboardItem(
+				null, null, null, null, fileEntry, null, null, null, null);
+
+		String expectedResult = "aaa";
+
+		Assert.assertEquals(
+			expectedResult,
+			fileEntryContentDashboardItem.getUserAvatarURL(
+				_getHttpServletRequest(1L)));
+	}
+
+	@Test
 	public void testGetDescription() {
 		FileEntry fileEntry = _getFileEntry();
 
@@ -240,7 +280,7 @@ public class FileEntryContentDashboardItemTest {
 					).infoFieldType(
 						DateInfoFieldType.INSTANCE
 					).name(
-						"file-name"
+						"fileName"
 					).labelInfoLocalizedValue(
 						null
 					).build(),

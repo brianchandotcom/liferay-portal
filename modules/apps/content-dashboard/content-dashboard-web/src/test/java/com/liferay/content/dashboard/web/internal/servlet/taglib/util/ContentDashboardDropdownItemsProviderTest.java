@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
@@ -312,6 +313,11 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public String getFileName() {
+				return "FileName";
+			}
+
+			@Override
 			public InfoItemReference getInfoItemReference() {
 				return new InfoItemReference(
 					RandomTestUtil.randomString(), RandomTestUtil.randomLong());
@@ -338,7 +344,8 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public List<DDMStructure> getSpecificFieldsInDDMStructure() {
+			public JSONObject getSpecificInformationJSONObject(
+				Locale locale) {
 				return null;
 			}
 

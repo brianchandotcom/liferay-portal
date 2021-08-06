@@ -21,8 +21,6 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
-import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -30,6 +28,8 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -350,7 +350,7 @@ public class FileEntryContentDashboardItem
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("preview-image");
+			infoItemFieldValues.getInfoFieldValue("previewImage");
 
 		if (infoFieldValue == null) {
 			return StringPool.BLANK;
@@ -397,19 +397,20 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public List<DDMStructure> getSpecificFieldsInDDMStructure() {
-		try {
-			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
-
-			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-			return dlFileVersion.getDDMStructures();
-		}
-		catch (PortalException portalException) {
-			portalException.printStackTrace();
-		}
-
-		return null;
+	public JSONObject getSpecificInformationJSONObject(Locale locale) {
+		return JSONUtil.put(
+			"description", getDescription(locale)
+		).put(
+			"downloadURL", getDownloadURL()
+		).put(
+			"extension", getExtension()
+		).put(
+			"fileName", getFileName()
+		).put(
+			"preview", getPreviewImage()
+		).put(
+			"size", getSize()
+		);
 	}
 
 	@Override

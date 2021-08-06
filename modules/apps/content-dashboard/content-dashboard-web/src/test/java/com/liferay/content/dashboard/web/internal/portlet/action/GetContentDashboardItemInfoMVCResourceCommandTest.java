@@ -283,6 +283,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
+			public String getFileName() {
+				return "FileName";
+			}
+
+			@Override
 			public InfoItemReference getInfoItemReference() {
 				return new InfoItemReference(className, classPK);
 			}
@@ -308,7 +313,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public List<DDMStructure> getSpecificFieldsInDDMStructure() {
+			public JSONObject getSpecificInformationJSONObject(Locale locale) {
 				return null;
 			}
 

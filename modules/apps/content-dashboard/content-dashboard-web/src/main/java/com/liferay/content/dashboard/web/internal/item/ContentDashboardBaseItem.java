@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Yurena Cabrera
  */
@@ -58,7 +56,6 @@ public abstract class ContentDashboardBaseItem<T>
 		return null;
 	}
 
-	@Reference
 	private UserService _userService;
 
 }

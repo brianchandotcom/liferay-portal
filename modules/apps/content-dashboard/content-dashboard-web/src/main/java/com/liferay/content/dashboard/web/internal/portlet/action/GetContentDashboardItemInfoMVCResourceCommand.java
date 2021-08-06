@@ -117,9 +117,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				}
 			).map(
 				contentDashboardItem -> JSONUtil.put(
-					"avatar",
-					contentDashboardItem.getUserAvatarURL(httpServletRequest)
-				).put(
+//					"avatar",
+//					contentDashboardItem.getUserAvatarURL(httpServletRequest)
+//				).put(
 					"categories",
 					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
 				).put(
@@ -132,22 +132,13 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"data", _getDataJSONObject(contentDashboardItem, locale)
 				).put(
-					"description", contentDashboardItem.getDescription(locale)
-				).put(
-					"downloadURL", contentDashboardItem.getDownloadURL()
-				).put(
-					"extension", contentDashboardItem.getExtension()
-				).put(
-					"fileName", contentDashboardItem.getFileName()
-				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
-					"preview", contentDashboardItem.getPreviewImage()
-				).put(
-					"size", contentDashboardItem.getSize()
+					"specificFields",
+					contentDashboardItem.getSpecificInformationJSONObject(locale)
 				).put(
 					"subType", _getSubtype(contentDashboardItem, locale)
 				).put(

@@ -49,17 +49,17 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public void deleteAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception {
 
 		_accountRoleLocalService.unassociateUser(
-			accountId, accountRoleId, accountUserId);
+			accountId, accountRoleId, userAccountId);
 	}
 
 	@Override
 	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
-			String accountUserExternalReferenceCode)
+			String userAccountExternalReferenceCode)
 		throws Exception {
 
 		deleteAccountRoleUserAssociation(
@@ -67,7 +67,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 				accountExternalReferenceCode),
 			accountRoleId,
 			_userResourceDTOConverter.getUserId(
-				accountUserExternalReferenceCode));
+				userAccountExternalReferenceCode));
 	}
 
 	@Override
@@ -131,17 +131,17 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public void postAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception {
 
 		_accountRoleLocalService.associateUser(
-			accountId, accountRoleId, accountUserId);
+			accountId, accountRoleId, userAccountId);
 	}
 
 	@Override
 	public void postAccountRoleUserAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
-			String accountUserExternalReferenceCode)
+			String userAccountExternalReferenceCode)
 		throws Exception {
 
 		postAccountRoleUserAssociation(
@@ -149,7 +149,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 				accountExternalReferenceCode),
 			accountRoleId,
 			_userResourceDTOConverter.getUserId(
-				accountUserExternalReferenceCode));
+				userAccountExternalReferenceCode));
 	}
 
 	private OrderByComparator<?> _getOrderByComparator(Sort[] sorts) {

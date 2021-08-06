@@ -107,7 +107,7 @@ public class UserAccountResourceImpl
 	extends BaseUserAccountResourceImpl implements EntityModelResource {
 
 	@Override
-	public void deleteAccountUserByEmailAddress(
+	public void deleteAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception {
 
@@ -116,33 +116,33 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+	public void deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception {
 
-		deleteAccountUserByEmailAddress(
+		deleteAccountUserAccountByEmailAddress(
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			emailAddress);
 	}
 
 	@Override
-	public void deleteAccountUsersByEmailAddress(
+	public void deleteAccountUserAccountsByEmailAddress(
 			Long accountId, String[] emailAddresses)
 		throws Exception {
 
 		for (String emailAddress : emailAddresses) {
-			deleteAccountUserByEmailAddress(accountId, emailAddress);
+			deleteAccountUserAccountByEmailAddress(accountId, emailAddress);
 		}
 	}
 
 	@Override
-	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+	public void deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String[] emailAddresses)
 		throws Exception {
 
 		for (String emailAddress : emailAddresses) {
-			deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 				externalReferenceCode, emailAddress);
 		}
 	}
@@ -164,19 +164,19 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
+	public Page<UserAccount> getAccountUserAccountsByExternalReferenceCodePage(
 			String externalReferenceCode, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return getAccountUsersPage(
+		return getAccountUserAccountsPage(
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			search, filter, pagination, sorts);
 	}
 
 	@Override
-	public Page<UserAccount> getAccountUsersPage(
+	public Page<UserAccount> getAccountUserAccountsPage(
 			Long accountId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -301,7 +301,8 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public UserAccount postAccountUser(Long accountId, UserAccount userAccount)
+	public UserAccount postAccountUserAccount(
+			Long accountId, UserAccount userAccount)
 		throws Exception {
 
 		userAccount = postUserAccount(userAccount);
@@ -317,7 +318,7 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public void postAccountUserByEmailAddress(
+	public void postAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception {
 
@@ -333,44 +334,44 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public UserAccount postAccountUserByExternalReferenceCode(
+	public UserAccount postAccountUserAccountByExternalReferenceCode(
 			String externalReferenceCode, UserAccount userAccount)
 		throws Exception {
 
-		return postAccountUser(
+		return postAccountUserAccount(
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			userAccount);
 	}
 
 	@Override
-	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+	public void postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception {
 
-		postAccountUserByEmailAddress(
+		postAccountUserAccountByEmailAddress(
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			emailAddress);
 	}
 
 	@Override
-	public void postAccountUsersByEmailAddress(
+	public void postAccountUserAccountsByEmailAddress(
 			Long accountId, String[] emailAddresses)
 		throws Exception {
 
 		for (String emailAddress : emailAddresses) {
-			postAccountUserByEmailAddress(accountId, emailAddress);
+			postAccountUserAccountByEmailAddress(accountId, emailAddress);
 		}
 	}
 
 	@Override
-	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+	public void postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String[] emailAddresses)
 		throws Exception {
 
 		for (String emailAddress : emailAddresses) {
-			postAccountUserByExternalReferenceCodeByEmailAddress(
+			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 				externalReferenceCode, emailAddress);
 		}
 	}

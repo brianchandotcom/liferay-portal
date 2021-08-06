@@ -202,22 +202,22 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountRoleUserAssociationByExternalReferenceCode()
+	public void testDeleteAccountRoleUserAccountAssociationByExternalReferenceCode()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole =
-			testDeleteAccountRoleUserAssociationByExternalReferenceCode_addAccountRole();
+			testDeleteAccountRoleUserAccountAssociationByExternalReferenceCode_addAccountRole();
 
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.
-				deleteAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				deleteAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					null, accountRole.getId(), null));
 	}
 
 	protected AccountRole
-			testDeleteAccountRoleUserAssociationByExternalReferenceCode_addAccountRole()
+			testDeleteAccountRoleUserAccountAssociationByExternalReferenceCode_addAccountRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -225,28 +225,28 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountRoleUserAssociationByExternalReferenceCode()
+	public void testPostAccountRoleUserAccountAssociationByExternalReferenceCode()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole =
-			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole();
+			testPostAccountRoleUserAccountAssociationByExternalReferenceCode_addAccountRole();
 
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					null, accountRole.getId(), null));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					null, 0L, null));
 	}
 
 	protected AccountRole
-			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole()
+			testPostAccountRoleUserAccountAssociationByExternalReferenceCode_addAccountRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -806,18 +806,20 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountRoleUserAssociation() throws Exception {
+	public void testDeleteAccountRoleUserAccountAssociation() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole =
-			testDeleteAccountRoleUserAssociation_addAccountRole();
+			testDeleteAccountRoleUserAccountAssociation_addAccountRole();
 
 		assertHttpResponseStatusCode(
 			204,
-			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
-				accountRole.getAccountId(), accountRole.getId(), null));
+			accountRoleResource.
+				deleteAccountRoleUserAccountAssociationHttpResponse(
+					accountRole.getAccountId(), accountRole.getId(), null));
 	}
 
-	protected AccountRole testDeleteAccountRoleUserAssociation_addAccountRole()
+	protected AccountRole
+			testDeleteAccountRoleUserAccountAssociation_addAccountRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -825,23 +827,26 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountRoleUserAssociation() throws Exception {
+	public void testPostAccountRoleUserAccountAssociation() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole =
-			testPostAccountRoleUserAssociation_addAccountRole();
+			testPostAccountRoleUserAccountAssociation_addAccountRole();
 
 		assertHttpResponseStatusCode(
 			204,
-			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
-				accountRole.getAccountId(), accountRole.getId(), null));
+			accountRoleResource.
+				postAccountRoleUserAccountAssociationHttpResponse(
+					accountRole.getAccountId(), accountRole.getId(), null));
 
 		assertHttpResponseStatusCode(
 			404,
-			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
-				accountRole.getAccountId(), 0L, null));
+			accountRoleResource.
+				postAccountRoleUserAccountAssociationHttpResponse(
+					accountRole.getAccountId(), 0L, null));
 	}
 
-	protected AccountRole testPostAccountRoleUserAssociation_addAccountRole()
+	protected AccountRole
+			testPostAccountRoleUserAccountAssociation_addAccountRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

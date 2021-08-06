@@ -104,7 +104,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
+	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("accountExternalReferenceCode")
 			String accountExternalReferenceCode,
@@ -140,7 +140,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void postAccountRoleUserAssociationByExternalReferenceCode(
+	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("accountExternalReferenceCode")
 			String accountExternalReferenceCode,
@@ -286,7 +286,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void deleteAccountRoleUserAssociation(
+	public void deleteAccountRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
@@ -316,7 +316,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void postAccountRoleUserAssociation(
+	public void postAccountRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long

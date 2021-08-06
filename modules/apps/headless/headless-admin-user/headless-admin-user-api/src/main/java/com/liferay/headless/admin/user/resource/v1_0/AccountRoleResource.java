@@ -49,12 +49,12 @@ public interface AccountRoleResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
+	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public void postAccountRoleUserAssociationByExternalReferenceCode(
+	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String userAccountExternalReferenceCode)
 		throws Exception;
@@ -76,11 +76,11 @@ public interface AccountRoleResource {
 	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountRoleUserAssociation(
+	public void deleteAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
-	public void postAccountRoleUserAssociation(
+	public void postAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 

@@ -40,24 +40,24 @@ public interface AccountRoleResource {
 		return new Builder();
 	}
 
-	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
+	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+			deleteAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public void postAccountRoleUserAssociationByExternalReferenceCode(
+	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+			postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
@@ -99,21 +99,22 @@ public interface AccountRoleResource {
 			Long accountId, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountRoleUserAssociation(
+	public void deleteAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountRoleUserAssociationHttpResponse(
+			deleteAccountRoleUserAccountAssociationHttpResponse(
 				Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
-	public void postAccountRoleUserAssociation(
+	public void postAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postAccountRoleUserAssociationHttpResponse(
-			Long accountId, Long accountRoleId, Long userAccountId)
+	public HttpInvoker.HttpResponse
+			postAccountRoleUserAccountAssociationHttpResponse(
+				Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
 	public static class Builder {
@@ -187,13 +188,14 @@ public interface AccountRoleResource {
 
 	public static class AccountRoleResourceImpl implements AccountRoleResource {
 
-		public void deleteAccountRoleUserAssociationByExternalReferenceCode(
-				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+		public void
+				deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
+					String accountExternalReferenceCode, Long accountRoleId,
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				deleteAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
 					userAccountExternalReferenceCode);
 
@@ -235,7 +237,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				deleteAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -279,13 +281,14 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountRoleUserAssociationByExternalReferenceCode(
-				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+		public void
+				postAccountRoleUserAccountAssociationByExternalReferenceCode(
+					String accountExternalReferenceCode, Long accountRoleId,
+					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
 					userAccountExternalReferenceCode);
 
@@ -327,7 +330,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -742,12 +745,12 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountRoleUserAssociation(
+		public void deleteAccountRoleUserAccountAssociation(
 				Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountRoleUserAssociationHttpResponse(
+				deleteAccountRoleUserAccountAssociationHttpResponse(
 					accountId, accountRoleId, userAccountId);
 
 			String content = httpResponse.getContent();
@@ -788,7 +791,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountRoleUserAssociationHttpResponse(
+				deleteAccountRoleUserAccountAssociationHttpResponse(
 					Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 
@@ -828,12 +831,12 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountRoleUserAssociation(
+		public void postAccountRoleUserAccountAssociation(
 				Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountRoleUserAssociationHttpResponse(
+				postAccountRoleUserAccountAssociationHttpResponse(
 					accountId, accountRoleId, userAccountId);
 
 			String content = httpResponse.getContent();
@@ -874,7 +877,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountRoleUserAssociationHttpResponse(
+				postAccountRoleUserAccountAssociationHttpResponse(
 					Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 

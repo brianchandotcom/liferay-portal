@@ -337,12 +337,13 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Unassigns account users to the account role")
-	public boolean deleteAccountRoleUserAssociationByExternalReferenceCode(
-			@GraphQLName("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
-			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("userAccountExternalReferenceCode") String
-				userAccountExternalReferenceCode)
+	public boolean
+			deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
+				@GraphQLName("accountExternalReferenceCode") String
+					accountExternalReferenceCode,
+				@GraphQLName("accountRoleId") Long accountRoleId,
+				@GraphQLName("userAccountExternalReferenceCode") String
+					userAccountExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -350,7 +351,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.
-					deleteAccountRoleUserAssociationByExternalReferenceCode(
+					deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
 						userAccountExternalReferenceCode));
 
@@ -358,12 +359,13 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Assigns account users to the account role")
-	public boolean createAccountRoleUserAssociationByExternalReferenceCode(
-			@GraphQLName("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
-			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("userAccountExternalReferenceCode") String
-				userAccountExternalReferenceCode)
+	public boolean
+			createAccountRoleUserAccountAssociationByExternalReferenceCode(
+				@GraphQLName("accountExternalReferenceCode") String
+					accountExternalReferenceCode,
+				@GraphQLName("accountRoleId") Long accountRoleId,
+				@GraphQLName("userAccountExternalReferenceCode") String
+					userAccountExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -371,7 +373,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.
-					postAccountRoleUserAssociationByExternalReferenceCode(
+					postAccountRoleUserAccountAssociationByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
 						userAccountExternalReferenceCode));
 
@@ -406,7 +408,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(description = "Unassigns account users to the account role")
-	public boolean deleteAccountRoleUserAssociation(
+	public boolean deleteAccountRoleUserAccountAssociation(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("accountRoleId") Long accountRoleId,
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -416,14 +418,14 @@ public class Mutation {
 			_accountRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountRoleResource ->
-				accountRoleResource.deleteAccountRoleUserAssociation(
+				accountRoleResource.deleteAccountRoleUserAccountAssociation(
 					accountId, accountRoleId, userAccountId));
 
 		return true;
 	}
 
 	@GraphQLField(description = "Assigns account users to the account role")
-	public boolean createAccountRoleUserAssociation(
+	public boolean createAccountRoleUserAccountAssociation(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("accountRoleId") Long accountRoleId,
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -433,7 +435,7 @@ public class Mutation {
 			_accountRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountRoleResource ->
-				accountRoleResource.postAccountRoleUserAssociation(
+				accountRoleResource.postAccountRoleUserAccountAssociation(
 					accountId, accountRoleId, userAccountId));
 
 		return true;

@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_RADIO</td>
+	<td>xpath=(//div | //li)[(contains(@class,'open') or contains(@class,'show')) and (contains(@class,'dropdown') or contains(.//*/@class,'dropdown'))]//label[contains(.,'${key_radioName}')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISABLED_MENU_ITEM</td>
 	<td>xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show')]//*[contains(@class,'disabled')][normalize-space(text())='${key_menuItem}']</td>
 	<td></td>

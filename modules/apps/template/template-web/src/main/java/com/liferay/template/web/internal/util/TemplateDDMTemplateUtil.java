@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.template.web.internal.helper;
+package com.liferay.template.web.internal.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Lourdes Fernández Besada
  */
-public class TemplateDDMTemplateHelper {
+public class TemplateDDMTemplateUtil {
 
 	public static String getDataContent(
 		TemplateVariableDefinition templateVariableDefinition,
@@ -315,6 +315,6 @@ public class TemplateDDMTemplateHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TemplateDDMTemplateHelper.class);
+		TemplateDDMTemplateUtil.class);
 
 }

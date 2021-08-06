@@ -199,13 +199,15 @@ export const CollectionGeneralPanel = ({item}) => {
 	const handleShowAllItemsChanged = (event) => {
 		setShowAllItems(event.target.checked);
 
+		const numberOfItems = totalNumberOfItems || 1;
+
 		setNextValue({
 			...nextValue,
-			numberOfItems: totalNumberOfItems,
+			numberOfItems,
 		});
 
 		handleConfigurationChanged({
-			numberOfItems: totalNumberOfItems,
+			numberOfItems,
 			showAllItems: event.target.checked,
 		});
 
@@ -271,17 +273,20 @@ export const CollectionGeneralPanel = ({item}) => {
 				onNetworkStatus: () => {},
 			}).then(({totalNumberOfItems}) => {
 				if (isMounted()) {
-					setTotalNumberOfItems(totalNumberOfItems);
+					const numberOfItems = totalNumberOfItems || 1;
+
+					setTotalNumberOfItems(numberOfItems);
 
 					if (showAllItems) {
 						handleConfigurationChanged({
-							numberOfItems: totalNumberOfItems,
+							numberOfItems,
 						});
 
 						setNextValue((prevValue) => ({
 							...prevValue,
-							numberOfItems: totalNumberOfItems,
+							numberOfItems,
 						}));
+
 						setNumberOfItemsError(null);
 					}
 				}

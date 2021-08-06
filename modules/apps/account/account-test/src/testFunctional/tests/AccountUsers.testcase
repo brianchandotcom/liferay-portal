@@ -48,72 +48,6 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
-	@description = "This test adds a new user via the Users tab of an Account"
-	@priority = "4"
-	test CanAddAccountUserViaAssignUser {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Assign Account User",
-			accountEntryType = "Business");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Assign Account User");
-
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Assign Account User",
-			assigneeName = "userfn",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Assign Account User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.viewAssignee(assigneeName = "userfn");
-	}
-
-	@description = "This test assigns an existing user to account through the Users tab"
-	@priority = "4"
-	test CanAssignExistingUserToAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AccountUsers.addUser(
-			accountName = "Account Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		AccountConfiguration.enableAccountEmailDomain();
-
-		Accounts.openAccountsAdmin();
-
-		Accounts.addAccountWithDomain(
-			accountDescription = "This is a test for adding user to account.",
-			accountName = "Account with Exist User",
-			domainNames = "liferay.com");
-
-		Accounts.assignUsers(
-			accountName = "Account with Exist User",
-			assigneeName = "userfn");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account with Exist User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.viewAssignee(assigneeName = "userfn");
-	}
-
 	@description = "This test deactivates an active user"
 	@priority = "4"
 	test CanDeactivateUser {
@@ -389,39 +323,6 @@ definition {
 		User.impersonateCP(
 			siteName = "${siteName}",
 			userName = "userfn");
-	}
-
-	@description = "This test removes a user from account via Users tab"
-	@priority = "5"
-	test CanRemoveUserFromAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Remove Account User",
-			accountEntryType = "Business");
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AccountUsers.addUser(
-			accountName = "Remove Account User",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.removeAssignee(
-			assigneeName = "userfn",
-			assigneeType = "Users");
-
-		Accounts.openAccountsAdmin();
-
-		Accounts.viewNoAssignee(
-			accountName = "Remove Account User",
-			assigneeType = "Users");
 	}
 
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."

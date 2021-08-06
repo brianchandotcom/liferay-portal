@@ -383,15 +383,15 @@ definition {
 
 		if (isSet(timePeriod)) {
 			AssertTextEquals(
-				key_index = "3",
-				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
+				key_index = "6",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
 				value1 = "${timePeriod}");
 		}
 
 		if (isSet(date)) {
 			AssertTextEquals(
-				key_index = "3",
-				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
+				key_index = "6",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
 				value1 = "${date}");
 		}
 	}

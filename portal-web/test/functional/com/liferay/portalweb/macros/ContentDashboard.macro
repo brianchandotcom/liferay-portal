@@ -518,4 +518,25 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
+	macro selectListofCategoriesForAudienceAndStage {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var count : list "1,2,3") {
+				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
+
+				for (var count : list "1,2,3") {
+					WebContent.selectCategory(
+						categoryName = "S ${count}",
+						vocabularyName = "Audience");
+				}
+
+				for (var count : list "1,2,3") {
+					WebContent.selectCategory(
+						categoryName = "test ${count}",
+						vocabularyName = "Stage");
+				}
+
+				PortletEntry.publish();		
+			}	
+	}
 }

@@ -166,7 +166,7 @@ export const CollectionGeneralPanel = ({item}) => {
 				);
 			}
 			else if (
-				Number(event.target.value) < config.searchContainerPageMaxDelta
+				Number(event.target.value) <= config.searchContainerPageMaxDelta
 			) {
 				setNumberOfItemsPerPageError(null);
 			}

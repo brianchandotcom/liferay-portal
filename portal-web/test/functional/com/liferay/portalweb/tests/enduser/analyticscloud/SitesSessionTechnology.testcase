@@ -1,0 +1,34 @@
+@component-name = "portal-analytics-cloud"
+definition {
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+    setUp {
+        ACUtils.launchAC();
+        ACSettings.takeTokenFromAnalyticsCloud();
+        TestCase.setUpPortalInstance();
+        ACUtils.launchDXP();
+    }
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+        ACUtils.tearDownDXP();
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        ACUtils.tearDownAC();
+    }
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8312 | Test Summary: Session technology card shows what browsers are accessing the site the most"
+    @ignore = "true"
+    @priority = "5"
+    test ShowsBrowsersAccessingSiteMost {
+        // TODO LRAC-8312 ShowsBrowsersAccessingSiteMost
+    }
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8313 | Test Summary: Session technology card shows what devices are accessing the site the most"
+    @ignore = "true"
+    @priority = "5"
+    test ShowsDevicesAccessingSiteMost {
+        // TODO LRAC-8313 ShowsDevicesAccessingSiteMost
+    }
+}

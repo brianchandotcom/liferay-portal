@@ -37,8 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ElasticsearchConnectionConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "active-help", name = "active",
-		required = false
+		deflt = "false", description = "activate-or-deactivate-this-connection",
+		name = "active", required = false
 	)
 	public boolean active();
 

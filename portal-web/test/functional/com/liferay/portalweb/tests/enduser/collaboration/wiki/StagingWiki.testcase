@@ -83,7 +83,7 @@ definition {
 
 	@description = "This is a use case for LPS-73992. It asserts removed wiki attachment file can not be viewed after publishing."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CannotViewRemovedAttachmentAfterPublishing {
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",

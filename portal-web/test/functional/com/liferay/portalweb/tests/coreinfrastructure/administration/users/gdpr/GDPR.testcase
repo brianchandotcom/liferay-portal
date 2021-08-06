@@ -419,6 +419,42 @@ definition {
 
 	}
 
+	@description = "This test deletes and anonymizes all entries from all applications"
+	@priority = "3"
+	test CanDeleteAndAnonymizeAllEntries {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		User.openUsersAdmin();
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.deleteAndAnonymizeAllEntriesCP(itemsCount = "2");
+
+		User.openUsersAdmin();
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+	}
+
 	@description = "This test deletes export process"
 	@ignore = "Test Stub"
 	@priority = "3"

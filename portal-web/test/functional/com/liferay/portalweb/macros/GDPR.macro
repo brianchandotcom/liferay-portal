@@ -147,6 +147,34 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteAndAnonymizeAllEntriesCP {
+		GDPR.filterByApplications(
+			applications = "All Applications",
+			itemsCount = "${itemsCount}");
+
+		GDPR.deleteAllEntriesCP();
+
+		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
+
+		Navigator.gotoNavTab(navTab = "Auto Anonymize Data");
+
+		var key_text = "Anonymize";
+
+		AssertClickNoError(
+			locator1 = "Button#ANY",
+			value1 = "Anonymize");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to anonymize the user's personal data?");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "All personal data associated with this user's applications has been deleted or anonymized. The user can now be deleted. Click OK to delete the user.");
+
+		Alert.viewSuccessMessage();
+
+		User.openUsersAdmin();
+
+		LexiconEntry.viewNoEntry(rowEntry = "${userName}");
+	}
+
 	macro deleteMultipleEntriesCP {
 		for (var rowEntry : list "${rowEntry}") {
 			LexiconEntry.selectEntry(rowEntry = "${rowEntry}");

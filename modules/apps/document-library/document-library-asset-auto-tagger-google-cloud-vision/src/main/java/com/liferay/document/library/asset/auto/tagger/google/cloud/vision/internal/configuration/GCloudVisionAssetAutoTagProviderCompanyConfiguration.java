@@ -42,7 +42,8 @@ public interface GCloudVisionAssetAutoTagProviderCompanyConfiguration {
 		requiredInput = true
 	)
 	@Meta.AD(
-		description = "api-key-description", name = "api-key", required = false
+		description = "set-the-api-key-for-the-google-cloud-vision-api",
+		name = "api-key", required = false
 	)
 	public String apiKey();
 

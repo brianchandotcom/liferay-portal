@@ -30,7 +30,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface BingCommerceGeocoderConfiguration {
 
 	@Meta.AD(
-		description = "api-key-description", name = "api-key", required = false
+		description = "set-the-key-for-the-bing-maps-api-integration",
+		name = "api-key", required = false
 	)
 	public String apiKey();
 

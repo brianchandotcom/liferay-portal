@@ -40,7 +40,8 @@ public interface LayoutReportsGooglePageSpeedGroupConfiguration {
 		descriptionArguments = "https://developers.google.com/speed/docs/insights/v5/get-started"
 	)
 	@Meta.AD(
-		description = "api-key-description", name = "api-key", required = false
+		description = "get-your-api-key-at-x", name = "api-key",
+		required = false
 	)
 	public String apiKey();
 

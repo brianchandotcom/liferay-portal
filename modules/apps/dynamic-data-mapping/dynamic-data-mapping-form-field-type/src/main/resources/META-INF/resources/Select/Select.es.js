@@ -288,7 +288,7 @@ const DropdownListWithSearch = ({
 				option.label.toLowerCase().includes(query.toLowerCase())
 		);
 
-		if (showEmptyOption) {
+		if (showEmptyOption && !multiple) {
 			const emptyOption = {
 				label: Liferay.Language.get('choose-an-option'),
 				value: null,

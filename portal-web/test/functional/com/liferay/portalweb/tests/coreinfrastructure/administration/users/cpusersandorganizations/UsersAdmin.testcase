@@ -811,6 +811,45 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test CanBulkActivateUsers {
+		for (var userNum : list "1,2,3,4,5") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNum}@liferay.com",
+				userFirstName = "userfn${userNum}",
+				userLastName = "userln${userNum}",
+				userScreenName = "usersn${userNum}");
+		}
+
+		User.openUsersAdmin();
+
+		User.deactivateCP(
+			deactivateType = "Management Toolbar",
+			userFirstNameList = "userfn1,userfn3,userfn5");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		for (var rowEntry : list "userfn1 userln1,userfn3 userln3,userfn5 userln5") {
+			LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");
+		}
+
+		User.bulkActivateCP(
+			activateType = "Management Toolbar",
+			userFirstNameList = "userfn1,userfn3,userfn5");
+
+		for (var rowEntry : list "userfn1 userln1,userfn3 userln3,userfn5 userln5") {
+			LexiconEntry.viewNoEntry(rowEntry = "${rowEntry}");
+		}
+
+		User.openUsersAdmin();
+
+		for (var rowEntry : list "userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4,userfn5 userln5") {
+			AssertElementPresent(
+				key_rowEntry = "${rowEntry}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+	}
+
 	@priority = "4"
 	test CannotViewSiteSettingsInUserPersonalSite {
 		Navigator.gotoPersonalSite();

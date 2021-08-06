@@ -186,7 +186,7 @@ definition {
 		}
 
 		for (var serverPort : list "8080,9080") {
-			Clustering.deployClusteringJar(nodePort = "${serverPort}");
+			Clustering.deployClusteringModule(nodePort = "${serverPort}");
 		}
 
 		for (var method : list "invoke-method-module,invoke-method-portal") {

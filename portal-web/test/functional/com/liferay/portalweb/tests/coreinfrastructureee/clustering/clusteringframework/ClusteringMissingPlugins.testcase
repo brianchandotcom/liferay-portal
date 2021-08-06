@@ -35,7 +35,7 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Clustering.deployClusteringJar(nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
@@ -81,7 +81,7 @@ definition {
 			expectedText = "Unable to deserialize object",
 			nodePort = "9080");
 
-		Clustering.deployClusteringJar(nodePort = "9080");
+		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
@@ -134,7 +134,7 @@ definition {
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 			value1 = "This node is slave node");
 
-		Clustering.deployClusteringJar(nodePort = "9080");
+		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
@@ -150,7 +150,7 @@ definition {
 			exceptionText = "Memory clustered job from modules is triggered",
 			nodePort = "9080");
 
-		Clustering.deployClusteringJar(nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
@@ -189,7 +189,7 @@ definition {
 			categoryName = "com.liferay.cluster.test.module.internel",
 			nodePort = "9080");
 
-		Clustering.deployClusteringJar(nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
@@ -215,7 +215,7 @@ definition {
 			exceptionText = "Memory clustered job from modules is triggered",
 			nodePort = "9080");
 
-		Clustering.deployClusteringJar(nodePort = "9080");
+		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",

@@ -240,3 +240,21 @@ paths:
                     description:
                         ""
             tags: ["ObjectField"]
+    "/object-definitions/{objectDefinitionId}/publish":
+        post:
+            operationId: postObjectDefinitionPublish
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["ObjectDefinition"]

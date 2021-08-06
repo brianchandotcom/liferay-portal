@@ -229,9 +229,11 @@ export const getTagsOrderByDateCreatedQuery = `
 			sort: "dateCreated:desc"
 		) {
 			items {
+				actions
 				id
 				dateCreated
 				name
+				subscribed
 			}
 			lastPage
 			page
@@ -255,9 +257,11 @@ export const getTagsOrderByNumberOfUsagesQuery = `
 			siteKey: $siteKey
 		) {
 			items {
+				actions
 				id
 				keywordUsageCount
 				name
+				subscribed
 			}
 			lastPage
 			page
@@ -874,6 +878,22 @@ export const unsubscribeSectionQuery = `
 	) {
 		updateMessageBoardSectionUnsubscribe(
 			messageBoardSectionId: $messageBoardSectionId
+		)
+	}
+`;
+
+export const subscribeTagQuery = `
+	mutation updateKeywordSubscribe($keywordId: Long!) {
+		updateKeywordSubscribe(
+			keywordId: $keywordId
+		)
+	}
+`;
+
+export const unsubscribeTagQuery = `
+	mutation updateKeywordUnsubscribe($keywordId: Long!) {
+		updateKeywordUnsubscribe(
+			keywordId: $keywordId
 		)
 	}
 `;

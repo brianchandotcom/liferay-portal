@@ -437,15 +437,17 @@ export const CollectionGeneralPanel = ({item}) => {
 						/>
 					</ClayForm.Group>
 
-					<div className="mb-1 pt-1">
-						<ClayCheckbox
-							checked={showAllItems}
-							label={Liferay.Language.get(
-								'display-all-collection-items'
-							)}
-							onChange={handleShowAllItemsChanged}
-						/>
-					</div>
+					{item.config.paginationType && (
+						<div className="mb-1 pt-1">
+							<ClayCheckbox
+								checked={showAllItems}
+								label={Liferay.Language.get(
+									'display-all-collection-items'
+								)}
+								onChange={handleShowAllItemsChanged}
+							/>
+						</div>
+					)}
 
 					<ClayForm.Group
 						className={classNames({

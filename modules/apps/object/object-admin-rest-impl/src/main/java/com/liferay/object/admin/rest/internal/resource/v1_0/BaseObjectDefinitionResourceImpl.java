@@ -233,6 +233,25 @@ public abstract class BaseObjectDefinitionResourceImpl
 		return new ObjectDefinition();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/publish'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectDefinitionId")}
+	)
+	@Path("/object-definitions/{objectDefinitionId}/publish")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectDefinition")})
+	public void postObjectDefinitionPublish(
+			@NotNull @Parameter(hidden = true) @PathParam("objectDefinitionId")
+				Long objectDefinitionId)
+		throws Exception {
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(

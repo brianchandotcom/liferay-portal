@@ -1011,6 +1011,33 @@ definition {
 		}
 	}
 
+	macro bulkActivateCP {
+		if (isSet(userFirstNameList)) {
+			for (var userFirstName : list "${userFirstNameList}") {
+				LexiconEntry.selectEntry(rowEntry = "${userFirstName}");
+			}
+		}
+		else {
+			PortletEntry.selectAll();
+
+			if (IsChecked(key_rowEntry = "Test Test",locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX")) {
+				Click(
+					key_rowEntry = "Test Test",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+			}
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_rowEntry = "Test Test",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Activate");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro bulkDeactivateCP {
 		if (isSet(userFirstNameList)) {
 			for (var userFirstName : list "${userFirstNameList}") {

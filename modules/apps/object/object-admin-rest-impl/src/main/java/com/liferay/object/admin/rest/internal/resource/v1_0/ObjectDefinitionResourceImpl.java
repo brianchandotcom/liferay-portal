@@ -81,21 +81,23 @@ public class ObjectDefinitionResourceImpl
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		com.liferay.object.model.ObjectDefinition
-			serviceBuilderObjectDefinition =
-				_objectDefinitionService.addCustomObjectDefinition(
-					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(),
-						objectDefinition.getName()),
-					objectDefinition.getName(),
-					transformToList(
-						objectDefinition.getObjectFields(),
-						objectField -> ObjectFieldUtil.toObjectField(
-							objectField, _objectFieldLocalService)));
-
 		return _toObjectDefinition(
-			_objectDefinitionService.publishCustomObjectDefinition(
-				serviceBuilderObjectDefinition.getObjectDefinitionId()));
+			_objectDefinitionService.addCustomObjectDefinition(
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), objectDefinition.getName()),
+				objectDefinition.getName(),
+				transformToList(
+					objectDefinition.getObjectFields(),
+					objectField -> ObjectFieldUtil.toObjectField(
+						objectField, _objectFieldLocalService))));
+	}
+
+	@Override
+	public void postObjectDefinitionPublish(Long objectDefinitionId)
+		throws Exception {
+
+		_objectDefinitionService.publishCustomObjectDefinition(
+			objectDefinitionId);
 	}
 
 	private ObjectDefinition _toObjectDefinition(

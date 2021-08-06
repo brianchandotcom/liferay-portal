@@ -1571,6 +1571,20 @@ definition {
 			}
 		}
 
+		if (isSet(pagination)) {
+			Select(
+				key_fieldLabel = "Pagination",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${pagination}");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Pagination",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${pagination}");
+		}
+
 		if (isSet(maxNumberOfItems)) {
 			Type(
 				key_fieldLabel = "Maximum Number of Items",

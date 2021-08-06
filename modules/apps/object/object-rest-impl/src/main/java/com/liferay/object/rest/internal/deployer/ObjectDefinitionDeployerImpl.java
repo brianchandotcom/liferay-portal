@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
-	public List<ServiceRegistration<?>> deploy(
+	public synchronized List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
@@ -169,7 +169,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	@Override
-	public void undeploy(ObjectDefinition objectDefinition) {
+	public synchronized void undeploy(ObjectDefinition objectDefinition) {
 		Map<Long, ObjectDefinition> objectDefinitions =
 			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
 

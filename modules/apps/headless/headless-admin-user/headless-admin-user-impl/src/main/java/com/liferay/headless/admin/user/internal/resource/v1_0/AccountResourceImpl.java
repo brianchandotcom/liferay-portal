@@ -125,6 +125,12 @@ public class AccountResourceImpl
 					AccountActionKeys.ADD_ACCOUNT_ENTRY, "postAccount",
 					AccountConstants.RESOURCE_NAME, 0L)
 			).put(
+				"create-by-external-reference-code",
+				addAction(
+					AccountActionKeys.ADD_ACCOUNT_ENTRY,
+					"putAccountByExternalReferenceCode",
+					AccountConstants.RESOURCE_NAME, 0L)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, 0L, "getAccountsPage",

@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_DISABLED</td>
+	<td>//button[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-${type}')]][@disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES</td>
 	<td>//div[@class='search-results' and contains(.,'Pages')]</td>
 	<td></td>

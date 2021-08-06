@@ -32,6 +32,20 @@ definition {
 	@description = "This is a test for LPS-132422. The list of actions appear in right order for Fragments"
 	@priority = "3"
 	test ViewOrderOfPageTemplatesActions {
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName =
+							"Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName =
+							"Page Template Collection",
+					layoutPageTemplateEntryName = "Page Template Name",
+					layoutPageTemplateStatus = "Approved",
+					layoutPageTemplateType = "Content Page Template");
+		}
 
 		Pause(locator1 = "30000");
 	}

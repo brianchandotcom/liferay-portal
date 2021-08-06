@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -195,6 +197,12 @@ public class StagedExpandoTableStagedModelRepository
 					expandoTable.getClassNameId());
 
 				if (className == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to find class name by classNameId " +
+								expandoTable.getClassNameId());
+					}
+
 					return;
 				}
 
@@ -246,6 +254,9 @@ public class StagedExpandoTableStagedModelRepository
 	private String _parseName(String uuid) {
 		return uuid.substring(uuid.indexOf(StringPool.POUND) + 1);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StagedExpandoTableStagedModelRepository.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

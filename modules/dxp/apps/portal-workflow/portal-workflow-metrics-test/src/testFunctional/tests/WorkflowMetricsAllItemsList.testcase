@@ -1514,8 +1514,6 @@ definition {
 	@description = "LPS-98517 - Verify that a long username that exceeds 240px in the assignee dropdown option is placed in more than one line, respecting the alignment of the field"
 	@priority = "3"
 	test LongUserNameIsDisplayedInMoreThanOneLineInDropdown {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -2271,8 +2269,6 @@ definition {
 	@description = "LPS-108138 - Verify that, in All Items page, when the users select an instance that can't be transitioned by them, the option to transition is not available to be selected"
 	@priority = "4"
 	test TransitionOptionIsNotAvailableWhenUserCanNotTransitionInstance {
-		
-
 		JSONUser.addUser(
 			userEmailAddress = "user@liferay.com",
 			userFirstName = "user",

@@ -236,8 +236,6 @@ definition {
 
 	@priority = "4"
 	test ConfigureFolderWorkflow {
-		
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

@@ -815,8 +815,6 @@ definition {
 
 	@priority = "4"
 	test AssignRolePermissionsCompleteFormPG {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

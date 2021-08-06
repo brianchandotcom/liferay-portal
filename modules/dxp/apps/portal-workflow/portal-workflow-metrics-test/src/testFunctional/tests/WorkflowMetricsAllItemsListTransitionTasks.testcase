@@ -235,8 +235,6 @@ definition {
 	@description = "LPS-108138 - Verify that the message -The selected steps have transitioned successfully- is displayed when several steps are transitioned at once"
 	@priority = "3"
 	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

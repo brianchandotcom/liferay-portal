@@ -44,8 +44,6 @@ definition {
 	@description = "LPS-98518 - Verify that there is an image besides the assignee name that is retrieved from the global user profile picture (add, delete, update)"
 	@priority = "3"
 	test AssigneeImagesRetrievedFromGlobalUserProfile {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -138,8 +136,6 @@ definition {
 	@description = "LPS-97669 - Verify the user can search for a assignee with name containing non-ASCII chars (eg: japanese chars) using the search bar"
 	@priority = "3"
 	test CanSearchNonAsciiChars {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -387,8 +383,6 @@ definition {
 	@description = "LPS-97669 - Verify that a long username is placed in more than one line, respecting the alignment of the field inside Workload by Assignee card"
 	@priority = "3"
 	test LongUsernameIsPlacedInMoreThanOneLine {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -646,8 +640,6 @@ definition {
 	@description = "LPS-103368 - Verify that the user can filter the results inside (Workload by Assignee) page by assignee names that contain non-ascii chars (such as ç,é,コン, etc) using the search field"
 	@priority = "3"
 	test SearchFieldAcceptsNonAsciiChars {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

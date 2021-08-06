@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.configuration;
+package com.liferay.portal.search.internal.index.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "search", generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.search.configuration.BufferedIndexerInvocationHandlerInternalConfiguration"
+	id = "com.liferay.portal.search.internal.index.configuration.BufferedIndexerInvocationHandlerInternalConfiguration"
 )
 public interface BufferedIndexerInvocationHandlerInternalConfiguration {
 

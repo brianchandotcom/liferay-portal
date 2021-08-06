@@ -325,17 +325,6 @@ public class RenderLayoutStructureDisplayContext {
 	public String getContainerLinkHref(
 			ContainerStyledLayoutStructureItem
 				containerStyledLayoutStructureItem,
-			Object displayObject)
-		throws PortalException {
-
-		return getContainerLinkHref(
-			containerStyledLayoutStructureItem, displayObject,
-			LocaleUtil.getMostRelevantLocale());
-	}
-
-	public String getContainerLinkHref(
-			ContainerStyledLayoutStructureItem
-				containerStyledLayoutStructureItem,
 			Object displayObject, Locale locale)
 		throws PortalException {
 
@@ -483,14 +472,6 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	public String getContainerLinkTarget(
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
-
-		return getContainerLinkTarget(
-			containerStyledLayoutStructureItem,
-			LocaleUtil.getMostRelevantLocale());
 	}
 
 	public String getContainerLinkTarget(

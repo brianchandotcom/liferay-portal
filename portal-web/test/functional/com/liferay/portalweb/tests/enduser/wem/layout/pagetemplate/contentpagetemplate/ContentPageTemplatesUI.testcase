@@ -46,6 +46,21 @@ definition {
 					layoutPageTemplateStatus = "Approved",
 					layoutPageTemplateType = "Content Page Template");
 		}
+		task ("Change template to draft") {
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+		}
 
 		Pause(locator1 = "30000");
 	}

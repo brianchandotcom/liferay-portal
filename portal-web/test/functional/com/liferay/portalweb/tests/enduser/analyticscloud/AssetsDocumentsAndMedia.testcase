@@ -254,4 +254,85 @@ definition {
 			metricValue = "4");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8394 | Test Summary: Assert 180 day time filter in Documents and Media"
+    @ignore = "true"
+    @priority = "3"
+    test AssertDocumentsAndMediaPageTImeFilter180Days {
+
+        // TODO LRAC-8394 AssertDocumentsAndMediaPageTImeFilter180Days
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8395 | Test Summary: Custom Range time filter in Documents and Media assets page"
+    @ignore = "true"
+    @priority = "4"
+    test CanAssertDocumentsAndMediaTimeFIlterCustom {
+
+        // TODO LRAC-8395 CanAssertDocumentsAndMediaTimeFIlterCustom
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8396 | Test Summary: Documents list is searchable"
+    @ignore = "true"
+    @priority = "4"
+    test CanDocumentsAndMediaListSearchable {
+
+        // TODO LRAC-8396 CanDocumentsAndMediaListSearchable
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8402 | Test Summary: Documents audience card shows expected amount of know and anonymous individuals"
+    @ignore = "true"
+    @priority = "5"
+    test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM {
+
+        // TODO LRAC-8402 AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8403 | Test Summary: Documents audience card shows expected amount of segmented and unsegmented individuals"
+    @ignore = "true"
+    @priority = "5"
+    test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM {
+
+        // TODO LRAC-8403 AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8412 | Test Summary: Documents location card shows downloads by the expected location"
+    @ignore = "true"
+    @priority = "5"
+    test DocumentsLocationCardShowsViewsByExpectedLocation {
+
+        // TODO LRAC-8412 DocumentsLocationCardShowsViewsByExpectedLocation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8414 | Test Summary: Documents downloads by technology card shows downloads by the expected device"
+    @ignore = "true"
+    @priority = "5"
+    test DocumentsTechnologyCardShowsViewsByExpectedDevice {
+
+        // TODO LRAC-8414 DocumentsTechnologyCardShowsViewsByExpectedDevice
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8415 | Test Summary: Documents downloads by technology card shows downloads by the expected browser"
+    @ignore = "true"
+    @priority = "5"
+    test DocumentsTechnologyCardShowsViewsByExpectedBrowser {
+
+        // TODO LRAC-8415 DocumentsTechnologyCardShowsViewsByExpectedBrowser
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8419 | Test Summary: Document asset appears on list shows pages that the document exists on"
+    @ignore = "true"
+    @priority = "5"
+    test AssertAppearsOnListShowsPagesDocumentsExists {
+
+        // TODO LRAC-8419 AssertAppearsOnListShowsPagesDocumentsExists
+
+    }
+
 }

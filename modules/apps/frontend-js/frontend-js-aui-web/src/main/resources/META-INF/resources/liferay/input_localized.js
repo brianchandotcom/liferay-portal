@@ -761,10 +761,12 @@ AUI.add(
 								var activeLocalesAtom =
 									instance._activeLocalesAtom;
 
-								State.writeAtom(
-									activeLocalesAtom,
-									activeLocales
-								);
+								if (instance.get('adminMode')) {
+									State.writeAtom(
+										activeLocalesAtom,
+										activeLocales
+									);
+								}
 
 								instance._availableLanguagesSubscription = State.subscribe(
 									activeLocalesAtom,

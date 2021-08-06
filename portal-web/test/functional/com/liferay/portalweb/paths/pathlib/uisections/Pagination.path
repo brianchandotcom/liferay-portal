@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>ANY_PAGE</td>
-	<td>//ul[contains(@class,'pagination')]//li[@class='page-item ']//a[text()='${key_pageNumber}']</td>
+	<td>//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[contains(@class,'page-link')][normalize-space(text())='${key_pageNumber}']</td>
 	<td></td>
 </tr>
 <tr>

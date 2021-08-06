@@ -94,7 +94,11 @@
 		padding-top: 0;
 
 		& > .sidebar-section {
-			margin-bottom: 16px;
+			margin-bottom: 1rem;
+
+			&--spaced {
+				margin-bottom: 1.5rem;
+			}
 		}
 	}
 }
@@ -116,4 +120,29 @@
 
 .text-truncate-reverse {
 	direction: rtl;
+}
+
+.image-preview {
+	&-figure {
+		background-color: $secondary-l3;
+		border-radius: 0.25rem;
+		height: 10rem;
+		overflow: hidden;
+		position: relative;
+		text-align: center;
+
+		& > img {
+			height: 100%;
+			object-fit: contain;
+			width: 100%;
+		}
+	}
+
+	&-icon {
+		cursor: pointer;
+		fill: $secondary;
+		position: absolute;
+		right: 1rem;
+		top: 1rem;
+	}
 }

@@ -20,6 +20,7 @@ import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import React, {useMemo} from 'react';
 
+import ImagePreview from './ImagePreview';
 import Sidebar from './Sidebar';
 
 const formatDate = (date, languageTag) => {
@@ -42,10 +43,9 @@ const SidebarPanelInfoView = ({
 	classPK,
 	createDate,
 	data = {},
-	description,
-	fileName,
 	languageTag = 'en',
 	modifiedDate,
+	specificFields = {},
 	subType,
 	tags = [],
 	title,
@@ -79,6 +79,8 @@ const SidebarPanelInfoView = ({
 
 	const stickerColor = parseInt(user.userId, 10) % 10;
 	const itemIsFile = subType === 'Basic Document';
+
+	const {description, downloadURL, fileName, preview} = specificFields;
 
 	return (
 		<>
@@ -125,6 +127,14 @@ const SidebarPanelInfoView = ({
 					</ClaySticker>
 					<span className="ml-2 text-secondary">{user.name}</span>
 				</div>
+
+				{preview && (
+					<ImagePreview
+						downloadURL={downloadURL}
+						imageSrc={preview}
+						imageTitle={title}
+					/>
+				)}
 
 				{description && (
 					<div className="c-mb-4 sidebar-section">

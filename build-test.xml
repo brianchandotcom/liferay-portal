@@ -13717,7 +13717,14 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 		<antcall target="deploy-osgi-modules" />
 
-		<antcall target="deploy-data-guard" />
+		<get-testcase-property property.name="liferay.data.guard.enabled" />
+
+		<if>
+			<isset property="liferay.data.guard.enabled" />
+			<then>
+				<antcall target="deploy-data-guard" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />

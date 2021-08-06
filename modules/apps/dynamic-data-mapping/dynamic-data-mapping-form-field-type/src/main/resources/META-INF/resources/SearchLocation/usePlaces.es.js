@@ -117,6 +117,29 @@ const usePlaces = ({elementId, googlePlacesAPIKey, isReadOnly, onChange}) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
+
+	useEffect(() => {
+		const onScroll = () => {
+			const autoCompleteDropdown = document.querySelector(
+				'.pac-container:not([style*="display: none"])'
+			);
+			const element = document.getElementById(elementId);
+
+			if (autoCompleteDropdown && element === document.activeElement) {
+				const {height, top} = element?.getBoundingClientRect();
+				const scrollTop =
+					window.pageYOffset || document.documentElement.scrollTop;
+
+				autoCompleteDropdown.style.top =
+					height + scrollTop + top + 'px';
+			}
+		};
+
+		document.addEventListener('scroll', onScroll, true);
+
+		return () => document.removeEventListener('scroll', onScroll, true);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 };
 
 export default usePlaces;

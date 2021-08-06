@@ -53,6 +53,7 @@ export default function SelectCategory({
 
 	const onSelectedClick = (selected, id) => {
 		if (selected && singleSelection) {
+			onApply([id]);
 			setSelectedCategoryIds([id]);
 		}
 		else if (selected) {
@@ -93,7 +94,7 @@ export default function SelectCategory({
 		[]
 	);
 
-	const onApply = () => {
+	const onApply = (selectedCategoryIds) => {
 		if (!editMode) {
 			const queryParamName = `categoryId_${fragmentEntryLinkId}`;
 			const search = new URLSearchParams(window.location.search);
@@ -126,9 +127,14 @@ export default function SelectCategory({
 	return (
 		<ClayDropDownWithItems
 			footerContent={
-				<ClayButton onClick={onApply} small>
-					{Liferay.Language.get('apply')}
-				</ClayButton>
+				singleSelection ? null : (
+					<ClayButton
+						onClick={() => onApply(selectedCategoryIds)}
+						small
+					>
+						{Liferay.Language.get('apply')}
+					</ClayButton>
+				)
 			}
 			items={items}
 			onSearchValueChange={setSearchValue}

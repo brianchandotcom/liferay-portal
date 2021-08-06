@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cluster.test.module.internel;
+package com.liferay.portal.cluster.sample.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -51,21 +51,21 @@ public class ClusterMethodInvoker {
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutor.execute(clusterRequest);
 
-			ClusterNodeResponses clusterNodeResponses =
-				futureClusterResponses.get();
-
-			ClusterNodeResponse clusterNodeResponse =
-				clusterNodeResponses.getClusterResponse(
-					targetClusterNode.getClusterNodeId());
-
 			if (_log.isInfoEnabled()) {
+				ClusterNodeResponses clusterNodeResponses =
+					futureClusterResponses.get();
+
+				ClusterNodeResponse clusterNodeResponse =
+					clusterNodeResponses.getClusterResponse(
+						targetClusterNode.getClusterNodeId());
+
 				_log.info(
 					"Result of invoke-method-module is :" +
 						clusterNodeResponse.getResult());
 			}
 		}
-		catch (Exception e) {
-			_log.error(e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -88,8 +88,8 @@ public class ClusterMethodInvoker {
 						future.get());
 			}
 		}
-		catch (Exception e) {
-			_log.error(e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -111,21 +111,21 @@ public class ClusterMethodInvoker {
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutor.execute(clusterRequest);
 
-			ClusterNodeResponses clusterNodeResponses =
-				futureClusterResponses.get();
-
-			ClusterNodeResponse clusterNodeResponse =
-				clusterNodeResponses.getClusterResponse(
-					targetClusterNode.getClusterNodeId());
-
 			if (_log.isInfoEnabled()) {
+				ClusterNodeResponses clusterNodeResponses =
+					futureClusterResponses.get();
+
+				ClusterNodeResponse clusterNodeResponse =
+					clusterNodeResponses.getClusterResponse(
+						targetClusterNode.getClusterNodeId());
+
 				_log.info(
 					"Result of invoke-method-portal is :" +
 						clusterNodeResponse.getResult());
 			}
 		}
-		catch (Exception e) {
-			_log.error(e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -149,8 +149,8 @@ public class ClusterMethodInvoker {
 						future.get());
 			}
 		}
-		catch (Exception e) {
-			_log.error(e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

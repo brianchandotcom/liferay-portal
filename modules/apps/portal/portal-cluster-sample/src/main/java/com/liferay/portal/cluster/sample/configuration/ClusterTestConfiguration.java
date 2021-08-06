@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.cluster.test.module.internel;
+package com.liferay.portal.cluster.sample.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Tina Tian
  */
-public class ClusterTestCommands {
+@ExtendedObjectClassDefinition(generateUI = false)
+@Meta.OCD(
+	id = "com.liferay.portal.cluster.sample.configuration.ClusterTestConfiguration",
+	name = "cluster-test-configuration-name"
+)
+public abstract interface ClusterTestConfiguration {
 
-	public static final String INVOKE_METHOD_MODULE = "invoke-method-module";
-
-	public static final String INVOKE_METHOD_MODULE_ON_MASTER =
-		"invoke-method-module-on-master";
-
-	public static final String INVOKE_METHOD_PORTAL = "invoke-method-portal";
-
-	public static final String INVOKE_METHOD_PORTAL_ON_MASTER =
-		"invoke-method-portal-on-master";
+	@Meta.AD(deflt = "", required = false)
+	public String clusterTestCommand();
 
 }

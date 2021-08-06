@@ -235,7 +235,7 @@ definition {
 	@description = "LPS-108138 - Verify that the message -The selected steps have transitioned successfully- is displayed when several steps are transitioned at once"
 	@priority = "3"
 	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
-		property portal.upstream = "quarantine";
+		
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -262,7 +262,7 @@ definition {
 			Workflow.assignTaskToUser(
 				assetTitle = "Blogs Entry Title ${InstanceNameNumber}",
 				assetType = "Blogs Entry",
-				assigneeName = "Test Test",
+				assigneeName = "test (Test Test)",
 				workflowTask = "Review");
 		}
 

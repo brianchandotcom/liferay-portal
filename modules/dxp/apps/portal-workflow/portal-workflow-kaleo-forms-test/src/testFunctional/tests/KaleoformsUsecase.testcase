@@ -815,7 +815,7 @@ definition {
 
 	@priority = "4"
 	test AssignRolePermissionsCompleteFormPG {
-		property portal.upstream = "quarantine";
+		
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -951,7 +951,7 @@ definition {
 			workflowAssetType = "${workflowAssetType}",
 			workflowTask = "Review");
 
-		Workflow.assignByDetails(user = "userfn userln");
+		Workflow.assignByDetails(user = "usersn (userfn userln)");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

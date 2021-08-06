@@ -32,15 +32,12 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = TemplateDDMTemplateHelper.class)
 public class TemplateDDMTemplateHelper {
 
-	public String getDataContent(
+	public static String getDataContent(
 		TemplateVariableDefinition templateVariableDefinition,
 		String language) {
 
@@ -97,7 +94,7 @@ public class TemplateDDMTemplateHelper {
 		return dataContent;
 	}
 
-	public String getPaletteItemTitle(
+	public static String getPaletteItemTitle(
 		HttpServletRequest httpServletRequest, ResourceBundle resourceBundle,
 		TemplateVariableDefinition templateVariableDefinition) {
 
@@ -156,7 +153,7 @@ public class TemplateDDMTemplateHelper {
 		return sb.toString();
 	}
 
-	private String _getAccessor(String accessor, String language) {
+	private static String _getAccessor(String accessor, String language) {
 		if (StringUtil.equalsIgnoreCase(
 				language, TemplateConstants.LANG_TYPE_VM)) {
 
@@ -182,7 +179,7 @@ public class TemplateDDMTemplateHelper {
 		return accessor;
 	}
 
-	private String _getListCode(
+	private static String _getListCode(
 		String variableName, String itemName, String accessor,
 		String language) {
 
@@ -224,7 +221,7 @@ public class TemplateDDMTemplateHelper {
 		return StringPool.BLANK;
 	}
 
-	private String _getPaletteItemTitle(
+	private static String _getPaletteItemTitle(
 		HttpServletRequest httpServletRequest, String label, Class<?> clazz) {
 
 		if (clazz == null) {
@@ -264,7 +261,7 @@ public class TemplateDDMTemplateHelper {
 		return sb.toString();
 	}
 
-	private String _getVariableAssignmentCode(
+	private static String _getVariableAssignmentCode(
 		String variableName, String variableValue, String language) {
 
 		if (StringUtil.equalsIgnoreCase(
@@ -292,7 +289,7 @@ public class TemplateDDMTemplateHelper {
 		return variableName;
 	}
 
-	private String _getVariableReferenceCode(
+	private static String _getVariableReferenceCode(
 		String variableName, String accessor, String language) {
 
 		String methodInvocation = StringPool.BLANK;

@@ -894,7 +894,6 @@ definition {
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
 	@priority = "4"
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -909,14 +908,12 @@ definition {
 		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
 
 		AssertElementPresent(
-			value1 = "Account Member",
-			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH");
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH",
+			value1 = "Account Member");
 
 		AssertElementPresent(
-			value1 = "Account Administrator",
-			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH");
-
-
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH",
+			value1 = "Account Administrator");
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account role assigned"

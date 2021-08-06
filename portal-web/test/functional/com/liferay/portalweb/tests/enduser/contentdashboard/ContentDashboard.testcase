@@ -73,6 +73,85 @@ definition {
 		}
 	}
 
+	@description = "LPS-122873 When all the web content is unassigned from a Vocab1's category, the relative ordering of the rest of the categories remain the same"
+	@priority = "3"
+	test AssigningSomeAudienceCategoriesAndCheckingTheOrder {
+		property portal.acceptance = "true";
+
+		task ("Create a list of Audiences") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "S ${count}",
+					vocabularyName = "Audience");
+			}
+		}
+
+		task ("Create a list of Stages") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "test ${count}",
+					vocabularyName = "Stage");
+			}
+		}
+
+		task ("Create a list of Web Content") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Webcontent Content",
+					groupName = "Test Site Name",
+					title = "Webcontent Title ${count}");
+			}
+		}
+
+		task ("Select of categories 1 and 3 of Audience, and all categories of Stage") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var count : list "1,2,3") {
+				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
+
+				for (var count : list "1,3") {
+					WebContent.selectCategory(
+						categoryName = "S ${count}",
+						vocabularyName = "Audience");
+				}
+
+				for (var count : list "1,2,3") {
+					WebContent.selectCategory(
+						categoryName = "test ${count}",
+						vocabularyName = "Stage");
+				}
+
+				PortletEntry.publish();
+			}
+		}
+		task ("Navigate to content Dashboard and View the order of categories") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			task ("blue - first position") {
+				AssertElementPresent(
+					fillColor = "4B9FFF",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("orange - second position") {
+				AssertElementPresent(
+					fillColor = "FFB46E",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("red - third position") {
+				AssertElementPresent(
+					fillColor = "FF5F5F",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+		}
+	}
+
 	@description = "LPS-114911 When the user selects vocabularies from the selection panel, vocabularies selected show in the table as headers and categories assigned to contents will show "
 	@priority = "5"
 	test CategorieShowInTable {
@@ -110,6 +189,50 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "Test");
+		}
+	}
+
+	@description = "LPS-122873 When there are some categories created for vocabulary1 (X axis), they will always have the same order during the user session"
+	@priority = "3"
+	test CategoriesWithSameOrderDuringASession {
+		property portal.acceptance = "true";
+
+		task ("Create a list of Audiences") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "S ${count}",
+					vocabularyName = "Audience");
+			}
+		}
+
+		task ("Create a list of Stages") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "test ${count}",
+					vocabularyName = "Stage");
+			}
+		}
+
+		task ("Create a Web Content") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Webcontent Content",
+					groupName = "Test Site Name",
+					title = "Webcontent Title ${count}");
+			}
+		}
+
+		task ("Select list of categories") {
+			ContentDashboard.selectListofCategoriesForAudienceAndStage();
+		}
+
+		task ("Navigate to content Dashboard and View the order of categories") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
 		}
 	}
 
@@ -278,6 +401,103 @@ definition {
 		}
 	}
 
+	@description = "LPS-122873 When any web content is unassigned to a Vocab1's category, the relative ordering of categories remain the same"
+	@priority = "3"
+	test CheckOrderEvenWithSomeUnassignedCategories {
+		property portal.acceptance = "true";
+
+		task ("Create a list of Audiences") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "S ${count}",
+					vocabularyName = "Audience");
+			}
+		}
+
+		task ("Create a list of Stages") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "test ${count}",
+					vocabularyName = "Stage");
+			}
+		}
+
+		task ("Create a Web Content") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Webcontent Content",
+					groupName = "Test Site Name",
+					title = "Webcontent Title ${count}");
+			}
+		}
+
+		task ("Selecting the categories, one of the contents will not have category 2 of vocabulary 1") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title 1");
+
+			for (var count : list "1,3") {
+				WebContent.selectCategory(
+					categoryName = "S ${count}",
+					vocabularyName = "Audience");
+			}
+
+			for (var count : list "1,2,3") {
+				WebContent.selectCategory(
+					categoryName = "test ${count}",
+					vocabularyName = "Stage");
+			}
+
+			PortletEntry.publish();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var count : list "2,3") {
+				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
+
+				for (var count : list "1,2,3") {
+					WebContent.selectCategory(
+						categoryName = "S ${count}",
+						vocabularyName = "Audience");
+				}
+
+				for (var count : list "1,2,3") {
+					WebContent.selectCategory(
+						categoryName = "test ${count}",
+						vocabularyName = "Stage");
+				}
+
+				PortletEntry.publish();
+			}
+		}
+		task ("Navigate to content Dashboard and View the order of categories") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			task ("blue - first position") {
+				AssertElementPresent(
+					fillColor = "4B9FFF",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("orange - second position") {
+				AssertElementPresent(
+					fillColor = "FFB46E",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("red - third position") {
+				AssertElementPresent(
+					fillColor = "FF5F5F",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+		}
+	}
+
 	@description = "LPS-133716 When in Content Dashboard, a column with the Site / assetLibraty header is shown."
 	@priority = "2"
 	test CheckSiteAssertLibraryColumn {
@@ -336,6 +556,121 @@ definition {
 
 		task ("Drop second group") {
 			JSONGroup.deleteGroupByName(groupName = "Second Test Site Name");
+		}
+	}
+
+	@description = "LPS-122873 When a new category is created and assigned to a web content, the relative ordering of categories remain the same and the new category gets a new color, positionated in the last position"
+	@priority = "3"
+	test CheckTheOrderWithANewCategory {
+		property portal.acceptance = "true";
+
+		task ("Create a list of Audiences") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "S ${count}",
+					vocabularyName = "Audience");
+			}
+		}
+
+		task ("Create a list of Stages") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "test ${count}",
+					vocabularyName = "Stage");
+			}
+		}
+
+		task ("Create a list of Web Content") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Webcontent Content",
+					groupName = "Test Site Name",
+					title = "Webcontent Title ${count}");
+			}
+		}
+
+		task ("Select list of categories") {
+			ContentDashboard.selectListofCategoriesForAudienceAndStage();
+		}
+
+		task ("Navigate to content Dashboard and View the order of categories") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			task ("blue - first position") {
+				AssertElementPresent(
+					fillColor = "4B9FFF",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("orange - second position") {
+				AssertElementPresent(
+					fillColor = "FFB46E",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("red - third position") {
+				AssertElementPresent(
+					fillColor = "FF5F5F",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("green - last position") {
+				AssertElementNotPresent(
+					fillColor = "50D2A0",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+		}
+
+		task ("Create a new category and assign one of the contents") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "test 4",
+				vocabularyName = "Stage");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title 1");
+
+			WebContent.selectCategory(
+				categoryName = "test 4",
+				vocabularyName = "Stage");
+
+			PortletEntry.publish();
+		}
+		task ("Navigate to the content panel and see if, in the new category order, the new category receives a new color, placed in the last position") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			task ("blue - first position") {
+				AssertElementPresent(
+					fillColor = "4B9FFF",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("orange - second position") {
+				AssertElementPresent(
+					fillColor = "FFB46E",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("red - third position") {
+				AssertElementPresent(
+					fillColor = "FF5F5F",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("green - last position") {
+				AssertElementPresent(
+					fillColor = "50D2A0",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
 		}
 	}
 
@@ -1552,6 +1887,76 @@ definition {
 		}
 	}
 
+	@description = "LPS-122873 When the user add filters need to have only one vocabulary, the relative ordering of the categories remain the same"
+	@priority = "3"
+	test JustAddingAVocabularyThroughTheFilters {
+		property portal.acceptance = "true";
+
+		task ("Create a list of Audiences") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "S ${count}",
+					vocabularyName = "Audience");
+			}
+		}
+
+		task ("Create a list of Stages") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "test ${count}",
+					vocabularyName = "Stage");
+			}
+		}
+
+		task ("Create a Web Content") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Webcontent Content",
+					groupName = "Test Site Name",
+					title = "Webcontent Title ${count}");
+			}
+		}
+
+		task ("Selecting only the Stage vocabulary") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var count : list "1,2,3") {
+				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
+
+				for (var count : list "1,2,3") {
+					WebContent.selectCategory(
+						categoryName = "test ${count}",
+						vocabularyName = "Stage");
+				}
+
+				PortletEntry.publish();
+			}
+		}
+		task ("Go to content Dashboard and View the relative ordering of the categories remain the same") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "test 1",
+				xAxisCategoryName = "stage");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "test 2",
+				xAxisCategoryName = "stage");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "test 3",
+				xAxisCategoryName = "stage");
+		}
+	}
+
 	@description = "LPS-116987 When the user clicks on the eye icon in any of the translated into languages within the info panel, the user navigates to the VIEW version of the page in the matching language"
 	@priority = "5"
 	test LanguageVersion {
@@ -1599,6 +2004,69 @@ definition {
 				portlet = "Content Dashboard");
 
 			WebContent.checkLanguage();
+		}
+	}
+
+	@description = "LPS-122873 When the user configure the audit graph to have just one vocabulary, the relative ordering of the categories remain the same"
+	@priority = "3"
+	test NumberOfVcabulariesAccordingToTheAuditGraph {
+		property portal.acceptance = "true";
+
+		task ("Create a list of Audiences") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "S ${count}",
+					vocabularyName = "Audience");
+			}
+		}
+
+		task ("Create a list of Stages") {
+			for (var count : list "1,2,3") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "test ${count}",
+					vocabularyName = "Stage");
+			}
+		}
+
+		task ("Create a Web Content") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Webcontent Content",
+					groupName = "Test Site Name",
+					title = "Webcontent Title ${count}");
+			}
+		}
+
+		task ("Select list of categories") {
+			ContentDashboard.selectListofCategoriesForAudienceAndStage();
+		}
+
+		task ("Go to content Dashboard > Audit Graph configuration > and see the order when only one of the categories is selected in the audit Grafich") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			task ("removing the stage and leaving only the audience") {
+				ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
+
+				AssertTextNotPresent(
+					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+					value1 = "test 1",
+					xAxisCategoryName = "stage");
+
+				AssertTextNotPresent(
+					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+					value1 = "test 2",
+					xAxisCategoryName = "stage");
+
+				AssertTextNotPresent(
+					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+					value1 = "test 3",
+					xAxisCategoryName = "stage");
+			}
 		}
 	}
 
@@ -1781,6 +2249,7 @@ definition {
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
 	}
+
 	@description = "LPS-113832 So access to content dashboard will be a combination of permissions for accessing the Global App Menu and to view or edit web content."
 	@priority = "5"
 	test PermissionsForContentDashboard {
@@ -2114,513 +2583,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can open de Info side panel of a web content"
-	@priority = "5"
-	test ViewInfoPanel {
-		property portal.acceptance = "true";
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.openInfoPanelByDropdownMenu();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-			value1 = "Content Info");
-
-		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title");
-	}
-
-	@description = "LPS-122873 When a new category is created and assigned to a web content, the relative ordering of categories remain the same and the new category gets a new color, positionated in the last position"
-	@priority = "3"
-	test CheckTheOrderWithANewCategory {
-		property portal.acceptance = "true";
-
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
-		}
-
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
-		}
-
-		task ("Create a list of Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-		task ("Select list of categories") {
-         ContentDashboard.selectListofCategoriesForAudienceAndStage();
-		}
-
-		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-  			task ("blue - first position"){
-				AssertElementPresent(
-				fillColor = "4B9FFF",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-
-			task ("orange - second position"){
-				AssertElementPresent(
-				fillColor = "FFB46E",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}	
-      
-	        task ("red - third position"){
-				AssertElementPresent(
-				fillColor = "FF5F5F",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}	
-
-			task ("green - last position"){
-				AssertElementNotPresent(
-				fillColor = "50D2A0",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-
-
-		}
-
-		task ("Create a new category and assign one of the contents") {
-			JSONCategory.addCategory(
-				groupName = "Global",
-				title = "test 4",
-				vocabularyName = "Stage");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title 1");
-
-			WebContent.selectCategory(
-				categoryName = "test 4",
-				vocabularyName = "Stage");
-
-			PortletEntry.publish();
-		}
-		task ("Navigate to the content panel and see if, in the new category order, the new category receives a new color, placed in the last position") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-            task ("blue - first position"){
-				AssertElementPresent(
-				fillColor = "4B9FFF",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-
-			task ("orange - second position"){
-				AssertElementPresent(
-				fillColor = "FFB46E",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}	
-      
-	        task ("red - third position"){
-				AssertElementPresent(
-				fillColor = "FF5F5F",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-			
-			task ("green - last position"){
-				AssertElementPresent(
-				fillColor = "50D2A0",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-
-		}
-	}
-
-    @description = "LPS-122873 When there are some categories created for vocabulary1 (X axis), they will always have the same order during the user session"
-	@priority = "3"
-	test CategoriesWithSameOrderDuringASession {
-		property portal.acceptance = "true";
-
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
-		}
-
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
-		}
-
-		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-        task ("Select list of categories") {
-         ContentDashboard.selectListofCategoriesForAudienceAndStage();
-		}
-		
-		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-	}
-
-    @description = "LPS-122873 When all the web content is unassigned from a Vocab1's category, the relative ordering of the rest of the categories remain the same"
-	@priority = "3"
-	test AssigningSomeAudienceCategoriesAndCheckingTheOrder {
-		property portal.acceptance = "true";
-
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
-		}
-
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
-		}
-
-		task ("Create a list of Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-		task ("Select of categories 1 and 3 of Audience, and all categories of Stage") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			for (var count : list "1,2,3") {
-				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
-
-				for (var count : list "1,3") {
-					WebContent.selectCategory(
-						categoryName = "S ${count}",
-						vocabularyName = "Audience");
-				}
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "test ${count}",
-						vocabularyName = "Stage");
-				}
-
-				PortletEntry.publish();
-			}
-		}
-		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			task ("blue - first position"){
-				AssertElementPresent(
-				fillColor = "4B9FFF",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-
-			task ("orange - second position"){
-				AssertElementPresent(
-				fillColor = "FFB46E",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}	
-      
-	        task ("red - third position"){
-				AssertElementPresent(
-				fillColor = "FF5F5F",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}	
-		}
-	}
-
-    @description = "LPS-122873 When the user add filters need to have only one vocabulary, the relative ordering of the categories remain the same"
-	@priority = "3"
-	test JustAddingAVocabularyThroughTheFilters {
-		property portal.acceptance = "true";
-
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
-		}
-
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
-		}
-
-		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-		task ("Selecting only the Stage vocabulary") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			for (var count : list "1,2,3") {
-				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "test ${count}",
-						vocabularyName = "Stage");
-				}
-
-				PortletEntry.publish();
-			}
-		}
-		task ("Go to content Dashboard and View the relative ordering of the categories remain the same") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "test 1",
-				xAxisCategoryName = "stage");	
-
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "test 2",
-				xAxisCategoryName = "stage");	
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "test 3",
-				xAxisCategoryName = "stage");			
-		}
-	}
-
-    @description = "LPS-122873 When the user configure the audit graph to have just one vocabulary, the relative ordering of the categories remain the same"
-	@priority = "3"
-	test NumberOfVcabulariesAccordingToTheAuditGraph {
-		property portal.acceptance = "true";
-
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
-		}
-
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
-		}
-
-		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-        task ("Select list of categories") {
-         ContentDashboard.selectListofCategoriesForAudienceAndStage();
-		}
-        
-
-		task ("Go to content Dashboard > Audit Graph configuration > and see the order when only one of the categories is selected in the audit Grafich") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			task ("removing the stage and leaving only the audience") {
-				ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
-
-				AssertTextNotPresent(
-				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "test 1",
-				xAxisCategoryName = "stage");	
-
-
-				AssertTextNotPresent(
-					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-					value1 = "test 2",
-					xAxisCategoryName = "stage");	
-
-				AssertTextNotPresent(
-					locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-					value1 = "test 3",
-					xAxisCategoryName = "stage");			
-
-			}
-		}
-	}
-
-	@description = "LPS-122873 When any web content is unassigned to a Vocab1's category, the relative ordering of categories remain the same"
-	@priority = "3"
-	test CheckOrderEvenWithSomeUnassignedCategories {
-		property portal.acceptance = "true";
-
-		task ("Create a list of Audiences") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "S ${count}",
-					vocabularyName = "Audience");
-			}
-		}
-
-		task ("Create a list of Stages") {
-			for (var count : list "1,2,3") {
-				JSONCategory.addCategory(
-					groupName = "Global",
-					title = "test ${count}",
-					vocabularyName = "Stage");
-			}
-		}
-
-		task ("Create a Web Content") {
-			for (var count : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Webcontent Content",
-					groupName = "Test Site Name",
-					title = "Webcontent Title ${count}");
-			}
-		}
-
-		task ("Selecting the categories, one of the contents will not have category 2 of vocabulary 1") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title 1");
-
-			for (var count : list "1,3") {
-				WebContent.selectCategory(
-					categoryName = "S ${count}",
-					vocabularyName = "Audience");
-			}
-
-			for (var count : list "1,2,3") {
-				WebContent.selectCategory(
-					categoryName = "test ${count}",
-					vocabularyName = "Stage");
-			}
-
-			PortletEntry.publish();
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			for (var count : list "2,3") {
-				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${count}");
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "S ${count}",
-						vocabularyName = "Audience");
-				}
-
-				for (var count : list "1,2,3") {
-					WebContent.selectCategory(
-						categoryName = "test ${count}",
-						vocabularyName = "Stage");
-				}
-
-				PortletEntry.publish();
-			}
-		}
-		task ("Navigate to content Dashboard and View the order of categories") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-    
-
-         task ("blue - first position"){
-				AssertElementPresent(
-				fillColor = "4B9FFF",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}
-
-		task ("orange - second position"){
-				AssertElementPresent(
-				fillColor = "FFB46E",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}	
-      
-	    task ("red - third position"){
-			AssertElementPresent(
-				fillColor = "FF5F5F",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}		
-
-		}
-	}
-
 	@description = "LPS-122873 When the user uncheck any checkbox from the vocab2, the relative ordering of the categories remain the same"
 	@priority = "3"
 	test UncheckACategoryInTheContentPanel {
@@ -2654,7 +2616,7 @@ definition {
 		}
 
 		task ("Select list of categories") {
-         ContentDashboard.selectListofCategoriesForAudienceAndStage();
+			ContentDashboard.selectListofCategoriesForAudienceAndStage();
 		}
 
 		task ("Navigate to content Dashboard, uncheck a vocabulary category 2 and see the order of categories") {
@@ -2667,27 +2629,54 @@ definition {
 				checkboxName = "test 2",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			task ("blue - first position"){
+			task ("blue - first position") {
 				AssertElementPresent(
-				fillColor = "4B9FFF",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+					fillColor = "4B9FFF",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 			}
 
-			task ("orange - second position"){
+			task ("orange - second position") {
 				AssertElementNotPresent(
-				fillColor = "FFB46E",
-				locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
-			}	
-      
-	   		task ("red - third position"){
+					fillColor = "FFB46E",
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+			}
+
+			task ("red - third position") {
 				AssertElementPresent(
 					fillColor = "FF5F5F",
-					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");	
+					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 			}
-
-
 		}
 	}
 
+	@description = "Validate if the user can open de Info side panel of a web content"
+	@priority = "5"
+	test ViewInfoPanel {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.openInfoPanelByDropdownMenu();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+			value1 = "Content Info");
+
+		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title");
+	}
 
 }

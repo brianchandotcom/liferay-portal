@@ -1601,6 +1601,22 @@ definition {
 				value1 = "${maxNumberOfItems}");
 		}
 
+		if (isSet(maxNumberOfItemsPerPage)) {
+			Type(
+				key_text = "Maximum Number of Items per Page",
+				locator1 = "TextInput#ANY",
+				value1 = "${maxNumberOfItemsPerPage}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			AssertTextEquals(
+				key_text = "Maximum Number of Items per Page",
+				locator1 = "TextInput#ANY",
+				value1 = "${maxNumberOfItemsPerPage}");
+		}
+
 		PageEditor.waitForAutoSave();
 	}
 

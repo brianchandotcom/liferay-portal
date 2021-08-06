@@ -34,9 +34,7 @@ if (ddmTemplate != null) {
 	renderResponse.setTitle(LanguageUtil.format(request, "edit-x", HtmlUtil.escape(ddmTemplate.getName(locale))));
 }
 else {
-	EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-	renderResponse.setTitle(LanguageUtil.format(request, "add-x", HtmlUtil.escape(editDDMTemplateDisplayContext.getTemplateTypeLabel(classNameId))));
+	renderResponse.setTitle(LanguageUtil.format(request, "add-x", HtmlUtil.escape(editDDMTemplateDisplayContext.getTemplateTypeLabel())));
 }
 %>
 

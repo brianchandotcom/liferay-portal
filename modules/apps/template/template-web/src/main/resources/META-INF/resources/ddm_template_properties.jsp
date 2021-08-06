@@ -20,14 +20,115 @@
 EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
-
-String templateName = "New template";
-
-if (ddmTemplate != null) {
-	templateName = ddmTemplate.getName(locale);
-}
 %>
 
-<div>
-	<h1>Properties panel for template: <%= templateName %></h1>
+<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
+
+<div class="form-group-sm template-properties">
+	<aui:select changesContext="<%= true %>" cssClass="form-control-sm" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+
+		<%
+		for (String curLangType : editDDMTemplateDisplayContext.getLanguageTypes()) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(StringPool.PERIOD);
+			sb.append(curLangType);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		%>
+
+			<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(editDDMTemplateDisplayContext.getLanguageType(), curLangType) %>" value="<%= curLangType %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
+
+	<p class="control-label mb-1">
+		<b><liferay-ui:message key="item-type" /></b>
+	</p>
+
+	<p class="small">
+		<%= editDDMTemplateDisplayContext.getTemplateTypeLabel() %>
+	</p>
+
+	<c:if test="<%= Validator.isNotNull(editDDMTemplateDisplayContext.getTemplateSubtypeLabel()) %>">
+		<p class="control-label mb-1">
+			<b><liferay-ui:message key="item-subtype" /></b>
+		</p>
+
+		<p class="small">
+			<%= editDDMTemplateDisplayContext.getTemplateSubtypeLabel() %>
+		</p>
+	</c:if>
+
+	<c:if test="<%= (ddmTemplate == null) && !editDDMTemplateDisplayContext.autogenerateTemplateKey() %>">
+		<aui:input name="templateKey" />
+	</c:if>
+
+	<c:if test="<%= ddmTemplate != null %>">
+		<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= ddmTemplate.getTemplateKey() %>" />
+
+		<portlet:resourceURL id="/dynamic_data_mapping/get_template" var="getTemplateURL">
+			<portlet:param name="templateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
+		</portlet:resourceURL>
+
+		<aui:input name="url" type="resource" value="<%= getTemplateURL %>" />
+	</c:if>
+
+	<aui:input name="description" />
+
+	<%
+	String smallImageSource = editDDMTemplateDisplayContext.getSmallImageSource();
+	%>
+
+	<aui:select label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
+		<aui:option label="no-image" value="none" />
+		<aui:option label="from-url" value="url" />
+		<aui:option label="from-your-computer" value="file" />
+	</aui:select>
+
+	<div class="<%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>" id="<portlet:namespace />smallImageURLContainer">
+		<aui:input label="" name="smallImageURL" title="small-image-url" wrapperCssClass="mb-3" />
+
+		<c:if test="<%= editDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && Validator.isNotNull(ddmTemplate.getSmallImageURL()) %>">
+			<p class="control-label font-weight-semi-bold">
+				<liferay-ui:message key="preview" />
+			</p>
+
+			<div class="aspect-ratio aspect-ratio-16-to-9">
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+			</div>
+		</c:if>
+	</div>
+
+	<div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallImageFileContainer">
+		<aui:input label="" name="smallImageFile" type="file" wrapperCssClass="mb-3" />
+
+		<c:if test="<%= editDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0) %>">
+			<p>
+				<strong><liferay-ui:message key="preview" /></strong>
+			</p>
+
+			<div class="aspect-ratio aspect-ratio-16-to-9">
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
+			</div>
+		</c:if>
+	</div>
+
+	<aui:script>
+		Liferay.Util.toggleSelectBox(
+			'<portlet:namespace />smallImageSource',
+			'url',
+			'<portlet:namespace />smallImageURLContainer'
+		);
+		Liferay.Util.toggleSelectBox(
+			'<portlet:namespace />smallImageSource',
+			'file',
+			'<portlet:namespace />smallImageFileContainer'
+		);
+	</aui:script>
 </div>

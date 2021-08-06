@@ -56,7 +56,7 @@ definition {
 		task ("Configure the Staging Public Pages in site configuration") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-staging");
 
-			Site.addVirtualHostsURLCP(stagingPublicPages = "test.test");
+			Site.addVirtualHostsURLCP(stagingPublicPages = "www.able.com");
 		}
 
 		task ("Sign out") {
@@ -64,7 +64,7 @@ definition {
 		}
 
 		task ("Cannot view sitemap of staging site as Guest") {
-			Navigator.openSpecificURL(url = "http://test.test:8080/sitemap.xml");
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/sitemap.xml");
 
 			AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
 		}

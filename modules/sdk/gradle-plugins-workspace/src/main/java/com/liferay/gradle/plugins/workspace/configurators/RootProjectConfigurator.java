@@ -65,6 +65,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -1174,13 +1175,27 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project p) {
-					verify.checksum(workspaceExtension.getBundleChecksumMD5());
+					if (StringUtils.isNotEmpty(
+							workspaceExtension.getProduct())) {
 
-					TaskOutputs taskOutputs = downloadBundleTask.getOutputs();
+						String bundleChecksumMD5 =
+							workspaceExtension.getBundleChecksumMD5();
 
-					FileCollection fileCollection = taskOutputs.getFiles();
+						if (StringUtils.isEmpty(bundleChecksumMD5)) {
+							verify.setEnabled(false);
 
-					verify.src(fileCollection.getSingleFile());
+							return;
+						}
+
+						verify.checksum(bundleChecksumMD5);
+
+						TaskOutputs taskOutputs =
+							downloadBundleTask.getOutputs();
+
+						FileCollection fileCollection = taskOutputs.getFiles();
+
+						verify.src(fileCollection.getSingleFile());
+					}
 				}
 
 			});

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.cluster.test.module.internel;
+package com.liferay.portal.cluster.sample.internal;
 
-import com.liferay.cluster.test.module.configuration.ClusterTestConfiguration;
+import com.liferay.portal.cluster.sample.configuration.ClusterTestConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.cluster.test.module.configuration.ClusterTestConfiguration",
-	immediate = true
+	immediate = true, service = {}
 )
 public class ClusterTestDispatcher {
 
@@ -82,8 +82,8 @@ public class ClusterTestDispatcher {
 				_log.error("Unable to find command " + clusterTestCommand);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

@@ -161,8 +161,9 @@ definition {
 
 		if (isSet(accountGroupAccount)) {
 			AssertTextEquals(
+				key_columnName = "lfr-accounts-column",
 				key_rowEntry = "${accountGroupName}",
-				locator1 = "AccountGroup#ACCOUNT_GROUP_ACCOUNTS",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 				value1 = "${accountGroupAccount}");
 		}
 	}

@@ -115,13 +115,9 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.viewEntryAccounts(
-			accountName = "Person Account",
-			accountRowNumber = "2");
+		AccountUsers.viewEntryAccounts(accountName = "Person Account");
 
-		AccountUsers.viewEntryAccounts(
-			accountName = "No Assigned Account",
-			accountRowNumber = "1");
+		AccountUsers.viewEntryAccounts(accountName = "No Assigned Account");
 	}
 
 	@description = "This test adds and removes a user assignee to an account specific role."

@@ -242,6 +242,100 @@ definition {
 			fieldValue = "Test Text");
 	}
 
+	@description = "LPS-74997 - Verify that editing a Form does not affect previously submitted Form Entries"
+	@priority = "4"
+	test CanBeViewedAfterEditingTheForm {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Delete Select Option Test");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		var fieldName = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Select");
+
+		for (var number : list "1,2,3") {
+			FormFields.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.selectSelectOption(
+			fieldName = "Select",
+			selectOption = "Select 2");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewSelectEntry(
+			fieldLabel = "Select",
+			fieldName = "${fieldName}",
+			selectOption = "Select 2");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Delete Select Option Test");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select");
+
+		FormFields.deleteOptionsRow(rowNumber = "2");
+
+		FormFields.viewDeletedSelectOptionsRowFieldValue(
+			fieldValue = "Select 2",
+			rowNumber = "2");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewSelectEntry(
+			fieldLabel = "Select",
+			fieldName = "${fieldName}",
+			selectOption = "Select 2");
+	}
+
 	@description = "Verify that Entries Previews display the correct information"
 	@priority = "5"
 	test DisplayCorrectInfoInPreviews {
@@ -591,6 +685,99 @@ definition {
 			key_maxValue = "11",
 			key_minValue = "5",
 			key_sumValue = "16");
+	}
+
+	@description = "LPS-61197 - Verify that with Single Approver Workflow enabled, the Date Field is properly displayed on an Entry submitted from the Forms Widget"
+	@priority = "5"
+	test FromWidgetWithWorkflowEnabledDisplaysDateField {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureWorkflow(workflowDefinition = "Single Approver");
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewDateLabel(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "02/01/2016");
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByDetails(
+			workflowAssetTitle = "Created Form Name",
+			workflowAssetType = "Form Record",
+			workflowTask = "Review");
+
+		Workflow.viewTaskAssignedToMe(
+			workflowAssetTitle = "Created Form Name",
+			workflowAssetType = "Form Record",
+			workflowTask = "Review");
+
+		Workflow.viewTaskAssignedToMeDetails(
+			workflowAssetContent = "Date",
+			workflowAssetTitle = "Created Form Name",
+			workflowTask = "Review");
+
+		Workflow.gotoPreviewView();
+
+		FormFields.viewDateField(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Created Form Name",
+			workflowAssetType = "Form Record",
+			workflowTask = "Review");
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Created Form Name",
+			workflowAssetType = "Form Record",
+			workflowTask = "Review");
 	}
 
 	@description = "Verify that with Single Approver Workflow enabled and after the form entry was approved, the entry will have an approved label"

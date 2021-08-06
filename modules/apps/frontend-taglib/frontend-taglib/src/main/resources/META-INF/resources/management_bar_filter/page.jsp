@@ -25,7 +25,7 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 
 <c:if test="<%= !managementBarFilterItems.isEmpty() %>">
 	<li class="dropdown <%= disabled ? "disabled" : StringPool.BLANK %>">
-		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= Validator.isNotNull(label) ? label : StringPool.BLANK %>" data-toggle="<%= disabled ? StringPool.BLANK : "dropdown" %>" href="javascript:;">
+		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= Validator.isNotNull(label) ? label : StringPool.BLANK %>" data-toggle="<%= disabled ? StringPool.BLANK : "liferay-dropdown" %>" href="javascript:;">
 			<span class="management-bar-item-title">
 				<c:if test="<%= Validator.isNotNull(label) %>">
 					<liferay-ui:message key="<%= label %>" />:

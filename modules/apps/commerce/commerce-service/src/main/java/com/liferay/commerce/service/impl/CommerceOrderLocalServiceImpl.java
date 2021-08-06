@@ -319,7 +319,6 @@ public class CommerceOrderLocalServiceImpl
 			new HashMap<>());
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
@@ -345,7 +344,6 @@ public class CommerceOrderLocalServiceImpl
 			orderDateHour, orderDateMinute, orderStatus, serviceContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
@@ -368,7 +366,6 @@ public class CommerceOrderLocalServiceImpl
 			paymentStatus, 0, 0, 0, 0, 0, orderStatus, serviceContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
@@ -380,7 +377,7 @@ public class CommerceOrderLocalServiceImpl
 			int orderStatus, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCommerceOrder(
+		return commerceOrderLocalService.addCommerceOrder(
 			userId, groupId, commerceAccountId, commerceCurrencyId,
 			billingAddressId, shippingAddressId, commercePaymentMethodKey,
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,

@@ -18,6 +18,7 @@ import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMappe
 import com.liferay.fragment.entry.processor.editable.parser.util.EditableElementParserUtil;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,16 +49,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		JSONObject localizedJSONObject = configJSONObject.getJSONObject(
-			LocaleUtil.toLanguageId(fragmentEntryProcessorContext.getLocale()));
-
-		if ((localizedJSONObject != null) &&
-			(localizedJSONObject.length() > 0)) {
-
-			configJSONObject = localizedJSONObject;
-		}
-
-		String href = configJSONObject.getString("href");
+		JSONObject hrefJSONObject = configJSONObject.getJSONObject("href");
 
 		boolean assetDisplayPage =
 			_fragmentEntryProcessorHelper.isAssetDisplayPage(
@@ -69,11 +61,13 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		boolean mapped = _fragmentEntryProcessorHelper.isMapped(
 			configJSONObject);
 
-		if (Validator.isNull(href) && !assetDisplayPage && !collectionMapped &&
-			!layoutMapped && !mapped) {
+		if ((hrefJSONObject == null) && !assetDisplayPage &&
+			!collectionMapped && !layoutMapped && !mapped) {
 
 			return;
 		}
+
+		String href = StringPool.BLANK;
 
 		if (collectionMapped) {
 			href = GetterUtil.getString(
@@ -90,6 +84,15 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 				_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
 					configJSONObject, new HashMap<>(),
 					fragmentEntryProcessorContext));
+		}
+		else if (hrefJSONObject != null) {
+			href = hrefJSONObject.getString(
+				LocaleUtil.toLanguageId(
+					fragmentEntryProcessorContext.getLocale()));
+		}
+
+		if (Validator.isNull(href)) {
+			return;
 		}
 
 		Element linkElement = new Element("a");

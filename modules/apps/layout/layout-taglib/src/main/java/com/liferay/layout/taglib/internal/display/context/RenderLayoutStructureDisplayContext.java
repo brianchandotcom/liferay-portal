@@ -465,10 +465,10 @@ public class RenderLayoutStructureDisplayContext {
 			return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 		}
 
-		String href = linkJSONObject.getString("href");
+		JSONObject hrefJSONObject = linkJSONObject.getJSONObject("href");
 
-		if (Validator.isNotNull(href)) {
-			return href;
+		if (hrefJSONObject != null) {
+			return hrefJSONObject.getString(LocaleUtil.toLanguageId(locale));
 		}
 
 		return StringPool.BLANK;

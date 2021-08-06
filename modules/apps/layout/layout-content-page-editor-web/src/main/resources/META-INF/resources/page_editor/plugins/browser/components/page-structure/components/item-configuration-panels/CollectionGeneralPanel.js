@@ -63,6 +63,18 @@ const DEFAULT_LIST_STYLE = {
 	value: LIST_STYLE_GRID,
 };
 
+const ERROR_MESSAGES = {
+	maximumItems: Liferay.Language.get(
+		'the-maximum-number-of-items-in-this-collection-is-x'
+	),
+	maximumItemsPerPage: Liferay.Language.get(
+		'you-can-only-display-a-maximum-of-x-items-per-page'
+	),
+	noItems: Liferay.Language.get(
+		'you-need-at-least-one-item-to-use-pagination'
+	),
+};
+
 export const CollectionGeneralPanel = ({item}) => {
 	const [availableListItemStyles, setAvailableListItemStyles] = useState([]);
 	const [availableListStyles, setAvailableListStyles] = useState([
@@ -130,11 +142,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	const handleCollectionNumberOfItemsBlurred = (event) => {
 		if (Number(nextValue.numberOfItems) !== item.config.numberOfItems) {
 			setNumberOfItemsError(
-				Number(event.target.value) < 1
-					? Liferay.Language.get(
-							'you-need-at-least-one-item-to-use-pagination'
-					  )
-					: null
+				Number(event.target.value) < 1 ? ERROR_MESSAGES.noItems : null
 			);
 
 			handleConfigurationChanged({
@@ -159,11 +167,7 @@ export const CollectionGeneralPanel = ({item}) => {
 			nextValue.numberOfItemsPerPage !== item.config.numberOfItemsPerPage
 		) {
 			if (Number(event.target.value) < 1) {
-				setNumberOfItemsPerPageError(
-					Liferay.Language.get(
-						'you-need-at-least-one-item-to-use-pagination'
-					)
-				);
+				setNumberOfItemsPerPageError(ERROR_MESSAGES.noItems);
 			}
 			else if (
 				Number(event.target.value) <= config.searchContainerPageMaxDelta
@@ -223,9 +227,7 @@ export const CollectionGeneralPanel = ({item}) => {
 		) {
 			setNumberOfItemsError(
 				Liferay.Util.sub(
-					Liferay.Language.get(
-						'the-maximum-number-of-items-in-this-collection-is-x'
-					),
+					ERROR_MESSAGES.maximumItems,
 					totalNumberOfItems
 				)
 			);
@@ -236,9 +238,7 @@ export const CollectionGeneralPanel = ({item}) => {
 		if (isMaximumValuePerPageError) {
 			setNumberOfItemsPerPageError(
 				Liferay.Util.sub(
-					Liferay.Language.get(
-						'you-can-only-display-a-maximum-of-x-items-per-page'
-					),
+					ERROR_MESSAGES.maximumItemsPerPage,
 					config.searchContainerPageMaxDelta
 				)
 			);

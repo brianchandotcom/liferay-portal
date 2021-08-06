@@ -43,4 +43,31 @@ definition {
 		ACSites.viewSiteOverviewDashboardCards();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8260 | Test Summary: Site report page returns all cards filled out according to the site selected in the Site dropdown field"
+	@ignore = "true"
+	@priority = "5"
+	test SiteReportPageReturnsAllCardsFilledAccordingSiteSelected {
+
+		// TODO LRAC-8260 SiteReportPageReturnsAllCardsFilledAccordingSiteSelected pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8261 | Test Summary: Make sure the Site Reports is the home page of AC"
+	@ignore = "true"
+	@priority = "5"
+	test ViewSitesReportsAsHomePageAC {
+
+		// TODO LRAC-8261 ViewSitesReportsAsHomePageAC pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Sites Report page has an empty state If no data source is connect"
+	@ignore = "true"
+	@priority = "4"
+	test SitesReportPageHasEmptyStateIfNoDataSourceConnect {
+
+		// TODO LRAC-8266 SitesReportPageHasEmptyStateIfNoDataSourceConnect pending implementation
+
+	}
+
 }

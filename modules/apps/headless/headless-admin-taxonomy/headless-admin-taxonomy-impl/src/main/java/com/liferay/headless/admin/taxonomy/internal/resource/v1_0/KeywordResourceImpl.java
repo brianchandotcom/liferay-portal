@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
-import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter.KeywordDTOConverter;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.KeywordEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.petra.string.StringPool;
@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -42,12 +40,12 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
@@ -284,11 +282,10 @@ public class KeywordResourceImpl
 	}
 
 	private Keyword _toKeyword(AssetTag assetTag) {
-		Group group = groupLocalService.fetchGroup(assetTag.getGroupId());
-
-		return new Keyword() {
-			{
-				actions = HashMapBuilder.put(
+		return _keywordDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
 					"delete",
 					addAction(
 						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
@@ -309,43 +306,11 @@ public class KeywordResourceImpl
 						"putKeyword", assetTag.getUserId(),
 						AssetTagsPermission.RESOURCE_NAME,
 						assetTag.getGroupId())
-				).build();
-				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
-				dateCreated = assetTag.getCreateDate();
-				dateModified = assetTag.getModifiedDate();
-				id = assetTag.getTagId();
-				name = assetTag.getName();
-				siteId = GroupUtil.getSiteId(group);
-
-				setCreator(
-					() -> {
-						if (assetTag.getUserId() != 0) {
-							return CreatorUtil.toCreator(
-								_portal,
-								_userLocalService.fetchUser(
-									assetTag.getUserId()));
-						}
-
-						return null;
-					});
-				setKeywordUsageCount(
-					() -> {
-						Hits hits = _assetEntryLocalService.search(
-							assetTag.getCompanyId(),
-							new long[] {assetTag.getGroupId()},
-							assetTag.getUserId(), null, 0, null, null, null,
-							null, assetTag.getName(), true,
-							new int[] {
-								WorkflowConstants.STATUS_APPROVED,
-								WorkflowConstants.STATUS_PENDING,
-								WorkflowConstants.STATUS_SCHEDULED
-							},
-							false, 0, 1);
-
-						return hits.getLength();
-					});
-			}
-		};
+				).build(),
+				_dtoConverterRegistry, assetTag.getTagId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			assetTag);
 	}
 
 	private static final EntityModel _entityModel = new KeywordEntityModel();
@@ -358,6 +323,12 @@ public class KeywordResourceImpl
 
 	@Reference
 	private AssetTagService _assetTagService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private KeywordDTOConverter _keywordDTOConverter;
 
 	@Reference
 	private Portal _portal;

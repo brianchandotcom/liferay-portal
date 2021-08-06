@@ -18,11 +18,13 @@ import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFormEvaluatorExpressionObserver;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -52,32 +54,33 @@ public class DDMFormEvaluatorRuleHelper {
 	protected void checkFieldAffectedByAction(
 		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
 
+		checkFieldAffectedByCalculateAction(ddmFormRule, ddmFormField);
 		checkFieldAffectedBySetReadOnlyAction(ddmFormRule, ddmFormField);
 		checkFieldAffectedBySetRequiredAction(ddmFormRule, ddmFormField);
 		checkFieldAffectedBySetVisibleAction(ddmFormRule, ddmFormField);
-		checkFieldAffectedByCalculateAction(ddmFormRule, ddmFormField);
 	}
 
 	protected void checkFieldAffectedByCalculateAction(
 		DDMFormRule ddmFormRule, DDMFormField ddmFormField) {
 
-		Map<String, Object> properties = ddmFormField.getProperties();
-
 		if (containsAction(
 				ddmFormRule, "calculate", ddmFormField.getName(),
-				GetterUtil.getString(properties.get("value")))) {
+				GetterUtil.getString(ddmFormField.getProperty("value")))) {
 
-			String value = StringPool.BLANK;
+			String newValue = StringPool.BLANK;
 
-			if (GetterUtil.getString(properties.get("predefinedValue")) !=
-					null) {
+			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-				value = GetterUtil.getString(properties.get("predefinedValue"));
+			if (predefinedValue != null) {
+				newValue = GetterUtil.getString(
+					predefinedValue.getString(
+						new Locale(
+							(String)ddmFormField.getProperty("locale"))));
 			}
 
 			UpdateFieldPropertyRequest.Builder builder =
 				UpdateFieldPropertyRequest.Builder.newBuilder(
-					ddmFormField.getName(), "value", value);
+					ddmFormField.getName(), "value", newValue);
 
 			_ddmFormEvaluatorExpressionObserver.updateFieldProperty(
 				builder.build());

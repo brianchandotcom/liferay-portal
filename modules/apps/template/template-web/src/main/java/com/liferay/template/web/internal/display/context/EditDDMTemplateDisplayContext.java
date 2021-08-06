@@ -19,17 +19,30 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateVariableDefinition;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.template.web.internal.util.TemplateDDMTemplateUtil;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Eudaldo Alonso
@@ -73,7 +86,7 @@ public class EditDDMTemplateDisplayContext {
 		return _ddmTemplate;
 	}
 
-	public Map<String, Object> getDDMTemplateEditorContext() {
+	public Map<String, Object> getDDMTemplateEditorContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"propertiesViewURL",
 			() -> PortletURLBuilder.createRenderURL(
@@ -91,6 +104,8 @@ public class EditDDMTemplateDisplayContext {
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
 			).buildString()
+		).put(
+			"templateVariableGroups", _getTemplateVariableGroupJSONArray()
 		).build();
 	}
 
@@ -188,6 +203,84 @@ public class EditDDMTemplateDisplayContext {
 			_liferayPortletRequest, "tabs1", "information-templates");
 
 		return _tabs1;
+	}
+
+	private ResourceBundle _getTemplateHandlerResourceBundle() {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(getClassNameId());
+
+		Class<?> clazz = getClass();
+
+		if (templateHandler != null) {
+			clazz = templateHandler.getClass();
+		}
+
+		return ResourceBundleUtil.getBundle(_themeDisplay.getLocale(), clazz);
+	}
+
+	private JSONArray _getTemplateVariableGroupJSONArray() throws Exception {
+		JSONArray templateVariableGroupJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (TemplateVariableGroup templateVariableGroup :
+				_getTemplateVariableGroups()) {
+
+			if (templateVariableGroup.isEmpty()) {
+				continue;
+			}
+
+			JSONArray templateVariableDefinitionJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (TemplateVariableDefinition templateVariableDefinition :
+					templateVariableGroup.getTemplateVariableDefinitions()) {
+
+				templateVariableDefinitionJSONArray.put(
+					JSONUtil.put(
+						"content",
+						TemplateDDMTemplateUtil.getDataContent(
+							templateVariableDefinition, getLanguageType())
+					).put(
+						"label",
+						LanguageUtil.get(
+							_themeDisplay.getRequest(),
+							templateVariableDefinition.getLabel())
+					).put(
+						"repeatable",
+						templateVariableDefinition.isCollection() ||
+						templateVariableDefinition.isRepeatable()
+					).put(
+						"tooltip",
+						TemplateDDMTemplateUtil.getPaletteItemTitle(
+							_themeDisplay.getRequest(),
+							_getTemplateHandlerResourceBundle(),
+							templateVariableDefinition)
+					));
+			}
+
+			templateVariableGroupJSONArray.put(
+				JSONUtil.put(
+					"items", templateVariableDefinitionJSONArray
+				).put(
+					"label",
+					LanguageUtil.get(
+						_themeDisplay.getRequest(),
+						templateVariableGroup.getLabel())
+				));
+		}
+
+		return templateVariableGroupJSONArray;
+	}
+
+	private Collection<TemplateVariableGroup> _getTemplateVariableGroups()
+		throws Exception {
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			TemplateContextHelper.getTemplateVariableGroups(
+				getClassNameId(), _getClassPK(), getLanguageType(),
+				_themeDisplay.getLocale());
+
+		return templateVariableGroups.values();
 	}
 
 	private Long _classNameId;

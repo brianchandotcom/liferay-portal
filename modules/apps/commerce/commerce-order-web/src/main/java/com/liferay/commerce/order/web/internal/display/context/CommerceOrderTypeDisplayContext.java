@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -99,10 +100,7 @@ public class CommerceOrderTypeDisplayContext {
 			getCommerceOrderTypeClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
-
-		clayDataSetActionDropdownItems.add(
+		return ListUtil.fromArray(
 			new ClayDataSetActionDropdownItem(
 				PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
@@ -116,21 +114,15 @@ public class CommerceOrderTypeDisplayContext {
 					"commerceOrderTypeId", "{id}"
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
-				"get", null, null));
-
-		clayDataSetActionDropdownItems.add(
+				"get", null, null),
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete", "headless"));
-
-		clayDataSetActionDropdownItems.add(
+				"delete", "headless"),
 			new ClayDataSetActionDropdownItem(
 				_getManagePermissionsURL(), null, "permissions",
 				LanguageUtil.get(httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"));
-
-		return clayDataSetActionDropdownItems;
 	}
 
 	public long getCommerceOrderTypeId() throws PortalException {

@@ -892,11 +892,30 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
 
-		// TODO LRQA-69103 SingleApproverComesWithAccountMemberAndAdmRoleName pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		Click(
+			key_nodeType = "review",
+			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
+
+		AssertElementPresent(
+			value1 = "Account Member",
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH");
+
+		AssertElementPresent(
+			value1 = "Account Administrator",
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH");
+
 
 	}
 

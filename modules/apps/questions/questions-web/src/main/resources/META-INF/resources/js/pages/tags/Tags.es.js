@@ -12,11 +12,12 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput, ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useManualQuery} from 'graphql-hooks';
+import {useManualQuery, useMutation} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -28,10 +29,13 @@ import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	getTagsOrderByDateCreatedQuery,
 	getTagsOrderByNumberOfUsagesQuery,
+	subscribeTagQuery,
+	unsubscribeTagQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
 	dateToInternationalHuman,
+	deleteCacheKey,
 	historyPushWithSlug,
 	useDebounceCallback,
 } from '../../utils/utils.es';
@@ -141,6 +145,27 @@ export default withRouter(({history, location}) => {
 		(search) => changePage(search, 1, 20),
 		500
 	);
+
+	const [subscribe] = useMutation(subscribeTagQuery);
+	const [unsubscribe] = useMutation(unsubscribeTagQuery);
+
+	const changeSubscription = (keywordId, subscribed) => {
+		const fn = subscribed ? unsubscribe : subscribe;
+		fn({variables: {keywordId}}).then((_) => {
+			deleteCacheKey(getTagsOrderByDateCreatedQuery, {
+				page,
+				pageSize,
+				search,
+				siteKey: context.siteKey,
+			});
+			deleteCacheKey(getTagsOrderByNumberOfUsagesQuery, {
+				page,
+				pageSize,
+				search,
+				siteKey: context.siteKey,
+			});
+		});
+	};
 
 	return (
 		<>
@@ -262,40 +287,89 @@ export default withRouter(({history, location}) => {
 									<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
 										<div className="card-body">
 											<div className="card-row">
-												<div className="autofit-col autofit-col-expand">
-													<div className="autofit-section">
-														<div className="card-title">
-															<span className="text-truncate">
-																{tag.name}
-															</span>
+												<div className="autofit-row autofit-row-center autofit-row-expand">
+													<div className="autofit-col autofit-col-expand">
+														<div className="autofit-section">
+															<div className="card-title">
+																<span className="text-truncate">
+																	{tag.name}
+																</span>
+															</div>
 														</div>
-														{orderBy ===
-														'latest-created' ? (
-															<div>
-																{lang.sub(
-																	Liferay.Language.get(
-																		'created-on'
-																	),
-																	[
-																		dateToInternationalHuman(
-																			tag.dateCreated
-																		),
-																	]
-																)}
-															</div>
-														) : (
-															<div>
-																{lang.sub(
-																	Liferay.Language.get(
-																		'used-x-times'
-																	),
-																	[
-																		tag.keywordUsageCount,
-																	]
-																)}
-															</div>
-														)}
 													</div>
+													{tag.actions.subscribe && (
+														<div className="autofit-col">
+															<div className="autofit-section">
+																<ClayButton
+																	data-tooltip-align="top"
+																	displayType={
+																		tag.subscribed
+																			? 'primary'
+																			: 'secondary'
+																	}
+																	monospaced
+																	onClick={() => {
+																		changeSubscription(
+																			tag.id,
+																			tag.subscribed
+																		);
+																		const subscribed = !tag.subscribed;
+																		this.displayType = subscribed
+																			? 'primary'
+																			: 'secondary';
+																		this.title = subscribed
+																			? Liferay.Language.get(
+																					'unsubscribe'
+																			  )
+																			: Liferay.Language.get(
+																					'subscribe'
+																			  );
+																	}}
+																	title={
+																		tag.subscribed
+																			? Liferay.Language.get(
+																					'unsubscribe'
+																			  )
+																			: Liferay.Language.get(
+																					'subscribe'
+																			  )
+																	}
+																>
+																	<ClayIcon symbol="bell-on" />
+																</ClayButton>
+															</div>
+														</div>
+													)}
+												</div>
+											</div>
+											<div className="card-row">
+												<div className="autofit-section">
+													{orderBy ===
+													'latest-created' ? (
+														<div>
+															{lang.sub(
+																Liferay.Language.get(
+																	'created-on'
+																),
+																[
+																	dateToInternationalHuman(
+																		tag.dateCreated
+																	),
+																]
+															)}
+														</div>
+													) : (
+														<div>
+															{lang.sub(
+																Liferay.Language.get(
+																	'used-x-times'
+																),
+																[
+																	tag.keywordUsageCount,
+																]
+															)}
+														</div>
+													)}
 												</div>
 											</div>
 										</div>

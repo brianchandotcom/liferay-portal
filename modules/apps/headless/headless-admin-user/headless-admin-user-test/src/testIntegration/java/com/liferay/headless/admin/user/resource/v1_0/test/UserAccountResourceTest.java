@@ -107,7 +107,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteAccountUserByEmailAddress() throws Exception {
+	public void testDeleteAccountUserAccountByEmailAddress() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
@@ -117,7 +117,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 				_accountEntry.getAccountEntryId(), user.getUserId()));
 
-		userAccountResource.deleteAccountUserByEmailAddress(
+		userAccountResource.deleteAccountUserAccountByEmailAddress(
 			_accountEntry.getAccountEntryId(), user.getEmailAddress());
 
 		Assert.assertNull(
@@ -127,7 +127,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteAccountUserByExternalReferenceCodeByEmailAddress()
+	public void testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress()
 		throws Exception {
 
 		User user = UserTestUtil.addUser();
@@ -140,7 +140,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntry.getAccountEntryId(), user.getUserId()));
 
 		userAccountResource.
-			deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 				_accountEntry.getExternalReferenceCode(),
 				user.getEmailAddress());
 
@@ -151,7 +151,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteAccountUsersByEmailAddress() throws Exception {
+	public void testDeleteAccountUserAccountsByEmailAddress() throws Exception {
 		List<User> users = Arrays.asList(
 			UserTestUtil.addUser(), UserTestUtil.addUser(),
 			UserTestUtil.addUser(), UserTestUtil.addUser());
@@ -167,7 +167,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		List<User> removeUsers = users.subList(0, 2);
 
-		userAccountResource.deleteAccountUsersByEmailAddress(
+		userAccountResource.deleteAccountUserAccountsByEmailAddress(
 			_accountEntry.getAccountEntryId(), _toEmailAddresses(removeUsers));
 
 		for (User user : removeUsers) {
@@ -187,7 +187,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteAccountUsersByExternalReferenceCodeByEmailAddress()
+	public void testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress()
 		throws Exception {
 
 		List<User> users = Arrays.asList(
@@ -206,7 +206,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		List<User> removeUsers = users.subList(0, 2);
 
 		userAccountResource.
-			deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+			deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 				_accountEntry.getExternalReferenceCode(),
 				_toEmailAddresses(removeUsers));
 
@@ -383,8 +383,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostAccountUser() throws Exception {
-		super.testPostAccountUser();
+	public void testPostAccountUserAccount() throws Exception {
+		super.testPostAccountUserAccount();
 
 		UserAccount randomUserAccount = randomUserAccount();
 
@@ -393,7 +393,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				TestPropsValues.getCompanyId(),
 				randomUserAccount.getEmailAddress()));
 
-		randomUserAccount = testPostAccountUser_addAccountUser(
+		randomUserAccount = testPostAccountUserAccount_addUserAccount(
 			randomUserAccount);
 
 		Assert.assertNotNull(
@@ -408,14 +408,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostAccountUserByEmailAddress() throws Exception {
+	public void testPostAccountUserAccountByEmailAddress() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		Assert.assertNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 				_accountEntry.getAccountEntryId(), user.getUserId()));
 
-		userAccountResource.postAccountUserByEmailAddress(
+		userAccountResource.postAccountUserAccountByEmailAddress(
 			_accountEntry.getAccountEntryId(), user.getEmailAddress());
 
 		Assert.assertNotNull(
@@ -425,7 +425,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostAccountUserByExternalReferenceCodeByEmailAddress()
+	public void testPostAccountUserAccountByExternalReferenceCodeByEmailAddress()
 		throws Exception {
 
 		User user = UserTestUtil.addUser();
@@ -435,7 +435,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntry.getAccountEntryId(), user.getUserId()));
 
 		userAccountResource.
-			postAccountUserByExternalReferenceCodeByEmailAddress(
+			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 				_accountEntry.getExternalReferenceCode(),
 				user.getEmailAddress());
 
@@ -446,7 +446,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostAccountUsersByEmailAddress() throws Exception {
+	public void testPostAccountUserAccountsByEmailAddress() throws Exception {
 		List<User> users = Arrays.asList(
 			UserTestUtil.addUser(), UserTestUtil.addUser(),
 			UserTestUtil.addUser(), UserTestUtil.addUser());
@@ -457,7 +457,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					_accountEntry.getAccountEntryId(), user.getUserId()));
 		}
 
-		userAccountResource.postAccountUsersByEmailAddress(
+		userAccountResource.postAccountUserAccountsByEmailAddress(
 			_accountEntry.getAccountEntryId(), _toEmailAddresses(users));
 
 		for (User user : users) {
@@ -469,7 +469,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostAccountUsersByExternalReferenceCodeByEmailAddress()
+	public void testPostAccountUserAccountsByExternalReferenceCodeByEmailAddress()
 		throws Exception {
 
 		List<User> users = Arrays.asList(
@@ -483,7 +483,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 
 		userAccountResource.
-			postAccountUsersByExternalReferenceCodeByEmailAddress(
+			postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 				_accountEntry.getExternalReferenceCode(),
 				_toEmailAddresses(users));
 
@@ -569,7 +569,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected UserAccount testDeleteAccountUserByEmailAddress_addUserAccount()
+	protected UserAccount
+			testDeleteAccountUserAccountByEmailAddress_addUserAccount()
 		throws Exception {
 
 		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
@@ -577,14 +578,15 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected UserAccount
-			testDeleteAccountUserByExternalReferenceCodeByEmailAddress_addUserAccount()
+			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount()
 		throws Exception {
 
 		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
 	}
 
 	@Override
-	protected UserAccount testDeleteAccountUsersByEmailAddress_addUserAccount()
+	protected UserAccount
+			testDeleteAccountUserAccountsByEmailAddress_addUserAccount()
 		throws Exception {
 
 		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
@@ -608,31 +610,33 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected UserAccount
-			testGetAccountUsersByExternalReferenceCodePage_addUserAccount(
+			testGetAccountUserAccountsByExternalReferenceCodePage_addUserAccount(
 				String externalReferenceCode, UserAccount userAccount)
 		throws Exception {
 
-		return userAccountResource.postAccountUserByExternalReferenceCode(
-			externalReferenceCode, userAccount);
+		return userAccountResource.
+			postAccountUserAccountByExternalReferenceCode(
+				externalReferenceCode, userAccount);
 	}
 
 	@Override
 	protected String
-		testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode() {
+		testGetAccountUserAccountsByExternalReferenceCodePage_getExternalReferenceCode() {
 
 		return _accountEntry.getExternalReferenceCode();
 	}
 
 	@Override
-	protected UserAccount testGetAccountUsersPage_addUserAccount(
+	protected UserAccount testGetAccountUserAccountsPage_addUserAccount(
 			Long accountId, UserAccount userAccount)
 		throws Exception {
 
-		return userAccountResource.postAccountUser(accountId, userAccount);
+		return userAccountResource.postAccountUserAccount(
+			accountId, userAccount);
 	}
 
 	@Override
-	protected Long testGetAccountUsersPage_getAccountId() {
+	protected Long testGetAccountUserAccountsPage_getAccountId() {
 		return _getAccountEntryId();
 	}
 
@@ -713,29 +717,22 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
 	}
 
-	protected UserAccount testPostAccountUser_addAccountUser(
+	protected UserAccount testPostAccountUserAccount_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {
 
-		return _addAccountUser(_getAccountEntryId(), userAccount);
-	}
-
-	@Override
-	protected UserAccount testPostAccountUser_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		return userAccountResource.postUserAccount(userAccount);
+		return _addAccountUserAccount(_getAccountEntryId(), userAccount);
 	}
 
 	@Override
 	protected UserAccount
-			testPostAccountUserByExternalReferenceCode_addUserAccount(
+			testPostAccountUserAccountByExternalReferenceCode_addUserAccount(
 				UserAccount userAccount)
 		throws Exception {
 
-		return userAccountResource.postAccountUserByExternalReferenceCode(
-			_accountEntry.getExternalReferenceCode(), userAccount);
+		return userAccountResource.
+			postAccountUserAccountByExternalReferenceCode(
+				_accountEntry.getExternalReferenceCode(), userAccount);
 	}
 
 	@Override
@@ -760,10 +757,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			randomUserAccount());
 	}
 
-	private UserAccount _addAccountUser(Long accountId, UserAccount userAccount)
+	private UserAccount _addAccountUserAccount(
+			Long accountId, UserAccount userAccount)
 		throws Exception {
 
-		return userAccountResource.postAccountUser(accountId, userAccount);
+		return userAccountResource.postAccountUserAccount(
+			accountId, userAccount);
 	}
 
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)

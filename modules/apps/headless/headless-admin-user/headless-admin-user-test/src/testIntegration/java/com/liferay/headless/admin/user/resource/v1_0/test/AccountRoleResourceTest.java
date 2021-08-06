@@ -286,7 +286,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 			_userAccountResource.putUserAccountByExternalReferenceCode(
 				RandomTestUtil.randomString(), _randomUserAccount());
 
-		_userAccountResource.postAccountUserByEmailAddress(
+		_userAccountResource.postAccountUserAccountByEmailAddress(
 			account.getId(), userAccount.getEmailAddress());
 
 		return userAccount;

@@ -38,7 +38,7 @@ definition {
 		Clustering.deployClusteringModule(nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
+			exceptionText = "Could not resolve module: com.liferay.portal.cluster.sample",
 			nodePort = "8080");
 
 		Clustering.runGroovyScript(
@@ -115,7 +115,7 @@ definition {
 		Clustering.viewClusterStatusInConsole();
 
 		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
+			categoryName = "com.liferay.portal.cluster.sample.internal",
 			nodePort = "8080");
 
 		Clustering.runGroovyScript(
@@ -137,7 +137,7 @@ definition {
 		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
+			categoryName = "com.liferay.portal.cluster.sample.internal",
 			nodePort = "9080");
 
 		Pause(locator1 = "10000");
@@ -153,7 +153,7 @@ definition {
 		Clustering.deployClusteringModule(nodePort = "8080");
 
 		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
+			categoryName = "com.liferay.portal.cluster.sample.internal",
 			nodePort = "8080");
 
 		Pause(locator1 = "10000");
@@ -186,13 +186,13 @@ definition {
 		Clustering.viewClusterStatusInConsole();
 
 		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
+			categoryName = "com.liferay.portal.cluster.sample.internal",
 			nodePort = "9080");
 
 		Clustering.deployClusteringModule(nodePort = "8080");
 
 		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
+			categoryName = "com.liferay.portal.cluster.sample.internal",
 			nodePort = "8080");
 
 		Pause(locator1 = "10000");
@@ -218,13 +218,13 @@ definition {
 		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Clustering.enableDebugging(
-			categoryName = "com.liferay.cluster.test.module.internel",
+			categoryName = "com.liferay.portal.cluster.sample.internal",
 			nodePort = "9080");
 
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Scheduler job com.liferay.cluster.test.module.internel.SchedulerTestMessageListener.com.liferay.cluster.test.module.internel.SchedulerTestMessageListener already exists",
+			expectedText = "Scheduler job com.liferay.portal.cluster.sample.internal.SchedulerTestMessageListener.com.liferay.portal.cluster.sample.internal.SchedulerTestMessageListener already exists",
 			nodePort = "9080");
 
 		Clustering.viewTextPresentOnSpecificNode(

@@ -183,6 +183,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 				"categoryId_" + _fragmentEntryLink.getFragmentEntryLinkId())
 		).put(
 			"showSearch", _isShowSearch()
+		).put(
+			"singleSelection", _isSingleSelection()
 		).build();
 
 		return _props;
@@ -315,6 +317,10 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 	private boolean _isShowSearch() {
 		return GetterUtil.getBoolean(_getFieldValue("showSearch"));
+	}
+
+	private boolean _isSingleSelection() {
+		return GetterUtil.getBoolean(_getFieldValue("singleSelection"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

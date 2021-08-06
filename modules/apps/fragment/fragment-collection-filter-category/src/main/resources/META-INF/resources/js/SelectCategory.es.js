@@ -17,11 +17,12 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
-export default function MultiSelectCategory({
+export default function SelectCategory({
 	assetCategories,
 	fragmentEntryLinkId,
 	selectedAssetCategoryIds: initialSelectedCategoryIds,
 	showSearch,
+	singleSelection = false,
 }) {
 	const [selectedCategoryIds, setSelectedCategoryIds] = useState(() => {
 		return assetCategories
@@ -51,7 +52,10 @@ export default function MultiSelectCategory({
 	}, [searchValue, assetCategories]);
 
 	const onSelectedClick = (selected, id) => {
-		if (selected) {
+		if (selected && singleSelection) {
+			setSelectedCategoryIds([id]);
+		}
+		else if (selected) {
 			setSelectedCategoryIds([...selectedCategoryIds, id]);
 		}
 		else {
@@ -61,12 +65,28 @@ export default function MultiSelectCategory({
 		}
 	};
 
-	const items = filteredCategories.map((category) => ({
-		...category,
-		checked: initialSelectedCategoryIds.includes(category.id),
-		onChange: (selected) => onSelectedClick(selected, category.id),
-		type: 'checkbox',
-	}));
+	const items = singleSelection
+		? [
+				{
+					items: filteredCategories.map((category) => ({
+						checked: initialSelectedCategoryIds.includes(
+							category.id
+						),
+						label: category.label,
+						type: 'radio',
+						value: category.id,
+					})),
+					name: 'categoryId',
+					onChange: (categoryId) => onSelectedClick(true, categoryId),
+					type: 'radiogroup',
+				},
+		  ]
+		: filteredCategories.map((category) => ({
+				checked: initialSelectedCategoryIds.includes(category.id),
+				label: category.label,
+				onChange: (selected) => onSelectedClick(selected, category.id),
+				type: 'checkbox',
+		  }));
 
 	const editMode = useMemo(
 		() => document.body.classList.contains('has-edit-mode-menu'),
@@ -127,7 +147,7 @@ export default function MultiSelectCategory({
 	);
 }
 
-MultiSelectCategory.propTypes = {
+SelectCategory.propTypes = {
 	assetCategories: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,
@@ -137,4 +157,5 @@ MultiSelectCategory.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	selectedAssetCategoryIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 	showSearch: PropTypes.bool.isRequired,
+	singleSelection: PropTypes.bool,
 };

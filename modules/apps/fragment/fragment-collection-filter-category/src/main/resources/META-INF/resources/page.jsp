@@ -20,30 +20,17 @@
 	<%= fragmentCollectionFilterCategoryDisplayContext.getLabel() %>
 </p>
 
-<c:choose>
-	<c:when test="<%= fragmentCollectionFilterCategoryDisplayContext.isSingleSelection() %>">
-		<clay:dropdown-menu
-			cssClass="bg-light font-weight-bold form-control form-control-select form-control-sm text-left w-100"
-			displayType="secondary"
-			dropdownItems="<%= fragmentCollectionFilterCategoryDisplayContext.getDropdownItems() %>"
-			label="<%= fragmentCollectionFilterCategoryDisplayContext.getSelectedAssetCategoryTitle() %>"
-			title="<%= fragmentCollectionFilterCategoryDisplayContext.getAssetCategoryTreeNodeTitle() %>"
-		/>
-	</c:when>
-	<c:otherwise>
-		<div>
-			<clay:button
-				cssClass="bg-light dropdown-toggle font-weight-bold form-control-select form-control-sm text-left w-100"
-				disabled="<%= true %>"
-				displayType="secondary"
-				label='<%= LanguageUtil.get(request, "select") %>'
-				small="<%= true %>"
-			/>
+<div>
+	<clay:button
+		cssClass="bg-light dropdown-toggle font-weight-bold form-control-select form-control-sm text-left w-100"
+		disabled="<%= true %>"
+		displayType="secondary"
+		label='<%= LanguageUtil.get(request, "select") %>'
+		small="<%= true %>"
+	/>
 
-			<react:component
-				module="js/MultiSelectCategory.es"
-				props="<%= fragmentCollectionFilterCategoryDisplayContext.getProps() %>"
-			/>
-		</div>
-	</c:otherwise>
-</c:choose>
+	<react:component
+		module="js/SelectCategory.es"
+		props="<%= fragmentCollectionFilterCategoryDisplayContext.getProps() %>"
+	/>
+</div>

@@ -1832,6 +1832,398 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Simple pagination."
+	@priority = "5"
+	test NavigateToPagesInCollectionDisplayWithSimplePagination {
+		task ("Add 5 web contents") {
+			for (var i : list "1,2,3,4,5") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${i}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${i}");
+			}
+		}
+
+		task ("Add 5 blogs entries") {
+			for (var i : list "1,2,3,4,5") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content ${i}",
+					entryTitle = "Blogs Entry Title ${i}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add 5 document entries") {
+			for (var i : list "1,2,3,4,5") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentTitle = "Document Title ${i}",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_${i}.txt");
+			}
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Heading fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Document Title 5",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("View the None is selected in Pagination field") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Pagination",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "None");
+		}
+
+		task ("View the Previous and Next buttons not shown in Collection Display") {
+			for (var buttonName : list "Previous,Next") {
+				AssertElementNotPresent(
+					key_text = "${buttonName}",
+					locator1 = "Button#ANY");
+			}
+		}
+
+		task ("Select the Simple in Pagination field, Select the 15 in Maximum Number of Items field and Select the 15 in Maximum Number of Items per Page field") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				maxNumberOfItems = "15",
+				maxNumberOfItemsPerPage = "15",
+				pagination = "Simple",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("View all assets shown in Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Document Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "6";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Blogs Entry Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "11";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Web Content Title ${i}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the Previous and Next buttons are disabled") {
+			for (var buttonName : list "Previous,Next") {
+				AssertElementPresent(
+					key_text = "${buttonName}",
+					locator1 = "Button#ANY_DISABLED");
+			}
+		}
+
+		task ("Select the 5 in Maximum Number of Items per Page field") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				maxNumberOfItemsPerPage = "5",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("View only the 5 documents shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Document Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+
+		task ("Navigate to the Next page of Collection Display") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+
+		task ("View only the 5 blogs entries shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Blogs Entry Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+
+		task ("Navigate to the Next page of Collection Display") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+
+		task ("View only the 5 web contents shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Web Content Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("View only the 5 documents shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Document Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+
+		task ("Navigate to the Next page of Collection Display") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+
+		task ("View only the 5 blogs entries shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Blogs Entry Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+
+		task ("Navigate to the Next page of Collection Display") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+
+		task ("View only the 5 web contents shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Web Content Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View only the 5 documents shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Document Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+
+		task ("Navigate to the Next page of Collection Display") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+
+		task ("View only the 5 blogs entries shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Blogs Entry Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+
+		task ("Navigate to the Next page of Collection Display") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+
+		task ("View only the 5 web contents shown in current page of Collection Display") {
+			var n = "1";
+
+			for (var i : list "5,4,3,2,1") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "Web Content Title ${i}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_fragmentName = "heading",
+				key_rowPosition = "6",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
+		}
+	}
+
 	@description = "This is a use case for LPS-86141. The changes will be propagated to others cells when edit inline content of fragment in one cell."
 	@priority = "4"
 	test PropagateChangesOfInlineContentToOtherCells {

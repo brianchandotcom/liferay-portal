@@ -1,0 +1,120 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+		}
+	}
+
+	@description = "This checks that an entry can be added in the control panel."
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanAddEntryInAdmin {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property testray.component.names = "WYSIWYG";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that the content for a blogs entry can be searched in admin."
+	@priority = "4"
+	@refactordone
+	test CanSearchForContentInAdmin {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Unique Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Text",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs Entry Content",
+			entryTitle = "Unique Title",
+			position = "1",
+			relevance = "true");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs",
+			entryTitle = "Unique Title");
+
+		BlogsEntry.searchNoCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs1 Entry1 Content1",
+			entryTitle = "Unique Title");
+	}
+
+	@description = "This checks that the content for a blogs entry can be searched in admin."
+	@priority = "4"
+	@refactordone
+	test CanSearchForTitleInAdmin {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Unique Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content Text",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Unique Title",
+			entryTitle = "Unique Title",
+			position = "1",
+			relevance = "true");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Title",
+			entryTitle = "Unique Title");
+
+		BlogsEntry.searchNoCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs1 Entry1 Title1",
+			entryTitle = "Unique Title");
+	}
+
+}

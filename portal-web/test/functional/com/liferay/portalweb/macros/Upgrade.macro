@@ -4016,7 +4016,7 @@ definition {
 			password = "test",
 			userEmailAddress = "user2@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = "2");
 
 		Notifications.gotoNotifications();
 
@@ -4039,7 +4039,7 @@ definition {
 			password = "test",
 			userEmailAddress = "user1@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = "2");
 
 		Notifications.gotoNotifications();
 

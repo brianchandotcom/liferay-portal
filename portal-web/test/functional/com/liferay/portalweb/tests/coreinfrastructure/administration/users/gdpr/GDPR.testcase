@@ -229,7 +229,6 @@ definition {
 	}
 
 	@description = "This test anonymizes all entries from an application"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAnonymizeAllEntriesFromAnApplication {
 		User.logoutPG();
@@ -308,7 +307,6 @@ definition {
 	}
 
 	@description = "LPS-77748"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAnonymizeMultipleEntriesFromAnApplication {
 		User.logoutAndLoginPG(
@@ -359,7 +357,6 @@ definition {
 	}
 
 	@description = "This test anonymizes only one entry from an application via the Info panel"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanAnonymizeViaInfoPanel {
 		User.logoutAndLoginPG(
@@ -447,7 +444,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-77748. This test deletes multiple selected entries from a single application."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteMultipleEntriesFromAnApplication {
 		User.logoutAndLoginPG(
@@ -1195,7 +1191,6 @@ definition {
 	}
 
 	@description = "LPS-91766. This test asserts that the Remaining Items count under Status Summary is accurate"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test RemainingItemsCountIsAccurate {
 		User.logoutAndLoginPG(

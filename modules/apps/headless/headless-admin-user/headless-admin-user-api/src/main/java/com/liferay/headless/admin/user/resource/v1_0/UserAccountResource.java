@@ -51,51 +51,57 @@ public interface UserAccountResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
+	public Page<UserAccount> getAccountUserAccountsByExternalReferenceCodePage(
 			String externalReferenceCode, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public UserAccount postAccountUserByExternalReferenceCode(
+	public UserAccount postAccountUserAccountByExternalReferenceCode(
 			String externalReferenceCode, UserAccount userAccount)
 		throws Exception;
 
-	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+	public void deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String[] strings)
 		throws Exception;
 
-	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+	public void postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String[] strings)
 		throws Exception;
 
-	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+	public void deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
-	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+	public void postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
-	public Page<UserAccount> getAccountUsersPage(
+	public Page<UserAccount> getAccountUserAccountsPage(
 			Long accountId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
-	public UserAccount postAccountUser(Long accountId, UserAccount userAccount)
+	public UserAccount postAccountUserAccount(
+			Long accountId, UserAccount userAccount)
 		throws Exception;
 
-	public void deleteAccountUsersByEmailAddress(
+	public Response postAccountUserAccountBatch(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteAccountUserAccountsByEmailAddress(
 			Long accountId, String[] strings)
 		throws Exception;
 
-	public void postAccountUsersByEmailAddress(Long accountId, String[] strings)
+	public void postAccountUserAccountsByEmailAddress(
+			Long accountId, String[] strings)
 		throws Exception;
 
-	public void deleteAccountUserByEmailAddress(
+	public void deleteAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception;
 
-	public void postAccountUserByEmailAddress(
+	public void postAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception;
 

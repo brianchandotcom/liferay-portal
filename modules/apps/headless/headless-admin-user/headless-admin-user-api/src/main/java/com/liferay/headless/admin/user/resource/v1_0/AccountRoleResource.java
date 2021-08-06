@@ -51,12 +51,12 @@ public interface AccountRoleResource {
 
 	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
-			String accountUserExternalReferenceCode)
+			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public void postAccountRoleUserAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
-			String accountUserExternalReferenceCode)
+			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
@@ -77,11 +77,11 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public void deleteAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
 	public void postAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

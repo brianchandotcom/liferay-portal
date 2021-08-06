@@ -341,8 +341,8 @@ public class Mutation {
 			@GraphQLName("accountExternalReferenceCode") String
 				accountExternalReferenceCode,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserExternalReferenceCode") String
-				accountUserExternalReferenceCode)
+			@GraphQLName("userAccountExternalReferenceCode") String
+				userAccountExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -352,7 +352,7 @@ public class Mutation {
 				accountRoleResource.
 					deleteAccountRoleUserAssociationByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
-						accountUserExternalReferenceCode));
+						userAccountExternalReferenceCode));
 
 		return true;
 	}
@@ -362,8 +362,8 @@ public class Mutation {
 			@GraphQLName("accountExternalReferenceCode") String
 				accountExternalReferenceCode,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserExternalReferenceCode") String
-				accountUserExternalReferenceCode)
+			@GraphQLName("userAccountExternalReferenceCode") String
+				userAccountExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -373,7 +373,7 @@ public class Mutation {
 				accountRoleResource.
 					postAccountRoleUserAssociationByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
-						accountUserExternalReferenceCode));
+						userAccountExternalReferenceCode));
 
 		return true;
 	}
@@ -409,7 +409,7 @@ public class Mutation {
 	public boolean deleteAccountRoleUserAssociation(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserId") Long accountUserId)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -417,7 +417,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.deleteAccountRoleUserAssociation(
-					accountId, accountRoleId, accountUserId));
+					accountId, accountRoleId, userAccountId));
 
 		return true;
 	}
@@ -426,7 +426,7 @@ public class Mutation {
 	public boolean createAccountRoleUserAssociation(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserId") Long accountUserId)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -434,7 +434,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.postAccountRoleUserAssociation(
-					accountId, accountRoleId, accountUserId));
+					accountId, accountRoleId, userAccountId));
 
 		return true;
 	}
@@ -725,7 +725,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Creates a user and assigns them to the account"
 	)
-	public UserAccount createAccountUserByExternalReferenceCode(
+	public UserAccount createAccountUserAccountByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("userAccount") UserAccount userAccount)
 		throws Exception {
@@ -734,16 +734,19 @@ public class Mutation {
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource ->
-				userAccountResource.postAccountUserByExternalReferenceCode(
-					externalReferenceCode, userAccount));
+				userAccountResource.
+					postAccountUserAccountByExternalReferenceCode(
+						externalReferenceCode, userAccount));
 	}
 
 	@GraphQLField(
 		description = "Removes users from an account by their email addresses"
 	)
-	public boolean deleteAccountUsersByExternalReferenceCodeByEmailAddress(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("strings") String[] strings)
+	public boolean
+			deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("strings") String[] strings)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -751,7 +754,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.
-					deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+					deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 						externalReferenceCode, strings));
 
 		return true;
@@ -760,9 +763,11 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns users to an account by their email addresses"
 	)
-	public boolean createAccountUsersByExternalReferenceCodeByEmailAddress(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("strings") String[] strings)
+	public boolean
+			createAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("strings") String[] strings)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -770,7 +775,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.
-					postAccountUsersByExternalReferenceCodeByEmailAddress(
+					postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 						externalReferenceCode, strings));
 
 		return true;
@@ -779,9 +784,11 @@ public class Mutation {
 	@GraphQLField(
 		description = "Removes a user from an account by external reference code by their email address"
 	)
-	public boolean deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("emailAddress") String emailAddress)
+	public boolean
+			deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -789,7 +796,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.
-					deleteAccountUserByExternalReferenceCodeByEmailAddress(
+					deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 						externalReferenceCode, emailAddress));
 
 		return true;
@@ -798,9 +805,11 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns a user to an account by external reference code by their email address"
 	)
-	public boolean createAccountUserByExternalReferenceCodeByEmailAddress(
-			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("emailAddress") String emailAddress)
+	public boolean
+			createAccountUserAccountByExternalReferenceCodeByEmailAddress(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -808,7 +817,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.
-					postAccountUserByExternalReferenceCodeByEmailAddress(
+					postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 						externalReferenceCode, emailAddress));
 
 		return true;
@@ -817,7 +826,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Creates a user and assigns them to the account"
 	)
-	public UserAccount createAccountUser(
+	public UserAccount createAccountUserAccount(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("userAccount") UserAccount userAccount)
 		throws Exception {
@@ -825,14 +834,29 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource -> userAccountResource.postAccountUser(
+			userAccountResource -> userAccountResource.postAccountUserAccount(
 				accountId, userAccount));
+	}
+
+	@GraphQLField
+	public Response createAccountUserAccountBatch(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource ->
+				userAccountResource.postAccountUserAccountBatch(
+					accountId, callbackURL, object));
 	}
 
 	@GraphQLField(
 		description = "Removes users from an account by their email addresses"
 	)
-	public boolean deleteAccountUsersByEmailAddress(
+	public boolean deleteAccountUserAccountsByEmailAddress(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("strings") String[] strings)
 		throws Exception {
@@ -841,7 +865,7 @@ public class Mutation {
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource ->
-				userAccountResource.deleteAccountUsersByEmailAddress(
+				userAccountResource.deleteAccountUserAccountsByEmailAddress(
 					accountId, strings));
 
 		return true;
@@ -850,7 +874,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns users to an account by their email addresses"
 	)
-	public boolean createAccountUsersByEmailAddress(
+	public boolean createAccountUserAccountsByEmailAddress(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("strings") String[] strings)
 		throws Exception {
@@ -859,7 +883,7 @@ public class Mutation {
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource ->
-				userAccountResource.postAccountUsersByEmailAddress(
+				userAccountResource.postAccountUserAccountsByEmailAddress(
 					accountId, strings));
 
 		return true;
@@ -868,7 +892,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Removes a user from an account by their email address"
 	)
-	public boolean deleteAccountUserByEmailAddress(
+	public boolean deleteAccountUserAccountByEmailAddress(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
@@ -877,7 +901,7 @@ public class Mutation {
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource ->
-				userAccountResource.deleteAccountUserByEmailAddress(
+				userAccountResource.deleteAccountUserAccountByEmailAddress(
 					accountId, emailAddress));
 
 		return true;
@@ -886,7 +910,7 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns a user to an account by their email address"
 	)
-	public boolean createAccountUserByEmailAddress(
+	public boolean createAccountUserAccountByEmailAddress(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
@@ -895,7 +919,7 @@ public class Mutation {
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource ->
-				userAccountResource.postAccountUserByEmailAddress(
+				userAccountResource.postAccountUserAccountByEmailAddress(
 					accountId, emailAddress));
 
 		return true;

@@ -42,109 +42,122 @@ public interface UserAccountResource {
 		return new Builder();
 	}
 
-	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
+	public Page<UserAccount> getAccountUserAccountsByExternalReferenceCodePage(
 			String externalReferenceCode, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAccountUsersByExternalReferenceCodePageHttpResponse(
+			getAccountUserAccountsByExternalReferenceCodePageHttpResponse(
 				String externalReferenceCode, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public UserAccount postAccountUserByExternalReferenceCode(
+	public UserAccount postAccountUserAccountByExternalReferenceCode(
 			String externalReferenceCode, UserAccount userAccount)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAccountUserByExternalReferenceCodeHttpResponse(
+			postAccountUserAccountByExternalReferenceCodeHttpResponse(
 				String externalReferenceCode, UserAccount userAccount)
 		throws Exception;
 
-	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+	public void deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String[] strings)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
+			deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
 				String externalReferenceCode, String[] strings)
 		throws Exception;
 
-	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+	public void postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String[] strings)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
+			postAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
 				String externalReferenceCode, String[] strings)
 		throws Exception;
 
-	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+	public void deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+			deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
 				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
-	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+	public void postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+			postAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
 				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
-	public Page<UserAccount> getAccountUsersPage(
+	public Page<UserAccount> getAccountUserAccountsPage(
 			Long accountId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountUsersPageHttpResponse(
+	public HttpInvoker.HttpResponse getAccountUserAccountsPageHttpResponse(
 			Long accountId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public UserAccount postAccountUser(Long accountId, UserAccount userAccount)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postAccountUserHttpResponse(
+	public UserAccount postAccountUserAccount(
 			Long accountId, UserAccount userAccount)
 		throws Exception;
 
-	public void deleteAccountUsersByEmailAddress(
+	public HttpInvoker.HttpResponse postAccountUserAccountHttpResponse(
+			Long accountId, UserAccount userAccount)
+		throws Exception;
+
+	public void postAccountUserAccountBatch(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postAccountUserAccountBatchHttpResponse(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteAccountUserAccountsByEmailAddress(
 			Long accountId, String[] strings)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountUsersByEmailAddressHttpResponse(
+			deleteAccountUserAccountsByEmailAddressHttpResponse(
 				Long accountId, String[] strings)
 		throws Exception;
 
-	public void postAccountUsersByEmailAddress(Long accountId, String[] strings)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postAccountUsersByEmailAddressHttpResponse(
+	public void postAccountUserAccountsByEmailAddress(
 			Long accountId, String[] strings)
 		throws Exception;
 
-	public void deleteAccountUserByEmailAddress(
+	public HttpInvoker.HttpResponse
+			postAccountUserAccountsByEmailAddressHttpResponse(
+				Long accountId, String[] strings)
+		throws Exception;
+
+	public void deleteAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteAccountUserByEmailAddressHttpResponse(
+	public HttpInvoker.HttpResponse
+			deleteAccountUserAccountByEmailAddressHttpResponse(
+				Long accountId, String emailAddress)
+		throws Exception;
+
+	public void postAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception;
 
-	public void postAccountUserByEmailAddress(
-			Long accountId, String emailAddress)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postAccountUserByEmailAddressHttpResponse(
-			Long accountId, String emailAddress)
+	public HttpInvoker.HttpResponse
+			postAccountUserAccountByEmailAddressHttpResponse(
+				Long accountId, String emailAddress)
 		throws Exception;
 
 	public UserAccount getMyUserAccount() throws Exception;
@@ -336,13 +349,15 @@ public interface UserAccountResource {
 
 	public static class UserAccountResourceImpl implements UserAccountResource {
 
-		public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
-				String externalReferenceCode, String search,
-				String filterString, Pagination pagination, String sortString)
+		public Page<UserAccount>
+				getAccountUserAccountsByExternalReferenceCodePage(
+					String externalReferenceCode, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountUsersByExternalReferenceCodePageHttpResponse(
+				getAccountUserAccountsByExternalReferenceCodePageHttpResponse(
 					externalReferenceCode, search, filterString, pagination,
 					sortString);
 
@@ -384,7 +399,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAccountUsersByExternalReferenceCodePageHttpResponse(
+				getAccountUserAccountsByExternalReferenceCodePageHttpResponse(
 					String externalReferenceCode, String search,
 					String filterString, Pagination pagination,
 					String sortString)
@@ -433,7 +448,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -443,12 +458,12 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public UserAccount postAccountUserByExternalReferenceCode(
+		public UserAccount postAccountUserAccountByExternalReferenceCode(
 				String externalReferenceCode, UserAccount userAccount)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountUserByExternalReferenceCodeHttpResponse(
+				postAccountUserAccountByExternalReferenceCodeHttpResponse(
 					externalReferenceCode, userAccount);
 
 			String content = httpResponse.getContent();
@@ -489,7 +504,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountUserByExternalReferenceCodeHttpResponse(
+				postAccountUserAccountByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode, UserAccount userAccount)
 			throws Exception {
 
@@ -519,7 +534,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -529,12 +544,13 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
-				String externalReferenceCode, String[] strings)
+		public void
+				deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+					String externalReferenceCode, String[] strings)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
+				deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
 					externalReferenceCode, strings);
 
 			String content = httpResponse.getContent();
@@ -575,7 +591,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
+				deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
 					String externalReferenceCode, String[] strings)
 			throws Exception {
 
@@ -613,7 +629,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -623,12 +639,13 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountUsersByExternalReferenceCodeByEmailAddress(
-				String externalReferenceCode, String[] strings)
+		public void
+				postAccountUserAccountsByExternalReferenceCodeByEmailAddress(
+					String externalReferenceCode, String[] strings)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
+				postAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
 					externalReferenceCode, strings);
 
 			String content = httpResponse.getContent();
@@ -669,7 +686,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
+				postAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
 					String externalReferenceCode, String[] strings)
 			throws Exception {
 
@@ -707,7 +724,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -717,12 +734,13 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-				String externalReferenceCode, String emailAddress)
+		public void
+				deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
+					String externalReferenceCode, String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+				deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
 					externalReferenceCode, emailAddress);
 
 			String content = httpResponse.getContent();
@@ -763,7 +781,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+				deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
 					String externalReferenceCode, String emailAddress)
 			throws Exception {
 
@@ -791,7 +809,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 			httpInvoker.path("emailAddress", emailAddress);
@@ -802,12 +820,12 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountUserByExternalReferenceCodeByEmailAddress(
+		public void postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 				String externalReferenceCode, String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+				postAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
 					externalReferenceCode, emailAddress);
 
 			String content = httpResponse.getContent();
@@ -848,7 +866,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+				postAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
 					String externalReferenceCode, String emailAddress)
 			throws Exception {
 
@@ -876,7 +894,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 			httpInvoker.path("emailAddress", emailAddress);
@@ -887,13 +905,13 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<UserAccount> getAccountUsersPage(
+		public Page<UserAccount> getAccountUserAccountsPage(
 				Long accountId, String search, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountUsersPageHttpResponse(
+				getAccountUserAccountsPageHttpResponse(
 					accountId, search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -933,7 +951,7 @@ public interface UserAccountResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getAccountUsersPageHttpResponse(
+		public HttpInvoker.HttpResponse getAccountUserAccountsPageHttpResponse(
 				Long accountId, String search, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
@@ -981,7 +999,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-users");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts");
 
 			httpInvoker.path("accountId", accountId);
 
@@ -991,12 +1009,12 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public UserAccount postAccountUser(
+		public UserAccount postAccountUserAccount(
 				Long accountId, UserAccount userAccount)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postAccountUserHttpResponse(
-				accountId, userAccount);
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountUserAccountHttpResponse(accountId, userAccount);
 
 			String content = httpResponse.getContent();
 
@@ -1035,7 +1053,7 @@ public interface UserAccountResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAccountUserHttpResponse(
+		public HttpInvoker.HttpResponse postAccountUserAccountHttpResponse(
 				Long accountId, UserAccount userAccount)
 			throws Exception {
 
@@ -1065,7 +1083,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-users");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts");
 
 			httpInvoker.path("accountId", accountId);
 
@@ -1075,12 +1093,91 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountUsersByEmailAddress(
+		public void postAccountUserAccountBatch(
+				Long accountId, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountUserAccountBatchHttpResponse(
+					accountId, callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse postAccountUserAccountBatchHttpResponse(
+				Long accountId, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/batch");
+
+			httpInvoker.path("accountId", accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteAccountUserAccountsByEmailAddress(
 				Long accountId, String[] strings)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountUsersByEmailAddressHttpResponse(
+				deleteAccountUserAccountsByEmailAddressHttpResponse(
 					accountId, strings);
 
 			String content = httpResponse.getContent();
@@ -1121,7 +1218,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountUsersByEmailAddressHttpResponse(
+				deleteAccountUserAccountsByEmailAddressHttpResponse(
 					Long accountId, String[] strings)
 			throws Exception {
 
@@ -1159,7 +1256,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/by-email-address");
 
 			httpInvoker.path("accountId", accountId);
 
@@ -1169,12 +1266,13 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountUsersByEmailAddress(
+		public void postAccountUserAccountsByEmailAddress(
 				Long accountId, String[] strings)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountUsersByEmailAddressHttpResponse(accountId, strings);
+				postAccountUserAccountsByEmailAddressHttpResponse(
+					accountId, strings);
 
 			String content = httpResponse.getContent();
 
@@ -1214,7 +1312,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountUsersByEmailAddressHttpResponse(
+				postAccountUserAccountsByEmailAddressHttpResponse(
 					Long accountId, String[] strings)
 			throws Exception {
 
@@ -1252,7 +1350,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/by-email-address");
 
 			httpInvoker.path("accountId", accountId);
 
@@ -1262,12 +1360,12 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountUserByEmailAddress(
+		public void deleteAccountUserAccountByEmailAddress(
 				Long accountId, String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountUserByEmailAddressHttpResponse(
+				deleteAccountUserAccountByEmailAddressHttpResponse(
 					accountId, emailAddress);
 
 			String content = httpResponse.getContent();
@@ -1308,7 +1406,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountUserByEmailAddressHttpResponse(
+				deleteAccountUserAccountByEmailAddressHttpResponse(
 					Long accountId, String emailAddress)
 			throws Exception {
 
@@ -1336,7 +1434,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/by-email-address/{emailAddress}");
 
 			httpInvoker.path("accountId", accountId);
 			httpInvoker.path("emailAddress", emailAddress);
@@ -1347,12 +1445,12 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountUserByEmailAddress(
+		public void postAccountUserAccountByEmailAddress(
 				Long accountId, String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountUserByEmailAddressHttpResponse(
+				postAccountUserAccountByEmailAddressHttpResponse(
 					accountId, emailAddress);
 
 			String content = httpResponse.getContent();
@@ -1393,7 +1491,7 @@ public interface UserAccountResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountUserByEmailAddressHttpResponse(
+				postAccountUserAccountByEmailAddressHttpResponse(
 					Long accountId, String emailAddress)
 			throws Exception {
 
@@ -1421,7 +1519,7 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts/by-email-address/{emailAddress}");
 
 			httpInvoker.path("accountId", accountId);
 			httpInvoker.path("emailAddress", emailAddress);

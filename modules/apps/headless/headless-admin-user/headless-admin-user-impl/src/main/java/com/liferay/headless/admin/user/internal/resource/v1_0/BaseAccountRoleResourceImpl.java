@@ -83,7 +83,7 @@ public abstract class BaseAccountRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@DELETE
 	@Operation(description = "Unassigns account users to the account role")
@@ -95,12 +95,12 @@ public abstract class BaseAccountRoleResourceImpl
 			),
 			@Parameter(in = ParameterIn.PATH, name = "accountRoleId"),
 			@Parameter(
-				in = ParameterIn.PATH, name = "accountUserExternalReferenceCode"
+				in = ParameterIn.PATH, name = "userAccountExternalReferenceCode"
 			)
 		}
 	)
 	@Path(
-		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/{userAccountExternalReferenceCode}"
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
@@ -111,15 +111,15 @@ public abstract class BaseAccountRoleResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
 				accountRoleId,
 			@NotNull @Parameter(hidden = true)
-			@PathParam("accountUserExternalReferenceCode")
-			String accountUserExternalReferenceCode)
+			@PathParam("userAccountExternalReferenceCode")
+			String userAccountExternalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@Operation(description = "Assigns account users to the account role")
 	@Override
@@ -130,12 +130,12 @@ public abstract class BaseAccountRoleResourceImpl
 			),
 			@Parameter(in = ParameterIn.PATH, name = "accountRoleId"),
 			@Parameter(
-				in = ParameterIn.PATH, name = "accountUserExternalReferenceCode"
+				in = ParameterIn.PATH, name = "userAccountExternalReferenceCode"
 			)
 		}
 	)
 	@Path(
-		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/{userAccountExternalReferenceCode}"
 	)
 	@POST
 	@Produces({"application/json", "application/xml"})
@@ -147,8 +147,8 @@ public abstract class BaseAccountRoleResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
 				accountRoleId,
 			@NotNull @Parameter(hidden = true)
-			@PathParam("accountUserExternalReferenceCode")
-			String accountUserExternalReferenceCode)
+			@PathParam("userAccountExternalReferenceCode")
+			String userAccountExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -269,7 +269,7 @@ public abstract class BaseAccountRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
 	@DELETE
 	@Operation(description = "Unassigns account users to the account role")
@@ -278,11 +278,11 @@ public abstract class BaseAccountRoleResourceImpl
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountId"),
 			@Parameter(in = ParameterIn.PATH, name = "accountRoleId"),
-			@Parameter(in = ParameterIn.PATH, name = "accountUserId")
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId")
 		}
 	)
 	@Path(
-		"/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}"
+		"/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}"
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
@@ -291,15 +291,15 @@ public abstract class BaseAccountRoleResourceImpl
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
 				accountRoleId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
-				accountUserId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
 	@Operation(description = "Assigns account users to the account role")
 	@Override
@@ -307,11 +307,11 @@ public abstract class BaseAccountRoleResourceImpl
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountId"),
 			@Parameter(in = ParameterIn.PATH, name = "accountRoleId"),
-			@Parameter(in = ParameterIn.PATH, name = "accountUserId")
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId")
 		}
 	)
 	@Path(
-		"/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}"
+		"/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}"
 	)
 	@POST
 	@Produces({"application/json", "application/xml"})
@@ -321,8 +321,8 @@ public abstract class BaseAccountRoleResourceImpl
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
 				accountRoleId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
-				accountUserId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
 		throws Exception {
 	}
 

@@ -702,10 +702,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountUsersByExternalReferenceCode(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountUserAccountsByExternalReferenceCode(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Gets the users assigned to an account")
-	public UserAccountPage accountUsersByExternalReferenceCode(
+	public UserAccountPage accountUserAccountsByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -718,20 +718,23 @@ public class Query {
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource -> new UserAccountPage(
-				userAccountResource.getAccountUsersByExternalReferenceCodePage(
-					externalReferenceCode, search,
-					_filterBiFunction.apply(userAccountResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(userAccountResource, sortsString))));
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, search,
+						_filterBiFunction.apply(
+							userAccountResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							userAccountResource, sortsString))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountUsers(accountId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountUserAccounts(accountId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Gets the users assigned to an account")
-	public UserAccountPage accountUsers(
+	public UserAccountPage accountUserAccounts(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -744,7 +747,7 @@ public class Query {
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource -> new UserAccountPage(
-				userAccountResource.getAccountUsersPage(
+				userAccountResource.getAccountUserAccountsPage(
 					accountId, search,
 					_filterBiFunction.apply(userAccountResource, filterString),
 					Pagination.of(page, pageSize),
@@ -933,6 +936,39 @@ public class Query {
 			webUrlResource -> webUrlResource.getWebUrl(webUrlId));
 	}
 
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountUserAccountsPageTypeExtension {
+
+		public GetAccountUserAccountsPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Gets the users assigned to an account")
+		public UserAccountPage userAccounts(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_userAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				userAccountResource -> new UserAccountPage(
+					userAccountResource.getAccountUserAccountsPage(
+						_account.getId(), search,
+						_filterBiFunction.apply(
+							userAccountResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							userAccountResource, sortsString))));
+		}
+
+		private Account _account;
+
+	}
+
 	@GraphQLTypeExtension(UserAccount.class)
 	public class GetUserAccountPhonesPageTypeExtension {
 
@@ -951,39 +987,6 @@ public class Query {
 		}
 
 		private UserAccount _userAccount;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class GetAccountUsersPageTypeExtension {
-
-		public GetAccountUsersPageTypeExtension(Account account) {
-			_account = account;
-		}
-
-		@GraphQLField(description = "Gets the users assigned to an account")
-		public UserAccountPage users(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_userAccountResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				userAccountResource -> new UserAccountPage(
-					userAccountResource.getAccountUsersPage(
-						_account.getId(), search,
-						_filterBiFunction.apply(
-							userAccountResource, filterString),
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							userAccountResource, sortsString))));
-		}
-
-		private Account _account;
 
 	}
 
@@ -1019,6 +1022,43 @@ public class Query {
 		}
 
 		private Site _site;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountUserAccountsByExternalReferenceCodePageTypeExtension {
+
+		public GetAccountUserAccountsByExternalReferenceCodePageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField(description = "Gets the users assigned to an account")
+		public UserAccountPage userAccountsByExternalReferenceCode(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_userAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				userAccountResource -> new UserAccountPage(
+					userAccountResource.
+						getAccountUserAccountsByExternalReferenceCodePage(
+							_account.getExternalReferenceCode(), search,
+							_filterBiFunction.apply(
+								userAccountResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								userAccountResource, sortsString))));
+		}
+
+		private Account _account;
 
 	}
 
@@ -1061,42 +1101,6 @@ public class Query {
 		}
 
 		private UserAccount _userAccount;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class GetAccountUsersByExternalReferenceCodePageTypeExtension {
-
-		public GetAccountUsersByExternalReferenceCodePageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField(description = "Gets the users assigned to an account")
-		public UserAccountPage usersByExternalReferenceCode(
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_userAccountResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				userAccountResource -> new UserAccountPage(
-					userAccountResource.
-						getAccountUsersByExternalReferenceCodePage(
-							_account.getExternalReferenceCode(), search,
-							_filterBiFunction.apply(
-								userAccountResource, filterString),
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								userAccountResource, sortsString))));
-		}
-
-		private Account _account;
 
 	}
 

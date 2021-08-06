@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
-	public void deleteAccountRoleUserAssociation(
+	public void deleteAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception {
 
@@ -57,12 +57,12 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
+	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String userAccountExternalReferenceCode)
 		throws Exception {
 
-		deleteAccountRoleUserAssociation(
+		deleteAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
 				accountExternalReferenceCode),
 			accountRoleId,
@@ -130,7 +130,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public void postAccountRoleUserAssociation(
+	public void postAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception {
 
@@ -139,12 +139,12 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public void postAccountRoleUserAssociationByExternalReferenceCode(
+	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String userAccountExternalReferenceCode)
 		throws Exception {
 
-		postAccountRoleUserAssociation(
+		postAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
 				accountExternalReferenceCode),
 			accountRoleId,

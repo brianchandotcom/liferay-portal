@@ -28,15 +28,19 @@ definition {
 	test ViewNoAddPageTabViaPageTemplatesCP {
 		property test.name.skip.portal.instance = "WidgetPageTemplatesUseCase#ViewNoAddPageTabViaPageTemplatesCP";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		task ("Get site name and go to page template in global site") {
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+		}
 
-		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Wiki");
+		task ("Assert could not add page via Wiki page template") {
+			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Wiki");
 
-		SelectWindow(locator1 = "title=Wiki - ${siteName}");
+			SelectWindow(locator1 = "title=Wiki - ${siteName}");
 
-		Dockbar.viewAddTabsWithNoAddPagePermission();
+			Dockbar.viewAddTabsWithNoAddPagePermission();
+		}
 	}
 
 }

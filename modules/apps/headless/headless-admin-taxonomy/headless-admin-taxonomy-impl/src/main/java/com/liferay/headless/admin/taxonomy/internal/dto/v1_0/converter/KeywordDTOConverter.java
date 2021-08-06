@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.GroupUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,6 +62,9 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 				id = assetTag.getTagId();
 				name = assetTag.getName();
 				siteId = GroupUtil.getSiteId(group);
+				subscribed = _subscriptionLocalService.isSubscribed(
+					assetTag.getCompanyId(), dtoConverterContext.getUserId(),
+					AssetTag.class.getName(), assetTag.getTagId());
 
 				setCreator(
 					() -> {
@@ -101,6 +105,9 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

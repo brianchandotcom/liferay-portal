@@ -14,12 +14,11 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayLayout from '@clayui/layout';
-import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
 import React, {useMemo} from 'react';
 
+import DocumentLanguages from './DocumentLanguages';
 import ImagePreview from './ImagePreview';
 import Sidebar from './Sidebar';
 
@@ -87,7 +86,7 @@ const SidebarPanelInfoView = ({
 			<Sidebar.Header title={title} />
 
 			<Sidebar.Body>
-				<div className="c-mb-4 sidebar-section">
+				<div className="sidebar-section">
 					{itemIsFile && (
 						<p className="mb-2 text-secondary">{fileName}</p>
 					)}
@@ -108,7 +107,7 @@ const SidebarPanelInfoView = ({
 					))}
 				</div>
 
-				<div className="c-mb-4 sidebar-dl sidebar-section">
+				<div className="sidebar-dl sidebar-section">
 					<ClaySticker
 						className={classnames('sticker-user-icon', {
 							[`user-icon-color-${stickerColor}`]: !user.url,
@@ -137,93 +136,19 @@ const SidebarPanelInfoView = ({
 				)}
 
 				{description && (
-					<div className="c-mb-4 sidebar-section">
-						<h5>{Liferay.Language.get('description')}</h5>
-						<p className="text-secondary">{description}</p>
-					</div>
-				)}
-
-				{!!sortedViewURLS.length && (
-					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5>
-							{Liferay.Language.get('languages-translated-into')}
+					<div className="sidebar-section">
+						<h5 className="font-weight-semi-bold">
+							{Liferay.Language.get('description')}
 						</h5>
-
-						{sortedViewURLS.map((language) => (
-							<ClayLayout.ContentRow
-								key={language.languageId}
-								verticalAlign="center"
-							>
-								<ClayLayout.ContentCol className="inline-item-before">
-									<ClayIcon
-										className="c-mt-1"
-										symbol={language.languageId.toLowerCase()}
-									/>
-								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol
-									expand={!!language.viewURL}
-								>
-									<ClayLayout.ContentRow
-										key={language.languageId}
-										verticalAlign="center"
-									>
-										<ClayLayout.ContentCol className="inline-item-before small">
-											{language.languageId}
-										</ClayLayout.ContentCol>
-
-										<ClayLayout.ContentCol>
-											{language.default && (
-												<ClayLabel
-													className="d-inline"
-													displayType="info"
-												>
-													{Liferay.Language.get(
-														'default'
-													)}
-												</ClayLabel>
-											)}
-										</ClayLayout.ContentCol>
-									</ClayLayout.ContentRow>
-								</ClayLayout.ContentCol>
-
-								{language.viewURL && (
-									<ClayLayout.ContentCol>
-										<ClayLink
-											borderless
-											data-tooltip-align="top"
-											displayType="secondary"
-											href={language.viewURL}
-											monospaced
-											outline
-											title={Liferay.Language.get('view')}
-										>
-											<ClayIcon symbol="view" />
-										</ClayLink>
-									</ClayLayout.ContentCol>
-								)}
-							</ClayLayout.ContentRow>
-						))}
-					</div>
-				)}
-
-				{!!tags.length && (
-					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5>{Liferay.Language.get('tags')}</h5>
-
-						<p>
-							{tags.map((tag) => (
-								<ClayLabel displayType="secondary" key={tag}>
-									{tag}
-								</ClayLabel>
-							))}
-						</p>
+						<p className="text-secondary">{description}</p>
 					</div>
 				)}
 
 				{!!categories.length && (
 					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5>{Liferay.Language.get('categories')}</h5>
+						<h5 className="font-weight-semi-bold">
+							{Liferay.Language.get('categories')}
+						</h5>
 
 						<p>
 							{categories.map((category) => (
@@ -236,6 +161,26 @@ const SidebarPanelInfoView = ({
 							))}
 						</p>
 					</div>
+				)}
+
+				{!!tags.length && (
+					<div className="c-mb-4 sidebar-dl sidebar-section">
+						<h5 className="font-weight-semi-bold">
+							{Liferay.Language.get('tags')}
+						</h5>
+
+						<p>
+							{tags.map((tag) => (
+								<ClayLabel displayType="secondary" key={tag}>
+									{tag}
+								</ClayLabel>
+							))}
+						</p>
+					</div>
+				)}
+
+				{!!sortedViewURLS.length && (
+					<DocumentLanguages urls={sortedViewURLS} />
 				)}
 
 				{[
@@ -280,7 +225,9 @@ const SidebarPanelInfoView = ({
 								className="c-mb-4 sidebar-dl sidebar-section"
 								key={title}
 							>
-								<h5>{title}</h5>
+								<h5 className="font-weight-semi-bold">
+									{title}
+								</h5>
 
 								<p>{text}</p>
 							</div>

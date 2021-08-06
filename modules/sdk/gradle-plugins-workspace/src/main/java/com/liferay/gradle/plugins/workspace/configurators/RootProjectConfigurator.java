@@ -65,7 +65,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -174,6 +173,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			settings,
 			WorkspacePlugin.PROPERTY_PREFIX + "default.repository.enabled",
 			_DEFAULT_REPOSITORY_ENABLED);
+
+		_userBundleCheckSumMD5 = GradleUtil.getProperty(
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.checksum.md5",
+			null);
 	}
 
 	@Override
@@ -1165,6 +1168,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
+					if (!Objects.equals(
+							workspaceExtension.getBundleUrl(),
+							workspaceExtension.getDefaultBundleUrl())) {
+
+						if (Objects.nonNull(_userBundleCheckSumMD5)) {
+							return true;
+						}
+
+						return false;
+					}
+
 					return Validator.isNotNull(verify.getChecksum());
 				}
 
@@ -1175,27 +1189,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project p) {
-					if (StringUtils.isNotEmpty(
-							workspaceExtension.getProduct())) {
+					verify.checksum(workspaceExtension.getBundleChecksumMD5());
 
-						String bundleChecksumMD5 =
-							workspaceExtension.getBundleChecksumMD5();
+					TaskOutputs taskOutputs = downloadBundleTask.getOutputs();
 
-						if (StringUtils.isEmpty(bundleChecksumMD5)) {
-							verify.setEnabled(false);
+					FileCollection fileCollection = taskOutputs.getFiles();
 
-							return;
-						}
-
-						verify.checksum(bundleChecksumMD5);
-
-						TaskOutputs taskOutputs =
-							downloadBundleTask.getOutputs();
-
-						FileCollection fileCollection = taskOutputs.getFiles();
-
-						verify.src(fileCollection.getSingleFile());
-					}
+					verify.src(fileCollection.getSingleFile());
 				}
 
 			});
@@ -1509,5 +1509,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		"100_liferay_image_setup.sh";
 
 	private boolean _defaultRepositoryEnabled;
+	private String _userBundleCheckSumMD5;
 
 }

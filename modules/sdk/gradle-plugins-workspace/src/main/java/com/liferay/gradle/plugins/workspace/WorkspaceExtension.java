@@ -81,7 +81,7 @@ public class WorkspaceExtension {
 		_bundleCacheDir = _getProperty(
 			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
 		_bundleChecksumMD5 = _getProperty(
-			settings, "bundle.checksum.md5", _getDefaultBundleChecksumMD5());
+			settings, "bundle.checksum.md5", getDefaultBundleChecksumMD5());
 		_bundleDistRootDirName = _getProperty(
 			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
 		_bundleTokenDownload = _getProperty(
@@ -97,7 +97,7 @@ public class WorkspaceExtension {
 			settings, "bundle.token.password.file",
 			_BUNDLE_TOKEN_PASSWORD_FILE);
 		_bundleUrl = _getProperty(
-			settings, "bundle.url", _getDefaultBundleUrl());
+			settings, "bundle.url", getDefaultBundleUrl());
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
@@ -158,7 +158,7 @@ public class WorkspaceExtension {
 
 					if (!Objects.equals(
 							getBundleChecksumMD5(),
-							_getDefaultBundleChecksumMD5())) {
+							getDefaultBundleChecksumMD5())) {
 
 						logger.lifecycle(
 							String.format(
@@ -167,7 +167,7 @@ public class WorkspaceExtension {
 					}
 
 					if (!Objects.equals(
-							getBundleUrl(), _getDefaultBundleUrl())) {
+							getBundleUrl(), getDefaultBundleUrl())) {
 
 						logger.lifecycle(
 							String.format(
@@ -234,6 +234,26 @@ public class WorkspaceExtension {
 
 	public File getConfigsDir() {
 		return GradleUtil.toFile(_gradle.getRootProject(), _configsDir);
+	}
+
+	public String getDefaultBundleChecksumMD5() {
+		return Optional.ofNullable(
+			_getProductInfo(getProduct())
+		).map(
+			ProductInfo::getBundleChecksumMD5
+		).orElse(
+			null
+		);
+	}
+
+	public String getDefaultBundleUrl() {
+		return Optional.ofNullable(
+			_getProductInfo(getProduct())
+		).map(
+			this::_decodeBundleUrl
+		).orElse(
+			BundleSupportConstants.DEFAULT_BUNDLE_URL
+		);
 	}
 
 	public String getDockerContainerId() {
@@ -392,26 +412,6 @@ public class WorkspaceExtension {
 			ProductInfo::getAppServerTomcatVersion
 		).orElse(
 			null
-		);
-	}
-
-	private String _getDefaultBundleChecksumMD5() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			ProductInfo::getBundleChecksumMD5
-		).orElse(
-			null
-		);
-	}
-
-	private String _getDefaultBundleUrl() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			this::_decodeBundleUrl
-		).orElse(
-			BundleSupportConstants.DEFAULT_BUNDLE_URL
 		);
 	}
 

@@ -645,6 +645,12 @@ definition {
 
 		Form.publishForm();
 
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "text");
+
 		FormPortlet.submitWithValidationError(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
 
 		FormFields.editText(

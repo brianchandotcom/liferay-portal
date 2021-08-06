@@ -17,65 +17,22 @@
 <c:if test="<%= hasPermission %>">
 	<div id="item-finder-root-channel"></div>
 
-	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceOrderTypeChannelsResource = ServiceProvider.default.AdminOrderAPI(
-			'v1'
-		);
-
-		var id = <%= commerceOrderTypeId %>;
-		var orderTypeExternalReferenceCode =
-			'<%= HtmlUtil.escapeJS(commerceOrderType.getExternalReferenceCode()) %>';
-
-		function selectItem(channel) {
-			var channelData = {
-				channelExternalReferenceCode: channel.externalReferenceCode,
-				channelId: channel.id,
-				orderTypeExternalReferenceCode: orderTypeExternalReferenceCode,
-				orderTypeId: id,
-			};
-
-			return CommerceOrderTypeChannelsResource.addOrderTypeChannel(
-				id,
-				channelData
-			)
-				.then(() => {
-					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-						id:
-							'<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPE_QUALIFIER_CHANNELS %>',
-					});
-				})
-				.catch((error) => {
-					return Promise.reject(error);
-				});
-		}
-
-		function getSelectedItems() {
-			return Promise.resolve([]);
-		}
-
-		itemFinder.default('itemFinder', 'item-finder-root-channel', {
-			apiUrl: '/o/headless-commerce-admin-channel/v1.0/channels',
-			getSelectedItems: getSelectedItems,
-			inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-channel") %>',
-			itemSelectedMessage: '<%= LanguageUtil.get(request, "channel-selected") %>',
-			linkedDatasetsId: [
-				'<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPE_QUALIFIER_CHANNELS %>',
-			],
-			itemCreation: false,
-			itemsKey: 'id',
-			onItemSelected: selectItem,
-			pageSize: 10,
-			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-channels") %>',
-			portletId: '<%= portletDisplay.getRootPortletId() %>',
-			schema: [
-				{
-					fieldName: 'name',
-				},
-			],
-			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			titleLabel: '<%= LanguageUtil.get(request, "add-existing-channel") %>',
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"commerceOrderTypeId", commerceOrderTypeId
+			).put(
+				"datasetId", CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_TYPE_QUALIFIER_CHANNELS
+			).put(
+				"orderTypeExternalReferenceCode", HtmlUtil.escapeJS(commerceOrderType.getExternalReferenceCode())
+			).put(
+				"rootPortletId", portletDisplay.getRootPortletId()
+			).put(
+				"spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+			).build()
+		%>'
+		module="js/channels"
+	/>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"

@@ -29,50 +29,20 @@ String defaultLanguageId = LocaleUtil.toLanguageId(locale);
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-order-type") %>'
 >
-	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
+	<aui:form method="post" name="fm">
 		<aui:input bean="<%= commerceOrderTypeDisplayContext.getCommerceOrderType() %>" label="name" model="<%= CommerceOrderType.class %>" name="name" required="<%= true %>" />
 
 		<aui:input name="description" type="textarea" />
 	</aui:form>
 
-	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceOrderTypeResource = ServiceProvider.default.AdminOrderAPI('v1');
-
-		Liferay.provide(
-			window,
-			'<portlet:namespace />apiSubmit',
-			(form) => {
-				var description = form.querySelector('#description').value;
-				var name = form.querySelector('#name').value;
-
-				var orderTypeData = {
-					description: {<%= defaultLanguageId %>: description},
-					name: {<%= defaultLanguageId %>: name},
-				};
-
-				return CommerceOrderTypeResource.addOrderType(orderTypeData)
-					.then((payload) => {
-						var redirectURL = new Liferay.PortletURL.createURL(
-							'<%= editCommerceOrderTypePortletURL.toString() %>'
-						);
-
-						redirectURL.setParameter('commerceOrderTypeId', payload.id);
-						redirectURL.setParameter('p_auth', Liferay.authToken);
-
-						window.parent.Liferay.fire(events.CLOSE_MODAL, {
-							redirectURL: redirectURL.toString(),
-							successNotification: {
-								showSuccessNotification: true,
-								message:
-									'<liferay-ui:message key="your-request-completed-successfully" />',
-							},
-						});
-					})
-					.catch((error) => {
-						return Promise.reject(error);
-					});
-			},
-			['liferay-portlet-url']
-		);
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"defaultLanguageId", defaultLanguageId
+			).put(
+				"editCommerceOrderTypePortletURL", editCommerceOrderTypePortletURL.toString()
+			).build()
+		%>'
+		module="js/add_commerce_order_type"
+	/>
 </commerce-ui:modal-content>

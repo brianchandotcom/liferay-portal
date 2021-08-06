@@ -39,42 +39,28 @@ boolean hasPermission = commerceOrderTypeQualifiersDisplayContext.hasPermission(
 
 	<aui:model-context bean="<%= commerceOrderType %>" model="<%= CommerceOrderType.class %>" />
 
-	<div class="row">
-		<div class="col-12">
-			<commerce-ui:panel
-				bodyClasses="flex-fill"
-				collapsed="<%= false %>"
-				collapsible="<%= false %>"
-				title='<%= LanguageUtil.get(request, "channel-eligibility") %>'
-			>
-				<div class="row">
-					<aui:fieldset markupView="lexicon">
-						<aui:input checked='<%= Objects.equals(channelQualifiers, "all") %>' label="all-channels" name="qualifiers--channel--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseChannelQualifiers('all');" %>' type="radio" />
-						<aui:input checked='<%= Objects.equals(channelQualifiers, "channels") %>' label="specific-channels" name="qualifiers--channel--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseChannelQualifiers('channels');" %>' type="radio" />
-					</aui:fieldset>
-				</div>
-			</commerce-ui:panel>
-		</div>
-	</div>
+	<commerce-ui:panel
+		bodyClasses="flex-fill"
+		collapsed="<%= false %>"
+		collapsible="<%= false %>"
+		title='<%= LanguageUtil.get(request, "channel-eligibility") %>'
+	>
+		<aui:fieldset markupView="lexicon">
+			<aui:input checked='<%= Objects.equals(channelQualifiers, "all") %>' label="all-channels" name="chooseChannelQualifiers" type="radio" value="all" />
+			<aui:input checked='<%= Objects.equals(channelQualifiers, "channels") %>' label="specific-channels" name="chooseChannelQualifiers" type="radio" value="channels" />
+		</aui:fieldset>
+	</commerce-ui:panel>
 
 	<c:if test='<%= Objects.equals(channelQualifiers, "channels") %>'>
 		<%@ include file="/order_type/qualifier/channels.jspf" %>
 	</c:if>
 </aui:form>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />chooseChannelQualifiers',
-		(value) => {
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter('channelQualifiers', value);
-
-			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
-	);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"currentURL", currentURL
+		).build()
+	%>'
+	module="js/qualifiers"
+/>

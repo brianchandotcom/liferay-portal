@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cluster.test.module.internel;
+package com.liferay.portal.cluster.sample.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

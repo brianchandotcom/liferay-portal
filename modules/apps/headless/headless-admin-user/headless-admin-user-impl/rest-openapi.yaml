@@ -975,7 +975,7 @@ paths:
             # @review
             description:
                 Unassigns account users to the account role
-            operationId: deleteAccountRoleUserAssociationByExternalReferenceCode
+            operationId: deleteAccountRoleUserAccountAssociationByExternalReferenceCode
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1005,7 +1005,7 @@ paths:
             # @review
             description:
                 Assigns account users to the account role
-            operationId: postAccountRoleUserAssociationByExternalReferenceCode
+            operationId: postAccountRoleUserAccountAssociationByExternalReferenceCode
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1613,7 +1613,7 @@ paths:
             # @review
             description:
                 Unassigns account users to the account role
-            operationId: deleteAccountRoleUserAssociation
+            operationId: deleteAccountRoleUserAccountAssociation
             parameters:
                 - in: path
                   name: accountId
@@ -1645,7 +1645,7 @@ paths:
             # @review
             description:
                 Assigns account users to the account role
-            operationId: postAccountRoleUserAssociation
+            operationId: postAccountRoleUserAccountAssociation
             parameters:
                 - in: path
                   name: accountId

@@ -47,4 +47,28 @@ definition {
 		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Word");
 	}
 
+	@priority = "5"
+	test ViewOneDriveDocumentsArchive73101 {
+		property data.archive.type = "data-archive-onedrive";
+		property portal.version = "7.3.10.1";
+
+		OneDrive.goToOneDrive();
+
+		for (var dmDocumentType : list "Excel,PowerPoint,Word") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${dmDocumentType} Title After Upgrade");
+		}
+
+		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Excel");
+
+		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "PowerPoint");
+
+		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Word");
+
+		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Excel");
+
+		Upgrade.addOneDriveDocument(dmDocumentTypeName = "PowerPoint");
+
+		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Word");
+	}
+
 }

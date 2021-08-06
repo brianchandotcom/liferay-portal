@@ -34,6 +34,36 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
+	test ViewNotifications71105 {
+		property data.archive.type = "data-archive-notifications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.10.5";
+
+		Upgrade.viewNotifications();
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test ViewNotifications72104 {
+		property data.archive.type = "data-archive-notifications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.10.4";
+
+		Upgrade.viewNotifications();
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test ViewNotifications73101 {
+		property data.archive.type = "data-archive-notifications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewNotifications();
+	}
+
+	@priority = "5"
+	@refactorneeded
 	test ViewNotifications621015 {
 		property data.archive.type = "data-archive-notifications";
 		property portal.version = "6.2.10.15";
@@ -46,6 +76,16 @@ definition {
 	test ViewNotifications621021 {
 		property data.archive.type = "data-archive-notifications";
 		property portal.version = "6.2.10.21";
+
+		Upgrade.viewNotifications();
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test ViewNotifications701015 {
+		property data.archive.type = "data-archive-notifications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.10.15";
 
 		Upgrade.viewNotifications();
 	}

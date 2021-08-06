@@ -33,4 +33,15 @@ definition {
 		Upgrade.viewSharedBlog();
 	}
 
+	@priority = "5"
+	@refactorneeded
+	test ViewSharedAssetsArchive73101 {
+		property data.archive.type = "data-archive-asset-sharing";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
+
+		Upgrade.viewSharedBlog();
+	}
+
 }

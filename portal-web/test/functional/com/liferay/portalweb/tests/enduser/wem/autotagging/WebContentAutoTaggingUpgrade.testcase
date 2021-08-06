@@ -32,4 +32,14 @@ definition {
 		Upgrade.addAutoTaggedWebContent();
 	}
 
+	@priority = "5"
+	test ViewWebContentArchive73101 {
+		property data.archive.type = "data-archive-auto-tagging";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewAndDeleteAutoTaggedWebContent();
+
+		Upgrade.addAutoTaggedWebContent();
+	}
+
 }

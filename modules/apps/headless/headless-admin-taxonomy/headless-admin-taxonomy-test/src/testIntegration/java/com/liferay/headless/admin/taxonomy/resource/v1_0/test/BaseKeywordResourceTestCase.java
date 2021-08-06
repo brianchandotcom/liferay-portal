@@ -1440,6 +1440,14 @@ public abstract class BaseKeywordResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (keyword.getSubscribed() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1598,6 +1606,16 @@ public abstract class BaseKeywordResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						keyword1.getName(), keyword2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						keyword1.getSubscribed(), keyword2.getSubscribed())) {
 
 					return false;
 				}
@@ -1803,6 +1821,11 @@ public abstract class BaseKeywordResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1855,6 +1878,7 @@ public abstract class BaseKeywordResourceTestCase {
 				keywordUsageCount = RandomTestUtil.randomInt();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();
+				subscribed = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

@@ -166,6 +166,16 @@ public class KeywordSerDes {
 			sb.append(keyword.getSiteId());
 		}
 
+		if (keyword.getSubscribed() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subscribed\": ");
+
+			sb.append(keyword.getSubscribed());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -258,6 +268,13 @@ public class KeywordSerDes {
 			map.put("siteId", String.valueOf(keyword.getSiteId()));
 		}
 
+		if (keyword.getSubscribed() == null) {
+			map.put("subscribed", null);
+		}
+		else {
+			map.put("subscribed", String.valueOf(keyword.getSubscribed()));
+		}
+
 		return map;
 	}
 
@@ -327,6 +344,11 @@ public class KeywordSerDes {
 				if (jsonParserFieldValue != null) {
 					keyword.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subscribed")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setSubscribed((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

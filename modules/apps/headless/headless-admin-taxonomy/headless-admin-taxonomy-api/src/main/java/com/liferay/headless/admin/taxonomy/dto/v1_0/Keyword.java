@@ -323,6 +323,38 @@ public class Keyword implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(
+		description = "A flag that indicates whether the user making the requests is subscribed to this keyword."
+	)
+	public Boolean getSubscribed() {
+		return subscribed;
+	}
+
+	public void setSubscribed(Boolean subscribed) {
+		this.subscribed = subscribed;
+	}
+
+	@JsonIgnore
+	public void setSubscribed(
+		UnsafeSupplier<Boolean, Exception> subscribedUnsafeSupplier) {
+
+		try {
+			subscribed = subscribedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether the user making the requests is subscribed to this keyword."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean subscribed;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -457,6 +489,16 @@ public class Keyword implements Serializable {
 			sb.append("\"siteId\": ");
 
 			sb.append(siteId);
+		}
+
+		if (subscribed != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subscribed\": ");
+
+			sb.append(subscribed);
 		}
 
 		sb.append("}");

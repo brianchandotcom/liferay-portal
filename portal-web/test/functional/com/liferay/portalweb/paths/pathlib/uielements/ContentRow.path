@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER_TD</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//td[contains(@class,'${key_columnName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ROW_NUMBER_TD_2</td>
 	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]/td[2]</td>
 	<td></td>

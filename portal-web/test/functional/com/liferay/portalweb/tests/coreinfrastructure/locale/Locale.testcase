@@ -585,15 +585,9 @@ definition {
 			configurationName = "Language",
 			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureCurrentLanguagesCP(
-			currentPortalLanguages = "English (United States),Italian (Italy)",
-			defaultPortalLanguage = "English (United States)",
-			displaySettings = "Display Settings");
+		PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "English (United States),Italian (Italy)");
 
-		PortalSettings.configureCurrentLanguagesCP(
-			currentPortalLanguages = "English (United States),Italian (Italy)",
-			defaultPortalLanguage = "Italian (Italy)",
-			displaySettings = "Display Settings");
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Italian (Italy)");
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",

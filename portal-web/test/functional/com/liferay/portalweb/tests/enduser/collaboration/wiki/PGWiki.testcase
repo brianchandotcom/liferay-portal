@@ -128,7 +128,7 @@ definition {
 			wikiChildPageTitle = "Wiki Child Page Title");
 	}
 
-	@description = "This ensures that multople child pages can be added to the front page."
+	@description = "This ensures that multiple child pages can be added to the front page."
 	@priority = "5"
 	@refactordone
 	test CanAddChildPagesToFrontPage {
@@ -817,7 +817,7 @@ definition {
 			wikiPageTitle = "Wiki Page Rename");
 	}
 
-	@description = "This ensures that the changes can revert after moving a wiki page ."
+	@description = "This ensures that the changes can revert after moving a wiki page."
 	@priority = "4"
 	@refactordone
 	test CanRevertChangesMadeToParentPages {
@@ -922,7 +922,7 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
-	@description = "This ensures that the edited front page can revert to previous version."
+	@description = "This ensures that the edited wiki page can be saved as draft."
 	@priority = "4"
 	@refactordone
 	test CanSaveEditedPageAsDraft {

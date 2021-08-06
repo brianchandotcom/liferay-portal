@@ -277,7 +277,7 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
-	@description = "This ensures that user can not add wiki assets with a regular role without permissions."
+	@description = "This ensures that users can not add wiki assets with a regular role without permissions."
 	@priority = "4"
 	@refactordone
 	test CannotAddWikiAssetsWithRegularRoleWithoutPermissions {
@@ -309,7 +309,7 @@ definition {
 		WikiPortlet.viewNoPermissionCP();
 	}
 
-	@description = "This ensures that user can not add wiki assets with a regular role without permissions."
+	@description = "This ensures that users can not add wiki assets with a site role without permissions."
 	@priority = "4"
 	@refactordone
 	test CannotAddWikiAssetsWithSiteRoleWithoutPermissions {

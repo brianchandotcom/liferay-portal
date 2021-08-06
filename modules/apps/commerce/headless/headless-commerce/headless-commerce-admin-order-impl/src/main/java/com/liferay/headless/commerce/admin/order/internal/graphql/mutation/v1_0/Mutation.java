@@ -18,11 +18,15 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderNote;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeChannelResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -82,6 +86,22 @@ public class Mutation {
 
 		_orderNoteResourceComponentServiceObjects =
 			orderNoteResourceComponentServiceObjects;
+	}
+
+	public static void setOrderTypeResourceComponentServiceObjects(
+		ComponentServiceObjects<OrderTypeResource>
+			orderTypeResourceComponentServiceObjects) {
+
+		_orderTypeResourceComponentServiceObjects =
+			orderTypeResourceComponentServiceObjects;
+	}
+
+	public static void setOrderTypeChannelResourceComponentServiceObjects(
+		ComponentServiceObjects<OrderTypeChannelResource>
+			orderTypeChannelResourceComponentServiceObjects) {
+
+		_orderTypeChannelResourceComponentServiceObjects =
+			orderTypeChannelResourceComponentServiceObjects;
 	}
 
 	public static void setShippingAddressResourceComponentServiceObjects(
@@ -412,6 +432,174 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public OrderType createOrderType(
+			@GraphQLName("orderType") OrderType orderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.postOrderType(orderType));
+	}
+
+	@GraphQLField
+	public Response createOrderTypeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.postOrderTypeBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteOrderTypeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.deleteOrderTypeByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public OrderType patchOrderTypeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("orderType") OrderType orderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.patchOrderTypeByExternalReferenceCode(
+					externalReferenceCode, orderType));
+	}
+
+	@GraphQLField
+	public boolean deleteOrderType(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.deleteOrderType(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteOrderTypeBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.deleteOrderTypeBatch(
+				id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public OrderType patchOrderType(
+			@GraphQLName("id") Long id,
+			@GraphQLName("orderType") OrderType orderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.patchOrderType(
+				id, orderType));
+	}
+
+	@GraphQLField
+	public boolean deleteOrderTypeChannel(
+			@GraphQLName("orderTypeChannelId") Long orderTypeChannelId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeChannelResource ->
+				orderTypeChannelResource.deleteOrderTypeChannel(
+					orderTypeChannelId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteOrderTypeChannelBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeChannelResource ->
+				orderTypeChannelResource.deleteOrderTypeChannelBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public OrderTypeChannel
+			createOrderTypeByExternalReferenceCodeOrderTypeChannel(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("orderTypeChannel") OrderTypeChannel
+					orderTypeChannel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeChannelResource ->
+				orderTypeChannelResource.
+					postOrderTypeByExternalReferenceCodeOrderTypeChannel(
+						externalReferenceCode, orderTypeChannel));
+	}
+
+	@GraphQLField
+	public OrderTypeChannel createOrderTypeIdOrderTypeChannel(
+			@GraphQLName("id") Long id,
+			@GraphQLName("orderTypeChannel") OrderTypeChannel orderTypeChannel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeChannelResource ->
+				orderTypeChannelResource.postOrderTypeIdOrderTypeChannel(
+					id, orderTypeChannel));
+	}
+
+	@GraphQLField
+	public Response createOrderTypeIdOrderTypeChannelBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeChannelResource ->
+				orderTypeChannelResource.postOrderTypeIdOrderTypeChannelBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response patchOrderByExternalReferenceCodeShippingAddress(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shippingAddress") ShippingAddress shippingAddress)
@@ -533,6 +721,35 @@ public class Mutation {
 		orderNoteResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(OrderTypeResource orderTypeResource)
+		throws Exception {
+
+		orderTypeResource.setContextAcceptLanguage(_acceptLanguage);
+		orderTypeResource.setContextCompany(_company);
+		orderTypeResource.setContextHttpServletRequest(_httpServletRequest);
+		orderTypeResource.setContextHttpServletResponse(_httpServletResponse);
+		orderTypeResource.setContextUriInfo(_uriInfo);
+		orderTypeResource.setContextUser(_user);
+		orderTypeResource.setGroupLocalService(_groupLocalService);
+		orderTypeResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			OrderTypeChannelResource orderTypeChannelResource)
+		throws Exception {
+
+		orderTypeChannelResource.setContextAcceptLanguage(_acceptLanguage);
+		orderTypeChannelResource.setContextCompany(_company);
+		orderTypeChannelResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		orderTypeChannelResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		orderTypeChannelResource.setContextUriInfo(_uriInfo);
+		orderTypeChannelResource.setContextUser(_user);
+		orderTypeChannelResource.setGroupLocalService(_groupLocalService);
+		orderTypeChannelResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			ShippingAddressResource shippingAddressResource)
 		throws Exception {
@@ -557,6 +774,10 @@ public class Mutation {
 		_orderItemResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrderNoteResource>
 		_orderNoteResourceComponentServiceObjects;
+	private static ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<OrderTypeChannelResource>
+		_orderTypeChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingAddressResource>
 		_shippingAddressResourceComponentServiceObjects;
 

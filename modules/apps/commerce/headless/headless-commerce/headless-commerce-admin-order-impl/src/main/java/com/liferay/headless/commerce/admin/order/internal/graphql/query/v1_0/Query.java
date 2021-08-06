@@ -20,6 +20,8 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderNote;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
@@ -27,6 +29,8 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeChannelResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -108,6 +112,22 @@ public class Query {
 			orderNoteResourceComponentServiceObjects;
 	}
 
+	public static void setOrderTypeResourceComponentServiceObjects(
+		ComponentServiceObjects<OrderTypeResource>
+			orderTypeResourceComponentServiceObjects) {
+
+		_orderTypeResourceComponentServiceObjects =
+			orderTypeResourceComponentServiceObjects;
+	}
+
+	public static void setOrderTypeChannelResourceComponentServiceObjects(
+		ComponentServiceObjects<OrderTypeChannelResource>
+			orderTypeChannelResourceComponentServiceObjects) {
+
+		_orderTypeChannelResourceComponentServiceObjects =
+			orderTypeChannelResourceComponentServiceObjects;
+	}
+
 	public static void setShippingAddressResourceComponentServiceObjects(
 		ComponentServiceObjects<ShippingAddressResource>
 			shippingAddressResourceComponentServiceObjects) {
@@ -180,6 +200,23 @@ public class Query {
 			this::_populateResourceContext,
 			billingAddressResource ->
 				billingAddressResource.getOrderIdBillingAddress(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypeChannelChannel(orderTypeChannelId: ___){currencyCode, externalReferenceCode, id, name, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Channel orderTypeChannelChannel(
+			@GraphQLName("orderTypeChannelId") Long orderTypeChannelId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> channelResource.getOrderTypeChannelChannel(
+				orderTypeChannelId));
 	}
 
 	/**
@@ -411,6 +448,108 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypes(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderTypePage orderTypes(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> new OrderTypePage(
+				orderTypeResource.getOrderTypesPage(
+					search,
+					_filterBiFunction.apply(orderTypeResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(orderTypeResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypeByExternalReferenceCode(externalReferenceCode: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderType orderTypeByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.getOrderTypeByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderType(id: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderType orderType(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> orderTypeResource.getOrderType(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypeByExternalReferenceCodeOrderTypeChannels(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderTypeChannelPage
+			orderTypeByExternalReferenceCodeOrderTypeChannels(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeChannelResource -> new OrderTypeChannelPage(
+				orderTypeChannelResource.
+					getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypeIdOrderTypeChannels(id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OrderTypeChannelPage orderTypeIdOrderTypeChannels(
+			@GraphQLName("id") Long id, @GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeChannelResource -> new OrderTypeChannelPage(
+				orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+					id, search, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						orderTypeChannelResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderItemShippingAddress(id: ___){city, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, regionISOCode, street1, street2, street3, zip}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -589,6 +728,58 @@ public class Query {
 					billingAddressResource.
 						getOrderByExternalReferenceCodeBillingAddress(
 							_order.getExternalReferenceCode()));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
+	public class
+		GetOrderTypeByExternalReferenceCodeOrderTypeChannelsPageTypeExtension {
+
+		public GetOrderTypeByExternalReferenceCodeOrderTypeChannelsPageTypeExtension(
+			Order order) {
+
+			_order = order;
+		}
+
+		@GraphQLField
+		public OrderTypeChannelPage
+				typeByExternalReferenceCodeOrderTypeChannels(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_orderTypeChannelResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				orderTypeChannelResource -> new OrderTypeChannelPage(
+					orderTypeChannelResource.
+						getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+							_order.getExternalReferenceCode(),
+							Pagination.of(page, pageSize))));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
+	public class GetOrderTypeByExternalReferenceCodeTypeExtension {
+
+		public GetOrderTypeByExternalReferenceCodeTypeExtension(Order order) {
+			_order = order;
+		}
+
+		@GraphQLField
+		public OrderType typeByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_orderTypeResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				orderTypeResource ->
+					orderTypeResource.getOrderTypeByExternalReferenceCode(
+						_order.getExternalReferenceCode()));
 		}
 
 		private Order _order;
@@ -877,6 +1068,72 @@ public class Query {
 
 	}
 
+	@GraphQLName("OrderTypePage")
+	public class OrderTypePage {
+
+		public OrderTypePage(Page orderTypePage) {
+			actions = orderTypePage.getActions();
+
+			items = orderTypePage.getItems();
+			lastPage = orderTypePage.getLastPage();
+			page = orderTypePage.getPage();
+			pageSize = orderTypePage.getPageSize();
+			totalCount = orderTypePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<OrderType> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("OrderTypeChannelPage")
+	public class OrderTypeChannelPage {
+
+		public OrderTypeChannelPage(Page orderTypeChannelPage) {
+			actions = orderTypeChannelPage.getActions();
+
+			items = orderTypeChannelPage.getItems();
+			lastPage = orderTypeChannelPage.getLastPage();
+			page = orderTypeChannelPage.getPage();
+			pageSize = orderTypeChannelPage.getPageSize();
+			totalCount = orderTypeChannelPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<OrderTypeChannel> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("ShippingAddressPage")
 	public class ShippingAddressPage {
 
@@ -1010,6 +1267,35 @@ public class Query {
 		orderNoteResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(OrderTypeResource orderTypeResource)
+		throws Exception {
+
+		orderTypeResource.setContextAcceptLanguage(_acceptLanguage);
+		orderTypeResource.setContextCompany(_company);
+		orderTypeResource.setContextHttpServletRequest(_httpServletRequest);
+		orderTypeResource.setContextHttpServletResponse(_httpServletResponse);
+		orderTypeResource.setContextUriInfo(_uriInfo);
+		orderTypeResource.setContextUser(_user);
+		orderTypeResource.setGroupLocalService(_groupLocalService);
+		orderTypeResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			OrderTypeChannelResource orderTypeChannelResource)
+		throws Exception {
+
+		orderTypeChannelResource.setContextAcceptLanguage(_acceptLanguage);
+		orderTypeChannelResource.setContextCompany(_company);
+		orderTypeChannelResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		orderTypeChannelResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		orderTypeChannelResource.setContextUriInfo(_uriInfo);
+		orderTypeChannelResource.setContextUser(_user);
+		orderTypeChannelResource.setGroupLocalService(_groupLocalService);
+		orderTypeChannelResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			ShippingAddressResource shippingAddressResource)
 		throws Exception {
@@ -1038,6 +1324,10 @@ public class Query {
 		_orderItemResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrderNoteResource>
 		_orderNoteResourceComponentServiceObjects;
+	private static ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<OrderTypeChannelResource>
+		_orderTypeChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingAddressResource>
 		_shippingAddressResourceComponentServiceObjects;
 

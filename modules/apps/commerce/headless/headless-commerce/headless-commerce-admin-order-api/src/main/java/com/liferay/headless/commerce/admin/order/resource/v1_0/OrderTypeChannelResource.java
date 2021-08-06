@@ -14,10 +14,13 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
 
@@ -26,6 +29,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,20 +44,40 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ChannelResource {
+public interface OrderTypeChannelResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Channel getOrderTypeChannelChannel(Long orderTypeChannelId)
+	public void deleteOrderTypeChannel(Long orderTypeChannelId)
 		throws Exception;
 
-	public Channel getOrderByExternalReferenceCodeChannel(
-			String externalReferenceCode)
+	public Response deleteOrderTypeChannelBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
-	public Channel getOrderIdChannel(Long id) throws Exception;
+	public Page<OrderTypeChannel>
+			getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public OrderTypeChannel
+			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
+				String externalReferenceCode, OrderTypeChannel orderTypeChannel)
+		throws Exception;
+
+	public Page<OrderTypeChannel> getOrderTypeIdOrderTypeChannelsPage(
+			Long id, String search, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public OrderTypeChannel postOrderTypeIdOrderTypeChannel(
+			Long id, OrderTypeChannel orderTypeChannel)
+		throws Exception;
+
+	public Response postOrderTypeIdOrderTypeChannelBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -89,7 +113,7 @@ public interface ChannelResource {
 	@ProviderType
 	public interface Builder {
 
-		public ChannelResource build();
+		public OrderTypeChannelResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

@@ -22,6 +22,8 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeChannelResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -52,6 +54,10 @@ public class ServletDataImpl implements ServletData {
 			_orderItemResourceComponentServiceObjects);
 		Mutation.setOrderNoteResourceComponentServiceObjects(
 			_orderNoteResourceComponentServiceObjects);
+		Mutation.setOrderTypeResourceComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects);
+		Mutation.setOrderTypeChannelResourceComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects);
 		Mutation.setShippingAddressResourceComponentServiceObjects(
 			_shippingAddressResourceComponentServiceObjects);
 
@@ -67,6 +73,10 @@ public class ServletDataImpl implements ServletData {
 			_orderItemResourceComponentServiceObjects);
 		Query.setOrderNoteResourceComponentServiceObjects(
 			_orderNoteResourceComponentServiceObjects);
+		Query.setOrderTypeResourceComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects);
+		Query.setOrderTypeChannelResourceComponentServiceObjects(
+			_orderTypeChannelResourceComponentServiceObjects);
 		Query.setShippingAddressResourceComponentServiceObjects(
 			_shippingAddressResourceComponentServiceObjects);
 	}
@@ -101,6 +111,14 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<OrderNoteResource>
 		_orderNoteResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderTypeChannelResource>
+		_orderTypeChannelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ShippingAddressResource>

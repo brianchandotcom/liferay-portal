@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Commerce Admin Order API
 Bundle-SymbolicName: com.liferay.headless.commerce.admin.order.api
-Bundle-Version: 11.0.4
+Bundle-Version: 11.1.0
 Export-Package:\
 	com.liferay.headless.commerce.admin.order.constants.v1_0,\
 	com.liferay.headless.commerce.admin.order.dto.v1_0,\

@@ -93,6 +93,10 @@ public class OpenAPIResourceImpl {
 
 			add(OrderNoteResourceImpl.class);
 
+			add(OrderTypeResourceImpl.class);
+
+			add(OrderTypeChannelResourceImpl.class);
+
 			add(ShippingAddressResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

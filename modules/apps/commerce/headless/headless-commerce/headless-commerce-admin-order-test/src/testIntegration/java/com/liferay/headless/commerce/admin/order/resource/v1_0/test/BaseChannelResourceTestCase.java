@@ -197,6 +197,68 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderTypeChannelChannel() throws Exception {
+		Channel postChannel = testGetOrderTypeChannelChannel_addChannel();
+
+		Channel getChannel = channelResource.getOrderTypeChannelChannel(null);
+
+		assertEquals(postChannel, getChannel);
+		assertValid(getChannel);
+	}
+
+	protected Channel testGetOrderTypeChannelChannel_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypeChannelChannel() throws Exception {
+		Channel channel = testGraphQLChannel_addChannel();
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderTypeChannelChannel",
+								new HashMap<String, Object>() {
+									{
+										put("orderTypeChannelId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderTypeChannelChannel"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypeChannelChannelNotFound()
+		throws Exception {
+
+		Long irrelevantOrderTypeChannelId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderTypeChannelChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderTypeChannelId",
+									irrelevantOrderTypeChannelId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetOrderByExternalReferenceCodeChannel() throws Exception {
 		Channel postChannel =
 			testGetOrderByExternalReferenceCodeChannel_addChannel();

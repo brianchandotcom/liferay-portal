@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
-import com.liferay.headless.commerce.admin.order.resource.v1_0.ChannelResource;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeChannelResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -44,6 +44,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -55,12 +56,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -69,86 +76,229 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseChannelResourceImpl
-	implements ChannelResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<Channel> {
+public abstract class BaseOrderTypeChannelResourceImpl
+	implements EntityModelResource, OrderTypeChannelResource,
+			   VulcanBatchEngineTaskItemDelegate<OrderTypeChannel> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-type-channels/{orderTypeChannelId}/channel'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-type-channels/{orderTypeChannelId}'  -u 'test@liferay.com:test'
 	 */
-	@GET
+	@DELETE
 	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "orderTypeChannelId")}
 	)
-	@Path("/order-type-channels/{orderTypeChannelId}/channel")
+	@Path("/order-type-channels/{orderTypeChannelId}")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Channel")})
-	public Channel getOrderTypeChannelChannel(
+	@Tags(value = {@Tag(name = "OrderTypeChannel")})
+	public void deleteOrderTypeChannel(
 			@NotNull @Parameter(hidden = true) @PathParam("orderTypeChannelId")
 				Long orderTypeChannelId)
 		throws Exception {
-
-		return new Channel();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/channel'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-type-channels/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/order-type-channels/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "OrderTypeChannel")})
+	public Response deleteOrderTypeChannelBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				OrderTypeChannel.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels'  -u 'test@liferay.com:test'
 	 */
 	@GET
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "OrderTypeChannel")})
+	public Page<OrderTypeChannel>
+			getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
 	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
-	@Path("/orders/by-externalReferenceCode/{externalReferenceCode}/channel")
+	@Path(
+		"/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels"
+	)
+	@POST
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Channel")})
-	public Channel getOrderByExternalReferenceCodeChannel(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode")
-			String externalReferenceCode)
+	@Tags(value = {@Tag(name = "OrderTypeChannel")})
+	public OrderTypeChannel
+			postOrderTypeByExternalReferenceCodeOrderTypeChannel(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				OrderTypeChannel orderTypeChannel)
 		throws Exception {
 
-		return new Channel();
+		return new OrderTypeChannel();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/channel'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/orders/{id}/channel")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/order-types/{id}/order-type-channels")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Channel")})
-	public Channel getOrderIdChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+	@Tags(value = {@Tag(name = "OrderTypeChannel")})
+	public Page<OrderTypeChannel> getOrderTypeIdOrderTypeChannelsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
-		return new Channel();
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/{id}/order-type-channels' -d $'{"channelExternalReferenceCode": ___, "channelId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/order-types/{id}/order-type-channels")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "OrderTypeChannel")})
+	public OrderTypeChannel postOrderTypeIdOrderTypeChannel(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			OrderTypeChannel orderTypeChannel)
+		throws Exception {
+
+		return new OrderTypeChannel();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-types/order-type-channels/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/order-types/order-type-channels/batch")
+	@POST
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "OrderTypeChannel")})
+	public Response postOrderTypeIdOrderTypeChannelBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				OrderTypeChannel.class.getName(), callbackURL, null, object)
+		).build();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<Channel> channels,
+			java.util.Collection<OrderTypeChannel> orderTypeChannels,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<Channel> channels,
+			java.util.Collection<OrderTypeChannel> orderTypeChannels,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (OrderTypeChannel orderTypeChannel : orderTypeChannels) {
+			deleteOrderTypeChannel(orderTypeChannel.getOrderTypeChannelId());
+		}
 	}
 
 	@Override
@@ -167,7 +317,7 @@ public abstract class BaseChannelResourceImpl
 	}
 
 	@Override
-	public Page<Channel> read(
+	public Page<OrderTypeChannel> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -199,7 +349,7 @@ public abstract class BaseChannelResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<Channel> channels,
+			java.util.Collection<OrderTypeChannel> orderTypeChannels,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}

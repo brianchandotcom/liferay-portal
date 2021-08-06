@@ -14,10 +14,14 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
 
@@ -26,6 +30,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,20 +45,43 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ChannelResource {
+public interface OrderTypeResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Channel getOrderTypeChannelChannel(Long orderTypeChannelId)
+	public Page<OrderType> getOrderTypesPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Channel getOrderByExternalReferenceCodeChannel(
+	public OrderType postOrderType(OrderType orderType) throws Exception;
+
+	public Response postOrderTypeBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteOrderTypeByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
-	public Channel getOrderIdChannel(Long id) throws Exception;
+	public OrderType getOrderTypeByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public OrderType patchOrderTypeByExternalReferenceCode(
+			String externalReferenceCode, OrderType orderType)
+		throws Exception;
+
+	public void deleteOrderType(Long id) throws Exception;
+
+	public Response deleteOrderTypeBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
+	public OrderType getOrderType(Long id) throws Exception;
+
+	public OrderType patchOrderType(Long id, OrderType orderType)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -89,7 +117,7 @@ public interface ChannelResource {
 	@ProviderType
 	public interface Builder {
 
-		public ChannelResource build();
+		public OrderTypeResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

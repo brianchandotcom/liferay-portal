@@ -85,7 +85,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	@Test
 	public void testDeleteAccountRoleUserAssociation() throws Exception {
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount userAccount = _addUserAccount(_account);
+		UserAccount userAccount = _addAccountUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
 			_account, accountRole, userAccount, false);
@@ -111,7 +111,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		throws Exception {
 
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount userAccount = _addUserAccount(_account);
+		UserAccount userAccount = _addAccountUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
 			_account, accountRole, userAccount, false);
@@ -135,7 +135,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	@Test
 	public void testPostAccountRoleUserAssociation() throws Exception {
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount userAccount = _addUserAccount(_account);
+		UserAccount userAccount = _addAccountUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
 			_account, accountRole, userAccount, false);
@@ -160,7 +160,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		throws Exception {
 
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount userAccount = _addUserAccount(_account);
+		UserAccount userAccount = _addAccountUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
 			_account, accountRole, userAccount, false);
@@ -281,7 +281,9 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 			account.getId(), randomAccountRole());
 	}
 
-	private UserAccount _addUserAccount(Account account) throws Exception {
+	private UserAccount _addAccountUserAccount(Account account)
+		throws Exception {
+
 		UserAccount userAccount =
 			_userAccountResource.putUserAccountByExternalReferenceCode(
 				RandomTestUtil.randomString(), _randomUserAccount());

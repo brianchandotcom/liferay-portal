@@ -62,6 +62,20 @@ definition {
 
 		}
 
+		task ("Change thumbnail of Template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+					item = "Change Thumbnail",
+					pageTemplateName = "Page Template Name");
+
+			ItemSelector.uploadFile(uploadFileName = "Document_1.png");
+
+			LexiconCard.viewCardThumbnail(card = "Page Template Name");
+
+			SelectFrameTop(value1 = "relative=top");
+		}
+
 		Pause(locator1 = "30000");
 	}
 

@@ -306,6 +306,20 @@ public class KeywordResourceImpl
 						"putKeyword", assetTag.getUserId(),
 						AssetTagsPermission.RESOURCE_NAME,
 						assetTag.getGroupId())
+				).put(
+					"subscribe",
+					addAction(
+						ActionKeys.SUBSCRIBE, assetTag.getTagId(),
+						"putKeywordSubscribe", assetTag.getUserId(),
+						AssetTagsPermission.RESOURCE_NAME,
+						assetTag.getGroupId())
+				).put(
+					"unsubscribe",
+					addAction(
+						ActionKeys.SUBSCRIBE, assetTag.getTagId(),
+						"putKeywordUnsubscribe", assetTag.getUserId(),
+						AssetTagsPermission.RESOURCE_NAME,
+						assetTag.getGroupId())
 				).build(),
 				_dtoConverterRegistry, assetTag.getTagId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

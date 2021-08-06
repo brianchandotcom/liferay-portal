@@ -117,9 +117,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				}
 			).map(
 				contentDashboardItem -> JSONUtil.put(
-//					"avatar",
-//					contentDashboardItem.getUserAvatarURL(httpServletRequest)
-//				).put(
+					"avatar",
+					contentDashboardItem.getUserAvatarURL(
+						httpServletRequest, _userLocalService)
+				).put(
 					"categories",
 					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
 				).put(
@@ -138,7 +139,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
 					"specificFields",
-					contentDashboardItem.getSpecificInformationJSONObject(locale)
+					contentDashboardItem.getSpecificInformationJSONObject(
+						locale)
 				).put(
 					"subType", _getSubtype(contentDashboardItem, locale)
 				).put(

@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.web.internal.item;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -30,7 +30,10 @@ public abstract class ContentDashboardBaseItem<T>
 	implements ContentDashboardItem<T> {
 
 	@Override
-	public String getUserAvatarURL(HttpServletRequest httpServletRequest) {
+	public String getUserAvatarURL(
+		HttpServletRequest httpServletRequest,
+		UserLocalService userLocalService) {
+
 		StringBundler sb = new StringBundler(5);
 
 		ThemeDisplay themeDisplay =
@@ -40,7 +43,7 @@ public abstract class ContentDashboardBaseItem<T>
 		sb.append(themeDisplay.getPathImage());
 
 		try {
-			User user = _userService.getUserById(getUserId());
+			User user = userLocalService.getUserById(getUserId());
 
 			sb.append("/user_portrait?screenName=");
 			sb.append(user.getScreenName());
@@ -55,7 +58,5 @@ public abstract class ContentDashboardBaseItem<T>
 
 		return null;
 	}
-
-	private UserService _userService;
 
 }

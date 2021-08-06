@@ -19,13 +19,13 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
@@ -344,8 +344,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public JSONObject getSpecificInformationJSONObject(
-				Locale locale) {
+			public JSONObject getSpecificInformationJSONObject(Locale locale) {
 				return null;
 			}
 
@@ -361,7 +360,8 @@ public class ContentDashboardDropdownItemsProviderTest {
 
 			@Override
 			public String getUserAvatarURL(
-				HttpServletRequest httpServletRequest) {
+				HttpServletRequest httpServletRequest,
+				UserLocalService userLocalService) {
 
 				return "avatar/url/test";
 			}

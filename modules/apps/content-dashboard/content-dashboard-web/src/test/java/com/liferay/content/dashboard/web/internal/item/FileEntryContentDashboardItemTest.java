@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.kernel.model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,6 +57,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -177,8 +178,10 @@ public class FileEntryContentDashboardItemTest {
 			Collections.singletonList(assetTag),
 			fileEntryContentDashboardItem.getAssetTags());
 	}
+
 	@Test
 	public void testGetAuthorAvatar() throws Exception {
+		FileEntry fileEntry = _getFileEntry();
 
 		User user = Mockito.mock(User.class);
 
@@ -200,58 +203,26 @@ public class FileEntryContentDashboardItemTest {
 			123L
 		);
 
-		FileEntry fileEntry = _getFileEntry();
-		fileEntry.setCompanyId(123L);
-		fileEntry.setUserId(1L);
-
-		FileEntryContentDashboardItem fileEntryContentDashboardItem =
-			new FileEntryContentDashboardItem(
-				null, null, null, null,
-				fileEntry, null, null, null, null);
-
-		String expectedResult = "aaa";
-		Assert.assertEquals(
-			expectedResult,
-			fileEntryContentDashboardItem.getUserAvatarURL(_getHttpServletRequest(1L)));
-	}
-
-	@Test
-	public void testGetAuthorAvatar() throws Exception {
-		User user = Mockito.mock(User.class);
+		UserLocalService userLocalService = Mockito.mock(
+			UserLocalService.class);
 
 		Mockito.when(
-			user.getUserId()
+			userLocalService.getUserById(Mockito.any(Long.class))
 		).thenReturn(
-			1L
+			user
 		);
-
-		Mockito.when(
-			user.getScreenName()
-		).thenReturn(
-			"Screen Name"
-		);
-
-		Mockito.when(
-			user.getCompanyId()
-		).thenReturn(
-			123L
-		);
-
-		FileEntry fileEntry = _getFileEntry();
-
-		fileEntry.setCompanyId(123L);
-		fileEntry.setUserId(1L);
 
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
 				null, null, null, null, fileEntry, null, null, null, null);
 
-		String expectedResult = "aaa";
+		String expectedResult =
+			"null/user_portrait?screenName=Screen Name&amp;companyId=123";
 
 		Assert.assertEquals(
 			expectedResult,
 			fileEntryContentDashboardItem.getUserAvatarURL(
-				_getHttpServletRequest(1L)));
+				_getHttpServletRequest(1L), userLocalService));
 	}
 
 	@Test
@@ -353,7 +324,7 @@ public class FileEntryContentDashboardItemTest {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
-			group.getDescriptiveName(Mockito.any(Locale.class))
+			group.getDescriptiveName(Matchers.any(Locale.class))
 		).thenReturn(
 			"scopeName"
 		);
@@ -549,7 +520,7 @@ public class FileEntryContentDashboardItemTest {
 			url
 		);
 		Mockito.when(
-			contentDashboardItemAction.getURL(Mockito.any(Locale.class))
+			contentDashboardItemAction.getURL(Matchers.any(Locale.class))
 		).thenReturn(
 			url
 		);
@@ -570,8 +541,8 @@ public class FileEntryContentDashboardItemTest {
 
 		Mockito.when(
 			contentDashboardItemActionProvider.getContentDashboardItemAction(
-				Mockito.any(FileEntry.class),
-				Mockito.any(HttpServletRequest.class))
+				Matchers.any(FileEntry.class),
+				Matchers.any(HttpServletRequest.class))
 		).thenReturn(
 			contentDashboardItemAction
 		);
@@ -584,8 +555,8 @@ public class FileEntryContentDashboardItemTest {
 
 		Mockito.when(
 			contentDashboardItemActionProvider.isShow(
-				Mockito.any(JournalArticle.class),
-				Mockito.any(HttpServletRequest.class))
+				Matchers.any(JournalArticle.class),
+				Matchers.any(HttpServletRequest.class))
 		).thenReturn(
 			true
 		);
@@ -711,7 +682,7 @@ public class FileEntryContentDashboardItemTest {
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
-			language.get(Mockito.any(Locale.class), Mockito.anyString())
+			language.get(Matchers.any(Locale.class), Mockito.anyString())
 		).thenAnswer(
 			invocation -> invocation.getArguments()[1]
 		);

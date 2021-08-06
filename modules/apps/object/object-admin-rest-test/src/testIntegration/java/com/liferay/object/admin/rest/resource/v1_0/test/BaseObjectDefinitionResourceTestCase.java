@@ -382,6 +382,31 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Object/code"));
 	}
 
+	@Test
+	public void testPostObjectDefinitionPublish() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectDefinition objectDefinition =
+			testPostObjectDefinitionPublish_addObjectDefinition();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectDefinitionResource.postObjectDefinitionPublishHttpResponse(
+				objectDefinition.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectDefinitionResource.postObjectDefinitionPublishHttpResponse(
+				0L));
+	}
+
+	protected ObjectDefinition
+			testPostObjectDefinitionPublish_addObjectDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected ObjectDefinition testGraphQLObjectDefinition_addObjectDefinition()
 		throws Exception {
 

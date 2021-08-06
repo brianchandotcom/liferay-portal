@@ -3738,7 +3738,7 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		WaitForElementPresent(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
+		WaitForVisible(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
 	}
 
 }

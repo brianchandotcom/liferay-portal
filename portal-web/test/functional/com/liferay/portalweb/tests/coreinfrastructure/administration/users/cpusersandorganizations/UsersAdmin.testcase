@@ -870,6 +870,26 @@ definition {
 			cardSubtitle = "usersn1");
 	}
 
+	@description = "This test changes to list view for users."
+	@priority = "2"
+	test CanChangeToListView {
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		User.openUsersAdmin();
+
+		ManagementBar.changeDisplayStyle(displayStyle = "List");
+
+		LexiconList.viewListEntryTitle(listEntry = "userfn1 userln1");
+
+		LexiconList.viewListEntrySubtitle(
+			listEntry = "userfn1 userln1",
+			listEntrySubtitle = "usersn1");
+	}
+
 	@priority = "4"
 	test CannotViewSiteSettingsInUserPersonalSite {
 		Navigator.gotoPersonalSite();

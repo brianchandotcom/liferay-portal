@@ -128,7 +128,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	};
 
 	const handleCollectionNumberOfItemsBlurred = (event) => {
-		if (nextValue.numberOfItems !== item.config.numberOfItems) {
+		if (Number(nextValue.numberOfItems) !== item.config.numberOfItems) {
 			setNumberOfItemsError(
 				Number(event.target.value) < 1
 					? Liferay.Language.get(

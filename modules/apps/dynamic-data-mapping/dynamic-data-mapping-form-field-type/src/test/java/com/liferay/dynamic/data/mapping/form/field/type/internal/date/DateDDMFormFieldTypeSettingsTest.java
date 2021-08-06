@@ -22,6 +22,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -56,6 +58,7 @@ public class DateDDMFormFieldTypeSettingsTest
 	@Before
 	@Override
 	public void setUp() {
+		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpPortalUtil();
 		setUpResourceBundleUtil();
@@ -128,6 +131,12 @@ public class DateDDMFormFieldTypeSettingsTest
 					"indexType", "labelAtStructureLevel", "localizable",
 					"nativeField", "readOnly", "dataType", "type", "showLabel",
 					"repeatable", "validation")));
+	}
+
+	protected void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Override

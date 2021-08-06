@@ -506,10 +506,12 @@ definition {
 					locator1 = "MenuItem#ANY_CHECKBOX");
 			}
 
-			Button.clickApply();
+			DropdownMenuItem.click(menuItem = "Apply");
 		}
 		else {
-			DropdownMenuItem.click(menuItem = "${filterName}");
+			Click.clickAtNotVisible(
+				key_radioName = "${filterName}",
+				locator1 = "MenuItem#ANY_RADIO");
 		}
 
 		if (isSet(columnNumber)) {

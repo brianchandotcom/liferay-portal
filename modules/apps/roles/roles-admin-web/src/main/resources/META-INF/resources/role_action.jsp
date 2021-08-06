@@ -82,7 +82,7 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			confirmation="are-you-sure-you-want-to-delete-this-role"
+			confirmation="are-you-sure-you-want-to-delete-this-role?-task-assignments-may-be-deleted"
 			url="<%= deleteRoleURL %>"
 		/>
 	</c:if>

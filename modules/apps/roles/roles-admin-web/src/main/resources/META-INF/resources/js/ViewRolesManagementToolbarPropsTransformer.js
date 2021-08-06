@@ -36,7 +36,7 @@ export default function propsTransformer({
 			if (
 				confirm(
 					Liferay.Language.get(
-						'are-you-sure-you-want-to-delete-this-role'
+						'are-you-sure-you-want-to-delete-this-role?-task-assignments-may-be-deleted'
 					)
 				)
 			) {

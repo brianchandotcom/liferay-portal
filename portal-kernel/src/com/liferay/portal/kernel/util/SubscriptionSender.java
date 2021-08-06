@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.mail.kernel.model.FileAttachment;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.model.SMTPAccount;
@@ -79,6 +82,20 @@ import javax.mail.internet.InternetAddress;
  * @author Roberto Díaz
  */
 public class SubscriptionSender implements Serializable {
+
+	public void addAssetEntryPersistedSubscribers(
+		String assetEntryClassName, long assetEntryClassPK) {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			assetEntryClassName, assetEntryClassPK);
+
+		if (assetEntry != null) {
+			for (AssetTag assetTag : assetEntry.getTags()) {
+				addPersistedSubscribers(
+					AssetTag.class.getName(), assetTag.getTagId());
+			}
+		}
+	}
 
 	public void addFileAttachment(File file) {
 		addFileAttachment(file, null);

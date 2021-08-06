@@ -21,7 +21,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 List<Map<String, Object>> classTypesList = new ArrayList<>();
 %>
 
-<aui:fieldset cssClass="source-container" label="asset-entry-type">
+<aui:fieldset cssClass="source-container" label="asset-type">
 
 	<%
 	Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetPublisherDisplayContext.getAvailableClassNameIds());

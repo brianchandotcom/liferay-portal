@@ -14,5 +14,5 @@
 
 export {default as Treeview} from './treeview/Treeview';
 
-export {renderTranslationAdminModal} from './translation_manager/renderer';
 export {activeLocalesAtom} from './translation_manager/state';
+export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';

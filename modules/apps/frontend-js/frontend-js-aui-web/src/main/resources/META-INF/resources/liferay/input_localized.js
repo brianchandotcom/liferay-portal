@@ -372,9 +372,15 @@ AUI.add(
 					var instance = this;
 
 					Liferay.Loader.require(
-						['frontend-js-components-web@2.0.7/index'],
+						[
+							'frontend-js-components-web@2.0.7/index',
+							'@liferay/frontend-js-react-web@5.0.8/js/index',
+						],
 
-						(frontendJsComponentsWebModule) => {
+						(
+							frontendJsComponentsWebModule,
+							frontendJsReactWebModule
+						) => {
 							var modalContainerId =
 								instance.get('namespace') + 'modal-container';
 
@@ -430,9 +436,10 @@ AUI.add(
 								visible: true,
 							};
 
-							frontendJsComponentsWebModule.renderTranslationAdminModal(
-								modalContainer,
-								props
+							frontendJsReactWebModule.render(
+								frontendJsComponentsWebModule.TranslationAdminModal,
+								props,
+								modalContainer
 							);
 						}
 					);

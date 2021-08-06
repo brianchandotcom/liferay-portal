@@ -448,11 +448,9 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		GDPR.deleteAndAnonymizeAllEntriesCP(itemsCount = "2");
-
-		User.openUsersAdmin();
-
-		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+		GDPR.deleteAndAnonymizeAllEntriesCP(
+			itemsCount = "2",
+			userName = "userfn userln");
 	}
 
 	@description = "This test deletes export process"

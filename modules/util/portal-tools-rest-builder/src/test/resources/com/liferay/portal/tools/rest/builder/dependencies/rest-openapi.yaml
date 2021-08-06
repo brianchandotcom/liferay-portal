@@ -54,6 +54,7 @@ openapi: "3.0.1"
 paths:
     /document/{documentId}:
         get:
+            operationId: getDocumentForcePredictableOperationIdTest
             parameters:
                 - in: path
                   name: documentId

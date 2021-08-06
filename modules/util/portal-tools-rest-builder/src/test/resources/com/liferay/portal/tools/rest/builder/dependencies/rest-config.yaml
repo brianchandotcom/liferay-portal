@@ -6,4 +6,5 @@ application:
     className: "SampleApplication"
     name: "sample-application"
 author: "John Doe"
+forcePredictableOperationId: true
 implDir: "../sample-impl/src/main/java"

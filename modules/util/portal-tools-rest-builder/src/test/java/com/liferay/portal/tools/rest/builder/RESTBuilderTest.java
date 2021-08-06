@@ -21,6 +21,8 @@ import java.io.File;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -55,6 +57,8 @@ public class RESTBuilderTest {
 		_assertResourceFilesExist(filesPath, "Document");
 		_assertResourceFilesExist(filesPath, "Folder");
 
+		_assertForcePredictableOperationIds(filesPath);
+
 		File sampleApiDir = new File(filesPath + "/sample-api");
 
 		FileUtils.deleteDirectory(sampleApiDir);
@@ -66,6 +70,20 @@ public class RESTBuilderTest {
 		FileUtils.deleteDirectory(sampleImplDir);
 
 		Assert.assertFalse(sampleImplDir.exists());
+	}
+
+	private void _assertForcePredictableOperationIds(String filesPath)
+		throws Exception {
+
+		File queryJavaFile = new File(
+			filesPath.concat(
+				"/sample-impl/src/main/java/com/example/sample/internal" +
+					"/graphql/query/v1_0_0/Query.java"));
+
+		String text = new String(
+			Files.readAllBytes(queryJavaFile.toPath()), StandardCharsets.UTF_8);
+
+		Assert.assertFalse(text.contains("ForcePredictableOperationIdTest"));
 	}
 
 	private void _assertResourceFilesExist(

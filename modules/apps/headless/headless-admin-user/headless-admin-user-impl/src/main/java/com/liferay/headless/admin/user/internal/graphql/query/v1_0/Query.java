@@ -241,10 +241,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountRolesByExternalReferenceCode(externalReferenceCode: ___, keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountAccountRolesByExternalReferenceCode(externalReferenceCode: ___, keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Gets the account's roles")
-	public AccountRolePage accountRolesByExternalReferenceCode(
+	public AccountRolePage accountAccountRolesByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -256,19 +256,21 @@ public class Query {
 			_accountRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountRoleResource -> new AccountRolePage(
-				accountRoleResource.getAccountRolesByExternalReferenceCodePage(
-					externalReferenceCode, keywords,
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(accountRoleResource, sortsString))));
+				accountRoleResource.
+					getAccountAccountRolesByExternalReferenceCodePage(
+						externalReferenceCode, keywords,
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							accountRoleResource, sortsString))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountRoles(accountId: ___, keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountAccountRoles(accountId: ___, keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Gets the account's roles")
-	public AccountRolePage accountRoles(
+	public AccountRolePage accountAccountRoles(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -280,7 +282,7 @@ public class Query {
 			_accountRoleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountRoleResource -> new AccountRolePage(
-				accountRoleResource.getAccountRolesPage(
+				accountRoleResource.getAccountAccountRolesPage(
 					accountId, keywords, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(accountRoleResource, sortsString))));
 	}
@@ -990,6 +992,36 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountAccountRolesPageTypeExtension {
+
+		public GetAccountAccountRolesPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Gets the account's roles")
+		public AccountRolePage accountRoles(
+				@GraphQLName("keywords") String keywords,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountRoleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountRoleResource -> new AccountRolePage(
+					accountRoleResource.getAccountAccountRolesPage(
+						_account.getId(), keywords,
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							accountRoleResource, sortsString))));
+		}
+
+		private Account _account;
+
+	}
+
 	@GraphQLTypeExtension(Site.class)
 	public class GetSiteUserAccountsPageTypeExtension {
 
@@ -1078,6 +1110,40 @@ public class Query {
 		}
 
 		private AccountRole _accountRole;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountAccountRolesByExternalReferenceCodePageTypeExtension {
+
+		public GetAccountAccountRolesByExternalReferenceCodePageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField(description = "Gets the account's roles")
+		public AccountRolePage accountRolesByExternalReferenceCode(
+				@GraphQLName("keywords") String keywords,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountRoleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountRoleResource -> new AccountRolePage(
+					accountRoleResource.
+						getAccountAccountRolesByExternalReferenceCodePage(
+							_account.getExternalReferenceCode(), keywords,
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								accountRoleResource, sortsString))));
+		}
+
+		private Account _account;
 
 	}
 
@@ -1246,39 +1312,6 @@ public class Query {
 		}
 
 		private Organization _organization;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class GetAccountRolesByExternalReferenceCodePageTypeExtension {
-
-		public GetAccountRolesByExternalReferenceCodePageTypeExtension(
-			Account account) {
-
-			_account = account;
-		}
-
-		@GraphQLField(description = "Gets the account's roles")
-		public AccountRolePage rolesByExternalReferenceCode(
-				@GraphQLName("keywords") String keywords,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountRoleResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountRoleResource -> new AccountRolePage(
-					accountRoleResource.
-						getAccountRolesByExternalReferenceCodePage(
-							_account.getExternalReferenceCode(), keywords,
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								accountRoleResource, sortsString))));
-		}
-
-		private Account _account;
 
 	}
 
@@ -1465,36 +1498,6 @@ public class Query {
 		}
 
 		private Organization _organization;
-
-	}
-
-	@GraphQLTypeExtension(Account.class)
-	public class GetAccountRolesPageTypeExtension {
-
-		public GetAccountRolesPageTypeExtension(Account account) {
-			_account = account;
-		}
-
-		@GraphQLField(description = "Gets the account's roles")
-		public AccountRolePage roles(
-				@GraphQLName("keywords") String keywords,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_accountRoleResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				accountRoleResource -> new AccountRolePage(
-					accountRoleResource.getAccountRolesPage(
-						_account.getId(), keywords,
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							accountRoleResource, sortsString))));
-		}
-
-		private Account _account;
 
 	}
 

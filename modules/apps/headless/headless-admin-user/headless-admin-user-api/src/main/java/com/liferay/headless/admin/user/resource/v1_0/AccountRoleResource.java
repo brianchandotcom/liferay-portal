@@ -29,6 +29,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -49,38 +50,45 @@ public interface AccountRoleResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String userAccountExternalReferenceCode)
+	public void
+			deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String userAccountExternalReferenceCode)
+	public void
+			postAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
+	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
 			String externalReferenceCode, String keywords,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public AccountRole postAccountRoleByExternalReferenceCode(
+	public AccountRole postAccountAccountRoleByExternalReferenceCode(
 			String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
-	public Page<AccountRole> getAccountRolesPage(
+	public Page<AccountRole> getAccountAccountRolesPage(
 			Long accountId, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
-	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
+	public AccountRole postAccountAccountRole(
+			Long accountId, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountRoleUserAccountAssociation(
+	public Response postAccountAccountRoleBatch(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteAccountAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
-	public void postAccountRoleUserAccountAssociation(
+	public void postAccountAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 

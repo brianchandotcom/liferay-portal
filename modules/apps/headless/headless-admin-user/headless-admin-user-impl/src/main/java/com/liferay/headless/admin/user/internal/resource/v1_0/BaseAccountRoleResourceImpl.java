@@ -68,6 +68,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -104,15 +105,16 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("accountExternalReferenceCode")
-			String accountExternalReferenceCode,
-			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
-				accountRoleId,
-			@NotNull @Parameter(hidden = true)
-			@PathParam("userAccountExternalReferenceCode")
-			String userAccountExternalReferenceCode)
+	public void
+			deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+				@NotNull @Parameter(hidden = true) @PathParam("accountRoleId")
+					Long accountRoleId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("userAccountExternalReferenceCode")
+				String userAccountExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -140,15 +142,16 @@ public abstract class BaseAccountRoleResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("accountExternalReferenceCode")
-			String accountExternalReferenceCode,
-			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
-				accountRoleId,
-			@NotNull @Parameter(hidden = true)
-			@PathParam("userAccountExternalReferenceCode")
-			String userAccountExternalReferenceCode)
+	public void
+			postAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+				@NotNull @Parameter(hidden = true) @PathParam("accountRoleId")
+					Long accountRoleId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("userAccountExternalReferenceCode")
+				String userAccountExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -174,7 +177,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
+	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
 			String externalReferenceCode,
@@ -204,7 +207,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public AccountRole postAccountRoleByExternalReferenceCode(
+	public AccountRole postAccountAccountRoleByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
 			String externalReferenceCode,
@@ -234,7 +237,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Path("/accounts/{accountId}/account-roles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public Page<AccountRole> getAccountRolesPage(
+	public Page<AccountRole> getAccountAccountRolesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
@@ -257,13 +260,54 @@ public abstract class BaseAccountRoleResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public AccountRole postAccountRole(
+	public AccountRole postAccountAccountRole(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
 			AccountRole accountRole)
 		throws Exception {
 
 		return new AccountRole();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/accounts/{accountId}/account-roles/batch")
+	@POST
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "AccountRole")})
+	public Response postAccountAccountRoleBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				AccountRole.class.getName(), callbackURL, null, object)
+		).build();
 	}
 
 	/**
@@ -286,7 +330,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void deleteAccountRoleUserAccountAssociation(
+	public void deleteAccountAccountRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
@@ -316,7 +360,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
-	public void postAccountRoleUserAccountAssociation(
+	public void postAccountAccountRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
@@ -332,6 +376,12 @@ public abstract class BaseAccountRoleResourceImpl
 			java.util.Collection<AccountRole> accountRoles,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (AccountRole accountRole : accountRoles) {
+			postAccountAccountRole(
+				Long.parseLong((String)parameters.get("accountId")),
+				accountRole);
+		}
 	}
 
 	@Override
@@ -362,7 +412,9 @@ public abstract class BaseAccountRoleResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		return getAccountAccountRolesPage(
+			Long.parseLong((String)parameters.get("accountId")),
+			(String)parameters.get("keywords"), pagination, sorts);
 	}
 
 	@Override

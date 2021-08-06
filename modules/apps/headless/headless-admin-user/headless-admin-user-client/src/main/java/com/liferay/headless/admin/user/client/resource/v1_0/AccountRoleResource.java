@@ -40,80 +40,91 @@ public interface AccountRoleResource {
 		return new Builder();
 	}
 
-	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String userAccountExternalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			deleteAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
+	public void
+			deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String userAccountExternalReferenceCode)
-		throws Exception;
-
 	public HttpInvoker.HttpResponse
-			postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
+			deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
-	public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
+	public void
+			postAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postAccountAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
+	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
 			String externalReferenceCode, String keywords,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAccountRolesByExternalReferenceCodePageHttpResponse(
+			getAccountAccountRolesByExternalReferenceCodePageHttpResponse(
 				String externalReferenceCode, String keywords,
 				Pagination pagination, String sortString)
 		throws Exception;
 
-	public AccountRole postAccountRoleByExternalReferenceCode(
+	public AccountRole postAccountAccountRoleByExternalReferenceCode(
 			String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAccountRoleByExternalReferenceCodeHttpResponse(
+			postAccountAccountRoleByExternalReferenceCodeHttpResponse(
 				String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
-	public Page<AccountRole> getAccountRolesPage(
+	public Page<AccountRole> getAccountAccountRolesPage(
 			Long accountId, String keywords, Pagination pagination,
 			String sortString)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAccountRolesPageHttpResponse(
+	public HttpInvoker.HttpResponse getAccountAccountRolesPageHttpResponse(
 			Long accountId, String keywords, Pagination pagination,
 			String sortString)
 		throws Exception;
 
-	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postAccountRoleHttpResponse(
+	public AccountRole postAccountAccountRole(
 			Long accountId, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountRoleUserAccountAssociation(
+	public HttpInvoker.HttpResponse postAccountAccountRoleHttpResponse(
+			Long accountId, AccountRole accountRole)
+		throws Exception;
+
+	public void postAccountAccountRoleBatch(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postAccountAccountRoleBatchHttpResponse(
+			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteAccountAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountRoleUserAccountAssociationHttpResponse(
+			deleteAccountAccountRoleUserAccountAssociationHttpResponse(
 				Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
-	public void postAccountRoleUserAccountAssociation(
+	public void postAccountAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAccountRoleUserAccountAssociationHttpResponse(
+			postAccountAccountRoleUserAccountAssociationHttpResponse(
 				Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception;
 
@@ -189,13 +200,13 @@ public interface AccountRoleResource {
 	public static class AccountRoleResourceImpl implements AccountRoleResource {
 
 		public void
-				deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
+				deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
+				deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
 					userAccountExternalReferenceCode);
 
@@ -237,7 +248,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
+				deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -282,13 +293,13 @@ public interface AccountRoleResource {
 		}
 
 		public void
-				postAccountRoleUserAccountAssociationByExternalReferenceCode(
+				postAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
+				postAccountAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
 					userAccountExternalReferenceCode);
 
@@ -330,7 +341,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
+				postAccountAccountRoleUserAccountAssociationByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -374,13 +385,14 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
-				String externalReferenceCode, String keywords,
-				Pagination pagination, String sortString)
+		public Page<AccountRole>
+				getAccountAccountRolesByExternalReferenceCodePage(
+					String externalReferenceCode, String keywords,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountRolesByExternalReferenceCodePageHttpResponse(
+				getAccountAccountRolesByExternalReferenceCodePageHttpResponse(
 					externalReferenceCode, keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -421,7 +433,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAccountRolesByExternalReferenceCodePageHttpResponse(
+				getAccountAccountRolesByExternalReferenceCodePageHttpResponse(
 					String externalReferenceCode, String keywords,
 					Pagination pagination, String sortString)
 			throws Exception {
@@ -475,12 +487,12 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public AccountRole postAccountRoleByExternalReferenceCode(
+		public AccountRole postAccountAccountRoleByExternalReferenceCode(
 				String externalReferenceCode, AccountRole accountRole)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountRoleByExternalReferenceCodeHttpResponse(
+				postAccountAccountRoleByExternalReferenceCodeHttpResponse(
 					externalReferenceCode, accountRole);
 
 			String content = httpResponse.getContent();
@@ -521,7 +533,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountRoleByExternalReferenceCodeHttpResponse(
+				postAccountAccountRoleByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode, AccountRole accountRole)
 			throws Exception {
 
@@ -561,13 +573,13 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AccountRole> getAccountRolesPage(
+		public Page<AccountRole> getAccountAccountRolesPage(
 				Long accountId, String keywords, Pagination pagination,
 				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountRolesPageHttpResponse(
+				getAccountAccountRolesPageHttpResponse(
 					accountId, keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -607,7 +619,7 @@ public interface AccountRoleResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getAccountRolesPageHttpResponse(
+		public HttpInvoker.HttpResponse getAccountAccountRolesPageHttpResponse(
 				Long accountId, String keywords, Pagination pagination,
 				String sortString)
 			throws Exception {
@@ -661,12 +673,12 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public AccountRole postAccountRole(
+		public AccountRole postAccountAccountRole(
 				Long accountId, AccountRole accountRole)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postAccountRoleHttpResponse(
-				accountId, accountRole);
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountAccountRoleHttpResponse(accountId, accountRole);
 
 			String content = httpResponse.getContent();
 
@@ -705,7 +717,7 @@ public interface AccountRoleResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAccountRoleHttpResponse(
+		public HttpInvoker.HttpResponse postAccountAccountRoleHttpResponse(
 				Long accountId, AccountRole accountRole)
 			throws Exception {
 
@@ -745,12 +757,91 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountRoleUserAccountAssociation(
+		public void postAccountAccountRoleBatch(
+				Long accountId, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountAccountRoleBatchHttpResponse(
+					accountId, callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse postAccountAccountRoleBatchHttpResponse(
+				Long accountId, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-roles/batch");
+
+			httpInvoker.path("accountId", accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteAccountAccountRoleUserAccountAssociation(
 				Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountRoleUserAccountAssociationHttpResponse(
+				deleteAccountAccountRoleUserAccountAssociationHttpResponse(
 					accountId, accountRoleId, userAccountId);
 
 			String content = httpResponse.getContent();
@@ -791,7 +882,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountRoleUserAccountAssociationHttpResponse(
+				deleteAccountAccountRoleUserAccountAssociationHttpResponse(
 					Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 
@@ -831,12 +922,12 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountRoleUserAccountAssociation(
+		public void postAccountAccountRoleUserAccountAssociation(
 				Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountRoleUserAccountAssociationHttpResponse(
+				postAccountAccountRoleUserAccountAssociationHttpResponse(
 					accountId, accountRoleId, userAccountId);
 
 			String content = httpResponse.getContent();
@@ -877,7 +968,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountRoleUserAccountAssociationHttpResponse(
+				postAccountAccountRoleUserAccountAssociationHttpResponse(
 					Long accountId, Long accountRoleId, Long userAccountId)
 			throws Exception {
 

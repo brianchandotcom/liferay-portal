@@ -338,7 +338,7 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
-			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		if (objectDefinition.isSystem()) {
 			throw new ObjectDefinitionStatusException();

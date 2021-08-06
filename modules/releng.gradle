@@ -1065,12 +1065,7 @@ syncPortalLanguageKeys {
 						}
 					}
 
-					if (!languageKeys.isEmpty() || (languagePropertiesFile.name == "Language.properties")) {
-						languagePropertiesFile.setText languageKeys.sort().join("\n"), "UTF-8"
-					}
-					else {
-						delete languagePropertiesFile
-					}
+					languagePropertiesFile.setText languageKeys.sort().join("\n"), "UTF-8"
 				}
 			}
 

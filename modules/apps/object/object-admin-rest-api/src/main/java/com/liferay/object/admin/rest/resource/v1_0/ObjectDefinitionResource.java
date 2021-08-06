@@ -70,6 +70,9 @@ public interface ObjectDefinitionResource {
 	public ObjectDefinition getObjectDefinition(Long objectDefinitionId)
 		throws Exception;
 
+	public void postObjectDefinitionPublish(Long objectDefinitionId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

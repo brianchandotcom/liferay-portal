@@ -307,9 +307,7 @@
 						activeLocales: <%= JSONFactoryUtil.createJSONArray(activeLocales) %>,
 					</c:if>
 
-					<c:if test="<%= adminMode %>">
-						adminMode: true,
-					</c:if>
+					adminMode: <%= adminMode %>,
 					availableLocales: available,
 					boundingBox: '#<%= namespace + id %>PaletteBoundingBox',
 					columns: 20,

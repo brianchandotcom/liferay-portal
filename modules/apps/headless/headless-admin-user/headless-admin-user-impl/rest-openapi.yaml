@@ -970,7 +970,7 @@ paths:
                     description:
                         "Account successfully created"
             tags: ["Account"]
-    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}":
+    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/{userAccountExternalReferenceCode}":
         delete:
             # @review
             description:
@@ -989,7 +989,7 @@ paths:
                       format: int64
                       type: integer
                 - in: path
-                  name: accountUserExternalReferenceCode
+                  name: userAccountExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -1019,7 +1019,7 @@ paths:
                       format: int64
                       type: integer
                 - in: path
-                  name: accountUserExternalReferenceCode
+                  name: userAccountExternalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -1215,12 +1215,12 @@ paths:
                     description:
                         ""
             tags: ["AccountRole"]
-    "/accounts/by-external-reference-code/{externalReferenceCode}/account-users":
+    "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts":
         get:
             # @review
             description:
                 Gets the users assigned to an account
-            operationId: getAccountUsersByExternalReferenceCodePage
+            operationId: getAccountUserAccountsByExternalReferenceCodePage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1267,7 +1267,7 @@ paths:
             # @review
             description:
                 Creates a user and assigns them to the account
-            operationId: postAccountUserByExternalReferenceCode
+            operationId: postAccountUserAccountByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1294,12 +1294,12 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
-    "/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address":
+    "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address":
         delete:
             # @review
             description:
                 Removes users from an account by their email addresses
-            operationId: deleteAccountUsersByExternalReferenceCodeByEmailAddress
+            operationId: deleteAccountUserAccountsByExternalReferenceCodeByEmailAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1336,7 +1336,7 @@ paths:
             # @review
             description:
                 Assigns users to an account by their email addresses
-            operationId: postAccountUsersByExternalReferenceCodeByEmailAddress
+            operationId: postAccountUserAccountsByExternalReferenceCodeByEmailAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1369,12 +1369,12 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
-    "/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}":
+    "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}":
         delete:
             # @review
             description:
                 Removes a user from an account by external reference code by their email address
-            operationId: deleteAccountUserByExternalReferenceCodeByEmailAddress
+            operationId: deleteAccountUserAccountByExternalReferenceCodeByEmailAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1398,7 +1398,7 @@ paths:
             # @review
             description:
                 Assigns a user to an account by external reference code by their email address
-            operationId: postAccountUserByExternalReferenceCodeByEmailAddress
+            operationId: postAccountUserAccountByExternalReferenceCodeByEmailAddress
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1608,7 +1608,7 @@ paths:
                     description:
                         ""
             tags: ["AccountRole"]
-    "/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}":
+    "/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}":
         delete:
             # @review
             description:
@@ -1628,7 +1628,7 @@ paths:
                       format: int64
                       type: integer
                 - in: path
-                  name: accountUserId
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1660,7 +1660,7 @@ paths:
                       format: int64
                       type: integer
                 - in: path
-                  name: accountUserId
+                  name: userAccountId
                   required: true
                   schema:
                       format: int64
@@ -1673,12 +1673,12 @@ paths:
                     description:
                         ""
             tags: ["AccountRole"]
-    "/accounts/{accountId}/account-users":
+    "/accounts/{accountId}/user-accounts":
         get:
             # @review
             description:
                 Gets the users assigned to an account
-            operationId: getAccountUsersPage
+            operationId: getAccountUserAccountsPage
             parameters:
                 - in: path
                   name: accountId
@@ -1726,7 +1726,7 @@ paths:
             # @review
             description:
                 Creates a user and assigns them to the account
-            operationId: postAccountUser
+            operationId: postAccountUserAccount
             parameters:
                 - in: path
                   name: accountId
@@ -1754,12 +1754,12 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
-    "/accounts/{accountId}/account-users/by-email-address":
+    "/accounts/{accountId}/user-accounts/by-email-address":
         delete:
             # @review
             description:
                 Removes users from an account by their email addresses
-            operationId: deleteAccountUsersByEmailAddress
+            operationId: deleteAccountUserAccountsByEmailAddress
             parameters:
                 - in: path
                   name: accountId
@@ -1797,7 +1797,7 @@ paths:
             # @review
             description:
                 Assigns users to an account by their email addresses
-            operationId: postAccountUsersByEmailAddress
+            operationId: postAccountUserAccountsByEmailAddress
             parameters:
                 - in: path
                   name: accountId
@@ -1831,12 +1831,12 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
-    "/accounts/{accountId}/account-users/by-email-address/{emailAddress}":
+    "/accounts/{accountId}/user-accounts/by-email-address/{emailAddress}":
         delete:
             # @review
             description:
                 Removes a user from an account by their email address
-            operationId: deleteAccountUserByEmailAddress
+            operationId: deleteAccountUserAccountByEmailAddress
             parameters:
                 - in: path
                   name: accountId
@@ -1861,7 +1861,7 @@ paths:
             # @review
             description:
                 Assigns a user to an account by their email address
-            operationId: postAccountUserByEmailAddress
+            operationId: postAccountUserAccountByEmailAddress
             parameters:
                 - in: path
                   name: accountId

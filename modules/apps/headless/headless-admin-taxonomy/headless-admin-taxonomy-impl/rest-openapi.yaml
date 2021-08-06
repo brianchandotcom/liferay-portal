@@ -121,6 +121,12 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    # @review
+                    description:
+                        A flag that indicates whether the user making the requests is subscribed to this keyword.
+                    readOnly: true
+                    type: boolean
             required:
                 - name
             type: object

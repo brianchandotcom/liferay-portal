@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
-	public void deleteAccountRoleUserAccountAssociation(
+	public void deleteAccountAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception {
 
@@ -57,12 +57,13 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public void deleteAccountRoleUserAccountAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String userAccountExternalReferenceCode)
+	public void
+			deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String userAccountExternalReferenceCode)
 		throws Exception {
 
-		deleteAccountRoleUserAccountAssociation(
+		deleteAccountAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
 				accountExternalReferenceCode),
 			accountRoleId,
@@ -71,19 +72,19 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
+	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
 			String externalReferenceCode, String keywords,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return getAccountRolesPage(
+		return getAccountAccountRolesPage(
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			keywords, pagination, sorts);
 	}
 
 	@Override
-	public Page<AccountRole> getAccountRolesPage(
+	public Page<AccountRole> getAccountAccountRolesPage(
 		Long accountId, String keywords, Pagination pagination, Sort[] sorts) {
 
 		BaseModelSearchResult<com.liferay.account.model.AccountRole>
@@ -104,7 +105,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
+	public AccountRole postAccountAccountRole(
+			Long accountId, AccountRole accountRole)
 		throws Exception {
 
 		return _toAccountRole(
@@ -119,18 +121,18 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public AccountRole postAccountRoleByExternalReferenceCode(
+	public AccountRole postAccountAccountRoleByExternalReferenceCode(
 			String externalReferenceCode, AccountRole accountRole)
 		throws Exception {
 
-		return postAccountRole(
+		return postAccountAccountRole(
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			accountRole);
 	}
 
 	@Override
-	public void postAccountRoleUserAccountAssociation(
+	public void postAccountAccountRoleUserAccountAssociation(
 			Long accountId, Long accountRoleId, Long userAccountId)
 		throws Exception {
 
@@ -139,12 +141,13 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	}
 
 	@Override
-	public void postAccountRoleUserAccountAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String userAccountExternalReferenceCode)
+	public void
+			postAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String userAccountExternalReferenceCode)
 		throws Exception {
 
-		postAccountRoleUserAccountAssociation(
+		postAccountAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
 				accountExternalReferenceCode),
 			accountRoleId,

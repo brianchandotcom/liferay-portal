@@ -217,6 +217,11 @@ components:
                     type: string
                 name:
                     type: string
+                nodes:
+                    items:
+                        $ref: "#/components/schemas/Node"
+                    readOnly: true
+                    type: array
                 title:
                     type: string
                 title_i18n:

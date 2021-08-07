@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewObjectDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
@@ -81,15 +79,16 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			'<%= objectDefinition.getObjectDefinitionId() %>';
 
 		Liferay.Util.fetch(
-			'<%= viewObjectDefinitionsDisplayContext.getAPIURL() %>/' +
-				objectDefinitionId,
+			'/o/object-admin/v1.0/object-definitions/' +
+				objectDefinitionId +
+				'/publish',
 			{
 				body: JSON.stringify({id: objectDefinitionId}),
 				headers: new Headers({
 					Accept: 'application/json',
 					'Content-Type': 'application/json',
 				}),
-				method: 'PUT',
+				method: 'POST',
 			}
 		)
 			.then((response) => {

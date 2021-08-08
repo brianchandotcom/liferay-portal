@@ -28,7 +28,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ModifiedTime" return-type="Collection">
+		<finder name="GtModifiedTime" return-type="Collection">
 			<finder-column comparator="&gt;" name="modifiedTime" />
 		</finder>
 		<finder name="TypePK" return-type="DLSyncEvent" unique="true">

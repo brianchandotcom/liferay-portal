@@ -171,17 +171,17 @@
 			<finder-column name="kbFolderId" />
 			<finder-column name="status" />
 		</finder>
-		<finder db-index="false" name="G_S_L" return-type="Collection">
+		<finder db-index="false" name="G_LikeS_L" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" comparator="LIKE" name="sections" />
 			<finder-column name="latest" />
 		</finder>
-		<finder db-index="false" name="G_S_M" return-type="Collection">
+		<finder db-index="false" name="G_LikeS_M" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" comparator="LIKE" name="sections" />
 			<finder-column name="main" />
 		</finder>
-		<finder db-index="false" name="G_S_S" return-type="Collection">
+		<finder db-index="false" name="G_LikeS_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" comparator="LIKE" name="sections" />
 			<finder-column name="status" />

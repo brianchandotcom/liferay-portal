@@ -1092,7 +1092,7 @@ public interface CommercePriceListPersistence
 	 * @return the matching commerce price list
 	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
 	 */
-	public CommercePriceList findByCatalogBasePriceList(
+	public CommercePriceList findByG_CatalogBasePriceList(
 			long groupId, boolean catalogBasePriceList)
 		throws NoSuchPriceListException;
 
@@ -1103,7 +1103,7 @@ public interface CommercePriceListPersistence
 	 * @param catalogBasePriceList the catalog base price list
 	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
 	 */
-	public CommercePriceList fetchByCatalogBasePriceList(
+	public CommercePriceList fetchByG_CatalogBasePriceList(
 		long groupId, boolean catalogBasePriceList);
 
 	/**
@@ -1114,7 +1114,7 @@ public interface CommercePriceListPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
 	 */
-	public CommercePriceList fetchByCatalogBasePriceList(
+	public CommercePriceList fetchByG_CatalogBasePriceList(
 		long groupId, boolean catalogBasePriceList, boolean useFinderCache);
 
 	/**
@@ -1124,7 +1124,7 @@ public interface CommercePriceListPersistence
 	 * @param catalogBasePriceList the catalog base price list
 	 * @return the commerce price list that was removed
 	 */
-	public CommercePriceList removeByCatalogBasePriceList(
+	public CommercePriceList removeByG_CatalogBasePriceList(
 			long groupId, boolean catalogBasePriceList)
 		throws NoSuchPriceListException;
 
@@ -1135,7 +1135,7 @@ public interface CommercePriceListPersistence
 	 * @param catalogBasePriceList the catalog base price list
 	 * @return the number of matching commerce price lists
 	 */
-	public int countByCatalogBasePriceList(
+	public int countByG_CatalogBasePriceList(
 		long groupId, boolean catalogBasePriceList);
 
 	/**

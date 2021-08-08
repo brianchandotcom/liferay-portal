@@ -1414,12 +1414,12 @@ public class CommercePriceListUtil {
 	 * @return the matching commerce price list
 	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
 	 */
-	public static CommercePriceList findByCatalogBasePriceList(
+	public static CommercePriceList findByG_CatalogBasePriceList(
 			long groupId, boolean catalogBasePriceList)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListException {
 
-		return getPersistence().findByCatalogBasePriceList(
+		return getPersistence().findByG_CatalogBasePriceList(
 			groupId, catalogBasePriceList);
 	}
 
@@ -1430,10 +1430,10 @@ public class CommercePriceListUtil {
 	 * @param catalogBasePriceList the catalog base price list
 	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
 	 */
-	public static CommercePriceList fetchByCatalogBasePriceList(
+	public static CommercePriceList fetchByG_CatalogBasePriceList(
 		long groupId, boolean catalogBasePriceList) {
 
-		return getPersistence().fetchByCatalogBasePriceList(
+		return getPersistence().fetchByG_CatalogBasePriceList(
 			groupId, catalogBasePriceList);
 	}
 
@@ -1445,10 +1445,10 @@ public class CommercePriceListUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
 	 */
-	public static CommercePriceList fetchByCatalogBasePriceList(
+	public static CommercePriceList fetchByG_CatalogBasePriceList(
 		long groupId, boolean catalogBasePriceList, boolean useFinderCache) {
 
-		return getPersistence().fetchByCatalogBasePriceList(
+		return getPersistence().fetchByG_CatalogBasePriceList(
 			groupId, catalogBasePriceList, useFinderCache);
 	}
 
@@ -1459,12 +1459,12 @@ public class CommercePriceListUtil {
 	 * @param catalogBasePriceList the catalog base price list
 	 * @return the commerce price list that was removed
 	 */
-	public static CommercePriceList removeByCatalogBasePriceList(
+	public static CommercePriceList removeByG_CatalogBasePriceList(
 			long groupId, boolean catalogBasePriceList)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListException {
 
-		return getPersistence().removeByCatalogBasePriceList(
+		return getPersistence().removeByG_CatalogBasePriceList(
 			groupId, catalogBasePriceList);
 	}
 
@@ -1475,10 +1475,10 @@ public class CommercePriceListUtil {
 	 * @param catalogBasePriceList the catalog base price list
 	 * @return the number of matching commerce price lists
 	 */
-	public static int countByCatalogBasePriceList(
+	public static int countByG_CatalogBasePriceList(
 		long groupId, boolean catalogBasePriceList) {
 
-		return getPersistence().countByCatalogBasePriceList(
+		return getPersistence().countByG_CatalogBasePriceList(
 			groupId, catalogBasePriceList);
 	}
 

@@ -192,7 +192,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CD(
 		long commerceAccountId, long commerceDiscountId);
 
 	/**
@@ -208,7 +208,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
 	 * @return the range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CD(
 		long commerceAccountId, long commerceDiscountId, int start, int end);
 
 	/**
@@ -225,7 +225,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CD(
 		long commerceAccountId, long commerceDiscountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -245,7 +245,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CD(
 		long commerceAccountId, long commerceDiscountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator,
@@ -260,7 +260,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the first matching commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry findByA_D_First(
+	public CommerceDiscountUsageEntry findByCA_CD_First(
 			long commerceAccountId, long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceDiscountUsageEntry> orderByComparator)
@@ -274,7 +274,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry fetchByA_D_First(
+	public CommerceDiscountUsageEntry fetchByCA_CD_First(
 		long commerceAccountId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -288,7 +288,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the last matching commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry findByA_D_Last(
+	public CommerceDiscountUsageEntry findByCA_CD_Last(
 			long commerceAccountId, long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceDiscountUsageEntry> orderByComparator)
@@ -302,7 +302,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry fetchByA_D_Last(
+	public CommerceDiscountUsageEntry fetchByCA_CD_Last(
 		long commerceAccountId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -317,7 +317,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the previous, current, and next commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
 	 */
-	public CommerceDiscountUsageEntry[] findByA_D_PrevAndNext(
+	public CommerceDiscountUsageEntry[] findByCA_CD_PrevAndNext(
 			long commerceDiscountUsageEntryId, long commerceAccountId,
 			long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -330,7 +330,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceAccountId the commerce account ID
 	 * @param commerceDiscountId the commerce discount ID
 	 */
-	public void removeByA_D(long commerceAccountId, long commerceDiscountId);
+	public void removeByCA_CD(long commerceAccountId, long commerceDiscountId);
 
 	/**
 	 * Returns the number of commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
@@ -339,7 +339,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the number of matching commerce discount usage entries
 	 */
-	public int countByA_D(long commerceAccountId, long commerceDiscountId);
+	public int countByCA_CD(long commerceAccountId, long commerceDiscountId);
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -348,7 +348,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByO_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCO_CD(
 		long commerceOrderId, long commerceDiscountId);
 
 	/**
@@ -364,7 +364,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
 	 * @return the range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByO_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCO_CD(
 		long commerceOrderId, long commerceDiscountId, int start, int end);
 
 	/**
@@ -381,7 +381,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByO_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCO_CD(
 		long commerceOrderId, long commerceDiscountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -401,7 +401,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByO_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCO_CD(
 		long commerceOrderId, long commerceDiscountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator,
@@ -416,7 +416,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the first matching commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry findByO_D_First(
+	public CommerceDiscountUsageEntry findByCO_CD_First(
 			long commerceOrderId, long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceDiscountUsageEntry> orderByComparator)
@@ -430,7 +430,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry fetchByO_D_First(
+	public CommerceDiscountUsageEntry fetchByCO_CD_First(
 		long commerceOrderId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -444,7 +444,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the last matching commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry findByO_D_Last(
+	public CommerceDiscountUsageEntry findByCO_CD_Last(
 			long commerceOrderId, long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceDiscountUsageEntry> orderByComparator)
@@ -458,7 +458,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry fetchByO_D_Last(
+	public CommerceDiscountUsageEntry fetchByCO_CD_Last(
 		long commerceOrderId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -473,7 +473,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the previous, current, and next commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
 	 */
-	public CommerceDiscountUsageEntry[] findByO_D_PrevAndNext(
+	public CommerceDiscountUsageEntry[] findByCO_CD_PrevAndNext(
 			long commerceDiscountUsageEntryId, long commerceOrderId,
 			long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -486,7 +486,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceOrderId the commerce order ID
 	 * @param commerceDiscountId the commerce discount ID
 	 */
-	public void removeByO_D(long commerceOrderId, long commerceDiscountId);
+	public void removeByCO_CD(long commerceOrderId, long commerceDiscountId);
 
 	/**
 	 * Returns the number of commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -495,7 +495,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the number of matching commerce discount usage entries
 	 */
-	public int countByO_D(long commerceOrderId, long commerceDiscountId);
+	public int countByCO_CD(long commerceOrderId, long commerceDiscountId);
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -505,7 +505,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_O_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CO_CD(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId);
 
 	/**
@@ -522,7 +522,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
 	 * @return the range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_O_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CO_CD(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		int start, int end);
 
@@ -541,7 +541,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_O_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CO_CD(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
@@ -563,7 +563,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
-	public java.util.List<CommerceDiscountUsageEntry> findByA_O_D(
+	public java.util.List<CommerceDiscountUsageEntry> findByCA_CO_CD(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
@@ -580,7 +580,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the first matching commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry findByA_O_D_First(
+	public CommerceDiscountUsageEntry findByCA_CO_CD_First(
 			long commerceAccountId, long commerceOrderId,
 			long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -596,7 +596,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry fetchByA_O_D_First(
+	public CommerceDiscountUsageEntry fetchByCA_CO_CD_First(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -611,7 +611,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the last matching commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry findByA_O_D_Last(
+	public CommerceDiscountUsageEntry findByCA_CO_CD_Last(
 			long commerceAccountId, long commerceOrderId,
 			long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -627,7 +627,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
-	public CommerceDiscountUsageEntry fetchByA_O_D_Last(
+	public CommerceDiscountUsageEntry fetchByCA_CO_CD_Last(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
@@ -643,7 +643,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the previous, current, and next commerce discount usage entry
 	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
 	 */
-	public CommerceDiscountUsageEntry[] findByA_O_D_PrevAndNext(
+	public CommerceDiscountUsageEntry[] findByCA_CO_CD_PrevAndNext(
 			long commerceDiscountUsageEntryId, long commerceAccountId,
 			long commerceOrderId, long commerceDiscountId,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -657,7 +657,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceOrderId the commerce order ID
 	 * @param commerceDiscountId the commerce discount ID
 	 */
-	public void removeByA_O_D(
+	public void removeByCA_CO_CD(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId);
 
 	/**
@@ -668,7 +668,7 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the number of matching commerce discount usage entries
 	 */
-	public int countByA_O_D(
+	public int countByCA_CO_CD(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId);
 
 	/**

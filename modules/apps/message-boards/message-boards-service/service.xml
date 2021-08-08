@@ -326,7 +326,7 @@
 			<finder-column name="threadId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="T_notS" return-type="Collection">
+		<finder name="T_NotS" return-type="Collection">
 			<finder-column name="threadId" />
 			<finder-column comparator="!=" name="status" />
 		</finder>

@@ -6788,7 +6788,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String sections, boolean latest);
 
 	/**
@@ -6805,7 +6805,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String sections, boolean latest, int start, int end);
 
 	/**
@@ -6823,7 +6823,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String sections, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -6844,7 +6844,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String sections, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator,
@@ -6860,7 +6860,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the first matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_S_L_First(
+	public KBArticle findByG_LikeS_L_First(
 			long groupId, String sections, boolean latest,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -6875,7 +6875,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_S_L_First(
+	public KBArticle fetchByG_LikeS_L_First(
 		long groupId, String sections, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -6890,7 +6890,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the last matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_S_L_Last(
+	public KBArticle findByG_LikeS_L_Last(
 			long groupId, String sections, boolean latest,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -6905,7 +6905,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_S_L_Last(
+	public KBArticle fetchByG_LikeS_L_Last(
 		long groupId, String sections, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -6921,7 +6921,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] findByG_S_L_PrevAndNext(
+	public KBArticle[] findByG_LikeS_L_PrevAndNext(
 			long kbArticleId, long groupId, String sections, boolean latest,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -6935,7 +6935,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_L(
+	public java.util.List<KBArticle> filterFindByG_LikeS_L(
 		long groupId, String sections, boolean latest);
 
 	/**
@@ -6952,7 +6952,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_L(
+	public java.util.List<KBArticle> filterFindByG_LikeS_L(
 		long groupId, String sections, boolean latest, int start, int end);
 
 	/**
@@ -6970,7 +6970,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_L(
+	public java.util.List<KBArticle> filterFindByG_LikeS_L(
 		long groupId, String sections, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -6986,7 +6986,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] filterFindByG_S_L_PrevAndNext(
+	public KBArticle[] filterFindByG_LikeS_L_PrevAndNext(
 			long kbArticleId, long groupId, String sections, boolean latest,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7000,7 +7000,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_L(
+	public java.util.List<KBArticle> filterFindByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest);
 
 	/**
@@ -7017,7 +7017,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_L(
+	public java.util.List<KBArticle> filterFindByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest, int start, int end);
 
 	/**
@@ -7035,7 +7035,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_L(
+	public java.util.List<KBArticle> filterFindByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7052,7 +7052,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest);
 
 	/**
@@ -7069,7 +7069,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest, int start, int end);
 
 	/**
@@ -7087,7 +7087,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7108,7 +7108,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_L(
+	public java.util.List<KBArticle> findByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator,
@@ -7121,7 +7121,8 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param sections the sections
 	 * @param latest the latest
 	 */
-	public void removeByG_S_L(long groupId, String sections, boolean latest);
+	public void removeByG_LikeS_L(
+		long groupId, String sections, boolean latest);
 
 	/**
 	 * Returns the number of kb articles where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
@@ -7131,7 +7132,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_S_L(long groupId, String sections, boolean latest);
+	public int countByG_LikeS_L(long groupId, String sections, boolean latest);
 
 	/**
 	 * Returns the number of kb articles where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
@@ -7141,7 +7142,8 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_S_L(long groupId, String[] sectionses, boolean latest);
+	public int countByG_LikeS_L(
+		long groupId, String[] sectionses, boolean latest);
 
 	/**
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
@@ -7151,7 +7153,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_S_L(
+	public int filterCountByG_LikeS_L(
 		long groupId, String sections, boolean latest);
 
 	/**
@@ -7162,7 +7164,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param latest the latest
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_S_L(
+	public int filterCountByG_LikeS_L(
 		long groupId, String[] sectionses, boolean latest);
 
 	/**
@@ -7173,7 +7175,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String sections, boolean main);
 
 	/**
@@ -7190,7 +7192,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String sections, boolean main, int start, int end);
 
 	/**
@@ -7208,7 +7210,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String sections, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7229,7 +7231,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String sections, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator,
@@ -7245,7 +7247,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the first matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_S_M_First(
+	public KBArticle findByG_LikeS_M_First(
 			long groupId, String sections, boolean main,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7260,7 +7262,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_S_M_First(
+	public KBArticle fetchByG_LikeS_M_First(
 		long groupId, String sections, boolean main,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7275,7 +7277,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the last matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_S_M_Last(
+	public KBArticle findByG_LikeS_M_Last(
 			long groupId, String sections, boolean main,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7290,7 +7292,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_S_M_Last(
+	public KBArticle fetchByG_LikeS_M_Last(
 		long groupId, String sections, boolean main,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7306,7 +7308,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] findByG_S_M_PrevAndNext(
+	public KBArticle[] findByG_LikeS_M_PrevAndNext(
 			long kbArticleId, long groupId, String sections, boolean main,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7320,7 +7322,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_M(
+	public java.util.List<KBArticle> filterFindByG_LikeS_M(
 		long groupId, String sections, boolean main);
 
 	/**
@@ -7337,7 +7339,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_M(
+	public java.util.List<KBArticle> filterFindByG_LikeS_M(
 		long groupId, String sections, boolean main, int start, int end);
 
 	/**
@@ -7355,7 +7357,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_M(
+	public java.util.List<KBArticle> filterFindByG_LikeS_M(
 		long groupId, String sections, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7371,7 +7373,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] filterFindByG_S_M_PrevAndNext(
+	public KBArticle[] filterFindByG_LikeS_M_PrevAndNext(
 			long kbArticleId, long groupId, String sections, boolean main,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7385,7 +7387,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_M(
+	public java.util.List<KBArticle> filterFindByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main);
 
 	/**
@@ -7402,7 +7404,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_M(
+	public java.util.List<KBArticle> filterFindByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main, int start, int end);
 
 	/**
@@ -7420,7 +7422,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_M(
+	public java.util.List<KBArticle> filterFindByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7437,7 +7439,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main);
 
 	/**
@@ -7454,7 +7456,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main, int start, int end);
 
 	/**
@@ -7472,7 +7474,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7493,7 +7495,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_M(
+	public java.util.List<KBArticle> findByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator,
@@ -7506,7 +7508,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param sections the sections
 	 * @param main the main
 	 */
-	public void removeByG_S_M(long groupId, String sections, boolean main);
+	public void removeByG_LikeS_M(long groupId, String sections, boolean main);
 
 	/**
 	 * Returns the number of kb articles where groupId = &#63; and sections LIKE &#63; and main = &#63;.
@@ -7516,7 +7518,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_S_M(long groupId, String sections, boolean main);
+	public int countByG_LikeS_M(long groupId, String sections, boolean main);
 
 	/**
 	 * Returns the number of kb articles where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
@@ -7526,7 +7528,8 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_S_M(long groupId, String[] sectionses, boolean main);
+	public int countByG_LikeS_M(
+		long groupId, String[] sectionses, boolean main);
 
 	/**
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
@@ -7536,7 +7539,8 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_S_M(long groupId, String sections, boolean main);
+	public int filterCountByG_LikeS_M(
+		long groupId, String sections, boolean main);
 
 	/**
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
@@ -7546,7 +7550,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param main the main
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_S_M(
+	public int filterCountByG_LikeS_M(
 		long groupId, String[] sectionses, boolean main);
 
 	/**
@@ -7557,7 +7561,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String sections, int status);
 
 	/**
@@ -7574,7 +7578,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String sections, int status, int start, int end);
 
 	/**
@@ -7592,7 +7596,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String sections, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7613,7 +7617,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String sections, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator,
@@ -7629,7 +7633,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the first matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_S_S_First(
+	public KBArticle findByG_LikeS_S_First(
 			long groupId, String sections, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7644,7 +7648,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_S_S_First(
+	public KBArticle fetchByG_LikeS_S_First(
 		long groupId, String sections, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7659,7 +7663,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the last matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_S_S_Last(
+	public KBArticle findByG_LikeS_S_Last(
 			long groupId, String sections, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7674,7 +7678,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_S_S_Last(
+	public KBArticle fetchByG_LikeS_S_Last(
 		long groupId, String sections, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7690,7 +7694,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] findByG_S_S_PrevAndNext(
+	public KBArticle[] findByG_LikeS_S_PrevAndNext(
 			long kbArticleId, long groupId, String sections, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7704,7 +7708,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_S(
+	public java.util.List<KBArticle> filterFindByG_LikeS_S(
 		long groupId, String sections, int status);
 
 	/**
@@ -7721,7 +7725,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_S(
+	public java.util.List<KBArticle> filterFindByG_LikeS_S(
 		long groupId, String sections, int status, int start, int end);
 
 	/**
@@ -7739,7 +7743,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_S(
+	public java.util.List<KBArticle> filterFindByG_LikeS_S(
 		long groupId, String sections, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7755,7 +7759,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] filterFindByG_S_S_PrevAndNext(
+	public KBArticle[] filterFindByG_LikeS_S_PrevAndNext(
 			long kbArticleId, long groupId, String sections, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -7769,7 +7773,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_S(
+	public java.util.List<KBArticle> filterFindByG_LikeS_S(
 		long groupId, String[] sectionses, int status);
 
 	/**
@@ -7786,7 +7790,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_S(
+	public java.util.List<KBArticle> filterFindByG_LikeS_S(
 		long groupId, String[] sectionses, int status, int start, int end);
 
 	/**
@@ -7804,7 +7808,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_S_S(
+	public java.util.List<KBArticle> filterFindByG_LikeS_S(
 		long groupId, String[] sectionses, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7821,7 +7825,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String[] sectionses, int status);
 
 	/**
@@ -7838,7 +7842,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String[] sectionses, int status, int start, int end);
 
 	/**
@@ -7856,7 +7860,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String[] sectionses, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -7877,7 +7881,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_S_S(
+	public java.util.List<KBArticle> findByG_LikeS_S(
 		long groupId, String[] sectionses, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator,
@@ -7890,7 +7894,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param sections the sections
 	 * @param status the status
 	 */
-	public void removeByG_S_S(long groupId, String sections, int status);
+	public void removeByG_LikeS_S(long groupId, String sections, int status);
 
 	/**
 	 * Returns the number of kb articles where groupId = &#63; and sections LIKE &#63; and status = &#63;.
@@ -7900,7 +7904,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_S_S(long groupId, String sections, int status);
+	public int countByG_LikeS_S(long groupId, String sections, int status);
 
 	/**
 	 * Returns the number of kb articles where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
@@ -7910,7 +7914,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_S_S(long groupId, String[] sectionses, int status);
+	public int countByG_LikeS_S(long groupId, String[] sectionses, int status);
 
 	/**
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
@@ -7920,7 +7924,8 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_S_S(long groupId, String sections, int status);
+	public int filterCountByG_LikeS_S(
+		long groupId, String sections, int status);
 
 	/**
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
@@ -7930,7 +7935,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param status the status
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_S_S(
+	public int filterCountByG_LikeS_S(
 		long groupId, String[] sectionses, int status);
 
 	/**

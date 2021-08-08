@@ -604,19 +604,20 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S_L() throws Exception {
-		_persistence.countByG_S_L(
+	public void testCountByG_LikeS_L() throws Exception {
+		_persistence.countByG_LikeS_L(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_S_L(0L, "null", RandomTestUtil.randomBoolean());
+		_persistence.countByG_LikeS_L(
+			0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_S_L(
+		_persistence.countByG_LikeS_L(
 			0L, (String)null, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
-	public void testCountByG_S_LArrayable() throws Exception {
-		_persistence.countByG_S_L(
+	public void testCountByG_LikeS_LArrayable() throws Exception {
+		_persistence.countByG_LikeS_L(
 			RandomTestUtil.nextLong(),
 			new String[] {
 				RandomTestUtil.randomString(), "", "null", null, null
@@ -625,19 +626,20 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S_M() throws Exception {
-		_persistence.countByG_S_M(
+	public void testCountByG_LikeS_M() throws Exception {
+		_persistence.countByG_LikeS_M(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_S_M(0L, "null", RandomTestUtil.randomBoolean());
+		_persistence.countByG_LikeS_M(
+			0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_S_M(
+		_persistence.countByG_LikeS_M(
 			0L, (String)null, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
-	public void testCountByG_S_MArrayable() throws Exception {
-		_persistence.countByG_S_M(
+	public void testCountByG_LikeS_MArrayable() throws Exception {
+		_persistence.countByG_LikeS_M(
 			RandomTestUtil.nextLong(),
 			new String[] {
 				RandomTestUtil.randomString(), "", "null", null, null
@@ -646,18 +648,18 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S_S() throws Exception {
-		_persistence.countByG_S_S(
+	public void testCountByG_LikeS_S() throws Exception {
+		_persistence.countByG_LikeS_S(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByG_S_S(0L, "null", 0);
+		_persistence.countByG_LikeS_S(0L, "null", 0);
 
-		_persistence.countByG_S_S(0L, (String)null, 0);
+		_persistence.countByG_LikeS_S(0L, (String)null, 0);
 	}
 
 	@Test
-	public void testCountByG_S_SArrayable() throws Exception {
-		_persistence.countByG_S_S(
+	public void testCountByG_LikeS_SArrayable() throws Exception {
+		_persistence.countByG_LikeS_S(
 			RandomTestUtil.nextLong(),
 			new String[] {
 				RandomTestUtil.randomString(), "", "null", null, null

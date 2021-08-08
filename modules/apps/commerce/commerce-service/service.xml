@@ -82,7 +82,7 @@
 			<finder-column name="classPK" />
 			<finder-column name="defaultShipping" />
 		</finder>
-		<finder name="C_C_C_C" return-type="Collection">
+		<finder name="C_C_C_T" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -399,7 +399,7 @@
 		<finder name="ParentCommerceOrderItemId" return-type="Collection">
 			<finder-column name="parentCommerceOrderItemId" />
 		</finder>
-		<finder name="C_I" return-type="Collection">
+		<finder name="C_CPI" return-type="Collection">
 			<finder-column name="commerceOrderId" />
 			<finder-column name="CPInstanceId" />
 		</finder>

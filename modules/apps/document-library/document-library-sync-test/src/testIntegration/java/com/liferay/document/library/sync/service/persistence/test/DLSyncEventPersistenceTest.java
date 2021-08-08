@@ -156,10 +156,10 @@ public class DLSyncEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByModifiedTime() throws Exception {
-		_persistence.countByModifiedTime(RandomTestUtil.nextLong());
+	public void testCountByGtModifiedTime() throws Exception {
+		_persistence.countByGtModifiedTime(RandomTestUtil.nextLong());
 
-		_persistence.countByModifiedTime(0L);
+		_persistence.countByGtModifiedTime(0L);
 	}
 
 	@Test

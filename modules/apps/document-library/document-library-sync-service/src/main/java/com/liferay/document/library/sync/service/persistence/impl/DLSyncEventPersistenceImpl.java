@@ -93,8 +93,8 @@ public class DLSyncEventPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByModifiedTime;
-	private FinderPath _finderPathWithPaginationCountByModifiedTime;
+	private FinderPath _finderPathWithPaginationFindByGtModifiedTime;
+	private FinderPath _finderPathWithPaginationCountByGtModifiedTime;
 
 	/**
 	 * Returns all the dl sync events where modifiedTime &gt; &#63;.
@@ -103,8 +103,8 @@ public class DLSyncEventPersistenceImpl
 	 * @return the matching dl sync events
 	 */
 	@Override
-	public List<DLSyncEvent> findByModifiedTime(long modifiedTime) {
-		return findByModifiedTime(
+	public List<DLSyncEvent> findByGtModifiedTime(long modifiedTime) {
+		return findByGtModifiedTime(
 			modifiedTime, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -121,10 +121,10 @@ public class DLSyncEventPersistenceImpl
 	 * @return the range of matching dl sync events
 	 */
 	@Override
-	public List<DLSyncEvent> findByModifiedTime(
+	public List<DLSyncEvent> findByGtModifiedTime(
 		long modifiedTime, int start, int end) {
 
-		return findByModifiedTime(modifiedTime, start, end, null);
+		return findByGtModifiedTime(modifiedTime, start, end, null);
 	}
 
 	/**
@@ -141,11 +141,11 @@ public class DLSyncEventPersistenceImpl
 	 * @return the ordered range of matching dl sync events
 	 */
 	@Override
-	public List<DLSyncEvent> findByModifiedTime(
+	public List<DLSyncEvent> findByGtModifiedTime(
 		long modifiedTime, int start, int end,
 		OrderByComparator<DLSyncEvent> orderByComparator) {
 
-		return findByModifiedTime(
+		return findByGtModifiedTime(
 			modifiedTime, start, end, orderByComparator, true);
 	}
 
@@ -164,7 +164,7 @@ public class DLSyncEventPersistenceImpl
 	 * @return the ordered range of matching dl sync events
 	 */
 	@Override
-	public List<DLSyncEvent> findByModifiedTime(
+	public List<DLSyncEvent> findByGtModifiedTime(
 		long modifiedTime, int start, int end,
 		OrderByComparator<DLSyncEvent> orderByComparator,
 		boolean useFinderCache) {
@@ -172,7 +172,7 @@ public class DLSyncEventPersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByModifiedTime;
+		finderPath = _finderPathWithPaginationFindByGtModifiedTime;
 		finderArgs = new Object[] {modifiedTime, start, end, orderByComparator};
 
 		List<DLSyncEvent> list = null;
@@ -205,7 +205,7 @@ public class DLSyncEventPersistenceImpl
 
 			sb.append(_SQL_SELECT_DLSYNCEVENT_WHERE);
 
-			sb.append(_FINDER_COLUMN_MODIFIEDTIME_MODIFIEDTIME_2);
+			sb.append(_FINDER_COLUMN_GTMODIFIEDTIME_MODIFIEDTIME_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -257,11 +257,11 @@ public class DLSyncEventPersistenceImpl
 	 * @throws NoSuchEventException if a matching dl sync event could not be found
 	 */
 	@Override
-	public DLSyncEvent findByModifiedTime_First(
+	public DLSyncEvent findByGtModifiedTime_First(
 			long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator)
 		throws NoSuchEventException {
 
-		DLSyncEvent dlSyncEvent = fetchByModifiedTime_First(
+		DLSyncEvent dlSyncEvent = fetchByGtModifiedTime_First(
 			modifiedTime, orderByComparator);
 
 		if (dlSyncEvent != null) {
@@ -288,10 +288,10 @@ public class DLSyncEventPersistenceImpl
 	 * @return the first matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
 	 */
 	@Override
-	public DLSyncEvent fetchByModifiedTime_First(
+	public DLSyncEvent fetchByGtModifiedTime_First(
 		long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator) {
 
-		List<DLSyncEvent> list = findByModifiedTime(
+		List<DLSyncEvent> list = findByGtModifiedTime(
 			modifiedTime, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -310,11 +310,11 @@ public class DLSyncEventPersistenceImpl
 	 * @throws NoSuchEventException if a matching dl sync event could not be found
 	 */
 	@Override
-	public DLSyncEvent findByModifiedTime_Last(
+	public DLSyncEvent findByGtModifiedTime_Last(
 			long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator)
 		throws NoSuchEventException {
 
-		DLSyncEvent dlSyncEvent = fetchByModifiedTime_Last(
+		DLSyncEvent dlSyncEvent = fetchByGtModifiedTime_Last(
 			modifiedTime, orderByComparator);
 
 		if (dlSyncEvent != null) {
@@ -341,16 +341,16 @@ public class DLSyncEventPersistenceImpl
 	 * @return the last matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
 	 */
 	@Override
-	public DLSyncEvent fetchByModifiedTime_Last(
+	public DLSyncEvent fetchByGtModifiedTime_Last(
 		long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator) {
 
-		int count = countByModifiedTime(modifiedTime);
+		int count = countByGtModifiedTime(modifiedTime);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<DLSyncEvent> list = findByModifiedTime(
+		List<DLSyncEvent> list = findByGtModifiedTime(
 			modifiedTime, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -370,7 +370,7 @@ public class DLSyncEventPersistenceImpl
 	 * @throws NoSuchEventException if a dl sync event with the primary key could not be found
 	 */
 	@Override
-	public DLSyncEvent[] findByModifiedTime_PrevAndNext(
+	public DLSyncEvent[] findByGtModifiedTime_PrevAndNext(
 			long syncEventId, long modifiedTime,
 			OrderByComparator<DLSyncEvent> orderByComparator)
 		throws NoSuchEventException {
@@ -384,12 +384,12 @@ public class DLSyncEventPersistenceImpl
 
 			DLSyncEvent[] array = new DLSyncEventImpl[3];
 
-			array[0] = getByModifiedTime_PrevAndNext(
+			array[0] = getByGtModifiedTime_PrevAndNext(
 				session, dlSyncEvent, modifiedTime, orderByComparator, true);
 
 			array[1] = dlSyncEvent;
 
-			array[2] = getByModifiedTime_PrevAndNext(
+			array[2] = getByGtModifiedTime_PrevAndNext(
 				session, dlSyncEvent, modifiedTime, orderByComparator, false);
 
 			return array;
@@ -402,7 +402,7 @@ public class DLSyncEventPersistenceImpl
 		}
 	}
 
-	protected DLSyncEvent getByModifiedTime_PrevAndNext(
+	protected DLSyncEvent getByGtModifiedTime_PrevAndNext(
 		Session session, DLSyncEvent dlSyncEvent, long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator, boolean previous) {
 
@@ -419,7 +419,7 @@ public class DLSyncEventPersistenceImpl
 
 		sb.append(_SQL_SELECT_DLSYNCEVENT_WHERE);
 
-		sb.append(_FINDER_COLUMN_MODIFIEDTIME_MODIFIEDTIME_2);
+		sb.append(_FINDER_COLUMN_GTMODIFIEDTIME_MODIFIEDTIME_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -516,9 +516,9 @@ public class DLSyncEventPersistenceImpl
 	 * @param modifiedTime the modified time
 	 */
 	@Override
-	public void removeByModifiedTime(long modifiedTime) {
+	public void removeByGtModifiedTime(long modifiedTime) {
 		for (DLSyncEvent dlSyncEvent :
-				findByModifiedTime(
+				findByGtModifiedTime(
 					modifiedTime, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(dlSyncEvent);
@@ -532,8 +532,8 @@ public class DLSyncEventPersistenceImpl
 	 * @return the number of matching dl sync events
 	 */
 	@Override
-	public int countByModifiedTime(long modifiedTime) {
-		FinderPath finderPath = _finderPathWithPaginationCountByModifiedTime;
+	public int countByGtModifiedTime(long modifiedTime) {
+		FinderPath finderPath = _finderPathWithPaginationCountByGtModifiedTime;
 
 		Object[] finderArgs = new Object[] {modifiedTime};
 
@@ -544,7 +544,7 @@ public class DLSyncEventPersistenceImpl
 
 			sb.append(_SQL_COUNT_DLSYNCEVENT_WHERE);
 
-			sb.append(_FINDER_COLUMN_MODIFIEDTIME_MODIFIEDTIME_2);
+			sb.append(_FINDER_COLUMN_GTMODIFIEDTIME_MODIFIEDTIME_2);
 
 			String sql = sb.toString();
 
@@ -574,7 +574,7 @@ public class DLSyncEventPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_MODIFIEDTIME_MODIFIEDTIME_2 =
+	private static final String _FINDER_COLUMN_GTMODIFIEDTIME_MODIFIEDTIME_2 =
 		"dlSyncEvent.modifiedTime > ?";
 
 	private FinderPath _finderPathFetchByTypePK;
@@ -1302,16 +1302,16 @@ public class DLSyncEventPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByModifiedTime = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModifiedTime",
+		_finderPathWithPaginationFindByGtModifiedTime = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtModifiedTime",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"modifiedTime"}, true);
 
-		_finderPathWithPaginationCountByModifiedTime = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByModifiedTime",
+		_finderPathWithPaginationCountByGtModifiedTime = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtModifiedTime",
 			new String[] {Long.class.getName()}, new String[] {"modifiedTime"},
 			false);
 

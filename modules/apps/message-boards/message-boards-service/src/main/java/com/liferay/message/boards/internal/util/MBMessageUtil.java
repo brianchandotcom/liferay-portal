@@ -42,7 +42,7 @@ public class MBMessageUtil {
 				orderByComparator = (OrderByComparator<MBMessage>)comparator;
 			}
 
-			List<MBMessage> messages = mbMessagePersistence.findByT_notS(
+			List<MBMessage> messages = mbMessagePersistence.findByT_NotS(
 				threadId, WorkflowConstants.STATUS_IN_TRASH, start, end,
 				orderByComparator);
 

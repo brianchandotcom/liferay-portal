@@ -137,7 +137,7 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="CatalogBasePriceList" return-type="CommercePriceList">
+		<finder name="G_CatalogBasePriceList" return-type="CommercePriceList">
 			<finder-column name="groupId" />
 			<finder-column name="catalogBasePriceList" />
 		</finder>

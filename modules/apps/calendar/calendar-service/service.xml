@@ -241,7 +241,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="C_C_A" return-type="Collection">
+		<finder name="C_LikeC_A" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column comparator="LIKE" name="code" />
 			<finder-column name="active" />

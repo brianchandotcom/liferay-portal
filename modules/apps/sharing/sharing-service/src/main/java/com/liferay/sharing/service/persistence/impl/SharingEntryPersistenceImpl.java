@@ -2935,8 +2935,8 @@ public class SharingEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_TOUSERID_TOUSERID_2 =
 		"sharingEntry.toUserId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByExpirationDate;
-	private FinderPath _finderPathWithPaginationCountByExpirationDate;
+	private FinderPath _finderPathWithPaginationFindByLtExpirationDate;
+	private FinderPath _finderPathWithPaginationCountByLtExpirationDate;
 
 	/**
 	 * Returns all the sharing entries where expirationDate &lt; &#63;.
@@ -2945,8 +2945,8 @@ public class SharingEntryPersistenceImpl
 	 * @return the matching sharing entries
 	 */
 	@Override
-	public List<SharingEntry> findByExpirationDate(Date expirationDate) {
-		return findByExpirationDate(
+	public List<SharingEntry> findByLtExpirationDate(Date expirationDate) {
+		return findByLtExpirationDate(
 			expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2963,10 +2963,10 @@ public class SharingEntryPersistenceImpl
 	 * @return the range of matching sharing entries
 	 */
 	@Override
-	public List<SharingEntry> findByExpirationDate(
+	public List<SharingEntry> findByLtExpirationDate(
 		Date expirationDate, int start, int end) {
 
-		return findByExpirationDate(expirationDate, start, end, null);
+		return findByLtExpirationDate(expirationDate, start, end, null);
 	}
 
 	/**
@@ -2983,11 +2983,11 @@ public class SharingEntryPersistenceImpl
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
-	public List<SharingEntry> findByExpirationDate(
+	public List<SharingEntry> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		return findByExpirationDate(
+		return findByLtExpirationDate(
 			expirationDate, start, end, orderByComparator, true);
 	}
 
@@ -3006,7 +3006,7 @@ public class SharingEntryPersistenceImpl
 	 * @return the ordered range of matching sharing entries
 	 */
 	@Override
-	public List<SharingEntry> findByExpirationDate(
+	public List<SharingEntry> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
@@ -3014,7 +3014,7 @@ public class SharingEntryPersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByExpirationDate;
+		finderPath = _finderPathWithPaginationFindByLtExpirationDate;
 		finderArgs = new Object[] {
 			_getTime(expirationDate), start, end, orderByComparator
 		};
@@ -3055,12 +3055,12 @@ public class SharingEntryPersistenceImpl
 			boolean bindExpirationDate = false;
 
 			if (expirationDate == null) {
-				sb.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
+				sb.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1);
 			}
 			else {
 				bindExpirationDate = true;
 
-				sb.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
+				sb.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -3115,12 +3115,12 @@ public class SharingEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry findByExpirationDate_First(
+	public SharingEntry findByLtExpirationDate_First(
 			Date expirationDate,
 			OrderByComparator<SharingEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SharingEntry sharingEntry = fetchByExpirationDate_First(
+		SharingEntry sharingEntry = fetchByLtExpirationDate_First(
 			expirationDate, orderByComparator);
 
 		if (sharingEntry != null) {
@@ -3147,11 +3147,11 @@ public class SharingEntryPersistenceImpl
 	 * @return the first matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry fetchByExpirationDate_First(
+	public SharingEntry fetchByLtExpirationDate_First(
 		Date expirationDate,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByExpirationDate(
+		List<SharingEntry> list = findByLtExpirationDate(
 			expirationDate, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3170,12 +3170,12 @@ public class SharingEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry findByExpirationDate_Last(
+	public SharingEntry findByLtExpirationDate_Last(
 			Date expirationDate,
 			OrderByComparator<SharingEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SharingEntry sharingEntry = fetchByExpirationDate_Last(
+		SharingEntry sharingEntry = fetchByLtExpirationDate_Last(
 			expirationDate, orderByComparator);
 
 		if (sharingEntry != null) {
@@ -3202,17 +3202,17 @@ public class SharingEntryPersistenceImpl
 	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry fetchByExpirationDate_Last(
+	public SharingEntry fetchByLtExpirationDate_Last(
 		Date expirationDate,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		int count = countByExpirationDate(expirationDate);
+		int count = countByLtExpirationDate(expirationDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SharingEntry> list = findByExpirationDate(
+		List<SharingEntry> list = findByLtExpirationDate(
 			expirationDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3232,7 +3232,7 @@ public class SharingEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a sharing entry with the primary key could not be found
 	 */
 	@Override
-	public SharingEntry[] findByExpirationDate_PrevAndNext(
+	public SharingEntry[] findByLtExpirationDate_PrevAndNext(
 			long sharingEntryId, Date expirationDate,
 			OrderByComparator<SharingEntry> orderByComparator)
 		throws NoSuchEntryException {
@@ -3246,12 +3246,12 @@ public class SharingEntryPersistenceImpl
 
 			SharingEntry[] array = new SharingEntryImpl[3];
 
-			array[0] = getByExpirationDate_PrevAndNext(
+			array[0] = getByLtExpirationDate_PrevAndNext(
 				session, sharingEntry, expirationDate, orderByComparator, true);
 
 			array[1] = sharingEntry;
 
-			array[2] = getByExpirationDate_PrevAndNext(
+			array[2] = getByLtExpirationDate_PrevAndNext(
 				session, sharingEntry, expirationDate, orderByComparator,
 				false);
 
@@ -3265,7 +3265,7 @@ public class SharingEntryPersistenceImpl
 		}
 	}
 
-	protected SharingEntry getByExpirationDate_PrevAndNext(
+	protected SharingEntry getByLtExpirationDate_PrevAndNext(
 		Session session, SharingEntry sharingEntry, Date expirationDate,
 		OrderByComparator<SharingEntry> orderByComparator, boolean previous) {
 
@@ -3285,12 +3285,12 @@ public class SharingEntryPersistenceImpl
 		boolean bindExpirationDate = false;
 
 		if (expirationDate == null) {
-			sb.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
+			sb.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1);
 		}
 		else {
 			bindExpirationDate = true;
 
-			sb.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
+			sb.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -3390,9 +3390,9 @@ public class SharingEntryPersistenceImpl
 	 * @param expirationDate the expiration date
 	 */
 	@Override
-	public void removeByExpirationDate(Date expirationDate) {
+	public void removeByLtExpirationDate(Date expirationDate) {
 		for (SharingEntry sharingEntry :
-				findByExpirationDate(
+				findByLtExpirationDate(
 					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -3407,8 +3407,9 @@ public class SharingEntryPersistenceImpl
 	 * @return the number of matching sharing entries
 	 */
 	@Override
-	public int countByExpirationDate(Date expirationDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByExpirationDate;
+	public int countByLtExpirationDate(Date expirationDate) {
+		FinderPath finderPath =
+			_finderPathWithPaginationCountByLtExpirationDate;
 
 		Object[] finderArgs = new Object[] {_getTime(expirationDate)};
 
@@ -3422,12 +3423,12 @@ public class SharingEntryPersistenceImpl
 			boolean bindExpirationDate = false;
 
 			if (expirationDate == null) {
-				sb.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1);
+				sb.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1);
 			}
 			else {
 				bindExpirationDate = true;
 
-				sb.append(_FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2);
+				sb.append(_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2);
 			}
 
 			String sql = sb.toString();
@@ -3460,11 +3461,13 @@ public class SharingEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_1 =
-		"sharingEntry.expirationDate IS NULL";
+	private static final String
+		_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1 =
+			"sharingEntry.expirationDate IS NULL";
 
-	private static final String _FINDER_COLUMN_EXPIRATIONDATE_EXPIRATIONDATE_2 =
-		"sharingEntry.expirationDate < ?";
+	private static final String
+		_FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2 =
+			"sharingEntry.expirationDate < ?";
 
 	private FinderPath _finderPathWithPaginationFindByU_C;
 	private FinderPath _finderPathWithoutPaginationFindByU_C;
@@ -6019,16 +6022,16 @@ public class SharingEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"toUserId"},
 			false);
 
-		_finderPathWithPaginationFindByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExpirationDate",
+		_finderPathWithPaginationFindByLtExpirationDate = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtExpirationDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"expirationDate"}, true);
 
-		_finderPathWithPaginationCountByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByExpirationDate",
+		_finderPathWithPaginationCountByLtExpirationDate = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtExpirationDate",
 			new String[] {Date.class.getName()},
 			new String[] {"expirationDate"}, false);
 

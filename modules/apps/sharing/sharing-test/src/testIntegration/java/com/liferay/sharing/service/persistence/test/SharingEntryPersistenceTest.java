@@ -241,10 +241,10 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByExpirationDate() throws Exception {
-		_persistence.countByExpirationDate(RandomTestUtil.nextDate());
+	public void testCountByLtExpirationDate() throws Exception {
+		_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
 
-		_persistence.countByExpirationDate(RandomTestUtil.nextDate());
+		_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
 	}
 
 	@Test

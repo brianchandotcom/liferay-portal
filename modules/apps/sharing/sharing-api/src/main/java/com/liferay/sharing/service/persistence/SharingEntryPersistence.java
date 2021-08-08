@@ -825,7 +825,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param expirationDate the expiration date
 	 * @return the matching sharing entries
 	 */
-	public java.util.List<SharingEntry> findByExpirationDate(
+	public java.util.List<SharingEntry> findByLtExpirationDate(
 		Date expirationDate);
 
 	/**
@@ -840,7 +840,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param end the upper bound of the range of sharing entries (not inclusive)
 	 * @return the range of matching sharing entries
 	 */
-	public java.util.List<SharingEntry> findByExpirationDate(
+	public java.util.List<SharingEntry> findByLtExpirationDate(
 		Date expirationDate, int start, int end);
 
 	/**
@@ -856,7 +856,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching sharing entries
 	 */
-	public java.util.List<SharingEntry> findByExpirationDate(
+	public java.util.List<SharingEntry> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator);
@@ -875,7 +875,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sharing entries
 	 */
-	public java.util.List<SharingEntry> findByExpirationDate(
+	public java.util.List<SharingEntry> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator,
@@ -889,7 +889,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the first matching sharing entry
 	 * @throws NoSuchEntryException if a matching sharing entry could not be found
 	 */
-	public SharingEntry findByExpirationDate_First(
+	public SharingEntry findByLtExpirationDate_First(
 			Date expirationDate,
 			com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 				orderByComparator)
@@ -902,7 +902,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
-	public SharingEntry fetchByExpirationDate_First(
+	public SharingEntry fetchByLtExpirationDate_First(
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator);
@@ -915,7 +915,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the last matching sharing entry
 	 * @throws NoSuchEntryException if a matching sharing entry could not be found
 	 */
-	public SharingEntry findByExpirationDate_Last(
+	public SharingEntry findByLtExpirationDate_Last(
 			Date expirationDate,
 			com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 				orderByComparator)
@@ -928,7 +928,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
-	public SharingEntry fetchByExpirationDate_Last(
+	public SharingEntry fetchByLtExpirationDate_Last(
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 			orderByComparator);
@@ -942,7 +942,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the previous, current, and next sharing entry
 	 * @throws NoSuchEntryException if a sharing entry with the primary key could not be found
 	 */
-	public SharingEntry[] findByExpirationDate_PrevAndNext(
+	public SharingEntry[] findByLtExpirationDate_PrevAndNext(
 			long sharingEntryId, Date expirationDate,
 			com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
 				orderByComparator)
@@ -953,7 +953,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 *
 	 * @param expirationDate the expiration date
 	 */
-	public void removeByExpirationDate(Date expirationDate);
+	public void removeByLtExpirationDate(Date expirationDate);
 
 	/**
 	 * Returns the number of sharing entries where expirationDate &lt; &#63;.
@@ -961,7 +961,7 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @param expirationDate the expiration date
 	 * @return the number of matching sharing entries
 	 */
-	public int countByExpirationDate(Date expirationDate);
+	public int countByLtExpirationDate(Date expirationDate);
 
 	/**
 	 * Returns all the sharing entries where userId = &#63; and classNameId = &#63;.

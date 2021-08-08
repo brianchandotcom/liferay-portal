@@ -647,15 +647,15 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		}
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return kbArticlePersistence.filterFindByG_S_L(
+			return kbArticlePersistence.filterFindByG_LikeS_L(
 				groupId, array, true, start, end, orderByComparator);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {
-			return kbArticlePersistence.filterFindByG_S_M(
+			return kbArticlePersistence.filterFindByG_LikeS_M(
 				groupId, array, true, start, end, orderByComparator);
 		}
 
-		return kbArticlePersistence.filterFindByG_S_S(
+		return kbArticlePersistence.filterFindByG_LikeS_S(
 			groupId, array, status, start, end, orderByComparator);
 	}
 
@@ -670,15 +670,16 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		}
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return kbArticlePersistence.filterCountByG_S_L(
+			return kbArticlePersistence.filterCountByG_LikeS_L(
 				groupId, array, true);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {
-			return kbArticlePersistence.filterCountByG_S_M(
+			return kbArticlePersistence.filterCountByG_LikeS_M(
 				groupId, array, true);
 		}
 
-		return kbArticlePersistence.filterCountByG_S_S(groupId, array, status);
+		return kbArticlePersistence.filterCountByG_LikeS_S(
+			groupId, array, status);
 	}
 
 	@Override

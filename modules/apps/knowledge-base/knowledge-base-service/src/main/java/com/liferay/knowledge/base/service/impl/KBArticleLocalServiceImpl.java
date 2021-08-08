@@ -881,15 +881,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return kbArticlePersistence.findByG_S_L(
+			return kbArticlePersistence.findByG_LikeS_L(
 				groupId, array, true, start, end, orderByComparator);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {
-			return kbArticlePersistence.findByG_S_M(
+			return kbArticlePersistence.findByG_LikeS_M(
 				groupId, array, true, start, end, orderByComparator);
 		}
 
-		return kbArticlePersistence.findByG_S_S(
+		return kbArticlePersistence.findByG_LikeS_S(
 			groupId, array, status, start, end, orderByComparator);
 	}
 
@@ -904,13 +904,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return kbArticlePersistence.countByG_S_L(groupId, array, true);
+			return kbArticlePersistence.countByG_LikeS_L(groupId, array, true);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {
-			return kbArticlePersistence.countByG_S_M(groupId, array, true);
+			return kbArticlePersistence.countByG_LikeS_M(groupId, array, true);
 		}
 
-		return kbArticlePersistence.countByG_S_S(groupId, array, status);
+		return kbArticlePersistence.countByG_LikeS_S(groupId, array, status);
 	}
 
 	@Override

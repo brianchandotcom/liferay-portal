@@ -3692,8 +3692,8 @@ public class MBMessageUtil {
 	 * @param status the status
 	 * @return the matching message-boards messages
 	 */
-	public static List<MBMessage> findByT_notS(long threadId, int status) {
-		return getPersistence().findByT_notS(threadId, status);
+	public static List<MBMessage> findByT_NotS(long threadId, int status) {
+		return getPersistence().findByT_NotS(threadId, status);
 	}
 
 	/**
@@ -3709,10 +3709,10 @@ public class MBMessageUtil {
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @return the range of matching message-boards messages
 	 */
-	public static List<MBMessage> findByT_notS(
+	public static List<MBMessage> findByT_NotS(
 		long threadId, int status, int start, int end) {
 
-		return getPersistence().findByT_notS(threadId, status, start, end);
+		return getPersistence().findByT_NotS(threadId, status, start, end);
 	}
 
 	/**
@@ -3729,11 +3729,11 @@ public class MBMessageUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public static List<MBMessage> findByT_notS(
+	public static List<MBMessage> findByT_NotS(
 		long threadId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		return getPersistence().findByT_notS(
+		return getPersistence().findByT_NotS(
 			threadId, status, start, end, orderByComparator);
 	}
 
@@ -3752,12 +3752,12 @@ public class MBMessageUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public static List<MBMessage> findByT_notS(
+	public static List<MBMessage> findByT_NotS(
 		long threadId, int status, int start, int end,
 		OrderByComparator<MBMessage> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByT_notS(
+		return getPersistence().findByT_NotS(
 			threadId, status, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -3770,12 +3770,12 @@ public class MBMessageUtil {
 	 * @return the first matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public static MBMessage findByT_notS_First(
+	public static MBMessage findByT_NotS_First(
 			long threadId, int status,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().findByT_notS_First(
+		return getPersistence().findByT_NotS_First(
 			threadId, status, orderByComparator);
 	}
 
@@ -3787,11 +3787,11 @@ public class MBMessageUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public static MBMessage fetchByT_notS_First(
+	public static MBMessage fetchByT_NotS_First(
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		return getPersistence().fetchByT_notS_First(
+		return getPersistence().fetchByT_NotS_First(
 			threadId, status, orderByComparator);
 	}
 
@@ -3804,12 +3804,12 @@ public class MBMessageUtil {
 	 * @return the last matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public static MBMessage findByT_notS_Last(
+	public static MBMessage findByT_NotS_Last(
 			long threadId, int status,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().findByT_notS_Last(
+		return getPersistence().findByT_NotS_Last(
 			threadId, status, orderByComparator);
 	}
 
@@ -3821,11 +3821,11 @@ public class MBMessageUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public static MBMessage fetchByT_notS_Last(
+	public static MBMessage fetchByT_NotS_Last(
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		return getPersistence().fetchByT_notS_Last(
+		return getPersistence().fetchByT_NotS_Last(
 			threadId, status, orderByComparator);
 	}
 
@@ -3839,12 +3839,12 @@ public class MBMessageUtil {
 	 * @return the previous, current, and next message-boards message
 	 * @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	 */
-	public static MBMessage[] findByT_notS_PrevAndNext(
+	public static MBMessage[] findByT_NotS_PrevAndNext(
 			long messageId, long threadId, int status,
 			OrderByComparator<MBMessage> orderByComparator)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().findByT_notS_PrevAndNext(
+		return getPersistence().findByT_NotS_PrevAndNext(
 			messageId, threadId, status, orderByComparator);
 	}
 
@@ -3854,8 +3854,8 @@ public class MBMessageUtil {
 	 * @param threadId the thread ID
 	 * @param status the status
 	 */
-	public static void removeByT_notS(long threadId, int status) {
-		getPersistence().removeByT_notS(threadId, status);
+	public static void removeByT_NotS(long threadId, int status) {
+		getPersistence().removeByT_NotS(threadId, status);
 	}
 
 	/**
@@ -3865,8 +3865,8 @@ public class MBMessageUtil {
 	 * @param status the status
 	 * @return the number of matching message-boards messages
 	 */
-	public static int countByT_notS(long threadId, int status) {
-		return getPersistence().countByT_notS(threadId, status);
+	public static int countByT_NotS(long threadId, int status) {
+		return getPersistence().countByT_NotS(threadId, status);
 	}
 
 	/**

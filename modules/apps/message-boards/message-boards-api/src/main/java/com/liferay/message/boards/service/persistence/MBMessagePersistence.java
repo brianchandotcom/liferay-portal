@@ -3043,7 +3043,7 @@ public interface MBMessagePersistence
 	 * @param status the status
 	 * @return the matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByT_notS(long threadId, int status);
+	public java.util.List<MBMessage> findByT_NotS(long threadId, int status);
 
 	/**
 	 * Returns a range of all the message-boards messages where threadId = &#63; and status &ne; &#63;.
@@ -3058,7 +3058,7 @@ public interface MBMessagePersistence
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @return the range of matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByT_notS(
+	public java.util.List<MBMessage> findByT_NotS(
 		long threadId, int status, int start, int end);
 
 	/**
@@ -3075,7 +3075,7 @@ public interface MBMessagePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByT_notS(
+	public java.util.List<MBMessage> findByT_NotS(
 		long threadId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator);
@@ -3095,7 +3095,7 @@ public interface MBMessagePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message-boards messages
 	 */
-	public java.util.List<MBMessage> findByT_notS(
+	public java.util.List<MBMessage> findByT_NotS(
 		long threadId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator,
@@ -3110,7 +3110,7 @@ public interface MBMessagePersistence
 	 * @return the first matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public MBMessage findByT_notS_First(
+	public MBMessage findByT_NotS_First(
 			long threadId, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 				orderByComparator)
@@ -3124,7 +3124,7 @@ public interface MBMessagePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public MBMessage fetchByT_notS_First(
+	public MBMessage fetchByT_NotS_First(
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator);
@@ -3138,7 +3138,7 @@ public interface MBMessagePersistence
 	 * @return the last matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public MBMessage findByT_notS_Last(
+	public MBMessage findByT_NotS_Last(
 			long threadId, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 				orderByComparator)
@@ -3152,7 +3152,7 @@ public interface MBMessagePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public MBMessage fetchByT_notS_Last(
+	public MBMessage fetchByT_NotS_Last(
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 			orderByComparator);
@@ -3167,7 +3167,7 @@ public interface MBMessagePersistence
 	 * @return the previous, current, and next message-boards message
 	 * @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	 */
-	public MBMessage[] findByT_notS_PrevAndNext(
+	public MBMessage[] findByT_NotS_PrevAndNext(
 			long messageId, long threadId, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<MBMessage>
 				orderByComparator)
@@ -3179,7 +3179,7 @@ public interface MBMessagePersistence
 	 * @param threadId the thread ID
 	 * @param status the status
 	 */
-	public void removeByT_notS(long threadId, int status);
+	public void removeByT_NotS(long threadId, int status);
 
 	/**
 	 * Returns the number of message-boards messages where threadId = &#63; and status &ne; &#63;.
@@ -3188,7 +3188,7 @@ public interface MBMessagePersistence
 	 * @param status the status
 	 * @return the number of matching message-boards messages
 	 */
-	public int countByT_notS(long threadId, int status);
+	public int countByT_NotS(long threadId, int status);
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and status = &#63;.

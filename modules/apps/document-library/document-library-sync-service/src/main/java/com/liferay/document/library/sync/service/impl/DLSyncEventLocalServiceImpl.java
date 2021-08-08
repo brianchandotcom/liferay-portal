@@ -63,7 +63,7 @@ public class DLSyncEventLocalServiceImpl
 
 	@Override
 	public List<DLSyncEvent> getDLSyncEvents(long modifiedTime) {
-		return dlSyncEventPersistence.findByModifiedTime(modifiedTime);
+		return dlSyncEventPersistence.findByGtModifiedTime(modifiedTime);
 	}
 
 	@Override

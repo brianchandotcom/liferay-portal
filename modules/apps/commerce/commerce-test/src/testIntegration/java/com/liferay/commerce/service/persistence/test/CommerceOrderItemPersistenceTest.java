@@ -486,11 +486,11 @@ public class CommerceOrderItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_I() throws Exception {
-		_persistence.countByC_I(
+	public void testCountByC_CPI() throws Exception {
+		_persistence.countByC_CPI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_I(0L, 0L);
+		_persistence.countByC_CPI(0L, 0L);
 	}
 
 	@Test

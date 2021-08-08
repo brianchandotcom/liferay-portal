@@ -2359,9 +2359,9 @@ public class CommerceOrderItemPersistenceImpl
 		_FINDER_COLUMN_PARENTCOMMERCEORDERITEMID_PARENTCOMMERCEORDERITEMID_2 =
 			"commerceOrderItem.parentCommerceOrderItemId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_I;
-	private FinderPath _finderPathWithoutPaginationFindByC_I;
-	private FinderPath _finderPathCountByC_I;
+	private FinderPath _finderPathWithPaginationFindByC_CPI;
+	private FinderPath _finderPathWithoutPaginationFindByC_CPI;
+	private FinderPath _finderPathCountByC_CPI;
 
 	/**
 	 * Returns all the commerce order items where commerceOrderId = &#63; and CPInstanceId = &#63;.
@@ -2371,10 +2371,10 @@ public class CommerceOrderItemPersistenceImpl
 	 * @return the matching commerce order items
 	 */
 	@Override
-	public List<CommerceOrderItem> findByC_I(
+	public List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId) {
 
-		return findByC_I(
+		return findByC_CPI(
 			commerceOrderId, CPInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -2393,10 +2393,10 @@ public class CommerceOrderItemPersistenceImpl
 	 * @return the range of matching commerce order items
 	 */
 	@Override
-	public List<CommerceOrderItem> findByC_I(
+	public List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId, int start, int end) {
 
-		return findByC_I(commerceOrderId, CPInstanceId, start, end, null);
+		return findByC_CPI(commerceOrderId, CPInstanceId, start, end, null);
 	}
 
 	/**
@@ -2414,11 +2414,11 @@ public class CommerceOrderItemPersistenceImpl
 	 * @return the ordered range of matching commerce order items
 	 */
 	@Override
-	public List<CommerceOrderItem> findByC_I(
+	public List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId, int start, int end,
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
-		return findByC_I(
+		return findByC_CPI(
 			commerceOrderId, CPInstanceId, start, end, orderByComparator, true);
 	}
 
@@ -2438,7 +2438,7 @@ public class CommerceOrderItemPersistenceImpl
 	 * @return the ordered range of matching commerce order items
 	 */
 	@Override
-	public List<CommerceOrderItem> findByC_I(
+	public List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId, int start, int end,
 		OrderByComparator<CommerceOrderItem> orderByComparator,
 		boolean useFinderCache) {
@@ -2450,12 +2450,12 @@ public class CommerceOrderItemPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_I;
+				finderPath = _finderPathWithoutPaginationFindByC_CPI;
 				finderArgs = new Object[] {commerceOrderId, CPInstanceId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_I;
+			finderPath = _finderPathWithPaginationFindByC_CPI;
 			finderArgs = new Object[] {
 				commerceOrderId, CPInstanceId, start, end, orderByComparator
 			};
@@ -2494,9 +2494,9 @@ public class CommerceOrderItemPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEORDERITEM_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_I_COMMERCEORDERID_2);
+			sb.append(_FINDER_COLUMN_C_CPI_COMMERCEORDERID_2);
 
-			sb.append(_FINDER_COLUMN_C_I_CPINSTANCEID_2);
+			sb.append(_FINDER_COLUMN_C_CPI_CPINSTANCEID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -2551,12 +2551,12 @@ public class CommerceOrderItemPersistenceImpl
 	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
 	 */
 	@Override
-	public CommerceOrderItem findByC_I_First(
+	public CommerceOrderItem findByC_CPI_First(
 			long commerceOrderId, long CPInstanceId,
 			OrderByComparator<CommerceOrderItem> orderByComparator)
 		throws NoSuchOrderItemException {
 
-		CommerceOrderItem commerceOrderItem = fetchByC_I_First(
+		CommerceOrderItem commerceOrderItem = fetchByC_CPI_First(
 			commerceOrderId, CPInstanceId, orderByComparator);
 
 		if (commerceOrderItem != null) {
@@ -2587,11 +2587,11 @@ public class CommerceOrderItemPersistenceImpl
 	 * @return the first matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
 	@Override
-	public CommerceOrderItem fetchByC_I_First(
+	public CommerceOrderItem fetchByC_CPI_First(
 		long commerceOrderId, long CPInstanceId,
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
-		List<CommerceOrderItem> list = findByC_I(
+		List<CommerceOrderItem> list = findByC_CPI(
 			commerceOrderId, CPInstanceId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2611,12 +2611,12 @@ public class CommerceOrderItemPersistenceImpl
 	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
 	 */
 	@Override
-	public CommerceOrderItem findByC_I_Last(
+	public CommerceOrderItem findByC_CPI_Last(
 			long commerceOrderId, long CPInstanceId,
 			OrderByComparator<CommerceOrderItem> orderByComparator)
 		throws NoSuchOrderItemException {
 
-		CommerceOrderItem commerceOrderItem = fetchByC_I_Last(
+		CommerceOrderItem commerceOrderItem = fetchByC_CPI_Last(
 			commerceOrderId, CPInstanceId, orderByComparator);
 
 		if (commerceOrderItem != null) {
@@ -2647,17 +2647,17 @@ public class CommerceOrderItemPersistenceImpl
 	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
 	@Override
-	public CommerceOrderItem fetchByC_I_Last(
+	public CommerceOrderItem fetchByC_CPI_Last(
 		long commerceOrderId, long CPInstanceId,
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
-		int count = countByC_I(commerceOrderId, CPInstanceId);
+		int count = countByC_CPI(commerceOrderId, CPInstanceId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceOrderItem> list = findByC_I(
+		List<CommerceOrderItem> list = findByC_CPI(
 			commerceOrderId, CPInstanceId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2678,7 +2678,7 @@ public class CommerceOrderItemPersistenceImpl
 	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
 	 */
 	@Override
-	public CommerceOrderItem[] findByC_I_PrevAndNext(
+	public CommerceOrderItem[] findByC_CPI_PrevAndNext(
 			long commerceOrderItemId, long commerceOrderId, long CPInstanceId,
 			OrderByComparator<CommerceOrderItem> orderByComparator)
 		throws NoSuchOrderItemException {
@@ -2693,13 +2693,13 @@ public class CommerceOrderItemPersistenceImpl
 
 			CommerceOrderItem[] array = new CommerceOrderItemImpl[3];
 
-			array[0] = getByC_I_PrevAndNext(
+			array[0] = getByC_CPI_PrevAndNext(
 				session, commerceOrderItem, commerceOrderId, CPInstanceId,
 				orderByComparator, true);
 
 			array[1] = commerceOrderItem;
 
-			array[2] = getByC_I_PrevAndNext(
+			array[2] = getByC_CPI_PrevAndNext(
 				session, commerceOrderItem, commerceOrderId, CPInstanceId,
 				orderByComparator, false);
 
@@ -2713,7 +2713,7 @@ public class CommerceOrderItemPersistenceImpl
 		}
 	}
 
-	protected CommerceOrderItem getByC_I_PrevAndNext(
+	protected CommerceOrderItem getByC_CPI_PrevAndNext(
 		Session session, CommerceOrderItem commerceOrderItem,
 		long commerceOrderId, long CPInstanceId,
 		OrderByComparator<CommerceOrderItem> orderByComparator,
@@ -2732,9 +2732,9 @@ public class CommerceOrderItemPersistenceImpl
 
 		sb.append(_SQL_SELECT_COMMERCEORDERITEM_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_I_COMMERCEORDERID_2);
+		sb.append(_FINDER_COLUMN_C_CPI_COMMERCEORDERID_2);
 
-		sb.append(_FINDER_COLUMN_C_I_CPINSTANCEID_2);
+		sb.append(_FINDER_COLUMN_C_CPI_CPINSTANCEID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -2835,9 +2835,9 @@ public class CommerceOrderItemPersistenceImpl
 	 * @param CPInstanceId the cp instance ID
 	 */
 	@Override
-	public void removeByC_I(long commerceOrderId, long CPInstanceId) {
+	public void removeByC_CPI(long commerceOrderId, long CPInstanceId) {
 		for (CommerceOrderItem commerceOrderItem :
-				findByC_I(
+				findByC_CPI(
 					commerceOrderId, CPInstanceId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
@@ -2853,8 +2853,8 @@ public class CommerceOrderItemPersistenceImpl
 	 * @return the number of matching commerce order items
 	 */
 	@Override
-	public int countByC_I(long commerceOrderId, long CPInstanceId) {
-		FinderPath finderPath = _finderPathCountByC_I;
+	public int countByC_CPI(long commerceOrderId, long CPInstanceId) {
+		FinderPath finderPath = _finderPathCountByC_CPI;
 
 		Object[] finderArgs = new Object[] {commerceOrderId, CPInstanceId};
 
@@ -2865,9 +2865,9 @@ public class CommerceOrderItemPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEORDERITEM_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_I_COMMERCEORDERID_2);
+			sb.append(_FINDER_COLUMN_C_CPI_COMMERCEORDERID_2);
 
-			sb.append(_FINDER_COLUMN_C_I_CPINSTANCEID_2);
+			sb.append(_FINDER_COLUMN_C_CPI_CPINSTANCEID_2);
 
 			String sql = sb.toString();
 
@@ -2899,10 +2899,10 @@ public class CommerceOrderItemPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_I_COMMERCEORDERID_2 =
+	private static final String _FINDER_COLUMN_C_CPI_COMMERCEORDERID_2 =
 		"commerceOrderItem.commerceOrderId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_I_CPINSTANCEID_2 =
+	private static final String _FINDER_COLUMN_C_CPI_CPINSTANCEID_2 =
 		"commerceOrderItem.CPInstanceId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
@@ -4421,8 +4421,8 @@ public class CommerceOrderItemPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"parentCommerceOrderItemId"}, false);
 
-		_finderPathWithPaginationFindByC_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_I",
+		_finderPathWithPaginationFindByC_CPI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CPI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4430,13 +4430,13 @@ public class CommerceOrderItemPersistenceImpl
 			},
 			new String[] {"commerceOrderId", "CPInstanceId"}, true);
 
-		_finderPathWithoutPaginationFindByC_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_I",
+		_finderPathWithoutPaginationFindByC_CPI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceOrderId", "CPInstanceId"}, true);
 
-		_finderPathCountByC_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_I",
+		_finderPathCountByC_CPI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceOrderId", "CPInstanceId"}, false);
 

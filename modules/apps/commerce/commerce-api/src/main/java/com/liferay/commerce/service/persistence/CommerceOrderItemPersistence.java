@@ -669,7 +669,7 @@ public interface CommerceOrderItemPersistence
 	 * @param CPInstanceId the cp instance ID
 	 * @return the matching commerce order items
 	 */
-	public java.util.List<CommerceOrderItem> findByC_I(
+	public java.util.List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId);
 
 	/**
@@ -685,7 +685,7 @@ public interface CommerceOrderItemPersistence
 	 * @param end the upper bound of the range of commerce order items (not inclusive)
 	 * @return the range of matching commerce order items
 	 */
-	public java.util.List<CommerceOrderItem> findByC_I(
+	public java.util.List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId, int start, int end);
 
 	/**
@@ -702,7 +702,7 @@ public interface CommerceOrderItemPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce order items
 	 */
-	public java.util.List<CommerceOrderItem> findByC_I(
+	public java.util.List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderItem>
 			orderByComparator);
@@ -722,7 +722,7 @@ public interface CommerceOrderItemPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce order items
 	 */
-	public java.util.List<CommerceOrderItem> findByC_I(
+	public java.util.List<CommerceOrderItem> findByC_CPI(
 		long commerceOrderId, long CPInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderItem>
 			orderByComparator,
@@ -737,7 +737,7 @@ public interface CommerceOrderItemPersistence
 	 * @return the first matching commerce order item
 	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
 	 */
-	public CommerceOrderItem findByC_I_First(
+	public CommerceOrderItem findByC_CPI_First(
 			long commerceOrderId, long CPInstanceId,
 			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderItem>
 				orderByComparator)
@@ -751,7 +751,7 @@ public interface CommerceOrderItemPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
-	public CommerceOrderItem fetchByC_I_First(
+	public CommerceOrderItem fetchByC_CPI_First(
 		long commerceOrderId, long CPInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderItem>
 			orderByComparator);
@@ -765,7 +765,7 @@ public interface CommerceOrderItemPersistence
 	 * @return the last matching commerce order item
 	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
 	 */
-	public CommerceOrderItem findByC_I_Last(
+	public CommerceOrderItem findByC_CPI_Last(
 			long commerceOrderId, long CPInstanceId,
 			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderItem>
 				orderByComparator)
@@ -779,7 +779,7 @@ public interface CommerceOrderItemPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
-	public CommerceOrderItem fetchByC_I_Last(
+	public CommerceOrderItem fetchByC_CPI_Last(
 		long commerceOrderId, long CPInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderItem>
 			orderByComparator);
@@ -794,7 +794,7 @@ public interface CommerceOrderItemPersistence
 	 * @return the previous, current, and next commerce order item
 	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
 	 */
-	public CommerceOrderItem[] findByC_I_PrevAndNext(
+	public CommerceOrderItem[] findByC_CPI_PrevAndNext(
 			long commerceOrderItemId, long commerceOrderId, long CPInstanceId,
 			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderItem>
 				orderByComparator)
@@ -806,7 +806,7 @@ public interface CommerceOrderItemPersistence
 	 * @param commerceOrderId the commerce order ID
 	 * @param CPInstanceId the cp instance ID
 	 */
-	public void removeByC_I(long commerceOrderId, long CPInstanceId);
+	public void removeByC_CPI(long commerceOrderId, long CPInstanceId);
 
 	/**
 	 * Returns the number of commerce order items where commerceOrderId = &#63; and CPInstanceId = &#63;.
@@ -815,7 +815,7 @@ public interface CommerceOrderItemPersistence
 	 * @param CPInstanceId the cp instance ID
 	 * @return the number of matching commerce order items
 	 */
-	public int countByC_I(long commerceOrderId, long CPInstanceId);
+	public int countByC_CPI(long commerceOrderId, long CPInstanceId);
 
 	/**
 	 * Returns all the commerce order items where commerceOrderId = &#63; and subscription = &#63;.

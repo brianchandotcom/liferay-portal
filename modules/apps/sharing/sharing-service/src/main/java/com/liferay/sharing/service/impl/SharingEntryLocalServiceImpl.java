@@ -209,7 +209,7 @@ public class SharingEntryLocalServiceImpl
 	 */
 	@Override
 	public void deleteExpiredEntries() {
-		sharingEntryPersistence.removeByExpirationDate(DateUtil.newDate());
+		sharingEntryPersistence.removeByLtExpirationDate(DateUtil.newDate());
 	}
 
 	/**

@@ -394,7 +394,7 @@ public class CommerceOrderItemLocalServiceImpl
 	public List<CommerceOrderItem> getCommerceOrderItems(
 		long commerceOrderId, long cpInstanceId, int start, int end) {
 
-		return commerceOrderItemPersistence.findByC_I(
+		return commerceOrderItemPersistence.findByC_CPI(
 			commerceOrderId, cpInstanceId, start, end);
 	}
 
@@ -403,7 +403,7 @@ public class CommerceOrderItemLocalServiceImpl
 		long commerceOrderId, long cpInstanceId, int start, int end,
 		OrderByComparator<CommerceOrderItem> orderByComparator) {
 
-		return commerceOrderItemPersistence.findByC_I(
+		return commerceOrderItemPersistence.findByC_CPI(
 			commerceOrderId, cpInstanceId, start, end, orderByComparator);
 	}
 
@@ -426,7 +426,7 @@ public class CommerceOrderItemLocalServiceImpl
 	public int getCommerceOrderItemsCount(
 		long commerceOrderId, long cpInstanceId) {
 
-		return commerceOrderItemPersistence.countByC_I(
+		return commerceOrderItemPersistence.countByC_CPI(
 			commerceOrderId, cpInstanceId);
 	}
 

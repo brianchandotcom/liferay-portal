@@ -845,7 +845,7 @@ public class CommerceOrderLocalServiceImpl
 				guestCommerceOrderItems) {
 
 			List<CommerceOrderItem> userCommerceOrderItems =
-				commerceOrderItemPersistence.findByC_I(
+				commerceOrderItemPersistence.findByC_CPI(
 					userCommerceOrderId,
 					guestCommerceOrderItem.getCPInstanceId());
 

@@ -2147,10 +2147,10 @@ public class JournalFolderUtil {
 	 * @param status the status
 	 * @return the matching journal folders
 	 */
-	public static List<JournalFolder> findByF_C_P_NotS(
+	public static List<JournalFolder> findByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status) {
 
-		return getPersistence().findByF_C_P_NotS(
+		return getPersistence().findByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status);
 	}
 
@@ -2169,11 +2169,11 @@ public class JournalFolderUtil {
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @return the range of matching journal folders
 	 */
-	public static List<JournalFolder> findByF_C_P_NotS(
+	public static List<JournalFolder> findByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
 		int start, int end) {
 
-		return getPersistence().findByF_C_P_NotS(
+		return getPersistence().findByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, start, end);
 	}
 
@@ -2193,12 +2193,12 @@ public class JournalFolderUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching journal folders
 	 */
-	public static List<JournalFolder> findByF_C_P_NotS(
+	public static List<JournalFolder> findByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
 		int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator) {
 
-		return getPersistence().findByF_C_P_NotS(
+		return getPersistence().findByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, start, end,
 			orderByComparator);
 	}
@@ -2220,12 +2220,12 @@ public class JournalFolderUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal folders
 	 */
-	public static List<JournalFolder> findByF_C_P_NotS(
+	public static List<JournalFolder> findByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
 		int start, int end, OrderByComparator<JournalFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByF_C_P_NotS(
+		return getPersistence().findByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -2241,12 +2241,12 @@ public class JournalFolderUtil {
 	 * @return the first matching journal folder
 	 * @throws NoSuchFolderException if a matching journal folder could not be found
 	 */
-	public static JournalFolder findByF_C_P_NotS_First(
+	public static JournalFolder findByGtF_C_P_NotS_First(
 			long folderId, long companyId, long parentFolderId, int status,
 			OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 
-		return getPersistence().findByF_C_P_NotS_First(
+		return getPersistence().findByGtF_C_P_NotS_First(
 			folderId, companyId, parentFolderId, status, orderByComparator);
 	}
 
@@ -2260,11 +2260,11 @@ public class JournalFolderUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
-	public static JournalFolder fetchByF_C_P_NotS_First(
+	public static JournalFolder fetchByGtF_C_P_NotS_First(
 		long folderId, long companyId, long parentFolderId, int status,
 		OrderByComparator<JournalFolder> orderByComparator) {
 
-		return getPersistence().fetchByF_C_P_NotS_First(
+		return getPersistence().fetchByGtF_C_P_NotS_First(
 			folderId, companyId, parentFolderId, status, orderByComparator);
 	}
 
@@ -2279,12 +2279,12 @@ public class JournalFolderUtil {
 	 * @return the last matching journal folder
 	 * @throws NoSuchFolderException if a matching journal folder could not be found
 	 */
-	public static JournalFolder findByF_C_P_NotS_Last(
+	public static JournalFolder findByGtF_C_P_NotS_Last(
 			long folderId, long companyId, long parentFolderId, int status,
 			OrderByComparator<JournalFolder> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 
-		return getPersistence().findByF_C_P_NotS_Last(
+		return getPersistence().findByGtF_C_P_NotS_Last(
 			folderId, companyId, parentFolderId, status, orderByComparator);
 	}
 
@@ -2298,11 +2298,11 @@ public class JournalFolderUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	 */
-	public static JournalFolder fetchByF_C_P_NotS_Last(
+	public static JournalFolder fetchByGtF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
 		OrderByComparator<JournalFolder> orderByComparator) {
 
-		return getPersistence().fetchByF_C_P_NotS_Last(
+		return getPersistence().fetchByGtF_C_P_NotS_Last(
 			folderId, companyId, parentFolderId, status, orderByComparator);
 	}
 
@@ -2314,10 +2314,10 @@ public class JournalFolderUtil {
 	 * @param parentFolderId the parent folder ID
 	 * @param status the status
 	 */
-	public static void removeByF_C_P_NotS(
+	public static void removeByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status) {
 
-		getPersistence().removeByF_C_P_NotS(
+		getPersistence().removeByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status);
 	}
 
@@ -2330,10 +2330,10 @@ public class JournalFolderUtil {
 	 * @param status the status
 	 * @return the number of matching journal folders
 	 */
-	public static int countByF_C_P_NotS(
+	public static int countByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status) {
 
-		return getPersistence().countByF_C_P_NotS(
+		return getPersistence().countByGtF_C_P_NotS(
 			folderId, companyId, parentFolderId, status);
 	}
 

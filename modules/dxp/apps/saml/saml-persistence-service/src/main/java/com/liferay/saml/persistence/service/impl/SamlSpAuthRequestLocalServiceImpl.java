@@ -65,7 +65,7 @@ public class SamlSpAuthRequestLocalServiceImpl
 		createDate.setTime(
 			createDate.getTime() - _samlConfiguration.getSpAuthRequestMaxAge());
 
-		samlSpAuthRequestPersistence.removeByCreateDate(createDate);
+		samlSpAuthRequestPersistence.removeByLtCreateDate(createDate);
 	}
 
 	@Override

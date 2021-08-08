@@ -84,8 +84,8 @@ public class SamlIdpSsoSessionLocalServiceImpl
 			createDate.getTime() -
 				samlProviderConfiguration.sessionMaximumAge());
 
-		samlIdpSsoSessionPersistence.removeByCreateDate(createDate);
-		samlIdpSpSessionPersistence.removeByCreateDate(createDate);
+		samlIdpSsoSessionPersistence.removeByLtCreateDate(createDate);
+		samlIdpSpSessionPersistence.removeByLtCreateDate(createDate);
 	}
 
 	@Override

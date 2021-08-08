@@ -56,7 +56,7 @@ public class SamlSpMessageLocalServiceImpl
 
 	@Override
 	public void deleteExpiredSamlSpMessages() {
-		samlSpMessagePersistence.removeByExpirationDate(new Date());
+		samlSpMessagePersistence.removeByLtExpirationDate(new Date());
 	}
 
 	@Override

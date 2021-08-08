@@ -132,7 +132,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 		String accessTokenContent) {
 
 		List<OAuth2Authorization> oAuth2Authorizations =
-			oAuth2AuthorizationPersistence.findByAccessTokenContentHash(
+			oAuth2AuthorizationPersistence.findByC_AccessTokenContentHash(
 				CompanyThreadLocal.getCompanyId(),
 				accessTokenContent.hashCode());
 
@@ -152,7 +152,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 		String refreshTokenContent) {
 
 		List<OAuth2Authorization> oAuth2Authorizations =
-			oAuth2AuthorizationPersistence.findByRefreshTokenContentHash(
+			oAuth2AuthorizationPersistence.findByC_RefreshTokenContentHash(
 				CompanyThreadLocal.getCompanyId(),
 				refreshTokenContent.hashCode());
 

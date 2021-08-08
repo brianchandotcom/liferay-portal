@@ -291,13 +291,14 @@ public class CalendarResourcePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_A() throws Exception {
-		_persistence.countByC_C_A(
+	public void testCountByC_LikeC_A() throws Exception {
+		_persistence.countByC_LikeC_A(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_C_A(0L, "null", RandomTestUtil.randomBoolean());
+		_persistence.countByC_LikeC_A(
+			0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_C_A(
+		_persistence.countByC_LikeC_A(
 			0L, (String)null, RandomTestUtil.randomBoolean());
 	}
 

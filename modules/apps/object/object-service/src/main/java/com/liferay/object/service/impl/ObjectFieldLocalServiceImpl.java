@@ -122,6 +122,40 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public ObjectField updateObjectField(
+			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap,
+			boolean required)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		_validateIndexed(
+			indexed, indexedAsKeyword, indexedLanguageId,
+			objectField.getType());
+
+		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectField.getObjectDefinitionId());
+
+		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			objectField.setDBTableName(
+				objectDefinition.getExtensionDBTableName());
+		}
+
+		objectField.setIndexed(indexed);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectField.setRequired(required);
+
+		return objectFieldPersistence.update(objectField);
+	}
+
+	@Override
 	public void validateType(String type) throws PortalException {
 		if (!_types.contains(type)) {
 			throw new ObjectFieldTypeException("Invalid type " + type);

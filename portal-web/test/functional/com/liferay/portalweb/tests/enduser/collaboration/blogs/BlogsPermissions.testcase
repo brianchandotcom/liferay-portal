@@ -35,22 +35,88 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanAccessAdminWithRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsConfiguration.viewNoPermissionCP();
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAccessAdminWithSiteRole {
+		Permissions.setUpSiteRoleLoginUserCP(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsConfiguration.viewNoPermissionCP();
+	}
+
 	@priority = "5"
-	@refactorneeded
-	test AddBlogsEntryNoGuestRole {
+	@refactordone
+	test CannotAddEntryAsGuestByDefault {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		SitePages.addPublicPage(pageName = "Blogs Page");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Portlet.addPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		User.logoutPG();
 
@@ -59,70 +125,9 @@ definition {
 		BlogsEntry.viewNoAddPermissions();
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test AddBlogsEntryOrgRole {
-		Permissions.setUpOrgRoleLoginUserPG(
-			orgName = "Organization Name",
-			orgType = "Organization",
-			page = "Public Pages",
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization",
-			siteName = "Organization Name",
-			siteURL = "true",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		BlogsEntry.viewNoAddPermissions();
-
-		Permissions.definePermissionLoginUserCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Permissions.removePermissionLoginUserCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		BlogsEntry.viewNoAddPermissions();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntryOrgRoleInline {
+	test CannotAddEntryWhenOrgRoleHasNoPermissions {
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",
 			orgType = "Organization",
@@ -209,58 +214,9 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test AddBlogsEntryRegRole {
-		property portal.acceptance = "true";
-
-		Permissions.setUpRegRoleLoginUserPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
-			userScreenName = "usersn");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewNoAddPermissions();
-
-		Permissions.definePermissionLoginUserCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			roleTitle = "Regrole Name",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Permissions.removePermissionLoginUserCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			roleTitle = "Regrole Name",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewNoAddPermissions();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntryRegRoleInline {
+	test CannotAddEntryWhenRegRoleHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -327,67 +283,9 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test AddBlogsEntrySiteRole {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Permissions.setUpSiteRoleLoginUserPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Roles Siterole Name",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		BlogsEntry.viewNoAddPermissions();
-
-		Permissions.definePermissionLoginUserCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Permissions.removePermissionLoginUserCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		BlogsEntry.viewNoAddPermissions();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntrySiteRoleInline {
+	test CannotAddEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
@@ -461,15 +359,11 @@ definition {
 			siteName = "Site Name");
 
 		BlogsEntry.viewNoAddPermissions();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntrySiteTeamRoleInline {
+	test CannotAddEntryWhenTeamRoleHasNoPermissions {
 		Permissions.setUpSiteTeamRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -551,74 +445,6 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
-	}
-
-	@priority = "4"
-	@refactordone
-	test CanAccessAdminWithRegRole {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsConfiguration.viewNoPermissionCP();
-	}
-
-	@priority = "4"
-	@refactordone
-	test CanAccessAdminWithSiteRole {
-		Permissions.setUpSiteRoleLoginUserCP(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		BlogsConfiguration.viewNoPermissionCP();
 	}
 
 	@description = "This checks that a guest cannot comment on an entry when permissions are removed."
@@ -698,71 +524,9 @@ definition {
 		}
 	}
 
-	@description = "This checks that a user without permissions cannot view a draft entry from an admin."
-	@priority = "3"
-	@refactordone
-	test CannotViewDraftWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Blogs.addDraft(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This checks that an entry cannot be viewed by a guest once permissions are removed."
-	@priority = "4"
-	@refactordone
-	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.removeViewPermissionsPG(
-			entryTitle = "Blogs Entry2 Title",
-			roleTitle = "Guest");
-
-		User.logoutPG();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Content");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title");
-	}
-
 	@priority = "4"
 	@refactorneeded
-	test DeleteBlogsEntryNoGuestRole {
+	test CannotDeleteEntryAsGuestByDefault {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -786,121 +550,9 @@ definition {
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test DeleteBlogsEntryOrgRoleDefaultPermission {
-		property portal.acceptance = "true";
-
-		Permissions.setUpOrgRoleLoginUserPG(
-			orgName = "Organization Name",
-			orgType = "Organization",
-			page = "Public Pages",
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization",
-			siteName = "Organization Name",
-			siteURL = "true",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
-			userScreenName = "usersn");
-
-		Permissions.addBlogsEntryLoginUserPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			siteName = "Organization Name",
-			siteURLTemp = "true",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test DeleteBlogsEntryOrgRoleDefinePermission {
-		property portal.acceptance = "true";
-
-		Permissions.setUpOrgRoleLoginUserPG(
-			orgName = "Organization Name",
-			orgType = "Organization",
-			page = "Public Pages",
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization",
-			siteName = "Organization Name",
-			siteURL = "true",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
-			userScreenName = "usersn");
-
-		Permissions.addBlogsEntryLoginUserPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			siteName = "Organization Name",
-			siteURLTemp = "true",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Roles Orgrole Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		BlogsEntry.moveToRecycleBinPG(
-			assetType = "Blogs Entry",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Permissions.removePermissionViaAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Roles Orgrole Name");
-
-		Permissions.addBlogsEntryLoginUserPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			siteName = "Organization Name",
-			siteURLTemp = "true",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Organization Name");
-
-		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
 	@priority = "4"
 	@refactorneeded
-	test DeleteBlogsEntryOrgRoleInline {
+	test CannotDeleteEntryWhenOrgRoleHasNoPermissions {
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",
 			orgType = "Organization",
@@ -1000,7 +652,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteBlogsEntryOwnerRoleInline {
+	test CannotDeleteEntryWhenOwnerHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -1073,73 +725,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteBlogsEntryRegRole {
-		Permissions.setUpRegRoleLoginUserPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
-			userScreenName = "usersn");
-
-		Permissions.addBlogsEntryLoginUserPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.moveToRecycleBinPG(
-			assetType = "Blogs Entry",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Permissions.removePermissionViaAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Permissions.addBlogsEntryLoginUserPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test DeleteBlogsEntryRegRoleInline {
+	test CannotDeleteEntryWhenRegRoleHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -1215,88 +801,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteBlogsEntrySiteRole {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Permissions.setUpSiteRoleLoginUserPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Roles Siterole Name",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
-			userScreenName = "usersn");
-
-		Permissions.addBlogsEntryLoginUserPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			siteName = "Site Name",
-			siteURLTemp = "true",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		BlogsEntry.moveToRecycleBinPG(
-			assetType = "Blogs Entry",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Permissions.removePermissionViaAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Permissions.addBlogsEntryLoginUserPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			pageName = "Blogs Page",
-			siteName = "Site Name",
-			siteURLTemp = "true",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test DeleteBlogsEntrySiteRoleInline {
+	test CannotDeleteEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
@@ -1389,7 +894,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteBlogsEntrySiteTeamRoleInline {
+	test CannotDeleteEntryWhenTeamRoleHasNoPermissions {
 		Permissions.setUpSiteTeamRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -1474,15 +979,11 @@ definition {
 			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
 	@refactorneeded
-	test EditBlogsEntryOwnerRoleInline {
+	test CannotEditEntryWhenOwnerHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -1566,147 +1067,47 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
-	@priority = "4"
-	@refactordone
-	test NoWidgetActionsDisplayForGuestByDefault {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		User.logoutPG();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
-	}
-
 	@priority = "5"
 	@refactorneeded
-	test SubscribeBlogsRegRole {
+	test CannotDeleteEntryWithOrgRoleByDefault {
 		property portal.acceptance = "true";
 
-		Permissions.setUpRegRoleLoginUserPG(
+		Permissions.setUpOrgRoleLoginUserPG(
+			orgName = "Organization Name",
+			orgType = "Organization",
+			page = "Public Pages",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
-			roleTitle = "Regrole Name",
+			roleTitle = "Roles Orgrole Name",
+			roleType = "Organization",
+			siteName = "Organization Name",
+			siteURL = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "SUBSCRIBE",
-			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
+		Permissions.addBlogsEntryLoginUserPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			pageName = "Blogs Page",
+			siteName = "Organization Name",
+			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
-		Blogs.subscribePG();
-
-		Permissions.removePermissionViaAPI(
-			resourceAction = "SUBSCRIBE",
-			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
 	@priority = "4"
 	@refactorneeded
-	test SubscribeBlogsRegRoleInline {
-		Permissions.setUpRegRoleLoginUserPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
-			userScreenName = "usersn");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
-
-		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
-
-		Role.definePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.subscribePG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
-
-		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test SubscribeBlogsSiteRoleInline {
+	test CannotSubscribeToEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteMemberRoleLoginUserPG(
@@ -1766,98 +1167,14 @@ definition {
 			siteName = "Site Name");
 
 		BlogsConfiguration.viewNoSubscribePG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
 	}
 
 	@priority = "5"
 	@refactorneeded
-	test ViewBlogsEntryPermissionsOwnerRoleInline {
-		Permissions.setUpRegRoleLoginUserPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
-			roleTitle = "Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ENTRY",
-			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Owner");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewPermissionsNoPermissionPG(entryTitle = "Blogs Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
-
-		Role.definePermissionPG(
-			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Owner");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewPermissionsPG(entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test ViewBlogsEntryRegRoleInline {
+	test CannotSubscribeToEntryWhenRegRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPRolesCPBlogs#ViewBlogsEntryRegRoleInline";
+		property test.name.skip.portal.instance = "BlogsPermissions#CannotSubscribeToEntryWhenRegRoleHasNoPermissions";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
@@ -1939,12 +1256,42 @@ definition {
 		LexiconCard.viewCardTitle(card = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a user without permissions cannot view a draft entry from an admin."
+	@priority = "3"
+	@refactordone
+	test CannotViewDraftWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Blogs.addDraft(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
+	}
+
 	@priority = "5"
 	@refactorneeded
-	test ViewBlogsPermissionsRegRole {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPRolesPGBlogs#ViewBlogsPermissionsRegRole";
-
+	test CannotViewEntryAfterOwnerRoleInlinePermissionsAreRemoved {
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -1952,22 +1299,23 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
-
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "CONFIGURATION",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
 			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "PERMISSIONS",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
 			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
@@ -1976,34 +1324,83 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsConfiguration.viewPermissionsPG();
-
-		Permissions.removePermissionViaAPI(
-			resourceAction = "CONFIGURATION",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
-			roleTitle = "Regrole Name");
-
-		Permissions.removePermissionViaAPI(
-			resourceAction = "PERMISSIONS",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Owner");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewPermissionsNoPermissionPG(entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
+
+		Role.definePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
+			roleTitle = "Owner");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewPermissionsPG(entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that an entry cannot be viewed by a guest once permissions are removed."
+	@priority = "4"
+	@refactordone
+	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.removeViewPermissionsPG(
+			entryTitle = "Blogs Entry2 Title",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Content");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
 	}
 
 	@priority = "4"
 	@refactorneeded
-	test ViewBlogsPermissionsRegRoleInline {
+	test CannotViewEntryWhenRegRoleHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -2094,7 +1491,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test ViewBlogsPermissionsSiteRole {
+	test CannotViewEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
@@ -2175,15 +1572,32 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewBlogsPermissionsSiteRoleInline {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+	@refactordone
+	test NoWidgetActionsDisplayForGuestByDefault {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		Permissions.setUpSiteRoleLoginUserPG(
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test SubscribeBlogsRegRoleInline {
+		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
-			roleTitle = "Roles Siterole Name",
-			siteName = "Site Name",
+			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -2191,93 +1605,53 @@ definition {
 			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsConfiguration.viewAsSiteMemberPG();
+		BlogsConfiguration.viewNoPermissionPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Blogs");
 
-		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.definePermissionPG(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
-			roleTitle = "Roles Siterole Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
-
-		Role.definePermissionPG(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Roles Siterole Name");
+			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsConfiguration.viewPermissionsPG();
+		Blogs.subscribePG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Blogs");
 
-		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
+		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.removePermissionPG(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Roles Siterole Name");
+			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsConfiguration.viewAsSiteMemberPG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
-			roleTitle = "Roles Siterole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		BlogsConfiguration.viewAsSiteMemberPG();
+		BlogsConfiguration.viewNoPermissionPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

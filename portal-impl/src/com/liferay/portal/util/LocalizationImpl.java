@@ -94,6 +94,10 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public String[] getAvailableLanguageIds(Document document) {
+		if (document == null) {
+			return new String[0];
+		}
+
 		String attributeValue = _getRootAttributeValue(
 			document, _AVAILABLE_LOCALES, StringPool.BLANK);
 

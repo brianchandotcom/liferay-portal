@@ -197,6 +197,14 @@ definition {
 			value1 = "${sitePagesVariationName}");
 
 		if (isSet(copySitePagesVariationName)) {
+			MouseOver(
+				key_tooltipInfo = "Only the latest version marked as ready for publish process is copied.",
+				locator1 = "Staging#STAGING_TOOLTIP");
+
+			AssertVisible(
+				key_content = "Only the latest version marked as ready for publish process is copied.",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
 			Select(
 				locator1 = "StagingManageVariations#ADD_SITE_PAGES_VARIATION_COPY_PAGES_SELECT",
 				value1 = "${copySitePagesVariationName}");

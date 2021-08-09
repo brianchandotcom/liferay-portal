@@ -663,8 +663,8 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		AssertVisible(
-			key_connectionInfo = "The connection to the remote live site cannot be established due to a network problem.",
-			locator1 = "Staging#STAGING_CONNECTION_TOOLTIP");
+			key_tooltipInfo = "The connection to the remote live site cannot be established due to a network problem.",
+			locator1 = "Staging#STAGING_TOOLTIP");
 
 		AssertElementNotPresent(locator1 = "Staging#STAGING_LINK_LIVE");
 

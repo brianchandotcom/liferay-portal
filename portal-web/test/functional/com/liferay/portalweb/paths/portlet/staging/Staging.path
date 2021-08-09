@@ -160,8 +160,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_CONNECTION_TOOLTIP</td>
-	<td>//span[contains(@class,'lfr-portal-tooltip') and contains(@title,'${key_connectionInfo}')]</td>
+	<td>STAGING_TOOLTIP</td>
+	<td>//span[contains(@class,'lfr-portal-tooltip') and contains(@title,'${key_tooltipInfo}')]</td>
 	<td></td>
 </tr>
 <tr>

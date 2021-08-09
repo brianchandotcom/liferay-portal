@@ -69,6 +69,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
@@ -1090,6 +1091,9 @@ public class StructuredContentResourceImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		StructuredContentResourceImpl.class);
+
 	@Reference
 	private Aggregations _aggregations;
 
@@ -1167,9 +1171,6 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private Log _log;
 
 	@Reference
 	private Portal _portal;

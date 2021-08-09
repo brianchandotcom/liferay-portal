@@ -527,7 +527,7 @@
 			<finder-column name="type" />
 			<finder-column name="active" />
 		</finder>
-		<finder db-index="false" name="G_C_P" return-type="Collection">
+		<finder db-index="false" name="GtG_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
@@ -557,7 +557,7 @@
 			<finder-column name="liveGroupId" />
 			<finder-column name="groupKey" />
 		</finder>
-		<finder db-index="false" name="C_T_S" return-type="Collection">
+		<finder db-index="false" name="C_LikeT_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column comparator="LIKE" name="treePath" />
 			<finder-column name="site" />
@@ -572,13 +572,13 @@
 			<finder-column name="site" />
 			<finder-column name="active" />
 		</finder>
-		<finder db-index="false" name="G_C_C_P" return-type="Collection">
+		<finder db-index="false" name="GtG_C_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="parentGroupId" />
 		</finder>
-		<finder db-index="false" name="G_C_P_S" return-type="Collection">
+		<finder db-index="false" name="GtG_C_P_S" return-type="Collection">
 			<finder-column comparator="&gt;" name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
@@ -809,7 +809,7 @@
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="parentLayoutId" />
 			<finder-column name="hidden" />
 		</finder>
-		<finder name="G_P_P_LtP" return-type="Collection" where="system = [$FALSE$]">
+		<finder name="G_P_P_LteP" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="parentLayoutId" />
@@ -1417,14 +1417,14 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder db-index="false" name="Locations" return-type="Collection" where="parentOrganizationId != 0">
+		<finder db-index="false" name="CompanyIdLocations" return-type="Collection" where="parentOrganizationId != 0">
 			<finder-column name="companyId" />
 		</finder>
 		<finder name="C_P" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="parentOrganizationId" />
 		</finder>
-		<finder db-index="false" name="C_T" return-type="Collection">
+		<finder db-index="false" name="C_LikeT" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column comparator="LIKE" name="treePath" />
 		</finder>
@@ -1436,7 +1436,7 @@
 			<finder-column name="companyId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
-		<finder db-index="false" name="O_C_P" return-type="Collection">
+		<finder db-index="false" name="GtO_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="organizationId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentOrganizationId" />
@@ -1753,7 +1753,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="C_I_T" return-type="PluginSetting" unique="true">
+		<finder name="C_P_P" return-type="PluginSetting" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="pluginId" />
 			<finder-column name="pluginType" />
@@ -2875,7 +2875,7 @@
 		<finder name="PortraitId" return-type="User">
 			<finder-column name="portraitId" />
 		</finder>
-		<finder db-index="false" name="U_C" return-type="Collection" where="defaultUser = [$FALSE$]">
+		<finder db-index="false" name="GtU_C" return-type="Collection" where="defaultUser = [$FALSE$]">
 			<finder-column comparator="&gt;" name="userId" />
 			<finder-column name="companyId" />
 		</finder>
@@ -3012,7 +3012,7 @@
 			<finder-column name="companyId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
-		<finder db-index="false" name="U_C_P" return-type="Collection">
+		<finder db-index="false" name="GtU_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="userGroupId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentUserGroupId" />

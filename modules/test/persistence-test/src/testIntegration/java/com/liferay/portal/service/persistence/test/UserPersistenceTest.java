@@ -354,11 +354,11 @@ public class UserPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_C() throws Exception {
-		_persistence.countByU_C(
+	public void testCountByGtU_C() throws Exception {
+		_persistence.countByGtU_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByU_C(0L, 0L);
+		_persistence.countByGtU_C(0L, 0L);
 	}
 
 	@Test

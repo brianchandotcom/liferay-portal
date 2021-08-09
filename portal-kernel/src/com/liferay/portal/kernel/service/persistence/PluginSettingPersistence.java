@@ -192,7 +192,7 @@ public interface PluginSettingPersistence
 	 * @return the matching plugin setting
 	 * @throws NoSuchPluginSettingException if a matching plugin setting could not be found
 	 */
-	public PluginSetting findByC_I_T(
+	public PluginSetting findByC_P_P(
 			long companyId, String pluginId, String pluginType)
 		throws NoSuchPluginSettingException;
 
@@ -204,7 +204,7 @@ public interface PluginSettingPersistence
 	 * @param pluginType the plugin type
 	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	 */
-	public PluginSetting fetchByC_I_T(
+	public PluginSetting fetchByC_P_P(
 		long companyId, String pluginId, String pluginType);
 
 	/**
@@ -216,7 +216,7 @@ public interface PluginSettingPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
 	 */
-	public PluginSetting fetchByC_I_T(
+	public PluginSetting fetchByC_P_P(
 		long companyId, String pluginId, String pluginType,
 		boolean useFinderCache);
 
@@ -228,7 +228,7 @@ public interface PluginSettingPersistence
 	 * @param pluginType the plugin type
 	 * @return the plugin setting that was removed
 	 */
-	public PluginSetting removeByC_I_T(
+	public PluginSetting removeByC_P_P(
 			long companyId, String pluginId, String pluginType)
 		throws NoSuchPluginSettingException;
 
@@ -240,7 +240,7 @@ public interface PluginSettingPersistence
 	 * @param pluginType the plugin type
 	 * @return the number of matching plugin settings
 	 */
-	public int countByC_I_T(long companyId, String pluginId, String pluginType);
+	public int countByC_P_P(long companyId, String pluginId, String pluginType);
 
 	/**
 	 * Caches the plugin setting in the entity cache if it is enabled.

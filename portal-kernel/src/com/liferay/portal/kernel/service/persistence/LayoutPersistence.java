@@ -3808,7 +3808,7 @@ public interface LayoutPersistence
 	 * @param priority the priority
 	 * @return the matching layouts
 	 */
-	public java.util.List<Layout> findByG_P_P_LtP(
+	public java.util.List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority);
 
 	/**
@@ -3826,7 +3826,7 @@ public interface LayoutPersistence
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
-	public java.util.List<Layout> findByG_P_P_LtP(
+	public java.util.List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end);
 
@@ -3846,7 +3846,7 @@ public interface LayoutPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
-	public java.util.List<Layout> findByG_P_P_LtP(
+	public java.util.List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
@@ -3869,7 +3869,7 @@ public interface LayoutPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	public java.util.List<Layout> findByG_P_P_LtP(
+	public java.util.List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
@@ -3887,7 +3887,7 @@ public interface LayoutPersistence
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public Layout findByG_P_P_LtP_First(
+	public Layout findByG_P_P_LteP_First(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			int priority,
 			com.liferay.portal.kernel.util.OrderByComparator<Layout>
@@ -3904,7 +3904,7 @@ public interface LayoutPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public Layout fetchByG_P_P_LtP_First(
+	public Layout fetchByG_P_P_LteP_First(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
@@ -3920,7 +3920,7 @@ public interface LayoutPersistence
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public Layout findByG_P_P_LtP_Last(
+	public Layout findByG_P_P_LteP_Last(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			int priority,
 			com.liferay.portal.kernel.util.OrderByComparator<Layout>
@@ -3937,7 +3937,7 @@ public interface LayoutPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public Layout fetchByG_P_P_LtP_Last(
+	public Layout fetchByG_P_P_LteP_Last(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
@@ -3954,7 +3954,7 @@ public interface LayoutPersistence
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public Layout[] findByG_P_P_LtP_PrevAndNext(
+	public Layout[] findByG_P_P_LteP_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
 			int priority,
 			com.liferay.portal.kernel.util.OrderByComparator<Layout>
@@ -3970,7 +3970,7 @@ public interface LayoutPersistence
 	 * @param priority the priority
 	 * @return the matching layouts that the user has permission to view
 	 */
-	public java.util.List<Layout> filterFindByG_P_P_LtP(
+	public java.util.List<Layout> filterFindByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority);
 
 	/**
@@ -3988,7 +3988,7 @@ public interface LayoutPersistence
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts that the user has permission to view
 	 */
-	public java.util.List<Layout> filterFindByG_P_P_LtP(
+	public java.util.List<Layout> filterFindByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end);
 
@@ -4008,7 +4008,7 @@ public interface LayoutPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts that the user has permission to view
 	 */
-	public java.util.List<Layout> filterFindByG_P_P_LtP(
+	public java.util.List<Layout> filterFindByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
@@ -4026,7 +4026,7 @@ public interface LayoutPersistence
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public Layout[] filterFindByG_P_P_LtP_PrevAndNext(
+	public Layout[] filterFindByG_P_P_LteP_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
 			int priority,
 			com.liferay.portal.kernel.util.OrderByComparator<Layout>
@@ -4041,7 +4041,7 @@ public interface LayoutPersistence
 	 * @param parentLayoutId the parent layout ID
 	 * @param priority the priority
 	 */
-	public void removeByG_P_P_LtP(
+	public void removeByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority);
 
 	/**
@@ -4053,7 +4053,7 @@ public interface LayoutPersistence
 	 * @param priority the priority
 	 * @return the number of matching layouts
 	 */
-	public int countByG_P_P_LtP(
+	public int countByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority);
 
 	/**
@@ -4065,7 +4065,7 @@ public interface LayoutPersistence
 	 * @param priority the priority
 	 * @return the number of matching layouts that the user has permission to view
 	 */
-	public int filterCountByG_P_P_LtP(
+	public int filterCountByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority);
 
 	/**

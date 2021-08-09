@@ -1186,7 +1186,7 @@ public interface UserGroupPersistence
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the matching user groups
 	 */
-	public java.util.List<UserGroup> findByU_C_P(
+	public java.util.List<UserGroup> findByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId);
 
 	/**
@@ -1203,7 +1203,7 @@ public interface UserGroupPersistence
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups
 	 */
-	public java.util.List<UserGroup> findByU_C_P(
+	public java.util.List<UserGroup> findByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
 		int end);
 
@@ -1222,7 +1222,7 @@ public interface UserGroupPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups
 	 */
-	public java.util.List<UserGroup> findByU_C_P(
+	public java.util.List<UserGroup> findByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
@@ -1244,7 +1244,7 @@ public interface UserGroupPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
-	public java.util.List<UserGroup> findByU_C_P(
+	public java.util.List<UserGroup> findByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
@@ -1261,7 +1261,7 @@ public interface UserGroupPersistence
 	 * @return the first matching user group
 	 * @throws NoSuchUserGroupException if a matching user group could not be found
 	 */
-	public UserGroup findByU_C_P_First(
+	public UserGroup findByGtU_C_P_First(
 			long userGroupId, long companyId, long parentUserGroupId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
 				orderByComparator)
@@ -1276,7 +1276,7 @@ public interface UserGroupPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	 */
-	public UserGroup fetchByU_C_P_First(
+	public UserGroup fetchByGtU_C_P_First(
 		long userGroupId, long companyId, long parentUserGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
 			orderByComparator);
@@ -1291,7 +1291,7 @@ public interface UserGroupPersistence
 	 * @return the last matching user group
 	 * @throws NoSuchUserGroupException if a matching user group could not be found
 	 */
-	public UserGroup findByU_C_P_Last(
+	public UserGroup findByGtU_C_P_Last(
 			long userGroupId, long companyId, long parentUserGroupId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
 				orderByComparator)
@@ -1306,7 +1306,7 @@ public interface UserGroupPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
 	 */
-	public UserGroup fetchByU_C_P_Last(
+	public UserGroup fetchByGtU_C_P_Last(
 		long userGroupId, long companyId, long parentUserGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
 			orderByComparator);
@@ -1319,7 +1319,7 @@ public interface UserGroupPersistence
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the matching user groups that the user has permission to view
 	 */
-	public java.util.List<UserGroup> filterFindByU_C_P(
+	public java.util.List<UserGroup> filterFindByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId);
 
 	/**
@@ -1336,7 +1336,7 @@ public interface UserGroupPersistence
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups that the user has permission to view
 	 */
-	public java.util.List<UserGroup> filterFindByU_C_P(
+	public java.util.List<UserGroup> filterFindByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
 		int end);
 
@@ -1355,7 +1355,7 @@ public interface UserGroupPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups that the user has permission to view
 	 */
-	public java.util.List<UserGroup> filterFindByU_C_P(
+	public java.util.List<UserGroup> filterFindByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
@@ -1368,7 +1368,7 @@ public interface UserGroupPersistence
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 */
-	public void removeByU_C_P(
+	public void removeByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId);
 
 	/**
@@ -1379,7 +1379,7 @@ public interface UserGroupPersistence
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the number of matching user groups
 	 */
-	public int countByU_C_P(
+	public int countByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId);
 
 	/**
@@ -1390,7 +1390,7 @@ public interface UserGroupPersistence
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the number of matching user groups that the user has permission to view
 	 */
-	public int filterCountByU_C_P(
+	public int filterCountByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId);
 
 	/**

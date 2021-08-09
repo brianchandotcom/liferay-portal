@@ -322,12 +322,12 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_P() throws Exception {
-		_persistence.countByG_C_P(
+	public void testCountByGtG_C_P() throws Exception {
+		_persistence.countByGtG_C_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByG_C_P(0L, 0L, 0L);
+		_persistence.countByGtG_C_P(0L, 0L, 0L);
 	}
 
 	@Test
@@ -377,13 +377,14 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_T_S() throws Exception {
-		_persistence.countByC_T_S(
+	public void testCountByC_LikeT_S() throws Exception {
+		_persistence.countByC_LikeT_S(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_T_S(0L, "null", RandomTestUtil.randomBoolean());
+		_persistence.countByC_LikeT_S(
+			0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_T_S(
+		_persistence.countByC_LikeT_S(
 			0L, (String)null, RandomTestUtil.randomBoolean());
 	}
 
@@ -410,21 +411,22 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_C_P() throws Exception {
-		_persistence.countByG_C_C_P(
+	public void testCountByGtG_C_C_P() throws Exception {
+		_persistence.countByGtG_C_C_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_C_C_P(0L, 0L, 0L, 0L);
+		_persistence.countByGtG_C_C_P(0L, 0L, 0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_C_P_S() throws Exception {
-		_persistence.countByG_C_P_S(
+	public void testCountByGtG_C_P_S() throws Exception {
+		_persistence.countByGtG_C_P_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_C_P_S(0L, 0L, 0L, RandomTestUtil.randomBoolean());
+		_persistence.countByGtG_C_P_S(
+			0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

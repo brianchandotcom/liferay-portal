@@ -244,10 +244,10 @@ public class OrganizationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLocations() throws Exception {
-		_persistence.countByLocations(RandomTestUtil.nextLong());
+	public void testCountByCompanyIdLocations() throws Exception {
+		_persistence.countByCompanyIdLocations(RandomTestUtil.nextLong());
 
-		_persistence.countByLocations(0L);
+		_persistence.countByCompanyIdLocations(0L);
 	}
 
 	@Test
@@ -259,12 +259,12 @@ public class OrganizationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_T() throws Exception {
-		_persistence.countByC_T(RandomTestUtil.nextLong(), "");
+	public void testCountByC_LikeT() throws Exception {
+		_persistence.countByC_LikeT(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_T(0L, "null");
+		_persistence.countByC_LikeT(0L, "null");
 
-		_persistence.countByC_T(0L, (String)null);
+		_persistence.countByC_LikeT(0L, (String)null);
 	}
 
 	@Test
@@ -286,12 +286,12 @@ public class OrganizationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByO_C_P() throws Exception {
-		_persistence.countByO_C_P(
+	public void testCountByGtO_C_P() throws Exception {
+		_persistence.countByGtO_C_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByO_C_P(0L, 0L, 0L);
+		_persistence.countByGtO_C_P(0L, 0L, 0L);
 	}
 
 	@Test

@@ -4674,11 +4674,11 @@ public class LayoutUtil {
 	 * @param priority the priority
 	 * @return the matching layouts
 	 */
-	public static List<Layout> findByG_P_P_LtP(
+	public static List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		int priority) {
 
-		return getPersistence().findByG_P_P_LtP(
+		return getPersistence().findByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority);
 	}
 
@@ -4697,11 +4697,11 @@ public class LayoutUtil {
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
-	public static List<Layout> findByG_P_P_LtP(
+	public static List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end) {
 
-		return getPersistence().findByG_P_P_LtP(
+		return getPersistence().findByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority, start, end);
 	}
 
@@ -4721,11 +4721,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByG_P_P_LtP(
+	public static List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().findByG_P_P_LtP(
+		return getPersistence().findByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority, start, end,
 			orderByComparator);
 	}
@@ -4747,12 +4747,12 @@ public class LayoutUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByG_P_P_LtP(
+	public static List<Layout> findByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end, OrderByComparator<Layout> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByG_P_P_LtP(
+		return getPersistence().findByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -4768,12 +4768,12 @@ public class LayoutUtil {
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByG_P_P_LtP_First(
+	public static Layout findByG_P_P_LteP_First(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			int priority, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByG_P_P_LtP_First(
+		return getPersistence().findByG_P_P_LteP_First(
 			groupId, privateLayout, parentLayoutId, priority,
 			orderByComparator);
 	}
@@ -4788,11 +4788,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByG_P_P_LtP_First(
+	public static Layout fetchByG_P_P_LteP_First(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByG_P_P_LtP_First(
+		return getPersistence().fetchByG_P_P_LteP_First(
 			groupId, privateLayout, parentLayoutId, priority,
 			orderByComparator);
 	}
@@ -4808,12 +4808,12 @@ public class LayoutUtil {
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByG_P_P_LtP_Last(
+	public static Layout findByG_P_P_LteP_Last(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			int priority, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByG_P_P_LtP_Last(
+		return getPersistence().findByG_P_P_LteP_Last(
 			groupId, privateLayout, parentLayoutId, priority,
 			orderByComparator);
 	}
@@ -4828,11 +4828,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByG_P_P_LtP_Last(
+	public static Layout fetchByG_P_P_LteP_Last(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByG_P_P_LtP_Last(
+		return getPersistence().fetchByG_P_P_LteP_Last(
 			groupId, privateLayout, parentLayoutId, priority,
 			orderByComparator);
 	}
@@ -4849,12 +4849,12 @@ public class LayoutUtil {
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public static Layout[] findByG_P_P_LtP_PrevAndNext(
+	public static Layout[] findByG_P_P_LteP_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
 			int priority, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByG_P_P_LtP_PrevAndNext(
+		return getPersistence().findByG_P_P_LteP_PrevAndNext(
 			plid, groupId, privateLayout, parentLayoutId, priority,
 			orderByComparator);
 	}
@@ -4868,11 +4868,11 @@ public class LayoutUtil {
 	 * @param priority the priority
 	 * @return the matching layouts that the user has permission to view
 	 */
-	public static List<Layout> filterFindByG_P_P_LtP(
+	public static List<Layout> filterFindByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		int priority) {
 
-		return getPersistence().filterFindByG_P_P_LtP(
+		return getPersistence().filterFindByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority);
 	}
 
@@ -4891,11 +4891,11 @@ public class LayoutUtil {
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts that the user has permission to view
 	 */
-	public static List<Layout> filterFindByG_P_P_LtP(
+	public static List<Layout> filterFindByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end) {
 
-		return getPersistence().filterFindByG_P_P_LtP(
+		return getPersistence().filterFindByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority, start, end);
 	}
 
@@ -4915,11 +4915,11 @@ public class LayoutUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts that the user has permission to view
 	 */
-	public static List<Layout> filterFindByG_P_P_LtP(
+	public static List<Layout> filterFindByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().filterFindByG_P_P_LtP(
+		return getPersistence().filterFindByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority, start, end,
 			orderByComparator);
 	}
@@ -4936,12 +4936,12 @@ public class LayoutUtil {
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public static Layout[] filterFindByG_P_P_LtP_PrevAndNext(
+	public static Layout[] filterFindByG_P_P_LteP_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
 			int priority, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().filterFindByG_P_P_LtP_PrevAndNext(
+		return getPersistence().filterFindByG_P_P_LteP_PrevAndNext(
 			plid, groupId, privateLayout, parentLayoutId, priority,
 			orderByComparator);
 	}
@@ -4954,11 +4954,11 @@ public class LayoutUtil {
 	 * @param parentLayoutId the parent layout ID
 	 * @param priority the priority
 	 */
-	public static void removeByG_P_P_LtP(
+	public static void removeByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		int priority) {
 
-		getPersistence().removeByG_P_P_LtP(
+		getPersistence().removeByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority);
 	}
 
@@ -4971,11 +4971,11 @@ public class LayoutUtil {
 	 * @param priority the priority
 	 * @return the number of matching layouts
 	 */
-	public static int countByG_P_P_LtP(
+	public static int countByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		int priority) {
 
-		return getPersistence().countByG_P_P_LtP(
+		return getPersistence().countByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority);
 	}
 
@@ -4988,11 +4988,11 @@ public class LayoutUtil {
 	 * @param priority the priority
 	 * @return the number of matching layouts that the user has permission to view
 	 */
-	public static int filterCountByG_P_P_LtP(
+	public static int filterCountByG_P_P_LteP(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		int priority) {
 
-		return getPersistence().filterCountByG_P_P_LtP(
+		return getPersistence().filterCountByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority);
 	}
 

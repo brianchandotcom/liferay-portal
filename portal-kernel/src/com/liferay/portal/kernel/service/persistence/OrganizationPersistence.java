@@ -686,7 +686,8 @@ public interface OrganizationPersistence
 	 * @param companyId the company ID
 	 * @return the matching organizations
 	 */
-	public java.util.List<Organization> findByLocations(long companyId);
+	public java.util.List<Organization> findByCompanyIdLocations(
+		long companyId);
 
 	/**
 	 * Returns a range of all the organizations where companyId = &#63;.
@@ -700,7 +701,7 @@ public interface OrganizationPersistence
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
 	 */
-	public java.util.List<Organization> findByLocations(
+	public java.util.List<Organization> findByCompanyIdLocations(
 		long companyId, int start, int end);
 
 	/**
@@ -716,7 +717,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
 	 */
-	public java.util.List<Organization> findByLocations(
+	public java.util.List<Organization> findByCompanyIdLocations(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -735,7 +736,7 @@ public interface OrganizationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
-	public java.util.List<Organization> findByLocations(
+	public java.util.List<Organization> findByCompanyIdLocations(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
@@ -749,7 +750,7 @@ public interface OrganizationPersistence
 	 * @return the first matching organization
 	 * @throws NoSuchOrganizationException if a matching organization could not be found
 	 */
-	public Organization findByLocations_First(
+	public Organization findByCompanyIdLocations_First(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -762,7 +763,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
 	 */
-	public Organization fetchByLocations_First(
+	public Organization fetchByCompanyIdLocations_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -775,7 +776,7 @@ public interface OrganizationPersistence
 	 * @return the last matching organization
 	 * @throws NoSuchOrganizationException if a matching organization could not be found
 	 */
-	public Organization findByLocations_Last(
+	public Organization findByCompanyIdLocations_Last(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -788,7 +789,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
 	 */
-	public Organization fetchByLocations_Last(
+	public Organization fetchByCompanyIdLocations_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -802,7 +803,7 @@ public interface OrganizationPersistence
 	 * @return the previous, current, and next organization
 	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
 	 */
-	public Organization[] findByLocations_PrevAndNext(
+	public Organization[] findByCompanyIdLocations_PrevAndNext(
 			long organizationId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -814,7 +815,8 @@ public interface OrganizationPersistence
 	 * @param companyId the company ID
 	 * @return the matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByLocations(long companyId);
+	public java.util.List<Organization> filterFindByCompanyIdLocations(
+		long companyId);
 
 	/**
 	 * Returns a range of all the organizations that the user has permission to view where companyId = &#63;.
@@ -828,7 +830,7 @@ public interface OrganizationPersistence
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByLocations(
+	public java.util.List<Organization> filterFindByCompanyIdLocations(
 		long companyId, int start, int end);
 
 	/**
@@ -844,7 +846,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByLocations(
+	public java.util.List<Organization> filterFindByCompanyIdLocations(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -858,7 +860,7 @@ public interface OrganizationPersistence
 	 * @return the previous, current, and next organization
 	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
 	 */
-	public Organization[] filterFindByLocations_PrevAndNext(
+	public Organization[] filterFindByCompanyIdLocations_PrevAndNext(
 			long organizationId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -869,7 +871,7 @@ public interface OrganizationPersistence
 	 *
 	 * @param companyId the company ID
 	 */
-	public void removeByLocations(long companyId);
+	public void removeByCompanyIdLocations(long companyId);
 
 	/**
 	 * Returns the number of organizations where companyId = &#63;.
@@ -877,7 +879,7 @@ public interface OrganizationPersistence
 	 * @param companyId the company ID
 	 * @return the number of matching organizations
 	 */
-	public int countByLocations(long companyId);
+	public int countByCompanyIdLocations(long companyId);
 
 	/**
 	 * Returns the number of organizations that the user has permission to view where companyId = &#63;.
@@ -885,7 +887,7 @@ public interface OrganizationPersistence
 	 * @param companyId the company ID
 	 * @return the number of matching organizations that the user has permission to view
 	 */
-	public int filterCountByLocations(long companyId);
+	public int filterCountByCompanyIdLocations(long companyId);
 
 	/**
 	 * Returns all the organizations where companyId = &#63; and parentOrganizationId = &#63;.
@@ -1119,7 +1121,7 @@ public interface OrganizationPersistence
 	 * @param treePath the tree path
 	 * @return the matching organizations
 	 */
-	public java.util.List<Organization> findByC_T(
+	public java.util.List<Organization> findByC_LikeT(
 		long companyId, String treePath);
 
 	/**
@@ -1135,7 +1137,7 @@ public interface OrganizationPersistence
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
 	 */
-	public java.util.List<Organization> findByC_T(
+	public java.util.List<Organization> findByC_LikeT(
 		long companyId, String treePath, int start, int end);
 
 	/**
@@ -1152,7 +1154,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
 	 */
-	public java.util.List<Organization> findByC_T(
+	public java.util.List<Organization> findByC_LikeT(
 		long companyId, String treePath, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -1172,7 +1174,7 @@ public interface OrganizationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
-	public java.util.List<Organization> findByC_T(
+	public java.util.List<Organization> findByC_LikeT(
 		long companyId, String treePath, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator,
@@ -1187,7 +1189,7 @@ public interface OrganizationPersistence
 	 * @return the first matching organization
 	 * @throws NoSuchOrganizationException if a matching organization could not be found
 	 */
-	public Organization findByC_T_First(
+	public Organization findByC_LikeT_First(
 			long companyId, String treePath,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -1201,7 +1203,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
 	 */
-	public Organization fetchByC_T_First(
+	public Organization fetchByC_LikeT_First(
 		long companyId, String treePath,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -1215,7 +1217,7 @@ public interface OrganizationPersistence
 	 * @return the last matching organization
 	 * @throws NoSuchOrganizationException if a matching organization could not be found
 	 */
-	public Organization findByC_T_Last(
+	public Organization findByC_LikeT_Last(
 			long companyId, String treePath,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -1229,7 +1231,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
 	 */
-	public Organization fetchByC_T_Last(
+	public Organization fetchByC_LikeT_Last(
 		long companyId, String treePath,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -1244,7 +1246,7 @@ public interface OrganizationPersistence
 	 * @return the previous, current, and next organization
 	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
 	 */
-	public Organization[] findByC_T_PrevAndNext(
+	public Organization[] findByC_LikeT_PrevAndNext(
 			long organizationId, long companyId, String treePath,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -1257,7 +1259,7 @@ public interface OrganizationPersistence
 	 * @param treePath the tree path
 	 * @return the matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByC_T(
+	public java.util.List<Organization> filterFindByC_LikeT(
 		long companyId, String treePath);
 
 	/**
@@ -1273,7 +1275,7 @@ public interface OrganizationPersistence
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByC_T(
+	public java.util.List<Organization> filterFindByC_LikeT(
 		long companyId, String treePath, int start, int end);
 
 	/**
@@ -1290,7 +1292,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByC_T(
+	public java.util.List<Organization> filterFindByC_LikeT(
 		long companyId, String treePath, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -1305,7 +1307,7 @@ public interface OrganizationPersistence
 	 * @return the previous, current, and next organization
 	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
 	 */
-	public Organization[] filterFindByC_T_PrevAndNext(
+	public Organization[] filterFindByC_LikeT_PrevAndNext(
 			long organizationId, long companyId, String treePath,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -1317,7 +1319,7 @@ public interface OrganizationPersistence
 	 * @param companyId the company ID
 	 * @param treePath the tree path
 	 */
-	public void removeByC_T(long companyId, String treePath);
+	public void removeByC_LikeT(long companyId, String treePath);
 
 	/**
 	 * Returns the number of organizations where companyId = &#63; and treePath LIKE &#63;.
@@ -1326,7 +1328,7 @@ public interface OrganizationPersistence
 	 * @param treePath the tree path
 	 * @return the number of matching organizations
 	 */
-	public int countByC_T(long companyId, String treePath);
+	public int countByC_LikeT(long companyId, String treePath);
 
 	/**
 	 * Returns the number of organizations that the user has permission to view where companyId = &#63; and treePath LIKE &#63;.
@@ -1335,7 +1337,7 @@ public interface OrganizationPersistence
 	 * @param treePath the tree path
 	 * @return the number of matching organizations that the user has permission to view
 	 */
-	public int filterCountByC_T(long companyId, String treePath);
+	public int filterCountByC_LikeT(long companyId, String treePath);
 
 	/**
 	 * Returns the organization where companyId = &#63; and name = &#63; or throws a <code>NoSuchOrganizationException</code> if it could not be found.
@@ -1620,7 +1622,7 @@ public interface OrganizationPersistence
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the matching organizations
 	 */
-	public java.util.List<Organization> findByO_C_P(
+	public java.util.List<Organization> findByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId);
 
 	/**
@@ -1637,7 +1639,7 @@ public interface OrganizationPersistence
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
 	 */
-	public java.util.List<Organization> findByO_C_P(
+	public java.util.List<Organization> findByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
 		int start, int end);
 
@@ -1656,7 +1658,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
 	 */
-	public java.util.List<Organization> findByO_C_P(
+	public java.util.List<Organization> findByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
@@ -1678,7 +1680,7 @@ public interface OrganizationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
-	public java.util.List<Organization> findByO_C_P(
+	public java.util.List<Organization> findByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
@@ -1695,7 +1697,7 @@ public interface OrganizationPersistence
 	 * @return the first matching organization
 	 * @throws NoSuchOrganizationException if a matching organization could not be found
 	 */
-	public Organization findByO_C_P_First(
+	public Organization findByGtO_C_P_First(
 			long organizationId, long companyId, long parentOrganizationId,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -1710,7 +1712,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
 	 */
-	public Organization fetchByO_C_P_First(
+	public Organization fetchByGtO_C_P_First(
 		long organizationId, long companyId, long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -1725,7 +1727,7 @@ public interface OrganizationPersistence
 	 * @return the last matching organization
 	 * @throws NoSuchOrganizationException if a matching organization could not be found
 	 */
-	public Organization findByO_C_P_Last(
+	public Organization findByGtO_C_P_Last(
 			long organizationId, long companyId, long parentOrganizationId,
 			com.liferay.portal.kernel.util.OrderByComparator<Organization>
 				orderByComparator)
@@ -1740,7 +1742,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
 	 */
-	public Organization fetchByO_C_P_Last(
+	public Organization fetchByGtO_C_P_Last(
 		long organizationId, long companyId, long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
 			orderByComparator);
@@ -1753,7 +1755,7 @@ public interface OrganizationPersistence
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByO_C_P(
+	public java.util.List<Organization> filterFindByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId);
 
 	/**
@@ -1770,7 +1772,7 @@ public interface OrganizationPersistence
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByO_C_P(
+	public java.util.List<Organization> filterFindByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
 		int start, int end);
 
@@ -1789,7 +1791,7 @@ public interface OrganizationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
 	 */
-	public java.util.List<Organization> filterFindByO_C_P(
+	public java.util.List<Organization> filterFindByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization>
@@ -1802,7 +1804,7 @@ public interface OrganizationPersistence
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 */
-	public void removeByO_C_P(
+	public void removeByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId);
 
 	/**
@@ -1813,7 +1815,7 @@ public interface OrganizationPersistence
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the number of matching organizations
 	 */
-	public int countByO_C_P(
+	public int countByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId);
 
 	/**
@@ -1824,7 +1826,7 @@ public interface OrganizationPersistence
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the number of matching organizations that the user has permission to view
 	 */
-	public int filterCountByO_C_P(
+	public int filterCountByGtO_C_P(
 		long organizationId, long companyId, long parentOrganizationId);
 
 	/**

@@ -168,12 +168,12 @@ public class PluginSettingPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_I_T() throws Exception {
-		_persistence.countByC_I_T(RandomTestUtil.nextLong(), "", "");
+	public void testCountByC_P_P() throws Exception {
+		_persistence.countByC_P_P(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByC_I_T(0L, "null", "null");
+		_persistence.countByC_P_P(0L, "null", "null");
 
-		_persistence.countByC_I_T(0L, (String)null, (String)null);
+		_persistence.countByC_P_P(0L, (String)null, (String)null);
 	}
 
 	@Test

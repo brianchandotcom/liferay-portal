@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  */
 @Component(
-	configurationPid = "com.liferay.cluster.test.module.configuration.ClusterTestConfiguration",
+	configurationPid = "com.liferay.portal.cluster.sample.configuration.ClusterTestConfiguration",
 	immediate = true, service = {}
 )
 public class ClusterTestDispatcher {

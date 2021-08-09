@@ -84,7 +84,7 @@ definition {
 		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
+			exceptionText = "Could not resolve module: com.liferay.portal.cluster.sample",
 			nodePort = "9080");
 
 		Clustering.runGroovyScript(

@@ -36,6 +36,33 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8343 | Test Summary: Custom Range time period filter in Page table"
+	@ignore = "true"
+	@priority = "5"
+	test CanTimeFilterUseCustomRangeInPageTable {
+
+		// TODO LRAC-8343 CanTimeFilterUseCustomRangeInPageTable pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8340 | Test Summary: 180 Days time period filter in Page table"
+	@ignore = "true"
+	@priority = "3"
+	test PeriodFilter180DaysPageTable {
+
+		// TODO LRAC-8340 PeriodFilter180DaysPageTable pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8341 | Test Summary: Last Year time period filter in Page table"
+	@ignore = "true"
+	@priority = "3"
+	test PeriodFilterLastYearPageTable {
+
+		// TODO LRAC-8341 PeriodFilterLastYearPageTable pending implementation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"
 	@ignore = "true"
 	@priority = "5"
@@ -44,5 +71,7 @@ definition {
 		// TODO LRAC-8111 ShowsListOfPages pending implementation
 
 	}
+
+
 
 }

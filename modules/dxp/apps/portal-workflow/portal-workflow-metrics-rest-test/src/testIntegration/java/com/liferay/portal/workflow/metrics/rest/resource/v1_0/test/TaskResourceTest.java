@@ -75,8 +75,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostProcessTasksPage() throws Exception {
-		Page<Task> page = taskResource.postProcessTasksPage(
+	public void testPostTasksPage() throws Exception {
+		Page<Task> page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -94,7 +94,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			null, testGroup.getCompanyId(), _instance,
 			TestPropsValues.getUser());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -108,7 +108,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -122,7 +122,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task3), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -135,7 +135,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2, task3), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -148,7 +148,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2, task3), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -161,7 +161,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -174,7 +174,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task2), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(1, 10),
 			new TaskBulkSelection() {
 				{
@@ -188,7 +188,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task2), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(0, 0),
 			new TaskBulkSelection() {
 				{
@@ -202,7 +202,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(0, 0),
 			new TaskBulkSelection() {
 				{
@@ -216,7 +216,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task3), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(0, 0),
 			new TaskBulkSelection() {
 				{
@@ -229,7 +229,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2, task3), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(0, 0),
 			new TaskBulkSelection() {
 				{
@@ -242,7 +242,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2, task3), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(0, 0),
 			new TaskBulkSelection() {
 				{
@@ -255,7 +255,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(0, 0),
 			new TaskBulkSelection() {
 				{
@@ -268,7 +268,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task2), (List<Task>)page.getItems());
 
-		page = taskResource.postProcessTasksPage(
+		page = taskResource.postTasksPage(
 			Pagination.of(0, 0),
 			new TaskBulkSelection() {
 				{

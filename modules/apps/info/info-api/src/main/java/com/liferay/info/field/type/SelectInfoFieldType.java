@@ -14,6 +14,8 @@
 
 package com.liferay.info.field.type;
 
+import java.util.Collection;
+
 /**
  * @author Alicia Garcia
  */
@@ -25,9 +27,32 @@ public class SelectInfoFieldType implements InfoFieldType {
 	public static final Attribute<TextInfoFieldType, Boolean> MULTIPLE =
 		new Attribute<>();
 
+	public static final Attribute<TextInfoFieldType, Collection<Option>>
+		OPTIONS = new Attribute<>();
+
 	@Override
 	public String getName() {
 		return "select";
+	}
+
+	public static class Option {
+
+		public Option(String label, String value) {
+			_label = label;
+			_value = value;
+		}
+
+		public String getLabel() {
+			return _label;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		private final String _label;
+		private final String _value;
+
 	}
 
 	private SelectInfoFieldType() {

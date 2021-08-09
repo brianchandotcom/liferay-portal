@@ -16,9 +16,7 @@ package com.liferay.announcements.web.internal.upgrade;
 
 import com.liferay.announcements.web.internal.upgrade.v1_0_2.PermissionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,32 +29,6 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
-			new BaseUpgradeWebModuleRelease() {
-
-				@Override
-				protected String getBundleSymbolicName() {
-					return "com.liferay.announcements.web";
-				}
-
-				@Override
-				protected String[] getPortletIds() {
-					return new String[] {
-						"com_liferay_announcements_web_portlet_AlertsPortlet",
-						"com_liferay_announcements_web_portlet_" +
-							"AnnouncementsPortlet"
-					};
-				}
-
-			};
-
-		try {
-			upgradeWebModuleRelease.upgrade();
-		}
-		catch (UpgradeException upgradeException) {
-			throw new RuntimeException(upgradeException);
-		}
-
 		registry.register("0.0.0", "2.0.0", new DummyUpgradeStep());
 
 		registry.register("0.0.1", "1.0.1", new DummyUpgradeStep());

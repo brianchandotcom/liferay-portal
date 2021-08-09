@@ -22,6 +22,71 @@ definition {
 		}
 	}
 
+	@description = "This test checks that an inline image can be added to a blog."
+	@priority = "4"
+	@refactordone
+	@uitest
+	test CanAddInlineImage {
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
+			entryContent = "Blogs Entry Content",
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_1");
+	}
+
+	@description = "This test covers LPS-102178. It checks that a blog entry can be saved as draft automatically when the custom URL is the same as the removed one."
+	@priority = "3"
+	test CanAutoSaveDuplicateCustomURL {
+		Blogs.addEntryWithCustomURL(
+			customURL = "my-custom-url",
+			entryContent = "Blog Entry Content",
+			entryTitle = "Blog Entry Title",
+			siteURLKey = "guest");
+
+		JSONBlog.moveEntryToTrash(
+			entryTitle = "Blog Entry Title",
+			friendlyURL = "my-custom-url",
+			groupName = "Guest");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blog Entry Content New",
+			entryTitle = "Blog Entry Title New");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "my-custom-url");
+
+		BlogsEntry.autoSaveDraft();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(
+			entryStatus = "Draft",
+			entryTitle = "Blog Entry Title New");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blog Entry Content New",
+			entryTitle = "Blog Entry Title New");
+	}
+
 	@description = "This checks that the cover image of a blog entry can be changed."
 	@priority = "4"
 	@refactordone
@@ -345,6 +410,59 @@ definition {
 			lastModifiedBy = "Test Test",
 			uploadFileName = "Document_1.jpg",
 			versionNumber = "1.0");
+	}
+
+	@description = "This checks that the image in the DM folder can be added to a blog entry as a cover image."
+	@priority = "3"
+	@refactordone
+	test CanViewCoverImageUploadedFromDM {
+		for (var n : list "1,2") {
+			JSONDocument.addFolder(
+				dmFolderDescription = "DM Folder ${n} Description",
+				dmFolderName = "DM Folder ${n} Name",
+				groupName = "Guest");
+
+			JSONDocument.addFolder(
+				dmFolderDescription = "DM SubFolder ${n} Description",
+				dmFolderName = "DM SubFolder ${n} Name",
+				groupName = "Guest",
+				parentFolderName = "DM Folder ${n} Name");
+
+			var fileEntryId = JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${n}.jpg",
+				folderName = "DM SubFolder ${n} Name",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				parentFolderName = "DM Folder ${n} Name",
+				sourceFileName = "Document_${n}.jpg");
+
+			JSONBlog.addEntryWithImage(
+				coverImageId = "${fileEntryId}",
+				entryContent = "Blogs Entry${n} Content",
+				entryTitle = "Blogs Entry${n} Title",
+				groupName = "Guest");
+		}
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry1 Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_uploadFileName = "Document_1",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry2 Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_uploadFileName = "Document_2",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
 	}
 
 }

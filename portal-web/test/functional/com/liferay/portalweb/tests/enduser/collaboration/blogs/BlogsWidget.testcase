@@ -80,6 +80,40 @@ definition {
 			entryContent = "Blogs Entry Content Edited");
 	}
 
+	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
+	@priority = "3"
+	@refactorneeded
+	test CanSearchForPendingEntry {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entryContent = "Blogs Entry Content",
+			entrySearchTerm = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."
 	@priority = "4"
 	@refactorneeded
@@ -189,6 +223,107 @@ definition {
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "${entryContent}",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test CanViewBlogWithFutureDisplayDateViaBlogsAggregator {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Aggregator Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Aggregator Page",
+			widgetName = "Blogs Aggregator");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.scheduleBlogEntry();
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		BlogsEntry.viewNoEntryViaBlogsAggregatorPG();
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoEntryAsGuestPG(entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		BlogsEntry.viewNoEntryViaBlogsAggregatorPG();
+
+		Pause(locator1 = "120000");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "Blogs Aggregator");
+
+		var key_entryAbstractDescription = "Blogs Entry Abstract Description";
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertTextEquals(
+			locator1 = "BlogsAggregator#ENTRY_TITLE",
+			value1 = "Blogs Entry Title");
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#CONTENT_ABSTRACT",
+			value1 = "Blogs Entry Abstract Description");
+
+		AssertClick(
+			locator1 = "BlogsAggregator#ENTRY_TITLE",
+			value1 = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H2_HEADER",
+			value1 = "Blogs Aggregator");
+
+		AssertTextEquals(
+			locator1 = "BlogsEntry#CONTENT_ABSTRACT",
+			value1 = "Blogs Entry Abstract Description");
+
+		AssertClick(
+			locator1 = "BlogsAggregator#ENTRY_TITLE",
+			value1 = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}
 

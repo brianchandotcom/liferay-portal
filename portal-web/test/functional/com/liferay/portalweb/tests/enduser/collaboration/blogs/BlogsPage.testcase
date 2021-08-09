@@ -57,8 +57,8 @@ definition {
 	@description = "This test covers LPS-106613. It ensures that the custom abstract field cannot be reset to empty after typing in the content field."
 	@priority = "3"
 	@refactordone
-	test AbstractDescriptionCanPersistAfterTypingInContentField {
-		property test.name.skip.portal.instance = "PGBlogs#AbstractDescriptionCanPersistAfterTypingInContentField";
+	test AbstractDescriptionPersistsWhenTypingInContentField {
+		property test.name.skip.portal.instance = "BlogsPage#AbstractDescriptionPersistsWhenTypingInContentField";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -108,7 +108,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanDisplayViewCountForEntry {
-		property test.name.skip.portal.instance = "PGBlogs#CanDisplayViewCountForEntry";
+		property test.name.skip.portal.instance = "BlogsPage#CanDisplayViewCountForEntry";
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
@@ -417,7 +417,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSubscribeToComment {
-		property test.name.skip.portal.instance = "PGBlogs#CanSubscribeToComment";
+		property test.name.skip.portal.instance = "BlogsPage#CanSubscribeToComment";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -484,6 +484,94 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/custom-url-2");
 
 		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test CanViewEntriesOnMultiplePagesWithDifferentScopes {
+		property test.name.skip.portal.instance = "BlogsPage#CanViewEntriesOnMultiplePagesWithDifferentScopes";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page2");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page2",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page2");
+
+		Portlet.selectScopePG(
+			portletName = "Blogs",
+			scope = "Blogs Page2");
+
+		Navigator.gotoPage(pageName = "Blogs Page2");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoScopedPortlet(
+			category = "Content &amp; Data",
+			portlet = "Blogs",
+			scope = "Blogs Page2");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryAuthorCP(
+			entryAuthorFullName = "Test Test",
+			entryTitle = "Blogs Entry Title");
+
+		var key_entryTitle = "Blogs Entry Title";
+
+		AssertClick(
+			locator1 = "Blogs#ENTRY_TABLE_TITLE",
+			value1 = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsNavigator.gotoConfigurationScopePG();
+
+		BlogsConfiguration.viewScopeSelection(scopeSelection = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.selectScopePG(
+			portletName = "Blogs",
+			scope = "Blogs Page2");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}

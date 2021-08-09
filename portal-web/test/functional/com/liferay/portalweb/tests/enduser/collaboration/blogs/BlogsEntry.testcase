@@ -22,6 +22,33 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-106613. It ensures that the custom abstract field cannot be reset to empty after typing in the content field."
+	@priority = "3"
+	@refactordone
+	test AbstractDescriptionPersistsWhenTypingInContentField {
+		property test.name.skip.portal.instance = "BlogsPage#AbstractDescriptionPersistsWhenTypingInContentField";
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
+
+		Click.pauseClickAt(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
+
+		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
+
+		AssertTextEquals(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "Blogs Entry Abstract Description");
+	}
+
 	@description = "This is a use case for LPS-70143."
 	@priority = "4"
 	@refactorneeded
@@ -97,35 +124,25 @@ definition {
 		Button.clickPublish();
 	}
 
-	@description = "This test covers LPS-108029. It ensures that a blog entry can be edited from the search result."
+	@description = "This test checks that HTML is rendered in the blog content field."
 	@priority = "4"
-	@refactorneeded
-	test BlogEntryCanBeEditedFromSearchResult {
+	@refactordone
+	test CanAddHTMLToContentField {
 		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
+			entryContent = "<b>Bold Type</b> <i>Italics</i>",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openURL();
-
-		SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry Title");
-
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Blogs Entry Title");
-
-		Blogs.editEntryViaSearchResultDetails(
-			entryContent = "Blogs Entry Content",
-			entryContentEdit = "Blogs Entry Content Edit",
+		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
-			entryTitleEdit = "Blogs Entry Title Edit",
-			searchAssetTitle = "Blogs Entry Title");
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title Edit");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit");
+		BlogsEntry.viewEntryPG(
+			entryContentBold = "Bold Type",
+			entryContentItalics = "Italics",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
@@ -310,6 +327,46 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that a user can change the publish date for a scheduled entry to the present and publish it."
+	@priority = "4"
+	@refactordone
+	@uitest
+	test CanChangeAScheduledEntryToThePresentAndPublish {
+		property test.name.skip.portal.instance = "BlogsUsecase#CanChangeAScheduledEntryToThePresentAndPublish";
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.editDisplayDateYear();
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.editDisplayDate(displayTimeMinute = "00");
+
+		PortletEntry.publish();
+
+		PortletEntry.viewNoNavItemLink();
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@description = "This checks that a blog entry can saved as a draft and then deleted."
 	@priority = "4"
 	@refactorneeded
@@ -372,6 +429,88 @@ definition {
 		for (var entryCount : list "1,2") {
 			BlogsEntry.viewNoCP(entryTitle = "Blogs Entry${entryCount} Title");
 		}
+	}
+
+	@description = "This test covers LPS-106613. It ensures that the custom abstract can be added and edited."
+	@priority = "4"
+	@refactorneeded
+	test CanEditCustomAbstract {
+		property test.name.skip.portal.instance = "BlogsEntry#CanEditCustomAbstract";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithCustomAbstract(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryWithAbstractPG(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Custom AbstractEdit");
+
+		Type(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR",
+			value1 = "Blogs Entry Content Edit");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Blogs Entry Custom AbstractEdit",
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This test covers LPS-108029. It ensures that a blog entry can be edited from the search result."
+	@priority = "4"
+	@refactorneeded
+	test CanEditViaSearchResults {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry Title");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Blogs Entry Title");
+
+		Blogs.editEntryViaSearchResultDetails(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Edit",
+			searchAssetTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title Edit");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Edit");
 	}
 
 	@description = "This checks that a blog entry can be manually saved as a draft."
@@ -582,6 +721,34 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	@refactorneeded
+	test CanViewDefaultAbstract {
+		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryWithDefaultAbstract";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithDefaultAbstract(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryWithAbstractPG(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."
 	@priority = "4"
 	@refactordone
@@ -627,6 +794,30 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+	}
+
+	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
+	@priority = "4"
+	@refactordone
+	test TitleWillNotExecuteXSS {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
+			entryTitle = '''"><img src=xss onerror=alert(1)>''',
+			injectCode = "true");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = '''"><img src=xss onerror=alert(1)>''');
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
+			entryTitle = '''"><img src=xss onerror=alert(1)>''');
 	}
 
 }

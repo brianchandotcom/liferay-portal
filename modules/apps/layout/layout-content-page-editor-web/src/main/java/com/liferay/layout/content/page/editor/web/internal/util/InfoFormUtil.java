@@ -20,14 +20,21 @@ import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
@@ -60,15 +67,8 @@ public class InfoFormUtil {
 				}
 
 				defaultFieldSetFieldsJSONArray.put(
-					JSONUtil.put(
-						"dataType", _getDataType(infoFieldType)
-					).put(
-						"label", infoField.getLabel(locale)
-					).put(
-						"name", infoField.getName()
-					).put(
-						"type", _getType(infoFieldType)
-					));
+					_getFieldSetFieldJSONObject(
+						infoField, infoFieldType, locale));
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
 				JSONArray fieldSetFieldsJSONArray =
@@ -84,15 +84,8 @@ public class InfoFormUtil {
 					}
 
 					fieldSetFieldsJSONArray.put(
-						JSONUtil.put(
-							"dataType", _getDataType(infoFieldType)
-						).put(
-							"label", infoField.getLabel(locale)
-						).put(
-							"name", infoField.getName()
-						).put(
-							"type", _getType(infoFieldType)
-						));
+						_getFieldSetFieldJSONObject(
+							infoField, infoFieldType, locale));
 				}
 
 				if (fieldSetFieldsJSONArray.length() > 0) {
@@ -120,20 +113,72 @@ public class InfoFormUtil {
 		return "string";
 	}
 
+	private static JSONObject _getFieldSetFieldJSONObject(
+		InfoField infoField, InfoFieldType infoFieldType, Locale locale) {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"dataType", _getDataType(infoFieldType)
+		).put(
+			"label", infoField.getLabel(locale)
+		).put(
+			"name", infoField.getName()
+		).put(
+			"type", _getType(infoFieldType)
+		);
+
+		if (infoFieldType instanceof SelectInfoFieldType) {
+			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
+				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
+
+			List<SelectInfoFieldType.Option> options = optionsOptional.orElse(
+				Collections.emptyList());
+
+			if (ListUtil.isNotEmpty(options)) {
+				try {
+					JSONArray validValuesJSONArray = JSONUtil.toJSONArray(
+						options,
+						option -> JSONUtil.put(
+							"label", String.valueOf(option.getLabel())
+						).put(
+							"value", String.valueOf(option.getValue())
+						));
+
+					jsonObject.put(
+						"typeOptions",
+						JSONUtil.put("validValues", validValuesJSONArray));
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception, exception);
+					}
+				}
+			}
+		}
+
+		return jsonObject;
+	}
+
 	private static String _getType(InfoFieldType infoFieldType) {
 		if (infoFieldType instanceof BooleanInfoFieldType) {
 			return "checkbox";
+		}
+		else if (infoFieldType instanceof SelectInfoFieldType) {
+			return "select";
 		}
 
 		return "text";
 	}
 
 	private static boolean _isValidInfoFieldType(InfoFieldType infoFieldType) {
-		if (infoFieldType instanceof TextInfoFieldType) {
+		if (infoFieldType instanceof SelectInfoFieldType ||
+			infoFieldType instanceof TextInfoFieldType) {
+
 			return true;
 		}
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(InfoFormUtil.class);
 
 }

@@ -454,32 +454,6 @@ definition {
 			value1 = "The URL title is already in use. Please enter a unique URL title.");
 	}
 
-	@description = "This checks that a Blog cannot be published if the content field is null."
-	@priority = "4"
-	@refactordone
-	test CannotPublishWithoutContent {
-		Blogs.addWithInvalidContent(
-			entryInvalidContent = "",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This checks that a Blog cannot be published if the title field is null."
-	@priority = "4"
-	@refactordone
-	test CannotPublishWithoutTitle {
-		Blogs.addWithInvalidTitle(
-			entryContent = "Blogs Entry Content",
-			entryInvalidTitle = "");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewNoPG(entryTitle = "");
-	}
-
 	@description = "This checks that Blogs added and scoped to a page will not be seen in other pages."
 	@priority = "4"
 	@refactordone

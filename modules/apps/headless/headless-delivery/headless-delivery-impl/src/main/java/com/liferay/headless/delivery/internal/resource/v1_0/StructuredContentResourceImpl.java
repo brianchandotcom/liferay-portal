@@ -67,6 +67,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
@@ -816,15 +818,35 @@ public class StructuredContentResourceImpl
 					_queries, _sorts);
 			},
 			sorts,
-			document -> _toStructuredContent(
-				_journalArticleService.getLatestArticle(
-					GetterUtil.getLong(
+			document -> {
+				JournalArticle journalArticle = null;
+
+				try {
+					journalArticle = _journalArticleService.getLatestArticle(
+						GetterUtil.getLong(
+							document.get(
+								com.liferay.portal.kernel.search.Field.
+									SCOPE_GROUP_ID)),
 						document.get(
-							com.liferay.portal.kernel.search.Field.
-								SCOPE_GROUP_ID)),
-					document.get(
-						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
-					WorkflowConstants.STATUS_APPROVED)));
+							com.liferay.portal.kernel.search.Field.ARTICLE_ID),
+						WorkflowConstants.STATUS_APPROVED);
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Error retrieving content: " + portalException);
+					}
+				}
+				catch (Exception exception) {
+					throw new Exception(exception);
+				}
+
+				if (journalArticle != null) {
+					return _toStructuredContent(journalArticle);
+				}
+
+				return null;
+			});
 	}
 
 	private Fields _toFields(
@@ -1145,6 +1167,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Log _log;
 
 	@Reference
 	private Portal _portal;

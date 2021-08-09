@@ -1,0 +1,52 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "LPS-133865 - Verify if the fields from an Object are displayed to be mapped on a fragment"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FieldsFromObjectDisplayedToBeMapped {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137102 FieldsFromObjectDisplayedToBeMapped pending implementation
+
+	}
+
+	@description = "LPS-133865 - Verify if the Object is displayed to be selected as Collection Provider on the Collection Display fragment"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ObjectDisplayedToCollectionProdiver {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137101 ObjectDisplayedToCollectionProdiver pending implementation
+
+	}
+
+    @description = "LPS-133865 - Verify if the Object entries are rendered inside the Collection Display fragment"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ObjectEntriesAreRendered {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137103 ObjectEntriesAreRendered pending implementation
+
+	}
+
+}

@@ -90,6 +90,7 @@ public class AccountResourceDTOConverter
 					AccountEntryOrganizationRel::getOrganizationId, Long.class);
 				parentAccountId = accountEntry.getParentAccountEntryId();
 				status = accountEntry.getStatus();
+				type = accountEntry.getType();
 			}
 		};
 	}

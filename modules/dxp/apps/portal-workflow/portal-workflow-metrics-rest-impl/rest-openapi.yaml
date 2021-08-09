@@ -616,7 +616,7 @@ paths:
             tags: ["Index"]
     "/indexes/refresh":
         patch:
-            operationId: patchIndexesRefresh
+            operationId: patchIndexRefresh
             requestBody:
                 content:
                     application/json:
@@ -635,7 +635,7 @@ paths:
             tags: ["Index"]
     "/indexes/reindex":
         patch:
-            operationId: patchIndexesReindex
+            operationId: patchIndexReindex
             requestBody:
                 content:
                     application/json:
@@ -654,7 +654,7 @@ paths:
             tags: ["Index"]
     "/indexes/reindex/status":
         get:
-            operationId: getReindexStatusPage
+            operationId: getIndexReindexStatusPage
             responses:
                 200:
                     content:

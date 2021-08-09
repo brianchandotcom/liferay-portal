@@ -318,11 +318,11 @@ public class CommerceTierPriceEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_LtM() throws Exception {
-		_persistence.countByC_LtM(
+	public void testCountByC_LteM() throws Exception {
+		_persistence.countByC_LteM(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-		_persistence.countByC_LtM(0L, 0);
+		_persistence.countByC_LteM(0L, 0);
 	}
 
 	@Test
@@ -342,12 +342,12 @@ public class CommerceTierPriceEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_LtM_S() throws Exception {
-		_persistence.countByC_LtM_S(
+	public void testCountByC_LteM_S() throws Exception {
+		_persistence.countByC_LteM_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
 			RandomTestUtil.nextInt());
 
-		_persistence.countByC_LtM_S(0L, 0, 0);
+		_persistence.countByC_LteM_S(0L, 0, 0);
 	}
 
 	@Test

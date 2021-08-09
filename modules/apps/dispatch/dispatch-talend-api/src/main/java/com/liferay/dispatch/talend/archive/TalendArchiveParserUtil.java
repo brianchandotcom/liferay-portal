@@ -91,31 +91,38 @@ public class TalendArchiveParserUtil {
 
 		TalendArchive talendArchive = parse(jobArchiveInputStream);
 
-		if (talendArchive.hasJVMOptions()) {
-			String newJVMOptions = talendArchive.getJVMOptions();
+		try {
+			if (talendArchive.hasJVMOptions()) {
+				String newJVMOptions = talendArchive.getJVMOptions();
 
-			if (unicodeProperties.containsKey("JAVA_OPTS")) {
-				newJVMOptions = getJVMOptions(
-					newJVMOptions, unicodeProperties.get("JAVA_OPTS"));
+				if (unicodeProperties.containsKey("JAVA_OPTS")) {
+					newJVMOptions = getJVMOptions(
+						newJVMOptions, unicodeProperties.get("JAVA_OPTS"));
+				}
+
+				unicodeProperties.put("JAVA_OPTS", newJVMOptions);
+			}
+			else {
+				unicodeProperties.put("JAVA_OPTS", "-Xms256M -Xmx1024M");
 			}
 
-			unicodeProperties.put("JAVA_OPTS", newJVMOptions);
-		}
-		else {
-			unicodeProperties.put("JAVA_OPTS", "-Xms256M -Xmx1024M");
-		}
+			Properties contextProperties = talendArchive.getContextProperties();
 
-		Properties contextProperties = talendArchive.getContextProperties();
+			for (String propertyName :
+					contextProperties.stringPropertyNames()) {
 
-		for (String propertyName : contextProperties.stringPropertyNames()) {
-			if (unicodeProperties.containsKey(propertyName)) {
-				continue;
+				if (unicodeProperties.containsKey(propertyName)) {
+					continue;
+				}
+
+				unicodeProperties.put(
+					propertyName,
+					contextProperties.getProperty(propertyName) +
+						" (Automatic Copy)");
 			}
-
-			unicodeProperties.put(
-				propertyName,
-				contextProperties.getProperty(propertyName) +
-					" (Automatic Copy)");
+		}
+		finally {
+			FileUtil.deltree(talendArchive.getJobDirectory());
 		}
 	}
 

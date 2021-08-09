@@ -101,4 +101,22 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8453 | Test Summary: Web content submissions by technology card shows views by expected device"
+	@ignore = "true"
+	@priority = "5"
+	test WebContentTechnologyCardShowsViewsByExpectedDevice {
+
+		// TODO LRAC-8453 WebContentTechnologyCardShowsViewsByExpectedDevice
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8454 | Test Summary: Web content submissions by technology card shows views by expected browser"
+	@ignore = "true"
+	@priority = "5"
+	test WebContentTechnologyCardShowsViewsByExpectedBrowser {
+
+		// TODO LRAC-8454 WebContentTechnologyCardShowsViewsByExpectedBrowser
+
+	}
+
 }

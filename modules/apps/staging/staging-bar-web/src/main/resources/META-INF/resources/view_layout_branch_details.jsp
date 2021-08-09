@@ -35,10 +35,10 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 </div>
 
 <div class="dropdown">
-	<a class="dropdown-toggle layout-branch-selector staging-variation-selector" data-toggle="liferay-dropdown" href="#1">
-		<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>" localizeKey="<%= false %>" />
-
-		<aui:icon image="caret-double-l" markupView="lexicon" />
+	<a class="dropdown-toggle form-control form-control-select form-control-sm layout-branch-selector staging-variation-selector" data-toggle="liferay-dropdown" href="#1">
+		<span class="c-inner" tabindex="-1">
+			<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>" localizeKey="<%= false %>" />
+		</span>
 	</a>
 
 	<ul class="dropdown-menu">

@@ -34,6 +34,16 @@ html#{$cadmin-selector} {
 			padding-top: 0;
 		}
 
+		.staging-bar-workflow-text {
+			.alert-indicator .lexicon-icon {
+				margin-top: 0;
+			}
+
+			.taglib-workflow-status .label {
+				margin: 0;
+			}
+		}
+
 		.staging-button-container {
 			display: flex;
 			justify-content: center;
@@ -155,7 +165,8 @@ html#{$cadmin-selector} {
 		}
 
 		.staging-bar-workflow-text .status {
-			color: #2e5aac;
+			border-color: map-get($cadmin-label-info, border-color);
+			color: map-get($cadmin-label-info, color);
 		}
 
 		.staging-layout-revision-details-list {
@@ -205,29 +216,20 @@ html#{$cadmin-selector} {
 		}
 
 		.staging-variation-selector {
-			background: #f5f7f8;
-			border: 1px solid #e9e9ef;
-			border-radius: 4px;
-			color: #000;
-			display: block;
-			font-size: 14px;
 			max-width: 16ch;
 			overflow: hidden;
-			padding: 4px 24px 4px 8px;
+			padding-right: 24px;
 			position: relative;
 			text-overflow: ellipsis;
-			white-space: nowrap;
-			width: 100%;
 
-			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
-				font-size: 14px;
+			&:hover {
+				color: inherit;
+				text-decoration: none;
 			}
 
-			> span {
-				bottom: 4px;
-				display: block;
-				position: absolute;
-				right: 8px;
+			> .c-inner {
+				margin: -4px -24px -4px -12px;
+				width: auto;
 			}
 		}
 

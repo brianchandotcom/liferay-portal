@@ -16,6 +16,8 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -41,11 +43,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		Bundle bundle, ServletContext servletContext,
+		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
 		_bundle = bundle;
 		_servletContext = servletContext;
+		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
 	}
@@ -91,6 +95,37 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
+	private void _addObjectDefinition(User user) throws Exception {
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/rest/object-definition");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource =
+			objectDefinitionResourceBuilder.user(
+				user
+			).build();
+
+		for (String resourcePath : resourcePaths) {
+			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
+				_read(resourcePath));
+
+			if (objectDefinition != null) {
+				objectDefinition =
+					objectDefinitionResource.postObjectDefinition(
+						objectDefinition);
+
+				objectDefinitionResource.postObjectDefinitionPublish(
+					objectDefinition.getId());
+			}
+		}
+	}
+
 	private void _addTaxonomyVocabularies(long groupId, User user)
 		throws Exception {
 
@@ -123,6 +158,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _initialize(long groupId, User user) throws Exception {
+		_addObjectDefinition(user);
 		_addTaxonomyVocabularies(groupId, user);
 	}
 
@@ -132,6 +168,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private final Bundle _bundle;
+	private final ObjectDefinitionResource.Factory
+		_objectDefinitionResourceFactory;
 	private final ServletContext _servletContext;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;

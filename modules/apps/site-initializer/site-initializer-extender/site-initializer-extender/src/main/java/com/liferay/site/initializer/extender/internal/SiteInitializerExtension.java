@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import javax.servlet.ServletContext;
@@ -33,6 +34,7 @@ public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
 		Bundle bundle, BundleContext bundleContext,
+		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
@@ -42,8 +44,8 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
-				bundle, bundleContext, taxonomyVocabularyResourceFactory,
-				userLocalService));
+				bundle, bundleContext, objectDefinitionResourceFactory,
+				taxonomyVocabularyResourceFactory, userLocalService));
 
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();

@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.internal.info.collection.provider;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
@@ -22,6 +24,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -32,6 +35,7 @@ import com.liferay.info.sort.Sort;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.search.JournalSearcher;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,12 +49,14 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.io.Serializable;
 
@@ -119,6 +125,19 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	public InfoForm getConfigurationInfoForm() {
 		return InfoForm.builder(
 		).infoFieldSetEntry(
+			_addAttributes(
+				InfoField.builder(
+				).infoFieldType(
+					SelectInfoFieldType.INSTANCE
+				).name(
+					Field.ASSET_TAG_NAMES
+				)
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(getClass(), "tag")
+			).localizable(
+				true
+			).build()
+		).infoFieldSetEntry(
 			InfoFieldSet.builder(
 			).infoFieldSetEntry(
 				InfoField.builder(
@@ -128,17 +147,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 					Field.TITLE
 				).labelInfoLocalizedValue(
 					InfoLocalizedValue.localize(getClass(), "title")
-				).localizable(
-					true
-				).build()
-			).infoFieldSetEntry(
-				InfoField.builder(
-				).infoFieldType(
-					TextInfoFieldType.INSTANCE
-				).name(
-					Field.DESCRIPTION
-				).labelInfoLocalizedValue(
-					InfoLocalizedValue.localize(getClass(), "description")
 				).localizable(
 					true
 				).build()
@@ -171,6 +179,32 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		return LanguageUtil.get(resourceBundle, "basic-web-content");
 	}
 
+	private InfoField.FinalStep _addAttributes(InfoField.FinalStep finalStep) {
+		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		List<AssetTag> assetTags = new ArrayList<>(
+			_assetTagLocalService.getGroupTags(
+				serviceContext.getScopeGroupId()));
+
+		assetTags.sort(new AssetTagNameComparator(true));
+
+		options.add(
+			new SelectInfoFieldType.Option(StringPool.BLANK, StringPool.BLANK));
+
+		for (AssetTag assetTag : assetTags) {
+			options.add(
+				new SelectInfoFieldType.Option(
+					assetTag.getName(), assetTag.getName()));
+		}
+
+		finalStep.attribute(SelectInfoFieldType.OPTIONS, options);
+
+		return finalStep;
+	}
+
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery) {
 		Pagination pagination = collectionQuery.getPagination();
 
@@ -194,15 +228,21 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		Map<String, String[]> configuration = configurationOptional.orElse(
 			Collections.emptyMap());
 
-		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
-			String[] values = entry.getValue();
+		String[] assetTagNames = configuration.get(Field.ASSET_TAG_NAMES);
 
-			if (Validator.isNotNull(values[0])) {
-				String localizedName = Field.getLocalizedName(
-					LocaleUtil.getSiteDefault(), entry.getKey());
+		if (ArrayUtil.isNotEmpty(assetTagNames) &&
+			Validator.isNotNull(assetTagNames[0])) {
 
-				searchContext.setAttribute(localizedName, values[0]);
-			}
+			searchContext.setAssetTagNames(assetTagNames);
+		}
+
+		String[] title = configuration.get(Field.TITLE);
+
+		if (ArrayUtil.isNotEmpty(title) && Validator.isNotNull(title[0])) {
+			String localizedName = Field.getLocalizedName(
+				LocaleUtil.getSiteDefault(), Field.TITLE);
+
+			searchContext.setAttribute(localizedName, title[0]);
 		}
 
 		ServiceContext serviceContext =
@@ -238,6 +278,9 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicWebContentSingleFormVariationInfoCollectionProvider.class);
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

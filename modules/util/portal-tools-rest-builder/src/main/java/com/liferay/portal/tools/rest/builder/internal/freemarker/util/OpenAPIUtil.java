@@ -62,7 +62,7 @@ public class OpenAPIUtil {
 		if (s.endsWith("ases")) {
 			s = s.substring(0, s.length() - 1);
 		}
-		else if (s.endsWith("ses")) {
+		else if (s.endsWith("ses") || s.endsWith("xes")) {
 			s = s.substring(0, s.length() - 2);
 		}
 		else if (s.endsWith("ies")) {

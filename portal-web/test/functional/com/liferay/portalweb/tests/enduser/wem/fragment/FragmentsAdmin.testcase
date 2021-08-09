@@ -1,0 +1,546 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-90063. Images can be uploaded and deleted in the resources folder in a fragment collection."
+	@priority = "4"
+	@uitest
+	test AddAndDeleteResource {
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Navigate to the resources tab") {
+			Navigator.gotoNavItem(navItem = "Resources");
+		}
+
+		task ("Add a resource") {
+			FragmentsAdmin.addResource(resourceFile = "Document_1.png");
+		}
+
+		task ("View resource") {
+			FragmentsAdmin.viewEntryPresent(entry = "Document_1.png");
+		}
+
+		task ("Delete resource") {
+			FragmentsAdmin.deleteEntry(entry = "Document_1.png");
+		}
+
+		task ("View no resource") {
+			FragmentsAdmin.viewEntryNotPresent(entry = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-97184. The user could add a fragment via UI."
+	@priority = "5"
+	@uitest
+	test AddFragment {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Add a fragment collection") {
+			FragmentsAdmin.addCollection(collectionName = "Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a fragment that uses the Button fragment code") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
+
+			FragmentsEditor.waitForAutoSave();
+		}
+
+		task ("Publish the fragment") {
+			PortletEntry.publish();
+		}
+
+		task ("Assert the fragment appears in Fragments Admin") {
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
+		}
+	}
+
+	@description = "Fragments that are being used cannot be deleted."
+	@priority = "5"
+	@uitest
+	test CannotDeleteFragmentInUse {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a fragment") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+		}
+
+		task ("Add a page template collection") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		}
+
+		task ("Add a page template to the page template collection") {
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Add a new fragment to the page template") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Assert the fragment cannot be deleted because it is used in the page template") {
+			FragmentsAdmin.deleteEntry(entry = "Fragment Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Error:The fragment entry cannot be deleted because it is required by one or more page templates.");
+		}
+	}
+
+	@description = "This is a test for LPS-102173. The contributed fragments can be copied."
+	@priority = "5"
+	@uitest
+	test CopyContributedFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to the Fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Copy the Button fragment to new fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Button",
+				item = "Copy To");
+
+			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("View the copied fragment") {
+			FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");
+		}
+	}
+
+	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
+	@priority = "5"
+	@uitest
+	test CopyFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a fragment") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Copy the fragment") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Make a Copy");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("View the copied fragment") {
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name (Copy)");
+		}
+	}
+
+	@description = "Fragments can be deleted."
+	@priority = "5"
+	@uitest
+	test DeleteFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a fragment") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Delete the fragment") {
+			FragmentsAdmin.deleteEntry(entry = "Fragment Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Assert the fragment is not present") {
+			FragmentsAdmin.viewEntryNotPresent(entry = "Fragment Name");
+		}
+	}
+
+	@description = "Fragment collections can be deleted."
+	@priority = "5"
+	@uitest
+	test DeleteFragmentCollection {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to the fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Delete the fragment collection") {
+			Collection.deleteCollection(collectionName = "Collection Name");
+		}
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Assert the fragment collection is not present") {
+			Collection.viewNotPresent(collectionName = "Collection Name");
+		}
+	}
+
+	@description = "Edit a fragment and assert the edits persist."
+	@priority = "5"
+	@uitest
+	test EditFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a fragment with the Button fragment codes") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "fragment_button.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "fragment_button.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+		}
+
+		task ("Edit the fragment with the Title fragment codes") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
+
+			FragmentsEditor.assertFragmentPreview(
+				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				text = "LOREM IPSUM DOLOR SIT AMET");
+
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to the fragment") {
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+		}
+
+		task ("View the edited inline text shown in Preview window") {
+			FragmentsEditor.assertFragmentPreview(
+				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",
+				text = "LOREM IPSUM DOLOR SIT AMET");
+		}
+	}
+
+	@description = "This is a test for LPS-118241. The user could propagate the changes of fragment to content page."
+	@priority = "4"
+	test PropagateChangesOfFragmentToContentPage {
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a new fragment") {
+			var htmlSnippet = '''<h2 data-lfr-editable-id="title1" data-lfr-editable-type="rich-text">''';
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Test Fragment Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
+
+		task ("Add a new fragment to the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Test Fragment Name");
+		}
+
+		task ("View the inline text of new fragment at edit mode") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Example Rich Text",
+				fragmentName = "Test Fragment Name",
+				id = "title1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the inline text of new fragment at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				id = "title1",
+				key_position = "1",
+				key_text = "Example Rich Text",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+
+		task ("Edit the new fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Test Fragment Name",
+				item = "Edit");
+
+			var htmlSnippet = '''
+<h2 data-lfr-editable-id="title1" data-lfr-editable-type="rich-text">
+<h2 data-lfr-editable-id="title2" data-lfr-editable-type="rich-text">
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Propagate the changes") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Test Fragment Name",
+				item = "View Usages");
+
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+			Click(locator1 = "Button#PROPAGATE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View the changes of fragment at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			for (var n : list "1,2") {
+				AssertVisible(
+					id = "title${n}",
+					key_position = "1",
+					key_text = "Example Rich Text",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+			}
+		}
+
+		task ("View the changes of fragment at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			for (var n : list "1,2") {
+				PageEditor.viewFragmentEditableText(
+					editableText = "Example Rich Text",
+					fragmentName = "Fragment Name",
+					id = "title${n}");
+			}
+		}
+	}
+
+	@description = "Fragments can be renamed."
+	@priority = "4"
+	@uitest
+	test RenameFragment {
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Rename the fragment") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Rename");
+
+			PortletEntry.inputName(name = "Rename Fragment");
+
+			Modal.save();
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Assert the fragment has the new name") {
+			FragmentsAdmin.viewEntryPresent(entry = "Rename Fragment");
+		}
+	}
+
+	@description = "Can see contributed fragment collections in fragment administration"
+	@priority = "5"
+	test ViewContributedFragmentCollections {
+		property portal.acceptance = "true";
+
+		task ("View the Button fragment of Basic Components collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Button");
+		}
+
+		task ("View the Banner Center of Featured Content collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Featured Content");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Banner Center");
+		}
+	}
+
+}

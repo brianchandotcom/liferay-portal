@@ -21,6 +21,10 @@ definition {
 			groupName = "Site Name",
 			layoutName = "${layoutName}",
 			widgetName = "${widgetName}");
+
+		Navigator.gotoSitePage(
+			pageName = "${layoutName}",
+			siteName = "Site Name");
 	}
 
 	macro assertDataSourceName {
@@ -72,25 +76,20 @@ definition {
 			layoutName = "AC Page";
 		}
 
-		ACUtils.addWidgetToPage(
-			layoutName = "${layoutName}",
-			widgetName = "Blogs");
-
-		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
-			siteName = "Site Name");
+		if (!(IsElementPresent(locator1 = "ReportsAdmin#EMPTY_TABLE"))) {
+			ACUtils.addWidgetToPage(
+				layoutName = "${layoutName}",
+				widgetName = "Blogs");
+		}
 
 		if (!(isSet(entryTitle))) {
 			entryTitle = "Blogs AC Title";
 		}
-		Blogs.addEntry(
-			entryContent = "This is the blog test for AC",
-			entrySubtitle = "Blogs AC Subtitle",
-			entryTitle = "${entryTitle}");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		JSONBlog.addEntry(
+			entryContent = "This is the blog test for AC",
+			groupName = "Site Name",
+			entryTitle = "${entryTitle}");
 	}
 
 	macro createDMAndAddToPage {
@@ -98,13 +97,11 @@ definition {
 			layoutName = "AC Page";
 		}
 
-		ACUtils.addWidgetToPage(
-			layoutName = "${layoutName}",
-			widgetName = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
-			siteName = "Site Name");
+		if (!(IsElementPresent(locator1 = "ReportsAdmin#EMPTY_TABLE"))) {
+			ACUtils.addWidgetToPage(
+				layoutName = "${layoutName}",
+				widgetName = "Documents and Media");
+		}
 
 		if (!(isSet(dmDocumentTitle))) {
 			dmDocumentTitle = "DM AC Title";
@@ -114,15 +111,11 @@ definition {
 			dmDocumentFile = "Document_1.jpg";
 		}
 
-		DMDocument.enableActionsMenuOnPortlet();
-
-		DMDocument.addPG(
-			dmDocumentFile = "${dmDocumentFile}",
-			dmDocumentTitle = "${dmDocumentTitle}");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "${dmDocumentFile}");
 	}
 
 	macro createFormAndAddToPage {
@@ -137,10 +130,6 @@ definition {
 		ACUtils.addWidgetToPage(
 			layoutName = "${layoutName}",
 			widgetName = "Form");
-
-		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
-			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -175,10 +164,6 @@ definition {
 		ACUtils.addWidgetToPage(
 			layoutName = "${layoutName}",
 			widgetName = "Web Content Display");
-
-		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
-			siteName = "Site Name");
 
 		if (!(isSet(webContentTitle))) {
 			webContentTitle = "Web Content AC Title";

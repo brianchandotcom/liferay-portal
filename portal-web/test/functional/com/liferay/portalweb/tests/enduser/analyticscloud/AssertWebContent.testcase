@@ -119,4 +119,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8456 | Test Summary: Web content appears on card shows the pages that the web content appears on"
+	@ignore = "true"
+	@priority = "5"
+	test AssertAppearsOnListShowsPagesWebContentExists {
+
+		// TODO LRAC-8456 AssertAppearsOnListShowsPagesWebContentExists
+
+	}
+
 }

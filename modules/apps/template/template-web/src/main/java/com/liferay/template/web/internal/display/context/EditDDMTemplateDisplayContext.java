@@ -92,7 +92,7 @@ public class EditDDMTemplateDisplayContext {
 			() -> PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCPath(
-				"/ddm_template_properties.jsp"
+				"/ddm_template/properties.jsp"
 			).setTabs1(
 				_getTabs1()
 			).setParameter(

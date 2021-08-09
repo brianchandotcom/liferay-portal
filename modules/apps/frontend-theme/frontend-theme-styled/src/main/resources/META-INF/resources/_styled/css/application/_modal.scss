@@ -43,6 +43,11 @@
 
 	.yui3-resize-handles-wrapper {
 		pointer-events: all;
+
+		.yui3-resize-handle-inner-br {
+			bottom: 0;
+			right: 0;
+		}
 	}
 }
 

@@ -23,6 +23,75 @@ html#{$cadmin-selector} {
 			}
 		}
 
+		&.modal.show,
+		.modal.show {
+			display: block;
+		}
+
+		&.modal-dialog,
+		.modal-dialog {
+			&:not(.dialog-iframe-modal):not(.modal-full-screen) {
+				position: relative;
+			}
+
+			&.dialog-iframe-modal {
+				max-width: none;
+			}
+
+			&.modal-dialog-sm {
+				max-width: $cadmin-modal-md;
+			}
+
+			.yui3-resize-handles-wrapper {
+				pointer-events: all;
+
+				.yui3-resize-handle-inner-br {
+					background-position: -30px 0;
+					background-repeat: no-repeat;
+					bottom: 0;
+					display: block;
+					height: 15px;
+					overflow: hidden;
+					right: 0;
+					text-indent: -99999em;
+					width: 15px;
+				}
+			}
+		}
+
+		.modal-body.dialog-iframe-bd {
+			overflow: hidden;
+			padding: 0;
+		}
+
+		.yui3-widget-content-expanded {
+			height: 100%;
+		}
+
+		.loadingmask-message {
+			left: 50%;
+			padding: 2px;
+			position: absolute;
+			top: 50%;
+		}
+
+		.loadingmask-message-content {
+			-webkit-animation: loading-animation 1.2s infinite ease-out;
+			animation: loading-animation 1.2s infinite ease-out;
+			background: transparent;
+			border-radius: 50%;
+			border-width: 0;
+			clear: both;
+			color: transparent;
+			height: 1em;
+			margin: 0;
+			overflow: hidden;
+			padding: 0;
+			position: relative;
+			transform: translateZ(0);
+			width: 1em;
+		}
+
 		.user-icon-color-0 {
 			color: $user-icon-color-0;
 		}

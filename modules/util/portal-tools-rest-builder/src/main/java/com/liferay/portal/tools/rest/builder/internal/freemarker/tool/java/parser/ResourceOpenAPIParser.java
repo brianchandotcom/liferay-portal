@@ -759,7 +759,23 @@ public class ResourceOpenAPIParser {
 			else if ((i != (pathSegments.length - 1)) ||
 					 !Objects.equals(returnType, String.class.getName())) {
 
-				methodNameSegments.add(OpenAPIUtil.formatSingular(pathName));
+				String segment = OpenAPIUtil.formatSingular(pathName);
+
+				String s = StringUtil.toLowerCase(segment);
+
+				if (s.endsWith(StringUtil.toLowerCase(schemaName))) {
+					char c = segment.charAt(
+						segment.length() - schemaName.length());
+
+					if (Character.isUpperCase(c)) {
+						String substring = segment.substring(
+							0, segment.length() - schemaName.length());
+
+						segment = substring + schemaName;
+					}
+				}
+
+				methodNameSegments.add(segment);
 			}
 			else {
 				methodNameSegments.add(pathName);

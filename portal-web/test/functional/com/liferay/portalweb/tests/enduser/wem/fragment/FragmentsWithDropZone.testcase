@@ -12,15 +12,27 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a site via JSON") {
+		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Content Page Name",
+				layoutName = "Test Page Name",
 				type = "content");
+		}
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 	}
 
@@ -40,17 +52,7 @@ definition {
 	test AddButtonFragmentToFragmentWithDropZone {
 		property portal.acceptance = "true";
 
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
-				name = "Collection Name");
-		}
-
 		task ("Add a fragment with drop zone") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 			FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
@@ -62,7 +64,7 @@ definition {
 
 		task ("Add a new fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -91,6 +93,45 @@ definition {
 				key_fragmentName = "Button",
 				key_inFragmentName = "Fragment Name",
 				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-101258. Can create a fragment with multiple Drop Zone areas."
+	@priority = "4"
+	test AddFragmentWithTwoDropZones {
+		task ("Add a fragment with drop zone") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone1"></lfr-drop-zone>
+		<lfr-drop-zone id="drop-zone2"></lfr-drop-zone>''');
+
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("View the new fragment is shown on page") {
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "content",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "content",
+				key_position = "2",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 		}
 	}
 

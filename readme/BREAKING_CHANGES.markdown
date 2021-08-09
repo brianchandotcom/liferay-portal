@@ -646,6 +646,40 @@ This change was made to remove deprecated legacy code from Portal and improve th
 
 ---------------------------------------
 
+### OpenIdConnectServiceHandler interface removed
+- **Date:** 2021-Aug-09
+- **JIRA Ticket:** [LPS-124898](https://issues.liferay.com/browse/LPS-124898)
+
+#### What changed?
+
+In order to deliver improvements to OIDC refresh token handling, the authentication process has been improved to handle post-authentication processing.
+
+The following interface has been removed:
+
+- portal.security.sso.openid.connect.OpenIdConnectServiceHandler
+
+And replaced by:
+
+- portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler
+
+#### Who is affected?
+
+Everyone implementing or using this interface directly.
+
+#### How should I update my code?
+
+If the code invokes the old interface, change this to invoke the new interface. This means providing an `UnsafeConsumer` which is responsible for signing in the portal user. If on the other hand you have provided a custom implementation of the interface, then you will need to instead implement the new interface and provide a means of refreshing the user's OIDC access tokens using the provided refresh tokens. Otherwise portal sessions will invalidate upon the expiry of the initial access token.
+
+#### Why was this change made?
+
+For two reasons:
+
+- To detach the access token refresh process from HTTP request handling. Because this can cause problems maintaining OIDC sessions with providers that only allow refresh tokens to be used once. Resulting in premature portal session invalidation.
+
+- To avoid premature portal session invalidation for OIDC providers that provide refresh tokens that expiry at the same time as their corresponding access tokens.
+
+---------------------------------------
+
 ### Some static methods in `com.liferay.portal.kernel.servlet.SanitizedServletResponse` have been removed because these relate to the X-Xss-Protection header which is not supported by modern browsers.
 - **Date:** 2021-Aug-05
 - **JIRA Ticket:** [LPS-134188](https://issues.liferay.com/browse/LPS-134188)

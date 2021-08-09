@@ -262,7 +262,7 @@ definition {
 	@description = "This checks that a blog entry cannot be published if the custom abstracted is selected but empty."
 	@priority = "4"
 	@refactorneeded
-	test CannotAddEntryWhenCustomAbstractSelectedButEmpty {
+	test CannotAddWhenCustomAbstractIsSelectedButEmpty {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Title");
@@ -279,7 +279,7 @@ definition {
 	@description = "This checks that a blog entry without content cannot be added."
 	@priority = "4"
 	@refactordone
-	test CannotAddEntryWithEmptyContent {
+	test CannotAddWithEmptyContent {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addWithInvalidContent(
@@ -294,7 +294,7 @@ definition {
 	@description = "This checks that a blog entry without a title cannot be added."
 	@priority = "4"
 	@refactordone
-	test CannotAddEntryWithEmptyTitle {
+	test CannotAddWithEmptyTitle {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addWithInvalidTitle(

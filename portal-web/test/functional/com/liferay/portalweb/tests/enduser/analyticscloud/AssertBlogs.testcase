@@ -83,4 +83,22 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"
+	@ignore = "true"
+	@priority = "5"
+	test BlogsTechnologyCardShowsViewsByExpectedBrowser {
+
+		// TODO LRAC-8386 BlogsTechnologyCardShowsViewsByExpectedBrowser
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8385 | Test Summary: Blogs views by technology card shows views by the expected device"
+	@ignore = "true"
+	@priority = "5"
+	test BlogsTechnologyCardShowsViewsByExpectedDevice {
+
+		// TODO LRAC-8385 BlogsTechnologyCardShowsViewsByExpectedDevice
+
+	}
+
 }

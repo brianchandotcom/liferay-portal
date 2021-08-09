@@ -652,25 +652,6 @@ paths:
                     description:
                         ""
             tags: ["Index"]
-    "/reindex/statuses":
-        get:
-            operationId: getIndexReindexStatusPage
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ReindexStatus"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ReindexStatus"
-                                type: array
-                    description:
-                        ""
-            tags: ["ReindexStatus"]
     "/processes":
         post:
             operationId: postProcess
@@ -1656,6 +1637,25 @@ paths:
                     description:
                         ""
             tags: ["Process"]
+    "/reindex/statuses":
+        get:
+            operationId: getIndexReindexStatusPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReindexStatus"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReindexStatus"
+                                type: array
+                    description:
+                        ""
+            tags: ["ReindexStatus"]
     "/slas/{slaId}":
         delete:
             operationId: deleteSLA

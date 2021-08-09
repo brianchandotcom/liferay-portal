@@ -508,7 +508,7 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByC_N(
+	public java.util.List<OAuthApplication> findByC_LikeN(
 		long companyId, String name);
 
 	/**
@@ -524,7 +524,7 @@ public interface OAuthApplicationPersistence
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByC_N(
+	public java.util.List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end);
 
 	/**
@@ -541,7 +541,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByC_N(
+	public java.util.List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -561,7 +561,7 @@ public interface OAuthApplicationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByC_N(
+	public java.util.List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator,
@@ -576,7 +576,7 @@ public interface OAuthApplicationPersistence
 	 * @return the first matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public OAuthApplication findByC_N_First(
+	public OAuthApplication findByC_LikeN_First(
 			long companyId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -590,7 +590,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public OAuthApplication fetchByC_N_First(
+	public OAuthApplication fetchByC_LikeN_First(
 		long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -604,7 +604,7 @@ public interface OAuthApplicationPersistence
 	 * @return the last matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public OAuthApplication findByC_N_Last(
+	public OAuthApplication findByC_LikeN_Last(
 			long companyId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -618,7 +618,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public OAuthApplication fetchByC_N_Last(
+	public OAuthApplication fetchByC_LikeN_Last(
 		long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -633,7 +633,7 @@ public interface OAuthApplicationPersistence
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public OAuthApplication[] findByC_N_PrevAndNext(
+	public OAuthApplication[] findByC_LikeN_PrevAndNext(
 			long oAuthApplicationId, long companyId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -646,7 +646,7 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the matching o auth applications that the user has permission to view
 	 */
-	public java.util.List<OAuthApplication> filterFindByC_N(
+	public java.util.List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name);
 
 	/**
@@ -662,7 +662,7 @@ public interface OAuthApplicationPersistence
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications that the user has permission to view
 	 */
-	public java.util.List<OAuthApplication> filterFindByC_N(
+	public java.util.List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name, int start, int end);
 
 	/**
@@ -679,7 +679,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications that the user has permission to view
 	 */
-	public java.util.List<OAuthApplication> filterFindByC_N(
+	public java.util.List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -694,7 +694,7 @@ public interface OAuthApplicationPersistence
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public OAuthApplication[] filterFindByC_N_PrevAndNext(
+	public OAuthApplication[] filterFindByC_LikeN_PrevAndNext(
 			long oAuthApplicationId, long companyId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -706,7 +706,7 @@ public interface OAuthApplicationPersistence
 	 * @param companyId the company ID
 	 * @param name the name
 	 */
-	public void removeByC_N(long companyId, String name);
+	public void removeByC_LikeN(long companyId, String name);
 
 	/**
 	 * Returns the number of o auth applications where companyId = &#63; and name LIKE &#63;.
@@ -715,7 +715,7 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the number of matching o auth applications
 	 */
-	public int countByC_N(long companyId, String name);
+	public int countByC_LikeN(long companyId, String name);
 
 	/**
 	 * Returns the number of o auth applications that the user has permission to view where companyId = &#63; and name LIKE &#63;.
@@ -724,7 +724,7 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the number of matching o auth applications that the user has permission to view
 	 */
-	public int filterCountByC_N(long companyId, String name);
+	public int filterCountByC_LikeN(long companyId, String name);
 
 	/**
 	 * Returns all the o auth applications where userId = &#63; and name LIKE &#63;.
@@ -733,7 +733,8 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByU_N(long userId, String name);
+	public java.util.List<OAuthApplication> findByU_LikeN(
+		long userId, String name);
 
 	/**
 	 * Returns a range of all the o auth applications where userId = &#63; and name LIKE &#63;.
@@ -748,7 +749,7 @@ public interface OAuthApplicationPersistence
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByU_N(
+	public java.util.List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end);
 
 	/**
@@ -765,7 +766,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByU_N(
+	public java.util.List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -785,7 +786,7 @@ public interface OAuthApplicationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
-	public java.util.List<OAuthApplication> findByU_N(
+	public java.util.List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator,
@@ -800,7 +801,7 @@ public interface OAuthApplicationPersistence
 	 * @return the first matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public OAuthApplication findByU_N_First(
+	public OAuthApplication findByU_LikeN_First(
 			long userId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -814,7 +815,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public OAuthApplication fetchByU_N_First(
+	public OAuthApplication fetchByU_LikeN_First(
 		long userId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -828,7 +829,7 @@ public interface OAuthApplicationPersistence
 	 * @return the last matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public OAuthApplication findByU_N_Last(
+	public OAuthApplication findByU_LikeN_Last(
 			long userId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -842,7 +843,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public OAuthApplication fetchByU_N_Last(
+	public OAuthApplication fetchByU_LikeN_Last(
 		long userId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -857,7 +858,7 @@ public interface OAuthApplicationPersistence
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public OAuthApplication[] findByU_N_PrevAndNext(
+	public OAuthApplication[] findByU_LikeN_PrevAndNext(
 			long oAuthApplicationId, long userId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -870,7 +871,7 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the matching o auth applications that the user has permission to view
 	 */
-	public java.util.List<OAuthApplication> filterFindByU_N(
+	public java.util.List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name);
 
 	/**
@@ -886,7 +887,7 @@ public interface OAuthApplicationPersistence
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications that the user has permission to view
 	 */
-	public java.util.List<OAuthApplication> filterFindByU_N(
+	public java.util.List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name, int start, int end);
 
 	/**
@@ -903,7 +904,7 @@ public interface OAuthApplicationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications that the user has permission to view
 	 */
-	public java.util.List<OAuthApplication> filterFindByU_N(
+	public java.util.List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 			orderByComparator);
@@ -918,7 +919,7 @@ public interface OAuthApplicationPersistence
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public OAuthApplication[] filterFindByU_N_PrevAndNext(
+	public OAuthApplication[] filterFindByU_LikeN_PrevAndNext(
 			long oAuthApplicationId, long userId, String name,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuthApplication>
 				orderByComparator)
@@ -930,7 +931,7 @@ public interface OAuthApplicationPersistence
 	 * @param userId the user ID
 	 * @param name the name
 	 */
-	public void removeByU_N(long userId, String name);
+	public void removeByU_LikeN(long userId, String name);
 
 	/**
 	 * Returns the number of o auth applications where userId = &#63; and name LIKE &#63;.
@@ -939,7 +940,7 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the number of matching o auth applications
 	 */
-	public int countByU_N(long userId, String name);
+	public int countByU_LikeN(long userId, String name);
 
 	/**
 	 * Returns the number of o auth applications that the user has permission to view where userId = &#63; and name LIKE &#63;.
@@ -948,7 +949,7 @@ public interface OAuthApplicationPersistence
 	 * @param name the name
 	 * @return the number of matching o auth applications that the user has permission to view
 	 */
-	public int filterCountByU_N(long userId, String name);
+	public int filterCountByU_LikeN(long userId, String name);
 
 	/**
 	 * Caches the o auth application in the entity cache if it is enabled.

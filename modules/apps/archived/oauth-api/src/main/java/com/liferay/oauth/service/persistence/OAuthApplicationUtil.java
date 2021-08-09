@@ -678,10 +678,10 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the matching o auth applications
 	 */
-	public static List<OAuthApplication> findByC_N(
+	public static List<OAuthApplication> findByC_LikeN(
 		long companyId, String name) {
 
-		return getPersistence().findByC_N(companyId, name);
+		return getPersistence().findByC_LikeN(companyId, name);
 	}
 
 	/**
@@ -697,10 +697,10 @@ public class OAuthApplicationUtil {
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications
 	 */
-	public static List<OAuthApplication> findByC_N(
+	public static List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end) {
 
-		return getPersistence().findByC_N(companyId, name, start, end);
+		return getPersistence().findByC_LikeN(companyId, name, start, end);
 	}
 
 	/**
@@ -717,11 +717,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications
 	 */
-	public static List<OAuthApplication> findByC_N(
+	public static List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().findByC_N(
+		return getPersistence().findByC_LikeN(
 			companyId, name, start, end, orderByComparator);
 	}
 
@@ -740,12 +740,12 @@ public class OAuthApplicationUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
-	public static List<OAuthApplication> findByC_N(
+	public static List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_N(
+		return getPersistence().findByC_LikeN(
 			companyId, name, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -758,12 +758,12 @@ public class OAuthApplicationUtil {
 	 * @return the first matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public static OAuthApplication findByC_N_First(
+	public static OAuthApplication findByC_LikeN_First(
 			long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().findByC_N_First(
+		return getPersistence().findByC_LikeN_First(
 			companyId, name, orderByComparator);
 	}
 
@@ -775,11 +775,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public static OAuthApplication fetchByC_N_First(
+	public static OAuthApplication fetchByC_LikeN_First(
 		long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().fetchByC_N_First(
+		return getPersistence().fetchByC_LikeN_First(
 			companyId, name, orderByComparator);
 	}
 
@@ -792,12 +792,12 @@ public class OAuthApplicationUtil {
 	 * @return the last matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public static OAuthApplication findByC_N_Last(
+	public static OAuthApplication findByC_LikeN_Last(
 			long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().findByC_N_Last(
+		return getPersistence().findByC_LikeN_Last(
 			companyId, name, orderByComparator);
 	}
 
@@ -809,11 +809,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public static OAuthApplication fetchByC_N_Last(
+	public static OAuthApplication fetchByC_LikeN_Last(
 		long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().fetchByC_N_Last(
+		return getPersistence().fetchByC_LikeN_Last(
 			companyId, name, orderByComparator);
 	}
 
@@ -827,12 +827,12 @@ public class OAuthApplicationUtil {
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public static OAuthApplication[] findByC_N_PrevAndNext(
+	public static OAuthApplication[] findByC_LikeN_PrevAndNext(
 			long oAuthApplicationId, long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().findByC_N_PrevAndNext(
+		return getPersistence().findByC_LikeN_PrevAndNext(
 			oAuthApplicationId, companyId, name, orderByComparator);
 	}
 
@@ -843,10 +843,10 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the matching o auth applications that the user has permission to view
 	 */
-	public static List<OAuthApplication> filterFindByC_N(
+	public static List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name) {
 
-		return getPersistence().filterFindByC_N(companyId, name);
+		return getPersistence().filterFindByC_LikeN(companyId, name);
 	}
 
 	/**
@@ -862,10 +862,11 @@ public class OAuthApplicationUtil {
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications that the user has permission to view
 	 */
-	public static List<OAuthApplication> filterFindByC_N(
+	public static List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name, int start, int end) {
 
-		return getPersistence().filterFindByC_N(companyId, name, start, end);
+		return getPersistence().filterFindByC_LikeN(
+			companyId, name, start, end);
 	}
 
 	/**
@@ -882,11 +883,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications that the user has permission to view
 	 */
-	public static List<OAuthApplication> filterFindByC_N(
+	public static List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().filterFindByC_N(
+		return getPersistence().filterFindByC_LikeN(
 			companyId, name, start, end, orderByComparator);
 	}
 
@@ -900,12 +901,12 @@ public class OAuthApplicationUtil {
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public static OAuthApplication[] filterFindByC_N_PrevAndNext(
+	public static OAuthApplication[] filterFindByC_LikeN_PrevAndNext(
 			long oAuthApplicationId, long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().filterFindByC_N_PrevAndNext(
+		return getPersistence().filterFindByC_LikeN_PrevAndNext(
 			oAuthApplicationId, companyId, name, orderByComparator);
 	}
 
@@ -915,8 +916,8 @@ public class OAuthApplicationUtil {
 	 * @param companyId the company ID
 	 * @param name the name
 	 */
-	public static void removeByC_N(long companyId, String name) {
-		getPersistence().removeByC_N(companyId, name);
+	public static void removeByC_LikeN(long companyId, String name) {
+		getPersistence().removeByC_LikeN(companyId, name);
 	}
 
 	/**
@@ -926,8 +927,8 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the number of matching o auth applications
 	 */
-	public static int countByC_N(long companyId, String name) {
-		return getPersistence().countByC_N(companyId, name);
+	public static int countByC_LikeN(long companyId, String name) {
+		return getPersistence().countByC_LikeN(companyId, name);
 	}
 
 	/**
@@ -937,8 +938,8 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the number of matching o auth applications that the user has permission to view
 	 */
-	public static int filterCountByC_N(long companyId, String name) {
-		return getPersistence().filterCountByC_N(companyId, name);
+	public static int filterCountByC_LikeN(long companyId, String name) {
+		return getPersistence().filterCountByC_LikeN(companyId, name);
 	}
 
 	/**
@@ -948,8 +949,10 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the matching o auth applications
 	 */
-	public static List<OAuthApplication> findByU_N(long userId, String name) {
-		return getPersistence().findByU_N(userId, name);
+	public static List<OAuthApplication> findByU_LikeN(
+		long userId, String name) {
+
+		return getPersistence().findByU_LikeN(userId, name);
 	}
 
 	/**
@@ -965,10 +968,10 @@ public class OAuthApplicationUtil {
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications
 	 */
-	public static List<OAuthApplication> findByU_N(
+	public static List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end) {
 
-		return getPersistence().findByU_N(userId, name, start, end);
+		return getPersistence().findByU_LikeN(userId, name, start, end);
 	}
 
 	/**
@@ -985,11 +988,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications
 	 */
-	public static List<OAuthApplication> findByU_N(
+	public static List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().findByU_N(
+		return getPersistence().findByU_LikeN(
 			userId, name, start, end, orderByComparator);
 	}
 
@@ -1008,12 +1011,12 @@ public class OAuthApplicationUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth applications
 	 */
-	public static List<OAuthApplication> findByU_N(
+	public static List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByU_N(
+		return getPersistence().findByU_LikeN(
 			userId, name, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -1026,12 +1029,12 @@ public class OAuthApplicationUtil {
 	 * @return the first matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public static OAuthApplication findByU_N_First(
+	public static OAuthApplication findByU_LikeN_First(
 			long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().findByU_N_First(
+		return getPersistence().findByU_LikeN_First(
 			userId, name, orderByComparator);
 	}
 
@@ -1043,11 +1046,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public static OAuthApplication fetchByU_N_First(
+	public static OAuthApplication fetchByU_LikeN_First(
 		long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().fetchByU_N_First(
+		return getPersistence().fetchByU_LikeN_First(
 			userId, name, orderByComparator);
 	}
 
@@ -1060,12 +1063,13 @@ public class OAuthApplicationUtil {
 	 * @return the last matching o auth application
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
-	public static OAuthApplication findByU_N_Last(
+	public static OAuthApplication findByU_LikeN_Last(
 			long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().findByU_N_Last(userId, name, orderByComparator);
+		return getPersistence().findByU_LikeN_Last(
+			userId, name, orderByComparator);
 	}
 
 	/**
@@ -1076,11 +1080,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
-	public static OAuthApplication fetchByU_N_Last(
+	public static OAuthApplication fetchByU_LikeN_Last(
 		long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().fetchByU_N_Last(
+		return getPersistence().fetchByU_LikeN_Last(
 			userId, name, orderByComparator);
 	}
 
@@ -1094,12 +1098,12 @@ public class OAuthApplicationUtil {
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public static OAuthApplication[] findByU_N_PrevAndNext(
+	public static OAuthApplication[] findByU_LikeN_PrevAndNext(
 			long oAuthApplicationId, long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().findByU_N_PrevAndNext(
+		return getPersistence().findByU_LikeN_PrevAndNext(
 			oAuthApplicationId, userId, name, orderByComparator);
 	}
 
@@ -1110,10 +1114,10 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the matching o auth applications that the user has permission to view
 	 */
-	public static List<OAuthApplication> filterFindByU_N(
+	public static List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name) {
 
-		return getPersistence().filterFindByU_N(userId, name);
+		return getPersistence().filterFindByU_LikeN(userId, name);
 	}
 
 	/**
@@ -1129,10 +1133,10 @@ public class OAuthApplicationUtil {
 	 * @param end the upper bound of the range of o auth applications (not inclusive)
 	 * @return the range of matching o auth applications that the user has permission to view
 	 */
-	public static List<OAuthApplication> filterFindByU_N(
+	public static List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name, int start, int end) {
 
-		return getPersistence().filterFindByU_N(userId, name, start, end);
+		return getPersistence().filterFindByU_LikeN(userId, name, start, end);
 	}
 
 	/**
@@ -1149,11 +1153,11 @@ public class OAuthApplicationUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth applications that the user has permission to view
 	 */
-	public static List<OAuthApplication> filterFindByU_N(
+	public static List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return getPersistence().filterFindByU_N(
+		return getPersistence().filterFindByU_LikeN(
 			userId, name, start, end, orderByComparator);
 	}
 
@@ -1167,12 +1171,12 @@ public class OAuthApplicationUtil {
 	 * @return the previous, current, and next o auth application
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
-	public static OAuthApplication[] filterFindByU_N_PrevAndNext(
+	public static OAuthApplication[] filterFindByU_LikeN_PrevAndNext(
 			long oAuthApplicationId, long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws com.liferay.oauth.exception.NoSuchApplicationException {
 
-		return getPersistence().filterFindByU_N_PrevAndNext(
+		return getPersistence().filterFindByU_LikeN_PrevAndNext(
 			oAuthApplicationId, userId, name, orderByComparator);
 	}
 
@@ -1182,8 +1186,8 @@ public class OAuthApplicationUtil {
 	 * @param userId the user ID
 	 * @param name the name
 	 */
-	public static void removeByU_N(long userId, String name) {
-		getPersistence().removeByU_N(userId, name);
+	public static void removeByU_LikeN(long userId, String name) {
+		getPersistence().removeByU_LikeN(userId, name);
 	}
 
 	/**
@@ -1193,8 +1197,8 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the number of matching o auth applications
 	 */
-	public static int countByU_N(long userId, String name) {
-		return getPersistence().countByU_N(userId, name);
+	public static int countByU_LikeN(long userId, String name) {
+		return getPersistence().countByU_LikeN(userId, name);
 	}
 
 	/**
@@ -1204,8 +1208,8 @@ public class OAuthApplicationUtil {
 	 * @param name the name
 	 * @return the number of matching o auth applications that the user has permission to view
 	 */
-	public static int filterCountByU_N(long userId, String name) {
-		return getPersistence().filterCountByU_N(userId, name);
+	public static int filterCountByU_LikeN(long userId, String name) {
+		return getPersistence().filterCountByU_LikeN(userId, name);
 	}
 
 	/**

@@ -2091,8 +2091,8 @@ public class OAuthApplicationPersistenceImpl
 	private static final String _FINDER_COLUMN_CONSUMERKEY_CONSUMERKEY_3 =
 		"(oAuthApplication.consumerKey IS NULL OR oAuthApplication.consumerKey = '')";
 
-	private FinderPath _finderPathWithPaginationFindByC_N;
-	private FinderPath _finderPathWithPaginationCountByC_N;
+	private FinderPath _finderPathWithPaginationFindByC_LikeN;
+	private FinderPath _finderPathWithPaginationCountByC_LikeN;
 
 	/**
 	 * Returns all the o auth applications where companyId = &#63; and name LIKE &#63;.
@@ -2102,8 +2102,8 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByC_N(long companyId, String name) {
-		return findByC_N(
+	public List<OAuthApplication> findByC_LikeN(long companyId, String name) {
+		return findByC_LikeN(
 			companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2121,10 +2121,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the range of matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByC_N(
+	public List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end) {
 
-		return findByC_N(companyId, name, start, end, null);
+		return findByC_LikeN(companyId, name, start, end, null);
 	}
 
 	/**
@@ -2142,11 +2142,12 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the ordered range of matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByC_N(
+	public List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return findByC_N(companyId, name, start, end, orderByComparator, true);
+		return findByC_LikeN(
+			companyId, name, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2165,7 +2166,7 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the ordered range of matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByC_N(
+	public List<OAuthApplication> findByC_LikeN(
 		long companyId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
 		boolean useFinderCache) {
@@ -2175,7 +2176,7 @@ public class OAuthApplicationPersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByC_N;
+		finderPath = _finderPathWithPaginationFindByC_LikeN;
 		finderArgs = new Object[] {
 			companyId, name, start, end, orderByComparator
 		};
@@ -2214,17 +2215,17 @@ public class OAuthApplicationPersistenceImpl
 
 			sb.append(_SQL_SELECT_OAUTHAPPLICATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2282,12 +2283,12 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication findByC_N_First(
+	public OAuthApplication findByC_LikeN_First(
 			long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
 
-		OAuthApplication oAuthApplication = fetchByC_N_First(
+		OAuthApplication oAuthApplication = fetchByC_LikeN_First(
 			companyId, name, orderByComparator);
 
 		if (oAuthApplication != null) {
@@ -2318,11 +2319,11 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication fetchByC_N_First(
+	public OAuthApplication fetchByC_LikeN_First(
 		long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		List<OAuthApplication> list = findByC_N(
+		List<OAuthApplication> list = findByC_LikeN(
 			companyId, name, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2342,12 +2343,12 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication findByC_N_Last(
+	public OAuthApplication findByC_LikeN_Last(
 			long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
 
-		OAuthApplication oAuthApplication = fetchByC_N_Last(
+		OAuthApplication oAuthApplication = fetchByC_LikeN_Last(
 			companyId, name, orderByComparator);
 
 		if (oAuthApplication != null) {
@@ -2378,17 +2379,17 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication fetchByC_N_Last(
+	public OAuthApplication fetchByC_LikeN_Last(
 		long companyId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		int count = countByC_N(companyId, name);
+		int count = countByC_LikeN(companyId, name);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<OAuthApplication> list = findByC_N(
+		List<OAuthApplication> list = findByC_LikeN(
 			companyId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2409,7 +2410,7 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
 	@Override
-	public OAuthApplication[] findByC_N_PrevAndNext(
+	public OAuthApplication[] findByC_LikeN_PrevAndNext(
 			long oAuthApplicationId, long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
@@ -2426,13 +2427,13 @@ public class OAuthApplicationPersistenceImpl
 
 			OAuthApplication[] array = new OAuthApplicationImpl[3];
 
-			array[0] = getByC_N_PrevAndNext(
+			array[0] = getByC_LikeN_PrevAndNext(
 				session, oAuthApplication, companyId, name, orderByComparator,
 				true);
 
 			array[1] = oAuthApplication;
 
-			array[2] = getByC_N_PrevAndNext(
+			array[2] = getByC_LikeN_PrevAndNext(
 				session, oAuthApplication, companyId, name, orderByComparator,
 				false);
 
@@ -2446,7 +2447,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 	}
 
-	protected OAuthApplication getByC_N_PrevAndNext(
+	protected OAuthApplication getByC_LikeN_PrevAndNext(
 		Session session, OAuthApplication oAuthApplication, long companyId,
 		String name, OrderByComparator<OAuthApplication> orderByComparator,
 		boolean previous) {
@@ -2464,17 +2465,17 @@ public class OAuthApplicationPersistenceImpl
 
 		sb.append(_SQL_SELECT_OAUTHAPPLICATION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2579,8 +2580,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public List<OAuthApplication> filterFindByC_N(long companyId, String name) {
-		return filterFindByC_N(
+	public List<OAuthApplication> filterFindByC_LikeN(
+		long companyId, String name) {
+
+		return filterFindByC_LikeN(
 			companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2598,10 +2601,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the range of matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public List<OAuthApplication> filterFindByC_N(
+	public List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name, int start, int end) {
 
-		return filterFindByC_N(companyId, name, start, end, null);
+		return filterFindByC_LikeN(companyId, name, start, end, null);
 	}
 
 	/**
@@ -2619,12 +2622,13 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the ordered range of matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public List<OAuthApplication> filterFindByC_N(
+	public List<OAuthApplication> filterFindByC_LikeN(
 		long companyId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_N(companyId, name, start, end, orderByComparator);
+			return findByC_LikeN(
+				companyId, name, start, end, orderByComparator);
 		}
 
 		name = Objects.toString(name, "");
@@ -2647,17 +2651,17 @@ public class OAuthApplicationPersistenceImpl
 				_FILTER_SQL_SELECT_OAUTHAPPLICATION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -2734,13 +2738,13 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
 	@Override
-	public OAuthApplication[] filterFindByC_N_PrevAndNext(
+	public OAuthApplication[] filterFindByC_LikeN_PrevAndNext(
 			long oAuthApplicationId, long companyId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_N_PrevAndNext(
+			return findByC_LikeN_PrevAndNext(
 				oAuthApplicationId, companyId, name, orderByComparator);
 		}
 
@@ -2756,13 +2760,13 @@ public class OAuthApplicationPersistenceImpl
 
 			OAuthApplication[] array = new OAuthApplicationImpl[3];
 
-			array[0] = filterGetByC_N_PrevAndNext(
+			array[0] = filterGetByC_LikeN_PrevAndNext(
 				session, oAuthApplication, companyId, name, orderByComparator,
 				true);
 
 			array[1] = oAuthApplication;
 
-			array[2] = filterGetByC_N_PrevAndNext(
+			array[2] = filterGetByC_LikeN_PrevAndNext(
 				session, oAuthApplication, companyId, name, orderByComparator,
 				false);
 
@@ -2776,7 +2780,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 	}
 
-	protected OAuthApplication filterGetByC_N_PrevAndNext(
+	protected OAuthApplication filterGetByC_LikeN_PrevAndNext(
 		Session session, OAuthApplication oAuthApplication, long companyId,
 		String name, OrderByComparator<OAuthApplication> orderByComparator,
 		boolean previous) {
@@ -2800,17 +2804,17 @@ public class OAuthApplicationPersistenceImpl
 				_FILTER_SQL_SELECT_OAUTHAPPLICATION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -2953,9 +2957,9 @@ public class OAuthApplicationPersistenceImpl
 	 * @param name the name
 	 */
 	@Override
-	public void removeByC_N(long companyId, String name) {
+	public void removeByC_LikeN(long companyId, String name) {
 		for (OAuthApplication oAuthApplication :
-				findByC_N(
+				findByC_LikeN(
 					companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -2971,10 +2975,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the number of matching o auth applications
 	 */
 	@Override
-	public int countByC_N(long companyId, String name) {
+	public int countByC_LikeN(long companyId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByC_N;
+		FinderPath finderPath = _finderPathWithPaginationCountByC_LikeN;
 
 		Object[] finderArgs = new Object[] {companyId, name};
 
@@ -2985,17 +2989,17 @@ public class OAuthApplicationPersistenceImpl
 
 			sb.append(_SQL_COUNT_OAUTHAPPLICATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
 			}
 
 			String sql = sb.toString();
@@ -3038,9 +3042,9 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the number of matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public int filterCountByC_N(long companyId, String name) {
+	public int filterCountByC_LikeN(long companyId, String name) {
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_N(companyId, name);
+			return countByC_LikeN(companyId, name);
 		}
 
 		name = Objects.toString(name, "");
@@ -3049,17 +3053,17 @@ public class OAuthApplicationPersistenceImpl
 
 		sb.append(_FILTER_SQL_COUNT_OAUTHAPPLICATION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -3096,17 +3100,17 @@ public class OAuthApplicationPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_LIKEN_COMPANYID_2 =
 		"oAuthApplication.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_N_NAME_2 =
+	private static final String _FINDER_COLUMN_C_LIKEN_NAME_2 =
 		"lower(oAuthApplication.name) LIKE ?";
 
-	private static final String _FINDER_COLUMN_C_N_NAME_3 =
+	private static final String _FINDER_COLUMN_C_LIKEN_NAME_3 =
 		"(oAuthApplication.name IS NULL OR oAuthApplication.name LIKE '')";
 
-	private FinderPath _finderPathWithPaginationFindByU_N;
-	private FinderPath _finderPathWithPaginationCountByU_N;
+	private FinderPath _finderPathWithPaginationFindByU_LikeN;
+	private FinderPath _finderPathWithPaginationCountByU_LikeN;
 
 	/**
 	 * Returns all the o auth applications where userId = &#63; and name LIKE &#63;.
@@ -3116,8 +3120,8 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByU_N(long userId, String name) {
-		return findByU_N(
+	public List<OAuthApplication> findByU_LikeN(long userId, String name) {
+		return findByU_LikeN(
 			userId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -3135,10 +3139,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the range of matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByU_N(
+	public List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end) {
 
-		return findByU_N(userId, name, start, end, null);
+		return findByU_LikeN(userId, name, start, end, null);
 	}
 
 	/**
@@ -3156,11 +3160,11 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the ordered range of matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByU_N(
+	public List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		return findByU_N(userId, name, start, end, orderByComparator, true);
+		return findByU_LikeN(userId, name, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3179,7 +3183,7 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the ordered range of matching o auth applications
 	 */
 	@Override
-	public List<OAuthApplication> findByU_N(
+	public List<OAuthApplication> findByU_LikeN(
 		long userId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator,
 		boolean useFinderCache) {
@@ -3189,7 +3193,7 @@ public class OAuthApplicationPersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByU_N;
+		finderPath = _finderPathWithPaginationFindByU_LikeN;
 		finderArgs = new Object[] {userId, name, start, end, orderByComparator};
 
 		List<OAuthApplication> list = null;
@@ -3226,17 +3230,17 @@ public class OAuthApplicationPersistenceImpl
 
 			sb.append(_SQL_SELECT_OAUTHAPPLICATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_U_N_USERID_2);
+			sb.append(_FINDER_COLUMN_U_LIKEN_USERID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_N_NAME_3);
+				sb.append(_FINDER_COLUMN_U_LIKEN_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_U_N_NAME_2);
+				sb.append(_FINDER_COLUMN_U_LIKEN_NAME_2);
 			}
 
 			if (orderByComparator != null) {
@@ -3294,12 +3298,12 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication findByU_N_First(
+	public OAuthApplication findByU_LikeN_First(
 			long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
 
-		OAuthApplication oAuthApplication = fetchByU_N_First(
+		OAuthApplication oAuthApplication = fetchByU_LikeN_First(
 			userId, name, orderByComparator);
 
 		if (oAuthApplication != null) {
@@ -3330,11 +3334,11 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the first matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication fetchByU_N_First(
+	public OAuthApplication fetchByU_LikeN_First(
 		long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		List<OAuthApplication> list = findByU_N(
+		List<OAuthApplication> list = findByU_LikeN(
 			userId, name, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3354,12 +3358,12 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication findByU_N_Last(
+	public OAuthApplication findByU_LikeN_Last(
 			long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
 
-		OAuthApplication oAuthApplication = fetchByU_N_Last(
+		OAuthApplication oAuthApplication = fetchByU_LikeN_Last(
 			userId, name, orderByComparator);
 
 		if (oAuthApplication != null) {
@@ -3390,17 +3394,17 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the last matching o auth application, or <code>null</code> if a matching o auth application could not be found
 	 */
 	@Override
-	public OAuthApplication fetchByU_N_Last(
+	public OAuthApplication fetchByU_LikeN_Last(
 		long userId, String name,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
-		int count = countByU_N(userId, name);
+		int count = countByU_LikeN(userId, name);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<OAuthApplication> list = findByU_N(
+		List<OAuthApplication> list = findByU_LikeN(
 			userId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3421,7 +3425,7 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
 	@Override
-	public OAuthApplication[] findByU_N_PrevAndNext(
+	public OAuthApplication[] findByU_LikeN_PrevAndNext(
 			long oAuthApplicationId, long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
@@ -3438,13 +3442,13 @@ public class OAuthApplicationPersistenceImpl
 
 			OAuthApplication[] array = new OAuthApplicationImpl[3];
 
-			array[0] = getByU_N_PrevAndNext(
+			array[0] = getByU_LikeN_PrevAndNext(
 				session, oAuthApplication, userId, name, orderByComparator,
 				true);
 
 			array[1] = oAuthApplication;
 
-			array[2] = getByU_N_PrevAndNext(
+			array[2] = getByU_LikeN_PrevAndNext(
 				session, oAuthApplication, userId, name, orderByComparator,
 				false);
 
@@ -3458,7 +3462,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 	}
 
-	protected OAuthApplication getByU_N_PrevAndNext(
+	protected OAuthApplication getByU_LikeN_PrevAndNext(
 		Session session, OAuthApplication oAuthApplication, long userId,
 		String name, OrderByComparator<OAuthApplication> orderByComparator,
 		boolean previous) {
@@ -3476,17 +3480,17 @@ public class OAuthApplicationPersistenceImpl
 
 		sb.append(_SQL_SELECT_OAUTHAPPLICATION_WHERE);
 
-		sb.append(_FINDER_COLUMN_U_N_USERID_2);
+		sb.append(_FINDER_COLUMN_U_LIKEN_USERID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_U_N_NAME_3);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_U_N_NAME_2);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_2);
 		}
 
 		if (orderByComparator != null) {
@@ -3591,8 +3595,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public List<OAuthApplication> filterFindByU_N(long userId, String name) {
-		return filterFindByU_N(
+	public List<OAuthApplication> filterFindByU_LikeN(
+		long userId, String name) {
+
+		return filterFindByU_LikeN(
 			userId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -3610,10 +3616,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the range of matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public List<OAuthApplication> filterFindByU_N(
+	public List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name, int start, int end) {
 
-		return filterFindByU_N(userId, name, start, end, null);
+		return filterFindByU_LikeN(userId, name, start, end, null);
 	}
 
 	/**
@@ -3631,12 +3637,12 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the ordered range of matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public List<OAuthApplication> filterFindByU_N(
+	public List<OAuthApplication> filterFindByU_LikeN(
 		long userId, String name, int start, int end,
 		OrderByComparator<OAuthApplication> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByU_N(userId, name, start, end, orderByComparator);
+			return findByU_LikeN(userId, name, start, end, orderByComparator);
 		}
 
 		name = Objects.toString(name, "");
@@ -3659,17 +3665,17 @@ public class OAuthApplicationPersistenceImpl
 				_FILTER_SQL_SELECT_OAUTHAPPLICATION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_U_N_USERID_2);
+		sb.append(_FINDER_COLUMN_U_LIKEN_USERID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_U_N_NAME_3);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_U_N_NAME_2);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -3746,13 +3752,13 @@ public class OAuthApplicationPersistenceImpl
 	 * @throws NoSuchApplicationException if a o auth application with the primary key could not be found
 	 */
 	@Override
-	public OAuthApplication[] filterFindByU_N_PrevAndNext(
+	public OAuthApplication[] filterFindByU_LikeN_PrevAndNext(
 			long oAuthApplicationId, long userId, String name,
 			OrderByComparator<OAuthApplication> orderByComparator)
 		throws NoSuchApplicationException {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByU_N_PrevAndNext(
+			return findByU_LikeN_PrevAndNext(
 				oAuthApplicationId, userId, name, orderByComparator);
 		}
 
@@ -3768,13 +3774,13 @@ public class OAuthApplicationPersistenceImpl
 
 			OAuthApplication[] array = new OAuthApplicationImpl[3];
 
-			array[0] = filterGetByU_N_PrevAndNext(
+			array[0] = filterGetByU_LikeN_PrevAndNext(
 				session, oAuthApplication, userId, name, orderByComparator,
 				true);
 
 			array[1] = oAuthApplication;
 
-			array[2] = filterGetByU_N_PrevAndNext(
+			array[2] = filterGetByU_LikeN_PrevAndNext(
 				session, oAuthApplication, userId, name, orderByComparator,
 				false);
 
@@ -3788,7 +3794,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 	}
 
-	protected OAuthApplication filterGetByU_N_PrevAndNext(
+	protected OAuthApplication filterGetByU_LikeN_PrevAndNext(
 		Session session, OAuthApplication oAuthApplication, long userId,
 		String name, OrderByComparator<OAuthApplication> orderByComparator,
 		boolean previous) {
@@ -3812,17 +3818,17 @@ public class OAuthApplicationPersistenceImpl
 				_FILTER_SQL_SELECT_OAUTHAPPLICATION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_U_N_USERID_2);
+		sb.append(_FINDER_COLUMN_U_LIKEN_USERID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_U_N_NAME_3);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_U_N_NAME_2);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -3965,9 +3971,9 @@ public class OAuthApplicationPersistenceImpl
 	 * @param name the name
 	 */
 	@Override
-	public void removeByU_N(long userId, String name) {
+	public void removeByU_LikeN(long userId, String name) {
 		for (OAuthApplication oAuthApplication :
-				findByU_N(
+				findByU_LikeN(
 					userId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(oAuthApplication);
@@ -3982,10 +3988,10 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the number of matching o auth applications
 	 */
 	@Override
-	public int countByU_N(long userId, String name) {
+	public int countByU_LikeN(long userId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByU_N;
+		FinderPath finderPath = _finderPathWithPaginationCountByU_LikeN;
 
 		Object[] finderArgs = new Object[] {userId, name};
 
@@ -3996,17 +4002,17 @@ public class OAuthApplicationPersistenceImpl
 
 			sb.append(_SQL_COUNT_OAUTHAPPLICATION_WHERE);
 
-			sb.append(_FINDER_COLUMN_U_N_USERID_2);
+			sb.append(_FINDER_COLUMN_U_LIKEN_USERID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_N_NAME_3);
+				sb.append(_FINDER_COLUMN_U_LIKEN_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_U_N_NAME_2);
+				sb.append(_FINDER_COLUMN_U_LIKEN_NAME_2);
 			}
 
 			String sql = sb.toString();
@@ -4049,9 +4055,9 @@ public class OAuthApplicationPersistenceImpl
 	 * @return the number of matching o auth applications that the user has permission to view
 	 */
 	@Override
-	public int filterCountByU_N(long userId, String name) {
+	public int filterCountByU_LikeN(long userId, String name) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByU_N(userId, name);
+			return countByU_LikeN(userId, name);
 		}
 
 		name = Objects.toString(name, "");
@@ -4060,17 +4066,17 @@ public class OAuthApplicationPersistenceImpl
 
 		sb.append(_FILTER_SQL_COUNT_OAUTHAPPLICATION_WHERE);
 
-		sb.append(_FINDER_COLUMN_U_N_USERID_2);
+		sb.append(_FINDER_COLUMN_U_LIKEN_USERID_2);
 
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
-			sb.append(_FINDER_COLUMN_U_N_NAME_3);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			sb.append(_FINDER_COLUMN_U_N_NAME_2);
+			sb.append(_FINDER_COLUMN_U_LIKEN_NAME_2);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -4107,13 +4113,13 @@ public class OAuthApplicationPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_U_N_USERID_2 =
+	private static final String _FINDER_COLUMN_U_LIKEN_USERID_2 =
 		"oAuthApplication.userId = ? AND ";
 
-	private static final String _FINDER_COLUMN_U_N_NAME_2 =
+	private static final String _FINDER_COLUMN_U_LIKEN_NAME_2 =
 		"lower(oAuthApplication.name) LIKE ?";
 
-	private static final String _FINDER_COLUMN_U_N_NAME_3 =
+	private static final String _FINDER_COLUMN_U_LIKEN_NAME_3 =
 		"(oAuthApplication.name IS NULL OR oAuthApplication.name LIKE '')";
 
 	public OAuthApplicationPersistenceImpl() {
@@ -4721,8 +4727,8 @@ public class OAuthApplicationPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"consumerKey"},
 			false);
 
-		_finderPathWithPaginationFindByC_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N",
+		_finderPathWithPaginationFindByC_LikeN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4730,13 +4736,13 @@ public class OAuthApplicationPersistenceImpl
 			},
 			new String[] {"companyId", "name"}, true);
 
-		_finderPathWithPaginationCountByC_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_N",
+		_finderPathWithPaginationCountByC_LikeN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false);
 
-		_finderPathWithPaginationFindByU_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_N",
+		_finderPathWithPaginationFindByU_LikeN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_LikeN",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4744,8 +4750,8 @@ public class OAuthApplicationPersistenceImpl
 			},
 			new String[] {"userId", "name"}, true);
 
-		_finderPathWithPaginationCountByU_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_N",
+		_finderPathWithPaginationCountByU_LikeN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_LikeN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "name"}, false);
 	}

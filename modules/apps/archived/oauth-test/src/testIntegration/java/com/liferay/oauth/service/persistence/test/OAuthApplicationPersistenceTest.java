@@ -228,21 +228,21 @@ public class OAuthApplicationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_N() throws Exception {
-		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
+	public void testCountByC_LikeN() throws Exception {
+		_persistence.countByC_LikeN(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_N(0L, "null");
+		_persistence.countByC_LikeN(0L, "null");
 
-		_persistence.countByC_N(0L, (String)null);
+		_persistence.countByC_LikeN(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByU_N() throws Exception {
-		_persistence.countByU_N(RandomTestUtil.nextLong(), "");
+	public void testCountByU_LikeN() throws Exception {
+		_persistence.countByU_LikeN(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByU_N(0L, "null");
+		_persistence.countByU_LikeN(0L, "null");
 
-		_persistence.countByU_N(0L, (String)null);
+		_persistence.countByU_LikeN(0L, (String)null);
 	}
 
 	@Test

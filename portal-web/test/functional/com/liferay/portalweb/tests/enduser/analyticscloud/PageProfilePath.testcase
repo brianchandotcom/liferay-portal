@@ -1,0 +1,59 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8356 | Test Summary: 180 Days time period filter in Path Analysis"
+	@ignore = "true"
+	@priority = "3"
+	test CanTimeFilterUse180DaysPathAnalysis {
+
+		// TODO LRAC-8356 CanTimeFilterUse180DaysPathAnalysis pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8358 | Test Summary: Custom Range time period filter in Path Analysis"
+	@ignore = "true"
+	@priority = "5"
+	test CanTimeFilterUseCustomRangeInPathAnalysis {
+
+		// TODO LRAC-8358 CanTimeFilterUseCustomRangeInPathAnalysis pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8357 | Test Summary: Last Year time period filter in Path Analysis"
+	@ignore = "true"
+	@priority = "3"
+	test CanTimeFilterUseLastYearPathAnalysis {
+
+		// TODO LRAC-8357 CanTimeFilterUseLastYearPathAnalysis pending implementation
+
+	}
+
+}

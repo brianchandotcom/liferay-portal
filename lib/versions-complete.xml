@@ -78,7 +78,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.batch.engine.service.jar!commons-compress.jar</file-name>
-				<version>1.19</version>
+				<version>1.21</version>
 				<project-name>Apache Commons Compress</project-name>
 				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
 				<licenses>
@@ -1122,7 +1122,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.lists.service.jar!commons-compress.jar</file-name>
-				<version>1.19</version>
+				<version>1.21</version>
 				<project-name>Apache Commons Compress</project-name>
 				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
 				<licenses>
@@ -1395,7 +1395,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!commons-compress.jar</file-name>
-				<version>1.19</version>
+				<version>1.21</version>
 				<project-name>Apache Commons Compress</project-name>
 				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
 				<licenses>
@@ -2541,7 +2541,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-compress.jar</file-name>
-				<version>1.19</version>
+				<version>1.21</version>
 				<project-name>Apache Commons Compress</project-name>
 				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
 				<licenses>
@@ -6128,7 +6128,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-compress.jar</file-name>
-				<version>1.19</version>
+				<version>1.21</version>
 				<project-name>Commons Compress</project-name>
 				<project-url>http://commons.apache.org/compress</project-url>
 				<licenses>

@@ -23,11 +23,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface IndexStatusManager {
 
 	/**
-	 * Returns whether indexing is made in async mode.
+	 * Returns whether indexing is executed in async mode.
 	 *
 	 * @return <code>true</code> if indexing must be done in async mode; <code>false</code>
 	 *         otherwise
-	 * @see    com.liferay.portal.search.configuration.BufferedIndexerInvocationHandlerInternalConfiguration#async(
+	 * @see    com.liferay.portal.search.internal.index.configuration.BufferedIndexerInvocationHandlerInternalConfiguration#async(
 	 *         )
 	 */
 	public boolean isAsync();

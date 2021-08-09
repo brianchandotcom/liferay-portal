@@ -10,12 +10,15 @@ html#{$cadmin-selector} {
 			}
 		}
 
-		&--portlet-topper-hidden .portlet > .portlet-topper .portlet-options {
+		&--portlet-topper-hidden
+			.portlet
+			> .cadmin.portlet-topper
+			.portlet-options {
 			display: none;
 		}
 
 		.portlet {
-			> .portlet-topper {
+			> .cadmin.portlet-topper {
 				background-color: rgba(255, 255, 255, 0.95);
 				border: 1px solid $cadmin-info-l1;
 				border-radius: 3px;
@@ -24,32 +27,31 @@ html#{$cadmin-selector} {
 				opacity: 0;
 				padding: 10px 20px 10px 10px;
 				pointer-events: none;
+				position: absolute;
 				transform: translateY(0);
 				width: 100%;
 				z-index: $portletTopperZIndex;
 			}
 
-			&.open > .portlet-topper {
+			&.open > .cadmin.portlet-topper {
 				opacity: 0;
 				transform: translateY(0);
 			}
 
-			@include media-breakpoint-up(sm) {
-				&:hover,
-				&.focus {
-					> .portlet-topper {
-						opacity: 0.9;
-						pointer-events: all;
-						transform: translateY(0);
+			&:hover,
+			&.focus {
+				> .cadmin.portlet-topper {
+					opacity: 0.9;
+					pointer-events: all;
+					transform: translateY(0);
 
-						.portlet-topper-toolbar {
-							position: absolute;
-							right: 5px;
+					.portlet-topper-toolbar {
+						position: absolute;
+						right: 5px;
 
-							.lexicon-icon {
-								fill: $cadmin-primary;
-								stroke: currentColor;
-							}
+						.lexicon-icon {
+							fill: $cadmin-primary;
+							stroke: currentColor;
 						}
 					}
 				}

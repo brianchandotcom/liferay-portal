@@ -30,7 +30,7 @@ public interface JournalWebConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "changeable-default-language-description",
+		description = "if-checked,-the-default-language-of-web-content-articles-will-be-changeable",
 		name = "changeable-default-language", required = false
 	)
 	public boolean changeableDefaultLanguage();

@@ -41,12 +41,8 @@ public class OpenIdConnectHttpSessionListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
 		HttpSession httpSession = httpSessionEvent.getSession();
 
-		Object authenticatingUserIdObject = httpSession.getAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_AUTHENTICATING_USER_ID);
-
 		if (!_offlineOpenIdConnectSessionManager.isOpenIdConnectSession(
-				httpSession) ||
-			(authenticatingUserIdObject != null)) {
+				httpSession)) {
 
 			return;
 		}

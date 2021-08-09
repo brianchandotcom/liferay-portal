@@ -14,10 +14,11 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.service.filter;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
@@ -26,9 +27,12 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectCon
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
+import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,13 +47,13 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration",
 	immediate = true,
 	property = {
-		"before-filter=Auto Login Filter", "servlet-context-name=",
+		"after-filter=Virtual Host Filter", "servlet-context-name=",
 		"servlet-filter-name=SSO OpenId Connect Authentication Filter",
 		"url-pattern=" + OpenIdConnectConstants.REDIRECT_URL_PATTERN
 	},
 	service = {Filter.class, OpenIdConnectAuthenticationFilter.class}
 )
-public class OpenIdConnectAuthenticationFilter extends BaseFilter {
+public class OpenIdConnectAuthenticationFilter extends AutoLoginFilter {
 
 	@Override
 	public boolean isFilterEnabled(
@@ -87,39 +91,37 @@ public class OpenIdConnectAuthenticationFilter extends BaseFilter {
 			return;
 		}
 
+		String actionURL = (String)httpSession.getAttribute(
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL);
+
 		try {
 			_openIdConnectAuthenticationHandler.processAuthenticationResponse(
-				httpServletRequest, httpServletResponse);
+				httpServletRequest, httpServletResponse,
+				userId -> _autoLoginUser(
+					httpServletRequest, httpServletResponse, userId));
 		}
 		catch (StrangersNotAllowedException |
 			   UserEmailAddressException.MustNotUseCompanyMx exception) {
 
 			Class<?> clazz = exception.getClass();
 
-			httpSession.removeAttribute(
-				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
+			actionURL = _http.addParameter(
+				actionURL, "error", clazz.getSimpleName());
 
-			sendError(
-				clazz.getSimpleName(), httpServletRequest, httpServletResponse);
+			httpServletResponse.sendRedirect(actionURL);
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to process OpenID Connect authentication response: " +
-					exception.getMessage(),
-				exception);
-
-			httpSession.removeAttribute(
-				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
-
 			_portal.sendError(
 				exception, httpServletRequest, httpServletResponse);
 		}
 
-		String actionURL = (String)httpSession.getAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL);
-
-		if (actionURL != null) {
+		if (httpServletResponse.isCommitted()) {
+			return;
+		}
+		else if (actionURL != null) {
 			httpServletResponse.sendRedirect(actionURL);
+
+			return;
 		}
 
 		processFilter(
@@ -127,27 +129,39 @@ public class OpenIdConnectAuthenticationFilter extends BaseFilter {
 			httpServletRequest, httpServletResponse, filterChain);
 	}
 
-	protected void sendError(
-			String error, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+	private void _autoLoginUser(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Long userId)
 		throws Exception {
 
-		HttpSession session = httpServletRequest.getSession(false);
+		HttpSession httpSession = httpServletRequest.getSession();
 
-		if (session == null) {
-			return;
-		}
+		httpSession.setAttribute(
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_AUTHENTICATING_USER_ID,
+			userId);
 
-		String actionURL = (String)session.getAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL);
+		super.processFilter(
+			httpServletRequest, httpServletResponse,
+			(servletRequest, servletResponse) -> {
+				long authenticatedUserId = _getRemoteUserId(servletRequest);
 
-		if (actionURL == null) {
-			return;
-		}
+				if (authenticatedUserId == userId) {
+					return;
+				}
 
-		actionURL = _http.addParameter(actionURL, "error", error);
+				throw new ServletException(
+					StringBundler.concat(
+						"Expected user ", userId,
+						" to be authenticated, but user ", authenticatedUserId,
+						" was authenticated instead"));
+			});
+	}
 
-		httpServletResponse.sendRedirect(actionURL);
+	private long _getRemoteUserId(ServletRequest servletRequest) {
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
+
+		return GetterUtil.getLong(httpServletRequest.getRemoteUser());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

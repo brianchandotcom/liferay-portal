@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -85,8 +86,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	@Override
 	public void processAuthenticationResponse(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
+			HttpServletResponse httpServletResponse,
+			UnsafeConsumer<Long, Exception> userIdConsumer)
+		throws Exception {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
@@ -131,29 +133,30 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		httpSession.setAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_AUTHENTICATING_USER_ID,
-			_openIdConnectUserInfoProcessor.processUserInfo(
-				userInfo, _portal.getCompanyId(httpServletRequest),
-				serviceContext.getPathMain(), serviceContext.getPortalURL()));
+		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
+			userInfo, _portal.getCompanyId(httpServletRequest),
+			serviceContext.getPathMain(), serviceContext.getPortalURL());
+
+		userIdConsumer.accept(userId);
+
+		httpSession = httpServletRequest.getSession();
+
+		long openIdConnectSessionId =
+			_offlineOpenIdConnectSessionManager.startOpenIdConnectSession(
+				oidcTokens,
+				openIdConnectAuthenticationSession.getProviderName());
 
 		httpSession.setAttribute(
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION_ID,
-			_offlineOpenIdConnectSessionManager.startOpenIdConnectSession(
-				oidcTokens,
-				openIdConnectAuthenticationSession.getProviderName()));
+			openIdConnectSessionId);
 
 		httpSession.setAttribute(
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION,
 			new OpenIdConnectSessionImpl(
-				(Long)httpSession.getAttribute(
-					OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION_ID),
+				openIdConnectSessionId,
 				openIdConnectAuthenticationSession.getProviderName(),
 				openIdConnectAuthenticationSession.getNonce(),
-				openIdConnectAuthenticationSession.getState(),
-				(Long)httpSession.getAttribute(
-					OpenIdConnectWebKeys.
-						OPEN_ID_CONNECT_AUTHENTICATING_USER_ID)));
+				openIdConnectAuthenticationSession.getState(), userId));
 	}
 
 	@Override
@@ -352,7 +355,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	}
 
 	private void _validateState(State requestedState, State state)
-		throws OpenIdConnectServiceException {
+		throws Exception {
 
 		if (!state.equals(requestedState)) {
 			throw new OpenIdConnectServiceException.AuthenticationException(

@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Node;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowDefinitionSerDes;
@@ -161,6 +162,7 @@ public class WorkflowDefinitionResourceTest
 		WorkflowDefinition randomWorkflowDefinition =
 			randomWorkflowDefinition();
 
+		randomWorkflowDefinition.setNodes(new Node[0]);
 		randomWorkflowDefinition.setTransitions(new Transition[0]);
 
 		WorkflowDefinition postWorkflowDefinition =
@@ -174,7 +176,7 @@ public class WorkflowDefinitionResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"active", "name", "title", "transitions", "version"
+			"active", "name", "nodes", "title", "transitions", "version"
 		};
 	}
 
@@ -188,6 +190,37 @@ public class WorkflowDefinitionResourceTest
 			WorkflowDefinitionTestUtil.getContent(
 				workflowDefinition.getDescription(),
 				workflowDefinition.getName()));
+		workflowDefinition.setNodes(
+			new Node[] {
+				new Node() {
+					{
+						label = "Approved";
+						name = "approved";
+						type = Type.TERMINAL_STATE;
+					}
+				},
+				new Node() {
+					{
+						label = "Created";
+						name = "created";
+						type = Type.INITIAL_STATE;
+					}
+				},
+				new Node() {
+					{
+						label = "Review";
+						name = "review";
+						type = Type.TASK;
+					}
+				},
+				new Node() {
+					{
+						label = "Update";
+						name = "update";
+						type = Type.TASK;
+					}
+				}
+			});
 		workflowDefinition.setTransitions(
 			new Transition[] {
 				new Transition() {

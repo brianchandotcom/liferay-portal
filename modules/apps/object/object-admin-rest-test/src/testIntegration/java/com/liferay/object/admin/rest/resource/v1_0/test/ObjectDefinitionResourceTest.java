@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.After;
@@ -112,10 +113,18 @@ public class ObjectDefinitionResourceTest
 	protected ObjectDefinition randomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition = super.randomObjectDefinition();
 
+		objectDefinition.setLabel(
+			HashMapBuilder.put(
+				"en_US", "A" + objectDefinition.getName()
+			).build());
 		objectDefinition.setName("A" + objectDefinition.getName());
 
 		ObjectField objectField = new ObjectField();
 
+		objectField.setLabel(
+			HashMapBuilder.put(
+				"en_US", "Column"
+			).build());
 		objectField.setName("column");
 		objectField.setType("String");
 

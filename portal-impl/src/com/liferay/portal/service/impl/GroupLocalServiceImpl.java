@@ -1717,7 +1717,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> getGroups(
 		long companyId, String treePath, boolean site) {
 
-		return groupPersistence.findByC_T_S(companyId, treePath, site);
+		return groupPersistence.findByC_LikeT_S(companyId, treePath, site);
 	}
 
 	/**
@@ -2517,7 +2517,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					long previousId, long companyId, long parentPrimaryKey,
 					int size) {
 
-					return groupPersistence.findByG_C_C_P(
+					return groupPersistence.findByGtG_C_C_P(
 						previousId, companyId, classNameId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size, new GroupIdComparator(true));
 				}

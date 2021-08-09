@@ -428,7 +428,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
 
-		return groupPersistence.findByG_C_P_S(
+		return groupPersistence.findByGtG_C_P_S(
 			gtGroupId, companyId, parentGroupId, site, 0, size,
 			new GroupIdComparator(true));
 	}

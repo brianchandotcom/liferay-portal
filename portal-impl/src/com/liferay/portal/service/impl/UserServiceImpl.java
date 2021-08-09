@@ -1278,7 +1278,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				permissionChecker, User.class.getName(), 0, ActionKeys.VIEW);
 		}
 
-		return userPersistence.findByU_C(
+		return userPersistence.findByGtU_C(
 			gtUserId, companyId, 0, size, new UserIdComparator(true));
 	}
 

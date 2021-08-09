@@ -307,7 +307,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		long gtOrganizationId, long companyId, long parentOrganizationId,
 		int size) {
 
-		return organizationPersistence.filterFindByO_C_P(
+		return organizationPersistence.filterFindByGtO_C_P(
 			gtOrganizationId, companyId, parentOrganizationId, 0, size,
 			new OrganizationIdComparator(true));
 	}

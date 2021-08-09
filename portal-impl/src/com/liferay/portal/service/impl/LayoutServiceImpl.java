@@ -827,7 +827,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		long groupId, boolean privateLayout, long parentLayoutId,
 		int priority) {
 
-		return layoutPersistence.filterCountByG_P_P_LtP(
+		return layoutPersistence.filterCountByG_P_P_LteP(
 			groupId, privateLayout, parentLayoutId, priority);
 	}
 

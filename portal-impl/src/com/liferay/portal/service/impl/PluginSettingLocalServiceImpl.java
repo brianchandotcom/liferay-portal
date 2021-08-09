@@ -60,7 +60,7 @@ public class PluginSettingLocalServiceImpl
 	public PluginSetting getPluginSetting(
 		long companyId, String pluginId, String pluginType) {
 
-		PluginSetting pluginSetting = pluginSettingPersistence.fetchByC_I_T(
+		PluginSetting pluginSetting = pluginSettingPersistence.fetchByC_P_P(
 			companyId, pluginId, pluginType);
 
 		if (pluginSetting != null) {
@@ -122,7 +122,7 @@ public class PluginSettingLocalServiceImpl
 
 		pluginId = PortalUtil.getJsSafePortletId(pluginId);
 
-		PluginSetting pluginSetting = pluginSettingPersistence.fetchByC_I_T(
+		PluginSetting pluginSetting = pluginSettingPersistence.fetchByC_P_P(
 			companyId, pluginId, pluginType);
 
 		if (pluginSetting == null) {

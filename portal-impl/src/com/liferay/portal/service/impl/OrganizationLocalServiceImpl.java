@@ -716,7 +716,7 @@ public class OrganizationLocalServiceImpl
 	public List<Organization> getOrganizations(
 		long companyId, String treePath) {
 
-		return organizationPersistence.findByC_T(companyId, treePath);
+		return organizationPersistence.findByC_LikeT(companyId, treePath);
 	}
 
 	/**
@@ -1174,7 +1174,7 @@ public class OrganizationLocalServiceImpl
 					long previousId, long companyId, long parentPrimaryKey,
 					int size) {
 
-					return organizationPersistence.findByO_C_P(
+					return organizationPersistence.findByGtO_C_P(
 						previousId, companyId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size,
 						new OrganizationIdComparator(true));
@@ -2249,10 +2249,11 @@ public class OrganizationLocalServiceImpl
 		sb.append(organization.getOrganizationId());
 		sb.append(StringPool.FORWARD_SLASH);
 
-		List<Organization> organizations = organizationPersistence.findByC_T(
-			organization.getCompanyId(),
-			CustomSQLUtil.keywords(sb.toString())[0], QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new OrganizationNameComparator(true));
+		List<Organization> organizations =
+			organizationPersistence.findByC_LikeT(
+				organization.getCompanyId(),
+				CustomSQLUtil.keywords(sb.toString())[0], QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new OrganizationNameComparator(true));
 
 		long[] organizationIds = new long[organizations.size()];
 

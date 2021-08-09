@@ -10,7 +10,9 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
+		}
 
+		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 	}

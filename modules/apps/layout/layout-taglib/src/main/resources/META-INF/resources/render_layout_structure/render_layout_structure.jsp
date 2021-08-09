@@ -63,6 +63,8 @@ for (String childrenItemId : childrenItemIds) {
 
 							int numberOfRows = (int)Math.ceil((double)maxNumberOfItemsPerPage / collectionStyledLayoutStructureItem.getNumberOfColumns());
 
+							String collectionItemType = renderLayoutStructureDisplayContext.getCollectionItemType(collectionStyledLayoutStructureItem);
+
 							for (int i = 0; i < numberOfRows; i++) {
 						%>
 
@@ -77,6 +79,7 @@ for (String childrenItemId : childrenItemIds) {
 									}
 
 									request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collection.get(index));
+									request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE, collectionItemType);
 									request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 								%>
 
@@ -97,6 +100,7 @@ for (String childrenItemId : childrenItemIds) {
 						}
 						finally {
 							request.removeAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+							request.removeAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE);
 
 							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, currentLayoutDisplayPageProvider);
 						}

@@ -292,6 +292,22 @@ public class RenderLayoutStructureDisplayContext {
 			listObjectReference, defaultLayoutListRetrieverContext);
 	}
 
+	public String getCollectionItemType(
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		if ((collectionJSONObject == null) ||
+			!collectionJSONObject.has("itemType")) {
+
+			return StringPool.BLANK;
+		}
+
+		return collectionJSONObject.getString("itemType");
+	}
+
 	public LayoutDisplayPageProvider<?> getCollectionLayoutDisplayPageProvider(
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {

@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -102,8 +104,11 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(
 			thousandsSeparators.toString(), 5, thousandsSeparators.size());
 		Assert.assertEquals(
-			HashMapBuilder.put(
-				"label", "None"
+			HashMapBuilder.<String, Object>put(
+				"label",
+				HashMapBuilder.put(
+					"en_US", "None"
+				).build()
 			).put(
 				"reference", "none"
 			).put(
@@ -196,6 +201,18 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 				Matchers.any(ResourceBundle.class), Matchers.eq("none"))
 		).thenReturn(
 			"None"
+		);
+
+		when(
+			language.getAvailableLocales()
+		).thenReturn(
+			SetUtil.fromArray(new Locale[] {LocaleUtil.US})
+		);
+
+		when(
+			language.getLanguageId(LocaleUtil.US)
+		).thenReturn(
+			"en_US"
 		);
 
 		languageUtil.setLanguage(language);

@@ -9948,6 +9948,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-digital-signature-properties" />
 		<antcall target="prepare-selenium-email-properties" />
 		<antcall target="prepare-selenium-facebook-properties" />
+		<antcall target="prepare-selenium-google-cloud-autotagging-properties" />
 		<antcall target="prepare-selenium-google-cloud-translation-properties" />
 		<antcall target="prepare-selenium-google-properties" />
 		<antcall target="prepare-selenium-onedrive-properties" />
@@ -10713,6 +10714,17 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					facebook.password=${facebook.password}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-google-cloud-autotagging-properties">
+		<if>
+			<isset property="google.cloud.autotagging.service.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.cloud.autotagging.service.key=${google.cloud.autotagging.service.key}
 				</echo>
 			</then>
 		</if>

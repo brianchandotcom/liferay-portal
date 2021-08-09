@@ -12,18 +12,20 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a site via JSON") {
+		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		task ("Add a fragment collection via JSON") {
+		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
 				name = "Collection Name");
 		}
 
-		task ("Navigate to fragments admin") {
+		task ("Navigate to the fragment collection") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 	}
 
@@ -40,12 +42,9 @@ definition {
 
 	@description = "This is a test for LPS-80503 and LPS-108566. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented. Assert the available variables and taglibs are shown in the IntelliSense and autocomplete works."
 	@priority = "5"
+	@uitest
 	test AutocompleteFragment {
 		property portal.acceptance = "true";
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
 
 		task ("Add a fragment") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -94,12 +93,9 @@ definition {
 
 	@description = "This is a test for LPS-108566. The IntelliSense for available resources will popup when the current collection has resources and Auto-Complete works."
 	@priority = "5"
+	@uitest
 	test AutocompleteFragmentWithCollectionResource {
 		property portal.acceptance = "true";
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
 
 		task ("Add a fragment") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -172,6 +168,110 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
 				value1 = "${fragmentHTML}");
+		}
+	}
+
+	@description = "This is a test for LPS-97184. The user cannot publish fragment with invalid configuration."
+	@priority = "4"
+	@uitest
+	test CannotPublishFragmentWithInvalidConfiguration {
+		task ("Add a fragment with invalid configuration") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.gotoCodeTab();
+		}
+
+		task ("View the error message when click Publish button") {
+			Button.clickPublish();
+
+			Alert.viewErrorMessage(errorMessage = "Please provide a valid configuration for the fragment.");
+		}
+	}
+
+	@description = "This is a test for LPS-114145. The changes are saved automatically in fragment editor before publishing."
+	@priority = "5"
+	test ViewDraftAutoSaved {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment without publish") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
+
+			FragmentsEditor.waitForAutoSave();
+
+			Navigator.gotoBack();
+		}
+
+		task ("View the draft is saved") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+				value1 = '''<div class="fragment_1">Fragment Name</div>''');
+		}
+	}
+
+	@description = "This is a test for LPS-114145. The latest changes are saved automatically in fragment editor when the fragment has a published version."
+	@priority = "4"
+	test ViewLatestChangesAutoSaved {
+		task ("Add a fragment without publish") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Edit the fragment without publish") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">New Fragment Name</div>''');
+
+			FragmentsEditor.waitForAutoSave();
+
+			Navigator.gotoBack();
+		}
+
+		task ("View the latest changes are saved") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+				value1 = '''<div class="fragment_1">New Fragment Name</div>''');
+		}
+	}
+
+	@description = "This is a test for LPS-89251. When creating fragments there should be a visible reference to the Liferay Fragments Toolkit."
+	@priority = "4"
+	@uitest
+	test ViewReferenceToFragmentsToolkit {
+		task ("Access to the fragment editor") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+		}
+
+		task ("Click on the Fragments Toolkit link") {
+			Click(locator1 = "FragmentEditor#FRAGMENTS_TOOLKIT_LINK");
+		}
+
+		task ("Assert user is taken to the the Liferay Fragments Toolkit documentation page") {
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation(value1 = "https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli");
 		}
 	}
 

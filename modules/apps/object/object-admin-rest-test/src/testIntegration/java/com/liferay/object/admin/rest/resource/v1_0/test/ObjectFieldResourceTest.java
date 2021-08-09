@@ -15,6 +15,8 @@
 package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
@@ -25,4 +27,17 @@ import org.junit.runner.RunWith;
 @Ignore
 @RunWith(Arquillian.class)
 public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
+
+	@Override
+	protected ObjectField randomObjectField() throws Exception {
+		ObjectField objectField = super.randomObjectField();
+
+		objectField.setLabel(
+			HashMapBuilder.put(
+				"en_US", "A" + objectField.getName()
+			).build());
+
+		return objectField;
+	}
+
 }

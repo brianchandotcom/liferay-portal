@@ -285,4 +285,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8421 | Test Summary: Assert Assets Forms Custom Range Time Filter in Behaviour Report	"
+	@ignore = "true"
+	@priority = "5"
+	test CanTimeFilterUseCustomRangeInFormsBehaviourReport {
+
+		// TODO LRAC-8421 CanTimeFilterUseCustomRangeInFormsBehaviourReport
+
+	}
+
 }

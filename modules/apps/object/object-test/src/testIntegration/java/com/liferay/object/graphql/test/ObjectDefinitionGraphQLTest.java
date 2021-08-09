@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -69,14 +70,19 @@ public class ObjectDefinitionGraphQLTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_objectDefinitionLabel = "A" + RandomTestUtil.randomString(5);
 		_objectDefinitionName = "A" + RandomTestUtil.randomString(5);
+		_objectFieldLabel = "A" + RandomTestUtil.randomString(5);
 		_objectFieldName = "a" + RandomTestUtil.randomString(5);
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), _objectDefinitionName,
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, _objectDefinitionLabel),
+				_objectDefinitionName,
 				Collections.singletonList(
-					_createObjectField(_objectFieldName, "String")));
+					_createObjectField(
+						_objectFieldLabel, _objectFieldName, "String")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -296,12 +302,15 @@ public class ObjectDefinitionGraphQLTest {
 				"Object/" + _objectFieldName));
 	}
 
-	private ObjectField _createObjectField(String name, String type) {
+	private ObjectField _createObjectField(
+		String label, String name, String type) {
+
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
 		objectField.setIndexed(true);
 		objectField.setIndexedAsKeyword(true);
+		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
 		objectField.setName(name);
 		objectField.setType(type);
 
@@ -332,8 +341,10 @@ public class ObjectDefinitionGraphQLTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
+	private String _objectDefinitionLabel;
 	private String _objectDefinitionName;
 	private ObjectEntry _objectEntry;
+	private String _objectFieldLabel;
 	private String _objectFieldName;
 
 	private static class GraphQLField {

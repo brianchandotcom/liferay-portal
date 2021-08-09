@@ -35,12 +35,16 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -74,12 +78,17 @@ public class ObjectEntryServiceTest {
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Test",
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, "Test"), "Test",
 				Arrays.asList(
 					_createObjectField(
-						true, false, "firstName", false, "String"),
+						true, false,
+						Collections.singletonMap(LocaleUtil.US, "First Name"),
+						"firstName", false, "String"),
 					_createObjectField(
-						true, false, "lastName", false, "String")));
+						true, false,
+						Collections.singletonMap(LocaleUtil.US, "Last Name"),
+						"lastName", false, "String")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -184,14 +193,15 @@ public class ObjectEntryServiceTest {
 	}
 
 	private ObjectField _createObjectField(
-		boolean indexed, boolean indexedAsKeyword, String name,
-		boolean required, String type) {
+		boolean indexed, boolean indexedAsKeyword, Map<Locale, String> labelMap,
+		String name, boolean required, String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setLabelMap(labelMap);
 		objectField.setName(name);
 		objectField.setRequired(required);
 		objectField.setType(type);

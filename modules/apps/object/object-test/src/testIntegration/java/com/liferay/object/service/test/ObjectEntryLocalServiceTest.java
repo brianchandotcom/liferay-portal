@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -85,8 +86,9 @@ public class ObjectEntryLocalServiceTest {
 	public void setUp() throws Exception {
 		_irrelevantObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Irrelevant",
-				Collections.<ObjectField>emptyList());
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, "Irrelevant"),
+				"Irrelevant", Collections.<ObjectField>emptyList());
 
 		_irrelevantObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -95,31 +97,42 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Test",
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, "Test"), "Test",
 				Arrays.asList(
 					_createObjectField(
-						true, false, "ageOfDeath", false, "Long"),
+						true, false, "Age Of Death", "ageOfDeath", false,
+						"Long"),
 					_createObjectField(
-						true, false, "authorOfGospel", false, "Boolean"),
-					_createObjectField(true, false, "birthday", false, "Date"),
+						true, false, "Author Of Gospel", "authorOfGospel",
+						false, "Boolean"),
 					_createObjectField(
-						true, true, "emailAddress", true, "String"),
+						true, false, "Birthday", "birthday", false, "Date"),
 					_createObjectField(
-						true, true, "emailAddressDomain", false, "String"),
+						true, true, "Email Address", "emailAddress", true,
+						"String"),
 					_createObjectField(
-						true, false, "firstName", false, "String"),
-					_createObjectField(true, false, "height", false, "Double"),
+						true, true, "Email Address Domain",
+						"emailAddressDomain", false, "String"),
 					_createObjectField(
-						true, false, "lastName", false, "String"),
+						true, false, "First Name", "firstName", false,
+						"String"),
 					_createObjectField(
-						true, false, "middleName", false, "String"),
+						true, false, "Height", "height", false, "Double"),
 					_createObjectField(
-						true, false, "numberOfBooksWritten", false, "Integer"),
-					_createObjectField(false, false, "portrait", false, "Blob"),
+						true, false, "Last Name", "lastName", false, "String"),
 					_createObjectField(
-						true, false, "speed", false, "BigDecimal"),
+						true, false, "Middle Name", "middleName", false,
+						"String"),
 					_createObjectField(
-						true, false, "weight", false, "Double")));
+						true, false, "Number Of Books Written",
+						"numberOfBooksWritten", false, "Integer"),
+					_createObjectField(
+						false, false, "Portrait", "portrait", false, "Blob"),
+					_createObjectField(
+						true, false, "Speed", "speed", false, "BigDecimal"),
+					_createObjectField(
+						true, false, "Weight", "weight", false, "Double")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -888,7 +901,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private ObjectField _createObjectField(
-		boolean indexed, boolean indexedAsKeyword, String name,
+		boolean indexed, boolean indexedAsKeyword, String label, String name,
 		boolean required, String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
@@ -896,6 +909,7 @@ public class ObjectEntryLocalServiceTest {
 
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
 		objectField.setName(name);
 		objectField.setRequired(required);
 		objectField.setType(type);

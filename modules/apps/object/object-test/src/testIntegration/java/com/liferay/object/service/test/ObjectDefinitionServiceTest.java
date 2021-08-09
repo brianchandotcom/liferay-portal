@@ -28,8 +28,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -156,7 +161,7 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			user.getUserId(), "Test", null);
+			user.getUserId(), _labelMap, "Test", null);
 	}
 
 	private void _setUser(User user) {
@@ -174,7 +179,7 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					"Test", null);
+					_labelMap, "Test", null);
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -238,7 +243,7 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-					user.getUserId(), "Test", null);
+					user.getUserId(), _labelMap, "Test", null);
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
@@ -253,6 +258,8 @@ public class ObjectDefinitionServiceTest {
 	}
 
 	private User _defaultUser;
+	private final Map<Locale, String> _labelMap = Collections.singletonMap(
+		LocaleUtil.US, "Test");
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private User _user;

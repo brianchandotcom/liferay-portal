@@ -97,4 +97,21 @@ definition {
 		Portlet.deletePG(portletName = "Web Content Display");
 	}
 
+	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
+	@priority = "3"
+	test ViewOrderOfContentWidgetActions {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Widget Page Name");
+		}
+		task ("Assert the actions order for widget pages") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.clickPageMenu(pageName = "Test Widget Page Name");
+
+			MenuItem.viewOrder(menuItemList = "View,-,Convert to content page...,-,Copy page,-,Configure,Permissions,-,Delete");
+
+		}
+	}
 }

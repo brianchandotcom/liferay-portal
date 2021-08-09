@@ -770,6 +770,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ExportedFactoryConfigurationCanBeImported {
 		property portal.acceptance = "sharry";

@@ -65,15 +65,16 @@ import org.osgi.service.component.annotations.Reference;
 public class OfflineOpenIdConnectSessionManager {
 
 	public void endOpenIdConnectSession(long openIdConnectSessionId) {
-		try {
-			_openIdConnectSessionLocalService.deleteOpenIdConnectSession(
+		OpenIdConnectSession openIdConnectSession =
+			_openIdConnectSessionLocalService.fetchOpenIdConnectSession(
 				openIdConnectSessionId);
+
+		if (openIdConnectSession == null) {
+			return;
 		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-		}
+
+		_openIdConnectSessionLocalService.deleteOpenIdConnectSession(
+			openIdConnectSession);
 
 		try {
 			_openIdConnectTokenRefreshScheduler.unschedule(

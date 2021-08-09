@@ -197,28 +197,28 @@ public class CommerceDiscountUsageEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCA_CD() throws Exception {
-		_persistence.countByCA_CD(
+	public void testCountByCAI_CDI() throws Exception {
+		_persistence.countByCAI_CDI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByCA_CD(0L, 0L);
+		_persistence.countByCAI_CDI(0L, 0L);
 	}
 
 	@Test
-	public void testCountByCO_CD() throws Exception {
-		_persistence.countByCO_CD(
+	public void testCountByCOI_CDI() throws Exception {
+		_persistence.countByCOI_CDI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByCO_CD(0L, 0L);
+		_persistence.countByCOI_CDI(0L, 0L);
 	}
 
 	@Test
-	public void testCountByCA_CO_CD() throws Exception {
-		_persistence.countByCA_CO_CD(
+	public void testCountByCAI_COI_CDI() throws Exception {
+		_persistence.countByCAI_COI_CDI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByCA_CO_CD(0L, 0L, 0L);
+		_persistence.countByCAI_COI_CDI(0L, 0L, 0L);
 	}
 
 	@Test

@@ -607,9 +607,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		_FINDER_COLUMN_COMMERCEDISCOUNTID_COMMERCEDISCOUNTID_2 =
 			"commerceDiscountUsageEntry.commerceDiscountId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByCA_CD;
-	private FinderPath _finderPathWithoutPaginationFindByCA_CD;
-	private FinderPath _finderPathCountByCA_CD;
+	private FinderPath _finderPathWithPaginationFindByCAI_CDI;
+	private FinderPath _finderPathWithoutPaginationFindByCAI_CDI;
+	private FinderPath _finderPathCountByCAI_CDI;
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
@@ -619,10 +619,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_CDI(
 		long commerceAccountId, long commerceDiscountId) {
 
-		return findByCA_CD(
+		return findByCAI_CDI(
 			commerceAccountId, commerceDiscountId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -641,10 +641,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_CDI(
 		long commerceAccountId, long commerceDiscountId, int start, int end) {
 
-		return findByCA_CD(
+		return findByCAI_CDI(
 			commerceAccountId, commerceDiscountId, start, end, null);
 	}
 
@@ -663,11 +663,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_CDI(
 		long commerceAccountId, long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		return findByCA_CD(
+		return findByCAI_CDI(
 			commerceAccountId, commerceDiscountId, start, end,
 			orderByComparator, true);
 	}
@@ -688,7 +688,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_CDI(
 		long commerceAccountId, long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
 		boolean useFinderCache) {
@@ -700,14 +700,14 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCA_CD;
+				finderPath = _finderPathWithoutPaginationFindByCAI_CDI;
 				finderArgs = new Object[] {
 					commerceAccountId, commerceDiscountId
 				};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCA_CD;
+			finderPath = _finderPathWithPaginationFindByCAI_CDI;
 			finderArgs = new Object[] {
 				commerceAccountId, commerceDiscountId, start, end,
 				orderByComparator
@@ -752,9 +752,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CA_CD_COMMERCEACCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEACCOUNTID_2);
 
-			sb.append(_FINDER_COLUMN_CA_CD_COMMERCEDISCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEDISCOUNTID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -809,13 +809,13 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry findByCA_CD_First(
+	public CommerceDiscountUsageEntry findByCAI_CDI_First(
 			long commerceAccountId, long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCA_CD_First(
+			fetchByCAI_CDI_First(
 				commerceAccountId, commerceDiscountId, orderByComparator);
 
 		if (commerceDiscountUsageEntry != null) {
@@ -846,11 +846,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry fetchByCA_CD_First(
+	public CommerceDiscountUsageEntry fetchByCAI_CDI_First(
 		long commerceAccountId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		List<CommerceDiscountUsageEntry> list = findByCA_CD(
+		List<CommerceDiscountUsageEntry> list = findByCAI_CDI(
 			commerceAccountId, commerceDiscountId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -870,13 +870,13 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry findByCA_CD_Last(
+	public CommerceDiscountUsageEntry findByCAI_CDI_Last(
 			long commerceAccountId, long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCA_CD_Last(
+			fetchByCAI_CDI_Last(
 				commerceAccountId, commerceDiscountId, orderByComparator);
 
 		if (commerceDiscountUsageEntry != null) {
@@ -907,17 +907,17 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry fetchByCA_CD_Last(
+	public CommerceDiscountUsageEntry fetchByCAI_CDI_Last(
 		long commerceAccountId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		int count = countByCA_CD(commerceAccountId, commerceDiscountId);
+		int count = countByCAI_CDI(commerceAccountId, commerceDiscountId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceDiscountUsageEntry> list = findByCA_CD(
+		List<CommerceDiscountUsageEntry> list = findByCAI_CDI(
 			commerceAccountId, commerceDiscountId, count - 1, count,
 			orderByComparator);
 
@@ -939,7 +939,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry[] findByCA_CD_PrevAndNext(
+	public CommerceDiscountUsageEntry[] findByCAI_CDI_PrevAndNext(
 			long commerceDiscountUsageEntryId, long commerceAccountId,
 			long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
@@ -956,13 +956,13 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			CommerceDiscountUsageEntry[] array =
 				new CommerceDiscountUsageEntryImpl[3];
 
-			array[0] = getByCA_CD_PrevAndNext(
+			array[0] = getByCAI_CDI_PrevAndNext(
 				session, commerceDiscountUsageEntry, commerceAccountId,
 				commerceDiscountId, orderByComparator, true);
 
 			array[1] = commerceDiscountUsageEntry;
 
-			array[2] = getByCA_CD_PrevAndNext(
+			array[2] = getByCAI_CDI_PrevAndNext(
 				session, commerceDiscountUsageEntry, commerceAccountId,
 				commerceDiscountId, orderByComparator, false);
 
@@ -976,7 +976,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		}
 	}
 
-	protected CommerceDiscountUsageEntry getByCA_CD_PrevAndNext(
+	protected CommerceDiscountUsageEntry getByCAI_CDI_PrevAndNext(
 		Session session, CommerceDiscountUsageEntry commerceDiscountUsageEntry,
 		long commerceAccountId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
@@ -995,9 +995,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		sb.append(_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-		sb.append(_FINDER_COLUMN_CA_CD_COMMERCEACCOUNTID_2);
+		sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEACCOUNTID_2);
 
-		sb.append(_FINDER_COLUMN_CA_CD_COMMERCEDISCOUNTID_2);
+		sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEDISCOUNTID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -1098,9 +1098,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @param commerceDiscountId the commerce discount ID
 	 */
 	@Override
-	public void removeByCA_CD(long commerceAccountId, long commerceDiscountId) {
+	public void removeByCAI_CDI(
+		long commerceAccountId, long commerceDiscountId) {
+
 		for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
-				findByCA_CD(
+				findByCAI_CDI(
 					commerceAccountId, commerceDiscountId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
@@ -1116,8 +1118,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the number of matching commerce discount usage entries
 	 */
 	@Override
-	public int countByCA_CD(long commerceAccountId, long commerceDiscountId) {
-		FinderPath finderPath = _finderPathCountByCA_CD;
+	public int countByCAI_CDI(long commerceAccountId, long commerceDiscountId) {
+		FinderPath finderPath = _finderPathCountByCAI_CDI;
 
 		Object[] finderArgs = new Object[] {
 			commerceAccountId, commerceDiscountId
@@ -1130,9 +1132,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CA_CD_COMMERCEACCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEACCOUNTID_2);
 
-			sb.append(_FINDER_COLUMN_CA_CD_COMMERCEDISCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_CDI_COMMERCEDISCOUNTID_2);
 
 			String sql = sb.toString();
 
@@ -1164,15 +1166,15 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CA_CD_COMMERCEACCOUNTID_2 =
+	private static final String _FINDER_COLUMN_CAI_CDI_COMMERCEACCOUNTID_2 =
 		"commerceDiscountUsageEntry.commerceAccountId = ? AND ";
 
-	private static final String _FINDER_COLUMN_CA_CD_COMMERCEDISCOUNTID_2 =
+	private static final String _FINDER_COLUMN_CAI_CDI_COMMERCEDISCOUNTID_2 =
 		"commerceDiscountUsageEntry.commerceDiscountId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByCO_CD;
-	private FinderPath _finderPathWithoutPaginationFindByCO_CD;
-	private FinderPath _finderPathCountByCO_CD;
+	private FinderPath _finderPathWithPaginationFindByCOI_CDI;
+	private FinderPath _finderPathWithoutPaginationFindByCOI_CDI;
+	private FinderPath _finderPathCountByCOI_CDI;
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -1182,10 +1184,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCO_CD(
+	public List<CommerceDiscountUsageEntry> findByCOI_CDI(
 		long commerceOrderId, long commerceDiscountId) {
 
-		return findByCO_CD(
+		return findByCOI_CDI(
 			commerceOrderId, commerceDiscountId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1204,10 +1206,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCO_CD(
+	public List<CommerceDiscountUsageEntry> findByCOI_CDI(
 		long commerceOrderId, long commerceDiscountId, int start, int end) {
 
-		return findByCO_CD(
+		return findByCOI_CDI(
 			commerceOrderId, commerceDiscountId, start, end, null);
 	}
 
@@ -1226,11 +1228,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCO_CD(
+	public List<CommerceDiscountUsageEntry> findByCOI_CDI(
 		long commerceOrderId, long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		return findByCO_CD(
+		return findByCOI_CDI(
 			commerceOrderId, commerceDiscountId, start, end, orderByComparator,
 			true);
 	}
@@ -1251,7 +1253,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCO_CD(
+	public List<CommerceDiscountUsageEntry> findByCOI_CDI(
 		long commerceOrderId, long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
 		boolean useFinderCache) {
@@ -1263,12 +1265,12 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCO_CD;
+				finderPath = _finderPathWithoutPaginationFindByCOI_CDI;
 				finderArgs = new Object[] {commerceOrderId, commerceDiscountId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCO_CD;
+			finderPath = _finderPathWithPaginationFindByCOI_CDI;
 			finderArgs = new Object[] {
 				commerceOrderId, commerceDiscountId, start, end,
 				orderByComparator
@@ -1312,9 +1314,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CO_CD_COMMERCEORDERID_2);
+			sb.append(_FINDER_COLUMN_COI_CDI_COMMERCEORDERID_2);
 
-			sb.append(_FINDER_COLUMN_CO_CD_COMMERCEDISCOUNTID_2);
+			sb.append(_FINDER_COLUMN_COI_CDI_COMMERCEDISCOUNTID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -1369,13 +1371,13 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry findByCO_CD_First(
+	public CommerceDiscountUsageEntry findByCOI_CDI_First(
 			long commerceOrderId, long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCO_CD_First(
+			fetchByCOI_CDI_First(
 				commerceOrderId, commerceDiscountId, orderByComparator);
 
 		if (commerceDiscountUsageEntry != null) {
@@ -1406,11 +1408,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry fetchByCO_CD_First(
+	public CommerceDiscountUsageEntry fetchByCOI_CDI_First(
 		long commerceOrderId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		List<CommerceDiscountUsageEntry> list = findByCO_CD(
+		List<CommerceDiscountUsageEntry> list = findByCOI_CDI(
 			commerceOrderId, commerceDiscountId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1430,13 +1432,13 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry findByCO_CD_Last(
+	public CommerceDiscountUsageEntry findByCOI_CDI_Last(
 			long commerceOrderId, long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCO_CD_Last(
+			fetchByCOI_CDI_Last(
 				commerceOrderId, commerceDiscountId, orderByComparator);
 
 		if (commerceDiscountUsageEntry != null) {
@@ -1467,17 +1469,17 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry fetchByCO_CD_Last(
+	public CommerceDiscountUsageEntry fetchByCOI_CDI_Last(
 		long commerceOrderId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		int count = countByCO_CD(commerceOrderId, commerceDiscountId);
+		int count = countByCOI_CDI(commerceOrderId, commerceDiscountId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceDiscountUsageEntry> list = findByCO_CD(
+		List<CommerceDiscountUsageEntry> list = findByCOI_CDI(
 			commerceOrderId, commerceDiscountId, count - 1, count,
 			orderByComparator);
 
@@ -1499,7 +1501,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry[] findByCO_CD_PrevAndNext(
+	public CommerceDiscountUsageEntry[] findByCOI_CDI_PrevAndNext(
 			long commerceDiscountUsageEntryId, long commerceOrderId,
 			long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
@@ -1516,13 +1518,13 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			CommerceDiscountUsageEntry[] array =
 				new CommerceDiscountUsageEntryImpl[3];
 
-			array[0] = getByCO_CD_PrevAndNext(
+			array[0] = getByCOI_CDI_PrevAndNext(
 				session, commerceDiscountUsageEntry, commerceOrderId,
 				commerceDiscountId, orderByComparator, true);
 
 			array[1] = commerceDiscountUsageEntry;
 
-			array[2] = getByCO_CD_PrevAndNext(
+			array[2] = getByCOI_CDI_PrevAndNext(
 				session, commerceDiscountUsageEntry, commerceOrderId,
 				commerceDiscountId, orderByComparator, false);
 
@@ -1536,7 +1538,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		}
 	}
 
-	protected CommerceDiscountUsageEntry getByCO_CD_PrevAndNext(
+	protected CommerceDiscountUsageEntry getByCOI_CDI_PrevAndNext(
 		Session session, CommerceDiscountUsageEntry commerceDiscountUsageEntry,
 		long commerceOrderId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
@@ -1555,9 +1557,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		sb.append(_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-		sb.append(_FINDER_COLUMN_CO_CD_COMMERCEORDERID_2);
+		sb.append(_FINDER_COLUMN_COI_CDI_COMMERCEORDERID_2);
 
-		sb.append(_FINDER_COLUMN_CO_CD_COMMERCEDISCOUNTID_2);
+		sb.append(_FINDER_COLUMN_COI_CDI_COMMERCEDISCOUNTID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -1658,9 +1660,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @param commerceDiscountId the commerce discount ID
 	 */
 	@Override
-	public void removeByCO_CD(long commerceOrderId, long commerceDiscountId) {
+	public void removeByCOI_CDI(long commerceOrderId, long commerceDiscountId) {
 		for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
-				findByCO_CD(
+				findByCOI_CDI(
 					commerceOrderId, commerceDiscountId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
@@ -1676,8 +1678,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the number of matching commerce discount usage entries
 	 */
 	@Override
-	public int countByCO_CD(long commerceOrderId, long commerceDiscountId) {
-		FinderPath finderPath = _finderPathCountByCO_CD;
+	public int countByCOI_CDI(long commerceOrderId, long commerceDiscountId) {
+		FinderPath finderPath = _finderPathCountByCOI_CDI;
 
 		Object[] finderArgs = new Object[] {
 			commerceOrderId, commerceDiscountId
@@ -1690,9 +1692,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CO_CD_COMMERCEORDERID_2);
+			sb.append(_FINDER_COLUMN_COI_CDI_COMMERCEORDERID_2);
 
-			sb.append(_FINDER_COLUMN_CO_CD_COMMERCEDISCOUNTID_2);
+			sb.append(_FINDER_COLUMN_COI_CDI_COMMERCEDISCOUNTID_2);
 
 			String sql = sb.toString();
 
@@ -1724,15 +1726,15 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CO_CD_COMMERCEORDERID_2 =
+	private static final String _FINDER_COLUMN_COI_CDI_COMMERCEORDERID_2 =
 		"commerceDiscountUsageEntry.commerceOrderId = ? AND ";
 
-	private static final String _FINDER_COLUMN_CO_CD_COMMERCEDISCOUNTID_2 =
+	private static final String _FINDER_COLUMN_COI_CDI_COMMERCEDISCOUNTID_2 =
 		"commerceDiscountUsageEntry.commerceDiscountId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByCA_CO_CD;
-	private FinderPath _finderPathWithoutPaginationFindByCA_CO_CD;
-	private FinderPath _finderPathCountByCA_CO_CD;
+	private FinderPath _finderPathWithPaginationFindByCAI_COI_CDI;
+	private FinderPath _finderPathWithoutPaginationFindByCAI_COI_CDI;
+	private FinderPath _finderPathCountByCAI_COI_CDI;
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -1743,10 +1745,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CO_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_COI_CDI(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
 
-		return findByCA_CO_CD(
+		return findByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -1766,11 +1768,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CO_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_COI_CDI(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		int start, int end) {
 
-		return findByCA_CO_CD(
+		return findByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId, start, end,
 			null);
 	}
@@ -1791,12 +1793,12 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CO_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_COI_CDI(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		int start, int end,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		return findByCA_CO_CD(
+		return findByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId, start, end,
 			orderByComparator, true);
 	}
@@ -1818,7 +1820,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the ordered range of matching commerce discount usage entries
 	 */
 	@Override
-	public List<CommerceDiscountUsageEntry> findByCA_CO_CD(
+	public List<CommerceDiscountUsageEntry> findByCAI_COI_CDI(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		int start, int end,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
@@ -1831,14 +1833,14 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCA_CO_CD;
+				finderPath = _finderPathWithoutPaginationFindByCAI_COI_CDI;
 				finderArgs = new Object[] {
 					commerceAccountId, commerceOrderId, commerceDiscountId
 				};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCA_CO_CD;
+			finderPath = _finderPathWithPaginationFindByCAI_COI_CDI;
 			finderArgs = new Object[] {
 				commerceAccountId, commerceOrderId, commerceDiscountId, start,
 				end, orderByComparator
@@ -1885,11 +1887,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEACCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEACCOUNTID_2);
 
-			sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEORDERID_2);
+			sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEORDERID_2);
 
-			sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEDISCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEDISCOUNTID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -1947,14 +1949,14 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry findByCA_CO_CD_First(
+	public CommerceDiscountUsageEntry findByCAI_COI_CDI_First(
 			long commerceAccountId, long commerceOrderId,
 			long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCA_CO_CD_First(
+			fetchByCAI_COI_CDI_First(
 				commerceAccountId, commerceOrderId, commerceDiscountId,
 				orderByComparator);
 
@@ -1990,11 +1992,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry fetchByCA_CO_CD_First(
+	public CommerceDiscountUsageEntry fetchByCAI_COI_CDI_First(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		List<CommerceDiscountUsageEntry> list = findByCA_CO_CD(
+		List<CommerceDiscountUsageEntry> list = findByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId, 0, 1,
 			orderByComparator);
 
@@ -2016,14 +2018,14 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry findByCA_CO_CD_Last(
+	public CommerceDiscountUsageEntry findByCAI_COI_CDI_Last(
 			long commerceAccountId, long commerceOrderId,
 			long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCA_CO_CD_Last(
+			fetchByCAI_COI_CDI_Last(
 				commerceAccountId, commerceOrderId, commerceDiscountId,
 				orderByComparator);
 
@@ -2059,18 +2061,18 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry fetchByCA_CO_CD_Last(
+	public CommerceDiscountUsageEntry fetchByCAI_COI_CDI_Last(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
 
-		int count = countByCA_CO_CD(
+		int count = countByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceDiscountUsageEntry> list = findByCA_CO_CD(
+		List<CommerceDiscountUsageEntry> list = findByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId, count - 1,
 			count, orderByComparator);
 
@@ -2093,7 +2095,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
 	 */
 	@Override
-	public CommerceDiscountUsageEntry[] findByCA_CO_CD_PrevAndNext(
+	public CommerceDiscountUsageEntry[] findByCAI_COI_CDI_PrevAndNext(
 			long commerceDiscountUsageEntryId, long commerceAccountId,
 			long commerceOrderId, long commerceDiscountId,
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
@@ -2110,13 +2112,13 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			CommerceDiscountUsageEntry[] array =
 				new CommerceDiscountUsageEntryImpl[3];
 
-			array[0] = getByCA_CO_CD_PrevAndNext(
+			array[0] = getByCAI_COI_CDI_PrevAndNext(
 				session, commerceDiscountUsageEntry, commerceAccountId,
 				commerceOrderId, commerceDiscountId, orderByComparator, true);
 
 			array[1] = commerceDiscountUsageEntry;
 
-			array[2] = getByCA_CO_CD_PrevAndNext(
+			array[2] = getByCAI_COI_CDI_PrevAndNext(
 				session, commerceDiscountUsageEntry, commerceAccountId,
 				commerceOrderId, commerceDiscountId, orderByComparator, false);
 
@@ -2130,7 +2132,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		}
 	}
 
-	protected CommerceDiscountUsageEntry getByCA_CO_CD_PrevAndNext(
+	protected CommerceDiscountUsageEntry getByCAI_COI_CDI_PrevAndNext(
 		Session session, CommerceDiscountUsageEntry commerceDiscountUsageEntry,
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
@@ -2149,11 +2151,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		sb.append(_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-		sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEACCOUNTID_2);
+		sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEACCOUNTID_2);
 
-		sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEORDERID_2);
+		sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEORDERID_2);
 
-		sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEDISCOUNTID_2);
+		sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEDISCOUNTID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -2257,11 +2259,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @param commerceDiscountId the commerce discount ID
 	 */
 	@Override
-	public void removeByCA_CO_CD(
+	public void removeByCAI_COI_CDI(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
 
 		for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
-				findByCA_CO_CD(
+				findByCAI_COI_CDI(
 					commerceAccountId, commerceOrderId, commerceDiscountId,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
@@ -2278,10 +2280,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * @return the number of matching commerce discount usage entries
 	 */
 	@Override
-	public int countByCA_CO_CD(
+	public int countByCAI_COI_CDI(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
 
-		FinderPath finderPath = _finderPathCountByCA_CO_CD;
+		FinderPath finderPath = _finderPathCountByCAI_COI_CDI;
 
 		Object[] finderArgs = new Object[] {
 			commerceAccountId, commerceOrderId, commerceDiscountId
@@ -2294,11 +2296,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEDISCOUNTUSAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEACCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEACCOUNTID_2);
 
-			sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEORDERID_2);
+			sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEORDERID_2);
 
-			sb.append(_FINDER_COLUMN_CA_CO_CD_COMMERCEDISCOUNTID_2);
+			sb.append(_FINDER_COLUMN_CAI_COI_CDI_COMMERCEDISCOUNTID_2);
 
 			String sql = sb.toString();
 
@@ -2332,14 +2334,15 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CA_CO_CD_COMMERCEACCOUNTID_2 =
+	private static final String _FINDER_COLUMN_CAI_COI_CDI_COMMERCEACCOUNTID_2 =
 		"commerceDiscountUsageEntry.commerceAccountId = ? AND ";
 
-	private static final String _FINDER_COLUMN_CA_CO_CD_COMMERCEORDERID_2 =
+	private static final String _FINDER_COLUMN_CAI_COI_CDI_COMMERCEORDERID_2 =
 		"commerceDiscountUsageEntry.commerceOrderId = ? AND ";
 
-	private static final String _FINDER_COLUMN_CA_CO_CD_COMMERCEDISCOUNTID_2 =
-		"commerceDiscountUsageEntry.commerceDiscountId = ?";
+	private static final String
+		_FINDER_COLUMN_CAI_COI_CDI_COMMERCEDISCOUNTID_2 =
+			"commerceDiscountUsageEntry.commerceDiscountId = ?";
 
 	public CommerceDiscountUsageEntryPersistenceImpl() {
 		setModelClass(CommerceDiscountUsageEntry.class);
@@ -2941,8 +2944,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			"countByCommerceDiscountId", new String[] {Long.class.getName()},
 			new String[] {"commerceDiscountId"}, false);
 
-		_finderPathWithPaginationFindByCA_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCA_CD",
+		_finderPathWithPaginationFindByCAI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCAI_CDI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2950,18 +2953,18 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			},
 			new String[] {"commerceAccountId", "commerceDiscountId"}, true);
 
-		_finderPathWithoutPaginationFindByCA_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCA_CD",
+		_finderPathWithoutPaginationFindByCAI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCAI_CDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceAccountId", "commerceDiscountId"}, true);
 
-		_finderPathCountByCA_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_CD",
+		_finderPathCountByCAI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCAI_CDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceAccountId", "commerceDiscountId"}, false);
 
-		_finderPathWithPaginationFindByCO_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCO_CD",
+		_finderPathWithPaginationFindByCOI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCOI_CDI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2969,18 +2972,18 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			},
 			new String[] {"commerceOrderId", "commerceDiscountId"}, true);
 
-		_finderPathWithoutPaginationFindByCO_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCO_CD",
+		_finderPathWithoutPaginationFindByCOI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCOI_CDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceOrderId", "commerceDiscountId"}, true);
 
-		_finderPathCountByCO_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCO_CD",
+		_finderPathCountByCOI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCOI_CDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceOrderId", "commerceDiscountId"}, false);
 
-		_finderPathWithPaginationFindByCA_CO_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCA_CO_CD",
+		_finderPathWithPaginationFindByCAI_COI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCAI_COI_CDI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
@@ -2991,8 +2994,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			},
 			true);
 
-		_finderPathWithoutPaginationFindByCA_CO_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCA_CO_CD",
+		_finderPathWithoutPaginationFindByCAI_COI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCAI_COI_CDI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -3001,8 +3004,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			},
 			true);
 
-		_finderPathCountByCA_CO_CD = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_CO_CD",
+		_finderPathCountByCAI_COI_CDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCAI_COI_CDI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},

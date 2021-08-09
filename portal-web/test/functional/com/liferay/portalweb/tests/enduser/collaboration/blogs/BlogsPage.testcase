@@ -581,7 +581,7 @@ definition {
 	@refactordone
 	test CanViewReadingTime {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PGBlogs#CanViewReadingTime";
+		property test.name.skip.portal.instance = "BlogsPage#CanViewReadingTime";
 
 		BlogsConfiguration.enableReadingTime();
 

@@ -170,7 +170,7 @@ definition {
 			uploadFileName = "static");
 	}
 
-	@description = "This is the same case as PGBlogs#CanAddTitleWithoutEscapingCharacters, but due to LPS-130537 we should ensure both contexts are covered."
+	@description = "This is the same case as BlogsPage#CanAddTitleWithoutEscapingCharacters, but due to LPS-130537 we should ensure both contexts are covered."
 	@priority = "4"
 	@refactordone
 	test CanAddTitleWithoutEscapingCharacters {

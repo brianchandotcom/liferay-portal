@@ -101,7 +101,7 @@ public class StyleBookScopedCSSVariablesProvider
 				}
 
 				public String getScope() {
-					return "#wrapper";
+					return "body";
 				}
 
 			});

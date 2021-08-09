@@ -333,6 +333,23 @@ definition {
 		Check.checkNotVisible(locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
+	@summary = "Click on page meni of a Site Page. Parent pages hierarchy is required to navigate to child pages."
+	macro clickPageMenu {
+		WaitForPageLoad();
+
+		if (isSet(parentPagesHierarchy)) {
+			for (var parentPage : list "${parentPagesHierarchy}") {
+				Click(
+						key_itemName = "${parentPage}",
+						locator1 = "SitePages#LIST_GROUP_ITEM");
+			}
+		}
+
+		Click(
+				key_pageName = "${pageName}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+	}
+
 	macro configureChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

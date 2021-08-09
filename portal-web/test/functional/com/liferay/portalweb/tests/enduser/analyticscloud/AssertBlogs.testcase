@@ -1,0 +1,50 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"
+	@ignore = "true"
+	@priority = "5"
+	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
+
+		// TODO LRAC-8374 AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
+	@ignore = "true"
+	@priority = "5"
+	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
+
+		// TODO LRAC-8375 AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs
+
+	}
+
+}

@@ -224,7 +224,6 @@ definition {
 	@description = "LPS-135888 - Verify that is possible to select Account role type for role assignments"
 	@priority = "5"
 	test CanAssignAccountRole {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -252,19 +251,11 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT",
-			value1 = "Account"
-		);
+			value1 = "Account");
 
 		AssertElementPresent(
 			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH",
-			value1 = "Account Administrator"
-		);
-
-		
-
-
-
-
+			value1 = "Account Administrator");
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"

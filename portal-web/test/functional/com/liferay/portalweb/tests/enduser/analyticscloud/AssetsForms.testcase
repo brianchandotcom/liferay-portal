@@ -348,5 +348,12 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8433 | Test Summary: Form appears on card shows the pages that the form appears on"
+	@ignore = "true"
+	@priority = "5"
+	test AssertAppearsOnListShowsPagesFormsExists {
 
+		// TODO LRAC-8433 AssertAppearsOnListShowsPagesFormsExists
+
+	}
 }

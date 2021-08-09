@@ -132,12 +132,22 @@ const FilterItem = ({filter, item, withoutRouteParams}) => {
 	);
 };
 
-const FilterItems = ({filters = [], ...props}) => {
-	return filters.map((filter) =>
-		filter.items.map((item, index) => (
-			<FilterItem filter={filter} item={item} key={index} {...props} />
-		))
-	);
+const FilterItems = ({filters = [], hideFilters = [], ...props}) => {
+	return filters
+		.filter(
+			(filterItem) =>
+				!hideFilters.find((hideItem) => filterItem.key === hideItem)
+		)
+		.map((filter) =>
+			filter.items.map((item, index) => (
+				<FilterItem
+					filter={filter}
+					item={item}
+					key={index}
+					{...props}
+				/>
+			))
+		);
 };
 
 const TotalCount = ({search, totalCount}) => {

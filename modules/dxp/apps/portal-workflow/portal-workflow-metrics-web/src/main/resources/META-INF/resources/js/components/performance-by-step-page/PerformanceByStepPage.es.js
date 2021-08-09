@@ -26,6 +26,8 @@ function PerformanceByStepPage({query, routeParams}) {
 
 	const {processId, ...paginationParams} = routeParams;
 	const {search = null} = parse(query);
+	const filterKeys = ['processVersion'];
+	const hideFilters = ['processVersion'];
 
 	useProcessTitle(processId, Liferay.Language.get('performance-by-step'));
 
@@ -33,7 +35,7 @@ function PerformanceByStepPage({query, routeParams}) {
 		filterValues: {dateEnd, dateStart, processVersion},
 		prefixedKeys,
 		selectedFilters,
-	} = useFilter({});
+	} = useFilter({filterKeys});
 
 	const {data, fetchData} = useFetch({
 		params: {
@@ -55,6 +57,7 @@ function PerformanceByStepPage({query, routeParams}) {
 		<PromisesResolver promises={promises}>
 			<PerformanceByStepPage.Header
 				filterKeys={prefixedKeys}
+				hideFilters={hideFilters}
 				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
 				totalCount={data.totalCount}

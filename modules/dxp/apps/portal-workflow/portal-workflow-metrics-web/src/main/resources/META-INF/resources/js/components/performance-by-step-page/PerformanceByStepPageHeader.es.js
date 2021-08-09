@@ -18,13 +18,21 @@ import SearchField from '../../shared/components/search-field/SearchField.es';
 import ProcessVersionFilter from '../filter/ProcessVersionFilter.es';
 import TimeRangeFilter from '../filter/TimeRangeFilter.es';
 
+const hasFilterToShow = (selectedFilters = [], hideFilters = []) =>
+	selectedFilters.filter(
+		(selectedItem) =>
+			!hideFilters.find((hideItem) => selectedItem.key === hideItem)
+	).length > 0;
+
 export default function Header({
 	filterKeys,
+	hideFilters = [],
 	routeParams,
 	selectedFilters,
 	totalCount,
 }) {
-	const showFiltersResult = routeParams.search || selectedFilters.length > 0;
+	const showFiltersResult =
+		routeParams.search || hasFilterToShow(selectedFilters, hideFilters);
 
 	return (
 		<>
@@ -66,6 +74,7 @@ export default function Header({
 
 					<ResultsBar.FilterItems
 						filters={selectedFilters}
+						hideFilters={hideFilters}
 						{...routeParams}
 					/>
 

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import java.net.InetAddress;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -119,8 +120,10 @@ public class LayoutCrawler {
 	}
 
 	private boolean _isHttpsEnabled() {
-		if (Http.HTTPS.equals(PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL)) ||
-			Http.HTTPS.equals(
+		if (Objects.equals(
+				Http.HTTPS, PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL)) ||
+			Objects.equals(
+				Http.HTTPS,
 				PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL))) {
 
 			return true;

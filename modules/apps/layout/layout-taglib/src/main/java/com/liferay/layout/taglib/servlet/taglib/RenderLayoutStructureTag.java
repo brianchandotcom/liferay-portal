@@ -18,7 +18,6 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
@@ -39,11 +38,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			RenderLayoutStructureDisplayContext.class.getName(),
 			new RenderLayoutStructureDisplayContext(
-				getFieldValues(), httpServletRequest,
-				PipingServletResponseFactory.createPipingServletResponse(
-					pageContext),
-				getLayoutStructure(), getMainItemId(), getMode(),
-				isShowPreview()));
+				getFieldValues(), httpServletRequest, getLayoutStructure(),
+				getMainItemId(), getMode(), isShowPreview()));
 
 		return super.doStartTag();
 	}

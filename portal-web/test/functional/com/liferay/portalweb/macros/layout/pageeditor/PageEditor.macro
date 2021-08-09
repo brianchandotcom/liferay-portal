@@ -1100,9 +1100,7 @@ definition {
 	macro clickDiscardDraft {
 		WaitForPageLoad();
 
-		Click(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+		SitePages.clickPageMenu(pageName = "${pageName}");
 
 		MenuItem.clickNoError(menuItem = "Discard Draft");
 

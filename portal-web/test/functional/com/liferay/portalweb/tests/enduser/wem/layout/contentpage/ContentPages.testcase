@@ -301,9 +301,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
@@ -343,9 +341,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
@@ -369,9 +365,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewPresent(menuItem = "Discard Draft");
 		}
@@ -399,9 +393,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
@@ -426,9 +418,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewPresent(menuItem = "Discard Draft");
 		}
@@ -461,9 +451,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
@@ -488,9 +476,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewPresent(menuItem = "Discard Draft");
 		}
@@ -522,9 +508,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click(
-				key_pageName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}

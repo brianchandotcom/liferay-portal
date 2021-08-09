@@ -261,9 +261,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Edit");
 
@@ -283,9 +281,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Preview");
 
@@ -323,9 +319,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Preview");
 
@@ -368,9 +362,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Preview");
 
@@ -419,9 +411,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Preview");
 
@@ -438,9 +428,7 @@ definition {
 
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewVisible(menuItem = "Edit");
 
@@ -458,9 +446,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.click(menuItem = "Preview");
 
@@ -507,9 +493,7 @@ definition {
 				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
 				value1 = "Pending");
 
-			Click.waitForMenuToggleJSClick(
-				key_pageName = "Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			SitePages.clickPageMenu(pageName = "Test Page Name");
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}

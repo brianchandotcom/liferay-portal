@@ -553,6 +553,74 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanAccessAdminWithRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsConfiguration.viewNoPermissionCP();
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAccessAdminWithSiteRole {
+		Permissions.setUpSiteRoleLoginUserCP(
+			pageName = "Blogs Page",
+			portletName = "Blogs",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsConfiguration.viewNoPermissionCP();
+	}
+
 	@description = "This checks that a guest cannot comment on an entry when permissions are removed."
 	@priority = "4"
 	@refactorneeded
@@ -1498,6 +1566,26 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
+	@priority = "4"
+	@refactordone
+	test NoWidgetActionsDisplayForGuestByDefault {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.viewNoPermissionPG();
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test SubscribeBlogsRegRole {
@@ -2194,104 +2282,6 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewBlogsPortletNoGuestRole {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Blogs Page");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Portlet.addPG(
-			pageName = "Blogs Page",
-			portletName = "Blogs");
-
-		User.logoutPG();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsConfiguration.viewNoPermissionPG();
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewBlogsPortletRegRole {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
-
-		BlogsConfiguration.viewNoPermissionCP();
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewBlogsPortletSiteRole {
-		Permissions.setUpSiteRoleLoginUserCP(
-			pageName = "Blogs Page",
-			portletName = "Blogs",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
-
-		BlogsConfiguration.viewNoPermissionCP();
 	}
 
 }

@@ -1,0 +1,59 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8370 | Test Summary: 180 Days time period filter in Interests List"
+	@ignore = "true"
+	@priority = "3"
+	test CanTimeFilterUse180DaysInInterestsList {
+
+		// TODO LRAC-8370 CanTimeFilterUse180DaysInInterestsList
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8372 | Test Summary: Custom Range time period filter in Interests List"
+	@ignore = "true"
+	@priority = "5"
+	test CanTimeFilterUseCustomRangeInInterestsList {
+
+		// TODO LRAC-8372 CanTimeFilterUseCustomRangeInInterestsList
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8371 | Test Summary: Last Year time period filter in Interests List"
+	@ignore = "true"
+	@priority = "3"
+	test CanTimeFilterUseLastYearInInterestsList {
+
+		// TODO LRAC-8371 CanTimeFilterUseLastYearInInterestsList
+
+	}
+
+}

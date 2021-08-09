@@ -44,6 +44,29 @@ public class CommerceOrderServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long commerceOrderTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderService.addCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			commerceOrderTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+			long groupId, long commerceAccountId, long commerceCurrencyId,
+			long shippingAddressId, long commerceOrderTypeId,
+			String purchaseOrderNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderService.addCommerceOrder(
+			groupId, commerceAccountId, commerceCurrencyId, shippingAddressId,
+			commerceOrderTypeId, purchaseOrderNumber);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
 			long groupId, long commerceAccountId, long commerceCurrencyId,
 			long shippingAddressId, String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -49,6 +49,27 @@ public class CommerceOrderServiceUtil {
 	}
 
 	public static CommerceOrder addCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long commerceOrderTypeId)
+		throws PortalException {
+
+		return getService().addCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			commerceOrderTypeId);
+	}
+
+	public static CommerceOrder addCommerceOrder(
+			long groupId, long commerceAccountId, long commerceCurrencyId,
+			long shippingAddressId, long commerceOrderTypeId,
+			String purchaseOrderNumber)
+		throws PortalException {
+
+		return getService().addCommerceOrder(
+			groupId, commerceAccountId, commerceCurrencyId, shippingAddressId,
+			commerceOrderTypeId, purchaseOrderNumber);
+	}
+
+	public static CommerceOrder addCommerceOrder(
 			long groupId, long commerceAccountId, long commerceCurrencyId,
 			long shippingAddressId, String purchaseOrderNumber)
 		throws PortalException {

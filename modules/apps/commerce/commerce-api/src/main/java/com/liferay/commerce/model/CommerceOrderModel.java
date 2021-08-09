@@ -338,6 +338,20 @@ public interface CommerceOrderModel
 	public void setShippingOptionName(String shippingOptionName);
 
 	/**
+	 * Returns the commerce order type ID of this commerce order.
+	 *
+	 * @return the commerce order type ID of this commerce order
+	 */
+	public long getCommerceOrderTypeId();
+
+	/**
+	 * Sets the commerce order type ID of this commerce order.
+	 *
+	 * @param commerceOrderTypeId the commerce order type ID of this commerce order
+	 */
+	public void setCommerceOrderTypeId(long commerceOrderTypeId);
+
+	/**
 	 * Returns the purchase order number of this commerce order.
 	 *
 	 * @return the purchase order number of this commerce order

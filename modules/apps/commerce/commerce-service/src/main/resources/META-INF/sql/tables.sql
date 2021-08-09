@@ -77,6 +77,7 @@ create table CommerceOrder (
 	transactionId TEXT null,
 	commerceShippingMethodId LONG,
 	shippingOptionName VARCHAR(255) null,
+	commerceOrderTypeId LONG,
 	purchaseOrderNumber VARCHAR(75) null,
 	couponCode VARCHAR(75) null,
 	lastPriceUpdateDate DATE null,

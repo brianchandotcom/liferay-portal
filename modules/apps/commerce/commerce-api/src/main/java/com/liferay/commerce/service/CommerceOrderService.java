@@ -71,6 +71,17 @@ public interface CommerceOrderService extends BaseService {
 		throws PortalException;
 
 	public CommerceOrder addCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long commerceOrderTypeId)
+		throws PortalException;
+
+	public CommerceOrder addCommerceOrder(
+			long groupId, long commerceAccountId, long commerceCurrencyId,
+			long shippingAddressId, long commerceOrderTypeId,
+			String purchaseOrderNumber)
+		throws PortalException;
+
+	public CommerceOrder addCommerceOrder(
 			long groupId, long commerceAccountId, long commerceCurrencyId,
 			long shippingAddressId, String purchaseOrderNumber)
 		throws PortalException;

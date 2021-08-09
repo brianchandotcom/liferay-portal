@@ -72,6 +72,56 @@ public class CommerceOrderLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long commerceOrderTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.addCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			commerceOrderTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long shippingAddressId,
+			long commerceOrderTypeId, String purchaseOrderNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.addCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			shippingAddressId, commerceOrderTypeId, purchaseOrderNumber);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			long commerceOrderTypeId, String purchaseOrderNumber,
+			java.math.BigDecimal subtotal, java.math.BigDecimal shippingAmount,
+			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
+			java.math.BigDecimal subtotalWithTaxAmount,
+			java.math.BigDecimal shippingWithTaxAmount,
+			java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
+			int orderDateMonth, int orderDateDay, int orderDateYear,
+			int orderDateHour, int orderDateMinute, int orderStatus,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.addCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			billingAddressId, shippingAddressId, commercePaymentMethodKey,
+			commerceShippingMethodId, shippingOptionName, commerceOrderTypeId,
+			purchaseOrderNumber, subtotal, shippingAmount, taxAmount, total,
+			subtotalWithTaxAmount, shippingWithTaxAmount, totalWithTaxAmount,
+			paymentStatus, orderDateMonth, orderDateDay, orderDateYear,
+			orderDateHour, orderDateMinute, orderStatus, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
 			long commerceCurrencyId, long billingAddressId,
 			long shippingAddressId, String commercePaymentMethodKey,
 			long commerceShippingMethodId, String shippingOptionName,

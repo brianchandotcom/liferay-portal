@@ -83,6 +83,10 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		createColumn(
 			"shippingOptionName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Long> commerceOrderTypeId =
+		createColumn(
+			"commerceOrderTypeId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, String> purchaseOrderNumber =
 		createColumn(
 			"purchaseOrderNumber", String.class, Types.VARCHAR,

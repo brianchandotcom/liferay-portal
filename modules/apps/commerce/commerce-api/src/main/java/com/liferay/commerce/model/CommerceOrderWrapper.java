@@ -64,6 +64,7 @@ public class CommerceOrderWrapper
 		attributes.put(
 			"commerceShippingMethodId", getCommerceShippingMethodId());
 		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("commerceOrderTypeId", getCommerceOrderTypeId());
 		attributes.put("purchaseOrderNumber", getPurchaseOrderNumber());
 		attributes.put("couponCode", getCouponCode());
 		attributes.put("lastPriceUpdateDate", getLastPriceUpdateDate());
@@ -278,6 +279,12 @@ public class CommerceOrderWrapper
 
 		if (shippingOptionName != null) {
 			setShippingOptionName(shippingOptionName);
+		}
+
+		Long commerceOrderTypeId = (Long)attributes.get("commerceOrderTypeId");
+
+		if (commerceOrderTypeId != null) {
+			setCommerceOrderTypeId(commerceOrderTypeId);
 		}
 
 		String purchaseOrderNumber = (String)attributes.get(
@@ -750,6 +757,16 @@ public class CommerceOrderWrapper
 	@Override
 	public int getCommerceOrderItemsCount(long cpInstanceId) {
 		return model.getCommerceOrderItemsCount(cpInstanceId);
+	}
+
+	/**
+	 * Returns the commerce order type ID of this commerce order.
+	 *
+	 * @return the commerce order type ID of this commerce order
+	 */
+	@Override
+	public long getCommerceOrderTypeId() {
+		return model.getCommerceOrderTypeId();
 	}
 
 	/**
@@ -1655,6 +1672,16 @@ public class CommerceOrderWrapper
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
 		model.setCommerceOrderId(commerceOrderId);
+	}
+
+	/**
+	 * Sets the commerce order type ID of this commerce order.
+	 *
+	 * @param commerceOrderTypeId the commerce order type ID of this commerce order
+	 */
+	@Override
+	public void setCommerceOrderTypeId(long commerceOrderTypeId) {
+		model.setCommerceOrderTypeId(commerceOrderTypeId);
 	}
 
 	/**

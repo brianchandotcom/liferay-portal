@@ -94,6 +94,7 @@
 		<field name="shippingOptionName" type="String">
 			<hint name="max-length">255</hint>
 		</field>
+		<field name="commerceOrderTypeId" type="long" />
 		<field name="purchaseOrderNumber" type="String" />
 		<field name="couponCode" type="String" />
 		<field name="lastPriceUpdateDate" type="Date" />

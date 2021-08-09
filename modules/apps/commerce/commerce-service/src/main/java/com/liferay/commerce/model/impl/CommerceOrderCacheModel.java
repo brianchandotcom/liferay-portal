@@ -64,7 +64,7 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(137);
+		StringBundler sb = new StringBundler(139);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -100,6 +100,8 @@ public class CommerceOrderCacheModel
 		sb.append(commerceShippingMethodId);
 		sb.append(", shippingOptionName=");
 		sb.append(shippingOptionName);
+		sb.append(", commerceOrderTypeId=");
+		sb.append(commerceOrderTypeId);
 		sb.append(", purchaseOrderNumber=");
 		sb.append(purchaseOrderNumber);
 		sb.append(", couponCode=");
@@ -280,6 +282,8 @@ public class CommerceOrderCacheModel
 			commerceOrderImpl.setShippingOptionName(shippingOptionName);
 		}
 
+		commerceOrderImpl.setCommerceOrderTypeId(commerceOrderTypeId);
+
 		if (purchaseOrderNumber == null) {
 			commerceOrderImpl.setPurchaseOrderNumber("");
 		}
@@ -453,6 +457,8 @@ public class CommerceOrderCacheModel
 
 		commerceShippingMethodId = objectInput.readLong();
 		shippingOptionName = objectInput.readUTF();
+
+		commerceOrderTypeId = objectInput.readLong();
 		purchaseOrderNumber = objectInput.readUTF();
 		couponCode = objectInput.readUTF();
 		lastPriceUpdateDate = objectInput.readLong();
@@ -588,6 +594,8 @@ public class CommerceOrderCacheModel
 			objectOutput.writeUTF(shippingOptionName);
 		}
 
+		objectOutput.writeLong(commerceOrderTypeId);
+
 		if (purchaseOrderNumber == null) {
 			objectOutput.writeUTF("");
 		}
@@ -695,6 +703,7 @@ public class CommerceOrderCacheModel
 	public String transactionId;
 	public long commerceShippingMethodId;
 	public String shippingOptionName;
+	public long commerceOrderTypeId;
 	public String purchaseOrderNumber;
 	public String couponCode;
 	public long lastPriceUpdateDate;

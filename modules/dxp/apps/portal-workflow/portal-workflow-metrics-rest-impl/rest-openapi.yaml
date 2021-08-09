@@ -652,7 +652,7 @@ paths:
                     description:
                         ""
             tags: ["Index"]
-    "/indexes/reindex/status":
+    "/reindex/statuses":
         get:
             operationId: getIndexReindexStatusPage
             responses:

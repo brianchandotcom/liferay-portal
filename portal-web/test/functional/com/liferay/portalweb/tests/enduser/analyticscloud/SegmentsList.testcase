@@ -29,6 +29,15 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8462 | Test Summary: Inform the User when there are no disabled Segments"
+	@ignore = "true"
+	@priority = "3"
+	test AssertUserIsInformedWhenThereAreNoDisabledSegments {
+
+		// TODO LRAC-8462 AssertUserIsInformedWhenThereAreNoDisabledSegments
+
+	}
+
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanSearchForSegment {
@@ -143,6 +152,24 @@ definition {
 		ACSegments.assertSegmentPresent(segmentName = "Static Segment Test");
 
 		ACSegments.assertSegmentPresent(segmentName = "Dynamic Segment Test");
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8460 | Test Summary: Order the Segment List"
+	@ignore = "true"
+	@priority = "4"
+	test OrderSegmentList {
+
+		// TODO LRAC-8460 OrderSegmentList
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8461 | Test Summary: Paginate Segment list"
+	@ignore = "true"
+	@priority = "3"
+	test PaginateSegmentList {
+
+		// TODO LRAC-8461 PaginateSegmentList
+
 	}
 
 }

@@ -74,4 +74,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8378 | Test Summary: Blogs location card shows views by the expected location"
+	@ignore = "true"
+	@priority = "5"
+	test BlogsLocationCardShowsViewsByExpectedLocation {
+
+		// TODO LRAC-8378 BlogsLocationCardShowsViewsByExpectedLocation
+
+	}
+
 }

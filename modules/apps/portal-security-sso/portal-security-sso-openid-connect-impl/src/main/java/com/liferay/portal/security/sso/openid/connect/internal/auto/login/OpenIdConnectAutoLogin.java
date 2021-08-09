@@ -57,6 +57,9 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_AUTHENTICATING_USER_ID);
 
 		if (userId != null) {
+			httpSession.removeAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_AUTHENTICATING_USER_ID);
+
 			User user = _userLocalService.getUserById(userId);
 
 			String[] credentials = new String[3];

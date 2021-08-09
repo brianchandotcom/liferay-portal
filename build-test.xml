@@ -6941,7 +6941,7 @@ go</echo>
 		<if>
 			<isset property="cluster.invoke.method" />
 			<then>
-				<echo file="${liferay.home}/osgi/configs/com.liferay.cluster.test.module.configuration.ClusterTestConfiguration.config">clusterTestCommand="${cluster.invoke.method}"</echo>
+				<echo file="${liferay.home}/osgi/configs/com.liferay.portal.cluster.sample.configuration.ClusterTestConfiguration.config">clusterTestCommand="${cluster.invoke.method}"</echo>
 			</then>
 		</if>
 	</target>

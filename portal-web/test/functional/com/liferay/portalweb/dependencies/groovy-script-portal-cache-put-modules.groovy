@@ -6,7 +6,7 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import java.lang.reflect.Constructor;
 
 try {
-	ClassLoader testModuleClassLoader = ClassLoaderPool.getClassLoader("com.liferay.cluster.test.module_3.0.0");
+	ClassLoader testModuleClassLoader = ClassLoaderPool.getClassLoader("com.liferay.portal.cluster.sample_1.0.0");
 
 	Class<?> clazz = testModuleClassLoader.loadClass("com.liferay.portal.cluster.sample.internal.ClusterTestClass");
 

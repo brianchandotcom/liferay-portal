@@ -47,7 +47,7 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.portal.cluster.sample.jar", "${deployDir}/com.liferay.portal.cluster.sample.jar");
 
 		Pause(locator1 = "10000");
 
@@ -70,11 +70,11 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.portal.cluster.sample.jar", "${deployDir}/com.liferay.portal.cluster.sample.jar");
 
 		Pause(locator1 = "10000");
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -95,13 +95,13 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.portal.cluster.sample.jar", "${deployDir}/com.liferay.portal.cluster.sample.jar");
 
 		Pause(locator1 = "10000");
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
 
@@ -132,11 +132,11 @@ definition {
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.portal.cluster.sample.jar");
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
 
@@ -146,13 +146,13 @@ definition {
 
 		Portlet.shutdownServer();
 
-		FileInstall.deleteJarOffline(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
+		FileInstall.deleteJarOffline(liferayDependencyJars = "com.liferay.portal.cluster.sample.jar");
 
 		Portlet.startServer(keepOSGiState = "true");
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
 

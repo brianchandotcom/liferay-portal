@@ -14,8 +14,10 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
+import com.liferay.headless.admin.workflow.dto.v1_0.Node;
 import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
+import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.NodeUtil;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.TransitionUtil;
 import com.liferay.headless.admin.workflow.internal.odata.entity.v1_0.WorkflowDefinitionEntityModel;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
@@ -168,6 +170,15 @@ public class WorkflowDefinitionResourceImpl
 				dateModified = workflowDefinition.getModifiedDate();
 				description = workflowDefinition.getDescription();
 				name = workflowDefinition.getName();
+				nodes = transformToArray(
+					workflowDefinition.getWorkflowNodes(),
+					workflowNode -> NodeUtil.toNode(
+						_language, workflowNode.getName(),
+						ResourceBundleUtil.getModuleAndPortalResourceBundle(
+							contextAcceptLanguage.getPreferredLocale(),
+							WorkflowDefinitionResourceImpl.class),
+						workflowNode.getType()),
+					Node.class);
 				title = titleMap.get(
 					contextAcceptLanguage.getPreferredLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(

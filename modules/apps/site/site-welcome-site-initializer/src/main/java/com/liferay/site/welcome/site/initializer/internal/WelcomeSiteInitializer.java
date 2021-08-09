@@ -60,8 +60,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -245,11 +243,9 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 		if (fileEntry == null) {
 			URL url = _bundle.getEntry(_PATH + _FILE_NAME_TREE_IMAGE);
 
-			File file = FileUtil.createTempFile(url.openStream());
-
 			byte[] bytes = null;
 
-			try (InputStream inputStream = new FileInputStream(file)) {
+			try (InputStream inputStream = url.openStream()) {
 				bytes = FileUtil.getBytes(inputStream);
 			}
 

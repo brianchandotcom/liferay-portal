@@ -276,4 +276,13 @@ definition {
 			metricValue = "4");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
+	@ignore = "true"
+	@priority = "5"
+	test CanFormsListSearchable {
+
+		// TODO LRAC-8417 CanFormsListSearchable
+
+	}
+
 }

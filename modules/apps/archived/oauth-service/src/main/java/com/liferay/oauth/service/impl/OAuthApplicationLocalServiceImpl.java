@@ -226,7 +226,7 @@ public class OAuthApplicationLocalServiceImpl
 			long userId = (Long)params.get("userId");
 
 			if (Validator.isNotNull(keywords)) {
-				return oAuthApplicationPersistence.findByU_N(
+				return oAuthApplicationPersistence.findByU_LikeN(
 					userId, keywords, start, end, orderByComparator);
 			}
 
@@ -235,7 +235,7 @@ public class OAuthApplicationLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(keywords)) {
-			return oAuthApplicationPersistence.findByC_N(
+			return oAuthApplicationPersistence.findByC_LikeN(
 				companyId, keywords, start, end, orderByComparator);
 		}
 
@@ -253,14 +253,14 @@ public class OAuthApplicationLocalServiceImpl
 			long userId = (Long)params.get("userId");
 
 			if (Validator.isNotNull(keywords)) {
-				return oAuthApplicationPersistence.countByU_N(userId, keywords);
+				return oAuthApplicationPersistence.countByU_LikeN(userId, keywords);
 			}
 
 			return oAuthApplicationPersistence.countByUserId(userId);
 		}
 
 		if (Validator.isNotNull(keywords)) {
-			return oAuthApplicationPersistence.countByC_N(companyId, keywords);
+			return oAuthApplicationPersistence.countByC_LikeN(companyId, keywords);
 		}
 
 		return oAuthApplicationPersistence.countByCompanyId(companyId);

@@ -74,4 +74,22 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8448 | Test Summary: Web content audience card shows expected amount of known and anonymous individuals"
+	@ignore = "true"
+	@priority = "5"
+	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInWC {
+
+		// TODO LRAC-8448 AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInWC
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
+	@ignore = "true"
+	@priority = "5"
+	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
+
+		// TODO LRAC-8449 AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC
+
+	}
+
 }

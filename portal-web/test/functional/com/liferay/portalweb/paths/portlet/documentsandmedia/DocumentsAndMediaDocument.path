@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>DOCUMENT_VIEW_VERSION_NUMBER</td>
-	<td>//section[contains(@id,'DLAdminPortlet')]//span[@class='workflow-version']/span[contains(@class,'workflow-value')]</td>
+	<td>//section[contains(@id,'DLAdminPortlet')]//span[contains(@class,'workflow-version')]/span[contains(@class,'workflow-value')]</td>
 	<td></td>
 </tr>
 <tr>

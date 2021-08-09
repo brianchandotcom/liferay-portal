@@ -19,6 +19,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -32,6 +33,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -67,6 +69,14 @@ public class DLFileVersionCTDisplayRenderer
 	}
 
 	@Override
+	public DLFileVersion fetchLatestVersionedModel(
+		DLFileVersion dlFileVersion) {
+
+		return _dlFileVersionLocalService.fetchLatestFileVersion(
+			dlFileVersion.getFileEntryId(), true);
+	}
+
+	@Override
 	public InputStream getDownloadInputStream(
 			DLFileVersion dlFileVersion, String version)
 		throws PortalException {
@@ -97,6 +107,11 @@ public class DLFileVersionCTDisplayRenderer
 	@Override
 	public String getTitle(Locale locale, DLFileVersion dlFileVersion) {
 		return dlFileVersion.getTitle();
+	}
+
+	@Override
+	public String getVersionName(DLFileVersion dlFileVersion) {
+		return dlFileVersion.getVersion();
 	}
 
 	@Override
@@ -135,5 +150,8 @@ public class DLFileVersionCTDisplayRenderer
 	protected void buildDisplay(DisplayBuilder<DLFileVersion> displayBuilder) {
 		buildDisplay(displayBuilder, displayBuilder.getModel());
 	}
+
+	@Reference
+	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 }

@@ -21,6 +21,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                label:
+                    additionalProperties:
+                        type: string
+                    type: object
                 name:
                     type: string
                 objectFields:
@@ -54,6 +58,10 @@ components:
                     type: boolean
                 indexedLanguageId:
                     type: string
+                label:
+                    additionalProperties:
+                        type: string
+                    type: object
                 name:
                     type: string
                 required:

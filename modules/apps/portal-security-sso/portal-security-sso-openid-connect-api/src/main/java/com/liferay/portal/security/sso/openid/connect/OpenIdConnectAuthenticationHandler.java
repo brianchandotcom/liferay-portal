@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,9 @@ public interface OpenIdConnectAuthenticationHandler {
 
 	public void processAuthenticationResponse(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException;
+			HttpServletResponse httpServletResponse,
+			UnsafeConsumer<Long, Exception> userIdConsumer)
+		throws Exception;
 
 	public void requestAuthentication(
 			String openIdConnectProviderName,

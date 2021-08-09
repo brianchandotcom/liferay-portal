@@ -3130,12 +3130,6 @@ definition {
 			value1 = "${filter}");
 	}
 
-	macro viewAutoSaveMessage {
-		AssertTextEquals.assertPartialText(
-			locator1 = "PageEditor#AUTOSAVE_MESSAGE",
-			value1 = "Saved");
-	}
-
 	macro viewCannotAddFragmentToOutsideOfDropZone {
 		WaitForPageLoad();
 

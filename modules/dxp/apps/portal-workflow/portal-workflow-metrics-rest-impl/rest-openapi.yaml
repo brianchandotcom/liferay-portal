@@ -1336,7 +1336,7 @@ paths:
             tags: ["Node"]
     "/processes/{processId}/process-versions":
         get:
-            operationId: getProcessVersionsPage
+            operationId: getProcessProcessVersionsPage
             parameters:
                 - in: path
                   name: processId
@@ -1736,7 +1736,7 @@ paths:
             tags: ["SLA"]
     "/tasks":
         post:
-            operationId: postProcessTasksPage
+            operationId: postTasksPage
             parameters:
                 - in: query
                   name: page

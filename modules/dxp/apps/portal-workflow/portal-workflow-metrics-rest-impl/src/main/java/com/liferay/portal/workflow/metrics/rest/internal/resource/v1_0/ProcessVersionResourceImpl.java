@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProcessVersionResourceImpl extends BaseProcessVersionResourceImpl {
 
 	@Override
-	public Page<ProcessVersion> getProcessVersionsPage(Long processId)
+	public Page<ProcessVersion> getProcessProcessVersionsPage(Long processId)
 		throws Exception {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();

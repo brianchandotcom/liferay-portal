@@ -199,7 +199,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	}
 
 	@Override
-	public Page<Task> postProcessTasksPage(
+	public Page<Task> postTasksPage(
 			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception {
 

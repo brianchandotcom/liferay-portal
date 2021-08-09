@@ -29,6 +29,24 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
+	@ignore = "true"
+	@priority = "5"
+	test AssertAppearsOnListShowsPagesBlogExists {
+
+		// TODO LRAC-8387 AssertAppearsOnListShowsPagesBlogExists
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8384 | Test Summary: Assert 180 day time filter in Blogs"
+	@ignore = "true"
+	@priority = "3"
+	test AssertBlogsPageTImeFilter180Days {
+
+		// TODO LRAC-8384 AssertBlogsPageTImeFilter180Days
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"
 	@ignore = "true"
 	@priority = "5"
@@ -44,33 +62,6 @@ definition {
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
 
 		// TODO LRAC-8375 AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8383 | Test Summary: Custom Range time filter in Blogs assets page"
-	@ignore = "true"
-	@priority = "5"
-	test CanUseCustomRangeBlogsAssetsPage {
-
-		// TODO LRAC-8383 CanUseCustomRangeBlogsAssetsPage
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
-	@ignore = "true"
-	@priority = "5"
-	test CanBlogsListSearchable {
-
-		// TODO LRAC-8382 CanBlogsListSearchable
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8384 | Test Summary: Assert 180 day time filter in Blogs"
-	@ignore = "true"
-	@priority = "3"
-	test AssertBlogsPageTImeFilter180Days {
-
-		// TODO LRAC-8384 AssertBlogsPageTImeFilter180Days
 
 	}
 
@@ -101,12 +92,21 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
 	@ignore = "true"
 	@priority = "5"
-	test AssertAppearsOnListShowsPagesBlogExists {
+	test CanBlogsListSearchable {
 
-		// TODO LRAC-8387 AssertAppearsOnListShowsPagesBlogExists
+		// TODO LRAC-8382 CanBlogsListSearchable
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8383 | Test Summary: Custom Range time filter in Blogs assets page"
+	@ignore = "true"
+	@priority = "5"
+	test CanUseCustomRangeBlogsAssetsPage {
+
+		// TODO LRAC-8383 CanUseCustomRangeBlogsAssetsPage
 
 	}
 

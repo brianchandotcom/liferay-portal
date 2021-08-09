@@ -109,6 +109,16 @@ public class ObjectFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (objectField.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append(_toJSON(objectField.getLabel()));
+		}
+
 		if (objectField.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +215,13 @@ public class ObjectFieldSerDes {
 				String.valueOf(objectField.getIndexedLanguageId()));
 		}
 
+		if (objectField.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(objectField.getLabel()));
+		}
+
 		if (objectField.getName() == null) {
 			map.put("name", null);
 		}
@@ -275,6 +292,13 @@ public class ObjectFieldSerDes {
 				if (jsonParserFieldValue != null) {
 					objectField.setIndexedLanguageId(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setLabel(
+						(Map)ObjectFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

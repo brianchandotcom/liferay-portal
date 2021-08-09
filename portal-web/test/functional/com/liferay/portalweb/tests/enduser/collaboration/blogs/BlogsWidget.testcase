@@ -52,6 +52,34 @@ definition {
 		}
 	}
 
+	@description = "This checks that an entry can be edited in card view"
+	@priority = "4"
+	@refactordone
+	test CanEditEntryInCardViewViaADT {
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Blogs",
+			templateName = "Card");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.editContentViaCardViewPG(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edited",
+			entryTitle = "Blogs Entry Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewPG(
+			entryCardTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content Edited");
+	}
+
 	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."
 	@priority = "4"
 	@refactorneeded

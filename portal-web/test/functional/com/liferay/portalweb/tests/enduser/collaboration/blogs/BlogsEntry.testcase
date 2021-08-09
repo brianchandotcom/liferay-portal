@@ -131,7 +131,7 @@ definition {
 	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
 	@priority = "5"
 	@refactorneeded
-	test CanAddEntryWithStaticGif {
+	test CanAddWithStaticGif {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
@@ -170,6 +170,121 @@ definition {
 		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",
 			entryTitle = '''&amp; &lt; &gt; &quot; > <''');
+	}
+
+	@description = "This is a use case for LPS-69240. It checks that a blog entry with custom URL can be added and also that the automatic URL is generated properly in the UI."
+	@priority = "4"
+	@refactordone
+	test CanAddWithCustomURL {
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		AssertChecked(locator1 = "Radio#AUTOMATIC_URL");
+
+		AssertTextEquals(
+			locator1 = "TextInput#BLOGS_ENTRY_URL",
+			value1 = "blogs-entry-title");
+
+		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+
+		Check(locator1 = "Radio#CUSTOM_URL");
+
+		Type(
+			locator1 = "TextInput#BLOGS_ENTRY_URL",
+			value1 = "custom-url-here");
+
+		PortletEntry.publish();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/custom-url-here");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This is a usecase for LPS-75241. It checks that an embedded video can be added to a blog."
+	@priority = "5"
+	@refactordone
+	test CanAddWithEmbeddedVideo {
+		property portal.acceptance = "true";
+		property testray.component.names = "WYSIWYG";
+
+		Blogs.addEntry(
+			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title",
+			navTab = "URL",
+			videoService = "youtube");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "true",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that basic text can be inputted and displayed in the most common fields in a blog entry."
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanAddWithSubtitle {
+		property testray.component.names = "WYSIWYG";
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a blog entry with a trackback URL can be added."
+	@priority = "4"
+	@refactorneeded
+	test CanAddWithTrackbackURL {
+		property custom.properties = "blogs.trackback.enabled=true";
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+		Refresh();
+
+		BlogsEntry.addWithTrackbackURLPG(
+			entryContent = "Blogs Entry1 Content",
+			entryContent2 = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry1 Title",
+			entryTitle2 = "Blogs Entry2 Title",
+			pageName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewWithTrackbackURLPG(
+			entryContent = "Blogs Entry1 Content",
+			entryContent2 = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry1 Title",
+			entryTitle2 = "Blogs Entry2 Title");
 	}
 
 	@description = "This checks that a blog entry can be automatically saved as a draft."
@@ -259,6 +374,66 @@ definition {
 		}
 	}
 
+	@description = "This checks that a blog entry can be manually saved as a draft."
+	@priority = "5"
+	@refactordone
+	test CanManuallySaveAsDraft {
+		property portal.acceptance = "true";
+
+		Blogs.addDraft(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(
+			entryStatus = "Draft",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This this a use case for LPS-69240. It checks that a blog entry with a URL that duplicates an existing one cannot be published."
+	@priority = "4"
+	@refactordone
+	test CannotAddDuplicateCustomURLThroughUI {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+
+		Check(locator1 = "Radio#CUSTOM_URL");
+
+		Type(
+			locator1 = "TextInput#BLOGS_ENTRY_URL",
+			value1 = "blogs-entry-title");
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#ERROR");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_ENTER_A_UNIQUE_TITLE",
+			value1 = "The URL title is already in use. Please enter a unique URL title.");
+	}
+
 	@description = "This checks that a blog entry cannot be published if the custom abstracted is selected but empty."
 	@priority = "4"
 	@refactorneeded
@@ -332,6 +507,126 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a blog entry that is scheduled is in a pre-publish status in the UI."
+	@priority = "4"
+	@refactordone
+	test CanSchedulePost {
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.scheduleBlogEntry();
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		BlogsEntry.viewPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a blog entry can be searched for by its content."
+	@priority = "4"
+	@refactordone
+	test CanSearchByContent {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
+
+		JSONBlog.addEntry(
+			entryContent = "Unique Content",
+			entryTitle = "Blogs Entry Title");
+
+		for (var searchTerm : list "Unique,Unique Content") {
+			Navigator.gotoPage(pageName = "Search Page");
+
+			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Blogs Entry Title",
+				searchAssetType = "Blogs Entry",
+				searchTerm = "${searchTerm}");
+		}
+	}
+
+	@description = "This checks that a blog entry can be searched for by its title."
+	@priority = "4"
+	@refactordone
+	test CanSearchByTitle {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
+
+		JSONBlog.addEntry(
+			entryContent = "Unique Content",
+			entryTitle = "Blogs Entry Title");
+
+		for (var searchTerm : list "Blogs,Blogs Entry Title") {
+			Navigator.gotoPage(pageName = "Search Page");
+
+			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Blogs Entry Title",
+				searchAssetType = "Blogs Entry",
+				searchTerm = "${searchTerm}");
+		}
+	}
+
+	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."
+	@priority = "4"
+	@refactordone
+	test ShouldHaveUniqueURLForDuplicate {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/blogs-entry-title-1");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This checks that a string that is over 255 characters in the title will be trimmed to 255."
+	@priority = "4"
+	@refactordone
+	test ShouldTrimTitleTo255CharactersWhenOver {
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||XX");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-x",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
 	}
 
 }

@@ -68,6 +68,21 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				objectField.getType()));
 	}
 
+	@Override
+	public ObjectField putObjectField(
+			Long objectFieldId, ObjectField objectField)
+		throws Exception {
+
+		return ObjectFieldUtil.toObjectField(
+			_objectFieldLocalService.updateObjectField(
+				objectFieldId, objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(),
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), objectField.getName()),
+				objectField.getRequired()));
+	}
+
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 

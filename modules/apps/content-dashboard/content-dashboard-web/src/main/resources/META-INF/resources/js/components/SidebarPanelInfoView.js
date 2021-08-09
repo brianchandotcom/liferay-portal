@@ -81,6 +81,33 @@ const SidebarPanelInfoView = ({
 
 	const {description, downloadURL, fileName, preview} = specificFields;
 
+	const documentDates = [
+		{
+			text: formatDate(data['display-date']?.value, languageTag),
+			title: Liferay.Language.get('display-date'),
+		},
+		{
+			text: formatDate(createDate, languageTag),
+			title: Liferay.Language.get('creation-date'),
+		},
+		{
+			text: formatDate(modifiedDate, languageTag),
+			title: Liferay.Language.get('modified-date'),
+		},
+		{
+			text: formatDate(data['expiration-date']?.value, languageTag),
+			title: Liferay.Language.get('expiration-date'),
+		},
+		{
+			text: formatDate(data['review-date']?.value, languageTag),
+			title: Liferay.Language.get('review-date'),
+		},
+		{
+			text: classPK,
+			title: Liferay.Language.get('id'),
+		},
+	];
+
 	return (
 		<>
 			<Sidebar.Header title={title} />
@@ -183,41 +210,7 @@ const SidebarPanelInfoView = ({
 					<DocumentLanguages urls={sortedViewURLS} />
 				)}
 
-				{[
-					{
-						text: formatDate(
-							data['display-date']?.value,
-							languageTag
-						),
-						title: Liferay.Language.get('display-date'),
-					},
-					{
-						text: formatDate(createDate, languageTag),
-						title: Liferay.Language.get('creation-date'),
-					},
-					{
-						text: formatDate(modifiedDate, languageTag),
-						title: Liferay.Language.get('modified-date'),
-					},
-					{
-						text: formatDate(
-							data['expiration-date']?.value,
-							languageTag
-						),
-						title: Liferay.Language.get('expiration-date'),
-					},
-					{
-						text: formatDate(
-							data['review-date']?.value,
-							languageTag
-						),
-						title: Liferay.Language.get('review-date'),
-					},
-					{
-						text: classPK,
-						title: Liferay.Language.get('id'),
-					},
-				].map(
+				{documentDates.map(
 					({text, title}) =>
 						text &&
 						title && (

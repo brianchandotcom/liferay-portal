@@ -133,6 +133,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"data", _getDataJSONObject(contentDashboardItem, locale)
 				).put(
+					"docType", contentDashboardItem.getTypeLabel(locale)
+				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",
@@ -149,9 +151,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"title", contentDashboardItem.getTitle(locale)
 				).put(
 					"user", _getUserJSONObject(contentDashboardItem, locale)
-				).put(
-					"docType",
-					contentDashboardItem.getTypeLabel(locale)
 				).put(
 					"versions",
 					_getVersionsJSONArray(contentDashboardItem, locale)

@@ -38,9 +38,7 @@ public class IndexerRequest {
 
 		_method = method;
 		_classedModel = classedModel;
-
 		_indexer = new NoAutoCommitIndexer<>(indexer);
-
 		_forceSync = forceSync;
 
 		_modelClassName = classedModel.getModelClassName();

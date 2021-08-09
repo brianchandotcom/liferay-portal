@@ -18,7 +18,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const ImagePreview = ({downloadURL, imageSrc, imageTitle}) => {
+const DocumentPreview = ({documentSrc, documentTitle, downloadURL}) => {
 	const [showModal, setShowModal] = useState(false);
 
 	const {observer} = useModal({
@@ -29,11 +29,11 @@ const ImagePreview = ({downloadURL, imageSrc, imageTitle}) => {
 
 	return (
 		<>
-			<div className="image-preview sidebar-section sidebar-section--spaced">
-				<figure className="image-preview-figure">
-					<img alt={imageTitle} src={imageSrc} />
+			<div className="document-preview sidebar-section sidebar-section--spaced">
+				<figure className="document-preview-figure">
+					<img alt={documentTitle} src={documentSrc} />
 					<ClayIcon
-						className="image-preview-icon"
+						className="document-preview-icon"
 						onClick={handleShowModal}
 						symbol="shortcut"
 					/>
@@ -51,13 +51,13 @@ const ImagePreview = ({downloadURL, imageSrc, imageTitle}) => {
 			</div>
 			{showModal && (
 				<ClayModal observer={observer} size="full-screen">
-					<ClayModal.Header>{imageTitle}</ClayModal.Header>
+					<ClayModal.Header>{documentTitle}</ClayModal.Header>
 					<ClayModal.Body className="p-0">
 						<figure className="h-100 m-0 text-center">
 							<img
-								alt={imageTitle}
+								alt={documentTitle}
 								className="h-100"
-								src={imageSrc}
+								src={documentSrc}
 							/>
 						</figure>
 					</ClayModal.Body>
@@ -67,10 +67,10 @@ const ImagePreview = ({downloadURL, imageSrc, imageTitle}) => {
 	);
 };
 
-ImagePreview.propTypes = {
+DocumentPreview.propTypes = {
+	documentSrc: PropTypes.string.isRequired,
+	documentTitle: PropTypes.string,
 	downloadURL: PropTypes.string,
-	imageSrc: PropTypes.string.isRequired,
-	imageTitle: PropTypes.string,
 };
 
-export default ImagePreview;
+export default DocumentPreview;

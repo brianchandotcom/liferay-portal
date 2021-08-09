@@ -19,7 +19,7 @@ import classnames from 'classnames';
 import React, {useMemo} from 'react';
 
 import DocumentLanguages from './DocumentLanguages';
-import ImagePreview from './ImagePreview';
+import DocumentPreview from './DocumentPreview';
 import Sidebar from './Sidebar';
 
 const formatDate = (date, languageTag) => {
@@ -155,10 +155,10 @@ const SidebarPanelInfoView = ({
 				</div>
 
 				{preview && (
-					<ImagePreview
+					<DocumentPreview
+						documentSrc={preview}
+						documentTitle={title}
 						downloadURL={downloadURL}
-						imageSrc={preview}
-						imageTitle={title}
 					/>
 				)}
 

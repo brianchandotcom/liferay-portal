@@ -21,7 +21,6 @@ import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.web.internal.util.MicroblogsWebUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -33,8 +32,6 @@ import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jonathan Lee
@@ -50,11 +47,6 @@ public class MicroblogsActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
-	}
-
-	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -139,12 +131,5 @@ public class MicroblogsActivityInterpreter
 	)
 	private ModelResourcePermission<MicroblogsEntry>
 		_microblogsEntryModelResourcePermission;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(bundle.symbolic.name=com.liferay.microblogs.web)"
-	)
-	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

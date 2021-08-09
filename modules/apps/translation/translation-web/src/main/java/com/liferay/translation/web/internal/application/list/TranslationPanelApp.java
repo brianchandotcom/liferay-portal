@@ -19,7 +19,6 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.translation.constants.TranslationPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,8 +53,5 @@ public class TranslationPanelApp extends BasePanelApp {
 
 	@Reference
 	private Language _language;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.translation.web)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

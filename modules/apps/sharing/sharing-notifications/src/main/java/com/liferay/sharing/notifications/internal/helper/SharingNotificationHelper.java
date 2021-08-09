@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -71,8 +70,8 @@ public class SharingNotificationHelper {
 
 		User toUser = _userLocalService.fetchUser(sharingEntry.getToUserId());
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(_getLocale(toUser));
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_getLocale(toUser), getClass());
 
 		template.put(
 			"actionTitle", _getEmailActionTitle(sharingEntry, resourceBundle));
@@ -197,8 +196,8 @@ public class SharingNotificationHelper {
 			languageKey = "x-has-shared-x-with-you-for-x-until-x";
 		}
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, languageKey,
@@ -250,11 +249,6 @@ public class SharingNotificationHelper {
 
 		return ResourceBundleUtil.getString(resourceBundle, "someone");
 	}
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.sharing.notifications)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;

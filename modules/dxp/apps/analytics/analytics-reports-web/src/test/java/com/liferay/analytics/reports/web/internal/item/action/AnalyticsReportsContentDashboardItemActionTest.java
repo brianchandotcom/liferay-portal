@@ -16,12 +16,7 @@ package com.liferay.analytics.reports.web.internal.item.action;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -40,32 +35,12 @@ public class AnalyticsReportsContentDashboardItemActionTest {
 
 	@Test
 	public void testCreation() {
-		String label = RandomTestUtil.randomString();
 		String url = RandomTestUtil.randomString();
-
-		ResourceBundle resourceBundle = new ResourceBundle() {
-
-			@Override
-			public Enumeration<String> getKeys() {
-				return Collections.enumeration(
-					Collections.singletonList("view-metrics"));
-			}
-
-			@Override
-			protected Object handleGetObject(String key) {
-				return label;
-			}
-
-		};
 
 		AnalyticsReportsContentDashboardItemAction
 			analyticsReportsContentDashboardItemAction =
-				new AnalyticsReportsContentDashboardItemAction(
-					locale -> resourceBundle, url);
+				new AnalyticsReportsContentDashboardItemAction(url);
 
-		Assert.assertEquals(
-			label,
-			analyticsReportsContentDashboardItemAction.getLabel(LocaleUtil.US));
 		Assert.assertEquals(
 			"viewMetrics",
 			analyticsReportsContentDashboardItemAction.getName());

@@ -18,7 +18,6 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -27,7 +26,6 @@ import com.liferay.translation.google.cloud.translator.internal.configuration.Go
 import java.util.Dictionary;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -51,8 +49,8 @@ public class GoogleCloudTranslatorConfigurationModelListener
 		if (enabled && !_isValid(serviceAccountPrivateKey)) {
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					_resourceBundleLoader.loadResourceBundle(
-						LocaleThreadLocal.getThemeDisplayLocale()),
+					ResourceBundleUtil.getBundle(
+						LocaleThreadLocal.getThemeDisplayLocale(), getClass()),
 					"the-service-account-private-key-must-be-in-json-format"),
 				GoogleCloudTranslatorConfiguration.class, getClass(),
 				properties);
@@ -74,10 +72,5 @@ public class GoogleCloudTranslatorConfigurationModelListener
 			return false;
 		}
 	}
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.translation.google.cloud.translator)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

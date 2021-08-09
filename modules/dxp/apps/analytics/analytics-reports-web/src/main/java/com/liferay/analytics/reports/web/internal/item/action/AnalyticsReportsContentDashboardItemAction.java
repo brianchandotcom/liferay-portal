@@ -15,7 +15,6 @@
 package com.liferay.analytics.reports.web.internal.item.action;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -27,10 +26,7 @@ import java.util.ResourceBundle;
 public class AnalyticsReportsContentDashboardItemAction
 	implements ContentDashboardItemAction {
 
-	public AnalyticsReportsContentDashboardItemAction(
-		ResourceBundleLoader resourceBundleLoader, String url) {
-
-		_resourceBundleLoader = resourceBundleLoader;
+	public AnalyticsReportsContentDashboardItemAction(String url) {
 		_url = url;
 	}
 
@@ -41,8 +37,8 @@ public class AnalyticsReportsContentDashboardItemAction
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
 
 		return ResourceBundleUtil.getString(resourceBundle, "view-metrics");
 	}
@@ -69,7 +65,6 @@ public class AnalyticsReportsContentDashboardItemAction
 
 	private static final String _NAME = "viewMetrics";
 
-	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _url;
 
 }

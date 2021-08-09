@@ -22,8 +22,8 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
@@ -72,8 +72,8 @@ public class DDMUserPersonalFolderItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, "com.liferay.dynamic.data.mapping.lang");
 
 		return _language.get(resourceBundle, "user-personal-folder");
 	}
@@ -135,11 +135,6 @@ public class DDMUserPersonalFolderItemSelectorView
 
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	private ServletContext _servletContext;
 

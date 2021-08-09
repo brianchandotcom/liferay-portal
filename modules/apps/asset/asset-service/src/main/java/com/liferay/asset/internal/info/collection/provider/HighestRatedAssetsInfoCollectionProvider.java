@@ -23,7 +23,7 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -63,8 +63,8 @@ public class HighestRatedAssetsInfoCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "highest-rated-assets");
 	}
@@ -74,8 +74,5 @@ public class HighestRatedAssetsInfoCollectionProvider
 
 	@Reference
 	private AssetEntryService _assetEntryService;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.asset.service)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

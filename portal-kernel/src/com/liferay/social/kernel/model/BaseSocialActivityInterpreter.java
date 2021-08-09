@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
@@ -123,7 +124,9 @@ public abstract class BaseSocialActivityInterpreter
 		}
 	}
 
-	protected abstract ResourceBundleLoader acquireResourceBundleLoader();
+	protected ResourceBundleLoader acquireResourceBundleLoader() {
+		return locale -> ResourceBundleUtil.getBundle(locale, getClass());
+	}
 
 	protected String addNoSuchEntryRedirect(
 			String url, String className, long classPK,

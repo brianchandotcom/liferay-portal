@@ -25,8 +25,8 @@ import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.Serializable;
 
@@ -59,8 +59,8 @@ public class ObjectEntryRowInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "row");
 	}
@@ -145,9 +145,6 @@ public class ObjectEntryRowInfoItemRenderer
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.object.web)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	private ServletContext _servletContext;
 

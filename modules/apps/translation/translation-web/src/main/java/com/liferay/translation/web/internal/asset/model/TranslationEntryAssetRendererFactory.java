@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
@@ -56,9 +55,8 @@ public class TranslationEntryAssetRendererFactory
 
 		if (translationEntry != null) {
 			return new TranslationEntryAssetRenderer(
-				_infoItemServiceTracker, _resourceBundleLoader, _servletContext,
-				translationEntry, _translationInfoFieldChecker,
-				_translationSnapshotProvider);
+				_infoItemServiceTracker, _servletContext, translationEntry,
+				_translationInfoFieldChecker, _translationSnapshotProvider);
 		}
 
 		return null;
@@ -71,9 +69,6 @@ public class TranslationEntryAssetRendererFactory
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.translation.web)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.translation.web)")
 	private ServletContext _servletContext;

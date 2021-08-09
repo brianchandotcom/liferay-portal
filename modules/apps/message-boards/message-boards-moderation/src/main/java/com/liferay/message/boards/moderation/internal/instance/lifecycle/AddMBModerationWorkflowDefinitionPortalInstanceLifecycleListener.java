@@ -20,9 +20,9 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
@@ -78,7 +78,7 @@ public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener
 			titleMap.put(
 				_language.getLanguageId(locale),
 				_language.get(
-					_resourceBundleLoader.loadResourceBundle(locale),
+					ResourceBundleUtil.getBundle(locale, getClass()),
 					MBModerationConstants.WORKFLOW_DEFINITION_NAME));
 		}
 
@@ -87,11 +87,6 @@ public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener
 
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.message.boards.moderation)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private UserLocalService _userLocalService;

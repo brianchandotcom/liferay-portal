@@ -19,7 +19,7 @@ import com.liferay.connected.app.ConnectedAppProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLocalService;
 
 import java.util.Locale;
@@ -51,11 +51,6 @@ public class SharepointRestRepositoryConnectedAppProvider
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.sharepoint.rest.oauth2.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
-
-	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.sharepoint.rest.oauth2.web)"
 	)
 	private ServletContext _servletContext;
@@ -82,8 +77,8 @@ public class SharepointRestRepositoryConnectedAppProvider
 
 		@Override
 		public String getName(Locale locale) {
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(locale);
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, getClass());
 
 			return LanguageUtil.get(resourceBundle, getKey());
 		}

@@ -26,7 +26,6 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,7 +58,6 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 			}
 
 			return new AnalyticsReportsContentDashboardItemAction(
-				_resourceBundleLoader,
 				AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
 					infoItemReference, httpServletRequest, _portal,
 					_portletURLFactory));
@@ -155,10 +153,5 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.analytics.reports.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

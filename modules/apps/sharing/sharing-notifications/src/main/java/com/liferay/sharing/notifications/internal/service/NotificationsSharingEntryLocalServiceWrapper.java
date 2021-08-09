@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -183,11 +182,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationsSharingEntryLocalServiceWrapper.class);
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.sharing.notifications)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private SharingNotificationHelper _sharingNotificationHelper;

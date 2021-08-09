@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -64,8 +63,8 @@ public class DepotRolesPortalInstanceLifecycleListener
 	}
 
 	private String _getDescription(Locale locale, String name) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
 
 		if (Objects.equals(
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, name)) {
@@ -160,9 +159,6 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 	@Reference
 	private Language _language;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.depot.service)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

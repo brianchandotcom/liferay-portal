@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.JSONTranslatorPacket;
@@ -89,8 +89,8 @@ public class AutoTranslateServlet extends HttpServlet {
 			_writeErrorJSON(
 				httpServletResponse,
 				_language.get(
-					_resourceBundleLoader.loadResourceBundle(
-						_portal.getLocale(httpServletRequest)),
+					ResourceBundleUtil.getBundle(
+						_portal.getLocale(httpServletRequest), getClass()),
 					"there-is-a-problem-with-the-translation-service.-please-" +
 						"contact-your-administrator"));
 		}
@@ -145,9 +145,6 @@ public class AutoTranslateServlet extends HttpServlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.translation.web)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private Translator _translator;

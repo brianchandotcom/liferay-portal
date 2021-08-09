@@ -17,7 +17,6 @@ package com.liferay.saml.internal.servlet.filter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,8 +37,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Stian Sigvartsen
@@ -99,8 +96,8 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 				StringBundler.concat(
 					"<!DOCTYPE html>\n\n<html><body>",
 					ResourceBundleUtil.getString(
-						_resourceBundleLoader.loadResourceBundle(
-							_portal.getLocale(httpServletRequest)),
+						ResourceBundleUtil.getBundle(
+							_portal.getLocale(httpServletRequest), getClass()),
 						"your-browser-must-support-javascript-to-proceed"),
 					"</body></html>"));
 
@@ -163,12 +160,5 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(bundle.symbolic.name=com.liferay.saml.impl)"
-	)
-	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

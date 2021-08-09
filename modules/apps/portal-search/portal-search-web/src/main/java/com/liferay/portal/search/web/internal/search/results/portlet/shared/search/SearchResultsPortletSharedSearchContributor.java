@@ -48,12 +48,14 @@ public class SearchResultsPortletSharedSearchContributor
 			new SearchResultsPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		paginate(searchResultsPortletPreferences, portletSharedSearchSettings);
-
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
 				searchResultsPortletPreferences.
 					getFederatedSearchKeyOptional());
+
+		paginate(
+			searchResultsPortletPreferences, portletSharedSearchSettings,
+			searchRequestBuilder);
 
 		if (searchResultsPortletPreferences.isHighlightEnabled()) {
 			searchRequestBuilder.highlightEnabled(true);
@@ -63,19 +65,19 @@ public class SearchResultsPortletSharedSearchContributor
 
 			searchRequestBuilder.highlightFields(fieldsToDisplay);
 		}
-
-		searchRequestBuilder.paginationStartParameterName(
-			searchResultsPortletPreferences.getPaginationStartParameterName());
 	}
 
 	protected void paginate(
 		SearchResultsPortletPreferences searchResultsPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
+		PortletSharedSearchSettings portletSharedSearchSettings,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		String paginationStartParameterName =
 			searchResultsPortletPreferences.getPaginationStartParameterName();
 
 		portletSharedSearchSettings.setPaginationStartParameterName(
+			paginationStartParameterName);
+		searchRequestBuilder.paginationStartParameterName(
 			paginationStartParameterName);
 
 		Optional<String> paginationStartParameterValueOptional =
@@ -98,6 +100,14 @@ public class SearchResultsPortletSharedSearchContributor
 			searchResultsPortletPreferences.getPaginationDelta());
 
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
+		searchRequestBuilder.size(paginationDelta);
+
+		SearchOptionalUtil.copy(
+			() -> paginationStartParameterValueOptional.map(
+				paginationStartValue ->
+					(Integer.valueOf(paginationStartValue) - 1) *
+						paginationDelta),
+			searchRequestBuilder::from);
 	}
 
 	@Reference

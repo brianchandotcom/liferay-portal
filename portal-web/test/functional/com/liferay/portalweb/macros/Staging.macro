@@ -1536,4 +1536,18 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro viewVariationTooltipMessage {
+		var key_pageName = "${pageName}";
+		var key_title = "${title}";
+
+		MouseOver(
+			key_pageName = "${pageName}",
+			locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME");
+
+		AssertVisible(
+			key_pageName = "${pageName}",
+			key_title = "${title}",
+			locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME_SPAN_TITLE");
+	}
+
 }

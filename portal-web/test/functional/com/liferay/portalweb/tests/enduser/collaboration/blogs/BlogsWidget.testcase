@@ -372,4 +372,22 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that blogs widgets follow W3C accessibility standards."
+	@priority = "4"
+	test WidgetsFollowAccessibilityStandards {
+		for (var widgetName : list "Blogs Aggregator,Recent Bloggers") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "${widgetName}");
+		}
+
+		Navigator.openSitePage(
+			pageName = "Blogs Page",
+			siteName = "Guest");
+
+		AssertAccessible();
+	}
+
 }

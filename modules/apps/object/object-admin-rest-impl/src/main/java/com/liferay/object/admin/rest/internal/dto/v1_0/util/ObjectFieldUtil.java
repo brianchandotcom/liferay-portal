@@ -17,9 +17,7 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Collections;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 /**
  * @author Gabriel Albuquerque
@@ -58,8 +56,7 @@ public class ObjectFieldUtil {
 		serviceBuilderObjectField.setIndexedLanguageId(
 			objectField.getIndexedLanguageId());
 		serviceBuilderObjectField.setLabelMap(
-			Collections.singletonMap(
-				LocaleUtil.getSiteDefault(), objectField.getName()));
+			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
 		serviceBuilderObjectField.setName(objectField.getName());
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));

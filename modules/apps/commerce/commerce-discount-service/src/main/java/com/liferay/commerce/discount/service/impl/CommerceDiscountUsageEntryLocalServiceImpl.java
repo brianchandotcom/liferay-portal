@@ -66,7 +66,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
 
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			commerceDiscountUsageEntryPersistence.fetchByCA_CO_CD_First(
+			commerceDiscountUsageEntryPersistence.fetchByCAI_COI_CDI_First(
 				commerceAccountId, commerceOrderId, commerceDiscountId, null);
 
 		if (commerceDiscountUsageEntry != null) {
@@ -91,7 +91,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 	public int getCommerceDiscountUsageEntriesCount(
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
 
-		return commerceDiscountUsageEntryPersistence.countByCA_CO_CD(
+		return commerceDiscountUsageEntryPersistence.countByCAI_COI_CDI(
 			commerceAccountId, commerceOrderId, commerceDiscountId);
 	}
 
@@ -99,7 +99,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 	public int getCommerceDiscountUsageEntriesCountByAccountId(
 		long commerceAccountId, long commerceDiscountId) {
 
-		return commerceDiscountUsageEntryPersistence.countByCA_CD(
+		return commerceDiscountUsageEntryPersistence.countByCAI_CDI(
 			commerceAccountId, commerceDiscountId);
 	}
 
@@ -107,7 +107,7 @@ public class CommerceDiscountUsageEntryLocalServiceImpl
 	public int getCommerceDiscountUsageEntriesCountByOrderId(
 		long commerceOrderId, long commerceDiscountId) {
 
-		return commerceDiscountUsageEntryPersistence.countByCO_CD(
+		return commerceDiscountUsageEntryPersistence.countByCOI_CDI(
 			commerceOrderId, commerceDiscountId);
 	}
 

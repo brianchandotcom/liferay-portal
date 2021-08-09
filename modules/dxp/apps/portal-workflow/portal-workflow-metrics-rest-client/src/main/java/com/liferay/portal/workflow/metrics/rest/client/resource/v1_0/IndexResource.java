@@ -44,14 +44,14 @@ public interface IndexResource {
 	public HttpInvoker.HttpResponse getIndexesPageHttpResponse()
 		throws Exception;
 
-	public void patchIndexesRefresh(Index index) throws Exception;
+	public void patchIndexRefresh(Index index) throws Exception;
 
-	public HttpInvoker.HttpResponse patchIndexesRefreshHttpResponse(Index index)
+	public HttpInvoker.HttpResponse patchIndexRefreshHttpResponse(Index index)
 		throws Exception;
 
-	public void patchIndexesReindex(Index index) throws Exception;
+	public void patchIndexReindex(Index index) throws Exception;
 
-	public HttpInvoker.HttpResponse patchIndexesReindexHttpResponse(Index index)
+	public HttpInvoker.HttpResponse patchIndexReindexHttpResponse(Index index)
 		throws Exception;
 
 	public static class Builder {
@@ -200,9 +200,9 @@ public interface IndexResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchIndexesRefresh(Index index) throws Exception {
+		public void patchIndexRefresh(Index index) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				patchIndexesRefreshHttpResponse(index);
+				patchIndexRefreshHttpResponse(index);
 
 			String content = httpResponse.getContent();
 
@@ -241,7 +241,7 @@ public interface IndexResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse patchIndexesRefreshHttpResponse(
+		public HttpInvoker.HttpResponse patchIndexRefreshHttpResponse(
 				Index index)
 			throws Exception {
 
@@ -279,9 +279,9 @@ public interface IndexResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchIndexesReindex(Index index) throws Exception {
+		public void patchIndexReindex(Index index) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				patchIndexesReindexHttpResponse(index);
+				patchIndexReindexHttpResponse(index);
 
 			String content = httpResponse.getContent();
 
@@ -320,7 +320,7 @@ public interface IndexResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse patchIndexesReindexHttpResponse(
+		public HttpInvoker.HttpResponse patchIndexReindexHttpResponse(
 				Index index)
 			throws Exception {
 

@@ -191,7 +191,12 @@ public abstract class BaseReindexStatusResourceTestCase {
 	}
 
 	@Test
-	public void testGetReindexStatusPage() throws Exception {
+	public void testGetReindexStatusesPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGraphQLGetReindexStatusesPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 

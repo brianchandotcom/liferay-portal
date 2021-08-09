@@ -39,9 +39,9 @@ public interface ReindexStatusResource {
 		return new Builder();
 	}
 
-	public Page<ReindexStatus> getReindexStatusPage() throws Exception;
+	public Page<ReindexStatus> getReindexStatusesPage() throws Exception;
 
-	public HttpInvoker.HttpResponse getReindexStatusPageHttpResponse()
+	public HttpInvoker.HttpResponse getReindexStatusesPageHttpResponse()
 		throws Exception;
 
 	public static class Builder {
@@ -116,9 +116,9 @@ public interface ReindexStatusResource {
 	public static class ReindexStatusResourceImpl
 		implements ReindexStatusResource {
 
-		public Page<ReindexStatus> getReindexStatusPage() throws Exception {
+		public Page<ReindexStatus> getReindexStatusesPage() throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				getReindexStatusPageHttpResponse();
+				getReindexStatusesPageHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -157,7 +157,7 @@ public interface ReindexStatusResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getReindexStatusPageHttpResponse()
+		public HttpInvoker.HttpResponse getReindexStatusesPageHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -184,7 +184,7 @@ public interface ReindexStatusResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/indexes/reindex/status");
+						"/o/portal-workflow-metrics/v1.0/reindex/statuses");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

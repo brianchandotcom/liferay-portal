@@ -95,7 +95,7 @@ public abstract class BaseIndexResourceImpl
 	@Path("/indexes/refresh")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Index")})
-	public void patchIndexesRefresh(Index index) throws Exception {
+	public void patchIndexRefresh(Index index) throws Exception {
 	}
 
 	/**
@@ -109,7 +109,7 @@ public abstract class BaseIndexResourceImpl
 	@Path("/indexes/reindex")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Index")})
-	public void patchIndexesReindex(Index index) throws Exception {
+	public void patchIndexReindex(Index index) throws Exception {
 	}
 
 	@Override

@@ -172,25 +172,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean patchIndexesRefresh(@GraphQLName("index") Index index)
+	public boolean patchIndexRefresh(@GraphQLName("index") Index index)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_indexResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			indexResource -> indexResource.patchIndexesRefresh(index));
+			indexResource -> indexResource.patchIndexRefresh(index));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean patchIndexesReindex(@GraphQLName("index") Index index)
+	public boolean patchIndexReindex(@GraphQLName("index") Index index)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_indexResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			indexResource -> indexResource.patchIndexesReindex(index));
+			indexResource -> indexResource.patchIndexReindex(index));
 
 		return true;
 	}

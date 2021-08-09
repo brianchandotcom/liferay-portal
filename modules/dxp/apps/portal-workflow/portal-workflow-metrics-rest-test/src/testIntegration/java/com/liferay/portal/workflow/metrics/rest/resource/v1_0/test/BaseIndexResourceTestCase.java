@@ -203,12 +203,12 @@ public abstract class BaseIndexResourceTestCase {
 	}
 
 	@Test
-	public void testPatchIndexesRefresh() throws Exception {
+	public void testPatchIndexRefresh() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPatchIndexesReindex() throws Exception {
+	public void testPatchIndexReindex() throws Exception {
 		Assert.assertTrue(false);
 	}
 

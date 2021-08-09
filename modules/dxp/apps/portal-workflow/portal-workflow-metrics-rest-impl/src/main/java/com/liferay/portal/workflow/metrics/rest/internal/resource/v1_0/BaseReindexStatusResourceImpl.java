@@ -71,14 +71,14 @@ public abstract class BaseReindexStatusResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/reindex/status'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/reindex/statuses'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
-	@Path("/indexes/reindex/status")
+	@Path("/reindex/statuses")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ReindexStatus")})
-	public Page<ReindexStatus> getReindexStatusPage() throws Exception {
+	public Page<ReindexStatus> getReindexStatusesPage() throws Exception {
 		return Page.of(Collections.emptyList());
 	}
 

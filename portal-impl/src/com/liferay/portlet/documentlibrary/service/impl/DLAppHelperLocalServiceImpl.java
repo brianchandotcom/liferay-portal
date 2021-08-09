@@ -1656,7 +1656,7 @@ public class DLAppHelperLocalServiceImpl
 				false, WorkflowConstants.STATUS_IN_TRASH);
 		}
 		else {
-			dlFolders = dlFolderPersistence.findByG_M_T_H(
+			dlFolders = dlFolderPersistence.findByG_M_LikeT_H(
 				dlFolder.getGroupId(), false,
 				CustomSQLUtil.keywords(
 					dlFolder.getTreePath(), WildcardMode.TRAILING)[0],

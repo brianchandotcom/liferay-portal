@@ -122,6 +122,23 @@ public class Query {
 					objectDefinitionId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectField(objectFieldId: ___){actions, id, indexed, indexedAsKeyword, indexedLanguageId, name, required, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectField objectField(
+			@GraphQLName("objectFieldId") Long objectFieldId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource -> objectFieldResource.getObjectField(
+				objectFieldId));
+	}
+
 	@GraphQLName("ObjectDefinitionPage")
 	public class ObjectDefinitionPage {
 

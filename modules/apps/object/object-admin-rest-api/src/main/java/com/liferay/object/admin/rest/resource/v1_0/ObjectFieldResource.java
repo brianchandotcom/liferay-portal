@@ -61,6 +61,15 @@ public interface ObjectFieldResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
+	public ObjectField getObjectField(Long objectFieldId) throws Exception;
+
+	public ObjectField putObjectField(
+			Long objectFieldId, ObjectField objectField)
+		throws Exception;
+
+	public Response putObjectFieldBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

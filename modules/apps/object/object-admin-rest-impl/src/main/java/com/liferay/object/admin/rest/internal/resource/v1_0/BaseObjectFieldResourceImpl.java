@@ -59,6 +59,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -169,6 +170,86 @@ public abstract class BaseObjectFieldResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-fields/{objectFieldId}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectFieldId")}
+	)
+	@Path("/object-fields/{objectFieldId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectField")})
+	public ObjectField getObjectField(
+			@NotNull @Parameter(hidden = true) @PathParam("objectFieldId") Long
+				objectFieldId)
+		throws Exception {
+
+		return new ObjectField();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-fields/{objectFieldId}' -d $'{"indexed": ___, "indexedAsKeyword": ___, "indexedLanguageId": ___, "name": ___, "required": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectFieldId")}
+	)
+	@Path("/object-fields/{objectFieldId}")
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "ObjectField")})
+	public ObjectField putObjectField(
+			@NotNull @Parameter(hidden = true) @PathParam("objectFieldId") Long
+				objectFieldId,
+			ObjectField objectField)
+		throws Exception {
+
+		return new ObjectField();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-fields/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/object-fields/batch")
+	@Produces("application/json")
+	@PUT
+	@Tags(value = {@Tag(name = "ObjectField")})
+	public Response putObjectFieldBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				ObjectField.class.getName(), callbackURL, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -243,6 +324,13 @@ public abstract class BaseObjectFieldResourceImpl
 			java.util.Collection<ObjectField> objectFields,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ObjectField objectField : objectFields) {
+			putObjectField(
+				objectField.getId() != null ? objectField.getId() :
+					Long.parseLong((String)parameters.get("objectFieldId")),
+				objectField);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -162,6 +162,32 @@ public class Mutation {
 					objectDefinitionId, callbackURL, object));
 	}
 
+	@GraphQLField
+	public ObjectField updateObjectField(
+			@GraphQLName("objectFieldId") Long objectFieldId,
+			@GraphQLName("objectField") ObjectField objectField)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource -> objectFieldResource.putObjectField(
+				objectFieldId, objectField));
+	}
+
+	@GraphQLField
+	public Response updateObjectFieldBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource -> objectFieldResource.putObjectFieldBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

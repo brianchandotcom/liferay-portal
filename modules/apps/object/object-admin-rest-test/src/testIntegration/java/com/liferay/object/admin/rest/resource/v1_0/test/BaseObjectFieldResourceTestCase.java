@@ -336,6 +336,89 @@ public abstract class BaseObjectFieldResourceTestCase {
 			objectField);
 	}
 
+	@Test
+	public void testGetObjectField() throws Exception {
+		ObjectField postObjectField = testGetObjectField_addObjectField();
+
+		ObjectField getObjectField = objectFieldResource.getObjectField(
+			postObjectField.getId());
+
+		assertEquals(postObjectField, getObjectField);
+		assertValid(getObjectField);
+	}
+
+	protected ObjectField testGetObjectField_addObjectField() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectField() throws Exception {
+		ObjectField objectField = testGraphQLObjectField_addObjectField();
+
+		Assert.assertTrue(
+			equals(
+				objectField,
+				ObjectFieldSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectField",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"objectFieldId",
+											objectField.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/objectField"))));
+	}
+
+	@Test
+	public void testGraphQLGetObjectFieldNotFound() throws Exception {
+		Long irrelevantObjectFieldId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectField",
+						new HashMap<String, Object>() {
+							{
+								put("objectFieldId", irrelevantObjectFieldId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutObjectField() throws Exception {
+		ObjectField postObjectField = testPutObjectField_addObjectField();
+
+		ObjectField randomObjectField = randomObjectField();
+
+		ObjectField putObjectField = objectFieldResource.putObjectField(
+			postObjectField.getId(), randomObjectField);
+
+		assertEquals(randomObjectField, putObjectField);
+		assertValid(putObjectField);
+
+		ObjectField getObjectField = objectFieldResource.getObjectField(
+			putObjectField.getId());
+
+		assertEquals(randomObjectField, getObjectField);
+		assertValid(getObjectField);
+	}
+
+	protected ObjectField testPutObjectField_addObjectField() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected ObjectField testGraphQLObjectField_addObjectField()
 		throws Exception {
 

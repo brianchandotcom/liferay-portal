@@ -1,0 +1,52 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ObjectDisplayedForPageTemplate {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137102 ObjectDisplayedForPageTemplate pending implementation
+
+	}
+
+	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ObjectEntriesAreRendered {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137101 ObjectEntriesAreRendered pending implementation
+
+	}
+
+    @description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ObjectMappedURL {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137103 ObjectMappedURL pending implementation
+
+	}
+
+}

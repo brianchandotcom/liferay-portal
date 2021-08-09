@@ -58,6 +58,70 @@ definition {
 		Blogs.assertNoPublishOption(entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test covers LPS-99265. It ensures that a staged blogs entry cannot be shared unless it is first published to Live."
+	@priority = "4"
+	@refactordone
+	test CannotShareUnpublishedEntry {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false");
+
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
+
+		AssertElementNotPresent(
+			key_menuItem = "Share",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
+
+		Asset.share(
+			sharingPermissions = "View",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "Blogs Entry Title",
+			ownerName = "Test Test");
+	}
+
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."
 	@priority = "4"
 	@refactordone
@@ -236,74 +300,10 @@ definition {
 		LexiconCard.viewCardNotPresent(card = "Document_3 (1).jpg");
 	}
 
-	@description = "This test covers LPS-99265. It ensures that a staged blogs entry cannot be shared unless it is first published to Live."
-	@priority = "4"
-	@refactordone
-	test CanShareBlogsEntryOnLiveSite {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name (Staging)",
-			site = "false");
-
-		BlogsNavigator.openToStagingCP(
-			groupName = "Site Name",
-			siteURLKey = "site-name-staging");
-
-		AssertElementNotPresent(
-			key_menuItem = "Share",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
-
-		Asset.share(
-			sharingPermissions = "View",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Notifications.viewBadgeCount(notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "Blogs Entry Title",
-			ownerName = "Test Test");
-	}
-
 	@description = "This is a use case for LPS-72949."
 	@priority = "5"
 	@refactorneeded
-	test StagingLocalLiveLockAndEditBlogsEntry {
+	test CanPublishUpdatedEntryTitle {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",

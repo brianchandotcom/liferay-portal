@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
@@ -95,8 +97,13 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		httpSession.removeAttribute(_OPEN_ID_CONNECT_AUTHENTICATION_SESSION);
 
 		if (openIdConnectAuthenticationSession == null) {
-			throw new OpenIdConnectServiceException.AuthenticationException(
-				"OpenId Connect authentication was not requested or removed");
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"OpenId Connect authentication was not requested or " +
+						"removed");
+			}
+
+			return;
 		}
 
 		AuthenticationSuccessResponse authenticationSuccessResponse =
@@ -358,6 +365,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 	private static final String _OPEN_ID_CONNECT_AUTHENTICATION_SESSION =
 		"OPEN_ID_CONNECT_AUTHENTICATION_SESSION";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OpenIdConnectAuthenticationHandlerImpl.class);
 
 	@Reference
 	private OfflineOpenIdConnectSessionManager

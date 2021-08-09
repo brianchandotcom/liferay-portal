@@ -1,0 +1,42 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-135548 - Verify that user can view custom objects"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ViewCustomObjects {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137098 ViewSystemObjects pending implementation
+
+	}
+
+	@description = "LPS-135548 - Verify that user can view system objects"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ViewSystemObjects {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137096 ViewSystemObjects pending implementation
+
+	}
+
+}

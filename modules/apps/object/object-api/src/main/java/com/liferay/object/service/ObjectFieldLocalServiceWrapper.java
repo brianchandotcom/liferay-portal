@@ -398,6 +398,18 @@ public class ObjectFieldLocalServiceWrapper
 		return _objectFieldLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectField updateObjectField(
+			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId,
+			java.util.Map<java.util.Locale, String> labelMap, boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.updateObjectField(
+			objectFieldId, indexed, indexedAsKeyword, indexedLanguageId,
+			labelMap, required);
+	}
+
 	/**
 	 * Updates the object field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

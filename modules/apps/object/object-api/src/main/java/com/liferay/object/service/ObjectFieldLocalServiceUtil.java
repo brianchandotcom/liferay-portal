@@ -352,6 +352,17 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static ObjectField updateObjectField(
+			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
+			boolean required)
+		throws PortalException {
+
+		return getService().updateObjectField(
+			objectFieldId, indexed, indexedAsKeyword, indexedLanguageId,
+			labelMap, required);
+	}
+
 	/**
 	 * Updates the object field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

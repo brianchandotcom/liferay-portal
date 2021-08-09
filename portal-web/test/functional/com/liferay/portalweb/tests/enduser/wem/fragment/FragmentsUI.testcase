@@ -277,7 +277,7 @@ definition {
 	}
 
 
-	@description = "This is a test for LPS-132422. The list of actions appear in right order for Fragments"
+	@description = "This is a test for LPS-132422. The list of actions appear in right order for fragments."
 	@priority = "3"
 	test ViewOrderOfFragmentsActions {
 

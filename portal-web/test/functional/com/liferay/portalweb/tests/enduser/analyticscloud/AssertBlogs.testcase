@@ -47,4 +47,31 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8383 | Test Summary: Custom Range time filter in Blogs assets page"
+	@ignore = "true"
+	@priority = "5"
+	test CanUseCustomRangeBlogsAssetsPage {
+
+		// TODO LRAC-8383 CanUseCustomRangeBlogsAssetsPage
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
+	@ignore = "true"
+	@priority = "5"
+	test CanBlogsListSearchable {
+
+		// TODO LRAC-8382 CanBlogsListSearchable
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8384 | Test Summary: Assert 180 day time filter in Blogs"
+	@ignore = "true"
+	@priority = "3"
+	test AssertBlogsPageTImeFilter180Days {
+
+		// TODO LRAC-8384 AssertBlogsPageTImeFilter180Days
+
+	}
+
 }

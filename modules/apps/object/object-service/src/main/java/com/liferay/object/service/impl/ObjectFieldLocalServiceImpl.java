@@ -205,8 +205,6 @@ public class ObjectFieldLocalServiceImpl
 			String type)
 		throws PortalException {
 
-		// TODO Add a test for this
-
 		if (indexed && Objects.equals(type, "Blob")) {
 			throw new ObjectFieldTypeException("Blob type is not indexable");
 		}

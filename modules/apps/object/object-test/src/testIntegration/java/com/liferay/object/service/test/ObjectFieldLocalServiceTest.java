@@ -53,6 +53,49 @@ public class ObjectFieldLocalServiceTest {
 	@Test
 	public void testAddSystemObjectField() throws Exception {
 
+		// Blob type is not indexable
+
+		try {
+			_testAddSystemObjectField(
+				_createObjectField(true, false, "", "", "able", "Blob"));
+
+			Assert.fail();
+		}
+		catch (ObjectFieldTypeException objectFieldTypeException) {
+			Assert.assertEquals(
+				"Blob type is not indexable",
+				objectFieldTypeException.getMessage());
+		}
+
+		// Indexed language ID can only be applied with type \"String\" that
+		// is not indexed as a keyword
+
+		try {
+			_testAddSystemObjectField(
+				_createObjectField(true, false, "en_US", "", "able", "Long"));
+
+			Assert.fail();
+		}
+		catch (ObjectFieldTypeException objectFieldTypeException) {
+			Assert.assertEquals(
+				"Indexed language ID can only be applied with type " +
+					"\"String\" that is not indexed as a keyword",
+				objectFieldTypeException.getMessage());
+		}
+
+		try {
+			_testAddSystemObjectField(
+				_createObjectField(true, true, "en_US", "", "able", "String"));
+
+			Assert.fail();
+		}
+		catch (ObjectFieldTypeException objectFieldTypeException) {
+			Assert.assertEquals(
+				"Indexed language ID can only be applied with type " +
+					"\"String\" that is not indexed as a keyword",
+				objectFieldTypeException.getMessage());
+		}
+
 		// Label is null
 
 		try {
@@ -209,6 +252,23 @@ public class ObjectFieldLocalServiceTest {
 		}
 	}
 
+	private ObjectField _createObjectField(
+		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+		String label, String name, String type) {
+
+		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
+			0);
+
+		objectField.setIndexed(indexed);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
+		objectField.setName(name);
+		objectField.setType(type);
+
+		return objectField;
+	}
+
 	private ObjectField _createObjectField(String name, String type) {
 		return _createObjectField(name, name, type);
 	}
@@ -216,14 +276,7 @@ public class ObjectFieldLocalServiceTest {
 	private ObjectField _createObjectField(
 		String label, String name, String type) {
 
-		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
-			0);
-
-		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
-		objectField.setName(name);
-		objectField.setType(type);
-
-		return objectField;
+		return _createObjectField(false, false, null, label, name, type);
 	}
 
 	private void _testAddSystemObjectField(ObjectField... objectFields)

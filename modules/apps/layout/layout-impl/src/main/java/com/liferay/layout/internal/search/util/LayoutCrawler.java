@@ -55,15 +55,19 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutCrawler {
 
 	public String getLayoutContent(Layout layout, Locale locale) {
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		HttpClient httpClient = httpClientBuilder.setUserAgent(
-			_USER_AGENT
-		).build();
-
 		try {
 			InetAddress inetAddress = _portal.getPortalServerInetAddress(
 				_isHttpsEnabled());
+
+			if (inetAddress == null) {
+				return StringPool.BLANK;
+			}
+
+			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+			HttpClient httpClient = httpClientBuilder.setUserAgent(
+				_USER_AGENT
+			).build();
 
 			ThemeDisplay themeDisplay = new ThemeDisplay();
 

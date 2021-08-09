@@ -1,0 +1,76 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8344 | Test Summary: Site overview acquisition card shows which channels individuals are coming from"
+	@ignore = "true"
+	@priority = "5"
+	test AssertShowsChannelsIndividualsComingFrom {
+
+		// TODO LRAC-8344 AssertShowsChannelsIndividualsComingFrom
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8346 | Test Summary: Assert Sites Acquisition card Channels highest session"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSitesAcquisitionCardChannelsHighestSession {
+
+		// TODO LRAC-8346 AssertSitesAcquisitionCardChannelsHighestSession
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8347 | Test Summary: Assert Sites Acquisition card Referrers highest session"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSitesAcquisitionCardReferrersHighestSession {
+
+		// TODO LRAC-8347 AssertSitesAcquisitionCardReferrersHighestSession
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8348 | Test Summary: Assert Sites Acquisition card Source|Medium highest session"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSitesAcquisitionCardSourceAndMediumHighestSession {
+
+		// TODO LRAC-8348 AssertSitesAcquisitionCardSourceAndMediumHighestSession
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8345 | Test Summary: Assert Sites Acquisition change time filter"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSitesAcquisitionChangeTimeFilter {
+
+		// TODO LRAC-8345 AssertSitesAcquisitionChangeTimeFilter
+
+	}
+}

@@ -80,7 +80,7 @@ public class SyncDeviceLocalServiceImpl extends SyncDeviceLocalServiceBaseImpl {
 		long companyId, String keywords, int start, int end,
 		OrderByComparator<SyncDevice> orderByComparator) {
 
-		return syncDevicePersistence.findByC_U(
+		return syncDevicePersistence.findByC_LikeU(
 			companyId, StringUtil.quote(keywords, StringPool.PERCENT), start,
 			end, orderByComparator);
 	}

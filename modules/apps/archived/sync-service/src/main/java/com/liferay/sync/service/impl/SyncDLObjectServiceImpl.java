@@ -696,7 +696,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 				};
 			}
 
-			int count = syncDLObjectPersistence.countByM_R_NotE(
+			int count = syncDLObjectPersistence.countByGtM_R_NotE(
 				lastAccessTime, repositoryId, events);
 
 			if (count == 0) {
@@ -724,7 +724,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			List<SyncDLObject> syncDLObjects = null;
 
 			if (retrieveFromCache) {
-				syncDLObjects = syncDLObjectPersistence.findByM_R_NotE(
+				syncDLObjects = syncDLObjectPersistence.findByGtM_R_NotE(
 					lastAccessTime, repositoryId, events, start, end,
 					new SyncDLObjectModifiedTimeComparator());
 			}

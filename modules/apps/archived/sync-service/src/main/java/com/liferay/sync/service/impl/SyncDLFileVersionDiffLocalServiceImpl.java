@@ -99,7 +99,7 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 	@Override
 	public void deleteExpiredSyncDLFileVersionDiffs() throws PortalException {
 		List<SyncDLFileVersionDiff> syncDLFileVersionDiffs =
-			syncDLFileVersionDiffPersistence.findByExpirationDate(new Date());
+			syncDLFileVersionDiffPersistence.findByLtExpirationDate(new Date());
 
 		for (SyncDLFileVersionDiff syncDLFileVersionDiff :
 				syncDLFileVersionDiffs) {

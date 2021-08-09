@@ -261,20 +261,20 @@ public class SyncDLObjectPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTreePath() throws Exception {
-		_persistence.countByTreePath("");
+	public void testCountByLikeTreePath() throws Exception {
+		_persistence.countByLikeTreePath("");
 
-		_persistence.countByTreePath("null");
+		_persistence.countByLikeTreePath("null");
 
-		_persistence.countByTreePath((String)null);
+		_persistence.countByLikeTreePath((String)null);
 	}
 
 	@Test
-	public void testCountByM_R() throws Exception {
-		_persistence.countByM_R(
+	public void testCountByGtM_R() throws Exception {
+		_persistence.countByGtM_R(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByM_R(0L, 0L);
+		_persistence.countByGtM_R(0L, 0L);
 	}
 
 	@Test
@@ -304,12 +304,12 @@ public class SyncDLObjectPersistenceTest {
 	}
 
 	@Test
-	public void testCountByT_NotE() throws Exception {
-		_persistence.countByT_NotE("", "");
+	public void testCountByLikeT_NotE() throws Exception {
+		_persistence.countByLikeT_NotE("", "");
 
-		_persistence.countByT_NotE("null", "null");
+		_persistence.countByLikeT_NotE("null", "null");
 
-		_persistence.countByT_NotE((String)null, (String)null);
+		_persistence.countByLikeT_NotE((String)null, (String)null);
 	}
 
 	@Test
@@ -331,18 +331,18 @@ public class SyncDLObjectPersistenceTest {
 	}
 
 	@Test
-	public void testCountByM_R_NotE() throws Exception {
-		_persistence.countByM_R_NotE(
+	public void testCountByGtM_R_NotE() throws Exception {
+		_persistence.countByGtM_R_NotE(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
 
-		_persistence.countByM_R_NotE(0L, 0L, "null");
+		_persistence.countByGtM_R_NotE(0L, 0L, "null");
 
-		_persistence.countByM_R_NotE(0L, 0L, (String)null);
+		_persistence.countByGtM_R_NotE(0L, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByM_R_NotEArrayable() throws Exception {
-		_persistence.countByM_R_NotE(
+	public void testCountByGtM_R_NotEArrayable() throws Exception {
+		_persistence.countByGtM_R_NotE(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			new String[] {
 				RandomTestUtil.randomString(), "", "null", null, null

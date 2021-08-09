@@ -205,12 +205,12 @@ public class SyncDevicePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_U() throws Exception {
-		_persistence.countByC_U(RandomTestUtil.nextLong(), "");
+	public void testCountByC_LikeU() throws Exception {
+		_persistence.countByC_LikeU(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_U(0L, "null");
+		_persistence.countByC_LikeU(0L, "null");
 
-		_persistence.countByC_U(0L, (String)null);
+		_persistence.countByC_LikeU(0L, (String)null);
 	}
 
 	@Test

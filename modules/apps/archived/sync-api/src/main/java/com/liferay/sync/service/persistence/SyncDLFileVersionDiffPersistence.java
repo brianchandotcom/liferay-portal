@@ -193,7 +193,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param expirationDate the expiration date
 	 * @return the matching sync dl file version diffs
 	 */
-	public java.util.List<SyncDLFileVersionDiff> findByExpirationDate(
+	public java.util.List<SyncDLFileVersionDiff> findByLtExpirationDate(
 		Date expirationDate);
 
 	/**
@@ -208,7 +208,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @return the range of matching sync dl file version diffs
 	 */
-	public java.util.List<SyncDLFileVersionDiff> findByExpirationDate(
+	public java.util.List<SyncDLFileVersionDiff> findByLtExpirationDate(
 		Date expirationDate, int start, int end);
 
 	/**
@@ -224,7 +224,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
-	public java.util.List<SyncDLFileVersionDiff> findByExpirationDate(
+	public java.util.List<SyncDLFileVersionDiff> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDLFileVersionDiff>
 			orderByComparator);
@@ -243,7 +243,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
-	public java.util.List<SyncDLFileVersionDiff> findByExpirationDate(
+	public java.util.List<SyncDLFileVersionDiff> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDLFileVersionDiff>
 			orderByComparator,
@@ -257,7 +257,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @return the first matching sync dl file version diff
 	 * @throws NoSuchDLFileVersionDiffException if a matching sync dl file version diff could not be found
 	 */
-	public SyncDLFileVersionDiff findByExpirationDate_First(
+	public SyncDLFileVersionDiff findByLtExpirationDate_First(
 			Date expirationDate,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<SyncDLFileVersionDiff> orderByComparator)
@@ -270,7 +270,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	 */
-	public SyncDLFileVersionDiff fetchByExpirationDate_First(
+	public SyncDLFileVersionDiff fetchByLtExpirationDate_First(
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDLFileVersionDiff>
 			orderByComparator);
@@ -283,7 +283,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @return the last matching sync dl file version diff
 	 * @throws NoSuchDLFileVersionDiffException if a matching sync dl file version diff could not be found
 	 */
-	public SyncDLFileVersionDiff findByExpirationDate_Last(
+	public SyncDLFileVersionDiff findByLtExpirationDate_Last(
 			Date expirationDate,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<SyncDLFileVersionDiff> orderByComparator)
@@ -296,7 +296,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	 */
-	public SyncDLFileVersionDiff fetchByExpirationDate_Last(
+	public SyncDLFileVersionDiff fetchByLtExpirationDate_Last(
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<SyncDLFileVersionDiff>
 			orderByComparator);
@@ -310,7 +310,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @return the previous, current, and next sync dl file version diff
 	 * @throws NoSuchDLFileVersionDiffException if a sync dl file version diff with the primary key could not be found
 	 */
-	public SyncDLFileVersionDiff[] findByExpirationDate_PrevAndNext(
+	public SyncDLFileVersionDiff[] findByLtExpirationDate_PrevAndNext(
 			long syncDLFileVersionDiffId, Date expirationDate,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<SyncDLFileVersionDiff> orderByComparator)
@@ -321,7 +321,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 *
 	 * @param expirationDate the expiration date
 	 */
-	public void removeByExpirationDate(Date expirationDate);
+	public void removeByLtExpirationDate(Date expirationDate);
 
 	/**
 	 * Returns the number of sync dl file version diffs where expirationDate &lt; &#63;.
@@ -329,7 +329,7 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @param expirationDate the expiration date
 	 * @return the number of matching sync dl file version diffs
 	 */
-	public int countByExpirationDate(Date expirationDate);
+	public int countByLtExpirationDate(Date expirationDate);
 
 	/**
 	 * Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or throws a <code>NoSuchDLFileVersionDiffException</code> if it could not be found.

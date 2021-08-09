@@ -1695,8 +1695,8 @@ public class SyncDevicePersistenceImpl
 	private static final String _FINDER_COLUMN_USERID_USERID_2 =
 		"syncDevice.userId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_U;
-	private FinderPath _finderPathWithPaginationCountByC_U;
+	private FinderPath _finderPathWithPaginationFindByC_LikeU;
+	private FinderPath _finderPathWithPaginationCountByC_LikeU;
 
 	/**
 	 * Returns all the sync devices where companyId = &#63; and userName LIKE &#63;.
@@ -1706,8 +1706,8 @@ public class SyncDevicePersistenceImpl
 	 * @return the matching sync devices
 	 */
 	@Override
-	public List<SyncDevice> findByC_U(long companyId, String userName) {
-		return findByC_U(
+	public List<SyncDevice> findByC_LikeU(long companyId, String userName) {
+		return findByC_LikeU(
 			companyId, userName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1725,10 +1725,10 @@ public class SyncDevicePersistenceImpl
 	 * @return the range of matching sync devices
 	 */
 	@Override
-	public List<SyncDevice> findByC_U(
+	public List<SyncDevice> findByC_LikeU(
 		long companyId, String userName, int start, int end) {
 
-		return findByC_U(companyId, userName, start, end, null);
+		return findByC_LikeU(companyId, userName, start, end, null);
 	}
 
 	/**
@@ -1746,11 +1746,11 @@ public class SyncDevicePersistenceImpl
 	 * @return the ordered range of matching sync devices
 	 */
 	@Override
-	public List<SyncDevice> findByC_U(
+	public List<SyncDevice> findByC_LikeU(
 		long companyId, String userName, int start, int end,
 		OrderByComparator<SyncDevice> orderByComparator) {
 
-		return findByC_U(
+		return findByC_LikeU(
 			companyId, userName, start, end, orderByComparator, true);
 	}
 
@@ -1770,7 +1770,7 @@ public class SyncDevicePersistenceImpl
 	 * @return the ordered range of matching sync devices
 	 */
 	@Override
-	public List<SyncDevice> findByC_U(
+	public List<SyncDevice> findByC_LikeU(
 		long companyId, String userName, int start, int end,
 		OrderByComparator<SyncDevice> orderByComparator,
 		boolean useFinderCache) {
@@ -1780,7 +1780,7 @@ public class SyncDevicePersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByC_U;
+		finderPath = _finderPathWithPaginationFindByC_LikeU;
 		finderArgs = new Object[] {
 			companyId, userName, start, end, orderByComparator
 		};
@@ -1819,17 +1819,17 @@ public class SyncDevicePersistenceImpl
 
 			sb.append(_SQL_SELECT_SYNCDEVICE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_LIKEU_COMPANYID_2);
 
 			boolean bindUserName = false;
 
 			if (userName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_U_USERNAME_3);
+				sb.append(_FINDER_COLUMN_C_LIKEU_USERNAME_3);
 			}
 			else {
 				bindUserName = true;
 
-				sb.append(_FINDER_COLUMN_C_U_USERNAME_2);
+				sb.append(_FINDER_COLUMN_C_LIKEU_USERNAME_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1887,12 +1887,12 @@ public class SyncDevicePersistenceImpl
 	 * @throws NoSuchDeviceException if a matching sync device could not be found
 	 */
 	@Override
-	public SyncDevice findByC_U_First(
+	public SyncDevice findByC_LikeU_First(
 			long companyId, String userName,
 			OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException {
 
-		SyncDevice syncDevice = fetchByC_U_First(
+		SyncDevice syncDevice = fetchByC_LikeU_First(
 			companyId, userName, orderByComparator);
 
 		if (syncDevice != null) {
@@ -1923,11 +1923,11 @@ public class SyncDevicePersistenceImpl
 	 * @return the first matching sync device, or <code>null</code> if a matching sync device could not be found
 	 */
 	@Override
-	public SyncDevice fetchByC_U_First(
+	public SyncDevice fetchByC_LikeU_First(
 		long companyId, String userName,
 		OrderByComparator<SyncDevice> orderByComparator) {
 
-		List<SyncDevice> list = findByC_U(
+		List<SyncDevice> list = findByC_LikeU(
 			companyId, userName, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1947,12 +1947,12 @@ public class SyncDevicePersistenceImpl
 	 * @throws NoSuchDeviceException if a matching sync device could not be found
 	 */
 	@Override
-	public SyncDevice findByC_U_Last(
+	public SyncDevice findByC_LikeU_Last(
 			long companyId, String userName,
 			OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException {
 
-		SyncDevice syncDevice = fetchByC_U_Last(
+		SyncDevice syncDevice = fetchByC_LikeU_Last(
 			companyId, userName, orderByComparator);
 
 		if (syncDevice != null) {
@@ -1983,17 +1983,17 @@ public class SyncDevicePersistenceImpl
 	 * @return the last matching sync device, or <code>null</code> if a matching sync device could not be found
 	 */
 	@Override
-	public SyncDevice fetchByC_U_Last(
+	public SyncDevice fetchByC_LikeU_Last(
 		long companyId, String userName,
 		OrderByComparator<SyncDevice> orderByComparator) {
 
-		int count = countByC_U(companyId, userName);
+		int count = countByC_LikeU(companyId, userName);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SyncDevice> list = findByC_U(
+		List<SyncDevice> list = findByC_LikeU(
 			companyId, userName, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2014,7 +2014,7 @@ public class SyncDevicePersistenceImpl
 	 * @throws NoSuchDeviceException if a sync device with the primary key could not be found
 	 */
 	@Override
-	public SyncDevice[] findByC_U_PrevAndNext(
+	public SyncDevice[] findByC_LikeU_PrevAndNext(
 			long syncDeviceId, long companyId, String userName,
 			OrderByComparator<SyncDevice> orderByComparator)
 		throws NoSuchDeviceException {
@@ -2030,13 +2030,13 @@ public class SyncDevicePersistenceImpl
 
 			SyncDevice[] array = new SyncDeviceImpl[3];
 
-			array[0] = getByC_U_PrevAndNext(
+			array[0] = getByC_LikeU_PrevAndNext(
 				session, syncDevice, companyId, userName, orderByComparator,
 				true);
 
 			array[1] = syncDevice;
 
-			array[2] = getByC_U_PrevAndNext(
+			array[2] = getByC_LikeU_PrevAndNext(
 				session, syncDevice, companyId, userName, orderByComparator,
 				false);
 
@@ -2050,7 +2050,7 @@ public class SyncDevicePersistenceImpl
 		}
 	}
 
-	protected SyncDevice getByC_U_PrevAndNext(
+	protected SyncDevice getByC_LikeU_PrevAndNext(
 		Session session, SyncDevice syncDevice, long companyId, String userName,
 		OrderByComparator<SyncDevice> orderByComparator, boolean previous) {
 
@@ -2067,17 +2067,17 @@ public class SyncDevicePersistenceImpl
 
 		sb.append(_SQL_SELECT_SYNCDEVICE_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_LIKEU_COMPANYID_2);
 
 		boolean bindUserName = false;
 
 		if (userName.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_U_USERNAME_3);
+			sb.append(_FINDER_COLUMN_C_LIKEU_USERNAME_3);
 		}
 		else {
 			bindUserName = true;
 
-			sb.append(_FINDER_COLUMN_C_U_USERNAME_2);
+			sb.append(_FINDER_COLUMN_C_LIKEU_USERNAME_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2180,9 +2180,9 @@ public class SyncDevicePersistenceImpl
 	 * @param userName the user name
 	 */
 	@Override
-	public void removeByC_U(long companyId, String userName) {
+	public void removeByC_LikeU(long companyId, String userName) {
 		for (SyncDevice syncDevice :
-				findByC_U(
+				findByC_LikeU(
 					companyId, userName, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -2198,10 +2198,10 @@ public class SyncDevicePersistenceImpl
 	 * @return the number of matching sync devices
 	 */
 	@Override
-	public int countByC_U(long companyId, String userName) {
+	public int countByC_LikeU(long companyId, String userName) {
 		userName = Objects.toString(userName, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByC_U;
+		FinderPath finderPath = _finderPathWithPaginationCountByC_LikeU;
 
 		Object[] finderArgs = new Object[] {companyId, userName};
 
@@ -2212,17 +2212,17 @@ public class SyncDevicePersistenceImpl
 
 			sb.append(_SQL_COUNT_SYNCDEVICE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_LIKEU_COMPANYID_2);
 
 			boolean bindUserName = false;
 
 			if (userName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_U_USERNAME_3);
+				sb.append(_FINDER_COLUMN_C_LIKEU_USERNAME_3);
 			}
 			else {
 				bindUserName = true;
 
-				sb.append(_FINDER_COLUMN_C_U_USERNAME_2);
+				sb.append(_FINDER_COLUMN_C_LIKEU_USERNAME_2);
 			}
 
 			String sql = sb.toString();
@@ -2257,13 +2257,13 @@ public class SyncDevicePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_LIKEU_COMPANYID_2 =
 		"syncDevice.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_U_USERNAME_2 =
+	private static final String _FINDER_COLUMN_C_LIKEU_USERNAME_2 =
 		"lower(syncDevice.userName) LIKE ?";
 
-	private static final String _FINDER_COLUMN_C_U_USERNAME_3 =
+	private static final String _FINDER_COLUMN_C_LIKEU_USERNAME_3 =
 		"(syncDevice.userName IS NULL OR syncDevice.userName LIKE '')";
 
 	public SyncDevicePersistenceImpl() {
@@ -2871,8 +2871,8 @@ public class SyncDevicePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
-		_finderPathWithPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
+		_finderPathWithPaginationFindByC_LikeU = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeU",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2880,8 +2880,8 @@ public class SyncDevicePersistenceImpl
 			},
 			new String[] {"companyId", "userName"}, true);
 
-		_finderPathWithPaginationCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_U",
+		_finderPathWithPaginationCountByC_LikeU = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeU",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "userName"}, false);
 	}

@@ -62,10 +62,7 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"decimalSymbols", _createOptions(_getDecimalSymbols())
 		).put(
-			"thousandsSeparators",
-			_createOptions(
-				_getThousandsSeparators(
-					ddmFormFieldRenderingContext.getLocale()))
+			"thousandsSeparators", _createOptions(_getThousandsSeparators())
 		).putAll(
 			_getValueParameters(ddmFormFieldRenderingContext.getValue())
 		).build();
@@ -105,9 +102,21 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributor
 			_portal.getResourceBundle(locale));
 	}
 
-	private Map<String, Object> _getThousandsSeparators(Locale locale) {
+	private Map<String, String> _getThousandsSeparatorLabels() {
+		Map<String, String> thousandsSeparatorLabels = new HashMap<>();
+
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+			thousandsSeparatorLabels.put(
+				LanguageUtil.getLanguageId(availableLocale),
+				LanguageUtil.get(_getResourceBundle(availableLocale), "none"));
+		}
+
+		return thousandsSeparatorLabels;
+	}
+
+	private Map<String, Object> _getThousandsSeparators() {
 		return LinkedHashMapBuilder.<String, Object>put(
-			"none", LanguageUtil.get(_getResourceBundle(locale), "none")
+			"none", _getThousandsSeparatorLabels()
 		).put(
 			",", "1,000"
 		).put(

@@ -48,7 +48,7 @@ export interface ISymbols {
 }
 interface ISelectProps<T> {
 	disabled: boolean;
-	label: string;
+	label: LocalizedValue<string>;
 	reference: string;
 	value: T;
 }

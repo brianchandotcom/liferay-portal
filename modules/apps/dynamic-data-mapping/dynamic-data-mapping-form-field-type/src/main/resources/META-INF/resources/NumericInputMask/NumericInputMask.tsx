@@ -60,7 +60,7 @@ export interface ISymbols {
 
 interface ISelectProps<T> {
 	disabled: boolean;
-	label: string;
+	label: LocalizedValue<string>;
 	reference: string;
 	value: T;
 }
@@ -101,9 +101,10 @@ const NumericInputMask: React.FC<IProps> = ({
 			return {
 				...item,
 				disabled: item.reference === decimalSymbol?.[0],
+				label: item.label?.[editingLanguageId] ?? item.label,
 			};
 		});
-	}, [decimalSymbol, thousandsSeparatorsProp]);
+	}, [decimalSymbol, editingLanguageId, thousandsSeparatorsProp]);
 
 	useEffect(() => {
 		const newValue =

@@ -42,8 +42,9 @@ public interface GoogleAuthorizationConfiguration {
 	public String clientId();
 
 	@Meta.AD(
-		deflt = "", description = "client-secret-help", name = "client-secret",
-		required = false
+		deflt = "",
+		description = "set-this-to-the-client-secret-provided-by-google",
+		name = "client-secret", required = false
 	)
 	public String clientSecret();
 

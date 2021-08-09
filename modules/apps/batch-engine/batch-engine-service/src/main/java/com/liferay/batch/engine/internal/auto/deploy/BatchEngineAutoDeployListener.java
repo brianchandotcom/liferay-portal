@@ -82,6 +82,10 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		}
 
 		try (ZipFile zipFile = new ZipFile(file)) {
+			if (!_isValidZipEntryCount(zipFile)) {
+				return false;
+			}
+
 			BatchEngineZipEntryPair batchEngineZipEntryPair =
 				_getBatchEngineZipEntryPair(zipFile);
 
@@ -217,6 +221,32 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		}
 
 		return batchEngineZipEntryPair;
+	}
+
+	private boolean _isValidZipEntryCount(ZipFile zipFile) {
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		int fileCount = 0;
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if (zipEntry.isDirectory()) {
+				continue;
+			}
+
+			fileCount++;
+		}
+
+		if (fileCount != 2) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unsupported file count " + fileCount);
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

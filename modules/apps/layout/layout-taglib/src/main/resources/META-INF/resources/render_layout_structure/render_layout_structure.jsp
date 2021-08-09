@@ -59,9 +59,13 @@ for (String childrenItemId : childrenItemIds) {
 
 							List<Object> collection = renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem);
 
-							int maxNumberOfItemsPerPage = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+							int numberOfItemsToDisplay = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItems());
 
-							int numberOfRows = (int)Math.ceil((double)maxNumberOfItemsPerPage / collectionStyledLayoutStructureItem.getNumberOfColumns());
+							if (Validator.isNotNull(paginationType) && !Objects.equals(paginationType, "none")) {
+								numberOfItemsToDisplay = Math.min(numberOfItemsToDisplay, collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+							}
+
+							int numberOfRows = (int)Math.ceil((double)numberOfItemsToDisplay / collectionStyledLayoutStructureItem.getNumberOfColumns());
 
 							for (int i = 0; i < numberOfRows; i++) {
 						%>
@@ -72,7 +76,7 @@ for (String childrenItemId : childrenItemIds) {
 								for (int j = 0; j < collectionStyledLayoutStructureItem.getNumberOfColumns(); j++) {
 									int index = (i * collectionStyledLayoutStructureItem.getNumberOfColumns()) + j;
 
-									if ((index >= maxNumberOfItemsPerPage) || (index >= collection.size())) {
+									if ((index >= numberOfItemsToDisplay) || (index >= collection.size())) {
 										break;
 									}
 

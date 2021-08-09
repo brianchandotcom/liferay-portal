@@ -1639,7 +1639,7 @@ paths:
             tags: ["Process"]
     "/reindex/statuses":
         get:
-            operationId: getIndexReindexStatusPage
+            operationId: getReindexStatusesPage
             responses:
                 200:
                     content:

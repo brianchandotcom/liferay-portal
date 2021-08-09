@@ -53,6 +53,12 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 	}
 
 	@Override
+	public ObjectField getObjectField(Long objectFieldId) throws Exception {
+		return ObjectFieldUtil.toObjectField(
+			_objectFieldLocalService.getObjectField(objectFieldId));
+	}
+
+	@Override
 	public ObjectField postObjectDefinitionObjectField(
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {

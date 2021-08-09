@@ -321,5 +321,23 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8429 | Test Summary: Form submissions by technology card shows views by expected browser"
+	@ignore = "true"
+	@priority = "5"
+	test FormsTechnologyCardShowsViewsByExpectedBrowser {
+
+		// TODO LRAC-8429 FormsTechnologyCardShowsViewsByExpectedBrowser
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8428 | Test Summary: Form submissions by technology card shows views by expected device"
+	@ignore = "true"
+	@priority = "5"
+	test FormsTechnologyCardShowsViewsByExpectedDevice {
+
+		// TODO LRAC-8428 FormsTechnologyCardShowsViewsByExpectedDevice
+
+	}
+
 
 }

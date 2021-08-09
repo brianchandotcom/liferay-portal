@@ -1,0 +1,75 @@
+{
+	"name": "RaylifeApplication",
+	"objectFields": [
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"name": "address",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"name": "addressApt",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"name": "city",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"name": "email",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"name": "firstName",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"name": "lastName",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"name": "phone",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"name": "state",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"name": "website",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"name": "zip",
+			"required": false,
+			"type": "String"
+		}
+	]
+}

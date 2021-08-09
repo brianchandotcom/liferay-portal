@@ -101,4 +101,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
+	@ignore = "true"
+	@priority = "5"
+	test AssertAppearsOnListShowsPagesBlogExists {
+
+		// TODO LRAC-8387 AssertAppearsOnListShowsPagesBlogExists
+
+	}
+
 }

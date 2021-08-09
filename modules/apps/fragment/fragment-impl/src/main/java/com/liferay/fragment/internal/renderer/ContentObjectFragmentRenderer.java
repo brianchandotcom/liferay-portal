@@ -288,6 +288,13 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String itemType = (String)httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE);
+
+		if (Validator.isNull(className) && Validator.isNotNull(itemType)) {
+			className = itemType;
+		}
+
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);

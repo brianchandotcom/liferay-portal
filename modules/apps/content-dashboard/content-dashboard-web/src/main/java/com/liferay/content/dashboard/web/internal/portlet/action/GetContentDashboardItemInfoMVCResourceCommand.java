@@ -150,6 +150,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"user", _getUserJSONObject(contentDashboardItem, locale)
 				).put(
+					"docType",
+					contentDashboardItem.getTypeLabel(locale)
+				).put(
 					"versions",
 					_getVersionsJSONArray(contentDashboardItem, locale)
 				).put(

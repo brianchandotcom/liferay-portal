@@ -22,70 +22,19 @@
 	CKEDITOR.plugins.add(pluginName, {
 		init(editor) {
 			editor.ui.addBalloonToolbarButton('ImageAlignLeft', {
-				click() {
-					const imageWidget = editor.widgets.selected[0];
-
-					if (imageWidget.name !== 'image') {
-						return;
-					}
-
-					imageWidget.focus();
-
-					const alignValue = imageWidget.data.align;
-
-					if (!alignValue || alignValue !== 'left') {
-						imageWidget.setData('align', 'left');
-					}
-					else {
-						imageWidget.setData('align', 'none');
-					}
-				},
+				command: 'justifyleft',
 				icon: 'align-image-left',
 				title: editor.lang.common.alignLeft,
 			});
 
 			editor.ui.addBalloonToolbarButton('ImageAlignCenter', {
-				click() {
-					const imageWidget = editor.widgets.selected[0];
-
-					if (imageWidget.name !== 'image') {
-						return;
-					}
-
-					imageWidget.focus();
-
-					const alignValue = imageWidget.data.align;
-
-					if (!alignValue || alignValue !== 'center') {
-						imageWidget.setData('align', 'center');
-					}
-					else if (alignValue === 'center') {
-						imageWidget.setData('align', 'none');
-					}
-				},
+				command: 'justifycenter',
 				icon: 'align-image-center',
 				title: editor.lang.common.alignCenter,
 			});
 
 			editor.ui.addBalloonToolbarButton('ImageAlignRight', {
-				click() {
-					const imageWidget = editor.widgets.selected[0];
-
-					if (imageWidget.name !== 'image') {
-						return;
-					}
-
-					imageWidget.focus();
-
-					const alignValue = imageWidget.data.align;
-
-					if (!alignValue || alignValue !== 'right') {
-						imageWidget.setData('align', 'right');
-					}
-					else {
-						imageWidget.setData('align', 'none');
-					}
-				},
+				command: 'justifyright',
 				icon: 'align-image-right',
 				title: editor.lang.common.alignRight,
 			});

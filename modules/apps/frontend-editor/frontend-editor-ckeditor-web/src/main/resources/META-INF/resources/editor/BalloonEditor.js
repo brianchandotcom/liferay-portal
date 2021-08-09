@@ -42,6 +42,15 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 		title: false,
 	};
 
+	const imageDirectionShim = editorConfig.toolbarImage.includes(
+		'ImageAlign'
+	) && {
+		style: {
+			float: 'left',
+			width: '100%',
+		},
+	};
+
 	return (
 		<Editor
 			config={editorConfig}
@@ -98,6 +107,7 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 				});
 			}}
 			type="inline"
+			{...imageDirectionShim}
 			{...otherProps}
 		/>
 	);

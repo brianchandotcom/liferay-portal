@@ -71,6 +71,7 @@ create table CommerceOrder (
 	modifiedDate DATE null,
 	commerceAccountId LONG,
 	commerceCurrencyId LONG,
+	commerceOrderTypeId LONG,
 	billingAddressId LONG,
 	shippingAddressId LONG,
 	commercePaymentMethodKey VARCHAR(75) null,

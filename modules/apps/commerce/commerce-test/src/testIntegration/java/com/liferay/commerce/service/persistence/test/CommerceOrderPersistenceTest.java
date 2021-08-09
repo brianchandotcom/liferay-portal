@@ -147,6 +147,8 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setCommerceCurrencyId(RandomTestUtil.nextLong());
 
+		newCommerceOrder.setCommerceOrderTypeId(RandomTestUtil.nextLong());
+
 		newCommerceOrder.setBillingAddressId(RandomTestUtil.nextLong());
 
 		newCommerceOrder.setShippingAddressId(RandomTestUtil.nextLong());
@@ -333,6 +335,9 @@ public class CommerceOrderPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrder.getCommerceCurrencyId(),
 			newCommerceOrder.getCommerceCurrencyId());
+		Assert.assertEquals(
+			existingCommerceOrder.getCommerceOrderTypeId(),
+			newCommerceOrder.getCommerceOrderTypeId());
 		Assert.assertEquals(
 			existingCommerceOrder.getBillingAddressId(),
 			newCommerceOrder.getBillingAddressId());
@@ -680,11 +685,11 @@ public class CommerceOrderPersistenceTest {
 			"commerceOrderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceAccountId", true,
-			"commerceCurrencyId", true, "billingAddressId", true,
-			"shippingAddressId", true, "commercePaymentMethodKey", true,
-			"commerceShippingMethodId", true, "shippingOptionName", true,
-			"purchaseOrderNumber", true, "couponCode", true,
-			"lastPriceUpdateDate", true, "subtotal", true,
+			"commerceCurrencyId", true, "commerceOrderTypeId", true,
+			"billingAddressId", true, "shippingAddressId", true,
+			"commercePaymentMethodKey", true, "commerceShippingMethodId", true,
+			"shippingOptionName", true, "purchaseOrderNumber", true,
+			"couponCode", true, "lastPriceUpdateDate", true, "subtotal", true,
 			"subtotalDiscountAmount", true, "subtotalDiscountPercentageLevel1",
 			true, "subtotalDiscountPercentageLevel2", true,
 			"subtotalDiscountPercentageLevel3", true,
@@ -1030,6 +1035,8 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setCommerceAccountId(RandomTestUtil.nextLong());
 
 		commerceOrder.setCommerceCurrencyId(RandomTestUtil.nextLong());
+
+		commerceOrder.setCommerceOrderTypeId(RandomTestUtil.nextLong());
 
 		commerceOrder.setBillingAddressId(RandomTestUtil.nextLong());
 

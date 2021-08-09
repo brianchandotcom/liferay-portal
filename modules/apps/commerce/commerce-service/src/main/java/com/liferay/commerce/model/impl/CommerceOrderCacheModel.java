@@ -64,7 +64,7 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(137);
+		StringBundler sb = new StringBundler(139);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,8 @@ public class CommerceOrderCacheModel
 		sb.append(commerceAccountId);
 		sb.append(", commerceCurrencyId=");
 		sb.append(commerceCurrencyId);
+		sb.append(", commerceOrderTypeId=");
+		sb.append(commerceOrderTypeId);
 		sb.append(", billingAddressId=");
 		sb.append(billingAddressId);
 		sb.append(", shippingAddressId=");
@@ -253,6 +255,7 @@ public class CommerceOrderCacheModel
 
 		commerceOrderImpl.setCommerceAccountId(commerceAccountId);
 		commerceOrderImpl.setCommerceCurrencyId(commerceCurrencyId);
+		commerceOrderImpl.setCommerceOrderTypeId(commerceOrderTypeId);
 		commerceOrderImpl.setBillingAddressId(billingAddressId);
 		commerceOrderImpl.setShippingAddressId(shippingAddressId);
 
@@ -445,6 +448,8 @@ public class CommerceOrderCacheModel
 
 		commerceCurrencyId = objectInput.readLong();
 
+		commerceOrderTypeId = objectInput.readLong();
+
 		billingAddressId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
@@ -560,6 +565,8 @@ public class CommerceOrderCacheModel
 		objectOutput.writeLong(commerceAccountId);
 
 		objectOutput.writeLong(commerceCurrencyId);
+
+		objectOutput.writeLong(commerceOrderTypeId);
 
 		objectOutput.writeLong(billingAddressId);
 
@@ -689,6 +696,7 @@ public class CommerceOrderCacheModel
 	public long modifiedDate;
 	public long commerceAccountId;
 	public long commerceCurrencyId;
+	public long commerceOrderTypeId;
 	public long billingAddressId;
 	public long shippingAddressId;
 	public String commercePaymentMethodKey;

@@ -1,0 +1,31 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-136451 - Verify if it's possible to see the entries of a field with capitalized letters in the name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FieldWithCapitalizedLetters {
+
+		// TODO LPS-137100 FieldWithCapitalizedLetters pending implementation
+
+	}
+
+}

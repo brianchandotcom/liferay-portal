@@ -126,6 +126,8 @@ definition {
 	@description = "LPS-108138 - Verify that tasks that are not assigned to the current users can't be transitioned via bulk transition action"
 	@priority = "4"
 	test CanNotBulkTransitionTasksNotAssignedToCurrentUser {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONUser.addUser(
@@ -497,6 +499,8 @@ definition {
 	@description = "LPS-108138 - Verify that only the tasks selected on -Select Steps to Transition- are being considered to be transitioned in the -Choose Transition Per Step- step"
 	@priority = "4"
 	test OnlySelectedTasksAreConsideredToBeTransitioned {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -636,6 +640,8 @@ definition {
 	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"
 	@priority = "4"
 	test TasksAreGroupedByVersionedTasks {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

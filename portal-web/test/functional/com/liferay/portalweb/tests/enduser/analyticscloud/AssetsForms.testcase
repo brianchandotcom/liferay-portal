@@ -312,5 +312,14 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8426 | Test Summary: Forms submissions by location card shows expected views by location"
+	@ignore = "true"
+	@priority = "5"
+	test FormsLocationCardShowsViewsByExpectedLocation {
+
+		// TODO LRAC-8426 FormsLocationCardShowsViewsByExpectedLocation
+
+	}
+
 
 }

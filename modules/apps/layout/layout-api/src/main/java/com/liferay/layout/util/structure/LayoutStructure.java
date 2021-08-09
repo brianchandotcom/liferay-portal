@@ -664,12 +664,15 @@ public class LayoutStructure {
 						childrenItemId);
 
 				columnLayoutStructureItem.setSize(
-					getColumnSize(numberOfColumns - 1, i));
+					LayoutStructureConstants.COLUMN_SIZES[numberOfColumns - 1]
+						[i]);
 			}
 
 			for (int i = oldNumberOfColumns; i < numberOfColumns; i++) {
 				_addColumnLayoutStructureItem(
-					itemId, i, getColumnSize(numberOfColumns - 1, i));
+					itemId, i,
+					LayoutStructureConstants.COLUMN_SIZES[numberOfColumns - 1]
+						[i]);
 			}
 
 			return Collections.emptyList();
@@ -683,7 +686,7 @@ public class LayoutStructure {
 					childrenItemId);
 
 			columnLayoutStructureItem.setSize(
-				getColumnSize(numberOfColumns - 1, i));
+				LayoutStructureConstants.COLUMN_SIZES[numberOfColumns - 1][i]);
 		}
 
 		List<LayoutStructureItem> deletedLayoutStructureItems =

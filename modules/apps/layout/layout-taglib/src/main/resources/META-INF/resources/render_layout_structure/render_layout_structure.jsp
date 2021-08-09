@@ -85,7 +85,7 @@ for (String childrenItemId : childrenItemIds) {
 								%>
 
 									<clay:col
-										md="<%= String.valueOf(layoutStructure.getColumnSize(collectionStyledLayoutStructureItem.getNumberOfColumns() - 1, j)) %>"
+										md="<%= String.valueOf(LayoutStructureConstants.COLUMN_SIZES[collectionStyledLayoutStructureItem.getNumberOfColumns() - 1][j]) %>"
 									>
 										<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
 									</clay:col>

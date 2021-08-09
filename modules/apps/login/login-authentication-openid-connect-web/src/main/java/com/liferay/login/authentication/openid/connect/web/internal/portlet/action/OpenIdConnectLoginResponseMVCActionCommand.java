@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
 import javax.portlet.ActionRequest;
@@ -103,9 +102,6 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 
 	@Reference
 	private OpenIdConnect _openIdConnect;
-
-	@Reference
-	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
 
 	@Reference
 	private Portal _portal;

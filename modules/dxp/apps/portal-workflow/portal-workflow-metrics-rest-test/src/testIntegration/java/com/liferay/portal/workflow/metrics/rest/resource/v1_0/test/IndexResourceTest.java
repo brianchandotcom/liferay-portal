@@ -72,14 +72,14 @@ public class IndexResourceTest extends BaseIndexResourceTestCase {
 
 	@Override
 	@Test
-	public void testPatchIndexesRefresh() throws Exception {
-		_assertPatchIndexes(indexResource::patchIndexesRefreshHttpResponse);
+	public void testPatchIndexRefresh() throws Exception {
+		_assertPatchIndexes(indexResource::patchIndexRefreshHttpResponse);
 	}
 
 	@Override
 	@Test
-	public void testPatchIndexesReindex() throws Exception {
-		_assertPatchIndexes(indexResource::patchIndexesReindexHttpResponse);
+	public void testPatchIndexReindex() throws Exception {
+		_assertPatchIndexes(indexResource::patchIndexReindexHttpResponse);
 	}
 
 	@Rule

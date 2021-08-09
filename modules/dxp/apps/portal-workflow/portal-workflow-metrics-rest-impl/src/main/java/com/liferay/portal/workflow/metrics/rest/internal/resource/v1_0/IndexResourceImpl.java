@@ -75,7 +75,7 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 	}
 
 	@Override
-	public void patchIndexesRefresh(Index index) throws Exception {
+	public void patchIndexRefresh(Index index) throws Exception {
 		if (Objects.isNull(index) || Validator.isNull(index.getKey())) {
 			throw new IndexKeyException();
 		}
@@ -102,7 +102,7 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 	}
 
 	@Override
-	public void patchIndexesReindex(Index index) throws Exception {
+	public void patchIndexReindex(Index index) throws Exception {
 		if (Objects.isNull(index) || Validator.isNull(index.getKey())) {
 			throw new IndexKeyException();
 		}

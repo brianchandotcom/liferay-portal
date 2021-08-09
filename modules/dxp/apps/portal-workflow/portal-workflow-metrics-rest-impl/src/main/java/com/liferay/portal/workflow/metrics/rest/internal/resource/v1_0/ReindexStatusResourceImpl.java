@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ReindexStatusResourceImpl extends BaseReindexStatusResourceImpl {
 
 	@Override
-	public Page<ReindexStatus> getReindexStatusPage() throws Exception {
+	public Page<ReindexStatus> getReindexStatusesPage() throws Exception {
 		return Page.of(
 			transform(
 				_backgroundTaskLocalService.getBackgroundTasks(

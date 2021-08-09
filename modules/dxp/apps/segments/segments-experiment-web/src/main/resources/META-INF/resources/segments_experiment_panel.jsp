@@ -58,7 +58,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 				<c:otherwise>
 					<h4 class="mt-3"><liferay-ui:message key="connect-to-liferay-analytics-cloud" /></h4>
 
-					<p class="text-secondary"><liferay-ui:message key="connect-to-liferay-analytics-cloud-help" /></p>
+					<p class="text-secondary"><liferay-ui:message key="in-order-to-perform-an-ab-test,-your-liferay-dxp-instance-has-to-be-connected" /></p>
 
 					<liferay-ui:icon
 						label="<%= true %>"

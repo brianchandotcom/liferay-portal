@@ -57,7 +57,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 					<c:otherwise>
 						<h4 class="mt-3"><liferay-ui:message key="connect-to-liferay-analytics-cloud" /></h4>
 
-						<p class="text-secondary"><liferay-ui:message key="connect-to-liferay-analytics-cloud-help" /></p>
+						<p class="text-secondary"><liferay-ui:message key="liferay-dxp-instance-has-to-be-connected-with-analytics-cloud-to-view-content-performance-metrics-and-build-a-successful-content-strategy" /></p>
 
 						<liferay-ui:icon
 							label="<%= true %>"

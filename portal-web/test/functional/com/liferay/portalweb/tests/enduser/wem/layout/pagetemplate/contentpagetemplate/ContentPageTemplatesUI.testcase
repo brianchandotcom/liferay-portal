@@ -76,7 +76,24 @@ definition {
 			SelectFrameTop(value1 = "relative=top");
 		}
 
-		Pause(locator1 = "30000");
+		task ("Assert the actions order of a collection") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewOrder(menuItemList = "Edit,-,Permissions,-,Delete");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		}
+
+		task ("Assert the actions order of a page template") {
+			LexiconEntry.openEntryMenu(rowEntry = "Page Template Name");
+
+			MenuItem.viewOrder(menuItemList = "Edit,-,Change Thumbnail,Remove thumbnail,Discard draft,Rename,-,Export,-,Configure,Permissions,-,Delete");
+
+			LexiconEntry.openEntryMenu(rowEntry = "Page Template Name");
+
+		}
+
 	}
 
 }

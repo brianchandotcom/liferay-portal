@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -322,6 +323,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentAccountId = RandomTestUtil.randomLong();
 				status = RandomTestUtil.randomInt();
+				type = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
 			}
 		};
 	}

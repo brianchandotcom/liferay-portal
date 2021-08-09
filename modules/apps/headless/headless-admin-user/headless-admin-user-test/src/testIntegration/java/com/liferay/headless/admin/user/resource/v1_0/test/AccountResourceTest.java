@@ -22,6 +22,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -268,6 +269,15 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 					organization2.getOrganizationId()));
 	}
 
+	@Test(expected = Problem.ProblemException.class)
+	public void testPostAccountInvalidType() throws Exception {
+		Account randomAccount = randomAccount();
+
+		randomAccount.setType(StringUtil.randomString());
+
+		testPostAccount_addAccount(randomAccount);
+	}
+
 	@Override
 	@Test
 	public void testPostOrganizationAccounts() throws Exception {
@@ -330,7 +340,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name"};
+		return new String[] {"name", "type"};
 	}
 
 	@Override
@@ -339,6 +349,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		account.setParentAccountId(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 		account.setStatus(WorkflowConstants.STATUS_APPROVED);
+		account.setType(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 
 		return account;
 	}

@@ -92,4 +92,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8451 | Test Summary: Web content submissions by location card shows expected views by location"
+	@ignore = "true"
+	@priority = "5"
+	test WebContentLocationCardShowsViewsByExpectedLocation {
+
+		// TODO LRAC-8451 WebContentLocationCardShowsViewsByExpectedLocation
+
+	}
+
 }

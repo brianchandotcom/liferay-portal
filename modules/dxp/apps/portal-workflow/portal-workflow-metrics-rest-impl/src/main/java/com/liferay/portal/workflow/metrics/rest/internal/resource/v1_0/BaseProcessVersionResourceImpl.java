@@ -85,7 +85,7 @@ public abstract class BaseProcessVersionResourceImpl
 	@Path("/processes/{processId}/process-versions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProcessVersion")})
-	public Page<ProcessVersion> getProcessVersionsPage(
+	public Page<ProcessVersion> getProcessProcessVersionsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId)
 		throws Exception {
@@ -129,7 +129,8 @@ public abstract class BaseProcessVersionResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		return getProcessProcessVersionsPage(
+			Long.parseLong((String)parameters.get("processId")));
 	}
 
 	@Override

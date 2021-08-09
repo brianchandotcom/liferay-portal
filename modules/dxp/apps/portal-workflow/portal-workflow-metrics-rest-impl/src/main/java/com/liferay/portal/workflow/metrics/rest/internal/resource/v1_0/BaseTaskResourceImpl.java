@@ -278,7 +278,7 @@ public abstract class BaseTaskResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Task")})
-	public Page<Task> postProcessTasksPage(
+	public Page<Task> postTasksPage(
 			@Context Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception {
 

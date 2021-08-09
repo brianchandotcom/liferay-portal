@@ -68,7 +68,7 @@ public interface TaskResource {
 	public void patchProcessTaskComplete(Long processId, Long taskId, Task task)
 		throws Exception;
 
-	public Page<Task> postProcessTasksPage(
+	public Page<Task> postTasksPage(
 			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception;
 

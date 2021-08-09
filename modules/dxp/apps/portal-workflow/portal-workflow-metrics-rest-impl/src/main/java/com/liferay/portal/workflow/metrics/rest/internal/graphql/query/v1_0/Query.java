@@ -415,10 +415,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processVersions(processId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processProcessVersions(processId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public ProcessVersionPage processVersions(
+	public ProcessVersionPage processProcessVersions(
 			@GraphQLName("processId") Long processId)
 		throws Exception {
 
@@ -426,7 +426,8 @@ public class Query {
 			_processVersionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			processVersionResource -> new ProcessVersionPage(
-				processVersionResource.getProcessVersionsPage(processId)));
+				processVersionResource.getProcessProcessVersionsPage(
+					processId)));
 	}
 
 	/**
@@ -666,27 +667,6 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Process.class)
-	public class GetProcessVersionsPageTypeExtension {
-
-		public GetProcessVersionsPageTypeExtension(Process process) {
-			_process = process;
-		}
-
-		@GraphQLField
-		public ProcessVersionPage versions() throws Exception {
-			return _applyComponentServiceObjects(
-				_processVersionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				processVersionResource -> new ProcessVersionPage(
-					processVersionResource.getProcessVersionsPage(
-						_process.getId())));
-		}
-
-		private Process _process;
-
-	}
-
-	@GraphQLTypeExtension(Process.class)
 	public class GetProcessTasksPageTypeExtension {
 
 		public GetProcessTasksPageTypeExtension(Process process) {
@@ -795,6 +775,27 @@ public class Query {
 				Query.this::_populateResourceContext,
 				taskResource -> taskResource.getProcessTask(
 					_process.getId(), taskId));
+		}
+
+		private Process _process;
+
+	}
+
+	@GraphQLTypeExtension(Process.class)
+	public class GetProcessProcessVersionsPageTypeExtension {
+
+		public GetProcessProcessVersionsPageTypeExtension(Process process) {
+			_process = process;
+		}
+
+		@GraphQLField
+		public ProcessVersionPage processVersions() throws Exception {
+			return _applyComponentServiceObjects(
+				_processVersionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				processVersionResource -> new ProcessVersionPage(
+					processVersionResource.getProcessProcessVersionsPage(
+						_process.getId())));
 		}
 
 		private Process _process;

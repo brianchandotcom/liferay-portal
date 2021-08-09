@@ -398,7 +398,7 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
-	public void testPostProcessTasksPage() throws Exception {
+	public void testPostTasksPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 

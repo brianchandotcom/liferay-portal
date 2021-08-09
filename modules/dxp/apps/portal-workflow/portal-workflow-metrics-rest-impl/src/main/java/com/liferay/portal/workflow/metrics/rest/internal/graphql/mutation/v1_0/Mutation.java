@@ -527,7 +527,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Task> createProcessTasksPage(
+	public java.util.Collection<Task> createTasksPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("taskBulkSelection") TaskBulkSelection
@@ -538,7 +538,7 @@ public class Mutation {
 			_taskResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taskResource -> {
-				Page paginationPage = taskResource.postProcessTasksPage(
+				Page paginationPage = taskResource.postTasksPage(
 					Pagination.of(page, pageSize), taskBulkSelection);
 
 				return paginationPage.getItems();

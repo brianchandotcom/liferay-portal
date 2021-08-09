@@ -437,6 +437,14 @@ public abstract class BaseObjectFieldResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("label", additionalAssertFieldName)) {
+				if (objectField.getLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (objectField.getName() == null) {
 					valid = false;
@@ -607,6 +615,17 @@ public abstract class BaseObjectFieldResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("label", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)objectField1.getLabel(),
+						(Map)objectField2.getLabel())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectField1.getName(), objectField2.getName())) {
@@ -759,6 +778,11 @@ public abstract class BaseObjectFieldResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("label")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name")) {

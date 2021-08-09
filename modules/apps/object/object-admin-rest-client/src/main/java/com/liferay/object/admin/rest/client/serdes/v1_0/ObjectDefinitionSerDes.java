@@ -115,6 +115,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getId());
 		}
 
+		if (objectDefinition.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append(_toJSON(objectDefinition.getLabel()));
+		}
+
 		if (objectDefinition.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -228,6 +238,13 @@ public class ObjectDefinitionSerDes {
 			map.put("id", String.valueOf(objectDefinition.getId()));
 		}
 
+		if (objectDefinition.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(objectDefinition.getLabel()));
+		}
+
 		if (objectDefinition.getName() == null) {
 			map.put("name", null);
 		}
@@ -302,6 +319,13 @@ public class ObjectDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setLabel(
+						(Map)ObjectDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

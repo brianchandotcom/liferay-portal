@@ -26,10 +26,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,6 +84,9 @@ public class ObjectDefinitionResourceImpl
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(),
+						objectDefinition.getName()),
 					objectDefinition.getName(),
 					transformToList(
 						objectDefinition.getObjectFields(),

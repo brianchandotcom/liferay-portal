@@ -160,6 +160,7 @@ for (String childrenItemId : childrenItemIds) {
 					</div>
 
 					<liferay-frontend:component
+						componentId='<%= "paginationComponent" + collectionStyledLayoutStructureItem.getItemId() %>'
 						context='<%=
 							HashMapBuilder.<String, Object>put(
 								"activePage", activePage

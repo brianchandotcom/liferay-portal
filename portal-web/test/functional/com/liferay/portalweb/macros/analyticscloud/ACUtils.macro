@@ -88,8 +88,8 @@ definition {
 
 		JSONBlog.addEntry(
 			entryContent = "This is the blog test for AC",
-			groupName = "Site Name",
-			entryTitle = "${entryTitle}");
+			entryTitle = "${entryTitle}",
+			groupName = "Site Name");
 	}
 
 	macro createDMAndAddToPage {

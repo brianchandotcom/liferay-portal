@@ -29,6 +29,51 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8483 | Test Summary: Add members from different pages"
+	@ignore = "true"
+	@priority = "3"
+	test CanAddMembersFromDifferentPages {
+
+		// TODO LRAC-8483 CanAddMembersFromDifferentPages
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8476 | Test Summary: Cancel Creating a Dynamic Segment"
+	@ignore = "true"
+	@priority = "3"
+	test CanCancelCreatingDynamicSegment {
+
+		// TODO LRAC-8476 CanCancelCreatingDynamicSegment
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8477 | Test Summary: Cancel creating a static segment"
+	@ignore = "true"
+	@priority = "3"
+	test CanCancelCreatingStaticSegment {
+
+		// TODO LRAC-8477 CanCancelCreatingStaticSegment
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8478 | Test Summary: Create a Dynamic Individuals Segment By Date"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateDynamicIndividualsSegmentByDate {
+
+		// TODO LRAC-8478 CanCreateDynamicIndividualsSegmentByDate
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8480 | Test Summary: Create a Dynamic Individuals Segment with a criteria that uses is known and is not"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateDynamicIndividualsSegmentWithCriteriaUsesIsAndIsNot {
+
+		// TODO LRAC-8480 CanCreateDynamicIndividualsSegmentWithCriteriaUsesIsAndIsNot
+
+	}
+
 	@description = "Create a dynamic segment with individuals"
 	@priority = "5"
 	test CanCreateDynamicSegmentWithIndividuals {
@@ -139,6 +184,24 @@ definition {
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8482 | Test Summary: Create a nested criteria"
+	@ignore = "true"
+	@priority = "3"
+	test CanCreateNestedCriteria {
+
+		// TODO LRAC-8482 CanCreateNestedCriteria
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
+	@ignore = "true"
+	@priority = "5"
+	test CanCreateSegmentFormValidation {
+
+		// TODO LRAC-8484 CanCreateSegmentFormValidation
+
+	}
+
 	@description = "Create a segment that contains anonymous individuals"
 	@priority = "5"
 	test CanCreateSegmentWithAnonymousIndividuals {
@@ -208,6 +271,15 @@ definition {
 		ACSegments.viewIncludeAnonymousLabel();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8479 | Test Summary: Create a Segment with a Number Property"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentWithNumberProperty {
+
+		// TODO LRAC-8479 CanCreateSegmentWithNumberProperty
+
+	}
+
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
@@ -258,6 +330,51 @@ definition {
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8474 | Test Summary: Duplicate a criteria"
+	@ignore = "true"
+	@priority = "3"
+	test CanDuplicateCriteria {
+
+		// TODO LRAC-8474 CanDuplicateCriteria
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
+	@ignore = "true"
+	@priority = "3"
+	test CanDynamicSegmentMembersPreviewInRealTime {
+
+		// TODO LRAC-8475 CanDynamicSegmentMembersPreviewInRealTime
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
+	@ignore = "true"
+	@priority = "3"
+	test CanFilterSegmentByAddMembers {
+
+		// TODO LRAC-8473 CanFilterSegmentByAddMembers
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8471 | Test Summary: Paginate Segment Profile in Membership List"
+	@ignore = "true"
+	@priority = "3"
+	test CanPaginateSegmentProfileInMembershipList {
+
+		// TODO LRAC-8471 CanPaginateSegmentProfileInMembershipList
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
+	@ignore = "true"
+	@priority = "3"
+	test CanPaginateStaticSegmentAddMembers {
+
+		// TODO LRAC-8472 CanPaginateStaticSegmentAddMembers
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8133 | Test Summary: Create button shows option to create static or dynamic"
 	@priority = "5"
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
@@ -295,6 +412,15 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSegments#SEGMENT_LABEL",
 			value1 = "DYNAMIC SEGMENT");
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8481 | Test Summary: Create a Dynamic Individuals Segment with a criteria that uses a boolean and a does not contain"
+	@ignore = "true"
+	@priority = "4"
+	test CreateDynamicIndividualsSegmentWithCriteriaUsesBooleanAndDoesNotContain {
+
+		// TODO LRAC-8481 CreateDynamicIndividualsSegmentWithCriteriaUsesBooleanAndDoesNotContain
+
 	}
 
 }

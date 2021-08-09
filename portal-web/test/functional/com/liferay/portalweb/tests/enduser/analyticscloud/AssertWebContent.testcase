@@ -38,4 +38,40 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8443 | Test Summary: Assert Custom Range time filter in assets"
+	@ignore = "true"
+	@priority = "5"
+	test CanUseCustomRangeTimeFilterInWebContentOverview {
+
+		// TODO LRAC-8443 CanUseCustomRangeTimeFilterInWebContentOverview
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8444 | Test Summary: Custom Range time filter in Web Content assets page"
+	@ignore = "true"
+	@priority = "4"
+	test CanAssertWebContentTimeFIlterCustom {
+
+		// TODO LRAC-8444 CanAssertWebContentTimeFIlterCustom
+
+	}
+	
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8445 | Test Summary: Assert Web Content 180 Days Time Filter In Web Content Assets Page"
+	@ignore = "true"
+	@priority = "5"
+	test CanUse180DaysTimeFilterInWebContentOverview {
+
+		// TODO LRAC-8445 CanUse180DaysTimeFilterInWebContentOverview
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8446 | Test Summary: Assert 180 day time filter in Assets"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAssetsPageTimeFilter180Days {
+
+		// TODO LRAC-8446 AssertAssetsPageTimeFilter180Days
+
+	}
+
 }

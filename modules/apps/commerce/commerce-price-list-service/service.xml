@@ -374,7 +374,7 @@
 			<finder-column name="commercePriceEntryId" />
 			<finder-column name="minQuantity" />
 		</finder>
-		<finder name="C_LtM" return-type="Collection">
+		<finder name="C_LteM" return-type="Collection">
 			<finder-column name="commercePriceEntryId" />
 			<finder-column comparator="&lt;=" name="minQuantity" />
 		</finder>
@@ -386,7 +386,7 @@
 			<finder-column comparator="&lt;" name="expirationDate" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_LtM_S" return-type="Collection">
+		<finder name="C_LteM_S" return-type="Collection">
 			<finder-column name="commercePriceEntryId" />
 			<finder-column comparator="&lt;=" name="minQuantity" />
 			<finder-column name="status" />

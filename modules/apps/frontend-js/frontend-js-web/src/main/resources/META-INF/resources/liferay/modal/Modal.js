@@ -27,7 +27,9 @@ import navigate from '../util/navigate.es';
 const Modal = ({
 	bodyHTML,
 	buttons,
-	containerProps = {},
+	containerProps = {
+		className: 'cadmin',
+	},
 	customEvents,
 	headerHTML,
 	height,
@@ -270,6 +272,7 @@ const openModal = (props) => {
 };
 
 const openPortletModal = ({
+	containerProps,
 	iframeBodyCssClass,
 	onClose,
 	portletSelector,
@@ -306,6 +309,7 @@ const openPortletModal = ({
 		}
 
 		openModal({
+			containerProps,
 			headerHTML,
 			iframeBodyCssClass,
 			onClose,
@@ -332,7 +336,7 @@ const openPortletWindow = ({bodyCssClass, portlet, uri, ...otherProps}) => {
 const openSelectionModal = ({
 	buttonAddLabel = Liferay.Language.get('add'),
 	buttonCancelLabel = Liferay.Language.get('cancel'),
-	containerProps = {},
+	containerProps,
 	customSelectEvent = false,
 	height,
 	id,

@@ -6,19 +6,34 @@ definition {
 	property testray.main.component.name = "Fragments";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONFragment.addFragmentCollection(
-			groupName = "Test Site Name",
-			name = "Collection Name");
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
 
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
 	}
 
 	tearDown {
@@ -30,46 +45,6 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
-	}
-
-	@description = "This is a test for LPS-97184. Invalid fragment configuration cannot be published and offers useful advice."
-	@priority = "4"
-	test AddInvalidConfiguration {
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-		FragmentsEditor.gotoConfigurationTab();
-
-		Pause(locator1 = "3000");
-
-		FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
-
-		FragmentsEditor.gotoCodeTab();
-
-		task ("Publish the fragment and assert there is an error message") {
-			Button.clickPublish();
-
-			Alert.viewErrorMessage(errorMessage = "Please provide a valid configuration for the fragment.");
-		}
-	}
-
-	@description = "This is a test for LPS-97184. Valid fragment configuration can be published."
-	@priority = "4"
-	test AddValidConfiguration {
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-		FragmentsEditor.gotoConfigurationTab();
-
-		Pause(locator1 = "3000");
-
-		FragmentsEditor.typeFileContent(fileName = "fragment_configuration.json");
-
-		FragmentsEditor.gotoCodeTab();
-
-		Pause(locator1 = "3000");
-
-		FragmentsEditor.typeFileContent(fileName = "fragment_configuration.html");
-
-		FragmentsEditor.publish();
 	}
 
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
@@ -88,13 +63,6 @@ definition {
 				groupName = "Test Site Name",
 				html = "${htmlSnippet}",
 				name = "Checkbox Fragment Example");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
 		}
 
 		task ("Add a new fragment to page") {
@@ -281,13 +249,6 @@ definition {
 				name = "ColorPalette Fragment Example");
 		}
 
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a new fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -317,6 +278,174 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100963. When a fragment that uses JavaScript has a configuration, there is a JavaScript configuration object available which contains the current values of the fragment configuration."
+	@priority = "4"
+	test ConfigureFragmentWithJavaScript {
+		task ("Add a new fragment with the following codes") {
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
+				''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="component-fragment-name text-break">
+	<a
+		class="btn"
+		data-lfr-editable-id="link"
+		data-lfr-editable-type="link"
+		href=""
+		id="fragment-${fragmentEntryLinkNamespace}-link"
+	>
+		Go Somewhere
+	</a>
+</div>
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			var jsSnippet = '''
+
+const size = configuration.buttonSize;
+const type = configuration.buttonType;
+
+function main() {
+		const editableField = fragmentElement.querySelector('.btn');
+
+	editableField.classList.add(`btn-${size}`);
+	editableField.classList.add(`btn-${type}`);
+}
+
+main();
+
+			''';
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add the new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("View the fragment styles") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "nm",
+				type = "primary");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
+
+			PageEditor.configureFragment(type = "Link");
+
+			PageEditor.gotoStyle(fragmentName = "Fragment Name");
+
+			PageEditor.configureFragment(size = "Large");
+		}
+
+		task ("View the fragment styles") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "lg",
+				type = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment styles in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "lg",
+				type = "link");
+		}
+	}
+
 	@description = "This is a test for LPS-96685. User can change select fragment configuration."
 	@priority = "5"
 	test ConfigureSelectConfigurationInContentPage {
@@ -333,13 +462,6 @@ definition {
 				groupName = "Test Site Name",
 				html = "${htmlSnippet}",
 				name = "Select Fragment Example");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
 		}
 
 		task ("Add a new fragment to page") {
@@ -494,13 +616,6 @@ definition {
 	@priority = "5"
 	test ConfigureTextConfigurationInContentPage {
 		property portal.acceptance = "true";
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
 
 		task ("Add a fragment with text configuration") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
@@ -723,13 +838,6 @@ definition {
 				name = "Text Fragment Example");
 		}
 
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a new fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -786,7 +894,7 @@ definition {
 
 			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
 
-			Pause(locator1 = "3000");
+			FragmentsEditor.waitForAutoSave();
 
 			FragmentsEditor.gotoCodeTab();
 
@@ -799,13 +907,6 @@ definition {
 			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
 
 			FragmentsEditor.publish();
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
 		}
 
 		task ("Add the new fragment to page") {
@@ -901,7 +1002,7 @@ definition {
 
 			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
 
-			Pause(locator1 = "3000");
+			FragmentsEditor.waitForAutoSave();
 
 			FragmentsEditor.gotoCodeTab();
 
@@ -916,14 +1017,7 @@ definition {
 			FragmentsEditor.publish();
 		}
 
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("Add the new fragment to page") {
+		task ("Add a new fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -1007,7 +1101,7 @@ definition {
 
 			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
 
-			Pause(locator1 = "3000");
+			FragmentsEditor.waitForAutoSave();
 
 			FragmentsEditor.gotoCodeTab();
 
@@ -1020,13 +1114,6 @@ definition {
 			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
 
 			FragmentsEditor.publish();
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
 		}
 
 		task ("Add the new fragment to page") {

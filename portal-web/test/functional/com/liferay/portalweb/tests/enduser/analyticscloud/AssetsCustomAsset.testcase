@@ -40,6 +40,42 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8538 | Test Summary: Create custom asset report"
+	@ignore = "true"
+	@priority = "5"
+	test CanCreateCustomAssetReport {
+
+		// TODO LRAC-8538 CanCreateCustomAssetReport
+
+	}
+
+	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8539 | Test Summary: Create multiple custom asset report"
+	@ignore = "true"
+	@priority = "5"
+	test CanCreateMultipleCustomAssetReport {
+
+		// TODO LRAC-8539 CanCreateMultipleCustomAssetReport
+
+	}
+
+	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8542 | Test Summary: Delete multiple custom asset report"
+	@ignore = "true"
+	@priority = "5"
+	test CanDeleteMultipleCustomAssetReport {
+
+		// TODO LRAC-8542 CanDeleteMultipleCustomAssetReport
+
+	}
+
+	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8543 | Test Summary: Delete one report out of many created"
+	@ignore = "true"
+	@priority = "3"
+	test CanDeleteOneReportOutManyCreated {
+
+		// TODO LRAC-8543 CanDeleteOneReportOutManyCreated
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8132 | Test Summary: Custom asset list shows a list of custom assets"
 	@priority = "5"
 	test CanShowsCustomAssetList {

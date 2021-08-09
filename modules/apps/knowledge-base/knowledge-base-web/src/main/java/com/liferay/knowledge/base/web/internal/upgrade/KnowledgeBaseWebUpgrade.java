@@ -20,9 +20,7 @@ import com.liferay.knowledge.base.web.internal.upgrade.v1_1_0.UpgradePortletPref
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,34 +34,6 @@ public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
-			new BaseUpgradeWebModuleRelease() {
-
-				@Override
-				protected String getBundleSymbolicName() {
-					return "com.liferay.knowledge.base.web";
-				}
-
-				@Override
-				protected String[] getPortletIds() {
-					return new String[] {
-						"1_WAR_knowledgebaseportlet",
-						"2_WAR_knowledgebaseportlet",
-						"3_WAR_knowledgebaseportlet",
-						"4_WAR_knowledgebaseportlet",
-						"5_WAR_knowledgebaseportlet"
-					};
-				}
-
-			};
-
-		try {
-			upgradeWebModuleRelease.upgrade();
-		}
-		catch (UpgradeException upgradeException) {
-			throw new RuntimeException(upgradeException);
-		}
-
 		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(

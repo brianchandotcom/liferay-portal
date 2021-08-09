@@ -771,6 +771,76 @@ definition {
 	}
 
 	@priority = "4"
+	test ExportedFactoryConfigurationCanBeImported {
+		property portal.acceptance = "sharry";
+
+		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
+		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
+		var portalURL = PropsUtil.get("portal.url");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID Connect Provider",
+			configurationScope = "Virtual Instance Scope");
+
+		OpenIDConnect.addProvider(
+			openIDConnectClientID = "${openIDConnectClientID}",
+			openIDConnectClientSecret = "${openIDConnectClientSecret}",
+			providerName = "Google");
+
+		LexiconEntry.gotoEntry(rowEntry = "Google");
+
+		SystemSettings.exportConfiguration();
+
+		SystemSettings.deleteConfiguration();
+
+		var tempFileDirectory = selenium.getOutputDirName();
+		var exportConfigFile = FileUtil.exists("${tempFileDirectory}");
+
+		if ("${exportConfigFile}" == "true") {
+			echo("The Configuration file for single factory is exported from edit page Successfully.");
+		}
+		else {
+			fail("FAIL! Cannot find the configuration file exported from edit page for single factory.");
+		}
+
+		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~*.config");
+
+		OSGiConfig.deployOSGiConfigFile(
+			OSGiConfigFileBaseDir = "${tempFileDirectory}",
+			OSGiConfigFileName = "${tempFileName}");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer();
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		User.firstLoginPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID Connect Provider",
+			configurationScope = "Virtual Instance Scope");
+
+		LexiconEntry.viewEntryName(rowEntry = "Google");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID Connect Provider",
+			configurationScope = "Virtual Instance Scope");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Google");
+
+		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
+	}
+
+	@priority = "4"
 	test FactoryConfigurationAreInTheirProperScope {
 		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationAreInTheirProperScope";
 

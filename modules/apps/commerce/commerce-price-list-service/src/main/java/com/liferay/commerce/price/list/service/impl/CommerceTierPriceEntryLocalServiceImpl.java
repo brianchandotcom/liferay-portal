@@ -528,7 +528,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		try {
 			commerceTierPriceEntry =
-				commerceTierPriceEntryPersistence.findByC_LtM_S_First(
+				commerceTierPriceEntryPersistence.findByC_LteM_S_First(
 					commercePriceEntryId, quantity,
 					WorkflowConstants.STATUS_APPROVED,
 					new CommerceTierPriceEntryMinQuantityComparator(false));
@@ -548,7 +548,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	public List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
 		long commercePriceEntryId, int quantity) {
 
-		return commerceTierPriceEntryPersistence.findByC_LtM_S(
+		return commerceTierPriceEntryPersistence.findByC_LteM_S(
 			commercePriceEntryId, quantity, WorkflowConstants.STATUS_APPROVED,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new CommerceTierPriceEntryMinQuantityComparator(true));

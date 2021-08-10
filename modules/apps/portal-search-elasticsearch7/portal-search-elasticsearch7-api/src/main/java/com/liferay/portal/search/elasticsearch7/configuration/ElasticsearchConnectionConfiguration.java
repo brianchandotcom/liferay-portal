@@ -43,8 +43,8 @@ public interface ElasticsearchConnectionConfiguration {
 	public boolean active();
 
 	@Meta.AD(
-		description = "connection-id-help", name = "connection-id",
-		required = false
+		description = "set-a-unique-id-for-this-connection",
+		name = "connection-id", required = false
 	)
 	public String connectionId();
 

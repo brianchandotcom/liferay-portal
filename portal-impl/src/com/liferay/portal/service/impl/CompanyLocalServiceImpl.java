@@ -476,7 +476,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		if (CompanyThreadLocal.isLocked()) {
 			unsafeConsumer.accept(
-				fetchCompanyById(CompanyThreadLocal.getCompanyId()));
+				companyLocalService.fetchCompanyById(
+					CompanyThreadLocal.getCompanyId()));
 
 			return;
 		}

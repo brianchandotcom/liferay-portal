@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -55,7 +56,8 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				bundle, _bundleContext, _objectDefinitionResourceFactory,
+				bundle, _bundleContext, _dlAppLocalService,
+				_objectDefinitionResourceFactory,
 				_taxonomyVocabularyResourceFactory, _userLocalService);
 
 		siteInitializerExtension.start();
@@ -94,6 +96,9 @@ public class SiteInitializerExtender
 
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;

@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -23,14 +25,20 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
+import java.net.URL;
+
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Set;
 
@@ -44,13 +52,14 @@ import org.osgi.framework.Bundle;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		Bundle bundle,
+		Bundle bundle, DLAppLocalService dlAppLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ServletContext servletContext,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
 		_bundle = bundle;
+		_dlAppLocalService = dlAppLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_servletContext = servletContext;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
@@ -96,6 +105,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public boolean isActive(long companyId) {
 		return true;
+	}
+
+	private void _addFileEntries(long groupId, User user) throws Exception {
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			"/site-initializer/file-entries", "*", true);
+
+		if (enumeration == null) {
+			return;
+		}
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			byte[] bytes = FileUtil.getBytes(url.openStream());
+
+			String fileName = FileUtil.getShortFileName(url.getFile());
+
+			_dlAppLocalService.addFileEntry(
+				null, user.getUserId(), groupId,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+				MimeTypesUtil.getContentType(fileName), bytes, null, null,
+				ServiceContextThreadLocal.getServiceContext());
+		}
 	}
 
 	private void _addObjectDefinitions(User user) throws Exception {
@@ -176,6 +208,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _initialize(long groupId, User user) throws Exception {
+		_addFileEntries(groupId, user);
 		_addObjectDefinitions(user);
 		_addTaxonomyVocabularies(groupId, user);
 	}
@@ -189,6 +222,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BundleSiteInitializer.class);
 
 	private final Bundle _bundle;
+	private final DLAppLocalService _dlAppLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ServletContext _servletContext;

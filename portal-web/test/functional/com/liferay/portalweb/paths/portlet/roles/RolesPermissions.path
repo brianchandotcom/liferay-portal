@@ -30,6 +30,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ACCOUNTS-->
+<tr>
+	<td>ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL</td>
+	<td>//h4[contains(.,'Application Permissions')]//following::input[contains(@name,'allRowIds')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_SELECT_ALL</td>
+	<td>//h4[contains(.,'Resource Permissions')]//following::input[contains(@name,'allRowIds')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_SELECT_ALL</td>
+	<td>//h4[contains(.,'Resource Permissions')]//following::input[contains(@name,'allRowIds')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONTROL_PANEL_GENERAL_PERMISSIONS-->
 <tr>
 	<td>CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ORGANIZATION_CHECKBOX</td>

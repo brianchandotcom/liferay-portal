@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>CANCEL_SEGMENT</td>
-	<td>//a[contains(@href,'segment') and contains(@class,'secondary')]</td>
+	<td>//a[contains(@class,'btn')][normalize-space(text())='Cancel']</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>CREATE_SEGMENT_BUTTON</td>
-	<td>//button[contains(@class,'btn-primary')]</td>
+	<td>//button[contains(@class,'dropdown-toggle')][normalize-space()='Create Segment']</td>
 	<td></td>
 </tr>
 <tr>

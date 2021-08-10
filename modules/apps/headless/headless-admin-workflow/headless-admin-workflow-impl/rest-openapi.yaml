@@ -372,7 +372,7 @@ components:
                 type:
                     description:
                         The workflow log's type.
-                    enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
+                    enum: [NodeEntry, TaskAssign, TaskCompletion, TaskUpdate, Transition]
                     readOnly: true
                     type: string
                 workflowTaskId:
@@ -960,7 +960,7 @@ paths:
                   name: types
                   schema:
                       items:
-                          enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
+                          enum: [NodeEntry, TaskAssign, TaskCompletion, TaskUpdate, Transition]
                           type: string
                       type: array
                 - in: query

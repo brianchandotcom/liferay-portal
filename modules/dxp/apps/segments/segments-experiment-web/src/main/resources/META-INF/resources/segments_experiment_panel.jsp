@@ -44,7 +44,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 				<c:when test="<%= SegmentsExperimentUtil.isAnalyticsConnected(themeDisplay.getCompanyId()) %>">
 					<h4 class="mt-3"><liferay-ui:message key="sync-to-analytics-cloud" /></h4>
 
-					<p class="text-secondary"><liferay-ui:message key="sync-to-analytics-cloud-help" /></p>
+					<p class="text-secondary"><liferay-ui:message key="in-order-to-perform-an-ab-test,-your-site-has-to-be-synced-to-liferay-analytics-cloud" /></p>
 
 					<liferay-ui:icon
 						label="<%= true %>"

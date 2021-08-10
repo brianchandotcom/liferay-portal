@@ -43,7 +43,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 					<c:when test="<%= AnalyticsReportsUtil.isAnalyticsConnected(themeDisplay.getCompanyId()) %>">
 						<h4 class="mt-3"><liferay-ui:message key="sync-to-analytics-cloud" /></h4>
 
-						<p class="text-secondary"><liferay-ui:message key="sync-to-analytics-cloud-help" /></p>
+						<p class="text-secondary"><liferay-ui:message key="sync-your-liferay-dxp-instance-with-analytics-cloud-to-view-content-performance-metrics-and-build-a-successful-content-strategy" /></p>
 
 						<liferay-ui:icon
 							label="<%= true %>"

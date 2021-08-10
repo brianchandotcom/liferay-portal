@@ -142,8 +142,9 @@ public interface S3StoreConfiguration {
 	public String proxyHost();
 
 	@Meta.AD(
-		deflt = "12345", description = "proxy-port-help", name = "proxy-port",
-		required = false
+		deflt = "12345",
+		description = "set-the-proxy-port-the-client-uses-to-connect",
+		name = "proxy-port", required = false
 	)
 	public int proxyPort();
 

@@ -104,8 +104,9 @@ public interface ElasticsearchConnectionConfiguration {
 	public String proxyHost();
 
 	@Meta.AD(
-		deflt = "0", description = "proxy-port-help", name = "proxy-port",
-		required = false
+		deflt = "0",
+		description = "set-the-proxy-port-to-be-used-for-the-client-connection",
+		name = "proxy-port", required = false
 	)
 	public int proxyPort();
 

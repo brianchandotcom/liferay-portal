@@ -42,13 +42,7 @@ definition {
 		property custom.properties = "module.framework.properties.file.install.dir=${liferay.home}/daploy,${liferay.home}/osgi/modules,${liferay.home}/osgi/war,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeNewWatchedDirectory";
 
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var deployDir = "${liferayHome}/daploy";
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "com.liferay.portal.cluster.sample.jar");
-
-		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/com.liferay.portal.cluster.sample.jar");
-
-		Pause(locator1 = "10000");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -64,13 +58,7 @@ definition {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=recurse";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeRecursiveSubdirectoryMode";
 
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var deployDir = "${liferayHome}/osgi/modules/recurse";
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "com.liferay.portal.cluster.sample.jar");
-
-		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/com.liferay.portal.cluster.sample.jar");
-
-		Pause(locator1 = "10000");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
@@ -88,13 +76,7 @@ definition {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=skip";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeSkipSubdirectoryMode";
 
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var deployDir = "${liferayHome}/deploy/recurse";
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "com.liferay.portal.cluster.sample.jar");
-
-		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/com.liferay.portal.cluster.sample.jar");
-
-		Pause(locator1 = "10000");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -129,9 +111,7 @@ definition {
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 
-		FileInstall.deployFileOnServer(
-			filePath = "coreinfrastructureee/clustering/clusteringframework",
-			liferayDependencyJars = "com.liferay.portal.cluster.sample");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		GogoShell.openGogoShellAdmin();
 

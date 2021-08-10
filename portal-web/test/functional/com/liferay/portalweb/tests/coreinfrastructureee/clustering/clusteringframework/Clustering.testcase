@@ -224,6 +224,59 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CanMasterChangedToSlaveNode {
+		property test.name.skip.portal.instance = "Clustering#CanMasterChangedToSlaveNode";
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-master-slave.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "This node is master node");
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-master-slave.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "This node is slave node");
+
+		Clustering.shutdownSpecificServer(nodePort = "8080");
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-master-slave.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "This node is master node");
+
+		Clustering.startSpecificServer(
+			deleteLiferayHome = "true",
+			keepCachedAppServerData = "true",
+			nodePort = "8080");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-master-slave.groovy");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "This node is slave node");
+	}
+
 	@priority = "5"
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";

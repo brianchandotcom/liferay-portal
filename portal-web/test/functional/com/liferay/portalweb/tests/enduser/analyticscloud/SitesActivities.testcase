@@ -128,9 +128,6 @@ definition {
 
 		// TODO LRAC-8295 CanSitesActivityTimeFilterUseCustomRange
 
-
-		
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8290 | Test Summary: Unique Visitors label is shown on the tabs of Pages dashboards"

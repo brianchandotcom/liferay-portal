@@ -69,7 +69,11 @@ export const FieldSet = ({
 					</div>
 				)}
 
-				<div className="page-editor__sidebar__fieldset">
+				<div
+					className={classNames('page-editor__sidebar__fieldset', {
+						'page-editor__sidebar__fieldset--no-label': !label,
+					})}
+				>
 					{availableFields.map((field, index) => {
 						const FieldComponent =
 							field.type &&

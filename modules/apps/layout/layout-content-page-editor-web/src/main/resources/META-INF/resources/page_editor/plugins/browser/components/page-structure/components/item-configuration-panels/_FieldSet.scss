@@ -30,6 +30,10 @@ html#{$cadmin-selector} {
 					margin-top: 0;
 				}
 			}
+
+			&--no-label {
+				margin-top: $pageEditorSpacing * 2;
+			}
 		}
 	}
 }

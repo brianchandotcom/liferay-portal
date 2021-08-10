@@ -211,7 +211,7 @@ renderResponse.setTitle(categoryDisplayName);
 
 					<c:if test="<%= !configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
 						<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
-							<liferay-ui:message key="this-configuration-is-not-saved-yet" />
+							<liferay-ui:message key="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default" />
 						</aui:alert>
 					</c:if>
 

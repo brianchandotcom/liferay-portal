@@ -250,6 +250,17 @@ public class EditDDMTemplateDisplayContext {
 		return new String[] {TemplateConstants.LANG_TYPE_FTL};
 	}
 
+	protected Collection<TemplateVariableGroup> getTemplateVariableGroups()
+		throws Exception {
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			TemplateContextHelper.getTemplateVariableGroups(
+				getTemplateHandlerClassNameId(), getClassPK(),
+				getLanguageType(), _themeDisplay.getLocale());
+
+		return templateVariableGroups.values();
+	}
+
 	private JSONObject _getAutocompleteJSONObject() throws Exception {
 		return JSONFactoryUtil.createJSONObject(
 			_ddmTemplateHelper.getAutocompleteJSON(
@@ -324,7 +335,7 @@ public class EditDDMTemplateDisplayContext {
 			JSONFactoryUtil.createJSONArray();
 
 		for (TemplateVariableGroup templateVariableGroup :
-				_getTemplateVariableGroups()) {
+				getTemplateVariableGroups()) {
 
 			if (templateVariableGroup.isEmpty()) {
 				continue;
@@ -371,17 +382,6 @@ public class EditDDMTemplateDisplayContext {
 		}
 
 		return templateVariableGroupJSONArray;
-	}
-
-	private Collection<TemplateVariableGroup> _getTemplateVariableGroups()
-		throws Exception {
-
-		Map<String, TemplateVariableGroup> templateVariableGroups =
-			TemplateContextHelper.getTemplateVariableGroups(
-				getClassNameId(), getClassPK(), getLanguageType(),
-				_themeDisplay.getLocale());
-
-		return templateVariableGroups.values();
 	}
 
 	private Long _classNameId;

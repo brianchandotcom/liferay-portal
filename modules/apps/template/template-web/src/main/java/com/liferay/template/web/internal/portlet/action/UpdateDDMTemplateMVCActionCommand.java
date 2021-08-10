@@ -137,6 +137,9 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 					"/template/edit_ddm_template"
 				).setRedirect(
 					ParamUtil.getString(uploadPortletRequest, "redirect")
+				).setTabs1(
+					ParamUtil.getString(
+						uploadPortletRequest, "tabs1", "information-templates")
 				).setParameter(
 					"ddmTemplateId", ddmTemplate.getTemplateId()
 				).buildString());

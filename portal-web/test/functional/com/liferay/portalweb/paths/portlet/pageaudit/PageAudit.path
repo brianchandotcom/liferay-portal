@@ -90,6 +90,21 @@
 	<td>//img[contains(@alt, 'success-page-audit-image-alt-description')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ERROR_WARNING_TITLE</td>
+	<td>//div[contains(@class, 'alert')] //strong[contains(., '${errorTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_WARNING_MESSAGE</td>
+	<td>//dd[text()='${errorMessage}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_WARNING_BOX</td>
+	<td>//div[contains(@class, 'alert')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

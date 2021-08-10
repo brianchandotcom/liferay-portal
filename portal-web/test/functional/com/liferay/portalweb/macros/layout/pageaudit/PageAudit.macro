@@ -89,7 +89,7 @@ definition {
 	}
 
 	macro openPanelBeforeConfiguration {
-		if (IsElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON")) {
+		if ((IsElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#ERROR_WARNING_BOX")) ) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}

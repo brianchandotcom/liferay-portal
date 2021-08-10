@@ -9,6 +9,10 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		Refresh();
 	}
 
 	tearDown {
@@ -35,54 +39,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test CanAddArticleWithAttachment {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleAttachment = "Document_1.txt",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewKBArticleWithAttachmentCP(
-			kbArticleAttachment = "Document_1.txt (259 B) Delete",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanAddChildArticle {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addChildArticleViaKBAdmin(
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbChildArticleContent = "Knowledge Base Child Article Content",
-			kbChildArticleTitle = "Knowledge Base Child Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.gotoViaKBAdminCP(
-			hasChildArticle = "true",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewChildArticleCP(
-			kbChildArticleContent = "Knowledge Base Child Article Content",
-			kbChildArticleTitle = "Knowledge Base Child Article Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanAddArticleAsDraft {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
@@ -97,51 +55,66 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test CanAddMultipleArticles {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		for (var kbCount : list "1,2,3") {
-			KBArticle.addCP(
-				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
-				kbArticleTitle = "Knowledge Base Article Title ${kbCount}");
-		}
-
-		for (var kbCount : list "1,2,3") {
-			KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-			KBArticle.viewCP(
-				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
-				kbArticleTitle = "Knowledge Base Article Title ${kbCount}");
-		}
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test CanAddArticleWithTemplate {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleViaTemplateCP";
-
-		JSONKnowledgeBase.addkBTemplate(
-			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = "Knowledge Base Template Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
+	@refactordone
+	test CanAddArticleWithAttachment {
 		KBArticle.addCP(
-			kbArticleAddViaTemplate = "true",
+			kbArticleAttachment = "Document_1.txt",
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbTemplateTitle = "Knowledge Base Template Title");
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.viewCP(
+		KBArticle.viewKBArticleWithAttachmentCP(
+			kbArticleAttachment = "Document_1.txt (259 B) Delete",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanAddArticleWithCategory {
+		Category.openCategoriesAdmin(siteURLKey = "guest");
+
+		Vocabulary.addWithAssociatedAssetTypeCP(
+			assetType = "Knowledge Base Article",
+			requiredCheckbox = "true",
+			vocabularyName = "Vocabulary Name");
+
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			categoryName = "Category Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			vocabularyName = "Vocabulary Name");
+
+		KBArticle.viewCP(
+			categoryName = "Category Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			vocabularyName = "Vocabulary Name");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddArticleWithHTML {
+		KBArticle.addCP(
+			kbArticleAddViaSource = "true",
+			kbArticleContentSource = '''<b>Knowledge Base&rsquo;s Article Content</b>''',
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewCPWithHTML(
+			kbArticleContent = "Knowledge Base’s Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanAddArticleWithRelatedBlog {
 		property test.name.skip.portal.instance = "KBAdmin#CanAddArticleWithRelatedBlog";
 
@@ -168,67 +141,253 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test CanAddArticleWithCategory {
-		Navigator.openURL();
+	@refactordone
+	@uitest
+	test CanAddArticleWithTemplate {
+		property test.name.skip.portal.instance = "KBAdmin#CanAddArticleWithTemplate";
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
-
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Knowledge Base Article",
-			requiredCheckbox = "true",
-			vocabularyName = "Vocabulary Name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
-
-		Category.addCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
-			categoryName = "Category Name",
+			kbArticleAddViaTemplate = "true",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			vocabularyName = "Vocabulary Name");
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewCP(
-			categoryName = "Category Name",
 			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddChildArticle {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addChildArticleViaKBAdmin(
 			kbArticleTitle = "Knowledge Base Article Title",
-			vocabularyName = "Vocabulary Name");
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.gotoViaKBAdminCP(
+			hasChildArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanAddFolder {
+		property portal.acceptance = "true";
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddMultipleArticles {
+		for (var kbCount : list "1,2,3") {
+			JSONKnowledgeBase.addkBArticle(
+				groupName = "Guest",
+				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
+				kbArticleTitle = "Knowledge Base Article Title ${kbCount}");
+		}
+
+		for (var kbCount : list "1,2,3") {
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+			KBArticle.viewCP(
+				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
+				kbArticleTitle = "Knowledge Base Article Title ${kbCount}");
+		}
+	}
+
+	@priority = "4"
+	@refactordone
+	@uitest
+	test CanAddTemplate {
+		property test.name.skip.portal.instance = "KBAdmin#CanAddTemplate";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBTemplate.addCP(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBTemplate.viewCPViaAddTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+	}
+
+	@priority = "3"
+	@refactordone
+	test CanCancelAddingArticle {
+		property test.name.skip.portal.instance = "KBAdmin#CanCancelAddingArticle";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.cancelAddKBArticle(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@priority = "3"
+	@refactordone
+	test CanCancelEditingArticle {
+		property test.name.skip.portal.instance = "KBAdmin#CanCancelEditingArticle";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.editCP(
+			cancel = "true",
+			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanDeleteArticle {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.selectArticleCP(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.deleteCP();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanDeleteFolder {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.deleteCP(kbFolderName = "KB Folder 1");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanEditArticleAndAddAttachment {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.editCP(
+			kbArticleAttachment = "Document_1.txt",
+			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewKBArticleWithAttachmentCP(
+			kbArticleAttachment = "Document_1.txt (259 B) Delete",
+			kbArticleContent = "Knowledge Base Article Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title Edit");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanEditFolder {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.editCP(
+			kbFolderDescription = "KB Folder 1 Description Edited",
+			kbFolderEditedName = "KB Folder 1 Edited",
+			kbFolderName = "KB Folder 1");
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1 Edited");
 	}
 
 	@priority = "4"
 	@refactorneeded
-	test CanAddArticleWithHTML {
-		var kbArticleContentSource = '''<b>Knowledge Base&rsquo;s Article Content</b>''';
+	test CannotAddArticleWithDuplicateURL {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
-			kbArticleAddViaSource = "true",
-			kbArticleContentSource = "${kbArticleContentSource}",
+			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.viewCPWithHTML(
-			kbArticleContent = "Knowledge Base’s Article Content",
+		KBArticle.viewFriendlyURLCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleFriendlyURL = "knowledge-base-article-title-1",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		AssertElementNotPresent(locator1 = "KnowledgeBaseArticle#CONTENT");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleDuplicateFriendlyURL = "true",
+			kbArticleFriendlyURL = "knowledge-base-article-title",
+			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
 	@priority = "3"
 	@refactorneeded
 	test CannotAddArticleWithInvalidAttachmentSize {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize";
+		property test.name.skip.portal.instance = "KBAdmin#CannotAddArticleWithInvalidAttachmentSize";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -256,30 +415,21 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
-	test CantAddArticleWithoutRequiredCategory {
-		property test.name.skip.portal.instance = "CPKnowledgebase#CantAddArticleWithoutRequiredCategory";
+	@refactordone
+	test CannotAddArticleWithoutRequiredCategory {
+		property test.name.skip.portal.instance = "KBAdmin#CannotAddArticleWithoutRequiredCategory";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
+		Category.openCategoriesAdmin(siteURLKey = "guest");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
 			assetType = "Knowledge Base Article",
 			required = "true",
 			vocabularyName = "Vocabulary Name");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
-
-		Category.addCP(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
+		JSONCategory.addCategory(
+				groupName = "Guest",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -290,96 +440,10 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test CanAddFolder {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.addCP(
-			kbFolderDescription = "KB Folder 1 Description",
-			kbFolderName = "KB Folder 1");
-
-		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
-
-		KBArticle.viewDefaultCP();
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
-
-		KBFolder.addCP(
-			kbFolderDescription = "KB Folder 2 Description",
-			kbFolderName = "KB Folder 2");
-
-		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
-
-		KBArticle.viewDefaultCP();
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanAddTemplate {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBTemplate.addCP(
-			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = "Knowledge Base Template Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBTemplate.viewCP(
-			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = "Knowledge Base Template Title");
-	}
-
 	@priority = "3"
-	@refactorneeded
-	test CanCancelAddingArticle {
-		property test.name.skip.portal.instance = "KBAdmin#CanCancelAddingArticle";
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.cancelAddKBArticle(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewDefaultCP();
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test CanCancelEditingArticle {
-		property test.name.skip.portal.instance = "KBAdmin#CanCancelEditingArticle";
-
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.editCP(
-			cancel = "true",
-			kbArticleContentEdit = "Knowledge Base Article Content Edit",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-	}
-
-	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CannotAddDuplicateFolder {
 		property test.name.skip.portal.instance = "KBAdmin#CannotAddDuplicateFolder";
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -393,107 +457,20 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test CanDeleteArticle {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.selectArticleCP(kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.deleteCP();
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewDefaultCP();
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanDeleteKBFolder {
-		JSONKnowledgeBase.addkBFolder(
-			groupName = "Guest",
-			kbFolderDescription = "KB Folder 1 Description",
-			kbFolderName = "KB Folder 1");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
-
-		KBArticle.viewDefaultCP();
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
-
-		KBFolder.deleteCP(kbFolderName = "KB Folder 1");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanEditArticleAndAddAttachment {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.editCP(
-			kbArticleAttachment = "Document_1.txt",
-			kbArticleContentEdit = "Knowledge Base Article Content Edit",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewKBArticleWithAttachmentCP(
-			kbArticleAttachment = "Document_1.txt (259 B) Delete",
-			kbArticleContent = "Knowledge Base Article Content Edit",
-			kbArticleTitle = "Knowledge Base Article Title Edit");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanEditFolder {
-		JSONKnowledgeBase.addkBFolder(
-			groupName = "Guest",
-			kbFolderDescription = "KB Folder 1 Description",
-			kbFolderName = "KB Folder 1");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
-
-		KBArticle.viewDefaultCP();
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
-
-		KBFolder.editCP(
-			kbFolderDescription = "KB Folder 1 Description Edited",
-			kbFolderEditedName = "KB Folder 1 Edited",
-			kbFolderName = "KB Folder 1");
-
-		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1 Edited");
-	}
-
-	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanRemoveParentArticle {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content Parent",
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Parent",
 			kbArticleTitle = "Knowledge Base Article Title Parent");
 
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content Child",
-			kbArticleTitle = "Knowledge Base Article Title Child");
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title Parent",
+			kbChildArticleContent = "Knowledge Base Article Content Child",
+			kbChildArticleTitle = "Knowledge Base Article Title Child");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.moveArticleCP(
 			kbArticleCurrentParent = "Home",
@@ -522,6 +499,8 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title Child");
 	}
 
+	@priority = "4"
+	@refactordone
 	test CanSaveEditedArticleAsDraft {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -545,17 +524,20 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSelectParentArticle {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content Parent",
 			kbArticleTitle = "Knowledge Base Article Title Parent");
 
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content Child",
-			kbArticleTitle = "Knowledge Base Article Title Child");
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title Parent",
+			kbChildArticleContent = "Knowledge Base Article Content Child",
+			kbChildArticleTitle = "Knowledge Base Article Title Child");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.moveArticleCP(
 			kbArticleCurrentParent = "Home",
@@ -572,16 +554,32 @@ definition {
 			kbChildArticleTitle = "Knowledge Base Article Title Child");
 	}
 
-	@priority = "3"
-	@refactorneeded
-	test CanViewChildArticle {
-		property test.name.skip.portal.instance = "KBAdmin#CanViewChildArticle";
+	@priority = "4"
+	@refactordone
+	test CanViewArticlePriority {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.addCP(
+		KBArticle.viewKBArticlePriorityCP(
+			kbArticleTitle = "Knowledge Base Article Title 1",
+			kbPriority = "1.0");
+	}
+
+	@priority = "3"
+	@refactordone
+	test CanViewChildArticle {
+		property test.name.skip.portal.instance = "KBAdmin#CanViewChildArticle";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addChildArticleViaKBAdmin(
 			kbArticleTitle = "Knowledge Base Article Title",
@@ -600,39 +598,37 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test CannotAddArticleWithDuplicateURL {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+	@refactordone
+	@uitest
+	test CanViewPendingContent {
+		property test.name.skip.portal.instance = "KBAdmin#CanViewPendingContent";
 
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
+		Navigator.openURL();
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow");
 
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewFriendlyURLCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleFriendlyURL = "knowledge-base-article-title-1",
-			kbArticleTitle = "Knowledge Base Article Title");
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleDuplicateFriendlyURL = "true",
-			kbArticleFriendlyURL = "knowledge-base-article-title",
-			kbArticleTitle = "Knowledge Base Article Title");
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowStatus = "Pending");
 	}
 
 	@priority = "4"
 	@refactorneeded
 	test CanViewPrioritiesOfImportedArticles {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
 			kbZipFile = "KBArticlesWithMarkdown.zip");
@@ -752,84 +748,6 @@ definition {
 		KBArticle.viewKBArticlePriorityCP(
 			kbArticleTitle = "Knowledge Base Article Parent Title 4",
 			kbPriority = "4.0");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanViewArticlePriority {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		for (var kbCount : list "1,2") {
-			KBArticle.addCP(
-				kbArticleContent = "Knowledge Base Article Content ${kbCount}",
-				kbArticleTitle = "Knowledge Base Article Title ${kbCount}");
-		}
-
-		KBArticle.viewKBArticlePriorityCP(
-			kbArticleTitle = "Knowledge Base Article Title 1",
-			kbPriority = "1.0");
-
-		KBArticle.viewKBArticlePriorityCP(
-			kbArticleTitle = "Knowledge Base Article Title 2",
-			kbPriority = "2.0");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test CanAddTemplate {
-		property test.name.skip.portal.instance = "KBAdmin#CanAddTemplate";
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBTemplate.addCP(
-			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = "Knowledge Base Template Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBTemplate.viewCPViaAddTemplate(
-			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = "Knowledge Base Template Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test ViewNoErrorAfterImportWithoutParentMarkdownFiles {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.importCP(
-			applyNumericalPrefix = "true",
-			kbZipFile = "KBArticlesNoIntroMarkdown.zip");
-
-		KBArticle.viewUploadFailed(kbImportFail = "false");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test CanViewPendingContent {
-		property test.name.skip.portal.instance = "KBAdmin#CanViewPendingContent";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Knowledge Base Article");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowStatus = "Pending");
 	}
 
 }

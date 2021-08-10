@@ -34,7 +34,7 @@ public class CPAttachmentFileEntryTable {
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
-		{"cdnURL", Types.VARCHAR}, {"cdn", Types.BOOLEAN},
+		{"cdnEnabled", Types.BOOLEAN}, {"cdnURL", Types.VARCHAR},
 		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
 		{"title", Types.VARCHAR}, {"json", Types.CLOB},
 		{"priority", Types.DOUBLE}, {"type_", Types.INTEGER},
@@ -71,9 +71,9 @@ TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("cdnURL", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("cdnEnabled", Types.BOOLEAN);
 
-TABLE_COLUMNS_MAP.put("cdn", Types.BOOLEAN);
+TABLE_COLUMNS_MAP.put("cdnURL", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 
@@ -99,13 +99,13 @@ TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,cdnURL VARCHAR(255) null,cdn BOOLEAN,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+"create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,cdnEnabled BOOLEAN,cdnURL STRING null,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 "drop table CPAttachmentFileEntry";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_4E815C57 on CPAttachmentFileEntry (classNameId, classPK, cdnURL[$COLUMN_LENGTH:255$])",
+		"create index IX_4E725857 on CPAttachmentFileEntry (classNameId, classPK, cdnURL[$COLUMN_LENGTH:4000$])",
 		"create index IX_B2AFFCE5 on CPAttachmentFileEntry (classNameId, classPK, displayDate, status)",
 		"create index IX_DD114140 on CPAttachmentFileEntry (classNameId, classPK, fileEntryId)",
 		"create index IX_A6E0353A on CPAttachmentFileEntry (classNameId, classPK, type_, status)",

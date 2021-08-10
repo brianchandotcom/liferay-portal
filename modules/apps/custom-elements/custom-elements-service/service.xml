@@ -44,5 +44,15 @@
 		<column name="htmlElementName" type="String" />
 		<column name="name" type="String" />
 		<column name="url" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

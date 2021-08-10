@@ -66,8 +66,8 @@ public interface DLConfiguration {
 	public String[] fileExtensions();
 
 	@Meta.AD(
-		deflt = "0", description = "file-max-size-help", name = "file-max-size",
-		required = false
+		deflt = "0", description = "file-max-size-help",
+		name = "maximum-file-size", required = false
 	)
 	public long fileMaxSize();
 

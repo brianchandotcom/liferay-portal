@@ -19,7 +19,7 @@ package com.liferay.info.field.type;
  */
 public class NumberInfoFieldType implements InfoFieldType {
 
-	public static final Attribute<TextInfoFieldType, Boolean> DECIMAL =
+	public static final Attribute<NumberInfoFieldType, Boolean> DECIMAL =
 		new Attribute<>();
 
 	public static final NumberInfoFieldType INSTANCE =

@@ -24,10 +24,10 @@ public class SelectInfoFieldType implements InfoFieldType {
 	public static final SelectInfoFieldType INSTANCE =
 		new SelectInfoFieldType();
 
-	public static final Attribute<TextInfoFieldType, Boolean> MULTIPLE =
+	public static final Attribute<SelectInfoFieldType, Boolean> MULTIPLE =
 		new Attribute<>();
 
-	public static final Attribute<TextInfoFieldType, Collection<Option>>
+	public static final Attribute<SelectInfoFieldType, Collection<Option>>
 		OPTIONS = new Attribute<>();
 
 	@Override

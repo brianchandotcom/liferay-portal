@@ -1,0 +1,289 @@
+components:
+    schemas:
+        BatchPlan:
+            properties:
+                active:
+                    description:
+                        The status of a batch plan.
+                    example: true
+                    type: boolean
+                batchPlanMappings:
+                    items:
+                        $ref: "#/components/schemas/BatchPlanMapping"
+                    type: array
+                batchPlanPolicy:
+                    $ref: "#/components/schemas/BatchPlanPolicy"
+                export:
+                    description:
+                        Specifies if a batch plan is created for import or export task.
+                    example: true
+                    type: boolean
+                externalType:
+                    description:
+                        The type of external entity that is being imported or exported.
+                    example: externalBlogPosting
+                    type: string
+                externalURL:
+                    type: string
+                id:
+                    description:
+                        The batch plan's ID.
+                    example: 12345
+                    format: int64
+                    type: integer
+                internalClassName:
+                    description:
+                        The entity class name.
+                    example: com.liferay.headless.delivery.dto.v1_0.BlogPosting
+                    type: string
+                name:
+                    description:
+                        The name of a batch plan.
+                    example: Blogs Import Plan
+                    type: string
+            type: object
+        BatchPlanLog:
+            properties:
+                batchPlanId:
+                    description:
+                        The batch plan's ID.
+                    example: 12345
+                    format: int64
+                    type: integer
+                dispatchTriggerExternalReferenceCode:
+                    type: string
+                exportTaskExternalReferenceCode:
+                    description:
+                        The external reference code of an export task.
+                    example: 123xyz
+                    type: string
+                id:
+                    description:
+                        The batch plan log's ID.
+                    example: 12345
+                    format: int64
+                    type: integer
+                importTaskExternalReferenceCode:
+                    description:
+                        The external reference code of an import task.
+                    example: 123xyz
+                    type: string
+                size:
+                    format: int32
+                    type: integer
+                status:
+                    format: int32
+                    type: integer
+                total:
+                    format: int32
+                    type: integer
+            type: object
+        BatchPlanMapping:
+            properties:
+                externalFieldName:
+                    description:
+                        The name of external entity's field.
+                    example: externalBlogPostingId
+                    type: string
+                externalFieldType:
+                    description:
+                        The type of external entity's field.
+                    example: int
+                    type: string
+                internalFieldName:
+                    description:
+                        The name of entity's field.
+                    example: blogPostingId
+                    type: string
+                internalFieldType:
+                    description:
+                        The type of entity's field.
+                    example: long
+                    type: string
+                script:
+                    description:
+                        The mapping script.
+                    type: string
+            type: object
+        BatchPlanPolicy:
+            properties:
+                name:
+                    type: string
+                value:
+                    type: string
+            type: object
+info:
+    description:
+        ""
+    license:
+        name: Apache 2.0
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: Headless Admin Batch Planner
+    version: v1.0
+openapi: 3.0.1
+paths:
+    /batch-plans:
+        get:
+            description:
+                Retrieves the batch plans.
+            operationId: getBatchPlansPage
+            parameters:
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BatchPlan"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BatchPlan"
+                                type: array
+                    description:
+                        ""
+            tags: ["BatchPlan"]
+        post:
+            description:
+                Creates a new batch plan.
+            operationId: postBatchPlan
+            parameters:
+                - in: query
+                  name: fieldNameMapping
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BatchPlan"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BatchPlan"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BatchPlan"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BatchPlan"
+                    description:
+                        ""
+            tags: ["BatchPlan"]
+    /batch-plans/{id}:
+        delete:
+            description:
+                Deletes the batch plan.
+            operationId: deleteBatchPlan
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    description:
+                        ""
+            tags: ["BatchPlan"]
+        get:
+            description:
+                Retrieves the batch plan.
+            operationId: getBatchPlan
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BatchPlan"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BatchPlan"
+                    description:
+                        ""
+            tags: ["BatchPlan"]
+        patch:
+            description:
+                Updates the batch plan.
+            operationId: patchBatchPlan
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BatchPlan"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BatchPlan"
+            responses:
+                204:
+                    description:
+                        ""
+            tags: ["BatchPlan"]
+    /batch-plans/{id}/logs:
+        get:
+            description:
+                Retrieves the batch plan logs.
+            operationId: getBatchPlanLogsPage
+            parameters:
+                - in: path
+                  description:
+                      The batch plan's ID.
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BatchPlanLog"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BatchPlanLog"
+                                type: array
+                    description:
+                        ""
+            tags: ["BatchPlanLog"]

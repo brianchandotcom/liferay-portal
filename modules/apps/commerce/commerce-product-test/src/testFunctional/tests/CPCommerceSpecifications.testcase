@@ -136,9 +136,6 @@ definition {
 	@priority = "3"
 	test RemoveSpecificationLabel {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSpecifications#RemoveSpecificationLabel";
-
-		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

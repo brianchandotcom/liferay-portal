@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -337,7 +338,7 @@ public class FileEntryContentDashboardItem
 		).put(
 			"preview", _getPreviewImage()
 		).put(
-			"size", _getSize()
+			"size", _getSize(locale)
 		).put(
 			"viewURL", _getViewURL(liferayPortletResponse, backURL)
 		);
@@ -483,20 +484,8 @@ public class FileEntryContentDashboardItem
 		return infoFieldValue.getValue();
 	}
 
-	private String _getSize() {
-		InfoItemFieldValues infoItemFieldValues =
-			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("size");
-
-		if (infoFieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		Object size = infoFieldValue.getValue();
-
-		return size.toString();
+	private String _getSize(Locale locale) {
+		return LanguageUtil.formatStorageSize(_fileEntry.getSize(), locale);
 	}
 
 	private String _getViewURL(

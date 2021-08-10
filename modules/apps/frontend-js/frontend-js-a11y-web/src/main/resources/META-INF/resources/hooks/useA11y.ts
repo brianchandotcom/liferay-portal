@@ -164,6 +164,20 @@ function segmentViolationsByRulesAndNodes(
 						[current.id]: node,
 					};
 
+					// Updates the new target value for all rules with
+					// reference to the old value.
+
+					Object.keys(previousViolation.nodes[previousNode]).forEach(
+						(ruleId) => {
+							previousViolation.rules[ruleId].nodes = [
+								...previousViolation.rules[ruleId].nodes.filter(
+									(node) => node !== previousNode
+								),
+								target,
+							];
+						}
+					);
+
 					delete previousViolation.nodes[previousNode];
 
 					staleTargets.add(previousNode);

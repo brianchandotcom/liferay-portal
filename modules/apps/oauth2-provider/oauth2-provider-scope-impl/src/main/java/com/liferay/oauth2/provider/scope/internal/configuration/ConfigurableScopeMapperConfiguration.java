@@ -35,7 +35,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ConfigurableScopeMapperConfiguration {
 
 	@Meta.AD(
-		deflt = "Default", description = "osgi-jaxrs-name-description",
+		deflt = "Default",
+		description = "if-this-configuration-should-apply-to-a-specific-application,-then-specify-it-here.-otherwise,-leave-blank-or-enter-default",
 		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 		name = "osgi-jaxrs-application-name", required = false
 	)

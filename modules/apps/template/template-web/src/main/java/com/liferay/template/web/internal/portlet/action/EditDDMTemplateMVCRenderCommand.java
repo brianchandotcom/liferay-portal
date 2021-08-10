@@ -16,6 +16,7 @@ package com.liferay.template.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,6 +64,10 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 
 		if (Objects.equals(tabs1, "information-templates")) {
 			renderRequest.setAttribute(
+				InfoItemServiceTracker.class.getName(),
+				_infoItemServiceTracker);
+
+			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new InformationTemplatesEditDDMTemplateDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
@@ -93,6 +98,9 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 	private DDMTemplateHelper _ddmTemplateHelper;
 
 	private volatile DDMWebConfiguration _ddmWebConfiguration;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;

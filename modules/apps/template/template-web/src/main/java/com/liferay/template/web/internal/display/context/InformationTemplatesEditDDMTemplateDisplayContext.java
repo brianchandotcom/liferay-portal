@@ -14,8 +14,18 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Optional;
 
 /**
  * @author Eudaldo Alonso
@@ -29,6 +39,59 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
+
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)liferayPortletRequest.getAttribute(
+				InfoItemServiceTracker.class.getName());
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
+
+	@Override
+	public String[] getLanguageTypes() {
+		return new String[] {TemplateConstants.LANG_TYPE_FTL};
+	}
+
+	@Override
+	public String getTemplateSubtypeLabel() {
+		return Optional.ofNullable(
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				PortalUtil.getClassName(getClassNameId()))
+		).map(
+			infoItemFormVariationsProvider ->
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					_themeDisplay.getScopeGroupId(),
+					String.valueOf(getClassPK()))
+		).map(
+			infoItemFormVariation -> infoItemFormVariation.getLabel(
+				_themeDisplay.getLocale())
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
+	@Override
+	public String getTemplateTypeLabel() {
+		return Optional.ofNullable(
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				PortalUtil.getClassName(getClassNameId()))
+		).map(
+			InfoItemFormProvider::getInfoForm
+		).map(
+			infoForm -> infoForm.getLabel(_themeDisplay.getLocale())
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
+	@Override
+	protected long getTemplateHandlerClassNameId() {
+		return PortalUtil.getClassNameId(InfoItemFormProvider.class);
+	}
+
+	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final ThemeDisplay _themeDisplay;
 
 }

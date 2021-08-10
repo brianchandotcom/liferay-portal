@@ -46,7 +46,7 @@ public class JournalDDMTemplateSmallImageFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/ddm_template/small_image.jsp";
+		return "/ddm_template/edit_small_image.jsp";
 	}
 
 }

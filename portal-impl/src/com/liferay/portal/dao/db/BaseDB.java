@@ -124,52 +124,7 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public List<Index> getIndexes(Connection connection) throws SQLException {
-		Set<Index> indexes = new HashSet<>();
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		String catalog = dbInspector.getCatalog();
-		String schema = dbInspector.getSchema();
-
-		try (ResultSet tableResultSet = databaseMetaData.getTables(
-				catalog, schema, null, new String[] {"TABLE"})) {
-
-			while (tableResultSet.next()) {
-				String tableName = dbInspector.normalizeName(
-					tableResultSet.getString("TABLE_NAME"));
-
-				try (ResultSet indexResultSet = getIndexResultSet(
-						connection, tableName)) {
-
-					while (indexResultSet.next()) {
-						String indexName = indexResultSet.getString(
-							"INDEX_NAME");
-
-						if (indexName == null) {
-							continue;
-						}
-
-						String lowerCaseIndexName = StringUtil.toLowerCase(
-							indexName);
-
-						if (!lowerCaseIndexName.startsWith("liferay_") &&
-							!lowerCaseIndexName.startsWith("ix_")) {
-
-							continue;
-						}
-
-						boolean unique = !indexResultSet.getBoolean(
-							"NON_UNIQUE");
-
-						indexes.add(new Index(indexName, tableName, unique));
-					}
-				}
-			}
-		}
-
-		return new ArrayList<>(indexes);
+		return getIndexes(connection, null, null);
 	}
 
 	@Override
@@ -682,6 +637,81 @@ public abstract class BaseDB implements DB {
 		}
 
 		return validIndexNames;
+	}
+
+	protected List<Index> getIndexes(
+			Connection connection, String tableName, String columnName)
+		throws SQLException {
+
+		Set<Index> indexes = new HashSet<>();
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		String catalog = dbInspector.getCatalog();
+		String schema = dbInspector.getSchema();
+
+		String normalizedTableName = tableName;
+
+		if (normalizedTableName != null) {
+			normalizedTableName = dbInspector.normalizeName(tableName);
+		}
+
+		String normalizedColumnName = columnName;
+
+		if (normalizedColumnName != null) {
+			normalizedColumnName = dbInspector.normalizeName(columnName);
+		}
+
+		try (ResultSet tableResultSet = databaseMetaData.getTables(
+				catalog, schema, normalizedTableName, new String[] {"TABLE"})) {
+
+			while (tableResultSet.next()) {
+				normalizedTableName = dbInspector.normalizeName(
+					tableResultSet.getString("TABLE_NAME"));
+
+				try (ResultSet indexResultSet = databaseMetaData.getIndexInfo(
+						catalog, schema, normalizedTableName, false, false)) {
+
+					while (indexResultSet.next()) {
+						String indexName = indexResultSet.getString(
+							"INDEX_NAME");
+
+						if (indexName == null) {
+							continue;
+						}
+
+						String lowerCaseIndexName = StringUtil.toLowerCase(
+							indexName);
+
+						if (!lowerCaseIndexName.startsWith("liferay_") &&
+							!lowerCaseIndexName.startsWith("ix_")) {
+
+							continue;
+						}
+
+						if (normalizedColumnName != null) {
+							if (!normalizedColumnName.equals(
+									dbInspector.normalizeName(
+										indexResultSet.getString(
+											"COLUMN_NAME")))) {
+
+								continue;
+							}
+						}
+
+						boolean unique = !indexResultSet.getBoolean(
+							"NON_UNIQUE");
+
+						indexes.add(
+							new Index(indexName, normalizedTableName, unique));
+					}
+				}
+			}
+		}
+
+		return new ArrayList<>(indexes);
 	}
 
 	protected abstract int[] getSQLTypes();

@@ -571,6 +571,7 @@ definition {
 
 	@description = "This is a use case for LRQA-48777. User can edit external applications to enable or disable permissions in both scopes. Blocked by LPS-142520."
 	test EditApplicationScopesAndViewLanguageKeys {
+		property liferay.dependency.jar = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
 		property portal.upstream = "true";
@@ -1339,6 +1340,7 @@ definition {
 
 	@description = "This is a use case for LRQA-48773. User can update scope bundle prefixes."
 	test ScopeBundlePrefixesCanBeUpdated {
+		property liferay.dependency.jar = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property test.name.skip.portal.instance = "OAuth2#ScopeBundlePrefixesCanBeUpdated";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
@@ -1413,6 +1415,7 @@ definition {
 
 	@description = "This is a use case for LRQA-40999. User can add and remove configurations in the scope mappings."
 	test ScopeMappingsCanBeUpdated {
+		property liferay.dependency.jar = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
 		property test.name.skip.portal.instance = "OAuth2#ScopeMappingsCanBeUpdated";

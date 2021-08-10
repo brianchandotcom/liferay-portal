@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=check-circle",
 		"ddm.form.field.type.label=checkbox-field-type-label",
-		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX,
-		"ddm.form.field.type.system=true"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX
 	},
 	service = DDMFormFieldType.class
 )

@@ -226,15 +226,15 @@ definition {
 		Refresh();
 
 		AssertElementNotPresent(
-			key_table = "Images",
 			key_entryName = "Commerce_Black",
+			key_table = "Images",
 			locator1 = "CommerceEntry#TABLE_ENTRY_NAME_NOT_CONTAINS");
 
 		echo("Commerce_Black is not present");
 
 		AssertElementPresent(
-			key_table = "Images",
 			key_entryName = "Commerce_Black_Edit",
+			key_table = "Images",
 			locator1 = "CommerceEntry#TABLE_ENTRY_NAME_NOT_CONTAINS");
 
 		echo("Commerce_Black_Edit is present");
@@ -257,7 +257,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Media");
 
 		CommerceProductImages.addAttachmentImages(imageTitles = "Black");
-		
+
 		Alert.viewSuccessMessage();
 
 		Click(
@@ -269,8 +269,8 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertElementNotPresent(
-			key_table = "Attachments",
 			key_entryName = "Commerce_Black",
+			key_table = "Attachments",
 			locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
 
 		echo("Commerce_Black is not present");
@@ -305,8 +305,8 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertElementNotPresent(
-			key_table = "Images",
 			key_entryName = "Commerce_Black",
+			key_table = "Images",
 			locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
 	}
 

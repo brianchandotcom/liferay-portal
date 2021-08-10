@@ -60,7 +60,6 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
 
 		for (var valueList : list "Up-Sell,Cross-Sell,Related,Accessories,Spare") {
-
 			CommerceRelations.addAnyProductRelation(
 				key_product = "Shoes",
 				key_relation = "${valueList} Product");
@@ -69,8 +68,7 @@ definition {
 				key_productName = "Shoes",
 				key_Value = "${valueList}",
 				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
-
-		}	
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6064. EditAProductRelations"
@@ -144,15 +142,12 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
 
 		for (var valueList : list "Up-Sell,Cross-Sell,Related,Accessories,Spare") {
-
 			CommerceRelations.addAnyProductRelation(
 				key_product = "Shoes",
 				key_relation = "${valueList} Product");
-
-		}		
+		}
 
 		for (var number : list "1,2,3,4,5") {
-
 			Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 
 			Click(
@@ -163,14 +158,11 @@ definition {
 		}
 
 		for (var valueList : list "Up-Sell,Cross-Sell,Related,Accessories,Spare") {
-
 			AssertElementNotPresent(
 				key_productName = "Shoes",
 				key_Value = "${valueList}",
 				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
-
 		}
-
 	}
 
 }

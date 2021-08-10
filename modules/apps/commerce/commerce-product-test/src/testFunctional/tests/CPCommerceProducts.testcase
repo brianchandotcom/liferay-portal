@@ -1128,7 +1128,7 @@ definition {
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		CommerceEntry.viewPaginationResults();
-		
+
 		CommerceProducts.searchProduct(search = "MIN55861");
 
 		AssertElementPresent(

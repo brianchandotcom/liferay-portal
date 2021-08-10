@@ -115,8 +115,6 @@ definition {
 		AssertElementNotPresent(
 			key_entryName = "Simple T-Shirt",
 			locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
-
-
 	}
 
 }

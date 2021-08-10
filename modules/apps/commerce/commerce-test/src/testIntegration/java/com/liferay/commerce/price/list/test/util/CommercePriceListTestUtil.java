@@ -132,7 +132,9 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			groupId, user.getUserId(), commerceCurrency.getCommerceCurrencyId(),
+			null, groupId, user.getUserId(),
+			commerceCurrency.getCommerceCurrencyId(), true,
+			CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 			RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
@@ -160,8 +162,9 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			groupId, user.getUserId(), commerceCurrency.getCommerceCurrencyId(),
-			CommercePriceListConstants.TYPE_PROMOTION,
+			null, groupId, user.getUserId(),
+			commerceCurrency.getCommerceCurrencyId(), true,
+			CommercePriceListConstants.TYPE_PROMOTION, 0, false,
 			RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),

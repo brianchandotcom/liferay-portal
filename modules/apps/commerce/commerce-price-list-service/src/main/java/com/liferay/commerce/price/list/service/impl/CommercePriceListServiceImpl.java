@@ -48,6 +48,13 @@ import java.util.stream.Stream;
 public class CommercePriceListServiceImpl
 	extends CommercePriceListServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId,
@@ -69,6 +76,13 @@ public class CommercePriceListServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId,
@@ -89,6 +103,13 @@ public class CommercePriceListServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId, String name,
@@ -108,6 +129,13 @@ public class CommercePriceListServiceImpl
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
@@ -157,6 +185,13 @@ public class CommercePriceListServiceImpl
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
@@ -181,6 +216,13 @@ public class CommercePriceListServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,

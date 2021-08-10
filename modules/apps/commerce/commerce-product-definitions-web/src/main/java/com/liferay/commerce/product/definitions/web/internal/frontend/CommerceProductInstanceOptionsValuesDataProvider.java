@@ -34,7 +34,6 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServi
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
@@ -694,8 +693,5 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private JsonHelper _jsonHelper;
 
 }

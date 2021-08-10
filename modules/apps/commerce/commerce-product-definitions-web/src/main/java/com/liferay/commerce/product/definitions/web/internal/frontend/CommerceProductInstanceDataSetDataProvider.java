@@ -27,7 +27,6 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
@@ -241,9 +240,6 @@ public class CommerceProductInstanceDataSetDataProvider
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
-
-	@Reference
-	private JsonHelper _jsonHelper;
 
 	@Reference
 	private Portal _portal;

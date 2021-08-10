@@ -3047,16 +3047,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			GradleUtil.getConfiguration(
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
 
-		sourceSet.setCompileClasspath(
-			FileUtil.join(
-				compileClasspathConfiguration, sourceSet.getCompileClasspath(),
-				portalTestConfiguration));
+		Configuration testCompileClasspathConfiguration =
+			GradleUtil.getConfiguration(
+				project, sourceSet.getCompileClasspathConfigurationName());
 
-		sourceSet.setRuntimeClasspath(
-			FileUtil.join(
-				portalTestSnapshotConfiguration, compileClasspathConfiguration,
-				portalConfiguration, sourceSet.getRuntimeClasspath(),
-				portalTestConfiguration));
+		testCompileClasspathConfiguration.extendsFrom(
+			compileClasspathConfiguration, portalTestConfiguration);
+
+		Configuration testRuntimeClasspathConfiguration =
+			GradleUtil.getConfiguration(
+				project, sourceSet.getRuntimeClasspathConfigurationName());
+
+		testRuntimeClasspathConfiguration.extendsFrom(
+			portalTestSnapshotConfiguration, compileClasspathConfiguration,
+			portalConfiguration, portalTestConfiguration);
 	}
 
 	private void _configureSourceSetTestIntegration(
@@ -3073,15 +3077,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
 
-		sourceSet.setCompileClasspath(
-			FileUtil.join(
-				portalConfiguration, compileOnlyConfiguration,
-				sourceSet.getCompileClasspath(), portalTestConfiguration));
+		Configuration testIntegrationCompileClasspathConfiguration =
+			GradleUtil.getConfiguration(
+				project, sourceSet.getCompileClasspathConfigurationName());
 
-		sourceSet.setRuntimeClasspath(
-			FileUtil.join(
-				portalConfiguration, compileOnlyConfiguration,
-				sourceSet.getRuntimeClasspath(), portalTestConfiguration));
+		testIntegrationCompileClasspathConfiguration.extendsFrom(
+			portalConfiguration, compileOnlyConfiguration,
+			portalTestConfiguration);
+
+		Configuration testIntegrationRuntimeClasspathConfiguration =
+			GradleUtil.getConfiguration(
+				project, sourceSet.getRuntimeClasspathConfigurationName());
+
+		testIntegrationRuntimeClasspathConfiguration.extendsFrom(
+			portalConfiguration, compileOnlyConfiguration,
+			portalTestConfiguration);
 	}
 
 	private void _configureTaskBaselineSyncReleaseVersions(

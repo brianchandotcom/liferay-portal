@@ -36,8 +36,11 @@ definition {
 
 		ACNavigation.goToSettings();
 
-		ACSettings.assertDataSource(dataSources = "Liferay DXP,Salesforce,CSV File");
+		ACSettings.goToDataSources();
 
+		ACSettings.clickGenericAddOrConfirmationButton();
+
+		ACSettings.assertCanChooseDataSourceOptions();
 	}
 
 	@description = "Automation ID: LRAC-8107 | Test Summary: Navigates to data source page"

@@ -109,7 +109,7 @@ public class EditDDMTemplateDisplayContext {
 			).setMVCPath(
 				"/ddm_template/edit_properties.jsp"
 			).setTabs1(
-				_getTabs1()
+				getTabs1()
 			).setParameter(
 				"classNameId", getClassNameId()
 			).setParameter(
@@ -185,6 +185,17 @@ public class EditDDMTemplateDisplayContext {
 		}
 
 		return _smallImageSource;
+	}
+
+	public String getTabs1() {
+		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		_tabs1 = ParamUtil.getString(
+			_liferayPortletRequest, "tabs1", "information-templates");
+
+		return _tabs1;
 	}
 
 	public String getTemplateSubtypeLabel() {
@@ -293,17 +304,6 @@ public class EditDDMTemplateDisplayContext {
 		}
 
 		return false;
-	}
-
-	private String _getTabs1() {
-		if (_tabs1 != null) {
-			return _tabs1;
-		}
-
-		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", "information-templates");
-
-		return _tabs1;
 	}
 
 	private ResourceBundle _getTemplateHandlerResourceBundle() {

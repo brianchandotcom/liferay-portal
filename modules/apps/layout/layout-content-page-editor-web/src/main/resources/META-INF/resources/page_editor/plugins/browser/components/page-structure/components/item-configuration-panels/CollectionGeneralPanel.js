@@ -20,8 +20,10 @@ import ClayForm, {
 	ClaySelectWithOption,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
+import ClayToolbar from '@clayui/toolbar';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
@@ -545,6 +547,7 @@ export const CollectionGeneralPanel = ({item}) => {
 };
 
 const COLLECTION_TYPE_DIVIDER = ' - ';
+const DEFAULT_CONFIG_VALUES = {};
 
 function CollectionFilterConfigurationModal({
 	collectionConfiguration,
@@ -554,9 +557,15 @@ function CollectionFilterConfigurationModal({
 	onClose,
 	visible,
 }) {
+	const isMounted = useIsMounted();
+
 	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector(selectPageContents);
 	const [itemConfig, setItemConfig] = useState(item.config);
+	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
+
+	const collectionConfigurationValues =
+		itemConfig?.collection?.config ?? DEFAULT_CONFIG_VALUES;
 
 	const {classNameId, classPK, key: collectionKey} = item.config?.collection;
 
@@ -605,63 +614,128 @@ function CollectionFilterConfigurationModal({
 		}
 	}, [item.config, visible]);
 
+	useEffect(() => {
+		if (Object.keys(collectionConfigurationValues).length > 0) {
+			CollectionService.getCollectionItemCount({
+				collection: itemConfig.collection,
+				onNetworkStatus: () => {},
+			}).then(({totalNumberOfItems}) => {
+				if (isMounted()) {
+					setTotalNumberOfItems(totalNumberOfItems || 0);
+				}
+			});
+		}
+	}, [isMounted, itemConfig.collection, collectionConfigurationValues]);
+
 	return (
-		<ClayModal containerProps={{className: 'cadmin'}} observer={observer}>
+		<ClayModal
+			className="page-editor__collection-general-panel__modal"
+			containerProps={{
+				className: 'cadmin',
+			}}
+			observer={observer}
+		>
 			<ClayModal.Header>
 				{Liferay.Language.get('filter-collection')}
 			</ClayModal.Header>
-			<ClayModal.Body>
-				{typeLabel && (
-					<p
-						className={classNames(
-							'page-editor__collection-general-panel__type-label',
-							{
-								'mb-0': subtypeLabel,
-								'mb-3': !subtypeLabel,
-							}
-						)}
-					>
-						<span className="mr-1">
-							{Liferay.Language.get('type')}:
-						</span>
-						{typeLabel}
-					</p>
-				)}
-
-				{subtypeLabel && (
-					<p className="mb-3 page-editor__collection-general-panel__type-label">
-						<span className="mr-1">
-							{Liferay.Language.get('subtype')}:
-						</span>
-						{subtypeLabel}
-					</p>
-				)}
-
-				<div className="page-editor__collection-general-panel__configuration-field-sets">
-					{collectionConfiguration ? (
-						collectionConfiguration.fieldSets
-							.filter((fieldSet) => fieldSet.fields.length)
-							.map((fieldSet, index) => (
-								<FieldSet
-									fields={fieldSet.fields}
-									key={`${fieldSet.label || ''}-${index}`}
-									label={fieldSet.label}
-									languageId={languageId}
-									onValueSelect={(name, value) =>
-										handleFieldValueSelect(
-											fieldSet,
-											name,
-											value
-										)
-									}
-									values={
-										item.config.collection?.config || {}
-									}
-								/>
-							))
-					) : (
-						<ClayLoadingIndicator />
+			<ClayModal.Body className="pt-0">
+				{Object.keys(collectionConfigurationValues).length > 0 &&
+					totalNumberOfItems !== null && (
+						<ClayToolbar subnav={{displayType: 'primary'}}>
+							<ClayLayout.ContainerFluid>
+								<ClayToolbar.Nav>
+									<ClayToolbar.Item
+										className="pl-2 text-left"
+										expand
+									>
+										<ClayToolbar.Section>
+											<span className="component-text">
+												{Liferay.Util.sub(
+													Liferay.Language.get(
+														'x-results-using-the-current-filter'
+													),
+													totalNumberOfItems
+												)}
+											</span>
+										</ClayToolbar.Section>
+									</ClayToolbar.Item>
+									<ClayToolbar.Item>
+										<ClayButton
+											className="component-link tbar-link"
+											displayType="unstyled"
+											onClick={() => {
+												const nextConfig = setIn(
+													itemConfig,
+													['collection', 'config'],
+													{}
+												);
+												setItemConfig(
+													(previousItemConfig) => ({
+														...previousItemConfig,
+														...nextConfig,
+													})
+												);
+											}}
+										>
+											{Liferay.Language.get('clear')}
+										</ClayButton>
+									</ClayToolbar.Item>
+								</ClayToolbar.Nav>
+							</ClayLayout.ContainerFluid>
+						</ClayToolbar>
 					)}
+
+				<div className="p-4">
+					{typeLabel && (
+						<p
+							className={classNames(
+								'page-editor__collection-general-panel__type-label',
+								{
+									'mb-0': subtypeLabel,
+									'mb-3': !subtypeLabel,
+								}
+							)}
+						>
+							<span className="mr-1">
+								{Liferay.Language.get('type')}:
+							</span>
+							{typeLabel}
+						</p>
+					)}
+
+					{subtypeLabel && (
+						<p className="mb-3 page-editor__collection-general-panel__type-label">
+							<span className="mr-1">
+								{Liferay.Language.get('subtype')}:
+							</span>
+							{subtypeLabel}
+						</p>
+					)}
+
+					<div className="page-editor__collection-general-panel__configuration-field-sets">
+						{collectionConfiguration ? (
+							collectionConfiguration.fieldSets
+								.filter((fieldSet) => fieldSet.fields.length)
+								.map((fieldSet, index) => (
+									<FieldSet
+										fields={fieldSet.fields}
+										key={`${fieldSet.label || ''}-${index}`}
+										label={fieldSet.label}
+										languageId={languageId}
+										onValueSelect={(name, value) =>
+											handleFieldValueSelect(
+												fieldSet,
+												name,
+												value
+											)
+										}
+										values={collectionConfigurationValues}
+									/>
+								))
+						) : (
+							<ClayLoadingIndicator />
+						)}
+					</div>
 				</div>
 			</ClayModal.Body>
 			<ClayModal.Footer

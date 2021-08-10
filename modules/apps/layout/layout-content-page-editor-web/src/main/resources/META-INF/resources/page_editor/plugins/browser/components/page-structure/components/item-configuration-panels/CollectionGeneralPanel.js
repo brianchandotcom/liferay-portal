@@ -32,6 +32,7 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import {selectPageContents} from '../../../../../../app/selectors/selectPageContents';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../../app/services/CollectionService';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
@@ -543,6 +544,8 @@ export const CollectionGeneralPanel = ({item}) => {
 	);
 };
 
+const COLLECTION_TYPE_DIVIDER = ' - ';
+
 function CollectionFilterConfigurationModal({
 	collectionConfiguration,
 	handleConfigurationChanged,
@@ -552,7 +555,19 @@ function CollectionFilterConfigurationModal({
 	visible,
 }) {
 	const languageId = useSelector(selectLanguageId);
+	const pageContents = useSelector(selectPageContents);
 	const [itemConfig, setItemConfig] = useState(item.config);
+
+	const {classNameId, classPK, key: collectionKey} = item.config?.collection;
+
+	const collection = pageContents.find((content) =>
+		collectionKey
+			? content.classPK === collectionKey
+			: content.classNameId === classNameId && content.classPK === classPK
+	);
+
+	const [typeLabel, subtypeLabel] =
+		collection?.subtype?.split(COLLECTION_TYPE_DIVIDER) || [];
 
 	const handleFieldValueSelect = (fieldSet, name, value) => {
 		const field = fieldSet.fields.find((field) => field.name === name);
@@ -596,6 +611,32 @@ function CollectionFilterConfigurationModal({
 				{Liferay.Language.get('filter-collection')}
 			</ClayModal.Header>
 			<ClayModal.Body>
+				{typeLabel && (
+					<p
+						className={classNames(
+							'page-editor__mapping-panel__type-label',
+							{
+								'mb-0': subtypeLabel,
+								'mb-2': !subtypeLabel,
+							}
+						)}
+					>
+						<span className="mr-1">
+							{Liferay.Language.get('type')}:
+						</span>
+						{typeLabel}
+					</p>
+				)}
+
+				{subtypeLabel && (
+					<p className="mb-2 page-editor__mapping-panel__type-label">
+						<span className="mr-1">
+							{Liferay.Language.get('subtype')}:
+						</span>
+						{subtypeLabel}
+					</p>
+				)}
+
 				{collectionConfiguration ? (
 					collectionConfiguration.fieldSets
 						.filter((fieldSet) => fieldSet.fields.length)

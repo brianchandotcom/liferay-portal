@@ -9,6 +9,7 @@
 	td:first-child,
 	th:first-child {
 		> .table-first-element-group {
+			align-items: center;
 			display: flex;
 			justify-content: space-between;
 		}

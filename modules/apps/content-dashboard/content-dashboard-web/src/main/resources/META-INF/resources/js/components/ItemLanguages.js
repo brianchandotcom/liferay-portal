@@ -16,9 +16,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-const DocumentLanguages = ({urls}) => (
+const ItemLanguages = ({urls}) => (
 	<div className="c-mb-4 sidebar-dl sidebar-section">
 		<h5 className="font-weight-semi-bold">
 			{Liferay.Language.get('languages-translated-into')}
@@ -78,4 +79,8 @@ const DocumentLanguages = ({urls}) => (
 	</div>
 );
 
-export default DocumentLanguages;
+ItemLanguages.propTypes = {
+	urls: PropTypes.array.isRequired,
+};
+
+export default ItemLanguages;

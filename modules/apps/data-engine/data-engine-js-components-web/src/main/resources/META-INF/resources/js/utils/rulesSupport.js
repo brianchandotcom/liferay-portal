@@ -357,7 +357,7 @@ export const isConditionsValid = (conditions) =>
 		})
 		.every((result) => result === true);
 
-export const isActionsValid = (actions) =>
+export const isActionsValid = (actions, dataProviders) =>
 	actions
 		.map(({action, target, ...payload}) => {
 			switch (action) {
@@ -371,13 +371,29 @@ export const isActionsValid = (actions) =>
 					);
 				}
 				case 'auto-fill': {
-					const {inputs, outputs} = payload;
+					const {inputs, label, outputs} = payload;
 
-					return (
-						Boolean(target) &&
-						(Boolean(Object.values(inputs).length) ||
-							Boolean(Object.values(outputs).length))
+					let valid = Boolean(
+						Object.values(inputs).length ||
+							Object.values(outputs).length
 					);
+
+					const currentDataProvider = dataProviders.find(
+						({id}) => id === label
+					);
+
+					const inputOutputLength =
+						currentDataProvider?.inputOutputLength;
+
+					const parametersQuantity =
+						Object.keys(outputs).length +
+						Object.values(inputs).length;
+
+					if (inputOutputLength) {
+						valid = parametersQuantity === inputOutputLength;
+					}
+
+					return Boolean(target) && valid;
 				}
 				default:
 					return Boolean(target);

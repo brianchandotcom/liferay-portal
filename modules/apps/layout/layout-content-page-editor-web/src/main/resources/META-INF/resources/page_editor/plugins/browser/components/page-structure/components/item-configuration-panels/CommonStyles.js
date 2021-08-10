@@ -15,14 +15,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
+import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet} from './FieldSet';
 
 export const CommonStyles = ({commonStylesValues, item}) => {
@@ -32,32 +31,6 @@ export const CommonStyles = ({commonStylesValues, item}) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-
-	const onCommonStylesValueSelect = (name, value) => {
-		let itemConfig = {
-			styles: {
-				[name]: value,
-			},
-		};
-
-		if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
-			itemConfig = {
-				[selectedViewportSize]: {
-					styles: {
-						[name]: value,
-					},
-				},
-			};
-		}
-
-		dispatch(
-			updateItemConfig({
-				itemConfig,
-				itemId: item.itemId,
-				segmentsExperienceId,
-			})
-		);
-	};
 
 	return (
 		<>
@@ -71,7 +44,16 @@ export const CommonStyles = ({commonStylesValues, item}) => {
 							key={index}
 							label={fieldSet.label}
 							languageId={config.defaultLanguageId}
-							onValueSelect={onCommonStylesValueSelect}
+							onValueSelect={(name, value) =>
+								updateItemStyle({
+									dispatch,
+									itemId: item.itemId,
+									segmentsExperienceId,
+									selectedViewportSize,
+									styleName: name,
+									styleValue: value,
+								})
+							}
 							values={commonStylesValues}
 						/>
 					);

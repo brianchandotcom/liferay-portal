@@ -16,10 +16,12 @@ package com.liferay.template.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
-import com.liferay.template.web.internal.display.context.EditDDMTemplateDisplayContext;
+import com.liferay.template.web.internal.display.context.InformationTemplatesEditDDMTemplateDisplayContext;
+import com.liferay.template.web.internal.display.context.WidgetTemplatesEditDDMTemplateDisplayContext;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -47,11 +49,23 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new EditDDMTemplateDisplayContext(
-				_portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse)));
+		String tabs1 = ParamUtil.getString(
+			renderRequest, "tabs1", "information-templates");
+
+		if (Objects.equals(tabs1, "information-templates")) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new InformationTemplatesEditDDMTemplateDisplayContext(
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)));
+		}
+		else if (Objects.equals(tabs1, "widget-templates")) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new WidgetTemplatesEditDDMTemplateDisplayContext(
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)));
+		}
 
 		return "/edit_ddm_template.jsp";
 	}

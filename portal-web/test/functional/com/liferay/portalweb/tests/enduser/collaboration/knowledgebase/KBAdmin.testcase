@@ -36,7 +36,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddChildArticleToKBArticleViaKBAdmin {
+	test AddChildArticleToKBArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -80,7 +80,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticlesViaKBAdmin {
+	test AddKBArticles {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		for (var kbCount : list "1,2,3") {
@@ -100,7 +100,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticleViaKBAdmin {
+	test AddKBArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -140,7 +140,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticleWithAttachmentViaKBAdmin {
+	test AddKBArticleWithAttachment {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -158,8 +158,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin";
+	test AddKBArticleWithBlogsEntryRelatedAsset {
+		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithBlogsEntryRelatedAsset";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -231,7 +231,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticleWithHTMLViaKBAdmin {
+	test AddKBArticleWithHTML {
 		var kbArticleContentSource = '''<b>Knowledge Base&rsquo;s Article Content</b>''';
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -417,7 +417,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteKBArticleViaKBAdmin {
+	test DeleteKBArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -457,7 +457,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test EditKBArticleAndAddAttachmentViaKBAdmin {
+	test EditKBArticleAndAddAttachment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -481,7 +481,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test EditKBArticleViaKBAdmin {
+	test EditKBArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -529,7 +529,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test RemoveParentArticleViaKBAdmin {
+	test RemoveParentArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -591,7 +591,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test SelectParentArticleViaKBAdmin {
+	test SelectParentArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -619,8 +619,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test ViewChildArticleInKBArticleViaKBAdmin {
-		property test.name.skip.portal.instance = "CPKnowledgebase#ViewChildArticleInKBArticleViaKBAdmin";
+	test ViewChildArticleInKBArticle {
+		property test.name.skip.portal.instance = "CPKnowledgebase#ViewChildArticleInKBArticle";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

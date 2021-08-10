@@ -14,6 +14,7 @@
 
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import isItemEmpty from '../isItemEmpty';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {ORIENTATIONS} from './constants/orientations';
@@ -84,9 +85,10 @@ export default function defaultComputeHover({
 		const targetIsContainerFlex = itemIsContainerFlex(targetItem);
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
-		const targetIsEmpty =
-			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
-			0;
+		const targetIsEmpty = isItemEmpty(
+			layoutDataRef.current.items[targetItem.itemId],
+			layoutDataRef.current
+		);
 		const allowedChild = checkAllowedChild(sourceItem, targetItem);
 
 		return (

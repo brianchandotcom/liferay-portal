@@ -23,6 +23,7 @@ import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import isItemEmpty from '../../utils/isItemEmpty';
 import Topper from '../Topper';
 import Row from './Row';
 
@@ -100,7 +101,11 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 function isSomeRowEmpty(item, layoutData, selectedViewportSize) {
 	const rows = groupItemsByRow(item, layoutData, selectedViewportSize);
 
-	return rows.some((row) => row.every((item) => item.children.length === 0));
+	return rows.some((row) =>
+		row.every((column) =>
+			isItemEmpty(column, layoutData, selectedViewportSize)
+		)
+	);
 }
 
 function groupItemsByRow(item, layoutData, selectedViewportSize) {

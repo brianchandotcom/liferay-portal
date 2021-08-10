@@ -20,6 +20,12 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
+	macro assertAddonsDetails {
+		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_LIMITS");
+
+		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_PRICE");
+	}
+
 	@summary = "Asserts the individuals usage value \
 	@param individualUsageValue"
 	macro assertIndividualsUsage() {
@@ -42,12 +48,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSettings#PAGE_VIEWS_USAGE_METRIC",
 			value1 = "${pageViewsUsageValue}");
-	}
-
-	macro assertAddonsDetails {
-		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_LIMITS");
-
-		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_PRICE");
 	}
 
 	macro assertPlanDetails {

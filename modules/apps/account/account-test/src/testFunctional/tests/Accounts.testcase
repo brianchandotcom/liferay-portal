@@ -945,6 +945,62 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Person Account");
 	}
 
+	@description = "This asserts that filter in setting default shipping will not change to billing and that billing addresses do not display as options."
+	@priority = "3"
+	test CannotAddBillingAddressAsDefaultShipping {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account 1",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 1");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			addressType = "Billing",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 1");
+
+		AssertClick(
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_SHIPPING",
+			value1 = "Set Default Address");
+
+		SelectFrame(
+			key_title = "Set Default Shipping Address",
+			locator1 = "IFrame#MODAL_ANY");
+
+		ClickNoError(
+			key_text = "times-small",
+			locator1 = "Icon#ANY");
+
+		AssertElementPresent(
+			key_filterScope = "Type: Shipping",
+			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
+
+		Click(locator1 = "Link#CLEAR");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No addresses were found.");
+
+		Search.searchCP(searchTerm = "Diamond Bar");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No addresses were found.");
+	}
+
 	@description = "This asserts that filter in setting default billing will not change to shipping and that shipping addresses do not display as options."
 	@priority = "3"
 	test CannotAddShippingAddressAsDefaultBilling {

@@ -42,15 +42,6 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 		title: false,
 	};
 
-	const imageDirectionShim = editorConfig.toolbarImage.includes(
-		'ImageAlign'
-	) && {
-		style: {
-			float: 'left',
-			width: '100%',
-		},
-	};
-
 	return (
 		<Editor
 			config={editorConfig}
@@ -71,12 +62,15 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 			}}
 			onInstanceReady={(event) => {
 				const editor = event.editor;
+				const editable = editor.editable();
 
 				// Workaround to make the "CKEDITOR.ui.richCombo"
 				// plugin work with the CKEditor (React) component
 				// the "id" needs to be "cke_" + "editor.name"
 
 				editor.element.setAttribute('id', `cke_${editor.name}`);
+
+				editable.attachClass('overflow-auto');
 
 				const balloonToolbars = editor.balloonToolbars;
 
@@ -107,7 +101,6 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 				});
 			}}
 			type="inline"
-			{...imageDirectionShim}
 			{...otherProps}
 		/>
 	);

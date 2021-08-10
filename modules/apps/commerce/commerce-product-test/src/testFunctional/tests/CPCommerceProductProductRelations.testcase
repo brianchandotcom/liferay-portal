@@ -143,144 +143,34 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
 
-		Click(locator1 = "Button#PLUS");
+		for (var valueList : list "Up-Sell,Cross-Sell,Related,Accessories,Spare") {
 
-		Click(
-			key_fieldName = "Up-Sell Product",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Shoes",
+				key_relation = "${valueList} Product");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}		
 
-		Check(
-			key_checkboxName = "Shoes",
-			locator1 = "Checkbox#ENABLE_CHECKBOX");
+		for (var number : list "1,2,3,4,5") {
 
-		SelectFrameTop();
+			Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 
-		Button.click(button = "Add");
+			Click(
+				filterOption = "Delete",
+				locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
-		SelectFrameTop();
+			AssertElementPresent(locator1 = "Message#SUCCESS");
+		}
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		for (var valueList : list "Up-Sell,Cross-Sell,Related,Accessories,Spare") {
 
-		Click(locator1 = "Button#PLUS");
+			AssertElementNotPresent(
+				key_productName = "Shoes",
+				key_Value = "${valueList}",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 
-		Click(
-			key_fieldName = "Add Cross-Sell Product",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		}
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Check(
-			key_checkboxName = "Shoes",
-			locator1 = "Checkbox#ENABLE_CHECKBOX");
-
-		SelectFrameTop();
-
-		Button.click(button = "Add");
-
-		SelectFrameTop();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "Button#PLUS");
-
-		Click(
-			key_fieldName = "Related Product",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Check(
-			key_checkboxName = "Shoes",
-			locator1 = "Checkbox#ENABLE_CHECKBOX");
-
-		SelectFrameTop();
-
-		Button.click(button = "Add");
-
-		SelectFrameTop();
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "Button#PLUS");
-
-		Click(
-			key_fieldName = "Accessories Product",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Check(
-			key_checkboxName = "Shoes",
-			locator1 = "Checkbox#ENABLE_CHECKBOX");
-
-		SelectFrameTop();
-
-		Button.click(button = "Add");
-
-		SelectFrameTop();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "Button#PLUS");
-
-		Click(
-			key_fieldName = "Spare Product",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Check(
-			key_checkboxName = "Shoes",
-			locator1 = "Checkbox#ENABLE_CHECKBOX");
-
-		SelectFrameTop();
-
-		Button.click(button = "Add");
-
-		SelectFrameTop();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-		Click(
-			filterOption = "Delete",
-			locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-		Click(
-			filterOption = "Delete",
-			locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-		Click(
-			filterOption = "Delete",
-			locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-		Click(
-			filterOption = "Delete",
-			locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-		Click(
-			filterOption = "Delete",
-			locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 }

@@ -169,17 +169,12 @@ definition {
 			webContentTitle = "Web Content AC Title";
 		}
 
-		if (!(isSet(webContentRichText))) {
-			webContentRichText = "This is the web content test for AC";
-		}
-
-		if (isSet(webContentRichText)) {
-			webContentRichText = "${webContentRichText}";
+		if (!(isSet(webContentContent))) {
+			webContentContent = "This is the web content test for AC";
 		}
 
 		WebContent.addPGViaWCD(
-			fieldFieldLabel = "content",
-			webContentRichText = "${webContentRichText}",
+			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
 		Pause(locator1 = "500");

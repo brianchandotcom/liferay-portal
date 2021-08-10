@@ -311,18 +311,9 @@ definition {
 			embedImage = "${embedImage}",
 			imageFileName = "${imageFileName}",
 			siteName = "${siteName}",
+			source = "${source}",
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
-
-		if (isSet(webContentRichText)) {
-			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "WCEditWebContent#SOURCE_BUTTON");
-
-			Type.typeCodeMirrorEditorNoError(
-				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-				value1 = "${webContentRichText}");
-		}
 
 		if (isSet(templateName)) {
 			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {

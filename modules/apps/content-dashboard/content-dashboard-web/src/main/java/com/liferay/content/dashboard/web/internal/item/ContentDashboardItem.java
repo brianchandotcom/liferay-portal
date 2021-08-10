@@ -69,9 +69,12 @@ public interface ContentDashboardItem<T> {
 
 	public String getScopeName(Locale locale);
 
-	public JSONObject getSpecificInformationJSONObject(
+	public default JSONObject getSpecificInformationJSONObject(
 		Locale locale, LiferayPortletResponse liferayPortletResponse,
-		String back);
+		String back) {
+
+		return null;
+	}
 
 	public String getTitle(Locale locale);
 

@@ -28,12 +28,10 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -319,14 +317,6 @@ public class JournalArticleContentDashboardItem
 		).orElse(
 			StringPool.BLANK
 		);
-	}
-
-	@Override
-	public JSONObject getSpecificInformationJSONObject(
-		Locale locale, LiferayPortletResponse liferayPortletResponse,
-		String back) {
-
-		return null;
 	}
 
 	@Override

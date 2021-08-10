@@ -10,6 +10,16 @@ definition {
 		Pause(locator1 = "10000");
 	}
 
+	macro deletePortalJarOffline {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-dependency-file  -Dliferay.portal.jars=${liferayDependencyJars} -Dliferay.home=${liferayHome}");
+
+		Pause(locator1 = "10000");
+	}
+
 	macro deleteWarOffline {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

@@ -46,9 +46,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 
-		GogoShell.viewOutput(outputContent = "Liferay Cluster Test Module");
+		GogoShell.viewOutput(outputContent = "Cluster Sample");
 
 		GogoShell.viewOutput(outputContent = "Active");
 	}
@@ -64,9 +64,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 
-		GogoShell.viewOutput(outputContent = "Liferay Cluster Test Module");
+		GogoShell.viewOutput(outputContent = "Cluster Sample");
 
 		GogoShell.viewOutput(outputContent = "Active");
 	}
@@ -82,11 +82,11 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 
 		GogoShell.viewOutput(outputContent = "false");
 
-		GogoShell.viewNoOutput(outputContent = "Liferay Cluster Test Module");
+		GogoShell.viewNoOutput(outputContent = "Cluster Sample");
 
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}
@@ -117,15 +117,15 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 
-		GogoShell.viewOutput(outputContent = "Liferay Cluster Test Module");
+		GogoShell.viewOutput(outputContent = "Cluster Sample");
 
 		GogoShell.viewOutput(outputContent = "Active");
 
 		Portlet.shutdownServer();
 
-		FileInstall.deleteJarOffline(liferayDependencyJars = "com.liferay.portal.cluster.sample.jar");
+		FileInstall.deletePortalJarOffline(liferayDependencyJars = "com.liferay.portal.cluster.sample.jar");
 
 		Portlet.startServer(keepOSGiState = "true");
 
@@ -133,11 +133,11 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 
 		GogoShell.viewOutput(outputContent = "false");
 
-		GogoShell.viewNoOutput(outputContent = "Liferay Cluster Test Module");
+		GogoShell.viewNoOutput(outputContent = "Cluster Sample");
 
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}

@@ -1100,6 +1100,12 @@ definition {
 	}
 
 	macro viewBlogsEntryRelatedAsset {
+		var key_kbArticleRelatedAssetTitle = "${kbArticleRelatedAssetTitle}";
+
+		AssertClick.assertTextClickAt(
+			locator1 = "AssetRelatedAssets#KB_RELATED_ASSETS_LINKS",
+			value1 = "${kbArticleRelatedAssetTitle}");
+
 		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT_GENERIC",
 			value1 = "Blogs Entry Content");

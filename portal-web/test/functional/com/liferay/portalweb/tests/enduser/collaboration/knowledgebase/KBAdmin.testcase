@@ -164,14 +164,7 @@ definition {
 			kbArticleRelatedAssetTitle = "Blogs Entry Title",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		var kbArticleRelatedAssetTitle = "Blogs Entry Title";
-		var key_kbArticleRelatedAssetTitle = "${kbArticleRelatedAssetTitle}";
-
-		AssertClick(
-			locator1 = "AssetRelatedAssets#KB_RELATED_ASSETS_LINKS",
-			value1 = "${kbArticleRelatedAssetTitle}");
-
-		KBArticle.viewBlogsEntryRelatedAsset();
+		KBArticle.viewBlogsEntryRelatedAsset(kbArticleRelatedAssetTitle = "Blogs Entry Title");
 	}
 
 	@priority = "4"

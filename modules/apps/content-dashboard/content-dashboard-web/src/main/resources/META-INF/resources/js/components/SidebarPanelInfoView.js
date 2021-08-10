@@ -77,7 +77,6 @@ const SidebarPanelInfoView = ({
 	);
 
 	const stickerColor = parseInt(user.userId, 10) % 10;
-	const documentIsFile = subType === 'Basic Document';
 
 	const {
 		description,
@@ -115,13 +114,21 @@ const SidebarPanelInfoView = ({
 		},
 	];
 
+	const documentIsAFile =
+		subType === 'Basic Document' &&
+		!!downloadURL &&
+		!!extension &&
+		parseInt(size?.split(' ')[0], 10) > 0;
+
+	const showTaxonomies = !!categories?.length || !!tags?.length;
+
 	return (
 		<>
 			<Sidebar.Header title={title} />
 
 			<Sidebar.Body>
 				<div className="sidebar-section">
-					{documentIsFile && (
+					{documentIsAFile && (
 						<p className="mb-2 text-secondary">{fileName}</p>
 					)}
 
@@ -166,23 +173,28 @@ const SidebarPanelInfoView = ({
 						documentSrc={preview}
 						documentTitle={title}
 						downloadURL={downloadURL}
-						extension={extension}
-						size={size}
+						isFile={documentIsAFile}
 					/>
 				)}
 
 				{description && (
 					<div className="sidebar-section">
-						<h5 className="font-weight-semi-bold">
+						<h5 className="font-weight-semi-bold mb-1">
 							{Liferay.Language.get('description')}
 						</h5>
 						<p className="text-secondary">{description}</p>
 					</div>
 				)}
 
+				{showTaxonomies && (
+					<h6 className="font-weight-semi-bold sidebar-section-subtitle text-uppercase">
+						{Liferay.Language.get('categorization')}
+					</h6>
+				)}
+
 				{!!categories.length && (
 					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5 className="font-weight-semi-bold">
+						<h5 className="font-weight-semi-bold mb-1">
 							{Liferay.Language.get('categories')}
 						</h5>
 
@@ -201,7 +213,7 @@ const SidebarPanelInfoView = ({
 
 				{!!tags.length && (
 					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5 className="font-weight-semi-bold">
+						<h5 className="font-weight-semi-bold mb-1">
 							{Liferay.Language.get('tags')}
 						</h5>
 
@@ -215,25 +227,54 @@ const SidebarPanelInfoView = ({
 					</div>
 				)}
 
-				{!!sortedViewURLS.length && (
-					<DocumentLanguages urls={sortedViewURLS} />
+				<h6 className="font-weight-semi-bold sidebar-section-subtitle text-uppercase">
+					{Liferay.Language.get('details')}
+				</h6>
+
+				{documentIsAFile && (
+					<div className="sidebar-section">
+						<h5 className="font-weight-semi-bold mb-1">
+							{Liferay.Language.get('file-name')}
+						</h5>
+						<p className="text-secondary">{fileName}</p>
+
+						<h5 className="font-weight-semi-bold mb-1">
+							{Liferay.Language.get('url')}
+						</h5>
+						<p className="text-secondary">{downloadURL}</p>
+
+						<h5 className="font-weight-semi-bold mb-1">
+							{Liferay.Language.get('extension')}
+						</h5>
+						<p className="text-secondary">{extension}</p>
+
+						<h5 className="font-weight-semi-bold mb-1">
+							{Liferay.Language.get('size')}
+						</h5>
+						<p className="text-secondary">{size}</p>
+					</div>
 				)}
 
-				{documentDates.map(
-					({text, title}) =>
-						text &&
-						title && (
-							<div
-								className="c-mb-4 sidebar-dl sidebar-section"
-								key={title}
-							>
-								<h5 className="font-weight-semi-bold">
-									{title}
-								</h5>
+				{!!documentDates.length &&
+					documentDates.map(
+						({text, title}) =>
+							text &&
+							title && (
+								<div
+									className="c-mb-4 sidebar-dl sidebar-section"
+									key={title}
+								>
+									<h5 className="font-weight-semi-bold mb-1">
+										{title}
+									</h5>
 
-								<p>{text}</p>
-							</div>
-						)
+									<p>{text}</p>
+								</div>
+							)
+					)}
+
+				{!!sortedViewURLS.length && (
+					<DocumentLanguages urls={sortedViewURLS} />
 				)}
 			</Sidebar.Body>
 		</>

@@ -17,16 +17,7 @@ import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const DocumentPreview = ({
-	documentSrc,
-	documentTitle,
-	downloadURL,
-	extension,
-	size,
-}) => {
-	const documentCanBeDownloaded =
-		!!downloadURL && !!extension && parseInt(size, 10) > 0;
-
+const DocumentPreview = ({documentSrc, documentTitle, downloadURL, isFile}) => {
 	return (
 		<div className="document-preview sidebar-section sidebar-section--spaced">
 			<figure className="document-preview-figure">
@@ -43,7 +34,7 @@ const DocumentPreview = ({
 				</a>
 			</figure>
 			<div>
-				{documentCanBeDownloaded && (
+				{isFile && (
 					<ClayLink className="btn btn-secondary" href={downloadURL}>
 						{Liferay.Language.get('download')}
 					</ClayLink>
@@ -53,12 +44,15 @@ const DocumentPreview = ({
 	);
 };
 
+DocumentPreview.defaultProps = {
+	isFile: false,
+};
+
 DocumentPreview.propTypes = {
 	documentSrc: PropTypes.string.isRequired,
 	documentTitle: PropTypes.string.isRequired,
 	downloadURL: PropTypes.string,
-	extension: PropTypes.string,
-	size: PropTypes.string,
+	isFile: PropTypes.bool,
 };
 
 export default DocumentPreview;

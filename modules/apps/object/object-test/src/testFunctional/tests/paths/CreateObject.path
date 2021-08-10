@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>CreateObject</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateObject</td></tr>
+</thead>
+
+<tbody>
+    <tr>
+        <td>VIEW_SYSTEM_OBJECT</td>
+        <td>//div[contains(@class,'table-list-title') and contains(.,'${key_name}') and contains(.,Yes)]</td>
+        <td></td>
+    </tr>
+
+</tbody>
+</table>
+</body>
+</html>

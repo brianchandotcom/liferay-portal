@@ -153,7 +153,7 @@ public class JournalEditDDMTemplateDisplayContext {
 			() -> PortletURLBuilder.createRenderURL(
 				_renderResponse
 			).setMVCPath(
-				"/ddm_template/properties.jsp"
+				"/ddm_template/edit_properties.jsp"
 			).setParameter(
 				"classPK", getClassPK()
 			).setParameter(

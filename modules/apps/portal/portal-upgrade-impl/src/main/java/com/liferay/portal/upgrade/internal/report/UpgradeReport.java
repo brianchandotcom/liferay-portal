@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.internal.report;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -71,10 +73,28 @@ public class UpgradeReport {
 		try {
 			FileUtil.write(file, _getLiferayVersions());
 
+			FileUtil.write(file, _getDialectInfo(), false, true);
+
 			FileUtil.write(file, _getProperties(), false, true);
 		}
 		catch (IOException ioException) {
 		}
+	}
+
+	private String _getDialectInfo() {
+		StringBuffer sb = new StringBuffer(7);
+
+		DB db = DBManagerUtil.getDB();
+
+		sb.append("Using ");
+		sb.append(db.getDBType());
+		sb.append(" version ");
+		sb.append(db.getMajorVersion());
+		sb.append(StringPool.PERIOD);
+		sb.append(db.getMinorVersion());
+		sb.append(StringPool.NEW_LINE);
+
+		return sb.toString();
 	}
 
 	private int _getInitialBuildNumber() {

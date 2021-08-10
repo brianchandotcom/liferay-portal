@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -33,12 +34,14 @@ public class SiteInitializerRegistrar {
 
 	public SiteInitializerRegistrar(
 		Bundle bundle, BundleContext bundleContext,
+		DLAppLocalService dlAppLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
 		_bundle = bundle;
 		_bundleContext = bundleContext;
+		_dlAppLocalService = dlAppLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
@@ -52,8 +55,9 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_bundle, _objectDefinitionResourceFactory, _servletContext,
-				_taxonomyVocabularyResourceFactory, _userLocalService),
+				_bundle, _dlAppLocalService, _objectDefinitionResourceFactory,
+				_servletContext, _taxonomyVocabularyResourceFactory,
+				_userLocalService),
 			MapUtil.singletonDictionary(
 				"site.initializer.key", _bundle.getSymbolicName()));
 	}
@@ -64,6 +68,7 @@ public class SiteInitializerRegistrar {
 
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
+	private final DLAppLocalService _dlAppLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private ServiceRegistration<?> _serviceRegistration;

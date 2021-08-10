@@ -2,19 +2,49 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
 	}
 
 	tearDown {
@@ -77,23 +107,15 @@ definition {
 	@description = "Create a dynamic segment with individuals"
 	@priority = "5"
 	test CanCreateDynamicSegmentWithIndividuals {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
 		ACUtils.launchAC();
 
@@ -109,7 +131,7 @@ definition {
 
 		ACSegments.addSegmentField(segmentField = "email");
 
-		ACSegments.editTextCriterion(textInput = "ac@liferay.com");
+		ACSegments.editTextCriterion(textInput = "userea@liferay.com");
 
 		ACSegments.saveSegment();
 
@@ -124,30 +146,22 @@ definition {
 			value1 = "DYNAMIC SEGMENT");
 
 		AssertElementPresent(
-			key_userName = "ac ac",
+			key_userName = "userfn userln",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
 	@description = "Create a Dynamic Individuals Segment with a criteria that uses is unknown"
 	@priority = "5"
 	test CanCreateDynamicSegmentWithIndividualsUseUnknown {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
 		ACUtils.launchAC();
 
@@ -205,23 +219,9 @@ definition {
 	@description = "Create a segment that contains anonymous individuals"
 	@priority = "5"
 	test CanCreateSegmentWithAnonymousIndividuals {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
 		JSONUser.addUser(
 			userEmailAddress = "liferay@liferay.com",
@@ -229,13 +229,14 @@ definition {
 			userLastName = "liferay",
 			userScreenName = "liferay");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "liferay@liferay.com");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "liferay@liferay.com",
 			userLoginFullName = "liferay liferay");
-
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
 
 		ACUtils.launchAC();
 
@@ -283,23 +284,15 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
 		ACUtils.launchAC();
 
@@ -378,7 +371,15 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8133 | Test Summary: Create button shows option to create static or dynamic"
 	@priority = "5"
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
 		ACUtils.launchAC();
 

@@ -31,6 +31,69 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8293 | Test Summary: Assert 180 Day time period filter in Sites"
+	@ignore = "true"
+	@priority = "3"
+	test Assert180DayTimePeriodFilterInSites {
+
+		// TODO LRAC-8293 Assert180DayTimePeriodFilterInSites
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8291 | Test Summary: Assert Sites Activities 180 Days Time Period Filter In Page Table"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSitesActivities180DaysTimePeriodFilterInPageTable {
+
+		// TODO LRAC-8291 AssertSitesActivities180DaysTimePeriodFilterInPageTable
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8282 | Test Summary: Anonymous converts to known"
+	@ignore = "true"
+	@priority = "4"
+	test CanAnonymousIndividualsConvertsToKnownIndividuals {
+
+		// TODO LRAC-8282 CanAnonymousIndividualsConvertsToKnownIndividuals
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8275 | Test Summary: Site Activity Card: Can filter graph by day"
+	@ignore = "true"
+	@priority = "5"
+	test CanFilterActivityCardGraphByDay {
+
+		// TODO LRAC-8275 CanFilterActivityCardGraphByDay
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8278 | Test Summary: Site Activity Card: Can filter graph by month"
+	@ignore = "true"
+	@priority = "5"
+	test CanFilterActivityCardGraphByMonth {
+
+		// TODO LRAC-8278 CanFilterActivityCardGraphByMonth
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8276 | Test Summary: Site Activity Card: Can filter graph by week"
+	@ignore = "true"
+	@priority = "5"
+	test CanFilterActivityCardGraphByWeek {
+
+		// TODO LRAC-8276 CanFilterActivityCardGraphByWeek
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8279 | Test Summary: Site Activity Card: Can hover over a point on the graph to get detailed stats"
+	@ignore = "true"
+	@priority = "5"
+	test CanHoverOverPointOnGraphGetStats {
+
+		// TODO LRAC-8279 CanHoverOverPointOnGraphGetStats
+
+	}
+
 	@description = "Bug ID: LRAC-7996 | Automation ID: LRAC-8110 | Test Summary: Assert Sites Activity loads activity data properly when the time filter is set to 'Last 24 hours'"
 	@ignore = "true"
 	@priority = "5"
@@ -38,6 +101,90 @@ definition {
 		ACTimeFilter.clickTimeFilterButton();
 		ACTimeFilter.setLast24Hours();
 		ACUtils.assertXAxisTimedGraph(parentName = "Beryl Commerce Activities");
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8280 | Test Summary: Anon and known visitors legend shown"
+	@ignore = "true"
+	@priority = "5"
+	test CanShownAnonAndKnownVisitorsLegend {
+
+		// TODO LRAC-8280 CanShownAnonAndKnownVisitorsLegend
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8281 | Test Summary: Anon and known visitors popover shows breakdown"
+	@ignore = "true"
+	@priority = "5"
+	test CanShownAnonAndKnownVisitorsPopoverBreakdown {
+
+		// TODO LRAC-8281 CanShownAnonAndKnownVisitorsPopoverBreakdown
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8295 | Test Summary: Assert Sites Activity time filter able to use Custom Range"
+	@ignore = "true"
+	@priority = "5"
+	test CanSitesActivityTimeFilterUseCustomRange {
+
+		// TODO LRAC-8295 CanSitesActivityTimeFilterUseCustomRange
+
+
+		
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8290 | Test Summary: Unique Visitors label is shown on the tabs of Pages dashboards"
+	@ignore = "true"
+	@priority = "3"
+	test CanUniqueVisitorsLabelShowPagesDashboards {
+
+		// TODO LRAC-8290 CanUniqueVisitorsLabelShowPagesDashboards
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8288 | Test Summary: Unique Visitors label is shown on the tabs of Sites dashboards"
+	@ignore = "true"
+	@priority = "3"
+	test CanUniqueVisitorsLabelShowSitesDashboards {
+
+		// TODO LRAC-8288 CanUniqueVisitorsLabelShowSitesDashboards
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8274 | Test Summary: Site Activity Card: Bounce rate and % change is shown"
+	@ignore = "true"
+	@priority = "5"
+	test ShownBounceRateAndPercentageChangeShown {
+
+		// TODO LRAC-8274 ShownBounceRateAndPercentageChangeShown
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8273 | Test Summary: Site Activity Card: Session duration and % change is shown"
+	@ignore = "true"
+	@priority = "5"
+	test ShownSessionDurationAndPercentageChangeShown {
+
+		// TODO LRAC-8273 ShownSessionDurationAndPercentageChangeShown
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8272 | Test Summary: Site Activity Card: Total Sessions/Visitor and % change is shown"
+	@ignore = "true"
+	@priority = "5"
+	test ShownTotalSessionsVisitorAndPercentageChangeShown {
+
+		// TODO LRAC-8272 ShownTotalSessionsVisitorAndPercentageChangeShown
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8271 | Test Summary: Site Activity Card: Total site visitors and % change is shown"
+	@ignore = "true"
+	@priority = "5"
+	test ShownTotalSiteVisitorsAndPercentageChangeShown {
+
+		// TODO LRAC-8271 ShownTotalSiteVisitorsAndPercentageChangeShown
+
 	}
 
 }

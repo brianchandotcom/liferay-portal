@@ -108,6 +108,8 @@ public class EditDDMTemplateDisplayContext {
 				_liferayPortletResponse
 			).setMVCPath(
 				"/ddm_template/edit_properties.jsp"
+			).setMVCRenderCommandName(
+				"/template/edit_ddm_template"
 			).setTabs1(
 				getTabs1()
 			).setParameter(

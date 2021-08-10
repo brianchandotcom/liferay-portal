@@ -249,13 +249,12 @@ public class EditCommercePriceListMVCActionCommand
 			String type = ParamUtil.getString(actionRequest, "type");
 
 			commercePriceList = _commercePriceListService.addCommercePriceList(
-				null, commerceCatalogGroupId, serviceContext.getUserId(),
-				commerceCurrencyId, netPrice, type, parentCommercePriceListId,
-				false, name, priority, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				null, commerceCatalogGroupId, commerceCurrencyId, netPrice,
+				type, parentCommercePriceListId, false, name, priority,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 		else {
 			commercePriceList =

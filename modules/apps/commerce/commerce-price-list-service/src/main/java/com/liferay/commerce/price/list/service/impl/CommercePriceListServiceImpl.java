@@ -129,6 +129,30 @@ public class CommercePriceListServiceImpl
 			neverExpire, serviceContext);
 	}
 
+	@Override
+	public CommercePriceList addCommercePriceList(
+			String externalReferenceCode, long groupId, long commerceCurrencyId,
+			boolean netPrice, String type, long parentCommercePriceListId,
+			boolean catalogBasePriceList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		_checkPortletResourcePermission(
+			groupId, CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
+
+		return commercePriceListLocalService.addCommercePriceList(
+			externalReferenceCode, groupId, getUserId(), commerceCurrencyId,
+			netPrice, type, parentCommercePriceListId, catalogBasePriceList,
+			name, priority, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addCommercePriceList(String, long, long, long, boolean, String, long,
@@ -160,6 +184,13 @@ public class CommercePriceListServiceImpl
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
@@ -172,9 +203,6 @@ public class CommercePriceListServiceImpl
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
-
-		_checkPortletResourcePermission(
-			groupId, CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
 
 		return commercePriceListLocalService.addCommercePriceList(
 			externalReferenceCode, groupId, userId, commerceCurrencyId,
@@ -301,12 +329,12 @@ public class CommercePriceListServiceImpl
 		// Add
 
 		return addCommercePriceList(
-			externalReferenceCode, groupId, userId, commerceCurrencyId,
-			netPrice, type, parentCommercePriceListId, catalogBasePriceList,
-			name, priority, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			externalReferenceCode, groupId, commerceCurrencyId, netPrice, type,
+			parentCommercePriceListId, catalogBasePriceList, name, priority,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override

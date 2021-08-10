@@ -71,9 +71,6 @@ public class InfoFormUtil {
 						infoField, infoFieldType, locale));
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
-				JSONArray fieldSetFieldsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
 				for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
@@ -83,18 +80,9 @@ public class InfoFormUtil {
 						continue;
 					}
 
-					fieldSetFieldsJSONArray.put(
+					defaultFieldSetFieldsJSONArray.put(
 						_getFieldSetFieldJSONObject(
 							infoField, infoFieldType, locale));
-				}
-
-				if (fieldSetFieldsJSONArray.length() > 0) {
-					fieldSetsJSONArray.put(
-						JSONUtil.put(
-							"configurationRole", infoFieldSet.getLabel(locale)
-						).put(
-							"fields", fieldSetFieldsJSONArray
-						));
 				}
 			}
 		}

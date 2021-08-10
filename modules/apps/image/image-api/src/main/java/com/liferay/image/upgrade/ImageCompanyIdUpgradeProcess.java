@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.service.internal.upgrade.v1_0_0;
+package com.liferay.image.upgrade;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -28,7 +28,6 @@ import java.util.function.Supplier;
 
 /**
  * @author Adolfo Pérez
- * @see    com.liferay.commerce.image.service.internal.upgrade.v1_0_0.CommerceImageCompanyIdUpgradeProcess
  */
 public class ImageCompanyIdUpgradeProcess<T> extends UpgradeProcess {
 

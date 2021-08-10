@@ -92,6 +92,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	}, [hoveredItemType, hoveredItemId, editableValues]);
 
 	const {
+		display,
 		marginBottom,
 		marginLeft,
 		marginRight,
@@ -105,6 +106,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const style = {};
 
 	style.boxShadow = getFrontendTokenValue(shadow);
+	style.display = display;
 	style.maxWidth = maxWidth;
 	style.minWidth = minWidth;
 	style.width = width;

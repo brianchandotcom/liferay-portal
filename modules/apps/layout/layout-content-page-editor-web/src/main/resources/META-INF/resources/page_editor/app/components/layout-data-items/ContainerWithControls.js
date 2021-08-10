@@ -49,6 +49,7 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 	const {widthType} = itemConfig;
 
 	const {
+		display,
 		height,
 		marginLeft,
 		marginRight,
@@ -61,6 +62,7 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 	const style = {};
 
 	style.boxShadow = getFrontendTokenValue(shadow);
+	style.display = display;
 	style.maxWidth = maxWidth;
 	style.minWidth = minWidth;
 	style.width = width;

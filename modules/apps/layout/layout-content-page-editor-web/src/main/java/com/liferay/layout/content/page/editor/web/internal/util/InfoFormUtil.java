@@ -135,6 +135,12 @@ public class InfoFormUtil {
 
 			if (ListUtil.isNotEmpty(options)) {
 				try {
+					Optional<Boolean> multipleOptional =
+						infoField.getAttributeOptional(
+							SelectInfoFieldType.MULTIPLE);
+
+					Boolean multiple = multipleOptional.orElse(false);
+
 					JSONArray validValuesJSONArray = JSONUtil.toJSONArray(
 						options,
 						option -> JSONUtil.put(
@@ -145,7 +151,11 @@ public class InfoFormUtil {
 
 					jsonObject.put(
 						"typeOptions",
-						JSONUtil.put("validValues", validValuesJSONArray));
+						JSONUtil.put(
+							"multiSelect", multiple
+						).put(
+							"validValues", validValuesJSONArray
+						));
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {

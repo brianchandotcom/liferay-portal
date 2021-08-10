@@ -21,7 +21,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
@@ -138,16 +137,11 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 				else if (!commerceOrder.isOpen() &&
 						 (continueAsGuest || commerceOrder.isGuestOrder())) {
 
-					CommerceChannel commerceChannel =
-						_commerceChannelLocalService.
-							getCommerceChannelByGroupId(
-								commerceOrder.getGroupId());
-
 					CookieKeys.deleteCookies(
 						httpServletRequest, httpServletResponse,
 						CookieKeys.getDomain(httpServletRequest),
 						CommerceOrder.class.getName() + StringPool.POUND +
-							commerceChannel.getCommerceChannelId());
+							commerceOrder.getGroupId());
 
 					CookieKeys.deleteCookies(
 						httpServletRequest, httpServletResponse,

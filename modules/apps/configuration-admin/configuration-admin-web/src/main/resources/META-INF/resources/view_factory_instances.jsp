@@ -134,7 +134,7 @@ renderResponse.setTitle(categoryDisplayName);
 				</clay:content-row>
 
 				<liferay-ui:search-container
-					emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet", factoryConfigurationModelName) %>'
+					emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet.-use-the-add-button-above-to-add-the-first", factoryConfigurationModelName) %>'
 					iteratorURL='<%=
 						PortletURLBuilder.createRenderURL(
 							renderResponse

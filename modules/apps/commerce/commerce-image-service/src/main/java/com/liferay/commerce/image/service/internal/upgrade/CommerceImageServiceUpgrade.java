@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.image.service.internal.upgrade;
 
-import com.liferay.commerce.image.service.internal.upgrade.v1_0_0.CommerceImageCompanyIdUpgradeProcess;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.image.upgrade.ImageCompanyIdUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,12 +37,12 @@ public class CommerceImageServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"0.0.0", "1.0.0",
-			new CommerceImageCompanyIdUpgradeProcess<>(
+			new ImageCompanyIdUpgradeProcess<>(
 				_commercePaymentMethodGroupRelLocalService::
 					getActionableDynamicQuery,
 				CommercePaymentMethodGroupRel::getCompanyId,
 				CommercePaymentMethodGroupRel::getImageId),
-			new CommerceImageCompanyIdUpgradeProcess<>(
+			new ImageCompanyIdUpgradeProcess<>(
 				_commerceShippingMethodLocalService::getActionableDynamicQuery,
 				CommerceShippingMethod::getCompanyId,
 				CommerceShippingMethod::getImageId));

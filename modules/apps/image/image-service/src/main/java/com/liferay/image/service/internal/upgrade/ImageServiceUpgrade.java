@@ -16,8 +16,8 @@ package com.liferay.image.service.internal.upgrade;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.image.service.internal.upgrade.v1_0_0.ImageCompanyIdUpgradeProcess;
 import com.liferay.image.service.internal.upgrade.v1_0_0.ImageStorageUpgradeProcess;
+import com.liferay.image.upgrade.ImageCompanyIdUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Company;

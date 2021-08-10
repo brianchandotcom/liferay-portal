@@ -114,6 +114,8 @@ const defaultProps = (fieldsList = FIELDS) => {
 				value: '39421',
 			},
 		],
+		dataProviderInstanceParameterSettingsURL:
+			'/o/dynamic-data-mapping-form-builder-provider-instance-parameter-settings/',
 		fields: fieldsList,
 		operatorsByType: OPERATORS_BY_TYPE,
 		pages,

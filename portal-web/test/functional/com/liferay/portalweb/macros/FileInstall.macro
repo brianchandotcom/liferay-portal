@@ -5,7 +5,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "delete-dependency-file  -Dliferay.dependency.jars=${liferayDependencyJars} -Dliferay.home=${liferayHome}");
+			value1 = "delete-dependency-file  -Dliferay.dependency.jar=${jarFile} -Dliferay.home=${liferayHome}");
 
 		Pause(locator1 = "10000");
 	}
@@ -15,7 +15,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "delete-dependency-file  -Dliferay.portal.jars=${liferayDependencyJars} -Dliferay.home=${liferayHome}");
+			value1 = "delete-dependency-file  -Dliferay.portal.dependency.jar=${jarFile} -Dliferay.home=${liferayHome}");
 
 		Pause(locator1 = "10000");
 	}
@@ -25,7 +25,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "delete-dependency-file  -Dliferay.dependency.wars=${liferayDependencyWars} -Dliferay.home=${liferayHome}");
+			value1 = "delete-dependency-file  -Dliferay.dependency.war=${warFile} -Dliferay.home=${liferayHome}");
 
 		Pause(locator1 = "10000");
 	}
@@ -42,7 +42,7 @@ definition {
 			var deployDir = "${liferayHome}-${bundleIndex}/deploy";
 		}
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
+		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${jarFile}", "${deployDir}/${jarFile}");
 
 		Pause(locator1 = "10000");
 	}

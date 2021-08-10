@@ -7184,29 +7184,23 @@ go</echo>
 
 	<target name="delete-dependency-file">
 		<if>
-			<isset property="liferay.dependency.wars" />
+			<isset property="liferay.dependency.war" />
 			<then>
-				<delete file="${liferay.home}/osgi/war/${liferay.dependency.wars}" />
-
-				<echo>${liferay.home}/osgi/war/${liferay.dependency.wars} </echo>
+				<delete file="${liferay.home}/osgi/war/${liferay.dependency.war}" verbose="true" />
 			</then>
 		</if>
 
 		<if>
-			<isset property="liferay.dependency.jars" />
+			<isset property="liferay.dependency.jar" />
 			<then>
-				<delete file="${liferay.home}/osgi/modules/${liferay.dependency.jars}" />
-
-				<echo>${liferay.home}/osgi/modules/${liferay.dependency.jars} </echo>
+				<delete file="${liferay.home}/osgi/modules/${liferay.dependency.jar}" verbose="true" />
 			</then>
 		</if>
 
 		<if>
-			<isset property="liferay.portal.jars" />
+			<isset property="liferay.portal.dependency.jar" />
 			<then>
-				<delete file="${liferay.home}/osgi/modules/${liferay.portal.jars}" />
-
-				<echo>${liferay.home}/osgi/portal/${liferay.portal.jars} </echo>
+				<delete file="${liferay.home}/osgi/portal/${liferay.portal.dependency.jar}" verbose="true" />
 			</then>
 		</if>
 	</target>
@@ -7412,50 +7406,50 @@ virtualHostname="localhost"
 
 		<if>
 			<not>
-				<isset property="liferay.dependency.jars" />
+				<isset property="liferay.dependency.jar" />
 			</not>
 			<then>
-				<get-testcase-property property.name="liferay.dependency.jars" />
+				<get-testcase-property property.name="liferay.dependency.jar" />
 			</then>
 		</if>
 
 		<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
 
 		<if>
-			<isset property="liferay.dependency.jars" />
+			<isset property="liferay.dependency.jar" />
 			<then>
-				<property name="liferay.dependency.jars" value="${liferay.dependency.jars}" />
+				<property name="liferay.dependency.jar" value="${liferay.dependency.jar}" />
 
 				<if>
-					<available file="${liferay.dependency.dir}/${liferay.dependency.jars}" type="dir" />
+					<available file="${liferay.dependency.dir}/${liferay.dependency.jar}" type="dir" />
 					<then>
-						<echo>Archiving ${liferay.dependency.dir}/${liferay.dependency.jars} to ${project.dir}/tmp/${liferay.dependency.jars}.</echo>
+						<echo>Archiving ${liferay.dependency.dir}/${liferay.dependency.jar} to ${project.dir}/tmp/${liferay.dependency.jar}.</echo>
 
 						<jar
-							basedir="${liferay.dependency.dir}/${liferay.dependency.jars}"
-							destfile="${project.dir}/tmp/${liferay.dependency.jars}"
-							manifest="${liferay.dependency.dir}/${liferay.dependency.jars}/META-INF/MANIFEST.MF"
+							basedir="${liferay.dependency.dir}/${liferay.dependency.jar}"
+							destfile="${project.dir}/tmp/${liferay.dependency.jar}"
+							manifest="${liferay.dependency.dir}/${liferay.dependency.jar}/META-INF/MANIFEST.MF"
 						/>
 
-						<echo>Copying ${project.dir}/tmp/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
+						<echo>Copying ${project.dir}/tmp/${liferay.dependency.jar} to ${deploy.dir}/${liferay.dependency.jar}.</echo>
 
 						<copy
-							file="${project.dir}/tmp/${liferay.dependency.jars}"
+							file="${project.dir}/tmp/${liferay.dependency.jar}"
 							todir="${deploy.dir}"
 						/>
 					</then>
 					<else>
-						<echo>Copying ${liferay.dependency.dir}/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}.</echo>
+						<echo>Copying ${liferay.dependency.dir}/${liferay.dependency.jar} to ${deploy.dir}/${liferay.dependency.jar}.</echo>
 
 						<copy
-							file="${liferay.dependency.dir}/${liferay.dependency.jars}"
+							file="${liferay.dependency.dir}/${liferay.dependency.jar}"
 							todir="${deploy.dir}"
 						/>
 					</else>
 				</if>
 			</then>
 			<else>
-				<echo>The property "liferay.dependency.jars" is not set.</echo>
+				<echo>The property "liferay.dependency.jar" is not set.</echo>
 			</else>
 		</if>
 	</target>

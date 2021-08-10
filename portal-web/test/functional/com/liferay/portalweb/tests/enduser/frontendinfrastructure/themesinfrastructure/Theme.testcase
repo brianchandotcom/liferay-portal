@@ -69,7 +69,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "delete-portal-theme -Dtheme-name=classic-theme");
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+		FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -96,7 +96,7 @@ definition {
 
 		User.firstLoginPG();
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "${appName}.war");
+		FileInstall.deployFileOnServer(jarFile = "${appName}.war");
 
 		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 
@@ -173,7 +173,7 @@ definition {
 
 		User.firstLoginPG();
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "${appName}.war");
+		FileInstall.deployFileOnServer(jarFile = "${appName}.war");
 
 		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 
@@ -225,9 +225,9 @@ definition {
 
 		LexiconCard.viewCardNotPresent(card = "test-theme-7-4");
 
-		FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
+		FileInstall.deleteWarOffline(warFile = "test-theme.war");
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "${appName}.war");
+		FileInstall.deployFileOnServer(jarFile = "${appName}.war");
 
 		Pause(locator1 = "30000");
 

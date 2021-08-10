@@ -125,7 +125,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		FileInstall.deletePortalJarOffline(liferayDependencyJars = "com.liferay.portal.cluster.sample.jar");
+		FileInstall.deletePortalJarOffline(jarFile = "com.liferay.portal.cluster.sample.jar");
 
 		Portlet.startServer(keepOSGiState = "true");
 
@@ -146,7 +146,7 @@ definition {
 	test UninstallWarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+		FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -160,7 +160,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		FileInstall.deleteWarOffline(liferayDependencyWars = "test-theme.war");
+		FileInstall.deleteWarOffline(warFile = "test-theme.war");
 
 		Portlet.startServer(keepOSGiState = "true");
 

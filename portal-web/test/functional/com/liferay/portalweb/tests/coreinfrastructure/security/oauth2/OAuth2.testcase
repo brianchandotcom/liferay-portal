@@ -628,7 +628,7 @@ definition {
 	}
 
 	test EditApplicationScopesAndViewLanguageKeys {
-		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
+		property liferay.dependency.jar = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
 		property portal.upstream = "quarantine";
@@ -1182,7 +1182,7 @@ definition {
 	}
 
 	test UpdateScopeBundlePrefixes {
-		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
+		property liferay.dependency.jar = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property test.name.skip.portal.instance = "OAuth2#UpdateScopeBundlePrefixes";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1243,7 +1243,7 @@ definition {
 	}
 
 	test UpdateScopeMappings {
-		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
+		property liferay.dependency.jar = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
 		property test.name.skip.portal.instance = "OAuth2#UpdateScopeMappings";
@@ -1380,7 +1380,7 @@ definition {
 			applicationName = "Analytics Cloud",
 			checkGlobalScope = "Everything");
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.oauth2.provider.sample.jar");
+		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.sample.jar");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

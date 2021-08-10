@@ -14,19 +14,13 @@
 
 package com.liferay.template.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
-import com.liferay.dynamic.data.mapping.constants.DDMConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.display.context.EditDDMTemplateDisplayContext;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -48,15 +42,10 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		renderRequest.setAttribute(
-			DDMGroupServiceConfiguration.class.getName(),
-			_getDDMGroupServiceConfiguration(themeDisplay.getScopeGroupId()));
+			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -67,23 +56,10 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_ddm_template.jsp";
 	}
 
-	private DDMGroupServiceConfiguration _getDDMGroupServiceConfiguration(
-		long groupId) {
-
-		try {
-			return _configurationProvider.getConfiguration(
-				DDMGroupServiceConfiguration.class,
-				new GroupServiceSettingsLocator(
-					groupId, DDMConstants.SERVICE_NAME));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
+	@Reference
+	private DDMTemplateHelper _ddmTemplateHelper;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
-
 	private Portal _portal;
 
 }

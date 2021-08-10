@@ -7871,6 +7871,41 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
+	<target name="deploy-specified-marketplace-apps">
+		<get-testcase-property property.name="specified.marketplace.app.includes" />
+
+		<if>
+			<isset property="specified.marketplace.app.includes" />
+			<then>
+				<for list="${specified.marketplace.app.includes}" param="specified.marketplace.app.includes">
+					<sequential>
+						<local name="specified.marketplace.app.file.name" />
+
+						<basename file="${portal.legacy.dir}/@{specified.marketplace.app.includes}" property="specified.marketplace.app.file.name" />
+
+						<echo>Copying ${portal.legacy.dir}/@{specified.marketplace.app.includes} to ${liferay.home}/deploy/${specified.marketplace.app.file.name}.</echo>
+
+						<copy
+							file="${portal.legacy.dir}/@{specified.marketplace.app.includes}"
+							todir="${liferay.home}/deploy"
+						/>
+					</sequential>
+				</for>
+
+				<get-testcase-property property.name="restart.required" />
+
+				<if>
+					<equals arg1="${restart.required}" arg2="true" />
+					<then>
+						<start-app-server />
+
+						<stop-app-server />
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="deploy-specified-plugins">
 
 		<!--
@@ -13573,6 +13608,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		</antcall>
 
 		<antcall target="deploy-dependency-jars" />
+
+		<get-testcase-property property.name="specified.marketplace.app.includes" />
+
+		<if>
+			<isset property="specified.marketplace.app.includes" />
+			<then>
+				<antcall target="deploy-specified-marketplace-apps" />
+			</then>
+		</if>
 
 		<antcall target="deploy-extra-apps" />
 

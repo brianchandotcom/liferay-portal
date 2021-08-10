@@ -19,11 +19,9 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.responsive.ViewportSize;
@@ -132,9 +130,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 			new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
-			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
-			_fragmentRendererController);
-		httpServletRequest.setAttribute(
 			WebKeys.CTX, httpServletRequest.getServletContext());
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 		httpServletRequest.setMethod(HttpMethods.GET);
@@ -199,9 +194,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 		MockHttpServletRequest httpServletRequest =
 			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
-			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
-			_fragmentRendererController);
 		httpServletRequest.setAttribute(
 			WebKeys.CTX, httpServletRequest.getServletContext());
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
@@ -317,9 +309,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 
 	@Inject
 	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Inject
-	private FragmentRendererController _fragmentRendererController;
 
 	@DeleteAfterTestRun
 	private Group _group;

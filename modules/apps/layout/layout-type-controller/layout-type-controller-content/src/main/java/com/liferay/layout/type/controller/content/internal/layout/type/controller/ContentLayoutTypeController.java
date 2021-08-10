@@ -14,8 +14,6 @@
 
 package com.liferay.layout.type.controller.content.internal.layout.type.controller;
 
-import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -123,10 +121,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				layoutMode = Constants.VIEW;
 			}
 		}
-
-		httpServletRequest.setAttribute(
-			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
-			_fragmentRendererController);
 
 		String page = getViewPage();
 
@@ -352,9 +346,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentLayoutTypeController.class);
-
-	@Reference
-	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
 	private Http _http;

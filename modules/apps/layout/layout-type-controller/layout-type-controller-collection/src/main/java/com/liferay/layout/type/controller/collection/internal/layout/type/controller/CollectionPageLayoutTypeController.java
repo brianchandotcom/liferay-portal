@@ -14,8 +14,6 @@
 
 package com.liferay.layout.type.controller.collection.internal.layout.type.controller;
 
-import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -115,10 +113,6 @@ public class CollectionPageLayoutTypeController
 
 			layoutMode = Constants.VIEW;
 		}
-
-		httpServletRequest.setAttribute(
-			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
-			_fragmentRendererController);
 
 		String page = getViewPage();
 
@@ -301,9 +295,6 @@ public class CollectionPageLayoutTypeController
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CollectionPageLayoutTypeController.class);
-
-	@Reference
-	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
 	private Http _http;

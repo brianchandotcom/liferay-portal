@@ -1030,6 +1030,25 @@ public class ServicePreAction extends Action {
 					Group sourceGroup = GroupLocalServiceUtil.getGroup(
 						sourceGroupId);
 
+					if (sourceGroup.isUser() &&
+						!GroupPermissionUtil.contains(
+							permissionChecker, sourceGroup, ActionKeys.VIEW)) {
+
+						sb = new StringBundler(6);
+
+						sb.append("User ");
+						sb.append(user.getUserId());
+						sb.append(" is not allowed to access the private ");
+						sb.append("pages of user ");
+						sb.append(sourceGroup.getClassPK());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(sb.toString());
+						}
+
+						throw new NoSuchLayoutException(sb.toString());
+					}
+
 					layout = new VirtualLayout(layout, sourceGroup);
 				}
 				else {

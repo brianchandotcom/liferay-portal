@@ -219,12 +219,13 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 			if (commerceChannelId > 0) {
 				channelFilterEnableBooleanFilter.addTerm(
-					CPField.CHANNEL_GROUP_IDS,
+					CPField.COMMERCE_CHANNEL_GROUP_IDS,
 					String.valueOf(commerceChannelId), BooleanClauseOccur.MUST);
 			}
 			else {
 				channelFilterEnableBooleanFilter.addTerm(
-					CPField.CHANNEL_GROUP_IDS, "-1", BooleanClauseOccur.MUST);
+					CPField.COMMERCE_CHANNEL_GROUP_IDS, "-1",
+					BooleanClauseOccur.MUST);
 			}
 
 			channelBooleanFilter.add(
@@ -447,7 +448,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		}
 
 		document.addNumber(
-			CPField.CHANNEL_GROUP_IDS,
+			CPField.COMMERCE_CHANNEL_GROUP_IDS,
 			ArrayUtil.toLongArray(commerceChannelGroupIds));
 
 		List<CommerceAccountGroupRel> commerceAccountGroupRels =

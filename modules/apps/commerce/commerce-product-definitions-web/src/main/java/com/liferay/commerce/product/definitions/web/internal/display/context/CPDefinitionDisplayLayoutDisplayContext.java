@@ -213,7 +213,7 @@ public class CPDefinitionDisplayLayoutDisplayContext
 				requestBackedPortletURLFactory, "productDefinitionsSelectItem",
 				cpDefinitionItemSelectorCriterion)
 		).setParameter(
-			CPField.CHANNEL_GROUP_ID,
+			CPField.COMMERCE_CHANNEL_GROUP_ID,
 			() -> {
 				CommerceChannel commerceChannel = getCommerceChannel();
 

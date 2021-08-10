@@ -125,7 +125,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		BaseModelSearchResult<CPDefinition> cpDefinitionBaseModelSearchResult;
 
 		long commerceChannelGroupId = ParamUtil.getLong(
-			httpServletRequest, CPField.CHANNEL_GROUP_ID);
+			httpServletRequest, CPField.COMMERCE_CHANNEL_GROUP_ID);
 
 		if (commerceChannelGroupId != 0) {
 			cpDefinitionBaseModelSearchResult =

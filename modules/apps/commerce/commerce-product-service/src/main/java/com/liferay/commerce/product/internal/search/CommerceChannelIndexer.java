@@ -120,7 +120,8 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 		Group group = _commerceChannelLocalService.getCommerceChannelGroup(
 			commerceChannel.getCommerceChannelId());
 
-		document.addKeyword(CPField.CHANNEL_GROUP_ID, group.getGroupId());
+		document.addKeyword(
+			CPField.COMMERCE_CHANNEL_GROUP_ID, group.getGroupId());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + commerceChannel + " indexed successfully");

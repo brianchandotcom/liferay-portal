@@ -130,7 +130,7 @@ public class CPOptionFacetsPortletSharedSearchContributor
 
 			if (commerceChannelGroupId > 0) {
 				searchContext.setAttribute(
-					CPField.CHANNEL_GROUP_ID, commerceChannelGroupId);
+					CPField.COMMERCE_CHANNEL_GROUP_ID, commerceChannelGroupId);
 				searchContext.setAttribute("secure", Boolean.TRUE);
 
 				CommerceAccount commerceAccount =

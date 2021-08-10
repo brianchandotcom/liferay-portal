@@ -27,21 +27,24 @@ public class CPField {
 	public static final String CATALOG_DEFAULT_LANGUAGE_ID =
 		"catalogDefaultLanguageId";
 
-	public static final String CATALOG_GROUP_ID = "commerceCatalogGroupId";
-
 	public static final String CDN = "cdn";
 
 	public static final String CDN_URL = "cdnURL";
 
 	public static final String CHANNEL_FILTER_ENABLED = "channelFilterEnabled";
 
-	public static final String CHANNEL_GROUP_ID = "commerceChannelGroupId";
-
-	public static final String CHANNEL_GROUP_IDS = "commerceChannelGroupIds";
-
 	public static final String CHANNEL_IDS = "channelIds";
 
 	public static final String CHANNEL_NAMES = "channelNames";
+
+	public static final String COMMERCE_CATALOG_GROUP_ID =
+		"commerceCatalogGroupId";
+
+	public static final String COMMERCE_CHANNEL_GROUP_ID =
+		"commerceChannelGroupId";
+
+	public static final String COMMERCE_CHANNEL_GROUP_IDS =
+		"commerceChannelGroupIds";
 
 	public static final String CP_DEFINITION_ID = "CPDefinitionId";
 

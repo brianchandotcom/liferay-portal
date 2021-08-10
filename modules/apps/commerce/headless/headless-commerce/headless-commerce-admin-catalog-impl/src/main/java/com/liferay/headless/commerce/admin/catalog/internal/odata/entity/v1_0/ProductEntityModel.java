@@ -45,8 +45,8 @@ public class ProductEntityModel implements EntityModel {
 				new EntityField(
 					"channelId", EntityField.Type.INTEGER,
 					locale -> Field.getSortableFieldName(
-						CPField.CHANNEL_GROUP_IDS),
-					locale -> CPField.CHANNEL_GROUP_IDS,
+						CPField.COMMERCE_CHANNEL_GROUP_IDS),
+					locale -> CPField.COMMERCE_CHANNEL_GROUP_IDS,
 					object -> _getCommerceChannelGroupId(object))),
 			new CollectionEntityField(
 				new IntegerEntityField("statusCode", locale -> Field.STATUS)),

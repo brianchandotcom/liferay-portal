@@ -1510,7 +1510,7 @@ public class CPDefinitionLocalServiceImpl
 			companyId, groupIds, keywords, status, start, end, sort);
 
 		searchContext.setAttribute(
-			CPField.CHANNEL_GROUP_ID, commerceChannelGroupId);
+			CPField.COMMERCE_CHANNEL_GROUP_ID, commerceChannelGroupId);
 		searchContext.setAttribute("secure", Boolean.TRUE);
 
 		return searchCPDefinitions(searchContext);

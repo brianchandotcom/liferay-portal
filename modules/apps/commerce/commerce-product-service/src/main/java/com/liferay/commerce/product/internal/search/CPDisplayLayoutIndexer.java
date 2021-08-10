@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.search;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -58,9 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 
 	public static final String CLASS_NAME = CPDisplayLayout.class.getName();
-
-	public static final String FIELD_COMMERCE_CATALOG_GROUP_ID =
-		"commerceCatalogGroupId";
 
 	public static final String FIELD_ENTRY_MODEL_CLASS_NAME =
 		"entryModelClassName";
@@ -133,7 +131,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 			CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
 
 			document.addKeyword(
-				FIELD_COMMERCE_CATALOG_GROUP_ID, cpDefinition.getGroupId());
+				CPField.COMMERCE_CATALOG_GROUP_ID, cpDefinition.getGroupId());
 
 			Locale locale = LocaleUtil.fromLanguageId(
 				commerceCatalog.getCatalogDefaultLanguageId());

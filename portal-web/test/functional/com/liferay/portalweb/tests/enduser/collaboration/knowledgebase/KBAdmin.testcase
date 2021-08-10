@@ -36,7 +36,25 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddChildArticleToKBArticle {
+	test CanAddArticleWithAttachment {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleAttachment = "Document_1.txt",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewKBArticleWithAttachmentCP(
+			kbArticleAttachment = "Document_1.txt (259 B) Delete",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test CanAddChildArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -62,7 +80,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticleAsDraft {
+	test CanAddArticleAsDraft {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -80,7 +98,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticles {
+	test CanAddMultipleArticles {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		for (var kbCount : list "1,2,3") {
@@ -100,7 +118,7 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test AddKBArticleViaTemplateCP {
+	test CanAddArticleWithTemplate {
 		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleViaTemplateCP";
 
 		JSONKnowledgeBase.addkBTemplate(
@@ -122,28 +140,10 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddKBArticleWithAttachment {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleAttachment = "Document_1.txt",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewKBArticleWithAttachmentCP(
-			kbArticleAttachment = "Document_1.txt (259 B) Delete",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-	}
-
 	@priority = "3"
 	@refactorneeded
-	test AddKBArticleWithBlogsEntryRelatedAsset {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithBlogsEntryRelatedAsset";
+	test CanAddArticleWithRelatedBlog {
+		property test.name.skip.portal.instance = "KBAdmin#CanAddArticleWithRelatedBlog";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -176,7 +176,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticleWithCategory {
+	test CanAddArticleWithCategory {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -215,7 +215,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddKBArticleWithHTML {
+	test CanAddArticleWithHTML {
 		var kbArticleContentSource = '''<b>Knowledge Base&rsquo;s Article Content</b>''';
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -234,7 +234,7 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test AddKBArticleWithInvalidAttachmentSize {
+	test CannotAddArticleWithInvalidAttachmentSize {
 		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize";
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -264,8 +264,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test AddKBArticleWithoutRequiredCategory {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithoutRequiredCategory";
+	test CantAddArticleWithoutRequiredCategory {
+		property test.name.skip.portal.instance = "CPKnowledgebase#CantAddArticleWithoutRequiredCategory";
 
 		Navigator.openURL();
 
@@ -299,7 +299,7 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test AddKBFolder {
+	test CanAddFolder {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -328,7 +328,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddTemplateCP {
+	test CanAddTemplate {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBTemplate.addCP(
@@ -344,8 +344,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test CancelAddKBArticle {
-		property test.name.skip.portal.instance = "CPKnowledgebase#CancelAddKBArticle";
+	test CanCancelAddingArticle {
+		property test.name.skip.portal.instance = "KBAdmin#CanCancelAddingArticle";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -358,8 +358,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test CancelEditKBArticle {
-		property test.name.skip.portal.instance = "CPKnowledgebase#CancelEditKBArticle";
+	test CanCancelEditingArticle {
+		property test.name.skip.portal.instance = "KBAdmin#CanCancelEditingArticle";
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -383,8 +383,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test CannotAddDuplicateKBFolder {
-		property test.name.skip.portal.instance = "CPKnowledgebase#CannotAddDuplicateKBFolder";
+	test CannotAddDuplicateFolder {
+		property test.name.skip.portal.instance = "KBAdmin#CannotAddDuplicateFolder";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -401,7 +401,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteKBArticle {
+	test CanDeleteArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -420,7 +420,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteKBFolder {
+	test CanDeleteKBFolder {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
@@ -441,7 +441,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test EditKBArticleAndAddAttachment {
+	test CanEditArticleAndAddAttachment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -465,7 +465,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test EditKBArticle {
+	test CanEditArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -487,7 +487,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test EditKBFolder {
+	test CanEditFolder {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
@@ -513,7 +513,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test RemoveParentArticle {
+	test CanRemoveParentArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -551,7 +551,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title Child");
 	}
 
-	test SaveEditedKBArticleAsDraft {
+	test CanSaveEditedArticleAsDraft {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -575,7 +575,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test SelectParentArticle {
+	test CanSelectParentArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -603,8 +603,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test ViewChildArticleInKBArticle {
-		property test.name.skip.portal.instance = "CPKnowledgebase#ViewChildArticleInKBArticle";
+	test CanViewChildArticle {
+		property test.name.skip.portal.instance = "KBAdmin#CanViewChildArticle";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -630,7 +630,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test ViewDuplicateFriendlyURLIsNotAllowed {
+	test CannotAddArticleWithDuplicateURL {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -659,7 +659,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test ViewImportedKBArticlesPrioritization {
+	test CanViewPrioritiesOfImportedArticles {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.importCP(
@@ -785,7 +785,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test ViewKBArticlePriority {
+	test CanViewArticlePriority {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		for (var kbCount : list "1,2") {
@@ -805,8 +805,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test ViewKBTemplateViaAddKBArticleCP {
-		property test.name.skip.portal.instance = "CPKnowledgebase#ViewKBTemplateViaAddKBArticleCP";
+	test CanAddTemplate {
+		property test.name.skip.portal.instance = "KBAdmin#CanAddTemplate";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -835,8 +835,8 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test ViewPendingKBArticleContent {
-		property test.name.skip.portal.instance = "CPKnowledgebase#ViewPendingKBArticleContent";
+	test CanViewPendingContent {
+		property test.name.skip.portal.instance = "KBAdmin#CanViewPendingContent";
 
 		Navigator.openURL();
 

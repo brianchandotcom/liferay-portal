@@ -28,7 +28,4 @@ import java.util.Map;
  */
 @ProviderType
 public interface JsonHelper {
-
-	public JSONArray toJSONArray(Map<String, List<String>> keyValues);
-
 }

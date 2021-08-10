@@ -450,6 +450,32 @@ public class JSONUtil {
 		return jsonArray;
 	}
 
+	public static JSONArray toJSONArray(Map<String, List<String>> keyValues) {
+		JSONArray jsonArray = _createJSONArray();
+
+		for (Map.Entry<String, List<String>> keyValuesEntry :
+				keyValues.entrySet()) {
+
+			JSONObject arrayEntryJSONObject = _createJSONObject();
+
+			arrayEntryJSONObject.put("key", keyValuesEntry.getKey());
+
+			JSONArray valuesJSONArray = _createJSONArray();
+
+			List<String> values = keyValuesEntry.getValue();
+
+			for (String value : values) {
+				valuesJSONArray.put(value);
+			}
+
+			arrayEntryJSONObject.put("value", valuesJSONArray);
+
+			jsonArray.put(arrayEntryJSONObject);
+		}
+
+		return jsonArray;
+	}
+
 	public static <T> JSONArray toJSONArray(
 		List<T> list, UnsafeFunction<T, Object, Exception> unsafeFunction,
 		Log log) {

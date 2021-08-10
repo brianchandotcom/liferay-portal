@@ -34,6 +34,7 @@ import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvide
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -100,7 +101,7 @@ public class CommerceProductInstanceDataSetDataProvider
 
 			String cpDefinitionName = cpDefinition.getName(languageId);
 
-			JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
+			JSONArray keyValuesJSONArray = JSONUtil.toJSONArray(
 				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 			int stockQuantity = _commerceInventoryEngine.getStockQuantity(

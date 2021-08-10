@@ -14,7 +14,16 @@
 
 package com.liferay.portal.upgrade.internal.report;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
+import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,6 +52,43 @@ public class UpgradeReport {
 			loggerName, key -> new ArrayList<>());
 
 		warningMessages.add(message);
+	}
+
+	public void generateReport() {
+		File file = new File(PropsValues.LIFERAY_HOME, "upgrade_report.info");
+
+		try {
+			FileUtil.write(file, _getProperties());
+		}
+		catch (IOException ioException) {
+		}
+	}
+
+	private String _getProperties() {
+		StringBuffer sb = new StringBuffer(9);
+
+		String dlStore = PropsValues.DL_STORE_IMPL;
+
+		sb.append(PropsKeys.DL_STORE_IMPL + StringPool.EQUAL + dlStore);
+
+		sb.append(StringPool.NEW_LINE);
+
+		if (dlStore.contains("FileSystemStore")) {
+			sb.append(
+				"Please check your OSGi configuration files to ensure " +
+					"rootDir has been set properly");
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.append(
+			"locales.enabled=" + Arrays.toString(PropsValues.LOCALES_ENABLED));
+		sb.append(StringPool.NEW_LINE);
+		sb.append("locales=" + Arrays.toString(PropsValues.LOCALES));
+		sb.append(StringPool.NEW_LINE);
+		sb.append("liferay.home=" + PropsValues.LIFERAY_HOME);
+
+		return sb.toString();
 	}
 
 	private final Map<String, ArrayList<String>> _errorMessages =

@@ -118,6 +118,8 @@ public class UpgradeReportLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
+			_upgradeReport.generateReport();
+
 			_upgradeReport = null;
 		}
 

@@ -13,7 +13,7 @@ definition {
 		AssertElementNotPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
 	}
 
-	@description = "Deploy the following jar into Liferay Portal server with port ${nodePort}: ${liferayDependencyJars}"
+	@description = "Deploy the following jar into Liferay Portal server at port ${nodePort}"
 	macro deployClusteringModule {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
 

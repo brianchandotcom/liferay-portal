@@ -14,18 +14,37 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.template.DDMTemplateVariableCodeHandler;
+import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.InfoFieldSetEntry;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 /**
  * @author Eudaldo Alonso
@@ -91,7 +110,111 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		return PortalUtil.getClassNameId(InfoItemFormProvider.class);
 	}
 
+	@Override
+	protected Collection<TemplateVariableGroup> getTemplateVariableGroups()
+		throws Exception {
+
+		List<TemplateVariableGroup> templateVariableGroups = new LinkedList<>(
+			super.getTemplateVariableGroups());
+
+		String itemClassName = PortalUtil.getClassName(getClassNameId());
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class, itemClassName);
+
+		if (infoItemFormProvider == null) {
+			if (log.isWarnEnabled()) {
+				log.warn(
+					"Unable to get info item form provider for class " +
+						itemClassName);
+			}
+
+			return templateVariableGroups;
+		}
+
+		String formVariationKey = StringPool.BLANK;
+
+		if (getClassPK() > 0) {
+			formVariationKey = String.valueOf(getClassPK());
+		}
+
+		InfoForm infoForm = null;
+
+		try {
+			infoForm = infoItemFormProvider.getInfoForm(
+				formVariationKey, _themeDisplay.getScopeGroupId());
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (log.isDebugEnabled()) {
+				log.debug(
+					StringBundler.concat(
+						"Unable to get info form for class ", itemClassName,
+						" and variation: ", formVariationKey, " and groupId: ",
+						_themeDisplay.getScopeGroupId()),
+					noSuchFormVariationException);
+			}
+		}
+
+		if (infoForm == null) {
+			if (log.isWarnEnabled()) {
+				log.warn("Unable to get info form for class " + itemClassName);
+			}
+
+			return templateVariableGroups;
+		}
+
+		Map<String, TemplateVariableGroup> additionalTemplateVariableGroups =
+			new TreeMap<>();
+
+		for (InfoFieldSetEntry infoFieldSetEntry :
+				infoForm.getInfoFieldSetEntries()) {
+
+			if (!(infoFieldSetEntry instanceof InfoFieldSet)) {
+				continue;
+			}
+
+			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+			TemplateVariableGroup templateVariableGroup =
+				new TemplateVariableGroup(
+					infoFieldSet.getLabel(_themeDisplay.getLocale()));
+
+			for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
+				InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+				templateVariableGroup.addFieldVariable(
+					infoField.getLabel(_themeDisplay.getLocale()),
+					TemplateNode.class, infoField.getName(),
+					infoField.getLabel(_themeDisplay.getLocale()),
+					infoFieldType.getName(), infoField.isMultivalued(),
+					_templateVariableCodeHandler);
+			}
+
+			additionalTemplateVariableGroups.put(
+				infoFieldSet.getLabel(_themeDisplay.getLocale()),
+				templateVariableGroup);
+		}
+
+		templateVariableGroups.addAll(
+			additionalTemplateVariableGroups.values());
+
+		return templateVariableGroups;
+	}
+
+	protected static final Log log = LogFactoryUtil.getLog(
+		InformationTemplatesTemplateDisplayContext.class);
+
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
+		new DDMTemplateVariableCodeHandler(
+			InformationTemplatesTemplateDisplayContext.class.getClassLoader(),
+			"com/liferay/template/web/internal/portlet/template/dependencies/",
+			SetUtil.fromArray(
+				new String[] {
+					"boolean", "date", "document-library", "geolocation",
+					"image", "journal-article", "link-to-page"
+				}));
 	private final ThemeDisplay _themeDisplay;
 
 }

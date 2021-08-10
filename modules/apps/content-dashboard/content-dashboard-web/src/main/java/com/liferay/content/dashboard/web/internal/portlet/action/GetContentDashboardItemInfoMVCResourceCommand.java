@@ -129,8 +129,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"data", _getDataJSONObject(contentDashboardItem, locale)
 				).put(
-					"docType", contentDashboardItem.getTypeLabel(locale)
-				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",

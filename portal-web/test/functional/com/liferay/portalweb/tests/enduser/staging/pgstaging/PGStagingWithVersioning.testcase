@@ -187,4 +187,24 @@ definition {
 			title = "There is not a version of this page marked as ready for publish process.");
 	}
 
+	@description = "This is a use case for LPS-123156"
+	@priority = "4"
+	test AssertVariationInfoInPublishScreen {
+		Staging.addSitePagesVariationPG(
+			copySitePagesVariationName = "All Site Pages Variations",
+			sitePagesVariationName = "Site Pages Variation Name");
+
+		Staging.markAsReadyForPublication();
+
+		Staging.gotoPublishToLive();
+
+		SelectFrame(
+			key_title = "Publish Site Pages Variation Name to Live.",
+			locator1 = "StagingPublishToLive#MODAL_TITLE");
+
+		AssertTextEquals(
+			locator1 = "StagingPublishToLive#MODAL_TITLE",
+			value1 = "Publish Site Pages Variation Name to Live.");
+	}
+
 }

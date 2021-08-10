@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_TITLE</td>
+	<td>//div[contains(@class,'modal-header')]//h3[contains(@class,'modal-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_SIMPLE_HELP_TEXT</td>
 	<td>//span[contains(@class,'publish-simple-help-text')]</td>
 	<td></td>

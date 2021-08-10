@@ -324,7 +324,7 @@ public class FileEntryContentDashboardItem
 	@Override
 	public JSONObject getSpecificInformationJSONObject(
 		Locale locale, LiferayPortletResponse liferayPortletResponse,
-		String back) {
+		String backURL) {
 
 		return JSONUtil.put(
 			"description", getDescription(locale)
@@ -339,7 +339,7 @@ public class FileEntryContentDashboardItem
 		).put(
 			"size", _getSize()
 		).put(
-			"viewURL", _getViewURL(liferayPortletResponse, back)
+			"viewURL", _getViewURL(liferayPortletResponse, backURL)
 		);
 	}
 

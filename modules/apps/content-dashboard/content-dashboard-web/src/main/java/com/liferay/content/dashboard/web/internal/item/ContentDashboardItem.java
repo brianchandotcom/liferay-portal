@@ -70,7 +70,7 @@ public interface ContentDashboardItem<T> {
 
 	public default JSONObject getSpecificInformationJSONObject(
 		Locale locale, LiferayPortletResponse liferayPortletResponse,
-		String back) {
+		String backURL) {
 
 		return null;
 	}

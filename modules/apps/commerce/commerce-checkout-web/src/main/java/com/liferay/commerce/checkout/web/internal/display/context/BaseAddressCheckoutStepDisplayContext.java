@@ -75,12 +75,13 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
 		CommerceAddress billingAddress = _commerceOrder.getBillingAddress();
 
-		if ((commerceAccount != null) &&
-			(commerceAccount.getDefaultBillingAddressId() ==
-				commerceAccount.getDefaultShippingAddressId()) &&
-			(billingAddress != null) && (shippingAddress != null) &&
-			(shippingAddress.getCommerceAddressId() ==
-				billingAddress.getCommerceAddressId())) {
+		if (((commerceAccount != null) &&
+			 (commerceAccount.getDefaultBillingAddressId() ==
+				 commerceAccount.getDefaultShippingAddressId()) &&
+			 (billingAddress == null) && (shippingAddress == null)) ||
+			((billingAddress != null) && (shippingAddress != null) &&
+			 (billingAddress.getCommerceAddressId() ==
+				 shippingAddress.getCommerceAddressId()))) {
 
 			return true;
 		}

@@ -84,30 +84,6 @@ public class BillingAddressCommerceCheckoutStep
 	}
 
 	@Override
-	public boolean isVisible(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		BillingAddressCheckoutStepDisplayContext
-			billingAddressCheckoutStepDisplayContext =
-				new BillingAddressCheckoutStepDisplayContext(
-					commerceAddressService, httpServletRequest);
-
-		CommerceOrder commerceOrder =
-			billingAddressCheckoutStepDisplayContext.getCommerceOrder();
-
-		if ((commerceOrder == null) ||
-			(commerceOrder.getBillingAddressId() ==
-				commerceOrder.getShippingAddressId())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

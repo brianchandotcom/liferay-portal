@@ -85,12 +85,13 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
 		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 
-		if ((commerceAccount != null) &&
-			(commerceAccount.getDefaultBillingAddressId() ==
-				commerceAccount.getDefaultShippingAddressId()) &&
-			(billingAddress != null) && (shippingAddress != null) &&
-			(shippingAddress.getCommerceAddressId() ==
-				billingAddress.getCommerceAddressId())) {
+		if (((commerceAccount != null) &&
+			 (commerceAccount.getDefaultBillingAddressId() ==
+				 commerceAccount.getDefaultShippingAddressId()) &&
+			 (billingAddress == null) && (shippingAddress == null)) ||
+			((billingAddress != null) && (shippingAddress != null) &&
+			 (billingAddress.getCommerceAddressId() ==
+				 shippingAddress.getCommerceAddressId()))) {
 
 			return false;
 		}

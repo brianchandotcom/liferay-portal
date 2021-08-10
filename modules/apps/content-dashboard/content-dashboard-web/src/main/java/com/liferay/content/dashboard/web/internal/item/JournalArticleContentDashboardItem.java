@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardIt
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -268,20 +267,6 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public String getDescription(Locale locale) {
-		InfoItemFieldValues infoItemFieldValues =
-			_infoItemFieldValuesProvider.getInfoItemFieldValues(
-				_journalArticle);
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("description");
-
-		Object description = infoFieldValue.getValue();
-
-		return description.toString();
-	}
-
-	@Override
 	public Object getDisplayFieldValue(String fieldName, Locale locale) {
 		InfoFieldValue<Object> infoFieldValue =
 			_infoItemFieldValuesProvider.getInfoFieldValue(
@@ -292,6 +277,16 @@ public class JournalArticleContentDashboardItem
 		}
 
 		return infoFieldValue.getValue(locale);
+	}
+
+	@Override
+	public JournalArticle getInfoItem() {
+		return _journalArticle;
+	}
+
+	@Override
+	public InfoItemFieldValuesProvider getInfoItemFieldValuesProvider() {
+		return _infoItemFieldValuesProvider;
 	}
 
 	@Override

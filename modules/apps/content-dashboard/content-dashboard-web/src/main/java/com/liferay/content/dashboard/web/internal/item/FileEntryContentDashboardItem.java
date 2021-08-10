@@ -268,23 +268,6 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public String getDescription(Locale locale) {
-		InfoItemFieldValues infoItemFieldValues =
-			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("description");
-
-		if (infoFieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		Object description = infoFieldValue.getValue();
-
-		return description.toString();
-	}
-
-	@Override
 	public Object getDisplayFieldValue(String fieldName, Locale locale) {
 		InfoFieldValue<Object> infoFieldValue =
 			_infoItemFieldValuesProvider.getInfoFieldValue(
@@ -295,6 +278,16 @@ public class FileEntryContentDashboardItem
 		}
 
 		return infoFieldValue.getValue(locale);
+	}
+
+	@Override
+	public FileEntry getInfoItem() {
+		return _fileEntry;
+	}
+
+	@Override
+	public InfoItemFieldValuesProvider getInfoItemFieldValuesProvider() {
+		return _infoItemFieldValuesProvider;
 	}
 
 	@Override

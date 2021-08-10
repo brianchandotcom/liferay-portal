@@ -14,12 +14,18 @@
 
 package com.liferay.content.dashboard.web.internal.item;
 
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +34,31 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class ContentDashboardBaseItem<T>
 	implements ContentDashboardItem<T> {
+
+	@Override
+	public String getDescription(Locale locale) {
+		InfoItemFieldValuesProvider infoItemFieldValuesProvider =
+			getInfoItemFieldValuesProvider();
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(getInfoItem());
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("description");
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object description = infoFieldValue.getValue();
+
+		return description.toString();
+	}
+
+	public abstract T getInfoItem();
+
+	public abstract InfoItemFieldValuesProvider
+		getInfoItemFieldValuesProvider();
 
 	@Override
 	public String getUserAvatarURL(

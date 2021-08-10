@@ -46,13 +46,19 @@ export const FieldSet = ({
 
 	const {selectedViewportSize} = store;
 
-	const availableFields =
+	let availableFields =
 		selectedViewportSize === VIEWPORT_SIZES.desktop
 			? fields
 			: fields.filter(
 					(field) =>
 						field.responsive || field.name === 'backgroundImage'
 			  );
+
+	if (!config.fragmentsHidingEnabled) {
+		availableFields = availableFields.filter(
+			(field) => field.name !== 'display'
+		);
+	}
 
 	return (
 		availableFields.length > 0 && (

@@ -63,21 +63,6 @@ definition {
 			kbChildArticleTitle = "Child Article Title");
 	}
 
-	@priority = "3"
-	@refactorneeded
-	test AddKBArticleContentNull {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "",
-			kbArticleInvalidContent = "true",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Title");
-	}
-
 	@priority = "4"
 	@refactorneeded
 	test AddKBArticleSuggestion {
@@ -103,20 +88,6 @@ definition {
 			kbSuggestionBody = "Knowledge Base Article Suggestion",
 			kbSuggestionUserName = "Test Test",
 			status = "New");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test AddKBArticleTitleNull {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCPWithInvalidTitle(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Content");
 	}
 
 	@priority = "4"

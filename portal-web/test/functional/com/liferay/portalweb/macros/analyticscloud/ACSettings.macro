@@ -26,18 +26,6 @@ definition {
 		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_PRICE");
 	}
 
-	@summary = "Asserts the individuals usage value \
-	@param individualUsageValue"
-	macro assertIndividualsUsage() {
-		AssertTextEquals(
-			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
-			value1 = "${individualUsageValue}");
-	}
-	
-	macro clickGenericAddOrConfirmationButton {
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-	}
-
 	macro assertCanChooseDataSourceOptions {
 		Click(
 			key_sourceType = "Liferay DXP",
@@ -52,20 +40,28 @@ definition {
 			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
 
 		AssertElementPresent(
-			locator1 = "ACSettings#ITEM_ON_LIST",
-			itemName = "Configure Salesforce");
+			itemName = "Configure Salesforce",
+			locator1 = "ACSettings#ITEM_ON_LIST");
 
 		Click(
-			locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE",
-			key_breadcrumbName = "Add Data Source");
+			key_breadcrumbName = "Add Data Source",
+			locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE");
 
 		Click(
 			key_sourceType = "CSV File",
 			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
 
 		AssertElementPresent(
-			locator1 = "Header#H3_TITLE",
-			key_title = "CSV File");
+			key_title = "CSV File",
+			locator1 = "Header#H3_TITLE");
+	}
+
+	@summary = "Asserts the individuals usage value \
+	@param individualUsageValue"
+	macro assertIndividualsUsage() {
+		AssertTextEquals(
+			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
+			value1 = "${individualUsageValue}");
 	}
 
 	macro assertKeywords {
@@ -130,6 +126,10 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSettings#USER_LIST_EMAIL",
 			value1 = "${userEmail}");
+	}
+
+	macro clickGenericAddOrConfirmationButton {
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
 
 	@summary = "Deletes all data source"

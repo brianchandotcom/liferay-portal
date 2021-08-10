@@ -43,7 +43,7 @@ const DocumentPreview = ({
 			)}
 			<div>
 				{isFile && (
-					<ClayLink className="btn btn-secondary" href={downloadURL}>
+					<ClayLink className="btn btn-primary" href={downloadURL}>
 						{Liferay.Language.get('download')}
 					</ClayLink>
 				)}

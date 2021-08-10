@@ -330,8 +330,7 @@ public class WorkflowInstanceViewDisplayContext
 			workflowInstanceRequestHelper.getLiferayPortletResponse()
 		).setNavigation(
 			() -> {
-				String instanceNavigation = ParamUtil.getString(
-					httpServletRequest, "navigation");
+				String instanceNavigation = getNavigation();
 
 				if (Validator.isNotNull(instanceNavigation)) {
 					return instanceNavigation;
@@ -383,6 +382,8 @@ public class WorkflowInstanceViewDisplayContext
 	public PortletURL getViewPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
+		).setNavigation(
+			getNavigation()
 		).setParameter(
 			"orderByType", getOrderByType()
 		).setParameter(

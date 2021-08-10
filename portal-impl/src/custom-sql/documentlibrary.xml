@@ -11,8 +11,7 @@
 				DLFileVersion ON
 					DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 			WHERE
-				(CAST_TEXT(DLFileEntry.extraSettings) != '') OR
-				(CAST_TEXT(DLFileVersion.extraSettings) != '')
+				[$EXTRA_SETTINGS$]
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.countByG_F">
@@ -145,8 +144,7 @@
 				DLFileVersion ON
 					DLFileVersion.fileEntryId = DLFileEntry.fileEntryId
 			WHERE
-				(CAST_TEXT(DLFileEntry.extraSettings) != '') OR
-				(CAST_TEXT(DLFileVersion.extraSettings) != '')
+				[$EXTRA_SETTINGS$]
 			ORDER BY
 				DLFileEntry.modifiedDate DESC
 		]]>

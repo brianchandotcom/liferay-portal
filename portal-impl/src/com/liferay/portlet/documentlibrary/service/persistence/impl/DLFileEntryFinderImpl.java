@@ -19,6 +19,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -94,7 +96,17 @@ public class DLFileEntryFinderImpl
 		try {
 			session = openSession();
 
+			DB db = getDB();
+
+			boolean oracle = false;
+
+			if (db.getDBType() == DBType.ORACLE) {
+				oracle = true;
+			}
+
 			String sql = CustomSQLUtil.get(COUNT_BY_EXTRA_SETTINGS);
+
+			sql = getExtraSettingsSQL(sql, oracle);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -372,7 +384,17 @@ public class DLFileEntryFinderImpl
 		try {
 			session = openSession();
 
+			DB db = getDB();
+
+			boolean oracle = false;
+
+			if (db.getDBType() == DBType.ORACLE) {
+				oracle = true;
+			}
+
 			String sql = CustomSQLUtil.get(FIND_BY_EXTRA_SETTINGS);
+
+			sql = getExtraSettingsSQL(sql, oracle);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -699,6 +721,23 @@ public class DLFileEntryFinderImpl
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
+	}
+
+	protected String getExtraSettingsSQL(String sql, boolean oracle) {
+		String replacementSQL = null;
+
+		if (oracle) {
+			replacementSQL =
+				"(LENGTH(DLFileEntry.extraSettings) > 0) OR " +
+					"(LENGTH(DLFileVersion.extraSettings) > 0)";
+		}
+		else {
+			replacementSQL =
+				"(CAST_TEXT(DLFileEntry.extraSettings) != '') OR " +
+					"(CAST_TEXT(DLFileVersion.extraSettings) != '')";
+		}
+
+		return StringUtil.replace(sql, "[$EXTRA_SETTINGS$]", replacementSQL);
 	}
 
 	protected String getFileEntriesSQL(

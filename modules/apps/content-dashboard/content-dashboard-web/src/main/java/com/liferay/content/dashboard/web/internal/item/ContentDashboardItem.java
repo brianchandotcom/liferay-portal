@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Date;
@@ -78,7 +79,9 @@ public interface ContentDashboardItem<T> {
 
 	public String getSize();
 
-	public JSONObject getSpecificInformationJSONObject(Locale locale);
+	public JSONObject getSpecificInformationJSONObject(
+		Locale locale, LiferayPortletResponse liferayPortletResponse,
+		String back);
 
 	public String getTitle(Locale locale);
 

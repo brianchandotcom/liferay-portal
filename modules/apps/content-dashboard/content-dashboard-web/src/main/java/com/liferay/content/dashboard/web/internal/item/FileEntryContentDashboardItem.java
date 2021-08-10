@@ -21,11 +21,13 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -397,7 +400,10 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public JSONObject getSpecificInformationJSONObject(Locale locale) {
+	public JSONObject getSpecificInformationJSONObject(
+		Locale locale, LiferayPortletResponse liferayPortletResponse,
+		String back) {
+
 		return JSONUtil.put(
 			"description", getDescription(locale)
 		).put(
@@ -410,6 +416,8 @@ public class FileEntryContentDashboardItem
 			"preview", getPreviewImage()
 		).put(
 			"size", getSize()
+		).put(
+			"viewURL", getViewURL(liferayPortletResponse, back)
 		);
 	}
 
@@ -470,6 +478,20 @@ public class FileEntryContentDashboardItem
 
 			return Collections.emptyList();
 		}
+	}
+
+	public String getViewURL(
+		LiferayPortletResponse liferayPortletResponse, String redirect) {
+
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
+		).setMVCRenderCommandName(
+			"/document_library/view_file_entry"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"fileEntryId", _fileEntry.getFileEntryId()
+		).buildString();
 	}
 
 	@Override

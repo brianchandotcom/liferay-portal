@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -344,7 +345,10 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public JSONObject getSpecificInformationJSONObject(Locale locale) {
+			public JSONObject getSpecificInformationJSONObject(
+				Locale locale, LiferayPortletResponse liferayPortletResponse,
+				String back) {
+
 				return null;
 			}
 

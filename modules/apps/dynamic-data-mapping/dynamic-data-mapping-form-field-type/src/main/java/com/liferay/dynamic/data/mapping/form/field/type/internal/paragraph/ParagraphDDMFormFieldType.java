@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"ddm.form.field.type.description=paragraph-field-type-description",
+		"ddm.form.field.type.description=add-text,-image,-video,-and-more",
 		"ddm.form.field.type.display.order:Integer=1",
 		"ddm.form.field.type.group=interface",
 		"ddm.form.field.type.icon=paragraph",

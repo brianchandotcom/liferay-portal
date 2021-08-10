@@ -88,7 +88,8 @@ public interface AssetPublisherPortletInstanceConfiguration {
 	 * @return default email address to use in asset entry added email.
 	 */
 	@Meta.AD(
-		deflt = "", description = "email-from-address-description",
+		deflt = "",
+		description = "set-the-address-from-which-asset-entry-added-emails-will-be-sent",
 		name = "email-from-address", required = false
 	)
 	public String emailFromAddress();

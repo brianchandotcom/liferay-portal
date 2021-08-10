@@ -14,8 +14,11 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -29,6 +32,29 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
+
+		_ddmWebConfiguration =
+			(DDMWebConfiguration)liferayPortletRequest.getAttribute(
+				DDMWebConfiguration.class.getName());
 	}
+
+	@Override
+	public boolean autogenerateTemplateKey() {
+		return _ddmWebConfiguration.autogenerateTemplateKey();
+	}
+
+	@Override
+	protected String getDefaultScript(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		if (templateHandler != null) {
+			return templateHandler.getTemplatesHelpContent(getLanguageType());
+		}
+
+		return "<#-- Empty script -->";
+	}
+
+	private final DDMWebConfiguration _ddmWebConfiguration;
 
 }

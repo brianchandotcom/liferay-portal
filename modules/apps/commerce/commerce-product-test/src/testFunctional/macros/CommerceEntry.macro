@@ -1137,11 +1137,9 @@ definition {
 	}
 
 	macro viewPaginationResults {
-		var results = selenium.getText("CommerceEntry#PAGINATION_RESULTS");
-
 		AssertTextEquals(
 			locator1 = "CommerceEntry#PAGINATION_RESULTS",
-			value1 = "${results}");
+			value1 = "Showing 11 to 20 of 54");
 	}
 
 	macro viewPriceListEntry {

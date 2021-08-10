@@ -23,7 +23,7 @@ String openSSOSubjectScreenName = (String)request.getAttribute(OpenSSOWebKeys.OP
 <liferay-util:buffer
 	var="msg"
 >
-	<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(openSSOSubjectScreenName) + "</strong>" %>' key="your-user-x-could-not-be-logged-in" />
+	<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(openSSOSubjectScreenName) + "</strong>" %>' key="your-user-x-could-not-be-signed-in" />
 
 	<c:choose>
 		<c:when test='<%= SessionMessages.contains(request, "MustNotUseCompanyMx") %>'>

@@ -63,21 +63,11 @@ public interface ContentDashboardItem<T> {
 
 	public Object getDisplayFieldValue(String fieldName, Locale locale);
 
-	public String getDownloadURL();
-
-	public String getExtension();
-
-	public String getFileName();
-
 	public InfoItemReference getInfoItemReference();
 
 	public Date getModifiedDate();
 
-	public Object getPreviewImage();
-
 	public String getScopeName(Locale locale);
-
-	public String getSize();
 
 	public JSONObject getSpecificInformationJSONObject(
 		Locale locale, LiferayPortletResponse liferayPortletResponse,

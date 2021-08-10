@@ -304,21 +304,6 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public String getDownloadURL() {
-				return "download/url/test";
-			}
-
-			@Override
-			public String getExtension() {
-				return "extension";
-			}
-
-			@Override
-			public String getFileName() {
-				return "FileName";
-			}
-
-			@Override
 			public InfoItemReference getInfoItemReference() {
 				return new InfoItemReference(
 					RandomTestUtil.randomString(), RandomTestUtil.randomLong());
@@ -330,18 +315,8 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public Object getPreviewImage() {
-				return new Object();
-			}
-
-			@Override
 			public String getScopeName(Locale locale) {
 				return null;
-			}
-
-			@Override
-			public String getSize() {
-				return "123";
 			}
 
 			@Override

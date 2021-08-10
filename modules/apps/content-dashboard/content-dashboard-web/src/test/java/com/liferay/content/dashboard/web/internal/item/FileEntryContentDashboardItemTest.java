@@ -267,46 +267,6 @@ public class FileEntryContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetExtension() {
-		FileEntry fileEntry = _getFileEntry();
-
-		Mockito.when(
-			fileEntry.getExtension()
-		).thenReturn(
-			"extension"
-		);
-
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
-			Mockito.mock(InfoItemFieldValuesProvider.class);
-
-		Mockito.when(
-			infoItemFieldValuesProvider.getInfoItemFieldValues(fileEntry)
-		).thenReturn(
-			InfoItemFieldValues.builder(
-			).infoFieldValue(
-				new InfoFieldValue<>(
-					InfoField.builder(
-					).infoFieldType(
-						DateInfoFieldType.INSTANCE
-					).name(
-						"fileName"
-					).labelInfoLocalizedValue(
-						null
-					).build(),
-					"fileName.extension")
-			).build()
-		);
-
-		FileEntryContentDashboardItem fileEntryContentDashboardItem =
-			new FileEntryContentDashboardItem(
-				null, null, null, null, fileEntry, null,
-				infoItemFieldValuesProvider, null, null);
-
-		Assert.assertEquals(
-			"extension", fileEntryContentDashboardItem.getExtension());
-	}
-
-	@Test
 	public void testGetModifiedDate() {
 		FileEntry fileEntry = _getFileEntry();
 
@@ -338,47 +298,6 @@ public class FileEntryContentDashboardItemTest {
 		Assert.assertEquals(
 			"scopeName",
 			fileEntryContentDashboardItem.getScopeName(LocaleUtil.US));
-	}
-
-	@Test
-	public void testGetSize() {
-		FileEntry fileEntry = _getFileEntry();
-		long sizeTest = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			fileEntry.getSize()
-		).thenReturn(
-			sizeTest
-		);
-
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
-			Mockito.mock(InfoItemFieldValuesProvider.class);
-
-		Mockito.when(
-			infoItemFieldValuesProvider.getInfoItemFieldValues(fileEntry)
-		).thenReturn(
-			InfoItemFieldValues.builder(
-			).infoFieldValue(
-				new InfoFieldValue<>(
-					InfoField.builder(
-					).infoFieldType(
-						DateInfoFieldType.INSTANCE
-					).name(
-						"size"
-					).labelInfoLocalizedValue(
-						null
-					).build(),
-					sizeTest)
-			).build()
-		);
-
-		FileEntryContentDashboardItem fileEntryContentDashboardItem =
-			new FileEntryContentDashboardItem(
-				null, null, null, null, fileEntry, null,
-				infoItemFieldValuesProvider, null, null);
-
-		Assert.assertEquals(
-			String.valueOf(sizeTest), fileEntryContentDashboardItem.getSize());
 	}
 
 	@Test

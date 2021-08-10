@@ -295,21 +295,6 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public String getDownloadURL() {
-		return null;
-	}
-
-	@Override
-	public String getExtension() {
-		return null;
-	}
-
-	@Override
-	public String getFileName() {
-		return null;
-	}
-
-	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			JournalArticle.class.getName(),
@@ -319,11 +304,6 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public Date getModifiedDate() {
 		return _journalArticle.getModifiedDate();
-	}
-
-	@Override
-	public Object getPreviewImage() {
-		return null;
 	}
 
 	@Override
@@ -344,11 +324,6 @@ public class JournalArticleContentDashboardItem
 		).orElse(
 			StringPool.BLANK
 		);
-	}
-
-	@Override
-	public String getSize() {
-		return null;
 	}
 
 	@Override

@@ -102,8 +102,8 @@ definition {
 	test ViewOrderOfContentWidgetActions {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Widget Page Name");
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
 		}
 		task ("Assert the actions order for widget pages") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -111,7 +111,7 @@ definition {
 			SitePages.clickPageMenu(pageName = "Test Widget Page Name");
 
 			MenuItem.viewOrder(menuItemList = "View,-,Convert to content page...,-,Copy page,-,Configure,Permissions,-,Delete");
-
 		}
 	}
+
 }

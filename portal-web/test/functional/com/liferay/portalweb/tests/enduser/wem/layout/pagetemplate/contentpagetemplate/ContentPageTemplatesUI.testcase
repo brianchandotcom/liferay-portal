@@ -15,7 +15,6 @@ definition {
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
-
 	}
 
 	tearDown {
@@ -33,21 +32,15 @@ definition {
 	@priority = "3"
 	test ViewOrderOfPageTemplatesActions {
 		task ("Add a content page template") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-					groupName = "Test Site Name",
-					layoutPageTemplateCollectionName =
-							"Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(groupName = "Test Site Name");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-					groupName = "Test Site Name",
-					layoutPageTemplateCollectionName =
-							"Page Template Collection",
-					layoutPageTemplateEntryName = "Page Template Name",
-					layoutPageTemplateStatus = "Approved",
-					layoutPageTemplateType = "Content Page Template");
+				groupName = "Test Site Name",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Content Page Template");
 		}
 		task ("Change template to draft") {
-
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
@@ -57,17 +50,16 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading");
-
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
 		task ("Change thumbnail of template") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-					item = "Change Thumbnail",
-					pageTemplateName = "Page Template Name");
+				item = "Change Thumbnail",
+				pageTemplateName = "Page Template Name");
 
 			ItemSelector.uploadFile(uploadFileName = "Document_1.png");
 
@@ -82,7 +74,6 @@ definition {
 			MenuItem.viewOrder(menuItemList = "Edit,-,Permissions,-,Delete");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
 		}
 
 		task ("Assert the actions order of a page template") {
@@ -91,9 +82,7 @@ definition {
 			MenuItem.viewOrder(menuItemList = "Edit,-,Change Thumbnail,Remove thumbnail,Discard draft,Rename,-,Export,-,Configure,Permissions,-,Delete");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Page Template Name");
-
 		}
-
 	}
 
 }

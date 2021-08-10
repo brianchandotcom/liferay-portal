@@ -340,14 +340,14 @@ definition {
 		if (isSet(parentPagesHierarchy)) {
 			for (var parentPage : list "${parentPagesHierarchy}") {
 				Click(
-						key_itemName = "${parentPage}",
-						locator1 = "SitePages#LIST_GROUP_ITEM");
+					key_itemName = "${parentPage}",
+					locator1 = "SitePages#LIST_GROUP_ITEM");
 			}
 		}
 
 		Click(
-				key_pageName = "${pageName}",
-				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
 	}
 
 	macro configureChildPage {

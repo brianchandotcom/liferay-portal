@@ -15,7 +15,6 @@ definition {
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
-
 	}
 
 	tearDown {
@@ -34,24 +33,24 @@ definition {
 	test ViewOrderOfContentPagesActions {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Content Page Name",
-					type = "content");
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
 			JSONLayout.publishLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Content Page Name");
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name");
 		}
 		task ("Add a Heading fragment") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 		task ("Assert the actions order for content pages") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -59,7 +58,6 @@ definition {
 			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
 			MenuItem.viewOrder(menuItemList = "Edit,View,-,Discard Draft,Orphan Widgets,-,Copy Page,-,Configure,Permissions,-,Delete");
-
 		}
 	}
 

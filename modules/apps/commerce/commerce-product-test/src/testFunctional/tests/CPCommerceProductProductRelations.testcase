@@ -34,9 +34,6 @@ definition {
 	@priority = "3"
 	test AddAProductRelations {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#AddAProductRelations";
-
-		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -53,6 +50,7 @@ definition {
 			productCatalog = "Master",
 			productName = "Shoes",
 			productType = "Simple");
+
 		Click(locator1 = "Icon#BACK");
 
 		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
@@ -61,25 +59,18 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
 
-		CommerceRelations.addAnyProductRelation(
-			key_product = "Shoes",
-			key_relation = "Up-Sell Product");
+		for (var valueList : list "Up-Sell,Cross-Sell,Related,Accessories,Spare") {
 
-		CommerceRelations.addAnyProductRelation(
-			key_product = "Shoes",
-			key_relation = "Cross-Sell Product");
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Shoes",
+				key_relation = "${valueList} Product");
 
-		CommerceRelations.addAnyProductRelation(
-			key_product = "Shoes",
-			key_relation = "Related Product");
+			AssertElementPresent(
+				key_productName = "Shoes",
+				key_Value = "${valueList}",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 
-		CommerceRelations.addAnyProductRelation(
-			key_product = "Shoes",
-			key_relation = "Accessories Product");
-
-		CommerceRelations.addAnyProductRelation(
-			key_product = "Shoes",
-			key_relation = "Spare Product");
+		}	
 	}
 
 	@description = "This is a test for COMMERCE-6064. EditAProductRelations"

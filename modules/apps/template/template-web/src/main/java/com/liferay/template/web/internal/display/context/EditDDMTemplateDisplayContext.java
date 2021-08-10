@@ -16,11 +16,13 @@ package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,6 +62,9 @@ public class EditDDMTemplateDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_ddmTemplateHelper =
+			(DDMTemplateHelper)liferayPortletRequest.getAttribute(
+				DDMTemplateHelper.class.getName());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -93,6 +99,10 @@ public class EditDDMTemplateDisplayContext {
 
 	public Map<String, Object> getDDMTemplateEditorContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"editorAutocompleteData", _getAutocompleteJSONObject()
+		).put(
+			"editorMode", _getEditorMode()
+		).put(
 			"propertiesViewURL",
 			() -> PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
@@ -219,6 +229,12 @@ public class EditDDMTemplateDisplayContext {
 		return new String[] {TemplateConstants.LANG_TYPE_FTL};
 	}
 
+	private JSONObject _getAutocompleteJSONObject() throws Exception {
+		return JSONFactoryUtil.createJSONObject(
+			_ddmTemplateHelper.getAutocompleteJSON(
+				_httpServletRequest, getLanguageType()));
+	}
+
 	private long _getClassPK() {
 		DDMTemplate ddmTemplate = getDDMTemplate();
 
@@ -227,6 +243,16 @@ public class EditDDMTemplateDisplayContext {
 		}
 
 		return 0;
+	}
+
+	private String _getEditorMode() {
+		if (Objects.equals(
+				getLanguageType(), TemplateConstants.LANG_TYPE_FTL)) {
+
+			return TemplateConstants.LANG_TYPE_FTL;
+		}
+
+		return TemplateConstants.LANG_TYPE_VM;
 	}
 
 	private String _getScript() {
@@ -360,6 +386,7 @@ public class EditDDMTemplateDisplayContext {
 
 	private Long _classNameId;
 	private DDMTemplate _ddmTemplate;
+	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;
 	private final HttpServletRequest _httpServletRequest;
 	private String _languageType;

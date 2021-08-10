@@ -34,9 +34,6 @@ definition {
 	@priority = "3"
 	test EditSpecificationGroup {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationGroup";
-
-		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

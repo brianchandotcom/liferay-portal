@@ -72,9 +72,6 @@ definition {
 	@priority = "3"
 	test EditSpecificationLabel {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationLabel";
-
-		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

@@ -30,12 +30,23 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8534 | Test Summary: Sign out of AC"
-	@ignore = "true"
 	@priority = "5"
 	test CanSignOutAC {
+		task ("Navigate to AC workspace") {
+			ACUtils.launchAC();
+		}
 
-		// TODO LRAC-8534 CanSignOutAC
+		task ("Sign out AC") {
+			ACWorkspace.signOut();
+		}
 
+		task ("View redirect to the Sign In page") {
+			AssertVisible(locator1 = "ACLogin#EMAIL_LOGIN_FIELD");
+
+			AssertVisible(locator1 = "ACLogin#PASSWORD_LOGIN_FIELD");
+
+			AssertVisible(locator1 = "ACLogin#LOGIN_BUTTON");
+		}
 	}
 
 }

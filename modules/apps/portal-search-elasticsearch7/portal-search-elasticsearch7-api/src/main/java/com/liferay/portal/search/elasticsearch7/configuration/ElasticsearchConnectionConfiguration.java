@@ -116,8 +116,8 @@ public interface ElasticsearchConnectionConfiguration {
 	public String proxyUserName();
 
 	@Meta.AD(
-		description = "proxy-password-help", name = "proxy-password",
-		required = false, type = Meta.Type.Password
+		description = "set-the-password-for-connecting-to-the-proxy",
+		name = "proxy-password", required = false, type = Meta.Type.Password
 	)
 	public String proxyPassword();
 

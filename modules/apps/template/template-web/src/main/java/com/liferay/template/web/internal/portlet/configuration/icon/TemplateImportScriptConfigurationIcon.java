@@ -51,7 +51,8 @@ public class TemplateImportScriptConfigurationIcon
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.template.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

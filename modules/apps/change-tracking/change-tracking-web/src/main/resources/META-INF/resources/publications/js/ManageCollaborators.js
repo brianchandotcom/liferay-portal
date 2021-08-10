@@ -28,7 +28,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
-import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
@@ -47,6 +47,8 @@ const CollaboratorRow = ({
 	updatedRoles,
 	user,
 }) => {
+	const [active, setActive] = useState(false);
+
 	let activeRole = roles[0];
 	let changed = false;
 	let className = '';
@@ -93,8 +95,12 @@ const CollaboratorRow = ({
 				user.roleValue === roles[i].value
 					? 'font-italic'
 					: '',
-			label: roles[i].label + ' (' + roles[i].helpText + ')',
-			onClick: () => handleSelect(roles[i]),
+			description: roles[i].shortDescription,
+			label: roles[i].label,
+			onClick: () => {
+				setActive(false);
+				handleSelect(roles[i]);
+			},
 			symbolLeft: activeRole.value === roles[i].value ? 'check' : '',
 		});
 	}
@@ -105,11 +111,13 @@ const CollaboratorRow = ({
 		},
 		{
 			label: Liferay.Language.get('remove'),
-			onClick: () =>
+			onClick: () => {
+				setActive(false);
 				handleSelect({
 					label: Liferay.Language.get('remove'),
 					value: -1,
-				}),
+				});
+			},
 			symbolLeft: activeRole.value === -1 ? 'check' : '',
 		}
 	);
@@ -118,11 +126,11 @@ const CollaboratorRow = ({
 
 	if (user.isOwner) {
 		title = Liferay.Language.get(
-			'owners-can-view-edit-publish-and-invite-other-users'
+			'owners-can-view,-edit,-publish,-and-invite-other-users'
 		);
 	}
-	else if (activeRole.tooltip) {
-		title = activeRole.tooltip;
+	else if (activeRole.longDescription) {
+		title = activeRole.longDescription;
 	}
 
 	let label = activeRole.label;
@@ -186,9 +194,12 @@ const CollaboratorRow = ({
 						/>
 					</div>
 				) : (
-					<ClayDropDownWithItems
+					<ClayDropDown
+						active={active}
 						alignmentPosition={Align.BottomLeft}
-						items={dropdownItems}
+						hasLeftSymbols={true}
+						menuWidth="sm"
+						onActiveChange={setActive}
 						spritemap={spritemap}
 						trigger={
 							<ClayButton
@@ -209,7 +220,29 @@ const CollaboratorRow = ({
 								</span>
 							</ClayButton>
 						}
-					/>
+					>
+						<ClayDropDown.ItemList>
+							<ClayDropDown.Group>
+								{dropdownItems.map((item, i) => {
+									if (item.type === 'divider') {
+										return <ClayDropDown.Divider />;
+									}
+
+									return (
+										<ClayDropDown.Item
+											className={item.className}
+											key={i}
+											onClick={item.onClick}
+											symbolLeft={item.symbolLeft}
+										>
+											<strong>{item.label}</strong>
+											<div>{item.description}</div>
+										</ClayDropDown.Item>
+									);
+								})}
+							</ClayDropDown.Group>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 				)}
 			</ClayTable.Cell>
 		</ClayTable.Row>
@@ -291,6 +324,7 @@ const ManageCollaborators = ({
 	trigger,
 	verifyEmailAddressURL,
 }) => {
+	const [active, setActive] = useState(false);
 	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
 		[]
 	);
@@ -756,8 +790,12 @@ const ManageCollaborators = ({
 
 		for (let i = 0; i < roles.length; i++) {
 			dropdownItems.push({
-				label: roles[i].label + ' (' + roles[i].helpText + ')',
-				onClick: () => setSelectedRole(roles[i]),
+				description: roles[i].shortDescription,
+				label: roles[i].label,
+				onClick: () => {
+					setActive(false);
+					setSelectedRole(roles[i]);
+				},
 				symbolLeft:
 					selectedRole.value === roles[i].value ? 'check' : '',
 			});
@@ -809,15 +847,18 @@ const ManageCollaborators = ({
 								/>
 							</ClayInput.GroupItem>
 							<ClayInput.GroupItem shrink>
-								<ClayDropDownWithItems
+								<ClayDropDown
+									active={active}
 									alignmentPosition={Align.BottomLeft}
-									items={dropdownItems}
+									hasLeftSymbols={true}
+									menuWidth="sm"
+									onActiveChange={setActive}
 									spritemap={spritemap}
 									trigger={
 										<ClayButton
 											data-tooltip-align="top"
 											displayType="secondary"
-											title={selectedRole.tooltip}
+											title={selectedRole.longDescription}
 										>
 											{selectedRole.label}
 
@@ -829,7 +870,26 @@ const ManageCollaborators = ({
 											</span>
 										</ClayButton>
 									}
-								/>
+								>
+									<ClayDropDown.ItemList>
+										<ClayDropDown.Group>
+											{dropdownItems.map((item, i) => (
+												<ClayDropDown.Item
+													key={i}
+													onClick={item.onClick}
+													symbolLeft={item.symbolLeft}
+												>
+													<strong>
+														{item.label}
+													</strong>
+													<div>
+														{item.description}
+													</div>
+												</ClayDropDown.Item>
+											))}
+										</ClayDropDown.Group>
+									</ClayDropDown.ItemList>
+								</ClayDropDown>
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
 

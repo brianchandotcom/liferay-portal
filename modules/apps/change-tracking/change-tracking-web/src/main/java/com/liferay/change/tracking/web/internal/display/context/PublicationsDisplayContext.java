@@ -28,6 +28,7 @@ import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -157,65 +158,86 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 				JSONUtil.put(
 					"default", true
 				).put(
-					"helpText", _language.get(_httpServletRequest, "can-view")
-				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_VIEWER)
 				).put(
-					"tooltip",
+					"longDescription",
+					StringBundler.concat(
+						_language.get(_httpServletRequest, "viewers-can-view"),
+						StringPool.SPACE,
+						_language.get(
+							_httpServletRequest,
+							"viewers-cannot-edit,-publish,-or-invite-other-" +
+								"users"))
+				).put(
+					"shortDescription",
 					_language.get(_httpServletRequest, "viewers-can-view")
 				).put(
 					"value", PublicationRoleConstants.ROLE_VIEWER
 				),
 				JSONUtil.put(
-					"helpText",
-					_language.get(_httpServletRequest, "can-view-and-edit")
-				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_EDITOR)
 				).put(
-					"tooltip",
+					"longDescription",
+					StringBundler.concat(
+						_language.get(
+							_httpServletRequest, "editors-can-view-and-edit"),
+						StringPool.SPACE,
+						_language.get(
+							_httpServletRequest,
+							"editors-cannot-publish-or-invite-other-users"))
+				).put(
+					"shortDescription",
 					_language.get(
 						_httpServletRequest, "editors-can-view-and-edit")
 				).put(
 					"value", PublicationRoleConstants.ROLE_EDITOR
 				),
 				JSONUtil.put(
-					"helpText",
-					_language.get(
-						_httpServletRequest, "can-view-edit-and-publish")
-				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_PUBLISHER)
 				).put(
-					"tooltip",
+					"longDescription",
+					StringBundler.concat(
+						_language.get(
+							_httpServletRequest,
+							"publishers-can-view,-edit,-and-publish"),
+						StringPool.SPACE,
+						_language.get(
+							_httpServletRequest,
+							"publishers-cannot-invite-other-users"))
+				).put(
+					"shortDescription",
 					_language.get(
 						_httpServletRequest,
-						"publishers-can-view-edit-and-publish")
+						"publishers-can-view,-edit,-and-publish")
 				).put(
 					"value", PublicationRoleConstants.ROLE_PUBLISHER
 				),
 				JSONUtil.put(
-					"helpText",
-					_language.get(
-						_httpServletRequest,
-						"can-view-edit-publish-and-invite-other-users")
-				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_INVITER)
 				).put(
-					"tooltip",
+					"longDescription",
 					_language.get(
 						_httpServletRequest,
-						"inviters-can-view-edit-publish-and-invite-other-users")
+						"inviters-can-view,-edit,-publish,-and-invite-other-" +
+							"users")
+				).put(
+					"shortDescription",
+					_language.get(
+						_httpServletRequest,
+						"inviters-can-view,-edit,-publish,-and-invite-other-" +
+							"users")
 				).put(
 					"value", PublicationRoleConstants.ROLE_INVITER
 				))

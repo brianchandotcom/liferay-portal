@@ -317,13 +317,13 @@ public class WorkflowDefinitionDisplayContext {
 			return StringPool.BLANK;
 		}
 		else if (workflowDefinitionLinks.size() == 1) {
-			return "workflow-in-use-remove-assignement-to-x-x";
+			return "workflow-in-use.-remove-its-assignment-to-x-x";
 		}
 		else if (workflowDefinitionLinks.size() == 2) {
-			return "workflow-in-use-remove-assignements-to-x-and-x-x";
+			return "workflow-in-use.-remove-its-assignments-to-x-and-x-x";
 		}
 
-		return "workflow-in-use-remove-assignements-to-x-x-and-x-more-x";
+		return "workflow-in-use.-remove-its-assignment-to-x-x-and-x-more-x";
 	}
 
 	public Date getModifiedDate(WorkflowDefinition workflowDefinition) {

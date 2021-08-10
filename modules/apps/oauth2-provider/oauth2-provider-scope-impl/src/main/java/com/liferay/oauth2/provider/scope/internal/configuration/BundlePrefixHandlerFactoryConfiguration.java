@@ -38,7 +38,7 @@ public interface BundlePrefixHandlerFactoryConfiguration {
 	@Meta.AD(
 		deflt = "Default", description = "osgi-jaxrs-name-description",
 		id = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
-		name = "osgi-jaxrs-name", required = false
+		name = "osgi-jaxrs-application-name", required = false
 	)
 	public String osgiJaxRsName();
 

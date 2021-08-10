@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -58,9 +61,10 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 			return null;
 		}
 
-		List<Long> addAllowedClassNameIds = _getAddAllowedClassNameIds();
+		List<TemplateHandler> addAllowedTemplateHandlers =
+			_getAddAllowedTemplateHandlers();
 
-		if (addAllowedClassNameIds.isEmpty()) {
+		if (addAllowedTemplateHandlers.isEmpty()) {
 			return null;
 		}
 
@@ -80,9 +84,14 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 			"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
 		).buildPortletURL();
 
-		for (long addAllowedClassNameId : addAllowedClassNameIds) {
+		for (TemplateHandler addAllowedTemplateHandler :
+				addAllowedTemplateHandlers) {
+
 			addDDMTemplateURL.setParameter(
-				"classNameId", String.valueOf(addAllowedClassNameId));
+				"classNameId",
+				String.valueOf(
+					PortalUtil.getClassNameId(
+						addAllowedTemplateHandler.getClassName())));
 			addDDMTemplateURL.setParameter("classPK", "0");
 			addDDMTemplateURL.setParameter(
 				"resourceClassNameId",
@@ -96,16 +105,16 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest,
-							_widgetTemplatesTemplateDisplayContext.
-								getTemplateTypeLabel(addAllowedClassNameId)));
+							addAllowedTemplateHandler.getName(
+								themeDisplay.getLocale())));
 				});
 		}
 
 		return creationMenu;
 	}
 
-	private List<Long> _getAddAllowedClassNameIds() {
-		List<Long> addAllowedClassNameIds = new ArrayList<>();
+	private List<TemplateHandler> _getAddAllowedTemplateHandlers() {
+		List<TemplateHandler> addAllowedTemplateHandlers = new ArrayList<>();
 
 		for (long classNameId :
 				_widgetTemplatesTemplateDisplayContext.getClassNameIds()) {
@@ -117,11 +126,15 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 					templateHandler.getResourceName(),
 					ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 
-				addAllowedClassNameIds.add(classNameId);
+				addAllowedTemplateHandlers.add(templateHandler);
 			}
 		}
 
-		return addAllowedClassNameIds;
+		Collections.sort(
+			addAllowedTemplateHandlers,
+			new TemplateHandlerComparator(themeDisplay.getLocale()));
+
+		return addAllowedTemplateHandlers;
 	}
 
 	private final WidgetTemplatesTemplateDisplayContext

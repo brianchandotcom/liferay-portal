@@ -61,6 +61,15 @@ public class CustomElementsSourceLocalServiceUtil {
 		return getService().addCustomElementsSource(customElementsSource);
 	}
 
+	public static CustomElementsSource addCustomElementsSource(
+			String htmlElementName, String name, String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCustomElementsSource(
+			htmlElementName, name, url, serviceContext);
+	}
+
 	/**
 	 * Creates a new custom elements source with the primary key. Does not add the custom elements source to the database.
 	 *
@@ -329,6 +338,18 @@ public class CustomElementsSourceLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<CustomElementsSource> searchCustomElementsSources(
+		String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort) {
+
+		return getService().searchCustomElementsSources(
+			keywords, start, end, sort);
+	}
+
+	public static int searchCustomElementsSourcesCount(String keywords) {
+		return getService().searchCustomElementsSourcesCount(keywords);
+	}
+
 	/**
 	 * Updates the custom elements source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -343,6 +364,16 @@ public class CustomElementsSourceLocalServiceUtil {
 		CustomElementsSource customElementsSource) {
 
 		return getService().updateCustomElementsSource(customElementsSource);
+	}
+
+	public static CustomElementsSource updateCustomElementsSource(
+			long customElementsSourceId, String htmlElementName, String name,
+			String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCustomElementsSource(
+			customElementsSourceId, htmlElementName, name, url, serviceContext);
 	}
 
 	public static CustomElementsSourceLocalService getService() {

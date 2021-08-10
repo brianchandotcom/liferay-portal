@@ -31,10 +31,10 @@ public class PortalUpgradeProcessRegistryImpl
 	public void registerUpgradeProcesses(
 		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 
-		upgradeProcesses.put(
-			new Version(3, 0, 0), new UpgradeSQLServerDatetime());
+		upgradeProcesses.put(new Version(3, 0, 0), new UpgradeSchema());
 
-		upgradeProcesses.put(new Version(4, 0, 0), new UpgradeSchema());
+		upgradeProcesses.put(
+			new Version(4, 0, 0), new UpgradeSQLServerDatetime());
 
 		upgradeProcesses.put(new Version(5, 0, 0), new UpgradeBadColumnNames());
 

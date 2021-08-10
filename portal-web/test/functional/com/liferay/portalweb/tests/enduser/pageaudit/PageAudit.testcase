@@ -171,6 +171,10 @@ definition {
 		}
 	}
 
+	@description = "LPS-135681 Given the Page Audit panel in its initial state (no API Key configured)
+	When the user clicks on the Configure button
+	Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
+
 	@priority = "4"
 	test NavigateToSiteSettingsWhenApiKeyNotConfigured {
 		property portal.acceptance = "true";

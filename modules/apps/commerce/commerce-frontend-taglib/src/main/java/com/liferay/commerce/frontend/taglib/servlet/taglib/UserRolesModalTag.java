@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -86,7 +86,7 @@ public class UserRolesModalTag extends ComponentRendererTag {
 
 			List<Role> roles = RoleServiceUtil.getRoles(
 				PortalUtil.getCompanyId(httpServletRequest),
-				new int[] {RoleConstants.TYPE_SITE});
+				new int[] {RoleConstants.TYPE_ACCOUNT});
 
 			for (Role role : roles) {
 				availableRoles.add(

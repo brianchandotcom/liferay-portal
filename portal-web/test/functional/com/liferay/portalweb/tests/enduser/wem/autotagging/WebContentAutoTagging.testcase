@@ -49,8 +49,7 @@ definition {
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Test Site Name (Staging)",
 			site = "false",
-			siteURLKey = "test-site-name",
-			staging = "true",
+			siteURLKey = "test-site-name-staging",
 			webContentTitle = "Digital Transformation or Digital Experience");
 
 		Panel.expandPanel(panel = "Categorization");

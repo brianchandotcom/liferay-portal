@@ -180,8 +180,7 @@ definition {
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Subscribe Site (Staging)",
 			site = "false",
-			siteURLKey = "subscribe-site",
-			staging = "true",
+			siteURLKey = "subscribe-site-staging",
 			webContentTitle = "WC WebContent Title");
 
 		WebContent.editCP(

@@ -144,15 +144,6 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
-	@ignore = "true"
-	@priority = "5"
-	test TotalNumberOfIndividualsIsShown {
-
-		// TODO LRAC-8146 Usage#TotalNumberOfIndividualsIsShown pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"
 	@priority = "5"
 	test PlanLimitNumberOfPageViewsIsShown {
@@ -170,6 +161,15 @@ definition {
 			key_metricName = "Page Views",
 			key_totalNumber = "75,000,000",
 			locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
+	@ignore = "true"
+	@priority = "5"
+	test TotalNumberOfIndividualsIsShown {
+
+		// TODO LRAC-8146 Usage#TotalNumberOfIndividualsIsShown pending implementation
+
 	}
 
 }

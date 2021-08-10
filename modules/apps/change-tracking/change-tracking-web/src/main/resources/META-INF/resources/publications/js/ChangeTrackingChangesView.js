@@ -1702,43 +1702,10 @@ export default ({
 		}
 
 		if (nodes.length > 5) {
-			nodes = nodes.slice(
+			return nodes.slice(
 				deltaState * (renderState.page - 1),
 				deltaState * renderState.page
 			);
-		}
-
-		if (getColumn() === COLUMN_MODIFIED_DATE) {
-			nodes.sort((a, b) => {
-				const typeNameA = a.typeName.toLowerCase();
-				const typeNameB = b.typeName.toLowerCase();
-
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
-
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				if (a.modifiedTime < b.modifiedTime) {
-					if (ascendingState) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (a.modifiedTime > b.modifiedTime) {
-					if (ascendingState) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				return 0;
-			});
 		}
 
 		return nodes;
@@ -1838,30 +1805,85 @@ export default ({
 			return '';
 		}
 
+		let orderListIcon = 'order-list-up';
+
+		if (ascendingState) {
+			orderListIcon = 'order-list-down';
+		}
+
+		const getColumnHeader = (column, title) => {
+			return (
+				<ClayButton
+					className={columnState === column ? '' : 'text-secondary'}
+					displayType="unstyled"
+					onClick={() => {
+						if (columnState === column) {
+							setAscendingState(!ascendingState);
+
+							return;
+						}
+
+						setColumnState(column);
+					}}
+				>
+					{title}
+
+					<span
+						className={`inline-item inline-item-after ${
+							columnState === column ? '' : 'text-muted'
+						}`}
+					>
+						<ClayIcon
+							spritemap={spritemap}
+							symbol={
+								columnState === column
+									? orderListIcon
+									: 'order-arrow'
+							}
+						/>
+					</span>
+				</ClayButton>
+			);
+		};
+
 		return (
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell headingCell>
-						{Liferay.Language.get('user')}
+						{getColumnHeader(
+							COLUMN_USER,
+							Liferay.Language.get('user')
+						)}
 					</ClayTable.Cell>
 					<ClayTable.Cell headingCell>
-						{Liferay.Language.get('site')}
+						{getColumnHeader(
+							COLUMN_SITE,
+							Liferay.Language.get('site')
+						)}
 					</ClayTable.Cell>
 					<ClayTable.Cell className="table-cell-expand" headingCell>
-						{Liferay.Language.get('title')}
-					</ClayTable.Cell>
-
-					<ClayTable.Cell
-						className="table-cell-expand-smallest"
-						headingCell
-					>
-						{Liferay.Language.get('change-type')}
+						{getColumnHeader(
+							COLUMN_TITLE,
+							Liferay.Language.get('title')
+						)}
 					</ClayTable.Cell>
 					<ClayTable.Cell
 						className="table-cell-expand-smallest"
 						headingCell
 					>
-						{Liferay.Language.get('last-modified')}
+						{getColumnHeader(
+							COLUMN_CHANGE_TYPE,
+							Liferay.Language.get('change-type')
+						)}
+					</ClayTable.Cell>
+					<ClayTable.Cell
+						className="table-cell-expand-smallest"
+						headingCell
+					>
+						{getColumnHeader(
+							COLUMN_MODIFIED_DATE,
+							Liferay.Language.get('last-modified')
+						)}
 					</ClayTable.Cell>
 				</ClayTable.Row>
 			</ClayTable.Head>
@@ -2205,111 +2227,88 @@ export default ({
 	};
 
 	const renderManagementToolbar = () => {
-		let items = [];
-
-		if (renderState.viewType === VIEW_TYPE_CHANGES) {
-			items = [
-				{
-					active: getColumn() === COLUMN_CHANGE_TYPE,
-					label: Liferay.Language.get('change-type'),
-					onClick: () => setColumnState(COLUMN_CHANGE_TYPE),
-				},
-				{
-					active: getColumn() === COLUMN_MODIFIED_DATE,
-					label: Liferay.Language.get('modified-date'),
-					onClick: () => setColumnState(COLUMN_MODIFIED_DATE),
-				},
-				{
-					active: getColumn() === COLUMN_SITE,
-					label: Liferay.Language.get('site'),
-					onClick: () => setColumnState(COLUMN_SITE),
-				},
-				{
-					active: getColumn() === COLUMN_USER,
-					label: Liferay.Language.get('user'),
-					onClick: () => setColumnState(COLUMN_USER),
-				},
-			];
-		}
-
-		items.push({
-			active: getColumn() === COLUMN_TITLE,
-			label: Liferay.Language.get('title'),
-			onClick: () => setColumnState(COLUMN_TITLE),
-		});
-
-		items.sort((a, b) => {
-			if (a.label < b.label) {
-				return -1;
-			}
-
-			return 1;
-		});
-
-		const dropdownItems = [
-			{
-				items,
-				label: Liferay.Language.get('order-by'),
-				type: 'group',
-			},
-		];
-
 		return (
 			<ClayManagementToolbar>
 				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
-						<ClayDropDownWithItems
-							items={dropdownItems}
-							spritemap={spritemap}
-							trigger={
-								<ClayButton
-									className="nav-link"
-									disabled={changes.length === 0}
-									displayType="unstyled"
-								>
-									<span className="navbar-breakpoint-down-d-none">
-										<span className="navbar-text-truncate">
-											{Liferay.Language.get(
-												'filter-and-order'
-											)}
-										</span>
-
-										<ClayIcon
-											className="inline-item inline-item-after"
-											spritemap={spritemap}
-											symbol="caret-bottom"
-										/>
-									</span>
-									<span className="navbar-breakpoint-d-none">
-										<ClayIcon
-											spritemap={spritemap}
-											symbol="filter"
-										/>
-									</span>
-								</ClayButton>
-							}
-						/>
-					</ClayManagementToolbar.Item>
-
-					<ClayManagementToolbar.Item
-						data-tooltip-align="top"
-						title={Liferay.Language.get('reverse-sort-direction')}
-					>
-						<ClayButton
-							disabled={changes.length === 0}
-							displayType="unstyled"
-							onClick={() => setAscendingState(!ascendingState)}
-						>
-							<ClayIcon
+					{renderState.viewType === VIEW_TYPE_CONTEXT && (
+						<ClayManagementToolbar.Item>
+							<ClayDropDownWithItems
+								items={[
+									{
+										items: [
+											{
+												active:
+													getColumn() ===
+													COLUMN_TITLE,
+												label: Liferay.Language.get(
+													'title'
+												),
+												onClick: () =>
+													setColumnState(
+														COLUMN_TITLE
+													),
+											},
+										],
+										label: Liferay.Language.get('order-by'),
+										type: 'group',
+									},
+								]}
 								spritemap={spritemap}
-								symbol={
-									ascendingState
-										? 'order-list-down'
-										: 'order-list-up'
+								trigger={
+									<ClayButton
+										className="nav-link"
+										disabled={changes.length === 0}
+										displayType="unstyled"
+									>
+										<span className="navbar-breakpoint-down-d-none">
+											<span className="navbar-text-truncate">
+												{Liferay.Language.get(
+													'filter-and-order'
+												)}
+											</span>
+
+											<ClayIcon
+												className="inline-item inline-item-after"
+												spritemap={spritemap}
+												symbol="caret-bottom"
+											/>
+										</span>
+										<span className="navbar-breakpoint-d-none">
+											<ClayIcon
+												spritemap={spritemap}
+												symbol="filter"
+											/>
+										</span>
+									</ClayButton>
 								}
 							/>
-						</ClayButton>
-					</ClayManagementToolbar.Item>
+						</ClayManagementToolbar.Item>
+					)}
+					{renderState.viewType === VIEW_TYPE_CONTEXT && (
+						<ClayManagementToolbar.Item
+							data-tooltip-align="top"
+							title={Liferay.Language.get(
+								'reverse-sort-direction'
+							)}
+						>
+							<ClayButton
+								disabled={changes.length === 0}
+								displayType="unstyled"
+								onClick={() =>
+									setAscendingState(!ascendingState)
+								}
+							>
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={
+										ascendingState
+											? 'order-list-down'
+											: 'order-list-up'
+									}
+								/>
+							</ClayButton>
+						</ClayManagementToolbar.Item>
+					)}
 
 					<ClayManagementToolbar.Item className="nav-item-expand" />
 

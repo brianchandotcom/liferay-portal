@@ -945,6 +945,64 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Person Account");
 	}
 
+	@description = "This asserts that filter in setting default billing will not change to shipping and that shipping addresses do not display as options."
+	@priority = "3"
+	test CannotAddShippingAddressAsDefaultBilling {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account 1",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 1");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			addressType = "Shipping",
+			phoneNumber = "+86 (0)411 88120855");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 1");
+
+		AssertClick(
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_BILLING",
+			value1 = "Set Default Address");
+
+		SelectFrame(
+			key_title = "Set Default Billing Address",
+			locator1 = "IFrame#MODAL_ANY");
+
+		ClickNoError(
+			key_text = "times-small",
+			locator1 = "Icon#ANY");
+
+		AssertElementPresent(
+			key_filterScope = "Type: Billing",
+			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
+
+		Click(locator1 = "Link#CLEAR");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No addresses were found.");
+
+		Search.searchCP(searchTerm = "China");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No addresses were found.");
+	}
+
 	@description = "This test adds an address, sets it as default, and removes it as default"
 	@priority = "3"
 	test CanRemoveAddressAsDefault {

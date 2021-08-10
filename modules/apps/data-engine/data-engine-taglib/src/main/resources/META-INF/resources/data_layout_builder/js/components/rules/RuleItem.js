@@ -39,9 +39,9 @@ const ACTION_LABELS = {
 const OPERATOR_LABELS = {
 	'belongs-to': Liferay.Language.get('belongs-to'),
 	contains: Liferay.Language.get('contains'),
+	'does-not-contain': Liferay.Language.get('does-not-contain'),
 	'equals-to': Liferay.Language.get('equals-to'),
 	'is-empty': Liferay.Language.get('is-empty'),
-	'not-contains': Liferay.Language.get('not-contains'),
 	'not-equals-to': Liferay.Language.get('not-equals-to'),
 	'not-is-empty': Liferay.Language.get('not-is-empty'),
 };

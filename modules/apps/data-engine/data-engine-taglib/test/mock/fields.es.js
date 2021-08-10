@@ -287,7 +287,7 @@ export const OPERATORS_BY_TYPE = {
 		},
 		{
 			label: 'Does not contain',
-			name: 'not-contains',
+			name: 'does-not-contain',
 			parameterClassNames: ['text', 'text'],
 			returnClassName: 'boolean',
 		},

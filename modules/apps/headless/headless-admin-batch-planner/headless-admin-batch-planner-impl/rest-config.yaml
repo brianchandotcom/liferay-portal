@@ -1,0 +1,10 @@
+apiDir: "../headless-admin-batch-planner-api/src/main/java"
+apiPackagePath: "com.liferay.headless.admin.batch.planner"
+application:
+    baseURI: "/headless-admin-batch-planner"
+    className: "HeadlessAdminBatchPlannerApplication"
+    name: "Liferay.Headless.Admin.Batch.Planner"
+author: "Matija Petanjek"
+generateBatch: false
+generateGraphQL: false
+testDir: "../headless-admin-batch-planner-test/src/testIntegration/java"

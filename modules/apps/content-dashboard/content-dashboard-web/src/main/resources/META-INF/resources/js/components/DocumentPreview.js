@@ -17,22 +17,30 @@ import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const DocumentPreview = ({documentSrc, documentTitle, downloadURL, isFile}) => {
+const DocumentPreview = ({
+	documentSrc,
+	documentTitle,
+	downloadURL,
+	isFile,
+	viewURL,
+}) => {
 	return (
 		<div className="document-preview sidebar-section sidebar-section--spaced">
-			<figure className="document-preview-figure">
-				<a
-					className="c-focus-inset d-block h-100"
-					href="#"
-					target="_blank"
-				>
-					<img alt={documentTitle} src={documentSrc} />
-					<ClayIcon
-						className="document-preview-icon"
-						symbol="shortcut"
-					/>
-				</a>
-			</figure>
+			{documentSrc && (
+				<figure className="document-preview-figure">
+					<a
+						className="align-items-center c-focus-inset d-flex h-100"
+						href={viewURL}
+						target="_blank"
+					>
+						<img alt={documentTitle} src={documentSrc} />
+						<ClayIcon
+							className="document-preview-icon"
+							symbol="shortcut"
+						/>
+					</a>
+				</figure>
+			)}
 			<div>
 				{isFile && (
 					<ClayLink className="btn btn-secondary" href={downloadURL}>
@@ -46,6 +54,7 @@ const DocumentPreview = ({documentSrc, documentTitle, downloadURL, isFile}) => {
 
 DocumentPreview.defaultProps = {
 	isFile: false,
+	viewURL: null,
 };
 
 DocumentPreview.propTypes = {
@@ -53,6 +62,7 @@ DocumentPreview.propTypes = {
 	documentTitle: PropTypes.string.isRequired,
 	downloadURL: PropTypes.string,
 	isFile: PropTypes.bool,
+	viewURL: PropTypes.string,
 };
 
 export default DocumentPreview;

@@ -85,6 +85,7 @@ const SidebarPanelInfoView = ({
 		fileName,
 		preview,
 		size,
+		viewURL,
 	} = specificFields;
 
 	const documentDates = [
@@ -174,6 +175,7 @@ const SidebarPanelInfoView = ({
 						documentTitle={title}
 						downloadURL={downloadURL}
 						isFile={documentIsAFile}
+						viewURL={viewURL}
 					/>
 				)}
 

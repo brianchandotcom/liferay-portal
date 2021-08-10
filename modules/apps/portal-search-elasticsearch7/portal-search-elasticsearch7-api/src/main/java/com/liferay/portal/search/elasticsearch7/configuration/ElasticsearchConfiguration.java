@@ -292,7 +292,8 @@ public interface ElasticsearchConfiguration {
 	public long sidecarShutdownTimeout();
 
 	@Meta.AD(
-		description = "proxy-host-help", name = "proxy-host", required = false
+		description = "set-the-proxy-host-to-be-used-for-the-client-connection",
+		name = "proxy-host", required = false
 	)
 	public String proxyHost();
 

@@ -136,7 +136,8 @@ public interface S3StoreConfiguration {
 	public int multipartUploadThreshold();
 
 	@Meta.AD(
-		description = "proxy-host-help", name = "proxy-host", required = false
+		description = "set-the-proxy-host-the-client-uses-to-connect",
+		name = "proxy-host", required = false
 	)
 	public String proxyHost();
 

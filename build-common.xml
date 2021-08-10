@@ -82,7 +82,7 @@
 		<pathelement path="${classpath.full}" />
 		<fileset
 			dir="${project.dir}/lib/development"
-			includes="osgi-annotation-versioning.jar,jsp-api.jar,mail.jar,servlet-api.jar"
+			includes="osgi-annotation-versioning.jar,osgi-core.jar,jsp-api.jar,mail.jar,servlet-api.jar"
 		/>
 		<fileset
 			dir="${project.dir}/lib/portal"

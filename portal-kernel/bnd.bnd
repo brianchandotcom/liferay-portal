@@ -3,6 +3,7 @@ Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 13.0.0
 Export-Package:\
 	!com.liferay.portal.kernel.internal.*,\
+	!com.liferay.portal.kernel.module.util,\
 	!com.liferay.portal.kernel.test.*,\
 	\
 	com.liferay.*

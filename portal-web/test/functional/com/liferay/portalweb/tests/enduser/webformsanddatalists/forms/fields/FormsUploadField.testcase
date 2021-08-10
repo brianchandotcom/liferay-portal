@@ -716,6 +716,8 @@ definition {
 	@description = "This is a use case for LPS-125499."
 	@priority = "2"
 	test GuestUserCannotUploadFileWithInvalidSize {
+		property test.name.skip.portal.instance = "FormsUploadField#GuestUserCannotUploadFileWithInvalidSize";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

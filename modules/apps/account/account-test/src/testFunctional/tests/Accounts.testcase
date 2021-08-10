@@ -118,6 +118,42 @@ definition {
 		AccountUsers.viewEntryAccounts(accountName = "No Assigned Account");
 	}
 
+	@description = "This test adds an address to account and asserts this address is not shared across accounts"
+	@priority = "3"
+	test AddressesAreAccountSpecific {
+		for (var accountNumber : list "1,2") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account ${accountNumber}",
+				accountEntryType = "Business");
+		}
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 1");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "1005 High-Tech Zone",
+			phoneNumber = "+86 (0)411 88120855");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 2");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No addresses were found.");
+	}
+
 	@description = "This test adds a new user via the Users tab of an Account"
 	@priority = "4"
 	test CanAddAccountUserViaAssignUser {
@@ -553,7 +589,6 @@ definition {
 	@priority = "4"
 	test CanDefinePermissionsForAccountSpecificRole {
 		task ("Add a business account with account specific role and navigate to Define Permissions") {
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Business Account with Role",
 				accountEntryType = "Business");
@@ -615,7 +650,7 @@ definition {
 			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
 
 			Button.clickSave();
-		}	
+		}
 	}
 
 	@description = "This test asserts an account can be deleted successfully via management toolbar and menu item."

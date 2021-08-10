@@ -5,7 +5,9 @@ exports[`Modal renders markup based on given configuration 1`] = `
   class="modal-open"
 >
   <div />
-  <div>
+  <div
+    class="cadmin"
+  >
     <div
       class="modal-backdrop fade show"
     />

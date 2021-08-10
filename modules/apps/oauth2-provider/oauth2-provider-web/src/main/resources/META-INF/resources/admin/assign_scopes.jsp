@@ -92,8 +92,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 	</clay:row>
 </clay:container-fluid>
 
-<aui:script sandbox="<%= true %>">
-	AUI().use('node', 'aui-modal', (A) => {
+<aui:script use="aui-base,aui-io-request,aui-modal,aui-node-base,liferay-util">
 		if (A.all('#<portlet:namespace />navGlobalScopes .panel').size() > 0) {
 			A.one('#<portlet:namespace />navScopeTypes').toggleClass(
 				'hidden',
@@ -375,5 +374,4 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 
 				panelBodyElement.addClass('show');
 			});
-	});
 </aui:script>

@@ -318,7 +318,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				long cpDefinitionId, boolean skuContributorsOnly, String json)
 		throws PortalException {
 
-		if (JSONUtil.isValid(json)) {
+		if (JSONUtil.isJSONObject(json)) {
 			return Collections.emptyMap();
 		}
 

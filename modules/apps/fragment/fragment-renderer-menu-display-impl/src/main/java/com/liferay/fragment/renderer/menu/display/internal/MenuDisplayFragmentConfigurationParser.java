@@ -160,7 +160,7 @@ public class MenuDisplayFragmentConfigurationParser {
 			_fragmentEntryConfigurationParser.getFieldValue(
 				configuration, editableValues, "source"));
 
-		if (JSONUtil.isValid(source)) {
+		if (JSONUtil.isJSONObject(source)) {
 			JSONObject jsonObject = _createJSONObject(source);
 
 			if (jsonObject.has("contextualMenu")) {

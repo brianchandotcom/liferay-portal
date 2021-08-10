@@ -220,7 +220,7 @@ public class FragmentEntryConfigurationParserImpl
 		value = GetterUtil.getString(value);
 
 		if (fragmentConfigurationField.isLocalizable() &&
-			JSONUtil.isValid(value)) {
+			JSONUtil.isJSONObject(value)) {
 
 			try {
 				JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(

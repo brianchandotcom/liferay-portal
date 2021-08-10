@@ -1,0 +1,103 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8564 | Test Summary: Add segment using an individual property 'site'"
+    @ignore = "true"
+    @priority = "4"
+    test CanAddSegmentUsingIndividualPropertySite {
+
+        // TODO LRAC-8564 CanAddSegmentUsingIndividualPropertySite pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8565 | Test Summary: Add segment using an individual property 'role'"
+    @ignore = "true"
+    @priority = "4"
+    test CanAddSegmentUsingIndividualPropertyRole {
+
+        // TODO LRAC-8565 CanAddSegmentUsingIndividualPropertyRole pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8566 | Test Summary: Add segment using an individual property 'team'"
+    @ignore = "true"
+    @priority = "4"
+    test CanAddSegmentUsingIndividualPropertyTeam {
+
+        // TODO LRAC-8566 CanAddSegmentUsingIndividualPropertyTeam pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8567 | Test Summary: Add segment using an individual property 'user group'"
+    @ignore = "true"
+    @priority = "4"
+    test CanAddSegmentUsingIndividualPropertyUserGroup {
+
+        // TODO LRAC-8567 CanAddSegmentUsingIndividualPropertyUserGroup pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8568 | Test Summary: Add segment using an individual property 'user'"
+    @ignore = "true"
+    @priority = "4"
+    test CanAddSegmentUsingIndividualPropertyUser {
+
+        // TODO LRAC-8568 CanAddSegmentUsingIndividualPropertyUser pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
+    @ignore = "true"
+    @priority = "4"
+    test CanAddSegmentWithCustomFieldsForIndividuals {
+
+        // TODO LRAC-8569 CanAddSegmentWithCustomFieldsForIndividuals pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
+    @ignore = "true"
+    @priority = "4"
+    test CanAddSegmentWithCustomFieldsForOrganizations {
+
+        // TODO LRAC-8570 CanAddSegmentWithCustomFieldsForOrganizations pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8571 | Test Summary: Custom field does not appear in AC after it has been removed in DXP"
+    @ignore = "true"
+    @priority = "4"
+    test AssertCustomFieldsNotAppearInACFilterWhenRemovedFromDXP {
+
+        // TODO LRAC-8571 AssertCustomFieldsNotAppearInACFilterWhenRemovedFromDXP pending implementation
+
+    }
+}

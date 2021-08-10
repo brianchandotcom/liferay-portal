@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="src/main/java/com/liferay/portal/upgrade/internal/report/UpgradeReport\.java" />
+	</source-check>
+</suppressions>

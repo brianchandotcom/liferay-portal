@@ -66,6 +66,7 @@ definition {
 	@description = "Given the Page Audit panel
 	When the API key is set but it is not valid
 	Then the Page Speed API will show a 'Show details' link, that will display the info details of the error, provided by the API."
+
 	@priority = "3"
 	test CheckErrorDetailsDisplayedInvalidApiKey {
 		task ("Enable Google PageSpeed") {
@@ -97,6 +98,7 @@ definition {
 
 	@description = "Given the Page Audit panel in a private page
 	Then the reload button won't be visible."
+
 	@priority = "3"
 	test CheckNotVisibleReloadbButtonInPrivatePage {
 		task ("Create a Private Page") {

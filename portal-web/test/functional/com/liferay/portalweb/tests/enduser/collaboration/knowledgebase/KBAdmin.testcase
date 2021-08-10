@@ -98,22 +98,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddKBArticle {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-	}
-
 	@priority = "3"
 	@refactorneeded
 	test AddKBArticleViaTemplateCP {

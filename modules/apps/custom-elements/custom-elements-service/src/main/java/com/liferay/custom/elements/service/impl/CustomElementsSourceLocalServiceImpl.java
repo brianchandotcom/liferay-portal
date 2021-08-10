@@ -17,14 +17,27 @@ package com.liferay.custom.elements.service.impl;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.base.CustomElementsSourceLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,6 +52,7 @@ import org.osgi.service.component.annotations.Component;
 public class CustomElementsSourceLocalServiceImpl
 	extends CustomElementsSourceLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CustomElementsSource addCustomElementsSource(
 			long userId, String htmlElementName, String name, String url,
@@ -71,26 +85,44 @@ public class CustomElementsSourceLocalServiceImpl
 
 	@Override
 	public List<CustomElementsSource> search(
-		String keywords, int start, int end, Sort sort) {
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
 
-		if (Validator.isNull(keywords)) {
-			return customElementsSourcePersistence.findAll(
-				start, end, _getOrderByComparator(sort));
+		SearchContext searchContext = buildSearchContext(
+			companyId, keywords, start, end, sort);
+
+		Indexer<CustomElementsSource> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CustomElementsSource.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<CustomElementsSource> customElementsSources =
+				getCustomElementsSources(hits);
+
+			if (customElementsSources != null) {
+				return customElementsSources;
+			}
 		}
 
-		return customElementsSourcePersistence.findByName(
-			keywords, start, end, _getOrderByComparator(sort));
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	@Override
-	public int searchCount(String keywords) {
-		if (Validator.isNull(keywords)) {
-			return customElementsSourcePersistence.countAll();
-		}
+	public int searchCount(long companyId, String keywords)
+		throws PortalException {
 
-		return customElementsSourcePersistence.countByName(keywords);
+		Indexer<CustomElementsSource> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CustomElementsSource.class);
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CustomElementsSource updateCustomElementsSource(
 			long customElementsSourceId, String htmlElementName, String name,
@@ -108,41 +140,68 @@ public class CustomElementsSourceLocalServiceImpl
 		return customElementsSourcePersistence.update(customElementsSource);
 	}
 
-	private OrderByComparator<CustomElementsSource> _getOrderByComparator(
-		Sort sort) {
+	protected SearchContext buildSearchContext(
+		long companyId, String keywords, int start, int end, Sort sort) {
 
-		if (sort == null) {
-			return null;
+		SearchContext searchContext = new SearchContext();
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.NAME, keywords
+			).put(
+				Field.URL, keywords
+			).build());
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setKeywords(keywords);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
 		}
 
-		return new OrderByComparator<CustomElementsSource>() {
+		searchContext.setStart(start);
 
-			@Override
-			public int compare(
-				CustomElementsSource customElementsSource1,
-				CustomElementsSource customElementsSource2) {
+		return searchContext;
+	}
 
-				Comparable<Object> value1 =
-					(Comparable)BeanPropertiesUtil.getObject(
-						customElementsSource1, sort.getFieldName());
+	protected List<CustomElementsSource> getCustomElementsSources(Hits hits)
+		throws PortalException {
 
-				Comparable<Object> value2 =
-					(Comparable)BeanPropertiesUtil.getObject(
-						customElementsSource1, sort.getFieldName());
+		List<Document> documents = hits.toList();
 
-				if (sort.isReverse()) {
-					return value2.compareTo(value1);
-				}
+		List<CustomElementsSource> customElementsSources = new ArrayList<>(
+			documents.size());
 
-				return value1.compareTo(value2);
+		for (Document document : documents) {
+			long customElementsSourceId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CustomElementsSource customElementsSource =
+				customElementsSourcePersistence.fetchByPrimaryKey(
+					customElementsSourceId);
+
+			if (customElementsSource == null) {
+				customElementsSources = null;
+
+				Indexer<CustomElementsSource> indexer =
+					IndexerRegistryUtil.getIndexer(CustomElementsSource.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
 			}
-
-			@Override
-			public String[] getOrderByFields() {
-				return new String[] {sort.getFieldName()};
+			else {
+				customElementsSources.add(customElementsSource);
 			}
+		}
 
-		};
+		return customElementsSources;
 	}
 
 }

@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../prop-types/index';
+import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import {useWidgets} from '../contexts/WidgetsContext';
@@ -27,6 +28,7 @@ import duplicateItem from '../thunks/duplicateItem';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
+import updateItemStyle from '../utils/updateItemStyle';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 
 export default function ItemActions({item}) {
@@ -36,12 +38,34 @@ export default function ItemActions({item}) {
 	const state = useSelector((state) => state);
 	const widgets = useWidgets();
 
-	const {fragmentEntryLinks, layoutData, segmentsExperienceId} = state;
+	const {
+		fragmentEntryLinks,
+		layoutData,
+		segmentsExperienceId,
+		selectedViewportSize,
+	} = state;
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
 	const itemActions = useMemo(() => {
 		const actions = [];
+
+		if (config.fragmentsHidingEnabled) {
+			actions.push({
+				action: () => {
+					updateItemStyle({
+						dispatch,
+						itemId: item.itemId,
+						segmentsExperienceId,
+						selectedViewportSize,
+						styleName: 'display',
+						styleValue: 'none',
+					});
+				},
+				icon: 'hidden',
+				label: Liferay.Language.get('hide-fragment'),
+			});
+		}
 
 		if (canBeSaved(item, layoutData)) {
 			actions.push({
@@ -88,6 +112,7 @@ export default function ItemActions({item}) {
 		item,
 		layoutData,
 		segmentsExperienceId,
+		selectedViewportSize,
 		selectItem,
 		state,
 		widgets,

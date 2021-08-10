@@ -117,10 +117,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				}
 			).map(
 				contentDashboardItem -> JSONUtil.put(
-					"avatar",
-					contentDashboardItem.getUserAvatarURL(
-						httpServletRequest, _userLocalService)
-				).put(
 					"categories",
 					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
 				).put(

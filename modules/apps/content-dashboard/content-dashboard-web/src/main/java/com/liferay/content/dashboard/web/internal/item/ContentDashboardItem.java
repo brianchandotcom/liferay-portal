@@ -22,7 +22,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Date;
 import java.util.List;
@@ -79,10 +78,6 @@ public interface ContentDashboardItem<T> {
 	public String getTitle(Locale locale);
 
 	public String getTypeLabel(Locale locale);
-
-	public String getUserAvatarURL(
-		HttpServletRequest httpServletRequest,
-		UserLocalService userLocalService);
 
 	public long getUserId();
 

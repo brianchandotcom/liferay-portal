@@ -306,14 +306,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public String getUserAvatarURL(
-				HttpServletRequest httpServletRequest,
-				UserLocalService userLocalService) {
-
-				return "avatar/url/test";
-			}
-
-			@Override
 			public long getUserId() {
 				return 0;
 			}

@@ -17,17 +17,9 @@ package com.liferay.content.dashboard.web.internal.item;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Yurena Cabrera
@@ -59,35 +51,5 @@ public abstract class ContentDashboardBaseItem<T>
 
 	public abstract InfoItemFieldValuesProvider
 		getInfoItemFieldValuesProvider();
-
-	@Override
-	public String getUserAvatarURL(
-		HttpServletRequest httpServletRequest,
-		UserLocalService userLocalService) {
-
-		StringBundler sb = new StringBundler(5);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		sb.append(themeDisplay.getPathImage());
-
-		try {
-			User user = userLocalService.getUserById(getUserId());
-
-			sb.append("/user_portrait?screenName=");
-			sb.append(user.getScreenName());
-			sb.append("&amp;companyId=");
-			sb.append(user.getCompanyId());
-
-			return sb.toString();
-		}
-		catch (PortalException portalException) {
-			portalException.printStackTrace();
-		}
-
-		return null;
-	}
 
 }

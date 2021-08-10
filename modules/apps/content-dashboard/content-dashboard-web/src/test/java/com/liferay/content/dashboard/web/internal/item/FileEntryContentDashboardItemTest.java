@@ -31,10 +31,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -177,52 +175,6 @@ public class FileEntryContentDashboardItemTest {
 		Assert.assertEquals(
 			Collections.singletonList(assetTag),
 			fileEntryContentDashboardItem.getAssetTags());
-	}
-
-	@Test
-	public void testGetAuthorAvatar() throws Exception {
-		FileEntry fileEntry = _getFileEntry();
-
-		User user = Mockito.mock(User.class);
-
-		Mockito.when(
-			user.getUserId()
-		).thenReturn(
-			1L
-		);
-
-		Mockito.when(
-			user.getScreenName()
-		).thenReturn(
-			"Screen Name"
-		);
-
-		Mockito.when(
-			user.getCompanyId()
-		).thenReturn(
-			123L
-		);
-
-		UserLocalService userLocalService = Mockito.mock(
-			UserLocalService.class);
-
-		Mockito.when(
-			userLocalService.getUserById(Mockito.any(Long.class))
-		).thenReturn(
-			user
-		);
-
-		FileEntryContentDashboardItem fileEntryContentDashboardItem =
-			new FileEntryContentDashboardItem(
-				null, null, null, null, fileEntry, null, null, null, null);
-
-		String expectedResult =
-			"null/user_portrait?screenName=Screen Name&amp;companyId=123";
-
-		Assert.assertEquals(
-			expectedResult,
-			fileEntryContentDashboardItem.getUserAvatarURL(
-				_getHttpServletRequest(1L), userLocalService));
 	}
 
 	@Test

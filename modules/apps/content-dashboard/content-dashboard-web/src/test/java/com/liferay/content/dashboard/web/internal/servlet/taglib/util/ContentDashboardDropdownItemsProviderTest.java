@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
@@ -335,14 +334,6 @@ public class ContentDashboardDropdownItemsProviderTest {
 			@Override
 			public String getTypeLabel(Locale locale) {
 				return "Web Content";
-			}
-
-			@Override
-			public String getUserAvatarURL(
-				HttpServletRequest httpServletRequest,
-				UserLocalService userLocalService) {
-
-				return "avatar/url/test";
 			}
 
 			@Override

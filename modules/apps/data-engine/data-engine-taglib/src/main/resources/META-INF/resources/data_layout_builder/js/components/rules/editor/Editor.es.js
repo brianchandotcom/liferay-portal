@@ -129,8 +129,21 @@ const reducer = (state, action) => {
 			const {actions, conditions} = state.ifStatement;
 			const {loc, value, ...otherPayloads} = action.payload;
 
+			let newActions = actions[loc];
+
+			if (
+				newActions.action === 'auto-fill' &&
+				newActions.label !== value
+			) {
+				newActions = {
+					...newActions,
+					inputs: {},
+					outputs: {},
+				};
+			}
+
 			actions[loc] = {
-				...actions[loc],
+				...newActions,
 				...otherPayloads,
 				label: value,
 				target: value,

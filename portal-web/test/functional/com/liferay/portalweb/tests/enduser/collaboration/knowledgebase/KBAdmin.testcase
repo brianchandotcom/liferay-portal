@@ -458,28 +458,6 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test CanEditArticle {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.editCP(
-			kbArticleContentEdit = "Knowledge Base Article Content Edit",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content Edit",
-			kbArticleTitle = "Knowledge Base Article Title Edit");
-	}
-
-	@priority = "4"
-	@refactorneeded
 	test CanEditFolder {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",

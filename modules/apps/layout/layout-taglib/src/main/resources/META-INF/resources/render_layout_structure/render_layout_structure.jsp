@@ -275,7 +275,7 @@ for (String childrenItemId : childrenItemIds) {
 				<c:if test="<%= fragmentEntryLink != null %>">
 
 					<%
-					FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+					FragmentRendererController fragmentRendererController = ServletContextUtil.getFragmentRendererController();
 
 					DefaultFragmentRendererContext defaultFragmentRendererContext = renderLayoutStructureDisplayContext.getDefaultFragmentRendererContext(fragmentEntryLink, fragmentStyledLayoutStructureItem.getItemId());
 					%>

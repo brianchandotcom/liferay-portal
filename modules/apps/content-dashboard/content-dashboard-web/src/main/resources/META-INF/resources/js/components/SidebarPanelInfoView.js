@@ -77,9 +77,16 @@ const SidebarPanelInfoView = ({
 	);
 
 	const stickerColor = parseInt(user.userId, 10) % 10;
-	const itemIsFile = subType === 'Basic Document';
+	const documentIsFile = subType === 'Basic Document';
 
-	const {description, downloadURL, fileName, preview} = specificFields;
+	const {
+		description,
+		downloadURL,
+		extension,
+		fileName,
+		preview,
+		size,
+	} = specificFields;
 
 	const documentDates = [
 		{
@@ -114,7 +121,7 @@ const SidebarPanelInfoView = ({
 
 			<Sidebar.Body>
 				<div className="sidebar-section">
-					{itemIsFile && (
+					{documentIsFile && (
 						<p className="mb-2 text-secondary">{fileName}</p>
 					)}
 
@@ -159,6 +166,8 @@ const SidebarPanelInfoView = ({
 						documentSrc={preview}
 						documentTitle={title}
 						downloadURL={downloadURL}
+						extension={extension}
+						size={size}
 					/>
 				)}
 

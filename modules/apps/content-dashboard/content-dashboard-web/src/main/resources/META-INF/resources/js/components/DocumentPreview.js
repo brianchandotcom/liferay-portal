@@ -14,63 +14,51 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
-const DocumentPreview = ({documentSrc, documentTitle, downloadURL}) => {
-	const [showModal, setShowModal] = useState(false);
-
-	const {observer} = useModal({
-		onClose: () => setShowModal(false),
-	});
-
-	const handleShowModal = () => setShowModal(true);
+const DocumentPreview = ({
+	documentSrc,
+	documentTitle,
+	downloadURL,
+	extension,
+	size,
+}) => {
+	const documentCanBeDownloaded =
+		!!downloadURL && !!extension && parseInt(size, 10) > 0;
 
 	return (
-		<>
-			<div className="document-preview sidebar-section sidebar-section--spaced">
-				<figure className="document-preview-figure">
+		<div className="document-preview sidebar-section sidebar-section--spaced">
+			<figure className="document-preview-figure">
+				<a
+					className="c-focus-inset d-block h-100"
+					href="#"
+					target="_blank"
+				>
 					<img alt={documentTitle} src={documentSrc} />
 					<ClayIcon
 						className="document-preview-icon"
-						onClick={handleShowModal}
 						symbol="shortcut"
 					/>
-				</figure>
-				<div>
-					{downloadURL && (
-						<ClayLink
-							className="btn btn-secondary"
-							href={downloadURL}
-						>
-							{Liferay.Language.get('download')}
-						</ClayLink>
-					)}
-				</div>
+				</a>
+			</figure>
+			<div>
+				{documentCanBeDownloaded && (
+					<ClayLink className="btn btn-secondary" href={downloadURL}>
+						{Liferay.Language.get('download')}
+					</ClayLink>
+				)}
 			</div>
-			{showModal && (
-				<ClayModal observer={observer} size="full-screen">
-					<ClayModal.Header>{documentTitle}</ClayModal.Header>
-					<ClayModal.Body className="p-0">
-						<figure className="h-100 m-0 text-center">
-							<img
-								alt={documentTitle}
-								className="h-100"
-								src={documentSrc}
-							/>
-						</figure>
-					</ClayModal.Body>
-				</ClayModal>
-			)}
-		</>
+		</div>
 	);
 };
 
 DocumentPreview.propTypes = {
 	documentSrc: PropTypes.string.isRequired,
-	documentTitle: PropTypes.string,
+	documentTitle: PropTypes.string.isRequired,
 	downloadURL: PropTypes.string,
+	extension: PropTypes.string,
+	size: PropTypes.string,
 };
 
 export default DocumentPreview;

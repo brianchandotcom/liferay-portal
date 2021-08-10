@@ -15,17 +15,22 @@
 package com.liferay.portal.workflow.web.internal.util.filter;
 
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * @author Adam Brandizzi
  */
+@RunWith(Parameterized.class)
 public class WorkflowDefinitionActivePredicateTest {
 
 	@ClassRule
@@ -33,86 +38,37 @@ public class WorkflowDefinitionActivePredicateTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void testFilterAllIncludeActive() {
-		WorkflowDefinitionActivePredicate predicate =
-			new WorkflowDefinitionActivePredicate(WorkflowConstants.STATUS_ANY);
-
-		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			true);
-
-		boolean result = predicate.test(workflowDefinition);
-
-		Assert.assertTrue(result);
+	@Parameterized.Parameters(
+		name = "active={0}, expectedResult={1}, status={2}"
+	)
+	public static List<Object[]> data() {
+		return Arrays.asList(
+			new Object[][] {
+				{true, true, WorkflowConstants.STATUS_ANY},
+				{false, true, WorkflowConstants.STATUS_ANY},
+				{true, false, WorkflowConstants.STATUS_DRAFT},
+				{false, true, WorkflowConstants.STATUS_DRAFT},
+				{false, false, WorkflowConstants.STATUS_APPROVED},
+				{true, true, WorkflowConstants.STATUS_APPROVED}
+			});
 	}
 
 	@Test
-	public void testFilterAllIncludeInactive() {
+	public void testFilter() {
 		WorkflowDefinitionActivePredicate predicate =
-			new WorkflowDefinitionActivePredicate(WorkflowConstants.STATUS_ANY);
+			new WorkflowDefinitionActivePredicate(status);
 
-		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			false);
-
-		boolean result = predicate.test(workflowDefinition);
-
-		Assert.assertTrue(result);
+		Assert.assertEquals(
+			expectedResult, predicate.test(new WorkflowDefinitionImpl(active)));
 	}
 
-	@Test
-	public void testFilterNotPublishedExcludeActive() {
-		WorkflowDefinitionActivePredicate predicate =
-			new WorkflowDefinitionActivePredicate(
-				WorkflowConstants.STATUS_DRAFT);
+	@Parameterized.Parameter
+	public boolean active;
 
-		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			true);
+	@Parameterized.Parameter(1)
+	public boolean expectedResult;
 
-		boolean result = predicate.test(workflowDefinition);
-
-		Assert.assertFalse(result);
-	}
-
-	@Test
-	public void testFilterNotPublishedIncludeInactive() {
-		WorkflowDefinitionActivePredicate predicate =
-			new WorkflowDefinitionActivePredicate(
-				WorkflowConstants.STATUS_DRAFT);
-
-		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			false);
-
-		boolean result = predicate.test(workflowDefinition);
-
-		Assert.assertTrue(result);
-	}
-
-	@Test
-	public void testFilterPublishedExcludeInactive() {
-		WorkflowDefinitionActivePredicate predicate =
-			new WorkflowDefinitionActivePredicate(
-				WorkflowConstants.STATUS_APPROVED);
-
-		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			false);
-
-		boolean result = predicate.test(workflowDefinition);
-
-		Assert.assertFalse(result);
-	}
-
-	@Test
-	public void testFilterPublishedIncludeActive() {
-		WorkflowDefinitionActivePredicate predicate =
-			new WorkflowDefinitionActivePredicate(
-				WorkflowConstants.STATUS_APPROVED);
-
-		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			true);
-
-		boolean result = predicate.test(workflowDefinition);
-
-		Assert.assertTrue(result);
-	}
+	@Parameterized.Parameter(2)
+	public int status;
 
 }

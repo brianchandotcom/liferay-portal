@@ -549,6 +549,75 @@ definition {
 		}
 	}
 
+	@description = "This only tests the UI for defining permissions for an account specific role. Permissioning will be covered when 2B widgets are implemented."
+	@priority = "4"
+	test CanDefinePermissionsForAccountSpecificRole {
+		task ("Add a business account with account specific role and navigate to Define Permissions") {
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business Account with Role",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account with Role");
+
+			Accounts.addAccountSpecificRole(accountRoleTitle = "Account Specific Role");
+
+			Navigator.gotoBack();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Define Permissions",
+				rowEntry = "Account Specific Role");
+		}
+
+		task ("Select All permissions for Applications and Resource Permissions for Account Entries") {
+			var key_navItem = "Accounts";
+
+			var key_subItem = "Accounts";
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
+
+			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
+
+			Check(locator1 = "RolesPermissions#ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_SELECT_ALL");
+
+			Check(locator1 = "RolesPermissions#ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_SELECT_ALL");
+
+			Button.clickSave();
+		}
+
+		task ("Select All permissions for Resource Permissions for Account Users") {
+			var key_navItem = "Accounts";
+
+			var key_subItem = "Account Users";
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
+
+			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
+
+			Button.clickSave();
+		}
+
+		task ("Select All permissions for Resource Permissions for Account Groups") {
+			var key_navItem = "Accounts";
+
+			var key_subItem = "Account Groups";
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
+
+			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
+
+			Button.clickSave();
+		}	
+	}
+
 	@description = "This test asserts an account can be deleted successfully via management toolbar and menu item."
 	@priority = "5"
 	test CanDeleteAccount {

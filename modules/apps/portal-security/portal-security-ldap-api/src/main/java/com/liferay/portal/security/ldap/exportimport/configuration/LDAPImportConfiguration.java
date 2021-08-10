@@ -60,7 +60,7 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	public long importLockExpirationTime();
 
 	@Meta.AD(
-		deflt = "auth-type", name = "import-user-sync-strategy",
+		deflt = "auth-type", name = "import-user-synchronization-strategy",
 		optionValues = {"auth-type", "uuid"}, required = false
 	)
 	public String importUserSyncStrategy();

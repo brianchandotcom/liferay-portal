@@ -99,7 +99,10 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 	}
 
 	private String _toLogTypeName(WorkflowLog.Type type) {
-		if (type == WorkflowLog.Type.TASK_ASSIGN) {
+		if (type == WorkflowLog.Type.NODE_ENTRY) {
+			return LogType.NODE_ENTRY.name();
+		}
+		else if (type == WorkflowLog.Type.TASK_ASSIGN) {
 			return LogType.TASK_ASSIGNMENT.name();
 		}
 		else if (type == WorkflowLog.Type.TASK_COMPLETION) {
@@ -183,7 +186,10 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 	}
 
 	private WorkflowLog.Type _toWorkflowLogType(String type) {
-		if (type == LogType.NODE_EXIT.name()) {
+		if (type == LogType.NODE_ENTRY.name()) {
+			return WorkflowLog.Type.NODE_ENTRY;
+		}
+		else if (type == LogType.NODE_EXIT.name()) {
 			return WorkflowLog.Type.TRANSITION;
 		}
 		else if (type == LogType.TASK_ASSIGNMENT.name()) {

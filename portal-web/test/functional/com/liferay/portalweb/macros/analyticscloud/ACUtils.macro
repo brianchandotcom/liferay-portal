@@ -177,8 +177,6 @@ definition {
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
-		Pause(locator1 = "500");
-
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");

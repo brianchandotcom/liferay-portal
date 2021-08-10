@@ -614,10 +614,10 @@ function CollectionFilterConfigurationModal({
 				{typeLabel && (
 					<p
 						className={classNames(
-							'page-editor__mapping-panel__type-label',
+							'page-editor__collection-general-panel__type-label',
 							{
 								'mb-0': subtypeLabel,
-								'mb-2': !subtypeLabel,
+								'mb-3': !subtypeLabel,
 							}
 						)}
 					>
@@ -629,7 +629,7 @@ function CollectionFilterConfigurationModal({
 				)}
 
 				{subtypeLabel && (
-					<p className="mb-2 page-editor__mapping-panel__type-label">
+					<p className="mb-3 page-editor__collection-general-panel__type-label">
 						<span className="mr-1">
 							{Liferay.Language.get('subtype')}:
 						</span>
@@ -637,28 +637,32 @@ function CollectionFilterConfigurationModal({
 					</p>
 				)}
 
-				{collectionConfiguration ? (
-					collectionConfiguration.fieldSets
-						.filter((fieldSet) => fieldSet.fields.length)
-						.map((fieldSet, index) => (
-							<FieldSet
-								fields={fieldSet.fields}
-								key={`${fieldSet.label || ''}-${index}`}
-								label={fieldSet.label}
-								languageId={languageId}
-								onValueSelect={(name, value) =>
-									handleFieldValueSelect(
-										fieldSet,
-										name,
-										value
-									)
-								}
-								values={item.config.collection?.config || {}}
-							/>
-						))
-				) : (
-					<ClayLoadingIndicator />
-				)}
+				<div className="page-editor__collection-general-panel__configuration-field-sets">
+					{collectionConfiguration ? (
+						collectionConfiguration.fieldSets
+							.filter((fieldSet) => fieldSet.fields.length)
+							.map((fieldSet, index) => (
+								<FieldSet
+									fields={fieldSet.fields}
+									key={`${fieldSet.label || ''}-${index}`}
+									label={fieldSet.label}
+									languageId={languageId}
+									onValueSelect={(name, value) =>
+										handleFieldValueSelect(
+											fieldSet,
+											name,
+											value
+										)
+									}
+									values={
+										item.config.collection?.config || {}
+									}
+								/>
+							))
+					) : (
+						<ClayLoadingIndicator />
+					)}
+				</div>
 			</ClayModal.Body>
 			<ClayModal.Footer
 				last={

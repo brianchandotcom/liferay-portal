@@ -12,12 +12,14 @@
  * details.
  */
 
+import {useResource} from '@clayui/data-provider';
 import {ClayModalProvider} from '@clayui/modal';
 import {
 	PageProvider as FieldProvider,
 	RulesSupport,
 	useFieldTypesResource,
 } from 'data-engine-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useReducer} from 'react';
 
 import {Actions} from './Actions.es';
@@ -450,6 +452,29 @@ export function Editor({
 		init
 	);
 
+	const InputOutputLength = ({target, url}) => {
+		const {resource} = useResource({
+			fetch,
+			link: location.origin + url,
+			variables: {
+				ddmDataProviderInstanceId: target,
+			},
+		});
+
+		return resource?.inputs.length + resource?.outputs.length;
+	};
+
+	const {dataProviderInstanceParameterSettingsURL} = otherProps;
+
+	const newDataProvider =
+		dataProvider?.map((provider) => ({
+			...provider,
+			inputOutputLength: InputOutputLength({
+				target: provider.id,
+				url: dataProviderInstanceParameterSettingsURL,
+			}),
+		})) ?? [];
+
 	const {resource: fieldTypes} = useFieldTypesResource();
 
 	useEffect(() => {
@@ -475,7 +500,7 @@ export function Editor({
 		};
 
 		onValidator(
-			RulesSupport.isActionsValid(actions) &&
+			RulesSupport.isActionsValid(actions, newDataProvider) &&
 				RulesSupport.isConditionsValid(newRule.conditions)
 		);
 		onChange(newRule);

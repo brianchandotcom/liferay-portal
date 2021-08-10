@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -318,7 +319,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				long cpDefinitionId, boolean skuContributorsOnly, String json)
 		throws PortalException {
 
-		if (_jsonHelper.isEmpty(json)) {
+		if (JSONUtil.isEmpty(json)) {
 			return Collections.emptyMap();
 		}
 
@@ -328,7 +329,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		if (_jsonHelper.isArray(json)) {
+		if (JSONUtil.isArray(json)) {
 			jsonArray = _jsonFactory.createJSONArray(json);
 		}
 		else {

@@ -35,6 +35,24 @@ definition {
 		}
 	}
 
+	@description = "Verify that the user can assign a a different Workflow to a Subfolder"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAssignDifferentWorkflowToSubfolder {
+
+		// TODO LRQA-69291 CanAssignDifferentWorkflowToSubfolder pending implementation
+
+	}
+
+	@description = "Verify that the user can assign a Workflow to the Home folder"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAssignWorkflowToHomeFolder {
+
+		// TODO LRQA-69290 CanAssignWorkflowToHomeFolder pending implementation
+
+	}
+
 	@priority = "4"
 	test ConfigureFolderWorkflow {
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
@@ -171,6 +189,24 @@ definition {
 		Navigator.gotoPage(pageName = "Test Page");
 
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
+	}
+
+	@description = "Verify that, when a Web Content is moved to a Folder, it's Workflow changes"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MoveWebContentToFolderChangeItsWorkflow {
+
+		// TODO LRQA-69293 MoveWebContentToFolderChangeItsWorkflow pending implementation
+
+	}
+
+	@description = "Verify that the Subfolder can use the Workflow of the Parent Folder"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SubfolderCanUseWorkflowOfParentFolder {
+
+		// TODO LRQA-69289 SubfolderCanUseWorkflowOfParentFolder pending implementation
+
 	}
 
 }

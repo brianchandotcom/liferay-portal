@@ -7200,6 +7200,15 @@ go</echo>
 				<echo>${liferay.home}/osgi/modules/${liferay.dependency.jars} </echo>
 			</then>
 		</if>
+
+		<if>
+			<isset property="liferay.portal.jars" />
+			<then>
+				<delete file="${liferay.home}/osgi/modules/${liferay.portal.jars}" />
+
+				<echo>${liferay.home}/osgi/portal/${liferay.portal.jars} </echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="delete-license-file">

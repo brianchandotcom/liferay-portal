@@ -1,9 +1,9 @@
 definition {
 
-    macro viewSystemObject {
+	macro viewSystemObject {
+		AssertElementPresent(
+			key_name = "${name}",
+			locator1 = "CreateObject#VIEW_SYSTEM_OBJECT");
+	}
 
-      		AssertElementPresent(
-	    		key_name = "${name}",
-		    	locator1 = "CreateObject#VIEW_SYSTEM_OBJECT");
-    }
 }

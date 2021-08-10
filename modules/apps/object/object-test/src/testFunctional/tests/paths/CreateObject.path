@@ -10,12 +10,11 @@
 </thead>
 
 <tbody>
-    <tr>
-        <td>VIEW_SYSTEM_OBJECT</td>
-        <td>//div[contains(@class,'table-list-title') and contains(.,'${key_name}') and contains(.,Yes)]</td>
-        <td></td>
-    </tr>
-
+	<tr>
+		<td>VIEW_SYSTEM_OBJECT</td>
+		<td>//div[contains(@class,'table-list-title') and contains(.,'${key_name}') and contains(.,Yes)]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

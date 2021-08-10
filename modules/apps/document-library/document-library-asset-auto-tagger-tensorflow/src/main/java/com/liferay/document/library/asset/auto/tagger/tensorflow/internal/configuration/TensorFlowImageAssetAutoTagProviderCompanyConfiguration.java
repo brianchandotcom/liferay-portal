@@ -36,7 +36,8 @@ public interface TensorFlowImageAssetAutoTagProviderCompanyConfiguration {
 	 * Enables auto tagging of images using a pre-trained tensorflow model.
 	 */
 	@Meta.AD(
-		deflt = "false", description = "enabled-description",
+		deflt = "false",
+		description = "enable-auto-tagging-of-images-in-the-document-library-using-tensor-flow",
 		name = "enable-tensor-flow-image-auto-tagging", required = false
 	)
 	public boolean enabled();

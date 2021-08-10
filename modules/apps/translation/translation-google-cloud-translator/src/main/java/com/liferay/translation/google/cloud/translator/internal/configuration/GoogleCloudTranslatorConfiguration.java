@@ -30,8 +30,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface GoogleCloudTranslatorConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "enabled-description", name = "enabled",
-		required = false
+		deflt = "false",
+		description = "enable-or-disable-the-integration-with-google-cloud-translation-api-for-automatic-translations",
+		name = "enabled", required = false
 	)
 	public boolean enabled();
 

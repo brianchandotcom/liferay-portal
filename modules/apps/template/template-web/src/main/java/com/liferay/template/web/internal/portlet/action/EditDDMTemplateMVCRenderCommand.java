@@ -14,7 +14,9 @@
 
 package com.liferay.template.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -23,17 +25,24 @@ import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.display.context.InformationTemplatesEditDDMTemplateDisplayContext;
 import com.liferay.template.web.internal.display.context.WidgetTemplatesEditDDMTemplateDisplayContext;
 
+import java.util.Map;
+import java.util.Objects;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
 		"mvc.command.name=/template/edit_ddm_template"
@@ -61,6 +70,9 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		}
 		else if (Objects.equals(tabs1, "widget-templates")) {
 			renderRequest.setAttribute(
+				DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
+
+			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new WidgetTemplatesEditDDMTemplateDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
@@ -70,8 +82,17 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_ddm_template.jsp";
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
+			DDMWebConfiguration.class, properties);
+	}
+
 	@Reference
 	private DDMTemplateHelper _ddmTemplateHelper;
+
+	private volatile DDMWebConfiguration _ddmWebConfiguration;
 
 	@Reference
 	private Portal _portal;

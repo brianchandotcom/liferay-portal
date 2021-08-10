@@ -175,7 +175,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 				<c:choose>
 					<c:when test="<%= eicve.getType() == ExportImportContentValidationException.ARTICLE_NOT_FOUND %>">
-						<liferay-ui:message key="unable-to-validate-referenced-journal-article" />
+						<liferay-ui:message key="unable-to-validate-referenced-web-content-article" />
 					</c:when>
 					<c:when test="<%= eicve.getType() == ExportImportContentValidationException.FILE_ENTRY_NOT_FOUND %>">
 						<liferay-ui:message arguments="<%= new String[] {MapUtil.toString(eicve.getDlReferenceParameters()), eicve.getDlReference()} %>" key="unable-to-validate-referenced-document-because-it-cannot-be-found-with-the-following-parameters-x-when-analyzing-link-x" />

@@ -244,10 +244,10 @@ const DatePicker = ({
 				const date = moment(initialValueMemoized);
 
 				if (year <= 50) {
-					date.subtract(1900, 'years');
-				}
-				else if (year < 100) {
 					date.subtract(2000, 'years');
+				}
+				else if (year > 50 && year < 100) {
+					date.subtract(1900, 'years');
 				}
 
 				inputRef.current.value = date.format(dateMask.toUpperCase());
@@ -256,7 +256,10 @@ const DatePicker = ({
 				inputRef.current.value = '';
 			}
 
-			if (inputRef.current.value.match(LETTER_DIGIT_REGEX)) {
+			if (
+				inputRef.current.value.match(LETTER_DIGIT_REGEX) ||
+				inputRef.current.value === ''
+			) {
 				maskInstance.current.update(inputRef.current.value);
 			}
 		}

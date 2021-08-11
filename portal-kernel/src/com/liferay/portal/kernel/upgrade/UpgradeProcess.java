@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
@@ -60,7 +63,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -298,6 +306,56 @@ public abstract class UpgradeProcess
 
 		private final String _columnName;
 
+	}
+
+	protected static <T, E1 extends Exception, E2 extends Exception> void
+			concurrentUpgrade(
+				UnsafeSupplier<T, E1> unsafeSupplier,
+				UnsafeConsumer<T, E2> unsafeConsumer)
+		throws E1, E2 {
+
+		Objects.requireNonNull(unsafeSupplier);
+		Objects.requireNonNull(unsafeConsumer);
+
+		ExecutorService executorService = Executors.newWorkStealingPool();
+
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
+		List<Future<Void>> futures = new ArrayList<>();
+
+		try {
+			T next = null;
+
+			while ((next = unsafeSupplier.get()) != null) {
+				T current = next;
+
+				Future<Void> future = executorService.submit(
+					() -> {
+						unsafeConsumer.accept(current);
+
+						return null;
+					});
+
+				futures.add(future);
+			}
+		}
+		finally {
+			executorService.shutdown();
+
+			for (Future<Void> future : futures) {
+				try {
+					future.get();
+				}
+				catch (ExecutionException executionException) {
+					throwableCollector.collect(executionException.getCause());
+				}
+				catch (Exception exception) {
+					throwableCollector.collect(exception);
+				}
+			}
+		}
+
+		throwableCollector.rethrow();
 	}
 
 	protected void alter(Class<?> tableClass, Alterable... alterables)

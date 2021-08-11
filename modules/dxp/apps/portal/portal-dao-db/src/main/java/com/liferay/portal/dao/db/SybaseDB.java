@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -31,6 +30,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.regex.Matcher;
@@ -97,7 +97,7 @@ public class SybaseDB extends BaseDB {
 
 	@Override
 	public void removePrimaryKey(Connection connection, String tableName)
-		throws Exception {
+		throws IOException, SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -124,7 +124,7 @@ public class SybaseDB extends BaseDB {
 		}
 
 		if (primaryKeyConstraintName == null) {
-			throw new UpgradeException(
+			throw new SQLException(
 				"No primary key constraint found for " + normalizedTableName);
 		}
 

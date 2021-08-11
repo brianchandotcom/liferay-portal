@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -115,7 +114,7 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	public void removePrimaryKey(Connection connection, String tableName)
-		throws Exception {
+		throws IOException, SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -139,7 +138,7 @@ public class SQLServerDB extends BaseDB {
 		}
 
 		if (primaryKeyConstraintName == null) {
-			throw new UpgradeException(
+			throw new SQLException(
 				"No primary key constraint found for " + normalizedTableName);
 		}
 

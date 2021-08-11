@@ -7912,22 +7912,22 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
-	<target name="deploy-specified-marketplace-apps">
-		<get-testcase-property property.name="specified.marketplace.app.includes" />
+	<target name="deploy-specific-marketplace-apps">
+		<get-testcase-property property.name="specific.marketplace.app.includes" />
 
 		<if>
-			<isset property="specified.marketplace.app.includes" />
+			<isset property="specific.marketplace.app.includes" />
 			<then>
-				<for list="${specified.marketplace.app.includes}" param="specified.marketplace.app.includes">
+				<for list="${specific.marketplace.app.includes}" param="specific.marketplace.app.includes">
 					<sequential>
-						<local name="specified.marketplace.app.file.name" />
+						<local name="specific.marketplace.app.file.name" />
 
-						<basename file="${portal.legacy.dir}/@{specified.marketplace.app.includes}" property="specified.marketplace.app.file.name" />
+						<basename file="${portal.legacy.dir}/@{specific.marketplace.app.includes}" property="specific.marketplace.app.file.name" />
 
-						<echo>Copying ${portal.legacy.dir}/@{specified.marketplace.app.includes} to ${liferay.home}/deploy/${specified.marketplace.app.file.name}.</echo>
+						<echo>Copying ${portal.legacy.dir}/@{specific.marketplace.app.includes} to ${liferay.home}/deploy/${specific.marketplace.app.file.name}.</echo>
 
 						<copy
-							file="${portal.legacy.dir}/@{specified.marketplace.app.includes}"
+							file="${portal.legacy.dir}/@{specific.marketplace.app.includes}"
 							todir="${liferay.home}/deploy"
 						/>
 					</sequential>
@@ -7947,7 +7947,7 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
-	<target name="deploy-specified-plugins">
+	<target name="deploy-specific-plugins">
 
 		<!--
 		Deploy plugin files to the deploy directory.
@@ -13644,18 +13644,18 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<antcall target="deploy-specified-plugins">
+		<antcall target="deploy-specific-plugins">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 
 		<antcall target="deploy-dependency-jars" />
 
-		<get-testcase-property property.name="specified.marketplace.app.includes" />
+		<get-testcase-property property.name="specific.marketplace.app.includes" />
 
 		<if>
-			<isset property="specified.marketplace.app.includes" />
+			<isset property="specific.marketplace.app.includes" />
 			<then>
-				<antcall target="deploy-specified-marketplace-apps" />
+				<antcall target="deploy-specific-marketplace-apps" />
 			</then>
 		</if>
 

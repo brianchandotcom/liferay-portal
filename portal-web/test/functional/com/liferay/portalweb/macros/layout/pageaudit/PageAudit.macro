@@ -72,6 +72,8 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Button#UPDATE");
 		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro goToDetailView {
@@ -117,6 +119,8 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Button#UPDATE");
 		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro setAPIViaSystemSettings {
@@ -143,6 +147,8 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Button#UPDATE");
 		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro setSEOcanonicalURL {

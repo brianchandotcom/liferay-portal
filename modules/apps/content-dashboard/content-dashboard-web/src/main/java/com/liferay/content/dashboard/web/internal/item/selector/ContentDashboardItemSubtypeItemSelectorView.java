@@ -186,7 +186,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			infoItemFormVariationsProvider.getInfoItemFormVariations(
 				themeDisplay.getScopeGroupId());
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray itemSubtypesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		InfoLocalizedValue<String> infoItemClassDetailsLabelInfoLocalizedValue =
 			infoItemClassDetails.getLabelInfoLocalizedValue();
@@ -206,7 +206,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				InfoItemReference infoItemReference =
 					contentDashboardItemSubtype.getInfoItemReference();
 
-				jsonArray.put(
+				itemSubtypesJSONArray.put(
 					JSONUtil.put(
 						"className", infoItemReference.getClassName()
 					).put(
@@ -231,7 +231,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			JSONUtil.put(
 				"icon", _getIcon(className)
 			).put(
-				"itemTypes", jsonArray
+				"itemSubtypes", itemSubtypesJSONArray
 			).put(
 				"label",
 				infoItemClassDetailsLabelInfoLocalizedValue.getValue(

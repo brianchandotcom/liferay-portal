@@ -104,31 +104,32 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			"Web Content Article",
 			contentDashboardItemTypeJSONObject.getString("label"));
 
-		JSONArray itemTypesJSONArray =
-			contentDashboardItemTypeJSONObject.getJSONArray("itemTypes");
+		JSONArray itemSubtypesJSONArray =
+			contentDashboardItemTypeJSONObject.getJSONArray("itemSubtypes");
 
-		Assert.assertEquals(2, itemTypesJSONArray.length());
+		Assert.assertEquals(2, itemSubtypesJSONArray.length());
 
-		JSONObject itemTypeJSONObject = itemTypesJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			DDMStructure.class.getName(),
-			itemTypeJSONObject.getString("className"));
-		Assert.assertNotNull(itemTypeJSONObject.getString("classPK"));
-		Assert.assertEquals(
-			"Basic Web Content", itemTypeJSONObject.getString("label"));
-
-		itemTypeJSONObject = itemTypesJSONArray.getJSONObject(1);
+		JSONObject itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(
+			0);
 
 		Assert.assertEquals(
 			DDMStructure.class.getName(),
-			itemTypeJSONObject.getString("className"));
+			itemSubtypeJSONObject.getString("className"));
+		Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+		Assert.assertEquals(
+			"Basic Web Content", itemSubtypeJSONObject.getString("label"));
+
+		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
+
+		Assert.assertEquals(
+			DDMStructure.class.getName(),
+			itemSubtypeJSONObject.getString("className"));
 		Assert.assertEquals(
 			ddmStructure.getStructureId(),
-			itemTypeJSONObject.getLong("classPK"));
+			itemSubtypeJSONObject.getLong("classPK"));
 		Assert.assertEquals(
 			ddmStructure.getName(LocaleUtil.getDefault()),
-			itemTypeJSONObject.getString("label"));
+			itemSubtypeJSONObject.getString("label"));
 
 		contentDashboardItemTypeJSONObject =
 			contentDashboardItemTypesJSONArray.getJSONObject(1);
@@ -139,35 +140,35 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 		Assert.assertEquals(
 			"Document", contentDashboardItemTypeJSONObject.getString("label"));
 
-		itemTypesJSONArray = contentDashboardItemTypeJSONObject.getJSONArray(
-			"itemTypes");
+		itemSubtypesJSONArray = contentDashboardItemTypeJSONObject.getJSONArray(
+			"itemSubtypes");
 
-		Assert.assertEquals(3, itemTypesJSONArray.length());
+		Assert.assertEquals(3, itemSubtypesJSONArray.length());
 
-		itemTypeJSONObject = itemTypesJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			DLFileEntryType.class.getName(),
-			itemTypeJSONObject.getString("className"));
-		Assert.assertNotNull(itemTypeJSONObject.getString("classPK"));
-		Assert.assertEquals(
-			"Basic Document", itemTypeJSONObject.getString("label"));
-
-		itemTypeJSONObject = itemTypesJSONArray.getJSONObject(1);
+		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
 			DLFileEntryType.class.getName(),
-			itemTypeJSONObject.getString("className"));
-		Assert.assertNotNull(itemTypeJSONObject.getString("classPK"));
-		Assert.assertNotNull(itemTypeJSONObject.getString("label"));
+			itemSubtypeJSONObject.getString("className"));
+		Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+		Assert.assertEquals(
+			"Basic Document", itemSubtypeJSONObject.getString("label"));
 
-		itemTypeJSONObject = itemTypesJSONArray.getJSONObject(2);
+		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
 
 		Assert.assertEquals(
 			DLFileEntryType.class.getName(),
-			itemTypeJSONObject.getString("className"));
-		Assert.assertNotNull(itemTypeJSONObject.getString("classPK"));
-		Assert.assertNotNull(itemTypeJSONObject.getString("label"));
+			itemSubtypeJSONObject.getString("className"));
+		Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+		Assert.assertNotNull(itemSubtypeJSONObject.getString("label"));
+
+		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(2);
+
+		Assert.assertEquals(
+			DLFileEntryType.class.getName(),
+			itemSubtypeJSONObject.getString("className"));
+		Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+		Assert.assertNotNull(itemSubtypeJSONObject.getString("label"));
 
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 	}

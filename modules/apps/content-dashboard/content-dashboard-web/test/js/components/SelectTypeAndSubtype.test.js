@@ -23,7 +23,7 @@ const mockProps = {
 	contentDashboardItemTypes: [
 		{
 			icon: 'web-content',
-			itemTypes: [
+			itemSubtypes: [
 				{
 					className:
 						'com.liferay.dynamic.data.mapping.model.DDMStructure',
@@ -36,7 +36,7 @@ const mockProps = {
 		},
 		{
 			icon: 'documents-and-media',
-			itemTypes: [
+			itemSubtypes: [
 				{
 					className:
 						'com.liferay.document.library.kernel.model.DLFileEntryType',
@@ -61,7 +61,7 @@ const mockProps = {
 		},
 	],
 	itemSelectorSaveEvent:
-		'_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_selectedContentDashboardItemTypeItem',
+		'_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_selectedContentDashboardItemSubtype',
 	portletNamespace:
 		'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_',
 };

@@ -25,14 +25,16 @@ import React, {useMemo, useRef, useState} from 'react';
  */
 const nodeTreeArrayMapper = (nodeArray) => {
 	return nodeArray.map((node, index) => {
-		const hasChildren = !!node.itemTypes?.length;
+		const hasChildren = !!node.itemSubtypes?.length;
 
 		const _getNodeId = ({index, node}) =>
 			hasChildren ? `_${index}` : `${node.className}_${node.classPK}`;
 
 		return {
 			...node,
-			children: hasChildren ? nodeTreeArrayMapper(node.itemTypes) : null,
+			children: hasChildren
+				? nodeTreeArrayMapper(node.itemSubtypes)
+				: null,
 			expanded: !!(!index && hasChildren) || false,
 			id: _getNodeId({index, node}),
 			name: node.label,

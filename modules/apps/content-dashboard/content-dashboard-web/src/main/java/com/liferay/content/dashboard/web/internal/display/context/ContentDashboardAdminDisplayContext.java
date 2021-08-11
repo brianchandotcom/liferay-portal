@@ -218,7 +218,7 @@ public class ContentDashboardAdminDisplayContext {
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory,
 				_liferayPortletResponse.getNamespace() +
-					"selectedContentDashboardItemSubtypeItem",
+					"selectedContentDashboardItemSubtype",
 				contentDashboardItemSubtypeItemSelectorCriterion)
 		).setParameter(
 			"checkedContentDashboardItemSubtypes",

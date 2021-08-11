@@ -1,0 +1,86 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8548 | Test Summary: Add segment using an organization property 'date modified'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyDateModified {
+
+		// TODO LRAC-8548 CanCreateSegmentUsingOrganizationPropertyDateModified pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8549 | Test Summary: Add segment using an organization property 'name'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyName {
+
+		// TODO LRAC-8549 CanCreateSegmentUsingOrganizationPropertyName pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8550 | Test Summary: Add segment using an organization property 'hierarchy path'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyHierarchyPath {
+
+		// TODO LRAC-8550 CanCreateSegmentUsingOrganizationPropertyHierarchyPath pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8551 | Test Summary: Add segment using an organization property 'organization'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyOrganization {
+
+		// TODO LRAC-8551 CanCreateSegmentUsingOrganizationPropertyOrganization pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8552 | Test Summary: Add segment using an organization property 'parent organization'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyParentOrganization {
+
+		// TODO LRAC-8552 CanCreateSegmentUsingOrganizationPropertyParentOrganization pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8553 | Test Summary: Add segment using an organization property 'type'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyType {
+
+		// TODO LRAC-8553 CanCreateSegmentUsingOrganizationPropertyType pending implementation
+
+	}
+
+}

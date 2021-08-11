@@ -190,11 +190,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIRST_ELEMENT_LISTED_TAGS</td>
-	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Web Content Title')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FLIP_AXES_BUTTON</td>
 	<td>//button[contains(@class, 'btn-outline-borderless') and contains(@type,'submit')]</td>
 	<td></td>

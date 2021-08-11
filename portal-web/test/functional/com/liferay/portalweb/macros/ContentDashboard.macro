@@ -12,17 +12,15 @@ definition {
 		Click(locator1 = "ContentDashboard#DELETE_SECOND_FILTER_SELECTED");
 	}
 
-	macro editWebContent {
+	macro editAsset {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 
 		Click(locator1 = "ContentDashboard#EDIT_OPTION");
 
-		Pause(locator1 = "3000");
-
-		if (isSet(webContentTitle)) {
+		if (isSet(assetTitle)) {
 			Click(locator1 = "TextInput#TITLE");
 
-			PortletEntry.inputTitle(title = "${webContentTitle}");
+			PortletEntry.inputTitle(title = "${assetTitle}");
 		}
 
 		Button.clickPublish();

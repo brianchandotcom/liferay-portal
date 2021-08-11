@@ -2,25 +2,55 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 
-		ACUtils.addSiteAndPage();
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
 
-		ACUtils.createWCAndAddToPage(
-			webContentContent = '''<div data-analytics-asset-type='custom' data-analytics-asset-id='analytics-portal' data-analytics-asset-category='AC' data-analytics-asset-title='Custom Asset Analytics Cloud'>%0A<h1> What's your favorite portal? </h1>%0A</div>''',
-			webContentTitle = "Custom Asset AC Title");
+		task ("Add a Web Content Display to page and display a web content") {
+			ACUtils.createWCAndAddToPage(
+				webContentContent = '''<div data-analytics-asset-type='custom' data-analytics-asset-id='analytics-portal' data-analytics-asset-category='AC' data-analytics-asset-title='Custom Asset Analytics Cloud'>%0A<h1> What's your favorite portal? </h1>%0A</div>''',
+				webContentTitle = "Custom Asset AC Title");
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
 	}
 
 	tearDown {
@@ -78,7 +108,9 @@ definition {
 	@priority = "5"
 	test CanShowsCustomAssetList {
 		for (var layoutName : list "AC Page 2,AC Page 3") {
-			ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "${layoutName}");
 		}
 
 		for (var n : list "2,3") {
@@ -88,19 +120,15 @@ definition {
 				webContentTitle = "Custom Asset AC Title ${n}");
 		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 			Navigator.gotoSitePage(

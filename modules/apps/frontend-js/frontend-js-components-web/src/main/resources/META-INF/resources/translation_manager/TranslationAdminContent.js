@@ -50,11 +50,15 @@ const TranslationAdminContent = ({
 	const [searchValue, setSearchValue] = useState('');
 
 	const activeLocales = useMemo(() => {
-		return initialAvailableLocales.filter(
-			(availableLocale) =>
-				availableLocale.label.match(new RegExp(searchValue, 'i')) &&
-				initialActiveLocales.includes(availableLocale.id)
-		);
+		return initialAvailableLocales.filter((availableLocale) => {
+			const regExp = new RegExp(searchValue, 'i');
+
+			return (
+				initialActiveLocales.includes(availableLocale.id) &&
+				(availableLocale.label.match(regExp) ||
+					availableLocale.displayName.match(regExp))
+			);
+		});
 	}, [initialAvailableLocales, initialActiveLocales, searchValue]);
 
 	const availableLocales = useMemo(() => {

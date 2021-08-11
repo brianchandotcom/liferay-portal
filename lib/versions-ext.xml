@@ -2701,22 +2701,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/rome.jar</file-name>
-				<version>1.0.LIFERAY-PATCHED-1</version>
-				<project-name>ROME</project-name>
-				<project-url>http://java.net/projects/rome</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2004 Sun Microsystems, Inc.</copyright-notice>
-					</license>
-				</licenses>
-				<comments>
-					See LPS-25084.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/rometools-utils.jar</file-name>
 				<version>1.16.0</version>
 				<project-name>Rome Tools</project-name>

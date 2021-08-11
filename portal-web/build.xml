@@ -37,7 +37,6 @@
 		<pathelement location="${project.dir}/lib/portal/log4j-core.jar" />
 		<pathelement location="${project.dir}/lib/portal/openid4java.jar" />
 		<pathelement location="${project.dir}/lib/portal/portlet.jar" />
-		<pathelement location="${project.dir}/lib/portal/rome.jar" />
 	</path>
 
 	<target name="build-dtd">

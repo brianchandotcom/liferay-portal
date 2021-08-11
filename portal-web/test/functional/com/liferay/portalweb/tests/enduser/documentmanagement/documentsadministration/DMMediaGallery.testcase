@@ -214,6 +214,59 @@ definition {
 		MGPortlet.viewCustomADTCarouselPG();
 	}
 
+	@description = "This test ensures that a file that exceed the set maximum size cannot be uploaded via Media Gallery."
+	@priority = "3"
+	test CanLimitMaxFileSize {
+		property test.name.skip.portal.instance = "DMMediaGallery#CanLimitMaxFileSize";
+
+		DMDocument.updateMaximumFileSize(fieldValue = "2000");
+
+		DMDocument.addPGViaMG(
+			groupName = "Guest",
+			layoutName = "media-gallery-page",
+			mediaGallery = "true",
+			mgDocumentDescription = "DM Document Description",
+			mgDocumentFile = "Document_2.jpeg",
+			mgDocumentTitle = "Document_2.jpeg",
+			siteURLKey = "guest",
+			warningFeedback = "Please enter a file with a valid file size no larger than 2 KB.");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.viewNoFilesViaMG(mgImagePreview = "Document_2.jpeg");
+	}
+
+	@description = "This test ensures that the restricted file extension cannot be uploaded via Media Gallery."
+	@priority = "3"
+	test CanLimitUploadedFileExtension {
+		property test.name.skip.portal.instance = "DMMediaGallery#CanLimitUploadedFileExtension";
+
+		DMDocument.updateFileExtensions(fieldValue = ".jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMDocument.addPGViaMG(
+			groupName = "Guest",
+			layoutName = "media-gallery-page",
+			mediaGallery = "true",
+			mgDocumentDescription = "DM Document Description",
+			mgDocumentFile = "Document_1.jpeg",
+			mgDocumentTitle = "Document_1.jpeg",
+			siteURLKey = "guest",
+			validationError = "Document names must end with one of the following extensions: .jpg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewNoFilesViaMG(mgDocumentTitle = "Document_1.jpeg");
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test DeleteFolderDocument {

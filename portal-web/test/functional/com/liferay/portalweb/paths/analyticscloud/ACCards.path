@@ -16,6 +16,11 @@
 	<td>//h5[@class='card-title'and text()='${key_cardTitle}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TRASH_ICON</td>
+	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//button[*[name()='svg'][contains(@class,'icon-trash')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -28,7 +28,9 @@ definition {
 			var contentXML = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
 		}
 		else {
-			var contentXML = JSONWebcontentUtil._convertToXML(content = "${content}");
+			var contentXML = JSONWebcontentUtil._convertToXML(
+				content = "${content}",
+				source = "${source}");
 		}
 
 		return "${contentXML}";

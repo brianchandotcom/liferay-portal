@@ -63,7 +63,9 @@ definition {
 
 		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
-		var contentXML = JSONWebcontentSetter.setContentXML(content = "${content}");
+		var contentXML = JSONWebcontentSetter.setContentXML(
+			content = "${content}",
+			source = "${source}");
 
 		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = "${description}");
 

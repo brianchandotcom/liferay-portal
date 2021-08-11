@@ -425,6 +425,28 @@ definition {
 		ControlMenu.viewHeaderTitle(headerTitle = "New Publish Process Based on New Publish Template");
 	}
 
+	@description = "This is a use case for LPS-123156."
+	@priority = "3"
+	test AssertScheduledPublicationInfo {
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.gotoNavTab(tabName = "Scheduled");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No scheduled publish processes were found.");
+
+		Staging.gotoNavTab(tabName = "Processes");
+
+		Staging.publishCustomPublication(scheduleProcess = "true");
+
+		Staging.gotoNavTab(tabName = "Scheduled");
+
+		AssertTextPresent(
+			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_TITLE",
+			value1 = "Untitled Scheduled Publish Process");
+	}
+
 	@description = "This is a use case for LPS-123156"
 	@priority = "4"
 	test AssertStagingPublicationAndProcessesMessage {

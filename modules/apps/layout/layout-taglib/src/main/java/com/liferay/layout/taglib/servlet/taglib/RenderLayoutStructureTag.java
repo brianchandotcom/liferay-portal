@@ -16,6 +16,7 @@ package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
@@ -27,11 +28,16 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -149,6 +155,63 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		colTag.doEndTag();
 	}
 
+	private void _renderContainerStyledLayoutStructureItem(
+			LayoutStructureItem layoutStructureItem,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
+			(ContainerStyledLayoutStructureItem)layoutStructureItem;
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String containerLinkHref =
+			renderLayoutStructureDisplayContext.getContainerLinkHref(
+				containerStyledLayoutStructureItem,
+				httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT),
+				themeDisplay.getLocale());
+
+		if (Validator.isNotNull(containerLinkHref)) {
+			jspWriter.write("<a href=\"");
+			jspWriter.write(containerLinkHref);
+			jspWriter.write("\"style=\"color: inherit; text-decoration: ");
+			jspWriter.write("none;\" target=\"");
+			jspWriter.write(
+				renderLayoutStructureDisplayContext.getContainerLinkTarget(
+					containerStyledLayoutStructureItem,
+					themeDisplay.getLocale()));
+			jspWriter.write("\">");
+		}
+
+		jspWriter.write("<div class=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getCssClass(
+				containerStyledLayoutStructureItem));
+		jspWriter.write("\" style=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getStyle(
+				containerStyledLayoutStructureItem));
+		jspWriter.write("\">");
+
+		_renderLayoutStructure(
+			layoutStructureItem.getChildrenItemIds(),
+			renderLayoutStructureDisplayContext);
+
+		jspWriter.write("</div>");
+
+		if (Validator.isNotNull(containerLinkHref)) {
+			jspWriter.write("</a>");
+		}
+	}
+
 	private void _renderLayoutStructure(
 			List<String> childrenItemIds,
 			RenderLayoutStructureDisplayContext
@@ -173,9 +236,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else if (layoutStructureItem instanceof
 						ContainerStyledLayoutStructureItem) {
 
-				_renderLayoutStructure(
-					layoutStructureItem.getChildrenItemIds(),
-					renderLayoutStructureDisplayContext);
+				_renderContainerStyledLayoutStructureItem(
+					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						DropZoneLayoutStructureItem) {

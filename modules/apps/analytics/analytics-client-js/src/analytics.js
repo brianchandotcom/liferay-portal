@@ -29,6 +29,7 @@ import {
 	STORAGE_KEY_MESSAGE_IDENTITY,
 	STORAGE_KEY_USER_ID,
 	TRACK_DEFAULT_OPTIONS,
+	VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH,
 } from './utils/constants';
 import {getContexts, setContexts} from './utils/contexts';
 import {normalizeEvent} from './utils/events';
@@ -377,6 +378,13 @@ class Analytics {
 			(request, middleware) => middleware(request, this),
 			{context: {}}
 		);
+
+		for (const key in context) {
+			context[key] = String(context[key]).slice(
+				0,
+				VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH
+			);
+		}
 
 		return context;
 	}

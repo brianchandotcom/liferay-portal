@@ -16,6 +16,8 @@ Import-Package:\
 	!org.apache.oro.text.perl,\
 	!org.apache.struts.*,\
 	\
+	!org.jdom.*,\
+	\
 	!org.slf4j.spi,\
 	\
 	!org.zeroturnaround.javarebel,\

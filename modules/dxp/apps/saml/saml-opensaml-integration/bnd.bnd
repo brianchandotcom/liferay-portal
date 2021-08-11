@@ -51,6 +51,8 @@ Import-Package:\
 	\
 	!org.checkerframework.*,\
 	\
+	!org.jdom.*,\
+	\
 	!org.joda.convert,\
 	\
 	!org.ldaptive.*,\

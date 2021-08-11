@@ -8,6 +8,8 @@ Import-Package:\
 	\
 	!org.apache.log,\
 	\
+	!org.jdom.*,\
+	\
 	!org.mozilla.javascript,\
 	\
 	!org.python.core,\

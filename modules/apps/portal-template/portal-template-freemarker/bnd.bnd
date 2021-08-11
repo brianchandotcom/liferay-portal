@@ -13,6 +13,8 @@ Import-Package:\
 	!org.apache.xml.resolver.*,\
 	!org.apache.xmlbeans.*,\
 	\
+	!org.jdom.*,\
+	\
 	!org.mozilla.*,\
 	\
 	!org.python.*,\

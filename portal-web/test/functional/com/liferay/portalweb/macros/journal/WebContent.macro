@@ -22,13 +22,18 @@ definition {
 		}
 
 		if (isSet(webContentContent)) {
-			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+			if (isSet(source)) {
+				CKEditor.addSourceContent(content = "${webContentContent}");
+			}
+			else {
+				SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-			Type(
-				locator1 = "CKEditor#BODY",
-				value1 = "${webContentContent}");
+				Type(
+					locator1 = "CKEditor#BODY",
+					value1 = "${webContentContent}");
 
-			SelectFrame(value1 = "relative=top");
+				SelectFrame(value1 = "relative=top");
+			}
 		}
 
 		if (isSet(embedImage)) {

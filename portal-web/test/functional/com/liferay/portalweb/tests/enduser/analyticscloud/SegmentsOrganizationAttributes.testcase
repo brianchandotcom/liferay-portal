@@ -38,21 +38,21 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8549 | Test Summary: Add segment using an organization property 'name'"
-	@ignore = "true"
-	@priority = "4"
-	test CanCreateSegmentUsingOrganizationPropertyName {
-
-		// TODO LRAC-8549 CanCreateSegmentUsingOrganizationPropertyName pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8550 | Test Summary: Add segment using an organization property 'hierarchy path'"
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyHierarchyPath {
 
 		// TODO LRAC-8550 CanCreateSegmentUsingOrganizationPropertyHierarchyPath pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8549 | Test Summary: Add segment using an organization property 'name'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyName {
+
+		// TODO LRAC-8549 CanCreateSegmentUsingOrganizationPropertyName pending implementation
 
 	}
 

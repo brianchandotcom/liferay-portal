@@ -1,4 +1,9 @@
 Bundle-Name: Liferay Search Tuning Rankings API
 Bundle-SymbolicName: com.liferay.search.tuning.rankings.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.search.tuning.rankings.exception,\
+	com.liferay.search.tuning.rankings.model,\
+	com.liferay.search.tuning.rankings.service,\
+	com.liferay.search.tuning.rankings.service.persistence
 -dsannotations-options: inherit

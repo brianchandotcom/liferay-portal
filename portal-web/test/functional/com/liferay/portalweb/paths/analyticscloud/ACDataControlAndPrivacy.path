@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>ACDataControlAndPrivacy</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACDataControlAndPrivacy</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>RESQUEST_LOG</td>
+	<td>//h4[contains(.,'Request Log')]/../..//a[contains(@class,'button') and contains(.,'Manage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_REQUEST</td>
+	<td>//*[contains(@class, 'nav-btn') and contains(.,'Create Request')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JOB_TYPE</td>
+	<td>//span[contains(@class,'checkbox-label') and contains(.,'${key_jobType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_ID</td>
+	<td>//span[@class='custom-control-label-text' and contains(text(), '${key_fieldType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIND_BY_EMAIL_FIELD</td>
+	<td>//input[contains(@class,'form-control-sm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIND_EMAIL_FIELD</td>
+	<td>//button[contains(@class,'text-truncate') and contains(.,'${key_emailAdress}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUEST_LOG_TABLE</td>
+	<td>//tr[contains(@class,'clickable') and contains(.,'${key_emailAdress}')]/..//tr[contains(.,'${key_requestType}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

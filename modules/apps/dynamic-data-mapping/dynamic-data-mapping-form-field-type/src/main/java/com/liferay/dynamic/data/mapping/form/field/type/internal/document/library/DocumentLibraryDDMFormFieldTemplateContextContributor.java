@@ -322,13 +322,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle portalResourceBundle = portal.getResourceBundle(locale);
-
-		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		return new AggregateResourceBundle(
-			moduleResourceBundle, portalResourceBundle);
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()),
+			portal.getResourceBundle(locale));
 	}
 
 	protected ThemeDisplay getThemeDisplay(

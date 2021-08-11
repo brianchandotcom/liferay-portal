@@ -20,6 +20,8 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
@@ -31,6 +33,7 @@ import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -328,9 +331,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else if (layoutStructureItem instanceof
 						RowStyledLayoutStructureItem) {
 
-				_renderLayoutStructure(
-					layoutStructureItem.getChildrenItemIds(),
-					renderLayoutStructureDisplayContext);
+				_renderRowStyledLayoutStructureItem(
+					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}
 			else {
 				_renderLayoutStructure(
@@ -338,6 +340,117 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					renderLayoutStructureDisplayContext);
 			}
 		}
+	}
+
+	private void _renderRowStyledLayoutStructureItem(
+			LayoutStructureItem layoutStructureItem,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)layoutStructureItem;
+
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructure.getLayoutStructureItem(
+				rowStyledLayoutStructureItem.getParentItemId());
+
+		boolean includeContainer = false;
+
+		if (parentLayoutStructureItem instanceof RootLayoutStructureItem) {
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+
+				includeContainer = true;
+			}
+			else {
+				LayoutStructureItem rootParentLayoutStructureItem =
+					_layoutStructure.getLayoutStructureItem(
+						parentLayoutStructureItem.getParentItemId());
+
+				if (rootParentLayoutStructureItem == null) {
+					includeContainer = true;
+				}
+				else if (rootParentLayoutStructureItem instanceof
+							DropZoneLayoutStructureItem) {
+
+					LayoutStructureItem dropZoneParentLayoutStructureItem =
+						_layoutStructure.getLayoutStructureItem(
+							rootParentLayoutStructureItem.getParentItemId());
+
+					if (dropZoneParentLayoutStructureItem instanceof
+							RootLayoutStructureItem) {
+
+						includeContainer = true;
+					}
+				}
+			}
+		}
+
+		jspWriter.write("<div class=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getCssClass(
+				rowStyledLayoutStructureItem));
+		jspWriter.write("\" style=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getStyle(
+				rowStyledLayoutStructureItem));
+		jspWriter.write("\">");
+
+		if (includeContainer) {
+			ContainerTag containerTag = new ContainerTag();
+
+			containerTag.setCssClass("p-0");
+			containerTag.setFluid(true);
+			containerTag.setPageContext(pageContext);
+
+			containerTag.doStartTag();
+
+			RowTag rowTag = new RowTag();
+
+			rowTag.setCssClass(
+				ResponsiveLayoutStructureUtil.getRowCssClass(
+					rowStyledLayoutStructureItem));
+			rowTag.setPageContext(pageContext);
+
+			rowTag.doStartTag();
+
+			_renderLayoutStructure(
+				layoutStructureItem.getChildrenItemIds(),
+				renderLayoutStructureDisplayContext);
+
+			rowTag.doEndTag();
+
+			containerTag.doEndTag();
+		}
+		else {
+			RowTag rowTag = new RowTag();
+
+			rowTag.setCssClass(
+				ResponsiveLayoutStructureUtil.getRowCssClass(
+					rowStyledLayoutStructureItem));
+			rowTag.setPageContext(pageContext);
+
+			rowTag.doStartTag();
+
+			_renderLayoutStructure(
+				layoutStructureItem.getChildrenItemIds(),
+				renderLayoutStructureDisplayContext);
+
+			rowTag.doEndTag();
+		}
+
+		jspWriter.write("</div>");
 	}
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";

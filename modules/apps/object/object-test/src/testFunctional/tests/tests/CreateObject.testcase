@@ -35,13 +35,10 @@ definition {
 	test ViewSystemObjects {
 		property portal.acceptance = "true";
 
-		var pAuth = Api.getPAuth();
-		var portalURL = PropsUtil.get("portal.url");
+		ObjectAdmin.openObjectAdmin();
 
-		Navigator.openSpecificURL(url = "${portalURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20125&p_p_auth=${pAuth}");
-
-		CreateObject.viewSystemObject(name = "CommerceOrder");
-		CreateObject.viewSystemObject(name = "User");
+		ObjectAdmin.viewSystemObject(name = "CommerceOrder");
+		ObjectAdmin.viewSystemObject(name = "User");
 	}
 
 }

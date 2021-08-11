@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -36,7 +37,8 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
-			getNullDateFunction(), _getLikeFunction()
+			getNullDateFunction(), _getCaseWhenThenFunction(),
+			_getLikeFunction(), _getSelectFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
@@ -75,6 +77,11 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll(dropTableIfExists);
 	}
 
+	private Function<String, String> _getCaseWhenThenFunction() {
+		return (String sql) -> _replaceQuestionParameterMarker(
+			_caseWhenThenPattern.matcher(sql), sql);
+	}
+
 	private Function<String, String> _getLikeFunction() {
 		return (String sql) -> {
 			Matcher matcher = _likePattern.matcher(sql);
@@ -84,7 +91,63 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		};
 	}
 
+	private Function<String, String> _getSelectFunction() {
+		return (String sql) -> _replaceQuestionParameterMarker(
+			_selectPattern.matcher(sql), sql);
+	}
+
+	private String _replaceQuestionParameterMarker(
+		Matcher matcher, String sql) {
+
+		int index = 0;
+
+		StringBundler sb = new StringBundler();
+
+		while (matcher.find()) {
+			if (matcher.start() > index) {
+				sb.append(sql.substring(index, matcher.start()));
+			}
+
+			sb.append(
+				StringUtil.replace(
+					matcher.group(),
+					new String[] {
+						StringBundler.concat(
+							StringPool.SPACE, StringPool.QUESTION,
+							StringPool.COMMA),
+						StringBundler.concat(
+							StringPool.SPACE, StringPool.QUESTION,
+							StringPool.SPACE)
+					},
+					new String[] {
+						StringBundler.concat(
+							StringPool.SPACE,
+							_QUESTION_PARAMETER_MARKER_REPLACEMENT,
+							StringPool.COMMA),
+						StringBundler.concat(
+							StringPool.SPACE,
+							_QUESTION_PARAMETER_MARKER_REPLACEMENT,
+							StringPool.SPACE)
+					}));
+
+			index = matcher.end();
+		}
+
+		if (index < (sql.length() - 1)) {
+			sb.append(sql.substring(index));
+		}
+
+		return sb.toString();
+	}
+
+	private static final String _QUESTION_PARAMETER_MARKER_REPLACEMENT =
+		"COALESCE(CAST(? AS VARCHAR(32672)),'')";
+
+	private static final Pattern _caseWhenThenPattern = Pattern.compile(
+		"\\bcase when.+?end\\b", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _likePattern = Pattern.compile(
 		"LIKE \\?", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _selectPattern = Pattern.compile(
+		"select .+?from ", Pattern.CASE_INSENSITIVE);
 
 }

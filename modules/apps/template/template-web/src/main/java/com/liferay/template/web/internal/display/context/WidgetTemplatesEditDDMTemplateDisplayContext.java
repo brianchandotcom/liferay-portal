@@ -44,9 +44,9 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 	}
 
 	@Override
-	protected String getDefaultScript(long classNameId) {
+	protected String getDefaultScript() {
 		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+			TemplateHandlerRegistryUtil.getTemplateHandler(getClassNameId());
 
 		if (templateHandler != null) {
 			return templateHandler.getTemplatesHelpContent(getLanguageType());

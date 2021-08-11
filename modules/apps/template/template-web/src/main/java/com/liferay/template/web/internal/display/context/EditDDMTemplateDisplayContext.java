@@ -238,7 +238,7 @@ public class EditDDMTemplateDisplayContext {
 		return _ddmTemplateId;
 	}
 
-	protected String getDefaultScript(long classNameId) {
+	protected String getDefaultScript() {
 		return "<#-- Empty script -->";
 	}
 
@@ -290,7 +290,7 @@ public class EditDDMTemplateDisplayContext {
 			getDDMTemplate(), _httpServletRequest, "script");
 
 		if (Validator.isNull(script)) {
-			script = getDefaultScript(getClassNameId());
+			script = getDefaultScript();
 		}
 
 		String scriptContent = ParamUtil.getString(

@@ -19,6 +19,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 export default function SelectCategory({
 	assetCategories,
+	enableDropdown,
 	fragmentEntryLinkId,
 	selectedAssetCategoryIds: initialSelectedCategoryIds,
 	showSearch,
@@ -37,6 +38,8 @@ export default function SelectCategory({
 	);
 
 	const [searchValue, setSearchValue] = useState('');
+
+	const [active, setActive] = useState(false);
 
 	useEffect(() => {
 		setFilteredCategories(
@@ -126,6 +129,7 @@ export default function SelectCategory({
 
 	return (
 		<ClayDropDownWithItems
+			active={active}
 			footerContent={
 				singleSelection ? null : (
 					<ClayButton
@@ -137,6 +141,14 @@ export default function SelectCategory({
 				)
 			}
 			items={items}
+			onActiveChange={(nextActive) => {
+				if (enableDropdown) {
+					setActive(nextActive);
+				}
+				else {
+					setActive(false);
+				}
+			}}
 			onSearchValueChange={setSearchValue}
 			searchValue={searchValue}
 			searchable={showSearch}

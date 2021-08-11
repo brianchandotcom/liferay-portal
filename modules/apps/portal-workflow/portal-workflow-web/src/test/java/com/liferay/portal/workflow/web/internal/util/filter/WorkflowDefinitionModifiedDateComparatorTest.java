@@ -18,16 +18,21 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.web.internal.util.comparator.WorkflowDefinitionModifiedDateComparator;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * @author Adam Brandizzi
  */
+@RunWith(Parameterized.class)
 public class WorkflowDefinitionModifiedDateComparatorTest {
 
 	@ClassRule
@@ -35,126 +40,57 @@ public class WorkflowDefinitionModifiedDateComparatorTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Parameterized.Parameters(
+		name = "ascending={0}, expectedResult={1}, increaseDate={2}, reverseComparator{3}"
+	)
+	public static List<Object[]> data() {
+		return Arrays.asList(
+			new Object[][] {
+				{true, 0, false, false}, {false, 0, false, false},
+				{true, 1, true, true}, {false, -1, true, true},
+				{true, -1, true, false}, {false, 1, true, false}
+			});
+	}
+
 	@Test
-	public void testCompareEqualsAscending() {
+	public void testCompare() {
 		WorkflowDefinitionModifiedDateComparator comparator =
-			new WorkflowDefinitionModifiedDateComparator(true);
+			new WorkflowDefinitionModifiedDateComparator(ascending);
 
 		Calendar calendar = Calendar.getInstance();
 
 		WorkflowDefinition workflowDefinition1 = new WorkflowDefinitionImpl(
 			calendar.getTime());
 
-		WorkflowDefinition workflowDefinition2 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		int result = comparator.compare(
-			workflowDefinition2, workflowDefinition1);
-
-		Assert.assertEquals(0, result);
-	}
-
-	@Test
-	public void testCompareEqualsDescending() {
-		WorkflowDefinitionModifiedDateComparator comparator =
-			new WorkflowDefinitionModifiedDateComparator(false);
-
-		Calendar calendar = Calendar.getInstance();
-
-		WorkflowDefinition workflowDefinition1 = new WorkflowDefinitionImpl(
-			calendar.getTime());
+		if (increaseDate) {
+			calendar.add(Calendar.DATE, 1);
+		}
 
 		WorkflowDefinition workflowDefinition2 = new WorkflowDefinitionImpl(
 			calendar.getTime());
 
-		int result = comparator.compare(
-			workflowDefinition2, workflowDefinition1);
-
-		Assert.assertEquals(0, result);
+		if (reverseComparator) {
+			Assert.assertEquals(
+				expectedResult,
+				comparator.compare(workflowDefinition2, workflowDefinition1));
+		}
+		else {
+			Assert.assertEquals(
+				expectedResult,
+				comparator.compare(workflowDefinition1, workflowDefinition2));
+		}
 	}
 
-	@Test
-	public void testCompareNewerOlderAscending() {
-		WorkflowDefinitionModifiedDateComparator comparator =
-			new WorkflowDefinitionModifiedDateComparator(true);
+	@Parameterized.Parameter
+	public boolean ascending;
 
-		Calendar calendar = Calendar.getInstance();
+	@Parameterized.Parameter(1)
+	public int expectedResult;
 
-		WorkflowDefinition workflowDefinition1 = new WorkflowDefinitionImpl(
-			calendar.getTime());
+	@Parameterized.Parameter(2)
+	public boolean increaseDate;
 
-		calendar.add(Calendar.DATE, 1);
-
-		WorkflowDefinition workflowDefinition2 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		int result = comparator.compare(
-			workflowDefinition2, workflowDefinition1);
-
-		Assert.assertEquals(1, result);
-	}
-
-	@Test
-	public void testCompareNewerOlderDescending() {
-		WorkflowDefinitionModifiedDateComparator comparator =
-			new WorkflowDefinitionModifiedDateComparator(false);
-
-		Calendar calendar = Calendar.getInstance();
-
-		WorkflowDefinition workflowDefinition1 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		calendar.add(Calendar.DATE, 1);
-
-		WorkflowDefinition workflowDefinition2 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		int result = comparator.compare(
-			workflowDefinition2, workflowDefinition1);
-
-		Assert.assertEquals(-1, result);
-	}
-
-	@Test
-	public void testCompareOlderNewerAscending() {
-		WorkflowDefinitionModifiedDateComparator comparator =
-			new WorkflowDefinitionModifiedDateComparator(true);
-
-		Calendar calendar = Calendar.getInstance();
-
-		WorkflowDefinition workflowDefinition1 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		calendar.add(Calendar.DATE, 1);
-
-		WorkflowDefinition workflowDefinition2 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		int result = comparator.compare(
-			workflowDefinition1, workflowDefinition2);
-
-		Assert.assertEquals(-1, result);
-	}
-
-	@Test
-	public void testCompareOlderNewerDescending() {
-		WorkflowDefinitionModifiedDateComparator comparator =
-			new WorkflowDefinitionModifiedDateComparator(false);
-
-		Calendar calendar = Calendar.getInstance();
-
-		WorkflowDefinition workflowDefinition1 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		calendar.add(Calendar.DATE, 1);
-
-		WorkflowDefinition workflowDefinition2 = new WorkflowDefinitionImpl(
-			calendar.getTime());
-
-		int result = comparator.compare(
-			workflowDefinition1, workflowDefinition2);
-
-		Assert.assertEquals(1, result);
-	}
+	@Parameterized.Parameter(3)
+	public boolean reverseComparator;
 
 }

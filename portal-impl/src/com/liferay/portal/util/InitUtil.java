@@ -57,7 +57,7 @@ import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConf
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.xml.SAXReaderImpl;
 
-import com.sun.syndication.io.XmlReader;
+import com.rometools.rome.io.XmlReader;
 
 import java.lang.reflect.Field;
 

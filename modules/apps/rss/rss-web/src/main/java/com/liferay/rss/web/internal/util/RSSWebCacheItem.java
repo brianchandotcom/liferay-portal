@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration;
 
-import com.sun.syndication.io.SyndFeedInput;
-import com.sun.syndication.io.XmlReader;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -102,18 +102,17 @@ Export-Package:\
 	\
 	com.liferay.ibm.icu.*;version='4.0.1',\
 	\
+	com.rometools.rome;version='1.16.0',\
+	com.rometools.rome.feed;version='1.16.0',\
+	com.rometools.rome.feed.atom;version='1.16.0',\
+	com.rometools.rome.feed.impl;version='1.16.0',\
+	com.rometools.rome.feed.module;version='1.16.0',\
+	com.rometools.rome.feed.rss;version='1.16.0',\
+	com.rometools.rome.feed.synd;version='1.16.0',\
+	com.rometools.rome.io;version='1.16.0',\
+	com.rometools.utils;version='1.16.0',\
+	\
 	com.sun.security.auth.module,\
-	com.sun.syndication;version='1.0',\
-	com.sun.syndication.feed;version='1.0',\
-	com.sun.syndication.feed.atom;version='1.0',\
-	com.sun.syndication.feed.impl;version='1.0',\
-	com.sun.syndication.feed.module;version='1.0',\
-	com.sun.syndication.feed.module.impl;version='1.0',\
-	com.sun.syndication.feed.rss;version='1.0',\
-	com.sun.syndication.feed.synd;version='1.0',\
-	com.sun.syndication.feed.synd.impl;version='1.0',\
-	com.sun.syndication.io;version='1.0',\
-	com.sun.syndication.io.impl;version='1.0',\
 	\
 	com.thoughtworks.xstream.*;version='1.4.17',\
 	\
@@ -355,7 +354,8 @@ Provide-Capability:\
 	@../../../lib/portal/persistence.jar,\
 	@../../../lib/portal/portlet.jar,\
 	@../../../lib/portal/portletmvc4spring-framework.jar,\
-	@../../../lib/portal/rome.jar,\
+	@../../../lib/portal/rometools-utils.jar,\
+	@../../../lib/portal/rometools.jar,\
 	@../../../lib/portal/slf4j-api.jar,\
 	@../../../lib/portal/spring-aop.jar,\
 	@../../../lib/portal/spring-aspects.jar,\

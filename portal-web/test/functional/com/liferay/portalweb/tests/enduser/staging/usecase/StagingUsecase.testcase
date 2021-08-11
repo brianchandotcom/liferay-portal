@@ -405,6 +405,26 @@ definition {
 			pollsQuestionVotePercent = "0%");
 	}
 
+	@description = "This is a use case for LPS-123156."
+	@priority = "3"
+	test AssertPublishTemplateInfo {
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.addPublishTemplate(
+			publishTemplateDescription = "New Publish Template Description",
+			publishTemplateName = "New Publish Template");
+
+		Staging.savePublishTemplate(
+			publishTemplateDescription = "New Publish Template Description",
+			publishTemplateName = "New Publish Template");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.addCustomPublication(publishTemplateName = "New Publish Template");
+
+		ControlMenu.viewHeaderTitle(headerTitle = "New Publish Process Based on New Publish Template");
+	}
+
 	@description = "This is a use case for LPS-123156"
 	@priority = "4"
 	test AssertStagingPublicationAndProcessesMessage {

@@ -951,10 +951,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/css@3.32.1":
-  version "3.32.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.32.1.tgz#b9f5f36f9d714e9d3f1f87334f3b15d9a1389516"
-  integrity sha512-iJtgdbSX9T54+0B0uFG2tyqPJ3+mD5sj8wrI+fTl5BUg4tdqrv2gSdQelYLv4gT+e177GzafyKXaj8ti6jLV9w==
+"@clayui/css@3.33.0":
+  version "3.33.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.33.0.tgz#870bd16461aa24b50258bf615db0ce7579df72d2"
+  integrity sha512-mOv4xUe+F9I6vPUgjrsnAEYT2MJVXJJiJzEP+m1gRqnQmG4Iy5uze/lWZrnCK1Dn6G8SFZz9P58f4MdvBbHoPg==
 
 "@clayui/data-provider@3.32.0":
   version "3.32.0"
@@ -1146,22 +1146,22 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/pagination-bar@3.32.0":
-  version "3.32.0"
-  resolved "https://registry.yarnpkg.com/@clayui/pagination-bar/-/pagination-bar-3.32.0.tgz#e42c046078426f9ae83f43d5cf2fecafd0f5943a"
-  integrity sha512-eLjkDcQbycxLwEB40XoMjiUJnjXBkEoY6Eh2A7pQAENdP2JAQY68bXjEOuvIRSwtfb0S8MfINGtj0guYGVg0Hg==
+"@clayui/pagination-bar@3.33.0":
+  version "3.33.0"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination-bar/-/pagination-bar-3.33.0.tgz#3de1e1215701a0ab350b646224794a8171b60711"
+  integrity sha512-gvgxc1HrQmI9oQzGz3RFdjCThWWRMEDNTwhb4SElfvIaiCbA4vsFrHSzF27LI0NiSXH1OKuk1JdVimNoP/fq2A==
   dependencies:
     "@clayui/button" "^3.32.0"
     "@clayui/drop-down" "^3.32.0"
     "@clayui/icon" "^3.32.0"
-    "@clayui/pagination" "^3.32.0"
+    "@clayui/pagination" "^3.33.0"
     "@clayui/shared" "^3.32.0"
     classnames "^2.2.6"
 
-"@clayui/pagination@3.32.0", "@clayui/pagination@^3.32.0":
-  version "3.32.0"
-  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.32.0.tgz#0eaaad355ef842e20b653daeff31f0128df1696d"
-  integrity sha512-j3dc7gnJIQ8YbSRH/dy9P3vNJ0XPPhENrwdGAD356jHRRe+kYOBbKEMnBfEGh3t0oSSFeGnewsmdxlpfJuh3zw==
+"@clayui/pagination@3.33.0", "@clayui/pagination@^3.33.0":
+  version "3.33.0"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.33.0.tgz#4611535f192530b280964b17b08386d3022a6f7b"
+  integrity sha512-n7EM4dIyZWYCwn7Q0CzMlXiDS6W4bIDhhhSSqrQXiKr7xCIjVI/XCU5IdUg+1moiWDaa7ZRYyGKhQzPzB/3YhQ==
   dependencies:
     "@clayui/button" "^3.32.0"
     "@clayui/drop-down" "^3.32.0"

@@ -69,6 +69,9 @@ definition {
 
 	@priority = "3"
 	test CheckErrorDetailsDisplayedInvalidApiKey {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckErrorDetailsDisplayedInvalidApiKey";
+
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
 
@@ -77,6 +80,8 @@ definition {
 
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSystemSettings(apiKey = "invalidAPI");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Open Page Audit panel and assert 'Show details' link") {

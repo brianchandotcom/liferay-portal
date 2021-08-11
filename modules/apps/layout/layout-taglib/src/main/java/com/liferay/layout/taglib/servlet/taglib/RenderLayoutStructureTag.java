@@ -15,6 +15,10 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
@@ -28,6 +32,8 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -35,8 +41,10 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
@@ -212,6 +220,71 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 	}
 
+	private void _renderFragmentStyledLayoutStructureItem(
+			LayoutStructureItem layoutStructureItem,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			jspWriter.write("<div class=\"master-layout-fragment\">");
+		}
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+		if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() > 0) {
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink != null) {
+				FragmentRendererController fragmentRendererController =
+					ServletContextUtil.getFragmentRendererController();
+
+				DefaultFragmentRendererContext defaultFragmentRendererContext =
+					renderLayoutStructureDisplayContext.
+						getDefaultFragmentRendererContext(
+							fragmentEntryLink,
+							fragmentStyledLayoutStructureItem.getItemId());
+
+				jspWriter.write("<div class=\"");
+				jspWriter.write(
+					renderLayoutStructureDisplayContext.getCssClass(
+						fragmentStyledLayoutStructureItem));
+				jspWriter.write("\" style=\"");
+				jspWriter.write(
+					renderLayoutStructureDisplayContext.getStyle(
+						fragmentStyledLayoutStructureItem));
+				jspWriter.write("\">");
+
+				HttpServletResponse httpServletResponse =
+					(HttpServletResponse)pageContext.getResponse();
+
+				jspWriter.write(
+					fragmentRendererController.render(
+						defaultFragmentRendererContext, httpServletRequest,
+						httpServletResponse));
+
+				jspWriter.write("</div>");
+			}
+		}
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			jspWriter.write("</div>");
+		}
+	}
+
 	private void _renderLayoutStructure(
 			List<String> childrenItemIds,
 			RenderLayoutStructureDisplayContext
@@ -249,9 +322,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else if (layoutStructureItem instanceof
 						FragmentStyledLayoutStructureItem) {
 
-				_renderLayoutStructure(
-					layoutStructureItem.getChildrenItemIds(),
-					renderLayoutStructureDisplayContext);
+				_renderFragmentStyledLayoutStructureItem(
+					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						RowStyledLayoutStructureItem) {

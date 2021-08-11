@@ -60,31 +60,31 @@ for (String childrenItemId : childrenItemIds) {
 							for (int i = 0; i < renderCollectionLayoutStructureItemDisplayContext.getNumberOfRows(); i++) {
 						%>
 
-							<clay:row>
+								<clay:row>
 
-								<%
-								for (int j = 0; j < collectionStyledLayoutStructureItem.getNumberOfColumns(); j++) {
-									int index = (i * collectionStyledLayoutStructureItem.getNumberOfColumns()) + j;
+									<%
+									for (int j = 0; j < collectionStyledLayoutStructureItem.getNumberOfColumns(); j++) {
+										int index = (i * collectionStyledLayoutStructureItem.getNumberOfColumns()) + j;
 
-									if ((index >= renderCollectionLayoutStructureItemDisplayContext.getNumberOfItemsToDisplay()) || (index >= collection.size())) {
-										break;
+										if ((index >= renderCollectionLayoutStructureItemDisplayContext.getNumberOfItemsToDisplay()) || (index >= collection.size())) {
+											break;
+										}
+
+										request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collection.get(index));
+										request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+									%>
+
+										<clay:col
+											md="<%= String.valueOf(LayoutStructureConstants.COLUMN_SIZES[collectionStyledLayoutStructureItem.getNumberOfColumns() - 1][j]) %>"
+										>
+											<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
+										</clay:col>
+
+									<%
 									}
+									%>
 
-									request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collection.get(index));
-									request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-								%>
-
-									<clay:col
-										md="<%= String.valueOf(LayoutStructureConstants.COLUMN_SIZES[collectionStyledLayoutStructureItem.getNumberOfColumns() - 1][j]) %>"
-									>
-										<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
-									</clay:col>
-
-								<%
-								}
-								%>
-
-							</clay:row>
+								</clay:row>
 
 						<%
 							}
@@ -176,39 +176,6 @@ for (String childrenItemId : childrenItemIds) {
 					<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
 				</c:otherwise>
 			</c:choose>
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof FragmentStyledLayoutStructureItem %>">
-			<c:if test="<%= Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) %>">
-				<div class="master-layout-fragment">
-			</c:if>
-
-			<%
-			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem = (FragmentStyledLayoutStructureItem)layoutStructureItem;
-			%>
-
-			<c:if test="<%= fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() > 0 %>">
-
-				<%
-				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-				%>
-
-				<c:if test="<%= fragmentEntryLink != null %>">
-
-					<%
-					FragmentRendererController fragmentRendererController = ServletContextUtil.getFragmentRendererController();
-
-					DefaultFragmentRendererContext defaultFragmentRendererContext = renderLayoutStructureDisplayContext.getDefaultFragmentRendererContext(fragmentEntryLink, fragmentStyledLayoutStructureItem.getItemId());
-					%>
-
-					<div class="<%= renderLayoutStructureDisplayContext.getCssClass(fragmentStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(fragmentStyledLayoutStructureItem) %>">
-						<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-					</div>
-				</c:if>
-			</c:if>
-
-			<c:if test="<%= Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) %>">
-				</div>
-			</c:if>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RowStyledLayoutStructureItem %>">
 

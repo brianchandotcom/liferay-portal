@@ -48,11 +48,131 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AccountUserCanApproveTask {
 
-		// TODO LRQA-69107 AccountUserCanApproveTask pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Test",
+			accountEntryType = "Business");
+
+		Refresh();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Test");
+
+		Accounts.addNewUserToBusinessAccount(
+			accountName = "Test",
+			assigneeName = "userfn",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn_");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.gotoEntryMenuItem(
+			rowEntry = "Account Administrator",
+			menuItem = "Assign Users");
+
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(
+			key_title = "Assign Users to Account Administrator",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Search.searchCP(searchTerm = "userfn");
+
+		Check(
+			key_tableEntry = "userfn",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Assign");
+
+		Alert.viewSuccessMessage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+		Select(
+			key_title = "Buyer Order Approval Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Single Approver (Version 1)");
+
+		Button.clickSave();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+		
+		FrontStore.addInitializerProductToCart(
+			productName = "Transmission Cooler Line Assembly",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Review Order");
+
+		Button.click(button = "Submit");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+		
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+		
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Order",
+			workflowAssetType = "Commerce Order",
+			workflowTask = "Review");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Order Management",
+			panel = "Commerce",
+			portlet = "Orders");
+
+		AssertElementPresent(
+			key_status = "Approved",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
 	}
 

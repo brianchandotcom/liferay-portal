@@ -22,27 +22,13 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class RenderLayoutStructureTag extends IncludeTag {
-
-	@Override
-	public int doStartTag() throws JspException {
-		HttpServletRequest httpServletRequest = getRequest();
-
-		httpServletRequest.setAttribute(
-			RenderLayoutStructureDisplayContext.class.getName(),
-			new RenderLayoutStructureDisplayContext(
-				getFieldValues(), httpServletRequest, getLayoutStructure(),
-				getMainItemId(), getMode(), isShowPreview()));
-
-		return super.doStartTag();
-	}
 
 	public Map<String, Object> getFieldValues() {
 		return _fieldValues;
@@ -105,6 +91,31 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		super.processStartTag();
+
+		RenderLayoutStructureDisplayContext
+			renderLayoutStructureDisplayContext =
+				new RenderLayoutStructureDisplayContext(
+					getFieldValues(), getRequest(), getLayoutStructure(),
+					getMainItemId(), getMode(), isShowPreview());
+
+		_renderLayoutStructure(renderLayoutStructureDisplayContext);
+
+		return SKIP_BODY;
+	}
+
+	private void _renderLayoutStructure(
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<div></div>");
 	}
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";

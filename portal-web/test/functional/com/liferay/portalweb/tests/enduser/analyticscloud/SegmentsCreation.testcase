@@ -125,12 +125,55 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8477 | Test Summary: Cancel creating a static segment"
-	@ignore = "true"
 	@priority = "3"
 	test CanCancelCreatingStaticSegment {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8477 CanCancelCreatingStaticSegment
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Add the new user as member") {
+			ACSegments.addStaticMember(tableMember = "userfn userln");
+		}
+
+		task ("Cancel the creation") {
+			ACSegments.cancelSegment();
+
+			Button.click(button = "Leave Page");
+		}
+
+		task ("View the empty info in Segments admin") {
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "No Segments Created");
+
+			AssertVisible(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8478 | Test Summary: Create a Dynamic Individuals Segment By Date"

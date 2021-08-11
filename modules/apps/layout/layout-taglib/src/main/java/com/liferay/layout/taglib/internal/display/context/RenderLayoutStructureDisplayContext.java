@@ -134,47 +134,17 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject collectionJSONObject =
 			collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
-		if ((collectionJSONObject == null) ||
-			(collectionJSONObject.length() <= 0)) {
-
-			return Collections.emptyList();
-		}
-
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
+			_getLayoutListRetriever(collectionJSONObject);
 		ListObjectReference listObjectReference = _getListObjectReference(
 			collectionJSONObject);
 
-		if (listObjectReference == null) {
-			return Collections.emptyList();
-		}
-
-		LayoutListRetrieverTracker layoutListRetrieverTracker =
-			ServletContextUtil.getLayoutListRetrieverTracker();
-
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			(LayoutListRetriever<?, ListObjectReference>)
-				layoutListRetrieverTracker.getLayoutListRetriever(
-					collectionJSONObject.getString("type"));
-
-		if (layoutListRetriever == null) {
+		if ((layoutListRetriever == null) || (listObjectReference == null)) {
 			return Collections.emptyList();
 		}
 
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			new DefaultLayoutListRetrieverContext();
-
-		defaultLayoutListRetrieverContext.setConfiguration(
-			_getConfiguration(collectionJSONObject));
-		defaultLayoutListRetrieverContext.setContextObject(
-			Optional.ofNullable(
-				_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT)
-			).orElse(
-				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
-			));
-		defaultLayoutListRetrieverContext.setHttpServletRequest(
-			_httpServletRequest);
-		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds());
+			_getDefaultLayoutListRetrieverContext(collectionJSONObject);
 
 		int end = collectionStyledLayoutStructureItem.getNumberOfItems();
 		int start = 0;
@@ -234,50 +204,18 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject collectionJSONObject =
 			collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
-		if ((collectionJSONObject == null) ||
-			(collectionJSONObject.length() <= 0)) {
-
-			return 0;
-		}
-
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
+			_getLayoutListRetriever(collectionJSONObject);
 		ListObjectReference listObjectReference = _getListObjectReference(
 			collectionJSONObject);
 
-		if (listObjectReference == null) {
+		if ((layoutListRetriever == null) || (listObjectReference == null)) {
 			return 0;
 		}
-
-		LayoutListRetrieverTracker layoutListRetrieverTracker =
-			ServletContextUtil.getLayoutListRetrieverTracker();
-
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			(LayoutListRetriever<?, ListObjectReference>)
-				layoutListRetrieverTracker.getLayoutListRetriever(
-					collectionJSONObject.getString("type"));
-
-		if (layoutListRetriever == null) {
-			return 0;
-		}
-
-		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			new DefaultLayoutListRetrieverContext();
-
-		defaultLayoutListRetrieverContext.setConfiguration(
-			_getConfiguration(collectionJSONObject));
-		defaultLayoutListRetrieverContext.setContextObject(
-			Optional.ofNullable(
-				_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT)
-			).orElse(
-				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
-			));
-		defaultLayoutListRetrieverContext.setHttpServletRequest(
-			_httpServletRequest);
-		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds());
 
 		return layoutListRetriever.getListCount(
-			listObjectReference, defaultLayoutListRetrieverContext);
+			listObjectReference,
+			_getDefaultLayoutListRetrieverContext(collectionJSONObject));
 	}
 
 	public LayoutDisplayPageProvider<?> getCollectionLayoutDisplayPageProvider(
@@ -1105,6 +1043,29 @@ public class RenderLayoutStructureDisplayContext {
 		return configuration;
 	}
 
+	private DefaultLayoutListRetrieverContext
+		_getDefaultLayoutListRetrieverContext(JSONObject collectionJSONObject) {
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setConfiguration(
+			_getConfiguration(collectionJSONObject));
+		defaultLayoutListRetrieverContext.setContextObject(
+			Optional.ofNullable(
+				_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT)
+			).orElse(
+				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
+			));
+		defaultLayoutListRetrieverContext.setHttpServletRequest(
+			_httpServletRequest);
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+			_getSegmentsEntryIds());
+
+		return defaultLayoutListRetrieverContext;
+	}
+
 	private long _getFileEntryId(String fieldId, Locale locale)
 		throws Exception {
 
@@ -1253,8 +1214,38 @@ public class RenderLayoutStructureDisplayContext {
 		return _frontendTokensJSONObject;
 	}
 
+	private LayoutListRetriever<?, ListObjectReference> _getLayoutListRetriever(
+		JSONObject collectionJSONObject) {
+
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
+			return null;
+		}
+
+		LayoutListRetrieverTracker layoutListRetrieverTracker =
+			ServletContextUtil.getLayoutListRetrieverTracker();
+
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
+			(LayoutListRetriever<?, ListObjectReference>)
+				layoutListRetrieverTracker.getLayoutListRetriever(
+					collectionJSONObject.getString("type"));
+
+		if (layoutListRetriever == null) {
+			return null;
+		}
+
+		return layoutListRetriever;
+	}
+
 	private ListObjectReference _getListObjectReference(
 		JSONObject collectionJSONObject) {
+
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
+			return null;
+		}
 
 		LayoutListRetrieverTracker layoutListRetrieverTracker =
 			ServletContextUtil.getLayoutListRetrieverTracker();

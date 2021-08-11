@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.data.domain=boolean",
 		"ddm.form.field.type.description=checkbox-field-type-description",
 		"ddm.form.field.type.display.order:Integer=8",
-		"ddm.form.field.type.group=basic",
-		"ddm.form.field.type.icon=check",
+		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=check",
 		"ddm.form.field.type.label=boolean",
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX
 	},

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -290,7 +291,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			@Override
 			public JSONObject getSpecificInformationJSONObject(
 				Locale locale, LiferayPortletResponse liferayPortletResponse,
-				String backURL) {
+				String backURL, ThemeDisplay themeDisplay) {
 
 				return null;
 			}

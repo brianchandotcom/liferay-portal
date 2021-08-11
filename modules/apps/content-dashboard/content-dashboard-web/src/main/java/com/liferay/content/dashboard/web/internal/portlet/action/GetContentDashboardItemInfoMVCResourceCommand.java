@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -138,7 +140,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					contentDashboardItem.getSpecificInformationJSONObject(
 						locale,
 						_portal.getLiferayPortletResponse(resourceResponse),
-						ParamUtil.getString(resourceRequest, "backURL"))
+						ParamUtil.getString(resourceRequest, "backURL"),
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY))
 				).put(
 					"subType", _getSubtype(contentDashboardItem, locale)
 				).put(

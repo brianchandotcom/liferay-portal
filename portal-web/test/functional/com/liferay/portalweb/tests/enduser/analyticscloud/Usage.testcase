@@ -194,12 +194,24 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
-	@ignore = "true"
 	@priority = "5"
-	test TotalNumberOfIndividualsIsShown {
+	test PlanLimitNumberOfIndividualsIsShown {
+		task ("Go to Usage and assert that the plan number of individuals is '110,000'") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8146 Usage#TotalNumberOfIndividualsIsShown pending implementation
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToUsage();
+
+			AssertElementPresent(
+				key_metricName = "Individuals",
+				key_totalNumber = "110,000",
+				locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
+		}
 	}
 
 }

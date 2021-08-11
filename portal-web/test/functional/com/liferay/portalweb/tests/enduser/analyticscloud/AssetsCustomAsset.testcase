@@ -89,6 +89,8 @@ definition {
 
 		task ("Close sessions") {
 			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
 		}
 
 		task ("Switch the property in AC") {

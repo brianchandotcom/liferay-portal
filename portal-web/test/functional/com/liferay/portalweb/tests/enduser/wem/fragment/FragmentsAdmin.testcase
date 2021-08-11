@@ -327,16 +327,25 @@ definition {
 		}
 
 		task ("Add a fragment with the Button fragment codes") {
-			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "fragment_button.html");
-			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "fragment_button.json");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
-				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
-				name = "Fragment Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
+
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
 		}
 
 		task ("Edit the fragment with the Title fragment codes") {

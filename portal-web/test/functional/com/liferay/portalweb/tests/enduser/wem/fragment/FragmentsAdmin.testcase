@@ -126,6 +126,7 @@ definition {
 		task ("Add a fragment") {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
 				name = "Fragment Name");
 		}

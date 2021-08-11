@@ -17,12 +17,19 @@ package com.liferay.layout.taglib.servlet.taglib;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.List;
 import java.util.Map;
 
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -103,19 +110,69 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					getFieldValues(), getRequest(), getLayoutStructure(),
 					getMainItemId(), getMode(), isShowPreview());
 
-		_renderLayoutStructure(renderLayoutStructureDisplayContext);
+		_renderLayoutStructure(
+			renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
+			renderLayoutStructureDisplayContext);
 
 		return SKIP_BODY;
 	}
 
 	private void _renderLayoutStructure(
+			List<String> childrenItemIds,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
 
-		JspWriter jspWriter = pageContext.getOut();
+		for (String childrenItemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				_layoutStructure.getLayoutStructureItem(childrenItemId);
 
-		jspWriter.write("<div></div>");
+			if (layoutStructureItem instanceof
+					CollectionStyledLayoutStructureItem) {
+
+				_renderLayoutStructure(
+					layoutStructureItem.getChildrenItemIds(),
+					renderLayoutStructureDisplayContext);
+			}
+			else if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
+				_renderLayoutStructure(
+					layoutStructureItem.getChildrenItemIds(),
+					renderLayoutStructureDisplayContext);
+			}
+			else if (layoutStructureItem instanceof
+						ContainerStyledLayoutStructureItem) {
+
+				_renderLayoutStructure(
+					layoutStructureItem.getChildrenItemIds(),
+					renderLayoutStructureDisplayContext);
+			}
+			else if (layoutStructureItem instanceof
+						DropZoneLayoutStructureItem) {
+
+				_renderLayoutStructure(
+					layoutStructureItem.getChildrenItemIds(),
+					renderLayoutStructureDisplayContext);
+			}
+			else if (layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem) {
+
+				_renderLayoutStructure(
+					layoutStructureItem.getChildrenItemIds(),
+					renderLayoutStructureDisplayContext);
+			}
+			else if (layoutStructureItem instanceof
+						RowStyledLayoutStructureItem) {
+
+				_renderLayoutStructure(
+					layoutStructureItem.getChildrenItemIds(),
+					renderLayoutStructureDisplayContext);
+			}
+			else {
+				_renderLayoutStructure(
+					layoutStructureItem.getChildrenItemIds(),
+					renderLayoutStructureDisplayContext);
+			}
+		}
 	}
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";

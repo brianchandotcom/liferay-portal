@@ -130,6 +130,7 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there is more than the 60% of the texts on the page with insufficient font sizes
 	Then the users will see the matching failing elements, with the size of the illegible font and the percentage of text it covers"
+
 	@priority = "4"
 	@uitest
 	test CheckIllegibleFontSizes {
@@ -165,7 +166,7 @@ definition {
 
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are images on the page with a displayed ratio different from the actual one
-	Then the users will see the matching failing elements, with its source link and the occurrences separately, and the Displayed Aspect Ratio and the Actual Aspect Ratio  for each one of them"
+	Then the users will see the matching failing elements, with its source link and the occurrences separately, and the Displayed Aspect Ratio and the Actual Aspect Ratio for each one of them"
 
 	@priority = "4"
 	@uitest
@@ -197,24 +198,25 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#FAILING_CHECK_TITLE",
 				value1 = "Incorrect Image Aspect Ratios");
-			
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Source File");
-			
+				failingText = "Source File",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Displayed Aspect Ratio");
-			
+				failingText = "Displayed Aspect Ratio",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Actual Aspect Ratio");
+				failingText = "Actual Aspect Ratio",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
 		}
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions to edit Instance Settings
 	When there is no canonical URL, or it doesnt coincide with the pages URL
 	Then the users will see the invalid canonical URL, and a text with a link to the instance settings: If the problem is that the canonical URL doesnt match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO"
+
 	@priority = "4"
 	@uitest
 	test CheckInvalidCanonicalURL {
@@ -249,7 +251,7 @@ definition {
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When the page has any invalid hreflang link 
+	When the page has any invalid hreflang link
 	Then the users will see the matching failing elements, with the incorrect hreflang links"
 
 	@priority = "4"
@@ -292,9 +294,10 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view for Crawlable-anchors check
 	When the user display the Description section
 	Then There will be a general description coming from the API: Search engines may use 'href' attributes on links to crawl websites. Learn More about Not crawlable links https://support.google.com/webmasters/answer/9112205"
+
 	@priority = "4"
 	@uitest
-	test CheckLinksCrawlable{
+	test CheckLinksCrawlable {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckLinksCrawlable";
 
@@ -322,7 +325,7 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#FAILING_CHECK_TITLE",
 				value1 = "Not All Links Are Crawlable");
-			
+
 			AssertTextPresent(
 				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
 				value1 = "crawlable-anchors");
@@ -330,11 +333,12 @@ definition {
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When  the link texts are not title as the link text
+	When the link texts are not title as the link text
 	Then the users will see the link text and the link destination URL"
+
 	@priority = "4"
 	@uitest
-	test CheckLinksTexts{
+	test CheckLinksTexts {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckLinksTexts";
 
@@ -362,20 +366,21 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#FAILING_CHECK_TITLE",
 				value1 = "Link Texts");
-			
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Link Text");
-			
+				failingText = "Link Text",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
+
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Link Destination URL");
+				failingText = "Link Destination URL",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
 		}
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are texts on the page with insufficient contrast ratio
 	Then the users will see the matching failing elements, with its current ratio, foreground color code, background color code, font size, font weight and expected ratio"
+
 	@priority = "4"
 	@uitest
 	test CheckLowContrastRatio {
@@ -416,6 +421,7 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are images on the page with no alt text
 	Then the users will see the matching failing elements, and the current code snippet"
+
 	@priority = "4"
 	@uitest
 	test CheckMissingImgALTAttributes {
@@ -456,6 +462,7 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are input-type images on the page with no alt text
 	Then the users will see the matching failing elements, and the current code snippet "
+
 	@priority = "4"
 	@uitest
 	test CheckMissingInputALTAttributes {
@@ -496,6 +503,7 @@ definition {
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
 	When there is no meta description for the page
 	Then the users will see a text with a link to the configuration section: Add a meta-description from the Configuration section of this page."
+
 	@priority = "4"
 	@uitest
 	test CheckMissingMetaDescription {
@@ -528,8 +536,8 @@ definition {
 				value1 = "Missing Meta Description");
 
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Add a description");
+				failingText = "Add a description",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
 		}
 	}
 
@@ -569,14 +577,15 @@ definition {
 				value1 = "Missing <title> Element");
 
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Add a title");
+				failingText = "Add a title",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
 		}
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are input-type images on the page with no alt text
 	Then the users will see the matching failing elements, and the current code snippet "
+
 	@priority = "4"
 	@uitest
 	test CheckPageBlockedFromIndexing {
@@ -609,14 +618,15 @@ definition {
 				value1 = "Page Blocked from Indexing");
 
 			AssertElementPresent(
-				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
-				failingText = "Change the robots.txt setting");
+				failingText = "Change the robots.txt setting",
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT");
 		}
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there tap targets on the page that are too small or are overlapping with others
 	Then the users will see the matching failing elements, with the tap target snippet, size and Overlapping Target if there is one"
+
 	@priority = "4"
 	@uitest
 	test CheckSmallTapTargets {
@@ -657,6 +667,7 @@ definition {
 	@description = "LPS-127668: Given the page audit panel
 	When the users access the second level
 	Then they can see the title of the issue, the description and tips sections"
+
 	@priority = "4"
 	@uitest
 	test NavigateToSecondLevel {

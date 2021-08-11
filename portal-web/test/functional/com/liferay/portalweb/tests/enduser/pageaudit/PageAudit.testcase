@@ -127,6 +127,536 @@ definition {
 		}
 	}
 
+	@description = "LPS-132234: Given the page audit panel detail view
+	When there is more than the 60% of the texts on the page with insufficient font sizes
+	Then the users will see the matching failing elements, with the size of the illegible font and the percentage of text it covers"
+	@priority = "4"
+	@uitest
+	test CheckIllegibleFontSizes {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Illegible Font Sizes");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Illegible Font Sizes");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view
+	When there are images on the page with a displayed ratio different from the actual one
+	Then the users will see the matching failing elements, with its source link and the occurrences separately, and the Displayed Aspect Ratio and the Actual Aspect Ratio  for each one of them"
+
+	@priority = "4"
+	@uitest
+	test CheckIncorrectImageAspectRatio {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckIncorrectImageAspectRatio";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Incorrect Image Aspect Ratios");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Incorrect Image Aspect Ratios");
+			
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Source File");
+			
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Displayed Aspect Ratio");
+			
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Actual Aspect Ratio");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions to edit Instance Settings
+	When there is no canonical URL, or it doesnt coincide with the pages URL
+	Then the users will see the invalid canonical URL, and a text with a link to the instance settings: If the problem is that the canonical URL doesnt match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO"
+	@priority = "4"
+	@uitest
+	test CheckInvalidCanonicalURL {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Invalid Canonical URL");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Invalid Canonical URL");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
+	When the page has any invalid hreflang link 
+	Then the users will see the matching failing elements, with the incorrect hreflang links"
+
+	@priority = "4"
+	@uitest
+	test CheckInvalidHreflang {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckInvalidHreflang";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Invalid Hreflang");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Invalid Hreflang");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
+				value1 = "link");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view for Crawlable-anchors check
+	When the user display the Description section
+	Then There will be a general description coming from the API: Search engines may use 'href' attributes on links to crawl websites. Learn More about Not crawlable links https://support.google.com/webmasters/answer/9112205"
+	@priority = "4"
+	@uitest
+	test CheckLinksCrawlable{
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckLinksCrawlable";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Not All Links Are Crawlable");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Not All Links Are Crawlable");
+			
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
+				value1 = "crawlable-anchors");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
+	When  the link texts are not title as the link text
+	Then the users will see the link text and the link destination URL"
+	@priority = "4"
+	@uitest
+	test CheckLinksTexts{
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckLinksTexts";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Link Texts");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Link Texts");
+			
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Link Text");
+			
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Link Destination URL");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view
+	When there are texts on the page with insufficient contrast ratio
+	Then the users will see the matching failing elements, with its current ratio, foreground color code, background color code, font size, font weight and expected ratio"
+	@priority = "4"
+	@uitest
+	test CheckLowContrastRatio {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckLowContrastRatio";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Low Contrast Ratio");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
+				value1 = "color-contrast");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view
+	When there are images on the page with no alt text
+	Then the users will see the matching failing elements, and the current code snippet"
+	@priority = "4"
+	@uitest
+	test CheckMissingImgALTAttributes {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckMissingImgALTAttributes";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Missing Img ALT Attributes");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Missing Img ALT Attributes");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
+				value1 = "img");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view
+	When there are input-type images on the page with no alt text
+	Then the users will see the matching failing elements, and the current code snippet "
+	@priority = "4"
+	@uitest
+	test CheckMissingInputALTAttributes {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckMissingInputALTAttributes";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Missing Input ALT Attributes");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Missing Input ALT Attributes");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
+				value1 = "input");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
+	When there is no meta description for the page
+	Then the users will see a text with a link to the configuration section: Add a meta-description from the Configuration section of this page."
+	@priority = "4"
+	@uitest
+	test CheckMissingMetaDescription {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckMissingMetaDescription";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Missing Meta Description");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Missing Meta Description");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Add a description");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
+	When there is no title for the page
+	Then the users will see a text with a link to the configuration section: Add a title from the Configuration section of this page"
+
+	@priority = "4"
+	@uitest
+	test CheckMissingTitleElement {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckMissingTitleElement";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Missing <title> Element");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Missing <title> Element");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Add a title");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view
+	When there are input-type images on the page with no alt text
+	Then the users will see the matching failing elements, and the current code snippet "
+	@priority = "4"
+	@uitest
+	test CheckPageBlockedFromIndexing {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckPageBlockedFromIndexing";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Page Blocked from Indexing");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Page Blocked from Indexing");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_TEXT",
+				failingText = "Change the robots.txt setting");
+		}
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view
+	When there tap targets on the page that are too small or are overlapping with others
+	Then the users will see the matching failing elements, with the tap target snippet, size and Overlapping Target if there is one"
+	@priority = "4"
+	@uitest
+	test CheckSmallTapTargets {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckSmallTapTargets";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Small Tap Targets");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Small Tap Targets");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
+				value1 = "a");
+		}
+	}
+
+	@description = "LPS-127668: Given the page audit panel
+	When the users access the second level
+	Then they can see the title of the issue, the description and tips sections"
 	@priority = "4"
 	@uitest
 	test NavigateToSecondLevel {

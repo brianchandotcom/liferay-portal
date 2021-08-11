@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FAILING_ELEMENT_TEXT</td>
+	<td>//*[contains(text(), '${failingText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_PAGESPEED_TITLE</td>
 	<td>//h2[contains(text(), 'Google PageSpeed Insights')]</td>
 	<td></td>

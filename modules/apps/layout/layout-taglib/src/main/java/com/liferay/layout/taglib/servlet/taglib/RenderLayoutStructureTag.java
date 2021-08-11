@@ -19,13 +19,21 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
+import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.list.renderer.InfoListRenderer;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
+import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -35,6 +43,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -44,6 +53,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -141,6 +151,224 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			renderLayoutStructureDisplayContext);
 
 		return SKIP_BODY;
+	}
+
+	private void _renderCollectionStyledLayoutStructureItem(
+			LayoutStructureItem layoutStructureItem,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		HttpServletResponse httpServletResponse =
+			(HttpServletResponse)pageContext.getResponse();
+
+		RenderCollectionLayoutStructureItemDisplayContext
+			renderCollectionLayoutStructureItemDisplayContext =
+				new RenderCollectionLayoutStructureItemDisplayContext(
+					collectionStyledLayoutStructureItem, httpServletRequest,
+					httpServletResponse);
+
+		InfoListRenderer<Object> infoListRenderer =
+			(InfoListRenderer<Object>)
+				renderCollectionLayoutStructureItemDisplayContext.
+					getInfoListRenderer();
+
+		jspWriter.write("<div class=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getCssClass(
+				collectionStyledLayoutStructureItem));
+		jspWriter.write("\" style=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getStyle(
+				collectionStyledLayoutStructureItem));
+		jspWriter.write("\">");
+
+		if (infoListRenderer != null) {
+			infoListRenderer.render(
+				renderCollectionLayoutStructureItemDisplayContext.
+					getCollection(),
+				renderCollectionLayoutStructureItemDisplayContext.
+					getInfoListRendererContext());
+		}
+		else {
+			LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider =
+				(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
+					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
+
+			try {
+				httpServletRequest.setAttribute(
+					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+					renderCollectionLayoutStructureItemDisplayContext.
+						getCollectionLayoutDisplayPageProvider());
+
+				List<Object> collection =
+					renderCollectionLayoutStructureItemDisplayContext.
+						getCollection();
+
+				int numberOfRows =
+					renderCollectionLayoutStructureItemDisplayContext.
+						getNumberOfRows();
+
+				for (int i = 0; i < numberOfRows; i++) {
+					RowTag rowTag = new RowTag();
+
+					rowTag.setPageContext(pageContext);
+
+					rowTag.doStartTag();
+
+					int numberOfColumns =
+						collectionStyledLayoutStructureItem.
+							getNumberOfColumns();
+
+					for (int j = 0; j < numberOfColumns; j++) {
+						int index = (i * numberOfColumns) + j;
+
+						int numberOfItemsToDisplay =
+							renderCollectionLayoutStructureItemDisplayContext.
+								getNumberOfItemsToDisplay();
+
+						if ((index >= numberOfItemsToDisplay) ||
+							(index >= collection.size())) {
+
+							break;
+						}
+
+						httpServletRequest.setAttribute(
+							InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT,
+							collection.get(index));
+
+						ColTag colTag = new ColTag();
+
+						int columnSize = LayoutStructureConstants.COLUMN_SIZES
+							[numberOfColumns - 1][j];
+
+						colTag.setMd(String.valueOf(columnSize));
+
+						colTag.setPageContext(pageContext);
+
+						colTag.doStartTag();
+
+						_renderLayoutStructure(
+							layoutStructureItem.getChildrenItemIds(),
+							renderLayoutStructureDisplayContext);
+
+						colTag.doEndTag();
+					}
+
+					rowTag.doEndTag();
+				}
+			}
+			finally {
+				httpServletRequest.removeAttribute(
+					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+
+				httpServletRequest.setAttribute(
+					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+					currentLayoutDisplayPageProvider);
+			}
+		}
+
+		if (Objects.equals(
+				collectionStyledLayoutStructureItem.getPaginationType(),
+				"numeric")) {
+
+			PaginationBarTag paginationBarTag = new PaginationBarTag();
+
+			paginationBarTag.setActiveDelta(
+				collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+			paginationBarTag.setActivePage(
+				renderCollectionLayoutStructureItemDisplayContext.
+					getActivePage());
+			paginationBarTag.setAdditionalProps(
+				renderCollectionLayoutStructureItemDisplayContext.
+					getNumericCollectionPaginationAdditionalProps());
+			paginationBarTag.setCssClass("pb-2 pt-3");
+			paginationBarTag.setPropsTransformer(
+				"render_layout_structure/js" +
+					"/NumericCollectionPaginationPropsTransformer");
+			paginationBarTag.setTotalItems(
+				collectionStyledLayoutStructureItem.getNumberOfItems());
+
+			paginationBarTag.doTag(pageContext);
+		}
+
+		if (Objects.equals(
+				collectionStyledLayoutStructureItem.getPaginationType(),
+				"simple")) {
+
+			jspWriter.write("<div class=\"d-flex flex-grow-1 h-100 ");
+			jspWriter.write("justify-content-center py-3\" ");
+			jspWriter.write("id=\"paginationPreviousButton_");
+			jspWriter.write(collectionStyledLayoutStructureItem.getItemId());
+			jspWriter.write("\"");
+
+			ButtonTag previousButtonTag = new ButtonTag();
+
+			previousButtonTag.setCssClass(
+				"font-weight-semi-bold mr-3 previous text-secondary");
+			previousButtonTag.setAdditionalProps(
+				HashMapBuilder.<String, Object>put(
+					"disabled",
+					Objects.equals(
+						renderCollectionLayoutStructureItemDisplayContext.
+							getActivePage(),
+						1)
+				).build());
+			previousButtonTag.setDisplayType("unstyled");
+			previousButtonTag.setId(
+				"paginationPreviousButton_" +
+					collectionStyledLayoutStructureItem.getItemId());
+			previousButtonTag.setLabel(
+				LanguageUtil.get(getRequest(), "previous"));
+
+			previousButtonTag.doTag(pageContext);
+
+			ButtonTag nextButtonTag = new ButtonTag();
+
+			nextButtonTag.setCssClass(
+				"font-weight-semi-bold ml-3 next text-secondary");
+			nextButtonTag.setAdditionalProps(
+				HashMapBuilder.<String, Object>put(
+					"disabled",
+					Objects.equals(
+						renderCollectionLayoutStructureItemDisplayContext.
+							getActivePage(),
+						renderCollectionLayoutStructureItemDisplayContext.
+							getNumberOfPages())
+				).build());
+			nextButtonTag.setDisplayType("unstyled");
+			nextButtonTag.setId(
+				"paginationNextButton_" +
+					collectionStyledLayoutStructureItem.getItemId());
+			nextButtonTag.setLabel(LanguageUtil.get(getRequest(), "next"));
+
+			nextButtonTag.doTag(pageContext);
+
+			jspWriter.write("</div>");
+
+			ComponentTag componentTag = new ComponentTag();
+
+			componentTag.setComponentId(
+				"paginationComponent" +
+					collectionStyledLayoutStructureItem.getItemId());
+			componentTag.setContext(
+				renderCollectionLayoutStructureItemDisplayContext.
+					getSimpleCollectionPaginationContext());
+			componentTag.setModule(
+				"render_layout_structure/js/SimpleCollectionPagination");
+
+			componentTag.doTag(pageContext);
+		}
+
+		jspWriter.write("</div>");
 	}
 
 	private void _renderColumnLayoutStructureItem(
@@ -275,7 +503,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 				String templateId =
 					themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR +
-					layoutTypePortlet.getLayoutTemplateId();
+						layoutTypePortlet.getLayoutTemplateId();
 
 				RuntimePageUtil.processTemplate(
 					originalHttpServletRequest,
@@ -371,9 +599,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			if (layoutStructureItem instanceof
 					CollectionStyledLayoutStructureItem) {
 
-				_renderLayoutStructure(
-					layoutStructureItem.getChildrenItemIds(),
-					renderLayoutStructureDisplayContext);
+				_renderCollectionStyledLayoutStructureItem(
+					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
 				_renderColumnLayoutStructureItem(

@@ -587,6 +587,32 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
+	protected void addPrimaryKey(
+			Connection connection, String tableName, String[] columnNames)
+		throws IOException, SQLException {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("alter table ");
+		sb.append(dbInspector.normalizeName(tableName, databaseMetaData));
+		sb.append(" add primary key (");
+
+		for (String columnName : columnNames) {
+			sb.append(columnName);
+			sb.append(", ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		runSQL(sb.toString());
+	}
+
 	protected String[] buildColumnNameTokens(String line) {
 		String[] words = StringUtil.split(line, CharPool.SPACE);
 
@@ -626,8 +652,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected List<IndexMetadata> dropIndexes(
-			Connection connection, String tableName, String columnName,
-			boolean dropPrimaryKey)
+			Connection connection, String tableName, String columnName)
 		throws IOException, SQLException {
 
 		List<IndexMetadata> indexMetadatas = getIndexes(
@@ -635,17 +660,6 @@ public abstract class BaseDB implements DB {
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
 			runSQL(connection, indexMetadata.getDropSQL());
-		}
-
-		if (dropPrimaryKey) {
-			IndexMetadata primaryKeyIndexMetadata = getPrimaryKey(
-				connection, tableName, columnName);
-
-			if (primaryKeyIndexMetadata != null) {
-				removePrimaryKey(connection, tableName);
-
-				indexMetadatas.add(primaryKeyIndexMetadata);
-			}
 		}
 
 		return indexMetadatas;
@@ -836,8 +850,8 @@ public abstract class BaseDB implements DB {
 		return new ArrayList<>(indexMetadatas);
 	}
 
-	protected IndexMetadata getPrimaryKey(
-			Connection connection, String tableName, String columnName)
+	protected String[] getPrimaryKeyColumnNames(
+			Connection connection, String tableName)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -847,18 +861,13 @@ public abstract class BaseDB implements DB {
 		String normalizedTableName = dbInspector.normalizeName(
 			tableName, databaseMetaData);
 
-		String pkName = null;
 		String[] columnNames = new String[0];
 
 		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
 				dbInspector.getCatalog(), dbInspector.getSchema(),
 				normalizedTableName)) {
 
-			while (resultSet.next()) {
-				if (pkName == null) {
-					pkName = resultSet.getString("PK_NAME");
-				}
-
+			if (resultSet.next()) {
 				ArrayUtil.append(
 					columnNames,
 					dbInspector.normalizeName(
@@ -866,21 +875,7 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
-		if (pkName == null) {
-			return null;
-		}
-
-		if (columnName != null) {
-			String normalizedColumnName = dbInspector.normalizeName(
-				columnName, databaseMetaData);
-
-			if (ArrayUtil.contains(columnNames, normalizedColumnName)) {
-				return null;
-			}
-		}
-
-		return new IndexMetadata(
-			pkName, normalizedTableName, true, columnNames);
+		return columnNames;
 	}
 
 	protected abstract int[] getSQLTypes();

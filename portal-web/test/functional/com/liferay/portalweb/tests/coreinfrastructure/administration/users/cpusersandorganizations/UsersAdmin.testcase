@@ -811,6 +811,31 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for can add comment for user."
+	@priority = "2"
+	test CanAddComment {
+		User.openUsersAdmin();
+
+		User.addCP(
+			userComment = "test",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Alert.viewSuccessMessage();
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		AssertElementPresent(
+			locator1 = "TextArea#COMMENTS",
+			userComment = "test");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+	}
+
 	@priority = "3"
 	test CanBulkActivateUsers {
 		for (var userNum : list "1,2,3,4,5") {

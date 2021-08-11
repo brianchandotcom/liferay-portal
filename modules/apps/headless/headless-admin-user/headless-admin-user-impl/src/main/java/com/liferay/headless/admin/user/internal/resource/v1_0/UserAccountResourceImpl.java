@@ -107,6 +107,22 @@ public class UserAccountResourceImpl
 	extends BaseUserAccountResourceImpl implements NestedFieldSupport {
 
 	@Override
+	public void
+			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception {
+
+		User user = _userLocalService.getUserByExternalReferenceCode(
+			contextCompany.getCompanyId(), userAccountExternalReferenceCode);
+
+		_accountEntryUserRelService.deleteAccountEntryUserRelByEmailAddress(
+			_accountResourceDTOConverter.getAccountEntryId(
+				accountExternalReferenceCode),
+			user.getEmailAddress());
+	}
+
+	@Override
 	public void deleteAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception {
@@ -344,6 +360,29 @@ public class UserAccountResourceImpl
 					BooleanClauseOccur.MUST_NOT);
 			},
 			search, filter, pagination, sorts);
+	}
+
+	@Override
+	public void
+			postAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception {
+
+		User user = _userLocalService.getUserByExternalReferenceCode(
+			contextCompany.getCompanyId(), userAccountExternalReferenceCode);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setLanguageId(
+			contextAcceptLanguage.getPreferredLanguageId());
+		serviceContext.setUserId(contextUser.getUserId());
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			_accountResourceDTOConverter.getAccountEntryId(
+				accountExternalReferenceCode),
+			user.getEmailAddress(), new long[0], null, serviceContext);
 	}
 
 	@Override

@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_ASSET_REPORT_DASHBOARD</td>
+	<td>//div[contains(@class,'analytics-add-report-empty-dashboard')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRASH_ICON</td>
 	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//button[*[name()='svg'][contains(@class,'icon-trash')]]</td>
 	<td></td>

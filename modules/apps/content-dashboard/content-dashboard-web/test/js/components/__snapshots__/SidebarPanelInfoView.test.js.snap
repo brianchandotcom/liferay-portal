@@ -5,24 +5,20 @@ exports[`SidebarPanelInfoView renders 1`] = `
   <div
     class="content-dashboard sidebar sidebar-light sidebar-sm"
   >
-    <div
+    <section
       class="sidebar-header"
     >
       <div
-        class="sidebar-section autofit-row autofit-row-center"
+        class="sidebar-section autofit-row"
       >
         <div
           class="autofit-col autofit-col-expand"
         >
-          <div
-            class="font-weight-bold text-truncate-inline"
+          <h2
+            class="font-weight-bold mb-0 pr-2 small"
           >
-            <span
-              class="text-truncate"
-            >
-              content-info
-            </span>
-          </div>
+            Basic Web Content Title
+          </h2>
         </div>
         <div
           class="autofit-col"
@@ -42,26 +38,15 @@ exports[`SidebarPanelInfoView renders 1`] = `
           </button>
         </div>
       </div>
-    </div>
+    </section>
     <div
       class="sidebar-body"
     >
       <div
-        class="c-mb-4"
+        class="sidebar-section"
       >
-        <div
-          class="component-title text-truncate-inline"
-        >
-          <span
-            class="text-truncate"
-            data-tooltip-align="top"
-            title="Basic Web Content Title"
-          >
-            Basic Web Content Title
-          </span>
-        </div>
         <p
-          class="component-subtitle font-weight-normal"
+          class="text-secondary"
         >
           Basic Web Content
         </p>
@@ -107,7 +92,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
         </div>
       </div>
       <div
-        class="c-mb-4 sidebar-dl sidebar-section"
+        class="sidebar-dl sidebar-section sidebar-section--spaced"
       >
         <span
           class="sticker sticker-user-icon user-icon-color-6 sticker-circle"
@@ -126,15 +111,211 @@ exports[`SidebarPanelInfoView renders 1`] = `
           </span>
         </span>
         <span
-          class="c-ml-2 h5"
+          class="ml-2 text-secondary"
         >
           Kate Williams
         </span>
       </div>
+      <h6
+        class="font-weight-semi-bold sidebar-section-subtitle text-uppercase"
+      >
+        categorization
+      </h6>
       <div
         class="c-mb-4 sidebar-dl sidebar-section"
       >
-        <h5>
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          categories
+        </h5>
+        <p>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Crime
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Romantic
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Classics
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Fantasy
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Science Fiction
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Advanced
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Education
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              Decision
+            </span>
+          </span>
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          tags
+        </h5>
+        <p>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              tag1
+            </span>
+          </span>
+          <span
+            class="label label-secondary"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              tag2
+            </span>
+          </span>
+        </p>
+      </div>
+      <h6
+        class="font-weight-semi-bold sidebar-section-subtitle text-uppercase"
+      >
+        details
+      </h6>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          display-date
+        </h5>
+        <p>
+          Jul 27, 2020, 10:53 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          creation-date
+        </h5>
+        <p>
+          Jul 27, 2020, 10:50 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          modified-date
+        </h5>
+        <p>
+          Jul 27, 2020, 10:56 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          expiration-date
+        </h5>
+        <p>
+          Jul 28, 2020, 10:00 AM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          review-date
+        </h5>
+        <p>
+          Jul 27, 2020, 2:14 PM
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold mb-1"
+        >
+          id
+        </h5>
+        <p>
+          38070
+        </p>
+      </div>
+      <div
+        class="c-mb-4 sidebar-dl sidebar-section"
+      >
+        <h5
+          class="font-weight-semi-bold"
+        >
           languages-translated-into
         </h5>
         <div
@@ -351,174 +532,6 @@ exports[`SidebarPanelInfoView renders 1`] = `
             </a>
           </div>
         </div>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          tags
-        </h5>
-        <p>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              tag1
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              tag2
-            </span>
-          </span>
-        </p>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          categories
-        </h5>
-        <p>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Crime
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Romantic
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Classics
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Fantasy
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Science Fiction
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Advanced
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Education
-            </span>
-          </span>
-          <span
-            class="label label-secondary"
-          >
-            <span
-              class="label-item label-item-expand"
-            >
-              Decision
-            </span>
-          </span>
-        </p>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          display-date
-        </h5>
-        <p>
-          Jul 27, 2020, 10:53 AM
-        </p>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          creation-date
-        </h5>
-        <p>
-          Jul 27, 2020, 10:50 AM
-        </p>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          modified-date
-        </h5>
-        <p>
-          Jul 27, 2020, 10:56 AM
-        </p>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          expiration-date
-        </h5>
-        <p>
-          Jul 28, 2020, 10:00 AM
-        </p>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          review-date
-        </h5>
-        <p>
-          Jul 27, 2020, 2:14 PM
-        </p>
-      </div>
-      <div
-        class="c-mb-4 sidebar-dl sidebar-section"
-      >
-        <h5>
-          id
-        </h5>
-        <p>
-          38070
-        </p>
       </div>
     </div>
   </div>

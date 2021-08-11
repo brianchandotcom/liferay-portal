@@ -153,8 +153,6 @@ describe('SidebarPanelInfoView', () => {
 			</Sidebar>
 		);
 
-		expect(getByText('content-info')).toBeInTheDocument();
-
 		expect(getByText('Basic Web Content Title')).toBeInTheDocument();
 		expect(getByText('Basic Web Content')).toBeInTheDocument();
 		expect(getByText('version 1.6')).toBeInTheDocument();

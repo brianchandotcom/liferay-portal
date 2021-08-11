@@ -536,6 +536,12 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = "${memberName}");
 	}
 
+	macro openOrganizationsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_toolbarItem=view-all-organizations&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersListView=flat-organizations");
+	}
+
 	macro removeMemberCP {
 		Organization.gotoMemberActionsCmd(
 			memberName = "${userFullName}",

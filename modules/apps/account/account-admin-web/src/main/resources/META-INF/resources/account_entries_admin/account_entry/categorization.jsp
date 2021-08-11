@@ -31,6 +31,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 
 	<%
 	Group controlPanelGroup = themeDisplay.getControlPanelGroup();
+	Group globalSiteGroup = themeDisplay.getSiteGroup();
 	%>
 
 	<div class="form-group">
@@ -46,7 +47,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 		<liferay-asset:asset-tags-selector
 			className="<%= AccountEntry.class.getName() %>"
 			classPK="<%= accountEntryDisplay.getAccountEntryId() %>"
-			groupIds="<%= new long[] {controlPanelGroup.getGroupId()} %>"
+			groupIds="<%= new long[] {controlPanelGroup.getGroupId(), globalSiteGroup.getGroupId()} %>"
 		/>
 	</div>
 </clay:sheet-section>

@@ -118,14 +118,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			byte[] bytes = FileUtil.getBytes(url.openStream());
-
 			String fileName = FileUtil.getShortFileName(url.getFile());
 
 			_dlAppLocalService.addFileEntry(
 				null, user.getUserId(), groupId,
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-				MimeTypesUtil.getContentType(fileName), bytes, null, null,
+				MimeTypesUtil.getContentType(fileName),
+				FileUtil.getBytes(url.openStream()), null, null,
 				ServiceContextThreadLocal.getServiceContext());
 		}
 	}

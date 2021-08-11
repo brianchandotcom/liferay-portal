@@ -23,15 +23,19 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.problem.Problem;
+import com.liferay.data.engine.rest.resource.exception.DataLayoutValidationException;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.TestDataDefinitionContentType;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -502,6 +506,39 @@ public class DataDefinitionResourceTest
 		Assert.assertEquals(dataDefinition.getName(), dataLayout.getName());
 	}
 
+	@Test
+	public void testPostSiteDataDefinitionByContentTypeInvalidRowSize()
+		throws Exception {
+
+		try {
+			DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
+				DataDefinitionResource.builder();
+
+			DataDefinitionResource dataDefinitionResource =
+				dataDefinitionResourcedBuilder.user(
+					TestPropsValues.getUser()
+				).build();
+
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), _CONTENT_TYPE,
+				com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
+					DataDefinitionTestUtil.read(
+						"data-definition-invalid-row-size.json")));
+
+			Assert.fail("An exception must be thrown");
+		}
+		catch (DataLayoutValidationException.InvalidRowSize
+					dataLayoutValidationException) {
+
+			Assert.assertEquals(
+				0,
+				_ddmStructureLocalService.getStructuresCount(
+					testGroup.getGroupId(),
+					_portal.getClassNameId(
+						TestDataDefinitionContentType.class)));
+		}
+	}
+
 	@Override
 	@Test
 	public void testPutDataDefinition() throws Exception {
@@ -759,6 +796,9 @@ public class DataDefinitionResourceTest
 
 	@Inject(type = DataEngineNativeObjectTracker.class)
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject(type = Portal.class)
 	private Portal _portal;

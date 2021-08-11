@@ -1,0 +1,98 @@
+{
+	"availableLanguageIds": [
+		"en_US",
+		"pt_BR"
+	],
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "string",
+				"displayStyle": "multiline",
+				"fieldNamespace": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": "Placeholder Text",
+					"pt_BR": "Texto Placeholder"
+				},
+				"tooltip": {
+					"en_US": "Tooltip",
+					"pt_BR": "Dica"
+				},
+				"validation": {
+					"errorMessage": {
+					},
+					"expression": {
+					},
+					"parameter": {
+					}
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			},
+			"localizable": true,
+			"name": "Text",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": true,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Help Text",
+				"pt_BR": "Texto de Ajuda"
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 6,
+								"fieldNames": [
+									"Text"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": "Page Description",
+					"pt_BR": "Descrição da Página"
+				},
+				"title": {
+					"en_US": "Page Title",
+					"pt_BR": "Título da Página"
+				}
+			}
+		],
+		"name": {
+			"en_US": "Structure",
+			"pt_BR": "Estrutura"
+		},
+		"paginationMode": "wizard"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+		"en_US": "Data Definition Description",
+		"pt_BR": "Descrição do Data Definition"
+	},
+	"name": {
+		"en_US": "Structure",
+		"pt_BR": "Estrutura"
+	},
+	"storageType": "default"
+}

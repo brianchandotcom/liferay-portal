@@ -35,11 +35,18 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTemplate;
+import com.liferay.portal.kernel.model.LayoutTemplateConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
+import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -223,6 +230,69 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 	}
 
+	private void _renderDropZoneLayoutStructureItem(
+			LayoutStructureItem layoutStructureItem,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			LayoutTypePortlet layoutTypePortlet =
+				themeDisplay.getLayoutTypePortlet();
+
+			String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
+
+			if (Validator.isNull(layoutTemplateId)) {
+				layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
+			}
+
+			LayoutTemplate layoutTemplate =
+				LayoutTemplateLocalServiceUtil.getLayoutTemplate(
+					layoutTemplateId, false, themeDisplay.getThemeId());
+
+			String themeId = themeDisplay.getThemeId();
+
+			if (layoutTemplate != null) {
+				themeId = layoutTemplate.getThemeId();
+			}
+
+			String templateContent = LayoutTemplateLocalServiceUtil.getContent(
+				layoutTypePortlet.getLayoutTemplateId(), false,
+				themeDisplay.getThemeId());
+
+			if (Validator.isNotNull(templateContent)) {
+				HttpServletRequest originalHttpServletRequest =
+					(HttpServletRequest)httpServletRequest.getAttribute(
+						"ORIGINAL_HTTP_SERVLET_REQUEST");
+
+				String templateId =
+					themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR +
+					layoutTypePortlet.getLayoutTemplateId();
+
+				RuntimePageUtil.processTemplate(
+					originalHttpServletRequest,
+					(HttpServletResponse)pageContext.getResponse(),
+					new StringTemplateResource(templateId, templateContent),
+					LayoutTemplateLocalServiceUtil.getLangType(
+						layoutTypePortlet.getLayoutTemplateId(), false,
+						themeDisplay.getThemeId()));
+			}
+		}
+		else {
+			_renderLayoutStructure(
+				layoutStructureItem.getChildrenItemIds(),
+				renderLayoutStructureDisplayContext);
+		}
+	}
+
 	private void _renderFragmentStyledLayoutStructureItem(
 			LayoutStructureItem layoutStructureItem,
 			RenderLayoutStructureDisplayContext
@@ -318,9 +388,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else if (layoutStructureItem instanceof
 						DropZoneLayoutStructureItem) {
 
-				_renderLayoutStructure(
-					layoutStructureItem.getChildrenItemIds(),
-					renderLayoutStructureDisplayContext);
+				_renderDropZoneLayoutStructureItem(
+					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						FragmentStyledLayoutStructureItem) {

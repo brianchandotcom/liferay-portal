@@ -137,46 +137,6 @@ for (String childrenItemId : childrenItemIds) {
 				</c:if>
 			</div>
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
-			<c:choose>
-				<c:when test="<%= Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) %>">
-
-					<%
-					String themeId = theme.getThemeId();
-
-					String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
-
-					if (Validator.isNull(layoutTemplateId)) {
-						layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
-					}
-
-					LayoutTemplate layoutTemplate = LayoutTemplateLocalServiceUtil.getLayoutTemplate(layoutTemplateId, false, theme.getThemeId());
-
-					if (layoutTemplate != null) {
-						themeId = layoutTemplate.getThemeId();
-					}
-
-					String templateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + layoutTypePortlet.getLayoutTemplateId();
-					String templateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
-
-					if (Validator.isNotNull(templateContent)) {
-						HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute("ORIGINAL_HTTP_SERVLET_REQUEST");
-
-						RuntimePageUtil.processTemplate(originalServletRequest, response, new StringTemplateResource(templateId, templateContent), LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId()));
-					}
-					%>
-
-				</c:when>
-				<c:otherwise>
-
-					<%
-					request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-					%>
-
-					<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
-				</c:otherwise>
-			</c:choose>
-		</c:when>
 		<c:otherwise>
 
 			<%

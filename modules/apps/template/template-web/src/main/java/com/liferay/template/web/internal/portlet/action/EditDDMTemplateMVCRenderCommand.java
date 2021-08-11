@@ -76,7 +76,6 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		else if (Objects.equals(tabs1, "widget-templates")) {
 			renderRequest.setAttribute(
 				DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
-
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new WidgetTemplatesEditDDMTemplateDisplayContext(

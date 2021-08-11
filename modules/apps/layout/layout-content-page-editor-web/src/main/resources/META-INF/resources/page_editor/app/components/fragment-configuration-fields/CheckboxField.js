@@ -14,7 +14,7 @@
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
@@ -22,6 +22,8 @@ export const CheckboxField = ({field, onValueSelect, value}) => {
 	const [nextValue, setNextValue] = useState(value);
 
 	const customValues = field.typeOptions?.customValues;
+
+	useEffect(() => setNextValue(value), [value]);
 
 	return (
 		<ClayForm.Group className="mt-1">

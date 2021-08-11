@@ -120,6 +120,38 @@ definition {
 			value1 = "${userEmail}");
 	}
 
+	macro createRequestLogByEmail {
+		var key_fieldType = "${fieldType}";
+
+		ACSettings.goToDataControlAndPrivacy();
+
+		Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
+
+		Click(locator1 = "ACDataControlAndPrivacy#CREATE_REQUEST");
+
+		for (var jobType : list "${jobTypes}") {
+			Click(
+				key_jobType = "${jobType}",
+				locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
+		}
+
+		Click(
+			key_fieldType = "Find by Email",
+			locator1 = "ACDataControlAndPrivacy#DATA_ID");
+
+		Click(locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD");
+
+		for (var emailAdress : list "${emailAdresses}") {
+			Click(
+				key_emailAdress = "${emailAdress}",
+				locator1 = "ACDataControlAndPrivacy#FIND_EMAIL_FIELD");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	@summary = "Deletes all data source"
 	macro deleteAllDataSource {
 		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
@@ -155,38 +187,6 @@ definition {
 		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-	}
-
-	macro createRequestLogByEmail {
-		var key_fieldType = "${fieldType}";
-
-		ACSettings.goToDataControlAndPrivacy();
-
-		Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
-
-		Click(locator1 = "ACDataControlAndPrivacy#CREATE_REQUEST");
-
-		for (var jobType : list "${jobTypes}") {
-			Click(
-				key_jobType = "${jobType}",
-				locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
-		}
-
-		Click(
-			key_fieldType = "Find by Email",
-			locator1 = "ACDataControlAndPrivacy#DATA_ID");
-
-		Click(locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD");
-
-		for (var emailAdress : list "${emailAdresses}") {
-			Click(
-				key_emailAdress = "${emailAdress}",
-				locator1 = "ACDataControlAndPrivacy#FIND_EMAIL_FIELD");
-		}
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Deletes a specific data source \

@@ -118,14 +118,10 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 					"defaultLanguageId from JournalArticle");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			List<UpdateJournalArticleLocalizedFieldsUpgradeCallable>
-				updateJournalArticleLocalizedFieldsUpgradeCallables =
-					new ArrayList<>();
-
-			while (resultSet.next()) {
-				UpdateJournalArticleLocalizedFieldsUpgradeCallable
-					updateJournalArticleLocalizedFieldsUpgradeCallable =
-						new UpdateJournalArticleLocalizedFieldsUpgradeCallable(
+			concurrentUpgrade(
+				() -> {
+					if (resultSet.next()) {
+						return new UpdateJournalArticleLocalizedFieldsUpgradeCallable(
 							resultSet.getLong(1), resultSet.getLong(2),
 							resultSet.getString(3), resultSet.getString(4),
 							resultSet.getString(5),
@@ -134,26 +130,11 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 								"articleLocalizationId, companyId, articlePK, ",
 								"title, description, languageId) values(?, ?, ",
 								"?, ?, ?, ?)"));
+					}
 
-				updateJournalArticleLocalizedFieldsUpgradeCallables.add(
-					updateJournalArticleLocalizedFieldsUpgradeCallable);
-			}
-
-			ExecutorService executorService = Executors.newWorkStealingPool();
-
-			List<Future<Boolean>> futures = executorService.invokeAll(
-				updateJournalArticleLocalizedFieldsUpgradeCallables);
-
-			executorService.shutdown();
-
-			for (Future<Boolean> future : futures) {
-				boolean success = GetterUtil.get(future.get(), true);
-
-				if (!success) {
-					throw new UpgradeException(
-						"Unable to update journal article localized fields");
-				}
-			}
+					return null;
+				},
+				BaseUpgradeCallable::call);
 		}
 	}
 

@@ -1,0 +1,100 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Message Boards";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsCategory.tearDownCP();
+
+			MessageboardsThread.tearDownCP();
+
+			MessageboardsPortlet.tearDownConfigurationGeneralCP();
+		}
+	}
+
+	@priority = "3"
+	@refactordone
+	test CanDeleteThreadWithAttachment {
+		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONMBMessage.addMessage(
+			groupName = "Site Name",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addAttachmentToMessage(
+			fileName = "Document_1.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.moveThreadToTrash(
+			groupName = "Site Name",
+			threadSubject = "MB Thread Message Subject");
+
+		AssertConsoleTextNotPresent(value1 = "MessageListenerException");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.portlet.documentlibrary.NoSuchFileEntryException");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.deleteCP(
+			assetName = "MB Thread Message Subject",
+			assetType = "Message Boards Thread");
+
+		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
+	}
+
+	@priority = "4"
+	@refactordone
+	test JavascriptIsNotExecutedWithBBCodeBody {
+		MessageboardsPortlet.configureGeneralCP(siteURLKey = "guest");
+
+		MessageboardsThread.addCP(
+			siteURLKey = "guest",
+			source = "true",
+			threadBody = "[img]Not An Image[font= onerror=alert(/XSS/.source)//]FF[/font][/img]",
+			threadSubject = "New Thread Subject");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.assertAlertNotPresent();
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "",
+			threadSubject = "New Thread Subject");
+
+		MessageboardsThread.addCP(
+			fontSize = "24",
+			siteURLKey = "guest",
+			source = "true",
+			threadBody = "[size=5]Thread Body[/size]",
+			threadSubject = "New Thread Subject 2");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			fontSize = "24",
+			replyCount = "0",
+			threadBody = "Thread Body",
+			threadSubject = "New Thread Subject 2");
+	}
+
+}

@@ -35,7 +35,6 @@ definition {
 	@priority = "5"
 	test CanBeCollapsed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -88,7 +87,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -125,7 +123,6 @@ definition {
 	@priority = "5"
 	test CanBeCreatedFromExistingField {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -180,7 +177,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -223,7 +219,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -254,7 +249,6 @@ definition {
 	@priority = "5"
 	test CanBeMovedBetweenPages {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -305,7 +299,6 @@ definition {
 	@priority = "5"
 	test CanBeRepeatable {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -360,7 +353,6 @@ definition {
 	@priority = "4"
 	test FieldsCanBeReordered {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -399,7 +391,6 @@ definition {
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -440,7 +431,6 @@ definition {
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

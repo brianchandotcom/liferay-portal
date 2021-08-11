@@ -35,7 +35,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -72,7 +71,6 @@ definition {
 	@priority = "5"
 	test CanBeCreatedInMultipleLanguages {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -135,7 +133,6 @@ definition {
 	@priority = "5"
 	test CanBeCreatedOnlyOncePerLanguage {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -257,7 +254,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -292,7 +288,6 @@ definition {
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -341,7 +336,6 @@ definition {
 	@priority = "5"
 	test CanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -384,7 +378,6 @@ definition {
 	@priority = "5"
 	test CanBePublished {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -433,7 +426,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -494,7 +486,6 @@ definition {
 	@priority = "5"
 	test ColorFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -545,7 +536,6 @@ definition {
 	@priority = "5"
 	test DateFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -874,7 +864,6 @@ definition {
 	@priority = "5"
 	test EntriesDisplayTheCorrectLanguageFlag {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -933,7 +922,6 @@ definition {
 	@priority = "5"
 	test FieldsAddedToTranslationAreAddedToDefaultLanguage {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -966,7 +954,6 @@ definition {
 	@priority = "5"
 	test FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1001,7 +988,6 @@ definition {
 	@priority = "5"
 	test GridFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1092,7 +1078,6 @@ definition {
 	@priority = "5"
 	test ImageFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1143,7 +1128,6 @@ definition {
 	@priority = "5"
 	test MaintainPropertiesFromDefaultLanguage {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1183,7 +1167,6 @@ definition {
 	@priority = "5"
 	test MultipleSelectionFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1273,7 +1256,6 @@ definition {
 	@priority = "5"
 	test NumericFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1332,7 +1314,6 @@ definition {
 	@priority = "5"
 	test ParagraphFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1383,7 +1364,6 @@ definition {
 	@priority = "5"
 	test RichTextFieldCanBeTranslated {
 		property forms.functional = "false";
-		property portal.acceptance = "false";
 		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
@@ -1463,7 +1443,6 @@ definition {
 	@priority = "5"
 	test SelectFromListFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1552,7 +1531,6 @@ definition {
 	@priority = "5"
 	test SeparatorFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1603,7 +1581,6 @@ definition {
 	@priority = "5"
 	test SingleSelectionFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1761,7 +1738,6 @@ definition {
 	@priority = "5"
 	test TextFieldAutocompleteOptionsCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1820,7 +1796,6 @@ definition {
 	@priority = "5"
 	test TextFieldBasicPropertiesCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1879,7 +1854,6 @@ definition {
 	@priority = "5"
 	test TextFieldPredefinedValueCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1916,7 +1890,6 @@ definition {
 	@priority = "5"
 	test UploadFieldCanBeTranslated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

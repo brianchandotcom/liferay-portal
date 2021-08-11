@@ -39,7 +39,6 @@ definition {
 	@priority = "5"
 	test ActionIsUpdatedWhenFieldLabelIsEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -233,7 +232,6 @@ definition {
 	@priority = "5"
 	test AreSavedWhenExitingTheForm {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -292,7 +290,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -429,7 +426,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -621,7 +617,6 @@ definition {
 	@priority = "5"
 	test ConditionIsUpdatedWhenFieldLabelIsEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -804,7 +799,6 @@ definition {
 	@priority = "5"
 	test CreationCanBeCanceled {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

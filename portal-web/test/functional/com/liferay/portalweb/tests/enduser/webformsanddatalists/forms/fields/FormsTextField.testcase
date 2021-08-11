@@ -34,7 +34,6 @@ definition {
 	@description = "Verify that a Text Field can be Autocompleted from a Data Provider"
 	@priority = "4"
 	test CanBeAutocompletedUsingADataProvider {
-		property portal.acceptance = "false";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsTextField#CanBeAutocompletedUsingADataProvider";
 
@@ -187,7 +186,6 @@ definition {
 	@priority = "4"
 	test CanBeAutocompletedUsingAList {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -236,7 +234,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -263,7 +260,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -310,7 +306,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -548,7 +543,6 @@ definition {
 	@priority = "4"
 	test CanBeValidatedUsingTheContainsOption {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -680,7 +674,6 @@ definition {
 	@priority = "4"
 	test CanBeValidatedUsingTheDoesNotMatchOption {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -736,7 +729,6 @@ definition {
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotEmailOption {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -795,7 +787,6 @@ definition {
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotURLOption {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -923,7 +914,6 @@ definition {
 	@priority = "5"
 	test CanRequireConfirmationWithValidation {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -988,7 +978,6 @@ definition {
 	@priority = "5"
 	test ConfirmationBoxCanBePlacedHorizontally {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1052,7 +1041,6 @@ definition {
 	@priority = "5"
 	test ConfirmationErrorMessageCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1108,7 +1096,6 @@ definition {
 	@priority = "5"
 	test ConfirmationLabelCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1168,7 +1155,6 @@ definition {
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1197,7 +1183,6 @@ definition {
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1229,7 +1214,6 @@ definition {
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1260,7 +1244,6 @@ definition {
 	@priority = "5"
 	test PlaceholderTextCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1287,7 +1270,6 @@ definition {
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1322,7 +1304,6 @@ definition {
 	@priority = "5"
 	test ReferenceCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

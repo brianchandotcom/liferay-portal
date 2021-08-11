@@ -114,7 +114,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -150,7 +149,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -192,7 +190,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -233,7 +230,6 @@ definition {
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -284,7 +280,6 @@ definition {
 	@priority = "5"
 	test CanBeRequired {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -329,7 +324,6 @@ definition {
 	@priority = "5"
 	test CanBeSetAsRepeatable {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -385,7 +379,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -435,7 +428,6 @@ definition {
 	@priority = "5"
 	test CanCreateListUsingAutofill {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingAutofill";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
@@ -528,7 +520,6 @@ definition {
 	@description = "LPS-85025 - Verify that a list can be created using a DataProvider"
 	@priority = "5"
 	test CanCreateListUsingDataProvider {
-		property portal.acceptance = "false";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingDataProvider";
 
@@ -628,7 +619,6 @@ definition {
 	@priority = "5"
 	test FieldReferenceOfOptionsCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -665,7 +655,6 @@ definition {
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -698,7 +687,6 @@ definition {
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -731,7 +719,6 @@ definition {
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -768,7 +755,6 @@ definition {
 	@priority = "5"
 	test OptionsCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -877,7 +863,6 @@ definition {
 	@priority = "5"
 	test OptionsCanBeRearranged {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -923,7 +908,6 @@ definition {
 	@priority = "5"
 	test OptionsCanBeSortedAlphabetically {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -981,7 +965,6 @@ definition {
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1025,7 +1008,6 @@ definition {
 	@priority = "5"
 	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1078,7 +1060,6 @@ definition {
 	@priority = "5"
 	test ReferenceCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

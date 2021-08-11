@@ -35,7 +35,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -64,7 +63,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -103,7 +101,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -165,7 +162,6 @@ definition {
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -208,7 +204,6 @@ definition {
 	@priority = "5"
 	test CanBeRequired {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -249,7 +244,6 @@ definition {
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -303,7 +297,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -379,7 +372,6 @@ definition {
 	@priority = "5"
 	test FieldReferencesOfOptionsCanBeEdited {
 		property forms.functional = "false";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -424,7 +416,6 @@ definition {
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -471,7 +462,6 @@ definition {
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -591,7 +581,6 @@ definition {
 	@priority = "5"
 	test OptionsCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -640,7 +629,6 @@ definition {
 	@priority = "5"
 	test OptionsCanBeDeleted {
 		property forms.functional = "quarantine";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -736,7 +724,6 @@ definition {
 	@priority = "5"
 	test OptionsCanBeDisplayedInlineAndAsList {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -786,7 +773,6 @@ definition {
 	@priority = "5"
 	test OptionsCanBeRearranged {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -906,7 +892,6 @@ definition {
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -955,7 +940,6 @@ definition {
 	@priority = "4"
 	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -996,7 +980,6 @@ definition {
 	@priority = "5"
 	test ReferenceCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

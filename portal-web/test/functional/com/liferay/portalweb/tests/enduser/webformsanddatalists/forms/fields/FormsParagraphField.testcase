@@ -401,7 +401,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -433,7 +432,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -474,7 +472,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -542,7 +539,6 @@ definition {
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -584,7 +580,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -640,7 +635,6 @@ definition {
 	@priority = "4"
 	test CanDeleteATableUsingBackspace {
 		property forms.functional = "false";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -695,7 +689,6 @@ definition {
 	@priority = "4"
 	test CanEditFormattingStyle {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanEditFormattingStyle";
 
 		ProductMenu.gotoPortlet(
@@ -771,7 +764,6 @@ definition {
 	@priority = "5"
 	test CannotBeSavedOrPublishedWithoutBodyText {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -834,7 +826,6 @@ definition {
 	@priority = "5"
 	test CanSupportALinkToAURL {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportALinkToAURL";
 
 		ProductMenu.gotoPortlet(
@@ -877,7 +868,6 @@ definition {
 	@priority = "5"
 	test CanSupportBulletedLists {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportBulletedLists";
 
 		ProductMenu.gotoPortlet(
@@ -934,7 +924,6 @@ definition {
 	@priority = "5"
 	test CanSupportHTML {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -973,7 +962,6 @@ definition {
 	@priority = "5"
 	test CanSupportImages {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportImages";
 
 		ProductMenu.gotoPortlet(
@@ -1013,7 +1001,6 @@ definition {
 	@priority = "5"
 	test CanSupportNumberedLists {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportNumberedLists";
 
 		ProductMenu.gotoPortlet(
@@ -1070,7 +1057,6 @@ definition {
 	@priority = "4"
 	test CanSupportTables {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportTables";
 
 		ProductMenu.gotoPortlet(
@@ -1112,7 +1098,6 @@ definition {
 	@priority = "5"
 	test CanSupportVideos {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportVideos";
 
 		ProductMenu.gotoPortlet(
@@ -1164,7 +1149,6 @@ definition {
 	@priority = "5"
 	test CanUndoAndRedo {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#CanUndoAndRedo";
 
 		ProductMenu.gotoPortlet(
@@ -1220,7 +1204,6 @@ definition {
 	@priority = "5"
 	test ReferenceCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1255,7 +1238,6 @@ definition {
 	@priority = "5"
 	test TextCanBeBoldedItalicizedAndUnderlined {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsParagraphField#TextCanBeBoldedItalicizedAndUnderlined";
 
 		ProductMenu.gotoPortlet(
@@ -1315,7 +1297,6 @@ definition {
 	@priority = "5"
 	test TitleCanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

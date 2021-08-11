@@ -39,7 +39,6 @@ definition {
 	@priority = "5"
 	test AutofillRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsPreview#AutofillRuleCanBePreviewed";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
@@ -129,7 +128,6 @@ definition {
 	@priority = "5"
 	test CalculateRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -194,7 +192,6 @@ definition {
 	@priority = "5"
 	test CanNavigateToDifferentPages {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -245,7 +242,6 @@ definition {
 	@priority = "4"
 	test CannotBeSubmitted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -268,7 +264,6 @@ definition {
 	@priority = "5"
 	test CannotNavigateToANewPageWithoutCompletingARequiredField {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -323,7 +318,6 @@ definition {
 	@priority = "5"
 	test ColorFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -364,7 +358,6 @@ definition {
 	@priority = "5"
 	test ContainsRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -421,7 +414,6 @@ definition {
 	@priority = "5"
 	test DateFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -463,7 +455,6 @@ definition {
 	@priority = "5"
 	test DoesNotContainRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -517,11 +508,9 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Enable) action can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test EnableRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -584,7 +573,6 @@ definition {
 	@priority = "5"
 	test FieldsetsCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -637,7 +625,6 @@ definition {
 	@priority = "5"
 	test FieldsGroupsCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -670,7 +657,6 @@ definition {
 	@priority = "5"
 	test GridFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -755,7 +741,6 @@ definition {
 	@priority = "5"
 	test ImageFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -797,7 +782,6 @@ definition {
 	@priority = "5"
 	test InvalidFormCannotBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -818,7 +802,6 @@ definition {
 	@priority = "5"
 	test IsEmptyRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -871,7 +854,6 @@ definition {
 	@priority = "5"
 	test IsEqualToRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -930,7 +912,6 @@ definition {
 	@priority = "5"
 	test IsNotEmptyRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -983,7 +964,6 @@ definition {
 	@priority = "5"
 	test IsNotEqualToRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1042,7 +1022,6 @@ definition {
 	@priority = "5"
 	test JumpToPageRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1113,7 +1092,6 @@ definition {
 	@priority = "5"
 	test MultipleSelectionFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1166,7 +1144,6 @@ definition {
 	@priority = "5"
 	test NumericFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1213,7 +1190,6 @@ definition {
 	@priority = "5"
 	test ParagraphFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1238,7 +1214,6 @@ definition {
 	@priority = "5"
 	test RequireRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1287,7 +1262,6 @@ definition {
 	@priority = "5"
 	test RichTextFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1328,7 +1302,6 @@ definition {
 	@priority = "5"
 	test SelectFromListFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1388,7 +1361,6 @@ definition {
 	@priority = "5"
 	test SeparatorFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1419,7 +1391,6 @@ definition {
 	@priority = "5"
 	test ShowRuleCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1474,7 +1445,6 @@ definition {
 	@priority = "5"
 	test SingleSelectionFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1535,7 +1505,6 @@ definition {
 	@priority = "5"
 	test TextFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1580,7 +1549,6 @@ definition {
 	@priority = "5"
 	test TranslationsCanBePreviewed {
 		property forms.functional = "false";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1621,7 +1589,6 @@ definition {
 	@priority = "5"
 	test UploadFieldCanBePreviewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

@@ -75,7 +75,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -154,11 +153,9 @@ definition {
 	}
 
 	@description = "Verify that a Rule Condition can be edited"
-	@ignore = "True"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -222,7 +219,6 @@ definition {
 	@priority = "4"
 	test CanCreateAContainsRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -292,7 +288,6 @@ definition {
 	@priority = "4"
 	test CanCreateADoesNotContainRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -366,7 +361,6 @@ definition {
 	@priority = "4"
 	test CanCreateAnIsEmptyRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -431,7 +425,6 @@ definition {
 	@priority = "4"
 	test CanCreateAnIsEqualToRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -503,7 +496,6 @@ definition {
 	@priority = "4"
 	test CanCreateAnIsGreaterThanOrEqualToRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -583,7 +575,6 @@ definition {
 	@priority = "4"
 	test CanCreateAnIsGreaterThanRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -657,7 +648,6 @@ definition {
 	@priority = "4"
 	test CanCreateAnIsLessThanOrEqualToRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -745,7 +735,6 @@ definition {
 	@priority = "4"
 	test CanCreateAnIsLessThanRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -933,7 +922,6 @@ definition {
 	@priority = "4"
 	test CanCreateAnIsNotEqualToRule {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1273,7 +1261,6 @@ definition {
 	@priority = "5"
 	test CanCreateMultipleConditionsUsingOR {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1381,7 +1368,6 @@ definition {
 	@priority = "5"
 	test OrOperatorisDisabledByDefault {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

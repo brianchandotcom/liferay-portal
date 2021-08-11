@@ -35,7 +35,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -82,7 +81,6 @@ definition {
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -131,7 +129,6 @@ definition {
 	@priority = "5"
 	test CanBeNavigatedUsingNavigationList {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -202,7 +199,6 @@ definition {
 	@priority = "5"
 	test CanBeViewed {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -340,7 +336,6 @@ definition {
 	@priority = "5"
 	test DisplayCorrectInfoInPreviews {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -405,7 +400,6 @@ definition {
 	@priority = "3"
 	test DisplayCorrectNumberOfEntries {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -462,7 +456,6 @@ definition {
 	@priority = "5"
 	test DisplayFieldListInSummaryTab {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -542,7 +535,6 @@ definition {
 	@priority = "5"
 	test DisplayNoMetricsInSummaryTab {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -627,7 +619,6 @@ definition {
 	@priority = "5"
 	test DisplayStatisticsInSummaryTab {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -784,7 +775,6 @@ definition {
 	@priority = "5"
 	test WorkflowApprovalChangesLabelToApproved {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -892,7 +882,6 @@ definition {
 	@priority = "5"
 	test WorkflowChangesSubmitButtonToSubmitForPublication {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -923,7 +912,6 @@ definition {
 	@priority = "5"
 	test WorkflowSubmissionChangesLabelToPending {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

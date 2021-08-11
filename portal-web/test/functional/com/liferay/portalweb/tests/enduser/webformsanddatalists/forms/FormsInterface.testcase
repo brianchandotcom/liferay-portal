@@ -130,7 +130,6 @@ definition {
 	@priority = "5"
 	test FieldsAddedViaElementSetCanBeReordered {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -187,7 +186,6 @@ definition {
 	@priority = "5"
 	test FieldsCanBeMovedBetweenPages {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -226,7 +224,6 @@ definition {
 	@priority = "5"
 	test FieldsCanBeReorderedViaDND {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -274,7 +271,6 @@ definition {
 	@priority = "5"
 	test FieldsCanBeResized {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -307,7 +303,6 @@ definition {
 	@priority = "5"
 	test FieldsDoNotLoseFunctionalityAfterResizing {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -364,7 +359,6 @@ definition {
 	@priority = "5"
 	test FieldsDoNotLosePropertiesAfterResizing {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -423,7 +417,6 @@ definition {
 	@priority = "5"
 	test FieldsGroupsCanBeReorderedViaDND {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -474,7 +467,6 @@ definition {
 	@priority = "5"
 	test FieldsGroupsCanBeResized {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -525,7 +517,6 @@ definition {
 	@priority = "5"
 	test MultipleFieldsCanBeAddedToARow {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -574,7 +565,6 @@ definition {
 	@priority = "5"
 	test MultipleFieldsGroupsCanBeAddedToARow {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -635,7 +625,6 @@ definition {
 	@priority = "5"
 	test MultipleFieldsGroupsInARowCanBeResized {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -712,7 +701,6 @@ definition {
 	@priority = "5"
 	test MultipleFieldsInARowCanBeResized {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

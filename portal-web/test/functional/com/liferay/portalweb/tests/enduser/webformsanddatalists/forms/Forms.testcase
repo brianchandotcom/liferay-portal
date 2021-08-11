@@ -348,7 +348,6 @@ definition {
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -396,7 +395,6 @@ definition {
 	@priority = "5"
 	test CanBeCreatedFromAutosavedDraft {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -443,7 +441,6 @@ definition {
 	@priority = "5"
 	test CanBeCreatedWithMultiplePages {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -547,7 +544,6 @@ definition {
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -576,7 +572,6 @@ definition {
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -615,7 +610,6 @@ definition {
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -771,8 +765,6 @@ definition {
 	@description = "LPS-61740 - Verify that a Form can be previewed"
 	@priority = "5"
 	test CanBePreviewed {
-		property portal.acceptance = "false";
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
@@ -797,8 +789,6 @@ definition {
 	@description = "LPS-61740 - Verify that a Form can be published"
 	@priority = "5"
 	test CanBePublished {
-		property portal.acceptance = "false";
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
@@ -844,7 +834,6 @@ definition {
 	@priority = "5"
 	test CanBeUnpublished {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1043,7 +1032,6 @@ definition {
 	@description = "Verify that Data Provider can retreive data for guest users"
 	@priority = "5"
 	test DataProviderCanRetrieveDataForGuestUser {
-		property portal.acceptance = "false";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDataProvider#DataProviderCanRetrieveDataForGuestUser";
 
@@ -1609,7 +1597,6 @@ definition {
 	@priority = "5"
 	test MultipleFormsCanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1714,7 +1701,6 @@ definition {
 	@priority = "5"
 	test PagesCanBeReordered {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1779,7 +1765,6 @@ definition {
 	@priority = "5"
 	test PagesCanBeReset {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1916,7 +1901,6 @@ definition {
 	@priority = "5"
 	test ShouldHaveAtLeastOneField {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -2800,7 +2784,6 @@ definition {
 	@priority = "5"
 	test WillAutosaveAfterOneMinute {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

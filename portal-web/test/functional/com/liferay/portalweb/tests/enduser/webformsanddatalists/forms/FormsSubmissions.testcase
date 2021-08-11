@@ -35,7 +35,6 @@ definition {
 	@priority = "5"
 	test CanBePartiallyFilledWithRequiredFields {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -80,7 +79,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -115,7 +113,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmittedFromWidget {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -189,7 +186,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmittedWhilePartiallyFilled {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -313,7 +309,6 @@ definition {
 	@priority = "5"
 	test CanBeSubmittedWithMultiplePages {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -429,7 +424,6 @@ definition {
 	@priority = "5"
 	test CanRedirectUserAfterFormSubmission {
 		property forms.functional = "false";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -576,7 +570,6 @@ definition {
 	@priority = "5"
 	test CanRequireUserAuthentication {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -635,7 +628,6 @@ definition {
 	@priority = "5"
 	test DefaultSuccessPageCanBeRestored {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -741,7 +733,6 @@ definition {
 	@priority = "4"
 	test SubmitButtonRestoredToDefaultIfLeftBlank {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -794,7 +785,6 @@ definition {
 	@priority = "5"
 	test SubmitButtonTextCanBeCustomized {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -829,7 +819,6 @@ definition {
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedMultipleTimes {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -880,7 +869,6 @@ definition {
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithNumbers {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -915,7 +903,6 @@ definition {
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithSpecialCharacters {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1021,7 +1008,6 @@ definition {
 	@priority = "5"
 	test SuccessPageCanBeDeleted {
 		property forms.functional = "true";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

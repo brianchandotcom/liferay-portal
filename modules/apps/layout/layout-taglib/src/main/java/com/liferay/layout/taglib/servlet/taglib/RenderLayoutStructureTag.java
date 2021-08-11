@@ -278,7 +278,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (Objects.equals(
 				collectionStyledLayoutStructureItem.getPaginationType(),
-				"numeric")) {
+				RenderCollectionLayoutStructureItemDisplayContext.
+					PAGINATION_TYPE_NUMERIC)) {
 
 			PaginationBarTag paginationBarTag = new PaginationBarTag();
 
@@ -302,7 +303,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (Objects.equals(
 				collectionStyledLayoutStructureItem.getPaginationType(),
-				"simple")) {
+				RenderCollectionLayoutStructureItemDisplayContext.
+					PAGINATION_TYPE_SIMPLE)) {
 
 			jspWriter.write("<div class=\"d-flex flex-grow-1 h-100 ");
 			jspWriter.write("justify-content-center py-3\" ");
@@ -346,8 +348,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				).build());
 			nextButtonTag.setDisplayType("unstyled");
 			nextButtonTag.setId(
-				"paginationNextButton_" +
-					collectionStyledLayoutStructureItem.getItemId());
+				RenderCollectionLayoutStructureItemDisplayContext.
+					PAGE_NUMBER_PARAM_PREFIX +
+						collectionStyledLayoutStructureItem.getItemId());
 			nextButtonTag.setLabel(LanguageUtil.get(getRequest(), "next"));
 
 			nextButtonTag.doTag(pageContext);

@@ -91,7 +91,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				getNumberOfPages(),
 				ParamUtil.getInteger(
 					_httpServletRequest,
-					"page_number_" +
+					PAGE_NUMBER_PARAM_PREFIX +
 						_collectionStyledLayoutStructureItem.getItemId(),
 					1)));
 

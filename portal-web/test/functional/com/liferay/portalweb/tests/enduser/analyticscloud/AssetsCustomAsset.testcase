@@ -237,7 +237,7 @@ definition {
 
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8543 | Test Summary: Delete one report out of many created"
 	@priority = "3"
-	test CanDeleteOneReportOutManyCreated {
+	test CanDeleteOneReportOutOfManyCreated {
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
 		}

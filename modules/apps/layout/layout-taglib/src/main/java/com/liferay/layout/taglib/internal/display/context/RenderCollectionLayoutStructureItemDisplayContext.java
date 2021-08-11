@@ -66,9 +66,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	public static final String PAGINATION_TYPE_SIMPLE = "simple";
 
 	public RenderCollectionLayoutStructureItemDisplayContext(
+		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		_collectionStyledLayoutStructureItem =
+			collectionStyledLayoutStructureItem;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 
@@ -76,30 +79,23 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<Object> getCollection(
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem) {
-
-		JSONObject collectionJSONObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
+	public List<Object> getCollection() {
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			_getLayoutListRetriever(collectionJSONObject);
-		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionJSONObject);
+			_getLayoutListRetriever();
+		ListObjectReference listObjectReference = _getListObjectReference();
 
 		if ((layoutListRetriever == null) || (listObjectReference == null)) {
 			return Collections.emptyList();
 		}
 
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			_getDefaultLayoutListRetrieverContext(collectionJSONObject);
+			_getDefaultLayoutListRetrieverContext();
 
-		int end = collectionStyledLayoutStructureItem.getNumberOfItems();
+		int end = _collectionStyledLayoutStructureItem.getNumberOfItems();
 		int start = 0;
 
 		String paginationType =
-			collectionStyledLayoutStructureItem.getPaginationType();
+			_collectionStyledLayoutStructureItem.getPaginationType();
 
 		if (Objects.equals(paginationType, PAGINATION_TYPE_NUMERIC) ||
 			Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE)) {
@@ -110,17 +106,17 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			int currentPage = ParamUtil.getInteger(
 				originalHttpServletRequest,
 				PAGE_NUMBER_PARAM_PREFIX +
-					collectionStyledLayoutStructureItem.getItemId());
+					_collectionStyledLayoutStructureItem.getItemId());
 
 			if (currentPage < 1) {
 				currentPage = 1;
 			}
 
 			int numberOfItems =
-				collectionStyledLayoutStructureItem.getNumberOfItems();
+				_collectionStyledLayoutStructureItem.getNumberOfItems();
 
 			int numberOfItemsPerPage =
-				collectionStyledLayoutStructureItem.getNumberOfItemsPerPage();
+				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage();
 
 			if (numberOfItemsPerPage >
 					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA) {
@@ -146,33 +142,24 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			listObjectReference, defaultLayoutListRetrieverContext);
 	}
 
-	public int getCollectionCount(
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem) {
-
-		JSONObject collectionJSONObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
+	public int getCollectionCount() {
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			_getLayoutListRetriever(collectionJSONObject);
-		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionJSONObject);
+			_getLayoutListRetriever();
+		ListObjectReference listObjectReference = _getListObjectReference();
 
 		if ((layoutListRetriever == null) || (listObjectReference == null)) {
 			return 0;
 		}
 
 		return layoutListRetriever.getListCount(
-			listObjectReference,
-			_getDefaultLayoutListRetrieverContext(collectionJSONObject));
+			listObjectReference, _getDefaultLayoutListRetrieverContext());
 	}
 
-	public LayoutDisplayPageProvider<?> getCollectionLayoutDisplayPageProvider(
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem) {
+	public LayoutDisplayPageProvider<?>
+		getCollectionLayoutDisplayPageProvider() {
 
 		JSONObject collectionJSONObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
 		if ((collectionJSONObject == null) ||
 			(collectionJSONObject.length() <= 0)) {
@@ -180,8 +167,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return null;
 		}
 
-		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionJSONObject);
+		ListObjectReference listObjectReference = _getListObjectReference();
 
 		if (listObjectReference == null) {
 			return null;
@@ -200,12 +186,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			getLayoutDisplayPageProviderByClassName(className);
 	}
 
-	public InfoListRenderer<?> getInfoListRenderer(
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem) {
-
+	public InfoListRenderer<?> getInfoListRenderer() {
 		if (Validator.isNull(
-				collectionStyledLayoutStructureItem.getListStyle())) {
+				_collectionStyledLayoutStructureItem.getListStyle())) {
 
 			return null;
 		}
@@ -214,24 +197,25 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			ServletContextUtil.getInfoListRendererTracker();
 
 		return infoListRendererTracker.getInfoListRenderer(
-			collectionStyledLayoutStructureItem.getListStyle());
+			_collectionStyledLayoutStructureItem.getListStyle());
 	}
 
-	public InfoListRendererContext getInfoListRendererContext(
-		String listItemStyle, String templateKey) {
-
+	public InfoListRendererContext getInfoListRendererContext() {
 		DefaultInfoListRendererContext defaultInfoListRendererContext =
 			new DefaultInfoListRendererContext(
 				_httpServletRequest, _httpServletResponse);
 
-		defaultInfoListRendererContext.setListItemRendererKey(listItemStyle);
-		defaultInfoListRendererContext.setTemplateKey(templateKey);
+		defaultInfoListRendererContext.setListItemRendererKey(
+			_collectionStyledLayoutStructureItem.getListItemStyle());
+		defaultInfoListRendererContext.setTemplateKey(
+			_collectionStyledLayoutStructureItem.getTemplateKey());
 
 		return defaultInfoListRendererContext;
 	}
 
-	private Map<String, String[]> _getConfiguration(
-		JSONObject collectionJSONObject) {
+	private Map<String, String[]> _getConfiguration() {
+		JSONObject collectionJSONObject =
+			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
 		JSONObject configurationJSONObject = collectionJSONObject.getJSONObject(
 			"config");
@@ -265,13 +249,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	private DefaultLayoutListRetrieverContext
-		_getDefaultLayoutListRetrieverContext(JSONObject collectionJSONObject) {
+		_getDefaultLayoutListRetrieverContext() {
 
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
 
-		defaultLayoutListRetrieverContext.setConfiguration(
-			_getConfiguration(collectionJSONObject));
+		defaultLayoutListRetrieverContext.setConfiguration(_getConfiguration());
 		defaultLayoutListRetrieverContext.setContextObject(
 			Optional.ofNullable(
 				_httpServletRequest.getAttribute(
@@ -287,8 +270,11 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return defaultLayoutListRetrieverContext;
 	}
 
-	private LayoutListRetriever<?, ListObjectReference> _getLayoutListRetriever(
-		JSONObject collectionJSONObject) {
+	private LayoutListRetriever<?, ListObjectReference>
+		_getLayoutListRetriever() {
+
+		JSONObject collectionJSONObject =
+			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
 		if ((collectionJSONObject == null) ||
 			(collectionJSONObject.length() <= 0)) {
@@ -311,8 +297,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return layoutListRetriever;
 	}
 
-	private ListObjectReference _getListObjectReference(
-		JSONObject collectionJSONObject) {
+	private ListObjectReference _getListObjectReference() {
+		JSONObject collectionJSONObject =
+			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
 		if ((collectionJSONObject == null) ||
 			(collectionJSONObject.length() <= 0)) {
@@ -364,6 +351,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return _segmentsEntryIds;
 	}
 
+	private final CollectionStyledLayoutStructureItem
+		_collectionStyledLayoutStructureItem;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private long[] _segmentsEntryIds;

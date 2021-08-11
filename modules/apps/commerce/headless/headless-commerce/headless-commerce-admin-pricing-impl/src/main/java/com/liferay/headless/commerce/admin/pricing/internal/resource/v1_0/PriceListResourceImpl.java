@@ -238,7 +238,7 @@ public class PriceListResourceImpl
 		CommercePriceList commercePriceList =
 			_commercePriceListService.addOrUpdateCommercePriceList(
 				priceList.getExternalReferenceCode(),
-				commerceCatalog.getGroupId(), contextUser.getUserId(), 0L,
+				commerceCatalog.getGroupId(), 0L,
 				commerceCurrency.getCommerceCurrencyId(), true,
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 				priceList.getName(),

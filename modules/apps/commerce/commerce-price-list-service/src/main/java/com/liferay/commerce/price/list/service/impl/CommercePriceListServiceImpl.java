@@ -272,7 +272,7 @@ public class CommercePriceListServiceImpl
 
 	@Override
 	public CommercePriceList addOrUpdateCommercePriceList(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long groupId,
 			long commercePriceListId, long commerceCurrencyId, boolean netPrice,
 			String type, long parentCommercePriceListId,
 			boolean catalogBasePriceList, String name, double priority,
@@ -339,6 +339,36 @@ public class CommercePriceListServiceImpl
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, boolean, String,
+	 long, boolean, String, double, int, int, int,  int, int, int, int, int,
+	 int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public CommercePriceList addOrUpdateCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commercePriceListId, long commerceCurrencyId, boolean netPrice,
+			String type, long parentCommercePriceListId,
+			boolean catalogBasePriceList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addOrUpdateCommercePriceList(
+			externalReferenceCode, groupId, commercePriceListId,
+			commerceCurrencyId, netPrice, type, parentCommercePriceListId,
+			catalogBasePriceList, name, priority, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
 	 String, long, boolean, String, double, int, int, int, int, int, int, int,
 	 int, int, int, boolean, ServiceContext)}
@@ -357,7 +387,7 @@ public class CommercePriceListServiceImpl
 		throws PortalException {
 
 		return addOrUpdateCommercePriceList(
-			externalReferenceCode, groupId, userId, commercePriceListId,
+			externalReferenceCode, groupId, commercePriceListId,
 			commerceCurrencyId, true,
 			CommercePriceListConstants.TYPE_PRICE_LIST,
 			parentCommercePriceListId, false, name, priority, displayDateMonth,

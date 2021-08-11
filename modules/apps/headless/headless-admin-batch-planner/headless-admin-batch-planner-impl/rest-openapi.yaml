@@ -48,6 +48,12 @@ components:
                         The type of external entity's field.
                     example: int
                     type: string
+                id:
+                    description:
+                        The mapping's ID.
+                    example: 12345
+                    format: int64
+                    type: integer
                 internalFieldName:
                     description:
                         The name of entity's field.
@@ -58,6 +64,12 @@ components:
                         The type of entity's field.
                     example: long
                     type: string
+                planId:
+                    description:
+                        The plan's ID.
+                    example: 12345
+                    format: int64
+                    type: integer
                 script:
                     description:
                         The mapping script.
@@ -109,8 +121,20 @@ components:
             type: object
         Policy:
             properties:
+                id:
+                    description:
+                        The policy's ID.
+                    example: 12345
+                    format: int64
+                    type: integer
                 name:
                     type: string
+                planId:
+                    description:
+                        The plan's ID.
+                    example: 12345
+                    format: int64
+                    type: integer
                 value:
                     type: string
             type: object

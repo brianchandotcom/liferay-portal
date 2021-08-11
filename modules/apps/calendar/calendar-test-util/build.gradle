@@ -7,7 +7,6 @@ dependencies {
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":core:registry-api")
 }
 
 liferay {

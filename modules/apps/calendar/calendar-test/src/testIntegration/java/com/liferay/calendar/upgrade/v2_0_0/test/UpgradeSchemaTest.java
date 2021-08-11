@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -63,7 +64,8 @@ public class UpgradeSchemaTest {
 
 		_upgradeDatabaseTestHelper =
 			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
-		_upgradeProcess = CalendarUpgradeTestUtil.getServiceUpgradeStep(
+		_upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator,
 			"com.liferay.calendar.internal.upgrade.v2_0_0." +
 				"SchemaUpgradeProcess");
 
@@ -150,5 +152,10 @@ public class UpgradeSchemaTest {
 	private Group _group;
 	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
 	private UpgradeProcess _upgradeProcess;
+
+	@Inject(
+		filter = "component.name=com.liferay.calendar.internal.upgrade.CalendarServiceUpgrade"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

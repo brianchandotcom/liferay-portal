@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.model.impl.PortalPreferenceValueImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -200,8 +201,8 @@ public class UpgradePortalPreferencesTest {
 	}
 
 	protected void setUpUpgradePortalPreferences() {
-		_upgradeProcess = CalendarUpgradeTestUtil.getWebUpgradeStep(
-			"UpgradePortalPreferences");
+		_upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, "UpgradePortalPreferences");
 	}
 
 	private static final String _NAMESPACE_NEW_SESSION_CLICKS =
@@ -223,6 +224,11 @@ public class UpgradePortalPreferencesTest {
 	private PortalPreferences _portalPreferences;
 
 	private UpgradeProcess _upgradeProcess;
+
+	@Inject(
+		filter = "component.name=com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -11,5 +11,6 @@
 			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
-	}
+	},
+	"version": 1.0
 }

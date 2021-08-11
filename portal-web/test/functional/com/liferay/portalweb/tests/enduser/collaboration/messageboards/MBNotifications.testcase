@@ -110,4 +110,148 @@ definition {
 			subject = "MB Category Name");
 	}
 
+	@ignore = "true"
+	@priority = "4"
+	@refactorneeded
+	test ViewMBThreadAndReplyThreadInGmail {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
+		property test.name.skip.portal.instance = "MessageboardsUsecase#ViewMBThreadAndReplyThreadInGmail";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.configureMailServerSettings(
+			needsReply = "true",
+			userName = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.editCP(
+			mailDomain = "gmail.com",
+			virtualHost = "localhost");
+
+		JSONUser.addUser(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = PropsUtil.get("email.address.3"));
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
+
+		Navigator.openURL();
+
+		Navigator.gotoAccountSettings();
+
+		User.editUserInformation(userEmailAddressEdit = PropsUtil.get("email.address.4"));
+
+		MessageboardsPortlet.configureMessageEmailFromCP(emailFromAddress = PropsUtil.get("email.address.2"));
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Message Boards Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = PropsUtil.get("email.address.3"));
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsPortlet.subscribePG();
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = PropsUtil.get("email.address.4"));
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject GMMB1");
+
+		Pause(locator1 = "15000");
+
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.viewMail(
+			emailFromUserName = "Joe Bloggs",
+			gmailAssetType = "GMMB1",
+			gmailMessageBody = "MB Thread Message Body",
+			gmailMessageTitle = "MB Category Name New Message: MB Thread Message Subject GMMB1");
+
+		Gmail.replyMail(gmailReplyMessage = "MB Thread Message Subject GMMB1 Reply");
+
+		Navigator.openSpecificURL(url = "${portalURL}");
+
+		Pause(locator1 = "30000");
+
+		Refresh();
+
+		AssertVisible(locator1 = "Notifications#PROFILE_BADGE_COUNT");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsThread.viewReplyPG(
+			replyCount = "1",
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Message Subject GMMB1 Reply",
+			threadSubject = "MB Thread Message Subject GMMB1",
+			userName = "userfn userln");
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "MB Category Name New Message: MB Thread Message Subject GMMB1,Your New Account,Your New Password,GMMB1");
+	}
+
 }

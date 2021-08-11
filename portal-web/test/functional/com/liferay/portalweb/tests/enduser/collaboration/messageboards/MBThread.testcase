@@ -36,6 +36,86 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	@refactorneeded
+	test CanAddLinkToDocument {
+		property portal.acceptance = "true";
+		property testray.component.names = "WYSIWYG";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Thread");
+
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "MB Thread Message Subject");
+
+		CKEditor.addTextWithLink(
+			displayText = "Link to Document",
+			dmDocumentTitle = "Document_1.jpg",
+			fieldLabel = "Body");
+
+		PortletEntry.publish();
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
+
+		Click(
+			key_text = "Link to Document",
+			locator1 = "Link#ANY");
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test CanAddLinkToPage {
+		property portal.acceptance = "true";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "${pageName}");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Thread");
+
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "MB Thread Message Subject");
+
+		CKEditor.addTextWithLink(
+			displayText = "Link to Page",
+			fieldLabel = "Body",
+			pageName = "${pageName}");
+
+		PortletEntry.publish();
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntry(rowEntry = "MB Thread Message Subject");
+
+		Click(
+			key_text = "Link to Page",
+			locator1 = "Link#ANY");
+
+		AssertVisible(
+			key_pageName = "${pageName}",
+			locator1 = "Home#PAGE_ACTIVE");
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanAddReply {
@@ -116,6 +196,32 @@ definition {
 		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
 	}
 
+	@priority = "5"
+	@refactordone
+	test CanDeleteThread {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.moveThreadToTrash(
+			groupName = "Guest",
+			threadSubject = "MB Thread Message Subject");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "MB Thread Message Subject",
+			assetType = "Message Boards Thread");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
+	}
 
 	@priority = "3"
 	@refactordone
@@ -215,40 +321,110 @@ definition {
 			threadSubject = "Message Boards Thread Subject");
 	}
 
+	@priority = "5"
+	@refactordone
+	test CanRestoreThread {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		JSONMBMessage.addMessage(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addMessageReply(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			replyBody = "MB Body Reply",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.moveCategoryToTrash(
+			categoryName = "MB Category Name",
+			groupName = "Guest");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.restoreCP(
+			assetName = "MB Category Name",
+			assetRestoreLocation = "Home",
+			assetType = "Message Boards Category");
+
+		RecycleBin.viewDefaultCP(assetName = "MB Category Name");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.viewCP(
+			categoryCount = "0",
+			categoryName = "MB Category Name",
+			replyCount = "1",
+			threadCount = "1");
+
+		MessageboardsThread.viewCP(
+			replyCount = "1",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
+
+		MessageboardsThread.viewReplyCP(
+			threadBody = "MB Body Reply",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
+	}
+
 	@priority = "4"
 	@refactordone
-	test JavascriptIsNotExecutedWithBBCodeBody {
-		MessageboardsPortlet.configureGeneralCP(siteURLKey = "guest");
+	test JavascriptIsNotExecutedInBBCodeBody {
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsThread.addCP(
-			siteURLKey = "guest",
+		MessageboardsThread.addPG(
 			source = "true",
-			threadBody = "[img]Not An Image[font= onerror=alert(/XSS/.source)//]FF[/font][/img]",
-			threadSubject = "New Thread Subject");
+			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
+			threadSubject = "MB Thread Message Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsThread.assertAlertNotPresent();
-
-		MessageboardsThread.viewCP(
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
 			replyCount = "0",
-			threadBody = "",
-			threadSubject = "New Thread Subject");
+			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
+			threadSubject = "MB Thread Message Subject");
 
-		MessageboardsThread.addCP(
-			fontSize = "24",
-			siteURLKey = "guest",
-			source = "true",
-			threadBody = "[size=5]Thread Body[/size]",
-			threadSubject = "New Thread Subject 2");
+		MessageboardsThread.viewNoXSSPG(
+			sourceContent = "true",
+			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
+			threadSubject = "MB Thread Message Subject");
+	}
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+	@description = "This is a use case for LPS-65365."
+	@priority = "5"
+	@refactorneeded
+	test JavascriptIsNotExecutedInHTMLBody {
+		property custom.properties = "message.boards.message.formats.default=html";
 
-		MessageboardsThread.viewCP(
-			fontSize = "24",
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>''');
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
 			replyCount = "0",
-			threadBody = "Thread Body",
-			threadSubject = "New Thread Subject 2");
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>''');
+
+		MessageboardsThread.viewNoXSSPG(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>''');
+
+		AssertHTMLSourceTextNotPresent(value1 = '''<script>alert(123);</script>''');
+
+		AssertHTMLSourceTextPresent(value1 = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 	}
 
 	@priority = "4"

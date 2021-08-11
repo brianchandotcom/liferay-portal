@@ -1,0 +1,376 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Message Boards";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsCategory.tearDownCP();
+
+			MessageboardsThread.tearDownCP();
+
+			MessageboardsPortlet.tearDownConfigurationGeneralCP();
+		}
+	}
+
+	@description = "This test covers LPS-97376, This ensures that a user can not view the subscribed message via the notification without permissions."
+	@priority = "4"
+	test CannotViewMessageViaNotificationWithoutPermissionsOnContentPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addMessage(
+			addGuestPermissions = "true",
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Message Boards Page",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Message Boards");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		PermissionsInline.gotoMessageBoardsThreadPG(threadSubject = "MB Thread Message Subject");
+
+		PermissionsInline.addOrRemoveSubscribePermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "User");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Add",
+			roleList = "User");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONMBMessage.subscribeToMessage(
+			groupName = "Guest",
+			threadSubject = "MB Thread Message Subject",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Body Reply",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		PermissionsInline.gotoMessageBoardsThreadPG(threadSubject = "MB Thread Message Subject");
+
+		PermissionsInline.addOrRemoveSubscribePermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "User");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "User,Guest");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "MB Thread Message Subject");
+
+		AssertElementNotPresent(
+			key_threadBody = "MB Body Reply",
+			locator1 = "MessageBoardsThread#THREAD_BODY");
+
+		Alert.viewErrorMessage(errorMessage = "You do not have the roles required to access this portlet.");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewMessageBoardsPortletRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsPortlet.viewNoPermissionCP();
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewMessageBoardsPortletSiteRole {
+		Permissions.setUpSiteRoleLoginUserCP(
+			pageName = "Blogs Page",
+			portletName = "Message Boards",
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site",
+			siteName = "Site Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
+
+		MessageboardsPortlet.viewNoPermissionCP();
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(
+			membershipType = "Private",
+			siteName = "Blank Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Site Page Name",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name");
+
+		Portlet.addPG(portletName = "Message Boards");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name");
+
+		MessageboardsThread.addPGWithPermissions(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			viewableBySelection = "Owner");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread Message Subject Reply",
+			threadSubject = "MB Thread Message Subject");
+
+		PermissionsInline.gotoMessageBoardsThreadReplyPG(
+			pageName = "Site Page Name",
+			siteName = "Blank Site Name",
+			siteURL = "true",
+			threadReplyBody = "MB Thread Message Subject Reply",
+			threadSubject = "MB Thread Message Subject");
+
+		for (var roleTitle : list "Power User,User") {
+			PermissionsInline.viewPermissionsRemoved(
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "${roleTitle}");
+		}
+
+		PermissionsInline.viewPermissionsChecked(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Owner");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test ViewMessageBoardsBannedUsers {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		PermissionsInline.gotoMessageBoardsPG(pageName = "Message Boards Page");
+
+		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
+			Role.definePermissionPG(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				roleTitle = "User");
+		}
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread1 Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadReplyBody = "MB Thread2 Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutPG();
+
+		User.loginPG();
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "userfn2 userln2",
+			replyCount = "2",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.banUser(
+			threadReplyBody = "MB Thread1 Reply Body",
+			userName = "userfn1 userln1");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "userfn2 userln2",
+			replyCount = "2",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.banUser(
+			threadReplyBody = "MB Thread2 Reply Body",
+			userName = "userfn2 userln2");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.viewBannedUserCP(
+			site = "Guest",
+			userScreenName = "userfn1 userln1");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsPortlet.viewBannedUserCP(
+			site = "Guest",
+			userScreenName = "userfn2 userln2");
+	}
+
+}

@@ -19,11 +19,6 @@ declare const Numeric: React.FC<IProps>;
 export {Numeric};
 declare const _default: any;
 export default _default;
-interface INumericInputMask {
-	append: string;
-	appendType: 'prefix' | 'suffix';
-	symbols: ISymbols;
-}
 interface IProps {
 	append: string;
 	appendType: 'prefix' | 'suffix';
@@ -34,7 +29,6 @@ interface IProps {
 	inputMaskFormat?: string;
 	localizedValue?: LocalizedValue<string>;
 	name: string;
-	numericInputMask: INumericInputMask | string;
 	onBlur: FocusEventHandler<HTMLInputElement>;
 	onChange: (event: {
 		target: {
@@ -46,7 +40,6 @@ interface IProps {
 	predefinedValue?: string;
 	readOnly: boolean;
 	symbols: ISymbols;
-	thousandsSeparator?: [',' | '.' | ' ' | "'" | 'none'];
 	value?: string;
 }
 declare type NumericDataType = 'integer' | 'double';

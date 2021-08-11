@@ -323,7 +323,7 @@ describe('Field Numeric', () => {
 
 	describe('Decimal Input Mask toggle', () => {
 		it('renders a suffix', () => {
-			const {container} = render(
+			const {container, getByText} = render(
 				<Numeric
 					append="$"
 					appendType="suffix"
@@ -336,11 +336,12 @@ describe('Field Numeric', () => {
 
 			const input = container.querySelector('input');
 
-			expect(input.value).toBe('123$');
+			expect(input.value).toBe('123');
+			expect(getByText('$')).toHaveClass('input-group-text');
 		});
 
 		it('renders a prefix', () => {
-			const {container} = render(
+			const {container, getByText} = render(
 				<Numeric
 					append="$"
 					appendType="prefix"
@@ -353,7 +354,8 @@ describe('Field Numeric', () => {
 
 			const input = container.querySelector('input');
 
-			expect(input.value).toBe('$123');
+			expect(getByText('$')).toHaveClass('input-group-text');
+			expect(input.value).toBe('123');
 		});
 
 		it('renders the thousand separator', () => {
@@ -370,6 +372,22 @@ describe('Field Numeric', () => {
 			const input = container.querySelector('input');
 
 			expect(input.value).toBe('1,234');
+		});
+
+		it('hides the thousand separator if it is set to `none`', () => {
+			const {container} = render(
+				<Numeric
+					dataType="double"
+					inputMask
+					name="numericField"
+					symbols={{decimalSymbol: '.', thousandsSeparator: 'none'}}
+					value="1234"
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			expect(input.value).toBe('1234');
 		});
 
 		it('allows user to input a decimal separator', () => {
@@ -391,7 +409,45 @@ describe('Field Numeric', () => {
 			expect(onChange).toHaveBeenLastCalledWith({
 				target: {value: '1,23'},
 			});
-			expect(onChange.mock.calls[4][0].target.value).toBe('1,23');
+		});
+
+		it('generates a placeholder', () => {
+			const {container} = render(
+				<Numeric
+					dataType="double"
+					inputMask
+					name="numericField"
+					symbols={{decimalSymbol: ','}}
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			expect(input).toHaveAttribute('placeholder', '0,00');
+		});
+
+		/**
+		 * LPS-136519 / LPS-136523
+		 */
+		it('ignores non decimal input', () => {
+			const onChange = jest.fn();
+			const {container} = render(
+				<Numeric
+					append="999"
+					appendType="suffix"
+					dataType="double"
+					inputMask
+					name="numericField"
+					onChange={onChange}
+					symbols={{decimalSymbol: ','}}
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			userEvent.type(input, 'a# @e');
+
+			expect(onChange).not.toHaveBeenCalled();
 		});
 	});
 });

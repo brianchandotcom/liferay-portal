@@ -433,6 +433,71 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 	}
 
+	@description = "This test covers LPS-91303. It ensures that the content of a selected root folder is viewable."
+	@priority = "3"
+	@refactordone
+	test CanViewContentOfConfiguredRootFolder {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Home Article",
+			kbArticleTitle = "Knowledge Base Home Article");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 1",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Folder Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder Title 1");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewDefaultFriendlyURL {
+		property test.name.skip.portal.instance = "KBDisplayWidget#CanViewDefaultFriendlyURL";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display");
+
+		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title");
+
+		KBArticle.viewKBDisplayPG(kbArticleFriendlyURL = "kb-article-title");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewCustomFriendlyURL {
+		property test.name.skip.portal.instance = "KBDisplayWidget#CanViewCustomFriendlyURL";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "KB Article Content",
+			kbArticleFriendlyURL = "custom-friendly-url",
+			kbArticleTitle = "Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display");
+
+		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "Article Title");
+
+		KBArticle.viewKBDisplayPG(kbArticleFriendlyURL = "custom-friendly-url");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanViewEditedKBArticleTitleHistory {

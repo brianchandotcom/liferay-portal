@@ -295,8 +295,10 @@ definition {
 				PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
 
 				AssertElementNotPresent(
-					key_fragmentName = "Place fragments here.",
-					locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+					key_content = "Place fragments here.",
+					key_fragmentClass = "content",
+					key_position = "1",
+					locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 				AssertElementNotPresent(
 					key_index = "2",
@@ -358,8 +360,10 @@ definition {
 				value1 = "Place fragments here.");
 
 			AssertElementNotPresent(
-				key_fragmentName = "Place fragments here.",
-				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+				key_content = "Place fragments here.",
+				key_fragmentClass = "content",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Assert could not add fragment in Tab 2,3,4") {

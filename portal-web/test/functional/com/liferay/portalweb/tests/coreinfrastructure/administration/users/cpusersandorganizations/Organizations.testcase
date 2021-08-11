@@ -795,6 +795,40 @@ definition {
 			searchTerm = "Organization");
 	}
 
+	@description = "This adds a global category to an organization."
+	@priority = "3"
+	test CanAddGlobalCategoryToOrganization {
+		JSONCategory.addVocabulary(
+			groupName = "Global",
+			title = "Vocabulary Name 1");
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1");
+
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+		Organization.openOrganizationsAdmin();
+
+		Organization.editOrganizationCP(orgName = "Organization Name");
+
+		Organization.editCategorizationCP(
+			categoryName = "Category Name 1",
+			orgName = "Organization Name",
+			vocabularyName = "Vocabulary Name 1");
+
+		PortletEntry.save();
+
+		Organization.openOrganizationsAdmin();
+
+		Organization.editOrganizationCP(orgName = "Organization Name");
+
+		AssetCategorization.viewCategory(categoryName = "Category Name 1");
+
+		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
+	}
+
 	@description = "This test asserts that an organization cannot be deleted if there is a suborganization associated with it."
 	@priority = "3"
 	test CannotDeleteAnOrganizationWithSuborganization {

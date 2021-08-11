@@ -290,6 +290,30 @@ definition {
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
+	@priority = "4"
+	@refactorneeded
+	test CanViewArticleViaDefaultFriendlyURL {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article2 Content",
+			kbArticleTitle = "Knowledge Base Article2 Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		var kbArticleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
+
+		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article2 Content",
+			kbArticleTitle = "Knowledge Base Article2 Title");
+	}
+
 	@priority = "3"
 	@refactorneeded
 	test CanViewArticleViaNavigationLinks {
@@ -361,22 +385,25 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test CanViewArticleViaDefaultFriendlyURL {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
+	test CanViewArticleViaUserDefinedFriendlyURL {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
+		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article2 Content",
+			kbArticleFriendlyURL = "Friendly Universal Resource Locator",
 			kbArticleTitle = "Knowledge Base Article2 Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		var kbArticleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
+		var kbAricleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
 
-		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
+		Navigator.gotoPage(pageName = "Home");
+
+		Navigator.openSpecificURL(url = "${kbAricleFriendlyURL}");
 
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",
@@ -404,33 +431,6 @@ definition {
 		KBArticle.viewViaNextLinkPG(
 			kbArticleContent = "This is a child article. Lengthy articles are no longer summarized on the KB Display portlet, and the Read More link has been deprecated. To access a child article, one must click on the parent article and then click on the child page link found either: under the article navigation, or under the parent article entry.",
 			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanViewArticleViaUserDefinedFriendlyURL {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article2 Content",
-			kbArticleFriendlyURL = "Friendly Universal Resource Locator",
-			kbArticleTitle = "Knowledge Base Article2 Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		var kbAricleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
-
-		Navigator.gotoPage(pageName = "Home");
-
-		Navigator.openSpecificURL(url = "${kbAricleFriendlyURL}");
-
-		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article2 Content",
-			kbArticleTitle = "Knowledge Base Article2 Title");
 	}
 
 	@priority = "4"

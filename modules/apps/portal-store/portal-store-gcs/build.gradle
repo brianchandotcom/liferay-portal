@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	compileInclude group: "com.google.api", name: "api-common", version: "1.10.1"
 	compileInclude group: "com.google.api", name: "gax", version: "1.62.0"
 	compileInclude group: "com.google.api", name: "gax-httpjson", version: "0.79.0"

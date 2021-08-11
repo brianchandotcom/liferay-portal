@@ -13,7 +13,7 @@ dependencies {
 	compileInclude group: "com.google.oauth-client", name: "google-oauth-client-java6", version: "1.31.0"
 	compileInclude group: "com.google.oauth-client", name: "google-oauth-client-servlet", version: "1.31.0"
 
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

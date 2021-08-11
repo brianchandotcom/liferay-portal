@@ -1,9 +1,9 @@
 dependencies {
 	compileInclude project(":apps:petra:petra-json-web-service-client")
 
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	compileOnly project(":apps:analytics:analytics-api")

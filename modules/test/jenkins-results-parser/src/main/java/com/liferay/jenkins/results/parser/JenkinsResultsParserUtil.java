@@ -3145,14 +3145,24 @@ public class JenkinsResultsParserUtil {
 						buildProperties.getProperty("spira.admin.user.name"));
 				}
 
-				if ((httpAuthorizationHeader == null) &&
-					url.matches("https://test-\\d+-\\d+.liferay.com/.+")) {
+				if (url.matches("https://test-\\d+-\\d+.liferay.com/.+")) {
+					if (isCINode()) {
+						url = getLocalURL(url);
 
-					Properties buildProperties = getBuildProperties();
+						httpAuthorizationHeader = null;
+					}
+					else {
+						if (httpAuthorizationHeader == null) {
+							Properties buildProperties = getBuildProperties();
 
-					httpAuthorizationHeader = new BasicHTTPAuthorization(
-						buildProperties.getProperty("jenkins.admin.user.token"),
-						buildProperties.getProperty("jenkins.admin.user.name"));
+							httpAuthorizationHeader =
+								new BasicHTTPAuthorization(
+									buildProperties.getProperty(
+										"jenkins.admin.user.token"),
+									buildProperties.getProperty(
+										"jenkins.admin.user.name"));
+						}
+					}
 				}
 
 				boolean testrayRequest = false;

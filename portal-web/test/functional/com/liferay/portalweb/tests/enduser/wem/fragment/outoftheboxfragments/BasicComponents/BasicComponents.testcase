@@ -19,7 +19,7 @@ definition {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				pageName = "Test Page Name",
+				layoutName = "Test Page Name",
 				type = "content");
 		}
 	}

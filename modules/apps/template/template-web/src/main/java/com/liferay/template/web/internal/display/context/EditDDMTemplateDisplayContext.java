@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -99,9 +98,21 @@ public class EditDDMTemplateDisplayContext {
 
 	public Map<String, Object> getDDMTemplateEditorContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"editorAutocompleteData", _getAutocompleteJSONObject()
+			"editorAutocompleteData",
+			JSONFactoryUtil.createJSONObject(
+				_ddmTemplateHelper.getAutocompleteJSON(
+					_httpServletRequest, getLanguageType()))
 		).put(
-			"editorMode", _getEditorMode()
+			"editorMode",
+			() -> {
+				if (Objects.equals(
+						getLanguageType(), TemplateConstants.LANG_TYPE_FTL)) {
+
+					return TemplateConstants.LANG_TYPE_FTL;
+				}
+
+				return TemplateConstants.LANG_TYPE_VM;
+			}
 		).put(
 			"propertiesViewURL",
 			() -> PortletURLBuilder.createRenderURL(
@@ -259,22 +270,6 @@ public class EditDDMTemplateDisplayContext {
 				getLanguageType(), _themeDisplay.getLocale());
 
 		return templateVariableGroups.values();
-	}
-
-	private JSONObject _getAutocompleteJSONObject() throws Exception {
-		return JSONFactoryUtil.createJSONObject(
-			_ddmTemplateHelper.getAutocompleteJSON(
-				_httpServletRequest, getLanguageType()));
-	}
-
-	private String _getEditorMode() {
-		if (Objects.equals(
-				getLanguageType(), TemplateConstants.LANG_TYPE_FTL)) {
-
-			return TemplateConstants.LANG_TYPE_FTL;
-		}
-
-		return TemplateConstants.LANG_TYPE_VM;
 	}
 
 	private String _getScript() {

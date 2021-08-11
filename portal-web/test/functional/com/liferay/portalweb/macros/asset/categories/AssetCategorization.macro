@@ -36,7 +36,7 @@ definition {
 
 	macro addCategoryViaSelect {
 		Panel.expandPanel(panel = "Categorization");
-		
+
 		Click(
 			key_vocabularyName = "${vocabularyName}",
 			locator1 = "AssetCategorization#CATEGORY_SELECT");
@@ -50,7 +50,7 @@ definition {
 		IFrame.selectTopFrame();
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
-	
+
 		IFrame.closeFrame();
 	}
 

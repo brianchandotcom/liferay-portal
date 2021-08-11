@@ -113,26 +113,7 @@ definition {
 		}
 	}
 
-
-	@description = "LPS-131793 Given select modal window in the the categorization section in Documents and Media
-    When the user has permissions to add new categories to Global vocabularies
-    Then the user is able to add new categories from the select modal window"
-	@priority = "4"
-	test AddCategoryFromDMWithPermission {
-		task ("Go to add Basic Document page in Global") {
-			DMNavigator.openToAddEntry(
-				groupName = "Global",
-				siteURLKey = "global");
-		}
-
-		task ("Add category via DM page") {
-			AssetCategorization.addCategoryViaSelect(
-				categoryName = "New Category",
-				vocabularyName = "Topic");
-		}
-	}
-
-	@description = "LPS-131793 Given select modal window in the the categorization section in Documents and Media
+	@description = "Given select modal window in the the categorization section in Documents and Media
     When the user has NOT permissions to add new categories to Global vocabularies
     Then the user is NOT able to add new categories from the select modal window"
 	@priority = "4"
@@ -143,13 +124,13 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-			
+
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
-		
+
 		task ("Create role, its permissions and assign to user") {
 			JSONRole.addRegularRole(
 				roleKey = "DocumentCreatorRole",
@@ -159,12 +140,12 @@ definition {
 				resourceAction = "ADD_DOCUMENT",
 				resourceName = "com.liferay.document.library",
 				roleTitle = "DocumentCreatorRole");
-			
+
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
 				roleTitle = "DocumentCreatorRole");
-			
+
 			JSONRole.assignRoleToUser(
 				roleTitle = "DocumentCreatorRole",
 				userEmailAddress = "userea@liferay.com");
@@ -184,7 +165,25 @@ definition {
 
 		task ("Assert if not possible to ADD cateory") {
 			AssetCategorization.viewNoAddPermissions(vocabularyName = "Topic");
-		}	
+		}
+	}
+
+	@description = "Given select modal window in the the categorization section in Documents and Media
+    When the user has permissions to add new categories to Global vocabularies
+    Then the user is able to add new categories from the select modal window"
+	@priority = "4"
+	test AddCategoryFromDMWithPermission {
+		task ("Go to add Basic Document page in Global") {
+			DMNavigator.openToAddEntry(
+				groupName = "Global",
+				siteURLKey = "global");
+		}
+
+		task ("Add category via DM page") {
+			AssetCategorization.addCategoryViaSelect(
+				categoryName = "New Category",
+				vocabularyName = "Topic");
+		}
 	}
 
 	@description = "LPS-134960 When in Blogs, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
@@ -644,6 +643,7 @@ definition {
 	@description = "LPS-131793 Given the vocabulary's configuration page
     When the Basic Document asset type for Documents and Media is selected
     Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (External Video Shortcut & Google Drive Shortcut) will not"
+	
 	@priority = "4"
 	test CheckDMVocabularyAssetSubtypeBasicDocument {
 		task ("Create a vocabulary with Associated Asset Type of Document > Basic Document") {
@@ -662,7 +662,7 @@ definition {
 
 			Panel.expandPanel(panel = "Categorization");
 
-			for(var vocabulary : list "Basic Document Vocabulary,Topic,Audience,Stage") {
+			for (var vocabulary : list "Basic Document Vocabulary,Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -674,14 +674,14 @@ definition {
 				documentTypeName = "External Video Shortcut",
 				groupName = "Test Site Name",
 				siteURLKey = "test-site-name");
-			
+
 			Panel.expandPanel(panel = "Categorization");
 
 			AssertElementNotPresent(
 				key_vocabularyName = "Basic Document Vocabulary",
 				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-			for(var vocabulary : list "Topic,Audience,Stage") {
+			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -693,14 +693,14 @@ definition {
 				documentTypeName = "Google Drive Shortcut",
 				groupName = "Test Site Name",
 				siteURLKey = "test-site-name");
-			
+
 			Panel.expandPanel(panel = "Categorization");
 
 			AssertElementNotPresent(
 				key_vocabularyName = "Basic Document Vocabulary",
 				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-			for(var vocabulary : list "Topic,Audience,Stage") {
+			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -711,6 +711,7 @@ definition {
 	@description = "LPS-131793 Given the vocabulary's configuration page
     When External Video Shortcut asset type for Documents and Media is selected
     Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (Basic Document & Google Drive Shortcut) will not"
+	
 	@priority = "4"
 	test CheckDMVocabularyAssetSubtypeExternalVideoShortcut {
 		task ("Create a vocabulary with Associated Asset Type of Document > External Video Shortcut") {
@@ -730,7 +731,7 @@ definition {
 
 			Panel.expandPanel(panel = "Categorization");
 
-			for(var vocabulary : list "External Video Shortcut Vocabulary,Topic,Audience,Stage") {
+			for (var vocabulary : list "External Video Shortcut Vocabulary,Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -741,14 +742,14 @@ definition {
 			DMNavigator.openToAddEntry(
 				groupName = "Test Site Name",
 				siteURLKey = "test-site-name");
-			
+
 			Panel.expandPanel(panel = "Categorization");
 
 			AssertElementNotPresent(
 				key_vocabularyName = "External Video Shortcut Vocabulary",
 				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-			for(var vocabulary : list "Topic,Audience,Stage") {
+			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -760,14 +761,14 @@ definition {
 				documentTypeName = "Google Drive Shortcut",
 				groupName = "Test Site Name",
 				siteURLKey = "test-site-name");
-			
+
 			Panel.expandPanel(panel = "Categorization");
 
 			AssertElementNotPresent(
 				key_vocabularyName = "External Video Shortcut Vocabulary",
 				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-			for(var vocabulary : list "Topic,Audience,Stage") {
+			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -778,6 +779,7 @@ definition {
 	@description = "LPS-131793 Given the vocabulary's configuration page
     When the Google Drive Shortcut asset type for Documents and Media is selected
     Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (Basic Document & External Video Shortcut) will not"
+	
 	@priority = "4"
 	test CheckDMVocabularyAssetSubtypeGoogleDriveShortcut {
 		task ("Create a vocabulary with Associated Asset Type of Document > Google Drive Shortcut") {
@@ -797,7 +799,7 @@ definition {
 
 			Panel.expandPanel(panel = "Categorization");
 
-			for(var vocabulary : list "Google Drive Shortcut Vocabulary,Topic,Audience,Stage") {
+			for (var vocabulary : list "Google Drive Shortcut Vocabulary,Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -808,14 +810,14 @@ definition {
 			DMNavigator.openToAddEntry(
 				groupName = "Test Site Name",
 				siteURLKey = "test-site-name");
-			
+
 			Panel.expandPanel(panel = "Categorization");
 
 			AssertElementNotPresent(
 				key_vocabularyName = "Google Drive Shortcut Vocabulary",
 				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-			for(var vocabulary : list "Topic,Audience,Stage") {
+			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
@@ -827,14 +829,14 @@ definition {
 				documentTypeName = "External Video Shortcut",
 				groupName = "Test Site Name",
 				siteURLKey = "test-site-name");
-			
+
 			Panel.expandPanel(panel = "Categorization");
 
 			AssertElementNotPresent(
 				key_vocabularyName = "Google Drive Shortcut Vocabulary",
 				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-			for(var vocabulary : list "Topic,Audience,Stage") {
+			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
 					key_vocabularyName = "${vocabulary}",
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");

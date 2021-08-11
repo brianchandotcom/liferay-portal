@@ -125,12 +125,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
 			}
 
-			int listCount = layoutListRetriever.getListCount(
-				listObjectReference, defaultLayoutListRetrieverContext);
-
 			end = Math.min(
 				Math.min(currentPage * numberOfItemsPerPage, numberOfItems),
-				listCount);
+				getCollectionCount());
 
 			start = (currentPage - 1) * numberOfItemsPerPage;
 		}
@@ -143,6 +140,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getCollectionCount() {
+		if (_collectionCount != null) {
+			return _collectionCount;
+		}
+
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
 			_getLayoutListRetriever();
 		ListObjectReference listObjectReference = _getListObjectReference();
@@ -151,8 +152,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return 0;
 		}
 
-		return layoutListRetriever.getListCount(
+		_collectionCount = layoutListRetriever.getListCount(
 			listObjectReference, _getDefaultLayoutListRetrieverContext());
+
+		return _collectionCount;
 	}
 
 	public LayoutDisplayPageProvider<?>
@@ -351,6 +354,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return _segmentsEntryIds;
 	}
 
+	private Integer _collectionCount;
 	private final CollectionStyledLayoutStructureItem
 		_collectionStyledLayoutStructureItem;
 	private final HttpServletRequest _httpServletRequest;

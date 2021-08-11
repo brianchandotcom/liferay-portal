@@ -21,6 +21,11 @@
 	<td>//span[@class='title'and text()='${key_metricTitle}']/..//div[@class='metric-value']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NO_RESULTS_CONTENT_MESSAGE</td>
+	<td>//div[@class='no-results-content']//h4[text()='${key_noResultMessage}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

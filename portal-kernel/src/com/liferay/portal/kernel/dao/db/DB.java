@@ -104,6 +104,9 @@ public interface DB {
 	public void process(UnsafeConsumer<Long, Exception> unsafeConsumer)
 		throws Exception;
 
+	public void removePrimaryKey(Connection connection, String tableName)
+		throws Exception;
+
 	public default void runSQL(
 			Connection connection, DBTypeToSQLMap dbTypeToSQLMap)
 		throws IOException, SQLException {

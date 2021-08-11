@@ -247,6 +247,22 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public void removePrimaryKey(Connection connection, String tableName)
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		String normalizedTableName = dbInspector.normalizeName(
+			tableName, databaseMetaData);
+
+		runSQL(
+			StringBundler.concat(
+				"alter table ", normalizedTableName, " drop primary key"));
+	}
+
+	@Override
 	public void runSQL(Connection connection, String sql)
 		throws IOException, SQLException {
 

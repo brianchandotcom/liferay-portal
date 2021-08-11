@@ -16,10 +16,12 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -109,6 +111,42 @@ public class SQLServerDB extends BaseDB {
 	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _SUPPORTS_NEW_UUID_FUNCTION;
+	}
+
+	@Override
+	public void removePrimaryKey(Connection connection, String tableName)
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		String normalizedTableName = dbInspector.normalizeName(
+			tableName, databaseMetaData);
+
+		String primaryKeyConstraintName = null;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select name from sys.key_constraints where ",
+					"type = 'PK' and ", "OBJECT_NAME(parent_object_id) = '",
+					normalizedTableName, "'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				primaryKeyConstraintName = resultSet.getString("name");
+			}
+		}
+
+		if (primaryKeyConstraintName == null) {
+			throw new UpgradeException(
+				"No primary key constraint found for " + normalizedTableName);
+		}
+
+		runSQL(
+			StringBundler.concat(
+				"alter table ", normalizedTableName, " drop constraint ",
+				primaryKeyConstraintName));
 	}
 
 	@Override

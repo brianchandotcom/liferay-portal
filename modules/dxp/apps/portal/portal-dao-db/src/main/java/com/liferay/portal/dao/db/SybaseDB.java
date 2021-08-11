@@ -17,14 +17,20 @@ package com.liferay.portal.dao.db;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
 
 import java.util.regex.Matcher;
@@ -87,6 +93,45 @@ public class SybaseDB extends BaseDB {
 	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _SUPPORTS_NEW_UUID_FUNCTION;
+	}
+
+	@Override
+	public void removePrimaryKey(Connection connection, String tableName)
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		String normalizedTableName = dbInspector.normalizeName(
+			tableName, databaseMetaData);
+
+		String primaryKeyConstraintName = null;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"sp_helpconstraint " + normalizedTableName);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				String definition = resultSet.getString("definition");
+
+				if (definition.startsWith("PRIMARY KEY INDEX")) {
+					primaryKeyConstraintName = resultSet.getString("name");
+
+					break;
+				}
+			}
+		}
+
+		if (primaryKeyConstraintName == null) {
+			throw new UpgradeException(
+				"No primary key constraint found for " + normalizedTableName);
+		}
+
+		runSQL(
+			StringBundler.concat(
+				"alter table ", normalizedTableName, " drop constraint ",
+				primaryKeyConstraintName));
 	}
 
 	@Override

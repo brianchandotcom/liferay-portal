@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -49,7 +48,6 @@ import java.lang.reflect.Field;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -631,66 +629,7 @@ public abstract class UpgradeProcess
 	protected void removePrimaryKey(String tableName) throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		DBInspector dbInspector = new DBInspector(connection);
-
-		String normalizedTableName = dbInspector.normalizeName(
-			tableName, connection.getMetaData());
-
-		if ((db.getDBType() == DBType.SQLSERVER) ||
-			(db.getDBType() == DBType.SYBASE)) {
-
-			String primaryKeyConstraintName = null;
-
-			if (db.getDBType() == DBType.SQLSERVER) {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"select name from sys.key_constraints where ",
-								"type = 'PK' and ",
-								"OBJECT_NAME(parent_object_id) = '",
-								normalizedTableName, "'"));
-					ResultSet resultSet = preparedStatement.executeQuery()) {
-
-					if (resultSet.next()) {
-						primaryKeyConstraintName = resultSet.getString("name");
-					}
-				}
-			}
-			else {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"sp_helpconstraint " + normalizedTableName);
-					ResultSet resultSet = preparedStatement.executeQuery()) {
-
-					while (resultSet.next()) {
-						String definition = resultSet.getString("definition");
-
-						if (definition.startsWith("PRIMARY KEY INDEX")) {
-							primaryKeyConstraintName = resultSet.getString(
-								"name");
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (primaryKeyConstraintName == null) {
-				throw new UpgradeException(
-					"No primary key constraint found for " +
-						normalizedTableName);
-			}
-
-			runSQL(
-				StringBundler.concat(
-					"alter table ", normalizedTableName, " drop constraint ",
-					primaryKeyConstraintName));
-		}
-		else {
-			runSQL(
-				StringBundler.concat(
-					"alter table ", normalizedTableName, " drop primary key"));
-		}
+		db.removePrimaryKey(connection, tableName);
 	}
 
 	protected void updateIndexes(Class<?> tableClass) throws Exception {

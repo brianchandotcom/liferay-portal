@@ -455,15 +455,6 @@ definition {
 
 	}
 
-	@description = "LPS-100677 - Verify the page is providing loading feedback when the table is being updated according to the search queries"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test PageProvidesLoadingFeedbackOnTableUpdate {
-
-		// TODO LRQA-67670 PageProvidesLoadingFeedbackOnTableUpdate pending implementation
-
-	}
-
 	@description = "LPS-100677 - Verify that the search is an approximate match aka LIKE search type or character by character comparison"
 	@priority = "3"
 	test SearchIsAnApproximateMatch {

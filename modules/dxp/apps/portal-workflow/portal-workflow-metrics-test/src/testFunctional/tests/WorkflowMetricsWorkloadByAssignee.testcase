@@ -432,15 +432,6 @@ definition {
 			value1 = "18px");
 	}
 
-	@description = "LPS-98518 - Verify that the (Workload by Assignee) page is providing the loading feedback when the table is being updated"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
-
-		// TODO LRQA-67611 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
-
-	}
-
 	@description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab On Time is selected"
 	@priority = "5"
 	test PercentageIndicationOnOnTimeTab {

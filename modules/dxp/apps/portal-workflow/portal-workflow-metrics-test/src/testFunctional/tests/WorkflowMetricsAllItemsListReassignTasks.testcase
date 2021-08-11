@@ -508,15 +508,6 @@ definition {
 			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
 	}
 
-	@description = "LPS-102664 - Verify that when the user clicks on Next in Select Tasks to Reassign, a loading state with Retrieving all possible assignees message is displayed"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test LoadingStateWithMessageIsDisplayed {
-
-		// TODO LRQA-67846 LoadingStateWithMessageIsDisplayed pending implementation
-
-	}
-
 	@description = "LPS-102664 - Verify that in Select Tasks to Reassign, the tasks are displayed in the same order rule displayed in All Items page"
 	@priority = "3"
 	test TasksAreDisplayedInSameOrderRuleInAllItemsPage {

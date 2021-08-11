@@ -231,15 +231,6 @@ definition {
 			velocityValueTotal = "0");
 	}
 
-	@description = "LPS-98233 - Verify that the page provides loading feedback when the table is being updated according to filter options"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
-
-		// TODO LRQA-67656 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
-
-	}
-
 	@description = "LPS-98233 - Verify that the To date is greater than the From date"
 	@priority = "3"
 	test ToDateMustBeGreaterThanFromDate {

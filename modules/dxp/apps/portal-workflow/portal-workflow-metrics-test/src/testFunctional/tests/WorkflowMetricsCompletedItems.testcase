@@ -327,15 +327,6 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
 	}
 
-	@description = "LPS-94146 - Verify that the page provides loading feedback when the table is being updated according to filter options"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test PageProvidesLoadingFeedbackWhenUpdatingTable {
-
-		// TODO LRQA-67637 PageProvidesLoadingFeedbackWhenUpdatingTable pending implementation
-
-	}
-
 	@description = "LPS-94146 - Verify that the percentage is displayed in Overdue, On Time and Untracked cards"
 	@priority = "4"
 	test PercentageIsDisplayedInCards {

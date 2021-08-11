@@ -1631,15 +1631,6 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
 	}
 
-	@description = "LPS-130217 - Verify that the page provides loading feedback when the table is being updated according to order options"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
-
-		// TODO LRQA-67722 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
-
-	}
-
 	@description = "LPS-130166 - Verify that popover for Due Date will display up to 2 SLAs and the order should be from the most to the least critical SLA"
 	@priority = "3"
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {

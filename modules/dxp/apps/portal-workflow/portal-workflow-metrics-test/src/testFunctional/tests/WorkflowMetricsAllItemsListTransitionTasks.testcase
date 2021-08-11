@@ -216,15 +216,6 @@ definition {
 			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
 	}
 
-	@description = "LPS-108138 - Verify that there are loading cards in Select Steps to Transition and Choose Transition per Step"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test LoadingCardsAreDisplayed {
-
-		// TODO LRQA-67810 LoadingCardsAreDisplayed pending implementation
-
-	}
-
 	@description = "LPS-108138 - Verify that the message -Your connection has been unexpectedly lost. Select 'Done' to retry.- is displayed when the connection is lost before the user clicks on Done"
 	@ignore = "Test Stub"
 	@priority = "2"

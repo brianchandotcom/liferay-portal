@@ -116,12 +116,58 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8539 | Test Summary: Create multiple custom asset report"
-	@ignore = "true"
 	@priority = "5"
 	test CanCreateMultipleCustomAssetReport {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8539 CanCreateMultipleCustomAssetReport
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add three custom asset reports") {
+			var n = "1";
+
+			for (var metric : list "Asset Views (sum),Asset Interaction Time (sum),Asset Downloads (sum)") {
+				ACNavigation.goToAssets();
+
+				ACNavigation.switchTab(tabName = "Custom");
+
+				ACAssets.addCustomAssetReport(
+					assetName = "Custom Asset Analytics Cloud",
+					metric = "Asset Views (sum)",
+					reportName = "Test Custom Asset Report ${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the new reports") {
+			for (var n : list "1,2,3") {
+				ACCards.viewCards(cardTitle = "Test Custom Asset Report ${n}");
+			}
+		}
 	}
 
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8542 | Test Summary: Delete multiple custom asset report"

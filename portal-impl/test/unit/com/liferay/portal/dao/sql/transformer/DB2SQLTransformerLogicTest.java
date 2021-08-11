@@ -60,6 +60,27 @@ public class DB2SQLTransformerLogicTest
 	}
 
 	@Test
+	public void testReplaceCaseWhenThen() {
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from Foo where case when foo = COALESCE(CAST(? AS ",
+				"VARCHAR(32672)),'') then COALESCE(CAST(? AS VARCHAR(32672)),",
+				"'') else COALESCE(CAST(? AS VARCHAR(32672)),'') end"),
+			sqlTransformer.transform(
+				"select * from Foo where case when foo = ? then ? else ? end"));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select bar, COALESCE(CAST(? AS VARCHAR(32672)),''), case ",
+				"when foo = COALESCE(CAST(? AS VARCHAR(32672)),'') then ",
+				"COALESCE(CAST(? AS VARCHAR(32672)),'') else COALESCE(CAST(? ",
+				"AS VARCHAR(32672)),'') end as columnA from Foo"),
+			sqlTransformer.transform(
+				"select bar, ?, case when foo = ? then ? else ? end as " +
+					"columnA from Foo"));
+	}
+
+	@Test
 	public void testReplaceLike() {
 		Assert.assertEquals(
 			"select foo from Foo where foo LIKE COALESCE(" +
@@ -73,6 +94,14 @@ public class DB2SQLTransformerLogicTest
 		Assert.assertEquals(
 			getModTransformedSQL(),
 			sqlTransformer.transform(getModOriginalSQL()));
+	}
+
+	@Test
+	public void testReplaceSelect() {
+		Assert.assertEquals(
+			"select foo, COALESCE(CAST(? AS VARCHAR(32672)),''), bar, " +
+				"COALESCE(CAST(? AS VARCHAR(32672)),'') from Foo",
+			sqlTransformer.transform("select foo, ?, bar, ? from Foo"));
 	}
 
 	@Override

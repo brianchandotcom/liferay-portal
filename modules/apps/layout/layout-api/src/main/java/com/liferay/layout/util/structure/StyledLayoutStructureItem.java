@@ -103,6 +103,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return GetterUtil.getString(_getStyleProperty("display"));
 	}
 
+	public String getDisplay() {
+		return _getStringStyleProperty("display");
+	}
+
 	public String getFontFamily() {
 		return GetterUtil.getString(_getStyleProperty("fontFamily"));
 	}

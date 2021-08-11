@@ -501,7 +501,7 @@ public class RenderLayoutStructureDisplayContext {
 			StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler cssClassSB = new StringBundler(33);
+		StringBundler cssClassSB = new StringBundler(35);
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getAlign())) {
 			cssClassSB.append(" ");
@@ -534,6 +534,11 @@ public class RenderLayoutStructureDisplayContext {
 				styledLayoutStructureItem.getContentDisplay(), "flex-row")) {
 
 			cssClassSB.append(" d-flex flex-row");
+		}
+
+		if (Validator.isNotNull(styledLayoutStructureItem.getDisplay())) {
+			cssClassSB.append(" d-lg-");
+			cssClassSB.append(styledLayoutStructureItem.getDisplay());
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getJustify())) {

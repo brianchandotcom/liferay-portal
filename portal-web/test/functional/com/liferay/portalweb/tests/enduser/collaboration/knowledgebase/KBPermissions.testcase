@@ -1,0 +1,217 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownSiteWorkflow();
+
+			KBFolder.tearDownCP();
+
+			KBArticle.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test ViewSuggestionsWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		JSONUser.addUser(
+			userEmailAddress = "poweruser@liferay.com",
+			userFirstName = "Power",
+			userLastName = "User",
+			userScreenName = "poweruser");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "poweruser@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Power User",
+			userScreenName = "poweruser");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "poweruser");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		JSONUser.addUser(
+			userEmailAddress = "user2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user2@liferay.com");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "Test Test Knowledge Base Article Suggestion");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticleSuggestion.gotoSuggestionStatusNew(suggestionCount = "1");
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "Test Test Knowledge Base Article Suggestion",
+			kbSuggestionUserName = "Test Test",
+			status = "New");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 1");
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 2");
+
+		KBArticleSuggestion.viewSubmittedSuggestionCountNoPermissionPG(kbSuggestionCount = "2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbSuggestionBody = "User 2 Knowledge Base Article Suggestion 1");
+
+		KBArticleSuggestion.viewSubmittedSuggestionCountNoPermissionPG(kbSuggestionCount = "1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "poweruser@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS",
+			value1 = "There are 4 suggestions.");
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "User 2 Knowledge Base Article Suggestion 1",
+			kbSuggestionUserName = "userfn2 userln2",
+			status = "New");
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 2",
+			kbSuggestionUserName = "userfn1 userln1",
+			status = "New");
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "User 1 Knowledge Base Article Suggestion 1",
+			kbSuggestionUserName = "userfn1 userln1",
+			status = "New");
+
+		KBArticleSuggestion.viewPG(
+			kbSuggestionBody = "Test Test Knowledge Base Article Suggestion",
+			kbSuggestionUserName = "Test Test",
+			status = "New");
+	}
+
+}

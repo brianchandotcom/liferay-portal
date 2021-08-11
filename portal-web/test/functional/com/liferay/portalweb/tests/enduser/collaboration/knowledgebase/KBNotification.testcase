@@ -1,0 +1,162 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownSiteWorkflow();
+
+			KBFolder.tearDownCP();
+
+			KBArticle.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test ViewKBArticleSuggestionsWorkflowNotificationEmail {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.smtp.server.enabled = "true";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Test",
+			userLastName = "2",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Site Administrator",
+			userScreenName = "usersn");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.configureEmailCP(
+			emailFrom = "true",
+			suggestionInProgress = "true",
+			suggestionReceived = "true",
+			suggestionResolved = "true",
+			userEmailAddress = "test@liferay.com",
+			userName = "Test Test");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.subscribeCP();
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		KBArticleSuggestion.addPG(
+			kbArticleTitle = "KB Article Title",
+			kbSuggestionBody = "KB Article Suggestion Content");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticleSuggestion.viewSuggestionStatus(
+			kbSuggestionBody = "KB Article Suggestion Content",
+			status = "New");
+
+		KBArticleSuggestion.moveToInProgressStatus(
+			kbArticleTitle = "KB Article Title",
+			kbSuggestionBody = "KB Article Suggestion Content");
+
+		KBArticleSuggestion.viewSuggestionStatus(
+			kbSuggestionBody = "KB Article Suggestion Content",
+			status = "In Progress");
+
+		KBArticleSuggestion.moveToResolvedStatus(
+			kbArticleTitle = "KB Article Title",
+			kbSuggestionBody = "KB Article Suggestion Content");
+
+		KBArticleSuggestion.viewSuggestionStatus(
+			kbSuggestionBody = "KB Article Suggestion Content",
+			status = "Resolved");
+
+		MockMock.viewMail(
+			asset = "suggestion",
+			content = "View your resolved suggestion here",
+			recipient = "Test 2",
+			sender = "Test Test",
+			subject = "We have resolved your suggestion for article KB Article Title");
+	}
+
+}

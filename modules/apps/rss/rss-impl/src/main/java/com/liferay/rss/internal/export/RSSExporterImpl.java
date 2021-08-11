@@ -36,7 +36,7 @@ import com.rometools.rome.io.SyndFeedOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom.IllegalDataException;
+import org.jdom2.IllegalDataException;
 
 import org.osgi.service.component.annotations.Component;
 

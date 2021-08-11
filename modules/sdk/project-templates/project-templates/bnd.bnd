@@ -38,7 +38,7 @@ Private-Package:\
 	org.dom4j.tree,\
 	org.dom4j.util,\
 	\
-	org.jdom,\
-	org.jdom.filter,\
-	org.jdom.input,\
-	org.jdom.output
+	org.jdom2,\
+	org.jdom2.filter,\
+	org.jdom2.input,\
+	org.jdom2.output

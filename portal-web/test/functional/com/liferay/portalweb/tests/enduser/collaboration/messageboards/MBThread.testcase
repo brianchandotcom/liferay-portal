@@ -9,6 +9,16 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
 	}
 
 	tearDown {
@@ -25,6 +35,87 @@ definition {
 			MessageboardsPortlet.tearDownConfigurationGeneralCP();
 		}
 	}
+
+	@priority = "5"
+	@refactordone
+	test CanAddReply {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewReplyPG(
+			replyCount = "1",
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddThreadWithUTF8Characters {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thrèad Mèssagè Body",
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
+
+		MessageboardsThread.openToThread(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thrèad Mèssagè Body",
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanCancelEditOnThread {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread Subject");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "Message Boards Thread Subject");
+
+		MessageboardsThread.cancelEdit(
+			threadBodyEdit = "Message Boards Thread Body Edit",
+			threadSubject = "Message Boards Thread Subject",
+			threadSubjectEdit = "Message Boards Thread Subject Edit");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread Subject",
+			userName = "Test Test");
+	}
+
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanCancelThread {
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.cancelAdd(
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject");
+
+		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
+	}
+
 
 	@priority = "3"
 	@refactordone
@@ -63,6 +154,69 @@ definition {
 
 	@priority = "4"
 	@refactordone
+	test CanLimitThreadAttachmentSize {
+		property test.name.skip.portal.instance = "MBThread#CanLimitThreadAttachmentSize";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope");
+
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addInvalidAttachmentPG(
+			invalidSize = "true",
+			maxAttachmentFileSize = "100",
+			mbThreadAttachment = "Document_1.ppt",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+	}
+
+	@description = "This is a test case for UC-6."
+	@priority = "4"
+	@refactordone
+	test CanLockAndUnlockThread {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread Subject");
+
+		MessageboardsThread.lockPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "Message Boards Thread Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewLockedPG(threadSubject = "Message Boards Thread Subject");
+
+		MessageboardsThread.unlockPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "Message Boards Thread Subject");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = "Message Boards Thread Reply Body",
+			threadSubject = "Message Boards Thread Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewReplyPG(
+			replyCount = "1",
+			threadBody = "Message Boards Thread Body",
+			threadReplyBody = "Message Boards Thread Reply Body",
+			threadSubject = "Message Boards Thread Subject");
+	}
+
+	@priority = "4"
+	@refactordone
 	test JavascriptIsNotExecutedWithBBCodeBody {
 		MessageboardsPortlet.configureGeneralCP(siteURLKey = "guest");
 
@@ -95,6 +249,101 @@ definition {
 			replyCount = "0",
 			threadBody = "Thread Body",
 			threadSubject = "New Thread Subject 2");
+	}
+
+	@priority = "4"
+	@refactorneeded
+	test MoveMBCategory1ThreadToCategory2 {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category1 Name",
+			userEmailAddress = "test@liferay.com");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category2 Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category1 Name");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.movePG(
+			categoryName = "MB Category2 Name",
+			categoryName1 = "MB Category1 Name",
+			categoryName2 = "MB Category2 Name",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category2 Name");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test MoveMBCategory1ThreadWithExplanationPostToCategory2 {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category1 Name",
+			userEmailAddress = "test@liferay.com");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category2 Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category1 Name");
+
+		MessageboardsThread.addPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.movePG(
+			categoryName = "MB Category2 Name",
+			categoryName1 = "MB Category1 Name",
+			categoryName2 = "MB Category2 Name",
+			explanationBody = "MB Explanation Post Body",
+			explanationPost = "true",
+			explanationSubject = "MB Explanation Post Subject",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.gotoPG(categoryName = "MB Category2 Name");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "1",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body",
+			threadBody2 = "MB Explanation Post Body",
+			threadSubject = "MB Thread Message Subject",
+			threadSubject2 = "MB Explanation Post Subject");
 	}
 
 }

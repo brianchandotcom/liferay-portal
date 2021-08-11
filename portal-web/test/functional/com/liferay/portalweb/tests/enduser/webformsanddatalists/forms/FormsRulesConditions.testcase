@@ -154,7 +154,6 @@ definition {
 	}
 
 	@description = "Verify that a Rule Condition can be edited"
-	@ignore = "True"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";

@@ -681,7 +681,7 @@ definition {
 	}
 
 	@description = "Verify that a Table can be deleted in the Body Text using the right click menu"
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteATableUsingRightClick {
 		property forms.functional = "false";
@@ -1207,7 +1207,7 @@ definition {
 	}
 
 	@description = "Verify that changes to a Field can be canceled"
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test ChangesCanBeCanceled {
 		property portal.acceptance = "false";
@@ -1346,7 +1346,7 @@ definition {
 	}
 
 	@description = "Verify that the Field Type can be changed"
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
 		property portal.acceptance = "false";

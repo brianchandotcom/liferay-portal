@@ -125,7 +125,6 @@ definition {
 	}
 
 	@description = "Verify that a Rule Action can be deleted"
-	@ignore = "True"
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";

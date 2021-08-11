@@ -116,7 +116,6 @@ definition {
 	}
 
 	@description = "Verify that a Form with all the Fields can be submitted"
-	@ignore = "true"
 	@priority = "5"
 	test CanBeSubmittedWithAllFields {
 		property test.name.skip.portal.instance = "FormsFields#CanBeSubmittedWithAllFields";

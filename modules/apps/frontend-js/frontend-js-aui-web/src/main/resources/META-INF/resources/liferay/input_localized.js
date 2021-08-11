@@ -471,6 +471,8 @@ AUI.add(
 
 					var activeLocales = instance.get('activeLocales');
 
+					var defaultLanguageId = instance.get('defaultLanguageId');
+
 					var translatedLanguages = instance.get(
 						'translatedLanguages'
 					);
@@ -482,6 +484,8 @@ AUI.add(
 					var newFlagsNode = instance._flagsInitialContent
 						.cloneNode(true)
 						.getDOMNode();
+
+					var changeToDefault;
 
 					Object.entries(instance.get('availableLocales')).forEach(
 						(entry) => {
@@ -500,9 +504,7 @@ AUI.add(
 								translatedLanguages['remove'](key);
 
 								if (key === selectedLanguageId) {
-									instance.selectFlag(
-										instance.get('defaultLanguageId')
-									);
+									changeToDefault = true;
 								}
 							}
 							else {
@@ -522,6 +524,14 @@ AUI.add(
 
 					var boundingBox = instance.get('boundingBox');
 					instance._flags = boundingBox.one('.palette-container');
+
+					if (changeToDefault) {
+						instance._onSelectFlag({
+							item: currentFlagsNode.querySelector(
+								'[data-languageid="' + defaultLanguageId + '"]'
+							),
+						});
+					}
 
 					if (instance.get('adminMode')) {
 						instance._bindManageTranslationsButton();

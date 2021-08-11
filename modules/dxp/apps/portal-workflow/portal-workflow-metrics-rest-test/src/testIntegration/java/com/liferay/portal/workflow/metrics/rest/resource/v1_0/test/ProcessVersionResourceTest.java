@@ -110,7 +110,7 @@ public class ProcessVersionResourceTest
 	public void testGraphQLGetProcessProcessVersionsPage() throws Exception {
 		BaseProcessVersionResourceTestCase.GraphQLField graphQLField =
 			new BaseProcessVersionResourceTestCase.GraphQLField(
-				"processVersions",
+				"processProcessVersions",
 				HashMapBuilder.<String, Object>put(
 					"processId", _process.getId()
 				).build(),
@@ -119,7 +119,7 @@ public class ProcessVersionResourceTest
 
 		JSONObject processVersionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/processVersions");
+			"JSONObject/processProcessVersions");
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(

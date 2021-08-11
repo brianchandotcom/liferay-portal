@@ -15,94 +15,26 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import Sidebar from '../../../src/main/resources/META-INF/resources/js/components/Sidebar';
-import SidebarPanelInfoView from '../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView';
-
 import '@testing-library/jest-dom/extend-expect';
 
-const mockCategories = [
-	'Crime',
-	'Romantic',
-	'Classics',
-	'Fantasy',
-	'Science Fiction',
-	'Advanced',
-	'Education',
-	'Decision',
-];
+import Sidebar from '../../../src/main/resources/META-INF/resources/js/components/Sidebar';
+import SidebarPanelInfoView from '../../../src/main/resources/META-INF/resources/js/components/SidebarPanelInfoView';
+import {
+	mockedFileDocumentProps,
+	mockedImageDocumentProps,
+	mockedNoTaxonomies,
+	mockedProps,
+	mockedUser,
+	mockedVideoShortcutDocumentProps,
+} from '../mocks/props';
 
-const mockClassPK = 38070;
-
-const mockCreateDate = '2020-07-27T10:50:55.19';
-
-const mockData = {
-	'display-date': {
-		title: 'Display Date',
-		value: '2020-07-27T10:53:00',
-	},
-	'expiration-date': {
-		title: 'Expiration Date',
-		value: '2020-07-28T10:00:00',
-	},
-	'review-date': {
-		title: 'Review Date',
-		value: '2020-07-27T14:14:30',
-	},
+const _getSidebarComponent = (props) => {
+	return (
+		<Sidebar>
+			<SidebarPanelInfoView {...props} />
+		</Sidebar>
+	);
 };
-
-const mockModifiedDate = '2020-07-27T10:56:56.027';
-
-const mockSubType = 'Basic Web Content';
-
-const mockTags = ['tag1', 'tag2'];
-
-const mockTitle = 'Basic Web Content Title';
-
-const mockUser = {
-	name: 'Kate Williams',
-	url: '',
-	userId: 20126,
-};
-
-const mockVersions = [
-	{
-		statusLabel: 'Approved',
-		statusStyle: 'success',
-		version: 1.6,
-	},
-	{
-		statusLabel: 'Draft',
-		statusStyle: 'secondary',
-		version: 1.7,
-	},
-];
-
-const mockViewURLs = [
-	{
-		default: false,
-		languageId: 'es-ES',
-		viewURL:
-			'http://localhost:8080/es-ES/web/guest/-/basic-web-content-title',
-	},
-	{
-		default: false,
-		languageId: 'fr-FR',
-		viewURL:
-			'http://localhost:8080/fr-FR/web/guest/-/basic-web-content-title',
-	},
-	{
-		default: true,
-		languageId: 'en-US',
-		viewURL:
-			'http://localhost:8080/en-US/web/guest/-/basic-web-content-title',
-	},
-	{
-		default: false,
-		languageId: 'pt-BR',
-		viewURL:
-			'http://localhost:8080/pt-BR/web/guest/-/basic-web-content-title',
-	},
-];
 
 describe('SidebarPanelInfoView', () => {
 	afterEach(() => {
@@ -111,46 +43,14 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders', () => {
-		const {asFragment} = render(
-			<Sidebar>
-				<SidebarPanelInfoView
-					categories={mockCategories}
-					classPK={mockClassPK}
-					createDate={mockCreateDate}
-					data={mockData}
-					languageTag="en"
-					modifiedDate={mockModifiedDate}
-					subType={mockSubType}
-					tags={mockTags}
-					title={mockTitle}
-					user={mockUser}
-					versions={mockVersions}
-					viewURLs={mockViewURLs}
-				/>
-			</Sidebar>
-		);
+		const {asFragment} = render(_getSidebarComponent(mockedProps));
 
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it('renders sidebar panel with info according to the API', () => {
-		const {getByText} = render(
-			<Sidebar>
-				<SidebarPanelInfoView
-					categories={mockCategories}
-					classPK={mockClassPK}
-					createDate={mockCreateDate}
-					data={mockData}
-					languageTag="en"
-					modifiedDate={mockModifiedDate}
-					subType={mockSubType}
-					tags={mockTags}
-					title={mockTitle}
-					user={mockUser}
-					versions={mockVersions}
-					viewURLs={mockViewURLs}
-				/>
-			</Sidebar>
+	it('renders sidebar panel with proper info for a basic web content', () => {
+		const {container, getByText} = render(
+			_getSidebarComponent(mockedProps)
 		);
 
 		expect(getByText('Basic Web Content Title')).toBeInTheDocument();
@@ -161,6 +61,8 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('Draft')).toBeInTheDocument();
 
 		expect(getByText('Kate Williams')).toBeInTheDocument();
+		const avatar = container.querySelector('.lexicon-icon-user');
+		expect(avatar).toBeTruthy();
 
 		expect(getByText('languages-translated-into')).toBeInTheDocument();
 		expect(getByText('en-US')).toBeInTheDocument();
@@ -200,5 +102,89 @@ describe('SidebarPanelInfoView', () => {
 
 		expect(getByText('id')).toBeInTheDocument();
 		expect(getByText('38070')).toBeInTheDocument();
+
+		expect(getByText('categorization')).toBeInTheDocument();
+		expect(getByText('details')).toBeInTheDocument();
+	});
+
+	it('renders sidebar panel with proper info for a basic web content', () => {
+		const {queryByText} = render(
+			_getSidebarComponent({...mockedProps, ...mockedNoTaxonomies})
+		);
+
+		expect(queryByText('categorization')).not.toBeInTheDocument();
+	});
+
+	it('renders sidebar panel with proper info for an image document', () => {
+		const {container, getByText} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedImageDocumentProps,
+			})
+		);
+		const previewFigureTag = container.querySelector('figure');
+
+		expect(
+			previewFigureTag.classList.contains('document-preview-figure')
+		).toBe(true);
+
+		expect(getByText('Basic Document')).toBeInTheDocument();
+		expect(getByText('Mocked description')).toBeInTheDocument();
+		expect(getByText('download')).toBeInTheDocument();
+		expect(getByText('size')).toBeInTheDocument();
+		expect(getByText('file-name')).toBeInTheDocument();
+		expect(getByText('url')).toBeInTheDocument();
+	});
+
+	it('renders sidebar panel with proper info for a video shortcut document', () => {
+		const {container, getByText, queryByText} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedVideoShortcutDocumentProps,
+			})
+		);
+		const previewFigureTag = container.querySelector('figure');
+
+		expect(
+			previewFigureTag.classList.contains('document-preview-figure')
+		).toBe(true);
+
+		expect(getByText('Mocked description')).toBeInTheDocument();
+		expect(getByText('External Video Shortcut')).toBeInTheDocument();
+
+		expect(queryByText('download')).not.toBeInTheDocument();
+		expect(queryByText('size')).not.toBeInTheDocument();
+		expect(queryByText('filename')).not.toBeInTheDocument();
+		expect(queryByText('url')).not.toBeInTheDocument();
+	});
+
+	it('renders sidebar panel with proper info for a file', () => {
+		const {container, getByText} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedFileDocumentProps,
+			})
+		);
+		const previewFigureTag = container.querySelector('figure');
+
+		expect(previewFigureTag).toBe(null);
+
+		expect(getByText('Basic Document')).toBeInTheDocument();
+		expect(getByText('download')).toBeInTheDocument();
+	});
+
+	it('renders sidebar panel with proper info if author has avatar', () => {
+		const {container} = render(
+			_getSidebarComponent({
+				...mockedProps,
+				...mockedUser,
+			})
+		);
+
+		const avatar = container.querySelector('.lexicon-icon-user');
+		expect(avatar).toBeFalsy();
+
+		const image = container.querySelector('.sticker-img');
+		expect(image).toBeTruthy();
 	});
 });

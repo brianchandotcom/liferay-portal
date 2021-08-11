@@ -65,7 +65,21 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Start Node Description",
+			nodeName = "Start",
+			nodeNodeLabel = "Start",
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "connector",
@@ -876,7 +890,21 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Start Node Description",
+			nodeName = "Start",
+			nodeNodeLabel = "Start",
+			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
 			connectorName = "Connector1",
@@ -888,7 +916,7 @@ definition {
 
 		KaleoDesigner.viewNodePresent(key_nodeNodeLabel = "Task");
 
-		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
+		KaleoDesigner.viewConnectorPresent(connectorLabel = "Connector1");
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"

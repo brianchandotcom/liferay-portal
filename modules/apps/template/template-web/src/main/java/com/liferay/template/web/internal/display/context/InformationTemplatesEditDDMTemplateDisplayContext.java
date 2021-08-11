@@ -24,7 +24,6 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -119,9 +118,9 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 				InfoItemFormProvider.class, itemClassName);
 
 		if (infoItemFormProvider == null) {
-			if (log.isWarnEnabled()) {
-				log.warn(
-					"Unable to get info item form provider for class " +
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get info item form provider for class name " +
 						itemClassName);
 			}
 
@@ -141,12 +140,9 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 				formVariationKey, _themeDisplay.getScopeGroupId());
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
-			if (log.isDebugEnabled()) {
-				log.debug(
-					StringBundler.concat(
-						"Unable to get info form for class ", itemClassName,
-						" and variation: ", formVariationKey, " and groupId: ",
-						_themeDisplay.getScopeGroupId()),
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get form variation with key " + formVariationKey,
 					noSuchFormVariationException);
 			}
 
@@ -186,8 +182,8 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		return templateVariableGroups;
 	}
 
-	protected static final Log log = LogFactoryUtil.getLog(
-		InformationTemplatesTemplateDisplayContext.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		InformationTemplatesEditDDMTemplateDisplayContext.class);
 
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =

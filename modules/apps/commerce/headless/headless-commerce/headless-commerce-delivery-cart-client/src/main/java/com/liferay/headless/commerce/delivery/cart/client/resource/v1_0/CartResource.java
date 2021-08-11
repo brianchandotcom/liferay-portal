@@ -88,11 +88,12 @@ public interface CartResource {
 			Long cartId, CouponCode couponCode)
 		throws Exception;
 
-	public Page<Cart> getChannelCartsPage(Long channelId, Pagination pagination)
+	public Page<Cart> getChannelCartsPage(
+			Long accountId, Long channelId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getChannelCartsPageHttpResponse(
-			Long channelId, Pagination pagination)
+			Long accountId, Long channelId, Pagination pagination)
 		throws Exception;
 
 	public Cart postChannelCart(Long channelId, Cart cart) throws Exception;
@@ -791,11 +792,12 @@ public interface CartResource {
 		}
 
 		public Page<Cart> getChannelCartsPage(
-				Long channelId, Pagination pagination)
+				Long accountId, Long channelId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getChannelCartsPageHttpResponse(channelId, pagination);
+				getChannelCartsPageHttpResponse(
+					accountId, channelId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -835,7 +837,7 @@ public interface CartResource {
 		}
 
 		public HttpInvoker.HttpResponse getChannelCartsPageHttpResponse(
-				Long channelId, Pagination pagination)
+				Long accountId, Long channelId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -869,8 +871,9 @@ public interface CartResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-cart/v1.0/channels/{channelId}/carts");
+						"/o/headless-commerce-delivery-cart/v1.0/channels/{channelId}/account/{accountId}/carts");
 
+			httpInvoker.path("accountId", accountId);
 			httpInvoker.path("channelId", channelId);
 
 			httpInvoker.userNameAndPassword(

@@ -383,7 +383,7 @@ public abstract class BaseCartResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/channels/{channelId}/carts'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/channels/{channelId}/account/{accountId}/carts'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Operation(
@@ -392,15 +392,18 @@ public abstract class BaseCartResourceImpl
 	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/channels/{channelId}/carts")
+	@Path("/channels/{channelId}/account/{accountId}/carts")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Cart")})
 	public Page<Cart> getChannelCartsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
 				channelId,
 			@Context Pagination pagination)

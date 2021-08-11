@@ -403,20 +403,25 @@ public abstract class BaseCartResourceTestCase {
 	@Test
 	public void testGetChannelCartsPage() throws Exception {
 		Page<Cart> page = cartResource.getChannelCartsPage(
+			testGetChannelCartsPage_getAccountId(),
 			testGetChannelCartsPage_getChannelId(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
+		Long accountId = testGetChannelCartsPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetChannelCartsPage_getIrrelevantAccountId();
 		Long channelId = testGetChannelCartsPage_getChannelId();
 		Long irrelevantChannelId =
 			testGetChannelCartsPage_getIrrelevantChannelId();
 
-		if (irrelevantChannelId != null) {
+		if ((irrelevantAccountId != null) && (irrelevantChannelId != null)) {
 			Cart irrelevantCart = testGetChannelCartsPage_addCart(
-				irrelevantChannelId, randomIrrelevantCart());
+				irrelevantAccountId, irrelevantChannelId,
+				randomIrrelevantCart());
 
 			page = cartResource.getChannelCartsPage(
-				irrelevantChannelId, Pagination.of(1, 2));
+				irrelevantAccountId, irrelevantChannelId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -425,11 +430,14 @@ public abstract class BaseCartResourceTestCase {
 			assertValid(page);
 		}
 
-		Cart cart1 = testGetChannelCartsPage_addCart(channelId, randomCart());
+		Cart cart1 = testGetChannelCartsPage_addCart(
+			accountId, channelId, randomCart());
 
-		Cart cart2 = testGetChannelCartsPage_addCart(channelId, randomCart());
+		Cart cart2 = testGetChannelCartsPage_addCart(
+			accountId, channelId, randomCart());
 
-		page = cartResource.getChannelCartsPage(channelId, Pagination.of(1, 2));
+		page = cartResource.getChannelCartsPage(
+			accountId, channelId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -444,23 +452,27 @@ public abstract class BaseCartResourceTestCase {
 
 	@Test
 	public void testGetChannelCartsPageWithPagination() throws Exception {
+		Long accountId = testGetChannelCartsPage_getAccountId();
 		Long channelId = testGetChannelCartsPage_getChannelId();
 
-		Cart cart1 = testGetChannelCartsPage_addCart(channelId, randomCart());
+		Cart cart1 = testGetChannelCartsPage_addCart(
+			accountId, channelId, randomCart());
 
-		Cart cart2 = testGetChannelCartsPage_addCart(channelId, randomCart());
+		Cart cart2 = testGetChannelCartsPage_addCart(
+			accountId, channelId, randomCart());
 
-		Cart cart3 = testGetChannelCartsPage_addCart(channelId, randomCart());
+		Cart cart3 = testGetChannelCartsPage_addCart(
+			accountId, channelId, randomCart());
 
 		Page<Cart> page1 = cartResource.getChannelCartsPage(
-			channelId, Pagination.of(1, 2));
+			accountId, channelId, Pagination.of(1, 2));
 
 		List<Cart> carts1 = (List<Cart>)page1.getItems();
 
 		Assert.assertEquals(carts1.toString(), 2, carts1.size());
 
 		Page<Cart> page2 = cartResource.getChannelCartsPage(
-			channelId, Pagination.of(2, 2));
+			accountId, channelId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -469,16 +481,29 @@ public abstract class BaseCartResourceTestCase {
 		Assert.assertEquals(carts2.toString(), 1, carts2.size());
 
 		Page<Cart> page3 = cartResource.getChannelCartsPage(
-			channelId, Pagination.of(1, 3));
+			accountId, channelId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(cart1, cart2, cart3), (List<Cart>)page3.getItems());
 	}
 
-	protected Cart testGetChannelCartsPage_addCart(Long channelId, Cart cart)
+	protected Cart testGetChannelCartsPage_addCart(
+			Long accountId, Long channelId, Cart cart)
 		throws Exception {
 
-		return cartResource.postChannelCart(channelId, cart);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetChannelCartsPage_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetChannelCartsPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
 	}
 
 	protected Long testGetChannelCartsPage_getChannelId() throws Exception {

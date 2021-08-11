@@ -22,6 +22,12 @@ definition {
 		Button.clickSave();
 	}
 
+	macro removeCustomAssetReport {
+		Click(
+			key_cardTitle = "${reportName}",
+			locator1 = "ACCards#TRASH_ICON");
+	}
+
 	macro viewAssets {
 		var key_assetName = "${assetName}";
 

@@ -1,5 +1,27 @@
 definition {
 
+	macro addCustomAssetReport {
+		ACNavigation.openItem(itemName = "${assetName}");
+
+		Button.click(button = "Add Report");
+
+		Type(
+			key_text = "Report Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${reportName}");
+
+		Select(
+			key_fieldLabel = "Metric",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${metric}");
+
+		WaitForVisible(
+			key_text = "Save",
+			locator1 = "Button#ANY_ENABLED");
+
+		Button.clickSave();
+	}
+
 	macro viewAssets {
 		var key_assetName = "${assetName}";
 

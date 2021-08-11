@@ -499,6 +499,14 @@ definition {
 				name = "Collection Name");
 		}
 
+		task ("Add a fragment") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+		}
+
 		task ("Navigate to the fragment collection") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -532,6 +540,8 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("View the Button fragment of Basic Components collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Button");

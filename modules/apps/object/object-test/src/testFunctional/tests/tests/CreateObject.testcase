@@ -30,7 +30,6 @@ definition {
 	}
 
 	@description = "LPS-135548 - Verify that user can view system objects"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ViewSystemObjects {
 		property portal.acceptance = "true";

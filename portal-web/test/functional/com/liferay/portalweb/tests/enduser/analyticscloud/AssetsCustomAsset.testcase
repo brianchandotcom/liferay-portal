@@ -69,12 +69,48 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8538 | Test Summary: Create custom asset report"
-	@ignore = "true"
 	@priority = "5"
 	test CanCreateCustomAssetReport {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8538 CanCreateCustomAssetReport
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a custom asset report") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Custom");
+
+			ACAssets.addCustomAssetReport(
+				assetName = "Custom Asset Analytics Cloud",
+				metric = "Asset Views (sum)",
+				reportName = "Test Custom Asset Report");
+		}
+
+		task ("View the new report") {
+			ACCards.viewCards(cardTitle = "Test Custom Asset Report");
+		}
 	}
 
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8539 | Test Summary: Create multiple custom asset report"

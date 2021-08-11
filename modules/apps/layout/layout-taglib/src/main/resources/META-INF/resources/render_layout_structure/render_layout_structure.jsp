@@ -137,25 +137,6 @@ for (String childrenItemId : childrenItemIds) {
 				</c:if>
 			</div>
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
-
-			<%
-			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
-
-			RowStyledLayoutStructureItem rowStyledLayoutStructureItem = (RowStyledLayoutStructureItem)layoutStructure.getLayoutStructureItem(columnLayoutStructureItem.getParentItemId());
-			%>
-
-			<clay:col
-				cssClass="<%= ResponsiveLayoutStructureUtil.getColumnCssClass(columnLayoutStructureItem, rowStyledLayoutStructureItem) %>"
-			>
-
-				<%
-				request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-				%>
-
-				<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
-			</clay:col>
-		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ContainerStyledLayoutStructureItem %>">
 
 			<%

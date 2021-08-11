@@ -15,6 +15,8 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
+import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -117,6 +119,36 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		return SKIP_BODY;
 	}
 
+	private void _renderColumnLayoutStructureItem(
+			LayoutStructureItem layoutStructureItem,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		ColumnLayoutStructureItem columnLayoutStructureItem =
+			(ColumnLayoutStructureItem)layoutStructureItem;
+
+		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)
+				_layoutStructure.getLayoutStructureItem(
+					columnLayoutStructureItem.getParentItemId());
+
+		ColTag colTag = new ColTag();
+
+		colTag.setCssClass(
+			ResponsiveLayoutStructureUtil.getColumnCssClass(
+				columnLayoutStructureItem, rowStyledLayoutStructureItem));
+		colTag.setPageContext(pageContext);
+
+		colTag.doStartTag();
+
+		_renderLayoutStructure(
+			layoutStructureItem.getChildrenItemIds(),
+			renderLayoutStructureDisplayContext);
+
+		colTag.doEndTag();
+	}
+
 	private void _renderLayoutStructure(
 			List<String> childrenItemIds,
 			RenderLayoutStructureDisplayContext
@@ -135,9 +167,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
-				_renderLayoutStructure(
-					layoutStructureItem.getChildrenItemIds(),
-					renderLayoutStructureDisplayContext);
+				_renderColumnLayoutStructureItem(
+					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						ContainerStyledLayoutStructureItem) {

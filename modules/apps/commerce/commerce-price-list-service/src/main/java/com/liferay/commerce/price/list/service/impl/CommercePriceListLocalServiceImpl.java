@@ -1346,6 +1346,12 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceList;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceList updateCommercePriceList(
@@ -1371,6 +1377,12 @@ public class CommercePriceListLocalServiceImpl
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId, String name,
@@ -1391,6 +1403,13 @@ public class CommercePriceListLocalServiceImpl
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, String, long, boolean,
+	 String, double, int, int, int, int, int, int, int, int, int, int, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceList updateCommercePriceList(

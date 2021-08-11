@@ -367,7 +367,7 @@ public class PriceListResourceImpl
 
 		commercePriceList = _commercePriceListService.updateCommercePriceList(
 			commercePriceList.getCommercePriceListId(),
-			commerceCurrency.getCommerceCurrencyId(),
+			commerceCurrency.getCommerceCurrencyId(), true, 0,
 			GetterUtil.get(priceList.getName(), commercePriceList.getName()),
 			GetterUtil.get(
 				priceList.getPriority(), commercePriceList.getPriority()),

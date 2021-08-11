@@ -16,6 +16,7 @@ package com.liferay.custom.elements.web.internal.portlet.action;
 
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalService;
+import com.liferay.custom.elements.web.internal.CustomElementsDynamicPortletRegistrar;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -64,18 +65,29 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 			CustomElementsPortletDescriptor.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			_customElementsPortletDescriptorLocalService.
-				addCustomElementsPortletDescriptor(
-					cssURLs, htmlElementName, instanceable, name, properties,
-					serviceContext);
+			CustomElementsPortletDescriptor customElementsPortletDescriptor =
+				_customElementsPortletDescriptorLocalService.
+					addCustomElementsPortletDescriptor(
+						cssURLs, htmlElementName, instanceable, name,
+						properties, serviceContext);
+
+			_customElementsDynamicPortletRegistrar.registerPortlet(
+				customElementsPortletDescriptor);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			_customElementsPortletDescriptorLocalService.
-				updateCustomElementsPortletDescriptor(
-					ParamUtil.getLong(
-						actionRequest, "customElementsPortletDescriptorId"),
-					cssURLs, htmlElementName, instanceable, name, properties,
-					serviceContext);
+			CustomElementsPortletDescriptor customElementsPortletDescriptor =
+				_customElementsPortletDescriptorLocalService.
+					updateCustomElementsPortletDescriptor(
+						ParamUtil.getLong(
+							actionRequest, "customElementsPortletDescriptorId"),
+						cssURLs, htmlElementName, instanceable, name,
+						properties, serviceContext);
+
+			_customElementsDynamicPortletRegistrar.unregisterPortlet(
+				customElementsPortletDescriptor);
+
+			_customElementsDynamicPortletRegistrar.registerPortlet(
+				customElementsPortletDescriptor);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -84,6 +96,10 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 			actionResponse.sendRedirect(redirect);
 		}
 	}
+
+	@Reference
+	private CustomElementsDynamicPortletRegistrar
+		_customElementsDynamicPortletRegistrar;
 
 	@Reference
 	private CustomElementsPortletDescriptorLocalService

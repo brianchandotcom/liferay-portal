@@ -81,6 +81,12 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -158,6 +164,12 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -202,6 +214,12 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		ACUtils.launchAC();
@@ -279,6 +297,12 @@ definition {
 			userLoginEmailAddress = "liferay@liferay.com",
 			userLoginFullName = "liferay liferay");
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -333,6 +357,12 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		ACUtils.launchAC();
@@ -420,6 +450,12 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		ACUtils.launchAC();

@@ -1455,6 +1455,8 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${dmDocumentFile}");
 
+		AssertElementPresent(locator1 = "TextInput#FILE_PRESENT");
+
 		if (isSet(useCurrentTitle)) {
 			echo("Use the title automatically added after uploading a file.");
 		}

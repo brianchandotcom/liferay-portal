@@ -59,23 +59,35 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 					"JournalArticle where ctCollectionId = 0");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			while (resultSet.next()) {
-				DDMStructure ddmStructure =
-					_ddmStructureLocalService.getStructure(
-						_portal.getSiteGroupId(resultSet.getLong("groupId")),
-						classNameId, resultSet.getString("DDMStructureKey"),
-						true);
+			concurrentUpgrade(
+				() -> {
+					if (resultSet.next()) {
+						return new JournalArticleInfo(
+							resultSet.getLong("id_"),
+							resultSet.getLong("groupId"),
+							resultSet.getString("content"),
+							resultSet.getString("DDMStructureKey"));
+					}
 
-				DDMFormValues ddmFormValues =
-					_fieldsToDDMFormValuesConverter.convert(
-						ddmStructure,
-						_journalConverter.getDDMFields(
-							ddmStructure, resultSet.getString("content")));
+					return null;
+				},
+				journalArticleInfo -> {
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.getStructure(
+							_portal.getSiteGroupId(journalArticleInfo._groupId),
+							classNameId, journalArticleInfo._ddmStructureKey,
+							true);
 
-				_ddmFieldLocalService.updateDDMFormValues(
-					ddmStructure.getStructureId(), resultSet.getLong("id_"),
-					ddmFormValues);
-			}
+					DDMFormValues ddmFormValues =
+						_fieldsToDDMFormValuesConverter.convert(
+							ddmStructure,
+							_journalConverter.getDDMFields(
+								ddmStructure, journalArticleInfo._content));
+
+					_ddmFieldLocalService.updateDDMFormValues(
+						ddmStructure.getStructureId(), journalArticleInfo._id,
+						ddmFormValues);
+				});
 		}
 
 		alter(JournalArticleTable.class, new AlterTableDropColumn("content"));
@@ -88,5 +100,23 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 		_fieldsToDDMFormValuesConverter;
 	private final JournalConverter _journalConverter;
 	private final Portal _portal;
+
+	private static class JournalArticleInfo {
+
+		private JournalArticleInfo(
+			long id, long groupId, String content, String ddmStructureKey) {
+
+			_id = id;
+			_groupId = groupId;
+			_content = content;
+			_ddmStructureKey = ddmStructureKey;
+		}
+
+		private final String _content;
+		private final String _ddmStructureKey;
+		private final long _groupId;
+		private final long _id;
+
+	}
 
 }

@@ -275,7 +275,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		testOrderHelper.testOrderByDDMNumberField();
 	}
 
-	@Ignore
 	@Test
 	public void testOrderByDDMNumberFieldRepeatable() throws Exception {
 		TestOrderHelper testOrderHelper =

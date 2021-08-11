@@ -24,6 +24,7 @@ import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountAcc
 import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountRuleNameUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,10 +80,9 @@ public class CommerceDiscountUpgradeStepRegistrator
 			new com.liferay.commerce.discount.internal.upgrade.v2_4_1.
 				CommerceDiscountUpgradeProcess());
 
-		registry.register(
-			"2.4.1", "2.5.0",
-			new com.liferay.commerce.discount.internal.upgrade.v2_5_0.
-				DummyUpgradeProcess());
+		registry.register("2.4.1", "2.4.2", new DummyUpgradeStep());
+
+		registry.register("2.4.2", "2.5.0", new DummyUpgradeStep());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce discount upgrade step registrator finished");

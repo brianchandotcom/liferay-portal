@@ -1,0 +1,87 @@
+definition {
+
+	macro enableGCNLTextAutoTagging {
+		var googleAPIKey = PropsUtil.get("google.cloud.autotagging.service.key");
+
+		Type(
+			key_text = "apiKey",
+			locator1 = "TextArea#ANY",
+			value1 = "${googleAPIKey}");
+
+		if (isSet(enableClassificationEndpoint)) {
+			FormFields.enableCheckbox(fieldName = "Classification Endpoint Enabled");
+		}
+
+		if (isSet(confidence)) {
+			SystemSettings.editTextSetting(
+				settingName = "Confidence",
+				settingValue = "${confidence}");
+		}
+
+		if (isSet(enableEntityEndpoint)) {
+			FormFields.enableCheckbox(fieldName = "Entity Endpoint Enabled");
+		}
+
+		if (isSet(salience)) {
+			SystemSettings.editTextSetting(
+				settingName = "Salience",
+				settingValue = "${salience}");
+		}
+
+		Click(locator1 = "Dropdown#TRIGGER");
+
+		DropdownMenuItem.click(menuItem = "${assetType}");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
+	macro enableGCVImageAutoTagging {
+		var googleAPIKey = PropsUtil.get("google.cloud.autotagging.service.key");
+
+		Type(
+			key_text = "apiKey",
+			locator1 = "TextArea#ANY",
+			value1 = "${googleAPIKey}");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
+	macro openToGCNLTextAutoTagging {
+		var baseURL = PropsUtil.get("portal.url");
+
+		if ("${configurationScope}" == "Instance Settings") {
+			var portlet = "InstanceSettingsPortlet";
+		}
+		else {
+			var portlet = "SystemSettingsPortlet";
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration");
+	}
+
+	macro openToGCVImageAutoTagging {
+		var baseURL = PropsUtil.get("portal.url");
+
+		if ("${configurationScope}" == "Instance Settings") {
+			var portlet = "InstanceSettingsPortlet";
+		}
+		else {
+			var portlet = "SystemSettingsPortlet";
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration");
+	}
+
+}

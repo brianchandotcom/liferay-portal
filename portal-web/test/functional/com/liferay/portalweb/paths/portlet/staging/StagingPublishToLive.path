@@ -11,6 +11,16 @@
 
 <tbody>
 <tr>
+	<td>ACTIVE_TAB_NAME</td>
+	<td>//*[contains(@class,'nav-link active') and contains(.,'${key_tabName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB_NAME</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'${key_tabName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SWITCH_TO_ADVANCED_PUBLICATION</td>
 	<td>//a[contains(.,'Switch to Advanced Publish Process')]</td>
 	<td></td>

@@ -596,6 +596,14 @@ definition {
 		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
 	}
 
+	macro gotoNavTab {
+		var key_tabName = "${tabName}";
+
+		Click(locator1 = "StagingPublishToLive#TAB_NAME");
+
+		AssertElementPresent(locator1 = "StagingPublishToLive#ACTIVE_TAB_NAME");
+	}
+
 	macro gotoPublishToLive {
 		if ((IsElementNotPresent(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON")) && (IsElementPresent(locator1 = "Icon#STAGING"))) {
 			Click(locator1 = "Icon#STAGING");

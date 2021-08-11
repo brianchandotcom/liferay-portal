@@ -36,10 +36,6 @@ for (String childrenItemId : childrenItemIds) {
 			RenderCollectionLayoutStructureItemDisplayContext renderCollectionLayoutStructureItemDisplayContext = new RenderCollectionLayoutStructureItemDisplayContext(collectionStyledLayoutStructureItem, request, response);
 
 			InfoListRenderer<Object> infoListRenderer = (InfoListRenderer<Object>)renderCollectionLayoutStructureItemDisplayContext.getInfoListRenderer();
-
-			int collectionCount = renderCollectionLayoutStructureItemDisplayContext.getCollectionCount();
-
-			String paginationType = collectionStyledLayoutStructureItem.getPaginationType();
 			%>
 
 			<div class="<%= renderLayoutStructureDisplayContext.getCssClass(collectionStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(collectionStyledLayoutStructureItem) %>">
@@ -61,15 +57,7 @@ for (String childrenItemId : childrenItemIds) {
 
 							List<Object> collection = renderCollectionLayoutStructureItemDisplayContext.getCollection();
 
-							int numberOfItemsToDisplay = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItems());
-
-							if (Validator.isNotNull(paginationType) && !Objects.equals(paginationType, "none")) {
-								numberOfItemsToDisplay = Math.min(numberOfItemsToDisplay, collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
-							}
-
-							int numberOfRows = (int)Math.ceil((double)numberOfItemsToDisplay / collectionStyledLayoutStructureItem.getNumberOfColumns());
-
-							for (int i = 0; i < numberOfRows; i++) {
+							for (int i = 0; i < renderCollectionLayoutStructureItemDisplayContext.getNumberOfRows(); i++) {
 						%>
 
 							<clay:row>
@@ -78,7 +66,7 @@ for (String childrenItemId : childrenItemIds) {
 								for (int j = 0; j < collectionStyledLayoutStructureItem.getNumberOfColumns(); j++) {
 									int index = (i * collectionStyledLayoutStructureItem.getNumberOfColumns()) + j;
 
-									if ((index >= numberOfItemsToDisplay) || (index >= collection.size())) {
+									if ((index >= renderCollectionLayoutStructureItemDisplayContext.getNumberOfItemsToDisplay()) || (index >= collection.size())) {
 										break;
 									}
 
@@ -111,42 +99,22 @@ for (String childrenItemId : childrenItemIds) {
 					</c:otherwise>
 				</c:choose>
 
-				<%
-				int maxNumberOfItems = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItems());
-
-				int numberOfPages = (int)Math.ceil((double)maxNumberOfItems / collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
-
-				int activePage = Math.max(1, Math.min(numberOfPages, ParamUtil.getInteger(request, "page_number_" + collectionStyledLayoutStructureItem.getItemId(), 1)));
-				%>
-
-				<c:if test='<%= Objects.equals(paginationType, "numeric") %>'>
+				<c:if test='<%= Objects.equals(collectionStyledLayoutStructureItem.getPaginationType(), "numeric") %>'>
 					<clay:pagination-bar
 						activeDelta="<%= collectionStyledLayoutStructureItem.getNumberOfItemsPerPage() %>"
-						activePage="<%= activePage %>"
-						additionalProps='<%=
-							HashMapBuilder.<String, Object>put(
-								"collectionId", collectionStyledLayoutStructureItem.getItemId()
-							).put(
-								"numberOfItems", collectionStyledLayoutStructureItem.getNumberOfItems()
-							).put(
-								"numberOfItemsPerPage", collectionStyledLayoutStructureItem.getNumberOfItemsPerPage()
-							).put(
-								"paginationType", paginationType
-							).put(
-								"totalPages", numberOfPages
-							).build()
-						%>'
+						activePage="<%= renderCollectionLayoutStructureItemDisplayContext.getActivePage() %>"
+						additionalProps="<%= renderCollectionLayoutStructureItemDisplayContext.getNumericCollectionPaginationAdditionalProps() %>"
 						cssClass="pb-2 pt-3"
 						propsTransformer="render_layout_structure/js/NumericCollectionPaginationPropsTransformer"
 						totalItems="<%= collectionStyledLayoutStructureItem.getNumberOfItems() %>"
 					/>
 				</c:if>
 
-				<c:if test='<%= Objects.equals(paginationType, "simple") %>'>
+				<c:if test='<%= Objects.equals(collectionStyledLayoutStructureItem.getPaginationType(), "simple") %>'>
 					<div class="d-flex flex-grow-1 h-100 justify-content-center py-3" id="<%= "paginationButtons_" + collectionStyledLayoutStructureItem.getItemId() %>">
 						<clay:button
 							cssClass="font-weight-semi-bold mr-3 previous text-secondary"
-							disabled="<%= Objects.equals(activePage, 1) %>"
+							disabled="<%= Objects.equals(renderCollectionLayoutStructureItemDisplayContext.getActivePage(), 1) %>"
 							displayType="unstyled"
 							id='<%= "paginationPreviousButton_" + collectionStyledLayoutStructureItem.getItemId() %>'
 							label='<%= LanguageUtil.get(request, "previous") %>'
@@ -154,7 +122,7 @@ for (String childrenItemId : childrenItemIds) {
 
 						<clay:button
 							cssClass="font-weight-semi-bold ml-3 next text-secondary"
-							disabled="<%= Objects.equals(activePage, numberOfPages) %>"
+							disabled="<%= Objects.equals(renderCollectionLayoutStructureItemDisplayContext.getActivePage(), renderCollectionLayoutStructureItemDisplayContext.getNumberOfPages()) %>"
 							displayType="unstyled"
 							id='<%= "paginationNextButton_" + collectionStyledLayoutStructureItem.getItemId() %>'
 							label='<%= LanguageUtil.get(request, "next") %>'
@@ -163,13 +131,7 @@ for (String childrenItemId : childrenItemIds) {
 
 					<liferay-frontend:component
 						componentId='<%= "paginationComponent" + collectionStyledLayoutStructureItem.getItemId() %>'
-						context='<%=
-							HashMapBuilder.<String, Object>put(
-								"activePage", activePage
-							).put(
-								"collectionId", collectionStyledLayoutStructureItem.getItemId()
-							).build()
-						%>'
+						context="<%= renderCollectionLayoutStructureItemDisplayContext.getSimpleCollectionPaginationContext() %>"
 						module="render_layout_structure/js/SimpleCollectionPagination"
 					/>
 				</c:if>

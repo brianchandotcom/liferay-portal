@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -77,6 +78,24 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public int getActivePage() {
+		if (_activePage != null) {
+			return _activePage;
+		}
+
+		_activePage = Math.max(
+			1,
+			Math.min(
+				getNumberOfPages(),
+				ParamUtil.getInteger(
+					_httpServletRequest,
+					"page_number_" +
+						_collectionStyledLayoutStructureItem.getItemId(),
+					1)));
+
+		return _activePage;
 	}
 
 	public List<Object> getCollection() {
@@ -214,6 +233,113 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_collectionStyledLayoutStructureItem.getTemplateKey());
 
 		return defaultInfoListRendererContext;
+	}
+
+	public int getMaxNumberOfItemsPerPage() {
+		if (_maxNumberOfItemsPerPage != null) {
+			return _maxNumberOfItemsPerPage;
+		}
+
+		_maxNumberOfItemsPerPage = Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+
+		return _maxNumberOfItemsPerPage;
+	}
+
+	public int getNumberOfItemsToDisplay() {
+		if (_numberOfItemsToDisplay != null) {
+			return _numberOfItemsToDisplay;
+		}
+
+		_numberOfItemsToDisplay = Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfItems());
+
+		if (Validator.isNotNull(
+				_collectionStyledLayoutStructureItem.getPaginationType()) &&
+			!Objects.equals(
+				_collectionStyledLayoutStructureItem.getPaginationType(),
+				"none")) {
+
+			_numberOfItemsToDisplay = Math.min(
+				_numberOfItemsToDisplay,
+				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+		}
+
+		return _numberOfItemsToDisplay;
+	}
+
+	public int getNumberOfPages() {
+		if (_numberOfPages != null) {
+			return _numberOfPages;
+		}
+
+		int maxNumberOfItems = Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfItems());
+
+		_numberOfPages = (int)Math.ceil(
+			(double)maxNumberOfItems /
+				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+
+		return _numberOfPages;
+	}
+
+	public int getNumberOfRows() {
+		if (_numberOfRows != null) {
+			return _numberOfRows;
+		}
+
+		_numberOfRows = (int)Math.ceil(
+			(double)getMaxNumberOfItemsPerPage() /
+				_collectionStyledLayoutStructureItem.getNumberOfColumns());
+
+		int numberOfItemsToDisplay = Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfItems());
+
+		if (Validator.isNotNull(
+				_collectionStyledLayoutStructureItem.getPaginationType()) &&
+			!Objects.equals(
+				_collectionStyledLayoutStructureItem.getPaginationType(),
+				"none")) {
+
+			numberOfItemsToDisplay = Math.min(
+				numberOfItemsToDisplay,
+				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+		}
+
+		_numberOfRows = (int)Math.ceil(
+			(double)numberOfItemsToDisplay /
+				_collectionStyledLayoutStructureItem.getNumberOfColumns());
+
+		return _numberOfRows;
+	}
+
+	public Map<String, Object> getNumericCollectionPaginationAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"collectionId", _collectionStyledLayoutStructureItem.getItemId()
+		).put(
+			"numberOfItems",
+			_collectionStyledLayoutStructureItem.getNumberOfItems()
+		).put(
+			"numberOfItemsPerPage",
+			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage()
+		).put(
+			"paginationType",
+			_collectionStyledLayoutStructureItem.getPaginationType()
+		).put(
+			"totalPages", getNumberOfPages()
+		).build();
+	}
+
+	public Map<String, Object> getSimpleCollectionPaginationContext() {
+		return HashMapBuilder.<String, Object>put(
+			"activePage", getActivePage()
+		).put(
+			"collectionId", _collectionStyledLayoutStructureItem.getItemId()
+		).build();
 	}
 
 	private Map<String, String[]> _getConfiguration() {
@@ -354,11 +480,16 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return _segmentsEntryIds;
 	}
 
+	private Integer _activePage;
 	private Integer _collectionCount;
 	private final CollectionStyledLayoutStructureItem
 		_collectionStyledLayoutStructureItem;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private Integer _maxNumberOfItemsPerPage;
+	private Integer _numberOfItemsToDisplay;
+	private Integer _numberOfPages;
+	private Integer _numberOfRows;
 	private long[] _segmentsEntryIds;
 	private final ThemeDisplay _themeDisplay;
 

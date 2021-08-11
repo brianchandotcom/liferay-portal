@@ -107,7 +107,7 @@ public class DataGuardClient {
 		return _getResult();
 	}
 
-	public long startCapture() throws Throwable {
+	public long startCapture() throws Exception {
 		_objectOutputStream.writeObject(DataGuardCommand.startCapture());
 
 		_objectOutputStream.flush();
@@ -115,7 +115,7 @@ public class DataGuardClient {
 		return _getResult();
 	}
 
-	private long _getResult() throws Throwable {
+	private long _getResult() throws Exception {
 		DataGuardResult dataGuardResult =
 			(DataGuardResult)_objectInputStream.readObject();
 

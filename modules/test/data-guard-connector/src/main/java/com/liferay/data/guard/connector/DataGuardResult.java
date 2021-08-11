@@ -29,9 +29,9 @@ public class DataGuardResult implements Serializable {
 		this(0, throwable);
 	}
 
-	public long get() throws Throwable {
-		if (_throwable != null) {
-			throw _throwable;
+	public long get() throws Exception {
+		if (_exception != null) {
+			throw _exception;
 		}
 
 		return _result;
@@ -43,21 +43,21 @@ public class DataGuardResult implements Serializable {
 		if (throwable != null) {
 			Class<? extends Throwable> clazz = throwable.getClass();
 
-			Throwable simpleThrowable = new Throwable(
+			Exception exception = new Exception(
 				clazz.getName() + ": " + throwable.getMessage());
 
-			simpleThrowable.setStackTrace(throwable.getStackTrace());
+			exception.setStackTrace(throwable.getStackTrace());
 
-			_throwable = simpleThrowable;
+			_exception = exception;
 		}
 		else {
-			_throwable = null;
+			_exception = null;
 		}
 	}
 
 	private static final long serialVersionUID = 1L;
 
+	private final Exception _exception;
 	private final long _result;
-	private final Throwable _throwable;
 
 }

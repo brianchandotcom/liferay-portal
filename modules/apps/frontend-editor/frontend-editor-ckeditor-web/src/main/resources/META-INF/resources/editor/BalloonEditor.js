@@ -70,7 +70,7 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 
 				editor.element.setAttribute('id', `cke_${editor.name}`);
 
-				editable.attachClass('overflow-auto');
+				editable.attachClass('liferay-editable');
 
 				const balloonToolbars = editor.balloonToolbars;
 

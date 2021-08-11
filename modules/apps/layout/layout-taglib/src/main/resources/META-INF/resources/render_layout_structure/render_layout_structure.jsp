@@ -33,9 +33,11 @@ for (String childrenItemId : childrenItemIds) {
 			<%
 			CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem = (CollectionStyledLayoutStructureItem)layoutStructureItem;
 
-			InfoListRenderer<Object> infoListRenderer = (InfoListRenderer<Object>)renderLayoutStructureDisplayContext.getInfoListRenderer(collectionStyledLayoutStructureItem);
+			RenderCollectionLayoutStructureItemDisplayContext renderCollectionLayoutStructureItemDisplayContext = new RenderCollectionLayoutStructureItemDisplayContext(request, response);
 
-			int collectionCount = renderLayoutStructureDisplayContext.getCollectionCount(collectionStyledLayoutStructureItem);
+			InfoListRenderer<Object> infoListRenderer = (InfoListRenderer<Object>)renderCollectionLayoutStructureItemDisplayContext.getInfoListRenderer(collectionStyledLayoutStructureItem);
+
+			int collectionCount = renderCollectionLayoutStructureItemDisplayContext.getCollectionCount(collectionStyledLayoutStructureItem);
 
 			String paginationType = collectionStyledLayoutStructureItem.getPaginationType();
 			%>
@@ -45,7 +47,7 @@ for (String childrenItemId : childrenItemIds) {
 					<c:when test="<%= infoListRenderer != null %>">
 
 						<%
-						infoListRenderer.render(renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem), renderLayoutStructureDisplayContext.getInfoListRendererContext(collectionStyledLayoutStructureItem.getListItemStyle(), collectionStyledLayoutStructureItem.getTemplateKey()));
+						infoListRenderer.render(renderCollectionLayoutStructureItemDisplayContext.getCollection(collectionStyledLayoutStructureItem), renderCollectionLayoutStructureItemDisplayContext.getInfoListRendererContext(collectionStyledLayoutStructureItem.getListItemStyle(), collectionStyledLayoutStructureItem.getTemplateKey()));
 						%>
 
 					</c:when>
@@ -55,9 +57,9 @@ for (String childrenItemId : childrenItemIds) {
 						LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider = (LayoutDisplayPageProvider<?>)request.getAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
 						try {
-							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderLayoutStructureDisplayContext.getCollectionLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
+							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderCollectionLayoutStructureItemDisplayContext.getCollectionLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
 
-							List<Object> collection = renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem);
+							List<Object> collection = renderCollectionLayoutStructureItemDisplayContext.getCollection(collectionStyledLayoutStructureItem);
 
 							int numberOfItemsToDisplay = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItems());
 

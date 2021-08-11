@@ -56,6 +56,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.naming.NamingException;
 
@@ -124,7 +126,16 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public List<Index> getIndexes(Connection connection) throws SQLException {
-		return getIndexes(connection, null, null);
+		List<IndexMetadata> indexes = getIndexes(connection, null, null);
+
+		Stream<IndexMetadata> stream = indexes.stream();
+
+		return stream.map(
+			index -> new Index(
+				index.getIndexName(), index.getTableName(), index.isUnique())
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override
@@ -554,6 +565,32 @@ public abstract class BaseDB implements DB {
 		return new String[] {words[1], words[2]};
 	}
 
+	protected List<IndexMetadata> dropIndexes(
+			Connection connection, String tableName, String columnName,
+			boolean dropPrimaryKey)
+		throws IOException, SQLException {
+
+		List<IndexMetadata> indexMetadatas = getIndexes(
+			connection, tableName, columnName);
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			runSQL(connection, indexMetadata.getDropSQL());
+		}
+
+		if (dropPrimaryKey) {
+			IndexMetadata primaryKeyIndexMetadata = getPrimaryKey(
+				connection, tableName, columnName);
+
+			if (primaryKeyIndexMetadata != null) {
+				//removePrimKey
+
+				indexMetadatas.add(primaryKeyIndexMetadata);
+			}
+		}
+
+		return indexMetadatas;
+	}
+
 	protected Set<String> dropIndexes(
 			Connection connection, String tablesSQL, String indexesSQL,
 			List<Index> indexes)
@@ -639,11 +676,11 @@ public abstract class BaseDB implements DB {
 		return validIndexNames;
 	}
 
-	protected List<Index> getIndexes(
+	protected List<IndexMetadata> getIndexes(
 			Connection connection, String tableName, String columnName)
 		throws SQLException {
 
-		Set<Index> indexes = new HashSet<>();
+		List<IndexMetadata> indexMetadatas = new ArrayList<>();
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -655,13 +692,15 @@ public abstract class BaseDB implements DB {
 		String normalizedTableName = tableName;
 
 		if (normalizedTableName != null) {
-			normalizedTableName = dbInspector.normalizeName(tableName);
+			normalizedTableName = dbInspector.normalizeName(
+				tableName, databaseMetaData);
 		}
 
 		String normalizedColumnName = columnName;
 
 		if (normalizedColumnName != null) {
-			normalizedColumnName = dbInspector.normalizeName(columnName);
+			normalizedColumnName = dbInspector.normalizeName(
+				columnName, databaseMetaData);
 		}
 
 		try (ResultSet tableResultSet = databaseMetaData.getTables(
@@ -669,12 +708,14 @@ public abstract class BaseDB implements DB {
 
 			while (tableResultSet.next()) {
 				normalizedTableName = dbInspector.normalizeName(
-					tableResultSet.getString("TABLE_NAME"));
+					tableResultSet.getString("TABLE_NAME"), databaseMetaData);
 
 				try (ResultSet indexResultSet = databaseMetaData.getIndexInfo(
 						catalog, schema, normalizedTableName, false, false)) {
 
-					while (indexResultSet.next()) {
+					boolean nextIndex = true;
+
+					while (nextIndex && indexResultSet.next()) {
 						String indexName = indexResultSet.getString(
 							"INDEX_NAME");
 
@@ -691,27 +732,95 @@ public abstract class BaseDB implements DB {
 							continue;
 						}
 
-						if (normalizedColumnName != null) {
-							if (!normalizedColumnName.equals(
-									dbInspector.normalizeName(
-										indexResultSet.getString(
-											"COLUMN_NAME")))) {
+						String[] columnNames = new String[0];
+						String currentIndexName = null;
 
-								continue;
+						while (indexResultSet.next()) {
+							currentIndexName = indexResultSet.getString(
+								"INDEX_NAME");
+
+							if (!indexName.equals(currentIndexName)) {
+								break;
 							}
+
+							ArrayUtil.append(
+								columnNames,
+								dbInspector.normalizeName(
+									indexResultSet.getString("COLUMN_NAME"),
+									databaseMetaData));
+						}
+
+						if (currentIndexName == null) {
+							nextIndex = false;
+						}
+
+						if ((normalizedColumnName != null) &&
+							!ArrayUtil.contains(
+								columnNames, normalizedColumnName)) {
+
+							continue;
 						}
 
 						boolean unique = !indexResultSet.getBoolean(
 							"NON_UNIQUE");
 
-						indexes.add(
-							new Index(indexName, normalizedTableName, unique));
+						indexMetadatas.add(
+							new IndexMetadata(
+								indexName, normalizedTableName, unique,
+								columnNames));
 					}
 				}
 			}
 		}
 
-		return new ArrayList<>(indexes);
+		return new ArrayList<>(indexMetadatas);
+	}
+
+	protected IndexMetadata getPrimaryKey(
+			Connection connection, String tableName, String columnName)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		String normalizedTableName = dbInspector.normalizeName(
+			tableName, databaseMetaData);
+
+		String pkName = null;
+		String[] columnNames = new String[0];
+
+		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
+				dbInspector.getCatalog(), dbInspector.getSchema(),
+				normalizedTableName)) {
+
+			while (resultSet.next()) {
+				if (pkName == null) {
+					pkName = resultSet.getString("PK_NAME");
+				}
+
+				ArrayUtil.append(
+					columnNames,
+					dbInspector.normalizeName(
+						resultSet.getString("COLUMN_NAME"), databaseMetaData));
+			}
+		}
+
+		if (pkName == null) {
+			return null;
+		}
+
+		if (columnName != null) {
+			String normalizedColumnName = dbInspector.normalizeName(
+				columnName, databaseMetaData);
+
+			if (ArrayUtil.contains(columnNames, normalizedColumnName)) {
+				return null;
+			}
+		}
+
+		return new IndexMetadata(
+			pkName, normalizedTableName, true, columnNames);
 	}
 
 	protected abstract int[] getSQLTypes();

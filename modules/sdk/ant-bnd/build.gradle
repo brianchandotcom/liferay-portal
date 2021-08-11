@@ -8,7 +8,7 @@ dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.3.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.9"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.11"
 
 	testCompile project(":core:petra:petra-io")
 	testCompile project(":core:petra:petra-string")

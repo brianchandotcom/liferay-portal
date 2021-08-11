@@ -1,7 +1,7 @@
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.9"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.11"
 }
 
 liferay {

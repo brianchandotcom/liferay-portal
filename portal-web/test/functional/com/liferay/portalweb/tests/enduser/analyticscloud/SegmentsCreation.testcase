@@ -21,8 +21,8 @@ definition {
 			ACUtils.launchDXP();
 		}
 
-		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
 		}
 
 		task ("Connect the DXP to AC") {

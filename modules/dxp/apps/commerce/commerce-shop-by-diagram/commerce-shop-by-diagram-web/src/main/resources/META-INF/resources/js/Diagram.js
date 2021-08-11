@@ -88,7 +88,7 @@ const Diagram = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showTooltip, setShowTooltip]);
 
-	return (
+	return imageURL !== '' ? (
 		<div className="diagram mx-auto">
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<DiagramHeader

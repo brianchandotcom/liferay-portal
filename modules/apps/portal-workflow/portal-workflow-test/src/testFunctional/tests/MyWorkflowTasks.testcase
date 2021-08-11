@@ -50,7 +50,6 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
 	@priority = "5"
 	test AccountUserCanApproveTask {
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
@@ -79,8 +78,8 @@ definition {
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
 		LexiconEntry.gotoEntryMenuItem(
-			rowEntry = "Account Administrator",
-			menuItem = "Assign Users");
+			menuItem = "Assign Users",
+			rowEntry = "Account Administrator");
 
 		LexiconEntry.gotoAdd();
 
@@ -119,7 +118,7 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-		
+
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
 			productQuantity = "1");
@@ -134,14 +133,14 @@ definition {
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
-		
+
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "User Authentication",
 			configurationName = "General",
 			configurationScope = "Virtual Instance Scope");
-		
+
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		
+
 		Navigator.openURL();
 
 		User.logoutAndLoginPG(
@@ -173,7 +172,6 @@ definition {
 		AssertElementPresent(
 			key_status = "Approved",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
 	}
 
 	@description = "LPS-135888 - Verify that the user with Account role can view the order details through the My Workflow Tasks page"

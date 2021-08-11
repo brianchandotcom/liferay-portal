@@ -19,6 +19,7 @@ import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService;
@@ -166,12 +167,13 @@ public class CommercePriceListsImporter {
 			CommercePriceList commercePriceList =
 				_commercePriceListLocalService.addOrUpdateCommercePriceList(
 					externalReferenceCode, catalogGroupId, user.getUserId(), 0,
-					commerceCurrency.getCommerceCurrencyId(), parentPriceListId,
-					name, priority, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					commerceCurrency.getCommerceCurrencyId(), true,
+					CommercePriceListConstants.TYPE_PRICE_LIST,
+					parentPriceListId, false, name, priority, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			for (int i = 0; i < accountGroupsJSONArray.length(); i++) {
 				try {

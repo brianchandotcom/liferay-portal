@@ -548,7 +548,12 @@ public class CommercePriceListLocalServiceImpl
 	 * @param  neverExpire
 	 * @param  serviceContext
 	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *#addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 *String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 *int, int, int, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceList addOrUpdateCommercePriceList(
@@ -572,6 +577,13 @@ public class CommercePriceListLocalServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CommercePriceList addOrUpdateCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
@@ -594,6 +606,13 @@ public class CommercePriceListLocalServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceList addOrUpdateCommercePriceList(

@@ -105,6 +105,10 @@
 			<arg line="configure set default.region us-west-1" />
 		</exec>
 
+		<exec executable="aws">
+			<arg line="configure set default.s3.signature_version s3v4" />
+		</exec>
+
 		<local name="bucket.configuration" />
 
 		<exec executable="aws" outputproperty="bucket.configuration">

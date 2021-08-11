@@ -26,13 +26,9 @@ definition {
 				CKEditor.addSourceContent(content = "${webContentContent}");
 			}
 			else {
-				SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-				Type(
-					locator1 = "CKEditor#BODY",
-					value1 = "${webContentContent}");
-
-				SelectFrame(value1 = "relative=top");
+				CKEditor.addContentInWebContent(
+					content = "${webContentContent}",
+					fieldLabel = "content");
 			}
 		}
 

@@ -98,10 +98,6 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
 			onSelect: (selectedItems) => {
-				if (!selectedItems.length) {
-					return;
-				}
-
 				let redirectURL = itemData?.redirectURL;
 
 				selectedItems.forEach((item) => {

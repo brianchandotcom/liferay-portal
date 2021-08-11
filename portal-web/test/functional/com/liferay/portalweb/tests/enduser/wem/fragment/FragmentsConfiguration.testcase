@@ -282,7 +282,7 @@ definition {
 	@priority = "4"
 	test ConfigureFragmentWithJavaScript {
 		task ("Add a new fragment with the following codes") {
-			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 			FragmentsEditor.gotoConfigurationTab();
 

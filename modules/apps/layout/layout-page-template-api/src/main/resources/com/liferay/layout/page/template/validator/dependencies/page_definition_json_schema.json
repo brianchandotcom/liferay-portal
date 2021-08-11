@@ -1680,6 +1680,10 @@
 			},
 			"title": "The settings Schema",
 			"type": "object"
+		},
+		"version": {
+			"title": "The version Schema",
+			"type": "number"
 		}
 	},
 	"required": [

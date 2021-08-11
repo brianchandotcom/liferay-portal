@@ -707,19 +707,46 @@ definition {
 	}
 
 	macro addPGViaMG {
-		Portlet.clickPortletPlusIconPG(portletName = "Media Gallery");
+		if (isSet(siteURLKey)) {
+			DMNavigator.openToAddEntry(
+				groupName = "${groupName}",
+				layoutName = "${layoutName}",
+				mediaGallery = "${mediaGallery}",
+				siteURLKey = "${siteURLKey}");
+		}
+		else {
+			Portlet.clickPortletPlusIconPG(portletName = "Media Gallery");
 
-		MenuItem.click(menuItem = "File Upload");
+			MenuItem.click(menuItem = "File Upload");
+		}
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = "${mgDocumentFile}");
 
+		if (isSet(warningFeedback)) {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "${warningFeedback}");
+
+			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
+		}
+
 		PortletEntry.inputTitle(title = "${mgDocumentTitle}");
 
 		PortletEntry.inputDescription(description = "${mgDocumentDescription}");
 
-		PortletEntry.publish();
+		if (isSet(validationError)) {
+			Button.clickPublish();
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "${validationError}",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "${validationError}");
+		}
+		else {
+			PortletEntry.publish();
+		}
 	}
 
 	macro addRelatedAssetPG {
@@ -2164,6 +2191,32 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro updateFileExtensions {
+		DMNavigator.openToConfigInSystemSettings(portlet = "Service");
+
+		ScrollWebElementIntoView(
+			key_text = "fileExtensions",
+			locator1 = "TextArea#ANY");
+
+		Type(
+			key_text = "fileExtensions",
+			locator1 = "TextArea#ANY",
+			value1 = "${fieldValue}");
+
+		SystemSettings.saveConfiguration();
+	}
+
+	macro updateMaximumFileSize {
+		DMNavigator.openToConfigInSystemSettings(portlet = "Service");
+
+		Type(
+			key_fieldLabel = "Maximum File Size",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldValue}");
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro viewAllPG {
 		DMDocument.viewPG(
 			categoryName = "${categoryName}",
@@ -2877,6 +2930,19 @@ definition {
 			AssertElementNotPresent(
 				key_categoryName = "${categoryName}",
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES");
+		}
+	}
+
+	macro viewNoFilesViaMG {
+		if (isSet(mgImagePreview)) {
+			AssertElementNotPresent(
+				key_mgImageName = "${mgImagePreview}",
+				locator1 = "MediaGallery#ENTRY_IMAGE_PREVIEW");
+		}
+		else {
+			AssertElementNotPresent(
+				key_mgDocumentTitle = "${mgDocumentTitle}",
+				locator1 = "MediaGallery#IMAGE_TITLE");
 		}
 	}
 

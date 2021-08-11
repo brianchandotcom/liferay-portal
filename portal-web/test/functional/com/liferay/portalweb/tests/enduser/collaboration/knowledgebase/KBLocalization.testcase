@@ -1,0 +1,104 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownSiteWorkflow();
+
+			KBFolder.tearDownCP();
+
+			KBArticle.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test ViewUnchangedKBArticleTitleViaLocalizedPage {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages",
+			site = "${siteName}");
+
+		SitePages.addPublicChildPage(
+			childPageName = "Knowledge Base Display Page",
+			parentPageName = "Home");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configureChildPage(
+			columnName = "1 Column",
+			pageName = "Knowledge Base Display Page",
+			parentPagesHierarchy = "Home",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.openURL();
+
+		Page.gotoChildPagePG(
+			childPageName = "Knowledge Base Display Page",
+			pageName = "Home");
+
+		Portlet.addPG(portletName = "Knowledge Base Display");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Page.viewTranslationsPG(
+			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
+			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
+			sitePageURL = "${portalURL}/es/web/guest/knowledge-base-display-page",
+			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.editPGViaLocalizedKBDisplay(
+			kbArticleContentEdit = "Knowledge Base Article Content Edited",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edited",
+			localizedSuccessMessage = "Su petición ha terminado con éxito.");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Content Edited",
+			kbArticleTitle = "Knowledge Base Article Title Edited");
+	}
+
+}

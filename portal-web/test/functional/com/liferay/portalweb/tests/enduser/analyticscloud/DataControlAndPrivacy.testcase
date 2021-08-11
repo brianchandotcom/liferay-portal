@@ -35,12 +35,29 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
-	@ignore = "true"
 	@priority = "5"
 	test CanCreateAccessRequest {
+		task ("Create Access Request") {
+			ACUtils.launchAC();
 
-		// TODO LRAC-8119 CanCreateAccessRequest
+			ACNavigation.goToSettings();
 
+			ACSettings.createRequestLogByEmail(
+				emailAdresses = "Alton.Jacobi@gmail.com",
+				jobTypes = "Access");
+		}
+
+		task ("Assert that Access Request was created and is on the list") {
+			ACSettings.goToProperties();
+
+			ACSettings.goToDataControlAndPrivacy();
+
+			Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
+
+			ACSettings.assertRequestLog(
+				emailAdresses = "Alton.Jacobi@gmail.com",
+				jobType = "Access");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"

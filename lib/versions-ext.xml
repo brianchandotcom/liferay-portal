@@ -2718,7 +2718,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/rometools-utils.jar</file-name>
-				<version>1.12.2</version>
+				<version>1.16.0</version>
 				<project-name>Rome Tools</project-name>
 				<project-url>http://rometools.github.io/rome/</project-url>
 				<licenses>
@@ -2731,7 +2731,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/rometools.jar</file-name>
-				<version>1.12.2</version>
+				<version>1.16.0</version>
 				<project-name>Rome Tools</project-name>
 				<project-url>http://rometools.github.io/rome/</project-url>
 				<licenses>

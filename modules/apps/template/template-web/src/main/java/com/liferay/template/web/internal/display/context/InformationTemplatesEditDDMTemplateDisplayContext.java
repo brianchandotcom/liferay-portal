@@ -42,9 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
 
 /**
  * @author Eudaldo Alonso
@@ -114,9 +112,6 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 	protected Collection<TemplateVariableGroup> getTemplateVariableGroups()
 		throws Exception {
 
-		List<TemplateVariableGroup> templateVariableGroups = new LinkedList<>(
-			super.getTemplateVariableGroups());
-
 		String itemClassName = PortalUtil.getClassName(getClassNameId());
 
 		InfoItemFormProvider<?> infoItemFormProvider =
@@ -130,16 +125,16 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 						itemClassName);
 			}
 
-			return templateVariableGroups;
+			return super.getTemplateVariableGroups();
 		}
+
+		InfoForm infoForm = null;
 
 		String formVariationKey = StringPool.BLANK;
 
 		if (getClassPK() > 0) {
 			formVariationKey = String.valueOf(getClassPK());
 		}
-
-		InfoForm infoForm = null;
 
 		try {
 			infoForm = infoItemFormProvider.getInfoForm(
@@ -154,18 +149,12 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 						_themeDisplay.getScopeGroupId()),
 					noSuchFormVariationException);
 			}
+
+			return super.getTemplateVariableGroups();
 		}
 
-		if (infoForm == null) {
-			if (log.isWarnEnabled()) {
-				log.warn("Unable to get info form for class " + itemClassName);
-			}
-
-			return templateVariableGroups;
-		}
-
-		Map<String, TemplateVariableGroup> additionalTemplateVariableGroups =
-			new TreeMap<>();
+		List<TemplateVariableGroup> templateVariableGroups = new LinkedList<>(
+			super.getTemplateVariableGroups());
 
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				infoForm.getInfoFieldSetEntries()) {
@@ -191,13 +180,8 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 					_templateVariableCodeHandler);
 			}
 
-			additionalTemplateVariableGroups.put(
-				infoFieldSet.getLabel(_themeDisplay.getLocale()),
-				templateVariableGroup);
+			templateVariableGroups.add(templateVariableGroup);
 		}
-
-		templateVariableGroups.addAll(
-			additionalTemplateVariableGroups.values());
 
 		return templateVariableGroups;
 	}

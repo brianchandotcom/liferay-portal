@@ -81,9 +81,11 @@ public class EditDDMTemplatePropertiesMVCRenderCommand
 				new WidgetTemplatesEditDDMTemplateDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
+
+			return "/ddm_template/edit_widget_template_properties.jsp";
 		}
 
-		return "/ddm_template/edit_properties.jsp";
+		return "/ddm_template/edit_information_template_properties.jsp";
 	}
 
 	@Activate

@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
@@ -62,6 +63,11 @@ public class GetCollectionConfigurationMVCResourceCommand
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
 				InfoCollectionProvider.class, collectionKey);
+
+		if (infoCollectionProvider == null) {
+			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
+				RelatedInfoItemCollectionProvider.class, collectionKey);
+		}
 
 		if (!(infoCollectionProvider instanceof
 				ConfigurableInfoCollectionProvider)) {

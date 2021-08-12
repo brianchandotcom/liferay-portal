@@ -1,0 +1,60 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8619 | Test Summary: Each interest topic shows the pages that contribute to the interest"
+    @ignore = "true"
+    @priority = "5"
+    test ViewInterestTopicShowsPagesContributeToInterest {
+
+        // TODO LRAC-8619 ViewInterestTopicShowsPagesContributeToInterest pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8620 | Test Summary: The list of pages for each interest topic is searchable"
+    @ignore = "true"
+    @priority = "4"
+    test CanSearchListOfPagesForInterestTopic {
+
+        // TODO LRAC-8620 CanSearchListOfPagesForInterestTopic pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8621 | Test Summary: Paginate Segment Profile in Interests tab"
+    @ignore = "true"
+    @priority = "3"
+    test PaginateSegmentProfileInInterestsTab {
+
+        // TODO LRAC-8621 PaginateSegmentProfileInInterestsTab pending implementation
+
+    }
+
+}

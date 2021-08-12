@@ -47,11 +47,11 @@ export default function ItemActions({item}) {
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
-	const itemActions = useMemo(() => {
-		const actions = [];
+	const dropdownItems = useMemo(() => {
+		const items = [];
 
 		if (config.fragmentsHidingEnabled) {
-			actions.push({
+			items.push({
 				action: () => {
 					updateItemStyle({
 						dispatch,
@@ -68,15 +68,21 @@ export default function ItemActions({item}) {
 		}
 
 		if (canBeSaved(item, layoutData)) {
-			actions.push({
+			items.push({
 				action: () => setOpenSaveModal(true),
 				icon: 'disk',
 				label: Liferay.Language.get('save-composition'),
 			});
 		}
 
+		if (items.length) {
+			items.push({
+				type: 'separator',
+			});
+		}
+
 		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
-			actions.push({
+			items.push({
 				action: () =>
 					dispatch(
 						duplicateItem({
@@ -88,10 +94,14 @@ export default function ItemActions({item}) {
 				icon: 'paste',
 				label: Liferay.Language.get('duplicate'),
 			});
+
+			items.push({
+				type: 'separator',
+			});
 		}
 
 		if (canBeRemoved(item, layoutData)) {
-			actions.push({
+			items.push({
 				action: () =>
 					dispatch(
 						deleteItem({
@@ -105,7 +115,7 @@ export default function ItemActions({item}) {
 			});
 		}
 
-		return actions;
+		return items;
 	}, [
 		dispatch,
 		fragmentEntryLinks,
@@ -118,7 +128,11 @@ export default function ItemActions({item}) {
 		widgets,
 	]);
 
-	return itemActions?.length ? (
+	if (!dropdownItems.length) {
+		return null;
+	}
+
+	return (
 		<>
 			<ClayDropDown
 				active={active}
@@ -143,26 +157,26 @@ export default function ItemActions({item}) {
 				}
 			>
 				<ClayDropDown.ItemList>
-					{itemActions.map((itemAction, index, array) => (
-						<React.Fragment key={itemAction.label}>
-							<ClayDropDown.Item
-								onClick={() => {
-									setActive(false);
+					{dropdownItems.map((dropdownItem) =>
+						dropdownItem.type === 'separator' ? (
+							<ClayDropDown.Divider />
+						) : (
+							<React.Fragment key={dropdownItem.label}>
+								<ClayDropDown.Item
+									onClick={() => {
+										setActive(false);
 
-									itemAction.action();
-								}}
-								symbolLeft={itemAction.icon}
-							>
-								<p className="d-inline-block m-0 ml-4">
-									{itemAction.label}
-								</p>
-							</ClayDropDown.Item>
-
-							{index !== array.length - 1 && (
-								<ClayDropDown.Divider />
-							)}
-						</React.Fragment>
-					))}
+										dropdownItem.action();
+									}}
+									symbolLeft={dropdownItem.icon}
+								>
+									<p className="d-inline-block m-0 ml-4">
+										{dropdownItem.label}
+									</p>
+								</ClayDropDown.Item>
+							</React.Fragment>
+						)
+					)}
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 
@@ -172,7 +186,7 @@ export default function ItemActions({item}) {
 				/>
 			)}
 		</>
-	) : null;
+	);
 }
 
 ItemActions.propTypes = {

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.AxisServlet;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.web.internal.session.replication.SessionReplicationFilter;
 import com.liferay.shielded.container.Ordered;
 import com.liferay.shielded.container.ShieldedContainerInitializer;
 
@@ -60,6 +61,17 @@ public class PortalWebShieldedContainerInitializer
 	@Override
 	public void initialize(ServletContext servletContext)
 		throws ServletException {
+
+		if (PropsValues.PORTLET_SESSION_REPLICATE_ENABLED) {
+			FilterRegistration.Dynamic dynamic = servletContext.addFilter(
+				SessionReplicationFilter.class.getName(),
+				new SessionReplicationFilter());
+
+			dynamic.setAsyncSupported(true);
+
+			dynamic.addMappingForUrlPatterns(
+				EnumSet.of(DispatcherType.REQUEST), false, "/*");
+		}
 
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();

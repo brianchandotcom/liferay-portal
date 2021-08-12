@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -780,6 +781,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			"(objectClass=" + SchedulerEventMessageListener.class.getName() +
 				")",
 			new SchedulerEventMessageListenerServiceTrackerCustomizer());
+
+		start();
 	}
 
 	protected void addWeeklyDayPos(
@@ -905,6 +908,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private JSONFactory _jsonFactory;
 	private final Map<String, ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new ConcurrentHashMap<>();
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

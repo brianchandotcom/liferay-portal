@@ -26,7 +26,6 @@ import com.liferay.portal.profile.PortalProfile;
 import com.liferay.portal.scheduler.quartz.internal.QuartzSchedulerEngine;
 import com.liferay.portal.scheduler.quartz.internal.QuartzSchemaManager;
 import com.liferay.portal.scheduler.quartz.internal.QuartzTriggerFactory;
-import com.liferay.portal.scheduler.quartz.internal.SchedulerLifecycleInitializer;
 import com.liferay.portal.scheduler.quartz.internal.messaging.proxy.QuartzSchedulerProxyMessageListener;
 import com.liferay.portal.scheduler.quartz.internal.upgrade.QuartzServiceUpgrade;
 
@@ -82,8 +81,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			QuartzSchedulerProxyMessageListener.class.getName(),
 			QuartzSchemaManager.class.getName(),
 			QuartzServiceUpgrade.class.getName(),
-			QuartzTriggerFactory.class.getName(),
-			SchedulerLifecycleInitializer.class.getName());
+			QuartzTriggerFactory.class.getName());
 	}
 
 	@Deactivate

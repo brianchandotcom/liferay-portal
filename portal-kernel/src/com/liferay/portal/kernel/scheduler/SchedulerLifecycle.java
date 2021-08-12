@@ -14,15 +14,13 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 /**
  * @author Tina Tian
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class SchedulerLifecycle extends BasePortalLifecycle {
 
 	@Override
@@ -31,24 +29,6 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalInit() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.callService(
-			SchedulerEngineHelper.class,
-			schedulerEngineHelper -> {
-				try {
-					schedulerEngineHelper.start();
-				}
-				catch (SchedulerException schedulerException) {
-					_log.error(
-						"Unable to start scheduler engine", schedulerException);
-				}
-
-				return null;
-			});
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SchedulerLifecycle.class);
 
 }

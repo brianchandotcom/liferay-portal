@@ -155,6 +155,97 @@ definition {
 			value1 = "There are no items found.");
 	}
 
+ 	@description = "Feature ID: Legacy | Automation ID: LRAC-8585 | Test Summary: It is not possible to add a duplicate user to a static segment"
+    @ignore = "true"
+    @priority = "4"
+    test CantDuplicateUserToStaticSegment {
+
+        // TODO LRAC-8585 CantDuplicateUserToStaticSegment pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8586 | Test Summary: Sort the Segment 'Add Members' Modal"
+    @ignore = "true"
+    @priority = "3"
+    test SortSegmentAddMembersModal {
+
+        // TODO LRAC-8586 SortSegmentAddMembersModal pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"
+    @ignore = "true"
+    @priority = "3"
+    test PaginateListOfMembersToBeAddedToTheSegment {
+
+        // TODO LRAC-8587 PaginateListOfMembersToBeAddedToTheSegment pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
+    @ignore = "true"
+    @priority = "3"
+    test AssertSegmentOverviewShowsCriteria {
+
+        // TODO LRAC-8588 AssertSegmentOverviewShowsCriteria pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8589 | Test Summary: Editor shows static segment label"
+    @ignore = "true"
+    @priority = "3"
+    test EditorShowsStaticSegmentLabel {
+
+        // TODO LRAC-8589 EditorShowsStaticSegmentLabel pending implementation
+
+    }
+	
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8590 | Test Summary: Undo Adding a Segment Member in the Edit Modal"
+    @ignore = "true"
+    @priority = "4"
+    test UndoAddingSegmentMemberInTheEditModal {
+
+        // TODO LRAC-8590 UndoAddingSegmentMemberInTheEditModal pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8591 | Test Summary: Undo all members from being added"
+    @ignore = "true"
+    @priority = "3"
+    test UndoAllMembersFromBeingAdded {
+
+        // TODO LRAC-8591 UndoAllMembersFromBeingAdded pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8593 | Test Summary: Undo Deleting a Segment Member in the Edit Modal"
+    @ignore = "true"
+    @priority = "4"
+    test UndoDeletingASegmentMemberInTheEditModal {
+
+        // TODO LRAC-8593 UndoDeletingASegmentMemberInTheEditModal pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8596 | Test Summary: Undo one static member from being added"
+    @ignore = "true"
+    @priority = "3"
+    test UndoOneStaticMemberFromBeingAdded {
+
+        // TODO LRAC-8596 UndoOneStaticMemberFromBeingAdded pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8598 | Test Summary: Segment List kebab menu contains Edit and Delete buttons"
+    @ignore = "true"
+    @priority = "3"
+    test SegmentListKebabMenuContainsEditAndDeleteButtons {
+
+        // TODO LRAC-8598 SegmentListKebabMenuContainsEditAndDeleteButtons pending implementation
+
+    }
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {

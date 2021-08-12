@@ -14,11 +14,17 @@
 
 package com.liferay.template.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,6 +62,13 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		renderRequest.setAttribute(
+			DDMGroupServiceConfiguration.class.getName(),
+			_getDDMGroupServiceConfiguration(themeDisplay.getScopeGroupId()));
+
 		renderRequest.setAttribute(
 			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 
@@ -92,6 +105,23 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
 	}
+
+	private DDMGroupServiceConfiguration _getDDMGroupServiceConfiguration(
+		long groupId) {
+
+		try {
+			return _configurationProvider.getConfiguration(
+				DDMGroupServiceConfiguration.class,
+				new GroupServiceSettingsLocator(
+					groupId, DDMConstants.SERVICE_NAME));
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMTemplateHelper _ddmTemplateHelper;

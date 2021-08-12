@@ -36,6 +36,17 @@ public class AccountEntryUserRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountEntryUserRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, java.util.Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId)
+		throws PortalException {
+
+		return getService().addAccountEntryUserRel(
+			accountEntryId, creatorUserId, screenName, emailAddress, locale,
+			firstName, middleName, lastName, prefixId, suffixId);
+	}
+
 	public static AccountEntryUserRel addAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress, long[] accountRoleIds,
 			String userExternalReferenceCode,

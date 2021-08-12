@@ -1674,6 +1674,65 @@ definition {
 	}
 
 	@priority = "4"
+	test SearchUsingCustomFacetWithUnlocalizedDDMField {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Test Structure Description",
+			structureName = "Test Structure");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP(structureName = "Test Structure");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
+
+		WebContent.addWithStructureCP(
+			structureName = "Test Structure",
+			webContentText = "Unlocalized text field",
+			webContentTitle = "WC Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "Unlocalized text field",
+			webContentTitle = "WC Title");
+
+		var port = Elasticsearch.getServerPort();
+
+		var curl = "http://localhost:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
+
+		var journalArticleDocumentType = JSONCurlUtil.get("${curl}");
+
+		var aggregationField = RegexUtil.replace("${journalArticleDocumentType}", "ddmFieldName&quot;:&quot;(.*)&quot;,&quot;ddmFieldValueKeyword&quot;", "1");
+
+		Search.openSearchPage();
+
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		SearchFacetPortlet.configureCustomFacet(aggregationField = "${aggregationField}");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		AssertElementPresent(
+			key_checkboxName = "Unlocalized text field",
+			key_facetClass = "Custom Facet",
+			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+	}
+
+	@priority = "4"
 	test SearchWebContent {
 		property test.name.skip.portal.instance = "Search#SearchWebContent";
 

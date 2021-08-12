@@ -102,7 +102,7 @@ public class ClusterMethodInvoker {
 				new Class<?>[] {Boolean.TYPE});
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, new Object[] {Boolean.valueOf(false)});
+				methodKey, new Object[] {Boolean.FALSE});
 
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 				methodHandler,
@@ -138,7 +138,7 @@ public class ClusterMethodInvoker {
 				new Class<?>[] {Boolean.TYPE});
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, new Object[] {Boolean.valueOf(false)});
+				methodKey, new Object[] {Boolean.FALSE});
 
 			Future<Integer> future = clusterMasterExecutor.executeOnMaster(
 				methodHandler);

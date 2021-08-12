@@ -1432,6 +1432,8 @@ definition {
 	@description = "LPS-130216 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number."
 	@priority = "3"
 	test ItemOrdetationIsPreservedWhenChangesPagination {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

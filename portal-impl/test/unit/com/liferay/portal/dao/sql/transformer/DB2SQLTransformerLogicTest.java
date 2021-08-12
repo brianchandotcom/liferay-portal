@@ -14,8 +14,10 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -59,35 +61,6 @@ public class DB2SQLTransformerLogicTest
 			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
 	}
 
-	@Test
-	public void testReplaceCaseWhenThen() {
-		Assert.assertEquals(
-			StringBundler.concat(
-				"select * from Foo where case when foo = COALESCE(CAST(? AS ",
-				"VARCHAR(32672)),'') then COALESCE(CAST(? AS VARCHAR(32672)),",
-				"'') else COALESCE(CAST(? AS VARCHAR(32672)),'') end"),
-			sqlTransformer.transform(
-				"select * from Foo where case when foo = ? then ? else ? end"));
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"select bar, COALESCE(CAST(? AS VARCHAR(32672)),''), case ",
-				"when foo = COALESCE(CAST(? AS VARCHAR(32672)),'') then ",
-				"COALESCE(CAST(? AS VARCHAR(32672)),'') else COALESCE(CAST(? ",
-				"AS VARCHAR(32672)),'') end as columnA from Foo"),
-			sqlTransformer.transform(
-				"select bar, ?, case when foo = ? then ? else ? end as " +
-					"columnA from Foo"));
-	}
-
-	@Test
-	public void testReplaceLike() {
-		Assert.assertEquals(
-			"select foo from Foo where foo LIKE COALESCE(" +
-				"CAST(? AS VARCHAR(32672)),'')",
-			sqlTransformer.transform("select foo from Foo where foo LIKE ?"));
-	}
-
 	@Override
 	@Test
 	public void testReplaceModWithExtraWhitespace() {
@@ -97,11 +70,22 @@ public class DB2SQLTransformerLogicTest
 	}
 
 	@Test
-	public void testReplaceSelect() {
+	public void testReplaceQuestionMark() {
+		_testReplaceQuestionMark("select foo from Foo where foo LIKE ?");
+		_testReplaceQuestionMark("select foo, ?, bar, ? from Foo");
+		_testReplaceQuestionMark("select * from Foo where foo = ? And bar = ?");
+		_testReplaceQuestionMark(
+			"select * from Foo where case when foo = ? then ? else ? end");
+		_testReplaceQuestionMark(
+			"select bar, ?, case when foo = ? then ? else ? end as columnA " +
+				"from Foo");
+
 		Assert.assertEquals(
-			"select foo, COALESCE(CAST(? AS VARCHAR(32672)),''), bar, " +
-				"COALESCE(CAST(? AS VARCHAR(32672)),'') from Foo",
-			sqlTransformer.transform("select foo, ?, bar, ? from Foo"));
+			"select * from Foo where foo = \" ?\"",
+			sqlTransformer.transform("select * from Foo where foo = \" ?\""));
+		Assert.assertEquals(
+			"select * from Foo where foo = \' ?\'",
+			sqlTransformer.transform("select * from Foo where foo = \' ?\'"));
 	}
 
 	@Override
@@ -122,6 +106,14 @@ public class DB2SQLTransformerLogicTest
 	@Override
 	protected String getNullDateTransformedSQL() {
 		return "select NULL from Foo";
+	}
+
+	private void _testReplaceQuestionMark(String sql) {
+		Assert.assertEquals(
+			StringUtil.replace(
+				sql, CharPool.QUESTION,
+				"COALESCE(CAST(? AS VARCHAR(32672)),'')"),
+			sqlTransformer.transform(sql));
 	}
 
 }

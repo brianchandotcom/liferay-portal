@@ -155,11 +155,6 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
-                number:
-                    example: 3
-                    format: int32
-                    minimum: 0
-                    type: integer
                 productId:
                     example: 33131
                     format: int64
@@ -170,6 +165,9 @@ components:
                     format: int32
                     minimum: 0
                     type: integer
+                sequence:
+                    example: 1
+                    type: string
                 sku:
                     example: SKU01
                     type: string
@@ -216,11 +214,6 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
-                number:
-                    example: 3
-                    format: int32
-                    minimum: 0
-                    type: integer
                 positionX:
                     example: 33.54
                     format: double
@@ -229,6 +222,9 @@ components:
                     example: 33.54
                     format: double
                     type: number
+                sequence:
+                    example: 1
+                    type: string
             type: object
     securitySchemes:
         BasicAuth:

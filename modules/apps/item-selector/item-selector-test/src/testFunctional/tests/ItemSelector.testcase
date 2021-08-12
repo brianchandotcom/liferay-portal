@@ -66,46 +66,6 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 	}
 
-	@description = "This ensures that the SVG image can be added to a fragment background."
-	@priority = "5"
-	@refactordone
-	test CanAddSVGImageToFragmentBackground {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.svg",
-			groupName = "Guest",
-			mimeType = "image/svg+xml",
-			sourceFileName = "Document_1.svg");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Guest");
-
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Container");
-
-		PageEditor.editLayoutContainer(
-			backgroundImage = "Direct",
-			entryTitle = "Document_1.svg",
-			navItem = "Documents and Media",
-			paddingTop = "2",
-			panel = "Styles");
-
-		PageEditor.clickPublish();
-
-		Navigator.gotoPage(pageName = "Test Content Page Name");
-
-		AssertVisible(
-			key_imageName = "Document_1.svg",
-			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
-	}
-
 	@description = "This test covers LPS-105188. It ensures that a user can change selected page for Navigation Menu item based on page after creation."
 	@priority = "4"
 	@refactordone

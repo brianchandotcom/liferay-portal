@@ -50,28 +50,6 @@ definition {
 		AdaptiveMedia.viewImageVariantDescription(description = "Low resolution variant");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test AddAMIWithZeroPixels {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Adaptive Media");
-
-		AdaptiveMedia.addImageResolution(
-			imageName = "Zero Resolution",
-			maxHeight = "0",
-			maxWidth = "0",
-			zero = "true");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Adaptive Media");
-
-		AdaptiveMedia.viewNoImageResolution(imageName = "Zero Resolution");
-	}
-
 	@priority = "4"
 	@refactorneeded
 	test AddAndEditEntriesWithSpecialCharacters {
@@ -200,9 +178,9 @@ definition {
 		AdaptiveMedia.viewNoImageResolution();
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddImageResolutionWithNoDimensions {
+	@priority = "5"
+	@refactordone
+	test CannotAddImageResolutionWithNoDimensions {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

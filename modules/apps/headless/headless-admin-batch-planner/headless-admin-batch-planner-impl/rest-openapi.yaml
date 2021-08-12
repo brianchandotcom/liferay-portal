@@ -209,7 +209,7 @@ paths:
                     description:
                         ""
             tags: ["Plan"]
-    /plans/{id}:
+    /plans/{planId}:
         delete:
             description:
                 Deletes the plan.
@@ -273,7 +273,7 @@ paths:
                     description:
                         ""
             tags: ["Plan"]
-    /plans/{id}/logs:
+    /plans/{planId}/logs:
         get:
             description:
                 Retrieves the plan logs.

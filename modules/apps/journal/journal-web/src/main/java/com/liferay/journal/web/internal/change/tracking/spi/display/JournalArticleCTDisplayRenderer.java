@@ -65,6 +65,11 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds(JournalArticle journalArticle) {
+		return journalArticle.getAvailableLanguageIds();
+	}
+
+	@Override
 	public String getContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale locale,
@@ -75,6 +80,11 @@ public class JournalArticleCTDisplayRenderer
 			journalArticle, _journalArticleLocalService,
 			_language.getLanguageId(locale), httpServletRequest,
 			httpServletResponse);
+	}
+
+	@Override
+	public String getDefaultLanguageId(JournalArticle journalArticle) {
+		return journalArticle.getDefaultLanguageId();
 	}
 
 	@Override

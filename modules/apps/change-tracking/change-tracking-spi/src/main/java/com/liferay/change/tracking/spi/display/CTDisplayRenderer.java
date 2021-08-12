@@ -39,6 +39,10 @@ public interface CTDisplayRenderer<T> {
 		return null;
 	}
 
+	public default String[] getAvailableLanguageIds(T model) {
+		return null;
+	}
+
 	public default String getContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale locale, T model)
@@ -59,6 +63,10 @@ public interface CTDisplayRenderer<T> {
 			LiferayPortletResponse liferayPortletResponse, T model)
 		throws Exception {
 
+		return null;
+	}
+
+	public default String getDefaultLanguageId(T model) {
 		return null;
 	}
 

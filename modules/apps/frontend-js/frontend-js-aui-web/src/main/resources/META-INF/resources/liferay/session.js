@@ -53,6 +53,10 @@ AUI.add(
 				sessionState: {
 					value: 'active',
 				},
+				sessionTimeoutOffset: {
+					getter: '_getLengthInMillis',
+					value: 0,
+				},
 				timestamp: {
 					getter: '_getTimestamp',
 					setter: '_setTimestamp',
@@ -233,6 +237,11 @@ AUI.add(
 					var instance = this;
 
 					var sessionLength = instance.get('sessionLength');
+
+					var sessionTimeoutOffset = instance.get(
+						'sessionTimeoutOffset'
+					);
+
 					var warningTime = instance.get('warningTime');
 
 					var registered = instance._registered;
@@ -277,25 +286,42 @@ AUI.add(
 						var warningMoment = false;
 
 						var hasExpired = elapsed >= sessionLength;
+						var hasExpiredTimeoutOffset =
+							elapsed >= sessionLength - sessionTimeoutOffset;
 						var hasWarned = elapsed >= warningTime;
 
-						if (hasWarned) {
+						if (hasExpiredTimeoutOffset || hasWarned) {
 							if (timestamp == 'expired') {
 								expirationMoment = true;
 								extend = false;
 								hasExpired = true;
+								hasExpiredTimeoutOffset = true;
 							}
 
-							if (hasExpired && sessionState != 'expired') {
-								if (extend) {
+							if (
+								hasExpiredTimeoutOffset &&
+								sessionState != 'expired'
+							) {
+								if (extend && !hasExpired) {
 									expirationMoment = false;
 									hasExpired = false;
+									hasExpiredTimeoutOffset = false;
 									hasWarned = false;
 									warningMoment = false;
 
 									instance.extend();
 								}
 								else {
+									if (extend && hasExpired) {
+										// eslint-disable-next-line no-console
+										console.log(
+											'Session was already expired: sessionLength=' +
+												sessionLength +
+												', elapsed time=' +
+												elapsed
+										);
+									}
+
 									instance.expire();
 
 									expirationMoment = true;
@@ -303,7 +329,7 @@ AUI.add(
 							}
 							else if (
 								hasWarned &&
-								!hasExpired &&
+								!hasExpiredTimeoutOffset &&
 								!extend &&
 								sessionState != 'warned'
 							) {
@@ -319,6 +345,7 @@ AUI.add(
 								interval,
 								hasWarned,
 								hasExpired,
+								hasExpiredTimeoutOffset,
 								warningMoment,
 								expirationMoment
 							);

@@ -30,12 +30,19 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8108 | Test Summary: Add date source page that allows user to choose type of data source"
-	@ignore = "true"
 	@priority = "5"
 	test AddDataSourcePageAllowsUserToChooseWhatKind {
+		task ("Go to data sources and enter in each one to assert that the user can choose any of them") {
+			ACUtils.launchAC();
 
-		// TODO LRAC-8108 AddDataSourcePageAllowsUserToChooseWhatKind
+			ACNavigation.goToSettings();
 
+			ACSettings.goToDataSources();
+
+			ACSettings.clickGenericAddOrConfirmationButton();
+
+			ACSettings.assertCanChooseDataSourceOptions();
+		}
 	}
 
 	@description = "Automation ID: LRAC-8107 | Test Summary: Navigates to data source page"

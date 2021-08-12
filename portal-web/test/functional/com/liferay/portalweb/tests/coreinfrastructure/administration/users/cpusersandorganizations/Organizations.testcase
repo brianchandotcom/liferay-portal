@@ -861,6 +861,40 @@ definition {
 		Organization.deleteCP(orgName = "Organization Name");
 	}
 
+	@description = "This sets Order By Name and asserts descending and ascending order"
+	@priority = "3"
+	test CanOrderOrganizationsByName {
+		for (var organizationNumber : list "1,2,3,4,5,6,7,8") {
+			JSONOrganization.addOrganization(organizationName = "Organization ${organizationNumber}");
+		}
+
+		Organization.openOrganizationsAdmin();
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		ManagementBar.setFilterAndOrder(orderBy = "Name");
+
+		ManagementBar.toggleViewOrder(order = "up");
+
+		for (var organizationNumber : list "5,6,7,8") {
+			LexiconEntry.viewEntryName(rowEntry = "Organization ${organizationNumber}");
+		}
+
+		for (var organizationNumber : list "1,2,3,4") {
+			LexiconEntry.viewNoEntry(rowEntry = "Organization ${organizationNumber}");
+		}
+
+		ManagementBar.toggleViewOrder(order = "down");
+
+		for (var organizationNumber : list "1,2,3,4") {
+			LexiconEntry.viewEntryName(rowEntry = "Organization ${organizationNumber}");
+		}
+
+		for (var organizationNumber : list "5,6,7,8") {
+			LexiconEntry.viewNoEntry(rowEntry = "Organization ${organizationNumber}");
+		}
+	}
+
 	@description = "This is a use case for LPS-123120."
 	@priority = "3"
 	test ClearSearchResults {

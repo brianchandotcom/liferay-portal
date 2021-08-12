@@ -99,15 +99,6 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
-	@ignore = "true"
-	@priority = "5"
-	test CanBlogsListSearchable {
-
-		// TODO LRAC-8382 CanBlogsListSearchable
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
 	@priority = "5"
 	test CanNavigatesToBlogsOverviewPage {

@@ -203,7 +203,6 @@ public class GetEntryRenderDataMVCResourceCommand
 					ctCollectionId, ctDisplayRenderer, ctSQLMode,
 					httpServletRequest, httpServletResponse, locale,
 					rightModel);
-
 				rightRender = _getRender(
 					httpServletRequest, httpServletResponse, ctCollectionId,
 					ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
@@ -275,7 +274,6 @@ public class GetEntryRenderDataMVCResourceCommand
 						leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
 						httpServletRequest, httpServletResponse, locale,
 						leftModel);
-
 					leftRender = _getRender(
 						httpServletRequest, httpServletResponse,
 						leftCtCollectionId, ctDisplayRenderer, ctEntryId,
@@ -297,7 +295,6 @@ public class GetEntryRenderDataMVCResourceCommand
 				leftContent = _getContent(
 					leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
 					httpServletRequest, httpServletResponse, locale, leftModel);
-
 				leftRender = _getRender(
 					httpServletRequest, httpServletResponse, leftCtCollectionId,
 					ctDisplayRenderer, ctEntryId, leftCTSQLMode, leftModel,
@@ -366,7 +363,6 @@ public class GetEntryRenderDataMVCResourceCommand
 						ctCollectionId, ctDisplayRenderer, ctSQLMode,
 						httpServletRequest, httpServletResponse, locale,
 						rightModel);
-
 					rightRender = _getRender(
 						httpServletRequest, httpServletResponse, ctCollectionId,
 						ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,

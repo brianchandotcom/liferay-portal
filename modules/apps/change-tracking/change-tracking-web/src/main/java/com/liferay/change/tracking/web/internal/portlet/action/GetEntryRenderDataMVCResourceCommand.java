@@ -362,26 +362,10 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		if (leftContent != null) {
 			jsonObject.put("leftContent", leftContent);
-
-			if (rightContent != null) {
-				jsonObject.put(
-					"unifiedContent",
-					DiffHtmlUtil.diff(
-						new UnsyncStringReader(leftContent),
-						new UnsyncStringReader(rightContent)));
-			}
 		}
 
 		if (leftRender != null) {
 			jsonObject.put("leftRender", leftRender);
-
-			if (rightRender != null) {
-				jsonObject.put(
-					"unifiedRender",
-					DiffHtmlUtil.diff(
-						new UnsyncStringReader(leftRender),
-						new UnsyncStringReader(rightRender)));
-			}
 		}
 
 		if (leftTitle != null) {
@@ -398,6 +382,22 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		if (rightTitle != null) {
 			jsonObject.put("rightTitle", rightTitle);
+		}
+
+		if ((leftContent != null) && (rightContent != null)) {
+			jsonObject.put(
+				"unifiedContent",
+				DiffHtmlUtil.diff(
+					new UnsyncStringReader(leftContent),
+					new UnsyncStringReader(rightContent)));
+		}
+
+		if ((leftRender != null) && (rightRender != null)) {
+			jsonObject.put(
+				"unifiedRender",
+				DiffHtmlUtil.diff(
+					new UnsyncStringReader(leftRender),
+					new UnsyncStringReader(rightRender)));
 		}
 
 		return jsonObject;

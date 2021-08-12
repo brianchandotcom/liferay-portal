@@ -236,20 +236,38 @@ public class PortletTracker
 
 		_portletInstanceFactory.destroy(portletModel);
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				PortletCategory portletCategory =
-					(PortletCategory)WebAppPool.get(
-						companyId, WebKeys.PORTLET_CATEGORY);
+		Long companyId = (Long)serviceReference.getProperty(
+			"com.liferay.portlet.company");
 
-				if (portletCategory == null) {
-					_log.error(
-						"Unable to get portlet category for " + companyId);
-				}
-				else {
-					portletCategory.separate(portletModel.getRootPortletId());
-				}
-			});
+		if (companyId == null) {
+			_companyLocalService.forEachCompanyId(
+				curCompanyId -> {
+					PortletCategory portletCategory =
+						(PortletCategory)WebAppPool.get(
+							curCompanyId, WebKeys.PORTLET_CATEGORY);
+
+					if (portletCategory == null) {
+						_log.error(
+							"Unable to get portlet category for " +
+								curCompanyId);
+					}
+					else {
+						portletCategory.separate(
+							portletModel.getRootPortletId());
+					}
+				});
+		}
+		else {
+			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
+				companyId, WebKeys.PORTLET_CATEGORY);
+
+			if (portletCategory == null) {
+				_log.error("Unable to get portlet category for " + companyId);
+			}
+			else {
+				portletCategory.separate(portletModel.getRootPortletId());
+			}
+		}
 
 		serviceRegistrations.removeServiceReference(serviceReference);
 	}

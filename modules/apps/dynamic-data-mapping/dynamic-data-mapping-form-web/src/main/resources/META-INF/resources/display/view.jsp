@@ -162,6 +162,15 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							</div>
 						</c:if>
 
+						<div class="ddm-form-upload-permission-message hide mt-4">
+							<clay:container-fluid>
+								<clay:alert
+									displayType="warning"
+									message="you-do-not-have-the-permission-to-access-the-upload-fields-on-this-form"
+								/>
+							</clay:container-fluid>
+						</div>
+
 						<div class="ddm-form-basic-info">
 							<clay:container-fluid>
 								<h1 class="ddm-form-name"><%= HtmlUtil.escape(formInstance.getName(displayLocale)) %></h1>

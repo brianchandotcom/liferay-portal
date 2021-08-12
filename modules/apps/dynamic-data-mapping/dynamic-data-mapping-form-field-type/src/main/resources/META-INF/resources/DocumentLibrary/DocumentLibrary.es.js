@@ -272,6 +272,7 @@ const Main = ({
 	onChange,
 	placeholder,
 	readOnly,
+	showUploadPermissionMessage,
 	valid: initialValid,
 	value = '{}',
 	...otherProps
@@ -285,10 +286,12 @@ const Main = ({
 	const [valid, setValid] = useState(initialValid);
 	const [progress, setProgress] = useState(0);
 
+	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();
+
 	const getErrorMessages = (errorMessage, isSignedIn) => {
 		const errorMessages = [errorMessage];
 
-		if (!isSignedIn && !allowGuestUsers) {
+		if (!allowGuestUsers && !isSignedIn) {
 			errorMessages.push(
 				Liferay.Language.get(
 					'you-need-to-be-signed-in-to-edit-this-field'
@@ -302,11 +305,28 @@ const Main = ({
 				)
 			);
 		}
+		else if (showUploadPermissionMessage) {
+			errorMessages.push(
+				Liferay.Language.get(
+					'you-need-to-be-assigned-to-the-same-site-where-the-form-was-created-to-use-this-field'
+				)
+			);
+		}
 
 		return errorMessages.join(' ');
 	};
 
-	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();
+	useEffect(() => {
+		if ((!allowGuestUsers && !isSignedIn) || showUploadPermissionMessage) {
+			const ddmFormUploadPermissionMessage = document.querySelector(
+				`.ddm-form-upload-permission-message`
+			);
+
+			if (ddmFormUploadPermissionMessage) {
+				ddmFormUploadPermissionMessage.classList.remove('hide');
+			}
+		}
+	}, [allowGuestUsers, isSignedIn, showUploadPermissionMessage]);
 
 	useEffect(() => {
 		setCurrentValue(value);
@@ -447,7 +467,9 @@ const Main = ({
 	};
 
 	const hasCustomError =
-		(!isSignedIn && !allowGuestUsers) || maximumSubmissionLimitReached;
+		(!isSignedIn && !allowGuestUsers) ||
+		maximumSubmissionLimitReached ||
+		showUploadPermissionMessage;
 
 	return (
 		<FieldBase

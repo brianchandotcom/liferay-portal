@@ -14,10 +14,9 @@
 
 package com.liferay.site.initializer.extender.internal;
 
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
@@ -25,18 +24,20 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -52,14 +53,14 @@ import org.osgi.framework.Bundle;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		Bundle bundle, DLAppLocalService dlAppLocalService,
+		Bundle bundle, DocumentResource.Factory documentResourceFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ServletContext servletContext,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
 		_bundle = bundle;
-		_dlAppLocalService = dlAppLocalService;
+		_documentResourceFactory = documentResourceFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_servletContext = servletContext;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
@@ -115,17 +116,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		DocumentResource.Builder documentResourceBuilder =
+			_documentResourceFactory.create();
+
+		DocumentResource documentResource = documentResourceBuilder.user(
+			user
+		).build();
+
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
 			String fileName = FileUtil.getShortFileName(url.getFile());
 
-			_dlAppLocalService.addFileEntry(
-				null, user.getUserId(), groupId,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-				MimeTypesUtil.getContentType(fileName),
-				FileUtil.getBytes(url.openStream()), null, null,
-				ServiceContextThreadLocal.getServiceContext());
+			byte[] bytes = FileUtil.getBytes(url.openStream());
+
+			MultipartBody multipartBody = MultipartBody.of(
+				Collections.singletonMap(
+					"file",
+					new BinaryFile(
+						MimeTypesUtil.getContentType(fileName), fileName,
+						url.openStream(), (long)bytes.length)),
+				null, Collections.emptyMap());
+
+			documentResource.postSiteDocument(groupId, multipartBody);
 		}
 	}
 
@@ -221,7 +234,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BundleSiteInitializer.class);
 
 	private final Bundle _bundle;
-	private final DLAppLocalService _dlAppLocalService;
+	private final DocumentResource.Factory _documentResourceFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ServletContext _servletContext;

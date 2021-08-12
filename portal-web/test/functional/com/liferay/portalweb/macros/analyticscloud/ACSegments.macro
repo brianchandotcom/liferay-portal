@@ -56,12 +56,30 @@ definition {
 		Click(locator1 = "ACSegments#CONFIRM_DELETION");
 	}
 
-	macro deleteSegmentCriterion {
-		Click(locator1 = "ACSegments#DELETE_SEGMENT_CRITERION");
+	macro deleteSegmentCriteria {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(
+			criteriaName = "${criteriaName}",
+			index = "${index}",
+			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
 	}
 
-	macro duplicateSegmentCriterion {
-		Click(locator1 = "ACSegments#DUPLICATE_SEGMENT_CRITERION");
+	macro duplicateSegmentCriteria {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(
+			criteriaName = "${criteriaName}",
+			index = "${index}",
+			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Duplicate");
 	}
 
 	macro editDateCriterion {

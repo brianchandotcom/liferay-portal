@@ -24,14 +24,14 @@
 		<column name="CPInstanceUuid" type="String" />
 		<column name="CProductId" type="long" />
 		<column name="diagram" type="boolean" />
-		<column name="number" type="int" />
 		<column name="quantity" type="int" />
+		<column name="sequence" type="String" />
 		<column name="sku" type="String" />
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="number" />
+			<order-column name="sequence" />
 		</order>
 
 		<!-- Finders -->
@@ -39,9 +39,9 @@
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 		</finder>
-		<finder name="CPDI_N" return-type="CPDefinitionDiagramEntry" unique="true">
+		<finder name="CPDI_S" return-type="CPDefinitionDiagramEntry" unique="true">
 			<finder-column name="CPDefinitionId" />
-			<finder-column name="number" />
+			<finder-column name="sequence" />
 		</finder>
 
 		<!-- References -->
@@ -65,14 +65,14 @@
 		<!-- Other fields -->
 
 		<column name="CPDefinitionId" type="long" />
-		<column name="number" type="int" />
 		<column name="positionX" type="double" />
 		<column name="positionY" type="double" />
+		<column name="sequence" type="String" />
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="number" />
+			<order-column name="sequence" />
 		</order>
 
 		<!-- Finders -->

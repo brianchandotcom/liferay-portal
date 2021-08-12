@@ -112,23 +112,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_CRITERIA_ATTRIBUTE_NAME</td>
+	<td>xpath=(//div[@class='criteria-row']//b[1])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_CRITERIA_ATTRIBUTE_VALUE</td>
-	<td>//div[@class='criteria-row']</td>
+	<td>xpath=(//div[@class='criteria-row']//b[2])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEGMENT_CRITERIA_CRITERIA_NAME</td>
-	<td>//div[@class='criteria-row']//self::b</td>
+	<td>SEGMENT_CRITERIA_CONDITION</td>
+	<td>xpath=(//div[@class='criteria-row']//span[1])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEGMENT_CRITERIA_CRITERIA_DETAIL</td>
-	<td>//div[@class='criteria-row']//self::b//following-sibling::span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEGMENT_CRITERIA_CRITERIA_VALUE</td>
-	<td>//div[@class='criteria-row']//self::b//following-sibling::span//following-sibling::b</td>
+	<td>SEGMENT_CRITERIA_TYPE</td>
+	<td>xpath=(//div[@class='criteria-row'][normalize-space(text())='${type}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

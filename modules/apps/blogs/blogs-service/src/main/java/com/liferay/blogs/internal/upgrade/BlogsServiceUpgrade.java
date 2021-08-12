@@ -59,7 +59,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "1.1.0",
 			new com.liferay.blogs.internal.upgrade.v1_1_0.
-				BlogsEntryUpgradeProcess(_friendlyURLEntryLocalService));
+				BlogsEntryUpgradeProcess(
+					_classNameLocalService, _friendlyURLEntryLocalService));
 
 		registry.register(
 			"1.1.0", "1.1.1",

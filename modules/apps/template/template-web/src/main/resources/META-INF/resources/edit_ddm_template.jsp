@@ -54,6 +54,28 @@ else {
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= resourceClassNameId %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
+	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
+	<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
+
+	<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
+
+		<%
+		String[] imageExtensions = editDDMTemplateDisplayContext.smallImageExtensions();
+		%>
+
+		<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(imageExtensions, StringPool.COMMA)) %>.
+	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
+
+		<%
+		long imageMaxSize = editDDMTemplateDisplayContext.smallImageMaxSize();
+		%>
+
+		<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-template">
@@ -82,9 +104,6 @@ else {
 			</ul>
 		</clay:container-fluid>
 	</nav>
-
-	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
 
 	<div>
 		<div id="<portlet:namespace />ddmTemplateEditor">

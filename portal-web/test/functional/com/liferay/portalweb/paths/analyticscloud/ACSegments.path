@@ -249,7 +249,7 @@
 </tr>
 <tr>
 	<td>TEXT_INPUT</td>
-	<td>//div[@class='criteria-statement']//div[@class='input-group-item']/input</td>
+	<td>xpath=(//div[contains(@class,'criteria-statement')]//div[contains(@class,'input-group-item')]//input[@type='text'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

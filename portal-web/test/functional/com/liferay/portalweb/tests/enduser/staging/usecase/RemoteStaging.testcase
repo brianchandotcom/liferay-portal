@@ -35,6 +35,29 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-123156."
+	@priority = "4"
+	test AssertValidationErrors {
+		property test.name.skip.portal.instance = "RemoteStaging#AssertValidationErrors";
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		SitePages.addPublicPage(pageName = "Second Test Page");
+
+		JSONGroup.deleteGroupByName(
+			groupName = "Remote Site",
+			portalURL = "http://localhost:9080");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(
+			failureExpected = "true",
+			remoteStaging = "true",
+			validateErrorMessage = "An unexpected error occurred with the publish process. Please check your portal and publishing configuration.");
+	}
+
 	@description = "This is a use case for LPS-72545."
 	@priority = "4"
 	test PublishCustomFieldDeletionviaRemoteStaging {

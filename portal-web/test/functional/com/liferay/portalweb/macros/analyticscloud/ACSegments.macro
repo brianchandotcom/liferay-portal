@@ -362,22 +362,37 @@ definition {
 		}
 	}
 
-	macro viewSegmentCriteria {
+	macro viewSegmentCriteriaIndividualAttributes {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertVisible(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_TYPE",
+			type = "Individual");
+
 		AssertTextEquals(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_NAME",
+			value1 = "${attributeName}");
+
+		AssertTextEquals(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
+			value1 = "${condition}");
+
+		AssertTextEquals(
+			index = "${index}",
 			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
 			value1 = "${attributeValue}");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#SEGMENT_CRITERIA_CRITERIA_NAME",
-			value1 = "${criteriaName}");
-
-		AssertTextEquals(
-			locator1 = "ACSegments#SEGMENT_CRITERIA_CRITERIA_DETAIL",
-			value1 = "${criteriaDetail}");
-
-		AssertTextEquals(
-			locator1 = "ACSegments#SEGMENT_CRITERIA_CRITERIA_VALUE",
-			value1 = "${criteriaValue}");
+		if (isSet(conjunction)) {
+			AssertTextEquals(
+				index = "${index}",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_CONJUNCTION",
+				value1 = "${conjunction}");
+		}
 	}
 
 	macro viewSegmentCriteriaWebBehavior {

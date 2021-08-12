@@ -40,6 +40,16 @@ public class DDLRecordTestHelper {
 	public DDLRecordTestHelper(Group group, DDLRecordSet recordSet)
 		throws Exception {
 
+		_userId = TestPropsValues.getUserId();
+
+		_group = group;
+		_recordSet = recordSet;
+	}
+
+	public DDLRecordTestHelper(long userId, Group group, DDLRecordSet recordSet)
+		throws Exception {
+
+		_userId = userId;
 		_group = group;
 		_recordSet = recordSet;
 	}
@@ -72,8 +82,7 @@ public class DDLRecordTestHelper {
 		throws Exception {
 
 		return DDLRecordLocalServiceUtil.addRecord(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_recordSet.getRecordSetId(),
+			_userId, _group.getGroupId(), _recordSet.getRecordSetId(),
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
 			DDLRecordTestUtil.getServiceContext(workflowAction));
 	}
@@ -92,8 +101,8 @@ public class DDLRecordTestHelper {
 		throws Exception {
 
 		return DDLRecordLocalServiceUtil.updateRecord(
-			TestPropsValues.getUserId(), recordId, majorVersion, displayIndex,
-			ddmFormValues, DDLRecordTestUtil.getServiceContext(workflowAction));
+			_userId, recordId, majorVersion, displayIndex, ddmFormValues,
+			DDLRecordTestUtil.getServiceContext(workflowAction));
 	}
 
 	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
@@ -116,6 +125,7 @@ public class DDLRecordTestHelper {
 		return ddmStructure.getDDMForm();
 	}
 
+	private final long _userId;
 	private final Group _group;
 	private final DDLRecordSet _recordSet;
 

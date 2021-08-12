@@ -355,7 +355,10 @@ public class PortletTracker
 			}
 
 			com.liferay.portal.kernel.model.Portlet portletModel =
-				buildPortletModel(portletApp, portletId, bundle);
+				buildPortletModel(
+					portletApp, portletId, bundle,
+					(Long)serviceReference.getProperty(
+						"target.deployment.company"));
 
 			portletModel.setPortletName(portletName);
 
@@ -417,14 +420,21 @@ public class PortletTracker
 	}
 
 	protected com.liferay.portal.kernel.model.Portlet buildPortletModel(
-		PortletApp portletApp, String portletId, Bundle bundle) {
+		PortletApp portletApp, String portletId, Bundle bundle,
+		Long companyId) {
 
 		com.liferay.portal.kernel.model.Portlet portletModel =
 			_portletLocalService.createPortlet(0);
 
 		portletModel.setPortletId(portletId);
 
-		portletModel.setCompanyId(CompanyConstants.SYSTEM);
+		if (companyId == null) {
+			portletModel.setCompanyId(CompanyConstants.SYSTEM);
+		}
+		else {
+			portletModel.setCompanyId(companyId);
+		}
+
 		portletModel.setPluginPackage(
 			new BundlePluginPackage(bundle, portletApp));
 		portletModel.setPortletApp(portletApp);
@@ -1284,36 +1294,47 @@ public class PortletTracker
 			categoryNames.add("category.undefined");
 		}
 
-		List<Future<Void>> futures = new ArrayList<>();
+		Long companyId = (Long)serviceReference.getProperty(
+			"target.deployment.company");
 
-		List<Company> companies = _companyLocalService.getCompanies(false);
+		if (companyId == null) {
+			List<Future<Void>> futures = new ArrayList<>();
 
-		_portletLocalService.clearCache();
+			List<Company> companies = _companyLocalService.getCompanies(false);
 
-		for (Company company : companies) {
-			futures.add(
-				_executorService.submit(
-					() -> {
-						_portletLocalService.deployRemotePortlet(
-							new long[] {company.getCompanyId()}, portletModel,
-							ArrayUtil.toStringArray(categoryNames), false,
-							false);
+			_portletLocalService.clearCache();
 
-						return null;
-					}));
-		}
+			for (Company company : companies) {
+				futures.add(
+					_executorService.submit(
+						() -> {
+							_portletLocalService.deployRemotePortlet(
+								new long[] {company.getCompanyId()},
+								portletModel,
+								ArrayUtil.toStringArray(categoryNames), false,
+								false);
 
-		for (Future<Void> future : futures) {
-			try {
-				future.get();
+							return null;
+						}));
 			}
-			catch (Exception exception) {
-				if (exception instanceof ExecutionException) {
-					throw new PortalException(exception.getCause());
+
+			for (Future<Void> future : futures) {
+				try {
+					future.get();
 				}
+				catch (Exception exception) {
+					if (exception instanceof ExecutionException) {
+						throw new PortalException(exception.getCause());
+					}
 
-				throw new PortalException(exception);
+					throw new PortalException(exception);
+				}
 			}
+		}
+		else {
+			_portletLocalService.deployRemotePortlet(
+				new long[] {companyId}, portletModel,
+				ArrayUtil.toStringArray(categoryNames), false, false);
 		}
 	}
 

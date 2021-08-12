@@ -142,4 +142,45 @@ definition {
 		ACSegments.viewDeletedSegmentName(searchTerm = "Static Segment Test");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
+    @ignore = "true"
+    @priority = "4"
+    test DeleteCustomFieldUsedSegmentResetData {
+
+        // TODO LRAC-8592 DeleteCustomFieldUsedSegmentResetData pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8594 | Test Summary: Deleting a data source causes individuals to be removed from segment"
+    @ignore = "true"
+    @priority = "4"
+    test DeleteDataSourceIndividualsRemovedSegmet {
+
+        // TODO LRAC-8594 DeleteDataSourceIndividualsRemovedSegmet pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8595 | Test Summary: Delete a criteria"
+    @ignore = "true"
+    @priority = "3"
+    test CanDeleteCriteria {
+
+        // TODO LRAC-8595 CanDeleteCriteria pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8597 | Test Summary: Delete a Segment via the Segment List"
+    @ignore = "true"
+    @priority = "4"
+    test CanDeleteSegmentViaSegmentList {
+
+        // TODO LRAC-8597 CanDeleteSegmentViaSegmentList pending implementation
+
+
+
+
+		
+
+    }
+
 }

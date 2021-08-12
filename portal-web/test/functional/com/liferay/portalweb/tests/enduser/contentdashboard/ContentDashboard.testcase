@@ -1019,9 +1019,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966: Given a user with NO permissions to edit documents
-	When the user clicks on the title link in the content dashboard
-	than the user cannot click on the title"
 	@priority = "4"
 	@uitest
 	test ClickTitleDocumentDPTWithNoPermissions {
@@ -1123,7 +1120,7 @@ definition {
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "DM Document Title");
 		}
-		
+
 		task ("Login again with the Test user") {
 			User.logoutPG();
 
@@ -1133,9 +1130,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966: Given a user with permissions to edit documents
-	When the user clicks on the title link in the content dashboard
-	then the user is led to the edit mode"
 	@priority = "4"
 	@uitest
 	test ClickTitleDocumentDPTWithPermissions {
@@ -1319,10 +1313,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-136345 Given a document created in an Asset Library
-	When the user goes to the content dashboard
-	Then the user can see the document listed"
-
 	@priority = "5"
 	test DocumentFromAssetLibraryIsListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -1362,9 +1352,51 @@ definition {
 		}
 	}
 
-	@description = "LPS-136345 Given a document created in site A in the instance and another one created in the site B
-	When the user goes to the content dashboard
-	Then the user can see both listed"
+	@priority = "4"
+	test DocumentIconView {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addWidget(portletName = "Documents and Media");
+
+			PageEditor.clickPublish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Click on the View icon and check the user is lead to the Display Page") {
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			Click(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
+		}
+	}
 
 	@priority = "5"
 	test DocumentsFromDifferentSitesAreListed {
@@ -1414,58 +1446,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966: Given a document with and associated Display Page Template
-	When the user with permissions clicks on the view button
-	Then the user is lead to the view mode"
-	@priority = "4"
-	test DocumentIconView {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property portal.acceptance = "true";
-
-		task ("Add Display Page and mark it as default") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Document",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Document");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addWidget(portletName = "Documents and Media");
-
-			PageEditor.clickPublish();
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Add a document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
-		}
-
-		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Click on the View icon and check the user is lead to the Display Page") {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
-			Click(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
-		}
-	}
-
-	@description = "LPS-119966: Given a document with and associated Display Page Template
-	When the user with permissions clicks on the info panel button
-	Then the user is lead to the info panel"
 	@priority = "4"
 	test DocumentViewInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -1498,9 +1478,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966: Given a document with and associated Display Page Template
-	When the user with permissions clicks on the edit button
-	Then the user is lead to the edit mode"
 	@priority = "4"
 	test EditDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";

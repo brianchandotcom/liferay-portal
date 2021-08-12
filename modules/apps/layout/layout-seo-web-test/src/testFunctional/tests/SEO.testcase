@@ -29,7 +29,7 @@ definition {
 	@description = "This test ensures that user can map the blogs with SEO meta tags for display pages."
 	@priority = "5"
 	@refactorneeded
-	test MapBlogsToDisplayPage {
+	test CanMapBlogsToDisplayPage {
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Blogs Entry",
 			displayPageTemplateEntryName = "Display Page Template Name",
@@ -71,7 +71,7 @@ definition {
 	@description = "This test ensures that user can map the document with SEO meta tags for display pages."
 	@priority = "5"
 	@refactorneeded
-	test MapDocumentToDisplayPage {
+	test CanMapDocumentToDisplayPage {
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
 			displayPageTemplateEntryName = "Display Page Template Name",
@@ -114,7 +114,7 @@ definition {
 	@description = "This test ensures that user can map the web content with SEO meta tags for display pages."
 	@priority = "5"
 	@refactorneeded
-	test MapWebContentToDisplayPage {
+	test CanMapWebContentToDisplayPage {
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
 			displayPageTemplateEntryName = "Display Page Template Name",

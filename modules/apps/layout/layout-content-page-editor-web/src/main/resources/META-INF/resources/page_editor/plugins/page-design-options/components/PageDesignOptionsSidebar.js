@@ -93,11 +93,9 @@ export default function PageDesignOptionsSidebar() {
 	);
 
 	useEffect(() => {
-		const wrapper = document.getElementById('wrapper');
-
-		if (selectedStyleBook && wrapper) {
+		if (selectedStyleBook && document.body) {
 			Object.values(selectedStyleBook.tokenValues).forEach((token) => {
-				wrapper.style.setProperty(
+				document.body.style.setProperty(
 					`--${token.cssVariable}`,
 					token.value
 				);

@@ -47,24 +47,6 @@ DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
 
 	</aui:select>
 
-	<p class="control-label mb-1">
-		<b><liferay-ui:message key="item-type" /></b>
-	</p>
-
-	<p class="small">
-		<%= editDDMTemplateDisplayContext.getTemplateTypeLabel() %>
-	</p>
-
-	<c:if test="<%= Validator.isNotNull(editDDMTemplateDisplayContext.getTemplateSubtypeLabel()) %>">
-		<p class="control-label mb-1">
-			<b><liferay-ui:message key="item-subtype" /></b>
-		</p>
-
-		<p class="small">
-			<%= editDDMTemplateDisplayContext.getTemplateSubtypeLabel() %>
-		</p>
-	</c:if>
-
 	<c:if test="<%= (ddmTemplate == null) && !editDDMTemplateDisplayContext.autogenerateTemplateKey() %>">
 		<aui:input name="templateKey" />
 	</c:if>

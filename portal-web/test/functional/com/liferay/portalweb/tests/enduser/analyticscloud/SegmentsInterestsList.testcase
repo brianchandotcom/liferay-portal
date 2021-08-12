@@ -1,142 +1,140 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    setUp {
-        ACUtils.launchAC();
+	setUp {
+		ACUtils.launchAC();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        ACUtils.launchDXP();
+		ACUtils.launchDXP();
+	}
 
-    }
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+		ACUtils.tearDownDXP();
 
-        ACUtils.tearDownDXP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
+		ACUtils.tearDownAC();
+	}
 
-        ACUtils.tearDownAC();
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
+	@ignore = "true"
+	@priority = "3"
+	test AssertNoInterestFoundInSegment {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8604 | Test Summary: Top interests for the workspace are shown in a list"
-    @ignore = "true"
-    @priority = "5"
-    test ViewSegmentsTopInterestsList {
+		// TODO LRAC-8613 AssertNoInterestFoundInSegment pending implementation
 
-        // TODO LRAC-8604 ViewSegmentsTopInterestsList pending implementation
+	}
 
-    }
-    
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8614 | Test Summary: Assert top interest shown in segment profile"
+	@ignore = "true"
+	@priority = "3"
+	test AssertTopInterestShownInSegmentProfile {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8605 | Test Summary: The top interests list is searchable"
-    @ignore = "true"
-    @priority = "5"
-    test CanSearchTopInterestsListSegments {
+		// TODO LRAC-8614 AssertTopInterestShownInSegmentProfile pending implementation
 
-        // TODO LRAC-8605 CanSearchTopInterestsListSegments pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8605 | Test Summary: The top interests list is searchable"
+	@ignore = "true"
+	@priority = "5"
+	test CanSearchTopInterestsListSegments {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8606 | Test Summary: Order the Details of a Segment's Interest"
-    @ignore = "true"
-    @priority = "3"
-    test OrderSegmentInterestDetails {
+		// TODO LRAC-8605 CanSearchTopInterestsListSegments pending implementation
 
-        // TODO LRAC-8606 OrderSegmentInterestDetails pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8606 | Test Summary: Order the Details of a Segment's Interest"
+	@ignore = "true"
+	@priority = "3"
+	test OrderSegmentInterestDetails {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8616 | Test Summary: Order the Segment Profile Engagement List"
-    @ignore = "true"
-    @priority = "4"
-    test OrderSegmentProfileEngagementScoreList {
+		// TODO LRAC-8606 OrderSegmentInterestDetails pending implementation
 
-        // TODO LRAC-8616 OrderSegmentProfileEngagementScoreList pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8616 | Test Summary: Order the Segment Profile Engagement List"
+	@ignore = "true"
+	@priority = "4"
+	test OrderSegmentProfileEngagementScoreList {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8607 | Test Summary: Order a Segment Profile's Interest"
-    @ignore = "true"
-    @priority = "3"
-    test OrderSegmentProfileInterests {
+		// TODO LRAC-8616 OrderSegmentProfileEngagementScoreList pending implementation
 
-        // TODO LRAC-8607 OrderSegmentProfileInterests pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8607 | Test Summary: Order a Segment Profile's Interest"
+	@ignore = "true"
+	@priority = "3"
+	test OrderSegmentProfileInterests {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8608 | Test Summary: Paginate Segment Profile in an Interest detail"
-    @ignore = "true"
-    @priority = "3"
-    test PaginateSegmentProfileInterestDetail {
+		// TODO LRAC-8607 OrderSegmentProfileInterests pending implementation
 
-        // TODO LRAC-8608 PaginateSegmentProfileInterestDetail pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8608 | Test Summary: Paginate Segment Profile in an Interest detail"
+	@ignore = "true"
+	@priority = "3"
+	test PaginateSegmentProfileInterestDetail {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8609 | Test Summary: Search a Segment Profile's Interest"
-    @ignore = "true"
-    @priority = "3"
-    test SearchSegmentProfilesInterest {
+		// TODO LRAC-8608 PaginateSegmentProfileInterestDetail pending implementation
 
-        // TODO LRAC-8609 SearchSegmentProfilesInterest pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8609 | Test Summary: Search a Segment Profile's Interest"
+	@ignore = "true"
+	@priority = "3"
+	test SearchSegmentProfilesInterest {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8610 | Test Summary: Segment interest details has a tab that shows active pages"
-    @ignore = "true"
-    @priority = "3"
-    test SegmentInterestDetailsTabShowsActivePages {
+		// TODO LRAC-8609 SearchSegmentProfilesInterest pending implementation
 
-        // TODO LRAC-8610 SegmentInterestDetailsTabShowsActivePages pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8610 | Test Summary: Segment interest details has a tab that shows active pages"
+	@ignore = "true"
+	@priority = "3"
+	test SegmentInterestDetailsTabShowsActivePages {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8611 | Test Summary: Interest details are shown"
-    @ignore = "true"
-    @priority = "3"
-    test ViewInterestDetails {
+		// TODO LRAC-8610 SegmentInterestDetailsTabShowsActivePages pending implementation
 
-        // TODO LRAC-8611 ViewInterestDetails pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8612 | Test Summary: Segment interest details has a tab that shows inactive pages"
+	@ignore = "true"
+	@priority = "3"
+	test SegmentInterestDetailsTabShowsInactivePages {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8612 | Test Summary: Segment interest details has a tab that shows inactive pages"
-    @ignore = "true"
-    @priority = "3"
-    test SegmentInterestDetailsTabShowsInactivePages {
+		// TODO LRAC-8612 SegmentInterestDetailsTabShowsInactivePages pending implementation
 
-        // TODO LRAC-8612 SegmentInterestDetailsTabShowsInactivePages pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8611 | Test Summary: Interest details are shown"
+	@ignore = "true"
+	@priority = "3"
+	test ViewInterestDetails {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
-    @ignore = "true"
-    @priority = "3"
-    test AssertNoInterestFoundInSegment {
+		// TODO LRAC-8611 ViewInterestDetails pending implementation
 
-        // TODO LRAC-8613 AssertNoInterestFoundInSegment pending implementation
+	}
 
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8604 | Test Summary: Top interests for the workspace are shown in a list"
+	@ignore = "true"
+	@priority = "5"
+	test ViewSegmentsTopInterestsList {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8614 | Test Summary: Assert top interest shown in segment profile"
-    @ignore = "true"
-    @priority = "3"
-    test AssertTopInterestShownInSegmentProfile {
+		// TODO LRAC-8604 ViewSegmentsTopInterestsList pending implementation
 
-        // TODO LRAC-8614 AssertTopInterestShownInSegmentProfile pending implementation
-
-    }
+	}
 
 }

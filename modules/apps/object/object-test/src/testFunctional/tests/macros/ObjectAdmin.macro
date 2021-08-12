@@ -1,13 +1,31 @@
 definition {
 
+	macro createCustomObject {
+		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
+
+		Type(
+			value1 = "${name}",
+			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT");
+
+		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");				
+	}
+
 	macro openObjectAdmin {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
+	}
+
+	macro viewCustomObject {
+		AssertElementPresent(
+			key_name = "${name}",
+			key_system = "No",
+			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
 	macro viewSystemObject {
 		AssertElementPresent(
 			key_name = "${name}",
-			locator1 = "ObjectAdmin#VIEW_SYSTEM_OBJECT");
+			key_system = "Yes",
+			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
 }

@@ -20,13 +20,15 @@ definition {
 	}
 
 	@description = "LPS-135548 - Verify that user can view custom objects"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ViewCustomObjects {
 		property portal.acceptance = "true";
 
-		// TODO LPS-137098 ViewSystemObjects pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.createCustomObject(name = "CustomObject");
+
+		ObjectAdmin.viewCustomObject(name = "CustomObject");
 	}
 
 	@description = "LPS-135548 - Verify that user can view system objects"

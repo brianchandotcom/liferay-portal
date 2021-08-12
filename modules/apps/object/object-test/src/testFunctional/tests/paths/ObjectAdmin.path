@@ -11,8 +11,23 @@
 
 <tbody>
 	<tr>
-		<td>VIEW_SYSTEM_OBJECT</td>
-		<td>//div[contains(@class,'table-list-title') and contains(.,'${key_name}') and contains(.,Yes)]</td>
+		<td>ADD_CUSTOM_OBJECT</td>
+		<td>//li[@class='nav-item navbar-breakpoint-d-none']/../li[(@class='nav-item')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SAVE_CUSTOM_OBJECT</td>
+		<td>//button[contains(text(),'Save')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>NAME_CUSTOM_OBJECT</td>
+		<td>//input[@id='objectDefinitionName']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT</td>
+		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
 </tbody>

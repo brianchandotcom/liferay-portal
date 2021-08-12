@@ -374,8 +374,6 @@ public class GetEntryRenderDataMVCResourceCommand
 				CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
 					CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
 
-				T model = null;
-
 				try (SafeCloseable safeCloseable1 =
 						CTCollectionThreadLocal.
 							setCTCollectionIdWithSafeCloseable(ctCollectionId);
@@ -383,13 +381,13 @@ public class GetEntryRenderDataMVCResourceCommand
 						CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
 							ctSQLMode)) {
 
-					model = ctDisplayRenderer.fetchLatestVersionedModel(
+					rightModel = ctDisplayRenderer.fetchLatestVersionedModel(
 						leftModel);
 				}
 
-				if (model != null) {
+				if (rightModel != null) {
 					String rightVersionName = ctDisplayRenderer.getVersionName(
-						model);
+						rightModel);
 
 					if (Validator.isNull(rightVersionName)) {
 						jsonObject.put(
@@ -414,35 +412,36 @@ public class GetEntryRenderDataMVCResourceCommand
 							leftVersionName, " (",
 							_language.get(httpServletRequest, "deleted"), ")"));
 
-					String content = _getContent(
+					rightContent = _getContent(
 						ctCollectionId, ctDisplayRenderer, ctSQLMode,
-						httpServletRequest, httpServletResponse, locale, model);
+						httpServletRequest, httpServletResponse, locale,
+						rightModel);
 
-					if (content != null) {
-						jsonObject.put("rightContent", content);
+					if (rightContent != null) {
+						jsonObject.put("rightContent", rightContent);
 
 						if (leftContent != null) {
 							jsonObject.put(
 								"unifiedContent",
 								DiffHtmlUtil.diff(
-									new UnsyncStringReader(content),
-									new UnsyncStringReader(leftContent)));
+									new UnsyncStringReader(leftContent),
+									new UnsyncStringReader(rightContent)));
 						}
 					}
 
-					String render = _getRender(
+					rightRender = _getRender(
 						httpServletRequest, httpServletResponse, ctCollectionId,
-						ctDisplayRenderer, ctEntryId, ctSQLMode, model,
+						ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
 						CTConstants.TYPE_AFTER);
 
-					jsonObject.put("rightRender", render);
+					jsonObject.put("rightRender", rightRender);
 
 					if (leftRender != null) {
 						jsonObject.put(
 							"unifiedRender",
 							DiffHtmlUtil.diff(
-								new UnsyncStringReader(render),
-								new UnsyncStringReader(leftRender)));
+								new UnsyncStringReader(leftRender),
+								new UnsyncStringReader(rightRender)));
 					}
 				}
 			}

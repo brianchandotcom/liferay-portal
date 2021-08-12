@@ -8,17 +8,23 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 
-		ACUtils.addSiteAndPage();
+		task ("Add a new site and add a web content in this site") {
+			ACUtils.addSiteAndPage();
 
-		ACUtils.createWCAndAddToPage();
+			ACUtils.createWCAndAddToPage();
+		}
 	}
 
 	tearDown {
@@ -136,12 +142,85 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
-	@ignore = "true"
 	@priority = "5"
 	test CanSearchWebContentList {
+		task ("Add pages and add web content to earch of the page") {
+			for (var layoutName : list "AC Page 2,AC Page 3") {
+				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+			}
 
-		// TODO LRAC-8441 CanSearchWebContentList
+			for (var n : list "2,3") {
+				ACUtils.createWCAndAddToPage(
+					layoutName = "AC Page ${n}",
+					webContentTitle = "Web Content AC Title ${n}");
+			}
+		}
 
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Web Content assets") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Web Content");
+		}
+
+		task ("Choose Last 24 Hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Search the Web Contents") {
+			ACUtils.searchBar(searchItem = "Web Content AC Title");
+
+			for (var assetName : list "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3") {
+				ACAssets.viewAssets(assetName = "${assetName}");
+			}
+
+			ACUtils.searchBar(searchItem = "2");
+
+			ACAssets.viewAssets(assetName = "Web Content AC Title 2");
+
+			ACUtils.searchBar(searchItem = "3");
+
+			ACAssets.viewAssets(assetName = "Web Content AC Title 3");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8445 | Test Summary: Assert Web Content 180 Days Time Filter In Web Content Assets Page"

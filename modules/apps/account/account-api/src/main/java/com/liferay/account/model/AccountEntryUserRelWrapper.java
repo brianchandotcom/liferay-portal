@@ -84,6 +84,23 @@ public class AccountEntryUserRelWrapper
 		}
 	}
 
+	@Override
+	public AccountEntry fetchAccountEntry() {
+		return model.fetchAccountEntry();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.User fetchUser() {
+		return model.fetchUser();
+	}
+
+	@Override
+	public AccountEntry getAccountEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAccountEntry();
+	}
+
 	/**
 	 * Returns the account entry ID of this account entry user rel.
 	 *
@@ -152,6 +169,13 @@ public class AccountEntryUserRelWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.User getUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getUser();
 	}
 
 	@Override

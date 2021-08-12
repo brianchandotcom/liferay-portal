@@ -60,4 +60,14 @@ public interface AccountEntryUserRel
 
 			};
 
+	public AccountEntry fetchAccountEntry();
+
+	public com.liferay.portal.kernel.model.User fetchUser();
+
+	public AccountEntry getAccountEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.model.User getUser()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

@@ -47,15 +47,6 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"
-	@ignore = "true"
-	@priority = "5"
-	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
-
-		// TODO LRAC-8374 AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
 	@ignore = "true"
 	@priority = "5"

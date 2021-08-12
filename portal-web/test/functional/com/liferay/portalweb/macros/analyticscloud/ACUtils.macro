@@ -27,6 +27,16 @@ definition {
 			siteName = "Site Name");
 	}
 
+	macro assertAudienceCard {
+		var key_index = "${index}";
+
+		for (var percentage : list "${percentageList}") {
+			var key_percentage = "${percentage}";
+
+			AssertElementPresent(locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE");
+		}
+	}
+
 	macro assertDataSourceName {
 		var itemName = "${dataSourceName}";
 
@@ -237,16 +247,6 @@ definition {
 		ACUtils.launchDXP();
 
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-	}
-
-	macro assertAudienceCard {
-		var key_index = "${index}";
-
-		for (var percentage : list "${percentageList}") {
-			var key_percentage = "${percentage}";
-
-			AssertElementPresent(locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE");
-		}
 	}
 
 }

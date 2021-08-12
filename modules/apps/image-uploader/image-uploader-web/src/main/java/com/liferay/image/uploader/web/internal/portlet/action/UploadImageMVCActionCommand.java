@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
 import java.awt.image.RenderedImage;
 
@@ -80,7 +81,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  */
 @Component(
-	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
+	configurationPid = {
+		"com.liferay.document.library.configuration.DLConfiguration",
+		"com.liferay.users.admin.configuration.UserFileUploadsConfiguration"
+	},
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + ImageUploaderPortletKeys.IMAGE_UPLOADER,
@@ -95,6 +99,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
+		_userFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			UserFileUploadsConfiguration.class, properties);
 	}
 
 	protected FileEntry addTempImageFileEntry(PortletRequest portletRequest)
@@ -150,7 +156,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long maxFileSize = ParamUtil.getLong(actionRequest, "maxFileSize");
+		long maxFileSize = getMaxFileSize(actionRequest);
 
 		try {
 			UploadException uploadException =
@@ -203,6 +209,27 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			handleUploadException(
 				actionRequest, actionResponse, cmd, maxFileSize, exception);
 		}
+	}
+
+	protected long getMaxFileSize(ActionRequest actionRequest) {
+		String currentLogoURL = actionRequest.getParameter("currentLogoURL");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String pathImage = themeDisplay.getPathImage();
+
+		if (StringUtil.startsWith(
+				currentLogoURL, pathImage + "/user_female_portrait") ||
+			StringUtil.startsWith(
+				currentLogoURL, pathImage + "/user_male_portrait") ||
+			StringUtil.startsWith(
+				currentLogoURL, pathImage + "/user_portrait")) {
+
+			return _userFileUploadsConfiguration.imageMaxSize();
+		}
+
+		return ParamUtil.getLong(actionRequest, "maxFileSize");
 	}
 
 	protected String getTempImageFileName(PortletRequest portletRequest) {
@@ -390,5 +417,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private UploadServletRequestConfigurationHelper
 		_uploadServletRequestConfigurationHelper;
+
+	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 
 }

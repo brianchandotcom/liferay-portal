@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -27,27 +28,42 @@ export const CheckboxField = ({field, onValueSelect, value}) => {
 
 	return (
 		<ClayForm.Group className="mt-1">
-			<ClayCheckbox
-				aria-label={field.label}
-				checked={
-					customValues
-						? nextValue === customValues.checked
-						: nextValue
-				}
-				label={field.label}
-				onChange={(event) => {
-					let eventValue = event.target.checked;
-
-					if (customValues) {
-						eventValue = eventValue
-							? customValues.checked
-							: customValues.unchecked;
+			<div className="align-items-center d-flex justify-content-between">
+				<ClayCheckbox
+					aria-label={field.label}
+					checked={
+						customValues
+							? nextValue === customValues.checked
+							: nextValue
 					}
+					containerProps={{className: 'mb-0'}}
+					label={field.label}
+					onChange={(event) => {
+						let eventValue = event.target.checked;
 
-					setNextValue(eventValue);
-					onValueSelect(field.name, eventValue);
-				}}
-			/>
+						if (customValues) {
+							eventValue = eventValue
+								? customValues.checked
+								: customValues.unchecked;
+						}
+
+						setNextValue(eventValue);
+						onValueSelect(field.name, eventValue);
+					}}
+				/>
+				{field.responsive && (
+					<ClayButtonWithIcon
+						data-tooltip-align="bottom"
+						displayType="secondary"
+						onClick={() => {
+							onValueSelect(field.name, null);
+						}}
+						small
+						symbol="restore"
+						title={Liferay.Language.get('restore-default')}
+					/>
+				)}
+			</div>
 		</ClayForm.Group>
 	);
 };

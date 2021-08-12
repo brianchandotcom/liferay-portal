@@ -28,6 +28,38 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-123156."
+	@priority = "3"
+	test AssertStagingSystemSettingsInfo {
+		property test.name.skip.portal.instance = "ExportImport#AssertSystemSettingsInfo";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.viewTextLabel(fieldLabel = "Single Asset Publish Process Includes Version History");
+
+		SystemSettings.viewSettingsText(settingsText = "Specify characters that are not allowed in web content folder names.");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.viewTextLabel(fieldLabel = "Delete temporary LAR during a failed staging publish process.");
+
+		SystemSettings.viewSettingsText(settingsText = "Uncheck to avoid deleting the temporary LAR during a failed staging publish process. In remote staging contexts, this only applies for the staging environment.");
+
+		SystemSettings.viewTextLabel(fieldLabel = "Delete temporary LAR during a successful staging publish process.");
+
+		SystemSettings.viewSettingsText(settingsText = "Uncheck to avoid deleting the temporary LAR during a successful staging publish process. In remote staging contexts, this only applies for the staging environment.");
+	}
+
 	@description = "This is a test for LPS-84223."
 	@priority = "3"
 	test DLLinkValidationInWebContent {

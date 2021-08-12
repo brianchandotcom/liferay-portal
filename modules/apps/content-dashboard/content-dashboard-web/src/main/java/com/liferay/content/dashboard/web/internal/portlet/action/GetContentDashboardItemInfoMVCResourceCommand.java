@@ -138,9 +138,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"specificFields",
 					contentDashboardItem.getSpecificInformationJSONObject(
-						locale,
-						_portal.getLiferayPortletResponse(resourceResponse),
 						ParamUtil.getString(resourceRequest, "backURL"),
+						_portal.getLiferayPortletResponse(resourceResponse),
+						locale,
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY))
 				).put(

@@ -326,8 +326,8 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public JSONObject getSpecificInformationJSONObject(
-		Locale locale, LiferayPortletResponse liferayPortletResponse,
-		String backURL, ThemeDisplay themeDisplay) {
+		String backURL, LiferayPortletResponse liferayPortletResponse,
+		Locale locale, ThemeDisplay themeDisplay) {
 
 		return JSONUtil.put(
 			"description", getDescription(locale)

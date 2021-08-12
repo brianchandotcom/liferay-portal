@@ -70,8 +70,8 @@ public interface ContentDashboardItem<T> {
 	public String getScopeName(Locale locale);
 
 	public default JSONObject getSpecificInformationJSONObject(
-		Locale locale, LiferayPortletResponse liferayPortletResponse,
-		String backURL, ThemeDisplay themeDisplay) {
+		String backURL, LiferayPortletResponse liferayPortletResponse,
+		Locale locale, ThemeDisplay themeDisplay) {
 
 		return null;
 	}

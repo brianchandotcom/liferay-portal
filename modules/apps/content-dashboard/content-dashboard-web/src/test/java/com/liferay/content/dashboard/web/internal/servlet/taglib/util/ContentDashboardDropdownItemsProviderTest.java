@@ -321,8 +321,8 @@ public class ContentDashboardDropdownItemsProviderTest {
 
 			@Override
 			public JSONObject getSpecificInformationJSONObject(
-				Locale locale, LiferayPortletResponse liferayPortletResponse,
-				String backURL, ThemeDisplay themeDisplay) {
+				String backURL, LiferayPortletResponse liferayPortletResponse,
+				Locale locale, ThemeDisplay themeDisplay) {
 
 				return null;
 			}

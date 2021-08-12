@@ -216,15 +216,6 @@ definition {
 			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
 	}
 
-	@description = "LPS-108138 - Verify that the message -Your connection has been unexpectedly lost. Select 'Done' to retry.- is displayed when the connection is lost before the user clicks on Done"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test MessageIsDisplayedWhenConnectionIsLost {
-
-		// TODO LRQA-67823 MessageIsDisplayedWhenConnectionIsLost pending implementation
-
-	}
-
 	@description = "LPS-108138 - Verify that the message -The selected steps have transitioned successfully- is displayed when several steps are transitioned at once"
 	@priority = "3"
 	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
@@ -385,15 +376,6 @@ definition {
 		Workflow._viewActivities(
 			workflowActivityComment = "Test",
 			workflowAssetTitle = "Blogs Entry Title 2");
-	}
-
-	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by assignees"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test OnChooseTransitionPerStepCanFilterByAssignee {
-
-		// TODO LRQA-67803 OnChooseTransitionPerStepCanFilterByAssignee pending implementation
-
 	}
 
 	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by steps"
@@ -733,15 +715,6 @@ definition {
 			task = "1");
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN_KEBAB");
-	}
-
-	@description = "LPS-105495 - Verify that an Unexpected Error message is displayed when the user tries to reassign a task and an unexpected error -such as a connection loss- occurs"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test UnexpectedErrorMessageIsDisplayed {
-
-		// TODO LRQA-67804 UnexpectedErrorMessageIsDisplayed pending implementation
-
 	}
 
 }

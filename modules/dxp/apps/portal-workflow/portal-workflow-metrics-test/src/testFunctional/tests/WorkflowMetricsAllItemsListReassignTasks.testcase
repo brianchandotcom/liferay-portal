@@ -266,24 +266,6 @@ definition {
 			value1 = "Test Test");
 	}
 
-	@description = "LPS-102664 - Verify that when the user clicks on Next in Select Tasks to Reassign, and the connection is lost, a corresponding error message is displayed"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test ErrorMessageIsDisplayedWhenConnectionIsLost {
-
-		// TODO LRQA-67841 ErrorMessageIsDisplayedWhenConnectionIsLost pending implementation
-
-	}
-
-	@description = "LPS-102664 - Verify that when the user clicks on Reassign in Select New Assignee, and the connection is lost, a corresponding error message is displayed"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test ErrorMessageIsDisplayedWhenConnectionIsLostOnReassign {
-
-		// TODO LRQA-67837 ErrorMessageIsDisplayedWhenConnectionIsLostOnReassign pending implementation
-
-	}
-
 	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the filters options are ordered alphabetically"
 	@ignore = "Test Stub"
 	@priority = "3"

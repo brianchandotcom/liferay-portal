@@ -49,15 +49,6 @@ definition {
 			locator1 = "WorkflowMetricsCompletionVelocity#DEFAULT_DATE_FORMAT_MESSAGE");
 	}
 
-	@description = "LPS-98001 - Verify that when there is an unexpected error, the card should display the specific error state"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test DisplaysErrorStateForUnexpectedError {
-
-		// TODO LRQA-67662 DisplaysErrorStateForUnexpectedError pending implementation
-
-	}
-
 	@description = "LPS-98233 - Verify that the fields From and To are required"
 	@priority = "3"
 	test FromAndToAreRequiredFields {

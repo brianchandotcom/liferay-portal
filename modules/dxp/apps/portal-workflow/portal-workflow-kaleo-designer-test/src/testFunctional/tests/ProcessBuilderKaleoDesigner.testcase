@@ -954,15 +954,6 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The StartNode node must have an outgoing transition.");
 	}
 
-	@description = "Verify that the transition becomes yellow on mouse hoover"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TransitionBecamesYellowOnMouseHoover {
-
-		// TODO LRQA-68457 TransitionBecamesYellowOnMouseHoover pending implementation
-
-	}
-
 	@description = "Verify that transition can be connected to another edge of node, orange circle will appear"
 	@priority = "5"
 	test TransitionCanBeConnectedToNode {

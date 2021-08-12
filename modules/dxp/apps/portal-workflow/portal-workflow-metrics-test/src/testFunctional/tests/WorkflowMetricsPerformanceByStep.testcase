@@ -446,15 +446,6 @@ definition {
 
 	}
 
-	@description = "LPS-100678 - Verify that the Performance by Step page displays the specific error state when there is an unexpected error"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test PageDisplaysSpecificErrorStateOnUnexpectedError {
-
-		// TODO LRQA-67669 PageDisplaysSpecificErrorStateOnUnexpectedError pending implementation
-
-	}
-
 	@description = "LPS-100677 - Verify that the search is an approximate match aka LIKE search type or character by character comparison"
 	@priority = "3"
 	test SearchIsAnApproximateMatch {
@@ -621,24 +612,6 @@ definition {
 		AssertElementPresent(
 			key_stepName = "更新",
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
-	}
-
-	@description = "LPS-100674 - Verify that the card Performance by Step, when it has 6 or more entries, the table should provide a vertical scroll"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test WhenCard6OrMoreEntriesTableProvideVerticalScroll {
-
-		// TODO LRQA-67679 WhenCard6OrMoreEntriesTableProvideVerticalScroll pending implementation
-
-	}
-
-	@description = "LPS-100674 - Verify that the card Performance by Step, when it has 5 or fewer entries, the table should not scroll"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test WhenCardHasUpTo5EntriesTableDoNotScroll {
-
-		// TODO LRQA-67677 WhenCardHasUpTo5EntriesTableDoNotScroll pending implementation
-
 	}
 
 	@description = "LPS-100674 - Verify that when an SLA is deleted, the data in Performance by Step is still part of the average calculation"

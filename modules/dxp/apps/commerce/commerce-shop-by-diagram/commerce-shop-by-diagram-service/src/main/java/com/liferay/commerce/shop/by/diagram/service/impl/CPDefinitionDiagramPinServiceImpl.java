@@ -44,15 +44,15 @@ public class CPDefinitionDiagramPinServiceImpl
 
 	@Override
 	public CPDefinitionDiagramPin addCPDefinitionDiagramPin(
-			long userId, long cpDefinitionId, int number, double positionX,
-			double positionY)
+			long userId, long cpDefinitionId, double positionX,
+			double positionY, String sequence)
 		throws PortalException {
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionDiagramPinLocalService.addCPDefinitionDiagramPin(
-			userId, cpDefinitionId, number, positionX, positionY);
+			userId, cpDefinitionId, positionX, positionY, sequence);
 	}
 
 	@Override
@@ -112,8 +112,8 @@ public class CPDefinitionDiagramPinServiceImpl
 
 	@Override
 	public CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
-			long cpDefinitionDiagramPinId, int number, double positionX,
-			double positionY)
+			long cpDefinitionDiagramPinId, double positionX,
+			double positionY, String sequence)
 		throws PortalException {
 
 		CPDefinitionDiagramPin cpDefinitionDiagramPin =
@@ -125,7 +125,7 @@ public class CPDefinitionDiagramPinServiceImpl
 			ActionKeys.UPDATE);
 
 		return cpDefinitionDiagramPinLocalService.updateCPDefinitionDiagramPin(
-			cpDefinitionDiagramPinId, number, positionX, positionY);
+			cpDefinitionDiagramPinId, positionX, positionY, sequence);
 	}
 
 	private static volatile ModelResourcePermission<CPDefinition>

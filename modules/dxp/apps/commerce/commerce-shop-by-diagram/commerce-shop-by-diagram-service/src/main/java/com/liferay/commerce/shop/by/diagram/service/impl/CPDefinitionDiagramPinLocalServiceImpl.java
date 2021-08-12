@@ -38,8 +38,8 @@ public class CPDefinitionDiagramPinLocalServiceImpl
 
 	@Override
 	public CPDefinitionDiagramPin addCPDefinitionDiagramPin(
-			long userId, long cpDefinitionId, int number, double positionX,
-			double positionY)
+			long userId, long cpDefinitionId, double positionX,
+			double positionY, String sequence)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -53,7 +53,7 @@ public class CPDefinitionDiagramPinLocalServiceImpl
 		cpDefinitionDiagramPin.setUserId(user.getUserId());
 		cpDefinitionDiagramPin.setUserName(user.getFullName());
 		cpDefinitionDiagramPin.setCPDefinitionId(cpDefinitionId);
-		cpDefinitionDiagramPin.setNumber(number);
+		cpDefinitionDiagramPin.setSequence(sequence);
 		cpDefinitionDiagramPin.setPositionX(positionX);
 		cpDefinitionDiagramPin.setPositionY(positionY);
 
@@ -82,17 +82,17 @@ public class CPDefinitionDiagramPinLocalServiceImpl
 
 	@Override
 	public CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
-			long cpDefinitionDiagramPinId, int number, double positionX,
-			double positionY)
+			long cpDefinitionDiagramPinId, double positionX,
+			double positionY, String sequence)
 		throws PortalException {
 
 		CPDefinitionDiagramPin cpDefinitionDiagramPin =
 			cpDefinitionDiagramPinLocalService.getCPDefinitionDiagramPin(
 				cpDefinitionDiagramPinId);
 
-		cpDefinitionDiagramPin.setNumber(number);
 		cpDefinitionDiagramPin.setPositionX(positionX);
 		cpDefinitionDiagramPin.setPositionY(positionY);
+		cpDefinitionDiagramPin.setSequence(sequence);
 
 		return cpDefinitionDiagramPinPersistence.update(cpDefinitionDiagramPin);
 	}

@@ -331,6 +331,12 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 			String name1 = zipEntry1.getName();
 			String name2 = zipEntry2.getName();
 
+			if (!name1.contains(StringPool.SLASH) &&
+				!name2.contains(StringPool.SLASH)) {
+
+				return true;
+			}
+
 			if (name1.startsWith(
 					name2.substring(0, name2.lastIndexOf(StringPool.SLASH))) &&
 				name2.startsWith(

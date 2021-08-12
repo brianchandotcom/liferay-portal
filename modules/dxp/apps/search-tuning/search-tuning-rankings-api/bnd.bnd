@@ -5,5 +5,6 @@ Export-Package:\
 	com.liferay.search.tuning.rankings.exception,\
 	com.liferay.search.tuning.rankings.model,\
 	com.liferay.search.tuning.rankings.service,\
-	com.liferay.search.tuning.rankings.service.persistence
+	com.liferay.search.tuning.rankings.service.persistence,\
+	com.liferay.search.tuning.rankings.storage
 -dsannotations-options: inherit

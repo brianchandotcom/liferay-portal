@@ -13,6 +13,22 @@ definition {
 
 		User.firstLoginPG();
 
+		task ("Uncheck verify strangers email option") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
 		for (var num : list "1,2") {
 			JSONUser.addUser(
 				jobTitle = "Test Engineer${num}",
@@ -1935,7 +1951,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130294."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserDateOfBirthSegment {
 		property portal.acceptance = "false";
@@ -1998,7 +2013,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130301."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserEmailAddressSegment {
 		property portal.acceptance = "false";
@@ -2063,7 +2077,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130295."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserFirstNameSegment {
 		property portal.acceptance = "false";
@@ -2128,7 +2141,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130296."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserJobTitleSegment {
 		property portal.acceptance = "false";
@@ -2193,7 +2205,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130297."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserLastNameSegment {
 		property portal.acceptance = "false";
@@ -2258,7 +2269,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130298."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserNameSegment {
 		property portal.acceptance = "false";
@@ -2323,7 +2333,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130299."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserRoleSegment {
 		property portal.acceptance = "false";
@@ -2388,7 +2397,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130300."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceUserScreenNameSegment {
 		property portal.acceptance = "false";

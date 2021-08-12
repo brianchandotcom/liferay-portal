@@ -262,6 +262,17 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro selectOperator {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Select(
+			key_indexField = "${index}",
+			locator1 = "ACSegments#ACTIVITIES_CRITERION",
+			value1 = "${operator}");
+	}
+
 	macro selectSegmentType {
 		var key_SegmentType = "${segmentType}";
 

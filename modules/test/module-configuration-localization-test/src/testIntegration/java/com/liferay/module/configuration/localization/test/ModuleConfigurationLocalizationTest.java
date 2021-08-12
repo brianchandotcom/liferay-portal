@@ -126,35 +126,25 @@ public class ModuleConfigurationLocalizationTest {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler();
-
 		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByBundleSymbolicName(
 					bundle.getSymbolicName());
 
 		if (resourceBundleLoader == null) {
-			sb.append(
-				"\n\tMissing default language file for configuration pids: ");
-
-			for (String pid : pids) {
-				sb.append(pid);
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			return sb.toString();
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 		}
-
-		ResourceBundleLoader aggregateResourceBundleLoader =
-			new AggregateResourceBundleLoader(
+		else {
+			resourceBundleLoader = new AggregateResourceBundleLoader(
 				resourceBundleLoader,
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+		}
 
-		ResourceBundle resourceBundle =
-			aggregateResourceBundleLoader.loadResourceBundle(
-				LocaleUtil.getDefault());
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			LocaleUtil.getDefault());
+
+		StringBundler sb = new StringBundler();
 
 		for (String pid : pids) {
 			String configurationError = _collectConfigurationError(

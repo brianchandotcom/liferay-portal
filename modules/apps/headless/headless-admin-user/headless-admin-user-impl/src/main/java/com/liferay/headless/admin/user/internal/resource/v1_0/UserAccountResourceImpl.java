@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
@@ -66,6 +66,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -289,16 +290,73 @@ public class UserAccountResourceImpl
 			Long accountId, UserAccount userAccount)
 		throws Exception {
 
-		userAccount = postUserAccount(userAccount);
-
 		AccountEntryUserRel accountEntryUserRel =
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountId, userAccount.getId());
+			_accountEntryUserRelService.addAccountEntryUserRel(
+				accountId, contextUser.getUserId(),
+				userAccount.getAlternateName(), userAccount.getEmailAddress(),
+				contextAcceptLanguage.getPreferredLocale(),
+				userAccount.getGivenName(), userAccount.getAdditionalName(),
+				userAccount.getFamilyName(), _getPrefixId(userAccount),
+				_getSuffixId(userAccount));
 
-		User user = _userLocalService.getUser(
-			accountEntryUserRel.getAccountUserId());
+		User user = accountEntryUserRel.getUser();
 
-		return _toUserAccount(user);
+		user = _userLocalService.updateJobTitle(
+			user.getUserId(), userAccount.getJobTitle());
+
+		UsersAdminUtil.updateAddresses(
+			Contact.class.getName(), user.getContactId(),
+			_getAddresses(userAccount));
+		UsersAdminUtil.updateEmailAddresses(
+			Contact.class.getName(), user.getContactId(),
+			_getServiceBuilderEmailAddresses(userAccount));
+		UsersAdminUtil.updatePhones(
+			Contact.class.getName(), user.getContactId(),
+			_getServiceBuilderPhones(userAccount));
+		UsersAdminUtil.updateWebsites(
+			Contact.class.getName(), user.getContactId(),
+			_getWebsites(userAccount));
+
+		Contact contact = user.getContact();
+
+		String sms = null;
+		String facebook = null;
+		String jabber = null;
+		String skype = null;
+		String twitter = null;
+
+		UserAccountContactInformation userAccountContactInformation =
+			userAccount.getUserAccountContactInformation();
+
+		if (userAccountContactInformation != null) {
+			sms = userAccountContactInformation.getSms();
+			facebook = userAccountContactInformation.getFacebook();
+			jabber = userAccountContactInformation.getJabber();
+			skype = userAccountContactInformation.getSkype();
+			twitter = userAccountContactInformation.getTwitter();
+		}
+
+		return _toUserAccount(
+			_userLocalService.updateUser(
+				user.getUserId(), null, null, null, false,
+				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
+				user.getScreenName(), user.getEmailAddress(), false, null,
+				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
+				user.getComments(), user.getFirstName(), user.getMiddleName(),
+				user.getLastName(), contact.getPrefixId(),
+				contact.getSuffixId(), user.isMale(),
+				_getBirthdayMonth(userAccount), _getBirthdayDay(userAccount),
+				_getBirthdayYear(userAccount), sms, facebook, jabber, skype,
+				twitter, user.getJobTitle(), user.getGroupIds(),
+				user.getOrganizationIds(), user.getRoleIds(), null,
+				user.getUserGroupIds(),
+				ServiceContextRequestUtil.createServiceContext(
+					CustomFieldsUtil.toMap(
+						User.class.getName(), contextCompany.getCompanyId(),
+						userAccount.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()),
+					contextCompany.getGroupId(), contextHttpServletRequest,
+					null)));
 	}
 
 	@Override
@@ -734,10 +792,7 @@ public class UserAccountResourceImpl
 		new UserAccountEntityModel();
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelService;
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
 	private AccountResourceDTOConverter _accountResourceDTOConverter;

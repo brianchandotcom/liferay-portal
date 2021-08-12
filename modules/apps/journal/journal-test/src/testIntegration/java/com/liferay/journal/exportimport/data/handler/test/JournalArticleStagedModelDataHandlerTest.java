@@ -24,6 +24,10 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -36,9 +40,11 @@ import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalArticleResourceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -50,7 +56,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -80,6 +88,81 @@ public class JournalArticleStagedModelDataHandlerTest
 	@Override
 	public boolean isAssetPrioritySupported() {
 		return true;
+	}
+
+	@Test
+	public void testArticleCreatedBeforeImportingLayoutDependencies()
+		throws Exception {
+
+		initExport();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Layout layout = LayoutTestUtil.addLayout(stagingGroup);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalArticle);
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, journalArticle, layout,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(
+			journalArticle);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		StagedModelDataHandler<Layout> originalLayoutStagedModelDataHandler =
+			(StagedModelDataHandler<Layout>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					Layout.class.getName());
+
+		TestLayoutStagedModelDataHandler testLayoutStagedModelDataHandler =
+			new TestLayoutStagedModelDataHandler(
+				originalLayoutStagedModelDataHandler);
+
+		StagedModelDataHandlerRegistryUtil.unregister(
+			originalLayoutStagedModelDataHandler);
+
+		StagedModelDataHandlerRegistryUtil.register(
+			testLayoutStagedModelDataHandler);
+
+		try {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+
+			StagedModelDataHandlerRegistryUtil.unregister(
+				testLayoutStagedModelDataHandler);
+
+			StagedModelDataHandlerRegistryUtil.register(
+				originalLayoutStagedModelDataHandler);
+		}
+
+		JournalArticle importJournalArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertNotNull(importJournalArticle);
+
+		Map<Long, Long> primaryKeys =
+			testLayoutStagedModelDataHandler.getPrimaryKeys();
+
+		Assert.assertNotNull(primaryKeys);
+
+		long importedResourcePrimKey = MapUtil.getLong(
+			primaryKeys, journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			importJournalArticle.getResourcePrimKey(), importedResourcePrimKey);
 	}
 
 	@Test
@@ -252,6 +335,153 @@ public class JournalArticleStagedModelDataHandlerTest
 		Assert.assertNotEquals(
 			journalArticle.getArticleResourceUuid(),
 			importJournalArticle.getArticleResourceUuid());
+	}
+
+	public class TestLayoutStagedModelDataHandler
+		implements StagedModelDataHandler<Layout> {
+
+		public TestLayoutStagedModelDataHandler(
+			StagedModelDataHandler<Layout>
+				wrappedLayoutStagedModelDataHandler) {
+
+			_wrappedLayoutStagedModelDataHandler =
+				wrappedLayoutStagedModelDataHandler;
+		}
+
+		@Override
+		public void deleteStagedModel(Layout stagedModel)
+			throws PortalException {
+
+			_wrappedLayoutStagedModelDataHandler.deleteStagedModel(stagedModel);
+		}
+
+		@Override
+		public void deleteStagedModel(
+				String uuid, long groupId, String className, String extraData)
+			throws PortalException {
+
+			_wrappedLayoutStagedModelDataHandler.deleteStagedModel(
+				uuid, groupId, className, extraData);
+		}
+
+		@Override
+		public void exportStagedModel(
+				PortletDataContext portletDataContext, Layout stagedModel)
+			throws PortletDataException {
+
+			_wrappedLayoutStagedModelDataHandler.exportStagedModel(
+				portletDataContext, stagedModel);
+		}
+
+		@Override
+		public Layout fetchMissingReference(String uuid, long groupId) {
+			return _wrappedLayoutStagedModelDataHandler.fetchMissingReference(
+				uuid, groupId);
+		}
+
+		@Override
+		public Layout fetchStagedModelByUuidAndGroupId(
+			String uuid, long groupId) {
+
+			return _wrappedLayoutStagedModelDataHandler.
+				fetchStagedModelByUuidAndGroupId(uuid, groupId);
+		}
+
+		@Override
+		public List<Layout> fetchStagedModelsByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+			return _wrappedLayoutStagedModelDataHandler.
+				fetchStagedModelsByUuidAndCompanyId(uuid, companyId);
+		}
+
+		@Override
+		public String[] getClassNames() {
+			return _wrappedLayoutStagedModelDataHandler.getClassNames();
+		}
+
+		@Override
+		public String getDisplayName(Layout stagedModel) {
+			return _wrappedLayoutStagedModelDataHandler.getDisplayName(
+				stagedModel);
+		}
+
+		@Override
+		public int[] getExportableStatuses() {
+			return _wrappedLayoutStagedModelDataHandler.getExportableStatuses();
+		}
+
+		public Map<Long, Long> getPrimaryKeys() {
+			return _primaryKeys;
+		}
+
+		@Override
+		public Map<String, String> getReferenceAttributes(
+			PortletDataContext portletDataContext, Layout stagedModel) {
+
+			return _wrappedLayoutStagedModelDataHandler.getReferenceAttributes(
+				portletDataContext, stagedModel);
+		}
+
+		@Override
+		public void importMissingReference(
+				PortletDataContext portletDataContext, Element referenceElement)
+			throws PortletDataException {
+
+			_wrappedLayoutStagedModelDataHandler.importMissingReference(
+				portletDataContext, referenceElement);
+		}
+
+		@Override
+		public void importMissingReference(
+				PortletDataContext portletDataContext, String uuid,
+				long groupId, long classPK)
+			throws PortletDataException {
+
+			_wrappedLayoutStagedModelDataHandler.importMissingReference(
+				portletDataContext, uuid, groupId, classPK);
+		}
+
+		@Override
+		public void importStagedModel(
+				PortletDataContext portletDataContext, Layout stagedModel)
+			throws PortletDataException {
+
+			if (_primaryKeys == null) {
+				_primaryKeys = new HashMap<>();
+
+				Map<Long, Long> primaryKeys =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						JournalArticle.class);
+
+				MapUtil.copy(primaryKeys, _primaryKeys);
+			}
+
+			_wrappedLayoutStagedModelDataHandler.importStagedModel(
+				portletDataContext, stagedModel);
+		}
+
+		@Override
+		public void restoreStagedModel(
+				PortletDataContext portletDataContext, Layout stagedModel)
+			throws PortletDataException {
+
+			_wrappedLayoutStagedModelDataHandler.restoreStagedModel(
+				portletDataContext, stagedModel);
+		}
+
+		@Override
+		public boolean validateReference(
+			PortletDataContext portletDataContext, Element referenceElement) {
+
+			return _wrappedLayoutStagedModelDataHandler.validateReference(
+				portletDataContext, referenceElement);
+		}
+
+		private Map<Long, Long> _primaryKeys;
+		private final StagedModelDataHandler<Layout>
+			_wrappedLayoutStagedModelDataHandler;
+
 	}
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()

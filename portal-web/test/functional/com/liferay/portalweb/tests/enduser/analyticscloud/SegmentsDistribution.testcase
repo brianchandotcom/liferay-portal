@@ -29,24 +29,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"
-	@ignore = "true"
-	@priority = "3"
-	test OrderSegmentProfileDistribution {
-
-		// TODO LRAC-8624 OrderSegmentProfileDistribution pending implementation
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
-	@ignore = "true"
-	@priority = "3"
-	test CanSearchTheSegmentProfileDistribution {
-
-		// TODO LRAC-8625 CanSearchTheSegmentProfileDistribution pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8626 | Test Summary: Segment distribution chart can be filtered by date property"
 	@ignore = "true"
 	@priority = "5"
@@ -71,6 +53,24 @@ definition {
 	test CanDistributionChartFilteredText {
 
 		// TODO LRAC-8628 CanDistributionChartFilteredText pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
+	@ignore = "true"
+	@priority = "3"
+	test CanSearchTheSegmentProfileDistribution {
+
+		// TODO LRAC-8625 CanSearchTheSegmentProfileDistribution pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"
+	@ignore = "true"
+	@priority = "3"
+	test OrderSegmentProfileDistribution {
+
+		// TODO LRAC-8624 OrderSegmentProfileDistribution pending implementation
 
 	}
 

@@ -4,10 +4,10 @@ definition {
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
 
 		Type(
-			value1 = "${name}",
-			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT");
+			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
+			value1 = "${name}");
 
-		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");				
+		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
 	macro openObjectAdmin {

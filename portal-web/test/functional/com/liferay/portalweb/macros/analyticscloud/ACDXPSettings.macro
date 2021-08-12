@@ -19,7 +19,7 @@ definition {
 
 		ACDXPSettings.createCombinedProperties(siteName = "${siteName}");
 
-		var assignedPropertyName = ACDXPSettings.getAssignedPropertyName();
+		var assignedPropertyName = ACDXPSettings.getAssignedPropertyName(siteName = "${siteName}");
 
 		ACDXPSettings.navToSyncedContactDataMenu();
 

@@ -17,6 +17,7 @@ package com.liferay.template.web.internal.display.context;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -73,6 +74,23 @@ public class InformationTemplatesTemplateDisplayContext
 			InfoItemFormProvider.class);
 
 		return _resourceClassNameId;
+	}
+
+	public String getTemplateSubtypeLabel(long classNameId, long classPK) {
+		return Optional.ofNullable(
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				PortalUtil.getClassName(classNameId))
+		).map(
+			infoItemFormVariationsProvider ->
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					themeDisplay.getScopeGroupId(), String.valueOf(classPK))
+		).map(
+			infoItemFormVariation -> infoItemFormVariation.getLabel(
+				themeDisplay.getLocale())
+		).orElse(
+			StringPool.BLANK
+		);
 	}
 
 	@Override

@@ -82,6 +82,12 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="item-subtype"
+					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateSubtypeLabel(ddmTemplate.getClassNameId(), ddmTemplate.getClassPK())) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest"
 					name="type"
 					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"

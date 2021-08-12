@@ -14,6 +14,7 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
@@ -61,6 +62,9 @@ public class EditDDMTemplateDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_ddmGroupServiceConfiguration =
+			(DDMGroupServiceConfiguration)liferayPortletRequest.getAttribute(
+				DDMGroupServiceConfiguration.class.getName());
 		_ddmTemplateHelper =
 			(DDMTemplateHelper)liferayPortletRequest.getAttribute(
 				DDMTemplateHelper.class.getName());
@@ -228,6 +232,14 @@ public class EditDDMTemplateDisplayContext {
 		return _smallImage;
 	}
 
+	public String[] smallImageExtensions() {
+		return _ddmGroupServiceConfiguration.smallImageExtensions();
+	}
+
+	public int smallImageMaxSize() {
+		return _ddmGroupServiceConfiguration.smallImageMaxSize();
+	}
+
 	protected long getClassPK() {
 		DDMTemplate ddmTemplate = getDDMTemplate();
 
@@ -381,6 +393,7 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	private Long _classNameId;
+	private final DDMGroupServiceConfiguration _ddmGroupServiceConfiguration;
 	private DDMTemplate _ddmTemplate;
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;

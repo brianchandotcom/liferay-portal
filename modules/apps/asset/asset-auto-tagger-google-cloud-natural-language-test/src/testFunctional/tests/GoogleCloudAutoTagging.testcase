@@ -1,0 +1,566 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Auto Tagging";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test AutoTagging Page");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	@description = "This test ensures that a document with text in a depot can be auto-tagged after enabling GCNL."
+	@priority = "4"
+	test CanAutoTagDocumentInDepot {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagDocumentInDepot";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Document",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DepotNavigator.openToDMEntry(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.expandInfo();
+
+		AutoTagging.assertAutoTagPresent(tagName = "computers");
+	}
+
+	@description = "This test ensures that an Image in a depot can be auto-tagged after enabling GCV."
+	@priority = "4"
+	test CanAutoTagImageInDepot {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagImageInDepot";
+
+		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Black.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.openToDMEntry(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Commerce_Black");
+
+		DMDocument.expandInfo();
+
+		AutoTagging.assertAutoTagPresent(tagName = "t-shirt");
+	}
+
+	@description = "This test ensures that a web content article with text in a depot can be auto-tagged after enabling GCNL."
+	@priority = "4"
+	test CanAutoTagWebContentInDepot {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagWebContentInDepot";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Web Content Article",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONWebcontent.addWebContent(
+			content = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Liferay");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContent.viewTagFromInfoPanel(
+			tagName = "computers",
+			webContentTitle = "Liferay");
+	}
+
+	@description = "This test ensures that a blog entry with a tag added by manual can not be auto-tagged after publishing."
+	@priority = "4"
+	test CanOnlyViewBlogManualTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewBlogManualTag";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Blogs Entry",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Test AutoTagging Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			assetTagNames = "manualtag",
+			entryContent = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
+			entryTitle = "Liferay",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Liferay",
+			layoutName = "test-autotagging-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Liferay",
+			tagName = "manualtag");
+
+		BlogsEntry.viewNoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "COMPUTERS");
+	}
+
+	@description = "This test ensures that a document with a tag added by manual can not be auto-tagged after publishing."
+	@priority = "4"
+	test CanOnlyViewDocumentManualTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewDocumentManualTag";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Document",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "manualtag",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.expandInfo();
+
+		AutoTagging.assertAutoTagPresent(tagName = "manualtag");
+
+		AutoTagging.assertNoAutoTag(tagName = "computers");
+	}
+
+	@description = "This test ensures that an image with a tag added by manual can not be auto-tagged after publishing."
+	@priority = "4"
+	test CanOnlyViewImageManualTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewImageManualTag";
+
+		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "manualtag",
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Black.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.expandInfo();
+
+		AutoTagging.assertAutoTagPresent(tagName = "manualtag");
+
+		AutoTagging.assertNoAutoTag(tagName = "t-shirt");
+	}
+
+	@description = "This test ensures that a WC article with a tag added by manual can not be auto-tagged after publishing."
+	@priority = "4"
+	test CanOnlyViewWebContentManualTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewWebContentManualTag";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Web Content Article",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONWebcontent.addWebContent(
+			assetTagNames = "manualtag",
+			content = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
+			groupName = "Site Name",
+			title = "Liferay");
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "liferay");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.viewTag(tagName = "manualtag");
+
+		AssetCategorization.viewNoTag(tagName = "electronics");
+	}
+
+	@description = "This test ensures that a tag added in a blog entry through GCNL can be removed."
+	@priority = "5"
+	test CanRemoveBlogTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveBlogTag";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Blogs Entry",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Test AutoTagging Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
+			entryTitle = "Liferay",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Liferay",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "computers");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Liferay",
+			layoutName = "test-autotagging-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewNoTag(
+			entryTitle = "Liferay",
+			tagName = "COMPUTERS");
+	}
+
+	@description = "This test ensures that a tag added in a document through GCNL can be removed."
+	@priority = "5"
+	test CanRemoveDocumentTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveDocumentTag";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Document",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "computers,electronics") {
+			AssetCategorization.removeTag(tagName = "${tagName}");
+		}
+
+		Button.clickPublish();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1");
+
+		for (var tagName : list "computers,electronics") {
+			AutoTagging.assertNoAutoTag(tagName = "${tagName}");
+		}
+	}
+
+	@description = "This test ensures that a tag added in an image through GCVI can be removed."
+	@priority = "5"
+	test CanRemoveImageTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveImageTag";
+
+		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Black.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "pattern,carmine") {
+			AssetCategorization.removeTag(tagName = "${tagName}");
+		}
+
+		Button.clickPublish();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "Commerce_Black");
+
+		for (var tagName : list "pattern,carmine") {
+			AutoTagging.assertNoAutoTag(tagName = "${tagName}");
+		}
+	}
+
+	@description = "This test ensures that a tag added in a WC article through GCNL can be removed."
+	@priority = "5"
+	test CanRemoveWebContentTag {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveWebContentTag";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Web Content Article",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONWebcontent.addWebContent(
+			content = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
+			groupName = "Site Name",
+			title = "Liferay");
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "Liferay");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "electronics,programming") {
+			AssetCategorization.removeTag(tagName = "${tagName}");
+		}
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewNoTagsFromInfoPanel(
+			tagNameList = "electronics,programming",
+			webContentTitle = "Liferay");
+	}
+
+	@description = "This test ensures that auto tags can be published to live with the blog entry."
+	@priority = "4"
+	test CanViewBlogAutoTagsAfterPublishing {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewBlogAutoTagsAfterPublishing";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Blogs Entry",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Test AutoTagging Page",
+			widgetName = "Blogs");
+
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
+			entryTitle = "Liferay",
+			groupName = "Site Name (Staging)",
+			site = "false");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test AutoTagging Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Liferay",
+			layoutName = "test-autotagging-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Liferay",
+			tagName = "COMPUTERS");
+	}
+
+	@description = "This test ensures that auto tags can be published to live with the document entry."
+	@priority = "4"
+	test CanViewDocumentAutoTagsAfterPublishing {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewDocumentAutoTagsAfterPublishing";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Document",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name-staging",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test AutoTagging Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.expandInfo();
+
+		AutoTagging.assertAutoTagPresent(tagName = "computers");
+	}
+
+	@description = "This test ensures that auto tags can be published to live with the Image."
+	@priority = "4"
+	test CanViewImageAutoTagsAfterPublishing {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewImageAutoTagsAfterPublishing";
+
+		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Black.jpg");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test AutoTagging Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Commerce_Black",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.expandInfo();
+
+		for (var tagName : list "sleeve,t-shirt,pattern") {
+			AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+		}
+	}
+
+	@description = "This test ensures that auto tags can be published to live with the WC article."
+	@priority = "4"
+	test CanViewWebContentAutoTagsAfterPublishing {
+		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewWebContentAutoTagsAfterPublishing";
+
+		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+
+		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+			assetType = "Web Content Article",
+			confidence = "0.005",
+			enableClassificationEndpoint = "true");
+
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "Since 2004 Liferay has been helping its customers, employees, partners, and community reach their full potential to serve others. With open source roots, Liferay has grown to over 900 employees in 23 offices across the globe. Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			title = "Liferay");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test AutoTagging Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewTagFromInfoPanel(
+			tagName = "programming",
+			webContentTitle = "Liferay");
+	}
+
+}

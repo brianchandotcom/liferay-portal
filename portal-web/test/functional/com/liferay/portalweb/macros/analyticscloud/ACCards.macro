@@ -8,4 +8,12 @@ definition {
 			value1 = "${cardTitle}");
 	}
 
+	macro viewMetricValue {
+		AssertTextEquals(
+			key_cardTitle = "${cardTitle}",
+			key_metricName = "${metricName}",
+			locator1 = "ACCards#METRIC_VALUE",
+			value1 = "${metricValue}");
+	}
+
 }

@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {
 	ClayInput,
 	ClayRadio,
@@ -23,6 +23,8 @@ import ClayForm, {
 	ClayToggle,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
@@ -555,6 +557,7 @@ export default ({
 	ctCollectionId,
 	currentUserId,
 	dataURL,
+	defaultLocale,
 	deleteCTCommentURL,
 	discardURL,
 	expired,
@@ -1188,6 +1191,7 @@ export default ({
 			? true
 			: !!showHideableFromURL;
 
+	const [active, setActive] = useState(false);
 	const [ascendingState, setAscendingState] = useState(true);
 	const [columnState, setColumnState] = useState(COLUMN_TITLE);
 	const [deltaState, setDeltaState] = useState(20);
@@ -1204,6 +1208,7 @@ export default ({
 		showHideable: initialShowHideable,
 		viewType: initialViewType,
 	});
+	const [selectedLocale, setSelectedLocale] = useState(defaultLocale);
 	const [showComments, setShowComments] = useState(false);
 
 	const handleNavigationUpdate = useCallback(
@@ -1259,6 +1264,7 @@ export default ({
 
 			window.history.pushState(state, document.title, path);
 
+			setActive(false);
 			setRenderState({
 				children: filterHideableNodes(node.children, showHideable),
 				dropdownItems: getDropdownItems(node),
@@ -2153,16 +2159,131 @@ export default ({
 		});
 	};
 
+	const renderLocalizationDropdown = (currentLocale) => {
+		if (
+			!renderState.node.locales ||
+			renderState.node.locales.length === 0
+		) {
+			return '';
+		}
+
+		return (
+			<div className="autofit-col publications-localization">
+				<ClayDropDown
+					active={active}
+					onActiveChange={setActive}
+					trigger={
+						<ClayButton
+							displayType="secondary"
+							monospaced
+							onClick={() => setActive(!active)}
+						>
+							<span className="inline-item">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol={currentLocale.symbol}
+								/>
+							</span>
+							<span className="btn-section">
+								{currentLocale.label}
+							</span>
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList>
+						{renderState.node.locales.map((locale) => {
+							return (
+								<ClayDropDown.Item
+									key={locale.label}
+									onClick={() => {
+										setActive(false);
+										setSelectedLocale(locale);
+									}}
+								>
+									<ClayLayout.ContentRow containerElement="span">
+										<ClayLayout.ContentCol
+											containerElement="span"
+											expand
+										>
+											<ClayLayout.ContentSection>
+												<ClayIcon
+													className="inline-item inline-item-before"
+													spritemap={spritemap}
+													symbol={locale.symbol}
+												/>
+
+												{locale.label}
+											</ClayLayout.ContentSection>
+										</ClayLayout.ContentCol>
+										<ClayLayout.ContentCol containerElement="span">
+											<ClayLayout.ContentSection>
+												<ClayLabel
+													displayType={
+														locale.label ===
+														renderState.node
+															.defaultLocale.label
+															? 'info'
+															: 'success'
+													}
+												>
+													{locale.label ===
+													renderState.node
+														.defaultLocale.label
+														? Liferay.Language.get(
+																'default'
+														  )
+														: Liferay.Language.get(
+																'translated'
+														  )}
+												</ClayLabel>
+											</ClayLayout.ContentSection>
+										</ClayLayout.ContentCol>
+									</ClayLayout.ContentRow>
+								</ClayDropDown.Item>
+							);
+						})}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			</div>
+		);
+	};
+
 	const renderEntry = () => {
 		if (!renderState.node.modelClassNameId) {
 			return '';
 		}
 
+		let currentLocale = selectedLocale;
+
+		if (
+			!renderState.node.locales ||
+			!renderState.node.locales.find(
+				(item) => item.label === currentLocale.label
+			)
+		) {
+			if (renderState.node.defaultLocale) {
+				currentLocale = renderState.node.defaultLocale;
+			}
+			else {
+				currentLocale = defaultLocale;
+			}
+		}
+
+		let title = renderState.node.title;
+
+		if (
+			renderState.node.localizedTitles &&
+			renderState.node.localizedTitles[currentLocale.label]
+		) {
+			title = renderState.node.localizedTitles[currentLocale.label];
+		}
+
 		return (
 			<div className="sheet">
 				<div className="autofit-row sheet-title">
+					{renderLocalizationDropdown(currentLocale)}
 					<div className="autofit-col autofit-col-expand">
-						<h2>{renderState.node.title} </h2>
+						<h2>{title}</h2>
 
 						<div className="entry-description">
 							{renderState.node.description

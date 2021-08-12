@@ -116,6 +116,28 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
+	public <T extends BaseModel<T>> String[] getAvailableLanguageIds(
+		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode, T model,
+		long modelClassNameId) {
+
+		CTDisplayRenderer<T> ctDisplayRenderer =
+			(CTDisplayRenderer<T>)_ctDisplayServiceTrackerMap.getService(
+				modelClassNameId);
+
+		if (ctDisplayRenderer == null) {
+			return null;
+		}
+
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId);
+			SafeCloseable safeCloseable2 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
+
+			return ctDisplayRenderer.getAvailableLanguageIds(model);
+		}
+	}
+
 	public long getCtCollectionId(CTCollection ctCollection, CTEntry ctEntry)
 		throws PortalException {
 
@@ -173,6 +195,20 @@ public class CTDisplayRendererRegistry {
 		}
 
 		return CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
+	}
+
+	public <T extends BaseModel<T>> String getDefaultLanguageId(
+		T model, long modelClassNameId) {
+
+		CTDisplayRenderer<T> ctDisplayRenderer =
+			(CTDisplayRenderer<T>)_ctDisplayServiceTrackerMap.getService(
+				modelClassNameId);
+
+		if (ctDisplayRenderer == null) {
+			return null;
+		}
+
+		return ctDisplayRenderer.getDefaultLanguageId(model);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -204,16 +204,10 @@ public class GetEntryRenderDataMVCResourceCommand
 					httpServletRequest, httpServletResponse, locale,
 					rightModel);
 
-				if (rightContent != null) {
-					jsonObject.put("rightContent", rightContent);
-				}
-
 				rightRender = _getRender(
 					httpServletRequest, httpServletResponse, ctCollectionId,
 					ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
 					CTConstants.TYPE_AFTER);
-
-				jsonObject.put("rightRender", rightRender);
 			}
 		}
 
@@ -282,32 +276,10 @@ public class GetEntryRenderDataMVCResourceCommand
 						httpServletRequest, httpServletResponse, locale,
 						leftModel);
 
-					if (leftContent != null) {
-						jsonObject.put("leftContent", leftContent);
-
-						if (rightContent != null) {
-							jsonObject.put(
-								"unifiedContent",
-								DiffHtmlUtil.diff(
-									new UnsyncStringReader(leftContent),
-									new UnsyncStringReader(rightContent)));
-						}
-					}
-
 					leftRender = _getRender(
 						httpServletRequest, httpServletResponse,
 						leftCtCollectionId, ctDisplayRenderer, ctEntryId,
 						leftCTSQLMode, leftModel, CTConstants.TYPE_AFTER);
-
-					jsonObject.put("leftRender", leftRender);
-
-					if (rightRender != null) {
-						jsonObject.put(
-							"unifiedRender",
-							DiffHtmlUtil.diff(
-								new UnsyncStringReader(leftRender),
-								new UnsyncStringReader(rightRender)));
-					}
 				}
 			}
 		}
@@ -326,32 +298,10 @@ public class GetEntryRenderDataMVCResourceCommand
 					leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
 					httpServletRequest, httpServletResponse, locale, leftModel);
 
-				if (leftContent != null) {
-					jsonObject.put("leftContent", leftContent);
-
-					if (rightContent != null) {
-						jsonObject.put(
-							"unifiedContent",
-							DiffHtmlUtil.diff(
-								new UnsyncStringReader(leftContent),
-								new UnsyncStringReader(rightContent)));
-					}
-				}
-
 				leftRender = _getRender(
 					httpServletRequest, httpServletResponse, leftCtCollectionId,
 					ctDisplayRenderer, ctEntryId, leftCTSQLMode, leftModel,
 					CTConstants.TYPE_BEFORE);
-
-				jsonObject.put("leftRender", leftRender);
-
-				if (rightRender != null) {
-					jsonObject.put(
-						"unifiedRender",
-						DiffHtmlUtil.diff(
-							new UnsyncStringReader(leftRender),
-							new UnsyncStringReader(rightRender)));
-				}
 			}
 		}
 
@@ -417,34 +367,44 @@ public class GetEntryRenderDataMVCResourceCommand
 						httpServletRequest, httpServletResponse, locale,
 						rightModel);
 
-					if (rightContent != null) {
-						jsonObject.put("rightContent", rightContent);
-
-						if (leftContent != null) {
-							jsonObject.put(
-								"unifiedContent",
-								DiffHtmlUtil.diff(
-									new UnsyncStringReader(leftContent),
-									new UnsyncStringReader(rightContent)));
-						}
-					}
-
 					rightRender = _getRender(
 						httpServletRequest, httpServletResponse, ctCollectionId,
 						ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
 						CTConstants.TYPE_AFTER);
-
-					jsonObject.put("rightRender", rightRender);
-
-					if (leftRender != null) {
-						jsonObject.put(
-							"unifiedRender",
-							DiffHtmlUtil.diff(
-								new UnsyncStringReader(leftRender),
-								new UnsyncStringReader(rightRender)));
-					}
 				}
 			}
+		}
+
+		if (leftContent != null) {
+			jsonObject.put("leftContent", leftContent);
+
+			if (rightContent != null) {
+				jsonObject.put(
+					"unifiedContent",
+					DiffHtmlUtil.diff(
+						new UnsyncStringReader(leftContent),
+						new UnsyncStringReader(rightContent)));
+			}
+		}
+
+		if (leftRender != null) {
+			jsonObject.put("leftRender", leftRender);
+
+			if (rightRender != null) {
+				jsonObject.put(
+					"unifiedRender",
+					DiffHtmlUtil.diff(
+						new UnsyncStringReader(leftRender),
+						new UnsyncStringReader(rightRender)));
+			}
+		}
+
+		if (rightContent != null) {
+			jsonObject.put("rightContent", rightContent);
+		}
+
+		if (rightRender != null) {
+			jsonObject.put("rightRender", rightRender);
 		}
 
 		return jsonObject;

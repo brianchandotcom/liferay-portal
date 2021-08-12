@@ -330,8 +330,6 @@ public class FileEntryContentDashboardItem
 		String backURL, ThemeDisplay themeDisplay) {
 
 		return JSONUtil.put(
-			"absoluteURL", _getAbsoluteURL(themeDisplay)
-		).put(
 			"description", getDescription(locale)
 		).put(
 			"downloadURL", _getDownloadURL()
@@ -341,6 +339,8 @@ public class FileEntryContentDashboardItem
 			"fileName", _getFileName()
 		).put(
 			"preview", _getPreviewImage()
+		).put(
+			"previewURL", _getPreviewURL(themeDisplay)
 		).put(
 			"size", _getSize(locale)
 		).put(
@@ -432,19 +432,6 @@ public class FileEntryContentDashboardItem
 		);
 	}
 
-	private String _getAbsoluteURL(ThemeDisplay themeDisplay) {
-		try {
-			return DLURLHelperUtil.getPreviewURL(
-				_fileEntry, _fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, true);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return null;
-		}
-	}
-
 	private String _getDownloadURL() {
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
@@ -499,6 +486,19 @@ public class FileEntryContentDashboardItem
 		}
 
 		return infoFieldValue.getValue();
+	}
+
+	private String _getPreviewURL(ThemeDisplay themeDisplay) {
+		try {
+			return DLURLHelperUtil.getPreviewURL(
+				_fileEntry, _fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK, false, true);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return null;
+		}
 	}
 
 	private String _getSize(Locale locale) {

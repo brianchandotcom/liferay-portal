@@ -13,16 +13,14 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayDropDown from '@clayui/drop-down';
+import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useId} from '../../utils/useId';
-
-const DEFAULT_MULTI_SELECT_VALUE = [];
 
 export const SelectField = ({
 	className,
@@ -76,7 +74,7 @@ export const SelectField = ({
 							? Array.isArray(value)
 								? defaultValue
 								: [defaultValue]
-							: DEFAULT_MULTI_SELECT_VALUE
+							: null
 					}
 				/>
 			) : (
@@ -101,7 +99,7 @@ const MultiSelect = ({
 	options,
 	value,
 }) => {
-	const [nextValue, setNextValue] = useState(value);
+	const [nextValue, setNextValue] = useState(value || []);
 
 	let label = Liferay.Language.get('select');
 
@@ -122,28 +120,36 @@ const MultiSelect = ({
 	const items = options.map((option) => {
 		return {
 			...option,
-			checked: value.some((item) => item === option.value),
+			checked:
+				Array.isArray(value) &&
+				value.some((item) => item === option.value),
 			onChange: (selected) => {
 				const changedValue = selected
 					? [...nextValue, option.value]
 					: nextValue.filter((item) => item !== option.value);
 
 				setNextValue(changedValue);
-				onValueSelect(field.name, changedValue);
+				onValueSelect(
+					field.name,
+					changedValue.length > 0 ? changedValue : null
+				);
 			},
 			type: 'checkbox',
 		};
 	});
 
 	useEffect(() => {
-		setNextValue((prevValue) => value || prevValue);
+		setNextValue(value || []);
 	}, [value]);
 
+	const [active, setActive] = useState(false);
+
 	return (
-		<ClayDropDownWithItems
+		<ClayDropDown
+			active={active}
 			disabled={!!disabled}
 			id={inputId}
-			items={items}
+			onActiveChange={setActive}
 			trigger={
 				<ClayButton
 					className="form-control-select form-control-sm text-left w-100"
@@ -153,7 +159,17 @@ const MultiSelect = ({
 					{label}
 				</ClayButton>
 			}
-		/>
+		>
+			{items.map(({checked, label, onChange}) => (
+				<ClayDropDown.Section key={label}>
+					<ClayCheckbox
+						checked={checked}
+						label={label}
+						onChange={() => onChange(!checked)}
+					/>
+				</ClayDropDown.Section>
+			))}
+		</ClayDropDown>
 	);
 };
 

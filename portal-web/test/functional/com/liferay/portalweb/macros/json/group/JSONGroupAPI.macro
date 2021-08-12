@@ -95,7 +95,9 @@ definition {
 	macro _deleteGroup {
 		Variables.assertDefined(parameterList = "${groupId}");
 
-		var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/delete-group \

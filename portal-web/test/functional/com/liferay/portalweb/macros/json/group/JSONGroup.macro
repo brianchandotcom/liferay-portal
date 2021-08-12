@@ -82,9 +82,13 @@ definition {
 	macro deleteGroupByName {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(
+			groupName = "${groupName}",
+			portalURL = "${portalURL}");
 
-		JSONGroupAPI._deleteGroup(groupId = "${groupId}");
+		JSONGroupAPI._deleteGroup(
+			groupId = "${groupId}",
+			portalURL = "${portalURL}");
 	}
 
 }

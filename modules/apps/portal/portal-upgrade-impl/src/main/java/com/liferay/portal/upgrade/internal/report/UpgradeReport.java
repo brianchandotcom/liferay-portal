@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,6 +32,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +47,12 @@ public class UpgradeReport {
 
 	public UpgradeReport() {
 		_setInitialBuildNumber();
+
+		if ((_initialBuildNumber != -1) &&
+			(_initialBuildNumber > ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER)) {
+
+			_setInitialSchemaVersion();
+		}
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
@@ -68,16 +77,21 @@ public class UpgradeReport {
 	}
 
 	public void generateReport() {
-		File file = new File(PropsValues.LIFERAY_HOME, "upgrade_report.info");
+		File logFile = _getLogFile();
+
+		StringBuffer sb = new StringBuffer(3);
+
+		sb.append(_getLiferayVersions());
+		sb.append(_getDialectInfo());
+		sb.append(_getProperties());
 
 		try {
-			FileUtil.write(file, _getLiferayVersions());
-
-			FileUtil.write(file, _getDialectInfo(), false, true);
-
-			FileUtil.write(file, _getProperties(), false, true);
+			FileUtil.write(logFile, sb.toString());
 		}
 		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to generate report");
+			}
 		}
 	}
 
@@ -97,42 +111,55 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private int _getInitialBuildNumber() {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select buildNumber from Release_ where releaseId = " +
-					ReleaseConstants.DEFAULT_ID)) {
-
-			ResultSet resultSet = preparedStatement.executeQuery();
-
-			if (resultSet.next()) {
-				return resultSet.getInt("buildNumber");
-			}
-		}
-		catch (Exception exception) {
-		}
-
-		return -1;
-	}
-
 	private String _getLiferayVersions() {
-		StringBuffer sb = new StringBuffer(6);
+		StringBuffer sb = new StringBuffer(10);
+
+		String currentSchemaVersion = _getSchemaVersion();
 
 		if (_initialBuildNumber != -1) {
-			sb.append("Initial Version of Liferay: ");
+			sb.append("Initial version of Liferay: ");
 			sb.append(_initialBuildNumber);
-			sb.append(StringPool.NEW_LINE);
+
+			if (_initialSchemaVersion != null) {
+				sb.append(" and initial schema version ");
+				sb.append(_initialSchemaVersion);
+			}
 		}
 		else {
 			sb.append("Unable to determine initial version of Liferay.");
-			sb.append(StringPool.NEW_LINE);
 		}
 
-		sb.append("Final Version of Liferay: ");
+		sb.append(StringPool.NEW_LINE);
+
+		sb.append("Final version of Liferay ");
 		sb.append(ReleaseInfo.getBuildNumber());
+
+		if (currentSchemaVersion != null) {
+			sb.append(" and final schema version ");
+			sb.append(currentSchemaVersion);
+		}
+
 		sb.append(StringPool.NEW_LINE);
 
 		return sb.toString();
+	}
+
+	private File _getLogFile() {
+		File logFile = new File(
+			PropsValues.LIFERAY_HOME, "upgrade_report.info");
+
+		if (logFile.exists()) {
+			String logFileName = logFile.getName();
+
+			logFile.renameTo(
+				new File(
+					PropsValues.LIFERAY_HOME,
+					logFileName + "." + logFile.lastModified()));
+
+			logFile = new File(PropsValues.LIFERAY_HOME, logFileName);
+		}
+
+		return logFile;
 	}
 
 	private String _getProperties() {
@@ -144,7 +171,7 @@ public class UpgradeReport {
 
 		sb.append(StringPool.NEW_LINE);
 
-		if (dlStore.contains("FileSystemStore")) {
+		if (dlStore.contains("AdvancedFileSystemStore")) {
 			sb.append(
 				"Please check your OSGi configuration files to ensure " +
 					"rootDir has been set properly");
@@ -163,15 +190,59 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private void _setInitialBuildNumber() {
-		_initialBuildNumber = _getInitialBuildNumber();
+	private String _getSchemaVersion() {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select schemaVersion from Release_ where releaseId = " +
+					ReleaseConstants.DEFAULT_ID)) {
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getString("schemaVersion");
+			}
+		}
+		catch (SQLException sqlException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get schemaVersion");
+			}
+		}
+
+		return null;
 	}
+
+	private void _setInitialBuildNumber() {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select buildNumber from Release_ where releaseId = " +
+					ReleaseConstants.DEFAULT_ID)) {
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				_initialBuildNumber = resultSet.getInt("buildNumber");
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get initial build Number and schema version");
+			}
+		}
+	}
+
+	private void _setInitialSchemaVersion() {
+		_initialSchemaVersion = _getSchemaVersion();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
 	private final Map<String, ArrayList<String>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
 		new ConcurrentHashMap<>();
 	private int _initialBuildNumber = -1;
+	private String _initialSchemaVersion;
 	private final Map<String, ArrayList<String>> _warningMessages =
 		new ConcurrentHashMap<>();
 

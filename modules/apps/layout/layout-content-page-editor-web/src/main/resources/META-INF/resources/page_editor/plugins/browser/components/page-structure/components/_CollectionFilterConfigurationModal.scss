@@ -2,8 +2,8 @@
 
 html#{$cadmin-selector} {
 	.cadmin {
-		.page-editor__collection-general-panel {
-			&__modal .modal-body {
+		.page-editor__collection-filter-configuration-modal {
+			& .modal-body {
 				padding: 0;
 			}
 

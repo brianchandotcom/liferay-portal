@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -39,6 +41,21 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AccountEntryUserRelServiceImpl
 	extends AccountEntryUserRelServiceBaseImpl {
+
+	@Override
+	public AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		return accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntryId, creatorUserId, screenName, emailAddress, locale,
+			firstName, middleName, lastName, prefixId, suffixId);
+	}
 
 	@Override
 	public AccountEntryUserRel addAccountEntryUserRelByEmailAddress(

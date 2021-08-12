@@ -329,6 +329,8 @@ definition {
 	@priority = "5"
 	test ViewCommerceEnabled {
 		property commerce.enabled = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "CommerceLicense#ViewCommerceEnabled";
 
 		CommerceLicense.executeSmoke();
 	}

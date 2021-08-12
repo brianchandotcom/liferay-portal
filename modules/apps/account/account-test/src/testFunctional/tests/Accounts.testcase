@@ -1015,16 +1015,6 @@ definition {
 			key_title = "Set Default Shipping Address",
 			locator1 = "IFrame#MODAL_ANY");
 
-		ClickNoError(
-			key_text = "times-small",
-			locator1 = "Icon#ANY");
-
-		AssertElementPresent(
-			key_filterScope = "Type: Shipping",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
-
-		Click(locator1 = "Link#CLEAR");
-
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No addresses were found.");
@@ -1072,16 +1062,6 @@ definition {
 		SelectFrame(
 			key_title = "Set Default Billing Address",
 			locator1 = "IFrame#MODAL_ANY");
-
-		ClickNoError(
-			key_text = "times-small",
-			locator1 = "Icon#ANY");
-
-		AssertElementPresent(
-			key_filterScope = "Type: Billing",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
-
-		Click(locator1 = "Link#CLEAR");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

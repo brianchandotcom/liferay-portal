@@ -573,10 +573,6 @@ definition {
 			key_title = "Set Default Billing Address",
 			locator1 = "IFrame#MODAL_ANY");
 
-		AssertElementPresent(
-			key_filterScope = "Type: Billing",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
-
 		Click(
 			key_addressName = "${addressName}",
 			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
@@ -598,10 +594,6 @@ definition {
 		SelectFrame(
 			key_title = "Set Default Shipping Address",
 			locator1 = "IFrame#MODAL_ANY");
-
-		AssertElementPresent(
-			key_filterScope = "Type: Shipping",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
 
 		Click(
 			key_addressName = "${addressName}",
@@ -892,10 +884,6 @@ definition {
 			key_title = "Set Default Billing Address",
 			locator1 = "IFrame#MODAL_ANY");
 
-		AssertElementPresent(
-			key_filterScope = "Type: Billing",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
-
 		Click(
 			key_addressName = "${addressName}",
 			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
@@ -921,10 +909,6 @@ definition {
 		SelectFrame(
 			key_title = "Set Default Shipping Address",
 			locator1 = "IFrame#MODAL_ANY");
-
-		AssertElementPresent(
-			key_filterScope = "Type: Shipping",
-			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
 
 		Click(
 			key_addressName = "${addressName}",

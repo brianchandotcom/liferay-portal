@@ -29,19 +29,23 @@ definition {
 	test AssertPageTemplatesTabsAreVisible {
 		property portal.acceptance = "true";
 
-		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+		task ("Go to Test Site Name page admin") {
+			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+		}
 
-		AssertVisible(
-			key_navItem = "Masters",
-			locator1 = "NavBar#NAV_ITEM_LINK");
+		task ("Assert Masters, Page Templates, and Display Page Templates displayed") {
+			AssertVisible(
+				key_navItem = "Masters",
+				locator1 = "NavBar#NAV_ITEM_LINK");
 
-		AssertVisible(
-			key_navItem = "Page Templates",
-			locator1 = "NavBar#NAV_ITEM_LINK");
+			AssertVisible(
+				key_navItem = "Page Templates",
+				locator1 = "NavBar#NAV_ITEM_LINK");
 
-		AssertVisible(
-			key_navItem = "Display Page Templates",
-			locator1 = "NavBar#NAV_ITEM_LINK");
+			AssertVisible(
+				key_navItem = "Display Page Templates",
+				locator1 = "NavBar#NAV_ITEM_LINK");
+		}
 	}
 
 }

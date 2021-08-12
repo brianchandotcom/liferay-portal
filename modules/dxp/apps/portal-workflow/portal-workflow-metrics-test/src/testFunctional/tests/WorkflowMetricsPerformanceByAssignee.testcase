@@ -205,15 +205,6 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_NAME");
 	}
 
-	@description = "LPS-97666 - Verify that, when there is an unexpected error, the Performance by Assignee card displays the specific error state"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test CardDisplaysSpecificErrorStateOnUnexpectedError {
-
-		// TODO LRQA-67711 CardDisplaysSpecificErrorStateOnUnexpectedError pending implementation
-
-	}
-
 	@description = "LPS-99441 - Verify that the roles and Process Steps filters values inside Performance by Assignee page are alphabetically sorted"
 	@priority = "3"
 	test FiltersValuesAreAlphabeticallyOrdered {
@@ -409,15 +400,6 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByAssignee#METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS");
 	}
 
-	@description = "LPS-99441 - Verify that when there is an unexpected error in Performance by Assignee page, the table displays the specific error state"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test PageDisplaysSpecificErrorStateOnUnexpectedError {
-
-		// TODO LRQA-67713 PageDisplaysSpecificErrorStateOnUnexpectedError pending implementation
-
-	}
-
 	@description = "LPS-97666 - Verify that the steps filter inside the card Performance by Assignee has All Steps as the first option from the dropdown menu"
 	@priority = "3"
 	test StepsFilterHasAllStepsAsFirstOption {
@@ -600,15 +582,6 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_EMPTY_STATE");
-	}
-
-	@description = "LPS-97666 - Verify that the card Performance by Assigned provides a vertical scroll if there are more than 5 entries"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TableProvidesVerticalScrollWhenThereAreMoreThan5Entries {
-
-		// TODO LRQA-67692 TableProvidesVerticalScrollWhenThereAreMoreThan5Entries pending implementation
-
 	}
 
 	@description = "LPS-103760 - Verify that the user can filter the results inside Performance by Assignee by assignee names that contain non-ascii chars such as ç,é,コン, etc using the search field"

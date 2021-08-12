@@ -312,24 +312,6 @@ definition {
 			value1 = "${displayTime}");
 	}
 
-	@description = "LPS-105497 - Verify that when there is an unexpected error, the modal displays the specific error state message in the banner"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test DisplaysSpecificErrorStateForUnexpectedError {
-
-		// TODO LRQA-67825 DisplaysSpecificErrorStateForUnexpectedError pending implementation
-
-	}
-
-	@description = "LPS-105498 - Verify that the message Error Your request has failed. Select Done to retry. is displayed when the network connection is lost when retrieving the tasks"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test ErrorMessageIsDisplayedOnNetworkConnectionIsLost {
-
-		// TODO LRQA-67819 ErrorMessageIsDisplayedOnNetworkConnectionIsLost pending implementation
-
-	}
-
 	@description = "LPS-105498 - Verify that the message The due dates for theses tasks have been updated is displayed when the bulk update due date action is successful"
 	@priority = "3"
 	test MessageIsDisplayedWhenBulkUpdateActionIsSuccessful {

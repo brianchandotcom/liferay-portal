@@ -19,7 +19,7 @@ import ClayModal from '@clayui/modal';
 import ClayToolbar from '@clayui/toolbar';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
@@ -39,15 +39,9 @@ export default function CollectionFilterConfigurationModal({
 	onClose,
 	visible,
 }) {
-	const isMounted = useIsMounted();
-
 	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector(selectPageContents);
 	const [itemConfig, setItemConfig] = useState(item.config);
-	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
-
-	const collectionConfigurationValues =
-		itemConfig?.collection?.config ?? DEFAULT_CONFIG_VALUES;
 
 	const {classNameId, classPK, key: collectionKey} = item.config?.collection;
 
@@ -96,19 +90,6 @@ export default function CollectionFilterConfigurationModal({
 		}
 	}, [item.config, visible]);
 
-	useEffect(() => {
-		if (Object.keys(collectionConfigurationValues).length > 0) {
-			CollectionService.getCollectionItemCount({
-				collection: itemConfig.collection,
-				onNetworkStatus: () => {},
-			}).then(({totalNumberOfItems}) => {
-				if (isMounted()) {
-					setTotalNumberOfItems(totalNumberOfItems || 0);
-				}
-			});
-		}
-	}, [isMounted, itemConfig.collection, collectionConfigurationValues]);
-
 	return (
 		<ClayModal
 			className="page-editor__collection-filter-configuration-modal"
@@ -121,52 +102,11 @@ export default function CollectionFilterConfigurationModal({
 				{Liferay.Language.get('filter-collection')}
 			</ClayModal.Header>
 			<ClayModal.Body className="pt-0">
-				{Object.keys(collectionConfigurationValues).length > 0 &&
-					totalNumberOfItems !== null && (
-						<ClayToolbar subnav={{displayType: 'primary'}}>
-							<ClayLayout.ContainerFluid>
-								<ClayToolbar.Nav>
-									<ClayToolbar.Item
-										className="pl-2 text-left"
-										expand
-									>
-										<ClayToolbar.Section>
-											<span className="component-text">
-												{Liferay.Util.sub(
-													Liferay.Language.get(
-														'there-are-x-results-using-the-current-filter'
-													),
-													totalNumberOfItems
-												)}
-											</span>
-										</ClayToolbar.Section>
-									</ClayToolbar.Item>
-									<ClayToolbar.Item>
-										<ClayButton
-											className="component-link tbar-link"
-											displayType="unstyled"
-											onClick={() => {
-												const nextConfig = setIn(
-													itemConfig,
-													['collection', 'config'],
-													{}
-												);
-												setItemConfig(
-													(previousItemConfig) => ({
-														...previousItemConfig,
-														...nextConfig,
-													})
-												);
-											}}
-										>
-											{Liferay.Language.get('clear')}
-										</ClayButton>
-									</ClayToolbar.Item>
-								</ClayToolbar.Nav>
-							</ClayLayout.ContainerFluid>
-						</ClayToolbar>
-					)}
-
+				<FilterInformationToolbar
+					collectionConfiguration={collectionConfiguration}
+					itemConfig={itemConfig}
+					setItemConfig={setItemConfig}
+				/>
 				<div className="p-4">
 					{typeLabel && (
 						<p
@@ -211,7 +151,9 @@ export default function CollectionFilterConfigurationModal({
 												value
 											)
 										}
-										values={collectionConfigurationValues}
+										values={
+											itemConfig?.collection?.config ?? {}
+										}
 									/>
 								))
 						) : (
@@ -237,5 +179,155 @@ export default function CollectionFilterConfigurationModal({
 				}
 			/>
 		</ClayModal>
+	);
+}
+
+const FilterInformationToolbar = ({
+	itemConfig = {},
+	setItemConfig,
+	collectionConfiguration,
+}) => {
+	const collectionConfigurationValues =
+		itemConfig?.collection?.config ?? DEFAULT_CONFIG_VALUES;
+
+	const isMounted = useIsMounted();
+	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
+	const [showAll, setShowAll] = useState(false);
+	const [enableShowAll, setEnableShowAll] = useState(false);
+	const filterInformationMessageElementRef = useRef();
+
+	const hasConfigurationValues =
+		Object.values(collectionConfigurationValues).filter((value) => !!value)
+			.length > 0;
+
+	const filterInformationMessage = getFilterInformationMessage({
+		collectionConfiguration,
+		collectionConfigurationValues,
+	});
+
+	useEffect(() => {
+		if (hasConfigurationValues) {
+			CollectionService.getCollectionItemCount({
+				collection: itemConfig?.collection,
+				onNetworkStatus: () => {},
+			}).then(({totalNumberOfItems}) => {
+				if (isMounted()) {
+					setTotalNumberOfItems(totalNumberOfItems || 0);
+				}
+			});
+		}
+	}, [isMounted, itemConfig?.collection, hasConfigurationValues]);
+
+	useEffect(() => {
+		const element = filterInformationMessageElementRef.current;
+		if (element && element.offsetWidth < element.scrollWidth) {
+			setEnableShowAll(true);
+		}
+		else {
+			setEnableShowAll(false);
+		}
+	}, [filterInformationMessage]);
+
+	return hasConfigurationValues && totalNumberOfItems !== null ? (
+		<ClayToolbar subnav={{displayType: 'primary'}}>
+			<ClayLayout.ContainerFluid>
+				<ClayToolbar.Nav>
+					<ClayToolbar.Item className="pl-2 text-left" expand>
+						<ClayToolbar.Section>
+							<span
+								className={classNames('component-text', {
+									'mb-0': showAll,
+									'text-truncate': !showAll,
+								})}
+								ref={filterInformationMessageElementRef}
+							>
+								{Liferay.Util.sub(
+									Liferay.Language.get('x-results-for-x'),
+									totalNumberOfItems,
+									filterInformationMessage
+								)}
+							</span>
+						</ClayToolbar.Section>
+
+						{enableShowAll && (
+							<ClayToolbar.Section>
+								<ClayButton
+									className="btn-link font-weight-semi-bold pl-0 tbar-link"
+									displayType="unstyled"
+									onClick={() =>
+										setShowAll(
+											(previousShowAll) =>
+												!previousShowAll
+										)
+									}
+								>
+									<span
+										className="c-inner ml-0"
+										tabIndex="-1"
+									>
+										{showAll
+											? Liferay.Language.get('show-less')
+											: Liferay.Language.get('show-all')}
+									</span>
+								</ClayButton>
+							</ClayToolbar.Section>
+						)}
+					</ClayToolbar.Item>
+					<ClayToolbar.Item>
+						<ClayButton
+							className="component-link tbar-link"
+							displayType="unstyled"
+							onClick={() => {
+								const nextConfig = setIn(
+									itemConfig,
+									['collection', 'config'],
+									{}
+								);
+								setItemConfig((previousItemConfig) => ({
+									...previousItemConfig,
+									...nextConfig,
+								}));
+							}}
+						>
+							{Liferay.Language.get('clear')}
+						</ClayButton>
+					</ClayToolbar.Item>
+				</ClayToolbar.Nav>
+			</ClayLayout.ContainerFluid>
+		</ClayToolbar>
+	) : null;
+};
+
+function getFilterInformationMessage({
+	collectionConfiguration,
+	collectionConfigurationValues,
+}) {
+	if (!collectionConfiguration || !collectionConfigurationValues) {
+		return null;
+	}
+
+	const fields = collectionConfiguration.fieldSets[0].fields;
+
+	return Object.entries(collectionConfigurationValues)
+		.filter(([_name, value]) => !!value)
+		.map(([name, value]) => {
+			const field = fields.find((field) => field.name === name);
+
+			if (field?.type === 'select') {
+				return Array.isArray(value)
+					? value.map((v) => getFieldLabel(field, v)).join(', ')
+					: value;
+			}
+
+			return value;
+		})
+		.join(', ');
+}
+
+function getFieldLabel(field, value) {
+	return (
+		field.typeOptions?.validValues.find(
+			(validValue) => validValue.value === value
+		)?.label ?? value
 	);
 }

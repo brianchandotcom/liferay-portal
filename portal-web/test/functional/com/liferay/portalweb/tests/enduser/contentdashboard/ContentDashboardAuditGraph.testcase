@@ -719,6 +719,81 @@ definition {
 		}
 	}
 
+	@description = "LPS-119966: Given a document with at least one category in one of the vocabularies featured in the graph
+	then the document is counted as an asset in the graph"
+	@priority = "4"
+	test DocumentWithOneCategory {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
+
+		task ("Create a new Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add public and internal categories to Document") {
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "DM Document Title");
+
+			DMDocument.addCategories(
+				categoryNameList = "Audience 1",
+				vocabularyName = "Audience");
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Assert the document is counted as an asset") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "DM Document Title",
+				xAxisCategoryName = "Audience 1");
+		}
+	}
+
+	@description = "LPS-119966: Given a document with no categories in any of the vocabularies featured in the graph
+	then the document is NOT counted as an asset in the graph"
+	@priority = "4"
+	test DocumentWithNoCategories {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
+
+		task ("Create a new Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Assert the are no info in the Audit Graph") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#EMPTY_AUDIT_GRAPH_TEXT",
+				value1 = "There is no data.");
+		}
+	}
+
 	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
 	@priority = "4"
 	test KeepInfomationOfDeleteVocabularyInSegment {

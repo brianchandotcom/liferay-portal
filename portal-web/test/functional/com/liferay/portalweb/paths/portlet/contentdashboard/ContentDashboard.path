@@ -145,6 +145,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_AUDIT_GRAPH_TEXT</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There is no data')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRED_LABEL</td>
 	<td>//*[contains(@class, 'label') and contains(text(),'EXPIRED')]</td>
 	<td></td>

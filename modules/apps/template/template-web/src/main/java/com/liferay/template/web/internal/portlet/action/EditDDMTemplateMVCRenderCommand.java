@@ -66,7 +66,6 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				InfoItemServiceTracker.class.getName(),
 				_infoItemServiceTracker);
-
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new InformationTemplatesEditDDMTemplateDisplayContext(

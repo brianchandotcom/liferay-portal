@@ -438,12 +438,70 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8474 | Test Summary: Duplicate a criteria"
-	@ignore = "true"
 	@priority = "3"
 	test CanDuplicateCriteria {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8474 CanDuplicateCriteria
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add a jobTitle field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "jobTitle");
+		}
+
+		task ("Duplicate the criteria") {
+			ACSegments.duplicateSegmentCriteria(criteriaName = "jobTitle");
+		}
+
+		task ("View the both criterias") {
+			ACSegments.viewDuplicatedCriteria(
+				criteriaName = "jobTitle",
+				totalCriteriaCount = "2");
+		}
+
+		task ("Define the first criteria") {
+			ACSegments.selectOperator(operator = "contains");
+
+			ACSegments.editTextCriterion(textInput = "web developer");
+		}
+
+		task ("Define the second criteria") {
+			ACSegments.selectOperator(
+				index = "2",
+				operator = "contains");
+
+			ACSegments.editTextCriterion(
+				index = "2",
+				textInput = "lawyer");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View criterias in Segment Criteria card") {
+			var criterias = '''IndividualjobTitlecontains"web developer" AND IndividualjobTitlecontains"lawyer"''';
+
+			AssertTextEquals.assertPartialText(
+				key_card = "Segment Criteria",
+				locator1 = "Card#CARD",
+				value1 = "${criterias}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"

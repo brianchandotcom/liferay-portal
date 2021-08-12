@@ -87,7 +87,8 @@ public class DDLRecordSearchTest {
 
 		DDLRecordSet recordSet = addRecordSet();
 
-		_recordTestHelper = new DDLRecordTestHelper(_group, recordSet);
+		_recordTestHelper = new DDLRecordTestHelper(
+			_user.getUserId(), _group, recordSet);
 		_searchContext = getSearchContext(_group, _user, recordSet);
 	}
 
@@ -193,16 +194,17 @@ public class DDLRecordSearchTest {
 
 		User user = UserLocalServiceUtil.getDefaultUser(companyId);
 
+		long userId = user.getUserId();
+
 		Group group = GroupTestUtil.addGroup(
-			companyId, user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
-			group);
+			userId, group);
 
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(DDLRecordSet.class), group);
+				userId, PortalUtil.getClassNameId(DDLRecordSet.class), group);
 
 		Set<Locale> locales = DDMFormTestUtil.createAvailableLocales(
 			new Locale[] {LocaleUtil.US, LocaleUtil.JAPAN});
@@ -247,7 +249,7 @@ public class DDLRecordSearchTest {
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
 
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
-			group, recordSet);
+			userId, group, recordSet);
 
 		recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
@@ -414,10 +416,11 @@ public class DDLRecordSearchTest {
 
 	protected DDLRecordSet addRecordSet() throws Exception {
 		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
-			_group);
+			_user.getUserId(), _group);
 
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
+				_user.getUserId(),
 				PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(

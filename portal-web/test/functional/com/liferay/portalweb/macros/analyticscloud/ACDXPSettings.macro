@@ -50,6 +50,8 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro createMultipleProperties {
@@ -149,6 +151,8 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro syncNewContactData {

@@ -72,7 +72,7 @@ definition {
 	@priority = "3"
 	test CanCancelCreatingDynamicSegment {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Sign in as new user") {
@@ -155,7 +155,7 @@ definition {
 	@priority = "5"
 	test CanCreateDynamicSegmentWithIndividuals {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Sign in as new user") {
@@ -207,7 +207,7 @@ definition {
 	@priority = "5"
 	test CanCreateDynamicSegmentWithIndividualsUseUnknown {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Sign in as new user") {
@@ -279,7 +279,7 @@ definition {
 	@priority = "5"
 	test CanCreateSegmentWithAnonymousIndividuals {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		JSONUser.addUser(
@@ -350,7 +350,7 @@ definition {
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Sign in as new user") {
@@ -443,7 +443,7 @@ definition {
 	@priority = "5"
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Sign in as new user") {

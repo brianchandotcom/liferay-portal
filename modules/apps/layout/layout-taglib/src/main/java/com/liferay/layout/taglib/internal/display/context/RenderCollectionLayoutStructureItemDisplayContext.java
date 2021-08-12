@@ -16,9 +16,7 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -220,19 +218,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		return infoListRendererTracker.getInfoListRenderer(
 			_collectionStyledLayoutStructureItem.getListStyle());
-	}
-
-	public InfoListRendererContext getInfoListRendererContext() {
-		DefaultInfoListRendererContext defaultInfoListRendererContext =
-			new DefaultInfoListRendererContext(
-				_httpServletRequest, _httpServletResponse);
-
-		defaultInfoListRendererContext.setListItemRendererKey(
-			_collectionStyledLayoutStructureItem.getListItemStyle());
-		defaultInfoListRendererContext.setTemplateKey(
-			_collectionStyledLayoutStructureItem.getTemplateKey());
-
-		return defaultInfoListRendererContext;
 	}
 
 	public int getMaxNumberOfItemsPerPage() {

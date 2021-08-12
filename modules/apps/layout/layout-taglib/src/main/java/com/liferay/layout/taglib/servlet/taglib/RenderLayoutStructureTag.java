@@ -26,6 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
@@ -43,6 +44,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -192,11 +195,27 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("\">");
 
 		if (infoListRenderer != null) {
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+			PipingServletResponse pipingServletResponse =
+				new PipingServletResponse(
+					httpServletResponse, unsyncStringWriter);
+
+			DefaultInfoListRendererContext defaultInfoListRendererContext =
+				new DefaultInfoListRendererContext(
+					httpServletRequest, pipingServletResponse);
+
+			defaultInfoListRendererContext.setListItemRendererKey(
+				collectionStyledLayoutStructureItem.getListItemStyle());
+			defaultInfoListRendererContext.setTemplateKey(
+				collectionStyledLayoutStructureItem.getTemplateKey());
+
 			infoListRenderer.render(
 				renderCollectionLayoutStructureItemDisplayContext.
 					getCollection(),
-				renderCollectionLayoutStructureItemDisplayContext.
-					getInfoListRendererContext());
+				defaultInfoListRendererContext);
+
+			jspWriter.write(unsyncStringWriter.toString());
 		}
 		else {
 			LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider =

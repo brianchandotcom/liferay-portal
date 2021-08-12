@@ -474,7 +474,7 @@ public class FileEntryContentDashboardItem
 		return versions.get(versions.size() - 1);
 	}
 
-	private Object _getPreviewImageURL() {
+	private String _getPreviewImageURL() {
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 
@@ -485,7 +485,7 @@ public class FileEntryContentDashboardItem
 			return StringPool.BLANK;
 		}
 
-		return infoFieldValue.getValue();
+		return String.valueOf(infoFieldValue.getValue());
 	}
 
 	private String _getPreviewURL(ThemeDisplay themeDisplay) {

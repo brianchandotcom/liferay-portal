@@ -64,6 +64,14 @@ public interface CommercePriceListService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce price list remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommercePriceListServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId,
 			boolean netPrice, long parentCommercePriceListId, String name,
@@ -75,6 +83,13 @@ public interface CommercePriceListService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId,
 			long parentCommercePriceListId, String name, double priority,
@@ -85,6 +100,13 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId, String name,
 			double priority, int displayDateMonth, int displayDateDay,
@@ -96,6 +118,24 @@ public interface CommercePriceListService extends BaseService {
 		throws PortalException;
 
 	public CommercePriceList addCommercePriceList(
+			String externalReferenceCode, long groupId, long commerceCurrencyId,
+			boolean netPrice, String type, long parentCommercePriceListId,
+			boolean catalogBasePriceList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
+	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, boolean netPrice,
 			long parentCommercePriceListId, String name, double priority,
@@ -106,6 +146,13 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, boolean netPrice, String type,
@@ -118,6 +165,13 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, long parentCommercePriceListId,
@@ -129,6 +183,13 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, String name, double priority,
@@ -139,6 +200,25 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePriceList addOrUpdateCommercePriceList(
+			String externalReferenceCode, long groupId,
+			long commercePriceListId, long commerceCurrencyId, boolean netPrice,
+			String type, long parentCommercePriceListId,
+			boolean catalogBasePriceList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, boolean, String,
+	 long, boolean, String, double, int, int, int,  int, int, int, int, int,
+	 int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addOrUpdateCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commercePriceListId, long commerceCurrencyId, boolean netPrice,
@@ -151,6 +231,13 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addOrUpdateCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commercePriceListId, long commerceCurrencyId,
@@ -162,6 +249,13 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList addOrUpdateCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commercePriceListId, long commerceCurrencyId, String name,
@@ -266,6 +360,12 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId,
 			long parentCommercePriceListId, String name, double priority,
@@ -276,6 +376,12 @@ public interface CommercePriceListService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId, String name,
 			double priority, int displayDateMonth, int displayDateDay,

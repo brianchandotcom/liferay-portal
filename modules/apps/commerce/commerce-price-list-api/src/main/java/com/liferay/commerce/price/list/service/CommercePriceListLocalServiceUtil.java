@@ -85,6 +85,13 @@ public class CommercePriceListLocalServiceUtil {
 		return getService().addCommercePriceList(commercePriceList);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId,
 			long parentCommercePriceListId, String name, double priority,
@@ -104,6 +111,13 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId, String name,
 			double priority, int displayDateMonth, int displayDateDay,
@@ -122,6 +136,13 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId, String type,
 			long parentCommercePriceListId, String name, double priority,
@@ -142,6 +163,13 @@ public class CommercePriceListLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			long groupId, long userId, long commerceCurrencyId, String type,
 			String name, double priority, int displayDateMonth,
@@ -161,6 +189,13 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, boolean netPrice,
@@ -204,6 +239,13 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, long parentCommercePriceListId,
@@ -225,6 +267,13 @@ public class CommercePriceListLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, String name, double priority,
@@ -244,6 +293,13 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commerceCurrencyId, String type,
@@ -316,7 +372,12 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param neverExpire
 	 * @param serviceContext
 	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	public static CommercePriceList addOrUpdateCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commercePriceListId, long commerceCurrencyId,
@@ -338,6 +399,13 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addOrUpdateCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commercePriceListId, long commerceCurrencyId, String name,
@@ -358,6 +426,13 @@ public class CommercePriceListLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList addOrUpdateCommercePriceList(
 			String externalReferenceCode, long groupId, long userId,
 			long commercePriceListId, long commerceCurrencyId, String type,
@@ -1030,6 +1105,12 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId,
 			long parentCommercePriceListId, String name, double priority,
@@ -1049,6 +1130,12 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId, String name,
 			double priority, int displayDateMonth, int displayDateDay,
@@ -1067,6 +1154,13 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, String, long, boolean,
+	 String, double, int, int, int, int, int, int, int, int, int, int, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId, String type,
 			long parentCommercePriceListId, boolean catalogBasePriceList,

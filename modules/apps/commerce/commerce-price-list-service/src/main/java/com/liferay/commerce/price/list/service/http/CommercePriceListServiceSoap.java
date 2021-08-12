@@ -63,6 +63,13 @@ import java.rmi.RemoteException;
 @Deprecated
 public class CommercePriceListServiceSoap {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addCommercePriceList(
 				long groupId, long userId, long commerceCurrencyId,
@@ -95,6 +102,13 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addCommercePriceList(
 				long groupId, long userId, long commerceCurrencyId,
@@ -127,6 +141,13 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addCommercePriceList(
 				long groupId, long userId, long commerceCurrencyId, String name,
@@ -157,6 +178,48 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
+			addCommercePriceList(
+				String externalReferenceCode, long groupId,
+				long commerceCurrencyId, boolean netPrice, String type,
+				long parentCommercePriceListId, boolean catalogBasePriceList,
+				String name, double priority, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceList
+				returnValue = CommercePriceListServiceUtil.addCommercePriceList(
+					externalReferenceCode, groupId, commerceCurrencyId,
+					netPrice, type, parentCommercePriceListId,
+					catalogBasePriceList, name, priority, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.price.list.model.CommercePriceListSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addCommercePriceList(
 				String externalReferenceCode, long groupId, long userId,
@@ -190,6 +253,13 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addCommercePriceList(
 				String externalReferenceCode, long groupId, long userId,
@@ -225,6 +295,13 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addCommercePriceList(
 				String externalReferenceCode, long groupId, long userId,
@@ -258,6 +335,13 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addCommercePriceList(
 				String externalReferenceCode, long groupId, long userId,
@@ -290,6 +374,50 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
+			addOrUpdateCommercePriceList(
+				String externalReferenceCode, long groupId,
+				long commercePriceListId, long commerceCurrencyId,
+				boolean netPrice, String type, long parentCommercePriceListId,
+				boolean catalogBasePriceList, String name, double priority,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceList
+				returnValue =
+					CommercePriceListServiceUtil.addOrUpdateCommercePriceList(
+						externalReferenceCode, groupId, commercePriceListId,
+						commerceCurrencyId, netPrice, type,
+						parentCommercePriceListId, catalogBasePriceList, name,
+						priority, displayDateMonth, displayDateDay,
+						displayDateYear, displayDateHour, displayDateMinute,
+						expirationDateMonth, expirationDateDay,
+						expirationDateYear, expirationDateHour,
+						expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.price.list.model.CommercePriceListSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, boolean, String,
+	 long, boolean, String, double, int, int, int,  int, int, int, int, int,
+	 int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addOrUpdateCommercePriceList(
 				String externalReferenceCode, long groupId, long userId,
@@ -327,6 +455,13 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addOrUpdateCommercePriceList(
 				String externalReferenceCode, long groupId, long userId,
@@ -363,6 +498,13 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			addOrUpdateCommercePriceList(
 				String externalReferenceCode, long groupId, long userId,
@@ -700,6 +842,12 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			updateCommercePriceList(
 				long commercePriceListId, long commerceCurrencyId,
@@ -734,6 +882,12 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap
 			updateCommercePriceList(
 				long commercePriceListId, long commerceCurrencyId, String name,

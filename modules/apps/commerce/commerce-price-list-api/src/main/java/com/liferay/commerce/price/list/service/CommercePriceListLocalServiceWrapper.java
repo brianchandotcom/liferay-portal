@@ -81,6 +81,13 @@ public class CommercePriceListLocalServiceWrapper
 			commercePriceList);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -102,6 +109,13 @@ public class CommercePriceListLocalServiceWrapper
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -122,6 +136,13 @@ public class CommercePriceListLocalServiceWrapper
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -144,6 +165,13 @@ public class CommercePriceListLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -165,6 +193,13 @@ public class CommercePriceListLocalServiceWrapper
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -212,6 +247,13 @@ public class CommercePriceListLocalServiceWrapper
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -235,6 +277,13 @@ public class CommercePriceListLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -256,6 +305,13 @@ public class CommercePriceListLocalServiceWrapper
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceList(String, long, long, long, boolean, String, long,
+	 boolean, String, double, int, int, int, int, int, int, int, int, int, int,
+	 boolean, serviceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addCommercePriceList(
@@ -332,7 +388,12 @@ public class CommercePriceListLocalServiceWrapper
 	 * @param neverExpire
 	 * @param serviceContext
 	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addOrUpdateCommercePriceList(
@@ -356,6 +417,13 @@ public class CommercePriceListLocalServiceWrapper
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addOrUpdateCommercePriceList(
@@ -378,6 +446,13 @@ public class CommercePriceListLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOrUpdateCommercePriceList(String, long, long, long, long, boolean,
+	 String, long, boolean, String, double, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			addOrUpdateCommercePriceList(
@@ -1189,6 +1264,12 @@ public class CommercePriceListLocalServiceWrapper
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			updateCommercePriceList(
@@ -1210,6 +1291,12 @@ public class CommercePriceListLocalServiceWrapper
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, long, String, double, int,
+	 int, int, int, int, int, int, int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			updateCommercePriceList(
@@ -1230,6 +1317,13 @@ public class CommercePriceListLocalServiceWrapper
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateCommercePriceList(long, long, boolean, String, long, boolean,
+	 String, double, int, int, int, int, int, int, int, int, int, int, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			updateCommercePriceList(

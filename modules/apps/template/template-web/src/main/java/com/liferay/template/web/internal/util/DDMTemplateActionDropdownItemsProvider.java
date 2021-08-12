@@ -53,31 +53,55 @@ public class DDMTemplateActionDropdownItemsProvider {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		return DropdownItemListBuilder.add(
-			() -> DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), _ddmTemplate,
-				ActionKeys.UPDATE),
-			_getEditDDMTemplateActionUnsafeConsumer()
-		).add(
-			() ->
-				_addDDMTemplateEnabled &&
-				DDMTemplatePermission.containsAddTemplatePermission(
-					_themeDisplay.getPermissionChecker(),
-					_themeDisplay.getScopeGroupId(),
-					_ddmTemplate.getClassNameId(),
-					_ddmTemplate.getResourceClassNameId()),
-			_getCopyDDMTemplateActionUnsafeConsumer()
-		).add(
-			() -> DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), _ddmTemplate,
-				ActionKeys.DELETE),
-			_getDeleteDDMTemplateActionUnsafeConsumer()
-		).add(
-			() -> DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), _ddmTemplate,
-				ActionKeys.PERMISSIONS),
-			_getPermissionsDDMTemplateActionUnsafeConsumer()
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> DDMTemplatePermission.contains(
+							_themeDisplay.getPermissionChecker(), _ddmTemplate,
+							ActionKeys.UPDATE),
+						_getEditDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							_addDDMTemplateEnabled &&
+							DDMTemplatePermission.containsAddTemplatePermission(
+								_themeDisplay.getPermissionChecker(),
+								_themeDisplay.getScopeGroupId(),
+								_ddmTemplate.getClassNameId(),
+								_ddmTemplate.getResourceClassNameId()),
+						_getCopyDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> DDMTemplatePermission.contains(
+							_themeDisplay.getPermissionChecker(), _ddmTemplate,
+							ActionKeys.PERMISSIONS),
+						_getPermissionsDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> DDMTemplatePermission.contains(
+							_themeDisplay.getPermissionChecker(), _ddmTemplate,
+							ActionKeys.DELETE),
+						_getDeleteDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

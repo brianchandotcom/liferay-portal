@@ -110,12 +110,13 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 				diagramEntry.getDiagram(),
 				cpDefinitionDiagramEntry.isDiagram()),
 			GetterUtil.get(
-				diagramEntry.getNumber(), cpDefinitionDiagramEntry.getNumber()),
-			GetterUtil.get(
 				diagramEntry.getQuantity(),
 				cpDefinitionDiagramEntry.getQuantity()),
 			GetterUtil.get(
 				diagramEntry.getSku(), cpDefinitionDiagramEntry.getSku()),
+			GetterUtil.get(
+				diagramEntry.getSequence(),
+				cpDefinitionDiagramEntry.getSequence()),
 			new ServiceContext());
 
 		return _toDiagramEntry(
@@ -167,9 +168,9 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 				GetterUtil.getString(diagramEntry.getSkuUuid()),
 				GetterUtil.getLong(diagramEntry.getProductId()),
 				GetterUtil.getBoolean(diagramEntry.getDiagram()),
-				GetterUtil.getInteger(diagramEntry.getNumber()),
 				GetterUtil.getInteger(diagramEntry.getQuantity()),
 				GetterUtil.getString(diagramEntry.getSku()),
+				GetterUtil.getString(diagramEntry.getSequence()),
 				new ServiceContext());
 
 		return _toDiagramEntry(

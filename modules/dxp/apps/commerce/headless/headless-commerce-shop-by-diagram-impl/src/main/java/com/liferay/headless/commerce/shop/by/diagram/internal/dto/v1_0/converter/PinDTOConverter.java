@@ -51,9 +51,9 @@ public class PinDTOConverter
 		return new Pin() {
 			{
 				id = cpDefinitionDiagramPin.getCPDefinitionDiagramPinId();
-				number = cpDefinitionDiagramPin.getNumber();
 				positionX = cpDefinitionDiagramPin.getPositionX();
 				positionY = cpDefinitionDiagramPin.getPositionY();
+				sequence = cpDefinitionDiagramPin.getSequence();
 
 				setDiagramEntry(
 					() -> {
@@ -61,7 +61,7 @@ public class PinDTOConverter
 							_cpDefinitionDiagramEntryService.
 								fetchCPDefinitionDiagramEntry(
 									cpDefinitionDiagramPin.getCPDefinitionId(),
-									cpDefinitionDiagramPin.getNumber());
+									cpDefinitionDiagramPin.getSequence());
 
 						if (cpDefinitionDiagramEntry == null) {
 							return null;

@@ -56,9 +56,9 @@ public class DiagramEntryDTOConverter
 				diagram = cpDefinitionDiagramEntry.isDiagram();
 				expando = expandoBridge.getAttributes();
 				id = cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId();
-				number = cpDefinitionDiagramEntry.getNumber();
 				productId = cpDefinitionDiagramEntry.getCProductId();
 				quantity = cpDefinitionDiagramEntry.getQuantity();
+				sequence = cpDefinitionDiagramEntry.getSequence();
 				sku = cpDefinitionDiagramEntry.getSku();
 				skuUuid = cpDefinitionDiagramEntry.getCPInstanceUuid();
 			}

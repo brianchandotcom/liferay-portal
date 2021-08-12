@@ -108,11 +108,12 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 		_cpDefinitionDiagramPinService.updateCPDefinitionDiagramPin(
 			cpDefinitionDiagramPin.getCPDefinitionDiagramPinId(),
-			GetterUtil.get(pin.getNumber(), cpDefinitionDiagramPin.getNumber()),
 			GetterUtil.get(
 				pin.getPositionX(), cpDefinitionDiagramPin.getPositionX()),
 			GetterUtil.get(
-				pin.getPositionY(), cpDefinitionDiagramPin.getPositionY()));
+				pin.getPositionY(), cpDefinitionDiagramPin.getPositionY()),
+			GetterUtil.get(
+				pin.getSequence(), cpDefinitionDiagramPin.getSequence()));
 
 		return _toPin(cpDefinitionDiagramPin.getCPDefinitionDiagramPinId());
 	}
@@ -153,9 +154,9 @@ public class PinResourceImpl extends BasePinResourceImpl {
 		CPDefinitionDiagramPin cpDefinitionDiagramPin =
 			_cpDefinitionDiagramPinService.addCPDefinitionDiagramPin(
 				contextUser.getUserId(), cpDefinitionId,
-				GetterUtil.getInteger(pin.getNumber()),
 				GetterUtil.getDouble(pin.getPositionX()),
-				GetterUtil.getDouble(pin.getPositionY()));
+				GetterUtil.getDouble(pin.getPositionY()),
+				GetterUtil.getString(pin.getSequence()));
 
 		return _toPin(cpDefinitionDiagramPin.getCPDefinitionDiagramPinId());
 	}

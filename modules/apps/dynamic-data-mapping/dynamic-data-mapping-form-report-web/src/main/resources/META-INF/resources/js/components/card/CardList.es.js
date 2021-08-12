@@ -69,14 +69,17 @@ const chartFactory = ({
 			);
 		}
 
+		case 'checkbox':
 		case 'radio':
-		case 'select':
+		case 'select': {
 			return (
 				<PieChart
 					data={toDataArray(options, values)}
 					totalEntries={sumTotalValues}
 				/>
 			);
+		}
+
 		case 'address':
 		case 'city':
 		case 'color':

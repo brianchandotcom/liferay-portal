@@ -277,7 +277,7 @@ paths:
         get:
             description:
                 Retrieves the plan logs.
-            operationId: getLogsPage
+            operationId: getPlanLogsPage
             parameters:
                 - in: path
                   description:

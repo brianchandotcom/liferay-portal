@@ -9,9 +9,7 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="numericField_masked"
       placeholder="+__ (__) ____-____"
       type="text"
@@ -39,9 +37,7 @@ exports[`Field Numeric has a helptext 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value=""
@@ -74,9 +70,7 @@ exports[`Field Numeric has a key 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value=""
@@ -103,9 +97,7 @@ exports[`Field Numeric has a label 1`] = `
       label
     </label>
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value=""
@@ -129,9 +121,7 @@ exports[`Field Numeric has a name 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="numericField"
       type="text"
       value=""
@@ -153,9 +143,7 @@ exports[`Field Numeric has a placeholder 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       placeholder="Placeholder"
       type="text"
@@ -178,9 +166,7 @@ exports[`Field Numeric has a value 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value="123"
@@ -203,10 +189,8 @@ exports[`Field Numeric has an id 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
+      class="form-control ddm-form-field-type__numeric--rtl"
       id="ID"
-      lang="en_US"
       name="undefined"
       type="text"
       value=""
@@ -228,9 +212,7 @@ exports[`Field Numeric is not readOnly 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value=""
@@ -252,9 +234,7 @@ exports[`Field Numeric is not required 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value=""
@@ -281,9 +261,7 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
       Numeric Field
     </label>
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value=""
@@ -305,9 +283,7 @@ exports[`Field Numeric renders the default markup 1`] = `
     tabindex="0"
   >
     <input
-      class="form-control"
-      dir="rtl"
-      lang="en_US"
+      class="form-control ddm-form-field-type__numeric--rtl"
       name="undefined"
       type="text"
       value=""

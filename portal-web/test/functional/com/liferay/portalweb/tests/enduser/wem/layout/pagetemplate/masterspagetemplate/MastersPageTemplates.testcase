@@ -398,13 +398,6 @@ definition {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",
 				layoutPageTemplateCollectionName = "Page Template Collection");
-
-			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection",
-				layoutPageTemplateEntryName = "Page Template Name 1",
-				layoutPageTemplateStatus = "Draft",
-				layoutPageTemplateType = "Content Page Template");
 		}
 
 		task ("Add a content page template based on Blank") {
@@ -1517,20 +1510,12 @@ definition {
 			Uncheck.uncheckToggleSwitch(
 				key_fragmentName = "Heading",
 				locator1 = "Checkbox#ALLOWED_FRAGMENT");
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_fragmentName = "Heading",
-				locator1 = "Checkbox#ALLOWED_FRAGMENT");
 		}
 
 		task ("Go to configure allowed frgaments and check button fragment") {
 			MastersPageTemplates.searchAllowedFragments(searchValue = "Button");
 
 			Check.checkToggleSwitch(
-				key_fragmentName = "Button",
-				locator1 = "Checkbox#ALLOWED_FRAGMENT");
-
-			AssertChecked.assertCheckedNotVisible(
 				key_fragmentName = "Button",
 				locator1 = "Checkbox#ALLOWED_FRAGMENT");
 

@@ -135,9 +135,12 @@ definition {
 	}
 
 	macro editTextCriterion {
-		var key_TextInput = "${textInput}";
+		if (!(isSet(index))) {
+			var index = "1";
+		}
 
 		Type(
+			index = "${index}",
 			locator1 = "ACSegments#TEXT_INPUT",
 			value1 = "${textInput}");
 	}

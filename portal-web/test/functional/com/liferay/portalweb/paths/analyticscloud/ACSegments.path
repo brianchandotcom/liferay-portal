@@ -37,6 +37,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERIA_ELLIPSIS</td>
+	<td>xpath=(//div[contains(@class,'criterion')][.//div[contains(@class,'display-value')][normalize-space(text())='${criteriaName}']]//button[contains(@class,'dropdown-toggle')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_TYPE_DROPDOWN</td>
 	<td>//div[@class='dropdown dropdown-root']/button</td>
 	<td></td>

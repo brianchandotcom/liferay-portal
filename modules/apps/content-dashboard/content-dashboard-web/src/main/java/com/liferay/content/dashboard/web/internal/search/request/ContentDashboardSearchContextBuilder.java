@@ -86,7 +86,8 @@ public class ContentDashboardSearchContextBuilder {
 						_httpServletRequest, "assetCategoryId"),
 					_assetCategoryLocalService, _assetVocabularyLocalService),
 				ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
-				ParamUtil.getLongValues(_httpServletRequest, "authorIds")));
+				ParamUtil.getLongValues(_httpServletRequest, "authorIds"),
+				ParamUtil.getStringValues(_httpServletRequest, "extension")));
 
 		String[] contentDashboardItemSubtypePayloads =
 			ParamUtil.getParameterValues(
@@ -234,7 +235,7 @@ public class ContentDashboardSearchContextBuilder {
 
 	private BooleanClause[] _getBooleanClauses(
 		AssetCategoryIds assetCategoryIds, String[] assetTagNames,
-		long[] authorIds) {
+		long[] authorIds, String[] extensions) {
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
@@ -264,12 +265,33 @@ public class ContentDashboardSearchContextBuilder {
 				authorIdsFilterOptional.get(), BooleanClauseOccur.MUST);
 		}
 
+		Optional<Filter> extensionsFilterOptional =
+			_getExtensionsFilterOptional(extensions);
+
+		extensionsFilterOptional.map(
+			extensionsFilter -> booleanFilter.add(
+				extensionsFilterOptional.get(), BooleanClauseOccur.MUST));
+
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
 		return new BooleanClause[] {
 			BooleanClauseFactoryUtil.create(
 				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
 		};
+	}
+
+	private Optional<Filter> _getExtensionsFilterOptional(String[] extensions) {
+		if (ArrayUtil.isEmpty(extensions)) {
+			return Optional.empty();
+		}
+
+		TermsFilter termsFilter = new TermsFilter("fileExtension");
+
+		for (String extension : extensions) {
+			termsFilter.addValue(extension);
+		}
+
+		return Optional.of(termsFilter);
 	}
 
 	private BooleanFilter _getTermsFilter(String field, long[] values) {

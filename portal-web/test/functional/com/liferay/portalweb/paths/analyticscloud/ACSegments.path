@@ -223,16 +223,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DUPLICATE_SEGMENT_CRITERION</td>
-	<td>//button[@aria-label='Duplicate']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_SEGMENT_CRITERION</td>
-	<td>//button[@aria-label='Delete']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEGMENT_CRITERION_ITEM</td>
 	<td>//div[@class='sidebar-collapse']//li[text()='${segmentField}']</td>
 	<td></td>

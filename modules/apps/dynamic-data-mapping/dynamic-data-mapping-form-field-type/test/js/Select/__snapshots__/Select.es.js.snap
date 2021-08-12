@@ -415,37 +415,6 @@ exports[`Select filters according to the input and calls onChange callback when 
             <button
               class="dropdown-item"
               data-testid="dropdownItem-0"
-              label="choose-an-option"
-            >
-              <div
-                class="custom-control custom-checkbox"
-              >
-                <label>
-                  <input
-                    aria-label="choose-an-option"
-                    class="custom-control-input"
-                    data-testid="labelItem-null"
-                    type="checkbox"
-                  />
-                  <span
-                    class="custom-control-label"
-                  >
-                    <span
-                      class="custom-control-label-text"
-                    >
-                      choose-an-option
-                    </span>
-                  </span>
-                </label>
-              </div>
-            </button>
-          </li>
-          <li
-            aria-selected="false"
-          >
-            <button
-              class="dropdown-item"
-              data-testid="dropdownItem-1"
               label="label1"
             >
               <div
@@ -476,7 +445,7 @@ exports[`Select filters according to the input and calls onChange callback when 
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-2"
+              data-testid="dropdownItem-1"
               label="label10"
             >
               <div
@@ -507,7 +476,7 @@ exports[`Select filters according to the input and calls onChange callback when 
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-3"
+              data-testid="dropdownItem-2"
               label="label11"
             >
               <div
@@ -538,7 +507,7 @@ exports[`Select filters according to the input and calls onChange callback when 
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-4"
+              data-testid="dropdownItem-3"
               label="label12"
             >
               <div
@@ -1898,37 +1867,6 @@ exports[`Select shows a search input when the number of options is more than the
             <button
               class="dropdown-item"
               data-testid="dropdownItem-0"
-              label="choose-an-option"
-            >
-              <div
-                class="custom-control custom-checkbox"
-              >
-                <label>
-                  <input
-                    aria-label="choose-an-option"
-                    class="custom-control-input"
-                    data-testid="labelItem-null"
-                    type="checkbox"
-                  />
-                  <span
-                    class="custom-control-label"
-                  >
-                    <span
-                      class="custom-control-label-text"
-                    >
-                      choose-an-option
-                    </span>
-                  </span>
-                </label>
-              </div>
-            </button>
-          </li>
-          <li
-            aria-selected="false"
-          >
-            <button
-              class="dropdown-item"
-              data-testid="dropdownItem-1"
               label="label1"
             >
               <div
@@ -1959,7 +1897,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-2"
+              data-testid="dropdownItem-1"
               label="label2"
             >
               <div
@@ -1990,7 +1928,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-3"
+              data-testid="dropdownItem-2"
               label="label3"
             >
               <div
@@ -2021,7 +1959,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-4"
+              data-testid="dropdownItem-3"
               label="label4"
             >
               <div
@@ -2052,7 +1990,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-5"
+              data-testid="dropdownItem-4"
               label="label5"
             >
               <div
@@ -2083,7 +2021,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-6"
+              data-testid="dropdownItem-5"
               label="label6"
             >
               <div
@@ -2114,7 +2052,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-7"
+              data-testid="dropdownItem-6"
               label="label7"
             >
               <div
@@ -2145,7 +2083,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-8"
+              data-testid="dropdownItem-7"
               label="label8"
             >
               <div
@@ -2176,7 +2114,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-9"
+              data-testid="dropdownItem-8"
               label="label9"
             >
               <div
@@ -2207,7 +2145,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-10"
+              data-testid="dropdownItem-9"
               label="label10"
             >
               <div
@@ -2238,7 +2176,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-11"
+              data-testid="dropdownItem-10"
               label="label11"
             >
               <div
@@ -2269,7 +2207,7 @@ exports[`Select shows a search input when the number of options is more than the
           >
             <button
               class="dropdown-item"
-              data-testid="dropdownItem-12"
+              data-testid="dropdownItem-11"
               label="label12"
             >
               <div

@@ -154,8 +154,6 @@ public class GetEntryRenderDataMVCResourceCommand
 			changeType = "deleted";
 		}
 
-		JSONObject jsonObject = JSONUtil.put("changeType", changeType);
-
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 		HttpServletResponse httpServletResponse =
@@ -163,13 +161,14 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
+		String editURL = null;
 		String rightContent = null;
 		String rightRender = null;
 		T rightModel = null;
+		String rightTitle = null;
 
 		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION) {
-			jsonObject.put(
-				"rightTitle", _language.get(httpServletRequest, "publication"));
+			rightTitle = _language.get(httpServletRequest, "publication");
 
 			long ctCollectionId = ctCollection.getCtCollectionId();
 
@@ -191,12 +190,8 @@ public class GetEntryRenderDataMVCResourceCommand
 					resourceRequest, "activeCTCollection");
 
 				if (activeCTCollection) {
-					String editURL = ctDisplayRenderer.getEditURL(
+					editURL = ctDisplayRenderer.getEditURL(
 						httpServletRequest, rightModel);
-
-					if (editURL != null) {
-						jsonObject.put("editURL", editURL);
-					}
 				}
 
 				rightContent = _getContent(
@@ -223,6 +218,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		String leftContent = null;
 		T leftModel = null;
 		String leftRender = null;
+		String leftTitle = null;
 
 		if ((ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) &&
 			(rightModel != null)) {
@@ -248,27 +244,21 @@ public class GetEntryRenderDataMVCResourceCommand
 						leftModel);
 
 					if (Validator.isNull(leftVersionName)) {
-						jsonObject.put(
-							"leftTitle",
-							_language.get(httpServletRequest, "production"));
+						leftTitle = _language.get(
+							httpServletRequest, "production");
 					}
 					else {
-						jsonObject.put(
-							"leftTitle",
-							StringBundler.concat(
-								_language.get(httpServletRequest, "version"),
-								": ", leftVersionName, " (",
-								_language.get(httpServletRequest, "production"),
-								")"));
+						leftTitle = StringBundler.concat(
+							_language.get(httpServletRequest, "version"), ": ",
+							leftVersionName, " (",
+							_language.get(httpServletRequest, "production"),
+							")");
 					}
 
-					jsonObject.put(
-						"rightTitle",
-						StringBundler.concat(
-							_language.get(httpServletRequest, "version"), ": ",
-							rightVersionName, " (",
-							_language.get(httpServletRequest, "publication"),
-							")"));
+					rightTitle = StringBundler.concat(
+						_language.get(httpServletRequest, "version"), ": ",
+						rightVersionName, " (",
+						_language.get(httpServletRequest, "publication"), ")");
 
 					leftContent = _getContent(
 						leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
@@ -284,8 +274,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		else if (ctEntry.getChangeType() !=
 					CTConstants.CT_CHANGE_TYPE_ADDITION) {
 
-			jsonObject.put(
-				"leftTitle", _language.get(httpServletRequest, "production"));
+			leftTitle = _language.get(httpServletRequest, "production");
 
 			leftModel = _ctDisplayRendererRegistry.fetchCTModel(
 				leftCtCollectionId, leftCTSQLMode,
@@ -337,27 +326,21 @@ public class GetEntryRenderDataMVCResourceCommand
 						rightModel);
 
 					if (Validator.isNull(rightVersionName)) {
-						jsonObject.put(
-							"rightTitle",
-							_language.get(httpServletRequest, "publication"));
+						rightTitle = _language.get(
+							httpServletRequest, "publication");
 					}
 					else {
-						jsonObject.put(
-							"rightTitle",
-							StringBundler.concat(
-								_language.get(httpServletRequest, "version"),
-								": ", rightVersionName, " (",
-								_language.get(
-									httpServletRequest, "publication"),
-								")"));
+						rightTitle = StringBundler.concat(
+							_language.get(httpServletRequest, "version"), ": ",
+							rightVersionName, " (",
+							_language.get(httpServletRequest, "publication"),
+							")");
 					}
 
-					jsonObject.put(
-						"leftTitle",
-						StringBundler.concat(
-							_language.get(httpServletRequest, "version"), ": ",
-							leftVersionName, " (",
-							_language.get(httpServletRequest, "deleted"), ")"));
+					leftTitle = StringBundler.concat(
+						_language.get(httpServletRequest, "version"), ": ",
+						leftVersionName, " (",
+						_language.get(httpServletRequest, "deleted"), ")");
 
 					rightContent = _getContent(
 						ctCollectionId, ctDisplayRenderer, ctSQLMode,
@@ -369,6 +352,12 @@ public class GetEntryRenderDataMVCResourceCommand
 						CTConstants.TYPE_AFTER);
 				}
 			}
+		}
+
+		JSONObject jsonObject = JSONUtil.put("changeType", changeType);
+
+		if (editURL != null) {
+			jsonObject.put("editURL", editURL);
 		}
 
 		if (leftContent != null) {
@@ -395,12 +384,20 @@ public class GetEntryRenderDataMVCResourceCommand
 			}
 		}
 
+		if (leftTitle != null) {
+			jsonObject.put("leftTitle", leftTitle);
+		}
+
 		if (rightContent != null) {
 			jsonObject.put("rightContent", rightContent);
 		}
 
 		if (rightRender != null) {
 			jsonObject.put("rightRender", rightRender);
+		}
+
+		if (rightTitle != null) {
+			jsonObject.put("rightTitle", rightTitle);
 		}
 
 		return jsonObject;

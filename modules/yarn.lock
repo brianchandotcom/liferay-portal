@@ -951,10 +951,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/css@3.33.0":
-  version "3.33.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.33.0.tgz#870bd16461aa24b50258bf615db0ce7579df72d2"
-  integrity sha512-mOv4xUe+F9I6vPUgjrsnAEYT2MJVXJJiJzEP+m1gRqnQmG4Iy5uze/lWZrnCK1Dn6G8SFZz9P58f4MdvBbHoPg==
+"@clayui/css@3.33.1":
+  version "3.33.1"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.33.1.tgz#5224c1bd916be6fdd0b919d31d33a9c2ff308a3c"
+  integrity sha512-MHHa1ckYy5ZB9xX4RPwRuE79fg/PhHhAQe4WT3JjPCZsr/w2ZR06yAFBODUsVb48zNu6MSYygcojDiuIOgXfOw==
 
 "@clayui/data-provider@3.32.0":
   version "3.32.0"

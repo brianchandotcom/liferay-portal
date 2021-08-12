@@ -32,13 +32,17 @@ definition {
 	@priority = "3"
 	test ViewOrderOfPageTemplatesActions {
 		task ("Add a content page template") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(groupName = "Test Site Name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
-				layoutPageTemplateEntryName = "Page Template Name",
-				layoutPageTemplateStatus = "Approved",
-				layoutPageTemplateType = "Content Page Template");
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Page Template Collection",
+					layoutPageTemplateEntryName = "Page Template Name",
+					layoutPageTemplateStatus = "Approved",
+					layoutPageTemplateType = "Content Page Template");
+
 		}
 		task ("Change template to draft") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");

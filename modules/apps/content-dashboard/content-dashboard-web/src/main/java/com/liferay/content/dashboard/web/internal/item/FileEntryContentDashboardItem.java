@@ -22,6 +22,7 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -42,11 +43,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -434,21 +433,16 @@ public class FileEntryContentDashboardItem
 	}
 
 	private String _getAbsoluteURL(ThemeDisplay themeDisplay) {
-		themeDisplay.getPortalURL();
+		try {
+			return DLURLHelperUtil.getPreviewURL(
+				_fileEntry, _fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK, false, true);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(_portal.getPathContext());
-		sb.append("/documents/");
-		sb.append(_fileEntry.getRepositoryId());
-		sb.append(StringPool.SLASH);
-		sb.append(_fileEntry.getFolderId());
-		sb.append(StringPool.SLASH);
-		sb.append(
-			URLCodec.encodeURL(HtmlUtil.unescape(_fileEntry.getFileName())));
-
-		return sb.toString();
+			return null;
+		}
 	}
 
 	private String _getDownloadURL() {

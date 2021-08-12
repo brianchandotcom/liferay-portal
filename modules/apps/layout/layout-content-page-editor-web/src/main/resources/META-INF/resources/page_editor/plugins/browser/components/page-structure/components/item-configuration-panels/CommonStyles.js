@@ -15,6 +15,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
@@ -32,11 +33,21 @@ export const CommonStyles = ({commonStylesValues, item}) => {
 		(state) => state.selectedViewportSize
 	);
 
+	let styles = commonStyles;
+
+	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
+		styles = styles.filter(
+			(fieldSet) =>
+				config.fragmentsHidingEnabled &&
+				fieldSet.styles.find((field) => field.name === 'display')
+		);
+	}
+
 	return (
 		<>
 			<h1 className="sr-only">{Liferay.Language.get('common-styles')}</h1>
 			<div className="page-editor__row-styles-panel__common-styles">
-				{commonStyles.map((fieldSet, index) => {
+				{styles.map((fieldSet, index) => {
 					return (
 						<FieldSet
 							fields={fieldSet.styles}

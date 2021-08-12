@@ -22,6 +22,8 @@ import {
 	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
+import {useSelector} from '../../contexts/StoreContext';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../Topper';
 import Collection from './Collection';
 import isHovered from './isHovered';
@@ -30,6 +32,17 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 	const [hovered, setHovered] = useState(false);
 
 	const [setRef, itemElement] = useSetRef(ref);
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const responsiveConfig = getResponsiveConfig(
+		item.config,
+		selectedViewportSize
+	);
+
+	const {display} = responsiveConfig.styles;
 
 	return (
 		<>
@@ -44,6 +57,7 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 				})}
 				item={item}
 				itemElement={itemElement}
+				style={{display}}
 			>
 				<Collection item={item} ref={setRef}>
 					{children}

@@ -17,10 +17,12 @@ import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../app/config/constants/
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../../app/config/index';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
 import {CollectionFilterGeneralPanel} from '../components/item-configuration-panels/CollectionFilterGeneralPanel';
 import {CollectionGeneralPanel} from '../components/item-configuration-panels/CollectionGeneralPanel';
+import {CollectionStylesPanel} from '../components/item-configuration-panels/CollectionStylesPanel';
 import ContainerGeneralPanel from '../components/item-configuration-panels/ContainerGeneralPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
@@ -37,6 +39,7 @@ const COLLECTION_FILTER_FRAGMENT_ENTRY_KEY =
 export const PANEL_IDS = {
 	collectionFilterGeneral: 'collectionFilterGeneral',
 	collectionGeneral: 'collectionGeneral',
+	collectionStyles: 'collectionStyles',
 	containerGeneral: 'containerGeneral',
 	containerStyles: 'containerStyles',
 	editableLink: 'editableLink',
@@ -59,10 +62,15 @@ export const PANELS = {
 		label: Liferay.Language.get('general'),
 		priority: 0,
 	},
+	[PANEL_IDS.collectionStyles]: {
+		component: CollectionStylesPanel,
+		label: Liferay.Language.get('styles'),
+		priority: 0,
+	},
 	[PANEL_IDS.containerGeneral]: {
 		component: ContainerGeneralPanel,
 		label: Liferay.Language.get('general'),
-		priority: 0,
+		priority: 1,
 	},
 	[PANEL_IDS.containerStyles]: {
 		component: ContainerStylesPanel,
@@ -160,6 +168,8 @@ export const selectPanels = (
 			[PANEL_IDS.collectionGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemConfiguration,
+			[PANEL_IDS.collectionStyles]:
+				canUpdateItemConfiguration && config.fragmentsHidingEnabled,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {

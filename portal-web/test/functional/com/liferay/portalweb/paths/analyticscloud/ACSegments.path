@@ -127,6 +127,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_CRITERIA_CONJUNCTION</td>
+	<td>xpath=(//div[contains(@class,'conjunction')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_CRITERIA_TYPE</td>
 	<td>xpath=(//div[@class='criteria-row'][normalize-space(text())='${type}'])[${index}]</td>
 	<td></td>

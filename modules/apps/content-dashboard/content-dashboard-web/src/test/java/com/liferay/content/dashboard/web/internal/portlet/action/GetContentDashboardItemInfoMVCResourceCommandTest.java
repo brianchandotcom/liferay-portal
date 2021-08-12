@@ -24,6 +24,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -103,6 +104,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"className", infoItemReference.getClassName());
 		mockLiferayResourceRequest.addParameter(
 			"classPK", String.valueOf(infoItemReference.getClassPK()));
+		mockLiferayResourceRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
@@ -149,6 +152,15 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			contentDashboardItemSubtype.getLabel(LocaleUtil.US),
 			jsonObject.getString("subType"));
+
+		Assert.assertEquals(
+			contentDashboardItem
+				.getSpecificInformationJSONObject("backURL",
+					PortalUtil.getPortal().getLiferayPortletResponse(mockLiferayResourceResponse),
+					Locale.US,
+					(ThemeDisplay)mockLiferayResourceRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)).toString(),
+			jsonObject.getJSONObject("specificFields").toString());
 
 		List<ContentDashboardItem.Version> versions =
 			contentDashboardItem.getVersions(LocaleUtil.US);
@@ -293,7 +305,15 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				String backURL, LiferayPortletResponse liferayPortletResponse,
 				Locale locale, ThemeDisplay themeDisplay) {
 
-				return null;
+				return new JSONObjectImpl()
+					.put("description", "My very important description")
+					.put("downloadURL", "www.download.url.com/download")
+					.put("extension", ".pdf")
+					.put("fileName", "MyDocument")
+					.put("previewImageURL", "www.previewImage.url.com/previewImage")
+					.put("previewURL", "www.previewURL.url.com/previewURL")
+					.put("size", "5")
+					.put("viewURL", "www.viewURL.url.com/viewURL");
 			}
 
 			@Override

@@ -211,6 +211,18 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
 		Blogs.addEntry(
 			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
 			entryContent = "video",
@@ -518,6 +530,8 @@ definition {
 	@refactordone
 	test CanManuallySaveAsDraft {
 		property portal.acceptance = "true";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",

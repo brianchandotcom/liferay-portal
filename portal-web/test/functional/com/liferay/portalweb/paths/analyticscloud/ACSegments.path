@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>DUPLICATED_CRITERIA</td>
-	<td>(//div[@class='criteria-statement']//div[text()='${criteriaName}'])[${totalCriteriaCount}]</td>
+	<td>xpath=(//div[@class='criteria-statement']//div[text()='${criteriaName}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

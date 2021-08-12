@@ -157,7 +157,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEGMENT_ELLIPSES</td>
+	<td>SEGMENT_ELLIPSIS</td>
 	<td>//div[contains(@class,'dropdown')]/button[contains(@class,'component')]</td>
 	<td></td>
 </tr>

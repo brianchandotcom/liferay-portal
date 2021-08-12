@@ -115,10 +115,7 @@ definition {
 	}
 
 	macro goToInstanceSettingsAC {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		Click(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_DXP_OPTION");
 	}

@@ -332,7 +332,10 @@ definition {
 		while ("${i}" != "${totalCriteriaCount}") {
 			var i = ${i} + 1;
 
-			AssertElementPresent(locator1 = "ACSegments#DUPLICATED_CRITERIA");
+			AssertVisible(
+				criteriaName = "${criteriaName}",
+				index = "${i}",
+				locator1 = "ACSegments#DUPLICATED_CRITERIA");
 		}
 	}
 

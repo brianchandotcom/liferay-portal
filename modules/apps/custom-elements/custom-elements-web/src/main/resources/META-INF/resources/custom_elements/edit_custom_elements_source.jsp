@@ -41,14 +41,11 @@ renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(reques
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="name">
-				</aui:input>
+				<aui:input name="name" />
 
-				<aui:input name="HTMLElementName">
-				</aui:input>
+				<aui:input fieldParam="htmlElementName" name="HTMLElementName" />
 
-				<aui:input name="URL">
-				</aui:input>
+				<aui:input fieldParam="url" name="URL" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

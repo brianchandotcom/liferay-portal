@@ -49,8 +49,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 
 		<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalURL" />
 
-		<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="internalClassName" />
-
 		<%
 		SelectHeadlessEndpointDisplayContext selectHeadlessEndpointDisplayContext = (SelectHeadlessEndpointDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 		%>
@@ -67,14 +65,18 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 					name='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
 					options="<%= selectHeadlessEndpointDisplayContext.getHeadlessEndpointSelectOptions() %>"
 				/>
+			</clay:col>
 
+			<clay:col
+				md="6"
+			>
 				<clay:select
 					containerCssClass="custom-container-css-class"
 					cssClass="custom-css-class"
 					disabled="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "headlessEndpointSchema" %>'
-					label="headless-endpoint-schema"
-					name='<%= liferayPortletResponse.getNamespace() + "headlessEndpointSchema" %>'
+					id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
+					label="internal-class-name"
+					name='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
 					options="<%= selectHeadlessEndpointDisplayContext.getHeadlessEndpointSelectOptions() %>"
 				/>
 			</clay:col>
@@ -84,23 +86,47 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			<c:if test="<%= batchPlannerPlanId > 0 %>">
 				<c:forEach items="<%= BatchPlannerPolicyServiceUtil.getBatchPlannerPolicies(batchPlannerPlanId) %>" var="batchPlannerPolicy">
 					<div class="form-group-item">
-						<aui:input name="name${batchPlannerPolicy.batchPlannerPolicyId}" value="${batchPlannerPolicy.name}" />
+						<aui:input name="policyName_${batchPlannerPolicy.batchPlannerPolicyId}" value="${batchPlannerPolicy.name}" />
 					</div>
 
 					<div class="form-group-item">
-						<aui:input name="value${batchPlannerPolicy.batchPlannerPolicyId}" value="${batchPlannerPolicy.value}" />
+						<aui:input name="policyValue_${batchPlannerPolicy.batchPlannerPolicyId}" value="${batchPlannerPolicy.value}" />
 					</div>
 				</c:forEach>
 			</c:if>
 
 			<div class="form-group-item">
-				<aui:input name="nameDefaultId" placeholder="name policy" value="" />
+				<aui:input name="policyName_0" placeholder="name policy" value="" />
 			</div>
 
 			<div class="form-group-item">
-				<aui:input name="valueDefaultId" placeholder="policy value" value="" />
+				<aui:input name="policyValue_0" placeholder="policy value" value="" />
 			</div>
 		</div>
+
+		<clay:content-section>
+			<clay:row
+				cssClass="plan-mappings"
+			>
+
+			</clay:row>
+
+			<clay:row
+				cssClass="hide plan-mappings-template"
+			>
+				<clay:col
+					md="6"
+				>
+					<aui:input name="externalFieldName_ID_TEMPLATE" placeholder="external field name" value="" />
+				</clay:col>
+
+				<clay:col
+					md="6"
+				>
+					<aui:input name="internalFieldName_ID_TEMPLATE" placeholder="open API field name" value="VALUE_TEMPLATE" />
+				</clay:col>
+			</clay:row>
+		</clay:content-section>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
@@ -114,7 +140,84 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	A.one('#<portlet:namespace />headlessEndpoint').on('change', function (event) {
 		this.attr('disabled', true);
 
+		var openapiDiscoveryURL = A.one(
+			'#<portlet:namespace />headlessEndpoint'
+		).val();
+
+		Liferay.Util.fetch(openapiDiscoveryURL, {
+			method: 'GET',
+			credentials: 'include',
+			headers: [
+				['content-type', 'application/json'],
+				['x-csrf-token', window.Liferay.authToken],
+			],
+		})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Failed to fetch: '${openapiDiscoveryURL}'`);
+				}
+
+				return response.json();
+			})
+			.then((jsonResponse) => {
+				var internalClassName = A.one(
+					'#<portlet:namespace />internalClassName'
+				);
+
+				internalClassName.empty();
+
+				let schemas = jsonResponse.components.schemas;
+
+				for (key in schemas) {
+					let properties = schemas[key].properties;
+
+					if (!properties || !properties['x-class-name']) {
+						continue;
+					}
+
+					let xClassName = properties['x-class-name'];
+
+					internalClassName.appendChild(
+						'<option value="' +
+							xClassName.default +
+							'">' +
+							key +
+							'</option>'
+					);
+				}
+
+				renderMappings();
+
+				internalClassName.attr('disabled', false);
+			})
+			.catch((response) => {
+				alert('FETCH failed ' + response);
+			})
+			.then(() => {
+				A.one('#<portlet:namespace />headlessEndpoint').attr(
+					'disabled',
+					false
+				);
+			});
+	});
+	A.one('#<portlet:namespace />internalClassName').on('change', function (event) {
+		this.attr('disabled', true);
+
+		renderMappings();
+
+		this.attr('disabled', false);
+	});
+
+	function renderMappings() {
 		var openapiURL = A.one('#<portlet:namespace />headlessEndpoint').val();
+
+		var internalClassName = A.one(
+			'#<portlet:namespace />internalClassName'
+		).val();
+
+		internalClassName = internalClassName.substr(
+			internalClassName.lastIndexOf('.') + 1
+		);
 
 		Liferay.Util.fetch(openapiURL, {
 			method: 'GET',
@@ -132,16 +235,31 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				return response.json();
 			})
 			.then((jsonResponse) => {
-				alert('I see dead objects: ' + jsonResponse.components);
+				let schemas = jsonResponse.components.schemas;
+
+				let schemaEntry = schemas[internalClassName];
+
+				var mappingArea = A.one('.plan-mappings');
+				var mappingRowTemplate = A.one(
+					'.plan-mappings-template'
+				).getContent();
+
+				mappingArea.empty();
+
+				let curId = 1;
+
+				for (key in schemaEntry.properties) {
+					let mappingRow = mappingRowTemplate
+						.replaceAll('ID_TEMPLATE', curId)
+						.replace('VALUE_TEMPLATE', key);
+
+					mappingArea.append(mappingRow);
+
+					curId++;
+				}
 			})
 			.catch((response) => {
 				alert('FETCH failed ' + response);
-			})
-			.then(() => {
-				A.one('#<portlet:namespace />headlessEndpoint').attr(
-					'disabled',
-					false
-				);
 			});
-	});
+	}
 </aui:script>

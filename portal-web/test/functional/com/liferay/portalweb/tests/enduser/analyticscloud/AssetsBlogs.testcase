@@ -87,6 +87,69 @@ definition {
 			value1 = "There are no Blogs found.");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
+	@ignore = "true"
+	@priority = "5"
+	test AssertAppearsOnListShowsPagesBlogExists {
+
+		// TODO LRAC-8387 AssertAppearsOnListShowsPagesBlogExists
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8384 | Test Summary: Assert 180 day time filter in Blogs"
+	@ignore = "true"
+	@priority = "3"
+	test AssertBlogsPageTImeFilter180Days {
+
+		// TODO LRAC-8384 AssertBlogsPageTImeFilter180Days
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"
+	@ignore = "true"
+	@priority = "5"
+	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
+
+		// TODO LRAC-8374 AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
+	@ignore = "true"
+	@priority = "5"
+	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
+
+		// TODO LRAC-8375 AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8378 | Test Summary: Blogs location card shows views by the expected location"
+	@ignore = "true"
+	@priority = "5"
+	test BlogsLocationCardShowsViewsByExpectedLocation {
+
+		// TODO LRAC-8378 BlogsLocationCardShowsViewsByExpectedLocation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"
+	@ignore = "true"
+	@priority = "5"
+	test BlogsTechnologyCardShowsViewsByExpectedBrowser {
+
+		// TODO LRAC-8386 BlogsTechnologyCardShowsViewsByExpectedBrowser
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8385 | Test Summary: Blogs views by technology card shows views by the expected device"
+	@ignore = "true"
+	@priority = "5"
+	test BlogsTechnologyCardShowsViewsByExpectedDevice {
+
+		// TODO LRAC-8385 BlogsTechnologyCardShowsViewsByExpectedDevice
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
 	@priority = "5"
 	test CanNavigatesToBlogsOverviewPage {
@@ -141,6 +204,15 @@ definition {
 		ACAssets.viewVisitorsBehaviorMetric(
 			metricTitle = "Views",
 			metricValue = "4");
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8383 | Test Summary: Custom Range time filter in Blogs assets page"
+	@ignore = "true"
+	@priority = "5"
+	test CanUseCustomRangeBlogsAssetsPage {
+
+		// TODO LRAC-8383 CanUseCustomRangeBlogsAssetsPage
+
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8114 | Test Summary: Blogs known individuals list shows individuals who have viewed the blog"

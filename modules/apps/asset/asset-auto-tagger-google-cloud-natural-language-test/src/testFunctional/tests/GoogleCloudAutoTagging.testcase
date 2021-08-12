@@ -39,9 +39,9 @@ definition {
 	test CanAutoTagDocumentInDepot {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagDocumentInDepot";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Document",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -67,9 +67,9 @@ definition {
 	test CanAutoTagImageInDepot {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagImageInDepot";
 
-		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+		GoogleCloudAutoTagging.openToImageConfiguration();
 
-		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+		GoogleCloudAutoTagging.enableImageAutoTagging();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Commerce_Black",
@@ -93,9 +93,9 @@ definition {
 	test CanAutoTagWebContentInDepot {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagWebContentInDepot";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Web Content Article",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -118,9 +118,9 @@ definition {
 	test CanOnlyViewBlogManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewBlogManualTag";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Blogs Entry",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -156,9 +156,9 @@ definition {
 	test CanOnlyViewDocumentManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewDocumentManualTag";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Document",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -188,9 +188,9 @@ definition {
 	test CanOnlyViewImageManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewImageManualTag";
 
-		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+		GoogleCloudAutoTagging.openToImageConfiguration();
 
-		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+		GoogleCloudAutoTagging.enableImageAutoTagging();
 
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "manualtag",
@@ -218,9 +218,9 @@ definition {
 	test CanOnlyViewWebContentManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewWebContentManualTag";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Web Content Article",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -248,9 +248,9 @@ definition {
 	test CanRemoveBlogTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveBlogTag";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Blogs Entry",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -292,9 +292,9 @@ definition {
 	test CanRemoveDocumentTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveDocumentTag";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Document",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -335,9 +335,9 @@ definition {
 	test CanRemoveImageTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveImageTag";
 
-		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+		GoogleCloudAutoTagging.openToImageConfiguration();
 
-		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+		GoogleCloudAutoTagging.enableImageAutoTagging();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Commerce_Black",
@@ -377,9 +377,9 @@ definition {
 	test CanRemoveWebContentTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveWebContentTag";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Web Content Article",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -414,9 +414,9 @@ definition {
 	test CanViewBlogAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewBlogAutoTagsAfterPublishing";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Blogs Entry",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -458,9 +458,9 @@ definition {
 	test CanViewDocumentAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewDocumentAutoTagsAfterPublishing";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Document",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");
@@ -496,9 +496,9 @@ definition {
 	test CanViewImageAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewImageAutoTagsAfterPublishing";
 
-		GoogleCloudAutoTagging.openToGCVImageAutoTagging();
+		GoogleCloudAutoTagging.openToImageConfiguration();
 
-		GoogleCloudAutoTagging.enableGCVImageAutoTagging();
+		GoogleCloudAutoTagging.enableImageAutoTagging();
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -533,9 +533,9 @@ definition {
 	test CanViewWebContentAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewWebContentAutoTagsAfterPublishing";
 
-		GoogleCloudAutoTagging.openToGCNLTextAutoTagging();
+		GoogleCloudAutoTagging.openToTextConfiguration();
 
-		GoogleCloudAutoTagging.enableGCNLTextAutoTagging(
+		GoogleCloudAutoTagging.enableTextAutoTagging(
 			assetType = "Web Content Article",
 			confidence = "0.005",
 			enableClassificationEndpoint = "true");

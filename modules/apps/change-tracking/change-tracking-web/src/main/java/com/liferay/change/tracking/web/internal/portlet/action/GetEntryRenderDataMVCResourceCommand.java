@@ -194,7 +194,7 @@ public class GetEntryRenderDataMVCResourceCommand
 					String editURL = ctDisplayRenderer.getEditURL(
 						httpServletRequest, rightModel);
 
-					if (Validator.isNotNull(editURL)) {
+					if (editURL != null) {
 						jsonObject.put("editURL", editURL);
 					}
 				}

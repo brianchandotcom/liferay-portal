@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LABEL</td>
+	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCOPED_CONFIGURATION_NAME</td>
 	<td>//a[contains(.,'${key_configurationScope}')]/following-sibling::div//*[contains(@class,'nav-link') and normalize-space(./text())='${key_configurationName}']</td>
 	<td></td>
@@ -43,6 +48,11 @@
 <tr>
 	<td>SETTING_FIELD_NAME_CHECKBOX</td>
 	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'${key_settingFieldName}')]/../..//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_TEXT</td>
+	<td>//span[contains(@class,'form-text')][contains(.,'${key_settingsText}')]</td>
 	<td></td>
 </tr>
 <!--ASSETS-->

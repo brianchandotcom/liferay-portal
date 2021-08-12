@@ -206,6 +206,13 @@ definition {
 			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION");
 	}
 
+	macro viewSettingsText {
+		AssertTextEquals.assertPartialText(
+			key_settingsText = "${settingsText}",
+			locator1 = "SystemSettings#SETTINGS_TEXT",
+			value1 = "${settingsText}");
+	}
+
 	macro viewTextareaPartialText {
 		AssertTextEquals.assertPartialText(
 			key_label = "${settingName}",
@@ -227,6 +234,13 @@ definition {
 				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
 				value1 = "${fieldValue}");
 		}
+	}
+
+	macro viewTextLabel {
+		AssertTextEquals.assertText(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "SystemSettings#LABEL",
+			value1 = "${fieldLabel}");
 	}
 
 }

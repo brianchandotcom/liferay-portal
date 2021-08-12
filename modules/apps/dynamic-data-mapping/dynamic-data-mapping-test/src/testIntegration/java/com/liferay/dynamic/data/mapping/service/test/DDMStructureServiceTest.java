@@ -390,7 +390,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			StringPool.BLANK, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
+		Assert.assertEquals(structures.toString(), 0, structures.size());
 	}
 
 	@Rule

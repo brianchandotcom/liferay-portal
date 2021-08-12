@@ -146,7 +146,7 @@ public class DDLRecordSearchTest {
 
 		Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
 
-		Assert.assertEquals(hits.toString(), 1, hits.getLength());
+		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
 
 	@Test

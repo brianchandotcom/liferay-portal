@@ -717,9 +717,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StructureIdComparator(true));
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
-		Assert.assertEquals(
-			"Global Structure", getStructureName(structures.get(0)));
+		Assert.assertEquals(structures.toString(), 0, structures.size());
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
 

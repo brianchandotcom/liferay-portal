@@ -121,8 +121,8 @@ public class EditDDMTemplateDisplayContext {
 			"propertiesViewURL",
 			() -> PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
-			).setMVCPath(
-				"/ddm_template/edit_properties.jsp"
+			).setMVCRenderCommandName(
+				"/template/edit_ddm_template_properties"
 			).setTabs1(
 				getTabs1()
 			).setParameter(

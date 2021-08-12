@@ -50,9 +50,15 @@ public class JenkinsAPIUtil {
 			return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get Jenkins API JSON object from " + sb.toString(),
-				ioException);
+			ioException.printStackTrace();
+
+			String errorMessage =
+				"Unable to get Jenkins API JSON object from " + sb.toString();
+
+			NotificationUtil.sendSlackNotification(
+				errorMessage, "ci-notifications", "Jenkins API Failure");
+
+			throw new RuntimeException(errorMessage, ioException);
 		}
 	}
 

@@ -120,4 +120,64 @@ definition {
 			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations.");
 	}
 
+	@description = "This test asserts that an Organization Administrator of an organization can manage suborganizations associated to it."
+	@priority = "4"
+	test OrganizationAdminCanManageSuborganizations {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Suborganization Name 1",
+			parentOrganizationName = "Organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.openUsersAdmin();
+
+		User.assignOrgRoleCP(
+			roleTitle = "Organization Administrator",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Suborganization Name 1");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Type(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "Suborganization Name Edit");
+
+		Button.clickSave();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Suborganization Name Edit");
+	}
+
 }

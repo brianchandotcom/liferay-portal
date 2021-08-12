@@ -99,7 +99,7 @@ public class DDLRecordSetTestHelper {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private final long _userId;
 	private final Group _group;
+	private final long _userId;
 
 }

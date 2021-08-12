@@ -125,8 +125,8 @@ public class DDLRecordTestHelper {
 		return ddmStructure.getDDMForm();
 	}
 
-	private final long _userId;
 	private final Group _group;
 	private final DDLRecordSet _recordSet;
+	private final long _userId;
 
 }

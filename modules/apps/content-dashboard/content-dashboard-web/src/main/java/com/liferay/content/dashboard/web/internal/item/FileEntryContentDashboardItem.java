@@ -338,7 +338,7 @@ public class FileEntryContentDashboardItem
 		).put(
 			"fileName", _getFileName()
 		).put(
-			"preview", _getPreviewImage()
+			"previewImageURL", _getPreviewImageURL()
 		).put(
 			"previewURL", _getPreviewURL(themeDisplay)
 		).put(
@@ -474,7 +474,7 @@ public class FileEntryContentDashboardItem
 		return versions.get(versions.size() - 1);
 	}
 
-	private Object _getPreviewImage() {
+	private Object _getPreviewImageURL() {
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 

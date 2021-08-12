@@ -83,7 +83,7 @@ const SidebarPanelInfoView = ({
 		downloadURL,
 		extension,
 		fileName,
-		preview,
+		previewImageURL,
 		previewURL,
 		size,
 		viewURL,
@@ -122,7 +122,7 @@ const SidebarPanelInfoView = ({
 		!!extension &&
 		parseInt(size?.split(' ')[0], 10) > 0;
 
-	const documentUsesPreview = !!preview || documentIsAFile;
+	const documentUsesPreview = !!previewImageURL || documentIsAFile;
 
 	const showTaxonomies = !!categories?.length || !!tags?.length;
 
@@ -174,7 +174,7 @@ const SidebarPanelInfoView = ({
 
 				{documentUsesPreview && (
 					<DocumentPreview
-						documentSrc={preview}
+						documentSrc={previewImageURL}
 						documentTitle={title}
 						downloadURL={downloadURL}
 						isFile={documentIsAFile}

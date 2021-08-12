@@ -494,13 +494,18 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("View criterias in Segment Criteria card") {
-			var criterias = '''IndividualjobTitlecontains"web developer" AND IndividualjobTitlecontains"lawyer"''';
+		task ("View both criterias in Segment Criteria card") {
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "jobTitle",
+				attributeValue = '''"web developer"''',
+				condition = "contains",
+				conjunction = "AND");
 
-			AssertTextEquals.assertPartialText(
-				key_card = "Segment Criteria",
-				locator1 = "Card#CARD",
-				value1 = "${criterias}");
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "jobTitle",
+				attributeValue = '''"lawyer"''',
+				condition = "contains",
+				index = "2");
 		}
 	}
 

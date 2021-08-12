@@ -16,12 +16,14 @@ package com.liferay.template.web.internal.display.context;
 
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -75,8 +77,18 @@ public class InformationTemplatesTemplateDisplayContext
 
 	@Override
 	public String getTemplateTypeLabel(long classNameId) {
-		return ResourceActionsUtil.getModelResource(
-			themeDisplay.getLocale(), PortalUtil.getClassName(classNameId));
+		return Optional.ofNullable(
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				PortalUtil.getClassName(classNameId))
+		).map(
+			InfoItemFormProvider::getInfoForm
+		).map(
+			infoForm -> infoForm.getLabel(themeDisplay.getLocale())
+		).orElse(
+			ResourceActionsUtil.getModelResource(
+				themeDisplay.getLocale(), PortalUtil.getClassName(classNameId))
+		);
 	}
 
 	private long[] _classNameIds;

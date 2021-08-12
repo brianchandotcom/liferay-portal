@@ -70,6 +70,13 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
+					name="item-type"
+					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"
+				/>
+
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
 					name="description"
 					value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
 				/>

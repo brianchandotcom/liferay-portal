@@ -57,11 +57,6 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 				%>
 
 				<liferay-ui:search-container-column-text
-					name="id"
-					property="templateId"
-				/>
-
-				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
 					href="<%= informationTemplatesTemplateDisplayContext.getDDMTemplateEditURL(ddmTemplate) %>"
 					name="name"
@@ -74,34 +69,10 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"
 				/>
 
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="description"
-					value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
-				/>
-
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="item-subtype"
 					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateSubtypeLabel(ddmTemplate.getClassNameId(), ddmTemplate.getClassPK())) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-smallest"
-					name="type"
-					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-smallest"
-					name="scope"
-					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getDDMTemplateScope(ddmTemplate)) %>"
-				/>
-
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					value="<%= ddmTemplate.getModifiedDate() %>"
 				/>
 
 				<liferay-ui:search-container-column-text>

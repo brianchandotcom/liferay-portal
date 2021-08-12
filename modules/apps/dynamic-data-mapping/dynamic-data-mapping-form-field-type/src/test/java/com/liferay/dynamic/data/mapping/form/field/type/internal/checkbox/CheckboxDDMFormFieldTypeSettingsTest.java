@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -90,6 +92,13 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"FALSE", repeatableDDMFormField.getVisibilityExpression());
 
+		DDMFormField requiredDDMFormField = ddmFormFieldsMap.get("required");
+
+		Assert.assertNotNull(requiredDDMFormField);
+		Assert.assertNotNull(requiredDDMFormField.getProperty("tooltip"));
+		Assert.assertNotNull(
+			requiredDDMFormField.getProperty("showAsSwitcher"));
+
 		DDMFormField showAsSwitcherDDMFormField = ddmFormFieldsMap.get(
 			"showAsSwitcher");
 
@@ -99,6 +108,21 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 			"boolean", showAsSwitcherDDMFormField.getDataType());
 		Assert.assertEquals(
 			"true", showAsSwitcherDDMFormField.getProperty("showAsSwitcher"));
+
+		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
+
+		DDMFormRule ddmFormRule = ddmFormRules.get(0);
+
+		Assert.assertEquals("TRUE", ddmFormRule.getCondition());
+
+		List<String> actions = ddmFormRule.getActions();
+
+		Assert.assertEquals(actions.toString(), 1, actions.size());
+		Assert.assertEquals(
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(0));
 	}
 
 	@Test
@@ -108,13 +132,13 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 			DDMFormLayoutTestUtil.createDDMFormLayout(
 				DDMFormLayout.TABBED_MODE,
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"label", "tip", "required", "showAsSwitcher"),
+					"label", "tip", "required", "requiredErrorMessage",
+					"showAsSwitcher"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
 					"name", "fieldReference", "visibilityExpression",
 					"predefinedValue", "objectFieldName", "fieldNamespace",
 					"indexType", "labelAtStructureLevel", "localizable",
-					"readOnly", "dataType", "type", "showLabel",
-					"repeatable")));
+					"readOnly", "dataType", "type", "repeatable")));
 	}
 
 	@Override

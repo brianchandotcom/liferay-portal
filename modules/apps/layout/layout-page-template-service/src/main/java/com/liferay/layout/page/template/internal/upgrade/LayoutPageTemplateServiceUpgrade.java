@@ -153,6 +153,11 @@ public class LayoutPageTemplateServiceUpgrade
 			new com.liferay.layout.page.template.internal.upgrade.v3_4_2.
 				LayoutPageTemplateStructureRelUpgradeProcess(
 					_fragmentEntryConfigurationParser));
+
+		registry.register(
+			"3.4.2", "3.4.3",
+			new com.liferay.layout.page.template.internal.upgrade.v3_4_3.
+				ResourcePermissionUpgradeProcess());
 	}
 
 	@Reference

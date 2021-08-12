@@ -37,7 +37,7 @@ public class CPDefinitionDiagramEntryModelDocumentContributor
 		Document document, CPDefinitionDiagramEntry cpDefinitionDiagramEntry) {
 
 		document.addText(CPField.SKU, cpDefinitionDiagramEntry.getSku());
-		document.addNumber("number", cpDefinitionDiagramEntry.getNumber());
+		document.addText("sequence", cpDefinitionDiagramEntry.getSequence());
 		document.addNumber("quantity", cpDefinitionDiagramEntry.getQuantity());
 	}
 

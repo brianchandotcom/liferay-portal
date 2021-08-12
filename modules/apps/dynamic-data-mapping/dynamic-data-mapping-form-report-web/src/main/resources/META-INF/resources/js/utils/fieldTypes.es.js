@@ -17,6 +17,10 @@ export default {
 		icon: 'geolocation',
 		title: Liferay.Language.get('address'),
 	},
+	checkbox: {
+		icon: 'check',
+		title: Liferay.Language.get('boolean'),
+	},
 	checkbox_multiple: {
 		icon: 'check-circle',
 		title: Liferay.Language.get('checkbox-multiple-field-type-label'),

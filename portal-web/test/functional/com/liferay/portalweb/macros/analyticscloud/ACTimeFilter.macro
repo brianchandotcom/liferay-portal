@@ -58,13 +58,11 @@ definition {
 		var key_month = "${startMonth}";
 		var key_year = "${startYear}";
 
-		Select(
-			locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN",
-			value1 = "${key_month}");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");
 
-		Select(
-			locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN",
-			value1 = "${key_year}");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN_OPTION");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 
@@ -72,13 +70,11 @@ definition {
 		var key_month = "${endMonth}";
 		var key_year = "${endYear}";
 
-		Select(
-			locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN",
-			value1 = "${key_month}");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");
 
-		Select(
-			locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN",
-			value1 = "${key_year}");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
+		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN_OPTION");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 

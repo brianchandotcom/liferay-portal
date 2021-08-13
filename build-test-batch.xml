@@ -3628,7 +3628,7 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="modules-integration-aws-test-jdk8">
-		<echo append="true" file="portal-impl/src/portal-ext.properties">
+		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.propertiess">
 
 dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
 

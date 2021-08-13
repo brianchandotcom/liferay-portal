@@ -30,12 +30,19 @@ definition {
 	}
 
 	@description = "LPS-133865 - Verify if the Object is displayed to be selected as Collection Provider on the Collection Display fragment"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ObjectDisplayedToCollectionProdiver {
 		property portal.acceptance = "true";
 
-		// TODO LPS-137101 ObjectDisplayedToCollectionProdiver pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.createCustomObject(name = "CustomObject");
+
+		ObjectAdmin.publishCustomObject(name = "CustomObject");
+
+		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
+
+		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider();
 
 	}
 

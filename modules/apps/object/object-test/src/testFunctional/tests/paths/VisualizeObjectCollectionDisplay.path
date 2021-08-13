@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>VisualizeObjectCollectionDisplay</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">VisualizeObjectCollectionDisplay</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>VIEW_OBJECT_COLLECTION_DISPLAY</td>
+		<td>//p[(@title='Object')]</td>
+		<td></td>
+	</tr>
+
+</tbody>
+</table>
+</body>
+</html>

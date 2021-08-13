@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
@@ -125,15 +124,18 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_getDDMTemplateActionableDynamicQuery(
-				portletDataContext,
-				ArrayUtil.toArray(_templateHandlerRegistry.getClassNameIds()),
-				new StagedModelType(
-					_portal.getClassNameId(DDMTemplate.class),
-					StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+		List<Long> classNameIds = _getClassNameIds(portletDataContext);
 
-		actionableDynamicQuery.performActions();
+		if (!classNameIds.isEmpty()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_getDDMTemplateActionableDynamicQuery(
+					portletDataContext, classNameIds.toArray(new Long[0]),
+					new StagedModelType(
+						_portal.getClassNameId(DDMTemplate.class),
+						StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+
+			actionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}

@@ -3648,18 +3648,7 @@ dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
 			<try>
 				<run-modules-integration-test
 					database.type="mysql"
-					database.version="5.7"
-					test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-					test.fix.pack.base.url="${test.fix.pack.base.url}"
-					test.license.xml.url="${test.license.xml.url}"
-					test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-					test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-					test.portal.bundle.version="${test.portal.bundle.version}"
-					test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-					test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-					test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-					test.sql.zip.url="${test.sql.zip.url}"
-				/>
+					database.version="5.7" />
 			</try>
 
 			<finally>

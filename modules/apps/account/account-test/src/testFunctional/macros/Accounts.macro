@@ -279,6 +279,40 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addBusinessAccountWithTag {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${accountName}");
+
+		if ("${addTagMethod}" == "Select") {
+			Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+
+			IFrame.selectTagFrame();
+
+			for (var tagName : list "${tagNameList}") {
+				var tagName = StringUtil.lowerCase("${tagName}");
+
+				Check(
+					key_rowEntry = "${tagName}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+			}
+
+			SelectFrameTop();
+
+			Button.clickDone();
+		}
+
+		else {
+			for (var tagName : list "${tagNameList}") {
+				var tagName = StringUtil.lowerCase("${tagName}");
+
+				AssetCategorization.addTag(tagName = "${tagName}");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro addInactiveBusinessAccount {
 		LexiconEntry.gotoAdd();
 

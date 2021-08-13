@@ -1,0 +1,8 @@
+Bundle-Name: Liferay List Type API
+Bundle-SymbolicName: com.liferay.list.type.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.list.type.exception,\
+	com.liferay.list.type.model,\
+	com.liferay.list.type.service,\
+	com.liferay.list.type.service.persistence

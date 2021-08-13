@@ -254,6 +254,25 @@ out.println(PortalUtil.escapeRedirect("/"));
 			value1 = "Forbidden");
 	}
 
+	@description = "This is a use case for LPS-114470."
+	@priority = "5"
+	test ValidateCraftedOrCorruptedFilesCannotCauseOutOfMemoryErrors {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "tika.mp3",
+			dmDocumentTitle = "DM Document Title");
+
+		AssertConsoleTextPresent(value1 = "java.io.IOException: Record size");
+
+		AssertConsoleTextPresent(value1 = "is larger than the allowed record size");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.OutOfMemoryError");
+	}
+
 	@priority = "5"
 	test ValidateForwardURLPG {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}";

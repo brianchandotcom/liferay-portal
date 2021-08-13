@@ -208,6 +208,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATE_PICKER</td>
+	<td>//div[contains(@class,'date-picker')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MONTH_AND_YEAR_CALENDAR</td>
 	<td>//select[contains(@class,'date-picker-select-root')][${key_indexCalendar}]</td>
 	<td></td>

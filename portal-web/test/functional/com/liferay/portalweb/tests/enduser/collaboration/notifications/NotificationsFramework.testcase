@@ -7,9 +7,6 @@ definition {
 	property testray.component.names = "Notification";
 	property testray.main.component.name = "Notifications";
 
-	var pageName = "Blogs Page";
-	var portletName = "Blogs";
-
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -17,13 +14,19 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Blogs Page");
+			layoutName = "Site Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
-			layoutName = "Blogs Page",
+			layoutName = "Site Page",
 			widgetName = "Blogs");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Site Page",
+			widgetName = "Message Boards");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

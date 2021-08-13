@@ -1,0 +1,61 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8637 | Test Summary: Account list can be paginated"
+    @ignore = "true"
+    @priority = "3"
+    test PaginateAccountList {
+
+        // TODO LRAC-8637 PaginateAccountList pending implementation
+
+    }
+    
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8638 | Test Summary: Order the Accounts List"
+    @ignore = "true"
+    @priority = "3"
+    test OrderAccountList {
+
+        // TODO LRAC-8638 OrderAccountList pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8639 | Test Summary: Search for an Account in the Account List"
+    @ignore = "true"
+    @priority = "3"
+    test CanSearchForAccount {
+
+        // TODO LRAC-8639 CanSearchForAccount pending implementation
+
+    }
+
+}

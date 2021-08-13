@@ -32,6 +32,7 @@ page import="com.liferay.content.dashboard.web.internal.constants.ContentDashboa
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminConfigurationDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminManagementToolbarDisplayContext" %><%@
+page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardExtensionItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem" %><%@
 page import="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype" %><%@

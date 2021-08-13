@@ -157,9 +157,11 @@ export default function ItemActions({item}) {
 				}
 			>
 				<ClayDropDown.ItemList>
-					{dropdownItems.map((dropdownItem) =>
+					{dropdownItems.map((dropdownItem, index, array) =>
 						dropdownItem.type === 'separator' ? (
-							<ClayDropDown.Divider />
+							index !== array.length - 1 && (
+								<ClayDropDown.Divider />
+							)
 						) : (
 							<React.Fragment key={dropdownItem.label}>
 								<ClayDropDown.Item

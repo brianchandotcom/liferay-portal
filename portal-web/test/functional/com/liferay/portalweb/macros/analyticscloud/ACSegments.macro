@@ -200,6 +200,18 @@ definition {
 		}
 	}
 
+	macro filterAndOrderForSegLists {
+		var key_filterName = "${filterName}";
+
+		Click(locator1 = "ACSegments#FILTER_AND_ORDER_BUTTON");
+
+		Click(
+			locator1 = "ACSegments#FILTER_DROPDOWN_OPTION",
+			value1 = "${key_filterName}");
+
+		Click(locator1 = "ACSegments#FILTER_AND_ORDER_BUTTON");
+	}
+
 	macro goToSidebarAttributes {
 		var key_Criterion = "${criterion}";
 

@@ -1,0 +1,11 @@
+definition {
+
+	macro viewInterests {
+		var key_interestName = "${interestName}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#INTERESTS_TABLE",
+			value1 = "${interestName}");
+	}
+
+}

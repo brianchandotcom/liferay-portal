@@ -17,8 +17,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -54,23 +54,28 @@ public class GetCollectionFiltersMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONArray fragmentCollectionFiltersJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		JSONObject fragmentCollectionFiltersJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
 		for (FragmentCollectionFilter fragmentCollectionFilter :
 				_fragmentCollectionFilterTracker.
 					getFragmentCollectionFilters()) {
 
-			fragmentCollectionFiltersJSONArray.put(
+			fragmentCollectionFiltersJSONObject.put(
+				fragmentCollectionFilter.getFilterKey(),
 				JSONUtil.put(
+					"configuration", fragmentCollectionFilter.getConfiguration()
+				).put(
+					"key", fragmentCollectionFilter.getFilterKey()
+				).put(
 					"label",
-					fragmentCollectionFilter.getLabel(
-						themeDisplay.getLocale())));
+					fragmentCollectionFilter.getLabel(themeDisplay.getLocale())
+				));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			fragmentCollectionFiltersJSONArray);
+			fragmentCollectionFiltersJSONObject);
 	}
 
 	@Reference

@@ -141,11 +141,42 @@ public interface WorkflowInstanceManager {
 			String transitionName, Map<String, Serializable> workflowContext)
 		throws WorkflowException;
 
+	public default WorkflowInstance signalWorkflowInstance(
+			long companyId, long userId, long workflowInstanceId,
+			String transitionName, Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws WorkflowException {
+
+		if (waitForCompletion) {
+			throw new UnsupportedOperationException();
+		}
+
+		return signalWorkflowInstance(
+			companyId, userId, workflowInstanceId, transitionName,
+			workflowContext);
+	}
+
 	public WorkflowInstance startWorkflowInstance(
 			long companyId, long groupId, long userId,
 			String workflowDefinitionName, Integer workflowDefinitionVersion,
 			String transitionName, Map<String, Serializable> workflowContext)
 		throws WorkflowException;
+
+	public default WorkflowInstance startWorkflowInstance(
+			long companyId, long groupId, long userId,
+			String workflowDefinitionName, Integer workflowDefinitionVersion,
+			String transitionName, Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws WorkflowException {
+
+		if (waitForCompletion) {
+			throw new UnsupportedOperationException();
+		}
+
+		return startWorkflowInstance(
+			companyId, groupId, userId, workflowDefinitionName,
+			workflowDefinitionVersion, transitionName, workflowContext);
+	}
 
 	public WorkflowInstance updateWorkflowContext(
 			long companyId, long workflowInstanceId,

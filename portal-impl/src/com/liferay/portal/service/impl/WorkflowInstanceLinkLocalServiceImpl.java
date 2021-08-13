@@ -240,6 +240,18 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			long classPK, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
+		startWorkflowInstance(
+			companyId, groupId, userId, className, classPK, workflowContext,
+			false);
+	}
+
+	@Override
+	public void startWorkflowInstance(
+			long companyId, long groupId, long userId, String className,
+			long classPK, Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws PortalException {
+
 		if (!WorkflowThreadLocal.isEnabled()) {
 			return;
 		}
@@ -282,7 +294,8 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		WorkflowInstance workflowInstance =
 			WorkflowInstanceManagerUtil.startWorkflowInstance(
 				companyId, groupId, userId, workflowDefinitionName,
-				workflowDefinitionVersion, null, workflowContext);
+				workflowDefinitionVersion, null, workflowContext,
+				waitForCompletion);
 
 		addWorkflowInstanceLink(
 			userId, companyId, groupId, className, classPK,

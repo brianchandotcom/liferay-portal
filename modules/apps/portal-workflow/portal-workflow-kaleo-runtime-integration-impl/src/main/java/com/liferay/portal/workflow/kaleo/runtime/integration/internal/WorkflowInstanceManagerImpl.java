@@ -289,14 +289,26 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 			String transitionName, Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
+		return signalWorkflowInstance(
+			companyId, userId, workflowInstanceId, transitionName,
+			workflowContext, false);
+	}
+
+	@Override
+	public WorkflowInstance signalWorkflowInstance(
+			long companyId, long userId, long workflowInstanceId,
+			String transitionName, Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws WorkflowException {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(userId);
 
 		return _workflowEngine.signalWorkflowInstance(
-			workflowInstanceId, transitionName, workflowContext,
-			serviceContext);
+			workflowInstanceId, transitionName, workflowContext, serviceContext,
+			waitForCompletion);
 	}
 
 	@Override
@@ -304,6 +316,19 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 			long companyId, long groupId, long userId,
 			String workflowDefinitionName, Integer workflowDefinitionVersion,
 			String transitionName, Map<String, Serializable> workflowContext)
+		throws WorkflowException {
+
+		return startWorkflowInstance(
+			companyId, groupId, userId, workflowDefinitionName,
+			workflowDefinitionVersion, transitionName, workflowContext, false);
+	}
+
+	@Override
+	public WorkflowInstance startWorkflowInstance(
+			long companyId, long groupId, long userId,
+			String workflowDefinitionName, Integer workflowDefinitionVersion,
+			String transitionName, Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
 		throws WorkflowException {
 
 		String className = WorkflowDefinition.class.getName();
@@ -327,7 +352,7 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 
 		return _workflowEngine.startWorkflowInstance(
 			workflowDefinitionName, workflowDefinitionVersion, transitionName,
-			workflowContext, serviceContext);
+			workflowContext, serviceContext, waitForCompletion);
 	}
 
 	@Override

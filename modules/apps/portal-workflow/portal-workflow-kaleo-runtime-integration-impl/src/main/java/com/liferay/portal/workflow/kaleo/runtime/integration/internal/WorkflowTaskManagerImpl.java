@@ -146,6 +146,19 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
+		return completeWorkflowTask(
+			companyId, userId, workflowTaskId, transitionName, comment,
+			workflowContext, false);
+	}
+
+	@Override
+	public WorkflowTask completeWorkflowTask(
+			long companyId, long userId, long workflowTaskId,
+			String transitionName, String comment,
+			Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws WorkflowException {
+
 		Lock lock = null;
 
 		try {
@@ -208,7 +221,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					public Void call() throws Exception {
 						try {
 							_kaleoSignaler.signalExit(
-								transitionName, executionContext);
+								transitionName, executionContext,
+								waitForCompletion);
 						}
 						catch (Exception exception) {
 							throw new WorkflowException(

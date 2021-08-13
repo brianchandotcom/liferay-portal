@@ -56,6 +56,22 @@ public interface WorkflowTaskManager {
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException;
 
+	public default WorkflowTask completeWorkflowTask(
+			long companyId, long userId, long workflowTaskId,
+			String transitionName, String comment,
+			Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws WorkflowException {
+
+		if (waitForCompletion) {
+			throw new UnsupportedOperationException();
+		}
+
+		return completeWorkflowTask(
+			companyId, userId, workflowTaskId, transitionName, comment,
+			workflowContext);
+	}
+
 	public WorkflowTask fetchWorkflowTask(long companyId, long workflowTaskId)
 		throws WorkflowException;
 

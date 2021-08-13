@@ -66,6 +66,18 @@ public class WorkflowTaskManagerUtil {
 			workflowContext);
 	}
 
+	public static WorkflowTask completeWorkflowTask(
+			long companyId, long userId, long workflowTaskId,
+			String transitionName, String comment,
+			Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws WorkflowException {
+
+		return _workflowTaskManager.completeWorkflowTask(
+			companyId, userId, workflowTaskId, transitionName, comment,
+			workflowContext, waitForCompletion);
+	}
+
 	public static WorkflowTask fetchWorkflowTask(
 			long companyId, long workflowTaskId)
 		throws WorkflowException {

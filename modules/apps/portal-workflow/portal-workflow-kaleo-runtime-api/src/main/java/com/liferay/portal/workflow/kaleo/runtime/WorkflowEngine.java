@@ -200,10 +200,23 @@ public interface WorkflowEngine {
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
+	public WorkflowInstance signalWorkflowInstance(
+			long workflowInstanceId, String transitionName,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext, boolean waitForCompletion)
+		throws WorkflowException;
+
 	public WorkflowInstance startWorkflowInstance(
 			String workflowDefinitionName, Integer workflowDefinitionVersion,
 			String transitionName, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
+		throws WorkflowException;
+
+	public WorkflowInstance startWorkflowInstance(
+			String workflowDefinitionName, Integer workflowDefinitionVersion,
+			final String transitionName,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext, boolean waitForCompletion)
 		throws WorkflowException;
 
 	public WorkflowInstance updateContext(

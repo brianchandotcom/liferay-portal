@@ -24,7 +24,10 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Thuong Dinh
+ *
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler}
  */
+@Deprecated
 @ProviderType
 public interface OpenIdConnectServiceHandler {
 

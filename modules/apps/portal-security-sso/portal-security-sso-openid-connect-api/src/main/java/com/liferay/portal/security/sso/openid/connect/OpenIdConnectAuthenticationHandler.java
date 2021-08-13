@@ -14,34 +14,28 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Jesse Rao
- *
- * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+ * @author Arthur Chan
  */
-@Deprecated
 @ProviderType
-public interface OpenIdConnectSession {
+public interface OpenIdConnectAuthenticationHandler {
 
-	public String getAccessTokenValue();
+	public void processAuthenticationResponse(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException;
 
-	public long getLoginTime();
-
-	public long getLoginUserId();
-
-	public String getNonceValue();
-
-	public OpenIdConnectFlowState getOpenIdConnectFlowState();
-
-	public String getOpenIdProviderName();
-
-	public String getRefreshTokenValue();
-
-	public String getStateValue();
-
-	public void setOpenIdConnectFlowState(
-		OpenIdConnectFlowState openIdConnectFlowState);
+	public void requestAuthentication(
+			String openIdConnectProviderName,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException;
 
 }

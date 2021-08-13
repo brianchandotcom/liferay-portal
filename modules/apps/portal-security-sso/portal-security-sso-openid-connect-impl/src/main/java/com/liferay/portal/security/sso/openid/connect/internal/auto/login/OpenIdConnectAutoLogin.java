@@ -20,9 +20,6 @@ import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
-import com.liferay.portal.security.sso.openid.connect.provider.OpenIdConnectSessionProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,8 +57,6 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 
 		Long userId = (Long)httpSession.getAttribute(USER_ID);
 
-		httpSession.removeAttribute(USER_ID);
-
 		if (userId != null) {
 			User user = _userLocalService.getUserById(userId);
 
@@ -71,13 +66,6 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			credentials[1] = user.getPassword();
 			credentials[2] = Boolean.TRUE.toString();
 
-			OpenIdConnectSession openIdConnectSession =
-				_openIdConnectSessionProvider.getOpenIdConnectSession(
-					httpSession);
-
-			openIdConnectSession.setOpenIdConnectFlowState(
-				OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE);
-
 			return credentials;
 		}
 
@@ -86,9 +74,6 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 
 	@Reference
 	private OpenIdConnect _openIdConnect;
-
-	@Reference
-	private OpenIdConnectSessionProvider _openIdConnectSessionProvider;
 
 	@Reference
 	private Portal _portal;

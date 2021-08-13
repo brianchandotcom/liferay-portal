@@ -12,21 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.provider;
-
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
-
-import javax.servlet.http.HttpSession;
+package com.liferay.portal.security.sso.openid.connect.internal.constants;
 
 /**
- * @author Istvan Sajtos
- *
- * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+ * @author Arthur Chan
  */
-@Deprecated
-public interface OpenIdConnectSessionProvider {
+public class OpenIdConnectDestinationNames {
 
-	public OpenIdConnectSession getOpenIdConnectSession(
-		HttpSession httpSession);
+	public static final String OPENID_CONNECT_TOKEN_REFRESH =
+		"liferay/openid_connect_token_refresh";
 
 }

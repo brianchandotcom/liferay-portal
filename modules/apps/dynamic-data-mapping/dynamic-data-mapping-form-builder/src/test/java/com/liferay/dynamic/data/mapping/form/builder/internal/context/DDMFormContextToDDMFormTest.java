@@ -16,11 +16,18 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.context;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,6 +55,93 @@ public class DDMFormContextToDDMFormTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormContextToDDMFormValues();
+	}
+
+	@Test
+	public void testGetDDMFormFieldValidationDateField() throws Exception {
+		DDMFormFieldValidation ddmFormFieldValidation =
+			_ddmFormContextToDDMForm.getDDMFormFieldValidation(
+				SetUtil.fromArray(
+					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
+				"date", LocaleUtil.US,
+				JSONUtil.put(
+					"parameter", JSONUtil.put("en_US", "Test US")
+				).toString());
+
+		LocalizedValue parameterLocalizedValue =
+			ddmFormFieldValidation.getParameterLocalizedValue();
+
+		Assert.assertEquals(
+			"Test US", parameterLocalizedValue.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"Test US", parameterLocalizedValue.getString(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetDDMFormFieldValidationEmptyValue() throws Exception {
+		Assert.assertNull(
+			_ddmFormContextToDDMForm.getDDMFormFieldValidation(
+				SetUtil.fromArray(
+					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
+				"numeric", LocaleUtil.US,
+				JSONUtil.put(
+					"expression", JSONUtil.put("value", StringPool.BLANK)
+				).put(
+					"parameter", JSONUtil.put("en_US", "Test")
+				).toString()));
+	}
+
+	@Test
+	public void testGetParameterLocalizedValueDateField() {
+		LocalizedValue parameterLocalizedValue =
+			_ddmFormContextToDDMForm.getParameterLocalizedValue(
+				JSONUtil.put(
+					"en_US", "Test US"
+				).put(
+					"pt_BR", "Test BR"
+				),
+				SetUtil.fromArray(
+					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
+				"date", LocaleUtil.US);
+
+		Assert.assertEquals(
+			"Test US", parameterLocalizedValue.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"Test US", parameterLocalizedValue.getString(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetParameterLocalizedValueNumericField() {
+		LocalizedValue parameterLocalizedValue =
+			_ddmFormContextToDDMForm.getParameterLocalizedValue(
+				JSONUtil.put(
+					"en_US", "Test US"
+				).put(
+					"pt_BR", "Test BR"
+				),
+				SetUtil.fromArray(
+					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
+				"numeric", LocaleUtil.US);
+
+		Assert.assertEquals(
+			"Test BR", parameterLocalizedValue.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"Test US", parameterLocalizedValue.getString(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetParameterLocalizedValueTextField() {
+		LocalizedValue parameterLocalizedValue =
+			_ddmFormContextToDDMForm.getParameterLocalizedValue(
+				JSONUtil.put("en_US", "Test US"),
+				SetUtil.fromArray(
+					new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
+				"text", LocaleUtil.US);
+
+		Assert.assertEquals(
+			"Test US", parameterLocalizedValue.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"Test US", parameterLocalizedValue.getString(LocaleUtil.US));
 	}
 
 	@Test

@@ -94,6 +94,24 @@ public class DDMFormValuesValidatorTest {
 	}
 
 	@Test
+	public void testEvaluateDDMFormFieldValidationExpressionNull()
+		throws Exception {
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(null);
+		ddmFormFieldValidation.setParameterLocalizedValue(
+			DDMFormValuesTestUtil.createLocalizedValue("10", LocaleUtil.US));
+
+		Assert.assertTrue(
+			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
+				"double", "Field", ddmFormFieldValidation, LocaleUtil.US,
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"12", LocaleUtil.US)));
+	}
+
+	@Test
 	public void testEvaluateForDoubleType() throws Exception {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();

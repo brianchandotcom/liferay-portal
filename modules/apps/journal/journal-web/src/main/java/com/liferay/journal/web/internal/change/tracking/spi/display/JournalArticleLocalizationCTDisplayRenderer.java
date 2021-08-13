@@ -58,8 +58,9 @@ public class JournalArticleLocalizationCTDisplayRenderer
 		return JournalArticleCTDisplayRenderer.getJournalArticleContent(
 			_journalArticleLocalService.getJournalArticle(
 				journalArticleLocalization.getArticlePK()),
-			_journalArticleLocalService, _language.getLanguageId(locale),
-			httpServletRequest, httpServletResponse);
+			_journalArticleLocalService,
+			journalArticleLocalization.getLanguageId(), httpServletRequest,
+			httpServletResponse);
 	}
 
 	@Override

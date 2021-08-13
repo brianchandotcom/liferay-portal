@@ -25,7 +25,7 @@ public interface LocalGitRepository extends GitRepository {
 
 	public static final Integer COMMITS_HISTORY_GROUP_SIZE = 100;
 
-	public static final Integer COMMITS_HISTORY_SIZE_MAX = 25000;
+	public static final Integer COMMITS_HISTORY_SIZE_MAX = 50000;
 
 	public File getDirectory();
 

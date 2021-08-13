@@ -17,6 +17,8 @@ package com.liferay.fragment.collection.filter;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Locale;
 
@@ -28,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ProviderType
 public interface FragmentCollectionFilter {
+
+	public default JSONObject getConfiguration() {
+		return JSONFactoryUtil.createJSONObject();
+	}
 
 	public String getLabel(Locale locale);
 

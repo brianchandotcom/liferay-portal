@@ -368,6 +368,17 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 			companyId, groupId, userId, className, classPK, workflowContext);
 	}
 
+	public static void startWorkflowInstance(
+			long companyId, long groupId, long userId, String className,
+			long classPK, Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws PortalException {
+
+		getService().startWorkflowInstance(
+			companyId, groupId, userId, className, classPK, workflowContext,
+			waitForCompletion);
+	}
+
 	public static void updateClassPK(
 			long companyId, long groupId, String className, long oldClassPK,
 			long newClassPK)

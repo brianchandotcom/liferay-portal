@@ -312,6 +312,12 @@ public interface WorkflowInstanceLinkLocalService
 			long classPK, Map<String, Serializable> workflowContext)
 		throws PortalException;
 
+	public void startWorkflowInstance(
+			long companyId, long groupId, long userId, String className,
+			long classPK, Map<String, Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws PortalException;
+
 	public void updateClassPK(
 			long companyId, long groupId, String className, long oldClassPK,
 			long newClassPK)

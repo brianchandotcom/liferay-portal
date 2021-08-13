@@ -417,6 +417,19 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	}
 
 	@Override
+	public void startWorkflowInstance(
+			long companyId, long groupId, long userId, String className,
+			long classPK,
+			java.util.Map<String, java.io.Serializable> workflowContext,
+			boolean waitForCompletion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_workflowInstanceLinkLocalService.startWorkflowInstance(
+			companyId, groupId, userId, className, classPK, workflowContext,
+			waitForCompletion);
+	}
+
+	@Override
 	public void updateClassPK(
 			long companyId, long groupId, String className, long oldClassPK,
 			long newClassPK)

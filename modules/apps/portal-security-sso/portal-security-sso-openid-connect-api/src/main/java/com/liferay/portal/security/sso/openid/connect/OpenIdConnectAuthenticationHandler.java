@@ -31,7 +31,7 @@ public interface OpenIdConnectAuthenticationHandler {
 	public void processAuthenticationResponse(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			UnsafeConsumer<Long, Exception> userIdConsumer)
+			UnsafeConsumer<Long, Exception> userIdUnsafeConsumer)
 		throws Exception;
 
 	public void requestAuthentication(

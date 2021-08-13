@@ -87,7 +87,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	public void processAuthenticationResponse(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			UnsafeConsumer<Long, Exception> userIdConsumer)
+			UnsafeConsumer<Long, Exception> userIdUnsafeConsumer)
 		throws Exception {
 
 		HttpSession httpSession = httpServletRequest.getSession();
@@ -137,7 +137,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			userInfo, _portal.getCompanyId(httpServletRequest),
 			serviceContext.getPathMain(), serviceContext.getPortalURL());
 
-		userIdConsumer.accept(userId);
+		userIdUnsafeConsumer.accept(userId);
 
 		httpSession = httpServletRequest.getSession();
 

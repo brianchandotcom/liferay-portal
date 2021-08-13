@@ -30,6 +30,14 @@ definition {
 			value1 = "${assetName}");
 	}
 
+	macro viewAssetsInfo {
+		AssertTextEquals(
+			index = "${index}",
+			key_assetName = "${assetName}",
+			locator1 = "ACAssets#ASSETS_INFO",
+			value1 = "${value}");
+	}
+
 	macro viewVisitorsBehaviorMetric {
 		var key_metricTitle = "${metricTitle}";
 

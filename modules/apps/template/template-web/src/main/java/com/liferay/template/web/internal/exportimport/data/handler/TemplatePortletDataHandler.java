@@ -188,6 +188,31 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	private List<Long> _getClassNameIds(PortletDataContext portletDataContext) {
+		List<Long> classNameIds = new ArrayList<>();
+
+		for (TemplateHandler templateHandler :
+				_templateHandlerRegistry.getTemplateHandlers()) {
+
+			ClassName className = _classNameLocalService.fetchClassName(
+				templateHandler.getClassName());
+
+			if (className == null) {
+				continue;
+			}
+
+			if (portletDataContext.getBooleanParameter(
+					NAMESPACE,
+					templateHandler.getName(LocaleUtil.getSiteDefault()))) {
+
+				classNameIds.add(
+					_portal.getClassNameId(templateHandler.getClassName()));
+			}
+		}
+
+		return classNameIds;
+	}
+
 	private ActionableDynamicQuery _getDDMTemplateActionableDynamicQuery(
 		final PortletDataContext portletDataContext, final Long[] classNameIds,
 		final StagedModelType stagedModelType) {

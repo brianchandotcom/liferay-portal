@@ -23,28 +23,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEXT_PAGES</td>
+	<td>xpath=(//a | //button)[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_ITEMS_PER_PAGE_SELECT</td>
-	<td>//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'dropdown-toggle')]/span</td>
+	<td>//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_PAGES</td>
+	<td>xpath=(//a | //button)[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESULT_MESSAGE</td>
 	<td>//div[@class='pagination-results']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULT_NEXT_PAGES</td>
-	<td>xpath=(//a | //button)[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULT_PAGES</td>
-	<td>//li[contains(@class,'page-item')]/a[contains(@class,'page-link') and text()='${pages}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULT_PREVIOUS_PAGES</td>
-	<td>xpath=(//a | //button)[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
 	<td></td>
 </tr>
 <!-- SEARCH_BAR -->

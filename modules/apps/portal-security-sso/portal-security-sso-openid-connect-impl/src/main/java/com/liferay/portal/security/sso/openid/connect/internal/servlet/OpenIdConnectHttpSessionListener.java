@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.internal.messaging;
+package com.liferay.portal.security.sso.openid.connect.internal.servlet;
 
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;

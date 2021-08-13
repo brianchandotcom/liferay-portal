@@ -400,8 +400,6 @@ definition {
 	test AddTaxRateSettingsByAddressTaxCalculation {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -437,9 +435,7 @@ definition {
 
 		SelectFrameTop();
 
-		// TODO Iframe fix at COMMERCE-6481
-
-		SelectFrame.selectFrameNoLoading(locator1 = "//body/div[25]/div[2]/div[1]/div[1]/div[1]/iframe[1]");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
 		Select(
 			key_fieldLabel = "Tax Category",

@@ -283,6 +283,10 @@ public class InfoCollectionProviderLayoutListRetriever
 					"infoFilterKey",
 					filteredInfoCollectionProvider.getInfoFilterClassName()));
 
+		if (infoRequestItemProvider != null) {
+			return null;
+		}
+
 		return infoRequestItemProvider.create(httpServletRequest);
 	}
 

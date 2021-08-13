@@ -94,6 +94,7 @@ public class UserAccountResourceDTOConverter
 
 		return new UserAccount() {
 			{
+				actions = dtoConverterContext.getActions();
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
 				birthDate = user.getBirthday();

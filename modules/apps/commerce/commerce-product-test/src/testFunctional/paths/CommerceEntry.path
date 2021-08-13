@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>VIRTUAL_SELECT_BY_PANEL</td>
-	<td>//div[contains(@class,'panel-heading')]//a[contains(.,'${key_panel}')]//../../..//span[@class='lfr-btn-label']</td>
+	<td>//div[contains(@class,'content')]//a[contains(.,'${key_panel}')]//..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

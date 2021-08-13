@@ -55,26 +55,26 @@ definition {
 		WaitForElementPresent(locator1 = "ACTimeFilter#DATE_PICKER");
 
 		var key_day = "${startDay}";
-		var key_month = "${startMonth}";
-		var key_year = "${startYear}";
 
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");
+		Select(
+			locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN",
+			value1 = "${startYear}");
 
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN_OPTION");
+		Select(
+			locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN",
+			value1 = "${startMonth}");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 
 		var key_day = "${endDay}";
-		var key_month = "${endMonth}";
-		var key_year = "${endYear}";
 
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");
+		Select(
+			locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN",
+			value1 = "${endYear}");
 
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN");
-		Click(locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN_OPTION");
+		Select(
+			locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN",
+			value1 = "${endMonth}");
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 

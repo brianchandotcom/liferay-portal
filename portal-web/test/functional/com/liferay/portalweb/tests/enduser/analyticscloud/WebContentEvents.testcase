@@ -1,0 +1,55 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8706 | Test Summary: Check webContentClicked triggers and check its properties (see reference document in comments)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckWebContentClickedAndCheckProperties {
+
+        // TODO LRAC-8706 CheckWebContentClickedAndCheckProperties pending implementation
+
+    }
+
+
+
+
+	
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8707 | Test Summary: Check webContentViewed triggers and check its properties (see reference document in comments)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckWebContentViewedAndCheckProperties {
+
+        // TODO LRAC-8707 CheckWebContentViewedAndCheckProperties pending implementation
+
+    }
+}

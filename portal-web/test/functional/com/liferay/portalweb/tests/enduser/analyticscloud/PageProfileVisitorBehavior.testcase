@@ -70,7 +70,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8517 | Test Summary: Assert Sites Page Overview time filter changes to 180 days"
 	@priority = "5"
-	test PeriodFilter180DaysPageOverview {
+	test TimeFilterByLast180DaysInPagesOverview {
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

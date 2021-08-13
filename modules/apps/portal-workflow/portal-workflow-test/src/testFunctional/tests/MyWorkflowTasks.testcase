@@ -477,7 +477,6 @@ definition {
 	@description = "LPS-135888 - Verify that the task is assigned to the user with Account role type"
 	@priority = "4"
 	test CanAssignTaskToUserWithAccountRole {
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
@@ -506,8 +505,8 @@ definition {
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
 		LexiconEntry.gotoEntryMenuItem(
-			rowEntry = "Account Administrator",
-			menuItem = "Assign Users");
+			menuItem = "Assign Users",
+			rowEntry = "Account Administrator");
 
 		LexiconEntry.gotoAdd();
 
@@ -563,7 +562,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-
 		AssertElementPresent(
 			key_status = "Pending",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
@@ -598,11 +596,6 @@ definition {
 			workflowAssetTitle = "Order",
 			workflowAssetType = "Commerce Order",
 			workflowTask = "Review");
-			
-		
-
-
-
 	}
 
 	@description = "Verify that the user can view the Assigned to My Roles page in List View"

@@ -263,6 +263,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						httpServletRequest.setAttribute(
 							InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT,
 							collection.get(index));
+						httpServletRequest.setAttribute(
+							InfoDisplayWebKeys.
+								INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE,
+							renderCollectionLayoutStructureItemDisplayContext.
+								getCollectionItemType());
 
 						ColTag colTag = new ColTag();
 
@@ -288,6 +293,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			finally {
 				httpServletRequest.removeAttribute(
 					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+				httpServletRequest.removeAttribute(
+					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE);
 
 				httpServletRequest.setAttribute(
 					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,

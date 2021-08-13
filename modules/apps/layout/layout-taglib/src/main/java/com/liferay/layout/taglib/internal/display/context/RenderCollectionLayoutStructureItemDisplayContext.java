@@ -29,6 +29,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -173,6 +174,27 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			listObjectReference, _getDefaultLayoutListRetrieverContext());
 
 		return _collectionCount;
+	}
+
+	public String getCollectionItemType() {
+		if (_collectionItemType != null) {
+			return _collectionItemType;
+		}
+
+		JSONObject collectionJSONObject =
+			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		String collectionItemType = StringPool.BLANK;
+
+		if ((collectionJSONObject != null) &&
+			collectionJSONObject.has("itemType")) {
+
+			collectionItemType = collectionJSONObject.getString("itemType");
+		}
+
+		_collectionItemType = collectionItemType;
+
+		return _collectionItemType;
 	}
 
 	public LayoutDisplayPageProvider<?>
@@ -467,6 +489,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 	private Integer _activePage;
 	private Integer _collectionCount;
+	private String _collectionItemType;
 	private final CollectionStyledLayoutStructureItem
 		_collectionStyledLayoutStructureItem;
 	private final HttpServletRequest _httpServletRequest;

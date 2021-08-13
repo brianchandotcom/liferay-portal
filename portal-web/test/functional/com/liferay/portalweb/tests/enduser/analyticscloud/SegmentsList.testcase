@@ -2,19 +2,24 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 	}
 
 	tearDown {
@@ -30,12 +35,29 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8462 | Test Summary: Inform the User when there are no disabled Segments"
-	@ignore = "true"
 	@priority = "3"
 	test AssertUserIsInformedWhenThereAreNoDisabledSegments {
+		task ("connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		// TODO LRAC-8462 AssertUserIsInformedWhenThereAreNoDisabledSegments
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Segments and filter by "Disable Segments"") {
+			ACNavigation.goToSegments();
+
+			ACSegments.filterAndOrderForSegLists(filterName = "Disabled Segments");
+		}
+
+		task ("Assert there is message There are no Segments found.") {
+			AssertTextPresent(
+				locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
+				value1 = "There are no Segments found.");
+		}
 	}
 
 	@description = "Search for specific segment"
@@ -154,22 +176,111 @@ definition {
 		ACSegments.assertSegmentPresent(segmentName = "Dynamic Segment Test");
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8460 | Test Summary: Order the Segment List"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8578 | Test Summary: Order the Segment List By Membership"
 	@ignore = "true"
 	@priority = "4"
-	test OrderSegmentList {
+	test OrderSegmentListByMembership {
 
-		// TODO LRAC-8460 OrderSegmentList
+		// OrderSegmentListByMembership
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8460 | Test Summary: Order the Segment List By Name"
+	@ignore = "true"
+	@priority = "4"
+	test OrderSegmentListByName {
+
+		// OrderSegmentListByName
 
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8461 | Test Summary: Paginate Segment list"
-	@ignore = "true"
 	@priority = "3"
 	test PaginateSegmentList {
+		task ("connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		// TODO LRAC-8461 PaginateSegmentList
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add 6 new Static Segments") {
+			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4,Static Segment Test5,Static Segment Test6") {
+				ACNavigation.goToSegments();
+
+				ACSegments.createStaticSegment();
+
+				ACSegments.nameSegment(segmentName = "${segmentName}");
+
+				ACSegments.addStaticMember(tableMember = "userfn userln");
+
+				ACSegments.saveSegment();
+			}
+		}
+
+		task ("Assert 6 segments display") {
+			ACNavigation.goToSegments();
+
+			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4,Static Segment Test5,Static Segment Test6") {
+				ACSegments.assertSegmentPresent(segmentName = "${segmentName}");
+			}
+		}
+
+		task ("Assert default pagination display "20 Items" message and page number") {
+			AssertTextEquals.assertText(
+				locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
+				value1 = "20 Items");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 6 of 6 entries.");
+
+			ACUtils.viewResultsPages(pageNumber = "1");
+		}
+
+		task ("Change the pagination to "5"") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4,Static Segment Test5") {
+				ACSegments.assertSegmentPresent(segmentName = "${segmentName}");
+			}
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+
+			ACUtils.viewResultsPages(pageNumber = "1");
+
+			ACUtils.viewResultsPages(pageNumber = "2");
+		}
+
+		task ("Page number display 1 2 and check previous next button") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+
+			ACSegments.assertSegmentPresent(segmentName = "Static Segment Test6");
+
+			ACUtils.checkPreviousNextButton(previousButton = "true");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+		}
 	}
 
 }

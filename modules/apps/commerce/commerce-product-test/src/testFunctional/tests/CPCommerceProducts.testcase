@@ -1018,9 +1018,23 @@ definition {
 	@description = "This is a test for COMMERCE-6304. UseFriendlyURL"
 	@priority = "3"
 	test UseFriendlyURL {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "false";
 
-		// TODO Review
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Channel");
+
+		for (var fixIssueButtonName : list "Product Detail") {
+			if (IsElementPresent(locator1 = "CommerceEntry#FIX_ISSUE_BUTTON", key_fixIssueButtonName = "${fixIssueButtonName}")) {
+				Click(
+					key_fixIssueButtonName = "${fixIssueButtonName}",
+					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
+
+				Alert.viewSuccessMessage();
+			}
+		}
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -323,14 +323,15 @@ public class AccountEntryUserRelLocalServiceImpl
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
 		long accountEntryId) {
 
-		return accountEntryUserRelPersistence.findByAEI(accountEntryId);
+		return accountEntryUserRelPersistence.findByAccountEntryId(
+			accountEntryId);
 	}
 
 	@Override
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
 		long accountEntryId, int start, int end) {
 
-		return accountEntryUserRelPersistence.findByAEI(
+		return accountEntryUserRelPersistence.findByAccountEntryId(
 			accountEntryId, start, end);
 	}
 
@@ -338,14 +339,16 @@ public class AccountEntryUserRelLocalServiceImpl
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountUserId(
 		long accountUserId) {
 
-		return accountEntryUserRelPersistence.findByAUI(accountUserId);
+		return accountEntryUserRelPersistence.findByAccountUserId(
+			accountUserId);
 	}
 
 	@Override
 	public long getAccountEntryUserRelsCountByAccountEntryId(
 		long accountEntryId) {
 
-		return accountEntryUserRelPersistence.countByAEI(accountEntryId);
+		return accountEntryUserRelPersistence.countByAccountEntryId(
+			accountEntryId);
 	}
 
 	@Override

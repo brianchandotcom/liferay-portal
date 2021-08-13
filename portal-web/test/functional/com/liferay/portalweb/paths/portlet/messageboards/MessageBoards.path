@@ -228,6 +228,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_THREAD_REPLY_VIA_AP</td>
+	<td>xpath=(.//*[normalize-space(text()) and normalize-space(.)='${key_threadReplySubject}'])[1]/following::*[name()='svg'][1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

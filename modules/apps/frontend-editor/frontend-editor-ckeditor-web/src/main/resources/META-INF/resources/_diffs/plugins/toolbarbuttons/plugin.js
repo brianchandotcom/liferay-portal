@@ -49,16 +49,6 @@
 				title: editor.lang.link.title,
 			});
 
-			editor.ui.addBalloonToolbarButton('LinkRemove', {
-				click() {
-					editor.fire('unlinkTextOrImage', {
-						selection: editor.getSelection(),
-					});
-				},
-				icon: 'unlink',
-				title: editor.lang.link.unlink,
-			});
-
 			editor.ui.addRichCombo('TableHeaders', {
 				init() {
 					const headersPrefix = editor.lang.table.headers;

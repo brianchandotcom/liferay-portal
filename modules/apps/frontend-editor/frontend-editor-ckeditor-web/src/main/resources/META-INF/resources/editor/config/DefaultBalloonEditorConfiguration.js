@@ -46,6 +46,7 @@ const DEFAULT_BALLOON_EDITOR_CONFIG = {
 	title: false,
 	toolbarImage:
 		'ImageAlignLeft,ImageAlignCenter,ImageAlignRight,LinkAddOrEdit,AltImg',
+	toolbarLink: 'LinkRemove,LinkTarget,LinkInput,LinkConfirm,LinkBrowse',
 	toolbarTable: 'TableHeaders,TableRow,TableColumn,TableCell,TableDelete',
 	toolbarText:
 		'Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock,LineHeight,BGColor,RemoveFormat',

@@ -26,6 +26,52 @@
 	<td>//div[@class='no-results-content']//h4[text()='${key_noResultMessage}']</td>
 	<td></td>
 </tr>
+<!-- VIEWS BY TECHNOLOGY -->
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_CARD</td>
+	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_TAB</td>
+	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//li[@class='card-tab' and @data-testid='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_TAB_ACTIVE</td>
+	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//li[@class='card-tab active' and @data-testid='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_BAR_CHART</td>
+	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//*[@class='recharts-layer recharts-bar-rectangle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_PIE_CHART</td>
+	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//*[@class='recharts-layer recharts-pie-sector']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_DEVICE_CHART_TOOLTIP_DEVICE_HEADER</td>
+	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//thead[@class='analytics-tooltip-chart-header']//div[@class='analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_DEVICE_CHART_TOOLTIP_VIEWS_HEADER</td>
+	<td>xpath=(//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//thead[@class='analytics-tooltip-chart-header']//div[@class='analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_DEVICE_CHART_TOOLTIP_PERCENTAGE_HEADER</td>
+	<td>xpath=(//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//thead[@class='analytics-tooltip-chart-header']//div[@class='analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWS_BY_TECHNOLOGY_BROWSER_CHART_LEGEND_BROWSER_PERCENTAGE_VALUE</td>
+	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//span[@class='recharts-legend-item-text' and contains(.,'${key_browserName}')]/span[@class='legend-percentage']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

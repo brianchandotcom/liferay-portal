@@ -29,6 +29,11 @@
 	<td>//*[text()='${key_parentName}']/parent::div/following-sibling::div[contains(@class, 'card-body')]//*[contains(@class, 'recharts-surface')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>METRIC_VALUE_PERCENTAGE</td>
+	<td>xpath=(//*[contains(@class,'recharts-pie-labels')])[${key_index}]//*[contains(text(),'${key_percentage}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

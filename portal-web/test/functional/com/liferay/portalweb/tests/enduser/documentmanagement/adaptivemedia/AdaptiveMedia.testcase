@@ -16,29 +16,6 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 	}
 
-	@priority = "4"
-	@refactordone
-	test CanEditEntryWithSpecialCharacters {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Adaptive Media");
-
-		AdaptiveMedia.addImageResolution(
-			description = "1234567890!@#$%^&amp;*()~`",
-			imageName = "1234567890!@#$%^&amp;*()~`",
-			maxHeight = "25",
-			maxWidth = "25");
-
-		AdaptiveMedia.editImageResolution(
-			imageName = "1234567890!@#$%^&amp;*()~`",
-			imageNameEdit = "[]\{}|:&quot;;&apos;,./&gt;&lt;?");
-
-		AdaptiveMedia.gotoImageVariantEntry(imageName = "[]\{}|:&quot;;&apos;,./&gt;&lt;?");
-
-		AdaptiveMedia.viewImageVariantDescription(description = "1234567890!@#$%^&amp;*()~`");
-	}
-
 	@priority = "5"
 	@refactorneeded
 	test CanAdaptImageInBlogsEntry {
@@ -269,6 +246,29 @@ definition {
 			percentAdapted = "0");
 
 		AdaptiveMedia.deleteImageResolution(imageName = "Small Image Variant");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanEditEntryWithSpecialCharacters {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Adaptive Media");
+
+		AdaptiveMedia.addImageResolution(
+			description = "1234567890!@#$%^&amp;*()~`",
+			imageName = "1234567890!@#$%^&amp;*()~`",
+			maxHeight = "25",
+			maxWidth = "25");
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "1234567890!@#$%^&amp;*()~`",
+			imageNameEdit = "[]\{}|:&quot;;&apos;,./&gt;&lt;?");
+
+		AdaptiveMedia.gotoImageVariantEntry(imageName = "[]\{}|:&quot;;&apos;,./&gt;&lt;?");
+
+		AdaptiveMedia.viewImageVariantDescription(description = "1234567890!@#$%^&amp;*()~`");
 	}
 
 	@priority = "4"

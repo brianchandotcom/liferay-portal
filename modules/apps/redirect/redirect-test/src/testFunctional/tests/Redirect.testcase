@@ -270,7 +270,6 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
 	}
 
-
 	@description = "This ensures that a temporary redirect can be added from an active 404 URL."
 	@priority = "5"
 	@refactorneeded

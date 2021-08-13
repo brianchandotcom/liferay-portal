@@ -111,10 +111,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="AEI" return-type="Collection">
+		<finder name="AccountEntryId" return-type="Collection">
 			<finder-column name="accountEntryId" />
 		</finder>
-		<finder name="AUI" return-type="Collection">
+		<finder name="AccountUserId" return-type="Collection">
 			<finder-column name="accountUserId" />
 		</finder>
 		<finder name="AEI_AUI" return-type="AccountEntryUserRel">

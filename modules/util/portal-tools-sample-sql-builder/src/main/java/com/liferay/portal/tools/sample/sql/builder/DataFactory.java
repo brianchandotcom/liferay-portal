@@ -6927,6 +6927,12 @@ public class DataFactory {
 				else if (name.equals("TotalDiscountPctLev4WithTax")) {
 					name = "TotalDiscountPercentageLevel4WithTaxAmount";
 				}
+				else if (name.equals("CdnEnabled")) {
+					name = "CDNEnabled";
+				}
+				else if (name.equals("CdnURL")) {
+					name = "CDNURL";
+				}
 
 				int type = (int)tableColumn[1];
 

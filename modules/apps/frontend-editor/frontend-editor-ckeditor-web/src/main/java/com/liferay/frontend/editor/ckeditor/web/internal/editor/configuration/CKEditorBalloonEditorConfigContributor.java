@@ -15,18 +15,11 @@
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,67 +42,6 @@ public class CKEditorBalloonEditorConfigContributor
 		super.populateConfigJSONObject(
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
-
-		String extraPlugins = jsonObject.getString("extraPlugins");
-
-		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += ",itemselector,stylescombo";
-		}
-		else {
-			extraPlugins = "itemselector,stylescombo";
-		}
-
-		jsonObject.put(
-			"extraPlugins", extraPlugins
-		).put(
-			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
-		).put(
-			"toolbarImage",
-			"ImageAlignLeft,ImageAlignCenter,ImageAlignRight,LinkAddOrEdit," +
-				"AltImg"
-		).put(
-			"toolbarTable",
-			"TableHeaders,TableRow,TableColumn,TableCell,TableDelete"
-		).put(
-			"toolbarText", getToolbarText()
-		).put(
-			"toolbarVideo", "VideoAlignLeft,VideoAlignCenter,VideoAlignRight"
-		);
-	}
-
-	protected JSONObject getStyleFormatJSONObject(
-		String styleFormatName, String element) {
-
-		return JSONUtil.put(
-			"element", element
-		).put(
-			"name", styleFormatName
-		);
-	}
-
-	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.frontend.editor.lang");
-
-		return JSONUtil.putAll(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "normal"), "p"),
-			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1"),
-			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2"),
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre"),
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "cited-work"), "cite"),
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "computer-code"), "code"));
-	}
-
-	protected String getToolbarText() {
-		return "Styles,Bold,Italic,Underline,BulletedList,NumberedList," +
-			"TextLink,JustifyLeft,JustifyCenter,JustifyRight,JustifyBlock," +
-				"LineHeight,BGColor,RemoveFormat";
 	}
 
 }

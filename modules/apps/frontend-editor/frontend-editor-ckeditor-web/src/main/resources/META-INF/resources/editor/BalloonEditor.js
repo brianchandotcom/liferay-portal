@@ -16,30 +16,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {Editor} from './Editor';
+import DEFAULT_BALLOON_EDITOR_CONFIG from './config/DefaultBalloonEditorConfiguration';
 
 import '../css/main.scss';
 
 const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
-	const defaultExtraPlugins = 'ballooneditor,videoembed';
-
-	const extraPlugins = config.extraPlugins ? `${config.extraPlugins},` : '';
-
-	const basicToolbars = {
-		toolbarImage:
-			'ImageAlignLeft,ImageAlignCenter,ImageAlignRight,LinkAddOrEdit,AltImg',
-		toolbarTable: 'TableHeaders,TableRow,TableColumn,TableCell,TableDelete',
-		toolbarText:
-			'Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink,' +
-			'JustifyLeft,JustifyCenter,JustifyRight,LineHeight,RemoveFormat',
-		toolbarVideo: 'VideoAlignLeft,VideoAlignCenter,VideoAlignRight',
-	};
-
 	const editorConfig = {
-		...basicToolbars,
+		...DEFAULT_BALLOON_EDITOR_CONFIG,
 		...config,
-		extraAllowedContent: '*',
-		extraPlugins: `${extraPlugins}${defaultExtraPlugins}`,
-		title: false,
 	};
 
 	return (

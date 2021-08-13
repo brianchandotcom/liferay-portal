@@ -62,12 +62,19 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8261 | Test Summary: Make sure the Site Reports is the home page of AC"
-	@ignore = "true"
 	@priority = "5"
 	test ViewSitesReportsAsHomePageAC {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8261 ViewSitesReportsAsHomePageAC pending implementation
+		ACUtils.launchAC();
 
+		ACNavigation.goToAssets();
+
+		ACWorkspace.signOut();
+
+		ACUtils.launchAC();
+
+		ACUtils.assertPageTitle(pageTitle = "Sites");
 	}
 
 }

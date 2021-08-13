@@ -1,108 +1,135 @@
 @component-name = "portal-analytics-cloud"
 definition {
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
-    setUp {
-        ACUtils.launchAC();
-        ACSettings.takeTokenFromAnalyticsCloud();
-        TestCase.setUpPortalInstance();
-        ACUtils.launchDXP();
-    }
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
-        ACUtils.tearDownDXP();
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        ACUtils.tearDownAC();
-    }
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8643 | Test Summary: Account activities list has pagination"
-    @ignore = "true"
-    @priority = "3"
-    test  PaginateAccountActivitiesList{
-        // TODO LRAC-8643 PaginateAccountActivitiesList pending implementation
-    }
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8644 | Test Summary: Assert Account Activities Chart Popover format"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesChartPopover {
-        // TODO LRAC-8644 AssertAccountActivitiesChartPopover pending implementation
-    }
+	setUp {
+		ACUtils.launchAC();
+		ACSettings.takeTokenFromAnalyticsCloud();
+		TestCase.setUpPortalInstance();
+		ACUtils.launchDXP();
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8645 | Test Summary: Selected account activity point can clear date selection"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesClearDateSelection {
-        // TODO LRAC-8645 PaginateAccountList pending implementation
-    }
-    
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		ACUtils.tearDownDXP();
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8646 | Test Summary: Assert Engagement Score time filter is disabled for Account Activities"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesEngagementScoreTimeFilterDisabled {
-        // TODO LRAC-8646 AssertAccountActivitiesEngagementScoreTimeFilterDisabled pending implementation
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		ACUtils.tearDownAC();
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8647 | Test Summary: Expand activity in account activities"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesExpandActivities {
-        // TODO LRAC-8647 AssertAccountActivitiesExpandActivities pending implementation
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8644 | Test Summary: Assert Account Activities Chart Popover format"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesChartPopover {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8648 | Test Summary: Assert account activities graph selected on first load"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesGraphSelectedFirstLoad {
-        // TODO LRAC-8648 AssertAccountActivitiesGraphSelectedFirstLoad pending implementation
-    }
+		// TODO LRAC-8644 AssertAccountActivitiesChartPopover pending implementation
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8649 | Test Summary: Assert 180 day time filter in Account Activities"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesPageTimeFilter180Days {
-        // TODO LRAC-8649 AssertAccountActivitiesPageTimeFilter180Days pending implementation
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8650 | Test Summary: Select point on account activities graph"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesPointGraph {
-        // TODO LRAC-8650 AssertAccountActivitiesPointGraph pending implementation
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8645 | Test Summary: Selected account activity point can clear date selection"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesClearDateSelection {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8651 | Test Summary: Session link to page in account activities"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesSessionLinkToPage {
-        // TODO LRAC-8651 AssertAccountActivitiesSessionLinkToPage pending implementation
-    }
+		// TODO LRAC-8645 PaginateAccountList pending implementation
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8652 | Test Summary: Assert Chart Ticks for Account Activities Metrics are Standardized"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesTicksDateFormat {
-        // TODO LRAC-8652 AssertAccountActivitiesTicksDateFormat pending implementation
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8653 | Test Summary: Set a Custom Range time filter for Account Activities"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountActivitiesTimeFilterCustom {
-        // TODO LRAC-8653 AssertAccountActivitiesTimeFilterCustom pending implementation
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8646 | Test Summary: Assert Engagement Score time filter is disabled for Account Activities"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesEngagementScoreTimeFilterDisabled {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8654 | Test Summary: Search an Account's Activities"
-    @ignore = "true"
-    @priority = "3"
-    test CanSearchAccountActivities {
-        // TODO LRAC-8654 CanSearchAccountActivities pending implementation
-    }
+		// TODO LRAC-8646 AssertAccountActivitiesEngagementScoreTimeFilterDisabled pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8647 | Test Summary: Expand activity in account activities"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesExpandActivities {
+
+		// TODO LRAC-8647 AssertAccountActivitiesExpandActivities pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8648 | Test Summary: Assert account activities graph selected on first load"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesGraphSelectedFirstLoad {
+
+		// TODO LRAC-8648 AssertAccountActivitiesGraphSelectedFirstLoad pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8649 | Test Summary: Assert 180 day time filter in Account Activities"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesPageTimeFilter180Days {
+
+		// TODO LRAC-8649 AssertAccountActivitiesPageTimeFilter180Days pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8650 | Test Summary: Select point on account activities graph"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesPointGraph {
+
+		// TODO LRAC-8650 AssertAccountActivitiesPointGraph pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8651 | Test Summary: Session link to page in account activities"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesSessionLinkToPage {
+
+		// TODO LRAC-8651 AssertAccountActivitiesSessionLinkToPage pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8652 | Test Summary: Assert Chart Ticks for Account Activities Metrics are Standardized"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesTicksDateFormat {
+
+		// TODO LRAC-8652 AssertAccountActivitiesTicksDateFormat pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8653 | Test Summary: Set a Custom Range time filter for Account Activities"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountActivitiesTimeFilterCustom {
+
+		// TODO LRAC-8653 AssertAccountActivitiesTimeFilterCustom pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8654 | Test Summary: Search an Account's Activities"
+	@ignore = "true"
+	@priority = "3"
+	test CanSearchAccountActivities {
+
+		// TODO LRAC-8654 CanSearchAccountActivities pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8643 | Test Summary: Account activities list has pagination"
+	@ignore = "true"
+	@priority = "3"
+	test PaginateAccountActivitiesList {
+
+		// TODO LRAC-8643 PaginateAccountActivitiesList pending implementation
+
+	}
 
 }

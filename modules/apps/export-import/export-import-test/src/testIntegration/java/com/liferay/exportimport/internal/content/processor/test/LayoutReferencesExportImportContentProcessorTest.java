@@ -22,16 +22,21 @@ import com.liferay.exportimport.test.util.TestReaderWriter;
 import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.registry.Registry;
@@ -40,6 +45,7 @@ import com.liferay.registry.ServiceTracker;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,6 +102,76 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			urlToExport, exportGroup, importGroup);
 
 		Assert.assertEquals(urlToExport, actualImportedURL);
+	}
+
+	@Test
+	public void testPrivateVirtualHostLayoutFriendlyURLFormatPreservedWhenPossible()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, true);
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, true);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, true) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup);
+
+		Assert.assertEquals(
+			_getGroupVirtualHostPortalURL(importGroup, true) +
+				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testPublicVirtualHostLayoutFriendlyURLFormatPreservedWhenPossible()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup);
+
+		Assert.assertEquals(
+			_getGroupVirtualHostPortalURL(importGroup, false) +
+				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testRelativeLayoutFriendlyURLFormatPreservedWhenPossible()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport = exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup);
+
+		Assert.assertEquals(exportLayout.getFriendlyURL(), actualImportedURL);
 	}
 
 	private String _exportAndImportLayoutURL(
@@ -162,6 +238,26 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			importedContent.length() - _CONTENT_POSTFIX.length());
 	}
 
+	private String _getGroupVirtualHostPortalURL(
+		Group group, boolean privateLayout) {
+
+		LayoutSet layoutSet = null;
+
+		if (privateLayout) {
+			layoutSet = group.getPrivateLayoutSet();
+		}
+		else {
+			layoutSet = group.getPublicLayoutSet();
+		}
+
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		return _portal.getPortalURL(
+			virtualHostnames.firstKey(), _portal.getPortalServerPort(false),
+			false);
+	}
+
 	private static final String _CONTENT_POSTFIX = "\">link</a>";
 
 	private static final String _CONTENT_PREFIX = "<a href=\"";
@@ -172,5 +268,8 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 	private ExportImportContentProcessor<String>
 		_layoutReferencesExportImportContentProcessor;
+
+	@Inject
+	private Portal _portal;
 
 }

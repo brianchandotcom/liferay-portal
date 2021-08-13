@@ -71,31 +71,42 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 
 				const balloonToolbars = editor.balloonToolbars;
 
-				balloonToolbars.create({
-					buttons: editorConfig.toolbarText,
-					cssSelector: '*',
-				});
+				if (editorConfig.toolbarText) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarText,
+						cssSelector: '*',
+					});
+				}
 
-				balloonToolbars.create({
-					buttons: editorConfig.toolbarImage,
-					priority:
-						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
-					widgets: 'image,image2',
-				});
+				if (editorConfig.toolbarImage) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarImage,
+						priority:
+							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
+								.HIGH,
+						widgets: 'image,image2',
+					});
+				}
 
-				balloonToolbars.create({
-					buttons: editorConfig.toolbarTable,
-					cssSelector: 'td',
-					priority:
-						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
-				});
+				if (editorConfig.toolbarTable) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarTable,
+						cssSelector: 'td',
+						priority:
+							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
+								.HIGH,
+					});
+				}
 
-				balloonToolbars.create({
-					buttons: editorConfig.toolbarVideo,
-					priority:
-						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
-					widgets: 'videoembed',
-				});
+				if (editorConfig.toolbarVideo) {
+					balloonToolbars.create({
+						buttons: editorConfig.toolbarVideo,
+						priority:
+							window.CKEDITOR.plugins.balloontoolbar.PRIORITY
+								.HIGH,
+						widgets: 'videoembed',
+					});
+				}
 			}}
 			type="inline"
 			{...otherProps}

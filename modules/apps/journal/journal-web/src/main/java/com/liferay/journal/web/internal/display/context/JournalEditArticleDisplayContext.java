@@ -44,12 +44,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -893,27 +890,6 @@ public class JournalEditArticleDisplayContext {
 				JournalArticleConstants.DDM_STRUCTURE_ID_ALL)) {
 
 			return true;
-		}
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			getGroupId(), false);
-
-		if (layoutSet.getLayoutSetPrototypeId() > 0) {
-			Group layoutSetPrototypeGroup =
-				GroupLocalServiceUtil.getLayoutSetPrototypeGroup(
-					_themeDisplay.getCompanyId(),
-					layoutSet.getLayoutSetPrototypeId());
-
-			if (WorkflowDefinitionLinkLocalServiceUtil.
-					hasWorkflowDefinitionLink(
-						_themeDisplay.getCompanyId(),
-						layoutSetPrototypeGroup.getGroupId(),
-						JournalFolder.class.getName(),
-						_getInheritedWorkflowDDMStructuresFolderId(),
-						JournalArticleConstants.DDM_STRUCTURE_ID_ALL)) {
-
-				return true;
-			}
 		}
 
 		return false;

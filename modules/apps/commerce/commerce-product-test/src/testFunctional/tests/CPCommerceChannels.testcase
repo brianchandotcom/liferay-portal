@@ -2038,8 +2038,6 @@ definition {
 	test RemoveTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -2075,9 +2073,7 @@ definition {
 
 		SelectFrameTop();
 
-		// TODO Update the path once COMMERCE-6121 is resolved, as there is an iframe that is only found with the path below
-
-		SelectFrame.selectFrameNoLoading(locator1 = "//body/div[25]/div[2]/div[1]/div[1]/div[1]/iframe[1]");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
 		Select(
 			key_fieldLabel = "Tax Category",

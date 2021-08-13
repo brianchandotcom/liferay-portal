@@ -386,9 +386,6 @@ definition {
 	@priority = "3"
 	test ConfigureVirtualProduct {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProducts#ConfigureVirtualProduct";
-
-		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -419,18 +416,24 @@ definition {
 			key_FilterOption = "Add",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
-		Click(
-			key_contentType = "Base Information",
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+		Pause(locator1 = "3000");
+
+		if (IsElementPresent(locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED", key_contentType = "Base Information")) {
+			Click(
+				key_contentType = "Base Information",
+				locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+		}
 
 		Type(
 			key_fieldLabel = "Max Number of Downloads",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "10");
 
-		Click(
-			key_contentType = "Sample",
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+		if (IsElementPresent(locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED", key_contentType = "Sample")) {
+			Click(
+				key_contentType = "Sample",
+				locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+		}
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Enable Sample",
@@ -459,11 +462,11 @@ definition {
 		Refresh();
 
 		AssertElementPresent(
-			key_index = "Commerce_Black",
+			key_index = "Commerce_Black.jpg",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		AssertElementPresent(
-			key_index = "Commerce_Black (1)",
+			key_index = "Commerce_Black (1).jpg",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		AssertTextEquals(

@@ -30,6 +30,7 @@ definition {
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
+<<<<<<< HEAD
 	macro deleteAllCustomObjectsViaAPI {
 		JSONObject.deleteAllCustomObjects(
 			userEmailAddress = "${userEmailAddress}",
@@ -54,6 +55,25 @@ definition {
 
 	macro openObjectAdmin {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
+=======
+	macro editCustomObject {
+		Click(
+			key_name = "${name}",
+			locator1 = "ObjectAdmin#SELECT_CUSTOM_OBJECT");
+
+		Click(locator1 = "ObjectAdmin#EDIT_CUSTOM_OBJECT");
+	}
+
+	macro openObjectAdmin {
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
+	}
+
+	macro publishCustomObject {
+		if (isSet(name)) {
+			ObjectAdmin.editCustomObject(name = "${name}");
+		}
+		Click(locator1 = "ObjectAdmin#PUBLISH_CUSTOM_OBJECT");
+>>>>>>> 637856c (LPS-137101 SF)
 	}
 
 	macro publishObjectViaAPI {

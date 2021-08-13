@@ -1,55 +1,50 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    setUp {
-        ACUtils.launchAC();
+	setUp {
+		ACUtils.launchAC();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        ACUtils.launchDXP();
+		ACUtils.launchDXP();
+	}
 
-    }
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+		ACUtils.tearDownDXP();
 
-        ACUtils.tearDownDXP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
+		ACUtils.tearDownAC();
+	}
 
-        ACUtils.tearDownAC();
-    }
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8706 | Test Summary: Check webContentClicked triggers and check its properties (see reference document in comments)"
+	@ignore = "true"
+	@priority = "5"
+	test CheckWebContentClickedAndCheckProperties {
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8706 | Test Summary: Check webContentClicked triggers and check its properties (see reference document in comments)"
-    @ignore = "true"
-    @priority = "5"
-    test CheckWebContentClickedAndCheckProperties {
+		// TODO LRAC-8706 CheckWebContentClickedAndCheckProperties pending implementation
 
-        // TODO LRAC-8706 CheckWebContentClickedAndCheckProperties pending implementation
-
-    }
-
-
-
-
-	
+	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8707 | Test Summary: Check webContentViewed triggers and check its properties (see reference document in comments)"
-    @ignore = "true"
-    @priority = "5"
-    test CheckWebContentViewedAndCheckProperties {
+	@ignore = "true"
+	@priority = "5"
+	test CheckWebContentViewedAndCheckProperties {
 
-        // TODO LRAC-8707 CheckWebContentViewedAndCheckProperties pending implementation
+		// TODO LRAC-8707 CheckWebContentViewedAndCheckProperties pending implementation
 
-    }
+	}
+
 }

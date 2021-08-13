@@ -628,12 +628,102 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
-	@ignore = "true"
 	@priority = "3"
 	test CanPaginateStaticSegmentAddMembers {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8472 CanPaginateStaticSegmentAddMembers
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "userea,user1,user2,user3,user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("View the Pagination is 10 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.viewPaginationItemsPerPage(itemsPerPage = "10");
+		}
+
+		task ("View all users are shown in current page") {
+			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,userfn userln") {
+				AssertVisible(
+					key_TableMember = "${username}",
+					locator1 = "ACSegments#TABLE_CHECKBOX");
+			}
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("View only 5 users are shown in current page") {
+			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5") {
+				AssertVisible(
+					key_TableMember = "${username}",
+					locator1 = "ACSegments#TABLE_CHECKBOX");
+			}
+
+			AssertElementNotPresent(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+		}
+
+		task ("Navigate to the page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View the userfn userln is shown in modal") {
+			AssertVisible(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8133 | Test Summary: Create button shows option to create static or dynamic"

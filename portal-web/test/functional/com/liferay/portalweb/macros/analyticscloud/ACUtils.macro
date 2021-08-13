@@ -47,6 +47,38 @@ definition {
 		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");
 	}
 
+	macro changePagination {
+		Click(locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT");
+
+		MenuItem.click(menuItem = "${itemsPerPage}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
+			value1 = "${itemsPerPage} Items");
+	}
+
+	macro checkAnyPage {
+		var key_pageNumber = "${pageNumber}";
+
+		if (isSet(pageNumber)) {
+			Click(locator1 = "ACUtils#ANY_PAGE");
+		}
+
+		ACUtils.viewResultsMessage(results = "${results}");
+	}
+
+	macro checkPreviousNextButton {
+		if (isSet(previousButton)) {
+			Click(locator1 = "ACUtils#RESULT_PREVIOUS_PAGES");
+		}
+
+		if (isSet(nextButton)) {
+			Click(locator1 = "ACUtils#RESULT_NEXT_PAGES");
+		}
+
+		ACUtils.viewResultsMessage(results = "${results}");
+	}
+
 	macro clearSearchBar {
 		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
@@ -240,6 +272,18 @@ definition {
 		ACUtils.launchDXP();
 
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+	}
+
+	macro viewResultsMessage {
+		AssertTextEquals(
+			locator1 = "ACUtils#RESULT_MESSAGE",
+			value1 = "${results}");
+	}
+
+	macro viewResultsPages {
+		AssertTextEquals(
+			locator1 = "ACUtils#RESULT_PAGES",
+			value1 = "${pages}");
 	}
 
 }

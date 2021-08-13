@@ -298,6 +298,17 @@
 	<td>//ul/li/button[contains(@class,'btn-primary')]|//ul/li/button[contains(@class,'btn-secondary')]</td>
 	<td></td>
 </tr>
+<!-- Segments List -->
+<tr>
+	<td>FILTER_AND_ORDER_BUTTON</td>
+	<td>//button[contains(@data-testid,'filter-and-order-button')]/span[@class='text-truncate' and text()='Filter and Order']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_DROPDOWN_OPTION</td>
+	<td>//div[contains(@class,'dropdown-item')]//label/input//following-sibling::span/span[text()='${key_filterName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -52,7 +52,7 @@ definition {
 
 		MenuItem.click(menuItem = "${itemsPerPage}");
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals.assertText(
 			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
 			value1 = "${itemsPerPage} Items");
 	}
@@ -60,23 +60,17 @@ definition {
 	macro checkAnyPage {
 		var key_pageNumber = "${pageNumber}";
 
-		if (isSet(pageNumber)) {
-			Click(locator1 = "ACUtils#ANY_PAGE");
-		}
-
-		ACUtils.viewResultsMessage(results = "${results}");
+		Click(locator1 = "ACUtils#ANY_PAGE");
 	}
 
 	macro checkPreviousNextButton {
 		if (isSet(previousButton)) {
-			Click(locator1 = "ACUtils#RESULT_PREVIOUS_PAGES");
+			Click(locator1 = "ACUtils#PREVIOUS_PAGES");
 		}
 
 		if (isSet(nextButton)) {
-			Click(locator1 = "ACUtils#RESULT_NEXT_PAGES");
+			Click(locator1 = "ACUtils#NEXT_PAGES");
 		}
-
-		ACUtils.viewResultsMessage(results = "${results}");
 	}
 
 	macro clearSearchBar {
@@ -281,9 +275,11 @@ definition {
 	}
 
 	macro viewResultsPages {
+		var key_pageNumber = "${pageNumber}";
+
 		AssertTextEquals(
-			locator1 = "ACUtils#RESULT_PAGES",
-			value1 = "${pages}");
+			locator1 = "ACUtils#ANY_PAGE",
+			value1 = "${key_pageNumber}");
 	}
 
 }

@@ -84,7 +84,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "${pageName}");
+			layoutName = "Message Boards Page");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
@@ -99,7 +99,7 @@ definition {
 		CKEditor.addTextWithLink(
 			displayText = "Link to Page",
 			fieldLabel = "Body",
-			pageName = "${pageName}");
+			pageName = "Message Boards Page");
 
 		PortletEntry.publish();
 
@@ -112,7 +112,7 @@ definition {
 			locator1 = "Link#ANY");
 
 		AssertVisible(
-			key_pageName = "${pageName}",
+			key_pageName = "Message Boards Page",
 			locator1 = "Home#PAGE_ACTIVE");
 	}
 

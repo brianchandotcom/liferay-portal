@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -66,8 +67,8 @@ public class SiteInitializerExtender
 			new SiteInitializerExtension(
 				bundle, _bundleContext, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_documentResourceFactory, _fragmentsImporter,
-				_groupLocalService, _jsonFactory,
+				_documentFolderResourceFactory, _documentResourceFactory, 
+				_fragmentsImporter, _groupLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
 				_userLocalService);
@@ -117,6 +118,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
+	@Reference
+	private DocumentFolderResource.Factory _documentFolderResourceFactory;
 
 	@Reference
 	private DocumentResource.Factory _documentResourceFactory;

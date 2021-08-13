@@ -29,13 +29,15 @@ Company companyObject = (Company)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:actionURL name="/on_demand_admin/request_admin_access" var="requestAdminAccessURL">
-		<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= companyObject.getCompanyId() != PortalUtil.getDefaultCompanyId() %>">
+		<portlet:actionURL name="/on_demand_admin/request_admin_access" var="requestAdminAccessURL">
+			<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="request-administrator-access"
-		target="_blank"
-		url="<%= requestAdminAccessURL %>"
-	/>
+		<liferay-ui:icon
+			message="request-administrator-access"
+			target="_blank"
+			url="<%= requestAdminAccessURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

@@ -1,104 +1,104 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    setUp {
-        ACUtils.launchAC();
+	setUp {
+		ACUtils.launchAC();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        ACUtils.launchDXP();
-    }
+		ACUtils.launchDXP();
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        ACUtils.tearDownDXP();
+		ACUtils.tearDownDXP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-        ACUtils.tearDownAC();
-    }
+		ACUtils.tearDownAC();
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8693 | Test Summary: Account overview associated segment show segment"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountOverviewAssociatedSegments {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8694 | Test Summary: Account segment list has pagination"
+	@ignore = "true"
+	@priority = "3"
+	test AccountSegmentListHasPagination {
 
-        // TODO LRAC-8693 AssertAccountOverviewAssociatedSegments pending implementation
+		// TODO LRAC-8694 AccountSegmentListHasPagination pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8694 | Test Summary: Account segment list has pagination"
-    @ignore = "true"
-    @priority = "3"
-    test AccountSegmentListHasPagination {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8693 | Test Summary: Account overview associated segment show segment"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountOverviewAssociatedSegments {
 
-        // TODO LRAC-8694 AccountSegmentListHasPagination pending implementation
+		// TODO LRAC-8693 AssertAccountOverviewAssociatedSegments pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8695 | Test Summary: Assert an Account's Associated Segments"
-    @ignore = "true"
-    @priority = "5"
-    test CanAssertAccountAssociatedSegments {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8696 | Test Summary: Selecting a Segment in Accounts"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountSegmentSelected {
 
-        // TODO LRAC-8695 CanAssertAccountAssociatedSegments pending implementation
+		// TODO LRAC-8696 AssertAccountSegmentSelected pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8696 | Test Summary: Selecting a Segment in Accounts"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountSegmentSelected {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8697 | Test Summary: Total number of associated segments are displayed"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountSegmentsTotal {
 
-        // TODO LRAC-8696 AssertAccountSegmentSelected pending implementation
+		// TODO LRAC-8697 AssertAccountSegmentsTotal pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8697 | Test Summary: Total number of associated segments are displayed"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountSegmentsTotal {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8698 | Test Summary: Total Membership of segments is shown"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountSegmentsTotalMembership {
 
-        // TODO LRAC-8697 AssertAccountSegmentsTotal pending implementation
+		// TODO LRAC-8698 AssertAccountSegmentsTotalMembership pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8698 | Test Summary: Total Membership of segments is shown"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountSegmentsTotalMembership {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8695 | Test Summary: Assert an Account's Associated Segments"
+	@ignore = "true"
+	@priority = "5"
+	test CanAssertAccountAssociatedSegments {
 
-        // TODO LRAC-8698 AssertAccountSegmentsTotalMembership pending implementation
+		// TODO LRAC-8695 CanAssertAccountAssociatedSegments pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8699 | Test Summary: Order an Account's Associated Segments"
-    @ignore = "true"
-    @priority = "3"
-    test OrderAccountAssociatedSegments {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8700 | Test Summary: Search an Account's Associated Segments"
+	@ignore = "true"
+	@priority = "4"
+	test CanSearchAccountsAssociatedSegments {
 
-        // TODO LRAC-8699 OrderAccountAssociatedSegments pending implementation
+		// TODO LRAC-8700 CanSearchAccountsAssociatedSegments pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8700 | Test Summary: Search an Account's Associated Segments"
-    @ignore = "true"
-    @priority = "4"
-    test CanSearchAccountsAssociatedSegments {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8699 | Test Summary: Order an Account's Associated Segments"
+	@ignore = "true"
+	@priority = "3"
+	test OrderAccountAssociatedSegments {
 
-        // TODO LRAC-8700 CanSearchAccountsAssociatedSegments pending implementation
+		// TODO LRAC-8699 OrderAccountAssociatedSegments pending implementation
 
-    }
+	}
 
 }

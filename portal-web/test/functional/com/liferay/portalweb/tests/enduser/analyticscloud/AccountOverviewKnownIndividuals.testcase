@@ -1,59 +1,59 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    setUp {
-        ACUtils.launchAC();
+	setUp {
+		ACUtils.launchAC();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        ACUtils.launchDXP();
-    }
+		ACUtils.launchDXP();
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        ACUtils.tearDownDXP();
+		ACUtils.tearDownDXP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-        ACUtils.tearDownAC();
-    }
+		ACUtils.tearDownAC();
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8686 | Test Summary: Account individuals list has pagination"
-    @ignore = "true"
-    @priority = "3"
-    test PaginateAccountIndividualsList {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8688 | Test Summary: Assert the Account Overview Cards"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountOverviewCards {
 
-        // TODO LRAC-8686 PaginateAccountIndividualsList pending implementation
+		// TODO LRAC-8688 AssertAccountOverviewCards pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8687 | Test Summary: Account overview known individuals show individuals"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountOverviewKnownIndividuals {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8687 | Test Summary: Account overview known individuals show individuals"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAccountOverviewKnownIndividuals {
 
-        // TODO LRAC-8687 AssertAccountOverviewKnownIndividuals pending implementation
+		// TODO LRAC-8687 AssertAccountOverviewKnownIndividuals pending implementation
 
-    }
+	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8688 | Test Summary: Assert the Account Overview Cards"
-    @ignore = "true"
-    @priority = "3"
-    test AssertAccountOverviewCards {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8686 | Test Summary: Account individuals list has pagination"
+	@ignore = "true"
+	@priority = "3"
+	test PaginateAccountIndividualsList {
 
-        // TODO LRAC-8688 AssertAccountOverviewCards pending implementation
+		// TODO LRAC-8686 PaginateAccountIndividualsList pending implementation
 
-    }
+	}
 
 }

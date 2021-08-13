@@ -16,6 +16,7 @@ package com.liferay.on.demand.admin.manager;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 
 /**
  * @author Pei-Jung Lan
@@ -24,5 +25,7 @@ public interface OnDemandAdminManager {
 
 	public String getLoginURL(Company company, long userId)
 		throws PortalException;
+
+	public boolean isOnDemandAdminUser(User user);
 
 }

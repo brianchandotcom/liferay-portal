@@ -84,12 +84,11 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 			ProxyUtil.fetchInvocationHandler(
 				_portletPreferencesLocalService, AopInvocationHandler.class);
 
-		final PortletPreferencesLocalServiceImpl
-			portletPreferencesLocalServiceImpl =
-				(PortletPreferencesLocalServiceImpl)
-					aopInvocationHandler.getTarget();
+		PortletPreferencesLocalServiceImpl portletPreferencesLocalServiceImpl =
+			(PortletPreferencesLocalServiceImpl)
+				aopInvocationHandler.getTarget();
 
-		final PortletPreferencesPersistence portletPreferencesPersistence =
+		PortletPreferencesPersistence portletPreferencesPersistence =
 			portletPreferencesLocalServiceImpl.
 				getPortletPreferencesPersistence();
 
@@ -182,10 +181,10 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 		SynchronousInvocationHandler.enable();
 
 		try {
-			final long ownerId = RandomTestUtil.randomLong();
-			final int ownerType = RandomTestUtil.randomInt();
-			final long plid = RandomTestUtil.randomLong();
-			final String portletId = RandomTestUtil.randomString(
+			long ownerId = RandomTestUtil.randomLong();
+			int ownerType = RandomTestUtil.randomInt();
+			long plid = RandomTestUtil.randomLong();
+			String portletId = RandomTestUtil.randomString(
 				UniqueStringRandomizerBumper.INSTANCE);
 
 			Callable<PortletPreferences> callable =

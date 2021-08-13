@@ -174,7 +174,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	private BuildCSSTask _addTaskBuildCSS(
 		Project project, final Sync copyCSSTask) {
 
-		final BuildCSSTask buildCSSTask = GradleUtil.addTask(
+		BuildCSSTask buildCSSTask = GradleUtil.addTask(
 			project, BUILD_CSS_TASK_NAME, BuildCSSTask.class);
 
 		buildCSSTask.dependsOn(copyCSSTask);

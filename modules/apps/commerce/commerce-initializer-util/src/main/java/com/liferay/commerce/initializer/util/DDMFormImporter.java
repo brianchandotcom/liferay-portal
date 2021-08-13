@@ -203,12 +203,12 @@ public class DDMFormImporter {
 			DDMForm ddmForm, String jsonFormSettings)
 		throws Exception {
 
-		final List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			jsonFormSettings);
 
-		final Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
+		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
 
 		return ddmFormFieldsStream.map(
 			formField -> {

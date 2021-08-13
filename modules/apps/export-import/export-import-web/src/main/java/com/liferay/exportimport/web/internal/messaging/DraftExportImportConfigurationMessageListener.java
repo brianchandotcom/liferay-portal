@@ -114,7 +114,7 @@ public class DraftExportImportConfigurationMessageListener
 			return;
 		}
 
-		final Date lastCreateDate;
+		Date lastCreateDate;
 
 		if (ExportImportWebConfigurationValues.
 				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT == 0) {
@@ -153,7 +153,7 @@ public class DraftExportImportConfigurationMessageListener
 		ActionableDynamicQuery actionableDynamicQuery =
 			_exportImportConfigurationLocalService.getActionableDynamicQuery();
 
-		final Property createDate = PropertyFactoryUtil.forName("createDate");
+		Property createDate = PropertyFactoryUtil.forName("createDate");
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {

@@ -227,7 +227,7 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			new ArrayList<>();
 
 		for (Map.Entry<String, Object> entry : initParametersMap.entrySet()) {
-			final String propertyName = entry.getKey();
+			String propertyName = entry.getKey();
 
 			if (!propertyName.startsWith(PropsKeys.AUTH_VERIFIER)) {
 				continue;

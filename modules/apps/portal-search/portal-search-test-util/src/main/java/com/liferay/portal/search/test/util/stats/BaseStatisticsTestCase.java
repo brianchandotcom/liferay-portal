@@ -298,7 +298,7 @@ public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 	}
 
 	protected void addDocuments(int count) throws Exception {
-		final String field = STAT_FIELD;
+		String field = STAT_FIELD;
 
 		for (int i = 1; i <= count; i++) {
 			addDocument(DocumentCreationHelpers.singleNumberSortable(field, i));

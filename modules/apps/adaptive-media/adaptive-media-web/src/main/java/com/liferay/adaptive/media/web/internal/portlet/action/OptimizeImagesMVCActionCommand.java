@@ -66,7 +66,7 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 
 		String entryUuid = ParamUtil.getString(actionRequest, "entryUuid");
 
-		final String jobName = "optimizeImages-".concat(_portalUUID.generate());
+		String jobName = "optimizeImages-".concat(_portalUUID.generate());
 
 		if (Validator.isNotNull(entryUuid)) {
 			_optimizeImagesSingleConfiguration(

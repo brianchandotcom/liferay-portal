@@ -120,7 +120,7 @@ public class AppDockerPlugin implements Plugin<Project> {
 		final Sync prepareAppDockerImageInputDirTask,
 		final AppDockerExtension appDockerExtension) {
 
-		final DockerBuildImage dockerBuildImage = GradleUtil.addTask(
+		DockerBuildImage dockerBuildImage = GradleUtil.addTask(
 			prepareAppDockerImageInputDirTask.getProject(),
 			BUILD_APP_DOCKER_IMAGE_TASK_NAME, DockerBuildImage.class);
 

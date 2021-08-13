@@ -233,7 +233,7 @@ public class InstrumentationAgent {
 		String[] excludes = arguments[1].split(",");
 
 		if (Boolean.getBoolean("whip.static.instrument")) {
-			final WhipClassFileTransformer whipClassFileTransformer =
+			WhipClassFileTransformer whipClassFileTransformer =
 				new WhipClassFileTransformer(includes, excludes);
 
 			instrumentation.addTransformer(whipClassFileTransformer);

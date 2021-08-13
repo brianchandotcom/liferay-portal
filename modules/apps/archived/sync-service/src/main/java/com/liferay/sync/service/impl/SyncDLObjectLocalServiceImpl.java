@@ -259,7 +259,7 @@ public class SyncDLObjectLocalServiceImpl
 	public void moveSyncDLObjects(final SyncDLObject parentSyncDLObject)
 		throws PortalException {
 
-		final String searchTreePath = StringUtil.quote(
+		String searchTreePath = StringUtil.quote(
 			String.valueOf(parentSyncDLObject.getTypePK()), StringPool.SLASH);
 
 		ActionableDynamicQuery actionableDynamicQuery =

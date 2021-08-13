@@ -200,7 +200,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 	@Test
 	public void testListTemplates() throws Exception {
-		final Map<String, String> expectedTemplates = new TreeMap<>();
+		Map<String, String> expectedTemplates = new TreeMap<>();
 
 		try (DirectoryStream<Path> directoryStream =
 				FileTestUtil.getProjectTemplatesDirectoryStream()) {

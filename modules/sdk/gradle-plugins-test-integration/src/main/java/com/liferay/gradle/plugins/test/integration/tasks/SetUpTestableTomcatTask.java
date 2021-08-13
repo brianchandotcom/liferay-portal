@@ -399,8 +399,7 @@ public class SetUpTestableTomcatTask
 
 		Document document = null;
 
-		final File tomcatUsersXmlFile = new File(
-			getDir(), "conf/tomcat-users.xml");
+		File tomcatUsersXmlFile = new File(getDir(), "conf/tomcat-users.xml");
 
 		try (InputStreamReader inputStreamReader = new InputStreamReader(
 				new FileInputStream(tomcatUsersXmlFile))) {

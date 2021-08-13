@@ -97,9 +97,9 @@ public class SetUpYarnTask extends DefaultTask {
 	}
 
 	private void _defineWorkspaces() throws IOException {
-		final File file = getPackageJsonFile();
+		File file = getPackageJsonFile();
 
-		final Path path = file.toPath();
+		Path path = file.toPath();
 
 		if (!file.exists()) {
 			Files.write(path, "{}".getBytes());

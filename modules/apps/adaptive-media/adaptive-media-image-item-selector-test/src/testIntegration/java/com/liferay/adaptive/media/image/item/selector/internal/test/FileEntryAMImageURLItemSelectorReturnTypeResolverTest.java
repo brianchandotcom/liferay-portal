@@ -111,7 +111,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String value = _itemSelectorReturnTypeResolver.getValue(
 			fileEntry, null);
@@ -156,7 +156,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String value = _itemSelectorReturnTypeResolver.getValue(
 			fileEntry, null);
@@ -202,7 +202,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		_addTestVariant("small", "uuid0", 50, 50);
 		_addTestVariant("small.hd", "uuid1", 99, 100);
@@ -246,7 +246,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String value = _itemSelectorReturnTypeResolver.getValue(
 			fileEntry, null);
@@ -287,7 +287,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String value = _itemSelectorReturnTypeResolver.getValue(
 			fileEntry, null);
@@ -325,7 +325,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		_addTestVariant("small", "uuid0", 50, 50);
 		_addTestVariant("small.hd", "uuid1", 100, 101);
@@ -366,7 +366,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		_addTestVariant("small", "uuid0", 50, 50);
 		_addTestVariant("small.hd", "uuid1", 98, 200);
@@ -407,7 +407,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		_addTestVariant("small", "uuid0", 50, 50);
 		_addTestVariant("small.hd", "uuid1", 102, 200);
@@ -451,7 +451,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String value = _itemSelectorReturnTypeResolver.getValue(
 			fileEntry, null);
@@ -492,7 +492,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String value = _itemSelectorReturnTypeResolver.getValue(
 			fileEntry, null);

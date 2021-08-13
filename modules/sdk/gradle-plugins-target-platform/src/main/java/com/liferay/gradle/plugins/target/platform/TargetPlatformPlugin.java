@@ -176,7 +176,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	}
 
 	private ResolveTask _addTaskResolve(Project project) {
-		final ResolveTask resolveTask = GradleUtil.addTask(
+		ResolveTask resolveTask = GradleUtil.addTask(
 			project, RESOLVE_TASK_NAME, ResolveTask.class);
 
 		resolveTask.setDescription(

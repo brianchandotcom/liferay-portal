@@ -316,7 +316,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 		PrefixHandlerFactory testPrefixHandlerFactory =
 			propertyAccessor -> target -> "test/" + target;
 
-		final ScopeMatcherFactory scopeMatcherFactory = Mockito.spy(
+		ScopeMatcherFactory scopeMatcherFactory = Mockito.spy(
 			new StrictScopeMatcherFactory());
 
 		Builder builder = new Builder();

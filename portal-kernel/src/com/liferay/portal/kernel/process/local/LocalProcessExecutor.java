@@ -84,7 +84,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				currentEnvironment.putAll(environment);
 			}
 
-			final Process process = processBuilder.start();
+			Process process = processBuilder.start();
 
 			ObjectOutputStream bootstrapObjectOutputStream =
 				new ObjectOutputStream(process.getOutputStream());

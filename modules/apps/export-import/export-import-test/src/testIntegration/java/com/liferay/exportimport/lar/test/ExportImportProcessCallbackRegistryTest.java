@@ -100,7 +100,7 @@ public class ExportImportProcessCallbackRegistryTest {
 		ExportImportProcessCallbackRegistryUtil.registerCallback(
 			_processId, callable1);
 
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
+		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		Thread thread = new Thread(getFullProcessRunnable(countDownLatch));
 
@@ -122,9 +122,9 @@ public class ExportImportProcessCallbackRegistryTest {
 		MockExportImportProcessCallable callable =
 			new MockExportImportProcessCallable();
 
-		final CountDownLatch startedLatch = new CountDownLatch(1);
-		final CountDownLatch registeredLatch = new CountDownLatch(1);
-		final CountDownLatch stoppedLatch = new CountDownLatch(1);
+		CountDownLatch startedLatch = new CountDownLatch(1);
+		CountDownLatch registeredLatch = new CountDownLatch(1);
+		CountDownLatch stoppedLatch = new CountDownLatch(1);
 
 		Thread starterThread = new Thread(
 			() -> {
@@ -179,7 +179,7 @@ public class ExportImportProcessCallbackRegistryTest {
 		ExportImportProcessCallbackRegistryUtil.registerCallback(
 			_processId, callable1);
 
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
+		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		Thread thread = new Thread(
 			getFullProcessRunnable(_processId, countDownLatch));

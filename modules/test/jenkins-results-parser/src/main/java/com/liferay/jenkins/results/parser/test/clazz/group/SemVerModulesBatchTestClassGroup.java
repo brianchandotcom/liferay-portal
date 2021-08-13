@@ -75,7 +75,7 @@ public class SemVerModulesBatchTestClassGroup
 
 		final File baseDir = modulesDir;
 		final List<File> modulesProjectDirs = new ArrayList<>();
-		final Path moduleBaseDirPath = moduleBaseDir.toPath();
+		Path moduleBaseDirPath = moduleBaseDir.toPath();
 
 		try {
 			Files.walkFileTree(

@@ -56,7 +56,7 @@ public class JspCPlugin implements Plugin<Project> {
 
 		Configuration jspCConfiguration = _addConfigurationJspC(project);
 
-		final CompileJSPTask generateJSPJavaTask = _addTaskGenerateJSPJava(
+		CompileJSPTask generateJSPJavaTask = _addTaskGenerateJSPJava(
 			project, jspCConfiguration);
 
 		final JavaCompile compileJSPTask = _addTaskCompileJSP(

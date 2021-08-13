@@ -327,7 +327,7 @@ public class DDMFormInstanceRecordIndexer
 	}
 
 	protected void reindexFormInstanceRecords(long companyId) throws Exception {
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			ddmFormInstanceRecordLocalService.
 				getIndexableActionableDynamicQuery();
 

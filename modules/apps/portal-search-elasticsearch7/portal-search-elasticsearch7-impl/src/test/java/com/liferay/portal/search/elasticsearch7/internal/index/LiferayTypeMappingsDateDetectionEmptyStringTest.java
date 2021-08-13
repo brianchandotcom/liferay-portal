@@ -51,15 +51,15 @@ public class LiferayTypeMappingsDateDetectionEmptyStringTest {
 
 	@Test
 	public void testEmptyStringInSecondDocument() throws Exception {
-		final String field1 = randomField();
-		final String field2 = randomField();
-		final String field3 = randomField();
-		final String field4 = randomField();
-		final String field5 = randomField();
-		final String field6 = randomField();
-		final String field7 = randomField();
-		final String field8 = randomField();
-		final String field9 = randomField();
+		String field1 = randomField();
+		String field2 = randomField();
+		String field3 = randomField();
+		String field4 = randomField();
+		String field5 = randomField();
+		String field6 = randomField();
+		String field7 = randomField();
+		String field8 = randomField();
+		String field9 = randomField();
 
 		index(
 			HashMapBuilder.<String, Object>put(

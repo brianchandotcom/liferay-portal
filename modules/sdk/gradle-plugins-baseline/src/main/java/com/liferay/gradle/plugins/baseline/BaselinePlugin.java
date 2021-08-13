@@ -128,7 +128,7 @@ public class BaselinePlugin implements Plugin<Project> {
 	private BaselineTask _addTaskBaseline(
 		final AbstractArchiveTask newJarTask) {
 
-		final BaselineTask baselineTask = _addTaskBaseline(
+		BaselineTask baselineTask = _addTaskBaseline(
 			newJarTask, BASELINE_TASK_NAME);
 
 		baselineTask.setDescription(
@@ -160,7 +160,7 @@ public class BaselinePlugin implements Plugin<Project> {
 		Dependency dependency = _createDependencyBaseline(
 			newJarTask, majorVersion);
 
-		final Configuration baselineConfiguration =
+		Configuration baselineConfiguration =
 			configurationContainer.detachedConfiguration(dependency);
 
 		_configureConfigurationBaseline(baselineConfiguration);

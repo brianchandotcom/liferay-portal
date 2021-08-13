@@ -59,7 +59,7 @@ public class RankingResultContentDisplayBuilder {
 
 		rankingResultContentDisplayContext.setAssetRenderer(assetRenderer);
 
-		final boolean visible;
+		boolean visible;
 
 		if ((assetEntry != null) && (assetRenderer != null) &&
 			assetEntry.isVisible() &&

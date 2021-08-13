@@ -122,7 +122,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		User user = addUser();
 
-		final Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 
 		indexedFieldsFixture.populateUID(user, map);
 
@@ -152,7 +152,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		User user = addUser();
 
-		final Map<String, String> map1 = HashMapBuilder.put(
+		Map<String, String> map1 = HashMapBuilder.put(
 			Field.COMPANY_ID, String.valueOf(user.getCompanyId())
 		).put(
 			Field.ENTRY_CLASS_NAME, user.getModelClassName()
@@ -178,7 +178,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		_userLocalService.addOrganizationUser(organizationId, user);
 
-		final Map<String, String> map2 = HashMapBuilder.putAll(
+		Map<String, String> map2 = HashMapBuilder.putAll(
 			map1
 		).put(
 			"organizationCount", "1"
@@ -192,7 +192,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		_userLocalService.addUserGroupUser(userGroupId, user);
 
-		final Map<String, String> map3 = HashMapBuilder.putAll(
+		Map<String, String> map3 = HashMapBuilder.putAll(
 			map2
 		).put(
 			"userGroupIds", String.valueOf(userGroupId)

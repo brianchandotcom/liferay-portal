@@ -70,7 +70,7 @@ public class SearchResultContentDisplayBuilder {
 
 		searchResultContentDisplayContext.setAssetRenderer(assetRenderer);
 
-		final boolean visible;
+		boolean visible;
 
 		if ((assetEntry != null) && (assetRenderer != null) &&
 			assetEntry.isVisible() &&

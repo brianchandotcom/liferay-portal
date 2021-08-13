@@ -76,7 +76,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		SourceSetContainer javaSourceSetContainer =
 			javaPluginConvention.getSourceSets();
 
-		final SourceSet javaMainSourceSet = javaSourceSetContainer.getByName(
+		SourceSet javaMainSourceSet = javaSourceSetContainer.getByName(
 			SourceSet.MAIN_SOURCE_SET_NAME);
 
 		// Tasks

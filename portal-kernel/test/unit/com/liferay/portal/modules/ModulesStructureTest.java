@@ -409,7 +409,7 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanIgnoreFiles() throws IOException {
-		final String gitRepoGitIgnoreTemplate = StringUtil.read(
+		String gitRepoGitIgnoreTemplate = StringUtil.read(
 			ModulesStructureTest.class, "dependencies/git_repo_gitignore.tmpl");
 		final String themeGitIgnoreTemplate = StringUtil.read(
 			ModulesStructureTest.class, "dependencies/theme_gitignore.tmpl");

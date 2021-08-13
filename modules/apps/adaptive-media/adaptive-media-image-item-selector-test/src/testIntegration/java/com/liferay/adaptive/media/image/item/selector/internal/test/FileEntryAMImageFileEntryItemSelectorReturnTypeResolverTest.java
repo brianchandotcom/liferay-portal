@@ -68,7 +68,7 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String value = _itemSelectorReturnTypeResolver.getValue(
 			fileEntry, null);

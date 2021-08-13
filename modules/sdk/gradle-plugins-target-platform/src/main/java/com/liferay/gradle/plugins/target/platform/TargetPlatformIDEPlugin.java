@@ -81,13 +81,13 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 	private Configuration _addConfigurationTargetPlatformIDE(
 		final Project project) {
 
-		final Configuration configuration = GradleUtil.addConfiguration(
+		Configuration configuration = GradleUtil.addConfiguration(
 			project, TARGET_PLATFORM_IDE_CONFIGURATION_NAME);
 
 		final Configuration ideBomsConfiguration = GradleUtil.addConfiguration(
 			project, _TARGET_PLATFORM_IDE_BOMS_CONFIGURATION_NAME);
 
-		final Configuration bomsConfiguration = GradleUtil.getConfiguration(
+		Configuration bomsConfiguration = GradleUtil.getConfiguration(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
 

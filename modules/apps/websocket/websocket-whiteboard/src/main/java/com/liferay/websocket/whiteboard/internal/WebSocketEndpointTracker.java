@@ -90,7 +90,7 @@ public class WebSocketEndpointTracker {
 						(List<String>)serviceReference.getProperty(
 							"org.osgi.http.websocket.endpoint.subprotocol");
 
-					final ServiceObjects<Endpoint> serviceObjects =
+					ServiceObjects<Endpoint> serviceObjects =
 						bundleContext.getServiceObjects(serviceReference);
 
 					ServerEndpointConfigWrapper serverEndpointConfigWrapper =

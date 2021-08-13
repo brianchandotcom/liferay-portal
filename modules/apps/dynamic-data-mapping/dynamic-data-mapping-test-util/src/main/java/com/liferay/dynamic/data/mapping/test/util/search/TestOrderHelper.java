@@ -355,8 +355,7 @@ public abstract class TestOrderHelper {
 
 		addSearchableAssetEntries(ddmStructure, ddmTemplate);
 
-		final AssetEntryQuery assetEntryQuery = createAssetEntryQuery(
-			ddmStructure);
+		AssetEntryQuery assetEntryQuery = createAssetEntryQuery(ddmStructure);
 
 		assertSearch(assetEntryQuery);
 	}

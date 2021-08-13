@@ -300,7 +300,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		String taskName = _PACKAGE_RUN_TASK_NAME_PREFIX + suffix;
 
-		final PackageRunTask packageRunTask = GradleUtil.addTask(
+		PackageRunTask packageRunTask = GradleUtil.addTask(
 			project, taskName, PackageRunTask.class);
 
 		packageRunTask.dependsOn(npmInstallTask);

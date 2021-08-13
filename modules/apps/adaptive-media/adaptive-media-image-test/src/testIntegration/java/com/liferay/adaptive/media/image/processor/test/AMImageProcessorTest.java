@@ -120,7 +120,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_amImageFinder.getAdaptiveMediaStream(
@@ -156,7 +156,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 
@@ -175,7 +175,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		final FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
+		FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
 
 		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 

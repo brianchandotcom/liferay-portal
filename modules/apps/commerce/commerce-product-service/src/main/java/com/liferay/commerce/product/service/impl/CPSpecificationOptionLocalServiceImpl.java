@@ -400,10 +400,10 @@ public class CPSpecificationOptionLocalServiceImpl
 			long companyId, long cpSpecificationOptionId)
 		throws Exception {
 
-		final Indexer<CPDefinition> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
 
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			cpDefinitionSpecificationOptionValueLocalService.
 				getIndexableActionableDynamicQuery();
 

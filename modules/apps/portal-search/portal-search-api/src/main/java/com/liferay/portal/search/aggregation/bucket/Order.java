@@ -57,7 +57,7 @@ public class Order {
 			return false;
 		}
 
-		final Order order = (Order)object;
+		Order order = (Order)object;
 
 		if ((_ascending != order._ascending) ||
 			!Objects.equals(_metricName, order._metricName) ||

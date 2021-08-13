@@ -57,7 +57,7 @@ public abstract class BaseSearchEngineConfigurator
 
 	@Override
 	public void afterPropertiesSet() {
-		final ServiceDependencyManager serviceDependencyManager =
+		ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
 		serviceDependencyManager.addServiceDependencyListener(

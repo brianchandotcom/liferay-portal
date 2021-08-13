@@ -46,7 +46,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		final String targetPlatformVersion =
+		String targetPlatformVersion =
 			workspaceExtension.getTargetPlatformVersion();
 
 		if (Validator.isNull(targetPlatformVersion)) {

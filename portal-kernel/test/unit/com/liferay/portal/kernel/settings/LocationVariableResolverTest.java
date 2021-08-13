@@ -118,7 +118,7 @@ public class LocationVariableResolverTest extends PowerMockito {
 
 	@Test
 	public void testResolveVariableWithServerProperty() {
-		final String expectedValue = "test@liferay.com";
+		String expectedValue = "test@liferay.com";
 
 		MemorySettings memorySettings = new MemorySettings();
 

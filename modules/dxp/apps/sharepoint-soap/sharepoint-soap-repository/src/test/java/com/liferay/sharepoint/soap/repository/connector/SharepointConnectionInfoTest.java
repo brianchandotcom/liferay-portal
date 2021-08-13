@@ -70,7 +70,7 @@ public class SharepointConnectionInfoTest {
 
 	@Test
 	public void testGetServiceURL() {
-		final String sitePath = "/sitePath";
+		String sitePath = "/sitePath";
 
 		SharepointConnectionInfo sharepointConnectionInfo =
 			_buildSharepointConnectionInfoWithSitePath(sitePath);

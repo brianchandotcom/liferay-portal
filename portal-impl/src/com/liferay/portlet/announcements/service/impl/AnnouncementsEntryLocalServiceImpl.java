@@ -485,7 +485,7 @@ public class AnnouncementsEntryLocalServiceImpl
 				params);
 		}
 
-		final IntervalActionProcessor<Void> intervalActionProcessor =
+		IntervalActionProcessor<Void> intervalActionProcessor =
 			new IntervalActionProcessor<>(total);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(

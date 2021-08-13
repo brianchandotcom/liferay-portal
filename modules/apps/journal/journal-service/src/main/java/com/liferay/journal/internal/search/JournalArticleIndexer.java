@@ -829,7 +829,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	protected void reindexArticles(long companyId) throws PortalException {
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery;
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery;
 
 		if (isIndexAllArticleVersions()) {
 			indexableActionableDynamicQuery =

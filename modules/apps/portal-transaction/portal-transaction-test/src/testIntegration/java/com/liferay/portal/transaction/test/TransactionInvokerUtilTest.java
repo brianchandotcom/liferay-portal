@@ -58,8 +58,8 @@ public class TransactionInvokerUtilTest {
 
 	@Test
 	public void testCommit() throws Throwable {
-		final long classNameId = _counterLocalService.increment();
-		final String classNameValue = PwdGenerator.getPassword();
+		long classNameId = _counterLocalService.increment();
+		String classNameValue = PwdGenerator.getPassword();
 
 		try {
 			TransactionInvokerUtil.invoke(
@@ -88,8 +88,8 @@ public class TransactionInvokerUtilTest {
 
 	@Test
 	public void testRollback() {
-		final long classNameId = _counterLocalService.increment();
-		final Exception exception1 = new Exception();
+		long classNameId = _counterLocalService.increment();
+		Exception exception1 = new Exception();
 
 		try {
 			TransactionInvokerUtil.invoke(

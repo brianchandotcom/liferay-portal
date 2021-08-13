@@ -162,7 +162,7 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 	protected void reindexCommerceCatalogs(long companyId)
 		throws PortalException {
 
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceCatalogLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);

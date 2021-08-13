@@ -175,7 +175,7 @@ public class UserNotificationEventLocalServiceImpl
 			getArchivedUserNotificationEventsCount(
 				userId, deliveryType, true, actionRequired, false);
 
-		final IntervalActionProcessor<Void> intervalActionProcessor =
+		IntervalActionProcessor<Void> intervalActionProcessor =
 			new IntervalActionProcessor<>(userNotificationEventsCount);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(

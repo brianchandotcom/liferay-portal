@@ -86,7 +86,7 @@ public class RESTBuilderModulesBatchTestClassGroup
 
 	protected static List<File> getModulesProjectDirs(File moduleBaseDir) {
 		final List<File> modulesProjectDirs = new ArrayList<>();
-		final Path moduleBaseDirPath = moduleBaseDir.toPath();
+		Path moduleBaseDirPath = moduleBaseDir.toPath();
 
 		try {
 			Files.walkFileTree(

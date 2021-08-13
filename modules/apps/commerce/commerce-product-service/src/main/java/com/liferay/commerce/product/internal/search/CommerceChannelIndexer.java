@@ -164,7 +164,7 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 	protected void reindexCommerceChannels(long companyId)
 		throws PortalException {
 
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceChannelLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);

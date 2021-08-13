@@ -584,7 +584,7 @@ public class GitHubDevSyncUtil {
 	protected static void deleteFromAllRemotes(
 		final String remoteGitBranchName, final List<GitRemote> gitRemotes) {
 
-		final long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		List<Callable<Boolean>> callables = new ArrayList<>();
 
@@ -950,7 +950,7 @@ public class GitHubDevSyncUtil {
 			throw new RuntimeException("Local Git branch is null");
 		}
 
-		final long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		List<Callable<Boolean>> callables = new ArrayList<>();
 

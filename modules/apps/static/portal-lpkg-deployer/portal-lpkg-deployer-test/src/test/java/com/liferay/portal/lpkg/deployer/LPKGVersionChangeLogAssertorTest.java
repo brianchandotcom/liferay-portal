@@ -50,7 +50,7 @@ public class LPKGVersionChangeLogAssertorTest {
 		Assert.assertNotNull(
 			"Missing system property \"liferay.home\"", liferayHome);
 
-		final Set<String> symbolicNames = new HashSet<>();
+		Set<String> symbolicNames = new HashSet<>();
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				Paths.get(liferayHome, "/osgi/marketplace"))) {

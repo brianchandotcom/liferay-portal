@@ -301,7 +301,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	}
 
 	protected void reindexCPInstances(long companyId) throws PortalException {
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpInstanceLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);

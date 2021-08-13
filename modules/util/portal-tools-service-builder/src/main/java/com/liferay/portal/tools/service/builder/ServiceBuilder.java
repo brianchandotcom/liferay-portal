@@ -5648,7 +5648,7 @@ public class ServiceBuilder {
 
 	private List<Path> _getUpdateSQLFilePaths() throws Exception {
 		if (!_osgiModule) {
-			final List<Path> updateSQLFilePaths = new ArrayList<>();
+			List<Path> updateSQLFilePaths = new ArrayList<>();
 
 			try (DirectoryStream<Path> paths = Files.newDirectoryStream(
 					Paths.get(_sqlDirName), "update-7.0.0-7.0.1*.sql")) {

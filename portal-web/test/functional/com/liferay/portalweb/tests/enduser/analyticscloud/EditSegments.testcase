@@ -318,12 +318,51 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8589 | Test Summary: Editor shows static segment label"
-	@ignore = "true"
 	@priority = "3"
 	test EditorShowsStaticSegmentLabel {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		// TODO LRAC-8589 EditorShowsStaticSegmentLabel pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
 
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+		ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "ac ac");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.editSegment(searchTerm = "Static Segment Test");
+
+		ACSegments.viewEditorLabel(labelName = "Static Segment");
+
+		ACUtils.assertPageTitle(pageTitle = "Edit Individuals Segment");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"

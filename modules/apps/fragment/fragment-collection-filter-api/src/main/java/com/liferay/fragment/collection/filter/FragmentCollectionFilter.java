@@ -35,6 +35,8 @@ public interface FragmentCollectionFilter {
 		return JSONFactoryUtil.createJSONObject();
 	}
 
+	public String getFilterKey();
+
 	public String getLabel(Locale locale);
 
 	public void render(

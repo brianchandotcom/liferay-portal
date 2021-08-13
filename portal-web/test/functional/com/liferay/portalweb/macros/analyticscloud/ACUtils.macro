@@ -273,6 +273,12 @@ definition {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
 
+	macro viewPaginationItemsPerPage {
+		AssertTextEquals(
+			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
+			value1 = "${itemsPerPage} Items");
+	}
+
 	macro viewResultsMessage {
 		AssertTextEquals(
 			locator1 = "ACUtils#RESULT_MESSAGE",

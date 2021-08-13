@@ -88,6 +88,9 @@ public class CustomElementsDynamicPortlet extends MVCPortlet {
 		properties.put("javax.portlet.security-role-ref", "power-user,user");
 		properties.put(
 			"javax.portlet.resource-bundle", _getResourceBundleName());
+		properties.put(
+			"target.deployment.company",
+			_customElementsPortletDescriptor.getCompanyId());
 
 		_serviceRegistration = bundleContext.registerService(
 			Portlet.class, this, properties);

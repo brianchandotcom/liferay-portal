@@ -19,6 +19,10 @@ package com.liferay.portal.workflow.kaleo.runtime.constants;
  */
 public class KaleoRuntimeDestinationNames {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String KALEO_GRAPH_WALKER =
 		"liferay/kaleo_graph_walker";
 

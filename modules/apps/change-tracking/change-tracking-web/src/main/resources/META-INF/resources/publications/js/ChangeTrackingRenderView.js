@@ -24,6 +24,7 @@ import React, {useEffect, useState} from 'react';
 export default ({dataURL, getCache, spritemap, updateCache}) => {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
+	const CHANGE_TYPE_MODIFIED = 'modified';
 	const CHANGE_TYPE_PRODUCTION = 'production';
 	const CONTENT_TYPE_DATA = 'data';
 	const CONTENT_TYPE_DISPLAY = 'display';
@@ -88,6 +89,12 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 			) {
 				newState.view = VIEW_LEFT;
 			}
+			else if (
+				cachedData.changeType === CHANGE_TYPE_MODIFIED &&
+				!Object.prototype.hasOwnProperty.call(cachedData, 'leftRender')
+			) {
+				newState.view = VIEW_SPLIT;
+			}
 
 			setState(newState);
 
@@ -141,6 +148,12 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 					!Object.prototype.hasOwnProperty.call(json, 'rightTitle')
 				) {
 					newState.view = VIEW_LEFT;
+				}
+				else if (
+					json.changeType === CHANGE_TYPE_MODIFIED &&
+					!Object.prototype.hasOwnProperty.call(json, 'leftRender')
+				) {
+					newState.view = VIEW_SPLIT;
 				}
 
 				setState(newState);
@@ -219,6 +232,19 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 		}
 		else if (loading) {
 			return '';
+		}
+		else if (
+			state.renderData.changeType === CHANGE_TYPE_MODIFIED &&
+			!Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'leftRender'
+			)
+		) {
+			return (
+				<ClayAlert displayType="danger" spritemap={spritemap}>
+					{Liferay.Language.get('this-item-is-missing-or-is-deleted')}
+				</ClayAlert>
+			);
 		}
 
 		return (
@@ -427,11 +453,16 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 
 		const items = [];
 
-		pushItem(items, VIEW_UNIFIED);
+		if (
+			state.renderData.changeType !== CHANGE_TYPE_MODIFIED ||
+			Object.prototype.hasOwnProperty.call(state.renderData, 'leftRender')
+		) {
+			pushItem(items, VIEW_UNIFIED);
 
-		items.push({
-			type: 'divider',
-		});
+			items.push({
+				type: 'divider',
+			});
+		}
 
 		pushItem(items, VIEW_LEFT);
 		pushItem(items, VIEW_RIGHT);

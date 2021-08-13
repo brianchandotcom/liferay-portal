@@ -1,0 +1,118 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8661 | Test Summary: Check blogClicked is triggered when a blog entry title is clicked and check its properties (see reference document in comments)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckBlogClickedWhenBlogEntryTitleIsClickedAndCheckProperties {
+
+        // TODO LRAC-8661 CheckBlogClickedWhenBlogEntryTitleIsClickedAndCheckProperties pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8662 | Test Summary: Check blogViewed triggers when visiting a DXP blog and check its properties (see reference document in comments)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckBlogViewedWhenVisitingDXPBlogAndCheckProperties {
+
+        // TODO LRAC-8662 CheckBlogViewedWhenVisitingDXPBlogAndCheckProperties pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8663 | Test Summary: Check blogDepthReached triggers (Level 1)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckBlogDepthReachedTo25AndCheckProperties {
+
+        // TODO LRAC-8663 CheckBlogDepthReachedTo25AndCheckProperties pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8664 | Test Summary: Check blogDepthReached triggers (Level 2)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckBlogDepthReachedTo50AndCheckProperties {
+
+        // TODO LRAC-8664 CheckBlogDepthReachedTo50AndCheckProperties pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8665 | Test Summary: Check blogDepthReached triggers (Level 3)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckBlogDepthReachedTo75AndCheckProperties {
+
+        // TODO LRAC-8665 CheckBlogDepthReachedTo75AndCheckProperties pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8666 | Test Summary: Check blogDepthReached triggers (Level 4)"
+    @ignore = "true"
+    @priority = "5"
+    test CheckBlogDepthReachedTo100AndCheckProperties {
+
+        // TODO LRAC-8666 CheckBlogDepthReachedTo100AndCheckProperties pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8667 | Test Summary: Check blogDepthReached events triggers on blog widgets outside of a blog page"
+    @ignore = "true"
+    @priority = "3"
+    test CheckBlogDepthReachedOutsideBlogPage {
+
+        // TODO LRAC-8667 CheckBlogDepthReachedOutsideBlogPage pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8668 | Test Summary: Check blogClicked is triggered when a blog is clicked within a widget"
+    @ignore = "true"
+    @priority = "3"
+    test CheckBlogClickedTriggeredWhenBlogClicked {
+
+        // TODO LRAC-8668 CheckBlogClickedTriggeredWhenBlogClicked pending implementation
+
+    }
+
+
+
+
+
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8669 | Test Summary: Check blogViewed does not trigger when the blog is visible as a widget in the front page"
+    @ignore = "true"
+    @priority = "2"
+    test CheckBlogViewedDoesNotTriggerWhenBlogIsVisible {
+
+        // TODO LRAC-8669 CheckBlogViewedDoesNotTriggerWhenBlogIsVisible pending implementation
+
+    }
+}

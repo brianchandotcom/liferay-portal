@@ -151,7 +151,8 @@ public class JournalManagementToolbarDisplayContext
 		).build();
 	}
 
-	public Map<String, Object> getAdditionalProps() throws Exception {
+	@Override
+	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"addArticleURL",
 			PortletURLBuilder.createRenderURL(
@@ -209,8 +210,7 @@ public class JournalManagementToolbarDisplayContext
 				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
-			"trashEnabled",
-			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
+			"trashEnabled", _isTrashEnabled()
 		).put(
 			"viewDDMStructureArticlesURL",
 			PortletURLBuilder.createRenderURL(
@@ -668,6 +668,20 @@ public class JournalManagementToolbarDisplayContext
 				_journalDisplayContext.getFolderId(), ActionKeys.ADD_ARTICLE)) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isTrashEnabled() {
+		try {
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException portalException) {
+
+			// LPS-52675
+
+			_log.error(portalException, portalException);
 		}
 
 		return false;

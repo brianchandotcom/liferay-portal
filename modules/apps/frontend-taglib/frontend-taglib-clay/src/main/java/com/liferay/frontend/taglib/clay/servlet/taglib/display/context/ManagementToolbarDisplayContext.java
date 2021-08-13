@@ -34,6 +34,10 @@ public interface ManagementToolbarDisplayContext {
 		return null;
 	}
 
+	public default Map<String, Object> getAdditionalProps() {
+		return null;
+	}
+
 	public default String getClearResultsURL() {
 		return null;
 	}

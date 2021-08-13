@@ -100,6 +100,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"deleteEntriesCmd",

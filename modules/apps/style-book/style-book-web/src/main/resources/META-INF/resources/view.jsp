@@ -18,13 +18,10 @@
 
 <%
 StyleBookDisplayContext styleBookDisplayContext = new StyleBookDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
-
-StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContext = new StyleBookManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, styleBookDisplayContext.getStyleBookEntriesSearchContainer());
 %>
 
 <clay:management-toolbar
-	additionalProps="<%= styleBookManagementToolbarDisplayContext.getAdditionalProps() %>"
-	managementToolbarDisplayContext="<%= styleBookManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= new StyleBookManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, styleBookDisplayContext.getStyleBookEntriesSearchContainer()) %>"
 	propsTransformer="js/StyleBookManagementToolbarPropsTransformer"
 />
 

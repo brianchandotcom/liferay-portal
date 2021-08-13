@@ -30,7 +30,6 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 
 <c:if test="<%= !stagingGroup %>">
 	<clay:management-toolbar
-		additionalProps="<%= redirectManagementToolbarDisplayContext.getAdditionalProps() %>"
 		managementToolbarDisplayContext="<%= redirectManagementToolbarDisplayContext %>"
 		propsTransformer="js/RedirectManagementToolbarPropsTransformer"
 	/>

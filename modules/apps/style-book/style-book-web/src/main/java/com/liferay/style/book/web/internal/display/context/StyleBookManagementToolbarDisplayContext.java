@@ -114,6 +114,7 @@ public class StyleBookManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"copyStyleBookEntryURL",

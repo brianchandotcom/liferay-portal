@@ -662,7 +662,20 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("supportsBulkActions", isSupportsBulkActions());
 		props.put("viewTypeItems", getViewTypeItems());
 
-		return super.prepareProps(props);
+		Map<String, Object> preparedProps = super.prepareProps(props);
+
+		if (!preparedProps.containsKey("additionalProps") &&
+			(_managementToolbarDisplayContext != null)) {
+
+			Map<String, Object> additionalProps =
+				_managementToolbarDisplayContext.getAdditionalProps();
+
+			if (additionalProps != null) {
+				preparedProps.put("additionalProps", additionalProps);
+			}
+		}
+
+		return preparedProps;
 	}
 
 	@Override

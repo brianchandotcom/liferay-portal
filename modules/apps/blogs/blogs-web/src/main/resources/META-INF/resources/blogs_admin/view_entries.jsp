@@ -27,13 +27,10 @@ String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
 SearchContainer<BlogsEntry> entriesSearchContainer = blogEntriesDisplayContext.getSearchContainer();
 
 PortletURL portletURL = entriesSearchContainer.getIteratorURL();
-
-BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle);
 %>
 
 <clay:management-toolbar
-	additionalProps="<%= blogEntriesManagementToolbarDisplayContext.getAdditionalProps() %>"
-	managementToolbarDisplayContext="<%= blogEntriesManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= new BlogEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle) %>"
 	propsTransformer="blogs_admin/js/BlogEntriesManagementToolbarPropsTransformer"
 	searchContainerId="blogEntries"
 />

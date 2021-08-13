@@ -90,6 +90,7 @@ public class TrashManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"restoreEntriesURL",

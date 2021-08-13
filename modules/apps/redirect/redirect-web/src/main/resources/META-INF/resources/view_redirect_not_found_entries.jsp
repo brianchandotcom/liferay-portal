@@ -25,7 +25,6 @@ RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 %>
 
 <clay:management-toolbar
-	additionalProps="<%= redirectNotFoundEntriesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	managementToolbarDisplayContext="<%= redirectNotFoundEntriesManagementToolbarDisplayContext %>"
 	propsTransformer="js/RedirectNotFoundEntriesManagementToolbarPropsTransformer"
 />

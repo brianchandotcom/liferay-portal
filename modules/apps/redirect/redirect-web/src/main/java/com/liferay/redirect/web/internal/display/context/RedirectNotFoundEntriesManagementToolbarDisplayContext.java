@@ -86,6 +86,7 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		).build();
 	}
 
+	@Override
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"editRedirectNotFoundEntriesURL",

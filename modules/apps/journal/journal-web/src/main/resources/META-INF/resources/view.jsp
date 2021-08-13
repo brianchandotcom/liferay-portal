@@ -47,7 +47,6 @@ else {
 />
 
 <clay:management-toolbar
-	additionalProps="<%= journalManagementToolbarDisplayContext.getAdditionalProps() %>"
 	managementToolbarDisplayContext="<%= journalManagementToolbarDisplayContext %>"
 	propsTransformer="js/ManagementToolbarPropsTransformer"
 />

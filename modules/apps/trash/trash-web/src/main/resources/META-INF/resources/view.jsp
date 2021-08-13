@@ -21,7 +21,6 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 %>
 
 <clay:management-toolbar
-	additionalProps="<%= trashManagementToolbarDisplayContext.getAdditionalProps() %>"
 	managementToolbarDisplayContext="<%= trashManagementToolbarDisplayContext %>"
 	propsTransformer="js/TrashManagementToolbarPropsTransformer"
 />

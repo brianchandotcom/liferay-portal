@@ -23,7 +23,6 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 %>
 
 <clay:management-toolbar
-	additionalProps="<%= depotAdminManagementToolbarDisplayContext.getAdditionalProps() %>"
 	managementToolbarDisplayContext="<%= depotAdminManagementToolbarDisplayContext %>"
 	propsTransformer="js/DepotAdminManagementToolbarPropsTransformer"
 />

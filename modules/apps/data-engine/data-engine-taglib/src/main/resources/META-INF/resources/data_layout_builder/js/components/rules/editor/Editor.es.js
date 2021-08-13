@@ -461,7 +461,7 @@ export function Editor({
 			},
 		});
 
-		return resource?.inputs.length + resource?.outputs.length;
+		return resource?.inputs?.length + resource?.outputs?.length;
 	};
 
 	const {dataProviderInstanceParameterSettingsURL} = otherProps;

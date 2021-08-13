@@ -601,9 +601,87 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
 	@priority = "5"
 	test ViewSegmentFormValidation {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8484 CanCreateSegmentFormValidation
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("View the Create button is disabled when the Name field is empty") {
+			AssertVisible(
+				key_text = "Create",
+				locator1 = "Button#ANY_DISABLED");
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("View the Create button is still disabled when there are no individuals") {
+			AssertTextEquals(
+				locator1 = "ACSegments#NO_MEMBER_TITLE",
+				value1 = "There are no Individuals found.");
+
+			AssertVisible(
+				key_text = "Create",
+				locator1 = "Button#ANY_DISABLED");
+		}
+
+		task ("Cancel the creation") {
+			ACSegments.cancelSegment();
+
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "No Segments Created");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACSegments.createDynamicSegment();
+		}
+
+		task ("View the Save Segment button is disabled when the Name field is empty") {
+			AssertVisible(
+				key_text = "Save Segment",
+				locator1 = "Button#ANY_DISABLED");
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("View the Save Segment button is still disabled when the form is empty") {
+			ACSegments.viewDeletedCriteria();
+
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "Drag and drop over an existing criteria to form groups.");
+
+			AssertVisible(
+				key_text = "Save Segment",
+				locator1 = "Button#ANY_DISABLED");
+		}
 	}
 
 }

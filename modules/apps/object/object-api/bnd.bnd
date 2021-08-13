@@ -8,4 +8,5 @@ Export-Package:\
 	com.liferay.object.model,\
 	com.liferay.object.service,\
 	com.liferay.object.service.persistence,\
-	com.liferay.object.system
+	com.liferay.object.system,\
+	com.liferay.object.util

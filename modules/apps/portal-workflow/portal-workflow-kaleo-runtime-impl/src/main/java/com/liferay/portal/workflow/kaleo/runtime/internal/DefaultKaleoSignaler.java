@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -33,6 +35,8 @@ import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +57,15 @@ public class DefaultKaleoSignaler
 			String transitionName, ExecutionContext executionContext)
 		throws PortalException {
 
+		signalEntry(transitionName, executionContext, false);
+	}
+
+	@Override
+	public void signalEntry(
+			String transitionName, ExecutionContext executionContext,
+			boolean waitForCompletion)
+		throws PortalException {
+
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
@@ -61,7 +74,16 @@ public class DefaultKaleoSignaler
 		_signal(
 			new PathElement(
 				null, kaleoInstanceToken.getCurrentKaleoNode(),
-				executionContext));
+				executionContext),
+			waitForCompletion);
+	}
+
+	@Override
+	public void signalExecute(
+			KaleoNode currentKaleoNode, ExecutionContext executionContext)
+		throws PortalException {
+
+		signalExecute(currentKaleoNode, executionContext, false);
 	}
 
 	@Override
@@ -70,7 +92,8 @@ public class DefaultKaleoSignaler
 		rollbackFor = Exception.class
 	)
 	public void signalExecute(
-			KaleoNode currentKaleoNode, ExecutionContext executionContext)
+			KaleoNode currentKaleoNode, ExecutionContext executionContext,
+			boolean waitForCompletion)
 		throws PortalException {
 
 		NodeExecutor nodeExecutor = _nodeExecutorFactory.getNodeExecutor(
@@ -84,13 +107,22 @@ public class DefaultKaleoSignaler
 		_executionContextHelper.checkKaleoInstanceComplete(executionContext);
 
 		for (PathElement remainingPathElement : remainingPathElements) {
-			_signal(remainingPathElement);
+			_signal(remainingPathElement, waitForCompletion);
 		}
 	}
 
 	@Override
 	public void signalExit(
 			String transitionName, ExecutionContext executionContext)
+		throws PortalException {
+
+		signalExit(transitionName, executionContext, false);
+	}
+
+	@Override
+	public void signalExit(
+			String transitionName, ExecutionContext executionContext,
+			boolean waitForCompletion)
 		throws PortalException {
 
 		KaleoInstanceToken kaleoInstanceToken =
@@ -101,11 +133,27 @@ public class DefaultKaleoSignaler
 		_signal(
 			new PathElement(
 				kaleoInstanceToken.getCurrentKaleoNode(), null,
-				executionContext));
+				executionContext),
+			waitForCompletion);
 	}
 
-	private void _signal(PathElement pathElement) {
-		_graphWalkerPortalExecutor.execute(pathElement);
+	private void _signal(PathElement pathElement, boolean waitForCompletion) {
+		NoticeableFuture<?> noticeableFuture =
+			_graphWalkerPortalExecutor.execute(pathElement);
+
+		if (waitForCompletion || PortalRunMode.isTestMode()) {
+			try {
+				CountDownLatch countDownLatch = new CountDownLatch(1);
+
+				noticeableFuture.addFutureListener(
+					future -> countDownLatch.countDown());
+
+				countDownLatch.await(5, TimeUnit.SECONDS);
+			}
+			catch (InterruptedException interruptedException) {
+				_log.error(interruptedException, interruptedException);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -29,12 +29,48 @@ public interface KaleoSignaler {
 			String transitionName, ExecutionContext executionContext)
 		throws PortalException;
 
+	public default void signalEntry(
+			String transitionName, ExecutionContext executionContext,
+			boolean waitForCompletion)
+		throws PortalException {
+
+		if (waitForCompletion) {
+			throw new UnsupportedOperationException();
+		}
+
+		signalEntry(transitionName, executionContext);
+	}
+
 	public void signalExecute(
 			KaleoNode currentKaleoNode, ExecutionContext executionContext)
 		throws PortalException;
 
+	public default void signalExecute(
+			KaleoNode currentKaleoNode, ExecutionContext executionContext,
+			boolean waitForCompletion)
+		throws PortalException {
+
+		if (waitForCompletion) {
+			throw new UnsupportedOperationException();
+		}
+
+		signalExecute(currentKaleoNode, executionContext);
+	}
+
 	public void signalExit(
 			String transitionName, ExecutionContext executionContext)
 		throws PortalException;
+
+	public default void signalExit(
+			String transitionName, ExecutionContext executionContext,
+			boolean waitForCompletion)
+		throws PortalException {
+
+		if (waitForCompletion) {
+			throw new UnsupportedOperationException();
+		}
+
+		signalExit(transitionName, executionContext);
+	}
 
 }

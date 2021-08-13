@@ -35,12 +35,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Molina
  */
-@Component(
-	immediate = true, property = "fragment.collection.filter.key=category",
-	service = FragmentCollectionFilter.class
-)
+@Component(immediate = true, service = FragmentCollectionFilter.class)
 public class FragmentCollectionFilterCategory
 	implements FragmentCollectionFilter {
+
+	public String getFilterKey() {
+		return "category";
+	}
 
 	@Override
 	public String getLabel(Locale locale) {

@@ -267,6 +267,8 @@ definition {
 
 	macro saveSegment {
 		Click(locator1 = "ACSegments#SAVE_SEGMENT");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro searchSegment {

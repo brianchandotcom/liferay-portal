@@ -249,6 +249,7 @@
 			<category name="Performance" />
 			<description name="Checks that modules are not depending on other modules." />
 			<property name="checkPetraDependencies" value="true" />
+			<property name="checkTestIntegrationCompileDependencies" value="false" />
 		</check>
 		<check name="GradleDependencyArtifactsCheck">
 			<category name="Bug Prevention" />

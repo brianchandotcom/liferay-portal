@@ -17,10 +17,9 @@ package com.liferay.object.graphql.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -81,8 +80,9 @@ public class ObjectDefinitionGraphQLTest {
 				Collections.singletonMap(LocaleUtil.US, _objectDefinitionLabel),
 				_objectDefinitionName,
 				Collections.singletonList(
-					_createObjectField(
-						_objectFieldLabel, _objectFieldName, "String")));
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, true, _objectFieldLabel,
+						_objectFieldName, false, "String")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -300,21 +300,6 @@ public class ObjectDefinitionGraphQLTest {
 							new GraphQLField(_objectFieldName)))),
 				"JSONObject/data", "JSONObject/update" + _objectDefinitionName,
 				"Object/" + _objectFieldName));
-	}
-
-	private ObjectField _createObjectField(
-		String label, String name, String type) {
-
-		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
-			0);
-
-		objectField.setIndexed(true);
-		objectField.setIndexedAsKeyword(true);
-		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
-		objectField.setName(name);
-		objectField.setType(type);
-
-		return objectField;
 	}
 
 	private JSONObject _invoke(GraphQLField queryGraphQLField)

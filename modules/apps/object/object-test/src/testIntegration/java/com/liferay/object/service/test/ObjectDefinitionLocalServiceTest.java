@@ -26,6 +26,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -188,8 +189,10 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), _labelMap, "Test",
 				Arrays.asList(
-					_createObjectField("Able", "able", "String"),
-					_createObjectField("Baker", "baker", "String")));
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, "Able", "able", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, "Baker", "baker", false, "String")));
 
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
@@ -305,10 +308,6 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addOrUpdateSystemObjectDefinition(
 				TestPropsValues.getCompanyId(),
 				new BaseSystemObjectDefinitionMetadata() {
-					{
-						objectFieldLocalService =
-							ObjectFieldLocalServiceUtil.getService();
-					}
 
 					@Override
 					public Map<Locale, String> getLabelMap() {
@@ -324,12 +323,13 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							createObjectField(
-								"Action Required", "actionRequired", true,
-								"Boolean"),
-							createObjectField(
-								"Delivery Type", "deliveryType", false, "Long"),
-							createObjectField(
+							ObjectFieldUtil.createObjectField(
+								LocaleUtil.US, "Action Required",
+								"actionRequired", true, "Boolean"),
+							ObjectFieldUtil.createObjectField(
+								LocaleUtil.US, "Delivery Type", "deliveryType",
+								false, "Long"),
+							ObjectFieldUtil.createObjectField(
 								"type_",
 								Collections.singletonMap(LocaleUtil.US, "Type"),
 								"type", true, "String"));
@@ -374,10 +374,6 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addOrUpdateSystemObjectDefinition(
 				TestPropsValues.getCompanyId(),
 				new BaseSystemObjectDefinitionMetadata() {
-					{
-						objectFieldLocalService =
-							ObjectFieldLocalServiceUtil.getService();
-					}
 
 					@Override
 					public Map<Locale, String> getLabelMap() {
@@ -393,11 +389,13 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							createObjectField(
-								"Archived", "archived", true, "Boolean"),
-							createObjectField(
-								"Delivery Type", "deliveryType", true, "Long"),
-							createObjectField(
+							ObjectFieldUtil.createObjectField(
+								LocaleUtil.US, "Archived", "archived", true,
+								"Boolean"),
+							ObjectFieldUtil.createObjectField(
+								LocaleUtil.US, "Delivery Type", "deliveryType",
+								true, "Long"),
+							ObjectFieldUtil.createObjectField(
 								"type_",
 								Collections.singletonMap(LocaleUtil.US, "Type"),
 								"type", false, "String"));
@@ -737,19 +735,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals("", objectField.getIndexedLanguageId());
 		Assert.assertEquals(required, objectField.isRequired());
 		Assert.assertEquals(type, objectField.getType());
-	}
-
-	private ObjectField _createObjectField(
-		String label, String name, String type) {
-
-		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
-			0);
-
-		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
-		objectField.setName(name);
-		objectField.setType(type);
-
-		return objectField;
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

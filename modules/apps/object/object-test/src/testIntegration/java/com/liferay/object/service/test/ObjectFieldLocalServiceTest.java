@@ -23,7 +23,7 @@ import com.liferay.object.exception.ReservedObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -256,17 +256,9 @@ public class ObjectFieldLocalServiceTest {
 		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 		String label, String name, String type) {
 
-		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
-			0);
-
-		objectField.setIndexed(indexed);
-		objectField.setIndexedAsKeyword(indexedAsKeyword);
-		objectField.setIndexedLanguageId(indexedLanguageId);
-		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
-		objectField.setName(name);
-		objectField.setType(type);
-
-		return objectField;
+		return ObjectFieldUtil.createObjectField(
+			null, indexed, indexedAsKeyword, indexedLanguageId,
+			Collections.singletonMap(LocaleUtil.US, label), name, false, type);
 	}
 
 	private ObjectField _createObjectField(String name, String type) {
@@ -276,7 +268,8 @@ public class ObjectFieldLocalServiceTest {
 	private ObjectField _createObjectField(
 		String label, String name, String type) {
 
-		return _createObjectField(false, false, null, label, name, type);
+		return ObjectFieldUtil.createObjectField(
+			LocaleUtil.US, label, name, false, type);
 	}
 
 	private void _testAddSystemObjectField(ObjectField... objectFields)

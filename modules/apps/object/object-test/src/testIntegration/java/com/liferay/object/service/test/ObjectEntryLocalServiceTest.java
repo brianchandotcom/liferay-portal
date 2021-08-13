@@ -25,6 +25,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -100,35 +101,39 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.US, "Test"), "Test",
 				Arrays.asList(
-					_createObjectField(
-						true, false, "Age of Death", "ageOfDeath", false,
-						"Long"),
-					_createObjectField(
-						true, false, "Author of Gospel", "authorOfGospel",
-						false, "Boolean"),
-					_createObjectField(
-						true, false, "Birthday", "birthday", false, "Date"),
-					_createObjectField(
-						true, true, "Email Address", "emailAddress", true,
-						"String"),
-					_createObjectField(
-						true, true, "Email Address Domain",
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "Age of Death",
+						"ageOfDeath", false, "Long"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "Author of Gospel",
+						"authorOfGospel", false, "Boolean"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "Birthday", "birthday",
+						false, "Date"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, true, "Email Address",
+						"emailAddress", true, "String"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, true, "Email Address Domain",
 						"emailAddressDomain", false, "String"),
-					_createObjectField(
-						true, false, "First Name", "firstName", false,
-						"String"),
-					_createObjectField(
-						true, false, "Height", "height", false, "Double"),
-					_createObjectField(
-						true, false, "Last Name", "lastName", false, "String"),
-					_createObjectField(
-						true, false, "Middle Name", "middleName", false,
-						"String"),
-					_createObjectField(
-						true, false, "Number of Books Written",
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "First Name", "firstName",
+						false, "String"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "Height", "height", false,
+						"Double"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "Last Name", "lastName",
+						false, "String"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "Middle Name", "middleName",
+						false, "String"),
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, true, false, "Number of Books Written",
 						"numberOfBooksWritten", false, "Integer"),
-					_createObjectField(
-						false, false, "Portrait", "portrait", false, "Blob")));
+					ObjectFieldUtil.createObjectField(
+						LocaleUtil.US, false, false, "Portrait", "portrait",
+						false, "Blob")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -905,23 +910,6 @@ public class ObjectEntryLocalServiceTest {
 
 			return resultSet.getInt(1);
 		}
-	}
-
-	private ObjectField _createObjectField(
-		boolean indexed, boolean indexedAsKeyword, String label, String name,
-		boolean required, String type) {
-
-		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
-			0);
-
-		objectField.setIndexed(indexed);
-		objectField.setIndexedAsKeyword(indexedAsKeyword);
-		objectField.setLabelMap(Collections.singletonMap(LocaleUtil.US, label));
-		objectField.setName(name);
-		objectField.setRequired(required);
-		objectField.setType(type);
-
-		return objectField;
 	}
 
 	private BigDecimal _getBigDecimal(long value) {

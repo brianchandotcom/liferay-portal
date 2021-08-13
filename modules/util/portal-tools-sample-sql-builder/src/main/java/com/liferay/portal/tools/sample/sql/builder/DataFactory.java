@@ -6840,6 +6840,24 @@ public class DataFactory {
 				if (name.endsWith(StringPool.UNDERLINE)) {
 					name = name.substring(0, name.length() - 1);
 				}
+				else if (name.equals("CIWarehouseId")) {
+					name = "CommerceInventoryWarehouseId";
+				}
+				else if (name.equals("CIWarehouseItemId")) {
+					name = "CommerceInventoryWarehouseItemId";
+				}
+				else if (name.equals("CPDSpecificationOptionValueId")) {
+					name = "CPDefinitionSpecificationOptionValueId";
+				}
+				else if (name.equals("CdnEnabled")) {
+					name = "CDNEnabled";
+				}
+				else if (name.equals("CdnURL")) {
+					name = "CDNURL";
+				}
+				else if (name.equals("DeliverySubTypeSettings")) {
+					name = "DeliverySubscriptionTypeSettings";
+				}
 				else if (name.equals("DiscountPctLevel1WithTaxAmount")) {
 					name = "DiscountPercentageLevel1WithTaxAmount";
 				}
@@ -6851,18 +6869,6 @@ public class DataFactory {
 				}
 				else if (name.equals("DiscountPctLevel4WithTaxAmount")) {
 					name = "DiscountPercentageLevel4WithTaxAmount";
-				}
-				else if (name.equals("CIWarehouseId")) {
-					name = "CommerceInventoryWarehouseId";
-				}
-				else if (name.equals("CIWarehouseItemId")) {
-					name = "CommerceInventoryWarehouseItemId";
-				}
-				else if (name.equals("CPDSpecificationOptionValueId")) {
-					name = "CPDefinitionSpecificationOptionValueId";
-				}
-				else if (name.equals("DeliverySubTypeSettings")) {
-					name = "DeliverySubscriptionTypeSettings";
 				}
 				else if (name.equals("LPageTemplateStructureRelId")) {
 					name = "LayoutPageTemplateStructureRelId";
@@ -6926,12 +6932,6 @@ public class DataFactory {
 				}
 				else if (name.equals("TotalDiscountPctLev4WithTax")) {
 					name = "TotalDiscountPercentageLevel4WithTaxAmount";
-				}
-				else if (name.equals("CdnEnabled")) {
-					name = "CDNEnabled";
-				}
-				else if (name.equals("CdnURL")) {
-					name = "CDNURL";
 				}
 
 				int type = (int)tableColumn[1];

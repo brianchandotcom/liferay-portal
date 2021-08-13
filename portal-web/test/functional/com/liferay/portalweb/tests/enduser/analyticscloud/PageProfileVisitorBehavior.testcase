@@ -137,12 +137,71 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8515 | Test Summary: Last Year time period filter in Page Overview"
-	@ignore = "true"
 	@priority = "5"
 	test PeriodFilterLastYearPageOverview {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8515 PeriodFilterLastYearPageOverview
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Pages tab in Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Select the Last 24 hours in time period") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to page report entry") {
+			ACNavigation.openItem(itemName = "AC Page - Site Name - Liferay DXP");
+		}
+
+		task ("Select the Last Year in Visitors Behavior chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Visitors Behavior");
+
+			ACTimeFilter.setLastYear();
+		}
+
+		task ("View the number of Unique Visitors in Visitors Behavior chart is 0") {
+			ACCards.viewMetricValue(
+				cardTitle = "Visitors Behavior",
+				metricName = "Unique Visitors",
+				metricValue = "0");
+		}
+
+		task ("View the number of Views in Visitors Behavior chart is 0") {
+			ACCards.viewMetricValue(
+				cardTitle = "Visitors Behavior",
+				metricName = "Views",
+				metricValue = "0");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"

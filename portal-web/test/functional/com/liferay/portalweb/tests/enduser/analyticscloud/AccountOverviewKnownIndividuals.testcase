@@ -1,0 +1,59 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8686 | Test Summary: Account individuals list has pagination"
+    @ignore = "true"
+    @priority = "3"
+    test PaginateAccountIndividualsList {
+
+        // TODO LRAC-8686 PaginateAccountIndividualsList pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8687 | Test Summary: Account overview known individuals show individuals"
+    @ignore = "true"
+    @priority = "3"
+    test AssertAccountOverviewKnownIndividuals {
+
+        // TODO LRAC-8687 AssertAccountOverviewKnownIndividuals pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8688 | Test Summary: Assert the Account Overview Cards"
+    @ignore = "true"
+    @priority = "3"
+    test AssertAccountOverviewCards {
+
+        // TODO LRAC-8688 AssertAccountOverviewCards pending implementation
+
+    }
+
+}

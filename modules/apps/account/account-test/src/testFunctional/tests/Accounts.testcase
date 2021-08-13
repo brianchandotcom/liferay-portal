@@ -2199,6 +2199,47 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test adds a global tag and adds it to account"
+	@priority = "3"
+	test OnlyGlobalTagCanBeAddedToAccount {
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "Guest Tag");
+
+		JSONAssettag.addTag(
+			groupName = "Global",
+			tagName = "Global Tag Name 1");
+
+		JSONAssettag.addTag(
+			groupName = "Global",
+			tagName = "Global Tag Name 2");
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.addBusinessAccountWithTag(
+			accountName = "Account with Tags",
+			addTagMethod = "Select",
+			tagNameList = "Global Tag Name 1,Global Tag Name 2");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Tags");
+
+		for (var tagName : list "Global Tag Name 1,Global Tag Name 2") {
+			var tagName = StringUtil.lowerCase("${tagName}");
+
+			AssetCategorization.viewTag(tagName = "${tagName}");
+		}
+
+		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+
+		IFrame.selectTagFrame();
+
+		var rowEntry = StringUtil.lowerCase("${rowEntry}");
+
+		LexiconEntry.viewNoEntry(rowEntry = StringUtil.lowerCase("Guest Tag"));
+	}
+
 	@description = "This test adds an Owned or account specific role and ensures this role is not shared across accounts"
 	@priority = "4"
 	test OwnedAccountRoleIsNotSharedAcrossAccounts {

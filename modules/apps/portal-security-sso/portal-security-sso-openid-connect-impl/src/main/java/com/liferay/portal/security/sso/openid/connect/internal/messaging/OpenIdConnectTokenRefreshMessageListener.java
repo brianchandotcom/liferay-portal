@@ -100,7 +100,7 @@ public class OpenIdConnectTokenRefreshMessageListener
 	private void _requestTokenRefresh(long openIdConnectSessionId)
 		throws Exception {
 
-		OpenIdConnectSession openIdConnectSession;
+		OpenIdConnectSession openIdConnectSession = null;
 
 		try {
 			openIdConnectSession =
@@ -110,7 +110,7 @@ public class OpenIdConnectTokenRefreshMessageListener
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to find OpenIdConnectSession with Id " +
+					"Unable to find OpenId Connect session " +
 						openIdConnectSessionId,
 					portalException);
 			}

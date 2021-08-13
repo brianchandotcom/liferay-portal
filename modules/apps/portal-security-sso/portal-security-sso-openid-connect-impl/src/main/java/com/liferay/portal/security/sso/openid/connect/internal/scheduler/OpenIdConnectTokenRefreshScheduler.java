@@ -143,7 +143,7 @@ public class OpenIdConnectTokenRefreshScheduler {
 			return;
 		}
 
-		// Offset is changed, reschedule every openIdConnect token refresh.
+		// Offset is changed. Reschedule every OpenId Connect token refresh.
 		// For each token refresh, access token lifetime is not changed.
 
 		for (SchedulerResponse schedulerResponse :

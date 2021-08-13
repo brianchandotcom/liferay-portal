@@ -17,11 +17,8 @@ package com.liferay.commerce.internal.object.system;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,8 +38,7 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 
 	@Override
 	public Map<Locale, String> getLabelMap() {
-		return Collections.singletonMap(
-			_defaultLocale, LanguageUtil.get(_defaultLocale, "commerce-order"));
+		return createLabelMap("commerce-order");
 	}
 
 	@Override
@@ -53,19 +49,14 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
+			createObjectField("order-status", "orderStatus", true, "Integer"),
 			createObjectField(
-				LanguageUtil.get(_defaultLocale, "order-status"), "orderStatus",
-				true, "Integer"),
-			createObjectField(
-				LanguageUtil.get(_defaultLocale, "shipping-amount"),
-				"shippingAmount", true, "BigDecimal"));
+				"shipping-amount", "shippingAmount", true, "BigDecimal"));
 	}
 
 	@Override
 	public int getVersion() {
 		return 1;
 	}
-
-	private final Locale _defaultLocale = LocaleUtil.getSiteDefault();
 
 }

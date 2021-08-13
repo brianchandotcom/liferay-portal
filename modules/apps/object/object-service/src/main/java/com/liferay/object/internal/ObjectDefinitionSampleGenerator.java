@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -143,23 +144,16 @@ public class ObjectDefinitionSampleGenerator {
 		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 		String label, String name, String type) {
 
-		ObjectField objectField = _objectFieldLocalService.createObjectField(0);
-
-		objectField.setIndexed(indexed);
-		objectField.setIndexedAsKeyword(indexedAsKeyword);
-		objectField.setIndexedLanguageId(indexedLanguageId);
-		objectField.setLabelMap(
-			Collections.singletonMap(LocaleUtil.getSiteDefault(), label));
-		objectField.setName(name);
-		objectField.setType(type);
-
-		return objectField;
+		return ObjectFieldUtil.createObjectField(
+			null, indexed, indexedAsKeyword, indexedLanguageId,
+			Collections.singletonMap(LocaleUtil.US, label), name, false, type);
 	}
 
 	private ObjectField _createObjectField(
 		String label, String name, String type) {
 
-		return _createObjectField(true, false, null, label, name, type);
+		return ObjectFieldUtil.createObjectField(
+			LocaleUtil.US, true, false, label, name, false, type);
 	}
 
 	@Reference

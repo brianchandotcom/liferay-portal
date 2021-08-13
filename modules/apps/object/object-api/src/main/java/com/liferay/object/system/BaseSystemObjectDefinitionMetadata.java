@@ -15,14 +15,12 @@
 package com.liferay.object.system;
 
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -31,39 +29,25 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseSystemObjectDefinitionMetadata
 	implements SystemObjectDefinitionMetadata {
 
+	protected Map<Locale, String> createLabelMap(String labelKey) {
+		return LocalizedMapUtil.getLocalizedMap(
+			labelKey, LocaleUtil.getDefault());
+	}
+
 	protected ObjectField createObjectField(
-		Map<Locale, String> labelMap, String name, boolean required,
+		String labelKey, String name, boolean required, String type) {
+
+		return createObjectField(null, labelKey, name, required, type);
+	}
+
+	protected ObjectField createObjectField(
+		String dbColumnName, String labelKey, String name, boolean required,
 		String type) {
 
-		return createObjectField(null, labelMap, name, required, type);
-	}
-
-	protected ObjectField createObjectField(
-		String dbColumnName, Map<Locale, String> labelMap, String name,
-		boolean required, String type) {
-
-		ObjectField objectField = objectFieldLocalService.createObjectField(0);
-
-		objectField.setDBColumnName(dbColumnName);
-		objectField.setIndexed(false);
-		objectField.setIndexedAsKeyword(false);
-		objectField.setLabelMap(labelMap);
-		objectField.setName(name);
-		objectField.setRequired(required);
-		objectField.setType(type);
-
-		return objectField;
-	}
-
-	protected ObjectField createObjectField(
-		String label, String name, boolean required, String type) {
-
-		return createObjectField(
-			null, Collections.singletonMap(LocaleUtil.getSiteDefault(), label),
+		return ObjectFieldUtil.createObjectField(
+			dbColumnName,
+			LocalizedMapUtil.getLocalizedMap(labelKey, LocaleUtil.getDefault()),
 			name, required, type);
 	}
-
-	@Reference
-	protected ObjectFieldLocalService objectFieldLocalService;
 
 }

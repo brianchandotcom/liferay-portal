@@ -17,11 +17,8 @@ package com.liferay.object.internal.system;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -43,8 +40,7 @@ public class UserSystemObjectDefinitionMetadata
 
 	@Override
 	public Map<Locale, String> getLabelMap() {
-		return Collections.singletonMap(
-			_defaultLocale, LanguageUtil.get(_defaultLocale, "user"));
+		return createLabelMap("user");
 	}
 
 	@Override
@@ -55,27 +51,15 @@ public class UserSystemObjectDefinitionMetadata
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField(
-				LanguageUtil.get(_defaultLocale, "email-address"),
-				"emailAddress", true, "String"),
-			createObjectField(
-				LanguageUtil.get(_defaultLocale, "first-name"), "firstName",
-				true, "String"),
-			createObjectField(
-				LanguageUtil.get(_defaultLocale, "middle-name"), "middleName",
-				false, "String"),
-			createObjectField(
-				"uuid_",
-				Collections.singletonMap(
-					_defaultLocale, LanguageUtil.get(_defaultLocale, "uuid")),
-				"uuid", false, "String"));
+			createObjectField("email-address", "emailAddress", true, "String"),
+			createObjectField("first-name", "firstName", true, "String"),
+			createObjectField("middle-name", "middleName", false, "String"),
+			createObjectField("uuid_", "uuid", "uuid", false, "String"));
 	}
 
 	@Override
 	public int getVersion() {
 		return 1;
 	}
-
-	private final Locale _defaultLocale = LocaleUtil.getSiteDefault();
 
 }

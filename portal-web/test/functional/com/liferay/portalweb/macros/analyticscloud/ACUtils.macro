@@ -42,6 +42,13 @@ definition {
 		}
 	}
 
+	macro assertPageTitle {
+		var key_pageTitle = "${pageTitle}";
+		AssertTextEquals(
+			locator1 = "ACUtils#PAGE_TITLE",
+			value1 = "${pageTitle}");
+	}
+
 	macro assertXAxisTimedGraph {
 		var key_parentName = "${parentName}";
 		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");

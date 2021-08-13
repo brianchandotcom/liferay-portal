@@ -22,7 +22,11 @@
 	<td>//div[contains(@class, 'input-group-item')]//button[contains(@class, 'button-root')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>PAGE_TITLE</td>
+	<td>//span[@class='text-truncate'and text()='${key_pageTitle}']</td>
+	<td></td>
+</tr>
 <!-- SVG_TIMED_GRAPH -->
 <tr>
 	<td>SVG_TIMED_GRAPH</td>

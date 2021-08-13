@@ -103,14 +103,16 @@ public class XMLServiceFinderNameCheck extends BaseFileCheck {
 				return;
 			}
 
-			String s = TextFormatter.format(
+			String expectedFinderName = TextFormatter.format(
 				finderColumn.get("name"), TextFormatter.G);
 
 			if (finderColumn.containsKey("comparator")) {
-				s = _comparatorNamesMap.get(finderColumn.get("comparator")) + s;
+				expectedFinderName =
+					_comparatorNamesMap.get(finderColumn.get("comparator")) +
+						expectedFinderName;
 			}
 
-			if (!s.equals(finderName)) {
+			if (!expectedFinderName.equals(finderName)) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
@@ -138,16 +140,17 @@ public class XMLServiceFinderNameCheck extends BaseFileCheck {
 			finderColumnName = StringUtil.upperCase(
 				finderColumnName.substring(0, 1));
 
-			String s = StringPool.BLANK;
+			String expectedFinderName = StringPool.BLANK;
 
 			if (finderColumn.containsKey("comparator")) {
-				s += _comparatorNamesMap.get(finderColumn.get("comparator"));
+				expectedFinderName += _comparatorNamesMap.get(
+					finderColumn.get("comparator"));
 			}
 
-			s = s + finderColumnName;
+			expectedFinderName = expectedFinderName + finderColumnName;
 
 			for (String splitFinderName : splitFinderNames) {
-				if (splitFinderName.startsWith(s)) {
+				if (splitFinderName.startsWith(expectedFinderName)) {
 					splitFinderNames.remove(splitFinderName);
 
 					continue outerLoop;

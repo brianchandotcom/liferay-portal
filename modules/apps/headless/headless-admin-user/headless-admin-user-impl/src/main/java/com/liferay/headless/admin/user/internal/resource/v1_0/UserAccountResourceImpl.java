@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
@@ -49,8 +50,10 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -58,7 +61,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -70,6 +76,7 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -167,7 +174,28 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			_getModelActions(
+				accountId,
+				Collections.singletonMap(
+					ActionKeys.MANAGE_USERS,
+					new String[] {
+						"deleteAccountUserAccountByEmailAddress",
+						"deleteAccountUserAccountByExternalReferenceCodeBy" +
+							"EmailAddress",
+						"deleteAccountUserAccountsByEmailAddress",
+						"deleteAccountUserAccountsByExternalReferenceCodeBy" +
+							"EmailAddress",
+						"getAccountUserAccountsByExternalReferenceCodePage",
+						"getAccountUserAccountsPage", "postAccountUserAccount",
+						"postAccountUserAccountByEmailAddress",
+						"postAccountUserAccountByExternalReferenceCode",
+						"postAccountUserAccountByExternalReferenceCodeBy" +
+							"EmailAddress",
+						"postAccountUserAccountsByEmailAddress",
+						"postAccountUserAccountsByExternalReferenceCodeBy" +
+							"EmailAddress"
+					}),
+				_accountEntryModelResourcePermission),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -212,7 +240,12 @@ public class UserAccountResourceImpl
 			organizationId);
 
 		return _getUserAccountsPage(
-			Collections.emptyMap(),
+			_getModelActions(
+				organization.getOrganizationId(),
+				Collections.singletonMap(
+					ActionKeys.MANAGE_USERS,
+					new String[] {"getOrganizationUserAccountsPage"}),
+				_organizationModelResourcePermission),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -233,7 +266,11 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		return _getUserAccountsPage(
-			Collections.emptyMap(),
+			Collections.singletonMap(
+				_formatActionMapKey("getSiteUserAccountsPage"),
+				addAction(
+					_formatActionMapKey("getSiteUserAccountsPage"),
+					"getSiteUserAccountsPage", User.class.getName(), siteId)),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -273,7 +310,18 @@ public class UserAccountResourceImpl
 		}
 
 		return _getUserAccountsPage(
-			Collections.emptyMap(),
+			HashMapBuilder.<String, Map<String, String>>putAll(
+				_getCompanyScopeActions(
+					new String[] {"getUserAccountsPage"}, ActionKeys.VIEW,
+					User.class.getName())
+			).putAll(
+				_getCompanyScopeActions(
+					new String[] {
+						"postUserAccount",
+						"putUserAccountByExternalReferenceCode"
+					},
+					ActionKeys.ADD_USER, PortletKeys.PORTAL)
+			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -628,6 +676,10 @@ public class UserAccountResourceImpl
 		}
 	}
 
+	private String _formatActionMapKey(String methodName) {
+		return TextFormatter.format(methodName, TextFormatter.K);
+	}
+
 	private List<Address> _getAddresses(UserAccount userAccount) {
 		return Optional.ofNullable(
 			userAccount.getUserAccountContactInformation()
@@ -678,12 +730,68 @@ public class UserAccountResourceImpl
 		);
 	}
 
+	private Map<String, Map<String, String>> _getCompanyScopeActions(
+		String[] methodNames, String actionName, String resourceName) {
+
+		Map<String, Map<String, String>> actions = new HashMap<>();
+
+		for (String methodName : methodNames) {
+			actions.put(
+				_formatActionMapKey(methodName),
+				addAction(actionName, methodName, resourceName, 0L));
+		}
+
+		return actions;
+	}
+
 	private DTOConverterContext _getDTOConverterContext(long userId) {
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),
-			Collections.emptyMap(), null, contextHttpServletRequest, userId,
+			_getModelActions(
+				userId,
+				HashMapBuilder.put(
+					ActionKeys.DELETE,
+					new String[] {
+						"deleteUserAccount",
+						"deleteUserAccountByExternalReferenceCode"
+					}
+				).put(
+					ActionKeys.UPDATE,
+					new String[] {
+						"putUserAccount",
+						"putUserAccountByExternalReferenceCode",
+						"patchUserAccount"
+					}
+				).put(
+					ActionKeys.VIEW,
+					new String[] {
+						"getMyUserAccount", "getUserAccount",
+						"getUserAccountByExternalReferenceCode"
+					}
+				).build(),
+				_userModelResourcePermission),
+			null, contextHttpServletRequest, userId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
+	}
+
+	private Map<String, Map<String, String>> _getModelActions(
+		long id, Map<String, String[]> actionMethodMap,
+		ModelResourcePermission<?> modelResourcePermission) {
+
+		Map<String, Map<String, String>> actions = new HashMap<>();
+
+		for (Map.Entry<String, String[]> entry : actionMethodMap.entrySet()) {
+			for (String methodName : entry.getValue()) {
+				actions.put(
+					_formatActionMapKey(methodName),
+					addAction(
+						entry.getKey(), id, methodName,
+						modelResourcePermission));
+			}
+		}
+
+		return actions;
 	}
 
 	private long _getPrefixId(UserAccount userAccount) {
@@ -791,6 +899,12 @@ public class UserAccountResourceImpl
 	private static final EntityModel _entityModel =
 		new UserAccountEntityModel();
 
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
 	@Reference
 	private AccountEntryUserRelService _accountEntryUserRelService;
 
@@ -804,6 +918,12 @@ public class UserAccountResourceImpl
 	@Reference
 	private ContactLocalService _contactLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
+	)
+	private ModelResourcePermission<Organization>
+		_organizationModelResourcePermission;
+
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
 
@@ -815,6 +935,11 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ModelResourcePermission<User> _userModelResourcePermission;
 
 	@Reference
 	private UserService _userService;

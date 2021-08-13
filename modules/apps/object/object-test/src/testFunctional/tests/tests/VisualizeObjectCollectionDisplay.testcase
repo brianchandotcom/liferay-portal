@@ -43,7 +43,6 @@ definition {
 		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
 
 		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider();
-
 	}
 
 	@description = "LPS-133865 - Verify if the Object entries are rendered inside the Collection Display fragment"

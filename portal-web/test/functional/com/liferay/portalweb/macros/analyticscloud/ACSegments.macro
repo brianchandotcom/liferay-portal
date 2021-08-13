@@ -83,31 +83,25 @@ definition {
 	}
 
 	macro editDateCriterion {
-		var key_year = "${year}";
-		var key_month = "${month}";
-		var key_day = "${day}";
-
-		Click(locator1 = "ACSegments#CALENDAR_INPUT");
-
-		for (var n : list "${repetitionList}") {
-			var key_indexCalendar = "2";
-
-			Click(locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR");
-
-			Click(locator1 = "ACSegments#YEAR_CALENDAR_OPTION");
-
-			var key_indexCalendar = "1";
-
-			Click(locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR");
-
-			Click(locator1 = "ACSegments#MONTH_CALENDAR_OPTION");
-
-			Click(locator1 = "ACSegments#DAY_CALENDAR_OPTION");
-
-			var key_year = "${year2}";
-			var key_month = "${month2}";
-			var key_day = "${day2}";
+		if (IsElementNotPresent(locator1 = "ACSegments#DATE_PICKER")) {
+			Click(
+				key_text = "calendar",
+				locator1 = "Icon#ANY");
 		}
+
+		Select(
+			key_indexCalendar = "2",
+			locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR",
+			value1 = "${year}");
+
+		Select(
+			key_indexCalendar = "1",
+			locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR",
+			value1 = "${month}");
+
+		Click(
+			key_day = "${day}",
+			locator1 = "ACSegments#DAY_CALENDAR_OPTION");
 	}
 
 	macro editFormControlCriterion {
@@ -205,19 +199,19 @@ definition {
 			ACSegments.editDateCriterion(
 				day = "${day}",
 				month = "${month}",
-				repetitionList = "1",
 				year = "${year}");
 		}
 
 		if ("${timeOption}" == "between") {
 			ACSegments.editDateCriterion(
 				day = "${day}",
-				day2 = "${day2}",
 				month = "${month}",
-				month2 = "${month2}",
-				repetitionList = "1,2",
-				year = "${year}",
-				year2 = "${year2}");
+				year = "${year}");
+
+			ACSegments.editDateCriterion(
+				day = "${day2}",
+				month = "${month2}",
+				year = "${year2}");
 		}
 	}
 

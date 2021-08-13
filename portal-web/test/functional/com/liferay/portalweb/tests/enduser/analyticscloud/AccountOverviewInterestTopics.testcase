@@ -1,0 +1,77 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8675 | Test Summary: Account interest details are shown"
+    @ignore = "true"
+    @priority = "3"
+    test AssertAccountsInterestDetails {
+
+        // TODO LRAC-8675 AssertAccountsInterestDetails pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8676 | Test Summary: Account interest details has pagination"
+    @ignore = "true"
+    @priority = "3"
+    test PaginateAccountInterestDetailsList {
+
+        // TODO LRAC-8676 PaginateAccountInterestDetailsList pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8677 | Test Summary: Account interests list has pagination"
+    @ignore = "true"
+    @priority = "3"
+    test PaginateAccountInterestsList {
+
+        // TODO LRAC-8677 PaginateAccountInterestsList pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8678 | Test Summary: Account interests shows member percentage"
+    @ignore = "true"
+    @priority = "3"
+    test AssertAccountInterestMemberPercentage {
+
+        // TODO LRAC-8678 AssertAccountInterestMemberPercentage pending implementation
+
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8679 | Test Summary: Search an Account Profile's Interests"
+    @ignore = "true"
+    @priority = "3"
+    test CanSearchAccountProfilesInterests {
+
+        // TODO LRAC-8679 CanSearchAccountProfilesInterests pending implementation
+
+    }
+
+}

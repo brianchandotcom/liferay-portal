@@ -214,42 +214,6 @@ definition {
 
 	@priority = "4"
 	@refactordone
-	test CanViewWebsiteNotificationForNewEntry {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.subscribePG();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
-
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Notifications.viewBadgeCount(notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		Notifications.navigateToContent(contentBody = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Notifications.viewBadgeCount(notificationCount = "0");
-	}
-
-	@priority = "4"
-	@refactordone
 	test CanViewWebsiteNotificationForNewComment {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -293,6 +257,42 @@ definition {
 			commentCount = "1",
 			entryComment = "Blogs Entry Comment",
 			userFullName = "userfn userln");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewWebsiteNotificationForNewEntry {
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}

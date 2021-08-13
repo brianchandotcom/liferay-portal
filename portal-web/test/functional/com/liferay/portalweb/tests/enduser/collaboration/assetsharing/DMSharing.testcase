@@ -703,38 +703,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This test covers LPS-94284. It ensures that the invalid email still does not add if it has a space."
-	@priority = "4"
-	@refactorneeded
-	test ShareViaInvalidAddress {
-		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title 1");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 1");
-
-		IFrame.selectModalFrame();
-
-		Type.sendKeys(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "userea2@liferay.com ");
-
-		KeyPress(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "\RETURN");
-
-		AssertElementPresent(
-			key_userEmailAddress = "userea2@liferay.com",
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_FEEDBACK_ITEM");
-
-		var key_userName = "userea2@liferay.com";
-
-		AssertElementNotPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
-	}
-
 	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
 	@priority = "5"
 	@refactorneeded

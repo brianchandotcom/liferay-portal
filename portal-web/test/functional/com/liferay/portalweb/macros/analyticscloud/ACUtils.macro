@@ -62,9 +62,7 @@ definition {
 
 		MenuItem.click(menuItem = "${itemsPerPage}");
 
-		AssertTextEquals.assertText(
-			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
-			value1 = "${itemsPerPage} Items");
+		ACUtils.viewPaginationItemsPerPage(itemsPerPage = "${itemsPerPage}");
 	}
 
 	macro checkAnyPage {

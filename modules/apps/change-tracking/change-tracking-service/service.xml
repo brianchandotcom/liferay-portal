@@ -30,7 +30,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CTCollectionId" return-type="Collection">
+		<finder name="CtCollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
 		</finder>
 		<finder name="C_MCNI_SMCPK" return-type="Collection">
@@ -115,10 +115,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CTCollectionId" return-type="Collection">
+		<finder name="CtCollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
 		</finder>
-		<finder name="CTEntryId" return-type="Collection">
+		<finder name="CtEntryId" return-type="Collection">
 			<finder-column name="ctEntryId" />
 		</finder>
 
@@ -149,7 +149,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CTCollectionId" return-type="Collection">
+		<finder name="CtCollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
 		</finder>
 		<finder name="C_MCNI" return-type="Collection">
@@ -188,7 +188,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CTCollectionId" return-type="Collection">
+		<finder name="CtCollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
 		</finder>
 	</entity>
@@ -211,10 +211,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CollectionId" return-type="Collection">
+		<finder name="CtCollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
 		</finder>
-		<finder name="PreviousCollectionId" return-type="Collection">
+		<finder name="PreviousCtCollectionId" return-type="Collection">
 			<finder-column name="previousCtCollectionId" />
 		</finder>
 		<finder name="C_U" return-type="CTPreferences" unique="true">
@@ -250,7 +250,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="CollectionId" return-type="Collection">
+		<finder name="CtCollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
 		</finder>
 

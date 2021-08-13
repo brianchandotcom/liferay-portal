@@ -30,7 +30,7 @@ buildIBMS3StoreTest {
 	filter {
 		String line ->
 
-		line.replace "import org.junit.AfterClass;", "import javax.annotation.Generated;\n\nimport org.junit.AfterClass;"
+		line.replace "import org.junit.Assume;", "import javax.annotation.Generated;\n\nimport org.junit.Assume;"
 	}
 
 	from new File("src/testIntegration/java/com/liferay/portal/store/s3/test/S3StoreTest.java")

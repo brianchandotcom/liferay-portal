@@ -52,6 +52,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_SEGMENT_INLINE_BUTTON</td>
+	<td>//td[contains(.,'${key_segmentName}')]/following-sibling::td//button[contains(@aria-label,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETED_CRITERIA</td>
 	<td>//div[@class='criteria-message']</td>
 	<td></td>

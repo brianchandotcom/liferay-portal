@@ -18,10 +18,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.Date;
+
 /**
  * @author Pei-Jung Lan
  */
 public interface OnDemandAdminManager {
+
+	public void cleanUpOnDemandAdminUsers(Date olderThanDate)
+		throws PortalException;
 
 	public String getLoginURL(Company company, long userId)
 		throws PortalException;

@@ -104,7 +104,7 @@ public class ExpandoDisplayContext {
 		).build();
 	}
 
-	public List<NavigationItem> getNavigationItems(final String label) {
+	public List<NavigationItem> getNavigationItems(String label) {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);

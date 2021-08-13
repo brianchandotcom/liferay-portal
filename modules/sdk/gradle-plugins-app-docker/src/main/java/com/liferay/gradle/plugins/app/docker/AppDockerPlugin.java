@@ -205,7 +205,7 @@ public class AppDockerPlugin implements Plugin<Project> {
 	}
 
 	private DockerPushImage _addTaskPushAppDockerImage(
-		final DockerBuildImage buildAppDockerImageTask,
+		DockerBuildImage buildAppDockerImageTask,
 		final AppDockerExtension appDockerExtension) {
 
 		DockerPushImage dockerPushImage = GradleUtil.addTask(

@@ -261,7 +261,7 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void assertBaseModelsCount(
-			final int expectedCount, final SearchContext searchContext)
+			int expectedCount, SearchContext searchContext)
 		throws Exception {
 
 		Hits hits = searchBaseModelsCount(searchContext);

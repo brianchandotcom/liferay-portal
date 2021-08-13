@@ -133,7 +133,7 @@ public class VirtualHostLocalServiceImpl
 	@Deprecated
 	@Override
 	public VirtualHost updateVirtualHost(
-		long companyId, final long layoutSetId, String hostname) {
+		long companyId, long layoutSetId, String hostname) {
 
 		List<VirtualHost> virtualHosts = updateVirtualHosts(
 			companyId, layoutSetId,
@@ -150,8 +150,7 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public List<VirtualHost> updateVirtualHosts(
-		long companyId, final long layoutSetId,
-		TreeMap<String, String> hostnames) {
+		long companyId, long layoutSetId, TreeMap<String, String> hostnames) {
 
 		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(
 			layoutSetId);

@@ -195,7 +195,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureTaskProcessResources(final Project project) {
+	private void _configureTaskProcessResources(Project project) {
 		File appDir = GradleUtil.getRootDir(project, "app.bnd");
 
 		final File appBndLocalizationDir = new File(
@@ -227,7 +227,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		final Action<FileCopyDetails> action = new Action<FileCopyDetails>() {
 
 			@Override
-			public void execute(final FileCopyDetails fileCopyDetails) {
+			public void execute(FileCopyDetails fileCopyDetails) {
 				fileCopyDetails.filter(
 					new Closure<Void>(copy) {
 

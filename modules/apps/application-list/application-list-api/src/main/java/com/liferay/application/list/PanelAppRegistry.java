@@ -87,8 +87,8 @@ public class PanelAppRegistry {
 	}
 
 	public List<PanelApp> getPanelApps(
-		PanelCategory parentPanelCategory,
-		final PermissionChecker permissionChecker, final Group group) {
+		PanelCategory parentPanelCategory, PermissionChecker permissionChecker,
+		Group group) {
 
 		return getPanelApps(
 			parentPanelCategory.getKey(), permissionChecker, group);
@@ -106,8 +106,8 @@ public class PanelAppRegistry {
 	}
 
 	public List<PanelApp> getPanelApps(
-		String parentPanelCategoryKey,
-		final PermissionChecker permissionChecker, final Group group) {
+		String parentPanelCategoryKey, PermissionChecker permissionChecker,
+		Group group) {
 
 		List<PanelApp> panelApps = getPanelApps(parentPanelCategoryKey);
 

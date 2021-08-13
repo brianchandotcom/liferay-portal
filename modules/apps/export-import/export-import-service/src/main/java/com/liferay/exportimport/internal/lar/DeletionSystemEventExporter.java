@@ -167,9 +167,8 @@ public class DeletionSystemEventExporter {
 	}
 
 	protected void doExportDeletionSystemEvents(
-			final PortletDataContext portletDataContext,
-			final Element rootElement,
-			final Set<StagedModelType> deletionSystemEventStagedModelTypes)
+			PortletDataContext portletDataContext, Element rootElement,
+			Set<StagedModelType> deletionSystemEventStagedModelTypes)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =

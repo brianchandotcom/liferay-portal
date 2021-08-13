@@ -212,7 +212,7 @@ public class SegmentsExperimentConstants {
 		}
 
 		public static void validateTransition(
-				final int fromStatusValue, final int toStatusValue)
+				int fromStatusValue, int toStatusValue)
 			throws SegmentsExperimentStatusException {
 
 			Optional<Status> fromStatusOptional = Status.parse(fromStatusValue);

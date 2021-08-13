@@ -98,7 +98,7 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 			user.getOriginalEmailAddress());
 	}
 
-	protected void exportToLDAP(final User user) throws Exception {
+	protected void exportToLDAP(User user) throws Exception {
 		exportToLDAP(user, _userExporter, _ldapSettings);
 	}
 

@@ -25,7 +25,7 @@ import java.util.stream.Stream;
  */
 public class StringUtil {
 
-	public static boolean isEmpty(final String value) {
+	public static boolean isEmpty(String value) {
 		if (value == null) {
 			return true;
 		}

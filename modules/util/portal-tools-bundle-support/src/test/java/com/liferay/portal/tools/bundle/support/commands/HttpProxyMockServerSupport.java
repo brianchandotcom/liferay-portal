@@ -63,9 +63,7 @@ public class HttpProxyMockServerSupport {
 			new HttpFiltersSourceAdapter() {
 
 				@Override
-				public HttpFilters filterRequest(
-					final HttpRequest httpRequest) {
-
+				public HttpFilters filterRequest(HttpRequest httpRequest) {
 					return new HttpFiltersAdapter(httpRequest) {
 
 						@Override

@@ -35,7 +35,7 @@ public class KaleoDefinitionModelListener
 	extends BaseModelListener<KaleoDefinition> {
 
 	@Override
-	public void onAfterCreate(final KaleoDefinition kaleoDefinition)
+	public void onAfterCreate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
 		TransactionCommitCallbackUtil.registerCallback(
@@ -55,7 +55,7 @@ public class KaleoDefinitionModelListener
 	}
 
 	@Override
-	public void onAfterRemove(final KaleoDefinition kaleoDefinition)
+	public void onAfterRemove(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
 		if (kaleoDefinition == null) {

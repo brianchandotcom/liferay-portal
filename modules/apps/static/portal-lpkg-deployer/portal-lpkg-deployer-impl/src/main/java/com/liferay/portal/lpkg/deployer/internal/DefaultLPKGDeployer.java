@@ -271,7 +271,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		_wabBundleTracker.close();
 	}
 
-	private void _activate(final BundleContext bundleContext) throws Exception {
+	private void _activate(BundleContext bundleContext) throws Exception {
 		bundleContext.registerService(
 			URLStreamHandlerService.class.getName(),
 			new LPKGURLStreamHandlerService(_urls),

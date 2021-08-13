@@ -257,11 +257,9 @@ public class ServiceComponentLocalServiceImpl
 
 	@Override
 	public void upgradeDB(
-			final ClassLoader classLoader, final String buildNamespace,
-			final long buildNumber,
-			final ServiceComponent previousServiceComponent,
-			final String tablesSQL, final String sequencesSQL,
-			final String indexesSQL)
+			ClassLoader classLoader, String buildNamespace, long buildNumber,
+			ServiceComponent previousServiceComponent, String tablesSQL,
+			String sequencesSQL, String indexesSQL)
 		throws Exception {
 
 		_upgradeDB(

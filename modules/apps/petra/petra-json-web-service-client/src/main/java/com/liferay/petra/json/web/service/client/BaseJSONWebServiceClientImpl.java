@@ -1126,7 +1126,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		return false;
 	}
 
-	private String[] _split(final String s) {
+	private String[] _split(String s) {
 		if (_isBlank(s)) {
 			return null;
 		}

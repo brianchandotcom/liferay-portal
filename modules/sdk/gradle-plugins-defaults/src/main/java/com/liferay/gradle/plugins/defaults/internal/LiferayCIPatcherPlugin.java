@@ -33,7 +33,7 @@ public class LiferayCIPatcherPlugin implements Plugin<Project> {
 	public static final Plugin<Project> INSTANCE = new LiferayCIPatcherPlugin();
 
 	@Override
-	public void apply(final Project project) {
+	public void apply(Project project) {
 		_configureTasksPackageRunBuild(project);
 		_configureTasksNpmInstall(project);
 	}

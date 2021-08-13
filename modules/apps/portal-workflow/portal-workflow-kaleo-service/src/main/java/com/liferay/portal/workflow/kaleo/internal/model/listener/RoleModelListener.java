@@ -51,7 +51,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		_kaleoTaskAssignmentLocalService = kaleoTaskAssignmentLocalService;
 	}
 
-	private void _deleteKaleoTaskAssignmentByRole(final long roleId)
+	private void _deleteKaleoTaskAssignmentByRole(long roleId)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =

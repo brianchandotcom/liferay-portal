@@ -236,7 +236,7 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 		return _bundleContext.getService(serviceReference);
 	}
 
-	private void _registerTestPortlet(final String portletId) throws Exception {
+	private void _registerTestPortlet(String portletId) throws Exception {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				Portlet.class, new TestPortlet(),

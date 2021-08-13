@@ -723,7 +723,7 @@ public class JournalFolderLocalServiceImpl
 	@Override
 	public void rebuildTree(
 			long companyId, long parentFolderId, String parentTreePath,
-			final boolean reindex)
+			boolean reindex)
 		throws PortalException {
 
 		JournalTreePathUtil.rebuildTree(

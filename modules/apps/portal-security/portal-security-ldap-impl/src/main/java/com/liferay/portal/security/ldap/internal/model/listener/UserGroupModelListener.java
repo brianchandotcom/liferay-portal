@@ -82,8 +82,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 	}
 
 	protected void exportToLDAP(
-		final long userId, final long userGroupId,
-		final UserOperation userOperation) {
+		long userId, long userGroupId, UserOperation userOperation) {
 
 		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 			return;

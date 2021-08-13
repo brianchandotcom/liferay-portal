@@ -256,7 +256,7 @@ public class SyncDLObjectLocalServiceImpl
 	}
 
 	@Override
-	public void moveSyncDLObjects(final SyncDLObject parentSyncDLObject)
+	public void moveSyncDLObjects(SyncDLObject parentSyncDLObject)
 		throws PortalException {
 
 		String searchTreePath = StringUtil.quote(
@@ -299,7 +299,7 @@ public class SyncDLObjectLocalServiceImpl
 	}
 
 	@Override
-	public void restoreSyncDLObjects(final SyncDLObject parentSyncDLObject)
+	public void restoreSyncDLObjects(SyncDLObject parentSyncDLObject)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -359,7 +359,7 @@ public class SyncDLObjectLocalServiceImpl
 	}
 
 	@Override
-	public void trashSyncDLObjects(final SyncDLObject parentSyncDLObject)
+	public void trashSyncDLObjects(SyncDLObject parentSyncDLObject)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =

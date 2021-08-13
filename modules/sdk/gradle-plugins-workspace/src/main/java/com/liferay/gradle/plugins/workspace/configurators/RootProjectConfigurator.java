@@ -738,7 +738,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private Copy _addTaskDockerDeploy(
-		Project project, final WorkspaceExtension workspaceExtension,
+		Project project, WorkspaceExtension workspaceExtension,
 		Configuration providedModulesConfiguration) {
 
 		Copy copy = GradleUtil.addTask(

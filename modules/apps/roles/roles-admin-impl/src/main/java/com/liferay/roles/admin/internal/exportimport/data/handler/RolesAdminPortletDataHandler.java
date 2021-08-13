@@ -112,7 +112,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -165,7 +165,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getRoleActionableDynamicQuery(
-		final PortletDataContext portletDataContext, final boolean export) {
+		PortletDataContext portletDataContext, boolean export) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_roleLocalService.getExportActionableDynamicQuery(

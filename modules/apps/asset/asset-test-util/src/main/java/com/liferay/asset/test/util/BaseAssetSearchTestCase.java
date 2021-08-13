@@ -1115,8 +1115,8 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected void assertCount(
-			final int expectedCount, final AssetEntryQuery assetEntryQuery,
-			final SearchContext searchContext, final int start, final int end)
+			int expectedCount, AssetEntryQuery assetEntryQuery,
+			SearchContext searchContext, int start, int end)
 		throws Exception {
 
 		int actualCount = searchCount(
@@ -1349,8 +1349,8 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected void testOrderByCreateDate(
-			final AssetEntryQuery assetEntryQuery, String orderByType,
-			String[] titles, final String[] orderedTitles)
+			AssetEntryQuery assetEntryQuery, String orderByType,
+			String[] titles, String[] orderedTitles)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1392,8 +1392,8 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected void testOrderByExpirationDate(
-			final AssetEntryQuery assetEntryQuery, final String orderByType,
-			final Date[] expirationDates)
+			AssetEntryQuery assetEntryQuery, String orderByType,
+			Date[] expirationDates)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1431,9 +1431,9 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected void testOrderByTitle(
-			final AssetEntryQuery assetEntryQuery, String orderByType,
+			AssetEntryQuery assetEntryQuery, String orderByType,
 			List<Map<Locale, String>> titleMaps,
-			final List<Map<Locale, String>> orderedTitleMaps, Locale[] locales)
+			List<Map<Locale, String>> orderedTitleMaps, Locale[] locales)
 		throws Exception {
 
 		ServiceContext serviceContext =

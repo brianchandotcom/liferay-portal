@@ -528,7 +528,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected boolean matchesURI(
-		Analyzer analyzer, String path, Resource resource, final String uri) {
+		Analyzer analyzer, String path, Resource resource, String uri) {
 
 		try {
 			URIFinder uriFinder = new URIFinder(uri);

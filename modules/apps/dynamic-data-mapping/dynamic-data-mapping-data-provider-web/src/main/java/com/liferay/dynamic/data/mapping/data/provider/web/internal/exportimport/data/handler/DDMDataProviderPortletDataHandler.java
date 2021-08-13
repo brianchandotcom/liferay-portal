@@ -52,7 +52,7 @@ public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 

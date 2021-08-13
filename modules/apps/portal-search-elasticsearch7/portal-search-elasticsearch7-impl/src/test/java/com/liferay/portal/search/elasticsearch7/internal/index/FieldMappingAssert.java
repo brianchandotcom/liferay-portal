@@ -45,9 +45,8 @@ public class FieldMappingAssert {
 	}
 
 	public static void assertFieldMappingMetadata(
-			final String expectedValue, final String key, final String field,
-			final String type, final String index,
-			final IndicesClient indicesClient)
+			String expectedValue, String key, String field, String type,
+			String index, IndicesClient indicesClient)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(

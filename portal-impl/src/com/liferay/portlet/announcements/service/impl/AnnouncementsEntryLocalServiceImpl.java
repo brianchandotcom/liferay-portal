@@ -469,9 +469,9 @@ public class AnnouncementsEntryLocalServiceImpl
 	}
 
 	protected void notifyUsers(
-			final AnnouncementsEntry entry, final long teamId,
-			final LinkedHashMap<String, Object> params, final String toName,
-			final String toAddress, final Company company)
+			AnnouncementsEntry entry, long teamId,
+			LinkedHashMap<String, Object> params, String toName,
+			String toAddress, Company company)
 		throws PortalException {
 
 		int total = 0;

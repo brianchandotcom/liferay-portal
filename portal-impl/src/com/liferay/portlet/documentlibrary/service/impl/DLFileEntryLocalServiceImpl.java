@@ -550,9 +550,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public void convertExtraSettings(final String[] keys)
-		throws PortalException {
-
+	public void convertExtraSettings(String[] keys) throws PortalException {
 		int total = dlFileEntryFinder.countByExtraSettings();
 
 		IntervalActionProcessor<Void> intervalActionProcessor =
@@ -659,8 +657,7 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void deleteFileEntries(
-			long groupId, final long folderId,
-			final boolean includeTrashedEntries)
+			long groupId, long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
 		RepositoryEventTrigger repositoryEventTrigger =
@@ -965,8 +962,7 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void deleteRepositoryFileEntries(
-			final long repositoryId, final long folderId,
-			final boolean includeTrashedEntries)
+			long repositoryId, long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
 		RepositoryEventTrigger repositoryEventTrigger =
@@ -1679,8 +1675,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public void setTreePaths(
-			final long folderId, final String treePath, final boolean reindex)
+	public void setTreePaths(long folderId, String treePath, boolean reindex)
 		throws PortalException {
 
 		if (treePath == null) {

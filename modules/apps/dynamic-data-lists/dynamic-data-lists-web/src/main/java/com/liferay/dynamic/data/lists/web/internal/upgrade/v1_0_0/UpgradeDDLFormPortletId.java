@@ -45,7 +45,7 @@ public class UpgradeDDLFormPortletId extends BasePortletIdUpgradeProcess {
 	}
 
 	protected void deleteResourcePermissions(
-			final String oldRootPortletId, final String newRootPortletId)
+			String oldRootPortletId, String newRootPortletId)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -81,8 +81,7 @@ public class UpgradeDDLFormPortletId extends BasePortletIdUpgradeProcess {
 	}
 
 	protected long getResourcePermissionsCount(
-			final long companyId, final String name, final int scope,
-			final long roleId)
+			long companyId, String name, int scope, long roleId)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -113,7 +112,7 @@ public class UpgradeDDLFormPortletId extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected void updateInstanceablePortletPreferences(
-			final String oldRootPortletId, final String newRootPortletId)
+			String oldRootPortletId, String newRootPortletId)
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =

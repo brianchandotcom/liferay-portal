@@ -176,7 +176,7 @@ public class FragmentEntryProcessorRegistryImpl
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, FragmentEntryProcessor.class,
 			Collections.reverseOrder(

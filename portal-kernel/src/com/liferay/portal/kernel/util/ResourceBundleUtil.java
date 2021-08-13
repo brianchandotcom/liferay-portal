@@ -149,8 +149,7 @@ public class ResourceBundleUtil {
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.util.ResourceBundleLoader
-		getResourceBundleLoader(
-			final String baseName, final ClassLoader classLoader) {
+		getResourceBundleLoader(String baseName, ClassLoader classLoader) {
 
 		return new ClassResourceBundleLoader(baseName, classLoader);
 	}

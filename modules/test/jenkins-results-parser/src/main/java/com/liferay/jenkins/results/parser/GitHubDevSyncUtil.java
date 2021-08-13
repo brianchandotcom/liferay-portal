@@ -462,7 +462,7 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static void deleteExpiredRemoteGitBranches(
-		final GitWorkingDirectory gitWorkingDirectory,
+		GitWorkingDirectory gitWorkingDirectory,
 		List<GitRemote> gitHubDevGitRemotes) {
 
 		final long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
@@ -582,7 +582,7 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static void deleteFromAllRemotes(
-		final String remoteGitBranchName, final List<GitRemote> gitRemotes) {
+		final String remoteGitBranchName, List<GitRemote> gitRemotes) {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -944,7 +944,7 @@ public class GitHubDevSyncUtil {
 
 	protected static void pushToAllRemotes(
 		final boolean force, final LocalGitBranch localGitBranch,
-		final String remoteGitBranchName, final List<GitRemote> gitRemotes) {
+		final String remoteGitBranchName, List<GitRemote> gitRemotes) {
 
 		if (localGitBranch == null) {
 			throw new RuntimeException("Local Git branch is null");
@@ -1264,8 +1264,7 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static void updateCacheRemoteGitBranchTimestamp(
-		final String cacheBranchName,
-		final GitWorkingDirectory gitWorkingDirectory,
+		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
 		List<GitRemote> gitHubDevGitRemotes) {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();

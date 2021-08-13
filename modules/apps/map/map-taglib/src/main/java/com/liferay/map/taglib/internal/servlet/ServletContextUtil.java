@@ -53,7 +53,7 @@ public class ServletContextUtil {
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_mapProviders = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, MapProvider.class, null,
 			ServiceReferenceMapperFactory.create(

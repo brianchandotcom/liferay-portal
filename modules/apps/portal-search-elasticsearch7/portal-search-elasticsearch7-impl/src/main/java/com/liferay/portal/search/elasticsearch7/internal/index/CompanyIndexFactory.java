@@ -350,9 +350,7 @@ public class CompanyIndexFactory
 			_elasticsearchConfigurationWrapper.indexNumberOfShards());
 	}
 
-	protected void loadIndexSettingsContributors(
-		final Settings.Builder builder) {
-
+	protected void loadIndexSettingsContributors(Settings.Builder builder) {
 		com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper
 			elasticsearchIndexSettingsHelper = (setting, value) -> builder.put(
 				setting, value);

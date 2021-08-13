@@ -94,7 +94,7 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	@Override
 	public <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		Class<S> clazz, String filterString,
-		final ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
+		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
 
 		ServiceReferenceMapperWrapper<K, S> serviceReferenceMapperWrapper =
 			new ServiceReferenceMapperWrapper<>(serviceReferenceMapper);
@@ -275,7 +275,7 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	public <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
-		final Comparator<ServiceReference<S>> comparator) {
+		Comparator<ServiceReference<S>> comparator) {
 
 		ServiceReferenceMapperWrapper<K, S> serviceReferenceMapperWrapper =
 			new ServiceReferenceMapperWrapper<>(serviceReferenceMapper);
@@ -462,7 +462,7 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		@SuppressWarnings({"rawtypes", "unchecked"})
 		public void map(
 			org.osgi.framework.ServiceReference<S> serviceReference,
-			final Emitter<K> emitter) {
+			Emitter<K> emitter) {
 
 			ServiceReferenceWrapper<S> serviceReferenceWrapper =
 				new ServiceReferenceWrapper<>(serviceReference);

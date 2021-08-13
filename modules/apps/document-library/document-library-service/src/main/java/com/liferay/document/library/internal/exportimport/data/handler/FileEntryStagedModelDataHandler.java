@@ -1068,7 +1068,7 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	private FileEntry _overrideFileVersion(
-			final FileEntry importedFileEntry, final String version,
+			FileEntry importedFileEntry, String version,
 			ServiceContext serviceContext)
 		throws PortalException {
 

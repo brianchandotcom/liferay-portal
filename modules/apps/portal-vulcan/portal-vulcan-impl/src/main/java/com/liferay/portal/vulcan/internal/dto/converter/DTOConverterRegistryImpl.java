@@ -44,7 +44,7 @@ public class DTOConverterRegistryImpl implements DTOConverterRegistry {
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext,
 			(Class<DTOConverter<?, ?>>)(Class<?>)DTOConverter.class,

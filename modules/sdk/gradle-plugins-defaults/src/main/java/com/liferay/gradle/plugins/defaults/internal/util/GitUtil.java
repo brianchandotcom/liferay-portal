@@ -97,7 +97,7 @@ public class GitUtil {
 		return result.trim();
 	}
 
-	public static String getGitResult(Project project, final Object... args) {
+	public static String getGitResult(Project project, Object... args) {
 		return getGitResult(project, project.getProjectDir(), args);
 	}
 

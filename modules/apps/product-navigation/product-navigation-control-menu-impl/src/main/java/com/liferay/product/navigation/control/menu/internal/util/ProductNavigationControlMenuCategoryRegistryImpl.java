@@ -69,7 +69,7 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
 			String productNavigationControlMenuCategoryKey,
-			final HttpServletRequest httpServletRequest) {
+			HttpServletRequest httpServletRequest) {
 
 		List<ProductNavigationControlMenuCategory>
 			productNavigationControlMenuCategories =
@@ -112,7 +112,7 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_productNavigationControlMenuCategoryServiceTrackerMap =
 			ServiceTrackerMapBuilder.SelectorFactory.newSelector(
 				bundleContext, ProductNavigationControlMenuCategory.class

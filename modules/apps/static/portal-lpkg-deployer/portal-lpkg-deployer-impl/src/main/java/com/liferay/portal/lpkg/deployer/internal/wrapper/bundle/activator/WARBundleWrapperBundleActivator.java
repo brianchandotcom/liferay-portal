@@ -36,7 +36,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class WARBundleWrapperBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(final BundleContext bundleContext) throws Exception {
+	public void start(BundleContext bundleContext) throws Exception {
 		Bundle bundle = bundleContext.getBundle();
 
 		Dictionary<String, String> headers = bundle.getHeaders(

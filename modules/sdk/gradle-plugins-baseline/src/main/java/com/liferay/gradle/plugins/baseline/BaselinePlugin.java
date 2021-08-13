@@ -125,9 +125,7 @@ public class BaselinePlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private BaselineTask _addTaskBaseline(
-		final AbstractArchiveTask newJarTask) {
-
+	private BaselineTask _addTaskBaseline(AbstractArchiveTask newJarTask) {
 		BaselineTask baselineTask = _addTaskBaseline(
 			newJarTask, BASELINE_TASK_NAME);
 
@@ -257,8 +255,8 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBaseline(
-		BaselineTask baselineTask, final AbstractArchiveTask newJarTask,
-		final Configuration baselineConfiguration,
+		BaselineTask baselineTask, AbstractArchiveTask newJarTask,
+		Configuration baselineConfiguration,
 		BaselineConfigurationExtension baselineConfigurationExtension) {
 
 		VersionNumber lowestBaselineVersionNumber = VersionNumber.parse(

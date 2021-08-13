@@ -250,7 +250,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 	}
 
 	private SetUpArquillianTask _addTaskSetUpArquillian(
-		final Project project, final SourceSet testIntegrationSourceSet,
+		Project project, final SourceSet testIntegrationSourceSet,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
 		SetUpArquillianTask setUpArquillianTask = GradleUtil.addTask(

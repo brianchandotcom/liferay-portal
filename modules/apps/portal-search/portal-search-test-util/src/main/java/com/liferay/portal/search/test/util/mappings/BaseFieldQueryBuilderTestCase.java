@@ -83,9 +83,7 @@ public abstract class BaseFieldQueryBuilderTestCase
 			});
 	}
 
-	protected void assertSearch(final String keywords, final int size)
-		throws Exception {
-
+	protected void assertSearch(String keywords, int size) throws Exception {
 		_assertCount(keywords, size);
 	}
 
@@ -104,7 +102,7 @@ public abstract class BaseFieldQueryBuilderTestCase
 			});
 	}
 
-	protected void assertSearchCount(final String keywords, final int size)
+	protected void assertSearchCount(String keywords, int size)
 		throws Exception {
 
 		assertSearch(
@@ -137,7 +135,7 @@ public abstract class BaseFieldQueryBuilderTestCase
 		_assertCount(keywords, 0);
 	}
 
-	protected Query buildQuery(final String keywords) {
+	protected Query buildQuery(String keywords) {
 		FieldQueryBuilder fieldQueryBuilder = createFieldQueryBuilder();
 
 		Query query = fieldQueryBuilder.build(getField(), keywords);
@@ -151,7 +149,7 @@ public abstract class BaseFieldQueryBuilderTestCase
 
 	protected abstract FieldQueryBuilder createFieldQueryBuilder();
 
-	protected Hits doSearch(final String keywords) throws Exception {
+	protected Hits doSearch(String keywords) throws Exception {
 		Query query = buildQuery(keywords);
 
 		return search(createSearchContext(), query);

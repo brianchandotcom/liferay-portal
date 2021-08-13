@@ -93,7 +93,7 @@ public interface ExportImportHelper {
 		throws PortalException;
 
 	public long getLayoutModelDeletionCount(
-			final PortletDataContext portletDataContext, boolean privateLayout)
+			PortletDataContext portletDataContext, boolean privateLayout)
 		throws PortalException;
 
 	/**
@@ -122,8 +122,8 @@ public interface ExportImportHelper {
 		throws PortalException;
 
 	public long getModelDeletionCount(
-			final PortletDataContext portletDataContext,
-			final StagedModelType stagedModelType)
+			PortletDataContext portletDataContext,
+			StagedModelType stagedModelType)
 		throws PortalException;
 
 	public String getPortletExportFileName(Portlet portlet);
@@ -164,7 +164,7 @@ public interface ExportImportHelper {
 		PortletDataContext portletDataContext, Element portletElement);
 
 	public MissingReferences validateMissingReferences(
-			final PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext)
 		throws Exception;
 
 	public void writeManifestSummary(

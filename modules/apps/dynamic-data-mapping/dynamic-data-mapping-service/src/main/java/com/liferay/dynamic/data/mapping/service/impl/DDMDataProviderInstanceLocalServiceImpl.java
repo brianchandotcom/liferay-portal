@@ -166,7 +166,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
-	public void deleteDataProviderInstances(long companyId, final long groupId)
+	public void deleteDataProviderInstances(long companyId, long groupId)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =

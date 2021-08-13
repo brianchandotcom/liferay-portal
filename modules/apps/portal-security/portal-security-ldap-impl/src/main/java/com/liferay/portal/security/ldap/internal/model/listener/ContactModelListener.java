@@ -67,7 +67,7 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 		}
 	}
 
-	protected void exportToLDAP(final Contact contact) {
+	protected void exportToLDAP(Contact contact) {
 		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 			return;
 		}

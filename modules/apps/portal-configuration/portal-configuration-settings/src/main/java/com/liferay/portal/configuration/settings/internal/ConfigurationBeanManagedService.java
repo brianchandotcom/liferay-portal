@@ -79,7 +79,7 @@ public class ConfigurationBeanManagedService implements ManagedService {
 	}
 
 	@Override
-	public void updated(final Dictionary<String, ?> properties) {
+	public void updated(Dictionary<String, ?> properties) {
 		if (System.getSecurityManager() != null) {
 			AccessController.doPrivileged(
 				new UpdatePrivilegedAction(properties));

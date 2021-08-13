@@ -183,7 +183,7 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private DownloadNodeTask _addTaskDownloadNode(
-		Project project, final NodeExtension nodeExtension) {
+		Project project, NodeExtension nodeExtension) {
 
 		return _addTaskDownloadNode(
 			project, DOWNLOAD_NODE_TASK_NAME, nodeExtension);
@@ -421,7 +421,7 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureExtensionNode(
-		final Project project, NodeExtension nodeExtension) {
+		Project project, NodeExtension nodeExtension) {
 
 		if (FileUtil.exists(project, "package-lock.json")) {
 			return;

@@ -87,7 +87,7 @@ public abstract class LiferayDefinition extends AbstractComponentDefinition {
 		"com.liferay.talend.runtime.LiferaySourceOrSink";
 
 	private static SandboxedInstance _getSandboxedInstance(
-		final String runtimeClassName, final boolean useCurrentJvmProperties) {
+		String runtimeClassName, boolean useCurrentJvmProperties) {
 
 		Class<LiferayDefinition> liferayDefinitionClass =
 			LiferayDefinition.class;

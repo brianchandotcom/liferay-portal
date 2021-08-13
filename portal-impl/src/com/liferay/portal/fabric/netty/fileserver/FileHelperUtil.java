@@ -111,9 +111,7 @@ public class FileHelperUtil {
 		delete(false, paths);
 	}
 
-	public static void move(Path fromPath, final Path toPath)
-		throws IOException {
-
+	public static void move(Path fromPath, Path toPath) throws IOException {
 		move(fromPath, toPath, true);
 	}
 

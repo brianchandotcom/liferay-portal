@@ -44,7 +44,7 @@ public class RatingsDataTransformerUtil {
 	}
 
 	public static void transformCompanyRatingsData(
-			final long companyId, PortletPreferences oldPortletPreferences,
+			long companyId, PortletPreferences oldPortletPreferences,
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
@@ -53,7 +53,7 @@ public class RatingsDataTransformerUtil {
 	}
 
 	public static void transformGroupRatingsData(
-			final long groupId, UnicodeProperties oldUnicodeProperties,
+			long groupId, UnicodeProperties oldUnicodeProperties,
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
@@ -70,7 +70,7 @@ public class RatingsDataTransformerUtil {
 	}
 
 	private void _transformCompanyRatingsData(
-			final long companyId, PortletPreferences oldPortletPreferences,
+			long companyId, PortletPreferences oldPortletPreferences,
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
@@ -114,7 +114,7 @@ public class RatingsDataTransformerUtil {
 	}
 
 	private void _transformGroupRatingsData(
-			final long groupId, UnicodeProperties oldUnicodeProperties,
+			long groupId, UnicodeProperties oldUnicodeProperties,
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
@@ -157,9 +157,8 @@ public class RatingsDataTransformerUtil {
 	}
 
 	private void _transformRatingsData(
-			final String classPKFieldName, final long classPKFieldValue,
-			final String className, RatingsType fromRatingsType,
-			RatingsType toRatingsType)
+			String classPKFieldName, long classPKFieldValue, String className,
+			RatingsType fromRatingsType, RatingsType toRatingsType)
 		throws PortalException {
 
 		if ((toRatingsType == null) || fromRatingsType.equals(toRatingsType)) {

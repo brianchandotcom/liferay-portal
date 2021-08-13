@@ -174,9 +174,7 @@ public abstract class BaseSyncModelListener<T extends BaseModel<T>>
 	@Reference
 	protected SyncDLObjectLocalService syncDLObjectLocalService;
 
-	private ActionableDynamicQuery _getActionableDynamicQuery(
-		final Object roleId) {
-
+	private ActionableDynamicQuery _getActionableDynamicQuery(Object roleId) {
 		ActionableDynamicQuery actionableDynamicQuery =
 			resourcePermissionLocalService.getActionableDynamicQuery();
 

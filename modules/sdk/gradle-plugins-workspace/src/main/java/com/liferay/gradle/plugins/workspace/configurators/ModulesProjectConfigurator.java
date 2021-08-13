@@ -336,7 +336,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
-	private void _configureRootTaskDistBundle(final Task buildTask) {
+	private void _configureRootTaskDistBundle(Task buildTask) {
 		Project project = buildTask.getProject();
 
 		Copy copy = (Copy)GradleUtil.getTask(

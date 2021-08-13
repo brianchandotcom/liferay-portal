@@ -26,8 +26,7 @@ import org.osgi.framework.ServiceReference;
 public final class ServiceReferenceMapperFactory {
 
 	public static <K, S> ServiceReferenceMapper<K, S> create(
-		final BundleContext bundleContext,
-		final ServiceMapper<K, S> serviceMapper) {
+		BundleContext bundleContext, ServiceMapper<K, S> serviceMapper) {
 
 		return (serviceReference, emitter) -> {
 			S service = bundleContext.getService(serviceReference);

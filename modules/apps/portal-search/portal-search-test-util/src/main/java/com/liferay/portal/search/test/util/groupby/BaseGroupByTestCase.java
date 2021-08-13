@@ -624,7 +624,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		return fields.keySet();
 	}
 
-	protected void indexDuplicates(final String name, int count) {
+	protected void indexDuplicates(String name, int count) {
 		String field = GROUP_FIELD;
 
 		for (int i = 1; i <= count; i++) {

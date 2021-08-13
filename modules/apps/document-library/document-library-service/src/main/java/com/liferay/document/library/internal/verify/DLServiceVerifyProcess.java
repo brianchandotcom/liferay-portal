@@ -107,7 +107,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	protected void checkFileVersionMimeTypes(final String[] originalMimeTypes)
+	protected void checkFileVersionMimeTypes(String[] originalMimeTypes)
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =

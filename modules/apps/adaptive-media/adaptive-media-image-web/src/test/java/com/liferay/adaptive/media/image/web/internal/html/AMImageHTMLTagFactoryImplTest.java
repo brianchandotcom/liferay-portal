@@ -200,7 +200,7 @@ public class AMImageHTMLTagFactoryImplTest {
 		);
 	}
 
-	private MediaQuery _createMediaQuery(final int width, String url)
+	private MediaQuery _createMediaQuery(int width, String url)
 		throws Exception {
 
 		return new MediaQuery(

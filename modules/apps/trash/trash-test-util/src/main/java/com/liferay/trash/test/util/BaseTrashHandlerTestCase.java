@@ -3387,7 +3387,7 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected long getDeletionSystemEventCount(
-			TrashHandler trashHandler, final long systemEventSetKey)
+			TrashHandler trashHandler, long systemEventSetKey)
 		throws Exception {
 
 		long systemEventClassNameId = PortalUtil.getClassNameId(

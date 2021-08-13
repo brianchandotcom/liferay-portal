@@ -210,14 +210,14 @@ public interface CustomElementsSourceModel
 	 * @return the html element name of this custom elements source
 	 */
 	@AutoEscape
-	public String getHTMLElementName();
+	public String getHtmlElementName();
 
 	/**
 	 * Sets the html element name of this custom elements source.
 	 *
 	 * @param htmlElementName the html element name of this custom elements source
 	 */
-	public void setHTMLElementName(String htmlElementName);
+	public void setHtmlElementName(String htmlElementName);
 
 	/**
 	 * Returns the name of this custom elements source.
@@ -240,13 +240,13 @@ public interface CustomElementsSourceModel
 	 * @return the url of this custom elements source
 	 */
 	@AutoEscape
-	public String getURL();
+	public String getUrl();
 
 	/**
 	 * Sets the url of this custom elements source.
 	 *
 	 * @param url the url of this custom elements source
 	 */
-	public void setURL(String url);
+	public void setUrl(String url);
 
 }

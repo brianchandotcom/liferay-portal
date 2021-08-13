@@ -323,21 +323,21 @@ public class CustomElementsSourceModelImpl
 			(BiConsumer<CustomElementsSource, Date>)
 				CustomElementsSource::setModifiedDate);
 		attributeGetterFunctions.put(
-			"htmlElementName", CustomElementsSource::getHTMLElementName);
+			"htmlElementName", CustomElementsSource::getHtmlElementName);
 		attributeSetterBiConsumers.put(
 			"htmlElementName",
 			(BiConsumer<CustomElementsSource, String>)
-				CustomElementsSource::setHTMLElementName);
+				CustomElementsSource::setHtmlElementName);
 		attributeGetterFunctions.put("name", CustomElementsSource::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<CustomElementsSource, String>)
 				CustomElementsSource::setName);
-		attributeGetterFunctions.put("url", CustomElementsSource::getURL);
+		attributeGetterFunctions.put("url", CustomElementsSource::getUrl);
 		attributeSetterBiConsumers.put(
 			"url",
 			(BiConsumer<CustomElementsSource, String>)
-				CustomElementsSource::setURL);
+				CustomElementsSource::setUrl);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -509,7 +509,7 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public String getHTMLElementName() {
+	public String getHtmlElementName() {
 		if (_htmlElementName == null) {
 			return "";
 		}
@@ -519,7 +519,7 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public void setHTMLElementName(String htmlElementName) {
+	public void setHtmlElementName(String htmlElementName) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -547,7 +547,7 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public String getURL() {
+	public String getUrl() {
 		if (_url == null) {
 			return "";
 		}
@@ -557,7 +557,7 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public void setURL(String url) {
+	public void setUrl(String url) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -638,9 +638,9 @@ public class CustomElementsSourceModelImpl
 		customElementsSourceImpl.setUserName(getUserName());
 		customElementsSourceImpl.setCreateDate(getCreateDate());
 		customElementsSourceImpl.setModifiedDate(getModifiedDate());
-		customElementsSourceImpl.setHTMLElementName(getHTMLElementName());
+		customElementsSourceImpl.setHtmlElementName(getHtmlElementName());
 		customElementsSourceImpl.setName(getName());
-		customElementsSourceImpl.setURL(getURL());
+		customElementsSourceImpl.setUrl(getUrl());
 
 		customElementsSourceImpl.resetOriginalValues();
 
@@ -766,7 +766,7 @@ public class CustomElementsSourceModelImpl
 			customElementsSourceCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		customElementsSourceCacheModel.htmlElementName = getHTMLElementName();
+		customElementsSourceCacheModel.htmlElementName = getHtmlElementName();
 
 		String htmlElementName = customElementsSourceCacheModel.htmlElementName;
 
@@ -782,7 +782,7 @@ public class CustomElementsSourceModelImpl
 			customElementsSourceCacheModel.name = null;
 		}
 
-		customElementsSourceCacheModel.url = getURL();
+		customElementsSourceCacheModel.url = getUrl();
 
 		String url = customElementsSourceCacheModel.url;
 

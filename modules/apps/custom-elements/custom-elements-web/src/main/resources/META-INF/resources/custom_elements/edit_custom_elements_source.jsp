@@ -43,9 +43,9 @@ renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(reques
 			<aui:fieldset>
 				<aui:input name="name" />
 
-				<aui:input fieldParam="htmlElementName" name="HTMLElementName" />
+				<aui:input name="htmlElementName" />
 
-				<aui:input fieldParam="url" name="URL" />
+				<aui:input name="url" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

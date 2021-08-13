@@ -87,7 +87,7 @@ public class CustomElementsSourceIndexer
 			CLASS_NAME, customElementsSource);
 
 		document.addText(Field.NAME, customElementsSource.getName());
-		document.addText(Field.URL, customElementsSource.getURL());
+		document.addText(Field.URL, customElementsSource.getUrl());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

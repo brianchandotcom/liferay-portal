@@ -53,9 +53,9 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String cssURLs = ParamUtil.getString(actionRequest, "CSSURLs");
+		String cssURLs = ParamUtil.getString(actionRequest, "cssURLs");
 		String htmlElementName = ParamUtil.getString(
-			actionRequest, "HTMLElementName");
+			actionRequest, "htmlElementName");
 		boolean instanceable = ParamUtil.getBoolean(
 			actionRequest, "instanceable");
 		String name = ParamUtil.getString(actionRequest, "name");

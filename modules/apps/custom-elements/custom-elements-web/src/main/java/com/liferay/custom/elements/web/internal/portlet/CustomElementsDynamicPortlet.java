@@ -73,7 +73,7 @@ public class CustomElementsDynamicPortlet extends MVCPortlet {
 			"portlet-custom-element-portlet");
 
 		Collection<String> cssURLs = StringUtil.split(
-			_customElementsPortletDescriptor.getCSSURLs(), CharPool.NEW_LINE);
+			_customElementsPortletDescriptor.getCssURLs(), CharPool.NEW_LINE);
 
 		properties.put(
 			"com.liferay.portlet.header-portal-css",
@@ -113,7 +113,7 @@ public class CustomElementsDynamicPortlet extends MVCPortlet {
 
 			printWriter.print(StringPool.LESS_THAN);
 			printWriter.print(
-				_customElementsPortletDescriptor.getHTMLElementName());
+				_customElementsPortletDescriptor.getHtmlElementName());
 
 			Map<String, String> tagAttributes = _getTagAttributes();
 
@@ -131,7 +131,7 @@ public class CustomElementsDynamicPortlet extends MVCPortlet {
 
 			printWriter.print("></");
 			printWriter.print(
-				_customElementsPortletDescriptor.getHTMLElementName());
+				_customElementsPortletDescriptor.getHtmlElementName());
 			printWriter.print(StringPool.GREATER_THAN);
 
 			printWriter.flush();

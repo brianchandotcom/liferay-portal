@@ -45,8 +45,8 @@ public class CustomElementsPortletDescriptorSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCSSURLs(model.getCSSURLs());
-		soapModel.setHTMLElementName(model.getHTMLElementName());
+		soapModel.setCssURLs(model.getCssURLs());
+		soapModel.setHtmlElementName(model.getHtmlElementName());
 		soapModel.setInstanceable(model.isInstanceable());
 		soapModel.setName(model.getName());
 		soapModel.setProperties(model.getProperties());
@@ -178,19 +178,19 @@ public class CustomElementsPortletDescriptorSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getCSSURLs() {
+	public String getCssURLs() {
 		return _cssURLs;
 	}
 
-	public void setCSSURLs(String cssURLs) {
+	public void setCssURLs(String cssURLs) {
 		_cssURLs = cssURLs;
 	}
 
-	public String getHTMLElementName() {
+	public String getHtmlElementName() {
 		return _htmlElementName;
 	}
 
-	public void setHTMLElementName(String htmlElementName) {
+	public void setHtmlElementName(String htmlElementName) {
 		_htmlElementName = htmlElementName;
 	}
 

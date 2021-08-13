@@ -160,17 +160,17 @@ public class CustomElementsPortletDescriptorCacheModel
 		}
 
 		if (cssURLs == null) {
-			customElementsPortletDescriptorImpl.setCSSURLs("");
+			customElementsPortletDescriptorImpl.setCssURLs("");
 		}
 		else {
-			customElementsPortletDescriptorImpl.setCSSURLs(cssURLs);
+			customElementsPortletDescriptorImpl.setCssURLs(cssURLs);
 		}
 
 		if (htmlElementName == null) {
-			customElementsPortletDescriptorImpl.setHTMLElementName("");
+			customElementsPortletDescriptorImpl.setHtmlElementName("");
 		}
 		else {
-			customElementsPortletDescriptorImpl.setHTMLElementName(
+			customElementsPortletDescriptorImpl.setHtmlElementName(
 				htmlElementName);
 		}
 

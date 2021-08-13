@@ -216,8 +216,8 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 		String cssURLs, String htmlElementName, boolean instanceable,
 		String name, String properties) {
 
-		customElementsPortletDescriptor.setCSSURLs(cssURLs);
-		customElementsPortletDescriptor.setHTMLElementName(htmlElementName);
+		customElementsPortletDescriptor.setCssURLs(cssURLs);
+		customElementsPortletDescriptor.setHtmlElementName(htmlElementName);
 		customElementsPortletDescriptor.setInstanceable(instanceable);
 		customElementsPortletDescriptor.setName(name);
 		customElementsPortletDescriptor.setProperties(properties);

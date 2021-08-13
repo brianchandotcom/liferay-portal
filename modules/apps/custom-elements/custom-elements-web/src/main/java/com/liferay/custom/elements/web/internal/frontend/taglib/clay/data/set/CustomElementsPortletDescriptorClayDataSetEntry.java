@@ -33,7 +33,7 @@ public class CustomElementsPortletDescriptorClayDataSetEntry {
 	}
 
 	public String getHtmlElementName() {
-		return _customElementsPortletDescriptor.getHTMLElementName();
+		return _customElementsPortletDescriptor.getHtmlElementName();
 	}
 
 	public String getName() {

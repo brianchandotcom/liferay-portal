@@ -44,7 +44,7 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 				<aui:input name="name">
 				</aui:input>
 
-				<aui:input name="HTMLElementName">
+				<aui:input name="htmlElementName">
 				</aui:input>
 
 				<aui:input name="instanceable">
@@ -53,7 +53,7 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 				<aui:input helpMessage="properties-help" name="properties" type="textarea">
 				</aui:input>
 
-				<aui:input helpMessage="css-urls-help" label="css-urls" name="CSSURLs" type="textarea">
+				<aui:input helpMessage="css-urls-help" label="css-urls" name="cssURLs" type="textarea">
 				</aui:input>
 			</aui:fieldset>
 		</aui:fieldset-group>

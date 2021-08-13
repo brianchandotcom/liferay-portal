@@ -139,12 +139,12 @@ public class CustomElementsSourcePersistenceTest {
 
 		newCustomElementsSource.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCustomElementsSource.setHTMLElementName(
+		newCustomElementsSource.setHtmlElementName(
 			RandomTestUtil.randomString());
 
 		newCustomElementsSource.setName(RandomTestUtil.randomString());
 
-		newCustomElementsSource.setURL(RandomTestUtil.randomString());
+		newCustomElementsSource.setUrl(RandomTestUtil.randomString());
 
 		_customElementsSources.add(
 			_persistence.update(newCustomElementsSource));
@@ -180,14 +180,14 @@ public class CustomElementsSourcePersistenceTest {
 				existingCustomElementsSource.getModifiedDate()),
 			Time.getShortTimestamp(newCustomElementsSource.getModifiedDate()));
 		Assert.assertEquals(
-			existingCustomElementsSource.getHTMLElementName(),
-			newCustomElementsSource.getHTMLElementName());
+			existingCustomElementsSource.getHtmlElementName(),
+			newCustomElementsSource.getHtmlElementName());
 		Assert.assertEquals(
 			existingCustomElementsSource.getName(),
 			newCustomElementsSource.getName());
 		Assert.assertEquals(
-			existingCustomElementsSource.getURL(),
-			newCustomElementsSource.getURL());
+			existingCustomElementsSource.getUrl(),
+			newCustomElementsSource.getUrl());
 	}
 
 	@Test
@@ -502,11 +502,11 @@ public class CustomElementsSourcePersistenceTest {
 
 		customElementsSource.setModifiedDate(RandomTestUtil.nextDate());
 
-		customElementsSource.setHTMLElementName(RandomTestUtil.randomString());
+		customElementsSource.setHtmlElementName(RandomTestUtil.randomString());
 
 		customElementsSource.setName(RandomTestUtil.randomString());
 
-		customElementsSource.setURL(RandomTestUtil.randomString());
+		customElementsSource.setUrl(RandomTestUtil.randomString());
 
 		_customElementsSources.add(_persistence.update(customElementsSource));
 

@@ -43,9 +43,9 @@ public class CustomElementsSourceSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setHTMLElementName(model.getHTMLElementName());
+		soapModel.setHtmlElementName(model.getHtmlElementName());
 		soapModel.setName(model.getName());
-		soapModel.setURL(model.getURL());
+		soapModel.setUrl(model.getUrl());
 
 		return soapModel;
 	}
@@ -172,11 +172,11 @@ public class CustomElementsSourceSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getHTMLElementName() {
+	public String getHtmlElementName() {
 		return _htmlElementName;
 	}
 
-	public void setHTMLElementName(String htmlElementName) {
+	public void setHtmlElementName(String htmlElementName) {
 		_htmlElementName = htmlElementName;
 	}
 
@@ -188,11 +188,11 @@ public class CustomElementsSourceSoap implements Serializable {
 		_name = name;
 	}
 
-	public String getURL() {
+	public String getUrl() {
 		return _url;
 	}
 
-	public void setURL(String url) {
+	public void setUrl(String url) {
 		_url = url;
 	}
 

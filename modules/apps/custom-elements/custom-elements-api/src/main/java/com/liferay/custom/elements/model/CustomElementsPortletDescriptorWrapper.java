@@ -56,8 +56,8 @@ public class CustomElementsPortletDescriptorWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("cssURLs", getCSSURLs());
-		attributes.put("htmlElementName", getHTMLElementName());
+		attributes.put("cssURLs", getCssURLs());
+		attributes.put("htmlElementName", getHtmlElementName());
 		attributes.put("instanceable", isInstanceable());
 		attributes.put("name", getName());
 		attributes.put("properties", getProperties());
@@ -120,13 +120,13 @@ public class CustomElementsPortletDescriptorWrapper
 		String cssURLs = (String)attributes.get("cssURLs");
 
 		if (cssURLs != null) {
-			setCSSURLs(cssURLs);
+			setCssURLs(cssURLs);
 		}
 
 		String htmlElementName = (String)attributes.get("htmlElementName");
 
 		if (htmlElementName != null) {
-			setHTMLElementName(htmlElementName);
+			setHtmlElementName(htmlElementName);
 		}
 
 		Boolean instanceable = (Boolean)attributes.get("instanceable");
@@ -174,8 +174,8 @@ public class CustomElementsPortletDescriptorWrapper
 	 * @return the css ur ls of this custom elements portlet descriptor
 	 */
 	@Override
-	public String getCSSURLs() {
-		return model.getCSSURLs();
+	public String getCssURLs() {
+		return model.getCssURLs();
 	}
 
 	/**
@@ -194,8 +194,8 @@ public class CustomElementsPortletDescriptorWrapper
 	 * @return the html element name of this custom elements portlet descriptor
 	 */
 	@Override
-	public String getHTMLElementName() {
-		return model.getHTMLElementName();
+	public String getHtmlElementName() {
+		return model.getHtmlElementName();
 	}
 
 	/**
@@ -339,8 +339,8 @@ public class CustomElementsPortletDescriptorWrapper
 	 * @param cssURLs the css ur ls of this custom elements portlet descriptor
 	 */
 	@Override
-	public void setCSSURLs(String cssURLs) {
-		model.setCSSURLs(cssURLs);
+	public void setCssURLs(String cssURLs) {
+		model.setCssURLs(cssURLs);
 	}
 
 	/**
@@ -362,8 +362,8 @@ public class CustomElementsPortletDescriptorWrapper
 	 * @param htmlElementName the html element name of this custom elements portlet descriptor
 	 */
 	@Override
-	public void setHTMLElementName(String htmlElementName) {
-		model.setHTMLElementName(htmlElementName);
+	public void setHtmlElementName(String htmlElementName) {
+		model.setHtmlElementName(htmlElementName);
 	}
 
 	/**

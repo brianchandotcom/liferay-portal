@@ -138,7 +138,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8515 | Test Summary: Last Year time period filter in Page Overview"
 	@priority = "5"
-	test PeriodFilterLastYearPageOverview {
+	test TimeFilterByLastYearInPagesOverview {
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

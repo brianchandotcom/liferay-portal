@@ -14,50 +14,26 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
-import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsUtil;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.logging.Level;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 
 import javax.servlet.http.HttpSession;
 
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -67,7 +43,6 @@ import org.springframework.mock.web.MockHttpSession;
 /**
  * @author Shuyang Zhou
  */
-@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class PortletSessionImplTest {
 
 	@ClassRule
@@ -76,22 +51,8 @@ public class PortletSessionImplTest {
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws ClassNotFoundException {
-		ClassLoader classLoader = PortletSessionImpl.class.getClassLoader();
-
-		_lazySerializableClass = classLoader.loadClass(
-			PortletSessionImpl.class.getName() + "$LazySerializable");
-
-		_lazySerializableObjectWrapperClass = classLoader.loadClass(
-			PortletSessionImpl.class.getName() +
-				"$LazySerializableObjectWrapper");
-	}
-
 	@Test
 	public void testConstructor() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
-
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
 		Assert.assertSame(_mockHttpSession, portletSessionImpl.httpSession);
@@ -107,8 +68,6 @@ public class PortletSessionImplTest {
 
 	@Test
 	public void testDirectDelegateMethods() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
-
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
 		Assert.assertEquals(
@@ -149,8 +108,6 @@ public class PortletSessionImplTest {
 
 	@Test
 	public void testGetAttribute() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
-
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
 		try {
@@ -201,8 +158,6 @@ public class PortletSessionImplTest {
 
 	@Test
 	public void testGetAttributeMap() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
-
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
 		String scopePrefix = portletSessionImpl.scopePrefix;
@@ -233,8 +188,6 @@ public class PortletSessionImplTest {
 
 	@Test
 	public void testGetAttributeNames() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
-
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
 		String scopePrefix = portletSessionImpl.scopePrefix;
@@ -292,99 +245,7 @@ public class PortletSessionImplTest {
 	}
 
 	@Test
-	public void testLazySerializableObjectWrapper() throws Exception {
-		Constructor<?> constructor =
-			_lazySerializableObjectWrapperClass.getDeclaredConstructor(
-				Serializable.class);
-
-		constructor.setAccessible(true);
-
-		TestSerializable testSerializable = new TestSerializable(
-			"testSerializableName");
-
-		Object lazySerializableObjectWrapperObject = constructor.newInstance(
-			testSerializable);
-
-		Assert.assertSame(
-			testSerializable,
-			ReflectionTestUtil.invoke(
-				lazySerializableObjectWrapperObject, "getSerializable",
-				new Class<?>[0]));
-
-		Assert.assertNotSame(
-			testSerializable,
-			ReflectionTestUtil.invoke(
-				_getDeserializedObject(lazySerializableObjectWrapperObject),
-				"getSerializable", new Class<?>[0]));
-
-		Assert.assertEquals(
-			testSerializable,
-			(TestSerializable)ReflectionTestUtil.invoke(
-				_getDeserializedObject(lazySerializableObjectWrapperObject),
-				"getSerializable", new Class<?>[0]));
-
-		Assert.assertEquals(
-			testSerializable,
-			(TestSerializable)ReflectionTestUtil.invoke(
-				_getDeserializedObject(
-					_getDeserializedObject(
-						lazySerializableObjectWrapperObject)),
-				"getSerializable", new Class<?>[0]));
-
-		// Test with broken classloader
-
-		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		ClassNotFoundException classNotFoundException =
-			new ClassNotFoundException();
-
-		currentThread.setContextClassLoader(
-			new ClassLoader() {
-
-				@Override
-				public Class<?> loadClass(String name)
-					throws ClassNotFoundException {
-
-					if (name.equals(TestSerializable.class.getName())) {
-						throw classNotFoundException;
-					}
-
-					return super.loadClass(name);
-				}
-
-			});
-
-		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
-				_lazySerializableClass.getName(), Level.ALL)) {
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertNull(
-				ReflectionTestUtil.invoke(
-					_getDeserializedObject(lazySerializableObjectWrapperObject),
-					"getSerializable", new Class<?>[0]));
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(
-				"Unable to deserialize object", logEntry.getMessage());
-			Assert.assertSame(classNotFoundException, logEntry.getThrowable());
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-	}
-
-	@Test
 	public void testRemoveAttribute() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
-
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
 		String scopePrefix = portletSessionImpl.scopePrefix;
@@ -427,97 +288,8 @@ public class PortletSessionImplTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
-	@AdviseWith(adviceClasses = PortalClassLoaderUtilAdvice.class)
-	@Test
-	public void testSerializableHttpSessionWrapper() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "true");
-
-		// Constructor
-
-		PortletSessionImpl portletSessionImpl = new PortletSessionImpl(
-			_mockHttpSession, _portletContext, _PORTLET_NAME, _PLID);
-
-		String scopePrefix = portletSessionImpl.scopePrefix;
-
-		Assert.assertTrue(
-			portletSessionImpl.httpSession instanceof HttpSessionWrapper);
-
-		HttpSessionWrapper httpSessionWrapper =
-			(HttpSessionWrapper)portletSessionImpl.httpSession;
-
-		Assert.assertSame(
-			_mockHttpSession, httpSessionWrapper.getWrappedSession());
-
-		// Set http session when session is not SerializableHttpSessionWrapper
-
-		portletSessionImpl.setHttpSession(_mockHttpSession);
-
-		Assert.assertNotSame(_mockHttpSession, portletSessionImpl.httpSession);
-		Assert.assertTrue(
-			portletSessionImpl.httpSession instanceof HttpSessionWrapper);
-
-		// Set http session when session is SerializableHttpSessionWrapper
-
-		portletSessionImpl.setHttpSession(httpSessionWrapper);
-
-		Assert.assertSame(httpSessionWrapper, portletSessionImpl.httpSession);
-
-		// Set/get attribute when value class is loaded by the bootstrap class
-		// loader
-
-		String key = "key";
-		String value = "value";
-
-		portletSessionImpl.setAttribute(key, value);
-
-		Assert.assertSame(value, portletSessionImpl.getAttribute(key));
-		Assert.assertSame(
-			value, _mockHttpSession.getAttribute(scopePrefix.concat(key)));
-
-		// Set/get attribute when value class is not loaded by the portal class
-		// loader
-
-		TestSerializable testSerializable = new TestSerializable("name");
-
-		PortalClassLoaderUtilAdvice.setPortalClassLoader(false);
-
-		portletSessionImpl.setAttribute(key, testSerializable);
-
-		Assert.assertSame(
-			testSerializable, portletSessionImpl.getAttribute(key));
-		Assert.assertTrue(
-			_lazySerializableObjectWrapperClass.isInstance(
-				_mockHttpSession.getAttribute(scopePrefix.concat(key))));
-
-		// Set/get non-serializable attribute when value class is not loaded by
-		// PortalClassLoader
-
-		Object objectValue = new Object();
-
-		portletSessionImpl.setAttribute(key, objectValue);
-
-		Assert.assertSame(objectValue, portletSessionImpl.getAttribute(key));
-		Assert.assertSame(
-			objectValue,
-			_mockHttpSession.getAttribute(scopePrefix.concat(key)));
-
-		// Set/get attribute when value class is loaded by PortalClassLoader
-
-		PortalClassLoaderUtilAdvice.setPortalClassLoader(true);
-
-		portletSessionImpl.setAttribute(key, testSerializable);
-
-		Assert.assertSame(
-			testSerializable, portletSessionImpl.getAttribute(key));
-		Assert.assertSame(
-			testSerializable,
-			_mockHttpSession.getAttribute(scopePrefix.concat(key)));
-	}
-
 	@Test
 	public void testSetAttribute() {
-		PropsUtil.set(PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
-
 		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
 
 		String scopePrefix = portletSessionImpl.scopePrefix;
@@ -545,48 +317,6 @@ public class PortletSessionImplTest {
 			key8, value8, PortletSession.APPLICATION_SCOPE);
 
 		Assert.assertSame(value8, _mockHttpSession.getAttribute(key8));
-	}
-
-	@Aspect
-	public static class PortalClassLoaderUtilAdvice {
-
-		public static void setPortalClassLoader(boolean portalClassLoader) {
-			_portalClassLoader = portalClassLoader;
-		}
-
-		@Around(
-			"execution(public static boolean com.liferay.portal.kernel.util." +
-				"PortalClassLoaderUtil.isPortalClassLoader(ClassLoader)) && " +
-					"args(classLoader)"
-		)
-		public boolean isPortalClassLoader(ClassLoader classLoader) {
-			return _portalClassLoader;
-		}
-
-		private static boolean _portalClassLoader;
-
-	}
-
-	private Object _getDeserializedObject(Object object) throws Exception {
-		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream()) {
-
-			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					unsyncByteArrayOutputStream)) {
-
-				objectOutputStream.writeObject(object);
-			}
-
-			try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-					new UnsyncByteArrayInputStream(
-						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
-						unsyncByteArrayOutputStream.size());
-				ObjectInputStream objectInputStream = new ObjectInputStream(
-					unsyncByteArrayInputStream)) {
-
-				return objectInputStream.readObject();
-			}
-		}
 	}
 
 	private PortletSessionImpl _getPortletSessionImpl() {
@@ -636,47 +366,11 @@ public class PortletSessionImplTest {
 
 			});
 
-	private Class<?> _lazySerializableClass;
-	private Class<?> _lazySerializableObjectWrapperClass;
 	private final MockHttpSession _mockHttpSession = new MockHttpSession();
 	private final Object _value1 = new Object();
 	private final Object _value2 = new Object();
 	private final Object _value3 = new Object();
 	private final Object _value4 = new Object();
 	private final Object _value5 = new Object();
-
-	private static class TestSerializable implements Serializable {
-
-		@Override
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-
-			if (!(object instanceof TestSerializable)) {
-				return false;
-			}
-
-			TestSerializable testSerializable = (TestSerializable)object;
-
-			return Objects.equals(_name, testSerializable._name);
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		@Override
-		public int hashCode() {
-			return _name.hashCode();
-		}
-
-		private TestSerializable(String name) {
-			_name = name;
-		}
-
-		private final String _name;
-
-	}
 
 }

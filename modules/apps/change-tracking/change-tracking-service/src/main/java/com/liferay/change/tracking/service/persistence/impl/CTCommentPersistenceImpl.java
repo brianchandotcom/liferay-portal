@@ -94,9 +94,9 @@ public class CTCommentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
-	private FinderPath _finderPathCountByCTCollectionId;
+	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
+	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+	private FinderPath _finderPathCountByCtCollectionId;
 
 	/**
 	 * Returns all the ct comments where ctCollectionId = &#63;.
@@ -105,8 +105,8 @@ public class CTCommentPersistenceImpl
 	 * @return the matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTCollectionId(long ctCollectionId) {
-		return findByCTCollectionId(
+	public List<CTComment> findByCtCollectionId(long ctCollectionId) {
+		return findByCtCollectionId(
 			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -123,10 +123,10 @@ public class CTCommentPersistenceImpl
 	 * @return the range of matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTCollectionId(
+	public List<CTComment> findByCtCollectionId(
 		long ctCollectionId, int start, int end) {
 
-		return findByCTCollectionId(ctCollectionId, start, end, null);
+		return findByCtCollectionId(ctCollectionId, start, end, null);
 	}
 
 	/**
@@ -143,11 +143,11 @@ public class CTCommentPersistenceImpl
 	 * @return the ordered range of matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTCollectionId(
+	public List<CTComment> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTComment> orderByComparator) {
 
-		return findByCTCollectionId(
+		return findByCtCollectionId(
 			ctCollectionId, start, end, orderByComparator, true);
 	}
 
@@ -166,7 +166,7 @@ public class CTCommentPersistenceImpl
 	 * @return the ordered range of matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTCollectionId(
+	public List<CTComment> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTComment> orderByComparator,
 		boolean useFinderCache) {
@@ -178,12 +178,12 @@ public class CTCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+				finderPath = _finderPathWithoutPaginationFindByCtCollectionId;
 				finderArgs = new Object[] {ctCollectionId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCTCollectionId;
+			finderPath = _finderPathWithPaginationFindByCtCollectionId;
 			finderArgs = new Object[] {
 				ctCollectionId, start, end, orderByComparator
 			};
@@ -271,11 +271,11 @@ public class CTCommentPersistenceImpl
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment findByCTCollectionId_First(
+	public CTComment findByCtCollectionId_First(
 			long ctCollectionId, OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		CTComment ctComment = fetchByCTCollectionId_First(
+		CTComment ctComment = fetchByCtCollectionId_First(
 			ctCollectionId, orderByComparator);
 
 		if (ctComment != null) {
@@ -302,10 +302,10 @@ public class CTCommentPersistenceImpl
 	 * @return the first matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment fetchByCTCollectionId_First(
+	public CTComment fetchByCtCollectionId_First(
 		long ctCollectionId, OrderByComparator<CTComment> orderByComparator) {
 
-		List<CTComment> list = findByCTCollectionId(
+		List<CTComment> list = findByCtCollectionId(
 			ctCollectionId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -324,11 +324,11 @@ public class CTCommentPersistenceImpl
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment findByCTCollectionId_Last(
+	public CTComment findByCtCollectionId_Last(
 			long ctCollectionId, OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		CTComment ctComment = fetchByCTCollectionId_Last(
+		CTComment ctComment = fetchByCtCollectionId_Last(
 			ctCollectionId, orderByComparator);
 
 		if (ctComment != null) {
@@ -355,16 +355,16 @@ public class CTCommentPersistenceImpl
 	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment fetchByCTCollectionId_Last(
+	public CTComment fetchByCtCollectionId_Last(
 		long ctCollectionId, OrderByComparator<CTComment> orderByComparator) {
 
-		int count = countByCTCollectionId(ctCollectionId);
+		int count = countByCtCollectionId(ctCollectionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTComment> list = findByCTCollectionId(
+		List<CTComment> list = findByCtCollectionId(
 			ctCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -384,7 +384,7 @@ public class CTCommentPersistenceImpl
 	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
 	 */
 	@Override
-	public CTComment[] findByCTCollectionId_PrevAndNext(
+	public CTComment[] findByCtCollectionId_PrevAndNext(
 			long ctCommentId, long ctCollectionId,
 			OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
@@ -398,12 +398,12 @@ public class CTCommentPersistenceImpl
 
 			CTComment[] array = new CTCommentImpl[3];
 
-			array[0] = getByCTCollectionId_PrevAndNext(
+			array[0] = getByCtCollectionId_PrevAndNext(
 				session, ctComment, ctCollectionId, orderByComparator, true);
 
 			array[1] = ctComment;
 
-			array[2] = getByCTCollectionId_PrevAndNext(
+			array[2] = getByCtCollectionId_PrevAndNext(
 				session, ctComment, ctCollectionId, orderByComparator, false);
 
 			return array;
@@ -416,7 +416,7 @@ public class CTCommentPersistenceImpl
 		}
 	}
 
-	protected CTComment getByCTCollectionId_PrevAndNext(
+	protected CTComment getByCtCollectionId_PrevAndNext(
 		Session session, CTComment ctComment, long ctCollectionId,
 		OrderByComparator<CTComment> orderByComparator, boolean previous) {
 
@@ -530,9 +530,9 @@ public class CTCommentPersistenceImpl
 	 * @param ctCollectionId the ct collection ID
 	 */
 	@Override
-	public void removeByCTCollectionId(long ctCollectionId) {
+	public void removeByCtCollectionId(long ctCollectionId) {
 		for (CTComment ctComment :
-				findByCTCollectionId(
+				findByCtCollectionId(
 					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -547,8 +547,8 @@ public class CTCommentPersistenceImpl
 	 * @return the number of matching ct comments
 	 */
 	@Override
-	public int countByCTCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCTCollectionId;
+	public int countByCtCollectionId(long ctCollectionId) {
+		FinderPath finderPath = _finderPathCountByCtCollectionId;
 
 		Object[] finderArgs = new Object[] {ctCollectionId};
 
@@ -592,9 +592,9 @@ public class CTCommentPersistenceImpl
 	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
 		"ctComment.ctCollectionId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByCTEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByCTEntryId;
-	private FinderPath _finderPathCountByCTEntryId;
+	private FinderPath _finderPathWithPaginationFindByCtEntryId;
+	private FinderPath _finderPathWithoutPaginationFindByCtEntryId;
+	private FinderPath _finderPathCountByCtEntryId;
 
 	/**
 	 * Returns all the ct comments where ctEntryId = &#63;.
@@ -603,8 +603,8 @@ public class CTCommentPersistenceImpl
 	 * @return the matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTEntryId(long ctEntryId) {
-		return findByCTEntryId(
+	public List<CTComment> findByCtEntryId(long ctEntryId) {
+		return findByCtEntryId(
 			ctEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -621,8 +621,8 @@ public class CTCommentPersistenceImpl
 	 * @return the range of matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTEntryId(long ctEntryId, int start, int end) {
-		return findByCTEntryId(ctEntryId, start, end, null);
+	public List<CTComment> findByCtEntryId(long ctEntryId, int start, int end) {
+		return findByCtEntryId(ctEntryId, start, end, null);
 	}
 
 	/**
@@ -639,11 +639,11 @@ public class CTCommentPersistenceImpl
 	 * @return the ordered range of matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTEntryId(
+	public List<CTComment> findByCtEntryId(
 		long ctEntryId, int start, int end,
 		OrderByComparator<CTComment> orderByComparator) {
 
-		return findByCTEntryId(ctEntryId, start, end, orderByComparator, true);
+		return findByCtEntryId(ctEntryId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -661,7 +661,7 @@ public class CTCommentPersistenceImpl
 	 * @return the ordered range of matching ct comments
 	 */
 	@Override
-	public List<CTComment> findByCTEntryId(
+	public List<CTComment> findByCtEntryId(
 		long ctEntryId, int start, int end,
 		OrderByComparator<CTComment> orderByComparator,
 		boolean useFinderCache) {
@@ -673,12 +673,12 @@ public class CTCommentPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCTEntryId;
+				finderPath = _finderPathWithoutPaginationFindByCtEntryId;
 				finderArgs = new Object[] {ctEntryId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCTEntryId;
+			finderPath = _finderPathWithPaginationFindByCtEntryId;
 			finderArgs = new Object[] {
 				ctEntryId, start, end, orderByComparator
 			};
@@ -766,11 +766,11 @@ public class CTCommentPersistenceImpl
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment findByCTEntryId_First(
+	public CTComment findByCtEntryId_First(
 			long ctEntryId, OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		CTComment ctComment = fetchByCTEntryId_First(
+		CTComment ctComment = fetchByCtEntryId_First(
 			ctEntryId, orderByComparator);
 
 		if (ctComment != null) {
@@ -797,10 +797,10 @@ public class CTCommentPersistenceImpl
 	 * @return the first matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment fetchByCTEntryId_First(
+	public CTComment fetchByCtEntryId_First(
 		long ctEntryId, OrderByComparator<CTComment> orderByComparator) {
 
-		List<CTComment> list = findByCTEntryId(
+		List<CTComment> list = findByCtEntryId(
 			ctEntryId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -819,11 +819,11 @@ public class CTCommentPersistenceImpl
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment findByCTEntryId_Last(
+	public CTComment findByCtEntryId_Last(
 			long ctEntryId, OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		CTComment ctComment = fetchByCTEntryId_Last(
+		CTComment ctComment = fetchByCtEntryId_Last(
 			ctEntryId, orderByComparator);
 
 		if (ctComment != null) {
@@ -850,16 +850,16 @@ public class CTCommentPersistenceImpl
 	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
 	@Override
-	public CTComment fetchByCTEntryId_Last(
+	public CTComment fetchByCtEntryId_Last(
 		long ctEntryId, OrderByComparator<CTComment> orderByComparator) {
 
-		int count = countByCTEntryId(ctEntryId);
+		int count = countByCtEntryId(ctEntryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTComment> list = findByCTEntryId(
+		List<CTComment> list = findByCtEntryId(
 			ctEntryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -879,7 +879,7 @@ public class CTCommentPersistenceImpl
 	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
 	 */
 	@Override
-	public CTComment[] findByCTEntryId_PrevAndNext(
+	public CTComment[] findByCtEntryId_PrevAndNext(
 			long ctCommentId, long ctEntryId,
 			OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
@@ -893,12 +893,12 @@ public class CTCommentPersistenceImpl
 
 			CTComment[] array = new CTCommentImpl[3];
 
-			array[0] = getByCTEntryId_PrevAndNext(
+			array[0] = getByCtEntryId_PrevAndNext(
 				session, ctComment, ctEntryId, orderByComparator, true);
 
 			array[1] = ctComment;
 
-			array[2] = getByCTEntryId_PrevAndNext(
+			array[2] = getByCtEntryId_PrevAndNext(
 				session, ctComment, ctEntryId, orderByComparator, false);
 
 			return array;
@@ -911,7 +911,7 @@ public class CTCommentPersistenceImpl
 		}
 	}
 
-	protected CTComment getByCTEntryId_PrevAndNext(
+	protected CTComment getByCtEntryId_PrevAndNext(
 		Session session, CTComment ctComment, long ctEntryId,
 		OrderByComparator<CTComment> orderByComparator, boolean previous) {
 
@@ -1025,9 +1025,9 @@ public class CTCommentPersistenceImpl
 	 * @param ctEntryId the ct entry ID
 	 */
 	@Override
-	public void removeByCTEntryId(long ctEntryId) {
+	public void removeByCtEntryId(long ctEntryId) {
 		for (CTComment ctComment :
-				findByCTEntryId(
+				findByCtEntryId(
 					ctEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(ctComment);
@@ -1041,8 +1041,8 @@ public class CTCommentPersistenceImpl
 	 * @return the number of matching ct comments
 	 */
 	@Override
-	public int countByCTEntryId(long ctEntryId) {
-		FinderPath finderPath = _finderPathCountByCTEntryId;
+	public int countByCtEntryId(long ctEntryId) {
+		FinderPath finderPath = _finderPathCountByCtEntryId;
 
 		Object[] finderArgs = new Object[] {ctEntryId};
 
@@ -1613,39 +1613,39 @@ public class CTCommentPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
+		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
+		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathCountByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
+		_finderPathCountByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
 
-		_finderPathWithPaginationFindByCTEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTEntryId",
+		_finderPathWithPaginationFindByCtEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"ctEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByCTEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTEntryId",
+		_finderPathWithoutPaginationFindByCtEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtEntryId",
 			new String[] {Long.class.getName()}, new String[] {"ctEntryId"},
 			true);
 
-		_finderPathCountByCTEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTEntryId",
+		_finderPathCountByCtEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtEntryId",
 			new String[] {Long.class.getName()}, new String[] {"ctEntryId"},
 			false);
 	}

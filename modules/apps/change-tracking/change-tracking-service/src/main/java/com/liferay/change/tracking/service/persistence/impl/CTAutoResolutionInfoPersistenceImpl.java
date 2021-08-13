@@ -99,9 +99,9 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
-	private FinderPath _finderPathCountByCTCollectionId;
+	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
+	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+	private FinderPath _finderPathCountByCtCollectionId;
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63;.
@@ -110,10 +110,10 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @return the matching ct auto resolution infos
 	 */
 	@Override
-	public List<CTAutoResolutionInfo> findByCTCollectionId(
+	public List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId) {
 
-		return findByCTCollectionId(
+		return findByCtCollectionId(
 			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -130,10 +130,10 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @return the range of matching ct auto resolution infos
 	 */
 	@Override
-	public List<CTAutoResolutionInfo> findByCTCollectionId(
+	public List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId, int start, int end) {
 
-		return findByCTCollectionId(ctCollectionId, start, end, null);
+		return findByCtCollectionId(ctCollectionId, start, end, null);
 	}
 
 	/**
@@ -150,11 +150,11 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @return the ordered range of matching ct auto resolution infos
 	 */
 	@Override
-	public List<CTAutoResolutionInfo> findByCTCollectionId(
+	public List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
 
-		return findByCTCollectionId(
+		return findByCtCollectionId(
 			ctCollectionId, start, end, orderByComparator, true);
 	}
 
@@ -173,7 +173,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @return the ordered range of matching ct auto resolution infos
 	 */
 	@Override
-	public List<CTAutoResolutionInfo> findByCTCollectionId(
+	public List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator,
 		boolean useFinderCache) {
@@ -185,12 +185,12 @@ public class CTAutoResolutionInfoPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+				finderPath = _finderPathWithoutPaginationFindByCtCollectionId;
 				finderArgs = new Object[] {ctCollectionId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCTCollectionId;
+			finderPath = _finderPathWithPaginationFindByCtCollectionId;
 			finderArgs = new Object[] {
 				ctCollectionId, start, end, orderByComparator
 			};
@@ -280,12 +280,12 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
 	 */
 	@Override
-	public CTAutoResolutionInfo findByCTCollectionId_First(
+	public CTAutoResolutionInfo findByCtCollectionId_First(
 			long ctCollectionId,
 			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
 		throws NoSuchAutoResolutionInfoException {
 
-		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByCTCollectionId_First(
+		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByCtCollectionId_First(
 			ctCollectionId, orderByComparator);
 
 		if (ctAutoResolutionInfo != null) {
@@ -312,11 +312,11 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @return the first matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
 	 */
 	@Override
-	public CTAutoResolutionInfo fetchByCTCollectionId_First(
+	public CTAutoResolutionInfo fetchByCtCollectionId_First(
 		long ctCollectionId,
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
 
-		List<CTAutoResolutionInfo> list = findByCTCollectionId(
+		List<CTAutoResolutionInfo> list = findByCtCollectionId(
 			ctCollectionId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -335,12 +335,12 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
 	 */
 	@Override
-	public CTAutoResolutionInfo findByCTCollectionId_Last(
+	public CTAutoResolutionInfo findByCtCollectionId_Last(
 			long ctCollectionId,
 			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
 		throws NoSuchAutoResolutionInfoException {
 
-		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByCTCollectionId_Last(
+		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByCtCollectionId_Last(
 			ctCollectionId, orderByComparator);
 
 		if (ctAutoResolutionInfo != null) {
@@ -367,17 +367,17 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
 	 */
 	@Override
-	public CTAutoResolutionInfo fetchByCTCollectionId_Last(
+	public CTAutoResolutionInfo fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
 
-		int count = countByCTCollectionId(ctCollectionId);
+		int count = countByCtCollectionId(ctCollectionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTAutoResolutionInfo> list = findByCTCollectionId(
+		List<CTAutoResolutionInfo> list = findByCtCollectionId(
 			ctCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -397,7 +397,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
 	 */
 	@Override
-	public CTAutoResolutionInfo[] findByCTCollectionId_PrevAndNext(
+	public CTAutoResolutionInfo[] findByCtCollectionId_PrevAndNext(
 			long ctAutoResolutionInfoId, long ctCollectionId,
 			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
 		throws NoSuchAutoResolutionInfoException {
@@ -412,13 +412,13 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 			CTAutoResolutionInfo[] array = new CTAutoResolutionInfoImpl[3];
 
-			array[0] = getByCTCollectionId_PrevAndNext(
+			array[0] = getByCtCollectionId_PrevAndNext(
 				session, ctAutoResolutionInfo, ctCollectionId,
 				orderByComparator, true);
 
 			array[1] = ctAutoResolutionInfo;
 
-			array[2] = getByCTCollectionId_PrevAndNext(
+			array[2] = getByCtCollectionId_PrevAndNext(
 				session, ctAutoResolutionInfo, ctCollectionId,
 				orderByComparator, false);
 
@@ -432,7 +432,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 		}
 	}
 
-	protected CTAutoResolutionInfo getByCTCollectionId_PrevAndNext(
+	protected CTAutoResolutionInfo getByCtCollectionId_PrevAndNext(
 		Session session, CTAutoResolutionInfo ctAutoResolutionInfo,
 		long ctCollectionId,
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator,
@@ -549,9 +549,9 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @param ctCollectionId the ct collection ID
 	 */
 	@Override
-	public void removeByCTCollectionId(long ctCollectionId) {
+	public void removeByCtCollectionId(long ctCollectionId) {
 		for (CTAutoResolutionInfo ctAutoResolutionInfo :
-				findByCTCollectionId(
+				findByCtCollectionId(
 					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -566,8 +566,8 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 * @return the number of matching ct auto resolution infos
 	 */
 	@Override
-	public int countByCTCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCTCollectionId;
+	public int countByCtCollectionId(long ctCollectionId) {
+		FinderPath finderPath = _finderPathCountByCtCollectionId;
 
 		Object[] finderArgs = new Object[] {ctCollectionId};
 
@@ -2070,21 +2070,21 @@ public class CTAutoResolutionInfoPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
+		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
+		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathCountByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
+		_finderPathCountByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
 

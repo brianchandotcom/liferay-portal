@@ -96,9 +96,9 @@ public class CTEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
-	private FinderPath _finderPathCountByCTCollectionId;
+	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
+	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+	private FinderPath _finderPathCountByCtCollectionId;
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63;.
@@ -107,8 +107,8 @@ public class CTEntryPersistenceImpl
 	 * @return the matching ct entries
 	 */
 	@Override
-	public List<CTEntry> findByCTCollectionId(long ctCollectionId) {
-		return findByCTCollectionId(
+	public List<CTEntry> findByCtCollectionId(long ctCollectionId) {
+		return findByCtCollectionId(
 			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -125,10 +125,10 @@ public class CTEntryPersistenceImpl
 	 * @return the range of matching ct entries
 	 */
 	@Override
-	public List<CTEntry> findByCTCollectionId(
+	public List<CTEntry> findByCtCollectionId(
 		long ctCollectionId, int start, int end) {
 
-		return findByCTCollectionId(ctCollectionId, start, end, null);
+		return findByCtCollectionId(ctCollectionId, start, end, null);
 	}
 
 	/**
@@ -145,11 +145,11 @@ public class CTEntryPersistenceImpl
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
-	public List<CTEntry> findByCTCollectionId(
+	public List<CTEntry> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator) {
 
-		return findByCTCollectionId(
+		return findByCtCollectionId(
 			ctCollectionId, start, end, orderByComparator, true);
 	}
 
@@ -168,7 +168,7 @@ public class CTEntryPersistenceImpl
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
-	public List<CTEntry> findByCTCollectionId(
+	public List<CTEntry> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
@@ -179,12 +179,12 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+				finderPath = _finderPathWithoutPaginationFindByCtCollectionId;
 				finderArgs = new Object[] {ctCollectionId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCTCollectionId;
+			finderPath = _finderPathWithPaginationFindByCtCollectionId;
 			finderArgs = new Object[] {
 				ctCollectionId, start, end, orderByComparator
 			};
@@ -271,11 +271,11 @@ public class CTEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a matching ct entry could not be found
 	 */
 	@Override
-	public CTEntry findByCTCollectionId_First(
+	public CTEntry findByCtCollectionId_First(
 			long ctCollectionId, OrderByComparator<CTEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		CTEntry ctEntry = fetchByCTCollectionId_First(
+		CTEntry ctEntry = fetchByCtCollectionId_First(
 			ctCollectionId, orderByComparator);
 
 		if (ctEntry != null) {
@@ -302,10 +302,10 @@ public class CTEntryPersistenceImpl
 	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
 	@Override
-	public CTEntry fetchByCTCollectionId_First(
+	public CTEntry fetchByCtCollectionId_First(
 		long ctCollectionId, OrderByComparator<CTEntry> orderByComparator) {
 
-		List<CTEntry> list = findByCTCollectionId(
+		List<CTEntry> list = findByCtCollectionId(
 			ctCollectionId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -324,11 +324,11 @@ public class CTEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a matching ct entry could not be found
 	 */
 	@Override
-	public CTEntry findByCTCollectionId_Last(
+	public CTEntry findByCtCollectionId_Last(
 			long ctCollectionId, OrderByComparator<CTEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		CTEntry ctEntry = fetchByCTCollectionId_Last(
+		CTEntry ctEntry = fetchByCtCollectionId_Last(
 			ctCollectionId, orderByComparator);
 
 		if (ctEntry != null) {
@@ -355,16 +355,16 @@ public class CTEntryPersistenceImpl
 	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
 	@Override
-	public CTEntry fetchByCTCollectionId_Last(
+	public CTEntry fetchByCtCollectionId_Last(
 		long ctCollectionId, OrderByComparator<CTEntry> orderByComparator) {
 
-		int count = countByCTCollectionId(ctCollectionId);
+		int count = countByCtCollectionId(ctCollectionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTEntry> list = findByCTCollectionId(
+		List<CTEntry> list = findByCtCollectionId(
 			ctCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -384,7 +384,7 @@ public class CTEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
 	 */
 	@Override
-	public CTEntry[] findByCTCollectionId_PrevAndNext(
+	public CTEntry[] findByCtCollectionId_PrevAndNext(
 			long ctEntryId, long ctCollectionId,
 			OrderByComparator<CTEntry> orderByComparator)
 		throws NoSuchEntryException {
@@ -398,12 +398,12 @@ public class CTEntryPersistenceImpl
 
 			CTEntry[] array = new CTEntryImpl[3];
 
-			array[0] = getByCTCollectionId_PrevAndNext(
+			array[0] = getByCtCollectionId_PrevAndNext(
 				session, ctEntry, ctCollectionId, orderByComparator, true);
 
 			array[1] = ctEntry;
 
-			array[2] = getByCTCollectionId_PrevAndNext(
+			array[2] = getByCtCollectionId_PrevAndNext(
 				session, ctEntry, ctCollectionId, orderByComparator, false);
 
 			return array;
@@ -416,7 +416,7 @@ public class CTEntryPersistenceImpl
 		}
 	}
 
-	protected CTEntry getByCTCollectionId_PrevAndNext(
+	protected CTEntry getByCtCollectionId_PrevAndNext(
 		Session session, CTEntry ctEntry, long ctCollectionId,
 		OrderByComparator<CTEntry> orderByComparator, boolean previous) {
 
@@ -530,9 +530,9 @@ public class CTEntryPersistenceImpl
 	 * @param ctCollectionId the ct collection ID
 	 */
 	@Override
-	public void removeByCTCollectionId(long ctCollectionId) {
+	public void removeByCtCollectionId(long ctCollectionId) {
 		for (CTEntry ctEntry :
-				findByCTCollectionId(
+				findByCtCollectionId(
 					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -547,8 +547,8 @@ public class CTEntryPersistenceImpl
 	 * @return the number of matching ct entries
 	 */
 	@Override
-	public int countByCTCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCTCollectionId;
+	public int countByCtCollectionId(long ctCollectionId) {
+		FinderPath finderPath = _finderPathCountByCtCollectionId;
 
 		Object[] finderArgs = new Object[] {ctCollectionId};
 
@@ -2808,21 +2808,21 @@ public class CTEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
+		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
+		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathCountByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
+		_finderPathCountByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
 

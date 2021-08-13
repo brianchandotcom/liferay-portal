@@ -189,7 +189,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the matching ct processes
 	 */
-	public java.util.List<CTProcess> findByCollectionId(long ctCollectionId);
+	public java.util.List<CTProcess> findByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns a range of all the ct processes where ctCollectionId = &#63;.
@@ -203,7 +203,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @return the range of matching ct processes
 	 */
-	public java.util.List<CTProcess> findByCollectionId(
+	public java.util.List<CTProcess> findByCtCollectionId(
 		long ctCollectionId, int start, int end);
 
 	/**
@@ -219,7 +219,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching ct processes
 	 */
-	public java.util.List<CTProcess> findByCollectionId(
+	public java.util.List<CTProcess> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator);
@@ -238,7 +238,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct processes
 	 */
-	public java.util.List<CTProcess> findByCollectionId(
+	public java.util.List<CTProcess> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator,
@@ -252,7 +252,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @return the first matching ct process
 	 * @throws NoSuchProcessException if a matching ct process could not be found
 	 */
-	public CTProcess findByCollectionId_First(
+	public CTProcess findByCtCollectionId_First(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 				orderByComparator)
@@ -265,7 +265,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct process, or <code>null</code> if a matching ct process could not be found
 	 */
-	public CTProcess fetchByCollectionId_First(
+	public CTProcess fetchByCtCollectionId_First(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator);
@@ -278,7 +278,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @return the last matching ct process
 	 * @throws NoSuchProcessException if a matching ct process could not be found
 	 */
-	public CTProcess findByCollectionId_Last(
+	public CTProcess findByCtCollectionId_Last(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 				orderByComparator)
@@ -291,7 +291,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct process, or <code>null</code> if a matching ct process could not be found
 	 */
-	public CTProcess fetchByCollectionId_Last(
+	public CTProcess fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 			orderByComparator);
@@ -305,7 +305,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @return the previous, current, and next ct process
 	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
 	 */
-	public CTProcess[] findByCollectionId_PrevAndNext(
+	public CTProcess[] findByCtCollectionId_PrevAndNext(
 			long ctProcessId, long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTProcess>
 				orderByComparator)
@@ -316,7 +316,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 *
 	 * @param ctCollectionId the ct collection ID
 	 */
-	public void removeByCollectionId(long ctCollectionId);
+	public void removeByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the number of ct processes where ctCollectionId = &#63;.
@@ -324,7 +324,7 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the number of matching ct processes
 	 */
-	public int countByCollectionId(long ctCollectionId);
+	public int countByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Caches the ct process in the entity cache if it is enabled.

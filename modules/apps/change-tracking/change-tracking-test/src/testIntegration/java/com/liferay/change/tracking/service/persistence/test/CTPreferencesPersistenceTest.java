@@ -163,17 +163,17 @@ public class CTPreferencesPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCollectionId() throws Exception {
-		_persistence.countByCollectionId(RandomTestUtil.nextLong());
+	public void testCountByCtCollectionId() throws Exception {
+		_persistence.countByCtCollectionId(RandomTestUtil.nextLong());
 
-		_persistence.countByCollectionId(0L);
+		_persistence.countByCtCollectionId(0L);
 	}
 
 	@Test
-	public void testCountByPreviousCollectionId() throws Exception {
-		_persistence.countByPreviousCollectionId(RandomTestUtil.nextLong());
+	public void testCountByPreviousCtCollectionId() throws Exception {
+		_persistence.countByPreviousCtCollectionId(RandomTestUtil.nextLong());
 
-		_persistence.countByPreviousCollectionId(0L);
+		_persistence.countByPreviousCtCollectionId(0L);
 	}
 
 	@Test

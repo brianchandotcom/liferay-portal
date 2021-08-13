@@ -46,7 +46,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTCollectionId(long ctCollectionId);
+	public java.util.List<CTComment> findByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns a range of all the ct comments where ctCollectionId = &#63;.
@@ -60,7 +60,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param end the upper bound of the range of ct comments (not inclusive)
 	 * @return the range of matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTCollectionId(
+	public java.util.List<CTComment> findByCtCollectionId(
 		long ctCollectionId, int start, int end);
 
 	/**
@@ -76,7 +76,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTCollectionId(
+	public java.util.List<CTComment> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
@@ -95,7 +95,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTCollectionId(
+	public java.util.List<CTComment> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator,
@@ -109,7 +109,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the first matching ct comment
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
-	public CTComment findByCTCollectionId_First(
+	public CTComment findByCtCollectionId_First(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 				orderByComparator)
@@ -122,7 +122,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
-	public CTComment fetchByCTCollectionId_First(
+	public CTComment fetchByCtCollectionId_First(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
@@ -135,7 +135,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the last matching ct comment
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
-	public CTComment findByCTCollectionId_Last(
+	public CTComment findByCtCollectionId_Last(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 				orderByComparator)
@@ -148,7 +148,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
-	public CTComment fetchByCTCollectionId_Last(
+	public CTComment fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
@@ -162,7 +162,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the previous, current, and next ct comment
 	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
 	 */
-	public CTComment[] findByCTCollectionId_PrevAndNext(
+	public CTComment[] findByCtCollectionId_PrevAndNext(
 			long ctCommentId, long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 				orderByComparator)
@@ -173,7 +173,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 *
 	 * @param ctCollectionId the ct collection ID
 	 */
-	public void removeByCTCollectionId(long ctCollectionId);
+	public void removeByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the number of ct comments where ctCollectionId = &#63;.
@@ -181,7 +181,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the number of matching ct comments
 	 */
-	public int countByCTCollectionId(long ctCollectionId);
+	public int countByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns all the ct comments where ctEntryId = &#63;.
@@ -189,7 +189,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param ctEntryId the ct entry ID
 	 * @return the matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTEntryId(long ctEntryId);
+	public java.util.List<CTComment> findByCtEntryId(long ctEntryId);
 
 	/**
 	 * Returns a range of all the ct comments where ctEntryId = &#63;.
@@ -203,7 +203,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param end the upper bound of the range of ct comments (not inclusive)
 	 * @return the range of matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTEntryId(
+	public java.util.List<CTComment> findByCtEntryId(
 		long ctEntryId, int start, int end);
 
 	/**
@@ -219,7 +219,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTEntryId(
+	public java.util.List<CTComment> findByCtEntryId(
 		long ctEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
@@ -238,7 +238,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct comments
 	 */
-	public java.util.List<CTComment> findByCTEntryId(
+	public java.util.List<CTComment> findByCtEntryId(
 		long ctEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator,
@@ -252,7 +252,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the first matching ct comment
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
-	public CTComment findByCTEntryId_First(
+	public CTComment findByCtEntryId_First(
 			long ctEntryId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 				orderByComparator)
@@ -265,7 +265,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
-	public CTComment fetchByCTEntryId_First(
+	public CTComment fetchByCtEntryId_First(
 		long ctEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
@@ -278,7 +278,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the last matching ct comment
 	 * @throws NoSuchCommentException if a matching ct comment could not be found
 	 */
-	public CTComment findByCTEntryId_Last(
+	public CTComment findByCtEntryId_Last(
 			long ctEntryId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 				orderByComparator)
@@ -291,7 +291,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct comment, or <code>null</code> if a matching ct comment could not be found
 	 */
-	public CTComment fetchByCTEntryId_Last(
+	public CTComment fetchByCtEntryId_Last(
 		long ctEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
@@ -305,7 +305,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the previous, current, and next ct comment
 	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
 	 */
-	public CTComment[] findByCTEntryId_PrevAndNext(
+	public CTComment[] findByCtEntryId_PrevAndNext(
 			long ctCommentId, long ctEntryId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 				orderByComparator)
@@ -316,7 +316,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 *
 	 * @param ctEntryId the ct entry ID
 	 */
-	public void removeByCTEntryId(long ctEntryId);
+	public void removeByCtEntryId(long ctEntryId);
 
 	/**
 	 * Returns the number of ct comments where ctEntryId = &#63;.
@@ -324,7 +324,7 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @param ctEntryId the ct entry ID
 	 * @return the number of matching ct comments
 	 */
-	public int countByCTEntryId(long ctEntryId);
+	public int countByCtEntryId(long ctEntryId);
 
 	/**
 	 * Caches the ct comment in the entity cache if it is enabled.

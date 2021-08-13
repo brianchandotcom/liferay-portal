@@ -46,7 +46,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the matching ct messages
 	 */
-	public java.util.List<CTMessage> findByCTCollectionId(long ctCollectionId);
+	public java.util.List<CTMessage> findByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns a range of all the ct messages where ctCollectionId = &#63;.
@@ -60,7 +60,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @param end the upper bound of the range of ct messages (not inclusive)
 	 * @return the range of matching ct messages
 	 */
-	public java.util.List<CTMessage> findByCTCollectionId(
+	public java.util.List<CTMessage> findByCtCollectionId(
 		long ctCollectionId, int start, int end);
 
 	/**
@@ -76,7 +76,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching ct messages
 	 */
-	public java.util.List<CTMessage> findByCTCollectionId(
+	public java.util.List<CTMessage> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTMessage>
 			orderByComparator);
@@ -95,7 +95,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct messages
 	 */
-	public java.util.List<CTMessage> findByCTCollectionId(
+	public java.util.List<CTMessage> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTMessage>
 			orderByComparator,
@@ -109,7 +109,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @return the first matching ct message
 	 * @throws NoSuchMessageException if a matching ct message could not be found
 	 */
-	public CTMessage findByCTCollectionId_First(
+	public CTMessage findByCtCollectionId_First(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTMessage>
 				orderByComparator)
@@ -122,7 +122,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct message, or <code>null</code> if a matching ct message could not be found
 	 */
-	public CTMessage fetchByCTCollectionId_First(
+	public CTMessage fetchByCtCollectionId_First(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTMessage>
 			orderByComparator);
@@ -135,7 +135,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @return the last matching ct message
 	 * @throws NoSuchMessageException if a matching ct message could not be found
 	 */
-	public CTMessage findByCTCollectionId_Last(
+	public CTMessage findByCtCollectionId_Last(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTMessage>
 				orderByComparator)
@@ -148,7 +148,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct message, or <code>null</code> if a matching ct message could not be found
 	 */
-	public CTMessage fetchByCTCollectionId_Last(
+	public CTMessage fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTMessage>
 			orderByComparator);
@@ -162,7 +162,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @return the previous, current, and next ct message
 	 * @throws NoSuchMessageException if a ct message with the primary key could not be found
 	 */
-	public CTMessage[] findByCTCollectionId_PrevAndNext(
+	public CTMessage[] findByCtCollectionId_PrevAndNext(
 			long ctMessageId, long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTMessage>
 				orderByComparator)
@@ -173,7 +173,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 *
 	 * @param ctCollectionId the ct collection ID
 	 */
-	public void removeByCTCollectionId(long ctCollectionId);
+	public void removeByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the number of ct messages where ctCollectionId = &#63;.
@@ -181,7 +181,7 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the number of matching ct messages
 	 */
-	public int countByCTCollectionId(long ctCollectionId);
+	public int countByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Caches the ct message in the entity cache if it is enabled.

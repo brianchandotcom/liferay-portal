@@ -179,10 +179,10 @@ public class CTAutoResolutionInfoPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+	public void testCountByCtCollectionId() throws Exception {
+		_persistence.countByCtCollectionId(RandomTestUtil.nextLong());
 
-		_persistence.countByCTCollectionId(0L);
+		_persistence.countByCtCollectionId(0L);
 	}
 
 	@Test

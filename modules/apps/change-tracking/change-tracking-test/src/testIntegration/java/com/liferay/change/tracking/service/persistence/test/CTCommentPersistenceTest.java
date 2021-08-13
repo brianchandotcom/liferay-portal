@@ -167,17 +167,17 @@ public class CTCommentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCTCollectionId() throws Exception {
-		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+	public void testCountByCtCollectionId() throws Exception {
+		_persistence.countByCtCollectionId(RandomTestUtil.nextLong());
 
-		_persistence.countByCTCollectionId(0L);
+		_persistence.countByCtCollectionId(0L);
 	}
 
 	@Test
-	public void testCountByCTEntryId() throws Exception {
-		_persistence.countByCTEntryId(RandomTestUtil.nextLong());
+	public void testCountByCtEntryId() throws Exception {
+		_persistence.countByCtEntryId(RandomTestUtil.nextLong());
 
-		_persistence.countByCTEntryId(0L);
+		_persistence.countByCtEntryId(0L);
 	}
 
 	@Test

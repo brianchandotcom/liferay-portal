@@ -46,7 +46,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the matching ct entries
 	 */
-	public java.util.List<CTEntry> findByCTCollectionId(long ctCollectionId);
+	public java.util.List<CTEntry> findByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns a range of all the ct entries where ctCollectionId = &#63;.
@@ -60,7 +60,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @return the range of matching ct entries
 	 */
-	public java.util.List<CTEntry> findByCTCollectionId(
+	public java.util.List<CTEntry> findByCtCollectionId(
 		long ctCollectionId, int start, int end);
 
 	/**
@@ -76,7 +76,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching ct entries
 	 */
-	public java.util.List<CTEntry> findByCTCollectionId(
+	public java.util.List<CTEntry> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
@@ -95,7 +95,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
-	public java.util.List<CTEntry> findByCTCollectionId(
+	public java.util.List<CTEntry> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator,
@@ -109,7 +109,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the first matching ct entry
 	 * @throws NoSuchEntryException if a matching ct entry could not be found
 	 */
-	public CTEntry findByCTCollectionId_First(
+	public CTEntry findByCtCollectionId_First(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 				orderByComparator)
@@ -122,7 +122,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
-	public CTEntry fetchByCTCollectionId_First(
+	public CTEntry fetchByCtCollectionId_First(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
@@ -135,7 +135,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the last matching ct entry
 	 * @throws NoSuchEntryException if a matching ct entry could not be found
 	 */
-	public CTEntry findByCTCollectionId_Last(
+	public CTEntry findByCtCollectionId_Last(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 				orderByComparator)
@@ -148,7 +148,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
-	public CTEntry fetchByCTCollectionId_Last(
+	public CTEntry fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
@@ -162,7 +162,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the previous, current, and next ct entry
 	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
 	 */
-	public CTEntry[] findByCTCollectionId_PrevAndNext(
+	public CTEntry[] findByCtCollectionId_PrevAndNext(
 			long ctEntryId, long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 				orderByComparator)
@@ -173,7 +173,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 *
 	 * @param ctCollectionId the ct collection ID
 	 */
-	public void removeByCTCollectionId(long ctCollectionId);
+	public void removeByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the number of ct entries where ctCollectionId = &#63;.
@@ -181,7 +181,7 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @param ctCollectionId the ct collection ID
 	 * @return the number of matching ct entries
 	 */
-	public int countByCTCollectionId(long ctCollectionId);
+	public int countByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63; and modelClassNameId = &#63;.

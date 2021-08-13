@@ -166,10 +166,10 @@ public class CTProcessPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCollectionId() throws Exception {
-		_persistence.countByCollectionId(RandomTestUtil.nextLong());
+	public void testCountByCtCollectionId() throws Exception {
+		_persistence.countByCtCollectionId(RandomTestUtil.nextLong());
 
-		_persistence.countByCollectionId(0L);
+		_persistence.countByCtCollectionId(0L);
 	}
 
 	@Test

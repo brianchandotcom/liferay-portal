@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Change Tracking API
 Bundle-SymbolicName: com.liferay.change.tracking.api
-Bundle-Version: 13.0.3
+Bundle-Version: 14.0.0
 Export-Package:\
 	com.liferay.change.tracking.closure,\
 	com.liferay.change.tracking.conflict,\

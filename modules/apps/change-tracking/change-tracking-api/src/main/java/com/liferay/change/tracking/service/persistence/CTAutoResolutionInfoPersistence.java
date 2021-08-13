@@ -47,7 +47,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @param ctCollectionId the ct collection ID
 	 * @return the matching ct auto resolution infos
 	 */
-	public java.util.List<CTAutoResolutionInfo> findByCTCollectionId(
+	public java.util.List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId);
 
 	/**
@@ -62,7 +62,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
 	 * @return the range of matching ct auto resolution infos
 	 */
-	public java.util.List<CTAutoResolutionInfo> findByCTCollectionId(
+	public java.util.List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId, int start, int end);
 
 	/**
@@ -78,7 +78,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching ct auto resolution infos
 	 */
-	public java.util.List<CTAutoResolutionInfo> findByCTCollectionId(
+	public java.util.List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
 			orderByComparator);
@@ -97,7 +97,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct auto resolution infos
 	 */
-	public java.util.List<CTAutoResolutionInfo> findByCTCollectionId(
+	public java.util.List<CTAutoResolutionInfo> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
 			orderByComparator,
@@ -111,7 +111,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @return the first matching ct auto resolution info
 	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
 	 */
-	public CTAutoResolutionInfo findByCTCollectionId_First(
+	public CTAutoResolutionInfo findByCtCollectionId_First(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CTAutoResolutionInfo> orderByComparator)
@@ -124,7 +124,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
 	 */
-	public CTAutoResolutionInfo fetchByCTCollectionId_First(
+	public CTAutoResolutionInfo fetchByCtCollectionId_First(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
 			orderByComparator);
@@ -137,7 +137,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @return the last matching ct auto resolution info
 	 * @throws NoSuchAutoResolutionInfoException if a matching ct auto resolution info could not be found
 	 */
-	public CTAutoResolutionInfo findByCTCollectionId_Last(
+	public CTAutoResolutionInfo findByCtCollectionId_Last(
 			long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CTAutoResolutionInfo> orderByComparator)
@@ -150,7 +150,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ct auto resolution info, or <code>null</code> if a matching ct auto resolution info could not be found
 	 */
-	public CTAutoResolutionInfo fetchByCTCollectionId_Last(
+	public CTAutoResolutionInfo fetchByCtCollectionId_Last(
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
 			orderByComparator);
@@ -164,7 +164,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @return the previous, current, and next ct auto resolution info
 	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
 	 */
-	public CTAutoResolutionInfo[] findByCTCollectionId_PrevAndNext(
+	public CTAutoResolutionInfo[] findByCtCollectionId_PrevAndNext(
 			long ctAutoResolutionInfoId, long ctCollectionId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CTAutoResolutionInfo> orderByComparator)
@@ -175,7 +175,7 @@ public interface CTAutoResolutionInfoPersistence
 	 *
 	 * @param ctCollectionId the ct collection ID
 	 */
-	public void removeByCTCollectionId(long ctCollectionId);
+	public void removeByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the number of ct auto resolution infos where ctCollectionId = &#63;.
@@ -183,7 +183,7 @@ public interface CTAutoResolutionInfoPersistence
 	 * @param ctCollectionId the ct collection ID
 	 * @return the number of matching ct auto resolution infos
 	 */
-	public int countByCTCollectionId(long ctCollectionId);
+	public int countByCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.

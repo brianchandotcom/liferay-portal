@@ -91,9 +91,9 @@ public class CTMessagePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
-	private FinderPath _finderPathCountByCTCollectionId;
+	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
+	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+	private FinderPath _finderPathCountByCtCollectionId;
 
 	/**
 	 * Returns all the ct messages where ctCollectionId = &#63;.
@@ -102,8 +102,8 @@ public class CTMessagePersistenceImpl
 	 * @return the matching ct messages
 	 */
 	@Override
-	public List<CTMessage> findByCTCollectionId(long ctCollectionId) {
-		return findByCTCollectionId(
+	public List<CTMessage> findByCtCollectionId(long ctCollectionId) {
+		return findByCtCollectionId(
 			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -120,10 +120,10 @@ public class CTMessagePersistenceImpl
 	 * @return the range of matching ct messages
 	 */
 	@Override
-	public List<CTMessage> findByCTCollectionId(
+	public List<CTMessage> findByCtCollectionId(
 		long ctCollectionId, int start, int end) {
 
-		return findByCTCollectionId(ctCollectionId, start, end, null);
+		return findByCtCollectionId(ctCollectionId, start, end, null);
 	}
 
 	/**
@@ -140,11 +140,11 @@ public class CTMessagePersistenceImpl
 	 * @return the ordered range of matching ct messages
 	 */
 	@Override
-	public List<CTMessage> findByCTCollectionId(
+	public List<CTMessage> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTMessage> orderByComparator) {
 
-		return findByCTCollectionId(
+		return findByCtCollectionId(
 			ctCollectionId, start, end, orderByComparator, true);
 	}
 
@@ -163,7 +163,7 @@ public class CTMessagePersistenceImpl
 	 * @return the ordered range of matching ct messages
 	 */
 	@Override
-	public List<CTMessage> findByCTCollectionId(
+	public List<CTMessage> findByCtCollectionId(
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTMessage> orderByComparator,
 		boolean useFinderCache) {
@@ -175,12 +175,12 @@ public class CTMessagePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+				finderPath = _finderPathWithoutPaginationFindByCtCollectionId;
 				finderArgs = new Object[] {ctCollectionId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCTCollectionId;
+			finderPath = _finderPathWithPaginationFindByCtCollectionId;
 			finderArgs = new Object[] {
 				ctCollectionId, start, end, orderByComparator
 			};
@@ -268,11 +268,11 @@ public class CTMessagePersistenceImpl
 	 * @throws NoSuchMessageException if a matching ct message could not be found
 	 */
 	@Override
-	public CTMessage findByCTCollectionId_First(
+	public CTMessage findByCtCollectionId_First(
 			long ctCollectionId, OrderByComparator<CTMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		CTMessage ctMessage = fetchByCTCollectionId_First(
+		CTMessage ctMessage = fetchByCtCollectionId_First(
 			ctCollectionId, orderByComparator);
 
 		if (ctMessage != null) {
@@ -299,10 +299,10 @@ public class CTMessagePersistenceImpl
 	 * @return the first matching ct message, or <code>null</code> if a matching ct message could not be found
 	 */
 	@Override
-	public CTMessage fetchByCTCollectionId_First(
+	public CTMessage fetchByCtCollectionId_First(
 		long ctCollectionId, OrderByComparator<CTMessage> orderByComparator) {
 
-		List<CTMessage> list = findByCTCollectionId(
+		List<CTMessage> list = findByCtCollectionId(
 			ctCollectionId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -321,11 +321,11 @@ public class CTMessagePersistenceImpl
 	 * @throws NoSuchMessageException if a matching ct message could not be found
 	 */
 	@Override
-	public CTMessage findByCTCollectionId_Last(
+	public CTMessage findByCtCollectionId_Last(
 			long ctCollectionId, OrderByComparator<CTMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		CTMessage ctMessage = fetchByCTCollectionId_Last(
+		CTMessage ctMessage = fetchByCtCollectionId_Last(
 			ctCollectionId, orderByComparator);
 
 		if (ctMessage != null) {
@@ -352,16 +352,16 @@ public class CTMessagePersistenceImpl
 	 * @return the last matching ct message, or <code>null</code> if a matching ct message could not be found
 	 */
 	@Override
-	public CTMessage fetchByCTCollectionId_Last(
+	public CTMessage fetchByCtCollectionId_Last(
 		long ctCollectionId, OrderByComparator<CTMessage> orderByComparator) {
 
-		int count = countByCTCollectionId(ctCollectionId);
+		int count = countByCtCollectionId(ctCollectionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTMessage> list = findByCTCollectionId(
+		List<CTMessage> list = findByCtCollectionId(
 			ctCollectionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -381,7 +381,7 @@ public class CTMessagePersistenceImpl
 	 * @throws NoSuchMessageException if a ct message with the primary key could not be found
 	 */
 	@Override
-	public CTMessage[] findByCTCollectionId_PrevAndNext(
+	public CTMessage[] findByCtCollectionId_PrevAndNext(
 			long ctMessageId, long ctCollectionId,
 			OrderByComparator<CTMessage> orderByComparator)
 		throws NoSuchMessageException {
@@ -395,12 +395,12 @@ public class CTMessagePersistenceImpl
 
 			CTMessage[] array = new CTMessageImpl[3];
 
-			array[0] = getByCTCollectionId_PrevAndNext(
+			array[0] = getByCtCollectionId_PrevAndNext(
 				session, ctMessage, ctCollectionId, orderByComparator, true);
 
 			array[1] = ctMessage;
 
-			array[2] = getByCTCollectionId_PrevAndNext(
+			array[2] = getByCtCollectionId_PrevAndNext(
 				session, ctMessage, ctCollectionId, orderByComparator, false);
 
 			return array;
@@ -413,7 +413,7 @@ public class CTMessagePersistenceImpl
 		}
 	}
 
-	protected CTMessage getByCTCollectionId_PrevAndNext(
+	protected CTMessage getByCtCollectionId_PrevAndNext(
 		Session session, CTMessage ctMessage, long ctCollectionId,
 		OrderByComparator<CTMessage> orderByComparator, boolean previous) {
 
@@ -527,9 +527,9 @@ public class CTMessagePersistenceImpl
 	 * @param ctCollectionId the ct collection ID
 	 */
 	@Override
-	public void removeByCTCollectionId(long ctCollectionId) {
+	public void removeByCtCollectionId(long ctCollectionId) {
 		for (CTMessage ctMessage :
-				findByCTCollectionId(
+				findByCtCollectionId(
 					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -544,8 +544,8 @@ public class CTMessagePersistenceImpl
 	 * @return the number of matching ct messages
 	 */
 	@Override
-	public int countByCTCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCTCollectionId;
+	public int countByCtCollectionId(long ctCollectionId) {
+		FinderPath finderPath = _finderPathCountByCtCollectionId;
 
 		Object[] finderArgs = new Object[] {ctCollectionId};
 
@@ -1093,21 +1093,21 @@ public class CTMessagePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
+		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
+		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathCountByCTCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
+		_finderPathCountByCtCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
 	}

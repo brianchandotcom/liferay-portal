@@ -51,13 +51,15 @@ const Validation = ({
 	validations,
 	visible,
 }) => {
+	const {focusedField} = useFormState();
+
 	const [
 		{enableValidation, errorMessage, parameter, selectedValidation},
 		dispatch,
 	] = useReducer(
 		reducer({
 			editingLanguageId,
-			fieldName: validation?.fieldName,
+			fieldName: validation?.fieldName ?? focusedField?.fieldName,
 			onChange,
 		}),
 		{

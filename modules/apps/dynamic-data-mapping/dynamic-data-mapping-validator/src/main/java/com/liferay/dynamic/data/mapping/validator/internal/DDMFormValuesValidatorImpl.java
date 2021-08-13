@@ -123,11 +123,17 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			return true;
 		}
 
+		DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
+			ddmFormFieldValidation.getDDMFormFieldValidationExpression();
+
+		if ((ddmFormFieldValidationExpression == null) ||
+			Validator.isNull(ddmFormFieldValidationExpression.getValue())) {
+
+			return true;
+		}
+
 		try {
 			DDMExpression<Boolean> ddmExpression = null;
-
-			DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
-				ddmFormFieldValidation.getDDMFormFieldValidationExpression();
 
 			if (ddmFormFieldValidation.getParameterLocalizedValue() != null) {
 				LocalizedValue parameterLocalizedValue =

@@ -51,6 +51,14 @@ public class ListTypeDefinitionLocalServiceWrapper
 			listTypeDefinition);
 	}
 
+	@Override
+	public com.liferay.list.type.model.ListTypeDefinition addListTypeDefinition(
+		long companyId, java.util.Map<java.util.Locale, String> labelMap) {
+
+		return _listTypeDefinitionLocalService.addListTypeDefinition(
+			companyId, labelMap);
+	}
+
 	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.
 	 *

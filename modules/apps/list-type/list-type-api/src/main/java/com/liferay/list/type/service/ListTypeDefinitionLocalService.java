@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -75,6 +77,9 @@ public interface ListTypeDefinitionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ListTypeDefinition addListTypeDefinition(
 		ListTypeDefinition listTypeDefinition);
+
+	public ListTypeDefinition addListTypeDefinition(
+		long companyId, Map<Locale, String> labelMap);
 
 	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.

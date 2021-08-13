@@ -50,6 +50,16 @@ public class ListTypeEntryLocalServiceWrapper
 		return _listTypeEntryLocalService.addListTypeEntry(listTypeEntry);
 	}
 
+	@Override
+	public com.liferay.list.type.model.ListTypeEntry addListTypeEntry(
+			long companyId, long listTypeDefinitionId,
+			java.util.Map<java.util.Locale, String> labelMap, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryLocalService.addListTypeEntry(
+			companyId, listTypeDefinitionId, labelMap, name);
+	}
+
 	/**
 	 * Creates a new list type entry with the primary key. Does not add the list type entry to the database.
 	 *
@@ -278,6 +288,14 @@ public class ListTypeEntryLocalServiceWrapper
 		return _listTypeEntryLocalService.getListTypeEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.list.type.model.ListTypeEntry>
+		getListTypeEntries(long listTypeDefinitionId) {
+
+		return _listTypeEntryLocalService.getListTypeEntries(
+			listTypeDefinitionId);
+	}
+
 	/**
 	 * Returns the number of list type entries.
 	 *
@@ -286,6 +304,12 @@ public class ListTypeEntryLocalServiceWrapper
 	@Override
 	public int getListTypeEntriesCount() {
 		return _listTypeEntryLocalService.getListTypeEntriesCount();
+	}
+
+	@Override
+	public int getListTypeEntriesCount(long listTypeDefinitionId) {
+		return _listTypeEntryLocalService.getListTypeEntriesCount(
+			listTypeDefinitionId);
 	}
 
 	/**

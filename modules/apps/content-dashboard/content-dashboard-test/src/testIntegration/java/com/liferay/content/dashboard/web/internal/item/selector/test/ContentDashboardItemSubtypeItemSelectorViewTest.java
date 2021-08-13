@@ -15,6 +15,7 @@
 package com.liferay.content.dashboard.web.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.content.dashboard.web.internal.item.test.utils.ContentDashboardTestUtils;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -22,8 +23,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -38,15 +37,12 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Map;
 
@@ -192,13 +188,15 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			new MockLiferayPortletRenderResponse());
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY,
+			ContentDashboardTestUtils.getThemeDisplay(_group.getGroupId()));
 
-		_withFFContentDashboardDocumentConfigurationEnabled(
-			() -> _contentDashboardItemSubtypeItemSelectorView.renderHTML(
-				mockHttpServletRequest, new MockHttpServletResponse(), null,
-				new MockLiferayPortletURL(), RandomTestUtil.randomString(),
-				true));
+		ContentDashboardTestUtils.
+			withFFContentDashboardDocumentConfigurationEnabled(
+				() -> _contentDashboardItemSubtypeItemSelectorView.renderHTML(
+					mockHttpServletRequest, new MockHttpServletResponse(), null,
+					new MockLiferayPortletURL(), RandomTestUtil.randomString(),
+					true));
 
 		Object contentDashboardItemSubtypeItemSelectorViewDisplayContext =
 			mockHttpServletRequest.getAttribute(
@@ -209,34 +207,6 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 		return ReflectionTestUtil.invoke(
 			contentDashboardItemSubtypeItemSelectorViewDisplayContext,
 			"getData", new Class<?>[0], null);
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-
-		return themeDisplay;
-	}
-
-	private void _withFFContentDashboardDocumentConfigurationEnabled(
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.content.dashboard.web.internal." +
-						"configuration.FFContentDashboardDocumentConfiguration",
-					dictionary)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	@Inject(

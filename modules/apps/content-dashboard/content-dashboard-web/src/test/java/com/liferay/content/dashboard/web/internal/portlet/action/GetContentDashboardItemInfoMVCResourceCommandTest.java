@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.BrowserSnifferImpl;
@@ -104,6 +105,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"className", infoItemReference.getClassName());
 		mockLiferayResourceRequest.addParameter(
 			"classPK", String.valueOf(infoItemReference.getClassPK()));
+
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
@@ -153,14 +155,21 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItemSubtype.getLabel(LocaleUtil.US),
 			jsonObject.getString("subType"));
 
+		Portal portal = PortalUtil.getPortal();
+
+		JSONObject getSpecificInformationJSONObject =
+			contentDashboardItem.getSpecificInformationJSONObject(
+				"backURL",
+				portal.getLiferayPortletResponse(mockLiferayResourceResponse),
+				LocaleUtil.US,
+				(ThemeDisplay)mockLiferayResourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY));
+
 		Assert.assertEquals(
-			contentDashboardItem
-				.getSpecificInformationJSONObject("backURL",
-					PortalUtil.getPortal().getLiferayPortletResponse(mockLiferayResourceResponse),
-					Locale.US,
-					(ThemeDisplay)mockLiferayResourceRequest.getAttribute(
-						WebKeys.THEME_DISPLAY)).toString(),
-			jsonObject.getJSONObject("specificFields").toString());
+			getSpecificInformationJSONObject.toString(),
+			jsonObject.getJSONObject(
+				"specificFields"
+			).toString());
 
 		List<ContentDashboardItem.Version> versions =
 			contentDashboardItem.getVersions(LocaleUtil.US);
@@ -305,15 +314,27 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				String backURL, LiferayPortletResponse liferayPortletResponse,
 				Locale locale, ThemeDisplay themeDisplay) {
 
-				return new JSONObjectImpl()
-					.put("description", "My very important description")
-					.put("downloadURL", "www.download.url.com/download")
-					.put("extension", ".pdf")
-					.put("fileName", "MyDocument")
-					.put("previewImageURL", "www.previewImage.url.com/previewImage")
-					.put("previewURL", "www.previewURL.url.com/previewURL")
-					.put("size", "5")
-					.put("viewURL", "www.viewURL.url.com/viewURL");
+				final JSONObject jsonObject = new JSONObjectImpl();
+
+				jsonObject.put(
+					"description", "My very important description"
+				).put(
+					"downloadURL", "www.download.url.com/download"
+				).put(
+					"extension", ".pdf"
+				).put(
+					"fileName", "MyDocument"
+				).put(
+					"previewImageURL", "www.previewImage.url.com/previewImage"
+				).put(
+					"previewURL", "www.previewURL.url.com/previewURL"
+				).put(
+					"size", "5"
+				).put(
+					"viewURL", "www.viewURL.url.com/viewURL"
+				);
+
+				return jsonObject;
 			}
 
 			@Override

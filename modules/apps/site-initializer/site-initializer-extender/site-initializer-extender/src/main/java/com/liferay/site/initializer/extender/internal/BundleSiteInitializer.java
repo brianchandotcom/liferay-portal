@@ -22,6 +22,8 @@ import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -58,9 +60,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -79,6 +83,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Bundle bundle, DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
@@ -92,6 +97,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
@@ -150,7 +156,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
-			_addDocuments(serviceContext);
+			_addDocuments(null, null, serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
@@ -222,9 +228,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDocuments(ServiceContext serviceContext) throws Exception {
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/documents");
+	private void _addDocuments(Long documentFolderId, String path, ServiceContext serviceContext) throws Exception {
+		Set<String> resourcePaths = null; //TODO change null for empty set
+
+		if (path != null) {
+			resourcePaths = _servletContext.getResourcePaths(
+				path);
+		} else {
+			resourcePaths = _servletContext.getResourcePaths(
+				"/site-initializer/documents");
+		}
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -239,8 +252,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
+				long documentInternalFolderId = _addDocumentFolder(documentFolderId, groupId, resourcePath, user);
 
-				// TODO Recurse
+				_addDocuments(documentInternalFolderId, groupId, resourcePath, user);
 
 				continue;
 			}
@@ -263,17 +277,63 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 
-			documentResource.postSiteDocument(
-				serviceContext.getScopeGroupId(),
-				MultipartBody.of(
-					Collections.singletonMap(
-						"file",
-						new BinaryFile(
-							MimeTypesUtil.getContentType(fileName), fileName,
-							urlConnection.getInputStream(),
-							urlConnection.getContentLength())),
-					null, values));
+			if (documentFolderId != null){
+				documentResource.postDocumentFolderDocument(
+					documentFolderId,
+					MultipartBody.of(
+						Collections.singletonMap(
+							"file",
+							new BinaryFile(
+								MimeTypesUtil.getContentType(fileName), fileName,
+								urlConnection.getInputStream(),
+								urlConnection.getContentLength())),
+						null, values));
+			} else {
+				documentResource.postSiteDocument(
+					serviceContext.getScopeGroupId(),
+					MultipartBody.of(
+						Collections.singletonMap(
+							"file",
+							new BinaryFile(
+								MimeTypesUtil.getContentType(fileName), fileName,
+								urlConnection.getInputStream(),
+								urlConnection.getContentLength())),
+						null, values));
+			}
 		}
+	}
+
+	private Long _addDocumentFolder(Long documentFolderId, long groupId, String resourcePath, User user) throws Exception {
+		DocumentFolderResource.Builder documentFolderResourceBuilder =
+			_documentFolderResourceFactory.create();
+
+		DocumentFolderResource documentFolderResource = documentFolderResourceBuilder.user(
+			user
+		).build();
+
+		//TODO Improve
+		String[] folderNameList = StringUtil.split(resourcePath,"/");
+		String folderName = folderNameList[folderNameList.length - 1];
+
+		String json = _read(folderName + "._si.json");
+
+		DocumentFolder documentFolder = null;
+
+		if(json != null){
+			documentFolder = DocumentFolder.toDTO(json);
+		} else {
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
+			jsonObject.put("name",folderName);
+			documentFolder = DocumentFolder.toDTO(jsonObject.toString());
+		}
+
+		if (documentFolderId != null) {
+			documentFolder = documentFolderResource.postDocumentFolderDocumentFolder(documentFolderId, documentFolder);
+		} else {
+			documentFolder = documentFolderResource.postSiteDocumentFolder(groupId, documentFolder);
+		}
+
+		return documentFolder.getId();
 	}
 
 	private void _addFragmentEntries(ServiceContext serviceContext)
@@ -432,6 +492,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;

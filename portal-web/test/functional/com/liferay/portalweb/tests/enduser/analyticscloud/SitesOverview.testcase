@@ -25,6 +25,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -44,12 +47,27 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8260 | Test Summary: Site report page returns all cards filled out according to the site selected in the Site dropdown field"
-	@ignore = "true"
 	@priority = "5"
 	test SiteReportPageReturnsAllCardsFilledAccordingSiteSelected {
+		ACUtils.addSiteAndPage();
 
-		// TODO LRAC-8260 SiteReportPageReturnsAllCardsFilledAccordingSiteSelected pending implementation
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		for (var cardTitle : list "${propertyName} Activities,Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology,Cohort Analysis") {
+			ACCards.viewCards(cardTitle = "${cardTitle}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Sites Report page has an empty state If no data source is connect"

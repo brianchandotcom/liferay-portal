@@ -57,6 +57,10 @@
 				name="active"
 				value='<%= LanguageUtil.get(request, curCompany.isActive() ? "yes" : "no") %>'
 			/>
+
+			<liferay-ui:search-container-column-jsp
+				path="/actions.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

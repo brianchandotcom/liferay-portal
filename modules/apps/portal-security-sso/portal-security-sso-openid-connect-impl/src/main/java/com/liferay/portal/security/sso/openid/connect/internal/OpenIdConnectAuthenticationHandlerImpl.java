@@ -165,7 +165,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		}
 
 		Nonce nonce = new Nonce();
-
 		State state = new State();
 
 		URI authenticationRequestURI = _getAuthenticationRequestURI(

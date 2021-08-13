@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.list.type.model.ListTypeDefinition">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="listTypeDefinitionId" type="long" />
+		<field name="companyId" type="long" />
+		<field localized="true" name="label" type="String" />
+	</model>
+	<model name="com.liferay.list.type.model.ListTypeEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="listTypeEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="listTypeDefinitionId" type="long" />
+		<field localized="true" name="label" type="String" />
+		<field name="name" type="String" />
+		<field name="type" type="String" />
+	</model>
+</model-hints>

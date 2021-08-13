@@ -14,10 +14,18 @@
 
 package com.liferay.list.type.service.impl;
 
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Albuquerque
@@ -28,4 +36,28 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ListTypeDefinitionLocalServiceImpl
 	extends ListTypeDefinitionLocalServiceBaseImpl {
+
+	@Override
+	public ListTypeDefinition addListTypeDefinition(
+			long userId, Map<Locale, String> nameMap)
+		throws PortalException {
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionPersistence.create(
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		listTypeDefinition.setCompanyId(user.getCompanyId());
+		listTypeDefinition.setUserId(user.getUserId());
+		listTypeDefinition.setUserName(user.getFullName());
+
+		listTypeDefinition.setNameMap(nameMap);
+
+		return listTypeDefinitionPersistence.update(listTypeDefinition);
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

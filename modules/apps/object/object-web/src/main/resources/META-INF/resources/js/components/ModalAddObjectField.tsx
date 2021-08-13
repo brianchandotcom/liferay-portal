@@ -20,14 +20,6 @@ import React, {useEffect, useState} from 'react';
 
 import RequiredMask from './RequiredMask';
 
-interface IAddObjectFieldRequest {
-	indexed: boolean;
-	indexedAsKeyword: boolean;
-	name: string;
-	required: boolean;
-	type: TObjectFieldType;
-}
-
 interface IErrorFeedback extends React.HTMLAttributes<HTMLElement> {
 	description: string;
 	spritemap: string;
@@ -40,6 +32,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 
 const objectFieldTypes = [
 	'BigDecimal',
+	'Blob',
 	'Boolean',
 	'Date',
 	'Double',
@@ -48,14 +41,10 @@ const objectFieldTypes = [
 	'String',
 ];
 
-type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<
-	infer ElementType
->
-	? ElementType
-	: never;
-type TObjectFieldType = ElementType<typeof objectFieldTypes>;
-
-type THandleFormStateFn = (key: string, value: boolean | string) => void;
+type THandleFormStateFn = (
+	key: string,
+	value: boolean | string
+) => void;
 
 type TFormState = {
 	name: string;
@@ -95,12 +84,13 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 		Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
-				indexed: true,
-				indexedAsKeyword: true,
+				indexed: false,
+				indexedAsKeyword: false,
+				indexedLanguageId: null,
 				name,
 				required,
 				type,
-			} as IAddObjectFieldRequest),
+			}),
 			headers: new Headers({
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -147,6 +137,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 					<ClayModal.Header>
 						{Liferay.Language.get('new-field')}
 					</ClayModal.Header>
+
 					<ClayModal.Body>
 						<ClayForm.Group
 							className={classNames({
@@ -224,6 +215,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 							toggled={formState.required}
 						/>
 					</ClayModal.Body>
+
 					<ClayModal.Footer
 						last={
 							<ClayButton.Group key={1} spaced>

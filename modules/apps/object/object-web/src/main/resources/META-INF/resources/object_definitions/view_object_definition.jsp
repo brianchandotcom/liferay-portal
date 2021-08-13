@@ -97,9 +97,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				}
 				else if (response.ok) {
 					Liferay.Util.openToast({
-						message: Liferay.Language.get(
-							'the-object-was-published-successfully'
-						),
+						message:
+							'<%= LanguageUtil.get(request, "the-object-was-published-successfully") %>',
 						type: 'success',
 					});
 

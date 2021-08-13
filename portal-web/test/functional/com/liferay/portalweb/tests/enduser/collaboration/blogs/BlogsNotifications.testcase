@@ -22,6 +22,21 @@ definition {
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
 		Navigator.gotoPage(pageName = "Blogs Page");
 	}
 
@@ -62,16 +77,6 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -99,17 +104,6 @@ definition {
 	test CanViewEmailNotificationsAfterAddingAndUpdatingEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUserToSite(
 			groupName = "Guest",

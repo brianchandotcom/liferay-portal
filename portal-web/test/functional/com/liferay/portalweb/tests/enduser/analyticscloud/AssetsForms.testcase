@@ -64,12 +64,54 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
-	@ignore = "true"
 	@priority = "5"
 	test CanFormsListSearchable {
+		ACUtils.addSiteAndPage(layoutName = "AC Page 1");
 
-		// TODO LRAC-8417 CanFormsListSearchable
+		ACUtils.createFormAndAddToPage(
+			formACTitle = "Created Form Name 1",
+			layoutName = "AC Page 1");
 
+		Refresh();
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		for (var pageName : list "AC Page,AC Page 1") {
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Forms");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		for (var formName : list "Created Form Name,Created Form Name 1") {
+			ACUtils.searchBar(searchItem = "${formName}");
+
+			ACAssets.viewAssets(assetName = "${formName}");
+		}
+
+		ACUtils.searchBar(searchItem = "Should not be here");
+
+		AssertTextEquals(
+			key_noResultMessage = "There are no Forms found.",
+			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
+			value1 = "There are no Forms found.");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8121 | Test Summary: Assert clicking a form in the forms list navigates to the form overview page"

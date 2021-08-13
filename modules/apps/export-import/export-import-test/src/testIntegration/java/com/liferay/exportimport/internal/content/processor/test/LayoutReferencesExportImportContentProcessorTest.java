@@ -24,10 +24,12 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -105,6 +108,32 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testPrivateVirtualHostLayoutFriendlyURLFormatModifiedWhenNecessary()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, true);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, true) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup);
+
+		Assert.assertEquals(
+			_getCompanyHostPortalURL(importGroup) +
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+					importGroup.getFriendlyURL() +
+						exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
 	public void testPrivateVirtualHostLayoutFriendlyURLFormatPreservedWhenPossible()
 		throws Exception {
 
@@ -130,6 +159,32 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testPublicVirtualHostLayoutFriendlyURLFormatModifiedWhenNecessary()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup);
+
+		Assert.assertEquals(
+			_getCompanyHostPortalURL(importGroup) +
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+					importGroup.getFriendlyURL() +
+						exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
 	public void testPublicVirtualHostLayoutFriendlyURLFormatPreservedWhenPossible()
 		throws Exception {
 
@@ -151,6 +206,28 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
 				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testRelativeLayoutFriendlyURLFormatModifiedWhenNecessary()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport = exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup);
+
+		Assert.assertEquals(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				importGroup.getFriendlyURL() + exportLayout.getFriendlyURL(),
 			actualImportedURL);
 	}
 
@@ -238,6 +315,14 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			importedContent.length() - _CONTENT_POSTFIX.length());
 	}
 
+	private String _getCompanyHostPortalURL(Group group) throws Exception {
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		return _portal.getPortalURL(
+			company.getVirtualHostname(), _portal.getPortalServerPort(false),
+			false);
+	}
+
 	private String _getGroupVirtualHostPortalURL(
 		Group group, boolean privateLayout) {
 
@@ -265,6 +350,9 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	private static ServiceTracker
 		<ExportImportContentProcessor<String>,
 		 ExportImportContentProcessor<String>> _serviceTracker;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private ExportImportContentProcessor<String>
 		_layoutReferencesExportImportContentProcessor;

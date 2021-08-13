@@ -150,8 +150,6 @@ public class SynchronousDestinationTestRule
 				"liferay/subscription_status");
 			Filter ddmStructureReindexFilter = _registerDestinationFilter(
 				"liferay/ddm_structure_reindex");
-			Filter kaleoGraphWalkerFilter = _registerDestinationFilter(
-				"liferay/kaleo_graph_walker");
 			Filter mailFilter = _registerDestinationFilter(
 				DestinationNames.MAIL);
 			Filter pdfProcessorFilter = _registerDestinationFilter(
@@ -173,10 +171,9 @@ public class SynchronousDestinationTestRule
 				commerceOrderFilter, commercePaymentFilter,
 				commerceShipmentFilter, commerceStockFilter,
 				commerceSubscriptionFilter, ddmStructureReindexFilter,
-				kaleoGraphWalkerFilter, mailFilter, pdfProcessorFilter,
-				rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
-				subscrpitionSenderFilter, tensorflowModelDownloadFilter,
-				videoProcessorFilter);
+				mailFilter, pdfProcessorFilter, rawMetaDataProcessorFilter,
+				segmentsEntryReindexFilter, subscrpitionSenderFilter,
+				tensorflowModelDownloadFilter, videoProcessorFilter);
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -205,7 +202,6 @@ public class SynchronousDestinationTestRule
 			replaceDestination("liferay/adaptive_media_processor");
 			replaceDestination("liferay/asset_auto_tagger");
 			replaceDestination("liferay/ddm_structure_reindex");
-			replaceDestination("liferay/kaleo_graph_walker");
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
 			replaceDestination("liferay/segments_entry_reindex");

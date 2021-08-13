@@ -61,7 +61,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8516 | Test Summary: Assert Sites Page Overview time filter to Custom Filter"
 	@priority = "5"
-	test CanTimeFilterUseCustomRangeInPageOverview {
+	test TimeFilterByCustomRangeInPagesOverview {
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

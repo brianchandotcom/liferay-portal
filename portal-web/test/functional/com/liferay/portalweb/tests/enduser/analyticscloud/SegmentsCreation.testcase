@@ -296,7 +296,7 @@ definition {
 			value1 = "DYNAMIC SEGMENT");
 
 		AssertElementPresent(
-			key_userName = "ac ac",
+			key_userName = "userfn userln",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 

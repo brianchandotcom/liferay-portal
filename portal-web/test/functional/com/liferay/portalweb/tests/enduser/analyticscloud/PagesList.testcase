@@ -8,17 +8,23 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 
-		ACUtils.addSiteAndPage();
+		task ("Add a new site and add a blog in this site") {
+			ACUtils.addSiteAndPage();
 
-		ACUtils.createBlogsAndAddToPage();
+			ACUtils.createBlogsAndAddToPage();
+		}
 	}
 
 	tearDown {
@@ -37,12 +43,79 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8336 | Test Summary: Search for a Page in Pages list"
-	@ignore = "true"
 	@priority = "5"
 	test CanSearchPageInPagesList {
+		task ("Add pages") {
+			for (var layoutName : list "AC Page 2,AC Page 3") {
+				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+			}
+		}
 
-		// TODO LRAC-8336 CanSearchPageInPagesList
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to sites pages tab") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Choose Last 24 Hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Search the Pages") {
+			ACUtils.searchBar(searchItem = "AC Page");
+
+			for (var assetName : list "AC Page - Site Name - Liferay DXP,AC Page 2 - Site Name - Liferay DXP,AC Page 3 - Site Name - Liferay DXP") {
+				ACAssets.viewAssets(assetName = "${assetName}");
+			}
+
+			ACUtils.searchBar(searchItem = "2");
+
+			ACAssets.viewAssets(assetName = "AC Page 2 - Site Name - Liferay DXP");
+
+			ACUtils.searchBar(searchItem = "3");
+
+			ACAssets.viewAssets(assetName = "AC Page 3 - Site Name - Liferay DXP");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"

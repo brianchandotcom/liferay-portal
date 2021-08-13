@@ -14,13 +14,16 @@
 
 package com.liferay.on.demand.admin.internal.manager;
 
+import com.liferay.on.demand.admin.constants.OnDemandAdminConstants;
 import com.liferay.on.demand.admin.manager.OnDemandAdminManager;
 import com.liferay.on.demand.admin.ticket.generator.OnDemandAdminTicketGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +50,18 @@ public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 		sb.append(ticket.getKey());
 
 		return sb.toString();
+	}
+
+	public boolean isOnDemandAdminUser(User user) {
+		if ((user != null) &&
+			StringUtil.startsWith(
+				user.getScreenName(),
+				OnDemandAdminConstants.ON_DEMAND_ADMIN_SCREEN_NAME_PREFIX)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

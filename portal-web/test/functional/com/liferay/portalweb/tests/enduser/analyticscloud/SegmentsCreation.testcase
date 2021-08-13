@@ -60,12 +60,112 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8483 | Test Summary: Add members from different pages"
-	@ignore = "true"
 	@priority = "3"
 	test CanAddMembersFromDifferentPages {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8483 CanAddMembersFromDifferentPages
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "userea,user1,user2,user3,user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View members of segment") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			for (var username : list "user1 user1,userfn userln") {
+				AssertVisible(
+					key_userName = "${username}",
+					locator1 = "ACSegments#SEGMENT_MEMBERS");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8476 | Test Summary: Cancel Creating a Dynamic Segment"

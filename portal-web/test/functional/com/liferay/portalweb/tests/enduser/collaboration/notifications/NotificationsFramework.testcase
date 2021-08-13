@@ -64,7 +64,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteNotifications {
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Navigator.gotoPage(pageName = "Site Page");
 
 		Blogs.subscribePG();
 
@@ -106,10 +106,69 @@ definition {
 		Notifications.viewNoNotifications(activePanel = "Notifications");
 	}
 
+	@priority = "5"
+	@refactordone
+	test CanFilterByReadAndUnread {
+		Navigator.gotoPage(pageName = "Site Page");
+
+		MessageboardsPortlet.subscribePG();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		for (var threadCount : list "1,2") {
+			JSONMBMessage.addMessage(
+				addGuestPermissions = "true",
+				groupName = "Guest",
+				threadBody = "MB Thread Message Body${threadCount}",
+				threadSubject = "MB Thread Message Subject${threadCount}",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.goToFilterValues(filterValues = "Read");
+
+		Notifications.viewDefaultContent();
+
+		Notifications.goToFilterValues(filterValues = "Unread");
+
+		for (var threadCount : list "1,2") {
+			Notifications.viewNewContent(
+				assetType = "message boards message",
+				contentBody = "MB Thread Message Subject${threadCount}",
+				user = "userfn userln");
+		}
+
+		NotificationsPortlet.configureNotificationPG(menuItem = "Mark All Notifications as Read");
+
+		Notifications.viewDefaultContent();
+
+		Notifications.viewNoNotifications(activePanel = "Notifications");
+
+		Navigator.gotoNotifications();
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Icon#MARK_AS_UNREAD");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanMarkAllNotificationsAsRead {
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Navigator.gotoPage(pageName = "Site Page");
 
 		Blogs.subscribePG();
 
@@ -147,7 +206,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewMultipleNotifications {
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Navigator.gotoPage(pageName = "Site Page");
 
 		Blogs.subscribePG();
 
@@ -208,6 +267,203 @@ definition {
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
 			notificationCount = "0");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewWebsiteNotificationForNewThreadInCategory {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONMBMessage.addMessage(
+			addGuestPermissions = "true",
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "MB Thread Message Subject",
+			user = "userfn userln");
+
+		Notifications.navigateToContent(contentBody = "MB Thread Message Subject");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "userfn userln");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewWebsiteNotificationForUpdatedThreadInCategory {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
+
+		JSONMBMessage.addMessage(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		MessageboardsThread.editPG(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject",
+			threadSubjectEdit = "MB Thread Message Subject Edit");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "MB Thread Message Subject Edit");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject Edit");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	@refactordone
+	test NoNoWebsiteNotificationAppearsForNewThreadInCategory {
+		Navigator.gotoNotifications();
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		NotificationsPortlet.disableUserDeliveries(
+			actionType = "Adds",
+			contentType = "Message Boards",
+			notificationType = "Website");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		MessageboardsThread.addPG(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
+	@priority = "4"
+	@refactordone
+	test NoWebsiteNotificationAppearsForUpdatedThreadInCategory {
+		Navigator.gotoNotifications();
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		NotificationsPortlet.disableUserDeliveries(
+			actionType = "Updates",
+			contentType = "Message Boards",
+			notificationType = "Website");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
+
+		JSONMBMessage.addMessage(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		MessageboardsThread.editPG(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject",
+			threadSubjectEdit = "MB Thread Message Subject Edit");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
 	}
 
 }

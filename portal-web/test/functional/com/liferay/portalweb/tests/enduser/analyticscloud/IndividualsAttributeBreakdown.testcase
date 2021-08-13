@@ -1,0 +1,57 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+    property analytics.cloud.enabled = "true";
+    property minimum.slave.ram = "32";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Analytics Cloud";
+
+    setUp {
+        ACUtils.launchAC();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+        TestCase.setUpPortalInstance();
+
+        ACUtils.launchDXP();
+
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ACUtils.tearDownDXP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+
+        ACUtils.tearDownAC();
+    }
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8657 | Test Summary: Add a new breakdown by an attribute and assert that correct results appear"
+    @ignore = "true"
+    @priority = "5"
+    test AddNewBreakdownByAttributeAndAssertCorrectResultsAppear {
+
+        // TODO LRAC-8657 AddNewBreakdownByAttributeAndAssertCorrectResultsAppear pending implementation
+
+    }
+
+
+	
+
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8658 | Test Summary: Delete a new breakdown"
+    @ignore = "true"
+    @priority = "5"
+    test DeleteNewBreakdown {
+
+        // TODO LRAC-8658 DeleteNewBreakdown pending implementation
+
+    }
+
+
+
+}

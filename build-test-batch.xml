@@ -3628,10 +3628,6 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="modules-integration-aws-test-jdk8">
-		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.propertiess">
-
-dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
-
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<tstamp>
@@ -3646,6 +3642,8 @@ dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
 
 		<trycatch>
 			<try>
+				<property name="aws.store.enabled" value="true" />
+
 				<run-modules-integration-test
 					database.type="mysql"
 					database.version="5.7" />

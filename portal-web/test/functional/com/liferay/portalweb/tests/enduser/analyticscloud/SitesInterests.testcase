@@ -15,6 +15,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -48,12 +50,71 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8283 | Test Summary: Site overview interests card shows what the top interests are"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsSitesTopInterests {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8283 ShowsSitesTopInterests
+		task ("Add specific pages and web contents to Site as interest topics") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
+			for (var layoutName : list "Sports,Technology,Science") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${layoutName}");
+
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content AC Title ${layoutName}");
+			}
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "Sports,Technology,Science") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("View Interests card with top interests") {
+			ACNavigation.goToSites();
+
+			ACCards.viewCards(cardTitle = "Interests");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Interests");
+
+			ACTimeFilter.setLast24Hours();
+
+			for (var interests : list "liferay dxp,site,sports,science,technology") {
+				ACInterests.viewInterests(interestName = "${interests}");
+			}
+		}
 	}
 
 }

@@ -23,7 +23,7 @@
 						localized="true"
 					</#if>
 
-					name="${entityColumn.name}" type="${entityColumn.type}"
+					name="${entityColumn.methodName}" type="${entityColumn.type}"
 
 					<#assign closeField = false />
 

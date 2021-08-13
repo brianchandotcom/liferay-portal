@@ -463,6 +463,8 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
 
 			ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, liveGroup);
+
+			ActionUtil.updateWorkflowDefinitionLinks(actionRequest, liveGroup);
 		}
 		else if (creationType.equals(
 					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {

@@ -309,15 +309,6 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
-	@ignore = "true"
-	@priority = "5"
-	test CanCreateSegmentFormValidation {
-
-		// TODO LRAC-8484 CanCreateSegmentFormValidation
-
-	}
-
 	@description = "Create a segment that contains anonymous individuals"
 	@priority = "5"
 	test CanCreateSegmentWithAnonymousIndividuals {
@@ -604,6 +595,14 @@ definition {
 	test CreateDynamicIndividualsSegmentWithCriteriaUsesBooleanAndDoesNotContain {
 
 		// TODO LRAC-8481 CreateDynamicIndividualsSegmentWithCriteriaUsesBooleanAndDoesNotContain
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
+	@priority = "5"
+	test ViewSegmentFormValidation {
+
+		// TODO LRAC-8484 CanCreateSegmentFormValidation
 
 	}
 

@@ -14,8 +14,12 @@
 
 package com.liferay.list.type.service.impl;
 
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,4 +32,19 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ListTypeDefinitionLocalServiceImpl
 	extends ListTypeDefinitionLocalServiceBaseImpl {
+
+	@Override
+	public ListTypeDefinition addListTypeDefinition(
+		long companyId, Map<Locale, String> labelMap) {
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionPersistence.create(
+				counterLocalService.increment());
+
+		listTypeDefinition.setCompanyId(companyId);
+		listTypeDefinition.setLabelMap(labelMap);
+
+		return listTypeDefinitionPersistence.update(listTypeDefinition);
+	}
+
 }

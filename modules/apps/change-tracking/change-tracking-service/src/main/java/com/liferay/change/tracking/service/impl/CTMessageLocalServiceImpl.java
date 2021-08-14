@@ -53,7 +53,7 @@ public class CTMessageLocalServiceImpl extends CTMessageLocalServiceBaseImpl {
 
 	@Override
 	public List<Message> getMessages(long ctCollectionId) {
-		List<CTMessage> ctMessages = ctMessagePersistence.findByCTCollectionId(
+		List<CTMessage> ctMessages = ctMessagePersistence.findByCtCollectionId(
 			ctCollectionId);
 
 		if (ctMessages.isEmpty()) {

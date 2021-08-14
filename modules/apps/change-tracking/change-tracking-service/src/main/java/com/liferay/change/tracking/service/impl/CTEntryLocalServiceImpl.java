@@ -119,7 +119,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		return ctEntryPersistence.findByCTCollectionId(
+		return ctEntryPersistence.findByCtCollectionId(
 			ctCollectionId, start, end, orderByComparator);
 	}
 
@@ -129,7 +129,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			return 0;
 		}
 
-		return ctEntryPersistence.countByCTCollectionId(ctCollectionId);
+		return ctEntryPersistence.countByCtCollectionId(ctCollectionId);
 	}
 
 	@Override

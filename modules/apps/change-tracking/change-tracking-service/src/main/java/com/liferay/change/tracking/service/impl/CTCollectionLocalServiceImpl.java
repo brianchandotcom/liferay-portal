@@ -149,7 +149,7 @@ public class CTCollectionLocalServiceImpl
 
 		Map<Long, List<ConflictInfo>> conflictInfoMap = new HashMap<>();
 
-		List<CTEntry> ctEntries = ctEntryPersistence.findByCTCollectionId(
+		List<CTEntry> ctEntries = ctEntryPersistence.findByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
 		Map<Long, CTConflictChecker<?>> ctConflictCheckers = new HashMap<>();
@@ -204,7 +204,7 @@ public class CTCollectionLocalServiceImpl
 		// Exclude created CTAutoResolutionInfos
 
 		List<CTAutoResolutionInfo> ctAutoResolutionInfos =
-			_ctAutoResolutionInfoPersistence.findByCTCollectionId(
+			_ctAutoResolutionInfoPersistence.findByCtCollectionId(
 				ctCollection.getCtCollectionId());
 
 		for (Map.Entry<Long, List<ConflictInfo>> entry :
@@ -354,7 +354,7 @@ public class CTCollectionLocalServiceImpl
 			throw new SystemException(exception);
 		}
 
-		List<CTEntry> ctEntries = ctEntryPersistence.findByCTCollectionId(
+		List<CTEntry> ctEntries = ctEntryPersistence.findByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
 		Set<Long> modelClassNameIds = new HashSet<>();
@@ -398,23 +398,23 @@ public class CTCollectionLocalServiceImpl
 				});
 		}
 
-		_ctAutoResolutionInfoPersistence.removeByCTCollectionId(
+		_ctAutoResolutionInfoPersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
-		ctCommentPersistence.removeByCTCollectionId(
+		ctCommentPersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
 		for (CTEntry ctEntry : ctEntries) {
 			ctEntryPersistence.remove(ctEntry);
 		}
 
-		ctMessagePersistence.removeByCTCollectionId(
+		ctMessagePersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
 		_ctPreferencesLocalService.resetCTPreferences(
 			ctCollection.getCtCollectionId());
 
-		List<CTProcess> ctProcesses = ctProcessPersistence.findByCollectionId(
+		List<CTProcess> ctProcesses = ctProcessPersistence.findByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
 		for (CTProcess ctProcess : ctProcesses) {
@@ -667,7 +667,7 @@ public class CTCollectionLocalServiceImpl
 		ctPreferencesPersistence.update(ctPreferences);
 
 		List<CTEntry> publishedCTEntries =
-			ctEntryPersistence.findByCTCollectionId(
+			ctEntryPersistence.findByCtCollectionId(
 				undoCTCollection.getCtCollectionId());
 
 		Map<Long, CTServiceCopier<?>> ctServiceCopiers = new HashMap<>();

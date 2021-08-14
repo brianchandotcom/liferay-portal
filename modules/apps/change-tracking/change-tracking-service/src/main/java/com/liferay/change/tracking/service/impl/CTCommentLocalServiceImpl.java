@@ -75,7 +75,7 @@ public class CTCommentLocalServiceImpl extends CTCommentLocalServiceBaseImpl {
 		Map<Long, List<CTComment>> collectionCommentsMap = new HashMap<>();
 
 		for (CTComment ctComment :
-				ctCommentPersistence.findByCTCollectionId(ctCollectionId)) {
+				ctCommentPersistence.findByCtCollectionId(ctCollectionId)) {
 
 			List<CTComment> ctComments = collectionCommentsMap.computeIfAbsent(
 				ctComment.getCtEntryId(), key -> new ArrayList<>());
@@ -88,7 +88,7 @@ public class CTCommentLocalServiceImpl extends CTCommentLocalServiceBaseImpl {
 
 	@Override
 	public List<CTComment> getCTEntryCTComments(long ctEntryId) {
-		return ctCommentPersistence.findByCTEntryId(ctEntryId);
+		return ctCommentPersistence.findByCtEntryId(ctEntryId);
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class CTPreferencesLocalServiceImpl
 	@Override
 	public void resetCTPreferences(long ctCollectionId) {
 		for (CTPreferences ctPreferences :
-				ctPreferencesPersistence.findByCollectionId(ctCollectionId)) {
+				ctPreferencesPersistence.findByCtCollectionId(ctCollectionId)) {
 
 			ctPreferences.setCtCollectionId(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION);
@@ -81,7 +81,7 @@ public class CTPreferencesLocalServiceImpl
 		}
 
 		for (CTPreferences ctPreferences :
-				ctPreferencesPersistence.findByPreviousCollectionId(
+				ctPreferencesPersistence.findByPreviousCtCollectionId(
 					ctCollectionId)) {
 
 			ctPreferences.setPreviousCtCollectionId(

@@ -134,7 +134,7 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Override
 	public List<CTProcess> getCTProcesses(long ctCollectionId) {
-		return ctProcessPersistence.findByCollectionId(ctCollectionId);
+		return ctProcessPersistence.findByCtCollectionId(ctCollectionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

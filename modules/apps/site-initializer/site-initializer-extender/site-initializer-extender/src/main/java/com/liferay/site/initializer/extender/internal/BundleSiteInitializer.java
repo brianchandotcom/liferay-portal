@@ -38,6 +38,8 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
+import java.io.InputStream;
+
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -266,8 +268,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private String _read(String resourcePath) throws Exception {
-		return StringUtil.read(
-			_servletContext.getResourceAsStream(resourcePath));
+		InputStream inputStream = _servletContext.getResourceAsStream(
+			resourcePath);
+
+		if (inputStream == null) {
+			return null;
+		}
+
+		return StringUtil.read(inputStream);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -689,10 +689,10 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @param sentDate the sent date
 	 * @return the matching commerce notification queue entries
 	 */
-	public static List<CommerceNotificationQueueEntry> findByLtS(
+	public static List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate) {
 
-		return getPersistence().findByLtS(sentDate);
+		return getPersistence().findByLtSentDate(sentDate);
 	}
 
 	/**
@@ -707,10 +707,10 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
 	 * @return the range of matching commerce notification queue entries
 	 */
-	public static List<CommerceNotificationQueueEntry> findByLtS(
+	public static List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate, int start, int end) {
 
-		return getPersistence().findByLtS(sentDate, start, end);
+		return getPersistence().findByLtSentDate(sentDate, start, end);
 	}
 
 	/**
@@ -726,11 +726,11 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce notification queue entries
 	 */
-	public static List<CommerceNotificationQueueEntry> findByLtS(
+	public static List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate, int start, int end,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
-		return getPersistence().findByLtS(
+		return getPersistence().findByLtSentDate(
 			sentDate, start, end, orderByComparator);
 	}
 
@@ -748,12 +748,12 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce notification queue entries
 	 */
-	public static List<CommerceNotificationQueueEntry> findByLtS(
+	public static List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate, int start, int end,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByLtS(
+		return getPersistence().findByLtSentDate(
 			sentDate, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -765,13 +765,14 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @return the first matching commerce notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
 	 */
-	public static CommerceNotificationQueueEntry findByLtS_First(
+	public static CommerceNotificationQueueEntry findByLtSentDate_First(
 			Date sentDate,
 			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
 		throws com.liferay.commerce.notification.exception.
 			NoSuchNotificationQueueEntryException {
 
-		return getPersistence().findByLtS_First(sentDate, orderByComparator);
+		return getPersistence().findByLtSentDate_First(
+			sentDate, orderByComparator);
 	}
 
 	/**
@@ -781,11 +782,12 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
 	 */
-	public static CommerceNotificationQueueEntry fetchByLtS_First(
+	public static CommerceNotificationQueueEntry fetchByLtSentDate_First(
 		Date sentDate,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
-		return getPersistence().fetchByLtS_First(sentDate, orderByComparator);
+		return getPersistence().fetchByLtSentDate_First(
+			sentDate, orderByComparator);
 	}
 
 	/**
@@ -796,13 +798,14 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @return the last matching commerce notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
 	 */
-	public static CommerceNotificationQueueEntry findByLtS_Last(
+	public static CommerceNotificationQueueEntry findByLtSentDate_Last(
 			Date sentDate,
 			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
 		throws com.liferay.commerce.notification.exception.
 			NoSuchNotificationQueueEntryException {
 
-		return getPersistence().findByLtS_Last(sentDate, orderByComparator);
+		return getPersistence().findByLtSentDate_Last(
+			sentDate, orderByComparator);
 	}
 
 	/**
@@ -812,11 +815,12 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
 	 */
-	public static CommerceNotificationQueueEntry fetchByLtS_Last(
+	public static CommerceNotificationQueueEntry fetchByLtSentDate_Last(
 		Date sentDate,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
-		return getPersistence().fetchByLtS_Last(sentDate, orderByComparator);
+		return getPersistence().fetchByLtSentDate_Last(
+			sentDate, orderByComparator);
 	}
 
 	/**
@@ -828,13 +832,13 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @return the previous, current, and next commerce notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
 	 */
-	public static CommerceNotificationQueueEntry[] findByLtS_PrevAndNext(
+	public static CommerceNotificationQueueEntry[] findByLtSentDate_PrevAndNext(
 			long commerceNotificationQueueEntryId, Date sentDate,
 			OrderByComparator<CommerceNotificationQueueEntry> orderByComparator)
 		throws com.liferay.commerce.notification.exception.
 			NoSuchNotificationQueueEntryException {
 
-		return getPersistence().findByLtS_PrevAndNext(
+		return getPersistence().findByLtSentDate_PrevAndNext(
 			commerceNotificationQueueEntryId, sentDate, orderByComparator);
 	}
 
@@ -843,8 +847,8 @@ public class CommerceNotificationQueueEntryUtil {
 	 *
 	 * @param sentDate the sent date
 	 */
-	public static void removeByLtS(Date sentDate) {
-		getPersistence().removeByLtS(sentDate);
+	public static void removeByLtSentDate(Date sentDate) {
+		getPersistence().removeByLtSentDate(sentDate);
 	}
 
 	/**
@@ -853,8 +857,8 @@ public class CommerceNotificationQueueEntryUtil {
 	 * @param sentDate the sent date
 	 * @return the number of matching commerce notification queue entries
 	 */
-	public static int countByLtS(Date sentDate) {
-		return getPersistence().countByLtS(sentDate);
+	public static int countByLtSentDate(Date sentDate) {
+		return getPersistence().countByLtSentDate(sentDate);
 	}
 
 	/**

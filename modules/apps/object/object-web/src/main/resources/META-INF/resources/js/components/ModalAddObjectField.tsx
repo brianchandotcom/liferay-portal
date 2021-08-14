@@ -41,10 +41,7 @@ const objectFieldTypes = [
 	'String',
 ];
 
-type THandleFormStateFn = (
-	key: string,
-	value: boolean | string
-) => void;
+type THandleFormStateFn = (key: string, value: boolean | string) => void;
 
 type TFormState = {
 	name: string;

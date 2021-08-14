@@ -9082,7 +9082,14 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</then>
 		</if>
 
-		<get-testcase-property property.name="aws.store.enabled" />
+		<if>
+			<not>
+				<isset property="aws.store.enabled" />
+			</not>
+			<then>
+				<get-testcase-property property.name="aws.store.enabled" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />

@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
@@ -36,7 +37,7 @@ public class SiteInitializerRegistrar {
 	public SiteInitializerRegistrar(
 		Bundle bundle, BundleContext bundleContext,
 		DocumentResource.Factory documentResourceFactory,
-		JSONFactory jsonFactory,
+		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
@@ -44,6 +45,7 @@ public class SiteInitializerRegistrar {
 		_bundle = bundle;
 		_bundleContext = bundleContext;
 		_documentResourceFactory = documentResourceFactory;
+		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
@@ -58,8 +60,8 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_bundle, _documentResourceFactory, _jsonFactory,
-				_objectDefinitionResourceFactory, _servletContext,
+				_bundle, _documentResourceFactory, _fragmentsImporter,
+				_jsonFactory, _objectDefinitionResourceFactory, _servletContext,
 				_taxonomyVocabularyResourceFactory, _userLocalService),
 			MapUtil.singletonDictionary(
 				"site.initializer.key", _bundle.getSymbolicName()));
@@ -72,6 +74,7 @@ public class SiteInitializerRegistrar {
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
 	private final DocumentResource.Factory _documentResourceFactory;
+	private final FragmentsImporter _fragmentsImporter;
 	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
@@ -37,7 +38,7 @@ public class SiteInitializerExtension {
 	public SiteInitializerExtension(
 		Bundle bundle, BundleContext bundleContext,
 		DocumentResource.Factory documentResourceFactory,
-		JSONFactory jsonFactory,
+		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
@@ -48,8 +49,8 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
-				bundle, bundleContext, documentResourceFactory, jsonFactory,
-				objectDefinitionResourceFactory,
+				bundle, bundleContext, documentResourceFactory,
+				fragmentsImporter, jsonFactory, objectDefinitionResourceFactory,
 				taxonomyVocabularyResourceFactory, userLocalService));
 
 		ServiceDependency serviceDependency =

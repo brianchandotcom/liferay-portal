@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -57,7 +58,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		Bundle bundle, DocumentResource.Factory documentResourceFactory,
-		JSONFactory jsonFactory,
+		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ServletContext servletContext,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
@@ -65,6 +66,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_bundle = bundle;
 		_documentResourceFactory = documentResourceFactory;
+		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_servletContext = servletContext;
@@ -167,6 +169,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addFragments(long groupId, User user) throws Exception {
+		URL url = _bundle.getEntry("/fragments.zip");
+
+		if (url == null) {
+			return;
+		}
+
+		_fragmentsImporter.importFragmentEntries(
+			user.getUserId(), groupId, 0,
+			FileUtil.createTempFile(url.openStream()), false);
+	}
+
 	private void _addObjectDefinitions(User user) throws Exception {
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-definitions");
@@ -246,6 +260,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _initialize(long groupId, User user) throws Exception {
 		_addDocuments(groupId, user);
+		_addFragments(groupId, user);
 		_addObjectDefinitions(user);
 		_addTaxonomyVocabularies(groupId, user);
 	}
@@ -260,6 +275,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private final Bundle _bundle;
 	private final DocumentResource.Factory _documentResourceFactory;
+	private final FragmentsImporter _fragmentsImporter;
 	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

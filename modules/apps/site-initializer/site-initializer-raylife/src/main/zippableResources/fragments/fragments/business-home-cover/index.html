@@ -1,0 +1,184 @@
+<div class="business-home-cover">
+	<div class="container position-relative">
+		<div class="business-home-cover-box">
+			<div class="business-home-cover-box-title">
+				<span
+					class="title-highlight"
+					data-lfr-editable-id="business-home-cover-title"
+					data-lfr-editable-type="text"
+					>More than Insurance.</span
+				>
+				<span
+					data-lfr-editable-id="business-home-cover-title2"
+					data-lfr-editable-type="text"
+					>We partner with your business.</span
+				>
+			</div>
+
+			<div class="d-flex">
+				<div class="d-none" id="new-quote">
+					<div class="business-email-delivered d-none">
+						<h2>Welcome Back, {name}!</h2>
+
+						<p>
+							We just sent a link to <strong>{email}</strong> to
+							continue your quote.
+						</p>
+					</div>
+
+					<div class="d-flex new-quote-form">
+						<div class="d-flex position-relative">
+							<label
+								for="email"
+								class="position-absolute bg-white px-1"
+								>Email Address</label
+							>
+							<input
+								class="rounded px-3"
+								id="email"
+								name="email"
+								type="text"
+							/>
+						</div>
+
+						<button button class="btn btn-sm btn-primary ml-4" type="submit">
+							<span
+								class="action-button-text font-weight-bold d-flex align-items-center"
+								data-lfr-editable-id="business-home-cover-continue-quote-button"
+								data-lfr-editable-type="text"
+								id="continue-quote"
+							>
+								CONTINUE QUOTE
+								<svg
+									class="lexicon-icon lexicon-icon-angle-right ml-2 arrow-icon"
+									focusable="false"
+									role="presentation"
+								>
+									<use
+										xlink:href="http://localhost:8080/o/admin-theme/images/clay/icons.svg#angle-right"
+									/>
+								</svg>
+							</span>
+						</button>
+					</div>
+
+					<p class="mt-4">
+						<span
+							class="business-home-cover-link"
+							data-lfr-editable-id="business-home-cover-link01"
+							data-lfr-editable-type="text"
+							>First time here?
+						</span
+						>
+
+						<a href="#" id="new-quote-button">
+							<span
+								data-lfr-editable-id="business-home-cover-link11"
+								data-lfr-editable-type="text"
+								>Start a New Quote</span
+							>
+						</a>
+					</p>
+				</div>
+
+				<div class="position-relative" id="retrieve-quote">
+					<form class="d-flex align-items-start" id="get-quote-form">
+						<div id="zip-container">
+							<label
+								for="zip"
+								class="position-absolute bg-white px-1"
+								>Zip</label
+							>
+							<input
+								class="rounded px-3 w-100"
+								id="zip"
+								maxlength="5"
+								name="zip"
+								placeholder="Zip"
+								type="text"
+							/>
+
+							<div class="error-feedback">
+								<span>Enter a valid 5 digit Zip</span>
+							</div>
+						</div>
+
+						<div class="flex-grow-1 position-relative" id="product-container">
+							<label
+								for="product"
+								class="position-absolute bg-white px-1"
+								>Product</label
+							>
+							<svg
+								class="lexicon-icon lexicon-icon-caret-bottom position-absolute select-icon"
+								focusable="false"
+								role="presentation"
+							>
+								<use
+									xlink:href="http://localhost:8080/o/admin-theme/images/clay/icons.svg#caret-bottom"
+								/>
+							</svg>
+
+							<select
+								class="rounded px-3 bg-white"
+								id="product"
+								name="product"
+							></select>
+
+							<div class="error-feedback">
+								<span>Please select a product</span>
+							</div>
+						</div>
+
+						<button button class="btn btn-sm btn-primary ml-4" type="submit">
+							<span
+								class="action-button-text font-weight-bold d-flex align-items-center"
+								data-lfr-editable-id="business-home-cover-get-a-quote-button"
+								data-lfr-editable-type="text"
+							>
+								GET A QUOTE
+								<svg
+									class="lexicon-icon lexicon-icon-angle-right ml-2 arrow-icon"
+									focusable="false"
+									role="presentation"
+								>
+									<use
+										xlink:href="http://localhost:8080/o/admin-theme/images/clay/icons.svg#angle-right"
+									/>
+								</svg>
+							</span>
+						</button>
+					</form>
+
+					<p class="mt-4">
+						<span
+							class="business-home-cover-link"
+							data-lfr-editable-id="business-home-cover-link"
+							data-lfr-editable-type="text"
+							>Already started?
+						</span
+						>
+
+						<a href="#" id="retrieve-quote-button">
+							<span
+								data-lfr-editable-id="business-home-cover-link2"
+								data-lfr-editable-type="text"
+								>Retrieve a Quote</span
+							>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<img
+				alt=""
+				class="business-home-cover-image"
+				data-lfr-editable-id="cover-image"
+				data-lfr-editable-type="image"
+				src="[resources:business_home_cover.png]"
+			/>
+		</div>
+	</div>
+</div>

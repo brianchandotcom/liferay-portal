@@ -1,0 +1,31 @@
+.section-subscription {
+	background-color: var(--gray-800);
+	color: var(--white);
+	text-align: center;
+}
+
+.section-subscription .input-info-text {
+	color: var(--gray-500);
+	margin-bottom: var(--spacer-4);
+}
+
+.section-subscription .section-subscription-details {
+	color: var(--gray-400);
+	font-size: var(--font-size-lg);
+	margin-bottom: var(--spacer-5);
+}
+
+.section-subscription .section-subscription-form {
+	justify-content: center;
+	margin-bottom: var(--spacer-3);
+}
+
+.section-subscription .section-subscription-form .form-control {
+	width: 400px;
+}
+
+.section-subscription .section-subscription-title {
+	font-size: var(--display4-size);
+	font-weight: var(--display4-weight);
+	margin-bottom: var(--spacer-3);
+}

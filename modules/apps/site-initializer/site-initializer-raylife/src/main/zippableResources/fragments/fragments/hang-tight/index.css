@@ -1,0 +1,11 @@
+h1 {
+	font-weight: var(--display1-weight);
+}
+
+p {
+	color: var(--gray-700)
+}
+
+.hang-tight-image {
+	width: 718px;
+}

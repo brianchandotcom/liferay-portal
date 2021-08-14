@@ -1,0 +1,11 @@
+.product-resources {
+	width: 75%;
+}
+
+.product-resources .icon-list {
+	margin-bottom: var(--spacer-4);
+}
+
+.product-resources .product-resources-title {
+	margin-bottom: calc(var(--spacer-1)*6);
+}

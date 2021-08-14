@@ -1,0 +1,29 @@
+.product-actions a {
+	color: var(--body-color);
+}
+
+.product-actions a:hover {
+	text-decoration: none;
+}
+
+.product-actions a:hover .product-action {
+	box-shadow: var(--box-shadow);
+}
+
+.product-actions a .product-action {
+	align-items: center;
+	background-color: var(--white);
+	box-shadow: var(--box-shadow-lg);
+	display: flex;
+	fill: red;
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	justify-content: center;
+	margin-bottom: calc(var(--spacer-1)*10);
+	padding: var(--spacer-5) var(--spacer-4);
+}
+
+.product-actions a .product-action img {
+	margin-right: var(--spacer-3);
+	max-width: 28px;
+}

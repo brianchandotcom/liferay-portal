@@ -1,0 +1,31 @@
+.home-cover .home-cover-box {
+	background-color: var(--white);
+	font-size: var(--font-size-lg);
+	max-width: 100%;
+	padding-bottom: var(--spacer-8);
+	padding-right: var(--spacer-6);
+	padding-top: var(--spacer-6);
+	position: absolute;
+	top: 280px;
+	width: 520px;
+}
+
+.home-cover .home-cover-box .home-cover-box-title {
+	font-size: 60px;
+	font-weight: var(--display3-weight);
+	line-height: var(--display-line-height);
+	margin-bottom: var(--spacer-4);
+}
+
+.home-cover .home-cover-box p {
+	margin-bottom: calc(var(--spacer-1)*10);
+}
+
+.home-cover .home-cover-image {
+	max-width: 100%;
+	width: 900px;
+}
+
+.page-editor__layout-viewport .home-cover .home-cover-box {
+	top: 144px;
+}

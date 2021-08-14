@@ -1,0 +1,13 @@
+.private-footer {
+	background-color: var(--gray-900);
+	padding-top: var(--spacer-6);
+}
+
+.private-footer .footer-bottom {
+	margin-top: 0;
+	padding-bottom: var(--spacer-4);
+}
+
+.private-footer .footer-bottom .nav-link {
+	color: var(--gray-500);
+}

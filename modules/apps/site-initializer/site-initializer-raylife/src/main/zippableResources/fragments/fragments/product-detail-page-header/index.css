@@ -1,0 +1,43 @@
+.contact-info {
+	align-items: center;
+	color: var(--white);
+	display: flex;
+}
+
+.contact-info img {
+	margin-right: var(--spacer-3);
+	transform: translateY(-2px);
+	width: 38px;
+}
+
+.contact-info a {
+	display: block;
+	font-weight: var(--font-weight-bold);
+	transform: translateY(-3px);
+}
+
+.page-header {
+	background-color: var(--dark);
+	height: 96px;
+	padding: var(--spacer-4);
+}
+
+.page-header .container {
+	 align-items: center;
+	 display: flex;
+	 justify-content: space-between;
+}
+
+.page-header .page-header-title {
+	color: var(--white);
+	font-size: var(--h3-font-size);
+	font-weight: var(--font-weight-bolder);
+}
+
+.page-header .page-header-title a {
+	color: var(--white);
+}
+
+.page-header .page-header-title .product-detail {
+	font-weight: var(--font-weight-normal);
+}

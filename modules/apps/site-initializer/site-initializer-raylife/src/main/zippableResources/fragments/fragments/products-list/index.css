@@ -1,0 +1,44 @@
+.products-list .product-group {
+	margin-bottom: var(--spacer-5);
+}
+
+.products-list .product-group .product-name {
+	align-items: center;
+	display: flex;
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bolder);
+	margin-bottom: var(--spacer-3);
+}
+
+.products-list .product-group .product-name img {
+	margin-right: var(--spacer-3);
+	width: 40px;
+}
+
+.products-list .product-group .product-summary {
+	color: var(--secondary);
+}
+
+.products-list .products-list-claim-heading {
+	font-size: var(--display4-size);
+	font-weight: var(--display4-weight);
+	margin-bottom: var(--spacer-3);
+	text-align: center;
+}
+
+.products-list .products-list-claim-text {
+	color: var(--secondary);
+	font-size: var(--font-size-lg);
+	margin-bottom: var(--spacer-6);
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 75%;
+}
+
+.products-list .products-list-title {
+	color: var(--secondary);
+	font-weight: var(--font-weight-bolder);
+	margin-bottom: var(--spacer-7);
+	text-align: center;
+}

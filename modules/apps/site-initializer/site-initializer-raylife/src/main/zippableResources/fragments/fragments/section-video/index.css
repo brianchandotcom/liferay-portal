@@ -1,0 +1,28 @@
+.section-video .section-video-text h5 {
+	color: var(--secondary);
+	margin: var(--spacer-3) 0;
+}
+
+.section-video .section-video-text .display-4 {
+	font-size: 56px;
+	margin-bottom: var(--spacer-3);
+}
+
+.section-video .section-video-text a img {
+	margin-bottom: 1px;
+	margin-left: var(--spacer-3);
+}
+
+.section-video .section-video-text p {
+	color: var(--secondary);
+	font-size: var(--font-size-lg);
+	margin-bottom: calc(var(--spacer-1)*6);
+}
+
+.section-video .video-player {
+	box-shadow: var(--box-shadow-lg);
+}
+
+.section-video .video-player img {
+	width: 100%;
+}

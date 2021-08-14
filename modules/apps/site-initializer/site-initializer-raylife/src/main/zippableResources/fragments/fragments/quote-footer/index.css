@@ -1,0 +1,27 @@
+.quote-footer {
+	background-color: var(--white);
+	border-top: 1px solid #d2d2d3;
+	padding-top: 32px;
+}
+
+.quote-footer .quote-footer-content {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+}
+
+.quote-footer-content__title {
+	font-size: 14px;
+}
+
+.quote-footer-content__description {
+	font-size: 18px;
+}
+
+.quote-footer-content__paragraph {
+	color: #606167;
+	font-size: 13px;
+	font-weight: 300;
+	margin-top: 32px;
+}

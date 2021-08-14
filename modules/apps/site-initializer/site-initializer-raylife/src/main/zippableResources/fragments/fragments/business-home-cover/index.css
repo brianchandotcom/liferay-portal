@@ -1,0 +1,121 @@
+.business-home-cover .action-button-text {
+	font-size: 15px;
+}
+
+.business-home-cover .btn {
+	min-height: 48px;
+	padding: 12px 16px;
+}
+
+.business-home-cover .business-home-cover-box {
+	background-color: var(--white);
+	border-radius: 8px;
+	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
+	font-size: var(--font-size-lg);
+	max-width: 100%;
+	padding: var(--spacer-6);
+	position: absolute;
+	right: 0;
+	top: 100px;
+	width: 700px;
+}
+
+.business-home-cover .business-home-cover-box label {
+	left: 14px;
+	top: -12px;
+}
+
+.business-home-cover .business-home-cover-box input, select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	border: 0.0625rem solid #7d7e85;
+	font-size: 16px;
+	font-weight: var(--font-weight-bolder);
+	height: 48px;
+	padding-right: 46px;
+	width: 265px;
+}
+
+.business-home-cover .business-home-cover-box #zip-container {
+	width: 119px;
+	margin-right: 21px
+}
+
+.business-home-cover .select-icon {
+	color: #7d7e85;
+	pointer-events: none;
+	right: 20px;
+	top: 17px;
+}
+
+.business-home-cover .business-home-cover-box .business-home-cover-box-title {
+	font-size: var(--display4-size);
+	font-weight: var(--display3-weight);
+	line-height: var(--display-line-height);
+	margin-bottom: var(--spacer-4);
+}
+
+.business-home-cover
+	.business-home-cover-box
+	.business-home-cover-box-title
+	.title-highlight {
+	color: var(--primary);
+	display: block;
+}
+
+.business-home-cover .business-home-cover-box p {
+	margin-bottom: calc(var(--spacer-1) * 10);
+}
+
+.business-home-cover .business-home-cover-image {
+	max-width: 100%;
+	width: 900px;
+}
+
+.page-editor__layout-viewport .business-home-cover .business-home-cover-box {
+	top: 144px;
+}
+
+.business-home-cover .business-email-delivered h2 {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.business-home-cover .business-email-delivered p {
+	color: #606167;
+	font-size: var(--font-size-base);
+}
+
+.business-home-cover .business-home-cover-link {
+	color: #606167;
+	font-weight: bold;
+}
+
+.business-home-cover .has-error input, .business-home-cover .has-error select {
+	border-color: #EA6136;
+	outline-color: #EA6136;
+}
+
+.business-home-cover .has-error label {
+	color: #EA6136;
+}
+
+.business-home-cover .error-feedback {
+	background-color: #FFE4DC;
+	border-radius: 8px;
+	color: #EA6136;
+	display: none;
+	font-size: 13px;
+	font-weight: var(--display3-weight);
+	padding: 8px;
+}
+
+.business-home-cover .has-error .error-feedback {
+	display: flex;
+}
+
+.business-home-cover .error-feedback::before {
+	content: url('[resources:error.svg]');
+	margin-right: 4px;
+}

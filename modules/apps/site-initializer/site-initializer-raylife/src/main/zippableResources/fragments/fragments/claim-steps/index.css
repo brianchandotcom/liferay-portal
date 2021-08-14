@@ -1,0 +1,16 @@
+.claim-step {
+	align-items: start;
+	display: flex;
+}
+
+.claim-step-image {
+	margin-top: 4px;
+}
+
+.claim-step-name {
+	font-weight: var(--font-weight-bold);
+}
+
+.claim-step-status {
+	color: var(--secondary);
+}

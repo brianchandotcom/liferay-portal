@@ -528,7 +528,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupIds" return-type="Collection">
+		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="G_C" return-type="Collection">
@@ -576,7 +576,7 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CommerceShipment" return-type="Collection">
+		<finder name="CommerceShipmentId" return-type="Collection">
 			<finder-column name="commerceShipmentId" />
 		</finder>
 		<finder name="CommerceOrderItemId" return-type="Collection">

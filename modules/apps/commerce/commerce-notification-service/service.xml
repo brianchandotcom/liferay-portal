@@ -96,7 +96,7 @@
 		<finder name="Sent" return-type="Collection">
 			<finder-column name="sent" />
 		</finder>
-		<finder name="LtS" return-type="Collection">
+		<finder name="LtSentDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="sentDate" />
 		</finder>
 		<finder name="G_C_C_S" return-type="Collection">

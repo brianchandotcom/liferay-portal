@@ -190,7 +190,7 @@ public interface CommerceShipmentItemPersistence
 	 * @param commerceShipmentId the commerce shipment ID
 	 * @return the matching commerce shipment items
 	 */
-	public java.util.List<CommerceShipmentItem> findByCommerceShipment(
+	public java.util.List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId);
 
 	/**
@@ -205,7 +205,7 @@ public interface CommerceShipmentItemPersistence
 	 * @param end the upper bound of the range of commerce shipment items (not inclusive)
 	 * @return the range of matching commerce shipment items
 	 */
-	public java.util.List<CommerceShipmentItem> findByCommerceShipment(
+	public java.util.List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId, int start, int end);
 
 	/**
@@ -221,7 +221,7 @@ public interface CommerceShipmentItemPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce shipment items
 	 */
-	public java.util.List<CommerceShipmentItem> findByCommerceShipment(
+	public java.util.List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipmentItem>
 			orderByComparator);
@@ -240,7 +240,7 @@ public interface CommerceShipmentItemPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce shipment items
 	 */
-	public java.util.List<CommerceShipmentItem> findByCommerceShipment(
+	public java.util.List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipmentItem>
 			orderByComparator,
@@ -254,7 +254,7 @@ public interface CommerceShipmentItemPersistence
 	 * @return the first matching commerce shipment item
 	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
 	 */
-	public CommerceShipmentItem findByCommerceShipment_First(
+	public CommerceShipmentItem findByCommerceShipmentId_First(
 			long commerceShipmentId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceShipmentItem> orderByComparator)
@@ -267,7 +267,7 @@ public interface CommerceShipmentItemPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
 	 */
-	public CommerceShipmentItem fetchByCommerceShipment_First(
+	public CommerceShipmentItem fetchByCommerceShipmentId_First(
 		long commerceShipmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipmentItem>
 			orderByComparator);
@@ -280,7 +280,7 @@ public interface CommerceShipmentItemPersistence
 	 * @return the last matching commerce shipment item
 	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
 	 */
-	public CommerceShipmentItem findByCommerceShipment_Last(
+	public CommerceShipmentItem findByCommerceShipmentId_Last(
 			long commerceShipmentId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceShipmentItem> orderByComparator)
@@ -293,7 +293,7 @@ public interface CommerceShipmentItemPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
 	 */
-	public CommerceShipmentItem fetchByCommerceShipment_Last(
+	public CommerceShipmentItem fetchByCommerceShipmentId_Last(
 		long commerceShipmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipmentItem>
 			orderByComparator);
@@ -307,7 +307,7 @@ public interface CommerceShipmentItemPersistence
 	 * @return the previous, current, and next commerce shipment item
 	 * @throws NoSuchShipmentItemException if a commerce shipment item with the primary key could not be found
 	 */
-	public CommerceShipmentItem[] findByCommerceShipment_PrevAndNext(
+	public CommerceShipmentItem[] findByCommerceShipmentId_PrevAndNext(
 			long commerceShipmentItemId, long commerceShipmentId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceShipmentItem> orderByComparator)
@@ -318,7 +318,7 @@ public interface CommerceShipmentItemPersistence
 	 *
 	 * @param commerceShipmentId the commerce shipment ID
 	 */
-	public void removeByCommerceShipment(long commerceShipmentId);
+	public void removeByCommerceShipmentId(long commerceShipmentId);
 
 	/**
 	 * Returns the number of commerce shipment items where commerceShipmentId = &#63;.
@@ -326,7 +326,7 @@ public interface CommerceShipmentItemPersistence
 	 * @param commerceShipmentId the commerce shipment ID
 	 * @return the number of matching commerce shipment items
 	 */
-	public int countByCommerceShipment(long commerceShipmentId);
+	public int countByCommerceShipmentId(long commerceShipmentId);
 
 	/**
 	 * Returns all the commerce shipment items where commerceOrderItemId = &#63;.

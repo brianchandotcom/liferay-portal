@@ -27,7 +27,9 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.InputStream;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,17 +52,25 @@ public class BundleSiteInitializerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testInitialize() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
 			BundleSiteInitializerTest.class);
 
-		Bundle bundle = _installBundle(
+		_bundle = _installBundle(
 			testBundle.getBundleContext(),
 			"/com.liferay.site.initializer.extender.test.bundle.jar");
 
-		bundle.start();
+		_bundle.start();
+	}
 
+	@After
+	public void tearDown() throws Exception {
+		_bundle.uninstall();
+	}
+
+	@Test
+	public void testInitialize() throws Exception {
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
 				_bundle.getSymbolicName());
@@ -72,8 +82,6 @@ public class BundleSiteInitializerTest {
 		_assertGroup(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
-
-		bundle.uninstall();
 	}
 
 	private void _assertGroup(Group group) {

@@ -18,9 +18,15 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
+import {useSelector} from '../../contexts/StoreContext';
 
 export const CheckboxField = ({field, onValueSelect, value}) => {
 	const [nextValue, setNextValue] = useState(value);
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	const customValues = field.typeOptions?.customValues;
 
@@ -51,18 +57,19 @@ export const CheckboxField = ({field, onValueSelect, value}) => {
 						onValueSelect(field.name, eventValue);
 					}}
 				/>
-				{field.responsive && (
-					<ClayButtonWithIcon
-						data-tooltip-align="bottom"
-						displayType="secondary"
-						onClick={() => {
-							onValueSelect(field.name, null);
-						}}
-						small
-						symbol="restore"
-						title={Liferay.Language.get('restore-default')}
-					/>
-				)}
+				{field.responsive &&
+					selectedViewportSize !== VIEWPORT_SIZES.desktop && (
+						<ClayButtonWithIcon
+							data-tooltip-align="bottom"
+							displayType="secondary"
+							onClick={() => {
+								onValueSelect(field.name, null);
+							}}
+							small
+							symbol="restore"
+							title={Liferay.Language.get('restore-default')}
+						/>
+					)}
 			</div>
 		</ClayForm.Group>
 	);

@@ -46,7 +46,7 @@ export const CommonStyles = ({commonStylesValues, item}) => {
 	return (
 		<>
 			<h1 className="sr-only">{Liferay.Language.get('common-styles')}</h1>
-			<div className="page-editor__row-styles-panel__common-styles">
+			<div className="page-editor__common-styles">
 				{styles.map((fieldSet, index) => {
 					return (
 						<FieldSet

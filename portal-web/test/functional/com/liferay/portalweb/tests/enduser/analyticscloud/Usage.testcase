@@ -174,25 +174,6 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"
-	@priority = "5"
-	test PlanLimitNumberOfPageViewsIsShown {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = "${propertyName}");
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToUsage();
-
-		AssertElementPresent(
-			key_metricName = "Page Views",
-			key_totalNumber = "75,000,000",
-			locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
 	@priority = "5"
 	test PlanLimitNumberOfIndividualsIsShown {
@@ -212,6 +193,25 @@ definition {
 				key_totalNumber = "110,000",
 				locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
 		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"
+	@priority = "5"
+	test PlanLimitNumberOfPageViewsIsShown {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		AssertElementPresent(
+			key_metricName = "Page Views",
+			key_totalNumber = "75,000,000",
+			locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
 	}
 
 }

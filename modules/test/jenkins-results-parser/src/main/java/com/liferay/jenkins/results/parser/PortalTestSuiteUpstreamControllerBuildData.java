@@ -138,6 +138,13 @@ public class PortalTestSuiteUpstreamControllerBuildData
 	}
 
 	private String _getPortalUpstreamBranchName() {
+		String portalUpstreamBranch = getBuildParameter(
+			"PORTAL_UPSTREAM_BRANCH");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranch)) {
+			return portalUpstreamBranch;
+		}
+
 		String jobName = getJobName();
 
 		Matcher matcher = _jobNamePattern.matcher(jobName);

@@ -70,34 +70,34 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetSpecificFields() throws Exception {
-		ContentDashboardTestUtils.withContentDashboardDocumentConfiguration(
-			_group.getCompanyId(), true,
-			() -> {
-				FileEntry fileEntry = _addFileEntry();
+		ContentDashboardTestUtils.
+			withFFContentDashboardDocumentConfigurationEnabled(
+				() -> {
+					FileEntry fileEntry = _addFileEntry();
 
-				JSONObject jsonObject = _serveResource(
-					FileEntry.class.getName(), fileEntry.getFileEntryId(),
-					_group.getGroupId());
+					JSONObject jsonObject = _serveResource(
+						FileEntry.class.getName(), fileEntry.getFileEntryId(),
+						_group.getGroupId());
 
-				JSONObject specificFieldsJSONObject = jsonObject.getJSONObject(
-					"specificFields");
+					JSONObject specificFieldsJSONObject =
+						jsonObject.getJSONObject("specificFields");
 
-				Assert.assertEquals(
-					"pdf", specificFieldsJSONObject.getString("extension"));
+					Assert.assertEquals(
+						"pdf", specificFieldsJSONObject.getString("extension"));
 
-				Assert.assertEquals(
-					"FileName.pdf",
-					specificFieldsJSONObject.getString("fileName"));
+					Assert.assertEquals(
+						"FileName.pdf",
+						specificFieldsJSONObject.getString("fileName"));
 
-				Assert.assertNotNull(
-					specificFieldsJSONObject.getString("downloadURL"));
-				Assert.assertNotNull(
-					specificFieldsJSONObject.getString("previewImageURL"));
-				Assert.assertNotNull(
-					specificFieldsJSONObject.getString("previewURL"));
-				Assert.assertNotNull(
-					specificFieldsJSONObject.getString("viewURL"));
-			});
+					Assert.assertNotNull(
+						specificFieldsJSONObject.getString("downloadURL"));
+					Assert.assertNotNull(
+						specificFieldsJSONObject.getString("previewImageURL"));
+					Assert.assertNotNull(
+						specificFieldsJSONObject.getString("previewURL"));
+					Assert.assertNotNull(
+						specificFieldsJSONObject.getString("viewURL"));
+				});
 	}
 
 	private FileEntry _addFileEntry() throws Exception {

@@ -14,7 +14,6 @@
 
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {DragTypes} from 'data-engine-taglib';
 import React, {
 	useCallback,
 	useContext,
@@ -25,6 +24,7 @@ import React, {
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import {DRAG_FIELD_TYPE_MOVE} from '../../../utils/dragTypes';
 import {hasFieldSet} from '../../../utils/fields.es';
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
 import {Actions, ActionsControls, useActions} from '../Actions.es';
@@ -79,7 +79,7 @@ export const Column = ({
 				rowIndex,
 			},
 			sourceParentField: parentField,
-			type: DragTypes.DRAG_FIELD_TYPE_MOVE,
+			type: DRAG_FIELD_TYPE_MOVE,
 		},
 	});
 

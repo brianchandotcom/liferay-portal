@@ -15,6 +15,7 @@
 // Utils
 
 export {default as compose} from './utils/compose.es';
+export * as DRAG_TYPES from './utils/dragTypes';
 export {convertToFormData, makeFetch} from './utils/fetch.es';
 export {normalizeFieldName} from './utils/fields.es';
 export * as FieldSetUtil from './utils/fieldSets';

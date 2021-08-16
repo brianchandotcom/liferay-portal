@@ -18,7 +18,6 @@ export {OPERATOR_OPTIONS_TYPES} from './components/rules/editor/config.es';
 export {Editor as RuleEditor} from './components/rules/editor/Editor.es';
 export {default as MultiPanelSidebar} from './components/sidebar/MultiPanelSidebar.es';
 export {default as DragLayer} from './drag-and-drop/DragLayer.es';
-export * as DragTypes from './drag-and-drop/dragTypes.es';
 export {EVENT_TYPES} from './eventTypes';
 export * as DataConverter from './utils/dataConverter.es';
 export * as LangUtil from './utils/lang.es';

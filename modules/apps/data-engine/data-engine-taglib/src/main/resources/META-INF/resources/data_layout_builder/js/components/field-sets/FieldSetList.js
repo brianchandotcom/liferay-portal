@@ -14,13 +14,13 @@
 
 import ClayButton from '@clayui/button';
 import {
+	DRAG_TYPES,
 	EVENT_TYPES,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
-import {DRAG_FIELDSET_ADD} from '../../drag-and-drop/dragTypes.es';
 import {getLocalizedValue, getPluralMessage} from '../../utils/lang.es';
 import {getSearchRegex} from '../../utils/search.es';
 import EmptyState from '../empty-state/EmptyState.es';
@@ -143,7 +143,7 @@ export default function FieldSetList({searchTerm}) {
 									actions={actions}
 									description={description}
 									disabled={disabled}
-									dragType={DRAG_FIELDSET_ADD}
+									dragType={DRAG_TYPES.DRAG_FIELDSET_ADD}
 									fieldSet={fieldSet}
 									icon="forms"
 									key={fieldSet.dataDefinitionKey}

@@ -18,13 +18,14 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
+import {DRAG_TYPES} from 'data-engine-js-components-web';
 import React, {useEffect, useState} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import './FieldType.scss';
-import {DRAG_FIELD_TYPE_ADD} from '../../drag-and-drop/dragTypes.es';
 import DropDown from '../drop-down/DropDown.es';
+
+import './FieldType.scss';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';
 
 const ICONS = {
@@ -45,7 +46,7 @@ const FieldType = (props) => {
 		disabled,
 		dragAlignment = 'left',
 		draggable = true,
-		dragType = DRAG_FIELD_TYPE_ADD,
+		dragType = DRAG_TYPES.DRAG_FIELD_TYPE_ADD,
 		icon,
 		label,
 		name,

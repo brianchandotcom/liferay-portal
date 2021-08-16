@@ -12,9 +12,10 @@
  * details.
  */
 
-import {DataConverter, DragTypes} from 'data-engine-taglib';
+import {DataConverter} from 'data-engine-taglib';
 import {useDrop as useDndDrop} from 'react-dnd';
 
+import * as DRAG_TYPES from '../../utils/dragTypes';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {elementSetAdded} from '../thunks/elementSetAdded.es';
 import {useConfig} from './useConfig.es';
@@ -141,10 +142,10 @@ export const useDrop = ({
 		DRAG_FIELD_TYPE_ADD,
 		DRAG_FIELD_TYPE_MOVE,
 		DRAG_FIELDSET_ADD,
-	} = DragTypes;
+	} = DRAG_TYPES;
 
 	const [{canDrop, overTarget}, drop] = useDndDrop({
-		accept: [...Object.values(DragTypes), DRAG_ELEMENT_SET_ADD],
+		accept: [...Object.values(DRAG_TYPES), DRAG_ELEMENT_SET_ADD],
 		canDrop: (item) =>
 			!isSameField(field, item.data) &&
 			!isDroppingFieldGroupIntoField(field, item.data) &&

@@ -47,11 +47,12 @@ public class ObjectDefinitionLocalServiceUtil {
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
 			long userId, Map<java.util.Locale, String> labelMap, String name,
+			Map<java.util.Locale, String> pluralLabelMap,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			userId, labelMap, name, objectFields);
+			userId, labelMap, name, pluralLabelMap, objectFields);
 	}
 
 	/**
@@ -84,13 +85,13 @@ public class ObjectDefinitionLocalServiceUtil {
 			long userId, String dbTableName,
 			Map<java.util.Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			int version,
+			Map<java.util.Locale, String> pluralLabelMap, int version,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addSystemObjectDefinition(
 			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, version, objectFields);
+			pkObjectFieldName, pluralLabelMap, version, objectFields);
 	}
 
 	/**

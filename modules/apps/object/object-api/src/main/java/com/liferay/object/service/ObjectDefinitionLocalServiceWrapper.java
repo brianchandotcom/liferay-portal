@@ -36,12 +36,12 @@ public class ObjectDefinitionLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
 			long userId, java.util.Map<java.util.Locale, String> labelMap,
-			String name,
+			String name, java.util.Map<java.util.Locale, String> pluralLabelMap,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			userId, labelMap, name, objectFields);
+			userId, labelMap, name, pluralLabelMap, objectFields);
 	}
 
 	/**
@@ -79,13 +79,13 @@ public class ObjectDefinitionLocalServiceWrapper
 			long userId, String dbTableName,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			int version,
+			java.util.Map<java.util.Locale, String> pluralLabelMap, int version,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addSystemObjectDefinition(
 			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, version, objectFields);
+			pkObjectFieldName, pluralLabelMap, version, objectFields);
 	}
 
 	/**

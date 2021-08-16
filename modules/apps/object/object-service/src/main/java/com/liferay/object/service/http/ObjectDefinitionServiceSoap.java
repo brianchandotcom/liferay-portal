@@ -70,17 +70,21 @@ public class ObjectDefinitionServiceSoap {
 	public static com.liferay.object.model.ObjectDefinitionSoap
 			addCustomObjectDefinition(
 				String[] labelMapLanguageIds, String[] labelMapValues,
-				String name,
+				String name, String[] pluralLabelMapLanguageIds,
+				String[] pluralLabelMapValues,
 				com.liferay.object.model.ObjectFieldSoap[] objectFields)
 		throws RemoteException {
 
 		try {
 			Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
 				labelMapLanguageIds, labelMapValues);
+			Map<Locale, String> pluralLabelMap =
+				LocalizationUtil.getLocalizationMap(
+					pluralLabelMapLanguageIds, pluralLabelMapValues);
 
 			com.liferay.object.model.ObjectDefinition returnValue =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					labelMap, name,
+					labelMap, name, pluralLabelMap,
 					com.liferay.object.model.impl.ObjectFieldModelImpl.toModels(
 						objectFields));
 

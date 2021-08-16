@@ -41,11 +41,12 @@ public class ObjectDefinitionServiceUtil {
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
 			Map<java.util.Locale, String> labelMap, String name,
+			Map<java.util.Locale, String> pluralLabelMap,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			labelMap, name, objectFields);
+			labelMap, name, pluralLabelMap, objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(

@@ -461,6 +461,7 @@ definition {
 		Publications.viewChangeDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
+			entryDeletedInProduction = "true",
 			publicationName = "Publication 2 Name");
 
 		IFrame.closeFrame();

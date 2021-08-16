@@ -485,10 +485,18 @@ definition {
 	}
 
 	macro viewChangeDiff {
-		AssertTextEquals(
-			key_displayItem = "Unified View",
-			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
-			value1 = "Unified View");
+		if ("${entryDeletedInProduction}" == "true") {
+			AssertTextEquals(
+				key_displayItem = "Split View",
+				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				value1 = "Split View");
+		}
+		else {
+			AssertTextEquals(
+				key_displayItem = "Unified View",
+				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				value1 = "Unified View");
+		}
 
 		var key_columnName = "${columnName}";
 
@@ -506,25 +514,25 @@ definition {
 
 		Publications.changeDiffDisplayItem(displayItem = "Production");
 
-		AssertTextEquals(
-			key_displayItem = "Production",
-			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
-			value1 = "Production");
+		if ("${entryDeletedInProduction}" == "true") {
+			Alert.viewErrorMessage(errorMessage = "This item is missing or is deleted.");
+		}
+		else {
+			AssertTextEquals(
+				key_displayItem = "Production",
+				locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+				value1 = "Production");
 
-		if (isSet(columnValueInProduction)) {
-			key_columnValueInProduction = "${columnValueInProduction}";
+			if (isSet(columnValueInProduction)) {
+				key_columnValueInProduction = "${columnValueInProduction}";
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Publications#COLUMN_VALUE_IN_PRODUCTION",
-				value1 = "${columnValueInProduction}");
+				AssertTextEquals.assertPartialText(
+					locator1 = "Publications#COLUMN_VALUE_IN_PRODUCTION",
+					value1 = "${columnValueInProduction}");
+			}
 		}
 
-		Publications.changeDiffDisplayItem(displayItem = "Publication: ${publicationName}");
-
-		AssertTextEquals.assertPartialText(
-			key_displayItem = "${publicationName}",
-			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
-			value1 = "${publicationName}");
+		Publications.changeDiffDisplayItem(displayItem = "Publication");
 
 		if (isSet(columnValueInPublication)) {
 			key_columnValueInPublication = "${columnValueInPublication}";

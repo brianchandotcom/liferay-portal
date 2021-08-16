@@ -165,7 +165,7 @@ definition {
 				value1 = "${fieldValueInProduction}");
 		}
 
-		Publications.changeDiffDisplayItem(displayItem = "Publication: ${publicationName}");
+		Publications.changeDiffDisplayItem(displayItem = "Publication");
 
 		AssertTextEquals.assertPartialText(
 			key_displayItem = "${publicationName}",

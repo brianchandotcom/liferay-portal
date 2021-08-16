@@ -76,11 +76,13 @@ public interface CommerceDiscountRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscountRel> getCategoriesByCommerceDiscountId(
-		long commerceDiscountId, String name, int start, int end);
+			long commerceDiscountId, String name, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesByCommerceDiscountIdCount(
-		long commerceDiscountId, String name);
+			long commerceDiscountId, String name)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getClassPKs(long commerceDiscountId, String className)
@@ -109,21 +111,35 @@ public interface CommerceDiscountRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscountRel>
-		getCommercePricingClassesByCommerceDiscountId(
-			long commerceDiscountId, String title, int start, int end);
+			getCommercePricingClassesByCommerceDiscountId(
+				long commerceDiscountId, String title, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommercePricingClassesByCommerceDiscountIdCount(
-		long commerceDiscountId, String title);
+			long commerceDiscountId, String title)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscountRel> getCPDefinitionsByCommerceDiscountId(
-		long commerceDiscountId, String name, String languageId, int start,
-		int end);
+			long commerceDiscountId, String name, String languageId, int start,
+			int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsByCommerceDiscountIdCount(
-		long commerceDiscountId, String name, String languageId);
+			long commerceDiscountId, String name, String languageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
+			long commerceDiscountId, String sku, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstancesByCommerceDiscountIdCount(
+			long commerceDiscountId, String sku)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

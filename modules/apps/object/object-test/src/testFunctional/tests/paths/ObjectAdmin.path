@@ -30,6 +30,21 @@
 		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
+		<tr>
+		<td>VIEW_CUSTOM_OBJECT</td>
+		<td>//div[contains(text(),'No')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_FIRST_CUSTOM_OBJECT</td>
+		<td>//div[contains(text(),'No')]/..//button[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-monospaced btn-unstyled']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DELETE_CUSTOM_OBJECT</td>
+		<td>//button[(@class='dropdown-item') and contains(text(),'Delete')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

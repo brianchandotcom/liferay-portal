@@ -17,6 +17,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			ObjectAdmin.deleteAllCustomObjects();
+		}
 	}
 
 	@description = "LPS-133865 - Verify if the fields from an Object are displayed to be mapped on a fragment"

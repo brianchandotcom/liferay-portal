@@ -17,6 +17,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			ObjectAdmin.deleteAllCustomObjects();
+		}
 	}
 
 	@description = "LPS-135548 - Verify that user can view custom objects"

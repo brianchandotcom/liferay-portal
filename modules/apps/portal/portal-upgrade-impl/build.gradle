@@ -2,6 +2,7 @@ dependencies {
 	compileInclude group: "org.jgrapht", name: "jgrapht-core", version: "0.9.1"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "com.liferay", name: "org.apache.felix.configadmin", version: "1.9.8.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay", name: "org.apache.felix.gogo.runtime", version: "1.1.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.apache.logging.log4j", version: "2.14.1.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.14.1.LIFERAY-PATCHED-1"

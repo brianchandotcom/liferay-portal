@@ -36,16 +36,21 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.felix.cm.PersistenceManager;
 
 /**
  * @author Sam Ziemer
  */
 public class UpgradeReport {
 
-	public UpgradeReport() {
+	public UpgradeReport(PersistenceManager persistenceManager) {
+		_persistenceManager = persistenceManager;
+
 		_setInitialBuildNumber();
 
 		if ((_initialBuildNumber != -1) &&
@@ -171,11 +176,43 @@ public class UpgradeReport {
 
 		sb.append(StringPool.NEW_LINE);
 
-		if (dlStore.contains("AdvancedFileSystemStore")) {
-			sb.append(
-				"Please check your OSGi configuration files to ensure " +
-					"rootDir has been set properly");
+		String rootDir = null;
 
+		if (dlStore.equals(
+				"com.liferay.portal.store.file.system.AdvancedFileSystemStore")) {
+
+			try {
+				Dictionary<String, String> configurations =
+					_persistenceManager.load(_ADVACNED_FILE_SYSTEM_STORE_PID);
+
+				if (configurations != null) {
+					rootDir = configurations.get("rootDir");
+				}
+			}
+			catch (IOException ioException) {
+			}
+		}
+		else if (dlStore.equals(
+					"com.liferay.portal.store.file.system.FileSystemStore")) {
+
+			try {
+				Dictionary<String, String> configurations =
+					_persistenceManager.load(_FILE_SYSTEM_STORE_PID);
+
+				if (configurations != null) {
+					rootDir = configurations.get("rootDir");
+				}
+			}
+			catch (IOException ioException) {
+			}
+		}
+
+		if (rootDir != null) {
+			sb.append("rootDir=" + rootDir);
+			sb.append(StringPool.NEW_LINE);
+		}
+		else if (dlStore.contains("FileSystemStore")) {
+			sb.append("rootDir was not set");
 			sb.append(StringPool.NEW_LINE);
 		}
 
@@ -235,6 +272,12 @@ public class UpgradeReport {
 		_initialSchemaVersion = _getSchemaVersion();
 	}
 
+	private static final String _ADVACNED_FILE_SYSTEM_STORE_PID =
+		"com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration";
+
+	private static final String _FILE_SYSTEM_STORE_PID =
+		"com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration";
+
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
 	private final Map<String, ArrayList<String>> _errorMessages =
@@ -243,6 +286,7 @@ public class UpgradeReport {
 		new ConcurrentHashMap<>();
 	private int _initialBuildNumber = -1;
 	private String _initialSchemaVersion;
+	private final PersistenceManager _persistenceManager;
 	private final Map<String, ArrayList<String>> _warningMessages =
 		new ConcurrentHashMap<>();
 

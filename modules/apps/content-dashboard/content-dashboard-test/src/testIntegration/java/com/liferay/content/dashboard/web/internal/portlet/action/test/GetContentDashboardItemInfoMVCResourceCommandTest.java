@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.test;
+package com.liferay.content.dashboard.web.internal.portlet.action.test;
 
 /**
  * @author Yurena Cabrera
@@ -57,7 +57,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Yurena Cabrera
  */
 @RunWith(Arquillian.class)
-public class FileEntryContentDashboardItemTest {
+public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule

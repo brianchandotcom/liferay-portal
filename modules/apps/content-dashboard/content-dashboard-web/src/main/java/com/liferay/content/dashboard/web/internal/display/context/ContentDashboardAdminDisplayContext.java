@@ -331,7 +331,7 @@ public class ContentDashboardAdminDisplayContext {
 
 	public List<String> getExtensions() {
 		return Arrays.asList(
-			ParamUtil.getStringValues(_liferayPortletRequest, "extensions"));
+			ParamUtil.getStringValues(_liferayPortletRequest, "extension"));
 	}
 
 	public String getOnClickConfiguration() throws WindowStateException {

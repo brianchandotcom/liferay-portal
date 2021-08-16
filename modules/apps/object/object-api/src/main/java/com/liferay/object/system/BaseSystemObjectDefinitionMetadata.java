@@ -18,7 +18,11 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Locale;
 import java.util.Map;
 
@@ -30,8 +34,7 @@ public abstract class BaseSystemObjectDefinitionMetadata
 	implements SystemObjectDefinitionMetadata {
 
 	protected Map<Locale, String> createLabelMap(String labelKey) {
-		return LocalizedMapUtil.getLocalizedMap(
-			labelKey, LocaleUtil.getDefault());
+		return LocalizedMapUtil.getLocalizedMap(_translate(labelKey));
 	}
 
 	protected ObjectField createObjectField(
@@ -45,9 +48,11 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		String type) {
 
 		return ObjectFieldUtil.createObjectField(
-			dbColumnName,
-			LocalizedMapUtil.getLocalizedMap(labelKey, LocaleUtil.getDefault()),
-			name, required, type);
+			dbColumnName, _translate(labelKey), name, required, type);
+	}
+
+	private String _translate(String labelKey) {
+		return LanguageUtil.get(LocaleUtil.getDefault(), labelKey);
 	}
 
 }

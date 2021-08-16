@@ -14,7 +14,7 @@
 
 package com.liferay.object.util;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -25,11 +25,8 @@ import java.util.Map;
  */
 public class LocalizedMapUtil {
 
-	public static Map<Locale, String> getLocalizedMap(
-		String labelKey, Locale locale) {
-
-		return Collections.singletonMap(
-			locale, LanguageUtil.get(locale, labelKey));
+	public static Map<Locale, String> getLocalizedMap(String label) {
+		return Collections.singletonMap(LocaleUtil.getDefault(), label);
 	}
 
 }

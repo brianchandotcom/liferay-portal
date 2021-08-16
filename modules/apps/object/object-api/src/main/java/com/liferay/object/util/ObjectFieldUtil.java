@@ -27,27 +27,24 @@ import java.util.Map;
 public class ObjectFieldUtil {
 
 	public static ObjectField createObjectField(
-		Locale defaultLocale, boolean indexed, boolean indexedAsKeyword,
+		boolean indexed, boolean indexedAsKeyword,
 		String label, String name, boolean required, String type) {
 
 		return createObjectField(
-			null, indexed, indexedAsKeyword, null,
-			Collections.singletonMap(defaultLocale, label), name, required,
-			type);
+			null, indexed, indexedAsKeyword, null, label, name, required, type);
 	}
 
 	public static ObjectField createObjectField(
-		Locale defaultLocale, String label, String name, boolean required,
+		String label, String name, boolean required,
 		String type) {
 
 		return createObjectField(
-			null, Collections.singletonMap(defaultLocale, label), name,
-			required, type);
+			null, label, name, required, type);
 	}
 
 	public static ObjectField createObjectField(
 		String dbColumnName, boolean indexed, boolean indexedAsKeyword,
-		String indexedLanguageId, Map<Locale, String> labelMap, String name,
+		String indexedLanguageId, String label, String name,
 		boolean required, String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
@@ -57,7 +54,7 @@ public class ObjectFieldUtil {
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
-		objectField.setLabelMap(labelMap);
+		objectField.setLabelMap(LocalizedMapUtil.getLocalizedMap(label));
 		objectField.setName(name);
 		objectField.setRequired(required);
 		objectField.setType(type);
@@ -66,11 +63,11 @@ public class ObjectFieldUtil {
 	}
 
 	public static ObjectField createObjectField(
-		String dbColumnName, Map<Locale, String> labelMap, String name,
+		String dbColumnName, String label, String name,
 		boolean required, String type) {
 
 		return createObjectField(
-			dbColumnName, false, false, null, labelMap, name, required, type);
+			dbColumnName, false, false, null, label, name, required, type);
 	}
 
 }

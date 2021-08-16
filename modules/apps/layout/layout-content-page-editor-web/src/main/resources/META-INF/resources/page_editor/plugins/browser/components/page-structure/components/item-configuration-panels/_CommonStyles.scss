@@ -1,0 +1,11 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__common-styles {
+			.page-editor__sidebar__fieldset--no-label {
+				margin-top: $pageEditorSpacing * 2;
+			}
+		}
+	}
+}

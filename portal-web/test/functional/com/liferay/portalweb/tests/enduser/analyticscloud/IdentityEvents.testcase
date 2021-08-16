@@ -1,62 +1,59 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    setUp {
-        ACUtils.launchAC();
+	setUp {
+		ACUtils.launchAC();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        ACUtils.launchDXP();
+		ACUtils.launchDXP();
+	}
 
-    }
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+		ACUtils.tearDownDXP();
 
-        ACUtils.tearDownDXP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-
-        ACUtils.tearDownAC();
-    }
-
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8713 | Test Summary: Check Identity triggers upon logging in and check its properties (see reference document in comments)"
-    @ignore = "true"
-    @priority = "5"
-    test CheckIdentityUponLoginInAndCheckProperties {
-
-        // TODO LRAC-8713 CheckIdentityUponLoginInAndCheckProperties pending implementation
-
-    }
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8714 | Test Summary: Check Identity is triggered when logging out and in again"
-    @ignore = "true"
-    @priority = "3"
-    test CheckIdentityTriggeredWhenLoggingOutAndAgain {
-
-        // TODO LRAC-8714 CheckIdentityTriggeredWhenLoggingOutAndAgain pending implementation
-
-    }
-
-
-
+		ACUtils.tearDownAC();
+	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8715 | Test Summary: Check identity is triggered when logging in after a unintended session close"
-    @ignore = "true"
-    @priority = "3"
-    test CheckIdentityTriggeredWhenLoggingAfterASessionClose {
+	@ignore = "true"
+	@priority = "3"
+	test CheckIdentityTriggeredWhenLoggingAfterASessionClose {
 
-        // TODO LRAC-8715 CheckIdentityTriggeredWhenLoggingAfterASessionClose pending implementation
+		// TODO LRAC-8715 CheckIdentityTriggeredWhenLoggingAfterASessionClose pending implementation
 
-    }
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8714 | Test Summary: Check Identity is triggered when logging out and in again"
+	@ignore = "true"
+	@priority = "3"
+	test CheckIdentityTriggeredWhenLoggingOutAndAgain {
+
+		// TODO LRAC-8714 CheckIdentityTriggeredWhenLoggingOutAndAgain pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8713 | Test Summary: Check Identity triggers upon logging in and check its properties (see reference document in comments)"
+	@ignore = "true"
+	@priority = "5"
+	test CheckIdentityUponLoginInAndCheckProperties {
+
+		// TODO LRAC-8713 CheckIdentityUponLoginInAndCheckProperties pending implementation
+
+	}
+
 }

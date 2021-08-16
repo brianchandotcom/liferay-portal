@@ -86,8 +86,12 @@ html#{$cadmin-selector} {
 				}
 
 				&--disabled {
+					color: $cadmin-secondary-l1;
 					cursor: not-allowed;
-					opacity: 0.4;
+				}
+
+				&--hidden {
+					color: $cadmin-secondary-l1;
 				}
 
 				&--mapped {
@@ -95,7 +99,8 @@ html#{$cadmin-selector} {
 				}
 			}
 
-			&__remove-button {
+			&__remove-button,
+			&__visibility-button {
 				color: $cadmin-secondary;
 				margin-left: 8px;
 				opacity: 0;
@@ -103,6 +108,10 @@ html#{$cadmin-selector} {
 
 				&--visible {
 					opacity: 1;
+				}
+
+				.lexicon-icon-hidden {
+					color: $cadmin-secondary-l1;
 				}
 			}
 		}

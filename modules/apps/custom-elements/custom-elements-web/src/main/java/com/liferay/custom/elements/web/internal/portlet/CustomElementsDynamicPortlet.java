@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,11 +31,9 @@ import java.io.PrintWriter;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -66,45 +65,37 @@ public class CustomElementsDynamicPortlet extends MVCPortlet {
 			throw new IllegalStateException("Portlet is already registered");
 		}
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put(
-			"com.liferay.portlet.css-class-wrapper",
-			"portlet-custom-element-portlet");
-
-		Collection<String> cssURLs = StringUtil.split(
-			_customElementsPortletDescriptor.getCSSURLs(), CharPool.NEW_LINE);
-
-		properties.put(
-			"com.liferay.portlet.header-portal-css",
-			cssURLs.toArray(new String[0]));
-
-		properties.put(
-			"com.liferay.portlet.display-category", "category.sample");
-		properties.put(
-			"com.liferay.portlet.instanceable",
-			_customElementsPortletDescriptor.isInstanceable());
-		properties.put("javax.portlet.name", _getPortletName());
-		properties.put("javax.portlet.security-role-ref", "power-user,user");
-		properties.put(
-			"javax.portlet.resource-bundle", _getResourceBundleName());
-		properties.put(
-			"target.deployment.company",
-			_customElementsPortletDescriptor.getCompanyId());
-
 		_serviceRegistration = bundleContext.registerService(
-			Portlet.class, this, properties);
-
-		properties = new Hashtable<>();
-
-		properties.put("resource.bundle.base.name", _getResourceBundleName());
-		properties.put(
-			"servlet.context.name", "com.liferay.custom.elements.web");
+			Portlet.class, this,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"com.liferay.portlet.company",
+				_customElementsPortletDescriptor.getCompanyId()
+			).put(
+				"com.liferay.portlet.css-class-wrapper",
+				"portlet-custom-element-portlet"
+			).put(
+				"com.liferay.portlet.display-category", "category.sample"
+			).put(
+				"com.liferay.portlet.header-portal-css", _getCSSURLs()
+			).put(
+				"com.liferay.portlet.instanceable",
+				_customElementsPortletDescriptor.isInstanceable()
+			).put(
+				"javax.portlet.name", _getPortletName()
+			).put(
+				"javax.portlet.resource-bundle", _getResourceBundleName()
+			).put(
+				"javax.portlet.security-role-ref", "power-user,user"
+			).build());
 
 		_resourceBundleLoaderServiceRegistration =
 			bundleContext.registerService(
 				ResourceBundleLoader.class, locale -> _getResourceBundle(),
-				properties);
+				HashMapDictionaryBuilder.<String, Object>put(
+					"resource.bundle.base.name", _getResourceBundleName()
+				).put(
+					"servlet.context.name", "com.liferay.custom.elements.web"
+				).build());
 	}
 
 	@Override
@@ -154,6 +145,13 @@ public class CustomElementsDynamicPortlet extends MVCPortlet {
 
 		_resourceBundleLoaderServiceRegistration = null;
 		_serviceRegistration = null;
+	}
+
+	private String[] _getCSSURLs() {
+		List<String> cssURLs = StringUtil.split(
+			_customElementsPortletDescriptor.getCSSURLs(), CharPool.NEW_LINE);
+
+		return cssURLs.toArray(new String[0]);
 	}
 
 	private String _getPortletName() {

@@ -334,6 +334,20 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro addWithCustomAbstractViaAP {
+		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomAbstract(entryAbstractDescription = "${entryAbstractDescription}");
+
+		PortletEntry.publish();
+	}
+
 	macro addWithDefaultAbstract {
 		BlogsNavigator.gotoAddEntry();
 

@@ -248,11 +248,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEGMENT_MEMBERSHIP_BUTTON</td>
-	<td>//div[@class='total-members']/following-sibling::button</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEXT_INPUT</td>
 	<td>xpath=(//div[contains(@class,'criteria-statement')]//div[contains(@class,'input-group-item')]//input[@type='text'])[${index}]</td>
 	<td></td>

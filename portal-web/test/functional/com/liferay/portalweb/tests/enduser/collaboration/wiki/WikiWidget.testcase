@@ -1,0 +1,51 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Wiki";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Display Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Display Test Page",
+			widgetName = "Wiki Display");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiNode.tearDownCP();
+
+			WikiPage.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-136997. It checks that pages can be viewed using the Tree Menu."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewPagesViaTreeMenu {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136997 CanViewPagesViaTreeMenu pending implementation
+
+	}
+
+}

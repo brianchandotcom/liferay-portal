@@ -1,0 +1,121 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Wiki";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			widgetName = "Wiki");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiPage.tearDownCP();
+
+			WikiNode.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-136983. It checks that an external link can be accessed from a wiki page."
+	@ignore = "true"
+	@priority = "3"
+	test CanAccessExternalLink {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136983 CanAccessExternalLink pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136987. It checks that related assets can be added to a page."
+	@ignore = "true"
+	@priority = "3"
+	test CanAddRelatedAssets {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136987 CanAddRelatedAssets pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136985. It checks that a summary can be added to a page."
+	@ignore = "true"
+	@priority = "3"
+	test CanAddSummary {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136985 CanAddSummary pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136988. It checks that a table of contents can be added to a page."
+	@ignore = "true"
+	@priority = "3"
+	test CanAddTableOfContents {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136988 CanAddTableOfContents pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136995. It checks that page versions can be compared."
+	@ignore = "true"
+	@priority = "3"
+	test CanComparePageVersions {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136995 CanComparePageVersions pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136996. It checks that a minor change can be created for a page."
+	@ignore = "true"
+	@priority = "3"
+	test CanCreateMinorChange {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136996 CanCreateMinorChange pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136989. It checks that pages can be imported into a specific node."
+	@ignore = "true"
+	@priority = "3"
+	test CanImportPagesIntoSpecificNode {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136989 CanImportPagesIntoSpecificNode pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136984. It checks that Javascript will not be excuted from the page title."
+	@ignore = "true"
+	@priority = "3"
+	test TitleWillNotExecuteXSS {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136984 TitleWillNotExecuteXSS pending implementation
+
+	}
+
+}

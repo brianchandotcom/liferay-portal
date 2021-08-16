@@ -1,0 +1,61 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Wiki";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			widgetName = "Wiki");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			WikiPage.tearDownCP();
+
+			WikiNode.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-136991. It checks that a wiki page can be viewed in Arabic."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewEntryInArabic {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136991 CanViewEntryInArabic pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136990. It checks that a wiki page can be viewed in Japanese."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewEntryInJapanese {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136990 CanViewEntryInJapanese pending implementation
+
+	}
+
+}

@@ -35,6 +35,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136986. It checks that page permissions can be configured via More Options."
+	@ignore = "true"
+	@priority = "3"
+	test CanConfigurePermissionsViaMoreOptions {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136986 CanConfigurePermissionsViaMoreOptions pending implementation
+
+	}
+
 	@description = "This ensures that a regular role with permissions can delete a wiki node."
 	@priority = "4"
 	@refactordone

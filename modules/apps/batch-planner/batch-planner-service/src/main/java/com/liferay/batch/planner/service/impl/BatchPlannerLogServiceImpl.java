@@ -79,6 +79,28 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 			batchPlannerPlanId);
 	}
 
+	@Override
+	public List<BatchPlannerLog> getBatchPlannerLogs(
+			long batchPlannerPlanId, int start, int end)
+		throws PortalException {
+
+		_batchPlannerPlanModelResourcePermission.check(
+			getPermissionChecker(), batchPlannerPlanId, ActionKeys.VIEW);
+
+		return batchPlannerLogPersistence.findByBatchPlannerPlanId(
+			batchPlannerPlanId, start, end);
+	}
+
+	public int getBatchPlannerLogsCount(long batchPlannerPlanId)
+		throws PortalException {
+
+		_batchPlannerPlanModelResourcePermission.check(
+			getPermissionChecker(), batchPlannerPlanId, ActionKeys.VIEW);
+
+		return batchPlannerLogPersistence.countByBatchPlannerPlanId(
+			batchPlannerPlanId);
+	}
+
 	private static volatile ModelResourcePermission<BatchPlannerPlan>
 		_batchPlannerPlanModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

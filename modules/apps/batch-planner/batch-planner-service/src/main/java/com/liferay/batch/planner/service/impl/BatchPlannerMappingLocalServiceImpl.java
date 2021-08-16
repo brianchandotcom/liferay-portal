@@ -87,12 +87,12 @@ public class BatchPlannerMappingLocalServiceImpl
 	@Override
 	public BatchPlannerMapping deleteBatchPlannerMapping(
 			long batchPlannerPlanId, String externalFieldName,
-			String internalName)
+			String internalFieldName)
 		throws PortalException {
 
 		BatchPlannerMapping batchPlannerMapping =
 			batchPlannerMappingPersistence.findByBPPI_EFN_IFN(
-				batchPlannerPlanId, externalFieldName, internalName);
+				batchPlannerPlanId, externalFieldName, internalFieldName);
 
 		return batchPlannerMappingPersistence.remove(batchPlannerMapping);
 	}
@@ -103,6 +103,23 @@ public class BatchPlannerMappingLocalServiceImpl
 
 		return batchPlannerMappingPersistence.findByBatchPlannerPlanId(
 			batchPlannerPlanId);
+	}
+
+	@Override
+	public BatchPlannerMapping updateBatchPlannerMapping(
+			long batchPlannerMappingId, String externalFieldName,
+			String externalFieldType, String script)
+		throws PortalException {
+
+		BatchPlannerMapping batchPlannerMapping =
+			batchPlannerMappingPersistence.findByPrimaryKey(
+				batchPlannerMappingId);
+
+		batchPlannerMapping.setExternalFieldName(externalFieldName);
+		batchPlannerMapping.setExternalFieldType(externalFieldType);
+		batchPlannerMapping.setScript(script);
+
+		return batchPlannerMappingPersistence.update(batchPlannerMapping);
 	}
 
 	private void _validateExternalFieldName(String externalFieldName)

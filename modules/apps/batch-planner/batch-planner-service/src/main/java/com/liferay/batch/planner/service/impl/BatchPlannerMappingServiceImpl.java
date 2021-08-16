@@ -80,6 +80,25 @@ public class BatchPlannerMappingServiceImpl
 			batchPlannerPlanId);
 	}
 
+	@Override
+	public BatchPlannerMapping updateBatchPlannerMapping(
+			long batchPlannerMappingId, String externalFieldName,
+			String externalFieldType, String script)
+		throws PortalException {
+
+		BatchPlannerMapping batchPlannerMapping =
+			batchPlannerMappingPersistence.findByPrimaryKey(
+				batchPlannerMappingId);
+
+		_batchPlannerPlanModelResourcePermission.check(
+			getPermissionChecker(), batchPlannerMapping.getBatchPlannerPlanId(),
+			ActionKeys.UPDATE);
+
+		return batchPlannerMappingLocalService.updateBatchPlannerMapping(
+			batchPlannerMappingId, externalFieldName, externalFieldType,
+			script);
+	}
+
 	private static volatile ModelResourcePermission<BatchPlannerPlan>
 		_batchPlannerPlanModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

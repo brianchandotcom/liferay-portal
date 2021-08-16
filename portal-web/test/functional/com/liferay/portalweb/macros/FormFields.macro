@@ -2,6 +2,23 @@ definition {
 
 	var rowNumber = "1";
 
+	macro addParagraphLinkToAURL {
+		Click(
+			key_titleName = "Link",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "FormFields#PARAGRAPH_LINK_MODAL");
+
+		SelectFrame(value1 = "relative=top");
+
+		Type(
+			fieldLabel = "URL",
+			locator1 = "FormFields#PARAGRAPH_LINK_TEXT_INPUT",
+			value1 = "${paragraphLink}");
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+	}
+
 	macro addRepeatableField {
 		Pause(locator1 = "2000");
 

@@ -640,13 +640,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PARAGRAPH_SPECIFIC_FIELD_BY_BODY</td>
-	<td>//div[@class='liferay-ddm-form-field-paragraph-text']/p[contains(.,'${key_bodyName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PARAGRAPH_LINK_SELECTOR</td>
-	<td>//div//label[text()='${fieldLabel}']//..//select//option[@value='${optionValue}']</td>
+	<td>PARAGRAPH_LINK_MODAL</td>
+	<td>//*[contains(@class,'cke_dialog_contents')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -657,6 +652,11 @@
 <tr>
 	<td>PARAGRAPH_LINK_TEXT_INPUT</td>
 	<td>//div[@class='cke_dialog_body']//label[text()='${fieldLabel}']//..//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_SPECIFIC_FIELD_BY_BODY</td>
+	<td>//div[@class='liferay-ddm-form-field-paragraph-text']/p[contains(.,'${key_bodyName}')]</td>
 	<td></td>
 </tr>
 <tr>

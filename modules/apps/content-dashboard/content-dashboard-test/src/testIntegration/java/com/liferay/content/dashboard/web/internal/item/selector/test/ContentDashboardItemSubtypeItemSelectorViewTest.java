@@ -15,7 +15,7 @@
 package com.liferay.content.dashboard.web.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.content.dashboard.web.internal.item.test.utils.ContentDashboardTestUtils;
+import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -189,9 +189,9 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
-			ContentDashboardTestUtils.getThemeDisplay(_group.getGroupId()));
+			ContentDashboardTestUtil.getThemeDisplay(_group.getGroupId()));
 
-		ContentDashboardTestUtils.
+		ContentDashboardTestUtil.
 			withFFContentDashboardDocumentConfigurationEnabled(
 				() -> _contentDashboardItemSubtypeItemSelectorView.renderHTML(
 					mockHttpServletRequest, new MockHttpServletResponse(), null,

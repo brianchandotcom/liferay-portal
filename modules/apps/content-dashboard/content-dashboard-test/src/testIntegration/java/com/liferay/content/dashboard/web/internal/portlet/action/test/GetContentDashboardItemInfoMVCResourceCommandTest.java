@@ -18,7 +18,7 @@ package com.liferay.content.dashboard.web.internal.portlet.action.test;
  * @author Yurena Cabrera
  */
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.content.dashboard.web.internal.item.test.utils.ContentDashboardTestUtils;
+import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -74,7 +74,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testGetSpecificFields() throws Exception {
-		ContentDashboardTestUtils.
+		ContentDashboardTestUtil.
 			withFFContentDashboardDocumentConfigurationEnabled(
 				() -> {
 					FileEntry fileEntry = _addFileEntry();
@@ -126,7 +126,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		mockLiferayResourceRequest.setParameter(
 			"classPK", String.valueOf(classPK));
 
-		ThemeDisplay themeDisplay = ContentDashboardTestUtils.getThemeDisplay(
+		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
 			_group.getGroupId());
 
 		mockLiferayResourceRequest.setAttribute(

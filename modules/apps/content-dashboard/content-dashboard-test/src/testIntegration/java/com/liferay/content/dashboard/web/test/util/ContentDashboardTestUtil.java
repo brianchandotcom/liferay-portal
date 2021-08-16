@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.test.utils;
+package com.liferay.content.dashboard.web.test.util;
 
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -26,7 +26,7 @@ import java.util.Dictionary;
 /**
  * @author Yurena Cabrera
  */
-public class ContentDashboardTestUtils {
+public class ContentDashboardTestUtil {
 
 	public static ThemeDisplay getThemeDisplay(long groupId) {
 		ThemeDisplay themeDisplay = new ThemeDisplay();

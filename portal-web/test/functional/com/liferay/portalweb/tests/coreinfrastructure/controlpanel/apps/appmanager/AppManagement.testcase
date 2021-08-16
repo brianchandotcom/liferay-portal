@@ -132,8 +132,8 @@ definition {
 
 	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateAdaptiveMedia {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateAdaptiveMedia";
+	test CanDeactivateAndActivateAdaptiveMedia {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateAdaptiveMedia";
 		property testray.main.component.name = "Adaptive Media";
 
 		ApplicationsMenu.gotoPortlet(
@@ -164,8 +164,8 @@ definition {
 
 	@description = "This ensures that the Asset Libraries app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateAssetLibraries {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateAssetLibraries";
+	test CanDeactivateAndActivateAssetLibraries {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateAssetLibraries";
 		property testray.main.component.name = "Depot";
 
 		ApplicationsMenu.gotoPortlet(
@@ -196,8 +196,8 @@ definition {
 
 	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateBlogs {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateBlogs";
+	test CanDeactivateAndActivateBlogs {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateBlogs";
 		property testray.main.component.name = "Blogs";
 
 		ApplicationsMenu.gotoPortlet(
@@ -228,8 +228,8 @@ definition {
 
 	@description = "This ensures that the Comment app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateComment {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateComment";
+	test CanDeactivateAndActivateComment {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateComment";
 		property testray.main.component.name = "Content Page Review";
 
 		ApplicationsMenu.gotoPortlet(
@@ -260,8 +260,8 @@ definition {
 
 	@description = "This ensures that the Document Library Opener app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateDocumentLibraryOpener {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateDocumentLibraryOpener";
+	test CanDeactivateAndActivateDocumentLibraryOpener {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateDocumentLibraryOpener";
 		property testray.main.component.name = "Document Management";
 
 		ApplicationsMenu.gotoPortlet(
@@ -292,8 +292,8 @@ definition {
 
 	@description = "This ensures that the Knowledge Base app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateKnowledgeBase {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateKnowledgeBase";
+	test CanDeactivateAndActivateKnowledgeBase {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateKnowledgeBase";
 		property testray.main.component.name = "Knowledge Base";
 
 		ApplicationsMenu.gotoPortlet(
@@ -324,8 +324,8 @@ definition {
 
 	@description = "This ensures that the Message Boards app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateMessageBoards {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateMessageBoards";
+	test CanDeactivateAndActivateMessageBoards {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateMessageBoards";
 		property testray.main.component.name = "Message Boards";
 
 		ApplicationsMenu.gotoPortlet(
@@ -356,8 +356,8 @@ definition {
 
 	@description = "This ensures that the Notifications app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateNotifications {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateNotifications";
+	test CanDeactivateAndActivateNotifications {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateNotifications";
 		property testray.main.component.name = "Notifications";
 
 		ApplicationsMenu.gotoPortlet(
@@ -388,8 +388,8 @@ definition {
 
 	@description = "This ensures that the Questions app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateQuestions {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateQuestions";
+	test CanDeactivateAndActivateQuestions {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateQuestions";
 		property testray.main.component.name = "Questions";
 
 		ApplicationsMenu.gotoPortlet(
@@ -420,8 +420,8 @@ definition {
 
 	@description = "This ensures that the Ratings app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateRatings {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateRatings";
+	test CanDeactivateAndActivateRatings {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateRatings";
 		property testray.main.component.name = "Ratings";
 
 		ApplicationsMenu.gotoPortlet(
@@ -452,8 +452,8 @@ definition {
 
 	@description = "This ensures that the Sharing app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateSharing {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateSharing";
+	test CanDeactivateAndActivateSharing {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateSharing";
 		property testray.main.component.name = "Asset Sharing";
 
 		ApplicationsMenu.gotoPortlet(
@@ -484,8 +484,8 @@ definition {
 
 	@description = "This ensures that the Translation app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateTranslation {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateTranslation";
+	test CanDeactivateAndActivateTranslation {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateTranslation";
 		property testray.main.component.name = "Translation Management";
 
 		ApplicationsMenu.gotoPortlet(
@@ -516,8 +516,8 @@ definition {
 
 	@description = "This ensures that the Wiki app in the app manager can be deactivated and reactivated."
 	@priority = "5"
-	test DeactivateAndActivateWiki {
-		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateWiki";
+	test CanDeactivateAndActivateWiki {
+		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateWiki";
 		property testray.main.component.name = "Wiki";
 
 		ApplicationsMenu.gotoPortlet(

@@ -172,8 +172,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
 
-		assetEntryQuery.setOrderByCol1(Field.TITLE);
-		assetEntryQuery.setOrderByType1("ASC");
+		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
+		assetEntryQuery.setOrderByType1("DESC");
 
 		return assetEntryQuery;
 	}

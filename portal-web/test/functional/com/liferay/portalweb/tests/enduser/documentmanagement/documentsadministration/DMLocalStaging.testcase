@@ -70,6 +70,126 @@ definition {
 			value1 = "Error:At least one field must be added.");
 	}
 
+	@description = "This is a test for LPS-136819. It checks that a file version can be deleted and published."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishDeletedFileVersion {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136819 CanPublishDeletedFileVersion pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136824. It checks that a folder with multiple files can be deleted using the normal publication process."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishDeletedFolderWithMultipleFiles {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136824 CanPublishDeletedFolderWithMultipleFiles pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136818. It checks that a folder with multiple files can be published using the SAP."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishFolderWithMultipleFilesViaSAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136818 CanPublishFolderWithMultipleFilesViaSAP pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136828. It checks that multiple metadata sets can be published."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishMetadataSets {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136828 CanPublishRelatedAsset pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136823. It checks that a minor version of a file can be published."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishMinorVersion {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136823 CanPublishMinorVersion pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136827. It checks that the related asset of a file can be published."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishRelatedAsset {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136827 CanPublishRelatedAsset pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136821. It checks that a repository can be published."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishRepository {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136821 CanPublishRepository pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136826. It checks that a shortcut can be published using the normal publication process."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishShortcut {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136826 CanPublishShortcut pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136817. It checks that a shortcut can be published using the SAP."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishShortcutViaSAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136817 CanPublishShortcutViaSAP pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136822. It checks that a document type can be updated and published using the normal publication process."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishUpdatedDocumentType {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136822 CanPublishUpdatedDocumentType pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136830. It checks that a shortcut can be updated and published."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishUpdatedShortcut {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136830 CanPublishUpdatedShortcut pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136831. It checks that a file can be replaced and republished."
+	@ignore = "true"
+	@priority = "3"
+	test CanReplaceFileAndRepublish {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136831 CanReplaceFileAndRepublish pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-74621."
 	@priority = "3"
 	@refactorneeded
@@ -286,6 +406,16 @@ definition {
 			dmDocumentTitle = "DM Document Title Edit",
 			dmDocumentType = "DM Document Type Name",
 			previewImage = "Image_2.jpg");
+	}
+
+	@description = "This is a test for LPS-136820. It checks that a pending file entry will not be published to live."
+	@ignore = "true"
+	@priority = "4"
+	test PendingEntryWillNotBePublishedToLive {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136820 PendingEntryWillNotBePublishedToLive pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-79925."

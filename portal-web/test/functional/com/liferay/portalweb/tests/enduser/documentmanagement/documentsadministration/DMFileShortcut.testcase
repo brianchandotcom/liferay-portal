@@ -1,0 +1,196 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-82073."
+	@priority = "5"
+	@refactorneeded
+	test AddShortcutToSiteDocument {
+		property testray.component.names = "Training";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "DM Document Title",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This is a test for LPS-136839. It checks that a shortcut can still be accessed after the target is moved."
+	@ignore = "true"
+	@priority = "4"
+	test CanAccessAfterMovingTarget {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136839 CanAccessAfterMovingTarget pending implementation
+
+	}
+
+	@description = "This ensures that the user can edit the shortcut."
+	@priority = "4"
+	@refactorneeded
+	test EditShortcutDestination {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.jpg",
+				groupName = "Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "Document_1.jpg",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editDMShortcutCP(
+			dmDocumentTitle = "Document_1.jpg",
+			dmNewDocumentTitle = "Document_2.jpg",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_2.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg");
+	}
+
+	@description = "This ensures that the shortcut is deleted after deleting the shortcut target."
+	@priority = "4"
+	@refactorneeded
+	test ViewShortcutAfterDeletingTarget {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "Document_1.jpg",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewDefault();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewDefault();
+	}
+
+	@description = "This ensures that the shortcut target is not deleted after deleting the shortcut."
+	@priority = "4"
+	@refactorneeded
+	test ViewTargetAfterDeletingShortcut {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "Document_1.jpg",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewDefault();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+	}
+
+}

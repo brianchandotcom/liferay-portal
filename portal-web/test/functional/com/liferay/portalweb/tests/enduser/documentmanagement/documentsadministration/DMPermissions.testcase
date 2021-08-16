@@ -677,6 +677,76 @@ definition {
 			value1 = "You do not have the required permissions.");
 	}
 
+	@description = "This is a test for LPS-136832. It checks that a guest cannot access a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotAccessFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136832 GuestCannotAccessFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136833. It checks that a guest cannot add a document in a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotAddDocumentInFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136833 GuestCannotAddDocumentInFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136834. It checks that a guest cannot delete a file without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotDeleteFile {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136834 GuestCannotDeleteFile pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136835. It checks that a guest cannot subscribe to a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotSubscribeToFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136835 GuestCannotSubscribeToFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136836. It checks that a guest cannot update comments in a file without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotUpdateComments {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136836 GuestCannotUpdateComments pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136837. It checks that a guest cannot update a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotUpdateFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136837 GuestCannotUpdateFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136838. It checks that a guest cannot view a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotViewFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136838 GuestCannotViewFolder pending implementation
+
+	}
+
 	@description = "This test covers LPS-106905. It ensures that a site admin user is able to select an image from the global site in WCD."
 	@priority = "3"
 	@refactorneeded
@@ -869,6 +939,136 @@ definition {
 		LAR.importPortlet(
 			larFileName = "moon-rocks-101-materials-structure.lar",
 			uploadFrom = "dependencies");
+	}
+
+	@description = "This is a test for LPS-136840. It checks that a site member cannot access a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotAccessFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136840 SiteMemberCannotAccessFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136841. It checks that a site member cannot add a document in a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotAddDocumentInFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136841 SiteMemberCannotAddDocumentInFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136842. It checks that a site member cannot add a shortcut without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotAddShortcut {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136842 SiteMemberCannotAddShortcut pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136845. It checks that a site member cannot delete a file without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotDeleteFile {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136845 SiteMemberCannotDeleteFile pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136846. It checks that a site member cannot delete a shortcut without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotDeleteShortcut {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136846 SiteMemberCannotDeleteShortcut pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136847. It checks that a site member cannot override a checkout process without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotOverrideCheckout {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136847 SiteMemberCannotOverrideCheckout pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136848. It checks that a site member cannot subscribe to a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotSubscribeToFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136848 SiteMemberCannotSubscribeToFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136849. It checks that a site member cannot update comments without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotUpdateComments {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136849 SiteMemberCannotUpdateComments pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136843. It checks that a site member cannot update the permissions of a file without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotUpdateFilePermissions {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136843 SiteMemberCannotUpdateFilePermissions pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136850. It checks that a site member cannot update a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotUpdateFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136850 SiteMemberCannotUpdateFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136844. It checks that a site member cannot update the permissions of a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotUpdateFolderPermissions {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136844 SiteMemberCannotUpdateFolderPermissions pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136851. It checks that a site member cannot view a file without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotViewFile {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136851 SiteMemberCannotViewFile pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136852. It checks that a site member cannot view a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotViewFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136852 SiteMemberCannotViewFolder pending implementation
+
 	}
 
 	@priority = "5"

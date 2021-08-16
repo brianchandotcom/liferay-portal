@@ -138,6 +138,16 @@ definition {
 			subject = "New Comments by Test Test");
 	}
 
+	@description = "This is a test for LPS-136816. It checks that custom fields can be rendered properly when a DM notification email is sent."
+	@ignore = "true"
+	@priority = "4"
+	test CanViewCustomFieldsInEmail {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136816 CanViewCustomFieldsInEmail pending implementation
+
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test CanViewEmailNotificationForNewDocumentInFolder {

@@ -1,0 +1,59 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a test for LPS-136855. It checks that a pending file cannot be added to another asset."
+	@ignore = "true"
+	@priority = "4"
+	test CannotAddPendingFileToAsset {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136855 CannotAddPendingFileToAsset pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136854. It checks that the single approver workflow can be removed from a folder."
+	@ignore = "true"
+	@priority = "3"
+	test CanRemoveWorkflowFromFolder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136854 CanRemoveWorkflowFromFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136853. It checks that a file can be resubmitted after it has been rejected."
+	@ignore = "true"
+	@priority = "4"
+	test CanResubmitRejectedDocument {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136853 CanResubmitRejectedDocument pending implementation
+
+	}
+
+}

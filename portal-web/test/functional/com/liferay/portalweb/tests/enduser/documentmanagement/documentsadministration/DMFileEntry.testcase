@@ -26,6 +26,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."
+	@ignore = "true"
+	@priority = "3"
+	test CanImportWithTags {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136825 CanImportWithTags pending implementation
+
+	}
+
 	@description = "This test ensures that the guest can see an expired document."
 	@priority = "4"
 	test CannotViewExpiredDocumentAsGuest {

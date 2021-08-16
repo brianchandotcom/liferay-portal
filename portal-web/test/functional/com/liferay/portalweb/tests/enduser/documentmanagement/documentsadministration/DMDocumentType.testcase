@@ -348,6 +348,16 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
 	}
 
+	@description = "This is a test for LPS-136815. It checks that a document type cannot be deleted when it is being used by a document."
+	@ignore = "true"
+	@priority = "4"
+	test CannotDeleteWhenBeingUsed {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136815 CannotDeleteWhenBeingUsed pending implementation
+
+	}
+
 	@description = "This test covers LPS-109066. It ensures that the localizable field available languages can be displayed correctly."
 	@priority = "3"
 	test CanViewLocalizableFieldCorrectAvailableLanguages {

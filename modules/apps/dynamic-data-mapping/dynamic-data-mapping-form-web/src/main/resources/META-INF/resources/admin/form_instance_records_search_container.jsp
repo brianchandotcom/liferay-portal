@@ -125,8 +125,9 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 						</c:when>
 						<c:when test="<%= StringUtil.equals(ddmFormField.getType(), DDMFormFieldTypeConstants.CHECKBOX) %>">
 							<c:choose>
-								<c:when test='<%= StringUtil.equals(ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), StringPool.BLANK, ddmFormFieldValuesMap.get(ddmFormField.getName())), "Yes") %>'>
+								<c:when test='<%= StringUtil.equals(ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), StringPool.BLANK, ddmFormFieldValuesMap.get(ddmFormField.getName())), LanguageUtil.get(ddmFormViewFormInstanceRecordsDisplayContext.getDefaultLocale(formInstanceRecord), "true")) %>'>
 									<liferay-ui:search-container-column-icon
+										cssClass="table-cell-expand"
 										icon="check"
 										name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
 									/>

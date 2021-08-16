@@ -178,9 +178,10 @@ public class CommerceDiscountRelServiceHttp {
 
 	public static java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCategoriesByCommerceDiscountId(
-				HttpPrincipal httpPrincipal, long commerceDiscountId,
-				String name, int start, int end) {
+				getCategoriesByCommerceDiscountId(
+					HttpPrincipal httpPrincipal, long commerceDiscountId,
+					String name, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -197,6 +198,13 @@ public class CommerceDiscountRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -215,7 +223,8 @@ public class CommerceDiscountRelServiceHttp {
 	}
 
 	public static int getCategoriesByCommerceDiscountIdCount(
-		HttpPrincipal httpPrincipal, long commerceDiscountId, String name) {
+			HttpPrincipal httpPrincipal, long commerceDiscountId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -232,6 +241,13 @@ public class CommerceDiscountRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -468,9 +484,10 @@ public class CommerceDiscountRelServiceHttp {
 
 	public static java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCommercePricingClassesByCommerceDiscountId(
-				HttpPrincipal httpPrincipal, long commerceDiscountId,
-				String title, int start, int end) {
+				getCommercePricingClassesByCommerceDiscountId(
+					HttpPrincipal httpPrincipal, long commerceDiscountId,
+					String title, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -487,6 +504,13 @@ public class CommerceDiscountRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -505,7 +529,8 @@ public class CommerceDiscountRelServiceHttp {
 	}
 
 	public static int getCommercePricingClassesByCommerceDiscountIdCount(
-		HttpPrincipal httpPrincipal, long commerceDiscountId, String title) {
+			HttpPrincipal httpPrincipal, long commerceDiscountId, String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -522,6 +547,13 @@ public class CommerceDiscountRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -539,9 +571,10 @@ public class CommerceDiscountRelServiceHttp {
 
 	public static java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCPDefinitionsByCommerceDiscountId(
-				HttpPrincipal httpPrincipal, long commerceDiscountId,
-				String name, String languageId, int start, int end) {
+				getCPDefinitionsByCommerceDiscountId(
+					HttpPrincipal httpPrincipal, long commerceDiscountId,
+					String name, String languageId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -558,6 +591,13 @@ public class CommerceDiscountRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -576,8 +616,9 @@ public class CommerceDiscountRelServiceHttp {
 	}
 
 	public static int getCPDefinitionsByCommerceDiscountIdCount(
-		HttpPrincipal httpPrincipal, long commerceDiscountId, String name,
-		String languageId) {
+			HttpPrincipal httpPrincipal, long commerceDiscountId, String name,
+			String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -594,6 +635,100 @@ public class CommerceDiscountRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+				getCPInstancesByCommerceDiscountId(
+					HttpPrincipal httpPrincipal, long commerceDiscountId,
+					String sku, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceDiscountRelServiceUtil.class,
+				"getCPInstancesByCommerceDiscountId",
+				_getCPInstancesByCommerceDiscountIdParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceDiscountId, sku, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.discount.model.CommerceDiscountRel>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCPInstancesByCommerceDiscountIdCount(
+			HttpPrincipal httpPrincipal, long commerceDiscountId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceDiscountRelServiceUtil.class,
+				"getCPInstancesByCommerceDiscountIdCount",
+				_getCPInstancesByCommerceDiscountIdCountParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceDiscountId, sku);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -658,5 +793,13 @@ public class CommerceDiscountRelServiceHttp {
 	private static final Class<?>[]
 		_getCPDefinitionsByCommerceDiscountIdCountParameterTypes13 =
 			new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[]
+		_getCPInstancesByCommerceDiscountIdParameterTypes14 = new Class[] {
+			long.class, String.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getCPInstancesByCommerceDiscountIdCountParameterTypes15 = new Class[] {
+			long.class, String.class
+		};
 
 }

@@ -137,6 +137,8 @@ definition {
 			index = "${index}",
 			locator1 = "ACSegments#TEXT_INPUT",
 			value1 = "${textInput}");
+
+		Click(locator1 = "ACSegments#TOTAL_MEMBERS");
 	}
 
 	macro editWebBehaviorCriterion {

@@ -248,6 +248,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOTAL_MEMBERS</td>
+	<td>//div[contains(@class,'total-members')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_INPUT</td>
 	<td>xpath=(//div[contains(@class,'criteria-statement')]//div[contains(@class,'input-group-item')]//input[@type='text'])[${index}]</td>
 	<td></td>

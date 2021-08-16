@@ -16,7 +16,7 @@ package com.liferay.custom.elements.web.internal.portlet.action;
 
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalService;
-import com.liferay.custom.elements.web.internal.CustomElementsDynamicPortletRegistrar;
+import com.liferay.custom.elements.web.internal.CustomElementsPortletRegistrar;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -56,7 +56,7 @@ public class DeleteCustomElementsPortletDescriptorMVCActionCommand
 				deleteCustomElementsPortletDescriptor(
 					customElementsPortletDescriptorId);
 
-		_customElementsDynamicPortletRegistrar.unregisterPortlet(
+		_customElementsPortletRegistrar.unregisterPortlet(
 			customElementsPortletDescriptor);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -67,11 +67,10 @@ public class DeleteCustomElementsPortletDescriptorMVCActionCommand
 	}
 
 	@Reference
-	private CustomElementsDynamicPortletRegistrar
-		_customElementsDynamicPortletRegistrar;
-
-	@Reference
 	private CustomElementsPortletDescriptorLocalService
 		_customElementsPortletDescriptorLocalService;
+
+	@Reference
+	private CustomElementsPortletRegistrar _customElementsPortletRegistrar;
 
 }

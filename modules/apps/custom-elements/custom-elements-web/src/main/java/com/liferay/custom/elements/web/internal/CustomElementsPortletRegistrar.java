@@ -16,7 +16,7 @@ package com.liferay.custom.elements.web.internal;
 
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalService;
-import com.liferay.custom.elements.web.internal.portlet.CustomElementsDynamicPortlet;
+import com.liferay.custom.elements.web.internal.portlet.CustomElementsPortlet;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,10 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(
-	immediate = true, service = CustomElementsDynamicPortletRegistrar.class
-)
-public class CustomElementsDynamicPortletRegistrar {
+@Component(immediate = true, service = CustomElementsPortletRegistrar.class)
+public class CustomElementsPortletRegistrar {
 
 	public void registerPortlet(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
@@ -57,7 +55,7 @@ public class CustomElementsDynamicPortletRegistrar {
 		_bundleContext = bundleContext;
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Starting custom elements dynamic portlets");
+			_log.info("Starting custom elements portlets");
 		}
 
 		for (CustomElementsPortletDescriptor customElementsPortletDescriptor :
@@ -72,71 +70,70 @@ public class CustomElementsDynamicPortletRegistrar {
 	@Deactivate
 	protected void deactivate() {
 		if (_log.isInfoEnabled()) {
-			_log.info("Stopping custom elements dynamic portlets");
+			_log.info("Stopping custom elements portlets");
 		}
 
-		for (long customElementPortletEntryId :
-				_customElementsDynamicPortlets.keySet()) {
+		for (long customElementsPortletDescriptorId :
+				_customElementsPortlets.keySet()) {
 
-			_unregisterPortlet(customElementPortletEntryId);
+			_unregisterPortlet(customElementsPortletDescriptorId);
 		}
 	}
 
 	private void _registerPortlet(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
-		CustomElementsDynamicPortlet customElementsDynamicPortlet =
-			new CustomElementsDynamicPortlet(customElementsPortletDescriptor);
+		CustomElementsPortlet customElementsPortlet = new CustomElementsPortlet(
+			customElementsPortletDescriptor);
 
 		long customElementsPortletDescriptorId =
 			customElementsPortletDescriptor.
 				getCustomElementsPortletDescriptorId();
 
-		CustomElementsDynamicPortlet existingCustomElementsDynamicPortlet =
-			_customElementsDynamicPortlets.putIfAbsent(
-				customElementsPortletDescriptorId,
-				customElementsDynamicPortlet);
+		CustomElementsPortlet existingCustomElementsPortlet =
+			_customElementsPortlets.putIfAbsent(
+				customElementsPortletDescriptorId, customElementsPortlet);
 
-		if (existingCustomElementsDynamicPortlet != null) {
+		if (existingCustomElementsPortlet != null) {
 			throw new IllegalStateException(
-				"Custom elements dynamic portlet " +
-					customElementsPortletDescriptorId +
-						" is already registered");
+				"Custom elements portlet " + customElementsPortletDescriptorId +
+					" is already registered");
 		}
 
-		customElementsDynamicPortlet.register(_bundleContext);
+		customElementsPortlet.register(_bundleContext);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Started custom elements dynamic portlet " +
-					customElementsDynamicPortlet.getName());
+				"Started custom elements portlet " +
+					customElementsPortlet.getName());
 		}
 	}
 
-	private void _unregisterPortlet(long customElementPortletEntryId) {
-		CustomElementsDynamicPortlet customElementsDynamicPortlet =
-			_customElementsDynamicPortlets.remove(customElementPortletEntryId);
+	private void _unregisterPortlet(long customElementsPortletDescriptorId) {
+		CustomElementsPortlet customElementsPortlet =
+			_customElementsPortlets.remove(customElementsPortletDescriptorId);
 
-		if (customElementsDynamicPortlet != null) {
-			customElementsDynamicPortlet.unregister();
+		if (customElementsPortlet != null) {
+			customElementsPortlet.unregister();
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Stopped custom elements dynamic portlet " +
-						customElementsDynamicPortlet.getName());
+					"Stopped custom elements portlet " +
+						customElementsPortlet.getName());
 			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomElementsDynamicPortletRegistrar.class);
+		CustomElementsPortletRegistrar.class);
 
 	private BundleContext _bundleContext;
-	private final ConcurrentMap<Long, CustomElementsDynamicPortlet>
-		_customElementsDynamicPortlets = new ConcurrentHashMap<>();
 
 	@Reference
 	private CustomElementsPortletDescriptorLocalService
 		_customElementsPortletDescriptorLocalService;
+
+	private final ConcurrentMap<Long, CustomElementsPortlet>
+		_customElementsPortlets = new ConcurrentHashMap<>();
 
 }

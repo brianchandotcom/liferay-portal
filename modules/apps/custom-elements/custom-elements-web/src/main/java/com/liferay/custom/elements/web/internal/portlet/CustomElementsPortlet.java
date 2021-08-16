@@ -48,9 +48,9 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Iván Zaera Avellón
  */
-public class CustomElementsDynamicPortlet extends MVCPortlet {
+public class CustomElementsPortlet extends MVCPortlet {
 
-	public CustomElementsDynamicPortlet(
+	public CustomElementsPortlet(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
 		_customElementsPortletDescriptor = customElementsPortletDescriptor;
@@ -206,7 +206,7 @@ public class CustomElementsDynamicPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomElementsDynamicPortlet.class);
+		CustomElementsPortlet.class);
 
 	private final CustomElementsPortletDescriptor
 		_customElementsPortletDescriptor;

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/custom_elements/init.jsp" %>
+<%@ include file="/custom_elements_source/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -29,7 +29,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(request, "add-custom-elements-source") : customElementsSource.getName());
 %>
 
-<portlet:actionURL name="/custom_elements/edit_custom_elements_source" var="editCustomElementsSourceURL" />
+<portlet:actionURL name="/custom_elements_source/edit_custom_elements_source" var="editCustomElementsSourceURL" />
 
 <clay:container-fluid>
 	<aui:form action="<%= editCustomElementsSourceURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCustomElementsSource();" %>'>
@@ -41,14 +41,11 @@ renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(reques
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="name">
-				</aui:input>
+				<aui:input name="name" />
 
-				<aui:input name="htmlElementName">
-				</aui:input>
+				<aui:input fieldParam="htmlElementName" name="HTMLElementName" />
 
-				<aui:input name="url">
-				</aui:input>
+				<aui:input fieldParam="url" name="URL" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

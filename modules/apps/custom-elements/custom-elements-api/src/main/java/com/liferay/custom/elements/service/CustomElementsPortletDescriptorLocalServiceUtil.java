@@ -63,6 +63,18 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 			customElementsPortletDescriptor);
 	}
 
+	public static CustomElementsPortletDescriptor
+			addCustomElementsPortletDescriptor(
+				String cssURLs, String htmlElementName, boolean instanceable,
+				String name, String properties,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCustomElementsPortletDescriptor(
+			cssURLs, htmlElementName, instanceable, name, properties,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new custom elements portlet descriptor with the primary key. Does not add the custom elements portlet descriptor to the database.
 	 *
@@ -343,6 +355,20 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<CustomElementsPortletDescriptor> search(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().search(companyId, keywords, start, end, sort);
+	}
+
+	public static int searchCount(long companyId, String keywords)
+		throws com.liferay.portal.kernel.search.SearchException {
+
+		return getService().searchCount(companyId, keywords);
+	}
+
 	/**
 	 * Updates the custom elements portlet descriptor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -359,6 +385,19 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 
 		return getService().updateCustomElementsPortletDescriptor(
 			customElementsPortletDescriptor);
+	}
+
+	public static CustomElementsPortletDescriptor
+			updateCustomElementsPortletDescriptor(
+				long customElementsSourceId, String cssURLs,
+				String htmlElementName, boolean instanceable, String name,
+				String properties,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCustomElementsPortletDescriptor(
+			customElementsSourceId, cssURLs, htmlElementName, instanceable,
+			name, properties, serviceContext);
 	}
 
 	public static CustomElementsPortletDescriptorLocalService getService() {

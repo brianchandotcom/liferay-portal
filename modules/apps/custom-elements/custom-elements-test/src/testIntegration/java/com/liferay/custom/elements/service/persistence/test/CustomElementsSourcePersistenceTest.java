@@ -216,15 +216,6 @@ public class CustomElementsSourcePersistenceTest {
 	}
 
 	@Test
-	public void testCountByName() throws Exception {
-		_persistence.countByName("");
-
-		_persistence.countByName("null");
-
-		_persistence.countByName((String)null);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CustomElementsSource newCustomElementsSource =
 			addCustomElementsSource();

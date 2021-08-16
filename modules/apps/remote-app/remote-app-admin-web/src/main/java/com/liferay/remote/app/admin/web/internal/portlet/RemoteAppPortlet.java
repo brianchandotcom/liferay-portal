@@ -19,15 +19,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -61,34 +60,36 @@ public class RemoteAppPortlet extends MVCPortlet {
 			throw new IllegalStateException("Portlet is already registered");
 		}
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put(
-			"com.liferay.portlet.company", _remoteAppEntry.getCompanyId());
-		properties.put(
-			"com.liferay.portlet.css-class-wrapper", "portlet-remote-app");
-		properties.put(
-			"com.liferay.portlet.display-category", "category.sample");
-		properties.put(
-			"com.liferay.portlet.header-portlet-css", "/display/css/main.css");
-		properties.put("com.liferay.portlet.instanceable", true);
-		properties.put("javax.portlet.name", _getPortletName());
-		properties.put("javax.portlet.security-role-ref", "power-user,user");
-		properties.put(
-			"javax.portlet.resource-bundle", _getResourceBundleName());
-
 		_serviceRegistration = bundleContext.registerService(
-			Portlet.class, this, properties);
-
-		properties = new Hashtable<>();
-
-		properties.put("resource.bundle.base.name", _getResourceBundleName());
-		properties.put("servlet.context.name", "remote-app-admin-web");
+			Portlet.class, this,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"com.liferay.portlet.company", _remoteAppEntry.getCompanyId()
+			).put(
+				"com.liferay.portlet.css-class-wrapper", "portlet-remote-app"
+			).put(
+				"com.liferay.portlet.display-category", "category.sample"
+			).put(
+				"com.liferay.portlet.header-portlet-css",
+				"/display/css/main.css"
+			).put(
+				"com.liferay.portlet.instanceable", true
+			).put(
+				"javax.portlet.name", _getPortletName()
+			).put(
+				"javax.portlet.security-role-ref", "power-user,user"
+			).put(
+				"javax.portlet.resource-bundle", _getResourceBundleName()
+			).build());
 
 		_resourceBundleLoaderServiceRegistration =
 			bundleContext.registerService(
 				ResourceBundleLoader.class,
-				locale -> _getResourceBundle(locale), properties);
+				locale -> _getResourceBundle(locale),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"resource.bundle.base.name", _getResourceBundleName()
+				).put(
+					"servlet.context.name", "remote-app-admin-web"
+				).build());
 	}
 
 	@Override

@@ -19,6 +19,9 @@ package com.liferay.custom.elements.web.internal.constants;
  */
 public class CustomElementsClayDataSetDisplayNames {
 
+	public static final String CUSTOM_ELEMENT_PORTLET_DESCRIPTORS =
+		"customElementPortletDescriptors";
+
 	public static final String CUSTOM_ELEMENT_SOURCES = "customElementSources";
 
 }

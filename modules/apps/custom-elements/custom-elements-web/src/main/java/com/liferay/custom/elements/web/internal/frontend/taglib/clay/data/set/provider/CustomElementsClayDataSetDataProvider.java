@@ -21,7 +21,10 @@ import com.liferay.custom.elements.web.internal.frontend.taglib.clay.data.set.Cu
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,13 +48,19 @@ public class CustomElementsClayDataSetDataProvider
 
 	@Override
 	public List<CustomElementsSourceClayDataSetEntry> getItems(
-		HttpServletRequest httpServletRequest, Filter filter,
-		Pagination pagination, Sort sort) {
+			HttpServletRequest httpServletRequest, Filter filter,
+			Pagination pagination, Sort sort)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<CustomElementsSource> customElementsSources =
 			_customElementsSourceLocalService.search(
-				filter.getKeywords(), pagination.getStartPosition(),
-				pagination.getEndPosition(), sort);
+				themeDisplay.getCompanyId(), filter.getKeywords(),
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				sort);
 
 		Stream<CustomElementsSource> stream = customElementsSources.stream();
 
@@ -65,10 +74,15 @@ public class CustomElementsClayDataSetDataProvider
 
 	@Override
 	public int getItemsCount(
-		HttpServletRequest httpServletRequest, Filter filter) {
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _customElementsSourceLocalService.searchCount(
-			filter.getKeywords());
+			themeDisplay.getCompanyId(), filter.getKeywords());
 	}
 
 	@Reference

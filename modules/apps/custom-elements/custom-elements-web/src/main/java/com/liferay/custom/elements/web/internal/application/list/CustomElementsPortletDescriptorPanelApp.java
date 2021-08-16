@@ -34,16 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class CustomElementsPanelApp extends BasePanelApp {
+public class CustomElementsPortletDescriptorPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CustomElementsPortletKeys.CUSTOM_ELEMENTS;
+		return CustomElementsPortletKeys.CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS + ")",
+		target = "(javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

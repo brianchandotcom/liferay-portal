@@ -70,7 +70,7 @@ public class CustomElementsSourceClayDataSetActionProvider
 						requestBackedPortletURLFactory.createRenderURL(
 							_getPortletId(httpServletRequest))
 					).setMVCRenderCommandName(
-						"/custom_elements/edit_custom_elements_source"
+						"/custom_elements_source/edit_custom_elements_source"
 					).setRedirect(
 						ParamUtil.getString(
 							httpServletRequest, "currentURL",
@@ -94,7 +94,7 @@ public class CustomElementsSourceClayDataSetActionProvider
 						requestBackedPortletURLFactory.createActionURL(
 							_getPortletId(httpServletRequest))
 					).setActionName(
-						"/custom_elements/delete_custom_elements_source"
+						"/custom_elements_source/delete_custom_elements_source"
 					).setParameter(
 						"customElementsSourceId",
 						customElementsSourceClayDataSetEntry.

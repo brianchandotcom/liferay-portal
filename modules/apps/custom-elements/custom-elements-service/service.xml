@@ -24,6 +24,10 @@
 		<column name="instanceable" type="boolean" />
 		<column name="name" type="String" />
 		<column name="properties" type="String" />
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="CustomElementsSource" remote-service="false" uuid="true">
 
@@ -49,9 +53,6 @@
 
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
-		</finder>
-		<finder name="Name" return-type="Collection">
-			<finder-column name="name" />
 		</finder>
 
 		<!-- References -->

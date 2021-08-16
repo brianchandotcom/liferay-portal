@@ -86,6 +86,13 @@ definition {
 	test AddWebContentArticleWithImageViaURL {
 		Navigator.openURL();
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");
@@ -96,8 +103,10 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+			imageSourceURL = "${portalURL}/webdav/guest/document_library/Document_1.jpg",
 			navTab = "URL");
 
 		PortletEntry.publish();

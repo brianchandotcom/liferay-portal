@@ -391,11 +391,11 @@ public class KaleoFormsAdminDisplayContext {
 				String orderByType = ParamUtil.getString(
 					_renderRequest, "orderByType");
 
-				if (orderByType.equals("asc")) {
-					return "desc";
+				if (orderByType.equals("desc")) {
+					return "asc";
 				}
 
-				return "asc";
+				return "desc";
 			}
 		).buildString();
 	}

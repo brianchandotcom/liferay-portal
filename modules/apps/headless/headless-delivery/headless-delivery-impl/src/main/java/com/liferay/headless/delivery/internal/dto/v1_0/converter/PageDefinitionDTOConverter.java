@@ -22,6 +22,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureIte
 import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -89,7 +90,8 @@ public class PageDefinitionDTOConverter
 					mainLayoutStructureItem, _layoutStructureItemMapperTracker,
 					saveInlineContent, saveMappingConfiguration);
 				settings = _toSettings(layout);
-				version = 1.1;
+				version =
+					LayoutStructureConstants.LATEST_PAGE_DEFINITION_VERSION;
 			}
 		};
 	}

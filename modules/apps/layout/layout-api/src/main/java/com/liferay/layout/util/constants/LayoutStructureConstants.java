@@ -26,4 +26,6 @@ public class LayoutStructureConstants {
 		{1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
+	public static final double LATEST_PAGE_DEFINITION_VERSION = 1.1;
+
 }

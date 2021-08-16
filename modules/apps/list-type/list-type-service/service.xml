@@ -48,8 +48,4 @@
 			<finder-column name="listTypeDefinitionId" />
 		</finder>
 	</entity>
-	<exceptions>
-		<exception>DuplicateListTypeEntry</exception>
-		<exception>ListTypeEntryName</exception>
-	</exceptions>
 </service-builder>

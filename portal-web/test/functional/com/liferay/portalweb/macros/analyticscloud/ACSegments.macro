@@ -256,7 +256,9 @@ definition {
 	}
 
 	macro previewSegmentMembership {
-		Click(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_BUTTON");
+		WaitForElementNotPresent(locator1 = "ACSegments#FORM_HEADER_LOADING_ANIMATION");
+
+		Click(locator1 = "Icon#EYE_PREVIEW");
 	}
 
 	macro saveSegment {

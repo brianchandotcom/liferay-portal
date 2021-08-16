@@ -639,7 +639,7 @@ definition {
 
 			var n = "1";
 
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
 					key_colPosition = "1",
 					key_fragmentName = "heading",

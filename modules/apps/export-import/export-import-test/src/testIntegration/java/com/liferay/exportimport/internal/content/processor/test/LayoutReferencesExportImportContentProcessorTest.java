@@ -189,6 +189,74 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testExportPublicPagesVirtualHostImportDefaultGroupNoVirtualHost()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, false, true);
+
+		Assert.assertEquals(
+			_getCompanyHostPortalURL(importGroup) +
+				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testExportPublicPagesVirtualHostImportDefaultGroupPublicPagesVirtualHost()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, false, true);
+
+		Assert.assertEquals(
+			_getGroupVirtualHostPortalURL(importGroup, false) +
+				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testExportRelativeURLImportDefaultGroupNoVirtualHost()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport = exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, false, true);
+
+		Assert.assertEquals(exportLayout.getFriendlyURL(), actualImportedURL);
+	}
+
+	@Test
 	public void testExternalURLNotModified() throws Exception {
 		Group exportGroup = GroupTestUtil.addGroup();
 		Group importGroup = GroupTestUtil.addGroup();

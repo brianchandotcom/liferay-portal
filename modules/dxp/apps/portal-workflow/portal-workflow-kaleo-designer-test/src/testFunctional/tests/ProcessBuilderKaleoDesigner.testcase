@@ -238,6 +238,8 @@ definition {
 	@description = "LPS-135888 - Verify that is possible to select Account role type for role assignments"
 	@priority = "5"
 	test CanAssignAccountRole {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAssignAccountRole";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

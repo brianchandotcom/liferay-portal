@@ -21,6 +21,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -73,7 +74,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testGetSpecificFields() throws Exception {
+	public void testServeResource() throws Exception {
 		ContentDashboardTestUtil.
 			withFFContentDashboardDocumentConfigurationEnabled(
 				() -> {
@@ -83,16 +84,23 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 						FileEntry.class.getName(), fileEntry.getFileEntryId(),
 						_group.getGroupId());
 
+					Assert.assertEquals(
+						FileEntry.class.getName(),
+						jsonObject.getString("className"));
+					Assert.assertEquals(
+						String.valueOf(fileEntry.getFileEntryId()),
+						jsonObject.getString("classPK"));
+					Assert.assertEquals(
+						"en-US", jsonObject.getString("languageTag"));
+
 					JSONObject specificFieldsJSONObject =
 						jsonObject.getJSONObject("specificFields");
 
 					Assert.assertEquals(
 						"pdf", specificFieldsJSONObject.getString("extension"));
-
 					Assert.assertEquals(
 						"FileName.pdf",
 						specificFieldsJSONObject.getString("fileName"));
-
 					Assert.assertNotNull(
 						specificFieldsJSONObject.getString("downloadURL"));
 					Assert.assertNotNull(
@@ -101,6 +109,26 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 						specificFieldsJSONObject.getString("previewURL"));
 					Assert.assertNotNull(
 						specificFieldsJSONObject.getString("viewURL"));
+
+					Assert.assertEquals(
+						"Basic Document", jsonObject.getString("subType"));
+					Assert.assertEquals(
+						"FileName.pdf", jsonObject.getString("title"));
+
+					JSONArray versionsJSONArray = jsonObject.getJSONArray(
+						"versions");
+
+					Assert.assertEquals(1, versionsJSONArray.length());
+
+					JSONObject versionJSONObject =
+						versionsJSONArray.getJSONObject(0);
+
+					Assert.assertEquals(
+						"Approved", versionJSONObject.getString("statusLabel"));
+					Assert.assertEquals(
+						"success", versionJSONObject.getString("statusStyle"));
+					Assert.assertEquals(
+						"1.0", versionJSONObject.getString("version"));
 				});
 	}
 

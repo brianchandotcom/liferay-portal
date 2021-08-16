@@ -22,7 +22,7 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"
 	@priority = "5"
 	test CanSelectObjectStorageType {
-        property portal.acceptance = "true";
+		property portal.acceptance = "true";
 
 		// TODO LPS-137349 CanSelectObjectStorageType pending implementation
 

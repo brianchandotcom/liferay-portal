@@ -38,4 +38,15 @@ definition {
 
 	}
 
+	
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8710 | Test Summary: Check all events can be triggered when offline"
+	@ignore = "true"
+	@priority = "3"
+	test CheckAllEventsCanBeTriggeredWhenOffline {
+
+		// TODO LRAC-8710 CheckAllEventsCanBeTriggeredWhenOffline pending implementation
+
+	}
+
 }

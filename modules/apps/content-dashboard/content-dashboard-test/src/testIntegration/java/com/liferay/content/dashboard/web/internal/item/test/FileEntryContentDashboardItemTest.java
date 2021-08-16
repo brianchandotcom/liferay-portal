@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -48,6 +50,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Yurena Cabrera
@@ -131,8 +135,26 @@ public class FileEntryContentDashboardItemTest {
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
-		_getContentDashboardItemInfoMVCResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			_getContentDashboardItemInfoMVCResourceCommand.serveResource(
+				mockLiferayResourceRequest, mockLiferayResourceResponse);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			(ByteArrayOutputStream)

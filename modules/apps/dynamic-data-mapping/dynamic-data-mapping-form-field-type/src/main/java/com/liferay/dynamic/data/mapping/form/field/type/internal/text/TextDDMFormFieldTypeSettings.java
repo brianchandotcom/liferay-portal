@@ -37,6 +37,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
+				"setValue('required', TRUE)",
+				"setValue('readOnly',TRUE)"
+			},
+			condition = "equals(isRequired('objectFieldName'), TRUE)"
+		),
+		@DDMFormRule(
+			actions = {
 				"setVisible('autocomplete', TRUE)",
 				"setVisible('repeatable', TRUE)",
 				"setVisible('requireConfirmation', TRUE)",

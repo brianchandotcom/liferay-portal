@@ -32,6 +32,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 	rules = {
 		@DDMFormRule(
 			actions = {
+				"setValue('required', TRUE)",
+				"setValue('readOnly', TRUE)",
+			},
+			condition = "equals(IsRequiredObjectField('objectFieldName'), TRUE)"
+		),
+		@DDMFormRule(
+			actions = {
 				"setVisible('inputMask', TRUE)",
 				"setVisible('repeatable', TRUE)",
 				"setVisible('requireConfirmation', TRUE)",

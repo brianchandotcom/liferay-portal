@@ -41,12 +41,47 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8595 | Test Summary: Delete a criteria"
-	@ignore = "true"
 	@priority = "3"
 	test CanDeleteCriteria {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8595 CanDeleteCriteria pending implementation
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "New Segment Test");
+		}
+
+		task ("Add a birthDate field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "birthDate");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Segment and edit it") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "New Segment Test");
+		}
+
+		task ("Delete the criteria") {
+			ACSegments.deleteSegmentCriteria(criteriaName = "birthDate");
+		}
+
+		task ("View the deleted criteria") {
+			ACSegments.viewDeletedCriteria();
+		}
 	}
 
 	@description = "Delete a dynamic segment"

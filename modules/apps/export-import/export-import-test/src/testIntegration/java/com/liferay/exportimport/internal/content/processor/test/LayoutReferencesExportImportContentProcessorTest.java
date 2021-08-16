@@ -329,6 +329,32 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testExportPrivatePagesVirtualHostURLImportDefaultGroup()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, true);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, true) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, false, true);
+
+		Assert.assertEquals(
+			_getCompanyHostPortalURL(importGroup) +
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+					importGroup.getFriendlyURL() +
+						exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
 	public void testExportPublicPagesVirtualHostImportDefaultGroupNoVirtualHost()
 		throws Exception {
 

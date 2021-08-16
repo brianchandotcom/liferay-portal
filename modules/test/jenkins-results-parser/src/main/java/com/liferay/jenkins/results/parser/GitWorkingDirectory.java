@@ -401,53 +401,62 @@ public class GitWorkingDirectory {
 	public LocalGitBranch createLocalGitBranch(
 		String localGitBranchName, boolean force, String startPoint) {
 
-		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
+		String currentBranchName = getCurrentBranchName();
 
-		LocalGitBranch tempLocalGitBranch = null;
+		List<String> commands = new ArrayList<>();
 
-		try {
-			if ((currentLocalGitBranch == null) ||
-				localGitBranchName.equals(currentLocalGitBranch.getName())) {
+		if ((currentBranchName == null) ||
+			currentBranchName.equals(localGitBranchName)) {
 
-				tempLocalGitBranch = createLocalGitBranch(
-					"temp-" + JenkinsResultsParserUtil.getCurrentTimeMillis());
+			String tempBranchName =
+				"temp-" + JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-				checkoutLocalGitBranch(tempLocalGitBranch);
+			RemoteGitBranch upstreamRemoteGitBranch =
+				getUpstreamRemoteGitBranch();
+
+			String upstreamGitBranchSHA = upstreamRemoteGitBranch.getSHA();
+
+			if (!localSHAExists(upstreamGitBranchSHA)) {
+				fetch(upstreamRemoteGitBranch);
 			}
 
-			StringBuilder sb = new StringBuilder();
+			commands.add(
+				JenkinsResultsParserUtil.combine(
+					"git branch -f ", tempBranchName, " ",
+					upstreamGitBranchSHA));
 
-			sb.append("git branch ");
-
-			if (force) {
-				sb.append("-f ");
-			}
-
-			sb.append(localGitBranchName);
-
-			if (startPoint != null) {
-				sb.append(" ");
-				sb.append(startPoint);
-			}
-
-			GitUtil.ExecutionResult executionResult = executeBashCommands(
-				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-				GitUtil.MILLIS_TIMEOUT, sb.toString());
-
-			if (executionResult.getExitValue() != 0) {
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Unable to create local branch ", localGitBranchName,
-						" at ", startPoint, "\n",
-						executionResult.getStandardError()));
-			}
+			commands.add(
+				JenkinsResultsParserUtil.combine(
+					"git checkout -f ", tempBranchName));
 		}
-		finally {
-			if (tempLocalGitBranch != null) {
-				checkoutLocalGitBranch(currentLocalGitBranch);
 
-				deleteLocalGitBranch(tempLocalGitBranch);
-			}
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git branch ");
+
+		if (force) {
+			sb.append("-f ");
+		}
+
+		sb.append(localGitBranchName);
+
+		if (startPoint != null) {
+			sb.append(" ");
+			sb.append(startPoint);
+		}
+
+		commands.add(sb.toString());
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			GitUtil.MILLIS_TIMEOUT, commands.toArray(new String[0]));
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create local branch ", localGitBranchName,
+					" at ", startPoint, "\n",
+					executionResult.getStandardError()));
 		}
 
 		return getLocalGitBranch(localGitBranchName, true);

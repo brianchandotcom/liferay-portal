@@ -222,6 +222,40 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_contentDashboardAdminDisplayContext.
 					getContentDashboardItemSubtypes();
 
+		List<String> extensions =
+			_contentDashboardAdminDisplayContext.getExtensions();
+
+		for (String extension : extensions) {
+			labelItemListWrapper.add(
+				labelItem -> {
+					labelItem.putData(
+						"removeLabelURL",
+						String.valueOf(
+							PortletURLBuilder.create(
+								PortletURLUtil.clone(
+									currentURLObj, liferayPortletResponse)
+							).setParameter(
+								"extension",
+								() -> {
+									Stream<String> stream = extensions.stream();
+
+									return stream.filter(
+										curExtension -> !Objects.equals(
+											curExtension, extension)
+									).toArray(
+										String[]::new
+									);
+								}
+							).buildString()));
+
+					labelItem.setCloseable(true);
+					labelItem.setLabel(
+						StringBundler.concat(
+							LanguageUtil.get(httpServletRequest, "extension"),
+							": ", extension));
+				});
+		}
+
 		for (ContentDashboardItemSubtype contentDashboardItemSubtype :
 				contentDashboardItemSubtypes) {
 

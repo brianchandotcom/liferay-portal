@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -96,6 +98,19 @@ public class BatchPlannerPlanServiceImpl
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.VIEW);
 
 		return batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
+	}
+
+	@Override
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, int start, int end) {
+
+		return batchPlannerPlanPersistence.filterFindByCompanyId(
+			companyId, start, end);
+	}
+
+	@Override
+	public int getBatchPlannerPlansCount(long companyId) {
+		return batchPlannerPlanPersistence.filterCountByCompanyId(companyId);
 	}
 
 	@Override

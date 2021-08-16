@@ -12,11 +12,11 @@
  * details.
  */
 
-import {PagesVisitor} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 
 import formatFieldValue from '../../utils/formatFieldValue.es';
 import setDataRecord from '../../utils/setDataRecord.es';
+import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
 const getDataRecordValues = ({

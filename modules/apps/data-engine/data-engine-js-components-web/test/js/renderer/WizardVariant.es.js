@@ -12,19 +12,18 @@
  * details.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
-import {ConfigProvider} from 'data-engine-js-components-web/js/core/hooks/useConfig.es';
+import React from 'react';
+
+import {ConfigProvider} from '../../../src/main/resources/META-INF/resources/js/core/hooks/useConfig.es';
 import {
 	FormProvider,
 	useFormState,
-} from 'data-engine-js-components-web/js/core/hooks/useForm.es';
-import {PageProvider} from 'data-engine-js-components-web/js/core/hooks/usePage.es';
-import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
-import {Column} from 'data-engine-js-components-web/js/custom/form/renderer/WizardVariant.es';
-import React from 'react';
-
-import '@testing-library/jest-dom/extend-expect';
-
+} from '../../../src/main/resources/META-INF/resources/js/core/hooks/useForm.es';
+import {PageProvider} from '../../../src/main/resources/META-INF/resources/js/core/hooks/usePage.es';
+import {pageReducer} from '../../../src/main/resources/META-INF/resources/js/custom/form/reducers/index.es';
+import {Column} from '../../../src/main/resources/META-INF/resources/js/custom/form/renderer/WizardVariant.es';
 import mockPages from '../__mock__/mockPages.es';
 
 const defaultProps = {

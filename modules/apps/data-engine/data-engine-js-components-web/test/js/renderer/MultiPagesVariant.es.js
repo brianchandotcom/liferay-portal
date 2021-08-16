@@ -13,17 +13,17 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import {ConfigProvider} from 'data-engine-js-components-web/js/core/hooks/useConfig.es';
+import React from 'react';
+
+import {ConfigProvider} from '../../../src/main/resources/META-INF/resources/js/core/hooks/useConfig.es';
 import {
 	FormProvider,
 	useFormState,
-} from 'data-engine-js-components-web/js/core/hooks/useForm.es';
-import {PageProvider} from 'data-engine-js-components-web/js/core/hooks/usePage.es';
-import {EVENT_TYPES} from 'data-engine-js-components-web/js/custom/form/eventTypes.es';
-import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
-import {PageHeader} from 'data-engine-js-components-web/js/custom/form/renderer/MultiPagesVariant.es';
-import React from 'react';
-
+} from '../../../src/main/resources/META-INF/resources/js/core/hooks/useForm.es';
+import {PageProvider} from '../../../src/main/resources/META-INF/resources/js/core/hooks/usePage.es';
+import {EVENT_TYPES} from '../../../src/main/resources/META-INF/resources/js/custom/form/eventTypes.es';
+import {pageReducer} from '../../../src/main/resources/META-INF/resources/js/custom/form/reducers/index.es';
+import {PageHeader} from '../../../src/main/resources/META-INF/resources/js/custom/form/renderer/MultiPagesVariant.es';
 import mockPages from '../__mock__/mockPages.es';
 
 const WithProvider = ({children, config, onAction, page, state}) => (

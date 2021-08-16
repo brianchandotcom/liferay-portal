@@ -12,7 +12,7 @@
  * details.
  */
 
-import {makeFetch} from 'data-engine-js-components-web';
+import {makeFetch} from '../../utils/fetch.es';
 
 export function elementSetAdded({
 	definitionURL,

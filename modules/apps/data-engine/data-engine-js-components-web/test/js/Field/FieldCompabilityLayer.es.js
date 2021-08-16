@@ -14,12 +14,12 @@
 
 import {waitForElement} from '@testing-library/dom';
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import {EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
-import {Field} from 'data-engine-js-components-web/js/core/components/Field/Field.es';
-import {FormNoopProvider} from 'data-engine-js-components-web/js/core/hooks/useForm.es';
-import {PageProvider} from 'data-engine-js-components-web/js/core/hooks/usePage.es';
 import React from 'react';
 
+import {EVENT_TYPES} from '../../../src/main/resources/META-INF/resources/js/core/actions/eventTypes.es';
+import {Field} from '../../../src/main/resources/META-INF/resources/js/core/components/Field/Field.es';
+import {FormNoopProvider} from '../../../src/main/resources/META-INF/resources/js/core/hooks/useForm.es';
+import {PageProvider} from '../../../src/main/resources/META-INF/resources/js/core/hooks/usePage.es';
 import MetalFieldMock from '../__mock__/MetalFieldMock.es';
 
 const fieldTypes = [

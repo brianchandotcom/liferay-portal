@@ -77,15 +77,48 @@ public class ContentDashboardExtensionItemSelectorViewTest {
 
 		Assert.assertEquals(9, extensionGroupsJSONArray.length());
 
-		JSONObject extensionGroupJSONObject =
-			extensionGroupsJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			"document-multimedia", extensionGroupJSONObject.getString("icon"));
-		Assert.assertEquals(
-			"Audio", extensionGroupJSONObject.getString("label"));
+		_assertExtensionGroupJSONObject(
+			"document-multimedia", "Audio",
+			extensionGroupsJSONArray.getJSONObject(0));
+		_assertExtensionGroupJSONObject(
+			"document-code", "Code", extensionGroupsJSONArray.getJSONObject(1));
+		_assertExtensionGroupJSONObject(
+			"document-compressed", "compressed",
+			extensionGroupsJSONArray.getJSONObject(2));
+		_assertExtensionGroupJSONObject(
+			"document-image", "Image",
+			extensionGroupsJSONArray.getJSONObject(3));
+		_assertExtensionGroupJSONObject(
+			"document-presentation", "presentation",
+			extensionGroupsJSONArray.getJSONObject(4));
+		_assertExtensionGroupJSONObject(
+			"document-table", "spreadsheet",
+			extensionGroupsJSONArray.getJSONObject(5));
+		_assertExtensionGroupJSONObject(
+			"document-text", "Text", extensionGroupsJSONArray.getJSONObject(6));
+		_assertExtensionGroupJSONObject(
+			"document-pdf", "vectorial",
+			extensionGroupsJSONArray.getJSONObject(7));
+		_assertExtensionGroupJSONObject(
+			"document-multimedia", "Video",
+			extensionGroupsJSONArray.getJSONObject(8));
 
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
+	}
+
+	private void _assertExtensionGroupJSONObject(
+		String expectedIcon, String expectedLabel,
+		JSONObject extensionGroupJSONObject) {
+
+		Assert.assertEquals(
+			expectedIcon, extensionGroupJSONObject.getString("icon"));
+		Assert.assertEquals(
+			expectedLabel, extensionGroupJSONObject.getString("label"));
+
+		JSONArray extensionsJSONArray = extensionGroupJSONObject.getJSONArray(
+			"extensions");
+
+		Assert.assertTrue(extensionsJSONArray.length() > 0);
 	}
 
 	private Map<String, Object> _getData() throws Exception {

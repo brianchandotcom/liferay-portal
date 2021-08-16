@@ -19,7 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Company companyObject = (Company)row.getObject();
+Company rowObjectCompany = (Company)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -29,9 +29,9 @@ Company companyObject = (Company)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= companyObject.getCompanyId() != PortalUtil.getDefaultCompanyId() %>">
+	<c:if test="<%= rowObjectCompany.getCompanyId() != PortalUtil.getDefaultCompanyId() %>">
 		<portlet:actionURL name="/on_demand_admin/request_admin_access" var="requestAdminAccessURL">
-			<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />
+			<portlet:param name="companyId" value="<%= String.valueOf(rowObjectCompany.getCompanyId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon

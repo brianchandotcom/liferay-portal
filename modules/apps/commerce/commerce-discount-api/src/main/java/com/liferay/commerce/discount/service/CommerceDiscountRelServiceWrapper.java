@@ -64,8 +64,9 @@ public class CommerceDiscountRelServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCategoriesByCommerceDiscountId(
-				long commerceDiscountId, String name, int start, int end) {
+				getCategoriesByCommerceDiscountId(
+					long commerceDiscountId, String name, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountRelService.getCategoriesByCommerceDiscountId(
 			commerceDiscountId, name, start, end);
@@ -73,7 +74,8 @@ public class CommerceDiscountRelServiceWrapper
 
 	@Override
 	public int getCategoriesByCommerceDiscountIdCount(
-		long commerceDiscountId, String name) {
+			long commerceDiscountId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountRelService.
 			getCategoriesByCommerceDiscountIdCount(commerceDiscountId, name);
@@ -134,8 +136,9 @@ public class CommerceDiscountRelServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCommercePricingClassesByCommerceDiscountId(
-				long commerceDiscountId, String title, int start, int end) {
+				getCommercePricingClassesByCommerceDiscountId(
+					long commerceDiscountId, String title, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountRelService.
 			getCommercePricingClassesByCommerceDiscountId(
@@ -144,7 +147,8 @@ public class CommerceDiscountRelServiceWrapper
 
 	@Override
 	public int getCommercePricingClassesByCommerceDiscountIdCount(
-		long commerceDiscountId, String title) {
+			long commerceDiscountId, String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountRelService.
 			getCommercePricingClassesByCommerceDiscountIdCount(
@@ -154,9 +158,10 @@ public class CommerceDiscountRelServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCPDefinitionsByCommerceDiscountId(
-				long commerceDiscountId, String name, String languageId,
-				int start, int end) {
+				getCPDefinitionsByCommerceDiscountId(
+					long commerceDiscountId, String name, String languageId,
+					int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountRelService.getCPDefinitionsByCommerceDiscountId(
 			commerceDiscountId, name, languageId, start, end);
@@ -164,11 +169,32 @@ public class CommerceDiscountRelServiceWrapper
 
 	@Override
 	public int getCPDefinitionsByCommerceDiscountIdCount(
-		long commerceDiscountId, String name, String languageId) {
+			long commerceDiscountId, String name, String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountRelService.
 			getCPDefinitionsByCommerceDiscountIdCount(
 				commerceDiscountId, name, languageId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+				getCPInstancesByCommerceDiscountId(
+					long commerceDiscountId, String sku, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountRelService.getCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, start, end);
+	}
+
+	@Override
+	public int getCPInstancesByCommerceDiscountIdCount(
+			long commerceDiscountId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountRelService.
+			getCPInstancesByCommerceDiscountIdCount(commerceDiscountId, sku);
 	}
 
 	/**

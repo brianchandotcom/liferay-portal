@@ -62,14 +62,16 @@ public class CommerceDiscountRelServiceUtil {
 	}
 
 	public static List<CommerceDiscountRel> getCategoriesByCommerceDiscountId(
-		long commerceDiscountId, String name, int start, int end) {
+			long commerceDiscountId, String name, int start, int end)
+		throws PortalException {
 
 		return getService().getCategoriesByCommerceDiscountId(
 			commerceDiscountId, name, start, end);
 	}
 
 	public static int getCategoriesByCommerceDiscountIdCount(
-		long commerceDiscountId, String name) {
+			long commerceDiscountId, String name)
+		throws PortalException {
 
 		return getService().getCategoriesByCommerceDiscountIdCount(
 			commerceDiscountId, name);
@@ -114,34 +116,54 @@ public class CommerceDiscountRelServiceUtil {
 	}
 
 	public static List<CommerceDiscountRel>
-		getCommercePricingClassesByCommerceDiscountId(
-			long commerceDiscountId, String title, int start, int end) {
+			getCommercePricingClassesByCommerceDiscountId(
+				long commerceDiscountId, String title, int start, int end)
+		throws PortalException {
 
 		return getService().getCommercePricingClassesByCommerceDiscountId(
 			commerceDiscountId, title, start, end);
 	}
 
 	public static int getCommercePricingClassesByCommerceDiscountIdCount(
-		long commerceDiscountId, String title) {
+			long commerceDiscountId, String title)
+		throws PortalException {
 
 		return getService().getCommercePricingClassesByCommerceDiscountIdCount(
 			commerceDiscountId, title);
 	}
 
 	public static List<CommerceDiscountRel>
-		getCPDefinitionsByCommerceDiscountId(
-			long commerceDiscountId, String name, String languageId, int start,
-			int end) {
+			getCPDefinitionsByCommerceDiscountId(
+				long commerceDiscountId, String name, String languageId,
+				int start, int end)
+		throws PortalException {
 
 		return getService().getCPDefinitionsByCommerceDiscountId(
 			commerceDiscountId, name, languageId, start, end);
 	}
 
 	public static int getCPDefinitionsByCommerceDiscountIdCount(
-		long commerceDiscountId, String name, String languageId) {
+			long commerceDiscountId, String name, String languageId)
+		throws PortalException {
 
 		return getService().getCPDefinitionsByCommerceDiscountIdCount(
 			commerceDiscountId, name, languageId);
+	}
+
+	public static List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
+			long commerceDiscountId, String sku, int start, int end)
+		throws PortalException {
+
+		return getService().getCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, start, end);
+	}
+
+	public static int getCPInstancesByCommerceDiscountIdCount(
+			long commerceDiscountId, String sku)
+		throws PortalException {
+
+		return getService().getCPInstancesByCommerceDiscountIdCount(
+			commerceDiscountId, sku);
 	}
 
 	/**

@@ -50,10 +50,8 @@ public class UpgradeReport {
 
 	public UpgradeReport(PersistenceManager persistenceManager) {
 		_persistenceManager = persistenceManager;
-
-		if (_initialBuildNumber >= ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER) {
-			_setInitialSchemaVersion();
-		}
+		_initialBuildNumber = _getBuildNumber();
+		_initialSchemaVersion = _getSchemaVersion();
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
@@ -94,6 +92,27 @@ public class UpgradeReport {
 				_log.warn("Unable to generate report");
 			}
 		}
+	}
+
+	private int _getBuildNumber() {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select buildNumber from Release_ where releaseId = " +
+					ReleaseConstants.DEFAULT_ID)) {
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getInt("buildNumber");
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get the build number");
+			}
+		}
+
+		return 0;
 	}
 
 	private String _getDialectInfo() {

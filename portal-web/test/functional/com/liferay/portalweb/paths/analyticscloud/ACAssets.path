@@ -33,6 +33,21 @@
 </tr>
 <!-- VIEWS BY TECHNOLOGY -->
 <tr>
+	<td>BROWSERS_METRIC_VALUE</td>
+	<td>//div[contains(.,'${key_cardTitle}')]//span[@class='recharts-legend-item-text']//span[@class='text-truncate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSERS_PERCENTAGE_METRIC_VALUE</td>
+	<td>//div[contains(.,'${key_cardTitle}')]//span[@class='recharts-legend-item-text']//span[@class='legend-percentage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSERS_PIE_CHART</td>
+	<td>//div[contains(@class,'analytics-devices-card')]//*[name()='path'][contains(@class,'recharts-sector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEWS_BY_TECHNOLOGY_CARD</td>
 	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']</td>
 	<td></td>

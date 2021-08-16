@@ -162,6 +162,16 @@ public class ObjectDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (objectDefinition.getPluralLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pluralLabel\": ");
+
+			sb.append(_toJSON(objectDefinition.getPluralLabel()));
+		}
+
 		if (objectDefinition.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -261,6 +271,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getObjectFields()));
 		}
 
+		if (objectDefinition.getPluralLabel() == null) {
+			map.put("pluralLabel", null);
+		}
+		else {
+			map.put(
+				"pluralLabel",
+				String.valueOf(objectDefinition.getPluralLabel()));
+		}
+
 		if (objectDefinition.getStatus() == null) {
 			map.put("status", null);
 		}
@@ -343,6 +362,13 @@ public class ObjectDefinitionSerDes {
 						).toArray(
 							size -> new ObjectField[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pluralLabel")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setPluralLabel(
+						(Map)ObjectDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

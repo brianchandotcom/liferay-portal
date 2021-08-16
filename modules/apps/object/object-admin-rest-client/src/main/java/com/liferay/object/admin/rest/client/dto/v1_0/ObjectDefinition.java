@@ -180,6 +180,28 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected ObjectField[] objectFields;
 
+	public Map<String, String> getPluralLabel() {
+		return pluralLabel;
+	}
+
+	public void setPluralLabel(Map<String, String> pluralLabel) {
+		this.pluralLabel = pluralLabel;
+	}
+
+	public void setPluralLabel(
+		UnsafeSupplier<Map<String, String>, Exception>
+			pluralLabelUnsafeSupplier) {
+
+		try {
+			pluralLabel = pluralLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> pluralLabel;
+
 	public Status getStatus() {
 		return status;
 	}

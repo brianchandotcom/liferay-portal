@@ -522,6 +522,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("pluralLabel", additionalAssertFieldName)) {
+				if (objectDefinition.getPluralLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (objectDefinition.getStatus() == null) {
 					valid = false;
@@ -701,6 +709,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getObjectFields(),
 						objectDefinition2.getObjectFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pluralLabel", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)objectDefinition1.getPluralLabel(),
+						(Map)objectDefinition2.getPluralLabel())) {
 
 					return false;
 				}
@@ -918,6 +937,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("objectFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("pluralLabel")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

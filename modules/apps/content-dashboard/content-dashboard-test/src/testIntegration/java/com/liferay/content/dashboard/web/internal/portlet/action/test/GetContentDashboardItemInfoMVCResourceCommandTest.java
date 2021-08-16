@@ -96,13 +96,13 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 					JSONObject specificFieldsJSONObject =
 						jsonObject.getJSONObject("specificFields");
 
+					Assert.assertNotNull(
+						specificFieldsJSONObject.getString("downloadURL"));
 					Assert.assertEquals(
 						"pdf", specificFieldsJSONObject.getString("extension"));
 					Assert.assertEquals(
 						"FileName.pdf",
 						specificFieldsJSONObject.getString("fileName"));
-					Assert.assertNotNull(
-						specificFieldsJSONObject.getString("downloadURL"));
 					Assert.assertNotNull(
 						specificFieldsJSONObject.getString("previewImageURL"));
 					Assert.assertNotNull(

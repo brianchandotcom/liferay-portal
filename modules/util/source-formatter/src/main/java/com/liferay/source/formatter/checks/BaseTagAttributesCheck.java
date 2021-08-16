@@ -106,6 +106,15 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
 			String tag = matcher.group(1);
 
+			String lastLine = StringUtil.trim(
+				getLine(content, getLineNumber(content, matcher.end(1))));
+
+			if (lastLine.matches("></[-\\w:]+>")) {
+				String newTag = StringUtil.replaceLast(tag, lastLine, "/>");
+
+				return StringUtil.replace(content, tag, newTag);
+			}
+
 			if (getLevel(_getStrippedTag(tag, "\"", "'"), "<", ">") != 0) {
 				continue;
 			}

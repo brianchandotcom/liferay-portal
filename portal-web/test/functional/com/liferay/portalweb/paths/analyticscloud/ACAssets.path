@@ -13,7 +13,7 @@
 <!-- ASSETS PAGE -->
 <tr>
 	<td>ASSETS_TABLE</td>
-	<td>//a[text()='${key_assetName}']</td>
+	<td>//div[contains(@class,'table-title')][normalize-space()='${key_assetName}']</td>
 	<td></td>
 </tr>
 <tr>

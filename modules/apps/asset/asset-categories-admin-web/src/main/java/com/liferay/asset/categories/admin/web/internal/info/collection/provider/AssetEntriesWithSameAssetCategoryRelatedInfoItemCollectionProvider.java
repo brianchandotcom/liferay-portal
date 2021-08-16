@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -193,10 +194,14 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			String[] itemTypes = configuration.get(_ITEM_TYPES);
 
 			for (String itemType : itemTypes) {
-				classNameIds.add(_portal.getClassNameId(itemType));
+				if (Validator.isNotNull(itemType)) {
+					classNameIds.add(_portal.getClassNameId(itemType));
+				}
 			}
 
-			return ArrayUtil.toArray(classNameIds.toArray(new Long[0]));
+			if (ListUtil.isNotEmpty(classNameIds)) {
+				return ArrayUtil.toArray(classNameIds.toArray(new Long[0]));
+			}
 		}
 
 		ServiceContext serviceContext =

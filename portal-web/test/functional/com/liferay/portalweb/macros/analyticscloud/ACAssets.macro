@@ -50,6 +50,23 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro viewTechnologyBrowsersMetric {
+		var key_cardTitle = "${cardTitle}";
+
+		AssertTextEquals(
+			locator1 = "ACAssets#BROWSERS_METRIC_VALUE",
+			value1 = "${browserMetricValue}");
+
+		AssertTextEquals(
+			locator1 = "ACAssets#BROWSERS_PERCENTAGE_METRIC_VALUE",
+			value1 = "${percentageMetricValue}");
+
+		AssertCssValue(
+			locator1 = "ACAssets#BROWSERS_PIE_CHART",
+			locator2 = "fill",
+			value1 = "${cssValue}");
+	}
+
 	macro viewViewsByTechnologyBrowserPercentage {
 		AssertTextEquals(
 			key_browserName = "${browserName}",

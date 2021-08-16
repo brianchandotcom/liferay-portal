@@ -52,7 +52,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
+			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
 				emailAdresses = "Alton.Jacobi@gmail.com",
@@ -78,7 +78,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
+			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
 				emailAdresses = "Adelina.Kohler@hotmail.com",

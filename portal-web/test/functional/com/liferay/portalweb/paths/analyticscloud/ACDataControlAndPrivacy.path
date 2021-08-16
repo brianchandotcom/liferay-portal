@@ -11,7 +11,7 @@
 
 <tbody>
 <tr>
-	<td>RESQUEST_LOG</td>
+	<td>REQUEST_LOG</td>
 	<td>//h4[contains(.,'Request Log')]/../..//a[contains(@class,'button') and contains(.,'Manage')]</td>
 	<td></td>
 </tr>

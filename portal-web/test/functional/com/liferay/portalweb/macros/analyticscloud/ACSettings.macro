@@ -159,7 +159,7 @@ definition {
 
 		ACSettings.goToDataControlAndPrivacy();
 
-		Click(locator1 = "ACDataControlAndPrivacy#RESQUEST_LOG");
+		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 		Click(locator1 = "ACDataControlAndPrivacy#CREATE_REQUEST");
 

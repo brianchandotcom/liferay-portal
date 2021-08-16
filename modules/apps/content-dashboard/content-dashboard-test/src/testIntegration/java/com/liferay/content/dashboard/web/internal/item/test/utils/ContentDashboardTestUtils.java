@@ -15,8 +15,10 @@
 package com.liferay.content.dashboard.web.internal.item.test.utils;
 
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,6 +39,27 @@ public class ContentDashboardTestUtils {
 			PermissionThreadLocal.getPermissionChecker());
 
 		return themeDisplay;
+	}
+
+	public static void withContentDashboardDocumentConfiguration(
+			long companyId, boolean enabled,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						companyId,
+						"com.liferay.content.dashboard.web.internal." +
+							"configuration." +
+								"FFContentDashboardDocumentConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", enabled
+						).build(),
+						SettingsFactoryUtil.getSettingsFactory())) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	public static void withFFContentDashboardDocumentConfigurationEnabled(

@@ -21,14 +21,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.dashboard.web.internal.item.test.utils.ContentDashboardTestUtils;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -38,7 +35,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -66,27 +62,6 @@ public class FileEntryContentDashboardItemTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	public static void withContentDashboardDocumentConfiguration(
-			long companyId, boolean enabled,
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						companyId,
-						"com.liferay.content.dashboard.web.internal." +
-							"configuration." +
-								"FFContentDashboardDocumentConfiguration",
-						HashMapDictionaryBuilder.<String, Object>put(
-							"enabled", enabled
-						).build(),
-						SettingsFactoryUtil.getSettingsFactory())) {
-
-			unsafeRunnable.run();
-		}
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(
@@ -95,7 +70,7 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetSpecificFields() throws Exception {
-		withContentDashboardDocumentConfiguration(
+		ContentDashboardTestUtils.withContentDashboardDocumentConfiguration(
 			_group.getCompanyId(), true,
 			() -> {
 				FileEntry fileEntry = _addFileEntry();
@@ -108,10 +83,10 @@ public class FileEntryContentDashboardItemTest {
 					"specificFields");
 
 				Assert.assertEquals(
-					"extension", specificFieldsJSONObject.getString("pdf"));
+					"pdf", specificFieldsJSONObject.getString("extension"));
 
 				Assert.assertEquals(
-					"fileName", specificFieldsJSONObject.getString("FileName"));
+					"FileName.pdf", specificFieldsJSONObject.getString("fileName"));
 
 				Assert.assertNotNull(
 					specificFieldsJSONObject.getString("downloadURL"));

@@ -25,6 +25,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -88,8 +88,8 @@ public class ObjectEntryLocalServiceTest {
 		_irrelevantObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, "Irrelevant"),
-				"Irrelevant", Collections.<ObjectField>emptyList());
+				LocalizedMapUtil.getLocalizedMap("Irrelevant"), "Irrelevant",
+				Collections.<ObjectField>emptyList());
 
 		_irrelevantObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -99,41 +99,37 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, "Test"), "Test",
+				LocalizedMapUtil.getLocalizedMap("Test"), "Test",
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "Age of Death",
-						"ageOfDeath", false, "Long"),
+						true, false, "Age of Death", "ageOfDeath", false,
+						"Long"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "Author of Gospel",
-						"authorOfGospel", false, "Boolean"),
+						true, false, "Author of Gospel", "authorOfGospel",
+						false, "Boolean"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "Birthday", "birthday",
-						false, "Date"),
+						true, false, "Birthday", "birthday", false, "Date"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, true, "Email Address",
-						"emailAddress", true, "String"),
+						true, true, "Email Address", "emailAddress", true,
+						"String"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, true, "Email Address Domain",
+						true, true, "Email Address Domain",
 						"emailAddressDomain", false, "String"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "First Name", "firstName",
-						false, "String"),
+						true, false, "First Name", "firstName", false,
+						"String"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "Height", "height", false,
-						"Double"),
+						true, false, "Height", "height", false, "Double"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "Last Name", "lastName",
-						false, "String"),
+						true, false, "Last Name", "lastName", false, "String"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "Middle Name", "middleName",
-						false, "String"),
+						true, false, "Middle Name", "middleName", false,
+						"String"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, true, false, "Number of Books Written",
+						true, false, "Number of Books Written",
 						"numberOfBooksWritten", false, "Integer"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, false, false, "Portrait", "portrait",
-						false, "Blob")));
+						false, false, "Portrait", "portrait", false, "Blob")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -143,12 +139,12 @@ public class ObjectEntryLocalServiceTest {
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, false, null,
-			Collections.singletonMap(LocaleUtil.US, "Speed"), "speed", false,
+			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false,
 			"BigDecimal");
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, false, null,
-			Collections.singletonMap(LocaleUtil.US, "Weight"), "weight", false,
+			LocalizedMapUtil.getLocalizedMap("Weight"), "weight", false,
 			"Double");
 	}
 

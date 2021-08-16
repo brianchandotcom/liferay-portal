@@ -26,6 +26,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -190,14 +191,14 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(), _labelMap, "Test",
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, "Able", "able", false, "String"),
+						"Able", "able", false, "String"),
 					ObjectFieldUtil.createObjectField(
-						LocaleUtil.US, "Baker", "baker", false, "String")));
+						"Baker", "baker", false, "String")));
 
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), false, false, null,
-			Collections.singletonMap(LocaleUtil.US, "Charlie"), "charlie", true,
+			LocalizedMapUtil.getLocalizedMap("Charlie"), "charlie", true,
 			"String");
 
 		// Before publish, database table
@@ -244,8 +245,7 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), false, false, null,
-			Collections.singletonMap(LocaleUtil.US, "Dog"), "dog", true,
-			"String");
+			LocalizedMapUtil.getLocalizedMap("Dog"), "dog", true, "String");
 
 		// After publish, database table
 
@@ -311,8 +311,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 					@Override
 					public Map<Locale, String> getLabelMap() {
-						return Collections.singletonMap(
-							LocaleUtil.US, "User Notification Event");
+						return LocalizedMapUtil.getLocalizedMap(
+							"User Notification Event");
 					}
 
 					@Override
@@ -323,16 +323,13 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							ObjectFieldUtil.createObjectField(
-								LocaleUtil.US, "Action Required",
-								"actionRequired", true, "Boolean"),
-							ObjectFieldUtil.createObjectField(
-								LocaleUtil.US, "Delivery Type", "deliveryType",
-								false, "Long"),
-							ObjectFieldUtil.createObjectField(
-								"type_",
-								Collections.singletonMap(LocaleUtil.US, "Type"),
-								"type", true, "String"));
+							createObjectField(
+								"Action Required", "actionRequired", true,
+								"Boolean"),
+							createObjectField(
+								"Delivery Type", "deliveryType", false, "Long"),
+							createObjectField(
+								"type_", "Type", "type", true, "String"));
 					}
 
 					@Override
@@ -377,8 +374,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 					@Override
 					public Map<Locale, String> getLabelMap() {
-						return Collections.singletonMap(
-							LocaleUtil.US, "User Notification Event");
+						return LocalizedMapUtil.getLocalizedMap(
+							"User Notification Event");
 					}
 
 					@Override
@@ -389,16 +386,12 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							ObjectFieldUtil.createObjectField(
-								LocaleUtil.US, "Archived", "archived", true,
-								"Boolean"),
-							ObjectFieldUtil.createObjectField(
-								LocaleUtil.US, "Delivery Type", "deliveryType",
-								true, "Long"),
-							ObjectFieldUtil.createObjectField(
-								"type_",
-								Collections.singletonMap(LocaleUtil.US, "Type"),
-								"type", false, "String"));
+							createObjectField(
+								"Archived", "archived", true, "Boolean"),
+							createObjectField(
+								"Delivery Type", "deliveryType", true, "Long"),
+							createObjectField(
+								"type_", "Type", "type", false, "String"));
 					}
 
 					@Override
@@ -597,8 +590,7 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), false, false, null,
-			Collections.singletonMap(LocaleUtil.US, "Able"), "able", true,
-			"String");
+			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, "String");
 
 		// Database table
 
@@ -768,7 +760,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 					TestPropsValues.getUserId(),
-					Collections.singletonMap(LocaleUtil.US, label), name,
+					LocalizedMapUtil.getLocalizedMap(label), name,
 					Collections.<ObjectField>emptyList());
 
 			objectDefinition =
@@ -797,8 +789,8 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 					TestPropsValues.getUserId(), null,
-					Collections.singletonMap(LocaleUtil.US, label), name, null,
-					null, 1, Collections.<ObjectField>emptyList());
+					LocalizedMapUtil.getLocalizedMap(label), name, null, null,
+					1, Collections.<ObjectField>emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {
@@ -808,7 +800,7 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
-	private final Map<Locale, String> _labelMap = Collections.singletonMap(
-		LocaleUtil.US, "Test");
+	private final Map<Locale, String> _labelMap =
+		LocalizedMapUtil.getLocalizedMap("Test");
 
 }

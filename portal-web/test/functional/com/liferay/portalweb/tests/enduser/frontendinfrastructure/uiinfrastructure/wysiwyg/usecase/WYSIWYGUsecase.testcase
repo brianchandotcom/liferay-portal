@@ -31,7 +31,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddBlogsEntryWithImageViaBlogsImages {
+	test CanAddBlogsEntryWithImageViaBlogsImages {
 		JSONLayout.addPublicLayout(
 			groupName = "WYSIWYG Site Name",
 			layoutName = "${pageName}");
@@ -81,47 +81,12 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_1");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddWebContentArticleWithImageViaURL {
-		Navigator.openURL();
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		ItemSelector.gotoItemSelectorViaCKEditor();
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		ItemSelector.addImageFromURL(
-			imageSourceURL = "${portalURL}/webdav/guest/document_library/Document_1.jpg",
-			navTab = "URL");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
-	}
-
 	@description = "Verify existing text can be formatted as a hyperlink"
 	@priority = "4"
 	@refactorneeded
 	test CanAddHyperlinkToExistingText {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONWebcontent.addWebContent(
@@ -147,10 +112,40 @@ definition {
 			locator1 = "CKEditor#BODY_TEXT_HREF");
 	}
 
+	@priority = "4"
+	@refactorneeded
+	test CanAddWebContentArticleWithImageViaURL {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		ItemSelector.gotoItemSelectorViaCKEditor();
+
+		ItemSelector.addImageFromURL(
+			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+			navTab = "URL");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+	}
+
 	@description = "Verify content can display content from left to right"
 	@priority = "4"
 	@refactorneeded
 	test CanDisplayContentLeftToRight {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -177,6 +172,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanDisplayContentRightToLeft {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WYSIWIGUsecase#ViewWikiFrontPageRightToLeft";
 
 		ProductMenu.gotoPortlet(
@@ -221,6 +217,7 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
 		Open(locator1 = "http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm");
 
@@ -368,6 +365,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanPreviewSourceContent {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "WYSIWYG Site Name",
@@ -417,7 +416,9 @@ definition {
 	@description = "Verify styled content can be added from source view"
 	@priority = "4"
 	@refactorneeded
-	test ViewSourceCodeFormattedInTextView {
+	test CanViewSourceCodeFormattedInTextView {
+		property environment.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "WYSIWYG Site Name",

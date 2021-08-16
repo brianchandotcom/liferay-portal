@@ -37,15 +37,16 @@ public class CommercePriceListLowestDiscoveryImpl
 
 	@Override
 	public CommercePriceList getCommercePriceList(
-			long groupId, long commerceAccountId, long commerceChannelId,
-			String cPInstanceUuid, String commercePriceListType)
+			long groupId, String commercePriceListType, long commerceAccountId,
+			long commerceChannelId, long commerceOrderTypeId,
+			String cPInstanceUuid)
 		throws PortalException {
 
 		return _commercePriceListLocalService.getCommercePriceListByLowestPrice(
-			groupId, commercePriceListType, cPInstanceUuid, commerceAccountId,
+			groupId, commercePriceListType, commerceAccountId,
 			_commerceAccountHelper.getCommerceAccountGroupIds(
 				commerceAccountId),
-			commerceChannelId);
+			commerceChannelId, commerceOrderTypeId, cPInstanceUuid);
 	}
 
 	@Reference

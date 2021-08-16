@@ -37,11 +37,32 @@ public class CommercePriceListHierarchyDiscoveryImpl
 
 	@Override
 	public CommercePriceList getCommercePriceList(
-			long groupId, long commerceAccountId, long commerceChannelId,
-			String cPInstanceUuid, String commercePriceListType)
+			long groupId, String commercePriceListType, long commerceAccountId,
+			long commerceChannelId, long commerceOrderTypeId,
+			String cPInstanceUuid)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.
+				getCommercePriceListByAccountAndChannelAndOrderTypeId(
+					groupId, commercePriceListType, commerceAccountId,
+					commerceChannelId, commerceOrderTypeId);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
+				getCommercePriceListByAccountAndOrderTypeId(
+					groupId, commercePriceListType, commerceAccountId,
+					commerceOrderTypeId);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
 			_commercePriceListLocalService.
 				getCommercePriceListByAccountAndChannelId(
 					groupId, commercePriceListType, commerceAccountId,
@@ -65,6 +86,26 @@ public class CommercePriceListHierarchyDiscoveryImpl
 
 		commercePriceList =
 			_commercePriceListLocalService.
+				getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
+					groupId, commercePriceListType, commerceAccountGroupIds,
+					commerceChannelId, commerceOrderTypeId);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
+				getCommercePriceListByAccountGroupsAndOrderTypeId(
+					groupId, commercePriceListType, commerceAccountGroupIds,
+					commerceOrderTypeId);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
 				getCommercePriceListByAccountGroupsAndChannelId(
 					groupId, commercePriceListType, commerceAccountGroupIds,
 					commerceChannelId);
@@ -77,6 +118,24 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			_commercePriceListLocalService.
 				getCommercePriceListByAccountGroupIds(
 					groupId, commercePriceListType, commerceAccountGroupIds);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
+				getCommercePriceListByChannelAndOrderTypeId(
+					groupId, commercePriceListType, commerceChannelId,
+					commerceOrderTypeId);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.getCommercePriceListByOrderTypeId(
+				groupId, commercePriceListType, commerceOrderTypeId);
 
 		if (commercePriceList != null) {
 			return commercePriceList;

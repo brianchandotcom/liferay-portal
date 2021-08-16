@@ -19,6 +19,9 @@ package com.liferay.portal.kernel.util;
  */
 public interface PropsKeys {
 
+	public static final String ACCESS_CONTROL_SHOW_SECURITY_EXCEPTION_DETAIL =
+		"access.control.show.security.exception.detail";
+
 	public static final String ADMIN_ANALYTICS_TYPES = "admin.analytics.types";
 
 	public static final String ADMIN_DEFAULT_GROUP_NAMES =
@@ -2873,9 +2876,6 @@ public interface PropsKeys {
 		"rtl.css.excluded.paths.regexp";
 
 	public static final String SANITIZER_IMPL = "sanitizer.impl";
-
-	public static final String SAP_SHOW_SECURITY_EXCEPTIONS =
-		"sap.show.security.exceptions";
 
 	public static final String SCHEDULER_DESCRIPTION_MAX_LENGTH =
 		"scheduler.description.max.length";

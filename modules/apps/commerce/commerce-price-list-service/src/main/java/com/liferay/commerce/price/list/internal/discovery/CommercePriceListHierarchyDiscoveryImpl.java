@@ -38,14 +38,32 @@ public class CommercePriceListHierarchyDiscoveryImpl
 	@Override
 	public CommercePriceList getCommercePriceList(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			String cPInstanceUuid, String commercePriceListType)
+			long commerceOrderTypeId, String cPInstanceUuid, String type)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.
+				getCommercePriceListByAccountAndChannelAndOrderTypeId(
+					groupId, commerceAccountId, commerceChannelId,
+					commerceOrderTypeId, type);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
+				getCommercePriceListByAccountAndOrderTypeId(
+					groupId, commerceAccountId, commerceOrderTypeId, type);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
 				getCommercePriceListByAccountAndChannelId(
-					groupId, commercePriceListType, commerceAccountId,
-					commerceChannelId);
+					groupId, commerceAccountId, commerceChannelId, type);
 
 		if (commercePriceList != null) {
 			return commercePriceList;
@@ -53,7 +71,7 @@ public class CommercePriceListHierarchyDiscoveryImpl
 
 		commercePriceList =
 			_commercePriceListLocalService.getCommercePriceListByAccountId(
-				groupId, commercePriceListType, commerceAccountId);
+				groupId, commerceAccountId, type);
 
 		if (commercePriceList != null) {
 			return commercePriceList;
@@ -65,9 +83,28 @@ public class CommercePriceListHierarchyDiscoveryImpl
 
 		commercePriceList =
 			_commercePriceListLocalService.
+				getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
+					groupId, commerceAccountGroupIds, commerceChannelId,
+					commerceOrderTypeId, type);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
+				getCommercePriceListByAccountGroupsAndOrderTypeId(
+					groupId, commerceAccountGroupIds, commerceOrderTypeId,
+					type);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
 				getCommercePriceListByAccountGroupsAndChannelId(
-					groupId, commercePriceListType, commerceAccountGroupIds,
-					commerceChannelId);
+					groupId, commerceAccountGroupIds, commerceChannelId, type);
 
 		if (commercePriceList != null) {
 			return commercePriceList;
@@ -76,7 +113,24 @@ public class CommercePriceListHierarchyDiscoveryImpl
 		commercePriceList =
 			_commercePriceListLocalService.
 				getCommercePriceListByAccountGroupIds(
-					groupId, commercePriceListType, commerceAccountGroupIds);
+					groupId, commerceAccountGroupIds, type);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.
+				getCommercePriceListByChannelAndOrderTypeId(
+					groupId, commerceChannelId, commerceOrderTypeId, type);
+
+		if (commercePriceList != null) {
+			return commercePriceList;
+		}
+
+		commercePriceList =
+			_commercePriceListLocalService.getCommercePriceListByOrderTypeId(
+				groupId, commerceOrderTypeId, type);
 
 		if (commercePriceList != null) {
 			return commercePriceList;
@@ -84,7 +138,7 @@ public class CommercePriceListHierarchyDiscoveryImpl
 
 		commercePriceList =
 			_commercePriceListLocalService.getCommercePriceListByChannelId(
-				groupId, commercePriceListType, commerceChannelId);
+				groupId, commerceChannelId, type);
 
 		if (commercePriceList != null) {
 			return commercePriceList;
@@ -92,7 +146,7 @@ public class CommercePriceListHierarchyDiscoveryImpl
 
 		commercePriceList =
 			_commercePriceListLocalService.getCommercePriceListByUnqualified(
-				groupId, commercePriceListType);
+				groupId, type);
 
 		if (commercePriceList != null) {
 			return commercePriceList;

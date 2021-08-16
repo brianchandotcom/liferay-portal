@@ -18,6 +18,7 @@ import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
@@ -88,11 +89,11 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, Map<Locale, String> labelMap, String name,
-			List<ObjectField> objectFields)
+			Map<Locale, String> pluralLabelMap, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, null, labelMap, name, null, null, false, 0,
+			userId, null, labelMap, name, null, null, pluralLabelMap, false, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -122,6 +123,7 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionMetadata.getName(),
 				systemObjectDefinitionMetadata.getPKObjectFieldDBColumnName(),
 				systemObjectDefinitionMetadata.getPKObjectFieldName(),
+				systemObjectDefinitionMetadata.getPluralLabelMap(),
 				systemObjectDefinitionMetadata.getVersion(),
 				systemObjectDefinitionMetadata.getObjectFields());
 		}
@@ -174,14 +176,14 @@ public class ObjectDefinitionLocalServiceImpl
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String dbTableName, Map<Locale, String> labelMap,
 			String name, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, int version,
-			List<ObjectField> objectFields)
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			int version, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, true, version, WorkflowConstants.STATUS_APPROVED,
-			objectFields);
+			pkObjectFieldName, pluralLabelMap, true, version,
+			WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
 	@Override
@@ -500,7 +502,8 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectDefinition _addObjectDefinition(
 			long userId, String dbTableName, Map<Locale, String> labelMap,
 			String name, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, boolean system, int version, int status,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			boolean system, int version, int status,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
@@ -545,6 +548,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validateName(user.getCompanyId(), name, system);
+		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
 		_validateVersion(system, version);
 
 		long objectDefinitionId = counterLocalService.increment();
@@ -561,6 +565,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName);
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
+		objectDefinition.setPluralLabelMap(pluralLabelMap);
 		objectDefinition.setSystem(system);
 		objectDefinition.setVersion(version);
 		objectDefinition.setStatus(status);
@@ -704,6 +709,19 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinitionPersistence.fetchByC_N(companyId, name) != null) {
 			throw new DuplicateObjectDefinitionException(
 				"Duplicate name " + name);
+		}
+	}
+
+	private void _validatePluralLabel(
+			Map<Locale, String> pluralLabelMap, Locale defaultLocale)
+		throws PortalException {
+
+		if ((pluralLabelMap == null) ||
+			Validator.isNull(pluralLabelMap.get(defaultLocale))) {
+
+			throw new ObjectDefinitionPluralLabelException(
+				"Plural Label is null for locale " +
+					defaultLocale.getDisplayName());
 		}
 	}
 

@@ -24,6 +24,7 @@ import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategy;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceImpl;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
@@ -805,8 +806,7 @@ public class CommerceProductPriceCalculationV2Impl
 	}
 
 	private CommercePriceList _getCommercePriceList(
-			long cpInstanceId, CommerceContext commerceContext,
-			String commercePriceListType)
+			long cpInstanceId, CommerceContext commerceContext, String type)
 		throws PortalException {
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
@@ -818,7 +818,7 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		CommercePriceListDiscovery commercePriceListDiscovery =
-			_getCommercePriceListDiscovery(commercePriceListType);
+			_getCommercePriceListDiscovery(type);
 
 		if (commercePriceListDiscovery == null) {
 			return null;
@@ -827,10 +827,18 @@ public class CommerceProductPriceCalculationV2Impl
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
+		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+		long commerceOrderTypeId = 0;
+
+		if (commerceOrder != null) {
+			commerceOrderTypeId = commerceOrder.getCommerceOrderTypeId();
+		}
+
 		return commercePriceListDiscovery.getCommercePriceList(
 			cpInstance.getGroupId(), commerceAccountId,
-			commerceContext.getCommerceChannelId(),
-			cpInstance.getCPInstanceUuid(), commercePriceListType);
+			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
+			cpInstance.getCPInstanceUuid(), type);
 	}
 
 	private CommercePriceListDiscovery _getCommercePriceListDiscovery(

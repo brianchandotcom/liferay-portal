@@ -549,66 +549,145 @@ public class CommerceDiscountLocalServiceUtil {
 			uuid, companyId);
 	}
 
-	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
-		long commerceAccountId, long commerceChannelId, long cpDefinitionId) {
+	public static List<CommerceDiscount>
+		getAccountAndChannelAndOrderTypeCommerceDiscounts(
+			long commerceAccountId, long commerceChannelId,
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId) {
 
-		return getService().getAccountAndChannelCommerceDiscounts(
-			commerceAccountId, commerceChannelId, cpDefinitionId);
+		return getService().getAccountAndChannelAndOrderTypeCommerceDiscounts(
+			commerceAccountId, commerceChannelId, commerceOrderTypeId,
+			cpDefinitionId, cpInstanceId);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountAndChannelAndOrderTypeCommerceDiscounts(
+			long commerceAccountId, long commerceChannelId,
+			long commerceOrderTypeId, String target) {
+
+		return getService().getAccountAndChannelAndOrderTypeCommerceDiscounts(
+			commerceAccountId, commerceChannelId, commerceOrderTypeId, target);
 	}
 
 	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
-		long commerceAccountId, long commerceChannelId,
-		String commerceDiscountTargetType) {
+		long commerceAccountId, long commerceChannelId, long cpDefinitionId,
+		long cpInstanceId) {
 
 		return getService().getAccountAndChannelCommerceDiscounts(
-			commerceAccountId, commerceChannelId, commerceDiscountTargetType);
+			commerceAccountId, commerceChannelId, cpDefinitionId, cpInstanceId);
+	}
+
+	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
+		long commerceAccountId, long commerceChannelId, String target) {
+
+		return getService().getAccountAndChannelCommerceDiscounts(
+			commerceAccountId, commerceChannelId, target);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountAndOrderTypeCommerceDiscounts(
+			long commerceAccountId, long commerceOrderTypeId, String target) {
+
+		return getService().getAccountAndOrderTypeCommerceDiscounts(
+			commerceAccountId, commerceOrderTypeId, target);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountCommerceAndOrderTypeDiscounts(
+			long commerceAccountId, long commerceOrderTypeId,
+			long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getAccountCommerceAndOrderTypeDiscounts(
+			commerceAccountId, commerceOrderTypeId, cpDefinitionId,
+			cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getAccountCommerceDiscounts(
-		long commerceAccountId, long cpDefinitionId) {
+		long commerceAccountId, long cpDefinitionId, long cpInstanceId) {
 
 		return getService().getAccountCommerceDiscounts(
-			commerceAccountId, cpDefinitionId);
+			commerceAccountId, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getAccountCommerceDiscounts(
-		long commerceAccountId, String commerceDiscountTargetType) {
+		long commerceAccountId, String target) {
 
 		return getService().getAccountCommerceDiscounts(
-			commerceAccountId, commerceDiscountTargetType);
+			commerceAccountId, target);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
+			long[] commerceAccountGroupIds, long commerceChannelId,
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId) {
+
+		return getService().
+			getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
+				commerceAccountGroupIds, commerceChannelId, commerceOrderTypeId,
+				cpDefinitionId, cpInstanceId);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
+			long[] commerceAccountGroupIds, long commerceChannelId,
+			long commerceOrderTypeId, String target) {
+
+		return getService().
+			getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
+				commerceAccountGroupIds, commerceChannelId, commerceOrderTypeId,
+				target);
 	}
 
 	public static List<CommerceDiscount>
 		getAccountGroupAndChannelCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long cpDefinitionId) {
+			long cpDefinitionId, long cpInstanceId) {
 
 		return getService().getAccountGroupAndChannelCommerceDiscount(
-			commerceAccountGroupIds, commerceChannelId, cpDefinitionId);
+			commerceAccountGroupIds, commerceChannelId, cpDefinitionId,
+			cpInstanceId);
 	}
 
 	public static List<CommerceDiscount>
 		getAccountGroupAndChannelCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			String commerceDiscountTargetType) {
+			String target) {
 
 		return getService().getAccountGroupAndChannelCommerceDiscount(
-			commerceAccountGroupIds, commerceChannelId,
-			commerceDiscountTargetType);
+			commerceAccountGroupIds, commerceChannelId, target);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountGroupAndOrderTypeCommerceDiscount(
+			long[] commerceAccountGroupIds, long commerceOrderTypeId,
+			long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getAccountGroupAndOrderTypeCommerceDiscount(
+			commerceAccountGroupIds, commerceOrderTypeId, cpDefinitionId,
+			cpInstanceId);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountGroupAndOrderTypeCommerceDiscount(
+			long[] commerceAccountGroupIds, long commerceOrderTypeId,
+			String target) {
+
+		return getService().getAccountGroupAndOrderTypeCommerceDiscount(
+			commerceAccountGroupIds, commerceOrderTypeId, target);
 	}
 
 	public static List<CommerceDiscount> getAccountGroupCommerceDiscount(
-		long[] commerceAccountGroupIds, long cpDefinitionId) {
+		long[] commerceAccountGroupIds, long cpDefinitionId,
+		long cpInstanceId) {
 
 		return getService().getAccountGroupCommerceDiscount(
-			commerceAccountGroupIds, cpDefinitionId);
+			commerceAccountGroupIds, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getAccountGroupCommerceDiscount(
-		long[] commerceAccountGroupIds, String commerceDiscountTargetType) {
+		long[] commerceAccountGroupIds, String target) {
 
 		return getService().getAccountGroupCommerceDiscount(
-			commerceAccountGroupIds, commerceDiscountTargetType);
+			commerceAccountGroupIds, target);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -632,18 +711,36 @@ public class CommerceDiscountLocalServiceUtil {
 			companyId, couponCode, active);
 	}
 
-	public static List<CommerceDiscount> getChannelCommerceDiscounts(
-		long commerceChannelId, long cpDefinitionId) {
+	public static List<CommerceDiscount>
+		getChannelAndOrderTypeCommerceDiscounts(
+			long commerceChannelId, long commerceOrderTypeId,
+			long cpDefinitionId, long cpInstanceId) {
 
-		return getService().getChannelCommerceDiscounts(
-			commerceChannelId, cpDefinitionId);
+		return getService().getChannelAndOrderTypeCommerceDiscounts(
+			commerceChannelId, commerceOrderTypeId, cpDefinitionId,
+			cpInstanceId);
+	}
+
+	public static List<CommerceDiscount>
+		getChannelAndOrderTypeCommerceDiscounts(
+			long commerceChannelId, long commerceOrderTypeId, String target) {
+
+		return getService().getChannelAndOrderTypeCommerceDiscounts(
+			commerceChannelId, commerceOrderTypeId, target);
 	}
 
 	public static List<CommerceDiscount> getChannelCommerceDiscounts(
-		long commerceChannelId, String commerceDiscountTargetType) {
+		long commerceChannelId, long cpDefinitionId, long cpInstanceId) {
 
 		return getService().getChannelCommerceDiscounts(
-			commerceChannelId, commerceDiscountTargetType);
+			commerceChannelId, cpDefinitionId, cpInstanceId);
+	}
+
+	public static List<CommerceDiscount> getChannelCommerceDiscounts(
+		long commerceChannelId, String target) {
+
+		return getService().getChannelCommerceDiscounts(
+			commerceChannelId, target);
 	}
 
 	/**
@@ -759,6 +856,20 @@ public class CommerceDiscountLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static List<CommerceDiscount> getOrderTypeCommerceDiscounts(
+		long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getOrderTypeCommerceDiscounts(
+			commerceOrderTypeId, cpDefinitionId, cpInstanceId);
+	}
+
+	public static List<CommerceDiscount> getOrderTypeCommerceDiscounts(
+		long commerceOrderTypeId, String target) {
+
+		return getService().getOrderTypeCommerceDiscounts(
+			commerceOrderTypeId, target);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -785,17 +896,16 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
-		long companyId, long cpDefinitionId) {
+		long companyId, long cpDefinitionId, long cpInstanceId) {
 
 		return getService().getUnqualifiedCommerceDiscounts(
-			companyId, cpDefinitionId);
+			companyId, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
-		long companyId, String commerceDiscountTargetType) {
+		long companyId, String target) {
 
-		return getService().getUnqualifiedCommerceDiscounts(
-			companyId, commerceDiscountTargetType);
+		return getService().getUnqualifiedCommerceDiscounts(companyId, target);
 	}
 
 	public static int getValidCommerceDiscountsCount(

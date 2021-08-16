@@ -120,11 +120,6 @@ paths:
             tags: ["Plan"]
         post:
             operationId: postPlan
-            parameters:
-                - in: query
-                  name: fieldNameMapping
-                  schema:
-                      type: string
             requestBody:
                 content:
                     application/json:
@@ -148,19 +143,22 @@ paths:
             operationId: deletePlan
             parameters:
                 - in: path
-                  name: id
+                  name: planId
                   required: true
                   schema:
                       format: int64
                       type: integer
             responses:
                 204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
             tags: ["Plan"]
         get:
             operationId: getPlan
             parameters:
                 - in: path
-                  name: id
+                  name: planId
                   required: true
                   schema:
                       format: int64
@@ -179,7 +177,7 @@ paths:
             operationId: patchPlan
             parameters:
                 - in: path
-                  name: id
+                  name: planId
                   required: true
                   schema:
                       format: int64
@@ -193,14 +191,21 @@ paths:
                         schema:
                             $ref: "#/components/schemas/Plan"
             responses:
-                204:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Plan"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Plan"
             tags: ["Plan"]
     /plans/{planId}/logs:
         get:
             operationId: getPlanLogsPage
             parameters:
                 - in: path
-                  name: id
+                  name: planId
                   required: true
                   schema:
                       format: int64

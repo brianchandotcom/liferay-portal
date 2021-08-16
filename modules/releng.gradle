@@ -991,14 +991,14 @@ syncPortalLanguageKeys {
 
 		Map<String, Set<String>> moduleMap = new TreeMap<String, Set<String>>()
 
+		Properties portalImplRootLanguageProperties = new Properties()
+
+		new InputStreamReader(new FileInputStream(new File(projectDir, "../portal-impl/src/content/Language.properties")), StandardCharsets.UTF_8).withReader {
+			portalImplRootLanguageProperties.load(it)
+		}
+
 		portalLanguagePropertiesFiles.each {
 			File portalLanguagePropertiesFile ->
-
-			Properties portalImplLanguageProperties = new Properties()
-
-			new InputStreamReader(new FileInputStream(new File(projectDir, "../portal-impl/src/content/" + portalLanguagePropertiesFile.name)), StandardCharsets.UTF_8).withReader {
-				portalImplLanguageProperties.load(it)
-			}
 
 			Properties portalLanguageProperties = new Properties()
 
@@ -1029,31 +1029,38 @@ syncPortalLanguageKeys {
 					languageProperties.each {
 						String key, String value ->
 
-						if (!portalImplLanguageProperties.containsKey(key) || (portalImplLanguageProperties.getProperty(key) != value)) {
-							if (!portalLanguageProperties.containsKey(key)) {
-								updatedPortalLanguageProperties = true
+						if (portalImplRootLanguageProperties.containsKey(key)) {
+							if (rootLanguageProperties.containsKey(key) && (portalImplRootLanguageProperties.getProperty(key) != rootLanguageProperties.getProperty(key))) {
+								String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
 
-								portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
+								moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
+
+								languageKeys.add(key + '=' + value.replace("\n", "\\n"))
 							}
-							else if (portalLanguageProperties.getProperty(key) != value) {
-								if (!rootLanguageProperties.containsKey(key)) {
-									String portalLanguageValue = portalLanguageProperties.getProperty(key)
+						}
+						else if (!portalLanguageProperties.containsKey(key)) {
+							updatedPortalLanguageProperties = true
 
-									if (portalLanguageValue.endsWith("(Automatic Copy)") || portalLanguageValue.endsWith("(Automatic Translation)")) {
-										if ((!value.endsWith("(Automatic Copy)") && !value.endsWith("(Automatic Translation)")) || (portalLanguageValue.endsWith("(Automatic Copy)") && value.endsWith("(Automatic Translation)"))) {
-											updatedPortalLanguageProperties = true
+							portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
+						}
+						else if (portalLanguageProperties.getProperty(key) != value) {
+							if (!rootLanguageProperties.containsKey(key)) {
+								String portalLanguageValue = portalLanguageProperties.getProperty(key)
 
-											portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
-										}
+								if (portalLanguageValue.endsWith("(Automatic Copy)") || portalLanguageValue.endsWith("(Automatic Translation)")) {
+									if ((!value.endsWith("(Automatic Copy)") && !value.endsWith("(Automatic Translation)")) || (portalLanguageValue.endsWith("(Automatic Copy)") && value.endsWith("(Automatic Translation)"))) {
+										updatedPortalLanguageProperties = true
+
+										portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
 									}
 								}
-								else {
-									String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
+							}
+							else {
+								String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
 
-									moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
+								moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
 
-									languageKeys.add(key + '=' + value.replace("\n", "\\n"))
-								}
+								languageKeys.add(key + '=' + value.replace("\n", "\\n"))
 							}
 						}
 					}

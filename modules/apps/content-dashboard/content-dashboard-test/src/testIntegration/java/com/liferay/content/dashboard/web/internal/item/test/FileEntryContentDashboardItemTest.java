@@ -86,7 +86,8 @@ public class FileEntryContentDashboardItemTest {
 					"pdf", specificFieldsJSONObject.getString("extension"));
 
 				Assert.assertEquals(
-					"FileName.pdf", specificFieldsJSONObject.getString("fileName"));
+					"FileName.pdf",
+					specificFieldsJSONObject.getString("fileName"));
 
 				Assert.assertNotNull(
 					specificFieldsJSONObject.getString("downloadURL"));

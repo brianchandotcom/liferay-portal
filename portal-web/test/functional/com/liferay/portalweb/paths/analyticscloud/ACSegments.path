@@ -239,7 +239,7 @@
 </tr>
 <tr>
 	<td>SEGMENT_DROP_AREA</td>
-	<td>//div[@class='drop-zone-target p-5']</td>
+	<td>xpath=(//div[contains(@class,'drop-zone-target')])[last()]</td>
 	<td></td>
 </tr>
 <tr>

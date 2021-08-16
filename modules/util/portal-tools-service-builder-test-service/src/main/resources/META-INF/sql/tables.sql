@@ -23,7 +23,10 @@ create table CacheFieldEntry (
 );
 
 create table CacheMissEntry (
-	cacheMissEntryId LONG not null primary key
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	cacheMissEntryId LONG not null,
+	primary key (cacheMissEntryId, ctCollectionId)
 );
 
 create table DSLQueryEntry (

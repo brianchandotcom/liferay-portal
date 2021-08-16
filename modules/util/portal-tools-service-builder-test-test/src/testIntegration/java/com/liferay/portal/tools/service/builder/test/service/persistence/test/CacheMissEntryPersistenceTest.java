@@ -122,11 +122,21 @@ public class CacheMissEntryPersistenceTest {
 
 		CacheMissEntry newCacheMissEntry = _persistence.create(pk);
 
+		newCacheMissEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		newCacheMissEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		_cacheMissEntries.add(_persistence.update(newCacheMissEntry));
 
 		CacheMissEntry existingCacheMissEntry = _persistence.findByPrimaryKey(
 			newCacheMissEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCacheMissEntry.getMvccVersion(),
+			newCacheMissEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingCacheMissEntry.getCtCollectionId(),
+			newCacheMissEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingCacheMissEntry.getCacheMissEntryId(),
 			newCacheMissEntry.getCacheMissEntryId());
@@ -157,7 +167,8 @@ public class CacheMissEntryPersistenceTest {
 
 	protected OrderByComparator<CacheMissEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CacheMissEntry", "cacheMissEntryId", true);
+			"CacheMissEntry", "mvccVersion", true, "ctCollectionId", true,
+			"cacheMissEntryId", true);
 	}
 
 	@Test
@@ -378,6 +389,10 @@ public class CacheMissEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CacheMissEntry cacheMissEntry = _persistence.create(pk);
+
+		cacheMissEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		cacheMissEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		_cacheMissEntries.add(_persistence.update(cacheMissEntry));
 

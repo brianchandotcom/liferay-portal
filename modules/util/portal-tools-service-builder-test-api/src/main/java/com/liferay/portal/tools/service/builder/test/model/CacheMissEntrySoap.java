@@ -32,6 +32,8 @@ public class CacheMissEntrySoap implements Serializable {
 	public static CacheMissEntrySoap toSoapModel(CacheMissEntry model) {
 		CacheMissEntrySoap soapModel = new CacheMissEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setCacheMissEntryId(model.getCacheMissEntryId());
 
 		return soapModel;
@@ -91,6 +93,22 @@ public class CacheMissEntrySoap implements Serializable {
 		setCacheMissEntryId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getCacheMissEntryId() {
 		return _cacheMissEntryId;
 	}
@@ -99,6 +117,8 @@ public class CacheMissEntrySoap implements Serializable {
 		_cacheMissEntryId = cacheMissEntryId;
 	}
 
+	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _cacheMissEntryId;
 
 }

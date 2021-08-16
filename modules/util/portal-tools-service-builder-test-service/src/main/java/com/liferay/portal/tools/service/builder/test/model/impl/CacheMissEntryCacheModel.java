@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.tools.service.builder.test.model.CacheMissEntry;
 
 import java.io.Externalizable;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class CacheMissEntryCacheModel
-	implements CacheModel<CacheMissEntry>, Externalizable {
+	implements CacheModel<CacheMissEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -46,7 +47,9 @@ public class CacheMissEntryCacheModel
 		CacheMissEntryCacheModel cacheMissEntryCacheModel =
 			(CacheMissEntryCacheModel)object;
 
-		if (cacheMissEntryId == cacheMissEntryCacheModel.cacheMissEntryId) {
+		if ((cacheMissEntryId == cacheMissEntryCacheModel.cacheMissEntryId) &&
+			(mvccVersion == cacheMissEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -55,15 +58,32 @@ public class CacheMissEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, cacheMissEntryId);
+		int hashCode = HashUtil.hash(0, cacheMissEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("{cacheMissEntryId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
+		sb.append(", cacheMissEntryId=");
 		sb.append(cacheMissEntryId);
+		sb.append("}");
 
 		return sb.toString();
 	}
@@ -72,6 +92,8 @@ public class CacheMissEntryCacheModel
 	public CacheMissEntry toEntityModel() {
 		CacheMissEntryImpl cacheMissEntryImpl = new CacheMissEntryImpl();
 
+		cacheMissEntryImpl.setMvccVersion(mvccVersion);
+		cacheMissEntryImpl.setCtCollectionId(ctCollectionId);
 		cacheMissEntryImpl.setCacheMissEntryId(cacheMissEntryId);
 
 		cacheMissEntryImpl.resetOriginalValues();
@@ -81,14 +103,24 @@ public class CacheMissEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
+
 		cacheMissEntryId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(cacheMissEntryId);
 	}
 
+	public long mvccVersion;
+	public long ctCollectionId;
 	public long cacheMissEntryId;
 
 }

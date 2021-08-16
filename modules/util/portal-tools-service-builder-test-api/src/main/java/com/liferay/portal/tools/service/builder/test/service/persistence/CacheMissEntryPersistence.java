@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchCacheMissEntryException;
 import com.liferay.portal.tools.service.builder.test.model.CacheMissEntry;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CacheMissEntryPersistence
-	extends BasePersistence<CacheMissEntry> {
+	extends BasePersistence<CacheMissEntry>, CTPersistence<CacheMissEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

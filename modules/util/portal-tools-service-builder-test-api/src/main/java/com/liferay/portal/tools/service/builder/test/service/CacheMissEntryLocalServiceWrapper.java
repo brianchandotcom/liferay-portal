@@ -14,7 +14,10 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.tools.service.builder.test.model.CacheMissEntry;
 
 /**
  * Provides a wrapper for {@link CacheMissEntryLocalService}.
@@ -44,11 +47,7 @@ public class CacheMissEntryLocalServiceWrapper
 	 * @return the cache miss entry that was added
 	 */
 	@Override
-	public com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-		addCacheMissEntry(
-			com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-				cacheMissEntry) {
-
+	public CacheMissEntry addCacheMissEntry(CacheMissEntry cacheMissEntry) {
 		return _cacheMissEntryLocalService.addCacheMissEntry(cacheMissEntry);
 	}
 
@@ -59,9 +58,7 @@ public class CacheMissEntryLocalServiceWrapper
 	 * @return the new cache miss entry
 	 */
 	@Override
-	public com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-		createCacheMissEntry(long cacheMissEntryId) {
-
+	public CacheMissEntry createCacheMissEntry(long cacheMissEntryId) {
 		return _cacheMissEntryLocalService.createCacheMissEntry(
 			cacheMissEntryId);
 	}
@@ -88,11 +85,7 @@ public class CacheMissEntryLocalServiceWrapper
 	 * @return the cache miss entry that was removed
 	 */
 	@Override
-	public com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-		deleteCacheMissEntry(
-			com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-				cacheMissEntry) {
-
+	public CacheMissEntry deleteCacheMissEntry(CacheMissEntry cacheMissEntry) {
 		return _cacheMissEntryLocalService.deleteCacheMissEntry(cacheMissEntry);
 	}
 
@@ -108,8 +101,7 @@ public class CacheMissEntryLocalServiceWrapper
 	 * @throws PortalException if a cache miss entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-			deleteCacheMissEntry(long cacheMissEntryId)
+	public CacheMissEntry deleteCacheMissEntry(long cacheMissEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cacheMissEntryLocalService.deleteCacheMissEntry(
@@ -231,9 +223,7 @@ public class CacheMissEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-		fetchCacheMissEntry(long cacheMissEntryId) {
-
+	public CacheMissEntry fetchCacheMissEntry(long cacheMissEntryId) {
 		return _cacheMissEntryLocalService.fetchCacheMissEntry(
 			cacheMissEntryId);
 	}
@@ -257,9 +247,8 @@ public class CacheMissEntryLocalServiceWrapper
 	 * @return the range of cache miss entries
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.portal.tools.service.builder.test.model.CacheMissEntry>
-			getCacheMissEntries(int start, int end) {
+	public java.util.List<CacheMissEntry> getCacheMissEntries(
+		int start, int end) {
 
 		return _cacheMissEntryLocalService.getCacheMissEntries(start, end);
 	}
@@ -282,8 +271,7 @@ public class CacheMissEntryLocalServiceWrapper
 	 * @throws PortalException if a cache miss entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-			getCacheMissEntry(long cacheMissEntryId)
+	public CacheMissEntry getCacheMissEntry(long cacheMissEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cacheMissEntryLocalService.getCacheMissEntry(cacheMissEntryId);
@@ -328,12 +316,28 @@ public class CacheMissEntryLocalServiceWrapper
 	 * @return the cache miss entry that was updated
 	 */
 	@Override
-	public com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-		updateCacheMissEntry(
-			com.liferay.portal.tools.service.builder.test.model.CacheMissEntry
-				cacheMissEntry) {
-
+	public CacheMissEntry updateCacheMissEntry(CacheMissEntry cacheMissEntry) {
 		return _cacheMissEntryLocalService.updateCacheMissEntry(cacheMissEntry);
+	}
+
+	@Override
+	public CTPersistence<CacheMissEntry> getCTPersistence() {
+		return _cacheMissEntryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<CacheMissEntry> getModelClass() {
+		return _cacheMissEntryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CacheMissEntry>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _cacheMissEntryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

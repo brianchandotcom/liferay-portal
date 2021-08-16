@@ -15,6 +15,8 @@
 package com.liferay.portal.tools.service.builder.test.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -30,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CacheMissEntryModel extends BaseModel<CacheMissEntry> {
+public interface CacheMissEntryModel
+	extends BaseModel<CacheMissEntry>, CTModel<CacheMissEntry>, MVCCModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -43,6 +46,7 @@ public interface CacheMissEntryModel extends BaseModel<CacheMissEntry> {
 	 *
 	 * @return the primary key of this cache miss entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -50,7 +54,40 @@ public interface CacheMissEntryModel extends BaseModel<CacheMissEntry> {
 	 *
 	 * @param primaryKey the primary key of this cache miss entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this cache miss entry.
+	 *
+	 * @return the mvcc version of this cache miss entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this cache miss entry.
+	 *
+	 * @param mvccVersion the mvcc version of this cache miss entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this cache miss entry.
+	 *
+	 * @return the ct collection ID of this cache miss entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this cache miss entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cache miss entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the cache miss entry ID of this cache miss entry.

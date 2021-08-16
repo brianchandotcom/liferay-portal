@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -41,6 +43,8 @@ public class CacheMissEntryWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("cacheMissEntryId", getCacheMissEntryId());
 
 		return attributes;
@@ -48,6 +52,18 @@ public class CacheMissEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
+		}
+
 		Long cacheMissEntryId = (Long)attributes.get("cacheMissEntryId");
 
 		if (cacheMissEntryId != null) {
@@ -63,6 +79,26 @@ public class CacheMissEntryWrapper
 	@Override
 	public long getCacheMissEntryId() {
 		return model.getCacheMissEntryId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this cache miss entry.
+	 *
+	 * @return the ct collection ID of this cache miss entry
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the mvcc version of this cache miss entry.
+	 *
+	 * @return the mvcc version of this cache miss entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -91,6 +127,26 @@ public class CacheMissEntryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this cache miss entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this cache miss entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the mvcc version of this cache miss entry.
+	 *
+	 * @param mvccVersion the mvcc version of this cache miss entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
+	}
+
+	/**
 	 * Sets the primary key of this cache miss entry.
 	 *
 	 * @param primaryKey the primary key of this cache miss entry
@@ -98,6 +154,20 @@ public class CacheMissEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public Map<String, Function<CacheMissEntry, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CacheMissEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

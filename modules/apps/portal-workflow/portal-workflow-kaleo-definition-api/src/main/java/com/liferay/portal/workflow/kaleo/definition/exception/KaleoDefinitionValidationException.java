@@ -241,6 +241,26 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 
 	}
 
+	public static class MustNotSetMoreThanOneDefaultTransition
+		extends KaleoDefinitionValidationException {
+
+		public MustNotSetMoreThanOneDefaultTransition(String node) {
+			super(
+				String.format(
+					"The %s node cannot have more than one default transition",
+					node));
+
+			_node = node;
+		}
+
+		public String getNode() {
+			return _node;
+		}
+
+		private final String _node;
+
+	}
+
 	public static class MustPairedForkAndJoinNodes
 		extends KaleoDefinitionValidationException {
 

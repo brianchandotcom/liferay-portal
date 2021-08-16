@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>DATE_CONTAINER</td>
-	<td>//fieldset[@aria-labelledby='Title']//div[contains(@id,'DateContainer')]</td>
+	<td>//div[@aria-labelledby='Header']//div[contains(@id,'DateContainer')]</td>
 	<td></td>
 </tr>
 <tr>

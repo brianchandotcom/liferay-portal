@@ -594,6 +594,66 @@ definition {
 			ratingStarCount = "5");
 	}
 
+	@description = "This is a test for LPS-136949. It checks that Stacked stars can be added and removed from comments."
+	@ignore = "true"
+	@priority = "5"
+	test CanRevokeStackedStarsFromComments {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136949 CanRevokeStackedStarsFromComments pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136958. It checks that Stacked stars can be added and removed from a web content."
+	@ignore = "true"
+	@priority = "5"
+	test CanRevokeStackedStarsFromWC {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136958 CanRevokeStackedStarsFromWC pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136951. It checks that Stacked stars can be added and removed from a wiki entry."
+	@ignore = "true"
+	@priority = "5"
+	test CanRevokeStackedStarsFromWiki {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136951 CanRevokeStackedStarsFromWiki pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136954. It checks that stars can be added and removed from a document."
+	@ignore = "true"
+	@priority = "5"
+	test CanRevokeStarsFromDocument {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136954 CanRevokeStarsFromDocument pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136956. It checks that stars can be added and removed from a KB article."
+	@ignore = "true"
+	@priority = "5"
+	test CanRevokeStarsFromKB {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136956 CanRevokeStarsFromKB pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136960. It checks that stars can be added and removed from a MB thread."
+	@ignore = "true"
+	@priority = "5"
+	test CanRevokeStarsFromMB {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136960 CanRevokeStarsFromMB pending implementation
+
+	}
+
 	@priority = "3"
 	@refactordone
 	test CanViewKBArticleWithEditedStarRatings {

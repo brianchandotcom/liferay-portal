@@ -77,6 +77,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_HEADER_LOADING_ANIMATION</td>
+	<td>//div[contains(@class,'form-header')]//span[contains(@class,'loading-animation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_CHECKBOX</td>
 	<td>//div[text()='${key_TableMember}']/ancestor::tr</td>
 	<td></td>

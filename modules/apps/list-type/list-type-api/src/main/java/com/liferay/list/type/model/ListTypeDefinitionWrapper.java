@@ -51,7 +51,7 @@ public class ListTypeDefinitionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("label", getLabel());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -107,10 +107,10 @@ public class ListTypeDefinitionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String label = (String)attributes.get("label");
+		String name = (String)attributes.get("name");
 
-		if (label != null) {
-			setLabel(label);
+		if (name != null) {
+			setName(name);
 		}
 	}
 
@@ -145,82 +145,6 @@ public class ListTypeDefinitionWrapper
 	}
 
 	/**
-	 * Returns the label of this list type definition.
-	 *
-	 * @return the label of this list type definition
-	 */
-	@Override
-	public String getLabel() {
-		return model.getLabel();
-	}
-
-	/**
-	 * Returns the localized label of this list type definition in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized label of this list type definition
-	 */
-	@Override
-	public String getLabel(java.util.Locale locale) {
-		return model.getLabel(locale);
-	}
-
-	/**
-	 * Returns the localized label of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this list type definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@Override
-	public String getLabel(java.util.Locale locale, boolean useDefault) {
-		return model.getLabel(locale, useDefault);
-	}
-
-	/**
-	 * Returns the localized label of this list type definition in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized label of this list type definition
-	 */
-	@Override
-	public String getLabel(String languageId) {
-		return model.getLabel(languageId);
-	}
-
-	/**
-	 * Returns the localized label of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this list type definition
-	 */
-	@Override
-	public String getLabel(String languageId, boolean useDefault) {
-		return model.getLabel(languageId, useDefault);
-	}
-
-	@Override
-	public String getLabelCurrentLanguageId() {
-		return model.getLabelCurrentLanguageId();
-	}
-
-	@Override
-	public String getLabelCurrentValue() {
-		return model.getLabelCurrentValue();
-	}
-
-	/**
-	 * Returns a map of the locales and localized labels of this list type definition.
-	 *
-	 * @return the locales and localized labels of this list type definition
-	 */
-	@Override
-	public Map<java.util.Locale, String> getLabelMap() {
-		return model.getLabelMap();
-	}
-
-	/**
 	 * Returns the list type definition ID of this list type definition.
 	 *
 	 * @return the list type definition ID of this list type definition
@@ -248,6 +172,82 @@ public class ListTypeDefinitionWrapper
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
+	}
+
+	/**
+	 * Returns the name of this list type definition.
+	 *
+	 * @return the name of this list type definition
+	 */
+	@Override
+	public String getName() {
+		return model.getName();
+	}
+
+	/**
+	 * Returns the localized name of this list type definition in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized name of this list type definition
+	 */
+	@Override
+	public String getName(java.util.Locale locale) {
+		return model.getName(locale);
+	}
+
+	/**
+	 * Returns the localized name of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this list type definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getName(java.util.Locale locale, boolean useDefault) {
+		return model.getName(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized name of this list type definition in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized name of this list type definition
+	 */
+	@Override
+	public String getName(String languageId) {
+		return model.getName(languageId);
+	}
+
+	/**
+	 * Returns the localized name of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this list type definition
+	 */
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return model.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return model.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return model.getNameCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized names of this list type definition.
+	 *
+	 * @return the locales and localized names of this list type definition
+	 */
+	@Override
+	public Map<java.util.Locale, String> getNameMap() {
+		return model.getNameMap();
 	}
 
 	/**
@@ -341,70 +341,6 @@ public class ListTypeDefinitionWrapper
 	}
 
 	/**
-	 * Sets the label of this list type definition.
-	 *
-	 * @param label the label of this list type definition
-	 */
-	@Override
-	public void setLabel(String label) {
-		model.setLabel(label);
-	}
-
-	/**
-	 * Sets the localized label of this list type definition in the language.
-	 *
-	 * @param label the localized label of this list type definition
-	 * @param locale the locale of the language
-	 */
-	@Override
-	public void setLabel(String label, java.util.Locale locale) {
-		model.setLabel(label, locale);
-	}
-
-	/**
-	 * Sets the localized label of this list type definition in the language, and sets the default locale.
-	 *
-	 * @param label the localized label of this list type definition
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setLabel(
-		String label, java.util.Locale locale, java.util.Locale defaultLocale) {
-
-		model.setLabel(label, locale, defaultLocale);
-	}
-
-	@Override
-	public void setLabelCurrentLanguageId(String languageId) {
-		model.setLabelCurrentLanguageId(languageId);
-	}
-
-	/**
-	 * Sets the localized labels of this list type definition from the map of locales and localized labels.
-	 *
-	 * @param labelMap the locales and localized labels of this list type definition
-	 */
-	@Override
-	public void setLabelMap(Map<java.util.Locale, String> labelMap) {
-		model.setLabelMap(labelMap);
-	}
-
-	/**
-	 * Sets the localized labels of this list type definition from the map of locales and localized labels, and sets the default locale.
-	 *
-	 * @param labelMap the locales and localized labels of this list type definition
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setLabelMap(
-		Map<java.util.Locale, String> labelMap,
-		java.util.Locale defaultLocale) {
-
-		model.setLabelMap(labelMap, defaultLocale);
-	}
-
-	/**
 	 * Sets the list type definition ID of this list type definition.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID of this list type definition
@@ -432,6 +368,69 @@ public class ListTypeDefinitionWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	 * Sets the name of this list type definition.
+	 *
+	 * @param name the name of this list type definition
+	 */
+	@Override
+	public void setName(String name) {
+		model.setName(name);
+	}
+
+	/**
+	 * Sets the localized name of this list type definition in the language.
+	 *
+	 * @param name the localized name of this list type definition
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setName(String name, java.util.Locale locale) {
+		model.setName(name, locale);
+	}
+
+	/**
+	 * Sets the localized name of this list type definition in the language, and sets the default locale.
+	 *
+	 * @param name the localized name of this list type definition
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setName(
+		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		model.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized names of this list type definition from the map of locales and localized names.
+	 *
+	 * @param nameMap the locales and localized names of this list type definition
+	 */
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
+		model.setNameMap(nameMap);
+	}
+
+	/**
+	 * Sets the localized names of this list type definition from the map of locales and localized names, and sets the default locale.
+	 *
+	 * @param nameMap the locales and localized names of this list type definition
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setNameMap(
+		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
+
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**

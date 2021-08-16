@@ -56,8 +56,8 @@ public class ListTypeDefinitionTable
 	public final Column<ListTypeDefinitionTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<ListTypeDefinitionTable, String> label = createColumn(
-		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ListTypeDefinitionTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private ListTypeDefinitionTable() {
 		super("ListTypeDefinition", ListTypeDefinitionTable::new);

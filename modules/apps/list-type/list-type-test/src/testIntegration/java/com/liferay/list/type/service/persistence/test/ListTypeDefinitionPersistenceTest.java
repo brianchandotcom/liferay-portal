@@ -137,7 +137,7 @@ public class ListTypeDefinitionPersistenceTest {
 
 		newListTypeDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
-		newListTypeDefinition.setLabel(RandomTestUtil.randomString());
+		newListTypeDefinition.setName(RandomTestUtil.randomString());
 
 		_listTypeDefinitions.add(_persistence.update(newListTypeDefinition));
 
@@ -171,8 +171,8 @@ public class ListTypeDefinitionPersistenceTest {
 				existingListTypeDefinition.getModifiedDate()),
 			Time.getShortTimestamp(newListTypeDefinition.getModifiedDate()));
 		Assert.assertEquals(
-			existingListTypeDefinition.getLabel(),
-			newListTypeDefinition.getLabel());
+			existingListTypeDefinition.getName(),
+			newListTypeDefinition.getName());
 	}
 
 	@Test
@@ -221,7 +221,7 @@ public class ListTypeDefinitionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"ListTypeDefinition", "mvccVersion", true, "uuid", true,
 			"listTypeDefinitionId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "label",
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
 			true);
 	}
 
@@ -467,7 +467,7 @@ public class ListTypeDefinitionPersistenceTest {
 
 		listTypeDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
-		listTypeDefinition.setLabel(RandomTestUtil.randomString());
+		listTypeDefinition.setName(RandomTestUtil.randomString());
 
 		_listTypeDefinitions.add(_persistence.update(listTypeDefinition));
 

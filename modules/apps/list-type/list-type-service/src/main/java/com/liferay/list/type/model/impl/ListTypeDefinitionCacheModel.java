@@ -96,8 +96,8 @@ public class ListTypeDefinitionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", label=");
-		sb.append(label);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -142,11 +142,11 @@ public class ListTypeDefinitionCacheModel
 			listTypeDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (label == null) {
-			listTypeDefinitionImpl.setLabel("");
+		if (name == null) {
+			listTypeDefinitionImpl.setName("");
 		}
 		else {
-			listTypeDefinitionImpl.setLabel(label);
+			listTypeDefinitionImpl.setName(name);
 		}
 
 		listTypeDefinitionImpl.resetOriginalValues();
@@ -167,7 +167,7 @@ public class ListTypeDefinitionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		label = objectInput.readUTF();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -197,11 +197,11 @@ public class ListTypeDefinitionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (label == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(label);
+			objectOutput.writeUTF(name);
 		}
 	}
 
@@ -213,6 +213,6 @@ public class ListTypeDefinitionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String label;
+	public String name;
 
 }

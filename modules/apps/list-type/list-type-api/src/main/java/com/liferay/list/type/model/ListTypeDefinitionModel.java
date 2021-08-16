@@ -209,103 +209,103 @@ public interface ListTypeDefinitionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the label of this list type definition.
+	 * Returns the name of this list type definition.
 	 *
-	 * @return the label of this list type definition
+	 * @return the name of this list type definition
 	 */
-	public String getLabel();
+	public String getName();
 
 	/**
-	 * Returns the localized label of this list type definition in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this list type definition in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized label of this list type definition
+	 * @return the localized name of this list type definition
 	 */
 	@AutoEscape
-	public String getLabel(Locale locale);
+	public String getName(Locale locale);
 
 	/**
-	 * Returns the localized label of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this list type definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized name of this list type definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
-	public String getLabel(Locale locale, boolean useDefault);
+	public String getName(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized label of this list type definition in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this list type definition in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized label of this list type definition
+	 * @return the localized name of this list type definition
 	 */
 	@AutoEscape
-	public String getLabel(String languageId);
+	public String getName(String languageId);
 
 	/**
-	 * Returns the localized label of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this list type definition in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized label of this list type definition
+	 * @return the localized name of this list type definition
 	 */
 	@AutoEscape
-	public String getLabel(String languageId, boolean useDefault);
+	public String getName(String languageId, boolean useDefault);
 
 	@AutoEscape
-	public String getLabelCurrentLanguageId();
+	public String getNameCurrentLanguageId();
 
 	@AutoEscape
-	public String getLabelCurrentValue();
+	public String getNameCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized labels of this list type definition.
+	 * Returns a map of the locales and localized names of this list type definition.
 	 *
-	 * @return the locales and localized labels of this list type definition
+	 * @return the locales and localized names of this list type definition
 	 */
-	public Map<Locale, String> getLabelMap();
+	public Map<Locale, String> getNameMap();
 
 	/**
-	 * Sets the label of this list type definition.
+	 * Sets the name of this list type definition.
 	 *
-	 * @param label the label of this list type definition
+	 * @param name the name of this list type definition
 	 */
-	public void setLabel(String label);
+	public void setName(String name);
 
 	/**
-	 * Sets the localized label of this list type definition in the language.
+	 * Sets the localized name of this list type definition in the language.
 	 *
-	 * @param label the localized label of this list type definition
+	 * @param name the localized name of this list type definition
 	 * @param locale the locale of the language
 	 */
-	public void setLabel(String label, Locale locale);
+	public void setName(String name, Locale locale);
 
 	/**
-	 * Sets the localized label of this list type definition in the language, and sets the default locale.
+	 * Sets the localized name of this list type definition in the language, and sets the default locale.
 	 *
-	 * @param label the localized label of this list type definition
+	 * @param name the localized name of this list type definition
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setLabel(String label, Locale locale, Locale defaultLocale);
+	public void setName(String name, Locale locale, Locale defaultLocale);
 
-	public void setLabelCurrentLanguageId(String languageId);
+	public void setNameCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized labels of this list type definition from the map of locales and localized labels.
+	 * Sets the localized names of this list type definition from the map of locales and localized names.
 	 *
-	 * @param labelMap the locales and localized labels of this list type definition
+	 * @param nameMap the locales and localized names of this list type definition
 	 */
-	public void setLabelMap(Map<Locale, String> labelMap);
+	public void setNameMap(Map<Locale, String> nameMap);
 
 	/**
-	 * Sets the localized labels of this list type definition from the map of locales and localized labels, and sets the default locale.
+	 * Sets the localized names of this list type definition from the map of locales and localized names, and sets the default locale.
 	 *
-	 * @param labelMap the locales and localized labels of this list type definition
+	 * @param nameMap the locales and localized names of this list type definition
 	 * @param defaultLocale the default locale
 	 */
-	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	@Override
 	public String[] getAvailableLanguageIds();

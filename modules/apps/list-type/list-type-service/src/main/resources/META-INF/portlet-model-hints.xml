@@ -10,7 +10,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="label" type="String" />
+		<field localized="true" name="name" type="String" />
 	</model>
 	<model name="com.liferay.list.type.model.ListTypeEntry">
 		<field name="mvccVersion" type="long" />

@@ -41,7 +41,7 @@ public class ListTypeDefinitionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setLabel(model.getLabel());
+		soapModel.setName(model.getName());
 
 		return soapModel;
 	}
@@ -168,12 +168,12 @@ public class ListTypeDefinitionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getLabel() {
-		return _label;
+	public String getName() {
+		return _name;
 	}
 
-	public void setLabel(String label) {
-		_label = label;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	private long _mvccVersion;
@@ -184,6 +184,6 @@ public class ListTypeDefinitionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _label;
+	private String _name;
 
 }

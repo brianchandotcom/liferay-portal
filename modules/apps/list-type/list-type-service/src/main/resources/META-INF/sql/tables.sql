@@ -7,7 +7,7 @@ create table ListTypeDefinition (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	label STRING null
+	name STRING null
 );
 
 create table ListTypeEntry (

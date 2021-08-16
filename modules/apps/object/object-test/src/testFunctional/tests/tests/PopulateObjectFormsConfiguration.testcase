@@ -19,6 +19,56 @@ definition {
 		}
 	}
 
+	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"
+	@priority = "4"
+	test CannotMapWithDifferentFieldTypes {
+
+		// TODO LPS-137352 CannotMapWithDifferentFieldTypes pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type in a Field Group"
+	@priority = "4"
+	test CannotMapWithDifferentFieldTypesForFieldGroup {
+
+		// TODO LPS-137355 CannotMapWithDifferentFieldTypesForFieldGroup pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's not possible to publish the Form when a required Object field is not mapped to a Form field"
+	@priority = "5"
+	test CannotPublishWhenRequiredFieldNotMapped {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137350 CannotPublishWhenRequiredFieldNotMapped pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if is not possible to publish the Form when required Object field is not mapped to a Form Field in a Field Group"
+	@priority = "5"
+	test CannotPublishWhenRequiredFieldNotMappedForFieldGroup {
+		property portal.acceptance = "true";
+
+		// TODO LPS-137353 CannotPublishWhenRequiredFieldNotMappedForFieldGroup pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's not possible to save or publish the Form if a added Form field is not mapped to a Object field"
+	@priority = "4"
+	test CannotSaveOrPublishWhenAddedFieldNotMapped {
+
+		// TODO LPS-137351 CannotSaveOrPublishWhenAddedFieldNotMapped pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's not possible to save or publish the Form if a added Form field is not mapped to a Object field in a Field Group"
+	@priority = "4"
+	test CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup {
+
+		// TODO LPS-137354 CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup pending implementation
+
+	}
+
 	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"
 	@priority = "5"
 	test CanSelectObjectStorageType {

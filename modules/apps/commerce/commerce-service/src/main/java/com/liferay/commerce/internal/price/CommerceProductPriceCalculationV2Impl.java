@@ -24,6 +24,7 @@ import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategy;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceImpl;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
@@ -827,10 +828,18 @@ public class CommerceProductPriceCalculationV2Impl
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
+		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+		long commerceOrderTypeId = 0;
+
+		if (commerceOrder != null) {
+			commerceOrderTypeId = commerceOrder.getCommerceOrderTypeId();
+		}
+
 		return commercePriceListDiscovery.getCommercePriceList(
-			cpInstance.getGroupId(), commerceAccountId,
-			commerceContext.getCommerceChannelId(),
-			cpInstance.getCPInstanceUuid(), commercePriceListType);
+			cpInstance.getGroupId(), commercePriceListType, commerceAccountId,
+			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
+			cpInstance.getCPInstanceUuid());
 	}
 
 	private CommercePriceListDiscovery _getCommercePriceListDiscovery(

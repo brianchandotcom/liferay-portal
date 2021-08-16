@@ -51,6 +51,11 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
+
+			PageEditor.clickPublish();
+		}
+		task ("Remove Heading fragment") {
+			PageEditor.removeFragment(fragmentName = "Heading");
 		}
 		task ("Assert the actions order for content pages") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");

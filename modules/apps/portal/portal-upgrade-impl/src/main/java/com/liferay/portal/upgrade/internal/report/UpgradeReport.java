@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -80,7 +83,7 @@ public class UpgradeReport {
 
 		StringBuffer sb = new StringBuffer(3);
 
-		sb.append(_getLiferayVersions());
+		sb.append(_getPortalVersions());
 		sb.append(_getDialectInfo());
 		sb.append(_getProperties());
 
@@ -131,39 +134,6 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private String _getLiferayVersions() {
-		StringBuffer sb = new StringBuffer(10);
-
-		String currentSchemaVersion = _getSchemaVersion();
-
-		if (_initialBuildNumber != 0) {
-			sb.append("Initial version of Liferay: ");
-			sb.append(_initialBuildNumber);
-
-			if (_initialSchemaVersion != null) {
-				sb.append(" and initial schema version ");
-				sb.append(_initialSchemaVersion);
-			}
-		}
-		else {
-			sb.append("Unable to determine initial version of Liferay.");
-		}
-
-		sb.append(StringPool.NEW_LINE);
-
-		sb.append("Final version of Liferay ");
-		sb.append(ReleaseInfo.getBuildNumber());
-
-		if (currentSchemaVersion != null) {
-			sb.append(" and final schema version ");
-			sb.append(currentSchemaVersion);
-		}
-
-		sb.append(StringPool.NEW_LINE);
-
-		return sb.toString();
-	}
-
 	private File _getLogFile() {
 		File logFile = new File(
 			PropsValues.LIFERAY_HOME, "upgrade_report.info");
@@ -180,6 +150,28 @@ public class UpgradeReport {
 		}
 
 		return logFile;
+	}
+
+	private String _getPortalVersions() {
+		Version expectedSchemaVersion =
+			PortalUpgradeProcess.getLatestSchemaVersion();
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(
+			_getReleaseInfo(
+				_initialBuildNumber, _initialSchemaVersion, "initial"));
+		sb.append(StringPool.NEW_LINE);
+		sb.append(
+			_getReleaseInfo(_getBuildNumber(), _getSchemaVersion(), "final"));
+		sb.append(StringPool.NEW_LINE);
+		sb.append(
+			_getReleaseInfo(
+				ReleaseInfo.getBuildNumber(), expectedSchemaVersion.toString(),
+				"expected"));
+		sb.append(StringPool.NEW_LINE);
+
+		return sb.toString();
 	}
 
 	private String _getProperties() {
@@ -238,6 +230,38 @@ public class UpgradeReport {
 		sb.append(StringPool.NEW_LINE);
 		sb.append("liferay.home=" + PropsValues.LIFERAY_HOME);
 		sb.append(StringPool.NEW_LINE);
+
+		return sb.toString();
+	}
+
+	private String _getReleaseInfo(
+		int buildNumber, String schemaVersion, String type) {
+
+		StringBuffer sb = new StringBuffer();
+
+		if (buildNumber != 0) {
+			sb.append(StringUtil.upperCaseFirstLetter(type));
+			sb.append(" Portal build number: ");
+			sb.append(buildNumber);
+		}
+		else {
+			sb.append("Unable to determine ");
+			sb.append(type);
+			sb.append(" Portal build number");
+		}
+
+		sb.append(StringPool.NEW_LINE);
+
+		if (schemaVersion != null) {
+			sb.append(StringUtil.upperCaseFirstLetter(type));
+			sb.append(" Portal schema version: ");
+			sb.append(schemaVersion);
+		}
+		else {
+			sb.append("Unable to determine ");
+			sb.append(type);
+			sb.append(" Portal schema version");
+		}
 
 		return sb.toString();
 	}

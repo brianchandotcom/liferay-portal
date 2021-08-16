@@ -31,6 +31,10 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectField"
                     type: array
+                pluralLabel:
+                    additionalProperties:
+                        type: string
+                    type: object
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true

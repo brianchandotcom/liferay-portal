@@ -122,6 +122,66 @@ definition {
 			ownerName = "Test Test");
 	}
 
+	@description = "This is a test for LPS-136789. It checks that a blog with a layout reference can be published."
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishBlogWithLayoutReference {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136789 CanPublishBlogWithLayoutReference pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishDeletedCoverImageViaSAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136790 CanPublishDeletedCoverImageViaSAP pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136793. It checks that a custom friendly URL for Blogs can be deleted and republished."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishDeletedCustomFriendlyURL {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136793 CanPublishDeletedCustomFriendlyURL pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136796. It checks that a deleted embedded linked image for Blogs can be published."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishDeletedEmbeddedLinkedImage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136796 CanPublishDeletedEmbeddedImage pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136799. It checks that a deleted image from the Blogs repository can be published and does not appear in live."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishDeletedImageFromRepository {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136799 CanPublishDeletedImageFromRepository pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136795. It checks that an embedded image using a link for Blogs can be published."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishEmbeddedImage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136795 CanPublishEmbeddedImage pending implementation
+
+	}
+
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."
 	@priority = "4"
 	@refactordone
@@ -161,6 +221,16 @@ definition {
 			contentBody = "Publication Process Finished Successfully",
 			portletName = "Blogs Portlet",
 			publicationType = "Local");
+	}
+
+	@description = "This is a test for LPS-136801. It checks that Blogs permissions can be published."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishPermissions {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136801 CanPublishPermissions pending implementation
+
 	}
 
 	@description = "This ensures that users can publish a scheduled blog entry to the live site."
@@ -300,6 +370,16 @@ definition {
 		LexiconCard.viewCardNotPresent(card = "Document_3 (1).jpg");
 	}
 
+	@description = "This is a test for LPS-136794. It checks that an updated custom friendly URL for Blogs can be published."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishUpdatedCustomFriendlyURL {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136794 CanPublishUpdatedCustomFriendlyURL pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-72949."
 	@priority = "5"
 	@refactorneeded
@@ -362,6 +442,56 @@ definition {
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title Edit");
+	}
+
+	@description = "This is a test for LPS-136804. It checks that a small image can be update and published through the normal publication flow."
+	@ignore = "true"
+	@priority = "4"
+	test CanPublishUpdatedSmallImage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136804 CanPublishUpdatedSmallImage pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136791. It checks that the cover image can be updated and republished using the SAP."
+	@ignore = "true"
+	@priority = "4"
+	test CanRepublishCoverImageViaSAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136791 CanRepublishCoverImageViaSAP pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136800. It checks that an updated inline image can be published and does not appear in live."
+	@ignore = "true"
+	@priority = "4"
+	test CanRepublishInlineImageViaSAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136800 CanRepublishInlineImageViaSAP pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136803. It checks that the small image can be updated and republished using the SAP."
+	@ignore = "true"
+	@priority = "4"
+	test CanRepublishSmallImageViaSAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136803 CanRepublishSmallImageViaSAP pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136805. It checks that the Blogs video can be updated and republished using the SAP."
+	@ignore = "true"
+	@priority = "4"
+	test CanRepublishVideoViaSAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136805 CanRepublishVideoViaSAP pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-80543."

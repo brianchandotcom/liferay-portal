@@ -1,0 +1,75 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-136776. It checks that a blog can be properly displayed in Arabic in the Blogs widget."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewBlogInArabic {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136776 CanViewBlogInArabic pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136774. It checks that a blog can be properly displayed in Arabic in the Blogs Aggregator."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewBlogInArabicViaBlogsAggregator {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136774 CanViewBlogInArabicViaBlogsAggregator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136777. It checks that a blog can be properly displayed in Japanese in the Blogs widget."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewBlogInJapanese {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136777 CanViewBlogInJapanese pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136775. It checks that a blog can be properly displayed in Japanese in the Blogs Aggregator."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewBlogInJapaneseViaBlogsAggregator {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136775 CanViewBlogInJapaneseViaBlogsAggregator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136778. It checks that social bookmarks for a Blog can be viewed in Japanese."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewSocialBookmarksInJapanese {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136778 CanViewSocialBookmarksInJapanese pending implementation
+
+	}
+
+}

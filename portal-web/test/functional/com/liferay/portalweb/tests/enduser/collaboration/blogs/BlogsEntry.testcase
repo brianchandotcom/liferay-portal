@@ -124,6 +124,46 @@ definition {
 		Button.clickPublish();
 	}
 
+	@description = "This is a test for LPS-136760. It checks that content can be added in code view."
+	@ignore = "true"
+	@priority = "2"
+	test CanAddContentInCodeView {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136760 CanAddContentInCodeView pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136762. It checks that content can be added in full screen mode."
+	@ignore = "true"
+	@priority = "2"
+	test CanAddContentInFullScreenMode {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136762 CanAddContentInFullScreenMode pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136763. It checks that 400 characters can be added to the description."
+	@ignore = "true"
+	@priority = "3"
+	test CanAddDescriptionWith400Characters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136763 CanAddDescriptionWith400Characters pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
+	@ignore = "true"
+	@priority = "3"
+	test CanAddFriendlyURLWithEscapeCharacters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136769 CanAddFriendlyURLWithEscapeCharacters pending implementation
+
+	}
+
 	@description = "This test checks that HTML is rendered in the blog content field."
 	@priority = "4"
 	@refactordone
@@ -143,6 +183,16 @@ definition {
 			entryContentItalics = "Italics",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This is a test for LPS-136761. It checks that special characters can be added to a custom abstract"
+	@ignore = "true"
+	@priority = "3"
+	test CanAddSpecialCharactersToCustomAbstract {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136761 CanAddSpecialCharactersToCustomAbstract pending implementation
+
 	}
 
 	@description = "This is the same case as BlogsPage#CanAddTitleWithoutEscapingCharacters, but due to LPS-130537 we should ensure both contexts are covered."
@@ -389,6 +439,16 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a test for LPS-136772. It checks that the cover image caption can be deleted."
+	@ignore = "true"
+	@priority = "3"
+	test CanDeleteCoverImageCaption {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136772 CanDeleteCoverImageCaption pending implementation
+
+	}
+
 	@description = "This checks that a blog entry can saved as a draft and then deleted."
 	@priority = "4"
 	@refactorneeded
@@ -451,6 +511,16 @@ definition {
 		for (var entryCount : list "1,2") {
 			BlogsEntry.viewNoCP(entryTitle = "Blogs Entry${entryCount} Title");
 		}
+	}
+
+	@description = "This is a test for LPS-136771. It checks that the cover image caption can be edited with special characters."
+	@ignore = "true"
+	@priority = "3"
+	test CanEditCoverImageCaptionWithSpecialCharacters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136771 CanEditCoverImageCaptionWithSpecialCharacters pending implementation
+
 	}
 
 	@description = "This test covers LPS-106613. It ensures that the custom abstract can be added and edited."
@@ -642,6 +712,46 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsEntry.viewDefaultCP(entryTitle = "");
+	}
+
+	@description = "This is a test for LPS-136764. It checks that Javascript cannot be executed in the content field."
+	@ignore = "true"
+	@priority = "3"
+	test CannotExecuteXSSInContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136764 CannotExecuteXSSInContent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136773. It checks that XSS cannot be executed in the cover image caption."
+	@ignore = "true"
+	@priority = "3"
+	test CannotExecuteXSSInCoverImageCaption {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136773 CannotExecuteXSSInCoverImageCaption pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136765. It checks that Javascript cannot be executed in the custom abstract."
+	@ignore = "true"
+	@priority = "3"
+	test CannotExecuteXSSInCustomAbstract {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136765 CannotExecuteXSSInCustomAbstract pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136788. It checks that a user cannot rate a post when it is disabled in the configuration."
+	@ignore = "true"
+	@priority = "3"
+	test CannotRatePost {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136788 CannotRatePost pending implementation
+
 	}
 
 	@description = "This checks that a blog draft can be published."

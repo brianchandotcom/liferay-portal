@@ -52,6 +52,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136766. It checks that comments can be disabled from the widget."
+	@ignore = "true"
+	@priority = "3"
+	test CanDisableComments {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136766 CanDisableComments pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136767. It checks that related assets can be disabled from the widget."
+	@ignore = "true"
+	@priority = "3"
+	test CanDisableRelatedAssets {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136767 CanDisableRelatedAssets pending implementation
+
+	}
+
 	@description = "This checks that an entry can be edited in card view"
 	@priority = "4"
 	@refactordone
@@ -327,6 +347,16 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a test for LPS-136809. It checks that a Blog entry can be viewed with the Menu Display configured."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewBlogWithMenuDisplay {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136809 CanViewBlogWithMenuDisplay pending implementation
+
+	}
+
 	@description = "This checks that the title of an entry can be displayed."
 	@priority = "3"
 	@refactordone
@@ -424,6 +454,36 @@ definition {
 				entryContent = "Blogs Entry Content Edit",
 				entryTitle = "Blogs Entry Title Edit");
 		}
+	}
+
+	@description = "This is a test for LPS-136810. It checks that a blog can be viewed with Quote Display in the Aggregator widget."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewEntryInQuoteDisplayStyleViaAggregator {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136810 CanViewEntryInQuoteDisplayStyleViaAggregator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136811. It checks that a blog can be viewed through the Navigations Portlet."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewEntryViaNavigationsPortlet {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136811 CanViewEntryViaNavigationsPortlet pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136812. It checks that a blog can be viewed through the Recent Bloggers Portlet."
+	@ignore = "true"
+	@priority = "4"
+	test CanViewEntryViaRecentBloggers {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136812 CanViewEntryViaRecentBloggers pending implementation
+
 	}
 
 	@description = "This checks that Blogs widgets are independently configured."

@@ -49,17 +49,20 @@ describe('ViewportSizeSelector', () => {
 	afterEach(cleanup);
 
 	it('renders ViewportSizeSelector component', () => {
-		const {getByTitle} = renderComponent({state: defaultState});
+		const {getByLabelText} = renderComponent({state: defaultState});
 
-		expect(getByTitle('Desktop')).toBeInTheDocument();
-		expect(getByTitle('Mobile')).toBeInTheDocument();
-		expect(getByTitle('Tablet')).toBeInTheDocument();
+		expect(getByLabelText('Desktop')).toBeInTheDocument();
+		expect(getByLabelText('Mobile')).toBeInTheDocument();
+		expect(getByLabelText('Tablet')).toBeInTheDocument();
 	});
 
 	it('calls onSizeSelected with sizeId when a size is selected', () => {
 		const onSelect = jest.fn();
-		const {getByTitle} = renderComponent({onSelect, state: defaultState});
-		const button = getByTitle('Mobile');
+		const {getByLabelText} = renderComponent({
+			onSelect,
+			state: defaultState,
+		});
+		const button = getByLabelText('Mobile');
 
 		userEvent.click(button);
 

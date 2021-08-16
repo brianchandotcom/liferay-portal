@@ -168,33 +168,53 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
 	@priority = "5"
 	test PageViewsUpdateInRealTime {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+<<<<<<< HEAD
+		task("Go to Usage, save the value of Page Views and add 3(correspond to the value of interaction with DXP)") {
+=======
+		task ("Go to Usage, save the value of Page Views, remove the comma and add 3(correspond to the value of interaction with DXP)") {
+>>>>>>> 6fec772 (LRAC-8150 Add the tasks)
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		ACUtils.launchAC();
+			ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${propertyName}");
 
-		ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-		ACSettings.goToUsage();
+			ACSettings.goToUsage();
 
-		var currentPageViews = selenium.getText(locator1 = "ACUsage#USAGE_CURRENT_PAGE_VIEWS");
+			var actualPageViews = selenium.getText("ACUsage#USAGE_CURRENT_PAGE_VIEWS");
+			var replacePageViews = StringUtil.replace("${actualPageViews}",",","");
+			var sumPageViews = ${replacePageViews} + 3;
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
 
-		ACUtils.closeAllSessions();
+			ACUtils.closeAllSessions();
 
-		Pause(locator1 = "30000");
+			Pause(locator1 = "30000");
+		}
 
-		ACUtils.launchAC();
+<<<<<<< HEAD
+		task("Go to Usage again and assert that the interaction with DXP change the value of Page Views") {
+=======
+		task ("Go to AC > Usage again and get the new value of Page Views"){
+>>>>>>> 6fec772 (LRAC-8150 Add the tasks)
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-		ACSettings.goToUsage();
+			ACSettings.goToUsage();
 
-		AssertTextNotEquals(
-			locator1 = "ACUsage#USAGE_CURRENT_PAGE_VIEWS",
-			value1 = "${currentPageViews}");
+			var expectedPageViews = selenium.getText("ACUsage#USAGE_CURRENT_PAGE_VIEWS");
+		}
+
+		task ("Remove the comma and compare the values"){
+			var replacePageViews2 = StringUtil.replace("${expectedPageViews}",",","");
+
+			TestUtils.assertEquals(
+				actual = "${sumPageViews}",
+				expected = "${replacePageViews2}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"

@@ -782,7 +782,7 @@ definition {
 	}
 
 	macro publishCustomPublication {
-		Staging.addCustomPublication();
+		Staging.addCustomPublication(headerTitle = "${headerTitle}");
 
 		if (isSet(scheduleProcess)) {
 			Staging.configureScheduleTime();
@@ -809,7 +809,9 @@ definition {
 
 		Staging.viewProcessResult(
 			failureExpected = "${failureExpected}",
-			scheduleProcess = "${scheduleProcess}");
+			inProcess = "${inProcess}",
+			scheduleProcess = "${scheduleProcess}",
+			validateErrorMessage = "${validateErrorMessage}");
 	}
 
 	macro publishToLive {
@@ -821,7 +823,6 @@ definition {
 
 		Staging.viewProcessResult(
 			failureExpected = "${failureExpected}",
-			inProcess = "${inProcess}",
 			scheduleProcess = "${scheduleProcess}",
 			validateErrorMessage = "${validateErrorMessage}");
 
@@ -1331,11 +1332,7 @@ definition {
 				value1 = "Failed");
 		}
 		else if (isSet(inProcess)) {
-			Pause(locator1 = "5000");
-
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_SUCCESSFUL",
-				value1 = "Successful");
+			AssertElementPresent(locator1 = "Staging#PROCESS_CURRENT_ITEM");
 		}
 		else if (isSet(scheduleProcess)) {
 			Alert.viewSuccessMessage();

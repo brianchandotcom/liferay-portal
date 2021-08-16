@@ -14,13 +14,13 @@
 
 import ClayLayout from '@clayui/layout';
 import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
 	FormFieldSettings,
 	Pages,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
 import React, {useMemo} from 'react';
 
 import {useSettingsContextFilter} from '../../../utils/settingsForm.es';

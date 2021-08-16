@@ -16,12 +16,12 @@ import ClayLayout from '@clayui/layout';
 import {Context as ModalContext} from '@clayui/modal';
 import classNames from 'classnames';
 import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
 	Pages,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
 import fieldDelete from 'data-engine-js-components-web/js/core/thunks/fieldDelete.es';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 

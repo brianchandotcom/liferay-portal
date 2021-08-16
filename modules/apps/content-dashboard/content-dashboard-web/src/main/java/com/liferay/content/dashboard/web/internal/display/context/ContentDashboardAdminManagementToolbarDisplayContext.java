@@ -766,6 +766,40 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				return dropdownItem;
 			},
 			() -> {
+				List<String> extensions =
+					_contentDashboardAdminDisplayContext.getExtensions();
+
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.setActive(!ListUtil.isEmpty(extensions));
+
+				dropdownItem.putData("action", "selectExtension");
+				dropdownItem.putData(
+					"dialogTitle",
+					LanguageUtil.get(
+						httpServletRequest, "filter-by-extension"));
+
+				dropdownItem.putData(
+					"redirectURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"extension", (String)null
+					).buildString());
+
+				dropdownItem.putData(
+					"selectExtensionURL",
+					String.valueOf(
+						_contentDashboardAdminDisplayContext.
+							getExtensionItemSelectorURL()));
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "extension") +
+						StringPool.TRIPLE_PERIOD);
+
+				return dropdownItem;
+			},
+			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
 
 				dropdownItem.putData("action", "selectAssetTag");

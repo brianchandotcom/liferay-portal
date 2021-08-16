@@ -18,6 +18,7 @@ import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfigur
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
+import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.extension.ContentDashboardExtensionItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
@@ -299,6 +300,38 @@ public class ContentDashboardAdminDisplayContext {
 
 		return _contentDashboardDropdownItemsProvider.getDropdownItems(
 			contentDashboardItem);
+	}
+
+	public String getExtensionItemSelectorURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
+
+		ContentDashboardExtensionItemSelectorCriterion
+			contentDashboardExtensionItemSelectorCriterion =
+				new ContentDashboardExtensionItemSelectorCriterion();
+
+		contentDashboardExtensionItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				Collections.singletonList(new UUIDItemSelectorReturnType()));
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_liferayPortletResponse.getNamespace() + "selectedExtension",
+				contentDashboardExtensionItemSelectorCriterion)
+		).setParameter(
+			"checkedExtensions",
+			() -> {
+				List<String> extensions = getExtensions();
+
+				return extensions.toArray(new String[0]);
+			}
+		).buildString();
+	}
+
+	public List<String> getExtensions() {
+		return Arrays.asList(
+			ParamUtil.getStringValues(_liferayPortletRequest, "extensions"));
 	}
 
 	public String getOnClickConfiguration() throws WindowStateException {

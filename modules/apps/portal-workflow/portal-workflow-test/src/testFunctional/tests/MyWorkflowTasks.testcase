@@ -617,11 +617,30 @@ definition {
 	}
 
 	@description = "Verify that the user is able to Reverse Sort Direction by clicking the icon"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanReverseSortDirection {
 
-		// TODO LRQA-68836 CanReverseSortDirection pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.clickRevertSortDirection();
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "MyWorkflowTasks#PROCESS_NAME_TABLE_ROW",
+			value1 = "Blogs Entry Title 2");
+
+
+
 
 	}
 

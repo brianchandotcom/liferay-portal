@@ -206,6 +206,11 @@
 	<td>//a[contains(@class,'dropdown-item') and contains(text(), '${key_selectOption}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROCESS_NAME_TABLE_ROW</td>
+	<td>//tr[${key_rowNumber}]//td[1]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

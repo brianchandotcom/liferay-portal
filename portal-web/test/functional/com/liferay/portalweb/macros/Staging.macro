@@ -87,6 +87,12 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		if (isSet(headerTitle)) {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "${headerTitle}");
+		}
+
 		if (isSet(publishTemplateName)) {
 			var key_publishTemplateName = "${publishTemplateName}";
 
@@ -310,6 +316,20 @@ definition {
 		AssertClick(
 			locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_NAME",
 			value1 = "${sitePagesVariationMenulistName}");
+	}
+
+	macro clickPublishToLiveButton {
+		if ("${remoteStaging}" == "true") {
+			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
+		}
+		else if (isSet(scheduleProcess)) {
+			AssertClick(
+				locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
+				value1 = "Add Event");
+		}
+		else {
+			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+		}
 	}
 
 	macro configurePublishToLive {
@@ -782,35 +802,14 @@ definition {
 			}
 		}
 
-		if ("${remoteStaging}" == "true") {
-			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
-		}
-		else if (isSet(scheduleProcess)) {
-			AssertClick(
-				locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
-				value1 = "Add Event");
-		}
-		else {
-			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_CUSTOM_PUBLICATION");
-		}
+		Staging.clickPublishToLiveButton(
+			failureExpected = "${failureExpected}",
+			remoteStaging = "${remoteStaging}",
+			scheduleProcess = "${scheduleProcess}");
 
-		while (IsElementNotPresent(locator1 = "Staging#PROCESS_RESULT")) {
-			Pause(locator1 = "1000");
-		}
-
-		if (isSet(failureExpected)) {
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_RESULT",
-				value1 = "FAILED");
-		}
-		else if (isSet(scheduleProcess)) {
-			Alert.viewSuccessMessage();
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_RESULT",
-				value1 = "Successful");
-		}
+		Staging.viewProcessResult(
+			failureExpected = "${failureExpected}",
+			scheduleProcess = "${scheduleProcess}");
 	}
 
 	macro publishToLive {
@@ -818,29 +817,13 @@ definition {
 			PortletEntry.inputName(name = "${publicationName}");
 		}
 
-		if ("${remoteStaging}" == "true") {
-			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
-		}
-		else {
-			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
-		}
+		Staging.clickPublishToLiveButton(remoteStaging = "${remoteStaging}");
 
-		Pause(locator1 = "5000");
-
-		if (isSet(failureExpected)) {
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_FAILED",
-				value1 = "Failed");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "Staging#PROCESS_SUCCESSFUL",
-				value1 = "Successful");
-		}
-
-		if (isSet(validateErrorMessage)) {
-			Staging.viewValidationError(validateErrorMessage = "${validateErrorMessage}");
-		}
+		Staging.viewProcessResult(
+			failureExpected = "${failureExpected}",
+			inProcess = "${inProcess}",
+			scheduleProcess = "${scheduleProcess}",
+			validateErrorMessage = "${validateErrorMessage}");
 
 		SelectFrameTop();
 
@@ -1335,6 +1318,37 @@ definition {
 		AssertTextEquals(
 			locator1 = "Staging#PAGE_VARIATION",
 			value1 = "${pageVariationName}");
+	}
+
+	macro viewProcessResult {
+		while (IsElementNotPresent(locator1 = "Staging#PROCESS_RESULT")) {
+			Pause(locator1 = "1000");
+		}
+
+		if (isSet(failureExpected)) {
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_FAILED",
+				value1 = "Failed");
+		}
+		else if (isSet(inProcess)) {
+			Pause(locator1 = "5000");
+
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_SUCCESSFUL",
+				value1 = "Successful");
+		}
+		else if (isSet(scheduleProcess)) {
+			Alert.viewSuccessMessage();
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_SUCCESSFUL",
+				value1 = "Successful");
+		}
+
+		if (isSet(validateErrorMessage)) {
+			Staging.viewValidationError(validateErrorMessage = "${validateErrorMessage}");
+		}
 	}
 
 	macro viewPublicationSummary {

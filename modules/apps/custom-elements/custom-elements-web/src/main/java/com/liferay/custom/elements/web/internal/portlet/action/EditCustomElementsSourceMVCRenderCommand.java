@@ -17,7 +17,7 @@ package com.liferay.custom.elements.web.internal.portlet.action;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
-import com.liferay.custom.elements.web.internal.display.context.CustomElementsDisplayContext;
+import com.liferay.custom.elements.web.internal.display.context.CustomElementsSourceDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS,
-		"mvc.command.name=/custom_elements/edit_custom_elements_source"
+		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_SOURCE,
+		"mvc.command.name=/custom_elements_source/edit_custom_elements_source"
 	},
 	service = MVCRenderCommand.class
 )
@@ -49,8 +49,8 @@ public class EditCustomElementsSourceMVCRenderCommand
 
 		try {
 			renderRequest.setAttribute(
-				CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT,
-				new CustomElementsDisplayContext(
+				CustomElementsWebKeys.CUSTOM_ELEMENTS_SOURCE_DISPLAY_CONTEXT,
+				new CustomElementsSourceDisplayContext(
 					renderRequest, renderResponse));
 
 			long customElementsSourceId = ParamUtil.getLong(
@@ -63,7 +63,7 @@ public class EditCustomElementsSourceMVCRenderCommand
 						customElementsSourceId));
 			}
 
-			return "/custom_elements/edit_custom_elements_source.jsp";
+			return "/custom_elements_source/edit_custom_elements_source.jsp";
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

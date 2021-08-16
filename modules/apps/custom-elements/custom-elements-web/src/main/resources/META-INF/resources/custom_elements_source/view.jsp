@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/custom_elements/init.jsp" %>
+<%@ include file="/custom_elements_source/init.jsp" %>
 
 <%
 CustomElementsDisplayContext customElementsDisplayContext = (CustomElementsDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT);

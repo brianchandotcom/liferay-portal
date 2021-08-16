@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.custom.elements.model.CustomElementsSource" %><%@
 page import="com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames" %><%@
 page import="com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys" %><%@
-page import="com.liferay.custom.elements.web.internal.display.context.CustomElementsDisplayContext" %><%@
+page import="com.liferay.custom.elements.web.internal.display.context.CustomElementsSourceDisplayContext" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

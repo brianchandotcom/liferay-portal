@@ -19,12 +19,12 @@ package com.liferay.custom.elements.web.internal.constants;
  */
 public class CustomElementsPortletKeys {
 
-	public static final String CUSTOM_ELEMENTS =
-		"com_liferay_custom_elements_web_internal_portlet_" +
-			"CustomElementsPortlet";
-
 	public static final String CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR =
 		"com_liferay_custom_elements_web_internal_portlet_" +
 			"CustomElementsPortletDescriptorPortlet";
+
+	public static final String CUSTOM_ELEMENTS_SOURCE =
+		"com_liferay_custom_elements_web_internal_portlet_" +
+			"CustomElementsSourcePortlet";
 
 }

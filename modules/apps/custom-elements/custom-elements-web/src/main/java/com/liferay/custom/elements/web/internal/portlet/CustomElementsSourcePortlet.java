@@ -36,14 +36,14 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Custom Elements",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.mvc-command-names-default-views=/custom_elements/view",
+		"javax.portlet.init-param.mvc-command-names-default-views=/custom_elements_source/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS,
+		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_SOURCE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )
-public class CustomElementsPortlet extends MVCPortlet {
+public class CustomElementsSourcePortlet extends MVCPortlet {
 }

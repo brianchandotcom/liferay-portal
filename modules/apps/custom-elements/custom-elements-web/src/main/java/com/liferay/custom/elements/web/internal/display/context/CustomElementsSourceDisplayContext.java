@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class CustomElementsDisplayContext {
+public class CustomElementsSourceDisplayContext {
 
-	public CustomElementsDisplayContext(
+	public CustomElementsSourceDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
@@ -46,7 +46,7 @@ public class CustomElementsDisplayContext {
 					PortletURLBuilder.createRenderURL(
 						_renderResponse
 					).setMVCRenderCommandName(
-						"/custom_elements/edit_custom_elements_source"
+						"/custom_elements_source/edit_custom_elements_source"
 					).setRedirect(
 						_getRedirect()
 					).buildPortletURL());

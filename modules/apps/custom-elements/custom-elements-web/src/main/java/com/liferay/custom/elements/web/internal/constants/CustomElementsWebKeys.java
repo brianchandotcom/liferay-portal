@@ -19,9 +19,6 @@ package com.liferay.custom.elements.web.internal.constants;
  */
 public class CustomElementsWebKeys {
 
-	public static final String CUSTOM_ELEMENTS_DISPLAY_CONTEXT =
-		"CUSTOM_ELEMENTS_DISPLAY_CONTEXT";
-
 	public static final String CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR =
 		"CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR";
 
@@ -31,5 +28,8 @@ public class CustomElementsWebKeys {
 
 	public static final String CUSTOM_ELEMENTS_SOURCE =
 		"CUSTOM_ELEMENTS_SOURCE";
+
+	public static final String CUSTOM_ELEMENTS_SOURCE_DISPLAY_CONTEXT =
+		"CUSTOM_ELEMENTS_SOURCE_DISPLAY_CONTEXT";
 
 }

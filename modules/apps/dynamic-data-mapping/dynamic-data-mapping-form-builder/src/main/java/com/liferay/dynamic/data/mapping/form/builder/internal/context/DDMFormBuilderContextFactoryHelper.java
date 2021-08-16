@@ -477,8 +477,8 @@ public class DDMFormBuilderContextFactoryHelper {
 			).put(
 				"pluginEntryPoint",
 				_npmResolver.resolveModuleName(
-					"dynamic-data-mapping-form-web/admin/js/plugins" +
-						"/field-sidebar/index.es")
+					"data-engine-taglib/data_layout_builder/js/plugins" +
+						"/fields-sidebar/index")
 			).put(
 				"sidebarPanelId", "fields"
 			).build()

@@ -13,7 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import React, {useEffect, useRef, useState} from 'react';
 
 const SearchInput = React.forwardRef(
@@ -88,30 +88,4 @@ const SearchInput = React.forwardRef(
 	}
 );
 
-const SearchInputWithForm = ({onSubmit = () => {}, ...restProps}) => {
-	const [searchText, setSearchText] = useState('');
-
-	const handleSubmit = (value) => {
-		onSubmit(value.trim());
-	};
-
-	return (
-		<ClayForm
-			onSubmit={(event) => {
-				event.preventDefault();
-				handleSubmit(searchText);
-			}}
-		>
-			<SearchInput
-				clearButton={false}
-				onChange={(searchText) => setSearchText(searchText)}
-				onSubmit={handleSubmit}
-				{...restProps}
-			/>
-		</ClayForm>
-	);
-};
-
 export default SearchInput;
-
-export {SearchInputWithForm};

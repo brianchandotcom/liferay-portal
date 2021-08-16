@@ -12,9 +12,7 @@
  * details.
  */
 
-import {addItem, updateItem} from './client.es';
 import {getLocalizedValue} from './lang.es';
-import {normalizeDataDefinition, normalizeDataLayout} from './normalizers.es';
 
 export function forEachDataDefinitionField(
 	dataDefinition = {dataDefinitionFields: []},
@@ -88,46 +86,4 @@ export function getOptionLabel(
 	};
 
 	return getLabel(languageId) || getLabel(defaultLanguageId) || value;
-}
-
-export function saveDataDefinition({
-	dataDefinition,
-	dataDefinitionId,
-	dataLayout,
-	dataLayoutId,
-}) {
-	const {defaultLanguageId} = dataDefinition;
-
-	const normalizedDataDefinition = normalizeDataDefinition(
-		dataDefinition,
-		defaultLanguageId,
-		false
-	);
-
-	const normalizedDataLayout = normalizeDataLayout(
-		dataLayout,
-		defaultLanguageId
-	);
-
-	const updateDefinition = () =>
-		updateItem(
-			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`,
-			normalizedDataDefinition
-		);
-
-	if (dataLayoutId) {
-		return updateDefinition().then(() =>
-			updateItem(
-				`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`,
-				normalizedDataLayout
-			)
-		);
-	}
-
-	return updateDefinition().then(() =>
-		addItem(
-			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`,
-			normalizedDataLayout
-		)
-	);
 }

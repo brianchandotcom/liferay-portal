@@ -118,6 +118,10 @@ public class ObjectDefinitionResourceTest
 				"en_US", "A" + objectDefinition.getName()
 			).build());
 		objectDefinition.setName("A" + objectDefinition.getName());
+		objectDefinition.setPluralLabel(
+			HashMapBuilder.put(
+				"en_US", "A" + objectDefinition.getName()
+			).build());
 
 		ObjectField objectField = new ObjectField();
 

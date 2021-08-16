@@ -688,12 +688,103 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
-	@ignore = "true"
 	@priority = "3"
 	test CanDynamicSegmentMembersPreviewInRealTime {
+		task ("Add one more user with a jobTitle") {
+			JSONUser.addUser(
+				jobTitle = "lawyer",
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
 
-		// TODO LRAC-8475 CanDynamicSegmentMembersPreviewInRealTime
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add an email criteria") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.selectOperator(operator = "contains");
+
+			ACSegments.editTextCriterion(textInput = "@liferay.com");
+		}
+
+		task ("View two users are shown on the Preview mode") {
+			Click(locator1 = "Icon#EYE_PREVIEW");
+
+			for (var username : list "userfn userln,user1 user1") {
+				ACAssets.viewAssets(assetName = "${username}");
+			}
+
+			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+		}
+
+		task ("Add a jobTitle criteria") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "jobTitle");
+
+			ACSegments.editTextCriterion(
+				index = "2",
+				textInput = "lawyer");
+		}
+
+		task ("View only one user is shown on Preview mode") {
+			Click(locator1 = "Icon#EYE_PREVIEW");
+
+			ACAssets.viewAssets(assetName = "user1 user1");
+
+			AssertElementNotPresent(
+				key_assetName = "userfn userln",
+				locator1 = "ACAssets#ASSETS_TABLE");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"

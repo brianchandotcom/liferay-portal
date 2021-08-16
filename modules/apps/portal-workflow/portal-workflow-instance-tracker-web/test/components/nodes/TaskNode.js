@@ -16,20 +16,33 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import StateNode from '../../../src/main/resources/META-INF/resources/js/components/state-node/StateNode';
+import TaskNode from '../../../src/main/resources/META-INF/resources/js/components/nodes/TaskNode';
 
-describe('The StateNode component should', () => {
-	it('Be rendered without any icon and without current-icon class as default', () => {
-		const {container} = render(<StateNode />);
+describe('The TaskNode component should', () => {
+	it('Be rendered without any icon and without current-icon or done-icon class as default', () => {
+		const {container} = render(<TaskNode />);
 
 		expect(container.querySelector('.lexicon-icon-live')).not.toBeTruthy();
+		expect(container.querySelector('.lexicon-icon-check')).not.toBeTruthy();
 		expect(container.querySelector('.current-icon')).not.toBeTruthy();
+		expect(container.querySelector('.done-icon')).not.toBeTruthy();
 	});
 
 	it('Be rendered with live icon and current-icon class when it receives the current prop', () => {
-		const {container} = render(<StateNode current />);
+		const {container} = render(<TaskNode current />);
 
 		expect(container.querySelector('.lexicon-icon-live')).toBeTruthy();
+		expect(container.querySelector('.lexicon-icon-check')).not.toBeTruthy();
 		expect(container.querySelector('.current-icon')).toBeTruthy();
+		expect(container.querySelector('.done-icon')).not.toBeTruthy();
+	});
+
+	it('Be rendered with check icon and done-icon class when it receives the done prop', () => {
+		const {container} = render(<TaskNode done />);
+
+		expect(container.querySelector('.lexicon-icon-check')).toBeTruthy();
+		expect(container.querySelector('.lexicon-icon-live')).not.toBeTruthy();
+		expect(container.querySelector('.done-icon')).toBeTruthy();
+		expect(container.querySelector('.current-icon')).not.toBeTruthy();
 	});
 });

@@ -12,24 +12,22 @@
  * details.
  */
 
-import classnames from 'classnames';
+import '@testing-library/jest-dom/extend-expect';
+import {render} from '@testing-library/react';
 import React from 'react';
 
-import '../../../css/main.scss';
+import BorderStateNode from '../../../../src/main/resources/META-INF/resources/js/components/nodes/state-node/BorderStateNode';
 
-export default function BorderStateNode({start = false}) {
-	const stateTitle = start
-		? Liferay.Language.get('start')
-		: Liferay.Language.get('end');
+describe('The BorderStateNode component should', () => {
+	it('Be rendered with End title as default', () => {
+		const {getByText} = render(<BorderStateNode />);
 
-	return (
-		<div
-			className={classnames(
-				'border-state-node node text-white',
-				start ? 'start-state' : 'end-state'
-			)}
-		>
-			<span>{stateTitle}</span>
-		</div>
-	);
-}
+		expect(getByText('end')).toBeTruthy();
+	});
+
+	it('Be rendered with Start title when it receives the start prop', () => {
+		const {getByText} = render(<BorderStateNode start />);
+
+		expect(getByText('start')).toBeTruthy();
+	});
+});

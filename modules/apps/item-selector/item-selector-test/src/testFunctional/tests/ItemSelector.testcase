@@ -458,6 +458,16 @@ definition {
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://test.com/test");
 	}
 
+	@description = "This is a test for LPS-136947. It checks that unsupported files cannot be uploaded to Blogs."
+	@ignore = "true"
+	@priority = "3"
+	test CannotUploadUnsupportedFilesToBlogs {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136947 CannotUploadUnsupportedFilesToBlogs pending implementation
+
+	}
+
 	@description = "This test covers LPS-119709. It ensures that the blog images can not filter by the everywhere and the current site."
 	@priority = "4"
 	@refactordone
@@ -1243,6 +1253,36 @@ definition {
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
+	}
+
+	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a document."
+	@ignore = "true"
+	@priority = "3"
+	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136945 OnlyRelevantSelectionsAppearWhenAddingDocuments pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136943. It checks that only 'File Upload' and 'Folder' options appear when adding images."
+	@ignore = "true"
+	@priority = "3"
+	test OnlyRelevantSelectionsAppearWhenAddingImages {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136943 OnlyRelevantSelectionsAppearWhenAddingImages pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136944. It checks that only 'File Upload,' 'Folder,' and 'External Video Shortcut' options appear when adding a video."
+	@ignore = "true"
+	@priority = "3"
+	test OnlyRelevantSelectionsAppearWhenAddingVideos {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136944 OnlyRelevantSelectionsAppearWhenAddingVideos pending implementation
+
 	}
 
 	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."

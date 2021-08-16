@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch7.internal.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -32,9 +31,9 @@ public class ResourceUtil {
 
 			return StringUtil.read(inputStream);
 		}
-		catch (IOException ioException) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to load resource: " + resourceName, ioException);
+				"Unable to load resource: " + resourceName, exception);
 		}
 	}
 

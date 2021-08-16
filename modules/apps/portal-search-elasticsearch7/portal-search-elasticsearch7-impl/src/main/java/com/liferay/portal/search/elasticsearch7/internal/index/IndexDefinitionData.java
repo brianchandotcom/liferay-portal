@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.spi.index.IndexDefinition;
 
 import java.util.Map;
@@ -26,13 +26,13 @@ import java.util.Objects;
 public class IndexDefinitionData {
 
 	public IndexDefinitionData(
-		IndexDefinition indexDefinition, Map<String, Object> properties) {
+		IndexDefinition indexDefinition, Map<String, Object> propertiesMap) {
 
 		_index = _getIndexName(
-			properties.get(IndexDefinition.PROPERTY_KEY_INDEX_NAME));
+			propertiesMap.get(IndexDefinition.PROPERTY_KEY_INDEX_NAME));
 		_source = _getSource(
 			indexDefinition,
-			properties.get(
+			propertiesMap.get(
 				IndexDefinition.PROPERTY_KEY_INDEX_SETTINGS_RESOURCE_NAME));
 	}
 
@@ -53,7 +53,8 @@ public class IndexDefinitionData {
 
 		String resourceName = String.valueOf(Objects.requireNonNull(property));
 
-		return StringUtil.read(indexDefinition.getClass(), resourceName);
+		return ResourceUtil.getResourceAsString(
+			indexDefinition.getClass(), resourceName);
 	}
 
 	private final String _index;

@@ -117,6 +117,28 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
+	const selectExtension = (itemData) => {
+		openSelectionModal({
+			buttonAddLabel: Liferay.Language.get('select'),
+			multiple: true,
+			onSelect: (selectedItems) => {
+				let redirectURL = itemData?.redirectURL;
+
+				selectedItems.forEach((item) => {
+					redirectURL = addParams(
+						`${portletNamespace}extension=${item}`,
+						redirectURL
+					);
+				});
+
+				navigate(redirectURL);
+			},
+			selectEventName: `${portletNamespace}selectedExtension`,
+			title: itemData?.dialogTitle,
+			url: itemData?.selectExtensionURL,
+		});
+	};
+
 	const selectScope = (itemData) => {
 		openSelectionModal({
 			id: `${portletNamespace}selectedScopeIdItem`,
@@ -152,6 +174,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			}
 			else if (action === 'selectContentDashboardItemSubtype') {
 				selectContentDashboardItemSubtype(data);
+			}
+			else if (action === 'selectExtension') {
+				selectExtension(data);
 			}
 			else if (action === 'selectScope') {
 				selectScope(data);

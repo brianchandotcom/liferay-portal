@@ -89,7 +89,7 @@ public class PageDefinitionDTOConverter
 					mainLayoutStructureItem, _layoutStructureItemMapperTracker,
 					saveInlineContent, saveMappingConfiguration);
 				settings = _toSettings(layout);
-				version = 1.0;
+				version = 1.1;
 			}
 		};
 	}

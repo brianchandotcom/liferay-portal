@@ -16,9 +16,15 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,6 +38,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,6 +51,115 @@ public class DB2DB extends BaseDB {
 
 	public DB2DB(int majorVersion, int minorVersion) {
 		super(DBType.DB2, majorVersion, minorVersion);
+	}
+
+	@Override
+	public void alterColumnName(
+			Connection connection, String tableName, String oldColumnName,
+			String newColumnDefinition)
+		throws Exception {
+
+		List<IndexMetadata> indexMetadatas = dropIndexes(
+			connection, tableName, oldColumnName);
+
+		String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
+			connection, tableName);
+
+		boolean primaryKey = ArrayUtil.contains(
+			primaryKeyColumnNames, oldColumnName);
+
+		if (primaryKey) {
+			removePrimaryKey(connection, tableName);
+		}
+
+		super.alterColumnName(
+			connection, tableName, oldColumnName, newColumnDefinition);
+
+		String newColumnName = StringUtil.extractFirst(
+			newColumnDefinition, StringPool.SPACE);
+
+		if (primaryKey) {
+			ArrayUtil.replace(
+				primaryKeyColumnNames, oldColumnName, newColumnName);
+
+			addPrimaryKey(connection, tableName, primaryKeyColumnNames);
+		}
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			ArrayUtil.replace(
+				indexMetadata.getColumnNames(), oldColumnName, newColumnName);
+		}
+
+		addIndexes(connection, tableName, indexMetadatas);
+	}
+
+	@Override
+	public void alterColumnType(
+			Connection connection, String tableName, String columnName,
+			String newColumnType)
+		throws Exception {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		if (!dbInspector.hasColumn(tableName, columnName)) {
+			throw new SQLException(
+				StringBundler.concat(
+					"Unknown column ", columnName, " in table ", tableName));
+		}
+
+		try {
+			super.alterColumnType(
+				connection, tableName, columnName, newColumnType);
+		}
+		catch (SQLException sqlException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Attempting to upgrade table ", tableName,
+						" by adding a temporary column due to: ",
+						sqlException.getMessage()));
+			}
+
+			String tempColumnName = "temp" + columnName;
+
+			alterTableAddColumn(
+				connection, tableName, tempColumnName, newColumnType);
+
+			runSQL(
+				StringBundler.concat(
+					"update ", tableName, " set ", tempColumnName, " = ",
+					columnName));
+
+			List<IndexMetadata> indexMetadatas = dropIndexes(
+				connection, tableName, columnName);
+
+			String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
+				connection, tableName);
+
+			boolean primaryKey = ArrayUtil.contains(
+				primaryKeyColumnNames, columnName);
+
+			if (primaryKey) {
+				removePrimaryKey(connection, tableName);
+			}
+
+			alterColumnName(
+				connection, tableName, columnName, tempColumnName + "2");
+
+			alterColumnName(connection, tableName, tempColumnName, columnName);
+
+			addIndexes(connection, tableName, indexMetadatas);
+
+			if (primaryKey) {
+				addPrimaryKey(connection, tableName, primaryKeyColumnNames);
+			}
+
+			alterTableDropColumn(connection, tableName, tempColumnName + "2");
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Successfully and upgraded table " + tableName);
+			}
+		}
 	}
 
 	@Override
@@ -300,5 +416,7 @@ public class DB2DB extends BaseDB {
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 
 	private static final boolean _SUPPORTS_SCROLLABLE_RESULTS = false;
+
+	private static final Log _log = LogFactoryUtil.getLog(DB2DB.class);
 
 }

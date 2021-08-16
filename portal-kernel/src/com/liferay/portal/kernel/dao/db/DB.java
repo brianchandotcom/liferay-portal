@@ -46,6 +46,25 @@ public interface DB {
 			Set<String> validIndexNames)
 		throws IOException;
 
+	public void alterColumnName(
+			Connection connection, String tableName, String oldColumnName,
+			String newColumnDefinition)
+		throws Exception;
+
+	public void alterColumnType(
+			Connection connection, String tableName, String columnName,
+			String newColumnType)
+		throws Exception;
+
+	public void alterTableAddColumn(
+			Connection connection, String tableName, String columnName,
+			String columnType)
+		throws Exception;
+
+	public void alterTableDropColumn(
+			Connection connection, String tableName, String columnName)
+		throws Exception;
+
 	public String buildSQL(String template) throws IOException, SQLException;
 
 	public DBType getDBType();

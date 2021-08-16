@@ -115,6 +115,71 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
+	public void alterColumnName(
+			Connection connection, String tableName, String oldColumnName,
+			String newColumnDefinition)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("alter_column_name ");
+		sb.append(tableName);
+		sb.append(StringPool.SPACE);
+		sb.append(oldColumnName);
+		sb.append(StringPool.SPACE);
+		sb.append(newColumnDefinition);
+
+		runSQL(connection, sb.toString());
+	}
+
+	public void alterColumnType(
+			Connection connection, String tableName, String columnName,
+			String newColumnType)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("alter_column_type ");
+		sb.append(tableName);
+		sb.append(StringPool.SPACE);
+		sb.append(columnName);
+		sb.append(StringPool.SPACE);
+		sb.append(newColumnType);
+
+		runSQL(connection, sb.toString());
+	}
+
+	public void alterTableAddColumn(
+			Connection connection, String tableName, String columnName,
+			String columnType)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("alter table ");
+		sb.append(tableName);
+		sb.append(" add ");
+		sb.append(columnName);
+		sb.append(StringPool.SPACE);
+		sb.append(columnType);
+
+		runSQL(connection, sb.toString());
+	}
+
+	public void alterTableDropColumn(
+			Connection connection, String tableName, String columnName)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("alter table ");
+		sb.append(tableName);
+		sb.append(" drop column ");
+		sb.append(columnName);
+
+		runSQL(connection, sb.toString());
+	}
+
 	@Override
 	public abstract String buildSQL(String template)
 		throws IOException, SQLException;

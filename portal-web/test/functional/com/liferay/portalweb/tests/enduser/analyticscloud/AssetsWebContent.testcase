@@ -456,7 +456,9 @@ definition {
 
 		ACAssets.gotoViewsByTechnologyTab(tabName = "Browsers");
 
-		ACAssets.viewViewsByTechnologyTabActive(tabName = "Browsers");
+		ACAssets.viewViewsByTechnologyTabActive(
+			cardTitle = "Views by Technology",
+			tabName = "Browsers");
 
 		ACAssets.viewTechnologyBrowsersMetric(
 			browserMetricValue = "Chrome",
@@ -510,10 +512,11 @@ definition {
 
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
-		ACAssets.viewViewsByTechnologyDeviceViewsAndPercentage(
+		ACAssets.viewTechnologyDeviceViewsAndPercentage(
+			actionValue = "3 Views",
+			cardTitle = "Views by Technology",
 			deviceName = "Desktop",
-			percentageValue = "100%",
-			viewsValue = "3");
+			percentageValue = "100%");
 	}
 
 }

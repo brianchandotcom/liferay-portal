@@ -67,30 +67,33 @@ definition {
 			value1 = "${cssValue}");
 	}
 
-	macro viewViewsByTechnologyDeviceViewsAndPercentage {
-		ScrollWebElementIntoView(locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_BAR_CHART");
+	macro viewTechnologyDeviceViewsAndPercentage {
+		var key_cardTitle = "${cardTitle}";
+
+		ScrollWebElementIntoView(locator1 = "ACAssets#TECHNOLOGY_BAR_CHART");
 
 		Pause(locator1 = "5000");
 
-		MouseOver(locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_BAR_CHART");
+		MouseOver(locator1 = "ACAssets#TECHNOLOGY_BAR_CHART");
 
 		AssertTextEquals(
-			locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_DEVICE_CHART_TOOLTIP_DEVICE_HEADER",
+			locator1 = "ACAssets#TECHNOLOGY_DEVICE_CHART_TOOLTIP_DEVICE_HEADER",
 			value1 = "${deviceName}");
 
 		AssertTextEquals(
-			locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_DEVICE_CHART_TOOLTIP_VIEWS_HEADER",
-			value1 = "${viewsValue} Views");
+			locator1 = "ACAssets#TECHNOLOGY_DEVICE_CHART_TOOLTIP_VIEWS_HEADER",
+			value1 = "${actionValue}");
 
 		AssertTextEquals(
-			locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_DEVICE_CHART_TOOLTIP_PERCENTAGE_HEADER",
+			locator1 = "ACAssets#TECHNOLOGY_DEVICE_CHART_TOOLTIP_PERCENTAGE_HEADER",
 			value1 = "${percentageValue}");
 	}
 
 	macro viewViewsByTechnologyTabActive {
 		AssertVisible(
+			key_cardTitle = "${cardTitle}",
 			key_tabName = "${tabName}",
-			locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_TAB_ACTIVE");
+			locator1 = "ACAssets#TECHNOLOGY_TAB_ACTIVE");
 	}
 
 	macro viewVisitorsBehaviorMetric {

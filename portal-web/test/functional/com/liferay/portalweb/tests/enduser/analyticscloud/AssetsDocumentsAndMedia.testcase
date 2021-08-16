@@ -251,7 +251,9 @@ definition {
 		task ("Assert downloads by browsers metric") {
 			ACNavigation.switchTabInCard(tabName = "Browsers");
 
-			ACAssets.viewViewsByTechnologyTabActive(tabName = "Browsers");
+			ACAssets.viewViewsByTechnologyTabActive(
+				cardTitle = "Downloads by Technology",
+				tabName = "Browsers");
 
 			ACAssets.viewTechnologyBrowsersMetric(
 				browserMetricValue = "Chrome",

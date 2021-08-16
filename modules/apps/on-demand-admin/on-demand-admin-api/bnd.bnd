@@ -1,0 +1,7 @@
+Bundle-Name: Liferay On-Demand Admin API
+Bundle-SymbolicName: com.liferay.on.demand.admin.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.on.demand.admin.constants,\
+	com.liferay.on.demand.admin.manager,\
+	com.liferay.on.demand.admin.ticket.generator

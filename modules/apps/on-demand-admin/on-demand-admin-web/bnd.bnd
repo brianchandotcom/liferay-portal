@@ -1,0 +1,6 @@
+Bundle-Name: Liferay On-Demand Admin Web
+Bundle-SymbolicName: com.liferay.on.demand.admin.web
+Bundle-Version: 1.0.0
+-liferay-aggregate-resource-bundles:\
+	com.liferay.on.demand.admin.web,\
+	com.liferay.portal.instances.web

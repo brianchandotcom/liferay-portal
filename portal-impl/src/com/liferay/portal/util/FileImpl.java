@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Digester;
@@ -40,8 +41,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.util.ant.ExpandTask;
 
 import java.io.File;
@@ -437,21 +436,21 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 
 			if (forkProcess) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				ProcessChannel<String> processChannel = registry.callService(
-					ProcessExecutor.class,
-					processExecutor -> {
-						try {
-							return processExecutor.execute(
-								PortalClassPathUtil.getPortalProcessConfig(),
-								new ExtractTextProcessCallable(
-									getBytes(tikaInputStream)));
-						}
-						catch (Exception exception) {
-							return ReflectionUtil.throwException(exception);
-						}
-					});
+				ProcessChannel<String> processChannel =
+					SystemBundleUtil.callService(
+						ProcessExecutor.class,
+						processExecutor -> {
+							try {
+								return processExecutor.execute(
+									PortalClassPathUtil.
+										getPortalProcessConfig(),
+									new ExtractTextProcessCallable(
+										getBytes(tikaInputStream)));
+							}
+							catch (Exception exception) {
+								return ReflectionUtil.throwException(exception);
+							}
+						});
 
 				Future<String> future =
 					processChannel.getProcessNoticeableFuture();

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.resource.bundle.CacheResourceBundleLoader;
@@ -1700,9 +1701,7 @@ public class HookHotDeployListener
 					_log.debug(beanLocatorException, beanLocatorException);
 				}
 
-				Registry registry = RegistryUtil.getRegistry();
-
-				registry.callService(
+				SystemBundleUtil.callService(
 					serviceTypeClass,
 					registryServiceProxy -> {
 						try {

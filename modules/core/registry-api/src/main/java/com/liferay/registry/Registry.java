@@ -28,8 +28,20 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Registry {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
+	 *			   #callService(Class, UnsafeFunction)}
+	 */
+	@Deprecated
 	public <S, R> R callService(Class<S> serviceClass, Function<S, R> function);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
+	 *			   #callService(String, UnsafeFunction)}
+	 */
+	@Deprecated
 	public <S, R> R callService(String className, Function<S, R> function);
 
 	public <T> ServiceReference<T>[] getAllServiceReferences(

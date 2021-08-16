@@ -54,6 +54,12 @@ public class RegistryImpl implements Registry {
 		_bundleContext = bundleContext;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
+	 *			   #callService(Class, UnsafeFunction)}
+	 */
+	@Deprecated
 	@Override
 	public <S, R> R callService(
 		Class<S> serviceClass, Function<S, R> function) {
@@ -75,6 +81,12 @@ public class RegistryImpl implements Registry {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
+	 *			   #callService(String, UnsafeFunction)}
+	 */
+	@Deprecated
 	@Override
 	public <S, R> R callService(String className, Function<S, R> function) {
 		org.osgi.framework.ServiceReference<S> serviceReference =

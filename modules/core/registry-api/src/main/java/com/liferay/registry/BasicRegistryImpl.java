@@ -51,6 +51,12 @@ import java.util.function.Function;
  */
 public class BasicRegistryImpl implements Registry {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
+	 *			   #callService(Class, UnsafeFunction)}
+	 */
+	@Deprecated
 	@Override
 	public <S, R> R callService(
 		Class<S> serviceClass, Function<S, R> function) {
@@ -58,6 +64,12 @@ public class BasicRegistryImpl implements Registry {
 		return callService(serviceClass.getName(), function);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
+	 *			   #callService(String, UnsafeFunction)}
+	 */
+	@Deprecated
 	@Override
 	public <S, R> R callService(String className, Function<S, R> function) {
 		Filter filter = getFilter("(objectClass=" + className + ")");

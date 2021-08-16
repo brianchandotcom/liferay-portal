@@ -17,13 +17,10 @@ package com.liferay.portal.template;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-
-import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,9 +32,7 @@ public class ServiceLocator {
 	}
 
 	public Object findService(String serviceName) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Object object = registry.callService(serviceName, Function.identity());
+		Object object = SystemBundleUtil.callService(serviceName, obj -> obj);
 
 		if (PropsValues.TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT &&
 			!(object instanceof BaseLocalService) &&

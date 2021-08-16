@@ -20,7 +20,7 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="label" type="String" />
+		<column localized="true" name="name" type="String" />
 	</entity>
 	<entity local-service="true" name="ListTypeEntry" remote-service="false" uuid="true">
 

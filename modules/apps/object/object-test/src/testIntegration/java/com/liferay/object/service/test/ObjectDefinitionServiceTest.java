@@ -160,7 +160,7 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			user.getUserId(), _labelMap, "Test", null);
+			user.getUserId(), _labelMap, "Test", _pluralLabelMap, null);
 	}
 
 	private void _setUser(User user) {
@@ -178,7 +178,7 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					_labelMap, "Test", null);
+					_labelMap, "Test", _pluralLabelMap, null);
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -242,7 +242,7 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-					user.getUserId(), _labelMap, "Test", null);
+					user.getUserId(), _labelMap, "Test", _pluralLabelMap, null);
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
@@ -261,6 +261,8 @@ public class ObjectDefinitionServiceTest {
 		LocalizedMapUtil.getLocalizedMap("Test");
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+	private final Map<Locale, String> _pluralLabelMap =
+		LocalizedMapUtil.getLocalizedMap("Tests");
 	private User _user;
 
 	@Inject(type = UserLocalService.class)

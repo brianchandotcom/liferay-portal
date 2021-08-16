@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_ABSTRACT_AP</td>
+	<td>//div[contains(@class,'asset-content')]//div[contains(.,'${key_entryAbstractDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_GENERIC</td>
 	<td>//div[contains(@class,'content')]//p</td>
 	<td></td>

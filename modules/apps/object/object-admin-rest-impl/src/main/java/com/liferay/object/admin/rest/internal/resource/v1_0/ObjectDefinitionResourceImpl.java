@@ -83,6 +83,7 @@ public class ObjectDefinitionResourceImpl
 			_objectDefinitionService.addCustomObjectDefinition(
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getName()),
 				objectDefinition.getName(),
+				LocalizedMapUtil.getLocalizedMap(objectDefinition.getName()),
 				transformToList(
 					objectDefinition.getObjectFields(),
 					objectField -> ObjectFieldUtil.toObjectField(

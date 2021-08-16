@@ -12,27 +12,29 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import React from 'react';
+import {Handle} from 'react-flow-renderer';
 
-import '../../css/main.scss';
+import '../../../../css/main.scss';
 
-export default function TaskNode({current = false, done = false, title}) {
+export default function BorderStateNode({data: {initial = true, label}}) {
 	return (
-		<div
-			className={classnames(
-				'node task-node',
-				current ? 'current-task text-white' : 'text-secondary'
-			)}
-		>
-			<span>{title}</span>
-
-			{current && (
-				<ClayIcon className="current-icon ml-2" symbol="live" />
+		<>
+			{initial ? (
+				<Handle position="right" style={{top: '50%'}} type="source" />
+			) : (
+				<Handle position="left" style={{top: '50%'}} type="target" />
 			)}
 
-			{done && <ClayIcon className="done-icon ml-2" symbol="check" />}
-		</div>
+			<div
+				className={classnames(
+					'border-state-node node text-white',
+					initial ? 'start-state' : 'end-state'
+				)}
+			>
+				<span>{Liferay.Language.get(label)}</span>
+			</div>
+		</>
 	);
 }

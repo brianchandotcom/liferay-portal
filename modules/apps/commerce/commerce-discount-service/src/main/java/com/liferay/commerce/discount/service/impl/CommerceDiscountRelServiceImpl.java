@@ -82,18 +82,27 @@ public class CommerceDiscountRelServiceImpl
 
 	@Override
 	public List<CommerceDiscountRel> getCategoriesByCommerceDiscountId(
-		long commerceDiscountId, String name, int start, int end) {
+			long commerceDiscountId, String name, int start, int end)
+		throws PortalException {
 
-		return commerceDiscountRelFinder.findCategoriesByCommerceDiscountId(
-			commerceDiscountId, name, start, end, true);
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCategoriesByCommerceDiscountId(
+				commerceDiscountId, name, start, end);
 	}
 
 	@Override
 	public int getCategoriesByCommerceDiscountIdCount(
-		long commerceDiscountId, String name) {
+			long commerceDiscountId, String name)
+		throws PortalException {
 
-		return commerceDiscountRelFinder.countCategoriesByCommerceDiscountId(
-			commerceDiscountId, name, true);
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCategoriesByCommerceDiscountIdCount(commerceDiscountId, name);
 	}
 
 	@Override
@@ -162,37 +171,81 @@ public class CommerceDiscountRelServiceImpl
 
 	@Override
 	public List<CommerceDiscountRel>
-		getCommercePricingClassesByCommerceDiscountId(
-			long commerceDiscountId, String title, int start, int end) {
+			getCommercePricingClassesByCommerceDiscountId(
+				long commerceDiscountId, String title, int start, int end)
+		throws PortalException {
 
-		return commerceDiscountRelFinder.findPricingClassesByCommerceDiscountId(
-			commerceDiscountId, title, start, end, true);
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCommercePricingClassesByCommerceDiscountId(
+				commerceDiscountId, title, start, end);
 	}
 
 	@Override
 	public int getCommercePricingClassesByCommerceDiscountIdCount(
-		long commerceDiscountId, String title) {
+			long commerceDiscountId, String title)
+		throws PortalException {
 
-		return commerceDiscountRelFinder.
-			countPricingClassesByCommerceDiscountId(
-				commerceDiscountId, title, true);
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCommercePricingClassesByCommerceDiscountIdCount(
+				commerceDiscountId, title);
 	}
 
 	@Override
 	public List<CommerceDiscountRel> getCPDefinitionsByCommerceDiscountId(
-		long commerceDiscountId, String name, String languageId, int start,
-		int end) {
+			long commerceDiscountId, String name, String languageId, int start,
+			int end)
+		throws PortalException {
 
-		return commerceDiscountRelFinder.findCPDefinitionsByCommerceDiscountId(
-			commerceDiscountId, name, languageId, start, end, true);
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCPDefinitionsByCommerceDiscountId(
+				commerceDiscountId, name, languageId, start, end);
 	}
 
 	@Override
 	public int getCPDefinitionsByCommerceDiscountIdCount(
-		long commerceDiscountId, String name, String languageId) {
+			long commerceDiscountId, String name, String languageId)
+		throws PortalException {
 
-		return commerceDiscountRelFinder.countCPDefinitionsByCommerceDiscountId(
-			commerceDiscountId, name, languageId, true);
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCPDefinitionsByCommerceDiscountIdCount(
+				commerceDiscountId, name, languageId);
+	}
+
+	@Override
+	public List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
+			long commerceDiscountId, String sku, int start, int end)
+		throws PortalException {
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCPInstancesByCommerceDiscountId(
+				commerceDiscountId, sku, start, end);
+	}
+
+	@Override
+	public int getCPInstancesByCommerceDiscountIdCount(
+			long commerceDiscountId, String sku)
+		throws PortalException {
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.
+			getCPInstancesByCommerceDiscountIdCount(commerceDiscountId, sku);
 	}
 
 	private static volatile ModelResourcePermission<CommerceDiscount>

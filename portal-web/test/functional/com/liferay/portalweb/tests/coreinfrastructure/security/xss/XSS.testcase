@@ -104,6 +104,32 @@ definition {
 			value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
 	}
 
+	@description = "This is a use case for LPS-82204."
+	@priority = "5"
+	test ViewBlogsEntryWithXSSCustomAbstract {
+		var entryAbstractDescription = '''<script>alert(123)</script>''';
+		var key_entryAbstractDescription = "${entryAbstractDescription}";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Blogs.addWithCustomAbstractViaAP(
+			entryAbstractDescription = "${entryAbstractDescription}",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		AssertAlertNotPresent();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "BlogsEntry#CONTENT_ABSTRACT_AP",
+			value1 = "${entryAbstractDescription}");
+	}
+
 	@priority = "3"
 	test ViewGoogleAnalyticsID {
 		Site.openSiteSettingsAdmin(siteURLKey = "guest");

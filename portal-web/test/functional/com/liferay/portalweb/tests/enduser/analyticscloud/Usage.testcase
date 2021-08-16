@@ -168,11 +168,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
 	@priority = "5"
 	test PageViewsUpdateInRealTime {
-<<<<<<< HEAD
-		task("Go to Usage, save the value of Page Views and add 3(correspond to the value of interaction with DXP)") {
-=======
 		task ("Go to Usage, save the value of Page Views, remove the comma and add 3(correspond to the value of interaction with DXP)") {
->>>>>>> 6fec772 (LRAC-8150 Add the tasks)
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			ACUtils.launchAC();
@@ -194,11 +190,7 @@ definition {
 			Pause(locator1 = "30000");
 		}
 
-<<<<<<< HEAD
-		task("Go to Usage again and assert that the interaction with DXP change the value of Page Views") {
-=======
-		task ("Go to AC > Usage again and get the new value of Page Views"){
->>>>>>> 6fec772 (LRAC-8150 Add the tasks)
+		task ("Go to AC > Usage again and get the new value of Page Views") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
@@ -208,7 +200,7 @@ definition {
 			var expectedPageViews = selenium.getText("ACUsage#USAGE_CURRENT_PAGE_VIEWS");
 		}
 
-		task ("Remove the comma and compare the values"){
+		task ("Remove the comma and compare the values") {
 			var replacePageViews2 = StringUtil.replace("${expectedPageViews}",",","");
 
 			TestUtils.assertEquals(

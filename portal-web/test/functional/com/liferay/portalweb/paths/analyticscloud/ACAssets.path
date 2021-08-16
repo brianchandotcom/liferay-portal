@@ -87,11 +87,6 @@
 	<td>xpath=(//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//thead[@class='analytics-tooltip-chart-header']//div[@class='analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal'])[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>VIEWS_BY_TECHNOLOGY_BROWSER_CHART_LEGEND_BROWSER_PERCENTAGE_VALUE</td>
-	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//span[@class='recharts-legend-item-text' and contains(.,'${key_browserName}')]/span[@class='legend-percentage']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

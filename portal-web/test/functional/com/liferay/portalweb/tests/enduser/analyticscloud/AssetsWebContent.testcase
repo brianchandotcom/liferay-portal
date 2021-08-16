@@ -458,9 +458,11 @@ definition {
 
 		ACAssets.viewViewsByTechnologyTabActive(tabName = "Browsers");
 
-		ACAssets.viewViewsByTechnologyBrowserPercentage(
-			browserName = "Chrome",
-			percentageValue = "100%");
+		ACAssets.viewTechnologyBrowsersMetric(
+			browserMetricValue = "Chrome",
+			cardTitle = "Views by Technology",
+			cssValue = "rgb(75, 155, 255)",
+			percentageMetricValue = "100%");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8453 | Test Summary: Web content submissions by technology card shows views by expected device"

@@ -67,13 +67,6 @@ definition {
 			value1 = "${cssValue}");
 	}
 
-	macro viewViewsByTechnologyBrowserPercentage {
-		AssertTextEquals(
-			key_browserName = "${browserName}",
-			locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_BROWSER_CHART_LEGEND_BROWSER_PERCENTAGE_VALUE",
-			value1 = "${percentageValue}");
-	}
-
 	macro viewViewsByTechnologyDeviceViewsAndPercentage {
 		ScrollWebElementIntoView(locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_BAR_CHART");
 

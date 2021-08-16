@@ -6269,14 +6269,14 @@ war.path=${app.server.portal.dir}/</echo>
 				<then>
 					<loadfile
 						failonerror="false"
-						property="binary.commerce.license"
+						property="commerce.license.binary"
 					>
 						<zipentry name="data/license/LiferayCommerceSubscriptionDevelopment_developercluster.li" zipfile="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip" />
 					</loadfile>
 
 					<loadfile
 						failonerror="false"
-						property="binary.portal.license"
+						property="dxp.license.binary"
 					>
 						<zipentry name="data/license/Liferaycom_PortalDevelopment_developercluster.li" zipfile="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip" />
 					</loadfile>
@@ -6288,8 +6288,8 @@ war.path=${app.server.portal.dir}/</echo>
 					<equals arg1="${poshi.method.name}" arg2="DeployCommerceLicenseBinaryFile" />
 					<and>
 						<isset property="data.archive.type" />
-						<isset property="binary.commerce.license" />
-						<isset property="binary.portal.license" />
+						<isset property="commerce.license.binary" />
+						<isset property="dxp.license.binary" />
 					</and>
 				</or>
 				<then>
@@ -6298,9 +6298,9 @@ war.path=${app.server.portal.dir}/</echo>
 				<elseif>
 					<and>
 						<isset property="data.archive.type" />
-						<isset property="binary.commerce.license" />
+						<isset property="commerce.license.binary" />
 						<not>
-							<isset property="binary.portal.license" />
+							<isset property="dxp.license.binary" />
 						</not>
 					</and>
 					<then>

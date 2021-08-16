@@ -51,12 +51,8 @@ public class UpgradeReport {
 	public UpgradeReport(PersistenceManager persistenceManager) {
 		_persistenceManager = persistenceManager;
 
-		_setInitialBuildNumber();
-
-		if ((_initialBuildNumber != -1) &&
-			(_initialBuildNumber > ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER)) {
-
-			_setInitialSchemaVersion();
+		if (initialBuildNumber > ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER) {
+			setInitialSchemaVersion();
 		}
 	}
 

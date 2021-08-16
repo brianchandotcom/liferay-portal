@@ -9,3 +9,4 @@ Import-Package:\
 	!org.junit.experimental.theories,\
 	\
 	*
+-includeresource: @jsonassert-[0-9.]*.jar

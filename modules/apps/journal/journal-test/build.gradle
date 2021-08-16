@@ -17,11 +17,14 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:asset:asset-display-page-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationCompile project(":apps:data-engine:data-engine-rest-api")
+	testIntegrationCompile project(":apps:data-engine:data-engine-rest-test-util")
 	testIntegrationCompile project(":apps:document-library:document-library-test-util")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")

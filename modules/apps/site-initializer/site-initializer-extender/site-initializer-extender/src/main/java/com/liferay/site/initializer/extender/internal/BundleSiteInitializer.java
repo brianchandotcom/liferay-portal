@@ -15,7 +15,6 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.fragment.importer.FragmentsImporter;
-import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -37,9 +36,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.exception.InitializationException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.io.InputStream;
 
@@ -177,7 +175,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addFragmentEntries(long groupId, User user) throws Exception {
-
 		URL url = _bundle.getEntry("/fragments.zip");
 
 		if (url == null) {
@@ -225,11 +222,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addStyleBookEntries(long groupId, User user) throws Exception {
+	private void _addStyleBookEntries(long groupId, User user)
+		throws Exception {
 
 		URL url = _bundle.getEntry("/style-books.zip");
 
-		if(url == null){
+		if (url == null) {
 			return;
 		}
 
@@ -282,7 +280,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _initialize(long groupId, User user) throws Exception {
 		_addDocuments(groupId, user);
 		_addFragmentEntries(groupId, user);
-		//_addObjectDefinitions(user);
+		_addObjectDefinitions(user);
 		_addStyleBookEntries(groupId, user);
 		_addTaxonomyVocabularies(groupId, user);
 	}

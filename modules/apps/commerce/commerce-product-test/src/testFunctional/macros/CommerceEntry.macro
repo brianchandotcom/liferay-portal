@@ -1139,7 +1139,7 @@ definition {
 	macro viewPaginationResults {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#PAGINATION_RESULTS",
-			value1 = "Showing 11 to 20 of 54");
+			value1 = "${results}");
 	}
 
 	macro viewPriceListEntry {

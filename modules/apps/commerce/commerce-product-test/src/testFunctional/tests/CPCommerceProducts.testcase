@@ -1144,7 +1144,7 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		CommerceEntry.viewPaginationResults();
+		CommerceEntry.viewPaginationResults(results = "Showing 11 to 20 of 54");
 
 		CommerceProducts.searchProduct(search = "MIN55861");
 

@@ -1,0 +1,9 @@
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__viewport-size-selector {
+			&__popover {
+				width: 256px;
+			}
+		}
+	}
+}

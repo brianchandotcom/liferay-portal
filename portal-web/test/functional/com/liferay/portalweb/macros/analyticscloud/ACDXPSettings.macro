@@ -96,24 +96,6 @@ definition {
 		return "${assignedPropertyName}";
 	}
 
-	macro getSiteAssignedPropertyName {
-		ACDXPSettings.goToInstanceSettingsAC();
-
-		ACDXPSettings.navToSyncedSitesMenu();
-
-		LexiconEntry.gotoAdd();
-
-		WaitForVisible(
-			key_tableEntry = "${siteName}",
-			locator1 = "LexiconTable#TABLE_ENTRY");
-
-		var assignedPropertyName = selenium.getText("//tr[@data-qa-id='row'][contains(.,'${siteName}')]//td[contains(@class,'assigned-property-column')]");
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
-
-		return "${assignedPropertyName}";
-	}
-
 	macro goToInstanceSettingsAC {
 		PortalSettings.openInstanceSettingsAdmin();
 

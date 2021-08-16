@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -121,31 +120,29 @@ public class InfoFormUtil {
 			List<SelectInfoFieldType.Option> options = optionsOptional.orElse(
 				Collections.emptyList());
 
-			if (ListUtil.isNotEmpty(options)) {
-				try {
-					Optional<Boolean> multipleOptional =
-						infoField.getAttributeOptional(
-							SelectInfoFieldType.MULTIPLE);
+			try {
+				Optional<Boolean> multipleOptional =
+					infoField.getAttributeOptional(
+						SelectInfoFieldType.MULTIPLE);
 
-					jsonObject.put(
-						"typeOptions",
-						JSONUtil.put(
-							"multiSelect", multipleOptional.orElse(false)
-						).put(
-							"validValues",
-							JSONUtil.toJSONArray(
-								options,
-								option -> JSONUtil.put(
-									"label", String.valueOf(option.getLabel())
-								).put(
-									"value", String.valueOf(option.getValue())
-								))
-						));
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception, exception);
-					}
+				jsonObject.put(
+					"typeOptions",
+					JSONUtil.put(
+						"multiSelect", multipleOptional.orElse(false)
+					).put(
+						"validValues",
+						JSONUtil.toJSONArray(
+							options,
+							option -> JSONUtil.put(
+								"label", String.valueOf(option.getLabel())
+							).put(
+								"value", String.valueOf(option.getValue())
+							))
+					));
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
 				}
 			}
 		}

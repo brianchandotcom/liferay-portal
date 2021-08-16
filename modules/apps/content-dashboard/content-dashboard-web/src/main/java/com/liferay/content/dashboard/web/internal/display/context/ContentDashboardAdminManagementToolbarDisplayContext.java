@@ -109,6 +109,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).setParameter(
 			"contentDashboardItemSubtypePayload", (String)null
 		).setParameter(
+			"extension", (String)null
+		).setParameter(
 			"scopeId", (String)null
 		).setParameter(
 			"status", WorkflowConstants.STATUS_ANY

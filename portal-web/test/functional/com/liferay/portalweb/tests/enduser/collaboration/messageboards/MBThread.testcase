@@ -36,6 +36,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136910. It checks that bold text can be added in the editor."
+	@ignore = "true"
+	@priority = "4"
+	test CanAddBoldText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136910 CanAddBoldText pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136911. It checks that an image can be added in the editor."
+	@ignore = "true"
+	@priority = "4"
+	test CanAddImage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136911 CanAddImage pending implementation
+
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test CanAddLinkToDocument {
@@ -158,6 +178,16 @@ definition {
 			threadSubject = "MB Thrèad Mèssagè Subjèct");
 	}
 
+	@description = "This is a test for LPS-136912. It checks that an urgent thread can be added."
+	@ignore = "true"
+	@priority = "3"
+	test CanAddUrgentThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136912 CanAddUrgentThread pending implementation
+
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanCancelEditOnThread {
@@ -258,6 +288,36 @@ definition {
 		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
 	}
 
+	@description = "This is a test for LPS-136914. It checks that an attachment can be downloaded."
+	@ignore = "true"
+	@priority = "4"
+	test CanDownloadAttachment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136913 CanDownloadAttachment pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136920. It checks that a thread can be exported."
+	@ignore = "true"
+	@priority = "3"
+	test CanExportThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136920 CanExportThread pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136919. It checks that a thread can be imported."
+	@ignore = "true"
+	@priority = "3"
+	test CanImportThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136919 CanImportThread pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanLimitThreadAttachmentSize {
@@ -319,6 +379,16 @@ definition {
 			threadBody = "Message Boards Thread Body",
 			threadReplyBody = "Message Boards Thread Reply Body",
 			threadSubject = "Message Boards Thread Subject");
+	}
+
+	@description = "This is a test for LPS-136915. It checks that an attachment can be restored."
+	@ignore = "true"
+	@priority = "3"
+	test CanRestoreAttachment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136915 CanRestoreAttachment pending implementation
+
 	}
 
 	@priority = "5"

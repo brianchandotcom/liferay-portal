@@ -51,6 +51,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136925. It checks that an email notification can be received in HTML format."
+	@ignore = "true"
+	@priority = "3"
+	test CanReceiveEmailInHTMLFormat {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136925 CanReceiveEmailInHTMLFormat pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136924. It checks that an email notification can be received when a post is flagged."
+	@ignore = "true"
+	@priority = "3"
+	test CanReceiveEmailWhenPostIsFlagged {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136924 CanReceiveEmailWhenPostIsFlagged pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136927. It checks that an email with a localized template can be received."
+	@ignore = "true"
+	@priority = "3"
+	test CanReceiveEmailWithLocalizedTemplate {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136927 CanReceiveEmailWithLocalizedTemplate pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanViewWebsiteNotificationForNewThreadInCategory {

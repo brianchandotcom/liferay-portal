@@ -1,0 +1,59 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Message Boards";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsCategory.tearDownCP();
+
+			MessageboardsThread.tearDownCP();
+
+			MessageboardsPortlet.tearDownConfigurationGeneralCP();
+		}
+	}
+
+	@description = "This is a test for LPS-136940. It checks that a comment in a thread submission can be modified."
+	@ignore = "true"
+	@priority = "3"
+	test CanModifyCommentInThreadSubmission {
+		property portal.acceptance = "false";
+
+		// TODO LPS-LPS-136940 CanModifyCommentInThreadSubmission pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136941. It checks that a thread submission can be updated."
+	@ignore = "true"
+	@priority = "3"
+	test CanModifyThreadSubmission {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136941 CanModifyThreadSubmission pending implementation
+
+	}
+
+}

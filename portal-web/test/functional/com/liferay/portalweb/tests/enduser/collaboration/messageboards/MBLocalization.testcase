@@ -1,0 +1,79 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Message Boards";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			MessageboardsCategory.tearDownCP();
+
+			MessageboardsThread.tearDownCP();
+
+			MessageboardsPortlet.tearDownConfigurationGeneralCP();
+		}
+	}
+
+	@description = "This is a test for LPS-136929. It checks that categories can be viewed in Arabic."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewCategoriesInArabic {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136929 CanViewCategoriesInArabic pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136930. It checks that categories can be viewed in Japanese."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewCategoriesInJapanese {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136930 CanViewCategoriesInJapanese pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136931. It checks that a thread can be viewed in Arabic."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewThreadInArabic {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136931 CanViewThreadInArabic pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136932. It checks that a thread can be viewed in Japanese."
+	@ignore = "true"
+	@priority = "3"
+	test CanViewThreadInJapanese {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136932 CanViewThreadInJapanese pending implementation
+
+	}
+
+}

@@ -26,6 +26,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136922. It checks that a banned user cannot create a new thread."
+	@ignore = "true"
+	@priority = "3"
+	test CannotCreateThreadAsBannedUser {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136922 CannotCreateThreadAsBannedUser pending implementation
+
+	}
+
 	@description = "This test covers LPS-97376, This ensures that a user can not view the subscribed message via the notification without permissions."
 	@priority = "4"
 	test CannotViewMessageViaNotificationWithoutPermissionsOnContentPage {
@@ -192,6 +202,66 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsPortlet.viewNoPermissionCP();
+	}
+
+	@description = "This is a test for LPS-136939. It checks that a guest cannot view a thread without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestCannotViewThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136939 GuestCannotViewThread pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136933. It checks that a site member cannot delete a category without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotDeleteCategory {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136933 SiteMemberCannotDeleteCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136934. It checks that a site member cannot delete a thread without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotDeleteThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136934 SiteMemberCannotDeleteThread pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136935. It checks that a site member cannot reply to a thread without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotReplyToThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136935 SiteMemberCannotReplyToThread pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136938. It checks that a site member cannot subscribe to a thread without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotSubscribeToThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136938 SiteMemberCannotSubscribeToThread pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136936. It checks that a site member cannot update a thread without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberCannotUpdateThread {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136936 SiteMemberCannotUpdateThread pending implementation
+
 	}
 
 	@priority = "3"

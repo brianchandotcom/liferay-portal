@@ -95,6 +95,16 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
+	@description = "This is a test for LPS-136921. It checks that the ban length and expiration of a user can be changed."
+	@ignore = "true"
+	@priority = "3"
+	test CanChangeBanLengthAndExpiration {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136921 CanChangeBanLengthAndExpiration pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanDeleteCategories {
@@ -132,6 +142,36 @@ definition {
 			replyCount = "0",
 			threadBody = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject Edit");
+	}
+
+	@description = "This is a test for LPS-136918. It checks that a category can be exported."
+	@ignore = "true"
+	@priority = "3"
+	test CanExportCategory {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136918 CanExportCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136917. It checks that a category can be imported."
+	@ignore = "true"
+	@priority = "3"
+	test CanImportCategory {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136917 CanImportCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136923. It checks that a user can be unbanned."
+	@ignore = "true"
+	@priority = "3"
+	test CanUnbanUser {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136923 CanUnbanUser pending implementation
+
 	}
 
 }

@@ -51,8 +51,8 @@ public class UpgradeReport {
 	public UpgradeReport(PersistenceManager persistenceManager) {
 		_persistenceManager = persistenceManager;
 
-		if (initialBuildNumber >= ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER) {
-			setInitialSchemaVersion();
+		if (_initialBuildNumber >= ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER) {
+			_setInitialSchemaVersion();
 		}
 	}
 
@@ -117,7 +117,7 @@ public class UpgradeReport {
 
 		String currentSchemaVersion = _getSchemaVersion();
 
-		if (_initialBuildNumber != -1) {
+		if (_initialBuildNumber != 0) {
 			sb.append("Initial version of Liferay: ");
 			sb.append(_initialBuildNumber);
 
@@ -280,7 +280,7 @@ public class UpgradeReport {
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
 		new ConcurrentHashMap<>();
-	private int _initialBuildNumber = -1;
+	private int _initialBuildNumber;
 	private String _initialSchemaVersion;
 	private final PersistenceManager _persistenceManager;
 	private final Map<String, ArrayList<String>> _warningMessages =

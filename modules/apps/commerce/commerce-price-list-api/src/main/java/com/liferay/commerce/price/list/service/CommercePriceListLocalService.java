@@ -374,26 +374,58 @@ public interface CommercePriceListLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList
+		getCommercePriceListByAccountAndChannelAndOrderTypeId(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			long commerceOrderTypeId, String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommercePriceListByAccountAndChannelId(
-		long groupId, String type, long commerceAccountId,
-		long commerceChannelId);
+		long groupId, long commerceAccountId, long commerceChannelId,
+		String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList getCommercePriceListByAccountAndOrderTypeId(
+		long groupId, long commerceAccountId, long commerceOrderTypeId,
+		String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList getCommercePriceListByAccountGroupAndOrderTypeId(
+		long groupId, long[] commerceAccountGroupIds, long commerceOrderTypeId,
+		String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommercePriceListByAccountGroupIds(
-		long groupId, String type, long[] commerceAccountGroupIds);
+		long groupId, long[] commerceAccountGroupIds, String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList
+		getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, long commerceOrderTypeId, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommercePriceListByAccountGroupsAndChannelId(
-		long groupId, String type, long[] commerceAccountGroupIds,
-		long commerceChannelId);
+		long groupId, long[] commerceAccountGroupIds, long commerceChannelId,
+		String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList getCommercePriceListByAccountGroupsAndOrderTypeId(
+		long groupId, long[] commerceAccountGroupIds, long commerceOrderTypeId,
+		String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommercePriceListByAccountId(
-		long groupId, String type, long commerceAccountId);
+		long groupId, long commerceAccountId, String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList getCommercePriceListByChannelAndOrderTypeId(
+		long groupId, long commerceChannelId, long commerceOrderTypeId,
+		String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommercePriceListByChannelId(
-		long groupId, String type, long commerceChannelId);
+		long groupId, long commerceChannelId, String type);
 
 	/**
 	 * Returns the commerce price list with the matching external reference code and company.
@@ -410,10 +442,14 @@ public interface CommercePriceListLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommercePriceListByLowestPrice(
-			long groupId, String type, String cPInstanceUuid,
-			long commerceAccountId, long[] commerceAccountGroupIds,
-			long commerceChannelId)
+			long groupId, long commerceAccountId,
+			long[] commerceAccountGroupIds, long commerceChannelId,
+			long commerceOrderTypeId, String cPInstanceUuid, String type)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceList getCommercePriceListByOrderTypeId(
+		long groupId, long commerceOrderTypeId, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceList getCommercePriceListByUnqualified(

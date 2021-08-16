@@ -252,15 +252,14 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 		Class<?>[] serviceClasses = new Class<?>[] {
 			InfoCollectionProvider.class, InfoCollectionTextFormatter.class,
-			InfoTextFormatter.class, InfoItemCapabilitiesProvider.class,
-			InfoItemDetailsProvider.class, InfoItemFieldValuesProvider.class,
-			InfoItemFieldValuesUpdater.class, InfoItemFormProvider.class,
-			InfoItemFormVariationsProvider.class,
+			InfoItemCapabilitiesProvider.class, InfoItemDetailsProvider.class,
+			InfoItemFieldValuesProvider.class, InfoItemFieldValuesUpdater.class,
+			InfoItemFormProvider.class, InfoItemFormVariationsProvider.class,
 			InfoItemLanguagesProvider.class, InfoItemObjectProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRenderer.class,
 			InfoItemSelector.class, InfoItemWorkflowProvider.class,
 			InfoListRenderer.class, InfoListProvider.class,
-			InfoRequestItemProvider.class,
+			InfoRequestItemProvider.class, InfoTextFormatter.class,
 			RelatedInfoItemCollectionProvider.class
 		};
 

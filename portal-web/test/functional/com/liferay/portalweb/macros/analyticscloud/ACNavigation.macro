@@ -70,6 +70,12 @@ definition {
 		Click(locator1 = "ACNavigation#TAB_NAME");
 	}
 
+	macro switchTabInCard {
+		var key_tabName = "${tabName}";
+
+		Click(locator1 = "ACNavigation#CARD_TAB_NAME");
+	}
+
 	macro viewActiveSwitchTab {
 		AssertTextEquals(
 			locator1 = "ACNavigation#ACTIVE_TAB_NAME",

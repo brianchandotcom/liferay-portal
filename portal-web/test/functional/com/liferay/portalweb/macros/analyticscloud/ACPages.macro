@@ -1,0 +1,30 @@
+definition {
+
+	@summary = "Filters Pages List by a given time period"
+	macro filterPagesListBySelectPeriod {
+		Click(
+			key_text = "${currentPeriod}",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_menuItem = "More Preset Periods",
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "More Preset Periods");
+
+		Click(
+			key_menuItem = "${selectPeriod}",
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "${selectPeriod}");
+
+		AssertTextPresent(
+			locator1 = "Button#ANY",
+			value1 = "${selectPeriod}");
+	}
+
+	macro navigateToPages {
+		Click(
+			key_navItem = "Pages",
+			locator1 = "NavBar#NAV_ITEM_REDIRECTION");
+	}
+
+}

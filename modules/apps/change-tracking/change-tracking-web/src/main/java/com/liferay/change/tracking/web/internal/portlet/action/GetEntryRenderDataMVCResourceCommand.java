@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -156,13 +158,18 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
+
+		String[] languageIds = ParamUtil.getStringValues(
+			resourceRequest, "languageIds");
+
 		String editURL = null;
 		String rightContent = null;
+		JSONObject rightLocalizedContentJSONObject = null;
 		String rightRender = null;
 		T rightModel = null;
 		String rightTitle = null;
@@ -194,10 +201,20 @@ public class GetEntryRenderDataMVCResourceCommand
 						httpServletRequest, rightModel);
 				}
 
-				rightContent = _getContent(
-					ctCollectionId, ctDisplayRenderer, ctSQLMode,
-					httpServletRequest, httpServletResponse, locale,
-					rightModel);
+				if (languageIds.length > 0) {
+					rightLocalizedContentJSONObject =
+						_getLocalizedContentJSONObject(
+							ctCollectionId, ctDisplayRenderer, ctSQLMode,
+							httpServletRequest, httpServletResponse,
+							languageIds, rightModel);
+				}
+				else {
+					rightContent = _getContent(
+						ctCollectionId, ctDisplayRenderer, ctSQLMode,
+						httpServletRequest, httpServletResponse, locale,
+						rightModel);
+				}
+
 				rightRender = _getRender(
 					httpServletRequest, httpServletResponse, ctCollectionId,
 					ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
@@ -216,6 +233,7 @@ public class GetEntryRenderDataMVCResourceCommand
 				leftCtCollectionId, ctEntry);
 
 		String leftContent = null;
+		JSONObject leftLocalizedContentJSONObject = null;
 		T leftModel = null;
 		String leftRender = null;
 		String leftTitle = null;
@@ -260,10 +278,20 @@ public class GetEntryRenderDataMVCResourceCommand
 						rightVersionName, " (",
 						_language.get(httpServletRequest, "publication"), ")");
 
-					leftContent = _getContent(
-						leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
-						httpServletRequest, httpServletResponse, locale,
-						leftModel);
+					if (languageIds.length > 0) {
+						leftLocalizedContentJSONObject =
+							_getLocalizedContentJSONObject(
+								leftCtCollectionId, ctDisplayRenderer,
+								leftCTSQLMode, httpServletRequest,
+								httpServletResponse, languageIds, leftModel);
+					}
+					else {
+						leftContent = _getContent(
+							leftCtCollectionId, ctDisplayRenderer,
+							leftCTSQLMode, httpServletRequest,
+							httpServletResponse, locale, leftModel);
+					}
+
 					leftRender = _getRender(
 						httpServletRequest, httpServletResponse,
 						leftCtCollectionId, ctDisplayRenderer, ctEntryId,
@@ -281,9 +309,20 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 			if (leftModel != null) {
-				leftContent = _getContent(
-					leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
-					httpServletRequest, httpServletResponse, locale, leftModel);
+				if (languageIds.length > 0) {
+					leftLocalizedContentJSONObject =
+						_getLocalizedContentJSONObject(
+							leftCtCollectionId, ctDisplayRenderer,
+							leftCTSQLMode, httpServletRequest,
+							httpServletResponse, languageIds, leftModel);
+				}
+				else {
+					leftContent = _getContent(
+						leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
+						httpServletRequest, httpServletResponse, locale,
+						leftModel);
+				}
+
 				leftRender = _getRender(
 					httpServletRequest, httpServletResponse, leftCtCollectionId,
 					ctDisplayRenderer, ctEntryId, leftCTSQLMode, leftModel,
@@ -342,10 +381,20 @@ public class GetEntryRenderDataMVCResourceCommand
 						leftVersionName, " (",
 						_language.get(httpServletRequest, "deleted"), ")");
 
-					rightContent = _getContent(
-						ctCollectionId, ctDisplayRenderer, ctSQLMode,
-						httpServletRequest, httpServletResponse, locale,
-						rightModel);
+					if (languageIds.length > 0) {
+						rightLocalizedContentJSONObject =
+							_getLocalizedContentJSONObject(
+								ctCollectionId, ctDisplayRenderer, ctSQLMode,
+								httpServletRequest, httpServletResponse,
+								languageIds, rightModel);
+					}
+					else {
+						rightContent = _getContent(
+							ctCollectionId, ctDisplayRenderer, ctSQLMode,
+							httpServletRequest, httpServletResponse, locale,
+							rightModel);
+					}
+
 					rightRender = _getRender(
 						httpServletRequest, httpServletResponse, ctCollectionId,
 						ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
@@ -358,6 +407,11 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		if (editURL != null) {
 			jsonObject.put("editURL", editURL);
+		}
+
+		if (leftLocalizedContentJSONObject != null) {
+			jsonObject.put(
+				"leftLocalizedContent", leftLocalizedContentJSONObject);
 		}
 
 		if (leftContent != null) {
@@ -376,6 +430,11 @@ public class GetEntryRenderDataMVCResourceCommand
 			jsonObject.put("rightContent", rightContent);
 		}
 
+		if (rightLocalizedContentJSONObject != null) {
+			jsonObject.put(
+				"rightLocalizedContent", rightLocalizedContentJSONObject);
+		}
+
 		if (rightRender != null) {
 			jsonObject.put("rightRender", rightRender);
 		}
@@ -392,6 +451,28 @@ public class GetEntryRenderDataMVCResourceCommand
 					new UnsyncStringReader(rightContent)));
 		}
 
+		if ((leftLocalizedContentJSONObject != null) &&
+			(rightLocalizedContentJSONObject != null)) {
+
+			JSONObject unifiedLocalizedContentJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			for (String languageId : languageIds) {
+				unifiedLocalizedContentJSONObject.put(
+					languageId,
+					DiffHtmlUtil.diff(
+						new UnsyncStringReader(
+							leftLocalizedContentJSONObject.getString(
+								languageId)),
+						new UnsyncStringReader(
+							rightLocalizedContentJSONObject.getString(
+								languageId))));
+			}
+
+			jsonObject.put(
+				"unifiedLocalizedContent", unifiedLocalizedContentJSONObject);
+		}
+
 		if ((leftRender != null) && (rightRender != null)) {
 			jsonObject.put(
 				"unifiedRender",
@@ -401,6 +482,38 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		return jsonObject;
+	}
+
+	private <T extends BaseModel<T>> JSONObject _getLocalizedContentJSONObject(
+		long ctCollectionId, CTDisplayRenderer<T> ctDisplayRenderer,
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String[] languageIds,
+		T model) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId);
+			SafeCloseable safeCloseable2 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
+
+			for (String languageId : languageIds) {
+				jsonObject.put(
+					languageId,
+					ctDisplayRenderer.getContent(
+						httpServletRequest, httpServletResponse,
+						LocaleUtil.fromLanguageId(languageId), model));
+			}
+
+			return jsonObject;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return null;
+		}
 	}
 
 	private <T extends BaseModel<T>> JSONObject

@@ -550,6 +550,105 @@ const CTComments = ({
 	);
 };
 
+const LocalizationDropdown = ({
+	currentLocale,
+	defaultLocale,
+	locales,
+	setSelectedLocale,
+	spritemap,
+}) => {
+	const [active, setActive] = useState(false);
+
+	return (
+		<div className="autofit-col publications-localization">
+			<ClayDropDown
+				active={active}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButton
+						displayType="secondary"
+						monospaced
+						onClick={() => setActive(!active)}
+					>
+						<span className="inline-item">
+							<ClayIcon
+								spritemap={spritemap}
+								symbol={currentLocale.symbol}
+							/>
+						</span>
+						<span className="btn-section">
+							{currentLocale.label}
+						</span>
+					</ClayButton>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{locales
+						.sort((a, b) => {
+							if (a.label === defaultLocale.label) {
+								return -1;
+							}
+							else if (b.label === defaultLocale.label) {
+								return 1;
+							}
+
+							return 0;
+						})
+						.map((locale) => {
+							return (
+								<ClayDropDown.Item
+									key={locale.label}
+									onClick={() => {
+										setActive(false);
+										setSelectedLocale(locale);
+									}}
+								>
+									<ClayLayout.ContentRow containerElement="span">
+										<ClayLayout.ContentCol
+											containerElement="span"
+											expand
+										>
+											<ClayLayout.ContentSection>
+												<ClayIcon
+													className="inline-item inline-item-before"
+													spritemap={spritemap}
+													symbol={locale.symbol}
+												/>
+
+												{locale.label}
+											</ClayLayout.ContentSection>
+										</ClayLayout.ContentCol>
+										<ClayLayout.ContentCol containerElement="span">
+											<ClayLayout.ContentSection>
+												<ClayLabel
+													displayType={
+														locale.label ===
+														defaultLocale.label
+															? 'info'
+															: 'success'
+													}
+												>
+													{locale.label ===
+													defaultLocale.label
+														? Liferay.Language.get(
+																'default'
+														  )
+														: Liferay.Language.get(
+																'translated'
+														  )}
+												</ClayLabel>
+											</ClayLayout.ContentSection>
+										</ClayLayout.ContentCol>
+									</ClayLayout.ContentRow>
+								</ClayDropDown.Item>
+							);
+						})}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		</div>
+	);
+};
+
 export default ({
 	activeCTCollection,
 	changes,
@@ -1191,7 +1290,6 @@ export default ({
 			? true
 			: !!showHideableFromURL;
 
-	const [active, setActive] = useState(false);
 	const [ascendingState, setAscendingState] = useState(true);
 	const [columnState, setColumnState] = useState(COLUMN_TITLE);
 	const [deltaState, setDeltaState] = useState(20);
@@ -1264,7 +1362,6 @@ export default ({
 
 			window.history.pushState(state, document.title, path);
 
-			setActive(false);
 			setRenderState({
 				children: filterHideableNodes(node.children, showHideable),
 				dropdownItems: getDropdownItems(node),
@@ -1751,13 +1848,25 @@ export default ({
 
 	const getDataURL = (node) => {
 		if (node.ctEntryId) {
-			const url = setParameter(
+			let url = setParameter(
 				dataURL,
 				'activeCTCollection',
 				activeCTCollection.toString()
 			);
 
-			return setParameter(url, 'ctEntryId', node.ctEntryId.toString());
+			url = setParameter(url, 'ctEntryId', node.ctEntryId.toString());
+
+			if (node.locales && node.locales.length > 0) {
+				const languageIds = [];
+
+				for (let i = 0; i < node.locales.length; i++) {
+					languageIds.push(node.locales[i].label);
+				}
+
+				return setParameter(url, 'languageIds', languageIds.join(','));
+			}
+
+			return url;
 		}
 
 		const url = setParameter(
@@ -2159,95 +2268,6 @@ export default ({
 		});
 	};
 
-	const renderLocalizationDropdown = (currentLocale) => {
-		if (
-			!renderState.node.locales ||
-			renderState.node.locales.length === 0
-		) {
-			return '';
-		}
-
-		return (
-			<div className="autofit-col publications-localization">
-				<ClayDropDown
-					active={active}
-					onActiveChange={setActive}
-					trigger={
-						<ClayButton
-							displayType="secondary"
-							monospaced
-							onClick={() => setActive(!active)}
-						>
-							<span className="inline-item">
-								<ClayIcon
-									spritemap={spritemap}
-									symbol={currentLocale.symbol}
-								/>
-							</span>
-							<span className="btn-section">
-								{currentLocale.label}
-							</span>
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.ItemList>
-						{renderState.node.locales.map((locale) => {
-							return (
-								<ClayDropDown.Item
-									key={locale.label}
-									onClick={() => {
-										setActive(false);
-										setSelectedLocale(locale);
-									}}
-								>
-									<ClayLayout.ContentRow containerElement="span">
-										<ClayLayout.ContentCol
-											containerElement="span"
-											expand
-										>
-											<ClayLayout.ContentSection>
-												<ClayIcon
-													className="inline-item inline-item-before"
-													spritemap={spritemap}
-													symbol={locale.symbol}
-												/>
-
-												{locale.label}
-											</ClayLayout.ContentSection>
-										</ClayLayout.ContentCol>
-										<ClayLayout.ContentCol containerElement="span">
-											<ClayLayout.ContentSection>
-												<ClayLabel
-													displayType={
-														locale.label ===
-														renderState.node
-															.defaultLocale.label
-															? 'info'
-															: 'success'
-													}
-												>
-													{locale.label ===
-													renderState.node
-														.defaultLocale.label
-														? Liferay.Language.get(
-																'default'
-														  )
-														: Liferay.Language.get(
-																'translated'
-														  )}
-												</ClayLabel>
-											</ClayLayout.ContentSection>
-										</ClayLayout.ContentCol>
-									</ClayLayout.ContentRow>
-								</ClayDropDown.Item>
-							);
-						})}
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
-			</div>
-		);
-	};
-
 	const renderEntry = () => {
 		if (!renderState.node.modelClassNameId) {
 			return '';
@@ -2281,7 +2301,16 @@ export default ({
 		return (
 			<div className="sheet">
 				<div className="autofit-row sheet-title">
-					{renderLocalizationDropdown(currentLocale)}
+					{renderState.node.locales &&
+						renderState.node.locales.length > 0 && (
+							<LocalizationDropdown
+								currentLocale={currentLocale}
+								defaultLocale={renderState.node.defaultLocale}
+								locales={renderState.node.locales}
+								setSelectedLocale={setSelectedLocale}
+								spritemap={spritemap}
+							/>
+						)}
 					<div className="autofit-col autofit-col-expand">
 						<h2>{title}</h2>
 
@@ -2320,6 +2349,7 @@ export default ({
 									renderState.node.modelClassPK.toString()
 							]
 						}
+						languageId={currentLocale.label}
 						spritemap={spritemap}
 						updateCache={(data) => {
 							renderCache.current[

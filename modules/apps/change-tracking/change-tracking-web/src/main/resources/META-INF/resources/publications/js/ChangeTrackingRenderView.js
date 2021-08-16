@@ -21,7 +21,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-export default ({dataURL, getCache, spritemap, updateCache}) => {
+export default ({dataURL, getCache, languageId, spritemap, updateCache}) => {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
 	const CHANGE_TYPE_MODIFIED = 'modified';
@@ -73,7 +73,15 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 				) &&
 				!Object.prototype.hasOwnProperty.call(
 					cachedData,
+					'leftLocalizedContent'
+				) &&
+				!Object.prototype.hasOwnProperty.call(
+					cachedData,
 					'rightContent'
+				) &&
+				!Object.prototype.hasOwnProperty.call(
+					cachedData,
+					'rightLocalizedContent'
 				)
 			) {
 				newState.contentType = CONTENT_TYPE_DATA;
@@ -136,7 +144,18 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 						json,
 						'leftContent'
 					) &&
-					!Object.prototype.hasOwnProperty.call(json, 'rightContent')
+					!Object.prototype.hasOwnProperty.call(
+						json,
+						'leftLocalizedContent'
+					) &&
+					!Object.prototype.hasOwnProperty.call(
+						json,
+						'rightContent'
+					) &&
+					!Object.prototype.hasOwnProperty.call(
+						json,
+						'rightLocalizedContent'
+					)
 				) {
 					newState.contentType = CONTENT_TYPE_DATA;
 				}
@@ -170,7 +189,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 					},
 				});
 			});
-	}, [getCache, dataURL, updateCache]);
+	}, [dataURL, getCache, updateCache]);
 
 	const setContentType = (contentType) => {
 		setState({
@@ -219,6 +238,32 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 					<div
 						dangerouslySetInnerHTML={{
 							__html: state.renderData.leftContent,
+						}}
+					/>
+				);
+			}
+
+			return (
+				<ClayAlert displayType="info" spritemap={spritemap}>
+					{Liferay.Language.get('content-is-empty')}
+				</ClayAlert>
+			);
+		}
+		else if (
+			state.contentType === CONTENT_TYPE_DISPLAY &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'leftLocalizedContent'
+			)
+		) {
+			if (state.renderData.leftLocalizedContent[languageId]) {
+				return (
+					<div
+						dangerouslySetInnerHTML={{
+							__html:
+								state.renderData.leftLocalizedContent[
+									languageId
+								],
 						}}
 					/>
 				);
@@ -295,6 +340,32 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 				</ClayAlert>
 			);
 		}
+		else if (
+			state.contentType === CONTENT_TYPE_DISPLAY &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'rightLocalizedContent'
+			)
+		) {
+			if (state.renderData.rightLocalizedContent[languageId]) {
+				return (
+					<div
+						dangerouslySetInnerHTML={{
+							__html:
+								state.renderData.rightLocalizedContent[
+									languageId
+								],
+						}}
+					/>
+				);
+			}
+
+			return (
+				<ClayAlert displayType="info" spritemap={spritemap}>
+					{Liferay.Language.get('content-is-empty')}
+				</ClayAlert>
+			);
+		}
 		else if (loading) {
 			return '';
 		}
@@ -351,6 +422,34 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 				</ClayAlert>
 			);
 		}
+		else if (
+			state.contentType === CONTENT_TYPE_DISPLAY &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'unifiedLocalizedContent'
+			)
+		) {
+			if (state.renderData.unifiedLocalizedContent[languageId]) {
+				return (
+					<div className="taglib-diff-html">
+						<div
+							dangerouslySetInnerHTML={{
+								__html:
+									state.renderData.unifiedLocalizedContent[
+										languageId
+									],
+							}}
+						/>
+					</div>
+				);
+			}
+
+			return (
+				<ClayAlert displayType="info" spritemap={spritemap}>
+					{Liferay.Language.get('content-is-empty')}
+				</ClayAlert>
+			);
+		}
 		else if (loading) {
 			return '';
 		}
@@ -365,7 +464,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 	};
 
 	const renderDiffLegend = () => {
-		if (state.view === VIEW_LEFT || state.view === VIEW_RIGHT) {
+		if (state.view !== VIEW_UNIFIED) {
 			return '';
 		}
 
@@ -565,7 +664,15 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
+												'leftLocalizedContent'
+											) &&
+											!Object.prototype.hasOwnProperty.call(
+												state.renderData,
 												'rightContent'
+											) &&
+											!Object.prototype.hasOwnProperty.call(
+												state.renderData,
+												'rightLocalizedContent'
 											)
 												? 'nav-link btn-link disabled'
 												: 'nav-link'
@@ -581,7 +688,15 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
+												'leftLocalizedContent'
+											) &&
+											!Object.prototype.hasOwnProperty.call(
+												state.renderData,
 												'rightContent'
+											) &&
+											!Object.prototype.hasOwnProperty.call(
+												state.renderData,
+												'rightLocalizedContent'
 											)
 												? Liferay.Language.get(
 														'item-does-not-have-a-content-display'

@@ -619,7 +619,6 @@ definition {
 	@description = "Verify that the user is able to Reverse Sort Direction by clicking the icon"
 	@priority = "2"
 	test CanReverseSortDirection {
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
@@ -638,10 +637,6 @@ definition {
 			key_rowNumber = "2",
 			locator1 = "MyWorkflowTasks#PROCESS_NAME_TABLE_ROW",
 			value1 = "Blogs Entry Title 2");
-
-
-
-
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Title"

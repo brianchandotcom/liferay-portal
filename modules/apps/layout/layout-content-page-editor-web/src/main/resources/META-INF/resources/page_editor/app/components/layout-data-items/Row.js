@@ -45,6 +45,7 @@ const Row = React.forwardRef(
 			borderColor,
 			borderRadius,
 			borderWidth,
+			display,
 			fontFamily,
 			fontSize,
 			fontWeight,
@@ -99,6 +100,7 @@ const Row = React.forwardRef(
 		}
 
 		if (!withinTopper) {
+			style.display = display;
 			style.maxWidth = maxWidth;
 			style.minWidth = minWidth;
 			style.width = width;

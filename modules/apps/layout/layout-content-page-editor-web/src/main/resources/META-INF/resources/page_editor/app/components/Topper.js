@@ -237,7 +237,11 @@ function TopperContent({
 			</TopperLabel>
 
 			<div className="page-editor__topper__content" ref={targetRef}>
-				<TopperErrorBoundary>{children}</TopperErrorBoundary>
+				<TopperErrorBoundary>
+					{React.cloneElement(children, {
+						withinTopper: true,
+					})}
+				</TopperErrorBoundary>
 			</div>
 		</div>
 	);

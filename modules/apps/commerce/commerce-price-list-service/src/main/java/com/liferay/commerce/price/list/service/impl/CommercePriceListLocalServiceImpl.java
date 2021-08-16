@@ -26,10 +26,21 @@ import com.liferay.commerce.price.list.exception.DuplicateCommerceBasePriceListE
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceListException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommercePriceListAccountRelTable;
+import com.liferay.commerce.price.list.model.CommercePriceListChannelRelTable;
+import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRelTable;
+import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRelTable;
+import com.liferay.commerce.price.list.model.CommercePriceListTable;
 import com.liferay.commerce.price.list.service.base.CommercePriceListLocalServiceBaseImpl;
 import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListException;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -65,7 +76,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -84,6 +94,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.LongStream;
 
 /**
  * @author Marco Leo
@@ -605,26 +616,95 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
+	public CommercePriceList
+		getCommercePriceListByAccountAndChannelAndOrderTypeId(
+			long groupId, String type, long commerceAccountId,
+			long commerceChannelId, long commerceOrderTypeId) {
+
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, commerceAccountId, null, commerceChannelId,
+				commerceOrderTypeId
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceLists.isEmpty()) {
+			return null;
+		}
+
+		return commercePriceLists.get(0);
+	}
+
+	@Override
 	public CommercePriceList getCommercePriceListByAccountAndChannelId(
 		long groupId, String type, long commerceAccountId,
 		long commerceChannelId) {
 
-		QueryDefinition<CommercePriceList> queryDefinition =
-			new QueryDefinition<>();
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, commerceAccountId, null, commerceChannelId, null
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
 
-		queryDefinition.setAttribute("commerceAccountId", commerceAccountId);
-		queryDefinition.setAttribute("commerceChannelId", commerceChannelId);
-		queryDefinition.setAttribute("groupId", groupId);
-		queryDefinition.setAttribute("type", type);
+		if (commercePriceLists.isEmpty()) {
+			return null;
+		}
 
-		queryDefinition.setStart(0);
-		queryDefinition.setEnd(1);
+		return commercePriceLists.get(0);
+	}
 
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListFinder.findByCommerceAccountAndChannelId(
-				queryDefinition);
+	@Override
+	public CommercePriceList getCommercePriceListByAccountAndOrderTypeId(
+		long groupId, String type, long commerceAccountId,
+		long commerceOrderTypeId) {
 
-		if (ListUtil.isEmpty(commercePriceLists)) {
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, commerceAccountId, null, null,
+				commerceOrderTypeId
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceLists.isEmpty()) {
+			return null;
+		}
+
+		return commercePriceLists.get(0);
+	}
+
+	@Override
+	public CommercePriceList getCommercePriceListByAccountGroupAndOrderTypeId(
+		long groupId, String type, long[] commerceAccountGroupIds,
+		long commerceOrderTypeId) {
+
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, commerceAccountGroupIds, null,
+				commerceOrderTypeId
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceLists.isEmpty()) {
 			return null;
 		}
 
@@ -635,22 +715,43 @@ public class CommercePriceListLocalServiceImpl
 	public CommercePriceList getCommercePriceListByAccountGroupIds(
 		long groupId, String type, long[] commerceAccountGroupIds) {
 
-		QueryDefinition<CommercePriceList> queryDefinition =
-			new QueryDefinition<>();
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, commerceAccountGroupIds, null, null
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
 
-		queryDefinition.setAttribute(
-			"commerceAccountGroupIds", commerceAccountGroupIds);
-		queryDefinition.setAttribute("groupId", groupId);
-		queryDefinition.setAttribute("type", type);
+		if (commercePriceLists.isEmpty()) {
+			return null;
+		}
 
-		queryDefinition.setStart(0);
-		queryDefinition.setEnd(1);
+		return commercePriceLists.get(0);
+	}
 
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListFinder.findByCommerceAccountGroupIds(
-				queryDefinition);
+	@Override
+	public CommercePriceList
+		getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
+			long groupId, String type, long[] commerceAccountGroupIds,
+			long commerceChannelId, long commerceOrderTypeId) {
 
-		if (ListUtil.isEmpty(commercePriceLists)) {
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, commerceAccountGroupIds, commerceChannelId,
+				commerceOrderTypeId
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceLists.isEmpty()) {
 			return null;
 		}
 
@@ -662,23 +763,43 @@ public class CommercePriceListLocalServiceImpl
 		long groupId, String type, long[] commerceAccountGroupIds,
 		long commerceChannelId) {
 
-		QueryDefinition<CommercePriceList> queryDefinition =
-			new QueryDefinition<>();
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, commerceAccountGroupIds, commerceChannelId,
+				null
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
 
-		queryDefinition.setAttribute(
-			"commerceAccountGroupIds", commerceAccountGroupIds);
-		queryDefinition.setAttribute("commerceChannelId", commerceChannelId);
-		queryDefinition.setAttribute("groupId", groupId);
-		queryDefinition.setAttribute("type", type);
+		if (commercePriceLists.isEmpty()) {
+			return null;
+		}
 
-		queryDefinition.setStart(0);
-		queryDefinition.setEnd(1);
+		return commercePriceLists.get(0);
+	}
 
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListFinder.findByCommerceAccountGroupsAndChannelId(
-				queryDefinition);
+	@Override
+	public CommercePriceList getCommercePriceListByAccountGroupsAndOrderTypeId(
+		long groupId, String type, long[] commerceAccountGroupIds,
+		long commerceOrderTypeId) {
 
-		if (ListUtil.isEmpty(commercePriceLists)) {
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, commerceAccountGroupIds, null,
+				commerceOrderTypeId
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceLists.isEmpty()) {
 			return null;
 		}
 
@@ -689,20 +810,42 @@ public class CommercePriceListLocalServiceImpl
 	public CommercePriceList getCommercePriceListByAccountId(
 		long groupId, String type, long commerceAccountId) {
 
-		QueryDefinition<CommercePriceList> queryDefinition =
-			new QueryDefinition<>();
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, commerceAccountId, null, null, null
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
 
-		queryDefinition.setAttribute("commerceAccountId", commerceAccountId);
-		queryDefinition.setAttribute("groupId", groupId);
-		queryDefinition.setAttribute("type", type);
+		if (commercePriceLists.isEmpty()) {
+			return null;
+		}
 
-		queryDefinition.setStart(0);
-		queryDefinition.setEnd(1);
+		return commercePriceLists.get(0);
+	}
 
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListFinder.findByCommerceAccountId(queryDefinition);
+	@Override
+	public CommercePriceList getCommercePriceListByChannelAndOrderTypeId(
+		long groupId, String type, long commerceChannelId,
+		long commerceOrderTypeId) {
 
-		if (ListUtil.isEmpty(commercePriceLists)) {
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, null, commerceChannelId,
+				commerceOrderTypeId
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceLists.isEmpty()) {
 			return null;
 		}
 
@@ -713,20 +856,18 @@ public class CommercePriceListLocalServiceImpl
 	public CommercePriceList getCommercePriceListByChannelId(
 		long groupId, String type, long commerceChannelId) {
 
-		QueryDefinition<CommercePriceList> queryDefinition =
-			new QueryDefinition<>();
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, null, commerceChannelId, null
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
 
-		queryDefinition.setAttribute("commerceChannelId", commerceChannelId);
-		queryDefinition.setAttribute("groupId", groupId);
-		queryDefinition.setAttribute("type", type);
-
-		queryDefinition.setStart(0);
-		queryDefinition.setEnd(1);
-
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListFinder.findByCommerceChannelId(queryDefinition);
-
-		if (ListUtil.isEmpty(commercePriceLists)) {
+		if (commercePriceLists.isEmpty()) {
 			return null;
 		}
 
@@ -735,51 +876,72 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public CommercePriceList getCommercePriceListByLowestPrice(
-			long groupId, String type, String cPInstanceUuid,
-			long commerceAccountId, long[] commerceAccountGroupIds,
-			long commerceChannelId)
+			long groupId, String type, long commerceAccountId,
+			long[] commerceAccountGroupIds, long commerceChannelId,
+			long commerceOrderTypeId, String cPInstanceUuid)
 		throws PortalException {
 
-		QueryDefinition<CommercePriceList> queryDefinition =
-			new QueryDefinition<>();
-
-		queryDefinition.setAttribute(
-			"commerceAccountGroupIds", commerceAccountGroupIds);
-		queryDefinition.setAttribute("commerceAccountId", commerceAccountId);
-		queryDefinition.setAttribute("commerceChannelId", commerceChannelId);
-		queryDefinition.setAttribute("cPInstanceUuid", cPInstanceUuid);
-		queryDefinition.setAttribute("groupId", groupId);
-		queryDefinition.setAttribute("type", type);
-
 		List<CommercePriceEntry> commercePriceEntries =
-			commercePriceListFinder.findByLowestPrice(queryDefinition);
+			commercePriceEntryPersistence.dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommercePriceEntryTable.INSTANCE),
+					groupId, type, commerceAccountId, commerceAccountGroupIds,
+					commerceChannelId, commerceOrderTypeId, cPInstanceUuid
+				).orderBy(
+					CommercePriceEntryTable.INSTANCE.price.ascending()
+				).limit(
+					0, 1
+				));
 
-		if (ListUtil.isEmpty(commercePriceEntries)) {
+		if (commercePriceEntries.isEmpty()) {
 			return null;
 		}
 
-		CommercePriceEntry lowestPriceEntry = commercePriceEntries.get(0);
+		CommercePriceEntry commercePriceEntry = commercePriceEntries.get(0);
 
-		return getCommercePriceList(lowestPriceEntry.getCommercePriceListId());
+		return commercePriceEntry.getCommercePriceList();
+	}
+
+	@Override
+	public CommercePriceList getCommercePriceListByOrderTypeId(
+		long groupId, String type, long commerceOrderTypeId) {
+
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, null, null, commerceOrderTypeId
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending()
+			).limit(
+				0, 1
+			));
+
+		if (commercePriceLists.isEmpty()) {
+			return null;
+		}
+
+		return commercePriceLists.get(0);
 	}
 
 	@Override
 	public CommercePriceList getCommercePriceListByUnqualified(
 		long groupId, String type) {
 
-		QueryDefinition<CommercePriceList> queryDefinition =
-			new QueryDefinition<>();
+		List<CommercePriceList> commercePriceLists = dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommercePriceListTable.INSTANCE),
+				groupId, type, null, null, null, null
+			).orderBy(
+				CommercePriceListTable.INSTANCE.priority.descending(),
+				CommercePriceListTable.INSTANCE.catalogBasePriceList.ascending()
+			).limit(
+				0, 1
+			));
 
-		queryDefinition.setAttribute("groupId", groupId);
-		queryDefinition.setAttribute("type", type);
-
-		queryDefinition.setStart(0);
-		queryDefinition.setEnd(1);
-
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListFinder.findByUnqualified(queryDefinition);
-
-		if (ListUtil.isEmpty(commercePriceLists)) {
+		if (commercePriceLists.isEmpty()) {
 			return null;
 		}
 
@@ -1388,6 +1550,213 @@ public class CommercePriceListLocalServiceImpl
 				"There is another commerce price list with external " +
 					"reference code " + externalReferenceCode);
 		}
+	}
+
+	private GroupByStep _getGroupByStep(
+		FromStep fromStep, Long groupId, String type, Long commerceAccountId,
+		long[] commerceAccountGroupIds, Long commerceChannelId,
+		Long commerceOrderTypeId) {
+
+		JoinStep joinStep = fromStep.from(CommercePriceListTable.INSTANCE);
+
+		Predicate predicate = CommercePriceListTable.INSTANCE.status.eq(
+			WorkflowConstants.STATUS_APPROVED
+		).and(
+			CommercePriceListTable.INSTANCE.groupId.eq(groupId)
+		).and(
+			CommercePriceListTable.INSTANCE.type.eq(type)
+		);
+
+		if (commerceAccountId != null) {
+			joinStep = joinStep.innerJoinON(
+				CommercePriceListAccountRelTable.INSTANCE,
+				CommercePriceListAccountRelTable.INSTANCE.commercePriceListId.
+					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			predicate = predicate.and(
+				CommercePriceListAccountRelTable.INSTANCE.commerceAccountId.eq(
+					commerceAccountId));
+		}
+		else {
+			joinStep = joinStep.leftJoinOn(
+				CommercePriceListAccountRelTable.INSTANCE,
+				CommercePriceListAccountRelTable.INSTANCE.commercePriceListId.
+					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			predicate = predicate.and(
+				CommercePriceListAccountRelTable.INSTANCE.
+					commercePriceListAccountRelId.isNull());
+		}
+
+		if (commerceAccountGroupIds != null) {
+			if (commerceAccountGroupIds.length == 0) {
+				commerceAccountGroupIds = new long[] {0};
+			}
+
+			joinStep = joinStep.innerJoinON(
+				CommercePriceListCommerceAccountGroupRelTable.INSTANCE,
+				CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+					commercePriceListId.eq(
+						CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			LongStream longStream = Arrays.stream(commerceAccountGroupIds);
+
+			predicate = predicate.and(
+				CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+					commerceAccountGroupId.in(
+						longStream.boxed(
+						).toArray(
+							Long[]::new
+						)));
+		}
+		else {
+			joinStep = joinStep.leftJoinOn(
+				CommercePriceListCommerceAccountGroupRelTable.INSTANCE,
+				CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+					commercePriceListId.eq(
+						CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			predicate = predicate.and(
+				CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+					commercePriceListCommerceAccountGroupRelId.isNull());
+		}
+
+		if (commerceChannelId != null) {
+			joinStep = joinStep.innerJoinON(
+				CommercePriceListChannelRelTable.INSTANCE,
+				CommercePriceListChannelRelTable.INSTANCE.commercePriceListId.
+					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			predicate = predicate.and(
+				CommercePriceListChannelRelTable.INSTANCE.commerceChannelId.eq(
+					commerceChannelId));
+		}
+		else {
+			joinStep = joinStep.leftJoinOn(
+				CommercePriceListChannelRelTable.INSTANCE,
+				CommercePriceListChannelRelTable.INSTANCE.commercePriceListId.
+					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			predicate = predicate.and(
+				CommercePriceListChannelRelTable.INSTANCE.
+					CommercePriceListChannelRelId.isNull());
+		}
+
+		if (commerceOrderTypeId != null) {
+			joinStep = joinStep.innerJoinON(
+				CommercePriceListOrderTypeRelTable.INSTANCE,
+				CommercePriceListOrderTypeRelTable.INSTANCE.commercePriceListId.
+					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			predicate = predicate.and(
+				CommercePriceListOrderTypeRelTable.INSTANCE.commerceOrderTypeId.
+					eq(commerceOrderTypeId));
+		}
+		else {
+			joinStep = joinStep.leftJoinOn(
+				CommercePriceListOrderTypeRelTable.INSTANCE,
+				CommercePriceListOrderTypeRelTable.INSTANCE.commercePriceListId.
+					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
+
+			predicate = predicate.and(
+				CommercePriceListOrderTypeRelTable.INSTANCE.
+					commercePriceListOrderTypeRelId.isNull());
+		}
+
+		return joinStep.where(predicate);
+	}
+
+	private GroupByStep _getGroupByStep(
+		FromStep fromStep, Long groupId, String type, Long commerceAccountId,
+		long[] commerceAccountGroupIds, Long commerceChannelId,
+		Long commerceOrderTypeId, String cPInstanceUuid) {
+
+		JoinStep joinStep = fromStep.from(
+			CommercePriceEntryTable.INSTANCE
+		).innerJoinON(
+			CommercePriceListTable.INSTANCE,
+			CommercePriceListTable.INSTANCE.commercePriceListId.eq(
+				CommercePriceEntryTable.INSTANCE.commercePriceListId)
+		).leftJoinOn(
+			CommercePriceListAccountRelTable.INSTANCE,
+			CommercePriceListAccountRelTable.INSTANCE.commercePriceListId.eq(
+				CommercePriceListTable.INSTANCE.commercePriceListId)
+		).leftJoinOn(
+			CommercePriceListCommerceAccountGroupRelTable.INSTANCE,
+			CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+				commercePriceListId.eq(
+					CommercePriceListTable.INSTANCE.commercePriceListId)
+		).leftJoinOn(
+			CommercePriceListChannelRelTable.INSTANCE,
+			CommercePriceListChannelRelTable.INSTANCE.commercePriceListId.eq(
+				CommercePriceListTable.INSTANCE.commercePriceListId)
+		).leftJoinOn(
+			CommercePriceListOrderTypeRelTable.INSTANCE,
+			CommercePriceListOrderTypeRelTable.INSTANCE.commercePriceListId.eq(
+				CommercePriceListTable.INSTANCE.commercePriceListId)
+		);
+
+		Long[] commerceAccountGroupObjs = {0L};
+
+		if ((commerceAccountGroupIds != null) &&
+			(commerceAccountGroupIds.length > 0)) {
+
+			LongStream longStream = Arrays.stream(commerceAccountGroupIds);
+
+			commerceAccountGroupObjs = longStream.boxed(
+			).toArray(
+				Long[]::new
+			);
+		}
+
+		Predicate predicate = CommercePriceListTable.INSTANCE.status.eq(
+			WorkflowConstants.STATUS_APPROVED
+		).and(
+			CommercePriceListTable.INSTANCE.groupId.eq(groupId)
+		).and(
+			CommercePriceListTable.INSTANCE.type.eq(type)
+		).and(
+			CommercePriceListAccountRelTable.INSTANCE.commerceAccountId.eq(
+				commerceAccountId
+			).or(
+				CommercePriceListAccountRelTable.INSTANCE.
+					commercePriceListAccountRelId.isNull()
+			).withParentheses()
+		).and(
+			CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+				commerceAccountGroupId.in(
+					commerceAccountGroupObjs
+				).or(
+					CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+						commercePriceListCommerceAccountGroupRelId.isNull()
+				).withParentheses()
+		).and(
+			CommercePriceListChannelRelTable.INSTANCE.commerceChannelId.eq(
+				commerceChannelId
+			).or(
+				CommercePriceListChannelRelTable.INSTANCE.
+					CommercePriceListChannelRelId.isNull()
+			).withParentheses()
+		).and(
+			CommercePriceListOrderTypeRelTable.INSTANCE.commerceOrderTypeId.eq(
+				commerceOrderTypeId
+			).or(
+				CommercePriceListOrderTypeRelTable.INSTANCE.
+					commercePriceListOrderTypeRelId.isNull()
+			).withParentheses()
+		);
+
+		if (!Validator.isBlank(cPInstanceUuid)) {
+			predicate = predicate.and(
+				CommercePriceEntryTable.INSTANCE.CPInstanceUuid.eq(
+					cPInstanceUuid)
+			).and(
+				CommercePriceEntryTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_APPROVED)
+			);
+		}
+
+		return joinStep.where(predicate);
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

@@ -208,6 +208,7 @@ const FragmentContent = ({
 		borderColor,
 		borderRadius,
 		borderWidth,
+		display,
 		fontFamily,
 		fontSize,
 		fontWeight,
@@ -261,6 +262,7 @@ const FragmentContent = ({
 
 	if (!withinTopper) {
 		style.boxShadow = getFrontendTokenValue(shadow);
+		style.display = display;
 		style.maxWidth = maxWidth;
 		style.minWidth = minWidth;
 		style.width = width;

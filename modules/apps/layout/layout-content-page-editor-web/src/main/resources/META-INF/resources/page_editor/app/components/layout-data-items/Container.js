@@ -51,6 +51,7 @@ const Container = React.forwardRef(
 			borderColor,
 			borderRadius,
 			borderWidth,
+			display,
 			fontFamily,
 			fontSize,
 			fontWeight,
@@ -129,6 +130,7 @@ const Container = React.forwardRef(
 
 		if (!withinTopper) {
 			style.boxShadow = getFrontendTokenValue(shadow);
+			style.display = display;
 			style.maxWidth = maxWidth;
 			style.minWidth = minWidth;
 			style.width = width;

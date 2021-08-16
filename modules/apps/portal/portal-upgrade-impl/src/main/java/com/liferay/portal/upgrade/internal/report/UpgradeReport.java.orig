@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -51,11 +48,18 @@ import org.apache.felix.cm.PersistenceManager;
  */
 public class UpgradeReport {
 
+<<<<<<< HEAD
 	public UpgradeReport(PersistenceManager persistenceManager) {
 		_persistenceManager = persistenceManager;
 
+		if (_initialBuildNumber >= ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER) {
+			_setInitialSchemaVersion();
+		}
+=======
+	public UpgradeReport() {
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
+>>>>>>> a848434d1c62 (LPS-137162 Simplify initialization and we must never change the scope of a method due to the tests. They should be private)
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
@@ -84,7 +88,7 @@ public class UpgradeReport {
 
 		StringBuffer sb = new StringBuffer(3);
 
-		sb.append(_getPortalVersions());
+		sb.append(_getLiferayVersions());
 		sb.append(_getDialectInfo());
 		sb.append(_getProperties());
 
@@ -92,10 +96,14 @@ public class UpgradeReport {
 			FileUtil.write(logFile, sb.toString());
 		}
 		catch (IOException ioException) {
-			_log.error("Unable to generate the upgrade report");
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to generate report");
+			}
 		}
 	}
 
+<<<<<<< HEAD
+=======
 	private int _getBuildNumber() {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -110,13 +118,14 @@ public class UpgradeReport {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get build number");
+				_log.warn("Unable to get the build number");
 			}
 		}
 
 		return 0;
 	}
 
+>>>>>>> a848434d1c62 (LPS-137162 Simplify initialization and we must never change the scope of a method due to the tests. They should be private)
 	private String _getDialectInfo() {
 		StringBuffer sb = new StringBuffer(7);
 
@@ -133,49 +142,55 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private File _getLogFile() {
-		File reportsDir = new File(".", "reports");
+	private String _getLiferayVersions() {
+		StringBuffer sb = new StringBuffer(10);
 
-		if ((reportsDir != null) && !reportsDir.exists()) {
-			reportsDir.mkdirs();
+		String currentSchemaVersion = _getSchemaVersion();
+
+		if (_initialBuildNumber != 0) {
+			sb.append("Initial version of Liferay: ");
+			sb.append(_initialBuildNumber);
+
+			if (_initialSchemaVersion != null) {
+				sb.append(" and initial schema version ");
+				sb.append(_initialSchemaVersion);
+			}
+		}
+		else {
+			sb.append("Unable to determine initial version of Liferay.");
 		}
 
-		File reportFile = new File(reportsDir, "upgrade_report.info");
+		sb.append(StringPool.NEW_LINE);
 
-		if (reportFile.exists()) {
-			String logFileName = reportFile.getName();
+		sb.append("Final version of Liferay ");
+		sb.append(ReleaseInfo.getBuildNumber());
 
-			reportFile.renameTo(
-				new File(
-					PropsValues.LIFERAY_HOME,
-					logFileName + "." + reportFile.lastModified()));
-
-			reportFile = new File(PropsValues.LIFERAY_HOME, logFileName);
+		if (currentSchemaVersion != null) {
+			sb.append(" and final schema version ");
+			sb.append(currentSchemaVersion);
 		}
 
-		return reportFile;
-	}
-
-	private String _getPortalVersions() {
-		Version expectedSchemaVersion =
-			PortalUpgradeProcess.getLatestSchemaVersion();
-
-		StringBuffer sb = new StringBuffer();
-
-		sb.append(
-			_getReleaseInfo(
-				_initialBuildNumber, _initialSchemaVersion, "initial"));
-		sb.append(StringPool.NEW_LINE);
-		sb.append(
-			_getReleaseInfo(_getBuildNumber(), _getSchemaVersion(), "final"));
-		sb.append(StringPool.NEW_LINE);
-		sb.append(
-			_getReleaseInfo(
-				ReleaseInfo.getBuildNumber(), expectedSchemaVersion.toString(),
-				"expected"));
 		sb.append(StringPool.NEW_LINE);
 
 		return sb.toString();
+	}
+
+	private File _getLogFile() {
+		File logFile = new File(
+			PropsValues.LIFERAY_HOME, "upgrade_report.info");
+
+		if (logFile.exists()) {
+			String logFileName = logFile.getName();
+
+			logFile.renameTo(
+				new File(
+					PropsValues.LIFERAY_HOME,
+					logFileName + "." + logFile.lastModified()));
+
+			logFile = new File(PropsValues.LIFERAY_HOME, logFileName);
+		}
+
+		return logFile;
 	}
 
 	private String _getProperties() {
@@ -238,38 +253,6 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private String _getReleaseInfo(
-		int buildNumber, String schemaVersion, String type) {
-
-		StringBuffer sb = new StringBuffer();
-
-		if (buildNumber != 0) {
-			sb.append(StringUtil.upperCaseFirstLetter(type));
-			sb.append(" Portal build number: ");
-			sb.append(buildNumber);
-		}
-		else {
-			sb.append("Unable to determine ");
-			sb.append(type);
-			sb.append(" Portal build number");
-		}
-
-		sb.append(StringPool.NEW_LINE);
-
-		if (schemaVersion != null) {
-			sb.append(StringUtil.upperCaseFirstLetter(type));
-			sb.append(" Portal schema version: ");
-			sb.append(schemaVersion);
-		}
-		else {
-			sb.append("Unable to determine ");
-			sb.append(type);
-			sb.append(" Portal schema version");
-		}
-
-		return sb.toString();
-	}
-
 	private String _getSchemaVersion() {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -284,11 +267,35 @@ public class UpgradeReport {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get schema version");
+				_log.warn("Unable to get schemaVersion");
 			}
 		}
 
 		return null;
+	}
+
+	private void _setInitialBuildNumber() {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select buildNumber from Release_ where releaseId = " +
+					ReleaseConstants.DEFAULT_ID)) {
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				_initialBuildNumber = resultSet.getInt("buildNumber");
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get initial build Number and schema version");
+			}
+		}
+	}
+
+	private void _setInitialSchemaVersion() {
+		_initialSchemaVersion = _getSchemaVersion();
 	}
 
 	private static final String _ADVACNED_FILE_SYSTEM_STORE_PID =
@@ -303,9 +310,14 @@ public class UpgradeReport {
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
 		new ConcurrentHashMap<>();
+<<<<<<< HEAD
+	private int _initialBuildNumber;
+	private String _initialSchemaVersion;
+	private final PersistenceManager _persistenceManager;
+=======
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
-	private final PersistenceManager _persistenceManager;
+>>>>>>> a848434d1c62 (LPS-137162 Simplify initialization and we must never change the scope of a method due to the tests. They should be private)
 	private final Map<String, ArrayList<String>> _warningMessages =
 		new ConcurrentHashMap<>();
 

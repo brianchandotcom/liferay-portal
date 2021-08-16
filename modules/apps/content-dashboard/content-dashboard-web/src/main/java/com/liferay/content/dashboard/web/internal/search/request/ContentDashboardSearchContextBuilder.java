@@ -87,7 +87,8 @@ public class ContentDashboardSearchContextBuilder {
 					_assetCategoryLocalService, _assetVocabularyLocalService),
 				ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
 				ParamUtil.getLongValues(_httpServletRequest, "authorIds"),
-				ParamUtil.getStringValues(_httpServletRequest, "extension")));
+				ParamUtil.getStringValues(
+					_httpServletRequest, "fileExtension")));
 
 		String[] contentDashboardItemSubtypePayloads =
 			ParamUtil.getParameterValues(

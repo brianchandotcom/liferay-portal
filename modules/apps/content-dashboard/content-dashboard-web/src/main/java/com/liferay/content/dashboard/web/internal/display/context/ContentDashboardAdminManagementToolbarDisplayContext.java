@@ -109,7 +109,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).setParameter(
 			"contentDashboardItemSubtypePayload", (String)null
 		).setParameter(
-			"extension", (String)null
+			"fileExtension", (String)null
 		).setParameter(
 			"scopeId", (String)null
 		).setParameter(
@@ -237,7 +237,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 								PortletURLUtil.clone(
 									currentURLObj, liferayPortletResponse)
 							).setParameter(
-								"extension",
+								"fileExtension",
 								() -> {
 									Stream<String> stream = extensions.stream();
 
@@ -820,7 +820,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					PortletURLBuilder.create(
 						getPortletURL()
 					).setParameter(
-						"extension", (String)null
+						"fileExtension", (String)null
 					).buildString());
 
 				dropdownItem.putData(

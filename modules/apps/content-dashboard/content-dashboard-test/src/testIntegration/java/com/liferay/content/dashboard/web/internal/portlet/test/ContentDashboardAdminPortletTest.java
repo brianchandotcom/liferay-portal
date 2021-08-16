@@ -614,26 +614,33 @@ public class ContentDashboardAdminPortletTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId(), new String[] {"tag2"}));
 
-		_addFileEntry("gif");
+		FileEntry gifFileEntry = _addFileEntry("gif");
+		FileEntry jpgFileEntry = _addFileEntry("jpg");
 
-		FileEntry fileEntry = _addFileEntry("jpg");
+		_addFileEntry("png");
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
 
-		mockLiferayPortletRenderRequest.setParameter("extension", "jpg");
+		mockLiferayPortletRenderRequest.setParameter(
+			"fileExtension", new String[] {"jpg", "gif"});
 
 		SearchContainer<Object> searchContainer = _getSearchContainer(
 			mockLiferayPortletRenderRequest);
 
-		Assert.assertEquals(1, searchContainer.getTotal());
+		Assert.assertEquals(2, searchContainer.getTotal());
 
 		List<Object> results = searchContainer.getResults();
 
 		Assert.assertEquals(
-			fileEntry.getFileName(),
+			jpgFileEntry.getFileName(),
 			ReflectionTestUtil.invoke(
 				results.get(0), "getTitle", new Class<?>[] {Locale.class},
+				LocaleUtil.US));
+		Assert.assertEquals(
+			gifFileEntry.getFileName(),
+			ReflectionTestUtil.invoke(
+				results.get(1), "getTitle", new Class<?>[] {Locale.class},
 				LocaleUtil.US));
 	}
 

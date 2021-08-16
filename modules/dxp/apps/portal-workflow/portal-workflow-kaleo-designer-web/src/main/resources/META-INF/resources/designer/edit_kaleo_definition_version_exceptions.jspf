@@ -25,6 +25,15 @@
 
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.class %>" message="please-enter-valid-content" />
 
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustNotSetMoreThanOneDefaultTransition.class %>">
+
+	<%
+	KaleoDefinitionValidationException.MustNotSetMoreThanOneDefaultTransition ent = (KaleoDefinitionValidationException.MustNotSetMoreThanOneDefaultTransition)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= ent.getNode() %>" key="<%= ent.getMessage() %>" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.EmptyNotificationTemplate.class %>">
 
 	<%

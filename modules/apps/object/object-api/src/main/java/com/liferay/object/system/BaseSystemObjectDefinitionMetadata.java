@@ -17,12 +17,9 @@ package com.liferay.object.system;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Locale;
 import java.util.Map;
 
@@ -48,7 +45,8 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		String type) {
 
 		return ObjectFieldUtil.createObjectField(
-			dbColumnName, _translate(labelKey), name, required, type);
+			dbColumnName, false, false, null, _translate(labelKey), name,
+			required, type);
 	}
 
 	private String _translate(String labelKey) {

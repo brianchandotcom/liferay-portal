@@ -17,35 +17,23 @@ package com.liferay.object.util;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Guilherme Camacho
  */
 public class ObjectFieldUtil {
 
 	public static ObjectField createObjectField(
-		boolean indexed, boolean indexedAsKeyword,
-		String label, String name, boolean required, String type) {
+		boolean indexed, boolean indexedAsKeyword, String label, String name,
+		boolean required, String type) {
 
 		return createObjectField(
 			null, indexed, indexedAsKeyword, null, label, name, required, type);
 	}
 
 	public static ObjectField createObjectField(
-		String label, String name, boolean required,
-		String type) {
-
-		return createObjectField(
-			null, label, name, required, type);
-	}
-
-	public static ObjectField createObjectField(
 		String dbColumnName, boolean indexed, boolean indexedAsKeyword,
-		String indexedLanguageId, String label, String name,
-		boolean required, String type) {
+		String indexedLanguageId, String label, String name, boolean required,
+		String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
@@ -63,11 +51,10 @@ public class ObjectFieldUtil {
 	}
 
 	public static ObjectField createObjectField(
-		String dbColumnName, String label, String name,
-		boolean required, String type) {
+		String label, String name, boolean required, String type) {
 
 		return createObjectField(
-			dbColumnName, false, false, null, label, name, required, type);
+			null, false, false, null, label, name, required, type);
 	}
 
 }

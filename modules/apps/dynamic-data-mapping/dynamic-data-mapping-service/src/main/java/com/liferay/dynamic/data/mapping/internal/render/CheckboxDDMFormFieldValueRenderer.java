@@ -46,10 +46,10 @@ public class CheckboxDDMFormFieldValueRenderer
 					value.getString(locale));
 
 				if (valueBoolean) {
-					return LanguageUtil.get(locale, "yes");
+					return LanguageUtil.get(locale, "true");
 				}
 
-				return LanguageUtil.get(locale, "no");
+				return LanguageUtil.get(locale, "false");
 			}
 
 		};

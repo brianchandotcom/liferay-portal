@@ -41,10 +41,10 @@ public class CheckboxDDMFormFieldValueRenderer
 			ddmFormFieldValue, locale);
 
 		if (valueBoolean == Boolean.TRUE) {
-			return LanguageUtil.get(locale, "yes");
+			return LanguageUtil.get(locale, "true");
 		}
 
-		return LanguageUtil.get(locale, "no");
+		return LanguageUtil.get(locale, "false");
 	}
 
 	@Reference

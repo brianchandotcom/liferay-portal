@@ -57,7 +57,7 @@ public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 			createCheckboxDDMFormFieldValueRenderer();
 
 		String expectedCheckboxRenderedValue = LanguageUtil.get(
-			LocaleUtil.US, "yes");
+			LocaleUtil.US, "true");
 
 		Assert.assertEquals(
 			expectedCheckboxRenderedValue,
@@ -66,7 +66,8 @@ public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 
 		ddmFormFieldValue.setValue(new UnlocalizedValue("false"));
 
-		expectedCheckboxRenderedValue = LanguageUtil.get(LocaleUtil.US, "no");
+		expectedCheckboxRenderedValue = LanguageUtil.get(
+			LocaleUtil.US, "false");
 
 		Assert.assertEquals(
 			expectedCheckboxRenderedValue,
@@ -88,8 +89,8 @@ public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
-		whenLanguageGet(LocaleUtil.US, "no", "No");
-		whenLanguageGet(LocaleUtil.US, "yes", "Yes");
+		whenLanguageGet(LocaleUtil.US, "false", "False");
+		whenLanguageGet(LocaleUtil.US, "true", "True");
 
 		LanguageUtil languageUtil = new LanguageUtil();
 

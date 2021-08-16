@@ -283,10 +283,11 @@ public class DDMImpl implements DDM {
 			Boolean valueBoolean = (Boolean)fieldValue;
 
 			if (valueBoolean) {
-				fieldValue = LanguageUtil.get(themeDisplay.getLocale(), "yes");
+				fieldValue = LanguageUtil.get(themeDisplay.getLocale(), "true");
 			}
 			else {
-				fieldValue = LanguageUtil.get(themeDisplay.getLocale(), "no");
+				fieldValue = LanguageUtil.get(
+					themeDisplay.getLocale(), "false");
 			}
 		}
 		else if (type.equals(DDMFormFieldType.DOCUMENT_LIBRARY)) {

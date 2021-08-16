@@ -619,14 +619,14 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 		whenLanguageGetAvailableLocalesThen(availableLocales);
 
-		whenLanguageGet(LocaleUtil.BRAZIL, "no", "Não");
-		whenLanguageGet(LocaleUtil.BRAZIL, "yes", "Sim");
+		whenLanguageGet(LocaleUtil.BRAZIL, "false", "Falso");
+		whenLanguageGet(LocaleUtil.BRAZIL, "true", "Verdadeiro");
 		whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
 		whenLanguageGet(LocaleUtil.SPAIN, "longitude", "Longitud");
 		whenLanguageGet(LocaleUtil.US, "latitude", "Latitude");
 		whenLanguageGet(LocaleUtil.US, "longitude", "Longitude");
-		whenLanguageGet(LocaleUtil.US, "no", "No");
-		whenLanguageGet(LocaleUtil.US, "yes", "Yes");
+		whenLanguageGet(LocaleUtil.US, "false", "False");
+		whenLanguageGet(LocaleUtil.US, "true", "True");
 
 		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
 		whenLanguageGetLanguageId(LocaleUtil.SPAIN, "es_ES");

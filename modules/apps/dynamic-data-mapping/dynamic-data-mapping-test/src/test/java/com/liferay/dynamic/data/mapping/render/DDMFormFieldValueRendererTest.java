@@ -100,12 +100,12 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 		String renderedValue = ddmFormFieldValueRenderer.render(
 			ddmFormFieldValue, LocaleUtil.US);
 
-		Assert.assertEquals("No", renderedValue);
+		Assert.assertEquals("False", renderedValue);
 
 		renderedValue = ddmFormFieldValueRenderer.render(
 			ddmFormFieldValue, LocaleUtil.BRAZIL);
 
-		Assert.assertEquals("Sim", renderedValue);
+		Assert.assertEquals("Verdadeiro", renderedValue);
 	}
 
 	@Test
@@ -128,12 +128,12 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 		String renderedValue = ddmFormFieldValueRenderer.render(
 			ddmFormValues.getDDMFormFieldValues(), LocaleUtil.US);
 
-		Assert.assertEquals("No, Yes", renderedValue);
+		Assert.assertEquals("False, True", renderedValue);
 
 		renderedValue = ddmFormFieldValueRenderer.render(
 			ddmFormValues.getDDMFormFieldValues(), LocaleUtil.BRAZIL);
 
-		Assert.assertEquals("Sim, Sim", renderedValue);
+		Assert.assertEquals("Verdadeiro, Verdadeiro", renderedValue);
 	}
 
 	@Test

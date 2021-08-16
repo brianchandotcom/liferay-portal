@@ -531,6 +531,18 @@ public class CommercePriceListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
+		getCommercePriceListByAccountAndChannelAndOrderTypeId(
+			long groupId, String type, long commerceAccountId,
+			long commerceChannelId, long commerceOrderTypeId) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListByAccountAndChannelAndOrderTypeId(
+				groupId, type, commerceAccountId, commerceChannelId,
+				commerceOrderTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
 		getCommercePriceListByAccountAndChannelId(
 			long groupId, String type, long commerceAccountId,
 			long commerceChannelId) {
@@ -542,12 +554,46 @@ public class CommercePriceListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
+		getCommercePriceListByAccountAndOrderTypeId(
+			long groupId, String type, long commerceAccountId,
+			long commerceOrderTypeId) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListByAccountAndOrderTypeId(
+				groupId, type, commerceAccountId, commerceOrderTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
+		getCommercePriceListByAccountGroupAndOrderTypeId(
+			long groupId, String type, long[] commerceAccountGroupIds,
+			long commerceOrderTypeId) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListByAccountGroupAndOrderTypeId(
+				groupId, type, commerceAccountGroupIds, commerceOrderTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
 		getCommercePriceListByAccountGroupIds(
 			long groupId, String type, long[] commerceAccountGroupIds) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListByAccountGroupIds(
 				groupId, type, commerceAccountGroupIds);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
+		getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
+			long groupId, String type, long[] commerceAccountGroupIds,
+			long commerceChannelId, long commerceOrderTypeId) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListByAccountGroupsAndChannelAndOrderTypeId(
+				groupId, type, commerceAccountGroupIds, commerceChannelId,
+				commerceOrderTypeId);
 	}
 
 	@Override
@@ -563,11 +609,33 @@ public class CommercePriceListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
+		getCommercePriceListByAccountGroupsAndOrderTypeId(
+			long groupId, String type, long[] commerceAccountGroupIds,
+			long commerceOrderTypeId) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListByAccountGroupsAndOrderTypeId(
+				groupId, type, commerceAccountGroupIds, commerceOrderTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
 		getCommercePriceListByAccountId(
 			long groupId, String type, long commerceAccountId) {
 
 		return _commercePriceListLocalService.getCommercePriceListByAccountId(
 			groupId, type, commerceAccountId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
+		getCommercePriceListByChannelAndOrderTypeId(
+			long groupId, String type, long commerceChannelId,
+			long commerceOrderTypeId) {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListByChannelAndOrderTypeId(
+				groupId, type, commerceChannelId, commerceOrderTypeId);
 	}
 
 	@Override
@@ -601,14 +669,23 @@ public class CommercePriceListLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
 			getCommercePriceListByLowestPrice(
-				long groupId, String type, String cPInstanceUuid,
-				long commerceAccountId, long[] commerceAccountGroupIds,
-				long commerceChannelId)
+				long groupId, String type, long commerceAccountId,
+				long[] commerceAccountGroupIds, long commerceChannelId,
+				long commerceOrderTypeId, String cPInstanceUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListLocalService.getCommercePriceListByLowestPrice(
-			groupId, type, cPInstanceUuid, commerceAccountId,
-			commerceAccountGroupIds, commerceChannelId);
+			groupId, type, commerceAccountId, commerceAccountGroupIds,
+			commerceChannelId, commerceOrderTypeId, cPInstanceUuid);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
+		getCommercePriceListByOrderTypeId(
+			long groupId, String type, long commerceOrderTypeId) {
+
+		return _commercePriceListLocalService.getCommercePriceListByOrderTypeId(
+			groupId, type, commerceOrderTypeId);
 	}
 
 	@Override

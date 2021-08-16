@@ -135,8 +135,13 @@ public class UpgradeReport {
 	}
 
 	private File _getLogFile() {
-		File logFile = new File(
-			PropsValues.LIFERAY_HOME, "upgrade_report.info");
+		File reportsDir = new File(".", "reports");
+
+		if ((reportsDir != null) && !reportsDir.exists()) {
+			reportsDir.mkdirs();
+		}
+
+		File logFile = new File(reportsDir, "upgrade_report.info");
 
 		if (logFile.exists()) {
 			String logFileName = logFile.getName();

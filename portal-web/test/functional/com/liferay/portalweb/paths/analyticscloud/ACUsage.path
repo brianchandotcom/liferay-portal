@@ -40,6 +40,11 @@
 	<td>//b[contains(@class,'details-label')and contains(.,'${key_planName}')]/../../../..//div[contains(@class,'annual-price') and contains(.,'${key_planValue}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USAGE_CURRENT_PAGE_VIEWS</td>
+	<td>//h3[contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

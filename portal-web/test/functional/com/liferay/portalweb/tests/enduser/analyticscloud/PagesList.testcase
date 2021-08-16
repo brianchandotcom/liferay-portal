@@ -45,6 +45,22 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8341 | Test Summary: Filter Page Table by Last Year"
+	@priority = "3"
+	test PeriodFilterLastYearPageTable {
+		task ("Open Analytics Cloud as active window") {
+			ACUtils.launchAC();
+		}
+
+		task ("Select Pages tab and change default period range from Last 30 days to Last Year") {
+			ACPages.navigateToPages();
+
+			ACPages.filterPagesListBySelectPeriod(
+				currentPeriod = "Last 30 days",
+				selectPeriod = "Last Year");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"
 	@ignore = "true"
 	@priority = "5"

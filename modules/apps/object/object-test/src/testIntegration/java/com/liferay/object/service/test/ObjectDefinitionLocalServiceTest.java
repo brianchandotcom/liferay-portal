@@ -19,6 +19,7 @@ import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
@@ -71,7 +72,7 @@ public class ObjectDefinitionLocalServiceTest {
 		// Label is null
 
 		try {
-			_testAddCustomObjectDefinition("", "Test");
+			_testAddCustomObjectDefinition("", "Test", "Tests");
 
 			Assert.fail();
 		}
@@ -84,13 +85,29 @@ public class ObjectDefinitionLocalServiceTest {
 		// Name is null
 
 		try {
-			_testAddCustomObjectDefinition("Test", "");
+			_testAddCustomObjectDefinition("Test", "", "Tests");
 
 			Assert.fail();
 		}
 		catch (ObjectDefinitionNameException objectDefinitionNameException) {
 			Assert.assertEquals(
 				"Name is null", objectDefinitionNameException.getMessage());
+		}
+
+		// Plural Label is null
+
+		try {
+			_testAddCustomObjectDefinition("Test", "Test", "");
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionPluralLabelException
+					objectDefinitionPluralLabelException) {
+
+			Assert.assertEquals(
+				"Plural Label is null for locale " +
+					LocaleUtil.US.getDisplayName(),
+				objectDefinitionPluralLabelException.getMessage());
 		}
 
 		// Custom object definition names are automatically prepended with
@@ -163,7 +180,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), _labelMap, "Test",
+				TestPropsValues.getUserId(), _labelMap, "Test", _pluralLabelMap,
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -188,7 +205,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), _labelMap, "Test",
+				TestPropsValues.getUserId(), _labelMap, "Test", _pluralLabelMap,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Able", "able", false, "String"),
@@ -333,6 +350,12 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
+					public Map<Locale, String> getPluralLabelMap() {
+						return LocalizedMapUtil.getLocalizedMap(
+							"User Notification Events");
+					}
+
+					@Override
 					public int getVersion() {
 						return 1;
 					}
@@ -392,6 +415,12 @@ public class ObjectDefinitionLocalServiceTest {
 								"Delivery Type", "deliveryType", true, "Long"),
 							createObjectField(
 								"type_", "Type", "type", false, "String"));
+					}
+
+					@Override
+					public Map<Locale, String> getPluralLabelMap() {
+						return LocalizedMapUtil.getLocalizedMap(
+							"User Notification Events");
 					}
 
 					@Override
@@ -536,7 +565,7 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, 1, Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, 1, Collections.<ObjectField>emptyList());
 
 		try {
 			_testAddSystemObjectDefinition("Test");
@@ -557,7 +586,8 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, -1, Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, -1,
+				Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -570,7 +600,7 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, 0, Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, 0, Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -585,7 +615,7 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, 1, Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, 1, Collections.<ObjectField>emptyList());
 
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
@@ -673,7 +703,7 @@ public class ObjectDefinitionLocalServiceTest {
 	public void testDeleteObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), _labelMap, "Test",
+				TestPropsValues.getUserId(), _labelMap, "Test", _pluralLabelMap,
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -748,10 +778,17 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	private void _testAddCustomObjectDefinition(String name) throws Exception {
-		_testAddCustomObjectDefinition(name, name);
+		_testAddCustomObjectDefinition(name, name, name);
 	}
 
 	private void _testAddCustomObjectDefinition(String label, String name)
+		throws Exception {
+
+		_testAddCustomObjectDefinition(label, name, label);
+	}
+
+	private void _testAddCustomObjectDefinition(
+			String label, String name, String pluralLabel)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = null;
@@ -761,6 +798,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 					TestPropsValues.getUserId(),
 					LocalizedMapUtil.getLocalizedMap(label), name,
+					LocalizedMapUtil.getLocalizedMap(pluralLabel),
 					Collections.<ObjectField>emptyList());
 
 			objectDefinition =
@@ -790,7 +828,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 					TestPropsValues.getUserId(), null,
 					LocalizedMapUtil.getLocalizedMap(label), name, null, null,
-					1, Collections.<ObjectField>emptyList());
+					_pluralLabelMap, 1, Collections.<ObjectField>emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {
@@ -802,5 +840,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 	private final Map<Locale, String> _labelMap =
 		LocalizedMapUtil.getLocalizedMap("Test");
+	private final Map<Locale, String> _pluralLabelMap =
+		LocalizedMapUtil.getLocalizedMap("Tests");
 
 }

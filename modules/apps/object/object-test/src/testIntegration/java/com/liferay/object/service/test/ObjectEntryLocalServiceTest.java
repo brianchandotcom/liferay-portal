@@ -89,6 +89,7 @@ public class ObjectEntryLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Irrelevant"), "Irrelevant",
+				LocalizedMapUtil.getLocalizedMap("Irrelevants"),
 				Collections.<ObjectField>emptyList());
 
 		_irrelevantObjectDefinition =
@@ -100,6 +101,7 @@ public class ObjectEntryLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Test"), "Test",
+				LocalizedMapUtil.getLocalizedMap("Tests"),
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						true, false, "Age of Death", "ageOfDeath", false,

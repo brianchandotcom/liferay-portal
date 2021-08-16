@@ -55,6 +55,11 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public Map<Locale, String> getPluralLabelMap() {
+		return createLabelMap("commerce-orders");
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}

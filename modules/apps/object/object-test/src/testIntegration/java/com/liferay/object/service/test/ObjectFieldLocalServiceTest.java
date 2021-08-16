@@ -281,7 +281,8 @@ public class ObjectFieldLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 					TestPropsValues.getUserId(), null,
 					LocalizedMapUtil.getLocalizedMap("Test"), "Test", null,
-					null, 1, Arrays.asList(objectFields));
+					null, LocalizedMapUtil.getLocalizedMap("Tests"), 1,
+					Arrays.asList(objectFields));
 		}
 		finally {
 			if (objectDefinition != null) {

@@ -58,6 +58,11 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public Map<Locale, String> getPluralLabelMap() {
+		return createLabelMap("users");
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}

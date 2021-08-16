@@ -50,7 +50,7 @@ public class ObjectDefinitionServiceImpl
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			Map<Locale, String> labelMap, String name,
-			List<ObjectField> objectFields)
+			Map<Locale, String> pluralLabelMap, List<ObjectField> objectFields)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -58,7 +58,7 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			getUserId(), labelMap, name, objectFields);
+			getUserId(), labelMap, name, pluralLabelMap, objectFields);
 	}
 
 	@Override

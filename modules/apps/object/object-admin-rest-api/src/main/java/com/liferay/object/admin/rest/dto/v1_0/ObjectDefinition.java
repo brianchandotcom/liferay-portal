@@ -255,6 +255,36 @@ public class ObjectDefinition implements Serializable {
 
 	@Schema
 	@Valid
+	public Map<String, String> getPluralLabel() {
+		return pluralLabel;
+	}
+
+	public void setPluralLabel(Map<String, String> pluralLabel) {
+		this.pluralLabel = pluralLabel;
+	}
+
+	@JsonIgnore
+	public void setPluralLabel(
+		UnsafeSupplier<Map<String, String>, Exception>
+			pluralLabelUnsafeSupplier) {
+
+		try {
+			pluralLabel = pluralLabelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> pluralLabel;
+
+	@Schema
+	@Valid
 	public Status getStatus() {
 		return status;
 	}
@@ -430,6 +460,16 @@ public class ObjectDefinition implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (pluralLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pluralLabel\": ");
+
+			sb.append(_toJSON(pluralLabel));
 		}
 
 		if (status != null) {

@@ -70,7 +70,7 @@ public interface ObjectDefinitionLocalService
 	 */
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, Map<Locale, String> labelMap, String name,
-			List<ObjectField> objectFields)
+			Map<Locale, String> pluralLabelMap, List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**
@@ -95,8 +95,8 @@ public interface ObjectDefinitionLocalService
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String dbTableName, Map<Locale, String> labelMap,
 			String name, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, int version,
-			List<ObjectField> objectFields)
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			int version, List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**

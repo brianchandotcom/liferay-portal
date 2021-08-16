@@ -76,6 +76,7 @@ public class ObjectEntryServiceTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Test"), "Test",
+				LocalizedMapUtil.getLocalizedMap("Tests"),
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						true, false, "First Name", "firstName", false,

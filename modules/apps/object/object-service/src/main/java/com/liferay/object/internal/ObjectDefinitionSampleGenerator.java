@@ -87,6 +87,7 @@ public class ObjectDefinitionSampleGenerator {
 				user.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Sample Object Definition"),
 				"SampleObjectDefinition",
+				LocalizedMapUtil.getLocalizedMap("Sample Object Definitions"),
 				Arrays.asList(
 					_createObjectField("Able", "able", "Long"),
 					_createObjectField("Baker", "baker", "Boolean"),

@@ -12,40 +12,30 @@
  * details.
  */
 
-package com.liferay.object.system;
+package com.liferay.object.exception;
 
-import com.liferay.object.model.ObjectField;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
- * @author Brian Wing Shun Chan
  */
-public interface SystemObjectDefinitionMetadata {
+public class ObjectDefinitionPluralLabelException extends PortalException {
 
-	public default String getDBTableName() {
-		return null;
+	public ObjectDefinitionPluralLabelException() {
 	}
 
-	public Map<Locale, String> getLabelMap();
-
-	public String getName();
-
-	public List<ObjectField> getObjectFields();
-
-	public default String getPKObjectFieldDBColumnName() {
-		return null;
+	public ObjectDefinitionPluralLabelException(String msg) {
+		super(msg);
 	}
 
-	public default String getPKObjectFieldName() {
-		return null;
+	public ObjectDefinitionPluralLabelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public Map<Locale, String> getPluralLabelMap();
-
-	public int getVersion();
+	public ObjectDefinitionPluralLabelException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

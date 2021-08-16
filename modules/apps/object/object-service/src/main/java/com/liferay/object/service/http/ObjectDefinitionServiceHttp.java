@@ -55,6 +55,7 @@ public class ObjectDefinitionServiceHttp {
 			addCustomObjectDefinition(
 				HttpPrincipal httpPrincipal,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
+				java.util.Map<java.util.Locale, String> pluralLabelMap,
 				java.util.List<com.liferay.object.model.ObjectField>
 					objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,7 +66,7 @@ public class ObjectDefinitionServiceHttp {
 				_addCustomObjectDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, labelMap, name, objectFields);
+				methodKey, labelMap, name, pluralLabelMap, objectFields);
 
 			Object returnObj = null;
 
@@ -333,7 +334,10 @@ public class ObjectDefinitionServiceHttp {
 		ObjectDefinitionServiceHttp.class);
 
 	private static final Class<?>[] _addCustomObjectDefinitionParameterTypes0 =
-		new Class[] {java.util.Map.class, String.class, java.util.List.class};
+		new Class[] {
+			java.util.Map.class, String.class, java.util.Map.class,
+			java.util.List.class
+		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getObjectDefinitionParameterTypes2 =

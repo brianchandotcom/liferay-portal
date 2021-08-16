@@ -228,7 +228,7 @@ definition {
 	@priority = "3"
 	test CanCancelCreatingStaticSegment {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Sign in as new user") {
@@ -300,7 +300,7 @@ definition {
 		}
 
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("View the page as different users") {
@@ -916,7 +916,7 @@ definition {
 		}
 
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getSiteAssignedPropertyName(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("View the page as different users") {

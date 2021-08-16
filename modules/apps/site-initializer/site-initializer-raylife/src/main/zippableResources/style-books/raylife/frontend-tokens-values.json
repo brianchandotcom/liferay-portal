@@ -1,0 +1,306 @@
+{
+	"blockquoteSmallColor": {
+		"cssVariableMapping": "blockquote-small-color",
+		"value": "#6b6c7e"
+	},
+	"bodyBgColor": {
+		"cssVariableMapping": "body-bg",
+		"value": "#FFFFFF"
+	},
+	"borderRadiusLg": {
+		"cssVariableMapping": "border-radius-lg",
+		"value": "0.3rem"
+	},
+	"borderRadiusSm": {
+		"cssVariableMapping": "border-radius-sm",
+		"value": "0.2rem"
+	},
+	"boxShadow": {
+		"cssVariableMapping": "box-shadow",
+		"value": "0 .25rem 1.5rem rgba(0, 0, 0, .06)"
+	},
+	"boxShadowLg": {
+		"cssVariableMapping": "box-shadow-lg",
+		"value": "0 .5rem 2rem rgba(0, 0, 0, .08)"
+	},
+	"boxShadowSm": {
+		"cssVariableMapping": "box-shadow-sm",
+		"value": "0 .125rem .25rem rgba(0, 0, 0, .06)"
+	},
+	"btnLinkColor": {
+		"cssVariableMapping": "btn-link-color",
+		"value": "var(--primary)"
+	},
+	"btnLinkHoverColor": {
+		"cssVariableMapping": "btn-link-hover-color",
+		"value": "#1f64ff"
+	},
+	"btnOutlinePrimaryBorderColor": {
+		"cssVariableMapping": "btn-outline-primary-border-color",
+		"value": "var(--primary)"
+	},
+	"btnOutlinePrimaryColor": {
+		"cssVariableMapping": "btn-outline-primary-color",
+		"value": "var(--primary)"
+	},
+	"btnOutlinePrimaryHoverBackgroundColor": {
+		"cssVariableMapping": "btn-outline-primary-hover-background-color",
+		"value": "var(--primary)"
+	},
+	"btnOutlinePrimaryHoverBorderColor": {
+		"cssVariableMapping": "btn-outline-primary-hover-border-color",
+		"value": "var(--primary)"
+	},
+	"btnOutlinePrimaryHoverColor": {
+		"cssVariableMapping": "btn-outline-primary-hover-color",
+		"value": "var(--white)"
+	},
+	"btnOutlineSecondaryBorderColor": {
+		"cssVariableMapping": "btn-outline-secondary-border-color",
+		"value": "var(--secondary)"
+	},
+	"btnOutlineSecondaryHoverBackgroundColor": {
+		"cssVariableMapping": "btn-outline-secondary-hover-background-color",
+		"value": "var(--secondary)"
+	},
+	"btnOutlineSecondaryHoverBorderColor": {
+		"cssVariableMapping": "btn-outline-secondary-hover-border-color",
+		"value": "var(--secondary)"
+	},
+	"btnOutlineSecondaryHoverColor": {
+		"cssVariableMapping": "btn-outline-secondary-hover-color",
+		"value": "var(--white)"
+	},
+	"btnPrimaryBackgroundColor": {
+		"cssVariableMapping": "btn-primary-background-color",
+		"value": "var(--primary)"
+	},
+	"btnPrimaryBorderColor": {
+		"cssVariableMapping": "btn-primary-border-color",
+		"value": "var(--primary)"
+	},
+	"btnPrimaryColor": {
+		"cssVariableMapping": "btn-primary-color",
+		"value": "var(--white)"
+	},
+	"btnPrimaryHoverBackgroundColor": {
+		"cssVariableMapping": "btn-primary-hover-background-color",
+		"value": "#1f64ff"
+	},
+	"btnPrimaryHoverBorderColor": {
+		"cssVariableMapping": "btn-primary-hover-border-color",
+		"value": "#1f64ff"
+	},
+	"btnPrimaryHoverColor": {
+		"cssVariableMapping": "btn-primary-hover-color",
+		"value": "var(--white)"
+	},
+	"btnSecondaryBackgroundColor": {
+		"cssVariableMapping": "btn-secondary-background-color",
+		"value": "var(--secondary)"
+	},
+	"btnSecondaryBorderColor": {
+		"cssVariableMapping": "btn-secondary-border-color",
+		"value": "var(--secondary)"
+	},
+	"btnSecondaryColor": {
+		"cssVariableMapping": "btn-secondary-color",
+		"value": "var(--white)"
+	},
+	"btnSecondaryHoverBackgroundColor": {
+		"cssVariableMapping": "btn-secondary-hover-background-color",
+		"value": "#616278"
+	},
+	"btnSecondaryHoverBorderColor": {
+		"cssVariableMapping": "btn-secondary-hover-border-color",
+		"value": "#616278"
+	},
+	"btnSecondaryHoverColor": {
+		"cssVariableMapping": "btn-secondary-hover-color",
+		"value": "var(--white)"
+	},
+	"containerMaxLg": {
+		"cssVariableMapping": "container-max-lg",
+		"value": "992px"
+	},
+	"containerMaxXl": {
+		"cssVariableMapping": "container-max-xl",
+		"value": "1200px"
+	},
+	"dangerColor": {
+		"cssVariableMapping": "danger",
+		"value": "#dc3545"
+	},
+	"darkColor": {
+		"cssVariableMapping": "dark",
+		"value": "#393a4a"
+	},
+	"display1Size": {
+		"cssVariableMapping": "display1-size",
+		"value": "5rem"
+	},
+	"display1Weight": {
+		"cssVariableMapping": "display1-weight",
+		"value": "800"
+	},
+	"display2Size": {
+		"cssVariableMapping": "display2-size",
+		"value": "4.5rem"
+	},
+	"display2Weight": {
+		"cssVariableMapping": "display2-weight",
+		"value": "800"
+	},
+	"display3Size": {
+		"cssVariableMapping": "display3-size",
+		"value": "3.5rem"
+	},
+	"display3Weight": {
+		"cssVariableMapping": "display3-weight",
+		"value": "800"
+	},
+	"display4Size": {
+		"cssVariableMapping": "display4-size",
+		"value": "2.5rem"
+	},
+	"display4Weight": {
+		"cssVariableMapping": "display4-weight",
+		"value": "800"
+	},
+	"displayLineHeight": {
+		"cssVariableMapping": "display-line-height",
+		"value": "1.15"
+	},
+	"fontFamilyBase": {
+		"cssVariableMapping": "font-family-base",
+		"value": "Barlow, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"fontFamilySansSerif": {
+		"cssVariableMapping": "font-family-sans-serif",
+		"value": "Barlow, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"fontSizeBase": {
+		"cssVariableMapping": "font-size-base",
+		"value": "1rem"
+	},
+	"fontSizeLg": {
+		"cssVariableMapping": "font-size-lg",
+		"value": "1.25rem"
+	},
+	"fontWeightBold": {
+		"cssVariableMapping": "font-weight-bold",
+		"value": "600"
+	},
+	"fontWeightBolder": {
+		"cssVariableMapping": "font-weight-bolder",
+		"value": "700"
+	},
+	"fontWeightLighter": {
+		"cssVariableMapping": "font-weight-lighter",
+		"value": "300"
+	},
+	"fontWeightNormal": {
+		"cssVariableMapping": "font-weight-normal",
+		"value": "400"
+	},
+	"gray100Color": {
+		"cssVariableMapping": "gray-100",
+		"value": "#F7F8F9"
+	},
+	"gray600Color": {
+		"cssVariableMapping": "gray-600",
+		"value": "#808193"
+	},
+	"gray700Color": {
+		"cssVariableMapping": "gray-700",
+		"value": "#555768"
+	},
+	"h1FontSize": {
+		"cssVariableMapping": "h1-font-size",
+		"value": "2.5rem"
+	},
+	"h2FontSize": {
+		"cssVariableMapping": "h2-font-size",
+		"value": "2rem"
+	},
+	"h3FontSize": {
+		"cssVariableMapping": "h3-font-size",
+		"value": "1.75rem"
+	},
+	"h4FontSize": {
+		"cssVariableMapping": "h4-font-size",
+		"value": "1.5rem"
+	},
+	"h5FontSize": {
+		"cssVariableMapping": "h5-font-size",
+		"value": "1.25rem"
+	},
+	"h6FontSize": {
+		"cssVariableMapping": "h6-font-size",
+		"value": "1rem"
+	},
+	"hrBorderColor": {
+		"cssVariableMapping": "hr-border-color",
+		"value": "#e7e7ed"
+	},
+	"infoColor": {
+		"cssVariableMapping": "info",
+		"value": " #2e5aac"
+	},
+	"leadFontWeight": {
+		"cssVariableMapping": "lead-font-weight",
+		"value": "400"
+	},
+	"lightColor": {
+		"cssVariableMapping": "light",
+		"value": "#F7F8F9"
+	},
+	"primaryColor": {
+		"cssVariableMapping": "primary",
+		"value": "#4C84FF"
+	},
+	"secondaryColor": {
+		"cssVariableMapping": "secondary",
+		"value": "#808193"
+	},
+	"spacer": {
+		"cssVariableMapping": "spacer",
+		"value": "4rem"
+	},
+	"spacer10": {
+		"cssVariableMapping": "spacer-10",
+		"value": "7rem"
+	},
+	"spacer5": {
+		"cssVariableMapping": "spacer-5",
+		"value": "2rem"
+	},
+	"spacer6": {
+		"cssVariableMapping": "spacer-6",
+		"value": "3rem"
+	},
+	"spacer7": {
+		"cssVariableMapping": "spacer-7",
+		"value": "4rem"
+	},
+	"spacer8": {
+		"cssVariableMapping": "spacer-8",
+		"value": "5rem"
+	},
+	"spacer9": {
+		"cssVariableMapping": "spacer-9",
+		"value": "6rem"
+	},
+	"successColor": {
+		"cssVariableMapping": "success",
+		"value": "#20c997"
+	},
+	"textMuted": {
+		"cssVariableMapping": "text-muted",
+		"value": "#6b6c7e"
+	},
+	"warningColor": {
+		"cssVariableMapping": "warning",
+		"value": " #fd7e14"
+	}
+}

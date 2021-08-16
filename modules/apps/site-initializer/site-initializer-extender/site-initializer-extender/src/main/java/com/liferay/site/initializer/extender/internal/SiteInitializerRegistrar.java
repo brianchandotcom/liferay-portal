@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
@@ -39,6 +40,7 @@ public class SiteInitializerRegistrar {
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
+		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
@@ -48,6 +50,7 @@ public class SiteInitializerRegistrar {
 		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
 	}
@@ -62,6 +65,7 @@ public class SiteInitializerRegistrar {
 			new BundleSiteInitializer(
 				_bundle, _documentResourceFactory, _fragmentsImporter,
 				_jsonFactory, _objectDefinitionResourceFactory, _servletContext,
+				_styleBookEntryZipProcessor,
 				_taxonomyVocabularyResourceFactory, _userLocalService),
 			MapUtil.singletonDictionary(
 				"site.initializer.key", _bundle.getSymbolicName()));
@@ -80,6 +84,7 @@ public class SiteInitializerRegistrar {
 		_objectDefinitionResourceFactory;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
+	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
 	private final UserLocalService _userLocalService;

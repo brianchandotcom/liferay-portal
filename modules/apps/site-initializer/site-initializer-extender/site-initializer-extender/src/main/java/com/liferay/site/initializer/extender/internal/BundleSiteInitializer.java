@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -36,6 +37,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.exception.InitializationException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.io.InputStream;
@@ -63,6 +66,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ServletContext servletContext,
+		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
@@ -72,6 +76,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_servletContext = servletContext;
+		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
 	}
@@ -172,6 +177,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addFragmentEntries(long groupId, User user) throws Exception {
+
 		URL url = _bundle.getEntry("/fragments.zip");
 
 		if (url == null) {
@@ -219,6 +225,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addStyleBookEntries(long groupId, User user) throws Exception {
+
+		URL url = _bundle.getEntry("/style-books.zip");
+
+		if(url == null){
+			return;
+		}
+
+		_styleBookEntryZipProcessor.importStyleBookEntries(
+			user.getUserId(), groupId,
+			FileUtil.createTempFile(url.openStream()), false);
+	}
+
 	private void _addTaxonomyVocabularies(long groupId, User user)
 		throws Exception {
 
@@ -263,7 +282,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _initialize(long groupId, User user) throws Exception {
 		_addDocuments(groupId, user);
 		_addFragmentEntries(groupId, user);
-		_addObjectDefinitions(user);
+		//_addObjectDefinitions(user);
+		_addStyleBookEntries(groupId, user);
 		_addTaxonomyVocabularies(groupId, user);
 	}
 
@@ -288,6 +308,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ServletContext _servletContext;
+	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
 	private final UserLocalService _userLocalService;

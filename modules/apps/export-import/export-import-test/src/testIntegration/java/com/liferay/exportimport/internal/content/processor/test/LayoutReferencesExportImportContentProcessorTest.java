@@ -23,6 +23,7 @@ import com.liferay.exportimport.test.util.TestUserIdStrategy;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -45,6 +46,9 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -91,6 +95,97 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	public void setUp() {
 		_layoutReferencesExportImportContentProcessor =
 			_serviceTracker.getService();
+	}
+
+	@Test
+	public void testExportDefaultGroupCompanyHostImportDefaultGroupCompanyHost()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport =
+			_getCompanyHostPortalURL(exportGroup) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, true, true);
+
+		Assert.assertEquals(
+			_getCompanyHostPortalURL(importGroup) +
+				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testExportDefaultGroupPublicPagesVirtualHostImportDefaultGroupNoVirtualHost()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, true, true);
+
+		Assert.assertEquals(
+			_getCompanyHostPortalURL(importGroup) +
+				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testExportDefaultGroupPublicPagesVirtualHostImportDefaultGroupPublicPagesVirtualHost()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport =
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, true, true);
+
+		Assert.assertEquals(
+			_getGroupVirtualHostPortalURL(importGroup, false) +
+				exportLayout.getFriendlyURL(),
+			actualImportedURL);
+	}
+
+	@Test
+	public void testExportDefaultGroupRelativeURLHostImportDefaultGroup()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+		Group importGroup = GroupTestUtil.addGroup();
+
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		String urlToExport = exportLayout.getFriendlyURL();
+
+		String actualImportedURL = _exportAndImportLayoutURL(
+			urlToExport, exportGroup, importGroup, true, true);
+
+		Assert.assertEquals(exportLayout.getFriendlyURL(), actualImportedURL);
 	}
 
 	@Test
@@ -255,7 +350,28 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			String url, Group exportGroup, Group importGroup)
 		throws Exception {
 
+		return _exportAndImportLayoutURL(
+			url, exportGroup, importGroup, false, false);
+	}
+
+	private String _exportAndImportLayoutURL(
+			String url, Group exportGroup, Group importGroup,
+			boolean exportFromDefaultGroup, boolean importToDefaultGroup)
+		throws Exception {
+
+		String oldVirtualHostsDefaultSiteName = null;
+
+		if (exportFromDefaultGroup || importToDefaultGroup) {
+			oldVirtualHostsDefaultSiteName =
+				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME;
+		}
+
 		TestReaderWriter testReaderWriter = new TestReaderWriter();
+
+		if (exportFromDefaultGroup) {
+			_setPortalProperty(
+				"VIRTUAL_HOSTS_DEFAULT_SITE_NAME", exportGroup.getGroupKey());
+		}
 
 		PortletDataContext exportPortletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -294,6 +410,11 @@ public class LayoutReferencesExportImportContentProcessorTest {
 					exportPortletDataContext, referrerStagedModel,
 					contentToExport, true, false);
 
+		if (importToDefaultGroup) {
+			_setPortalProperty(
+				"VIRTUAL_HOSTS_DEFAULT_SITE_NAME", importGroup.getGroupKey());
+		}
+
 		PortletDataContext importPortletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				importGroup.getCompanyId(), importGroup.getGroupId(),
@@ -309,6 +430,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 				replaceImportContentReferences(
 					importPortletDataContext, referrerStagedModel,
 					exportedContent);
+
+		if (exportFromDefaultGroup || importToDefaultGroup) {
+			_setPortalProperty(
+				"VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
+				oldVirtualHostsDefaultSiteName);
+		}
 
 		return importedContent.substring(
 			_CONTENT_PREFIX.length(),
@@ -341,6 +468,22 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		return _portal.getPortalURL(
 			virtualHostnames.firstKey(), _portal.getPortalServerPort(false),
 			false);
+	}
+
+	private void _setPortalProperty(String propertyName, Object value)
+		throws Exception {
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, propertyName);
+
+		field.setAccessible(true);
+
+		Field modifiersField = Field.class.getDeclaredField("modifiers");
+
+		modifiersField.setAccessible(true);
+		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+		field.set(null, value);
 	}
 
 	private static final String _CONTENT_POSTFIX = "\">link</a>";

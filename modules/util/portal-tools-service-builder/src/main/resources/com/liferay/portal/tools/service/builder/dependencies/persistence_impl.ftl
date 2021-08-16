@@ -1258,6 +1258,22 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					return map;
 				}
 
+				if ((databaseInMaxParameters > 0) && (primaryKeys.size() > databaseInMaxParameters)) {
+					Iterator<Serializable> iterator = primaryKeys.iterator();
+
+					while (iterator.hasNext()) {
+						Set<Serializable> page = new HashSet<>();
+
+						for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext();i++) {
+							page.add(iterator.next());
+						}
+
+						map.putAll(fetchByPrimaryKeys(page));
+					}
+
+					return map;
+				}
+
 				Set<Serializable> uncachedPrimaryKeys = null;
 
 				for (Serializable primaryKey : primaryKeys) {
@@ -1364,6 +1380,22 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				if (${entity.variableName} != null) {
 					map.put(primaryKey, ${entity.variableName});
+				}
+
+				return map;
+			}
+
+			if ((databaseInMaxParameters > 0) && (primaryKeys.size() > databaseInMaxParameters)) {
+				Iterator<Serializable> iterator = primaryKeys.iterator();
+
+				while (iterator.hasNext()) {
+					Set<Serializable> page = new HashSet<>();
+
+					for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext();i++) {
+						page.add(iterator.next());
+					}
+
+					map.putAll(fetchByPrimaryKeys(page));
 				}
 
 				return map;

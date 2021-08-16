@@ -5586,6 +5586,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		contactPersistence.update(contact, serviceContext);
 
+		user = userPersistence.findByPrimaryKey(userId);
+
 		// Group
 
 		if (screenNameModified) {

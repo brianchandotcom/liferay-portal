@@ -314,15 +314,16 @@ function StructureTreeNodeContent({
 			/>
 
 			<div>
-				{node.removable && config.fragmentsHidingEnabled && (
-					<VisibilityButton
-						dispatch={dispatch}
-						node={node}
-						segmentsExperienceId={segmentsExperienceId}
-						selectedViewportSize={selectedViewportSize}
-						visible={node.hidden || isHovered || isSelected}
-					/>
-				)}
+				{(node.removable || node.hidden) &&
+					config.fragmentsHidingEnabled && (
+						<VisibilityButton
+							dispatch={dispatch}
+							node={node}
+							segmentsExperienceId={segmentsExperienceId}
+							selectedViewportSize={selectedViewportSize}
+							visible={node.hidden || isHovered || isSelected}
+						/>
+					)}
 
 				{node.removable && canUpdatePageStructure && (
 					<RemoveButton
@@ -377,6 +378,7 @@ const VisibilityButton = ({
 					'page-editor__page-structure__tree-node__visibility-button--visible': visible,
 				}
 			)}
+			disabled={node.disabled}
 			displayType="unstyled"
 			onClick={() =>
 				updateItemStyle({

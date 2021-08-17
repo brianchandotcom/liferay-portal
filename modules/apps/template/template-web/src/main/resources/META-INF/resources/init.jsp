@@ -48,7 +48,8 @@ page import="com.liferay.template.web.internal.display.context.EditDDMTemplateDi
 page import="com.liferay.template.web.internal.display.context.InformationTemplatesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.InformationTemplatesTemplateDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.WidgetTemplatesManagementToolbarDisplayContext" %><%@
-page import="com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext" %>
+page import="com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext" %><%@
+page import="com.liferay.template.web.internal.util.FFTemplateConfigurationUtil" %>
 
 <%@ page import="java.util.Objects" %>
 

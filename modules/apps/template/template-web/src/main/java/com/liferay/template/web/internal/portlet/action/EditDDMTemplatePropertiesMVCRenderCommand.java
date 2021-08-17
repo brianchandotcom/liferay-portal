@@ -74,7 +74,7 @@ public class EditDDMTemplatePropertiesMVCRenderCommand
 			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 
 		String tabs1 = ParamUtil.getString(
-			renderRequest, "tabs1", "information-templates");
+			renderRequest, "tabs1", "widget-templates");
 
 		if (Objects.equals(tabs1, "information-templates")) {
 			renderRequest.setAttribute(

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 import com.liferay.template.web.internal.util.DDMTemplateActionDropdownItemsProvider;
+import com.liferay.template.web.internal.util.FFTemplateConfigurationUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -122,6 +123,7 @@ public abstract class BaseTemplateDisplayContext {
 
 	public List<NavigationItem> getNavigationItems() {
 		return NavigationItemListBuilder.add(
+			FFTemplateConfigurationUtil::informationTemplatesEnabled,
 			navigationItem -> {
 				navigationItem.setActive(
 					Objects.equals(getTabs1(), "information-templates"));
@@ -153,7 +155,7 @@ public abstract class BaseTemplateDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			liferayPortletRequest, "tabs1", "information-templates");
+			liferayPortletRequest, "tabs1", "widget-templates");
 
 		return _tabs1;
 	}

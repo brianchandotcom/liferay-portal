@@ -208,7 +208,7 @@ public class EditDDMTemplateDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", "information-templates");
+			_liferayPortletRequest, "tabs1", "widget-templates");
 
 		return _tabs1;
 	}

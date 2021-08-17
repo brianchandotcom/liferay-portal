@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "information-templates");
+String tabs1 = ParamUtil.getString(request, "tabs1", "widget-templates");
 %>
 
 <c:choose>
-	<c:when test='<%= Objects.equals(tabs1, "information-templates") %>'>
+	<c:when test='<%= FFTemplateConfigurationUtil.informationTemplatesEnabled() && Objects.equals(tabs1, "information-templates") %>'>
 		<liferay-util:include page="/view_information_templates.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= Objects.equals(tabs1, "widget-templates") %>'>

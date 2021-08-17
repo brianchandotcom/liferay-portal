@@ -84,6 +84,11 @@
 	<td>//h4[contains(@class,'section-title') and contains(.,'Choose Source')]/..//*[contains(@class,'data-source-item') and contains(.,'${key_sourceType}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILE_UPLOAD_SUCCESS_ICON</td>
+	<td>//div[contains(@class,'uploaded-file')]//*[name()='svg'][contains(@class,'success')]</td>
+	<td></td>
+</tr>
 <!-- DELETE DATA SOURCE SCREEN -->
 <tr>
 	<td>DELETE_BUTTON_DATA_SOURCE</td>

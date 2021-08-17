@@ -374,7 +374,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8480 | Test Summary: Create a Dynamic Individuals Segment with a criteria that uses is known and is not"
 	@priority = "4"
-	test CanCreateDynamicIndividualsSegmentWithCriteriaUsesIsAndIsNot {
+	test CanCreateDynamicSegmentWithIndividualCriteriaUsesIsKnownAndIsNot {
 		task ("Add three more new users") {
 			for (var n : list "1,2,3") {
 				JSONUser.addUser(

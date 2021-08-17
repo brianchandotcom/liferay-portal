@@ -341,7 +341,7 @@ public class Mutation {
 		description = "Unassigns account users by email address from the account role"
 	)
 	public boolean
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("accountRoleId") Long accountRoleId,
@@ -353,7 +353,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.
-					deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+					deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 						accountExternalReferenceCode, accountRoleId,
 						emailAddress));
 
@@ -364,7 +364,7 @@ public class Mutation {
 		description = "Assigns account users by email address to the account role"
 	)
 	public boolean
-			createAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			createAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("accountRoleId") Long accountRoleId,
@@ -376,7 +376,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.
-					postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+					postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 						accountExternalReferenceCode, accountRoleId,
 						emailAddress));
 
@@ -387,7 +387,7 @@ public class Mutation {
 		description = "Unassigns account users by external reference code from the account role"
 	)
 	public boolean
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("accountRoleId") Long accountRoleId,
@@ -400,7 +400,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.
-					deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+					deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
 						userAccountExternalReferenceCode));
 
@@ -408,10 +408,10 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Assigns account users by extenal reference code to the account role"
+		description = "Assigns account users by external reference code to the account role"
 	)
 	public boolean
-			createAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			createAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("accountRoleId") Long accountRoleId,
@@ -424,7 +424,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountRoleResource ->
 				accountRoleResource.
-					postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+					postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 						accountExternalReferenceCode, accountRoleId,
 						userAccountExternalReferenceCode));
 
@@ -798,7 +798,7 @@ public class Mutation {
 		description = "Removes a user by their external reference code from an account by external reference code"
 	)
 	public boolean
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("userAccountExternalReferenceCode") String
@@ -810,7 +810,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.
-					deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+					deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 						accountExternalReferenceCode,
 						userAccountExternalReferenceCode));
 
@@ -821,7 +821,7 @@ public class Mutation {
 		description = "Assigns a user by their external reference code to an account by external reference code"
 	)
 	public boolean
-			createAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			createAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("userAccountExternalReferenceCode") String
@@ -833,7 +833,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.
-					postAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+					postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 						accountExternalReferenceCode,
 						userAccountExternalReferenceCode));
 

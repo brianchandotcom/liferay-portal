@@ -41,61 +41,61 @@ public interface AccountRoleResource {
 	}
 
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddressHttpResponse(
-				String accountExternalReferenceCode, Long accountRoleId,
-				String emailAddress)
-		throws Exception;
-
-	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
-				String accountExternalReferenceCode, Long accountRoleId,
-				String emailAddress)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddressHttpResponse(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception;
 
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String emailAddress)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String emailAddress)
+		throws Exception;
+
+	public void
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<AccountRole>
-			getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPage(
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 				String accountExternalReferenceCode,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPageHttpResponse(
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPageHttpResponse(
 				String accountExternalReferenceCode,
 				String userAccountExternalReferenceCode)
 		throws Exception;
@@ -121,12 +121,12 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public Page<AccountRole>
-			getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPage(
+			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
 				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPageHttpResponse(
+			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPageHttpResponse(
 				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
@@ -246,13 +246,13 @@ public interface AccountRoleResource {
 	public static class AccountRoleResourceImpl implements AccountRoleResource {
 
 		public void
-				deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddressHttpResponse(
+				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
 					accountExternalReferenceCode, accountRoleId, emailAddress);
 
 			String content = httpResponse.getContent();
@@ -293,7 +293,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddressHttpResponse(
+				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String emailAddress)
 			throws Exception {
@@ -336,13 +336,13 @@ public interface AccountRoleResource {
 		}
 
 		public void
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddressHttpResponse(
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
 					accountExternalReferenceCode, accountRoleId, emailAddress);
 
 			String content = httpResponse.getContent();
@@ -383,7 +383,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddressHttpResponse(
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String emailAddress)
 			throws Exception {
@@ -426,13 +426,13 @@ public interface AccountRoleResource {
 		}
 
 		public void
-				deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
 					userAccountExternalReferenceCode);
 
@@ -474,7 +474,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -519,13 +519,13 @@ public interface AccountRoleResource {
 		}
 
 		public void
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					accountExternalReferenceCode, accountRoleId,
 					userAccountExternalReferenceCode);
 
@@ -567,7 +567,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode, Long accountRoleId,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -612,13 +612,13 @@ public interface AccountRoleResource {
 		}
 
 		public Page<AccountRole>
-				getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPage(
+				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 					String accountExternalReferenceCode,
 					String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPageHttpResponse(
+				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPageHttpResponse(
 					accountExternalReferenceCode,
 					userAccountExternalReferenceCode);
 
@@ -660,7 +660,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPageHttpResponse(
+				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPageHttpResponse(
 					String accountExternalReferenceCode,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -892,12 +892,12 @@ public interface AccountRoleResource {
 		}
 
 		public Page<AccountRole>
-				getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPage(
+				getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
 					String externalReferenceCode, String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPageHttpResponse(
+				getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPageHttpResponse(
 					externalReferenceCode, emailAddress);
 
 			String content = httpResponse.getContent();
@@ -938,7 +938,7 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPageHttpResponse(
+				getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPageHttpResponse(
 					String externalReferenceCode, String emailAddress)
 			throws Exception {
 

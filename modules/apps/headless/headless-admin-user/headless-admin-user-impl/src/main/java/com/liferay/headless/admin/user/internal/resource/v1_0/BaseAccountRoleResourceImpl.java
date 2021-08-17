@@ -106,7 +106,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("accountExternalReferenceCode")
 				String accountExternalReferenceCode,
@@ -142,7 +142,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("accountExternalReferenceCode")
 				String accountExternalReferenceCode,
@@ -180,7 +180,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("accountExternalReferenceCode")
 				String accountExternalReferenceCode,
@@ -198,7 +198,7 @@ public abstract class BaseAccountRoleResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@Operation(
-		description = "Assigns account users by extenal reference code to the account role"
+		description = "Assigns account users by external reference code to the account role"
 	)
 	@Override
 	@Parameters(
@@ -219,7 +219,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("accountExternalReferenceCode")
 				String accountExternalReferenceCode,
@@ -257,7 +257,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public Page<AccountRole>
-			getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPage(
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("accountExternalReferenceCode")
 				String accountExternalReferenceCode,
@@ -353,7 +353,7 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public Page<AccountRole>
-			getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPage(
+			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("externalReferenceCode")
 				String externalReferenceCode,

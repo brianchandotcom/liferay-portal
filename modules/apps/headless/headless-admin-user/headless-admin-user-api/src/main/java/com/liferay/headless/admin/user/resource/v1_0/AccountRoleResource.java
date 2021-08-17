@@ -51,31 +51,31 @@ public interface AccountRoleResource {
 	}
 
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception;
 
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception;
 
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<AccountRole>
-			getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPage(
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 				String accountExternalReferenceCode,
 				String userAccountExternalReferenceCode)
 		throws Exception;
@@ -90,7 +90,7 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public Page<AccountRole>
-			getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPage(
+			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
 				String externalReferenceCode, String emailAddress)
 		throws Exception;
 

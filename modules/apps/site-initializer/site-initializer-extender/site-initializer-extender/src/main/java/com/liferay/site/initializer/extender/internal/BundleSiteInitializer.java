@@ -286,11 +286,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			objectDefinition = objectDefinitionResource.postObjectDefinition(
-				objectDefinition);
+			try {
+				objectDefinition =
+					objectDefinitionResource.postObjectDefinition(
+						objectDefinition);
 
-			objectDefinitionResource.postObjectDefinitionPublish(
-				objectDefinition.getId());
+				objectDefinitionResource.postObjectDefinitionPublish(
+					objectDefinition.getId());
+			}
+			catch (Exception exception) {
+
+				// TODO PUT
+
+			}
 		}
 	}
 

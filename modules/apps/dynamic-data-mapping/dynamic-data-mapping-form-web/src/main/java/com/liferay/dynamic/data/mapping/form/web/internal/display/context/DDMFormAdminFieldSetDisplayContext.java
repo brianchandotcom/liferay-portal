@@ -131,7 +131,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			jsonFactory, npmResolver, portal);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
-			formAdminRequestHelper);
+			ddmFormAdminRequestHelper);
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class DDMFormAdminFieldSetDisplayContext
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						formAdminRequestHelper.getRequest(), "delete"));
+						ddmFormAdminRequestHelper.getRequest(), "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -219,7 +219,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		}
 
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		return LanguageUtil.get(
 			httpServletRequest,

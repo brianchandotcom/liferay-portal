@@ -199,10 +199,11 @@ public class DDMFormAdminDisplayContext {
 		this.ddmFormRenderer = ddmFormRenderer;
 		this.jsonFactory = jsonFactory;
 
-		formAdminRequestHelper = new DDMFormAdminRequestHelper(renderRequest);
+		ddmFormAdminRequestHelper = new DDMFormAdminRequestHelper(
+			renderRequest);
 
 		_formInstancePermissionCheckerHelper =
-			new FormInstancePermissionCheckerHelper(formAdminRequestHelper);
+			new FormInstancePermissionCheckerHelper(ddmFormAdminRequestHelper);
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
@@ -212,7 +213,7 @@ public class DDMFormAdminDisplayContext {
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						formAdminRequestHelper.getRequest(), "delete"));
+						ddmFormAdminRequestHelper.getRequest(), "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -273,7 +274,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public long getCompanyId() {
-		return formAdminRequestHelper.getCompanyId();
+		return ddmFormAdminRequestHelper.getCompanyId();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -318,9 +319,10 @@ public class DDMFormAdminDisplayContext {
 		throws Exception {
 
 		DDMFormViewFormInstanceRecordDisplayContext
-			formViewRecordDisplayContext = getFormViewRecordDisplayContext();
+			ddmFormViewFormInstanceRecordDisplayContext =
+				getDDMFormViewFormInstanceRecordDisplayContext();
 
-		return formViewRecordDisplayContext.getDDMFormContext(
+		return ddmFormViewFormInstanceRecordDisplayContext.getDDMFormContext(
 			renderRequest, readOnly);
 	}
 
@@ -335,7 +337,7 @@ public class DDMFormAdminDisplayContext {
 			serializedFormFieldTypes);
 
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		HttpServletResponse httpServletResponse =
 			PortalUtil.getHttpServletResponse(renderResponse);
@@ -473,6 +475,27 @@ public class DDMFormAdminDisplayContext {
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
+	public DDMFormViewFormInstanceRecordDisplayContext
+		getDDMFormViewFormInstanceRecordDisplayContext() {
+
+		return new DDMFormViewFormInstanceRecordDisplayContext(
+			ddmFormAdminRequestHelper.getRequest(),
+			PortalUtil.getHttpServletResponse(renderResponse),
+			_ddmFormInstanceRecordLocalService,
+			_ddmFormInstanceVersionLocalService, ddmFormRenderer,
+			_ddmFormValuesFactory, _ddmFormValuesMerger);
+	}
+
+	public DDMFormViewFormInstanceRecordsDisplayContext
+			getDDMFormViewFormInstanceRecordsDisplayContext()
+		throws PortalException {
+
+		return new DDMFormViewFormInstanceRecordsDisplayContext(
+			renderRequest, renderResponse, getDDMFormInstance(),
+			_ddmFormInstanceRecordLocalService,
+			_ddmFormFieldTypeServicesTracker);
+	}
+
 	public DDMStructure getDDMStructure() throws PortalException {
 		if (_ddmStructure != null) {
 			return _ddmStructure;
@@ -535,7 +558,7 @@ public class DDMFormAdminDisplayContext {
 				navigationItem.setActive(true);
 
 				HttpServletRequest httpServletRequest =
-					formAdminRequestHelper.getRequest();
+					ddmFormAdminRequestHelper.getRequest();
 
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "builder"));
@@ -571,7 +594,7 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		return LanguageUtil.get(
 			httpServletRequest, "create-forms-to-start-collecting-data");
@@ -581,7 +604,7 @@ public class DDMFormAdminDisplayContext {
 		SearchContainer<?> search = getSearch();
 
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		return LanguageUtil.get(
 			httpServletRequest, search.getEmptyResultsMessage());
@@ -603,7 +626,7 @@ public class DDMFormAdminDisplayContext {
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
@@ -626,7 +649,7 @@ public class DDMFormAdminDisplayContext {
 		String serializedFormBuilderContext = ParamUtil.getString(
 			renderRequest, "serializedFormBuilderContext");
 
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+		ThemeDisplay themeDisplay = ddmFormAdminRequestHelper.getThemeDisplay();
 
 		if (Validator.isNotNull(serializedFormBuilderContext)) {
 			JSONObject jsonObject = jsonFactory.createJSONObject(
@@ -659,7 +682,7 @@ public class DDMFormAdminDisplayContext {
 
 	public List<NavigationItem> getFormBuilderNavigationItems() {
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
@@ -774,27 +797,6 @@ public class DDMFormAdminDisplayContext {
 		return formURL;
 	}
 
-	public DDMFormViewFormInstanceRecordDisplayContext
-		getFormViewRecordDisplayContext() {
-
-		return new DDMFormViewFormInstanceRecordDisplayContext(
-			formAdminRequestHelper.getRequest(),
-			PortalUtil.getHttpServletResponse(renderResponse),
-			_ddmFormInstanceRecordLocalService,
-			_ddmFormInstanceVersionLocalService, ddmFormRenderer,
-			_ddmFormValuesFactory, _ddmFormValuesMerger);
-	}
-
-	public DDMFormViewFormInstanceRecordsDisplayContext
-			getFormViewRecordsDisplayContext()
-		throws PortalException {
-
-		return new DDMFormViewFormInstanceRecordsDisplayContext(
-			renderRequest, renderResponse, getDDMFormInstance(),
-			_ddmFormInstanceRecordLocalService,
-			_ddmFormFieldTypeServicesTracker);
-	}
-
 	public JSONObject getFunctionsMetadataJSONObject() throws PortalException {
 		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
 			getDDMFormBuilderSettingsResponse();
@@ -871,7 +873,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getLexiconIconsPath() {
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+		ThemeDisplay themeDisplay = ddmFormAdminRequestHelper.getThemeDisplay();
 
 		StringBundler sb = new StringBundler(3);
 
@@ -888,7 +890,7 @@ public class DDMFormAdminDisplayContext {
 
 	public List<NavigationItem> getNavigationItems() {
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		String currentTab = ParamUtil.getString(
 			httpServletRequest, "currentTab", "forms");
@@ -926,7 +928,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public PermissionChecker getPermissionChecker() {
-		return formAdminRequestHelper.getPermissionChecker();
+		return ddmFormAdminRequestHelper.getPermissionChecker();
 	}
 
 	public <T> T getPermissionCheckerHelper() {
@@ -1018,7 +1020,7 @@ public class DDMFormAdminDisplayContext {
 
 	public String getRestrictedFormURL() {
 		return _addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
-			getFormLayoutURL(formAdminRequestHelper.getThemeDisplay(), true);
+			getFormLayoutURL(ddmFormAdminRequestHelper.getThemeDisplay(), true);
 	}
 
 	public String getRolesURL() throws PortalException {
@@ -1029,7 +1031,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public long getScopeGroupId() {
-		return formAdminRequestHelper.getScopeGroupId();
+		return ddmFormAdminRequestHelper.getScopeGroupId();
 	}
 
 	public SearchContainer<?> getSearch() {
@@ -1086,7 +1088,8 @@ public class DDMFormAdminDisplayContext {
 
 	public String getSharedFormURL() {
 		return _addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
-			getFormLayoutURL(formAdminRequestHelper.getThemeDisplay(), false);
+			getFormLayoutURL(
+				ddmFormAdminRequestHelper.getThemeDisplay(), false);
 	}
 
 	public String getShareFormInstanceURL(DDMFormInstance formInstance) {
@@ -1273,7 +1276,7 @@ public class DDMFormAdminDisplayContext {
 	protected UnsafeConsumer<DropdownItem, Exception> getAddFormDropdownItem() {
 		return dropdownItem -> {
 			HttpServletRequest httpServletRequest =
-				formAdminRequestHelper.getRequest();
+				ddmFormAdminRequestHelper.getRequest();
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
@@ -1309,7 +1312,7 @@ public class DDMFormAdminDisplayContext {
 			return _ddmFormBuilderSettingsResponse;
 		}
 
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+		ThemeDisplay themeDisplay = ddmFormAdminRequestHelper.getThemeDisplay();
 
 		long fieldSetClassNameId = PortalUtil.getClassNameId(
 			DDMFormInstance.class);
@@ -1359,7 +1362,7 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
+			ddmFormAdminRequestHelper.getRequest();
 
 		return (DDMFormInstanceRecord)httpServletRequest.getAttribute(
 			DDMFormWebKeys.DYNAMIC_DATA_MAPPING_FORM_INSTANCE_RECORD);
@@ -1395,7 +1398,7 @@ public class DDMFormAdminDisplayContext {
 			return LocaleUtil.fromLanguageId(i18nLanguageId);
 		}
 
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+		ThemeDisplay themeDisplay = ddmFormAdminRequestHelper.getThemeDisplay();
 
 		return Optional.ofNullable(
 			themeDisplay.getSiteDefaultLocale()
@@ -1439,7 +1442,7 @@ public class DDMFormAdminDisplayContext {
 				dropdownItem.setHref(getPortletURL(), "navigation", "all");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						formAdminRequestHelper.getRequest(), "all"));
+						ddmFormAdminRequestHelper.getRequest(), "all"));
 			}
 		).build();
 	}
@@ -1539,13 +1542,13 @@ public class DDMFormAdminDisplayContext {
 		String propertyName) {
 
 		String propertyValue = ParamUtil.getString(
-			formAdminRequestHelper.getRequest(), propertyName);
+			ddmFormAdminRequestHelper.getRequest(), propertyName);
 
 		if (Validator.isNull(propertyValue)) {
 			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+		ThemeDisplay themeDisplay = ddmFormAdminRequestHelper.getThemeDisplay();
 
 		try {
 			JSONObject jsonObject = jsonFactory.createJSONObject(propertyValue);
@@ -1582,7 +1585,7 @@ public class DDMFormAdminDisplayContext {
 			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
 			dropdownItem.setLabel(
 				LanguageUtil.get(
-					formAdminRequestHelper.getRequest(), orderByCol));
+					ddmFormAdminRequestHelper.getRequest(), orderByCol));
 		};
 	}
 
@@ -1618,8 +1621,8 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstanceSearch ddmFormInstanceSearch) {
 
 		List<DDMFormInstance> results = _ddmFormInstanceService.search(
-			formAdminRequestHelper.getCompanyId(),
-			formAdminRequestHelper.getScopeGroupId(), getKeywords(),
+			ddmFormAdminRequestHelper.getCompanyId(),
+			ddmFormAdminRequestHelper.getScopeGroupId(), getKeywords(),
 			ddmFormInstanceSearch.getStart(), ddmFormInstanceSearch.getEnd(),
 			ddmFormInstanceSearch.getOrderByComparator());
 
@@ -1630,14 +1633,14 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstanceSearch ddmFormInstanceSearch) {
 
 		int total = _ddmFormInstanceService.searchCount(
-			formAdminRequestHelper.getCompanyId(),
-			formAdminRequestHelper.getScopeGroupId(), getKeywords());
+			ddmFormAdminRequestHelper.getCompanyId(),
+			ddmFormAdminRequestHelper.getScopeGroupId(), getKeywords());
 
 		ddmFormInstanceSearch.setTotal(total);
 	}
 
+	protected final DDMFormAdminRequestHelper ddmFormAdminRequestHelper;
 	protected final DDMFormRenderer ddmFormRenderer;
-	protected final DDMFormAdminRequestHelper formAdminRequestHelper;
 	protected final JSONFactory jsonFactory;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
@@ -1665,7 +1668,7 @@ public class DDMFormAdminDisplayContext {
 		navigationItem.setHref(
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
-					formAdminRequestHelper.getLiferayPortletRequest(),
+					ddmFormAdminRequestHelper.getLiferayPortletRequest(),
 					PortletProviderUtil.getPortletId(
 						DDMDataProviderInstance.class.getName(),
 						PortletProvider.Action.EDIT),
@@ -1673,9 +1676,9 @@ public class DDMFormAdminDisplayContext {
 			).setMVCPath(
 				"/view.jsp"
 			).setBackURL(
-				formAdminRequestHelper.getCurrentURL()
+				ddmFormAdminRequestHelper.getCurrentURL()
 			).setParameter(
-				"groupId", formAdminRequestHelper.getScopeGroupId()
+				"groupId", ddmFormAdminRequestHelper.getScopeGroupId()
 			).setParameter(
 				"refererPortletName",
 				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
@@ -1684,7 +1687,8 @@ public class DDMFormAdminDisplayContext {
 			).buildString());
 
 		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", formAdminRequestHelper.getLocale(), getClass());
+			"content.Language", ddmFormAdminRequestHelper.getLocale(),
+			getClass());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(moduleResourceBundle, "data-providers"));

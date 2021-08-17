@@ -149,13 +149,13 @@ public class DDMFormPortlet extends MVCPortlet {
 		try {
 			setRenderRequestAttributes(renderRequest, renderResponse);
 
-			DDMFormDisplayContext ddmFormPortletDisplayContext =
+			DDMFormDisplayContext ddmFormDisplayContext =
 				(DDMFormDisplayContext)renderRequest.getAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-			if (ddmFormPortletDisplayContext.isFormShared()) {
+			if (ddmFormDisplayContext.isFormShared()) {
 				saveRefererGroupIdInRequest(
-					renderRequest, ddmFormPortletDisplayContext);
+					renderRequest, ddmFormDisplayContext);
 			}
 		}
 		catch (Exception exception) {
@@ -203,10 +203,10 @@ public class DDMFormPortlet extends MVCPortlet {
 
 	protected void saveRefererGroupIdInRequest(
 		RenderRequest renderRequest,
-		DDMFormDisplayContext ddmFormPortletDisplayContext) {
+		DDMFormDisplayContext ddmFormDisplayContext) {
 
 		DDMFormInstance ddmFormInstance =
-			ddmFormPortletDisplayContext.getFormInstance();
+			ddmFormDisplayContext.getFormInstance();
 
 		if (ddmFormInstance != null) {
 			renderRequest.setAttribute(

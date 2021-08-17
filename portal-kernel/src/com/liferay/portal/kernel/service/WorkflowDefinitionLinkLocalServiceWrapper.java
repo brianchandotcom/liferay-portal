@@ -402,6 +402,15 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 
 	@Override
 	public java.util.List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+			long companyId, long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+			companyId, groupId, classPK);
+	}
+
+	@Override
+	public java.util.List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
 			long companyId, long groupId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

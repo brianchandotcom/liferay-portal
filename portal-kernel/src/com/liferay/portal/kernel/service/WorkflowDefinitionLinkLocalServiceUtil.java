@@ -359,6 +359,14 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	}
 
 	public static List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+			long companyId, long groupId, long classPK)
+		throws PortalException {
+
+		return getService().getWorkflowDefinitionLinks(
+			companyId, groupId, classPK);
+	}
+
+	public static List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
 

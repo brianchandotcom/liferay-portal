@@ -413,6 +413,21 @@ public class WorkflowDefinitionManagerTest {
 	}
 
 	@Test
+	public void testValidateTaskWithMoreThanOneDefaultTransition()
+		throws Exception {
+
+		InputStream inputStream = _getResourceInputStream(
+			"task-with-more-than-one-default-transitions-workflow-" +
+				"definition.xml");
+
+		String error = _assertInvalid(inputStream);
+
+		_assertEquals(
+			"The task8168 node cannot have more than one default transition",
+			error);
+	}
+
+	@Test
 	public void testValidateTransitions() throws Exception {
 		InputStream inputStream = _getResourceInputStream(
 			"invalid-transition-workflow-definition.xml");

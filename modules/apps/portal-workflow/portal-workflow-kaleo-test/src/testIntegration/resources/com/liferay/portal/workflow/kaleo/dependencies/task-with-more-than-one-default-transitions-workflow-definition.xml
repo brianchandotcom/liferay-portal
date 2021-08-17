@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.0.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd"
+>
+	<name>Definition70</name>
+	<version>1</version>
+	<state>
+		<name>StartNode</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						100,
+						40
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>connector32017</name>
+				<target>task8168</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>EndNode</name>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						100,
+						500
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Approve</name>
+				<description>Approve</description>
+				<script>
+					<![CDATA[com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	<task>
+		<name>task8168</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						276,
+						128
+					]
+				}
+			]]>
+		</metadata>
+		<assignments>
+			<user />
+		</assignments>
+		<transitions>
+			<transition>
+				<name>connector20229</name>
+				<target>task9232</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<name>connector22500</name>
+				<target>task11550</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>task9232</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						70,
+						219
+					]
+				}
+			]]>
+		</metadata>
+		<assignments>
+			<user />
+		</assignments>
+		<transitions>
+			<transition>
+				<name>connector16108</name>
+				<target>EndNode</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>task11550</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						564,
+						266
+					]
+				}
+			]]>
+		</metadata>
+		<assignments>
+			<user />
+		</assignments>
+		<transitions>
+			<transition>
+				<name>connector18687</name>
+				<target>EndNode</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

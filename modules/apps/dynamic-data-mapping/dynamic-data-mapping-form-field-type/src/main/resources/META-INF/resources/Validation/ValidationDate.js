@@ -191,9 +191,8 @@ const CustomDates = ({
 							disabled={readOnly}
 							id="validation_date_quantity"
 							max={MAX_QUANTITY}
-							min={MIN_QUANTITY}
 							name={`inputedQuantity_${eventType}`}
-							onChange={(event) => {
+							onBlur={(event) => {
 								let {value: newValue} = event.target;
 
 								if (newValue > MAX_QUANTITY) {
@@ -215,8 +214,11 @@ const CustomDates = ({
 									'quantity'
 								);
 							}}
+							onChange={({target: {value}}) => {
+								setQuantity(value);
+							}}
 							type="number"
-							value={Math.abs(quantity)}
+							value={quantity === '' ? '' : Math.abs(quantity)}
 						/>
 					</div>
 				</div>

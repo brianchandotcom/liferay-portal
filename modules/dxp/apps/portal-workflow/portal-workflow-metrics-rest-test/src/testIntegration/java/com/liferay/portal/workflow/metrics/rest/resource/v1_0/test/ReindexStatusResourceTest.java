@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.ReindexStatus;
@@ -51,9 +53,13 @@ public class ReindexStatusResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetReindexStatusesPage() throws Exception {
+		JSONObject reindexStatusesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"reindexStatuses", new GraphQLField("totalCount"))),
+			"JSONObject/data", "JSONObject/reindexStatuses");
 
-		// TODO
-
+		Assert.assertEquals(0, reindexStatusesJSONObject.get("totalCount"));
 	}
 
 	@Rule

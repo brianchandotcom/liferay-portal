@@ -1,0 +1,8 @@
+dependencies {
+	compileOnly project(":apps:batch-planner:batch-planner-api")
+	compileOnly project(":apps:headless:headless-admin-batch-planner:headless-admin-batch-planner-api")
+
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
+}

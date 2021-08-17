@@ -186,8 +186,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"publishFormInstanceURL", publishFormInstanceURL.toString()
 					).put(
-						"restrictedFormURL", ddmFormAdminDisplayContext.getRestrictedFormURL()
-					).put(
 						"rolesURL", rolesURL
 					).put(
 						"rules", ddmFormRulesJSONArray

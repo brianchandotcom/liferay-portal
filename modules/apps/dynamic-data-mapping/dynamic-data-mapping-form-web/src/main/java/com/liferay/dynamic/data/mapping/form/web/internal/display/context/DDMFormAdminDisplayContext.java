@@ -775,28 +775,6 @@ public class DDMFormAdminDisplayContext {
 		return getJSONObjectLocalizedPropertyFromRequest("name");
 	}
 
-	public String getFormURL() throws PortalException {
-		return getFormURL(getDDMFormInstance());
-	}
-
-	public String getFormURL(DDMFormInstance formInstance)
-		throws PortalException {
-
-		String formURL = null;
-
-		DDMFormInstanceSettings formInstanceSettings =
-			formInstance.getSettingsModel();
-
-		if (formInstanceSettings.requireAuthentication()) {
-			formURL = getRestrictedFormURL();
-		}
-		else {
-			formURL = getSharedFormURL();
-		}
-
-		return formURL;
-	}
-
 	public JSONObject getFunctionsMetadataJSONObject() throws PortalException {
 		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
 			getDDMFormBuilderSettingsResponse();
@@ -1006,21 +984,15 @@ public class DDMFormAdminDisplayContext {
 		return getPublishedFormURL(_ddmFormInstance);
 	}
 
-	public String getPublishedFormURL(DDMFormInstance formInstance)
+	public String getPublishedFormURL(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
-		if (!isFormPublished(formInstance)) {
+		if (!isFormPublished(ddmFormInstance)) {
 			return StringPool.BLANK;
 		}
 
-		String formURL = getFormURL(formInstance);
-
-		return formURL.concat(String.valueOf(formInstance.getFormInstanceId()));
-	}
-
-	public String getRestrictedFormURL() {
-		return _addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
-			getFormLayoutURL(ddmFormAdminRequestHelper.getThemeDisplay(), true);
+		return getSharedFormURL() +
+			String.valueOf(ddmFormInstance.getFormInstanceId());
 	}
 
 	public String getRolesURL() throws PortalException {
@@ -1088,8 +1060,7 @@ public class DDMFormAdminDisplayContext {
 
 	public String getSharedFormURL() {
 		return _addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
-			getFormLayoutURL(
-				ddmFormAdminRequestHelper.getThemeDisplay(), false);
+			getFormLayoutURL(ddmFormAdminRequestHelper.getThemeDisplay());
 	}
 
 	public String getShareFormInstanceURL(DDMFormInstance formInstance) {

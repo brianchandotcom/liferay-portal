@@ -247,9 +247,7 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		String formLayoutURL =
 			_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
-				getFormLayoutURL(
-					themeDisplay,
-					ddmFormInstanceSettings.requireAuthentication());
+				getFormLayoutURL(themeDisplay);
 
 		if (StringUtil.startsWith(currentURL, formLayoutURL) &&
 			!ddmFormInstanceSettings.published()) {

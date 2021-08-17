@@ -57,7 +57,6 @@ export const FormBuilder = () => {
 		publishFormInstanceURL,
 		published,
 		redirectURL,
-		restrictedFormURL,
 		shareFormInstanceURL,
 		sharedFormURL,
 		showPublishAlert,
@@ -179,28 +178,16 @@ export const FormBuilder = () => {
 
 	const getFormUrl = useCallback(
 		async (path) => {
-			const settingsDDMForm = await Liferay.componentReady(
-				'formSettingsAPI'
-			);
-
-			const fields = settingsDDMForm.reactComponentRef.current.getFields();
-
-			const {value: requireAuthentication} = fields.find(
-				({fieldName}) => fieldName === 'requireAuthentication'
-			);
-
 			const formInstanceId = document.querySelector(
 				`#${portletNamespace}formInstanceId`
 			).value;
 
 			return createFormURL(path, {
 				formInstanceId,
-				requireAuthentication,
-				restrictedFormURL,
 				sharedFormURL,
 			});
 		},
-		[portletNamespace, restrictedFormURL, sharedFormURL]
+		[portletNamespace, sharedFormURL]
 	);
 
 	useEffect(() => {

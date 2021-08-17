@@ -1,5 +1,11 @@
 definition {
 
+	macro assertNoCurrentInterests {
+		AssertVisible(
+			key_cardTitle = "Interests",
+			locator1 = "ACCards#NO_RESULTS_TITLE");
+	}
+
 	macro viewInterests {
 		var key_interestName = "${interestName}";
 

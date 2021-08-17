@@ -83,8 +83,8 @@ export default function SelectCategory({
 	const items = singleSelection
 		? [
 				{
+					checked: selectedCategoryIds?.[0],
 					items: filteredCategories.map((category) => ({
-						checked: selectedCategoryIds.includes(category.id),
 						label: category.label,
 						type: 'radio',
 						value: category.id,

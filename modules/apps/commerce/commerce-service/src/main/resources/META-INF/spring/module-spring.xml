@@ -28,6 +28,12 @@
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderNotePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderNotePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderPaymentLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderPaymentLocalService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPaymentPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderTypeLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderTypeLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderTypeServiceImpl" id="com.liferay.commerce.service.CommerceOrderTypeService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderTypePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderTypePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderTypeRelLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderTypeRelLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderTypeRelServiceImpl" id="com.liferay.commerce.service.CommerceOrderTypeRelService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderTypeRelPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderTypeRelPersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentLocalServiceImpl" id="com.liferay.commerce.service.CommerceShipmentLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentServiceImpl" id="com.liferay.commerce.service.CommerceShipmentService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShipmentPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShipmentPersistence" />

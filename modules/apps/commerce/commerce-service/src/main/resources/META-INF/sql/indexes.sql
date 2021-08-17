@@ -39,6 +39,15 @@ create index IX_EF4EEF80 on CommerceOrderNote (companyId, externalReferenceCode[
 
 create index IX_CF274005 on CommerceOrderPayment (commerceOrderId);
 
+create index IX_4EC1CAC8 on CommerceOrderType (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_CAB43113 on CommerceOrderType (displayDate, status);
+create index IX_56A0F58A on CommerceOrderType (expirationDate, status);
+
+create unique index IX_CBAD3B91 on CommerceOrderTypeRel (classNameId, classPK, commerceOrderTypeId);
+create index IX_7813C75C on CommerceOrderTypeRel (classNameId, commerceOrderTypeId);
+create index IX_AA661546 on CommerceOrderTypeRel (commerceOrderTypeId);
+create index IX_22C116C7 on CommerceOrderTypeRel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+
 create index IX_616BDD15 on CommerceShipment (groupId, commerceAddressId);
 create index IX_68FBA2B5 on CommerceShipment (groupId, status);
 

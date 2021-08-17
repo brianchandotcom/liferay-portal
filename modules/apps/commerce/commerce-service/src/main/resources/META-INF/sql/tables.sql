@@ -219,6 +219,40 @@ create table CommerceOrderPayment (
 	status INTEGER
 );
 
+create table CommerceOrderType (
+	externalReferenceCode VARCHAR(75) null,
+	commerceOrderTypeId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name STRING null,
+	description STRING null,
+	active_ BOOLEAN,
+	displayDate DATE null,
+	displayOrder INTEGER,
+	expirationDate DATE null,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
+);
+
+create table CommerceOrderTypeRel (
+	externalReferenceCode VARCHAR(75) null,
+	commerceOrderTypeRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	commerceOrderTypeId LONG
+);
+
 create table CommerceShipment (
 	commerceShipmentId LONG not null primary key,
 	groupId LONG,

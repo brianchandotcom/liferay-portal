@@ -30,12 +30,99 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8351 | Test Summary: Page profile audience card shows known and anonymous individuals as well as segmented/unsegmented individuals"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsKnownAnonymousIndividualsAsWellAsSegmentedUnsegmentedIndividuals {
+		task ("Add page and Blog for interaction with the AC") {
+			ACUtils.addSiteAndPage();
 
-		// TODO LRAC-8351 ShowsKnownAnonymousIndividualsAsWellAsSegmentedUnsegmentedIndividuals
+			ACUtils.createBlogsAndAddToPage();
+		}
 
+		task ("Add users and interact with the page to get data from known and unsegmented users") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			for (var name : list "ac,liferay") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+
+			ACDXPSettings.syncNewContactData();
+
+			for (var name : list "ac,liferay") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Logout and interact whith the page to get data from anonymous user") {
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Go to AC and create segment for the user") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			ACSegments.addStaticMember(tableMember = "ac ac");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to DXP and interact with the page to get data from segmented users") {
+			ACUtils.launchDXP();
+
+			for (var name : list "ac,liferay") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Logout and interact with the page to get data from anonymous unsegmented user") {
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close all sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Go to pages and open the page created in DXP") {
+			ACUtils.launchAC();
+
+			ACSites.assertAudienceCardItems(siteName = "Order History");
+		}
 	}
 
 }

@@ -15,25 +15,22 @@
 				},
 				{
 					"defaultValue": false,
-					"label": "show-label",
-					"name": "showLabel",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": false,
 					"label": "include-search-field",
 					"name": "showSearch",
 					"type": "checkbox"
 				},
 				{
+					"defaultValue": false,
+					"label": "show-label",
+					"name": "showLabel",
+					"type": "checkbox"
+				},
+				{
 					"defaultValue": "",
-					"label": "label",
+					"label": "label-text",
 					"localizable": true,
 					"name": "label",
-					"type": "text",
-					"typeOptions": {
-						"placeholder": "label"
-					}
+					"type": "text"
 				}
 			]
 		}

@@ -91,10 +91,6 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 					fragmentEntryProcessorContext.getLocale()));
 		}
 
-		if (Validator.isNull(href)) {
-			return;
-		}
-
 		Element linkElement = new Element("a");
 
 		Elements elements = element.children();

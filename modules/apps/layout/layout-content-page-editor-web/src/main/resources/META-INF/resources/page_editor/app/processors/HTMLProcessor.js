@@ -66,6 +66,9 @@ function createEditor(element, changeCallback, destroyCallback) {
 				},
 			},
 		],
+		containerProps: {
+			className: '',
+		},
 		onClose: () => destroyCallback(),
 		onOpen: () => {
 			Liferay.Util.getTop()

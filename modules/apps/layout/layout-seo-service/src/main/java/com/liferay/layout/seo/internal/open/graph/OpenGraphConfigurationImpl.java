@@ -15,6 +15,7 @@
 package com.liferay.layout.seo.internal.open.graph;
 
 import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
+import com.liferay.layout.seo.internal.configuration.LayoutSEOGroupConfiguration;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,6 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OpenGraphConfiguration.class)
 public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #isLayoutTranslatedLanguagesEnabled(Group)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isLayoutTranslatedLanguagesEnabled(Company company)
 		throws PortalException {
@@ -45,20 +52,23 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			return false;
 		}
 
-		return layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages();
+		return isLayoutTranslatedLanguagesEnabled(
+			_groupLocalService.getGroup(company.getGroupId()));
 	}
 
 	@Override
 	public boolean isLayoutTranslatedLanguagesEnabled(Group group)
 		throws PortalException {
 
-		if (!isLayoutTranslatedLanguagesEnabled(
-				_companyLocalService.getCompany(group.getCompanyId()))) {
+		LayoutSEOGroupConfiguration layoutSEOGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				LayoutSEOGroupConfiguration.class, group.getGroupId());
 
+		if (!isOpenGraphEnabled(group)) {
 			return false;
 		}
 
-		return isOpenGraphEnabled(group);
+		return layoutSEOGroupConfiguration.enableLayoutTranslatedLanguages();
 	}
 
 	@Override
@@ -98,6 +108,9 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;

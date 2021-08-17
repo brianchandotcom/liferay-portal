@@ -24,7 +24,7 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-	}
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -80,9 +80,6 @@ definition {
 		}
 
 		task ("Asset 180 Days time period filter") {
-
-
-			
 
 			// It is not possible to perform the assert because this test needs data from the past
 

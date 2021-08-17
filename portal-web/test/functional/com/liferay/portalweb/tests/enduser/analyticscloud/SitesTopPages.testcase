@@ -66,12 +66,74 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8296 | Test Summary: Show Top 5 Entrance Pages"
-	@ignore = "true"
 	@priority = "5"
 	test ShowTop5EntrancePages {
 
-		// TODO LRAC-8296 ShowTop5EntrancePages pending implementation
+		property portal.upstream = "quarantine";
 
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8725
+
+		task ("Site and blogs creation and connection with AC") {
+			ACUtils.addSiteAndPage();
+
+			for (var n : list "2,3,4,5") {
+				ACUtils.createBlogsAndAddToPage(entryTitle = "Test Blog ${n}");
+			}
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with pages") {
+			for (var n : list "2,3,4,5") {
+				Refresh();
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${n}");
+
+				Refresh();
+
+				Pause(locator1 = "3000");
+			}
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "60000");
+
+
+
+
+
+		}
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+		task ("Asset top 5 entrances pages") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ClickNoError(locator1 = "ACSites#TOP_PAGES_ENTRANCES_BUTTON");
+
+			ACCards.viewTopSitesByIndexes(
+				key_entry = "AC Page",
+				key_index = "1");
+
+			for (var n : list "2,3,4,5") {
+				ACCards.viewTopSitesByIndexes(
+					key_entry = "Test Blog ${n}",
+					key_index = "${n}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8297 | Test Summary: Show Top 5 Exit Pages"

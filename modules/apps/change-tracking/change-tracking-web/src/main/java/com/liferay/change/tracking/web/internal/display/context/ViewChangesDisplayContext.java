@@ -60,11 +60,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -319,7 +317,15 @@ public class ViewChangesDisplayContext {
 				return dataURL.toString();
 			}
 		).put(
-			"defaultLocale", _getLocaleJSONObject(_themeDisplay.getLanguageId())
+			"defaultLocale",
+			JSONUtil.put(
+				"label", _themeDisplay.getLanguageId()
+			).put(
+				"symbol",
+				StringUtil.replace(
+					StringUtil.toLowerCase(_themeDisplay.getLanguageId()),
+					CharPool.UNDERLINE, CharPool.DASH)
+			)
 		).put(
 			"deleteCTCommentURL",
 			() -> {
@@ -708,17 +714,6 @@ public class ViewChangesDisplayContext {
 		return jsonArray;
 	}
 
-	private JSONObject _getLocaleJSONObject(String languageId) {
-		return JSONUtil.put(
-			"label", languageId
-		).put(
-			"symbol",
-			StringUtil.replace(
-				StringUtil.toLowerCase(languageId), CharPool.UNDERLINE,
-				CharPool.DASH)
-		);
-	}
-
 	private String _getMissingModelMessage(
 		long classPK, long modelClassNameId) {
 
@@ -987,53 +982,6 @@ public class ViewChangesDisplayContext {
 				).put(
 					"userId", ctEntry.getUserId()
 				);
-
-				String[] availableLanguageIds =
-					_ctDisplayRendererRegistry.getAvailableLanguageIds(
-						ctCollectionId, ctSQLMode, model, modelClassNameId);
-
-				if ((availableLanguageIds != null) &&
-					(availableLanguageIds.length > 0)) {
-
-					String defaultLanguageId =
-						_ctDisplayRendererRegistry.getDefaultLanguageId(
-							model, modelClassNameId);
-
-					if (Validator.isNull(defaultLanguageId)) {
-						defaultLanguageId = _themeDisplay.getLanguageId();
-					}
-
-					modelInfo._jsonObject.put(
-						"defaultLocale",
-						_getLocaleJSONObject(defaultLanguageId));
-
-					JSONArray localesJSONArray =
-						JSONFactoryUtil.createJSONArray();
-					JSONObject localizedTitlesJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					for (String languageId : availableLanguageIds) {
-						localesJSONArray.put(_getLocaleJSONObject(languageId));
-
-						if (languageId.equals(_themeDisplay.getLanguageId())) {
-							localizedTitlesJSONObject.put(
-								languageId,
-								modelInfo._jsonObject.getString("title"));
-						}
-						else {
-							localizedTitlesJSONObject.put(
-								languageId,
-								_ctDisplayRendererRegistry.getTitle(
-									ctCollectionId, ctSQLMode,
-									LocaleUtil.fromLanguageId(languageId),
-									model, modelClassNameId));
-						}
-					}
-
-					modelInfo._jsonObject.put("locales", localesJSONArray);
-					modelInfo._jsonObject.put(
-						"localizedTitles", localizedTitlesJSONObject);
-				}
 
 				if (model instanceof GroupedModel) {
 					GroupedModel groupedModel = (GroupedModel)model;

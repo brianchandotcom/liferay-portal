@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {
 	ClayInput,
 	ClayRadio,
@@ -23,8 +23,6 @@ import ClayForm, {
 	ClayToggle,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
-import ClayLayout from '@clayui/layout';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
@@ -550,105 +548,6 @@ const CTComments = ({
 	);
 };
 
-const LocalizationDropdown = ({
-	currentLocale,
-	defaultLocale,
-	locales,
-	setSelectedLocale,
-	spritemap,
-}) => {
-	const [active, setActive] = useState(false);
-
-	return (
-		<div className="autofit-col publications-localization">
-			<ClayDropDown
-				active={active}
-				onActiveChange={setActive}
-				trigger={
-					<ClayButton
-						displayType="secondary"
-						monospaced
-						onClick={() => setActive(!active)}
-					>
-						<span className="inline-item">
-							<ClayIcon
-								spritemap={spritemap}
-								symbol={currentLocale.symbol}
-							/>
-						</span>
-						<span className="btn-section">
-							{currentLocale.label}
-						</span>
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					{locales
-						.sort((a, b) => {
-							if (a.label === defaultLocale.label) {
-								return -1;
-							}
-							else if (b.label === defaultLocale.label) {
-								return 1;
-							}
-
-							return 0;
-						})
-						.map((locale) => {
-							return (
-								<ClayDropDown.Item
-									key={locale.label}
-									onClick={() => {
-										setActive(false);
-										setSelectedLocale(locale);
-									}}
-								>
-									<ClayLayout.ContentRow containerElement="span">
-										<ClayLayout.ContentCol
-											containerElement="span"
-											expand
-										>
-											<ClayLayout.ContentSection>
-												<ClayIcon
-													className="inline-item inline-item-before"
-													spritemap={spritemap}
-													symbol={locale.symbol}
-												/>
-
-												{locale.label}
-											</ClayLayout.ContentSection>
-										</ClayLayout.ContentCol>
-										<ClayLayout.ContentCol containerElement="span">
-											<ClayLayout.ContentSection>
-												<ClayLabel
-													displayType={
-														locale.label ===
-														defaultLocale.label
-															? 'info'
-															: 'success'
-													}
-												>
-													{locale.label ===
-													defaultLocale.label
-														? Liferay.Language.get(
-																'default'
-														  )
-														: Liferay.Language.get(
-																'translated'
-														  )}
-												</ClayLabel>
-											</ClayLayout.ContentSection>
-										</ClayLayout.ContentCol>
-									</ClayLayout.ContentRow>
-								</ClayDropDown.Item>
-							);
-						})}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
-		</div>
-	);
-};
-
 export default ({
 	activeCTCollection,
 	changes,
@@ -1142,76 +1041,6 @@ export default ({
 		[discardURL, setParameter]
 	);
 
-	const getDropdownItems = useCallback(
-		(node) => {
-			if (!activeCTCollection || !node.modelClassNameId) {
-				return null;
-			}
-
-			const dropdownItems = [];
-
-			const cache =
-				renderCache.current[
-					node.modelClassNameId.toString() +
-						'-' +
-						node.modelClassPK.toString()
-				];
-
-			if (cache && cache.editURL) {
-				dropdownItems.push({
-					href: cache.editURL,
-					label: Liferay.Language.get('edit'),
-					symbolLeft: 'pencil',
-				});
-			}
-
-			dropdownItems.push({
-				href: getDiscardURL(node),
-				label: Liferay.Language.get('discard'),
-				symbolLeft: 'times-circle',
-			});
-
-			for (let i = 0; i < dropdownItems.length; i++) {
-				const dropdownItem = dropdownItems[i];
-
-				const href = dropdownItem.href;
-
-				if (typeof href !== 'string') {
-					continue;
-				}
-
-				const index = href.indexOf('?');
-
-				if (index > 0) {
-					let redirectKey = null;
-
-					const params = new URLSearchParams(
-						href.substring(index + 1)
-					);
-
-					params.forEach((value, key) => {
-						if (key.endsWith('_redirect')) {
-							redirectKey = key;
-						}
-					});
-
-					if (redirectKey) {
-						params.set(
-							redirectKey,
-							window.location.pathname + window.location.search
-						);
-
-						dropdownItem.href =
-							href.substring(0, index) + '?' + params.toString();
-					}
-				}
-			}
-
-			return dropdownItems;
-		},
-		[activeCTCollection, getDiscardURL]
-	);
-
 	const getPath = useCallback(
 		(pathParam, showHideable) => {
 			return (
@@ -1298,7 +1127,6 @@ export default ({
 			initialNode.children,
 			initialShowHideable
 		),
-		dropdownItems: getDropdownItems(initialNode),
 		filterClass: initialFilterClass,
 		id: initialNodeId,
 		node: initialNode,
@@ -1306,7 +1134,6 @@ export default ({
 		showHideable: initialShowHideable,
 		viewType: initialViewType,
 	});
-	const [selectedLocale, setSelectedLocale] = useState(defaultLocale);
 	const [showComments, setShowComments] = useState(false);
 
 	const handleNavigationUpdate = useCallback(
@@ -1337,7 +1164,6 @@ export default ({
 			) {
 				setRenderState({
 					children: renderState.children,
-					dropdownItems: renderState.dropdownItems,
 					filterClass: renderState.filterClass,
 					id: renderState.id,
 					node: renderState.node,
@@ -1364,7 +1190,6 @@ export default ({
 
 			setRenderState({
 				children: filterHideableNodes(node.children, showHideable),
-				dropdownItems: getDropdownItems(node),
 				filterClass,
 				id: nodeId,
 				node,
@@ -1375,7 +1200,7 @@ export default ({
 
 			window.scrollTo(0, 0);
 		},
-		[VIEW_TYPE_CONTEXT, getDropdownItems, getNode, getPath, renderState]
+		[VIEW_TYPE_CONTEXT, getNode, getPath, renderState]
 	);
 
 	const handlePopState = useCallback(
@@ -1424,7 +1249,6 @@ export default ({
 			) {
 				setRenderState({
 					children: renderState.children,
-					dropdownItems: renderState.dropdownItems,
 					filterClass: renderState.filterClass,
 					id: renderState.id,
 					node: renderState.node,
@@ -1447,7 +1271,6 @@ export default ({
 
 			setRenderState({
 				children: filterHideableNodes(node.children, showHideable),
-				dropdownItems: getDropdownItems(node),
 				filterClass,
 				id: nodeId,
 				node,
@@ -1459,7 +1282,6 @@ export default ({
 		[
 			PARAM_PATH,
 			VIEW_TYPE_CONTEXT,
-			getDropdownItems,
 			getNode,
 			getPathState,
 			isWithinApp,
@@ -1848,25 +1670,13 @@ export default ({
 
 	const getDataURL = (node) => {
 		if (node.ctEntryId) {
-			let url = setParameter(
+			const url = setParameter(
 				dataURL,
 				'activeCTCollection',
 				activeCTCollection.toString()
 			);
 
-			url = setParameter(url, 'ctEntryId', node.ctEntryId.toString());
-
-			if (node.locales && node.locales.length > 0) {
-				const languageIds = [];
-
-				for (let i = 0; i < node.locales.length; i++) {
-					languageIds.push(node.locales[i].label);
-				}
-
-				return setParameter(url, 'languageIds', languageIds.join(','));
-			}
-
-			return url;
+			return setParameter(url, 'ctEntryId', node.ctEntryId.toString());
 		}
 
 		const url = setParameter(
@@ -2258,7 +2068,6 @@ export default ({
 				renderState.node.children,
 				showHideable
 			),
-			dropdownItems: renderState.dropdownItems,
 			filterClass: renderState.filterClass,
 			id: renderState.id,
 			node: renderState.node,
@@ -2273,107 +2082,47 @@ export default ({
 			return '';
 		}
 
-		let currentLocale = selectedLocale;
-
-		if (
-			!renderState.node.locales ||
-			!renderState.node.locales.find(
-				(item) => item.label === currentLocale.label
-			)
-		) {
-			if (renderState.node.defaultLocale) {
-				currentLocale = renderState.node.defaultLocale;
-			}
-			else {
-				currentLocale = defaultLocale;
-			}
-		}
-
-		let title = renderState.node.title;
-
-		if (
-			renderState.node.localizedTitles &&
-			renderState.node.localizedTitles[currentLocale.label]
-		) {
-			title = renderState.node.localizedTitles[currentLocale.label];
-		}
-
 		return (
-			<div className="sheet">
-				<div className="autofit-row sheet-title">
-					{renderState.node.locales &&
-						renderState.node.locales.length > 0 && (
-							<LocalizationDropdown
-								currentLocale={currentLocale}
-								defaultLocale={renderState.node.defaultLocale}
-								locales={renderState.node.locales}
-								setSelectedLocale={setSelectedLocale}
-								spritemap={spritemap}
-							/>
-						)}
-					<div className="autofit-col autofit-col-expand">
-						<h2>{title}</h2>
+			<ChangeTrackingRenderView
+				ctEntry={!!renderState.node.ctEntryId}
+				dataURL={getDataURL(renderState.node)}
+				defaultLocale={defaultLocale}
+				description={
+					renderState.node.description
+						? renderState.node.description
+						: renderState.node.typeName
+				}
+				discardURL={getDiscardURL(renderState.node)}
+				getCache={() =>
+					renderCache.current[
+						renderState.node.modelClassNameId.toString() +
+							'-' +
+							renderState.node.modelClassPK.toString()
+					]
+				}
+				showDropdown={
+					activeCTCollection && renderState.node.modelClassNameId
+				}
+				spritemap={spritemap}
+				title={renderState.node.title}
+				updateCache={(data) => {
+					renderCache.current[
+						renderState.node.modelClassNameId.toString() +
+							'-' +
+							renderState.node.modelClassPK.toString()
+					] = data;
 
-						<div className="entry-description">
-							{renderState.node.description
-								? renderState.node.description
-								: renderState.node.typeName}
-						</div>
-					</div>
-					{renderState.dropdownItems && (
-						<div className="autofit-col">
-							<ClayDropDownWithItems
-								alignmentPosition={Align.BottomLeft}
-								items={renderState.dropdownItems}
-								spritemap={spritemap}
-								trigger={
-									<ClayButtonWithIcon
-										displayType="unstyled"
-										small
-										spritemap={spritemap}
-										symbol="ellipsis-v"
-									/>
-								}
-							/>
-						</div>
-					)}
-				</div>
-				<div className="sheet-section">
-					<ChangeTrackingRenderView
-						ctEntry={!!renderState.node.ctEntryId}
-						dataURL={getDataURL(renderState.node)}
-						getCache={() =>
-							renderCache.current[
-								renderState.node.modelClassNameId.toString() +
-									'-' +
-									renderState.node.modelClassPK.toString()
-							]
-						}
-						languageId={currentLocale.label}
-						spritemap={spritemap}
-						updateCache={(data) => {
-							renderCache.current[
-								renderState.node.modelClassNameId.toString() +
-									'-' +
-									renderState.node.modelClassPK.toString()
-							] = data;
-
-							setRenderState({
-								children: renderState.children,
-								dropdownItems: getDropdownItems(
-									renderState.node
-								),
-								filterClass: renderState.filterClass,
-								id: renderState.id,
-								node: renderState.node,
-								page: renderState.page,
-								showHideable: renderState.showHideable,
-								viewType: renderState.viewType,
-							});
-						}}
-					/>
-				</div>
-			</div>
+					setRenderState({
+						children: renderState.children,
+						filterClass: renderState.filterClass,
+						id: renderState.id,
+						node: renderState.node,
+						page: renderState.page,
+						showHideable: renderState.showHideable,
+						viewType: renderState.viewType,
+					});
+				}}
+			/>
 		);
 	};
 
@@ -2512,7 +2261,6 @@ export default ({
 					setDeltaState(delta);
 					setRenderState({
 						children: renderState.children,
-						dropdownItems: renderState.dropdownItems,
 						filterClass: renderState.filterClass,
 						id: renderState.id,
 						node: renderState.node,
@@ -2524,7 +2272,6 @@ export default ({
 				onPageChange={(page) =>
 					setRenderState({
 						children: renderState.children,
-						dropdownItems: renderState.dropdownItems,
 						filterClass: renderState.filterClass,
 						id: renderState.id,
 						node: renderState.node,

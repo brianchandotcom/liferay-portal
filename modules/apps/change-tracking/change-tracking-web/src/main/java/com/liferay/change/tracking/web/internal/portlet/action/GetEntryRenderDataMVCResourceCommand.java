@@ -26,12 +26,14 @@ import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistr
 import com.liferay.change.tracking.web.internal.display.DisplayContextImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -43,10 +45,13 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
@@ -159,15 +164,17 @@ public class GetEntryRenderDataMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		Locale locale = _portal.getLocale(httpServletRequest);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
 
-		String[] languageIds = ParamUtil.getStringValues(
-			resourceRequest, "languageIds");
-
+		String[] availableLanguageIds = null;
+		String defaultLanguageId = null;
 		String editURL = null;
+		JSONObject localizedTitlesJSONObject = null;
 		String rightContent = null;
 		JSONObject rightLocalizedContentJSONObject = null;
 		String rightRender = null;
@@ -201,18 +208,41 @@ public class GetEntryRenderDataMVCResourceCommand
 						httpServletRequest, rightModel);
 				}
 
-				if (languageIds.length > 0) {
+				availableLanguageIds =
+					_ctDisplayRendererRegistry.getAvailableLanguageIds(
+						ctCollectionId, ctSQLMode, rightModel,
+						ctEntry.getModelClassNameId());
+
+				defaultLanguageId =
+					_ctDisplayRendererRegistry.getDefaultLanguageId(
+						rightModel, ctEntry.getModelClassNameId());
+
+				if ((availableLanguageIds != null) &&
+					(availableLanguageIds.length > 0)) {
+
+					localizedTitlesJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					for (String languageId : availableLanguageIds) {
+						localizedTitlesJSONObject.put(
+							languageId,
+							_ctDisplayRendererRegistry.getTitle(
+								ctCollectionId, ctSQLMode,
+								LocaleUtil.fromLanguageId(languageId),
+								rightModel, ctEntry.getModelClassNameId()));
+					}
+
 					rightLocalizedContentJSONObject =
 						_getLocalizedContentJSONObject(
-							ctCollectionId, ctDisplayRenderer, ctSQLMode,
-							httpServletRequest, httpServletResponse,
-							languageIds, rightModel);
+							availableLanguageIds, ctCollectionId,
+							ctDisplayRenderer, ctSQLMode, httpServletRequest,
+							httpServletResponse, rightModel);
 				}
 				else {
 					rightContent = _getContent(
 						ctCollectionId, ctDisplayRenderer, ctSQLMode,
-						httpServletRequest, httpServletResponse, locale,
-						rightModel);
+						httpServletRequest, httpServletResponse,
+						themeDisplay.getLocale(), rightModel);
 				}
 
 				rightRender = _getRender(
@@ -278,18 +308,22 @@ public class GetEntryRenderDataMVCResourceCommand
 						rightVersionName, " (",
 						_language.get(httpServletRequest, "publication"), ")");
 
-					if (languageIds.length > 0) {
+					if ((availableLanguageIds != null) &&
+						(availableLanguageIds.length > 0)) {
+
 						leftLocalizedContentJSONObject =
 							_getLocalizedContentJSONObject(
-								leftCtCollectionId, ctDisplayRenderer,
-								leftCTSQLMode, httpServletRequest,
-								httpServletResponse, languageIds, leftModel);
+								availableLanguageIds, leftCtCollectionId,
+								ctDisplayRenderer, leftCTSQLMode,
+								httpServletRequest, httpServletResponse,
+								leftModel);
 					}
 					else {
 						leftContent = _getContent(
 							leftCtCollectionId, ctDisplayRenderer,
 							leftCTSQLMode, httpServletRequest,
-							httpServletResponse, locale, leftModel);
+							httpServletResponse, themeDisplay.getLocale(),
+							leftModel);
 					}
 
 					leftRender = _getRender(
@@ -309,18 +343,45 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 			if (leftModel != null) {
-				if (languageIds.length > 0) {
+				if (ctEntry.getChangeType() ==
+						CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+					availableLanguageIds =
+						_ctDisplayRendererRegistry.getAvailableLanguageIds(
+							leftCtCollectionId, leftCTSQLMode, leftModel,
+							ctEntry.getModelClassNameId());
+
+					defaultLanguageId =
+						_ctDisplayRendererRegistry.getDefaultLanguageId(
+							leftModel, ctEntry.getModelClassNameId());
+				}
+
+				if ((availableLanguageIds != null) &&
+					(availableLanguageIds.length > 0)) {
+
+					localizedTitlesJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					for (String languageId : availableLanguageIds) {
+						localizedTitlesJSONObject.put(
+							languageId,
+							_ctDisplayRendererRegistry.getTitle(
+								leftCtCollectionId, leftCTSQLMode,
+								LocaleUtil.fromLanguageId(languageId),
+								leftModel, ctEntry.getModelClassNameId()));
+					}
+
 					leftLocalizedContentJSONObject =
 						_getLocalizedContentJSONObject(
-							leftCtCollectionId, ctDisplayRenderer,
-							leftCTSQLMode, httpServletRequest,
-							httpServletResponse, languageIds, leftModel);
+							availableLanguageIds, leftCtCollectionId,
+							ctDisplayRenderer, leftCTSQLMode,
+							httpServletRequest, httpServletResponse, leftModel);
 				}
 				else {
 					leftContent = _getContent(
 						leftCtCollectionId, ctDisplayRenderer, leftCTSQLMode,
-						httpServletRequest, httpServletResponse, locale,
-						leftModel);
+						httpServletRequest, httpServletResponse,
+						themeDisplay.getLocale(), leftModel);
 				}
 
 				leftRender = _getRender(
@@ -381,18 +442,26 @@ public class GetEntryRenderDataMVCResourceCommand
 						leftVersionName, " (",
 						_language.get(httpServletRequest, "deleted"), ")");
 
-					if (languageIds.length > 0) {
+					availableLanguageIds =
+						_ctDisplayRendererRegistry.getAvailableLanguageIds(
+							ctCollectionId, ctSQLMode, rightModel,
+							ctEntry.getModelClassNameId());
+
+					if ((availableLanguageIds != null) &&
+						(availableLanguageIds.length > 0)) {
+
 						rightLocalizedContentJSONObject =
 							_getLocalizedContentJSONObject(
-								ctCollectionId, ctDisplayRenderer, ctSQLMode,
+								availableLanguageIds, ctCollectionId,
+								ctDisplayRenderer, ctSQLMode,
 								httpServletRequest, httpServletResponse,
-								languageIds, rightModel);
+								rightModel);
 					}
 					else {
 						rightContent = _getContent(
 							ctCollectionId, ctDisplayRenderer, ctSQLMode,
-							httpServletRequest, httpServletResponse, locale,
-							rightModel);
+							httpServletRequest, httpServletResponse,
+							themeDisplay.getLocale(), rightModel);
 					}
 
 					rightRender = _getRender(
@@ -404,6 +473,13 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		JSONObject jsonObject = JSONUtil.put("changeType", changeType);
+
+		if (Validator.isNull(defaultLanguageId)) {
+			defaultLanguageId = themeDisplay.getLanguageId();
+		}
+
+		jsonObject.put(
+			"defaultLocale", _getLocaleJSONObject(defaultLanguageId));
 
 		if (editURL != null) {
 			jsonObject.put("editURL", editURL);
@@ -457,7 +533,7 @@ public class GetEntryRenderDataMVCResourceCommand
 			JSONObject unifiedLocalizedContentJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			for (String languageId : languageIds) {
+			for (String languageId : availableLanguageIds) {
 				unifiedLocalizedContentJSONObject.put(
 					languageId,
 					DiffHtmlUtil.diff(
@@ -481,15 +557,42 @@ public class GetEntryRenderDataMVCResourceCommand
 					new UnsyncStringReader(rightRender)));
 		}
 
+		if ((availableLanguageIds != null) &&
+			(availableLanguageIds.length > 0)) {
+
+			JSONArray localesJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (String languageId : availableLanguageIds) {
+				localesJSONArray.put(_getLocaleJSONObject(languageId));
+			}
+
+			jsonObject.put(
+				"locales", localesJSONArray
+			).put(
+				"localizedTitles", localizedTitlesJSONObject
+			);
+		}
+
 		return jsonObject;
 	}
 
+	private JSONObject _getLocaleJSONObject(String languageId) {
+		return JSONUtil.put(
+			"label", languageId
+		).put(
+			"symbol",
+			StringUtil.replace(
+				StringUtil.toLowerCase(languageId), CharPool.UNDERLINE,
+				CharPool.DASH)
+		);
+	}
+
 	private <T extends BaseModel<T>> JSONObject _getLocalizedContentJSONObject(
-		long ctCollectionId, CTDisplayRenderer<T> ctDisplayRenderer,
+		String[] availableLanguageIds, long ctCollectionId,
+		CTDisplayRenderer<T> ctDisplayRenderer,
 		CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String[] languageIds,
-		T model) {
+		HttpServletResponse httpServletResponse, T model) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -499,7 +602,7 @@ public class GetEntryRenderDataMVCResourceCommand
 			SafeCloseable safeCloseable2 =
 				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
 
-			for (String languageId : languageIds) {
+			for (String languageId : availableLanguageIds) {
 				jsonObject.put(
 					languageId,
 					ctDisplayRenderer.getContent(

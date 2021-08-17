@@ -14226,6 +14226,13 @@ url=${short.hostname}:8080</echo>
 		<uninstall-patches patching.tool.dir="${patching.tool.dir}" />
 	</target>
 
+	<target name="unzip-download-temp-file">
+		<unzip
+			dest="${selenium.output.dir.name}"
+			src="${selenium.output.dir.name}/${fileName}"
+		/>
+	</target>
+
 	<target name="update-osgi-module-configuration">
 		<local name="osgi.configs.dir" />
 

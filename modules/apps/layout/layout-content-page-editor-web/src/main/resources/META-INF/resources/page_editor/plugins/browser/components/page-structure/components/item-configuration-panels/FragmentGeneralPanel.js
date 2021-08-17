@@ -17,15 +17,13 @@ import React, {useCallback} from 'react';
 
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../../app/config/constants/fragmentConfigurationRoles';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
-import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
+import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {FieldSet} from './FieldSet';
 
@@ -38,7 +36,6 @@ export const FragmentGeneralPanel = ({item}) => {
 	);
 
 	const languageId = useSelector(selectLanguageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
 		(fieldSet) =>
@@ -50,49 +47,16 @@ export const FragmentGeneralPanel = ({item}) => {
 
 	const onValueSelect = useCallback(
 		(name, value) => {
-			const configurationValues = getConfigurationValues(
-				defaultConfigurationValues,
-				fragmentEntryLink
-			);
-
-			const localizable =
-				fieldSets?.some((fieldSet) =>
-					fieldSet.fields.some(
-						(field) => field.name === name && field.localizable
-					)
-				) ?? false;
-
-			const currentValue = configurationValues[name];
-
-			const nextConfigurationValues = {
-				...configurationValues,
-				[name]: localizable
-					? {
-							...(typeof currentValue === 'object'
-								? currentValue
-								: {[config.defaultLanguageId]: currentValue}),
-							[languageId]: value,
-					  }
-					: value,
-			};
-
-			dispatch(
-				updateFragmentConfiguration({
-					configurationValues: nextConfigurationValues,
-					fragmentEntryLink,
-					languageId,
-					segmentsExperienceId,
-				})
-			);
+			updateConfigurationValue({
+				configuration: fragmentEntryLink.configuration,
+				dispatch,
+				fragmentEntryLink,
+				languageId,
+				name,
+				value,
+			});
 		},
-		[
-			defaultConfigurationValues,
-			dispatch,
-			fieldSets,
-			fragmentEntryLink,
-			languageId,
-			segmentsExperienceId,
-		]
+		[dispatch, fragmentEntryLink, languageId]
 	);
 
 	return (

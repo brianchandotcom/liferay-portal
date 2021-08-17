@@ -126,7 +126,7 @@ function FieldLeft({fields, left, onChange}) {
 					},
 				]}
 				onChange={onChange}
-				options={fields.filter(({type}) => type !== 'paragraph')}
+				options={fields}
 				placeholder={Liferay.Language.get('choose-an-option')}
 				showEmptyOption={false}
 				type="select"
@@ -158,7 +158,7 @@ function FieldRight({fields, left, right, roles, ...otherProps}) {
 				};
 			case 'field':
 				return {
-					options: fields.filter(({type}) => type !== 'paragraph'),
+					options: fields,
 					value: [right.value],
 				};
 			default: {

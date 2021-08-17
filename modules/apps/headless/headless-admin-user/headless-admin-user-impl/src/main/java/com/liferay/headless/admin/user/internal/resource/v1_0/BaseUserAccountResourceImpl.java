@@ -109,7 +109,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("accountExternalReferenceCode")
 				String accountExternalReferenceCode,
@@ -145,7 +145,7 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("accountExternalReferenceCode")
 				String accountExternalReferenceCode,

@@ -241,13 +241,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRoles(accountExternalReferenceCode: ___, userAccountExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRoles(accountExternalReferenceCode: ___, userAccountExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Gets a user's account roles by their external reference code from an account by external reference code"
 	)
 	public AccountRolePage
-			accountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRoles(
+			accountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRoles(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
 				@GraphQLName("userAccountExternalReferenceCode") String
@@ -259,7 +259,7 @@ public class Query {
 			this::_populateResourceContext,
 			accountRoleResource -> new AccountRolePage(
 				accountRoleResource.
-					getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPage(
+					getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 						accountExternalReferenceCode,
 						userAccountExternalReferenceCode)));
 	}
@@ -293,13 +293,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRoles(emailAddress: ___, externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeUserAccountByEmailAddressAccountRoles(emailAddress: ___, externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Gets a user's account roles by their email address from an account by external reference code"
 	)
 	public AccountRolePage
-			accountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRoles(
+			accountByExternalReferenceCodeUserAccountByEmailAddressAccountRoles(
 				@GraphQLName("externalReferenceCode") String
 					externalReferenceCode,
 				@GraphQLName("emailAddress") String emailAddress)
@@ -310,7 +310,7 @@ public class Query {
 			this::_populateResourceContext,
 			accountRoleResource -> new AccountRolePage(
 				accountRoleResource.
-					getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPage(
+					getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
 						externalReferenceCode, emailAddress)));
 	}
 
@@ -1222,9 +1222,9 @@ public class Query {
 
 	@GraphQLTypeExtension(Account.class)
 	public class
-		GetAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPageTypeExtension {
+		GetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPageTypeExtension {
 
-		public GetAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPageTypeExtension(
+		public GetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPageTypeExtension(
 			Account account) {
 
 			_account = account;
@@ -1234,7 +1234,7 @@ public class Query {
 			description = "Gets a user's account roles by their email address from an account by external reference code"
 		)
 		public AccountRolePage
-				byExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRoles(
+				byExternalReferenceCodeUserAccountByEmailAddressAccountRoles(
 					@GraphQLName("emailAddress") String emailAddress)
 			throws Exception {
 
@@ -1243,7 +1243,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				accountRoleResource -> new AccountRolePage(
 					accountRoleResource.
-						getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPage(
+						getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
 							_account.getExternalReferenceCode(),
 							emailAddress)));
 		}

@@ -224,22 +224,22 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode()
+	public void testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount =
-			testDeleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode_addUserAccount();
+			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
 
 		assertHttpResponseStatusCode(
 			204,
 			userAccountResource.
-				deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					null, null));
 	}
 
 	protected UserAccount
-			testDeleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode_addUserAccount()
+			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -247,28 +247,28 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode()
+	public void testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount =
-			testPostAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode_addUserAccount();
+			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
 
 		assertHttpResponseStatusCode(
 			204,
 			userAccountResource.
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					null, null));
 
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.
-				postAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					null, null));
 	}
 
 	protected UserAccount
-			testPostAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode_addUserAccount()
+			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

@@ -254,7 +254,7 @@ definition {
 	test FormsTechnologyCardShowsViewsByExpectedBrowser {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		task("Form submit") {
+		task ("Form submit") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -274,15 +274,15 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task("Close sessions") {
+		task ("Close sessions") {
 			ACUtils.closeAllSessions();
 
 			Pause(locator1 = "30000");
 		}
 
-		task("Enter in forms asset page") {
+		task ("Enter in forms asset page") {
 			ACUtils.launchAC();
-			
+
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 
 			ACNavigation.goToAssets();
@@ -296,7 +296,7 @@ definition {
 			ACNavigation.openItem(itemName = "Created Form Name");
 		}
 
-		task("Assert Browsers in Submissions by Technology") {
+		task ("Assert Browsers in Submissions by Technology") {
 			ACAssets.goToTechnologyTabInactive(
 				cardTitle = "Submissions by Technology",
 				tabName = "Browsers");
@@ -307,8 +307,6 @@ definition {
 				cssValue = "rgb(75, 155, 255)",
 				percentageMetricValue = "100%");
 		}
-
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8428 | Test Summary: Form submissions by technology card shows views by expected device"

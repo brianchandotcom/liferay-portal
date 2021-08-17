@@ -27,7 +27,6 @@ definition {
 			key_cardTitle = "${cardTitle}",
 			key_tabName = "${tabName}",
 			locator1 = "ACAssets#TECHNOLOGY_TAB_INACTIVE");
-			
 	}
 
 	macro gotoViewsByTechnologyTab {

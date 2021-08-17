@@ -190,11 +190,13 @@ public class UpgradeReport {
 		String rootDir = null;
 
 		if (dlStore.equals(
-				"com.liferay.portal.store.file.system.AdvancedFileSystemStore")) {
+				"com.liferay.portal.store.file.system." +
+					"AdvancedFileSystemStore")) {
 
 			try {
 				Dictionary<String, String> configurations =
-					_persistenceManager.load(_ADVANCED_FILE_SYSTEM_STORE_PID);
+					_persistenceManager.load(
+						_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
 
 				if (configurations != null) {
 					rootDir = configurations.get("rootDir");
@@ -208,7 +210,8 @@ public class UpgradeReport {
 
 			try {
 				Dictionary<String, String> configurations =
-					_persistenceManager.load(_FILE_SYSTEM_STORE_PID);
+					_persistenceManager.load(
+						_FILE_SYSTEM_STORE_CONFIGURATION_PID);
 
 				if (configurations != null) {
 					rootDir = configurations.get("rootDir");
@@ -291,11 +294,13 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private static final String _ADVANCED_FILE_SYSTEM_STORE_PID =
-		"com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration";
+	private static final String _ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID =
+		"com.liferay.portal.store.file.system.configuration." +
+			"AdvancedFileSystemStoreConfiguration";
 
-	private static final String _FILE_SYSTEM_STORE_PID =
-		"com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration";
+	private static final String _FILE_SYSTEM_STORE_CONFIGURATION_PID =
+		"com.liferay.portal.store.file.system.configuration." +
+			"FileSystemStoreConfiguration";
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 

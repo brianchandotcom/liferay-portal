@@ -228,7 +228,7 @@ definition {
 
 			DMFolder.viewCP(dmFolderName = "Financial Reports");
 
-			DMDocument.viewCPStatus(
+			DMDocument.viewStatus(
 				dmDocumentStatus = "Approved",
 				dmDocumentTitle = "Document_${entryCount}.doc");
 		}

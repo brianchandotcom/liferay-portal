@@ -30,6 +30,7 @@ import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOpenOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
@@ -44,6 +45,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -95,6 +97,7 @@ public class CommerceOrderContentDisplayContext {
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderService commerceOrderService,
+			CommerceOrderTypeService commerceOrderTypeService,
 			CommercePaymentMethodGroupRelService
 				commercePaymentMethodGroupRelService,
 			CommerceShipmentItemService commerceShipmentItemService,
@@ -109,6 +112,7 @@ public class CommerceOrderContentDisplayContext {
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderService = commerceOrderService;
+		_commerceOrderTypeService = commerceOrderTypeService;
 		_commercePaymentMethodGroupRelService =
 			commercePaymentMethodGroupRelService;
 		_commerceShipmentItemService = commerceShipmentItemService;
@@ -312,6 +316,33 @@ public class CommerceOrderContentDisplayContext {
 		}
 
 		return totalCommerceMoney.format(_cpRequestHelper.getLocale());
+	}
+
+	public List<CommerceOrderType> getCommerceOrderTypes()
+		throws PortalException {
+
+		CommerceChannel commerceChannel = fetchCommerceChannel();
+
+		if (commerceChannel == null) {
+			return Collections.emptyList();
+		}
+
+		return _commerceOrderTypeService.getCommerceOrderTypes(
+			CommerceChannel.class.getName(),
+			commerceChannel.getCommerceChannelId(), true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+	}
+
+	public int getCommerceOrderTypesCount() throws PortalException {
+		CommerceChannel commerceChannel = fetchCommerceChannel();
+
+		if (commerceChannel == null) {
+			return 0;
+		}
+
+		return _commerceOrderTypeService.getCommerceOrderTypesCount(
+			CommerceChannel.class.getName(),
+			commerceChannel.getCommerceChannelId(), true);
 	}
 
 	public String getCommercePriceDisplayType() {
@@ -582,6 +613,7 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderService _commerceOrderService;
+	private final CommerceOrderTypeService _commerceOrderTypeService;
 	private final CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;
 	private final CommerceShipmentItemService _commerceShipmentItemService;

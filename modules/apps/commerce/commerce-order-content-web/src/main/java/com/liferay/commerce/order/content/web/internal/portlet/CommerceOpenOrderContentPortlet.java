@@ -25,6 +25,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -103,6 +104,7 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 						_commerceAddressService, _commerceChannelLocalService,
 						_commerceOrderNoteService,
 						_commerceOrderPriceCalculation, _commerceOrderService,
+						_commerceOrderTypeService,
 						_commercePaymentMethodGroupRelService,
 						_commerceShipmentItemService,
 						_portal.getHttpServletRequest(renderRequest),
@@ -137,6 +139,9 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private CommercePaymentMethodGroupRelService

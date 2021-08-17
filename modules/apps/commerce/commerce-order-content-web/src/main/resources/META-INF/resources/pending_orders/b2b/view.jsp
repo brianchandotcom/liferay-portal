@@ -18,6 +18,8 @@
 
 <%
 CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
+
+int commerceOrderTypesCount = commerceOrderContentDisplayContext.getCommerceOrderTypesCount();
 %>
 
 <liferay-ui:error exception="<%= CommerceOrderAccountLimitException.class %>" message="unable-to-create-a-new-order-as-the-open-order-limit-has-been-reached" />
@@ -56,11 +58,33 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 					cssClass="btn-fixed btn-primary"
 					disabled="<%= commerceAccount == null %>"
 					displayType="primary"
+					id="add-order"
 					label='<%= LanguageUtil.get(request, "add-order") %>'
 					small="<%= false %>"
 					type="submit"
 				/>
 			</aui:form>
+
+			<c:if test="<%= commerceOrderTypesCount > 1 %>">
+				<portlet:renderURL var="viewCommerceOrderOrderTypeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_order_type_modal" />
+				</portlet:renderURL>
+
+				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">
+					document.querySelector('#add-order').addEventListener('click', (e) => {
+						e.preventDefault();
+						Liferay.fire(events.OPEN_MODAL, {
+							id: 'add-order-modal',
+						});
+					});
+				</aui:script>
+
+				<commerce-ui:modal
+					id="add-order-modal"
+					refreshPageOnClose="<%= true %>"
+					url="<%= viewCommerceOrderOrderTypeURL %>"
+				/>
+			</c:if>
 		</c:if>
 	</div>
 </liferay-ddm:template-renderer>

@@ -34,4 +34,9 @@ ContentDashboardExtensionItemSelectorViewDisplayContext contentDashboardExtensio
 			)
 		);
 	</script>
+
+	<react:component
+		module="js/SelectExtension"
+		props="<%= contentDashboardExtensionItemSelectorViewDisplayContext.getData() %>"
+	/>
 </section>

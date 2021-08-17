@@ -31,7 +31,7 @@ definition {
 	macro createCombinedProperties {
 		var siteName = "${siteName}";
 
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		LexiconEntry.gotoAdd();
 
 		Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");
 

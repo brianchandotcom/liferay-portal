@@ -101,6 +101,12 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 					</div>
 				</div>
 			</commerce-ui:panel>
+			<commerce-ui:panel
+				elementClasses="flex-fill h-100"
+				title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
+			>
+
+			</commerce-ui:panel>
 		</div>
 	</div>
 </aui:form>

@@ -24,7 +24,7 @@ const useReindexActions = () => {
 	const schedule = useInterval();
 	const toaster = useToaster();
 
-	const {fetchData} = useFetch({url: '/indexes/reindex/status'});
+	const {fetchData} = useFetch({url: '/reindex/statuses'});
 	const {patchData} = usePatch({url: '/indexes/reindex'});
 
 	const getReindexStatus = (key) =>

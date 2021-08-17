@@ -29,6 +29,7 @@ import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
@@ -42,6 +43,8 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -53,6 +56,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryService;
@@ -265,6 +269,32 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		CommerceAccount commerceAccount =
 			_commerceAccountService.getCommerceAccount(cart.getAccountId());
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceChannelGroupId);
+
+		int commerceOrderTypesCount =
+			_commerceOrderTypeService.getCommerceOrderTypesCount(
+				CommerceChannel.class.getName(),
+				commerceChannel.getCommerceChannelId(), true);
+
+		if ((cart.getOrderTypeId() == null) && (commerceOrderTypesCount == 1)) {
+			List<CommerceOrderType> commerceOrderTypes =
+				_commerceOrderTypeService.getCommerceOrderTypes(
+					CommerceChannel.class.getName(),
+					commerceChannel.getCommerceChannelId(), true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			CommerceOrderType commerceOrderType = commerceOrderTypes.get(0);
+
+			cart.setOrderTypeId(commerceOrderType.getCommerceOrderTypeId());
+		}
+		else if ((cart.getOrderTypeId() == null) &&
+				 (commerceOrderTypesCount == 0)) {
+
+			cart.setOrderTypeId(Long.valueOf(0));
+		}
 
 		return _commerceOrderService.addCommerceOrder(
 			commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
@@ -657,6 +687,12 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;

@@ -26,11 +26,15 @@ import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -47,6 +51,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -104,6 +110,25 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		long commerceOrderTypeId = ParamUtil.getLong(
 			actionRequest, "commerceOrderTypeId");
+
+		if (commerceOrderTypeId == 0) {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.getCommerceChannelByGroupId(
+					commerceChannelGroupId);
+
+			List<CommerceOrderType> commerceOrderTypes =
+				_commerceOrderTypeService.getCommerceOrderTypes(
+					CommerceChannel.class.getName(),
+					commerceChannel.getCommerceChannelId(), true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			if (!commerceOrderTypes.isEmpty()) {
+				CommerceOrderType commerceOrderType = commerceOrderTypes.get(0);
+
+				commerceOrderTypeId =
+					commerceOrderType.getCommerceOrderTypeId();
+			}
+		}
 
 		try {
 			return _commerceOrderService.addCommerceOrder(
@@ -452,6 +477,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private Portal _portal;

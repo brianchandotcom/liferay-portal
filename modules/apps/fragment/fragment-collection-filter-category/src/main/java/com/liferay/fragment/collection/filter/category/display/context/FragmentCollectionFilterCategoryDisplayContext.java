@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -138,11 +136,6 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 		).put(
 			"fragmentEntryLinkId",
 			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId())
-		).put(
-			"selectedAssetCategoryIds",
-			ParamUtil.getStringValues(
-				PortalUtil.getOriginalServletRequest(_httpServletRequest),
-				"categoryId_" + _fragmentEntryLink.getFragmentEntryLinkId())
 		).put(
 			"showSearch", _isShowSearch()
 		).put(

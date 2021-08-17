@@ -14,23 +14,34 @@
 
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import {
+	getCollectionFilterValue,
+	setCollectionFilterValue,
+} from '@liferay/fragment-renderer-collection-filter-impl';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export default function SelectCategory({
 	assetCategories,
 	enableDropdown,
 	fragmentEntryLinkId,
-	selectedAssetCategoryIds: initialSelectedCategoryIds,
 	showSearch,
 	singleSelection = false,
 }) {
 	const [selectedCategoryIds, setSelectedCategoryIds] = useState(() => {
-		return assetCategories
-			.filter((category) =>
-				initialSelectedCategoryIds.includes(category.id)
-			)
-			.map((category) => category.id);
+		const value = getCollectionFilterValue(
+			'categoryId',
+			fragmentEntryLinkId
+		);
+
+		if (Array.isArray(value)) {
+			return value;
+		}
+		else if (value) {
+			return [value];
+		}
+
+		return [];
 	});
 
 	const [filteredCategories, setFilteredCategories] = useState(
@@ -56,7 +67,7 @@ export default function SelectCategory({
 
 	const onSelectedClick = (selected, id) => {
 		if (selected && singleSelection) {
-			onApply([id]);
+			setCollectionFilterValue('categoryId', fragmentEntryLinkId, [id]);
 			setSelectedCategoryIds([id]);
 		}
 		else if (selected) {
@@ -73,9 +84,7 @@ export default function SelectCategory({
 		? [
 				{
 					items: filteredCategories.map((category) => ({
-						checked: initialSelectedCategoryIds.includes(
-							category.id
-						),
+						checked: selectedCategoryIds.includes(category.id),
 						label: category.label,
 						type: 'radio',
 						value: category.id,
@@ -86,31 +95,11 @@ export default function SelectCategory({
 				},
 		  ]
 		: filteredCategories.map((category) => ({
-				checked: initialSelectedCategoryIds.includes(category.id),
+				checked: selectedCategoryIds.includes(category.id),
 				label: category.label,
 				onChange: (selected) => onSelectedClick(selected, category.id),
 				type: 'checkbox',
 		  }));
-
-	const editMode = useMemo(
-		() => document.body.classList.contains('has-edit-mode-menu'),
-		[]
-	);
-
-	const onApply = (selectedCategoryIds) => {
-		if (!editMode) {
-			const queryParamName = `categoryId_${fragmentEntryLinkId}`;
-			const search = new URLSearchParams(window.location.search);
-
-			search.delete(queryParamName);
-
-			selectedCategoryIds.forEach((id) => {
-				search.append(queryParamName, id);
-			});
-
-			window.location.search = search;
-		}
-	};
 
 	let label = Liferay.Language.get('select');
 
@@ -133,7 +122,13 @@ export default function SelectCategory({
 			footerContent={
 				singleSelection ? null : (
 					<ClayButton
-						onClick={() => onApply(selectedCategoryIds)}
+						onClick={() =>
+							setCollectionFilterValue(
+								'categoryId',
+								fragmentEntryLinkId,
+								selectedCategoryIds
+							)
+						}
 						small
 					>
 						{Liferay.Language.get('apply')}
@@ -173,7 +168,6 @@ SelectCategory.propTypes = {
 		}).isRequired
 	),
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	selectedAssetCategoryIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 	showSearch: PropTypes.bool.isRequired,
 	singleSelection: PropTypes.bool,
 };

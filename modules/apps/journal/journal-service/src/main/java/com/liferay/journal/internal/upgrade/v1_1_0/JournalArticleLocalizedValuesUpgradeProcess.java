@@ -20,10 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -36,16 +33,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * @author Jürgen Kappler
@@ -268,51 +260,52 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 					"defaultLanguageId = ''"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			List<UpdateDefaultLanguageUpgradeCallable>
-				updateDefaultLanguageCallables = new ArrayList<>();
+			Map<Long, Locale> defaultSiteLocales = new HashMap<>();
 
-			while (resultSet.next()) {
-				String columnValue = resultSet.getString(3);
+			concurrentUpgrade(
+				() -> {
+					if (resultSet.next()) {
+						String columnValue = resultSet.getString(3);
 
-				if (Validator.isXml(columnValue) || strictUpdate) {
-					long groupId = resultSet.getLong(2);
+						if (Validator.isXml(columnValue) || strictUpdate) {
+							long groupId = resultSet.getLong(2);
 
-					Locale defaultSiteLocale = _defaultSiteLocales.get(groupId);
+							Locale defaultSiteLocale = defaultSiteLocales.get(
+								groupId);
 
-					if (defaultSiteLocale == null) {
-						defaultSiteLocale = PortalUtil.getSiteDefaultLocale(
-							groupId);
+							if (defaultSiteLocale == null) {
+								defaultSiteLocale =
+									PortalUtil.getSiteDefaultLocale(groupId);
 
-						_defaultSiteLocales.put(groupId, defaultSiteLocale);
+								defaultSiteLocales.put(
+									groupId, defaultSiteLocale);
+							}
+
+							return new Object[] {
+								resultSet.getLong(1), columnValue,
+								defaultSiteLocale
+							};
+						}
 					}
 
-					UpdateDefaultLanguageUpgradeCallable
-						updateDefaultLanguageCallable =
-							new UpdateDefaultLanguageUpgradeCallable(
-								resultSet.getLong(1), columnValue,
-								defaultSiteLocale);
+					return null;
+				},
+				values -> {
+					long id = (Long)values[0];
 
-					updateDefaultLanguageCallables.add(
-						updateDefaultLanguageCallable);
-				}
-			}
+					String xml = (String)values[1];
+					Locale defaultSiteLocale = (Locale)values[2];
 
-			ExecutorService executorService = Executors.newWorkStealingPool();
+					String defaultLanguageId =
+						LocalizationUtil.getDefaultLanguageId(
+							xml, defaultSiteLocale);
 
-			List<Future<Boolean>> futures = executorService.invokeAll(
-				updateDefaultLanguageCallables);
-
-			executorService.shutdown();
-
-			for (Future<Boolean> future : futures) {
-				boolean success = GetterUtil.get(future.get(), true);
-
-				if (!success) {
-					throw new UpgradeException(
-						"Unable to update journal article default language " +
-							"IDs");
-				}
-			}
+					runSQL(
+						connection,
+						StringBundler.concat(
+							"update JournalArticle set defaultLanguageId = '",
+							defaultLanguageId, "' where id_ = ", id));
+				});
 		}
 	}
 
@@ -324,46 +317,5 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 		JournalArticleLocalizedValuesUpgradeProcess.class);
 
 	private final CounterLocalService _counterLocalService;
-	private final Map<Long, Locale> _defaultSiteLocales = new HashMap<>();
-
-	private class UpdateDefaultLanguageUpgradeCallable
-		extends BaseUpgradeCallable<Boolean> {
-
-		public UpdateDefaultLanguageUpgradeCallable(
-			long id, String xml, Locale defaultSiteLocale) {
-
-			_id = id;
-
-			_xml = xml;
-
-			_defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-				_xml, defaultSiteLocale);
-		}
-
-		@Override
-		protected Boolean doCall() throws Exception {
-			try {
-				runSQL(
-					connection,
-					StringBundler.concat(
-						"update JournalArticle set defaultLanguageId = '",
-						_defaultLanguageId, "' where id_ = ", _id));
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to update default language ID for article " + _id,
-					exception);
-
-				return false;
-			}
-
-			return true;
-		}
-
-		private final String _defaultLanguageId;
-		private final long _id;
-		private final String _xml;
-
-	}
 
 }

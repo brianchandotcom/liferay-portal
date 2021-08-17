@@ -211,6 +211,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
+		_assertClassPKs(
+			Collections.singletonList(_CLASS_PK_1), new Object[] {"key"}, null);
+
 		JSONObject jsonObject = _jsonStorageEntryLocalService.getJSONObject(
 			_CLASS_NAME_ID, _CLASS_PK_1);
 

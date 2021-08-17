@@ -254,6 +254,11 @@ public class JSONStorageEntryLocalServiceImpl
 				JSONStorageEntryTable.INSTANCE.valueLong.eq(valueLong)
 			);
 		}
+		else if (value == null) {
+			predicate = predicate.and(
+				JSONStorageEntryTable.INSTANCE.type.eq(
+					JSONStorageEntryConstants.TYPE_NULL));
+		}
 		else {
 			JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 

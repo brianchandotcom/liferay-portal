@@ -194,7 +194,7 @@ public class UpgradeReport {
 
 			try {
 				Dictionary<String, String> configurations =
-					_persistenceManager.load(_ADVACNED_FILE_SYSTEM_STORE_PID);
+					_persistenceManager.load(_ADVANCED_FILE_SYSTEM_STORE_PID);
 
 				if (configurations != null) {
 					rootDir = configurations.get("rootDir");
@@ -291,7 +291,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private static final String _ADVACNED_FILE_SYSTEM_STORE_PID =
+	private static final String _ADVANCED_FILE_SYSTEM_STORE_PID =
 		"com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration";
 
 	private static final String _FILE_SYSTEM_STORE_PID =

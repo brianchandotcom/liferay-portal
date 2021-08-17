@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>USER_UPDATE_USER</td>
-	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'update-user')]</td>
+	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[normalize-space(text())='update-user']</td>
 	<td></td>
 </tr>
 <tr>

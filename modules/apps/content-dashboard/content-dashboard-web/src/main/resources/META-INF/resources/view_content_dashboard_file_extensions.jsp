@@ -27,14 +27,6 @@ ContentDashboardFileExtensionItemSelectorViewDisplayContext contentDashboardFile
 <section class="h-100">
 	<span aria-hidden="true" class="loading-animation mt-0 select-type-and-subtype-loader"></span>
 
-	<script>
-		console.log(
-			JSON.parse(
-				'<%= contentDashboardFileExtensionItemSelectorViewDisplayContext.getData().get("fileExtensionGroups") %>'
-			)
-		);
-	</script>
-
 	<react:component
 		module="js/SelectExtension"
 		props="<%= contentDashboardFileExtensionItemSelectorViewDisplayContext.getData() %>"

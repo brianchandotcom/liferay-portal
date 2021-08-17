@@ -346,6 +346,17 @@ definition {
 			value1 = "${pageNumber}");
 	}
 
+	macro viewConjunction {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals(
+			index = "${index}",
+			locator1 = "ACSegments#CONJUNCTION_BUTTON",
+			value1 = "${conjunction}");
+	}
+
 	macro viewDeletedCriteria {
 		AssertTextPresent(
 			locator1 = "ACSegments#DELETED_CRITERIA",

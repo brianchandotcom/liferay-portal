@@ -22,6 +22,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOP_PAGES_INDEXES</td>
+	<td>//tr[${key_indexNumber}]//div[contains(@class,'table-title')]//a[contains(text(),'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOP_PAGES_ENTRANCES_BUTTON</td>
+	<td>//span[text()='Entrances']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACQUISITIONS_CARD</td>
 	<td>//div[contains(@class,'acquisitions')]//h5[text()='Acquisitions']</td>
 	<td></td>

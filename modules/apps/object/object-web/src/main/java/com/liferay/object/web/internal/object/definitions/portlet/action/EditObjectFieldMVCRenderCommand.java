@@ -15,6 +15,8 @@
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,10 +50,14 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				ParamUtil.getLong(renderRequest, "objectFieldId"));
+
 			renderRequest.setAttribute(
-				ObjectWebKeys.OBJECT_FIELD,
-				_objectFieldLocalService.getObjectField(
-					ParamUtil.getLong(renderRequest, "objectFieldId")));
+				ObjectWebKeys.OBJECT_DEFINITION,
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectField.getObjectDefinitionId()));
+			renderRequest.setAttribute(ObjectWebKeys.OBJECT_FIELD, objectField);
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -59,6 +65,9 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 
 		return "/object_definitions/edit_object_field.jsp";
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

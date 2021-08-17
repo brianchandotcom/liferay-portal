@@ -328,6 +328,11 @@
 	<td>//ul/li/button[contains(@class,'btn-primary')]|//ul/li/button[contains(@class,'btn-secondary')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DISABLED_MEMBER</td>
+	<td>//tr[contains(@class,'disabled')]//div[text()='${key_memberName}']</td>
+	<td></td>
+</tr>
 <!-- Segments List -->
 <tr>
 	<td>FILTER_AND_ORDER_BUTTON</td>

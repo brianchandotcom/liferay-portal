@@ -1,6 +1,6 @@
 Bundle-Name: Liferay JSON Storage API
 Bundle-SymbolicName: com.liferay.json.storage.api
-Bundle-Version: 1.0.4
+Bundle-Version: 1.1.0
 Export-Package:\
 	com.liferay.json.storage.constants,\
 	com.liferay.json.storage.exception,\

@@ -45,6 +45,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -56,6 +58,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -156,6 +160,21 @@ public class DDMFormPortlet extends MVCPortlet {
 			if (ddmFormDisplayContext.isFormShared()) {
 				saveRefererGroupIdInRequest(
 					renderRequest, ddmFormDisplayContext);
+			}
+
+			if (ddmFormDisplayContext.isRequireAuthentication() &&
+				ddmFormDisplayContext.isSharedURL()) {
+
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(renderResponse);
+
+				httpServletResponse.sendRedirect(
+					StringBundler.concat(
+						_portal.getPathMain(), "/portal/login?redirect=",
+						URLCodec.encodeURL(
+							_portal.getCurrentURL(renderRequest))));
+
+				return;
 			}
 		}
 		catch (Exception exception) {

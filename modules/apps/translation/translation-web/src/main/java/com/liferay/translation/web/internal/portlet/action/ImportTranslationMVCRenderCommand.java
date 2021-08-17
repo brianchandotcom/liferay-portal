@@ -98,10 +98,24 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(model, "title");
+		InfoFieldValue<Object> infoFieldValue = _getTitleInfoFieldValue(
+			infoItemFieldValuesProvider, model);
 
 		return (String)infoFieldValue.getValue(locale);
+	}
+
+	private InfoFieldValue<Object> _getTitleInfoFieldValue(
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Object object) {
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
+
+		if (infoFieldValue != null) {
+			return infoFieldValue;
+		}
+
+		return infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
 	}
 
 	@Reference

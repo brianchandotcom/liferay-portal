@@ -92,8 +92,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			Object object = infoItemObjectProvider.getInfoItem(
 				_getInfoItemIdentifier(resourceRequest));
 
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
+			InfoFieldValue<Object> infoFieldValue = _getTitleInfoFieldValue(
+				infoItemFieldValuesProvider, object);
 
 			String escapedTitle = StringUtil.removeSubstrings(
 				(String)infoFieldValue.getValue(themeDisplay.getLocale()),
@@ -166,6 +166,20 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 		return new GroupKeyInfoItemIdentifier(
 			groupId, ParamUtil.getString(resourceRequest, "key"));
+	}
+
+	private InfoFieldValue<Object> _getTitleInfoFieldValue(
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Object object) {
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
+
+		if (infoFieldValue != null) {
+			return infoFieldValue;
+		}
+
+		return infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
 	}
 
 	@Reference

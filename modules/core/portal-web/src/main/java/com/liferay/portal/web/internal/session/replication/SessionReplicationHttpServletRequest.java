@@ -33,13 +33,24 @@ public class SessionReplicationHttpServletRequest
 
 	@Override
 	public HttpSession getSession() {
-		return new SessionReplicationHttpSessionWrapper(super.getSession());
+		HttpSession httpSession = super.getSession();
+
+		if (httpSession == null) {
+			return null;
+		}
+
+		return new SessionReplicationHttpSessionWrapper(httpSession);
 	}
 
 	@Override
 	public HttpSession getSession(boolean create) {
-		return new SessionReplicationHttpSessionWrapper(
-			super.getSession(create));
+		HttpSession httpSession = super.getSession(create);
+
+		if (httpSession == null) {
+			return null;
+		}
+
+		return new SessionReplicationHttpSessionWrapper(httpSession);
 	}
 
 }

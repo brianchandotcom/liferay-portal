@@ -145,6 +145,10 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		Assert.assertEquals(
 			getSharedFormURL() + _SHARED_FORM_INSTANCE_ID,
 			_ddmFormAdminDisplayContext.getPublishedFormURL(
+				mockDDMFormInstance(_SHARED_FORM_INSTANCE_ID, true, true)));
+		Assert.assertEquals(
+			getSharedFormURL() + _SHARED_FORM_INSTANCE_ID,
+			_ddmFormAdminDisplayContext.getPublishedFormURL(
 				mockDDMFormInstance(_SHARED_FORM_INSTANCE_ID, true, false)));
 		Assert.assertEquals(
 			StringPool.BLANK,

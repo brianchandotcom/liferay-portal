@@ -33,11 +33,13 @@ const CONFIG_DATA = {
 	actions: {
 		component: Actions,
 		expression: Liferay.Language.get('do'),
+		fieldFilter: ({rulesActionDisabled}) => !rulesActionDisabled,
 		name: Liferay.Language.get('actions'),
 	},
 	conditions: {
 		component: Conditions,
 		expression: Liferay.Language.get('if'),
+		fieldFilter: ({rulesConditionDisabled}) => !rulesConditionDisabled,
 		name: Liferay.Language.get('condition'),
 	},
 };
@@ -512,9 +514,11 @@ export function Editor({
 		<ClayModalProvider>
 			<FieldProvider value={{fieldTypes}}>
 				{state.panels.map((key) => {
-					const {component: Component, ...otherData} = CONFIG_DATA[
-						key
-					];
+					const {
+						component: Component,
+						fieldFilter,
+						...otherData
+					} = CONFIG_DATA[key];
 
 					return (
 						<Component
@@ -524,7 +528,7 @@ export function Editor({
 							allowActions={allowActions}
 							dataProvider={dataProvider}
 							dispatch={dispatch}
-							fields={fields}
+							fields={fields?.filter(fieldFilter)}
 							key={key}
 							state={state}
 						/>

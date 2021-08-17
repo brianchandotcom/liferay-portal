@@ -118,6 +118,10 @@ html#{$cadmin-selector} {
 					color: $cadmin-secondary-l1;
 				}
 			}
+
+			&__visibility-button:last-of-type {
+				margin-right: 1.25rem;
+			}
 		}
 	}
 }

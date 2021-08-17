@@ -67,7 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -310,11 +309,10 @@ public abstract class UpgradeProcess
 
 	}
 
-	protected static <T, E1 extends Exception, E2 extends Exception> void
-			concurrentUpgrade(
-				UnsafeSupplier<T, E1> unsafeSupplier,
-				UnsafeConsumer<T, E2> unsafeConsumer)
-		throws E1, E2 {
+	protected static <T> void concurrentUpgrade(
+			UnsafeSupplier<T, Exception> unsafeSupplier,
+			UnsafeConsumer<T, Exception> unsafeConsumer)
+		throws Exception {
 
 		Objects.requireNonNull(unsafeSupplier);
 		Objects.requireNonNull(unsafeConsumer);
@@ -340,6 +338,9 @@ public abstract class UpgradeProcess
 
 							unsafeConsumer.accept(current);
 						}
+						catch (Exception exception) {
+							throwableCollector.collect(exception);
+						}
 
 						return null;
 					});
@@ -351,15 +352,7 @@ public abstract class UpgradeProcess
 			executorService.shutdown();
 
 			for (Future<Void> future : futures) {
-				try {
-					future.get();
-				}
-				catch (ExecutionException executionException) {
-					throwableCollector.collect(executionException.getCause());
-				}
-				catch (Exception exception) {
-					throwableCollector.collect(exception);
-				}
+				future.get();
 			}
 		}
 

@@ -7,7 +7,9 @@ definition {
 	}
 
 	macro addSegmentField {
-		ACSegments.searchSegment(findSegment = "${segmentField}");
+		Type(
+			locator1 = "ACSegments#SEARCH_SEGMENT",
+			value1 = "${segmentField}");
 
 		var key_SegmentField = "${segmentField}";
 

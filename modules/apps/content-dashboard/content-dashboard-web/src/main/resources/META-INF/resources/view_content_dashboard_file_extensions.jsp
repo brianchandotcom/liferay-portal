@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentDashboardExtensionItemSelectorViewDisplayContext contentDashboardExtensionItemSelectorViewDisplayContext = (ContentDashboardExtensionItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardExtensionItemSelectorViewDisplayContext.class.getName());
+ContentDashboardFileExtensionItemSelectorViewDisplayContext contentDashboardFileExtensionItemSelectorViewDisplayContext = (ContentDashboardFileExtensionItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardFileExtensionItemSelectorViewDisplayContext.class.getName());
 %>
 
 <liferay-util:html-top>
@@ -30,13 +30,13 @@ ContentDashboardExtensionItemSelectorViewDisplayContext contentDashboardExtensio
 	<script>
 		console.log(
 			JSON.parse(
-				'<%= contentDashboardExtensionItemSelectorViewDisplayContext.getData().get("extensionGroups") %>'
+				'<%= contentDashboardFileExtensionItemSelectorViewDisplayContext.getData().get("fileExtensionGroups") %>'
 			)
 		);
 	</script>
 
 	<react:component
 		module="js/SelectExtension"
-		props="<%= contentDashboardExtensionItemSelectorViewDisplayContext.getData() %>"
+		props="<%= contentDashboardFileExtensionItemSelectorViewDisplayContext.getData() %>"
 	/>
 </section>

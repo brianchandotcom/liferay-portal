@@ -25,21 +25,19 @@ import React, {useMemo, useRef, useState} from 'react';
  */
 const nodeTreeArrayMapper = (nodeArray) => {
 	return nodeArray.map((node, index) => {
-		const hasChildren = !!node.extensions?.length;
+		const hasChildren = !!node.fileExtensions?.length;
 
 		const _getNodeId = ({index, node}) =>
-			hasChildren ? `_${index}` : `${node.extension}`;
+			hasChildren ? `_${index}` : `${node.fileExtension}`;
 
 		return {
 			...node,
 			children: hasChildren
-				? nodeTreeArrayMapper(node.extensions)
+				? nodeTreeArrayMapper(node.fileExtensions)
 				: null,
 			expanded: !!(!index && hasChildren) || false,
 			id: _getNodeId({index, node}),
-			name: hasChildren
-				? node.label
-				: node.extension,
+			name: hasChildren ? node.label : node.fileExtension,
 		};
 	});
 };
@@ -67,12 +65,11 @@ const getFilter = (filterQuery) => {
 };
 
 const SelectExtension = ({
-	extensionGroups,
+	fileExtensionGroups,
 	itemSelectorSaveEvent,
 	portletNamespace,
 }) => {
-
-	const nodes = nodeTreeArrayMapper(extensionGroups);
+	const nodes = nodeTreeArrayMapper(fileExtensionGroups);
 
 	const [filterQuery, setFilterQuery] = useState('');
 
@@ -173,7 +170,7 @@ const SelectExtension = ({
 								<div className="taglib-empty-result-message-header"></div>
 								<div className="sheet-text text-center">
 									{Liferay.Language.get(
-										'no-extensions-were-found'
+										'no-fileExtensions-were-found'
 									)}
 								</div>
 							</div>
@@ -186,7 +183,7 @@ const SelectExtension = ({
 };
 
 SelectExtension.propTypes = {
-	extensionGroups: PropTypes.array.isRequired,
+	fileExtensionGroups: PropTypes.array.isRequired,
 	itemSelectorSaveEvent: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };

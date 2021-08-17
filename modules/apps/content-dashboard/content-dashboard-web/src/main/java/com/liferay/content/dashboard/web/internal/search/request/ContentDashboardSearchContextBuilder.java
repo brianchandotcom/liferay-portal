@@ -236,7 +236,7 @@ public class ContentDashboardSearchContextBuilder {
 
 	private BooleanClause[] _getBooleanClauses(
 		AssetCategoryIds assetCategoryIds, String[] assetTagNames,
-		long[] authorIds, String[] extensions) {
+		long[] authorIds, String[] fileExtensions) {
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
@@ -266,12 +266,12 @@ public class ContentDashboardSearchContextBuilder {
 				authorIdsFilterOptional.get(), BooleanClauseOccur.MUST);
 		}
 
-		Optional<Filter> extensionsFilterOptional =
-			_getExtensionsFilterOptional(extensions);
+		Optional<Filter> fileExtensionsFilterOptional =
+			_getFileExtensionsFilterOptional(fileExtensions);
 
-		extensionsFilterOptional.map(
-			extensionsFilter -> booleanFilter.add(
-				extensionsFilterOptional.get(), BooleanClauseOccur.MUST));
+		fileExtensionsFilterOptional.map(
+			fileExtensionsFilter -> booleanFilter.add(
+				fileExtensionsFilterOptional.get(), BooleanClauseOccur.MUST));
 
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
@@ -281,15 +281,17 @@ public class ContentDashboardSearchContextBuilder {
 		};
 	}
 
-	private Optional<Filter> _getExtensionsFilterOptional(String[] extensions) {
-		if (ArrayUtil.isEmpty(extensions)) {
+	private Optional<Filter> _getFileExtensionsFilterOptional(
+		String[] fileExtensions) {
+
+		if (ArrayUtil.isEmpty(fileExtensions)) {
 			return Optional.empty();
 		}
 
 		TermsFilter termsFilter = new TermsFilter("fileExtension");
 
-		for (String extension : extensions) {
-			termsFilter.addValue(extension);
+		for (String fileExtension : fileExtensions) {
+			termsFilter.addValue(fileExtension);
 		}
 
 		return Optional.of(termsFilter);

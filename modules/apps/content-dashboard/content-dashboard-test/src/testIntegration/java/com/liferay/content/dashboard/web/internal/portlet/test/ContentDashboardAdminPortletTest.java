@@ -608,7 +608,7 @@ public class ContentDashboardAdminPortletTest {
 	}
 
 	@Test
-	public void testGetSearchContainerWithExtension() throws Exception {
+	public void testGetSearchContainerWithFileExtension() throws Exception {
 		JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			ServiceContextTestUtil.getServiceContext(
@@ -1473,13 +1473,13 @@ public class ContentDashboardAdminPortletTest {
 		}
 	}
 
-	private FileEntry _addFileEntry(String extension) throws Exception {
+	private FileEntry _addFileEntry(String fileExtension) throws Exception {
 		return DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), _user.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + "." + extension,
-			MimeTypesUtil.getExtensionContentType(extension), new byte[0], null,
-			null,
+			RandomTestUtil.randomString() + "." + fileExtension,
+			MimeTypesUtil.getExtensionContentType(fileExtension), new byte[0],
+			null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

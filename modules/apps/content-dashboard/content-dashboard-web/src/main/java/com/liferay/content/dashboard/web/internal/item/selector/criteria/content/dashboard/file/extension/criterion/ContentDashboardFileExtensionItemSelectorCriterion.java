@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.extension;
+package com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.file.extension.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
  * @author Alejandro Tardín
  */
-public class ContentDashboardExtensionItemSelectorCriterion
+public class ContentDashboardFileExtensionItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 }

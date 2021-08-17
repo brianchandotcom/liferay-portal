@@ -117,7 +117,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
-	const selectExtension = (itemData) => {
+	const selectFileExtension = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
 			multiple: true,
@@ -133,9 +133,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 				navigate(redirectURL);
 			},
-			selectEventName: `${portletNamespace}selectedExtension`,
+			selectEventName: `${portletNamespace}selectedFileExtension`,
 			title: itemData?.dialogTitle,
-			url: itemData?.selectExtensionURL,
+			url: itemData?.selectFileExtensionURL,
 		});
 	};
 
@@ -175,8 +175,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			else if (action === 'selectContentDashboardItemSubtype') {
 				selectContentDashboardItemSubtype(data);
 			}
-			else if (action === 'selectExtension') {
-				selectExtension(data);
+			else if (action === 'selectFileExtension') {
+				selectFileExtension(data);
 			}
 			else if (action === 'selectScope') {
 				selectScope(data);

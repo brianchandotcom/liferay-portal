@@ -141,10 +141,6 @@ public class DBUpgrader {
 			System.out.println(
 				"\nCompleted Liferay core upgrade process in " +
 					(stopWatch.getTime() / Time.SECOND) + " seconds");
-
-			System.out.println(
-				"Running modules upgrades. Connect to Gogo shell to check " +
-					"the status.");
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -156,6 +152,8 @@ public class DBUpgrader {
 				_stopUpgradeReportLogAppender();
 			}
 		}
+
+		System.out.println("DBUpgrader java process finished");
 	}
 
 	public static void upgrade() throws Exception {

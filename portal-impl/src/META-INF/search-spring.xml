@@ -41,17 +41,4 @@
 	<!-- Generic search engine -->
 
 	<bean class="com.liferay.portal.kernel.search.BaseSearchEngine" id="com.liferay.portal.search.generic.GenericSearchEngineImpl" />
-
-	<!-- Configurator -->
-
-	<bean class="com.liferay.portal.kernel.search.DefaultSearchEngineConfigurator" id="searchEngineConfigurator.core">
-		<property name="defaultSearchEngineId" value="SYSTEM_ENGINE" />
-		<property name="indexSearcher" ref="com.liferay.portal.kernel.search.IndexSearcherProxyBean" />
-		<property name="indexWriter" ref="com.liferay.portal.kernel.search.IndexWriterProxyBean" />
-		<property name="searchEngines">
-			<util:map>
-				<entry key="GENERIC_ENGINE" value-ref="com.liferay.portal.search.generic.GenericSearchEngineImpl" />
-			</util:map>
-		</property>
-	</bean>
 </beans>

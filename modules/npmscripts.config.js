@@ -29,6 +29,9 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
+					'@liferay/fragment-renderer-collection-filter-impl': {
+						'/': '*',
+					},
 					'@liferay/frontend-js-a11y-web': {
 						'/': '*',
 					},

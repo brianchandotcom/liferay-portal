@@ -77,6 +77,10 @@ public class CommercePricingDataSetConstants {
 		COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_CHANNELS =
 			"commercePriceListQualifierChannels";
 
+	public static final String
+		COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ORDER_TYPES =
+			"commercePriceListQualifierOrderTypes";
+
 	public static final String COMMERCE_DATA_SET_KEY_PRICE_LISTS =
 		"commercePriceLists";
 

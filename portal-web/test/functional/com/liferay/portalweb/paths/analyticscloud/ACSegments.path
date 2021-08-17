@@ -42,6 +42,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERIA_STATEMENT_BODY</td>
+	<td>xpath=(//div[contains(@class,'criteria-statement')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_TYPE_DROPDOWN</td>
 	<td>//div[@class='dropdown dropdown-root']/button</td>
 	<td></td>

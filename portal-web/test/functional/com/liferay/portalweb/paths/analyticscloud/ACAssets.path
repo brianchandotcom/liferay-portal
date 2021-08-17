@@ -78,11 +78,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEWS_BY_TECHNOLOGY_TAB</td>
-	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//li[@class='card-tab' and @data-testid='${key_tabName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIEWS_BY_TECHNOLOGY_PIE_CHART</td>
 	<td>//h5[@class='card-title' and text()='Views by Technology']/parent::div/parent::div[@class='card card-root analytics-devices-card']//*[@class='recharts-layer recharts-pie-sector']</td>
 	<td></td>

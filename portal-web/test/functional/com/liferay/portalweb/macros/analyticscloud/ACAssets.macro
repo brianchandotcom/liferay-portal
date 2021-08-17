@@ -22,12 +22,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro gotoViewsByTechnologyTab {
-		Click(
-			key_tabName = "${tabName}",
-			locator1 = "ACAssets#VIEWS_BY_TECHNOLOGY_TAB");
-	}
-
 	macro removeCustomAssetReport {
 		Click(
 			key_cardTitle = "${reportName}",

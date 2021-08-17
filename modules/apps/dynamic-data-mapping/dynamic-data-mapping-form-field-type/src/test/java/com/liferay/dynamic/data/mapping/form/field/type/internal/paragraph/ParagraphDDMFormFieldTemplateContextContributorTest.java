@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
@@ -54,6 +55,9 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertEquals(
 			text.getString(text.getDefaultLocale()), parameters.get("text"));
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(parameters.get("rulesConditionDisabled")));
 	}
 
 	@Test

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -127,6 +128,11 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 				)),
 			String.valueOf(parameters.get("labels")),
 			JSONCompareMode.STRICT_ORDER);
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(parameters.get("rulesActionDisabled")));
+		Assert.assertTrue(
+			GetterUtil.getBoolean(parameters.get("rulesConditionDisabled")));
 	}
 
 	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext() {

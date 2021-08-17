@@ -6,6 +6,23 @@ definition {
 		Click(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
 
+	macro addNestedSegmentField {
+		Type(
+			locator1 = "ACSegments#SEARCH_SEGMENT",
+			value1 = "${segmentField}");
+
+		var key_SegmentField = "${segmentField}";
+
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
+			locator2 = "ACSegments#CRITERIA_STATEMENT_BODY");
+	}
+
 	macro addSegmentField {
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",

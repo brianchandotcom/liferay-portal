@@ -161,7 +161,7 @@ if (Validator.isNotNull(portletResource)) {
 
 						Portlet curPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), resource);
 
-						if (portlet.isSystem()) {
+						if (curPortlet.isSystem()) {
 							continue;
 						}
 

@@ -53,6 +53,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TECHNOLOGY_TAB_INACTIVE</td>
+	<td>//h5[@class='card-title' and text()='${key_cardTitle}']/parent::div/parent::div[@class='card card-root analytics-devices-card']//li[@class='card-tab' and @data-testid='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TECHNOLOGY_BAR_CHART</td>
 	<td>//h5[@class='card-title' and text()='${key_cardTitle}']/parent::div/parent::div[@class='card card-root analytics-devices-card']//*[@class='recharts-layer recharts-bar-rectangle']</td>
 	<td></td>

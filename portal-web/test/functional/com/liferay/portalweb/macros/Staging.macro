@@ -468,7 +468,6 @@ definition {
 				locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_INPUT",
 				value1 = "${endByDay}");
 		}
-
 	}
 
 	macro copyFromLive {
@@ -1332,7 +1331,9 @@ definition {
 				value1 = "Failed");
 		}
 		else if (isSet(inProcess)) {
-			AssertElementPresent(locator1 = "Staging#PROCESS_CURRENT_ITEM");
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_CURRENT_ITEM",
+				value1 = "Please wait as the publish processes complete on the remote site.");
 		}
 		else if (isSet(scheduleProcess)) {
 			Alert.viewSuccessMessage();

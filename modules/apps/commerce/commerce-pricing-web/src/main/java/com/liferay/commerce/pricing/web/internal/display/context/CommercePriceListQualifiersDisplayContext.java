@@ -19,6 +19,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
+import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogService;
@@ -50,6 +51,8 @@ public class CommercePriceListQualifiersDisplayContext
 		CommercePriceListChannelRelService commercePriceListChannelRelService,
 		CommercePriceListCommerceAccountGroupRelService
 			commercePriceListCommerceAccountGroupRelService,
+		CommercePriceListOrderTypeRelService
+			commercePriceListOrderTypeRelService,
 		ModelResourcePermission<CommercePriceList>
 			commercePriceListModelResourcePermission,
 		CommercePriceListService commercePriceListService, Portal portal,
@@ -63,7 +66,11 @@ public class CommercePriceListQualifiersDisplayContext
 			commercePriceListAccountRelService;
 		_commercePriceListChannelRelService =
 			commercePriceListChannelRelService;
-		_commercePriceListCommerceAccountGroupRelService =			commercePriceListCommerceAccountGroupRelService;
+		_commercePriceListCommerceAccountGroupRelService =
+			commercePriceListCommerceAccountGroupRelService;
+		_commercePriceListOrderTypeRelService =
+			commercePriceListOrderTypeRelService;
+
 
 		_portal = portal;
 	}
@@ -100,6 +107,19 @@ public class CommercePriceListQualifiersDisplayContext
 
 		if (commercePriceListChannelRelsCount > 0) {
 			return "channels";
+		}
+
+		return "all";
+	}
+
+	public String getActiveOrderTypeEligibility() throws PortalException {
+		int commercePriceListChannelRelsCount =
+			_commercePriceListOrderTypeRelService.
+				getCommercePriceListOrderTypeRelsCount(
+					getCommercePriceListId(), null);
+
+		if (commercePriceListChannelRelsCount > 0) {
+			return "orderTypes";
 		}
 
 		return "all";
@@ -173,11 +193,30 @@ public class CommercePriceListQualifiersDisplayContext
 				"/price-list-channels?nestedFields=channel";
 	}
 
+	public List<ClayDataSetActionDropdownItem>
+			getPriceListOrderTypeClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		return ListUtil.fromArray(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "headless"));
+	}
+
+	public String getPriceListOrderTypesApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
+			getCommercePriceListId() +
+				"/price-list-order-types?nestedFields=orderType";
+	}
+
 	private final CommercePriceListAccountRelService
 		_commercePriceListAccountRelService;
 	private final CommercePriceListChannelRelService
 		_commercePriceListChannelRelService;
 	private final CommercePriceListCommerceAccountGroupRelService
 		_commercePriceListCommerceAccountGroupRelService;
+	private final CommercePriceListOrderTypeRelService
+		_commercePriceListOrderTypeRelService;
 
 }

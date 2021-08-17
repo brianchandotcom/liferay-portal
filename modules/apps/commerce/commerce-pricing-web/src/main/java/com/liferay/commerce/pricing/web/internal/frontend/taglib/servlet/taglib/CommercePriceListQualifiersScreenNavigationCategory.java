@@ -18,6 +18,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
+import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.web.internal.display.context.CommercePriceListQualifiersDisplayContext;
 import com.liferay.commerce.pricing.web.internal.servlet.taglib.ui.constants.CommercePriceListScreenNavigationConstants;
@@ -127,6 +128,7 @@ public class CommercePriceListQualifiersScreenNavigationCategory
 						_commercePriceListAccountRelService,
 						_commercePriceListChannelRelService,
 						_commercePriceListCommerceAccountGroupRelService,
+						_commercePriceListOrderTypeRelService,
 						_commercePriceListModelResourcePermission,
 						_commercePriceListService, _portal, httpServletRequest);
 
@@ -166,6 +168,10 @@ public class CommercePriceListQualifiersScreenNavigationCategory
 	)
 	private ModelResourcePermission<CommercePriceList>
 		_commercePriceListModelResourcePermission;
+
+	@Reference
+	private CommercePriceListOrderTypeRelService
+		_commercePriceListOrderTypeRelService;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

@@ -18,7 +18,7 @@ import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfigur
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
-import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.extension.ContentDashboardExtensionItemSelectorCriterion;
+import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.file.extension.criterion.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
@@ -302,34 +302,35 @@ public class ContentDashboardAdminDisplayContext {
 			contentDashboardItem);
 	}
 
-	public String getExtensionItemSelectorURL() {
+	public String getFileExtensionItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
 
-		ContentDashboardExtensionItemSelectorCriterion
-			contentDashboardExtensionItemSelectorCriterion =
-				new ContentDashboardExtensionItemSelectorCriterion();
+		ContentDashboardFileExtensionItemSelectorCriterion
+			contentDashboardFileExtensionItemSelectorCriterion =
+				new ContentDashboardFileExtensionItemSelectorCriterion();
 
-		contentDashboardExtensionItemSelectorCriterion.
+		contentDashboardFileExtensionItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(
 				Collections.singletonList(new UUIDItemSelectorReturnType()));
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory,
-				_liferayPortletResponse.getNamespace() + "selectedExtension",
-				contentDashboardExtensionItemSelectorCriterion)
+				_liferayPortletResponse.getNamespace() +
+					"selectedFileExtension",
+				contentDashboardFileExtensionItemSelectorCriterion)
 		).setParameter(
-			"checkedExtensions",
+			"checkedFileExtensions",
 			() -> {
-				List<String> extensions = getExtensions();
+				List<String> fileExtensions = getFileExtensions();
 
-				return extensions.toArray(new String[0]);
+				return fileExtensions.toArray(new String[0]);
 			}
 		).buildString();
 	}
 
-	public List<String> getExtensions() {
+	public List<String> getFileExtensions() {
 		return Arrays.asList(
 			ParamUtil.getStringValues(_liferayPortletRequest, "fileExtension"));
 	}

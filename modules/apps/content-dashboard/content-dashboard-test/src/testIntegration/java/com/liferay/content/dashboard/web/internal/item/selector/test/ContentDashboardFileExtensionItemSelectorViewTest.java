@@ -54,7 +54,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class ContentDashboardExtensionItemSelectorViewTest {
+public class ContentDashboardFileExtensionItemSelectorViewTest {
 
 	@ClassRule
 	@Rule
@@ -72,53 +72,55 @@ public class ContentDashboardExtensionItemSelectorViewTest {
 	public void testGetData() throws Exception {
 		Map<String, Object> data = _getData();
 
-		JSONArray extensionGroupsJSONArray = (JSONArray)data.get(
-			"extensionGroups");
+		JSONArray fileExtensionGroupsJSONArray = (JSONArray)data.get(
+			"fileExtensionGroups");
 
-		Assert.assertEquals(9, extensionGroupsJSONArray.length());
+		Assert.assertEquals(9, fileExtensionGroupsJSONArray.length());
 
 		_assertExtensionGroupJSONObject(
 			"document-multimedia", "Audio",
-			extensionGroupsJSONArray.getJSONObject(0));
+			fileExtensionGroupsJSONArray.getJSONObject(0));
 		_assertExtensionGroupJSONObject(
-			"document-code", "Code", extensionGroupsJSONArray.getJSONObject(1));
+			"document-code", "Code",
+			fileExtensionGroupsJSONArray.getJSONObject(1));
 		_assertExtensionGroupJSONObject(
 			"document-compressed", "compressed",
-			extensionGroupsJSONArray.getJSONObject(2));
+			fileExtensionGroupsJSONArray.getJSONObject(2));
 		_assertExtensionGroupJSONObject(
 			"document-image", "Image",
-			extensionGroupsJSONArray.getJSONObject(3));
+			fileExtensionGroupsJSONArray.getJSONObject(3));
 		_assertExtensionGroupJSONObject(
 			"document-presentation", "presentation",
-			extensionGroupsJSONArray.getJSONObject(4));
+			fileExtensionGroupsJSONArray.getJSONObject(4));
 		_assertExtensionGroupJSONObject(
 			"document-table", "spreadsheet",
-			extensionGroupsJSONArray.getJSONObject(5));
+			fileExtensionGroupsJSONArray.getJSONObject(5));
 		_assertExtensionGroupJSONObject(
-			"document-text", "Text", extensionGroupsJSONArray.getJSONObject(6));
+			"document-text", "Text",
+			fileExtensionGroupsJSONArray.getJSONObject(6));
 		_assertExtensionGroupJSONObject(
 			"document-pdf", "vectorial",
-			extensionGroupsJSONArray.getJSONObject(7));
+			fileExtensionGroupsJSONArray.getJSONObject(7));
 		_assertExtensionGroupJSONObject(
 			"document-multimedia", "Video",
-			extensionGroupsJSONArray.getJSONObject(8));
+			fileExtensionGroupsJSONArray.getJSONObject(8));
 
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 	}
 
 	private void _assertExtensionGroupJSONObject(
 		String expectedIcon, String expectedLabel,
-		JSONObject extensionGroupJSONObject) {
+		JSONObject fileExtensionGroupJSONObject) {
 
 		Assert.assertEquals(
-			expectedIcon, extensionGroupJSONObject.getString("icon"));
+			expectedIcon, fileExtensionGroupJSONObject.getString("icon"));
 		Assert.assertEquals(
-			expectedLabel, extensionGroupJSONObject.getString("label"));
+			expectedLabel, fileExtensionGroupJSONObject.getString("label"));
 
-		JSONArray extensionsJSONArray = extensionGroupJSONObject.getJSONArray(
-			"extensions");
+		JSONArray fileExtensionsJSONArray =
+			fileExtensionGroupJSONObject.getJSONArray("fileExtensions");
 
-		Assert.assertTrue(extensionsJSONArray.length() > 0);
+		Assert.assertTrue(fileExtensionsJSONArray.length() > 0);
 	}
 
 	private Map<String, Object> _getData() throws Exception {
@@ -142,18 +144,19 @@ public class ContentDashboardExtensionItemSelectorViewTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		_contentDashboardExtensionItemSelectorView.renderHTML(
+		_contentDashboardFileExtensionItemSelectorView.renderHTML(
 			mockHttpServletRequest, new MockHttpServletResponse(), null,
 			new MockLiferayPortletURL(), RandomTestUtil.randomString(), true);
 
-		Object contentDashboardExtensionItemSelectorViewDisplayContext =
+		Object contentDashboardFileExtensionItemSelectorViewDisplayContext =
 			mockHttpServletRequest.getAttribute(
 				"com.liferay.content.dashboard.web.internal.display.context." +
-					"ContentDashboardExtensionItemSelectorViewDisplayContext");
+					"ContentDashboardFileExtensionItemSelectorViewDisplay" +
+						"Context");
 
 		return ReflectionTestUtil.invoke(
-			contentDashboardExtensionItemSelectorViewDisplayContext, "getData",
-			new Class<?>[0], null);
+			contentDashboardFileExtensionItemSelectorViewDisplayContext,
+			"getData", new Class<?>[0], null);
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
@@ -166,11 +169,11 @@ public class ContentDashboardExtensionItemSelectorViewTest {
 	}
 
 	@Inject(
-		filter = "component.name=*.ContentDashboardExtensionItemSelectorView",
+		filter = "component.name=*.ContentDashboardFileExtensionItemSelectorView",
 		type = ItemSelectorView.class
 	)
 	private ItemSelectorView<ItemSelectorCriterion>
-		_contentDashboardExtensionItemSelectorView;
+		_contentDashboardFileExtensionItemSelectorView;
 
 	@DeleteAfterTestRun
 	private Group _group;

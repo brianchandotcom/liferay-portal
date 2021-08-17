@@ -224,10 +224,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_contentDashboardAdminDisplayContext.
 					getContentDashboardItemSubtypes();
 
-		List<String> extensions =
-			_contentDashboardAdminDisplayContext.getExtensions();
+		List<String> fileExtensions =
+			_contentDashboardAdminDisplayContext.getFileExtensions();
 
-		for (String extension : extensions) {
+		for (String fileExtension : fileExtensions) {
 			labelItemListWrapper.add(
 				labelItem -> {
 					labelItem.putData(
@@ -239,11 +239,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							).setParameter(
 								"fileExtension",
 								() -> {
-									Stream<String> stream = extensions.stream();
+									Stream<String> stream =
+										fileExtensions.stream();
 
 									return stream.filter(
-										curExtension -> !Objects.equals(
-											curExtension, extension)
+										curFileExtension -> !Objects.equals(
+											curFileExtension, fileExtension)
 									).toArray(
 										String[]::new
 									);
@@ -254,7 +255,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					labelItem.setLabel(
 						StringBundler.concat(
 							LanguageUtil.get(httpServletRequest, "extension"),
-							": ", extension));
+							": ", fileExtension));
 				});
 		}
 
@@ -802,14 +803,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				return dropdownItem;
 			},
 			() -> {
-				List<String> extensions =
-					_contentDashboardAdminDisplayContext.getExtensions();
+				List<String> fileExtensions =
+					_contentDashboardAdminDisplayContext.getFileExtensions();
 
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.setActive(!ListUtil.isEmpty(extensions));
+				dropdownItem.setActive(!ListUtil.isEmpty(fileExtensions));
 
-				dropdownItem.putData("action", "selectExtension");
+				dropdownItem.putData("action", "selectFileExtension");
 				dropdownItem.putData(
 					"dialogTitle",
 					LanguageUtil.get(
@@ -824,10 +825,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					).buildString());
 
 				dropdownItem.putData(
-					"selectExtensionURL",
+					"selectFileExtensionURL",
 					String.valueOf(
 						_contentDashboardAdminDisplayContext.
-							getExtensionItemSelectorURL()));
+							getFileExtensionItemSelectorURL()));
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "extension") +

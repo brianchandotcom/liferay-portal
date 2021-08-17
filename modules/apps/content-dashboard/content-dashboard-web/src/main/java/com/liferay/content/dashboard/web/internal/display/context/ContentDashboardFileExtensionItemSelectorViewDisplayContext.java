@@ -22,24 +22,24 @@ import java.util.Map;
 /**
  * @author Cristina González
  */
-public class ContentDashboardExtensionItemSelectorViewDisplayContext {
+public class ContentDashboardFileExtensionItemSelectorViewDisplayContext {
 
-	public ContentDashboardExtensionItemSelectorViewDisplayContext(
-		JSONArray extensionGroupsJSONArray, String itemSelectedEventName) {
+	public ContentDashboardFileExtensionItemSelectorViewDisplayContext(
+		JSONArray fileExtensionGroupsJSONArray, String itemSelectedEventName) {
 
-		_extensionGroupsJSONArray = extensionGroupsJSONArray;
+		_fileExtensionGroupsJSONArray = fileExtensionGroupsJSONArray;
 		_itemSelectedEventName = itemSelectedEventName;
 	}
 
 	public Map<String, Object> getData() {
 		return HashMapBuilder.<String, Object>put(
-			"extensionGroups", _extensionGroupsJSONArray
+			"fileExtensionGroups", _fileExtensionGroupsJSONArray
 		).put(
 			"itemSelectorSaveEvent", _itemSelectedEventName
 		).build();
 	}
 
-	private final JSONArray _extensionGroupsJSONArray;
+	private final JSONArray _fileExtensionGroupsJSONArray;
 	private final String _itemSelectedEventName;
 
 }

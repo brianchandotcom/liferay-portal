@@ -14,8 +14,8 @@
 
 package com.liferay.content.dashboard.web.internal.item.selector;
 
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardExtensionItemSelectorViewDisplayContext;
-import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.extension.ContentDashboardExtensionItemSelectorCriterion;
+import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardFileExtensionItemSelectorViewDisplayContext;
+import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.file.extension.criterion.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -65,15 +65,15 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
 	service = ItemSelectorView.class
 )
-public class ContentDashboardExtensionItemSelectorView
+public class ContentDashboardFileExtensionItemSelectorView
 	implements ItemSelectorView
-		<ContentDashboardExtensionItemSelectorCriterion> {
+		<ContentDashboardFileExtensionItemSelectorCriterion> {
 
 	@Override
-	public Class<ContentDashboardExtensionItemSelectorCriterion>
+	public Class<ContentDashboardFileExtensionItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return ContentDashboardExtensionItemSelectorCriterion.class;
+		return ContentDashboardFileExtensionItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -92,20 +92,21 @@ public class ContentDashboardExtensionItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			ContentDashboardExtensionItemSelectorCriterion
-				contentDashboardExtensionItemSelectorCriterion,
+			ContentDashboardFileExtensionItemSelectorCriterion
+				contentDashboardFileExtensionItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/view_content_dashboard_extensions.jsp");
+				"/view_content_dashboard_file_extensions.jsp");
 
 		servletRequest.setAttribute(
-			ContentDashboardExtensionItemSelectorViewDisplayContext.class.
+			ContentDashboardFileExtensionItemSelectorViewDisplayContext.class.
 				getName(),
-			new ContentDashboardExtensionItemSelectorViewDisplayContext(
-				_getContentDashboardExtensionGroupsJSONArray(servletRequest),
+			new ContentDashboardFileExtensionItemSelectorViewDisplayContext(
+				_getContentDashboardFileExtensionGroupsJSONArray(
+					servletRequest),
 				itemSelectedEventName));
 
 		requestDispatcher.include(servletRequest, servletResponse);
@@ -118,11 +119,11 @@ public class ContentDashboardExtensionItemSelectorView
 			DLConfiguration.class, properties);
 	}
 
-	private JSONObject _getContentDashboardExtensionGroupJSONObject(
-		Set<String> checkedExtensions, String icon, String labelKey,
+	private JSONObject _getContentDashboardFileExtensionGroupJSONObject(
+		Set<String> checkedFileExtensions, String icon, String labelKey,
 		Locale locale, String[] mimeTypes) {
 
-		JSONArray extensionsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray fileExtensionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		Stream<String> stream = Arrays.stream(mimeTypes);
 
@@ -132,16 +133,17 @@ public class ContentDashboardExtensionItemSelectorView
 			Set::stream
 		).distinct(
 		).forEach(
-			extension -> extensionsJSONArray.put(
+			fileExtension -> fileExtensionsJSONArray.put(
 				JSONUtil.put(
-					"extension", extension.replaceAll("^\\.", StringPool.BLANK)
+					"fileExtension",
+					fileExtension.replaceAll("^\\.", StringPool.BLANK)
 				).put(
-					"selected", checkedExtensions.contains(extension)
+					"selected", checkedFileExtensions.contains(fileExtension)
 				))
 		);
 
 		return JSONUtil.put(
-			"extensions", extensionsJSONArray
+			"fileExtensions", fileExtensionsJSONArray
 		).put(
 			"icon", icon
 		).put(
@@ -149,11 +151,11 @@ public class ContentDashboardExtensionItemSelectorView
 		);
 	}
 
-	private JSONArray _getContentDashboardExtensionGroupsJSONArray(
+	private JSONArray _getContentDashboardFileExtensionGroupsJSONArray(
 		ServletRequest servletRequest) {
 
-		Set<String> checkedExtensions = SetUtil.fromArray(
-			servletRequest.getParameterValues("checkedExtensions"));
+		Set<String> checkedFileExtensions = SetUtil.fromArray(
+			servletRequest.getParameterValues("checkedFileExtensions"));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -161,32 +163,32 @@ public class ContentDashboardExtensionItemSelectorView
 		Locale locale = themeDisplay.getLocale();
 
 		return JSONUtil.putAll(
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-multimedia", "audio", locale,
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-multimedia", "audio", locale,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-code", "code", locale,
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-code", "code", locale,
 				_dlConfiguration.codeFileMimeTypes()),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-compressed", "compressed", locale,
-				_dlConfiguration.compressedFileMimeTypes()),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-image", "image", locale,
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-compressed", "compressed",
+				locale, _dlConfiguration.compressedFileMimeTypes()),
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-image", "image", locale,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-presentation", "presentation",
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-presentation", "presentation",
 				locale, _dlConfiguration.presentationFileMimeTypes()),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-table", "spreadsheet", locale,
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-table", "spreadsheet", locale,
 				_dlConfiguration.spreadSheetFileMimeTypes()),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-text", "text", locale,
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-text", "text", locale,
 				_dlConfiguration.textFileMimeTypes()),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-pdf", "vectorial", locale,
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-pdf", "vectorial", locale,
 				_dlConfiguration.vectorialFileMimeTypes()),
-			_getContentDashboardExtensionGroupJSONObject(
-				checkedExtensions, "document-multimedia", "video", locale,
+			_getContentDashboardFileExtensionGroupJSONObject(
+				checkedFileExtensions, "document-multimedia", "video", locale,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES));
 	}
 

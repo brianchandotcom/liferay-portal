@@ -110,7 +110,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				return;
 			}
 
-			Set<Locale> availableLocales = _getAvailableLocales(layout);
+			Set<Locale> availableLocales = _getAvailableLocales(
+				layout, _portal.getSiteDefaultLocale(layout.getGroupId()));
 
 			String completeURL = _portal.getCurrentCompleteURL(
 				httpServletRequest);
@@ -353,7 +354,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return sb.toString();
 	}
 
-	private Set<Locale> _getAvailableLocales(Layout layout)
+	private Set<Locale> _getAvailableLocales(
+			Layout layout, Locale siteDefaultLocale)
 		throws PortalException {
 
 		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
@@ -380,7 +382,14 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		Stream<Locale> localesStream = stream.map(LocaleUtil::fromLanguageId);
 
-		return localesStream.collect(Collectors.toSet());
+		Set<Locale> availableLocales = localesStream.collect(
+			Collectors.toSet());
+
+		if (!availableLocales.contains(siteDefaultLocale)) {
+			availableLocales.add(siteDefaultLocale);
+		}
+
+		return availableLocales;
 	}
 
 	private String _getDefaultDescriptionTemplate() {

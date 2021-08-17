@@ -17,6 +17,10 @@ definition {
 	}
 
 	macro exitSettings {
+		WaitForVisible(
+			key_title = "Settings",
+			locator1 = "Header#H2_TITLE");
+
 		Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
 	}
 

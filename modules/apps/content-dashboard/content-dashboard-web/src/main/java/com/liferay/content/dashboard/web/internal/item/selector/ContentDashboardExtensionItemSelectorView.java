@@ -130,6 +130,7 @@ public class ContentDashboardExtensionItemSelectorView
 			MimeTypesUtil::getExtensions
 		).flatMap(
 			Set::stream
+		).distinct(
 		).forEach(
 			extension -> extensionsJSONArray.put(
 				JSONUtil.put(

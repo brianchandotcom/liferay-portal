@@ -724,7 +724,7 @@ public abstract class UpgradeProcess
 			"layoutset", "layoutsetbranch", "layoutsetprototype", "listtype",
 			"lock_", "mbban", "mbcategory", "mbdiscussion", "mbmailinglist",
 			"mbmessage", "mbstatsuser", "mbthread", "mbthreadflag", "mdraction",
-			"mdrrule", "mdrrulegroup", "mdrulegroupinstance",
+			"mdrrule", "mdrrulegroup", "mdrrulegroupinstance",
 			"membershiprequest", "organization_", "orggrouprole", "orglabor",
 			"passwordpolicy", "passwordpolicyrel", "passwordtracker", "phone",
 			"pluginsetting", "pollschoice", "pollsquestion", "pollsvote",

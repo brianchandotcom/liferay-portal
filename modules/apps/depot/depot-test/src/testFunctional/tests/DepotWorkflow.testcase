@@ -112,7 +112,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.viewCPStatus(
+		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_1.jpg");
 
@@ -561,7 +561,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.viewCPStatus(
+		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_2.jpg");
 
@@ -938,7 +938,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.viewCPStatus(
+		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Depot Document Title");
 	}

@@ -111,11 +111,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					return response.json();
 				}
 			})
-			.then(({title}) => {
-				Liferay.Util.openToast({
-					message: title,
-					type: 'danger',
-				});
+			.then((response) => {
+				if (response && response.title) {
+					Liferay.Util.openToast({
+						message: response.title,
+						type: 'danger',
+					});
+				}
 			});
 	}
 

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
+
 ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);
 %>
 
@@ -29,81 +31,88 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 	screenNavigatorModelBean="<%= (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD) %>"
 	screenNavigatorPortletURL="<%= currentURLObj %>"
 	title='<%= LanguageUtil.get(request, "field") %>'
-/>
+>
+	<form action="javascript:;" onSubmit="<%= liferayPortletResponse.getNamespace() + "saveObjectField();" %>">
+		<div class="side-panel-content">
+			<div class="side-panel-content__body">
+				<div class="sheet">
+					<h2 class="sheet-title">
+						<liferay-ui:message key="basic-info" />
+					</h2>
 
-<form action="javascript:;" onSubmit="<%= liferayPortletResponse.getNamespace() + "saveObjectField();" %>">
-	<div class="side-panel-content">
-		<div class="side-panel-content__body">
-			<div class="sheet">
-				<h2 class="sheet-title">
-					<liferay-ui:message key="basic-info" />
-				</h2>
+					<aui:input name="name" required="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" value="<%= objectField.getName() %>" />
 
-				<aui:input disabled="<%= true %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
+					<aui:select name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>">
+						<aui:option label="BigDecimal" selected='<%= objectField.getType().equals("BigDecimal") %>' value="BigDecimal" />
+						<aui:option label="Blob" selected='<%= objectField.getType().equals("Blob") %>' value="Blob" />
+						<aui:option label="Boolean" selected='<%= objectField.getType().equals("Boolean") %>' value="Boolean" />
+						<aui:option label="Date" selected='<%= objectField.getType().equals("Date") %>' value="Date" />
+						<aui:option label="Double" selected='<%= objectField.getType().equals("Double") %>' value="Double" />
+						<aui:option label="Integer" selected='<%= objectField.getType().equals("Integer") %>' value="Integer" />
+						<aui:option label="Long" selected='<%= objectField.getType().equals("Long") %>' value="Long" />
+						<aui:option label="String" selected='<%= objectField.getType().equals("String") %>' value="String" />
+					</aui:select>
 
-				<aui:select disabled="<%= true %>" name="type" required="<%= true %>">
-					<aui:option label="<%= objectField.getType() %>" value="<%= objectField.getType() %>" />
-				</aui:select>
+					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+						<aui:input inlineLabel="right" label='<%= LanguageUtil.get(request, "mandatory") %>' labelCssClass="simple-toggle-switch" name="required" type="toggle-switch" value="<%= objectField.getRequired() %>" />
+					</aui:field-wrapper>
+				</div>
 
-				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input inlineLabel="right" label='<%= LanguageUtil.get(request, "mandatory") %>' labelCssClass="simple-toggle-switch" name="required" type="toggle-switch" value="<%= objectField.getRequired() %>" />
-				</aui:field-wrapper>
-			</div>
+				<div class="mt-4 sheet" id="<portlet:namespace />searchableContainer" style="display: <%= objectField.getType().equals("Blob") ? "none;" : "block;" %>">
+					<h2 class="sheet-title">
+						<liferay-ui:message key="searchable" />
+					</h2>
 
-			<div class="mt-4 sheet" style="display: <%= objectField.getType().equals("Blob") ? "none;" : "block;" %>">
-				<h2 class="sheet-title">
-					<liferay-ui:message key="searchable" />
-				</h2>
+					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+						<aui:input inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableSwitch(event);" %>' type="toggle-switch" value="<%= objectField.getIndexed() %>" />
+					</aui:field-wrapper>
 
-				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeIndexed(event);" %>' type="toggle-switch" value="<%= objectField.getIndexed() %>" />
-				</aui:field-wrapper>
+					<div id="<portlet:namespace />indexedGroup" style="display: <%= (objectField.getType().equals("String") && objectField.getIndexed()) ? "block;" : "none;" %>">
+						<div class="form-group">
+							<clay:radio
+								checked="<%= objectField.getIndexedAsKeyword() %>"
+								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeKeyword" %>'
+								label='<%= LanguageUtil.get(request, "keyword") %>'
+								name="indexedType"
+								onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableType('keyword');" %>'
+							/>
 
-				<div id="<portlet:namespace />indexedGroup" style="display: <%= (objectField.getType().equals("String") && objectField.getIndexed()) ? "block;" : "none;" %>">
-					<div class="form-group">
-						<clay:radio
-							checked="<%= objectField.getIndexedAsKeyword() %>"
-							id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeKeyword" %>'
-							label='<%= LanguageUtil.get(request, "keyword") %>'
-							name="indexedType"
-							onChange='<%= liferayPortletResponse.getNamespace() + "onChangeIndexedType('keyword');" %>'
-						/>
+							<clay:radio
+								checked="<%= !objectField.getIndexedAsKeyword() %>"
+								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeText" %>'
+								label='<%= LanguageUtil.get(request, "text") %>'
+								name="indexedType"
+								onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableType('text');" %>'
+							/>
+						</div>
 
-						<clay:radio
-							checked="<%= !objectField.getIndexedAsKeyword() %>"
-							id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeText" %>'
-							label='<%= LanguageUtil.get(request, "text") %>'
-							name="indexedType"
-							onChange='<%= liferayPortletResponse.getNamespace() + "onChangeIndexedType('text');" %>'
-						/>
-					</div>
+						<div id="<portlet:namespace />indexedLanguageIdGroup" style="display: <%= !objectField.getIndexedAsKeyword() ? "block;" : "none;" %>">
+							<aui:select label='<%= LanguageUtil.get(request, "language") %>' name="indexedLanguageId">
 
-					<div id="<portlet:namespace />indexedLanguageIdGroup" style="display: <%= !objectField.getIndexedAsKeyword() ? "block;" : "none;" %>">
-						<aui:select label='<%= LanguageUtil.get(request, "language") %>' name="indexedLanguageId">
+								<%
+								for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+								%>
 
-							<%
-							for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-							%>
+									<aui:option label="<%= availableLocale.getDisplayName(locale) %>" lang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>" selected="<%= LocaleUtil.toLanguageId(availableLocale).equals(objectField.getIndexedLanguageId()) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
 
-								<aui:option label="<%= availableLocale.getDisplayName(locale) %>" lang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>" selected="<%= LocaleUtil.toLanguageId(availableLocale).equals(objectField.getIndexedLanguageId()) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
+								<%
+								}
+								%>
 
-							<%
-							}
-							%>
-
-						</aui:select>
+							</aui:select>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="side-panel-content__footer">
-			<aui:button cssClass="btn-cancel mr-1" name="cancel" value='<%= LanguageUtil.get(request, "cancel") %>' />
+			<div class="side-panel-content__footer">
+				<aui:button cssClass="btn-cancel mr-1" name="cancel" value='<%= LanguageUtil.get(request, "cancel") %>' />
 
-			<aui:button name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+				<aui:button name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+			</div>
 		</div>
-	</div>
-</form>
+	</form>
+</liferay-frontend:side-panel-content>
 
 <script>
 	function getNode(name) {
@@ -175,7 +184,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 				}
 			})
 			.then((response) => {
-				if (response.title) {
+				if (response && response.title) {
 					Liferay.Util.openToast({
 						message: response.title,
 						type: 'danger',
@@ -184,7 +193,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 			});
 	}
 
-	function <portlet:namespace />onChangeIndexed(event) {
+	function <portlet:namespace />onChangeSeachableSwitch(event) {
 		const indexedGroup = getNode('indexedGroup');
 		const type = '<%= objectField.getType() %>';
 
@@ -192,9 +201,16 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 			event.target.checked && type === 'String' ? 'block' : 'none';
 	}
 
-	function <portlet:namespace />onChangeIndexedType(value) {
+	function <portlet:namespace />onChangeSeachableType(value) {
 		const indexedLanguageIdGroup = getNode('indexedLanguageIdGroup');
 
 		indexedLanguageIdGroup.style.display = value === 'text' ? 'block' : 'none';
+	}
+
+	function <portlet:namespace />onChangeFieldType(event) {
+		const searchableContainer = getNode('searchableContainer');
+
+		searchableContainer.style.display =
+			event.target.value !== 'Blob' ? 'block' : 'none';
 	}
 </script>

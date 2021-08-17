@@ -250,11 +250,64 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8429 | Test Summary: Form submissions by technology card shows views by expected browser"
-	@ignore = "true"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedBrowser {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		// TODO LRAC-8429 FormsTechnologyCardShowsViewsByExpectedBrowser
+		task("Form submit") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			FormPortlet.waitFormRenderer(text = "Submit");
+
+			FormFields.viewTextLabel(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Assets");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Pause(locator1 = "5000");
+		}
+
+		task("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task("Enter in forms asset page") {
+			ACUtils.launchAC();
+			
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Forms");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Created Form Name");
+		}
+
+		task("Assert Browsers in Submissions by Technology") {
+			ACAssets.goToTechnologyTabInactive(
+				cardTitle = "Submissions by Technology",
+				tabName = "Browsers");
+
+			ACAssets.viewTechnologyBrowsersMetric(
+				browserMetricValue = "Chrome",
+				cardTitle = "Submissions by Technology",
+				cssValue = "rgb(75, 155, 255)",
+				percentageMetricValue = "100%");
+		}
+
 
 	}
 

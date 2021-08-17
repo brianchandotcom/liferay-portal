@@ -40,6 +40,15 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-69298. Verify the changes to pending when a file is edited"
+	@ignore = "true"
+	@priority = "3"
+	test AfterEditFileStatusBecomePending {
+
+		// TODO LRQA-69298 AfterEditFileStatusBecomePending pending implementation
+
+	}
+
 	@priority = "5"
 	test ApproveInDMFolderCustomWorkflow {
 		property test.name.skip.portal.instance = "WorkflowDocumentsAndMedia#ApproveInDMFolderCustomWorkflow";
@@ -232,6 +241,33 @@ definition {
 				dmDocumentStatus = "Approved",
 				dmDocumentTitle = "Document_${entryCount}.doc");
 		}
+	}
+
+	@description = "This is a test for LRQA-69296. Assert that a file can be published"
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishFile {
+
+		// TODO LRQA-69296 CanPublishFile pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69297. Assert that the user can publish multiple files"
+	@ignore = "true"
+	@priority = "3"
+	test CanPublishMultipleFiles {
+
+		// TODO LRQA-69297 CanPublishMultipleFiles pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69303. Verify created file can be shared. "
+	@ignore = "true"
+	@priority = "3"
+	test CanShareAFile {
+
+		// TODO LRQA-69303 CanShareAFile pending implementation
+
 	}
 
 	@priority = "4"
@@ -517,6 +553,42 @@ definition {
 		Workflow.gotoPreviewEdit();
 
 		DMDocument.viewCategories(categoryNameList = "legal,Other");
+	}
+
+	@description = "This is a test for LRQA-69299. Verify that the user can set Single Approver Workflow to Documents and Media"
+	@ignore = "true"
+	@priority = "3"
+	test SetSingleApproverToDocumentsAndMedia {
+
+		// TODO LRQA-69299 SetSingleApproverToDocumentsAndMedia pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69300. Verify the status as Draft after file checkout"
+	@ignore = "true"
+	@priority = "3"
+	test StatusBecomeDraftAfterCheckout {
+
+		// TODO LRQA-69300 StatusBecomeDraftAfterCheckout pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69301. Verify the status is changed to pending after a checkout is cancelled"
+	@ignore = "true"
+	@priority = "3"
+	test StatusPendingAfterCheckoutCancel {
+
+		// TODO LRQA-69301 StatusPendingAfterCheckoutCancel pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69302. Verify created file shows message about publication in process"
+	@ignore = "true"
+	@priority = "3"
+	test ViewPublicationInProcessMessage {
+
+		// TODO LRQA-69302 ViewPublicationInProcessMessage pending implementation
+
 	}
 
 }

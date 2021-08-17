@@ -5,6 +5,7 @@ application:
     className: "HeadlessAdminBatchPlannerApplication"
     name: "Liferay.Headless.Admin.Batch.Planner"
 author: "Matija Petanjek"
+clientDir: "../headless-admin-batch-planner-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false

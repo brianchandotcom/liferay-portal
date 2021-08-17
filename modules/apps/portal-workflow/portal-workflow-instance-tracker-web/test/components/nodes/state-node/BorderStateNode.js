@@ -15,19 +15,28 @@
 import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
+import {ReactFlowProvider} from 'react-flow-renderer';
 
 import BorderStateNode from '../../../../src/main/resources/META-INF/resources/js/components/nodes/state-node/BorderStateNode';
 
 describe('The BorderStateNode component should', () => {
-	it('Be rendered with End title as default', () => {
-		const {getByText} = render(<BorderStateNode />);
+	it('Be rendered with start-state class as default', () => {
+		const {container} = render(
+			<ReactFlowProvider>
+				<BorderStateNode data={{}} />
+			</ReactFlowProvider>
+		);
 
-		expect(getByText('end')).toBeTruthy();
+		expect(container.querySelector('.start-state')).toBeTruthy();
 	});
 
-	it('Be rendered with Start title when it receives the start prop', () => {
-		const {getByText} = render(<BorderStateNode start />);
+	it('Be rendered with end-state class as default', () => {
+		const {container} = render(
+			<ReactFlowProvider>
+				<BorderStateNode data={{initial: false}} />
+			</ReactFlowProvider>
+		);
 
-		expect(getByText('start')).toBeTruthy();
+		expect(container.querySelector('.end-state')).toBeTruthy();
 	});
 });

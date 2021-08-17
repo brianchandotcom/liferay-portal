@@ -15,19 +15,28 @@
 import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
+import {ReactFlowProvider} from 'react-flow-renderer';
 
 import StateNode from '../../../../src/main/resources/META-INF/resources/js/components/nodes/state-node/StateNode';
 
 describe('The StateNode component should', () => {
 	it('Be rendered without any icon and without current-icon class as default', () => {
-		const {container} = render(<StateNode />);
+		const {container} = render(
+			<ReactFlowProvider>
+				<StateNode data={{}} />
+			</ReactFlowProvider>
+		);
 
 		expect(container.querySelector('.lexicon-icon-live')).not.toBeTruthy();
 		expect(container.querySelector('.current-icon')).not.toBeTruthy();
 	});
 
 	it('Be rendered with live icon and current-icon class when it receives the current prop', () => {
-		const {container} = render(<StateNode current />);
+		const {container} = render(
+			<ReactFlowProvider>
+				<StateNode data={{current: true}} />
+			</ReactFlowProvider>
+		);
 
 		expect(container.querySelector('.lexicon-icon-live')).toBeTruthy();
 		expect(container.querySelector('.current-icon')).toBeTruthy();

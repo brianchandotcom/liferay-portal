@@ -16,4 +16,11 @@ definition {
 			value1 = "${metricValue}");
 	}
 
+	macro viewTopSitesByIndexes {
+		AssertElementPresent(
+			key_entryName = "${key_entry}",
+			key_indexNumber = "${key_index}",
+			locator1 = "ACSites#TOP_PAGES_INDEXES");
+	}
+
 }

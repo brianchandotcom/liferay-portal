@@ -33,8 +33,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ViewCountConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "enabled-help", name = "enabled",
-		required = false
+		deflt = "true",
+		description = "set-this-to-true-to-globally-enable-view-counts",
+		name = "enabled", required = false
 	)
 	public boolean enabled();
 

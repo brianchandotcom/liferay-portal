@@ -30,8 +30,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface GoogleAuthorizationConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "enabled-help", name = "enabled",
-		required = false
+		deflt = "false",
+		description = "set-this-to-true-to-globally-enable-view-counts",
+		name = "enabled", required = false
 	)
 	public boolean enabled();
 

@@ -14,7 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
-import {PageProvider} from 'data-engine-js-components-web';
+import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
 import SearchLocation from '../../../src/main/resources/META-INF/resources/SearchLocation/SearchLocation.es';
@@ -22,9 +22,9 @@ import SearchLocation from '../../../src/main/resources/META-INF/resources/Searc
 const globalLanguageDirection = Liferay.Language.direction;
 
 const SearchLocationWithProvider = (props) => (
-	<PageProvider value={{editingLanguageId: 'en_US'}}>
+	<FormProvider value={{editingLanguageId: 'en_US', viewMode: true}}>
 		<SearchLocation {...props} />
-	</PageProvider>
+	</FormProvider>
 );
 
 const defaultConfig = {
@@ -43,7 +43,6 @@ const defaultConfig = {
 	name: 'test_search_location_field',
 	onChange: jest.fn(),
 	readOnly: false,
-	viewMode: true,
 	visibleFields: ['address', 'city', 'country', 'postal-code', 'state'],
 };
 

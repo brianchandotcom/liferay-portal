@@ -142,7 +142,7 @@ public class PunchOutLoginPostAction extends Action {
 		else {
 			commerceOrder = _commerceOrderLocalService.addCommerceOrder(
 				punchOutUserId, commerceChannelGroupId, commerceAccountId,
-				commerceCurrencyId);
+				commerceCurrencyId, 0);
 
 			commerceOrder = _commerceOrderLocalService.updateStatus(
 				punchOutUserId, commerceOrder.getCommerceOrderId(),

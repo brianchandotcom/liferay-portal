@@ -174,7 +174,7 @@ public class CommerceOrderImporter {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
 				userId, serviceContext.getScopeGroupId(),
-				commerceAccount.getCommerceAccountId());
+				commerceAccount.getCommerceAccountId(), 0, 0);
 
 		// We update the order create date to the one in the dataset
 

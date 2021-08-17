@@ -103,7 +103,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		if (commerceAccount != null) {
 			commerceOrder = _commerceOrderService.addCommerceOrder(
-				_portal.getUserId(httpServletRequest),
 				commerceContext.getCommerceChannelGroupId(),
 				commerceAccount.getCommerceAccountId(), commerceCurrencyId, 0);
 		}

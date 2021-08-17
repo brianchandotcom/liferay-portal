@@ -31,24 +31,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8287 | Test Summary: Assert Sites Interests card highest interests"
-	@ignore = "true"
-	@priority = "3"
-	test AssertHigherInterests {
-
-		// TODO LRAC-8287 CanCreateAccessRequest
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8286 | Test Summary: Assert Sites Interests change time filter"
-	@ignore = "true"
-	@priority = "3"
-	test AssertTimeFilterChange {
-
-		// TODO LRAC-8286 AssertTimeFilterChange
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8283 | Test Summary: Site overview interests card shows what the top interests are"
 	@priority = "5"
 	test ShowsSitesTopInterests {

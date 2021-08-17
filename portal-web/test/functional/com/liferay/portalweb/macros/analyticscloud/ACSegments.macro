@@ -94,6 +94,16 @@ definition {
 		MenuItem.click(menuItem = "Duplicate");
 	}
 
+	macro editConjunction {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(
+			index = "${index}",
+			locator1 = "ACSegments#CONJUNCTION_BUTTON");
+	}
+
 	macro editDateCriterion {
 		if (IsElementNotPresent(locator1 = "ACSegments#DATE_PICKER")) {
 			Click(

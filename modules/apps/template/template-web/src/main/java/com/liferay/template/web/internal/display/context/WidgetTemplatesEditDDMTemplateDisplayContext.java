@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 /**
  * @author Eudaldo Alonso
@@ -36,11 +38,21 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 		_ddmWebConfiguration =
 			(DDMWebConfiguration)liferayPortletRequest.getAttribute(
 				DDMWebConfiguration.class.getName());
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public boolean autogenerateTemplateKey() {
 		return _ddmWebConfiguration.autogenerateTemplateKey();
+	}
+
+	@Override
+	public String getTemplateTypeLabel() {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(getClassNameId());
+
+		return templateHandler.getName(_themeDisplay.getLocale());
 	}
 
 	@Override
@@ -56,5 +68,6 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 	}
 
 	private final DDMWebConfiguration _ddmWebConfiguration;
+	private final ThemeDisplay _themeDisplay;
 
 }

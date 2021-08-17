@@ -134,6 +134,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8516 | Test Summary: Assert Sites Page Overview time filter to Custom Filter"
 	@priority = "5"
 	test TimeFilterByCustomRangeInPagesOverview {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-8730
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

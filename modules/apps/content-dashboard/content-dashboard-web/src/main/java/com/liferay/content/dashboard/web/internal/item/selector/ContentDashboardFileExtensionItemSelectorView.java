@@ -132,14 +132,18 @@ public class ContentDashboardFileExtensionItemSelectorView
 		).flatMap(
 			Set::stream
 		).distinct(
+		).map(
+			fileExtension -> fileExtension.replaceAll("^\\.", StringPool.BLANK)
 		).forEach(
-			fileExtension -> fileExtensionsJSONArray.put(
-				JSONUtil.put(
-					"fileExtension",
-					fileExtension.replaceAll("^\\.", StringPool.BLANK)
-				).put(
-					"selected", checkedFileExtensions.contains(fileExtension)
-				))
+			fileExtension -> {
+				fileExtensionsJSONArray.put(
+					JSONUtil.put(
+						"fileExtension", fileExtension
+					).put(
+						"selected",
+						checkedFileExtensions.contains(fileExtension)
+					));
+			}
 		);
 
 		return JSONUtil.put(

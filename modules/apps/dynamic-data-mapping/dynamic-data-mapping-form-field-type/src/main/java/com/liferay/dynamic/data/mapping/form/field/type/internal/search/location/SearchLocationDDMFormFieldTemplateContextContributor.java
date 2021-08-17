@@ -75,9 +75,6 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
 				"layout")
 		).put(
-			"viewMode",
-			GetterUtil.getBoolean(ddmFormFieldRenderingContext.isViewMode())
-		).put(
 			"visibleFields",
 			DDMFormFieldTypeUtil.getPropertyValue(
 				ddmFormField, ddmFormFieldRenderingContext.getLocale(),

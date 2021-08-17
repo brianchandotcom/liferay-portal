@@ -114,10 +114,11 @@ const Main = ({
 	settingsContext,
 	showLabel,
 	value,
-	viewMode,
 	visibleFields,
 	...otherProps
 }) => {
+	const {editingLanguageId, viewMode} = useFormState();
+
 	usePlaces({
 		elementId: `${name}#place`,
 		googlePlacesAPIKey,
@@ -132,9 +133,6 @@ const Main = ({
 		? visibleFields
 		: parse(visibleFields, []);
 	const currentLayout = Array.isArray(layout) ? layout : parse(layout, []);
-
-	const {editingLanguageId} = useFormState();
-
 	const parsedValue = parse(value, {});
 
 	useEffect(() => {

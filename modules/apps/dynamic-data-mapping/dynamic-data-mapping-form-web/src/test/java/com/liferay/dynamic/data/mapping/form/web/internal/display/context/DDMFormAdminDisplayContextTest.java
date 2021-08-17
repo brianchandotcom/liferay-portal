@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -142,24 +141,6 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetFormURLForRestrictedFormInstance() throws Exception {
-		setRenderRequestParamenter(
-			"formInstanceId", String.valueOf(_RESTRICTED_FORM_INSTANCE_ID));
-
-		Assert.assertEquals(
-			getRestrictedFormURL(), _ddmFormAdminDisplayContext.getFormURL());
-	}
-
-	@Test
-	public void testGetFormURLForSharedFormInstance() throws Exception {
-		setRenderRequestParamenter(
-			"formInstanceId", String.valueOf(_SHARED_FORM_INSTANCE_ID));
-
-		Assert.assertEquals(
-			getSharedFormURL(), _ddmFormAdminDisplayContext.getFormURL());
-	}
-
-	@Test
 	public void testGetPublishedFormURL() throws Exception {
 		Assert.assertEquals(
 			getSharedFormURL() + _SHARED_FORM_INSTANCE_ID,
@@ -172,34 +153,24 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetRestrictedFormURL() throws Exception {
-		Assert.assertEquals(
-			getRestrictedFormURL(),
-			_ddmFormAdminDisplayContext.getRestrictedFormURL());
-	}
-
-	@Test
 	public void testGetSharedFormURL() throws Exception {
 		Assert.assertEquals(
 			getSharedFormURL(), _ddmFormAdminDisplayContext.getSharedFormURL());
 	}
 
-	protected String getFormURL(
-		String friendlyURLPath, String pageFriendlyURLPath) {
+	@Test
+	public void testGetSharedFormURLForSharedFormInstance() throws Exception {
+		setRenderRequestParamenter(
+			"formInstanceId", String.valueOf(_SHARED_FORM_INSTANCE_ID));
 
-		return StringBundler.concat(
-			_PORTAL_URL, friendlyURLPath, _GROUP_FRIENDLY_URL_PATH,
-			pageFriendlyURLPath, _FORM_APPLICATION_PATH);
-	}
-
-	protected String getRestrictedFormURL() {
-		return getFormURL(
-			_PRIVATE_FRIENDLY_URL_PATH, _PRIVATE_PAGE_FRIENDLY_URL_PATH);
+		Assert.assertEquals(
+			getSharedFormURL(), _ddmFormAdminDisplayContext.getSharedFormURL());
 	}
 
 	protected String getSharedFormURL() {
-		return getFormURL(
-			_PUBLIC_FRIENDLY_URL_PATH, _PUBLIC_PAGE_FRIENDLY_URL_PATH);
+		return StringBundler.concat(
+			_PORTAL_URL, _PUBLIC_FRIENDLY_URL_PATH, _GROUP_FRIENDLY_URL_PATH,
+			_PUBLIC_PAGE_FRIENDLY_URL_PATH, _FORM_APPLICATION_PATH);
 	}
 
 	protected DDMFormInstance mockDDMFormInstance(
@@ -262,16 +233,6 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 			sharedDDMFormInstance
 		);
 
-		DDMFormInstance restrictedDDMFormInstance = mockDDMFormInstance(
-			_RESTRICTED_FORM_INSTANCE_ID, true);
-
-		when(
-			ddmFormInstanceService.fetchFormInstance(
-				Matchers.eq(_RESTRICTED_FORM_INSTANCE_ID))
-		).thenReturn(
-			restrictedDDMFormInstance
-		);
-
 		return ddmFormInstanceService;
 	}
 
@@ -287,26 +248,6 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		);
 
 		return settings;
-	}
-
-	protected Group mockGroup() {
-		Group group = mock(Group.class);
-
-		when(
-			group.getPathFriendlyURL(
-				Matchers.eq(false), Matchers.any(ThemeDisplay.class))
-		).thenReturn(
-			_PUBLIC_FRIENDLY_URL_PATH
-		);
-
-		when(
-			group.getPathFriendlyURL(
-				Matchers.eq(true), Matchers.any(ThemeDisplay.class))
-		).thenReturn(
-			_PRIVATE_FRIENDLY_URL_PATH
-		);
-
-		return group;
 	}
 
 	protected HttpServletRequest mockHttpServletRequest() {
@@ -326,18 +267,16 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	protected ThemeDisplay mockThemeDisplay() {
 		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
 
-		Group group = mockGroup();
+		when(
+			themeDisplay.getPathFriendlyURLPublic()
+		).thenReturn(
+			_PUBLIC_FRIENDLY_URL_PATH
+		);
 
 		when(
 			themeDisplay.getPortalURL()
 		).thenReturn(
 			_PORTAL_URL
-		);
-
-		when(
-			themeDisplay.getSiteGroup()
-		).thenReturn(
-			group
 		);
 
 		return themeDisplay;
@@ -466,16 +405,9 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 
 	private static final String _PORTAL_URL = "http://localhost:9999";
 
-	private static final String _PRIVATE_FRIENDLY_URL_PATH = "/group";
-
-	private static final String _PRIVATE_PAGE_FRIENDLY_URL_PATH = "/shared";
-
 	private static final String _PUBLIC_FRIENDLY_URL_PATH = "/web";
 
 	private static final String _PUBLIC_PAGE_FRIENDLY_URL_PATH = "/shared";
-
-	private static final long _RESTRICTED_FORM_INSTANCE_ID =
-		RandomTestUtil.randomLong();
 
 	private static final long _SHARED_FORM_INSTANCE_ID =
 		RandomTestUtil.randomLong();

@@ -42,7 +42,7 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Test Site Name");
 
 			LexiconCard.clickCardTitleLink(card = "Card");
@@ -60,7 +60,7 @@ definition {
 
 		task ("Assert the deployed collection is not present") {
 			AssertElementNotPresent(
-				collectionName = "imported",
+				collectionName = "Imported",
 				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
 				scope = "Test Site Name");
 		}
@@ -80,7 +80,7 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
 			LexiconCard.clickCardTitleLink(card = "Image");
@@ -98,7 +98,7 @@ definition {
 
 		task ("Assert the deployed collection is not present") {
 			AssertElementNotPresent(
-				collectionName = "imported",
+				collectionName = "Imported",
 				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
 				scope = "Default");
 		}
@@ -118,7 +118,7 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Global");
 
 			LexiconCard.clickCardTitleLink(card = "Link");
@@ -136,7 +136,7 @@ definition {
 
 		task ("Assert the deployed collection is not present") {
 			AssertElementNotPresent(
-				collectionName = "imported",
+				collectionName = "Imported",
 				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
 				scope = "Global");
 		}
@@ -159,7 +159,7 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Global");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Link");
@@ -171,7 +171,7 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Delete");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Global");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
@@ -181,7 +181,7 @@ definition {
 
 		task ("Assert can not delete system scoped read-only deployed fragment in normal site") {
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
@@ -193,7 +193,7 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Delete");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
@@ -237,7 +237,7 @@ definition {
 				siteURLKey = "global");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
@@ -249,7 +249,7 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Delete");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
@@ -276,10 +276,10 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Test Site Name");
 
-			AssertElementPresent(locator1 = "//div[@class='autofit-col' and normalize-space(text())='imported']");
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and normalize-space(text())='Imported']");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Card");
 		}
@@ -288,7 +288,7 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 			AssertElementNotPresent(
-				collectionName = "imported",
+				collectionName = "Imported",
 				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
 				scope = "Liferay");
 		}
@@ -334,10 +334,10 @@ definition {
 				siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Global");
 
-			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (Global)')]");
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'Imported (Global)')]");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Title");
 		}
@@ -360,20 +360,20 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
-			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'Imported (System)')]");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
-			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'Imported (System)')]");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 		}
@@ -384,10 +384,10 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-future-site");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
-			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'Imported (System)')]");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 		}
@@ -411,10 +411,10 @@ definition {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
-			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'Imported (System)')]");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 		}
@@ -442,10 +442,10 @@ definition {
 				siteURLKey = "guest");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "imported",
+				collectionName = "Imported",
 				scope = "Default");
 
-			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'Imported (System)')]");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Image");
 		}

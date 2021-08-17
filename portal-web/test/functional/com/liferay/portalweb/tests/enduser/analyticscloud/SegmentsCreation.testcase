@@ -1146,7 +1146,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8481 | Test Summary: Create a Dynamic Individuals Segment with a criteria that uses a boolean and a does not contain"
 	@priority = "4"
-	test CreateDynamicIndividualsSegmentWithCriteriaUsesBooleanAndDoesNotContain {
+	test CanCreateDynamicSegmentWithIndividualCriteriaUsesBooleanAndDoesNotContain {
 		task ("Add three more new users") {
 			for (var n : list "1,2,3") {
 				JSONUser.addUser(

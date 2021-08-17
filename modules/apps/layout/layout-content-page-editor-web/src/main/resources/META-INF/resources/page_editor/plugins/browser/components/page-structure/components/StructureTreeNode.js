@@ -138,6 +138,7 @@ export default function StructureTreeNode({node}) {
 		<MemoizedStructureTreeNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
 			isActive={node.activable && isSelected}
+			isDisabled={node.disabled}
 			isHovered={node.id === fromControlsId(hoveredItemId)}
 			isMapped={node.mapped}
 			isSelected={isSelected}
@@ -166,6 +167,7 @@ const MemoizedStructureTreeNodeContent = React.memo(
 function StructureTreeNodeContent({
 	activationOrigin,
 	isActive,
+	isDisabled,
 	isHovered,
 	isMapped,
 	isSelected,
@@ -174,7 +176,6 @@ function StructureTreeNodeContent({
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
-	const isDisabled = !node.activable || node.disabled;
 	const nodeRef = useRef();
 	const layoutDataRef = useRef();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -188,6 +189,8 @@ function StructureTreeNodeContent({
 
 		return null;
 	});
+
+	const isActivable = node.activable && node.itemType !== ITEM_TYPES.editable;
 
 	const item = {
 		children: node.children,
@@ -247,7 +250,7 @@ function StructureTreeNodeContent({
 
 	return (
 		<div
-			aria-disabled={isDisabled}
+			aria-disabled={isDisabled || !isActivable}
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'drag-over-bottom':
@@ -257,9 +260,9 @@ function StructureTreeNodeContent({
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				dragged: isDraggingSource,
-				'page-editor__page-structure__tree-node--activable':
-					node.activable && node.itemType !== ITEM_TYPES.editable,
+				'page-editor__page-structure__tree-node--activable': isActivable,
 				'page-editor__page-structure__tree-node--active': isActive,
+				'page-editor__page-structure__tree-node--disabled': isDisabled,
 				'page-editor__page-structure__tree-node--hovered': isHovered,
 				'page-editor__page-structure__tree-node--mapped': isMapped,
 			})}

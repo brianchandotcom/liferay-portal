@@ -68,6 +68,10 @@ html#{$cadmin-selector} {
 				box-shadow: inset 0 0 0 1px $cadmin-primary-l1;
 			}
 
+			&--disabled {
+				background-color: $cadmin-light-l1;
+			}
+
 			&--mapped#{&}--active,
 			&--mapped#{&}--hovered {
 				background-color: fade_out($cadmin-purple, 0.92);

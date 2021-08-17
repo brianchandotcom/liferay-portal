@@ -21,6 +21,8 @@ const ColorPicker = ({color, label, name}) => {
 	const [colorValue, setColorValue] = useState(color);
 	const [customColors, setCustomColors] = useState([]);
 
+	const noHashColorValue = colorValue.replace('#', '');
+
 	return (
 		<div className="form-group">
 			<input
@@ -29,8 +31,10 @@ const ColorPicker = ({color, label, name}) => {
 				value={
 					colorValue
 						? `${
-								HEX_COLOR_REGEX.test(colorValue) ? '#' : ''
-						  }${colorValue}`
+								HEX_COLOR_REGEX.test(noHashColorValue)
+									? '#'
+									: ''
+						  }${noHashColorValue}`
 						: ''
 				}
 			/>
@@ -44,7 +48,7 @@ const ColorPicker = ({color, label, name}) => {
 				showHex={true}
 				showPredefinedColorsWithCustom
 				title={label}
-				value={colorValue}
+				value={noHashColorValue}
 			/>
 		</div>
 	);

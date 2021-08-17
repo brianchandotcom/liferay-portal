@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.account.configuration,\
 	com.liferay.account.constants,\
 	com.liferay.account.exception,\
+	com.liferay.account.manager,\
 	com.liferay.account.model,\
 	com.liferay.account.retriever,\
 	com.liferay.account.role,\

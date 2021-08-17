@@ -80,7 +80,7 @@ public class UpgradeReport {
 	}
 
 	public void generateReport() {
-		File logFile = _getLogFile();
+		File reportFile = _getReportFile();
 
 		StringBuffer sb = new StringBuffer(3);
 
@@ -89,7 +89,7 @@ public class UpgradeReport {
 		sb.append(_getProperties());
 
 		try {
-			FileUtil.write(logFile, sb.toString());
+			FileUtil.write(reportFile, sb.toString());
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -131,28 +131,6 @@ public class UpgradeReport {
 		sb.append(StringPool.NEW_LINE);
 
 		return sb.toString();
-	}
-
-	private File _getLogFile() {
-		File reportsDir = new File(".", "reports");
-
-		if ((reportsDir != null) && !reportsDir.exists()) {
-			reportsDir.mkdirs();
-		}
-
-		File reportFile = new File(reportsDir, "upgrade_report.info");
-
-		if (reportFile.exists()) {
-			String logFileName = reportFile.getName();
-
-			reportFile.renameTo(
-				new File(
-					reportsDir, logFileName + "." + reportFile.lastModified()));
-
-			reportFile = new File(reportsDir, logFileName);
-		}
-
-		return reportFile;
 	}
 
 	private String _getPortalVersions() {
@@ -258,6 +236,29 @@ public class UpgradeReport {
 		}
 
 		return sb.toString();
+	}
+
+	private File _getReportFile() {
+		File reportsDir = new File(".", "reports");
+
+		if ((reportsDir != null) && !reportsDir.exists()) {
+			reportsDir.mkdirs();
+		}
+
+		File reportFile = new File(reportsDir, "upgrade_report.info");
+
+		if (reportFile.exists()) {
+			String reportFileName = reportFile.getName();
+
+			reportFile.renameTo(
+				new File(
+					reportsDir,
+					reportFileName + "." + reportFile.lastModified()));
+
+			reportFile = new File(reportsDir, reportFileName);
+		}
+
+		return reportFile;
 	}
 
 	private String _getRootDir(String dlStoreConfigurationPid) {

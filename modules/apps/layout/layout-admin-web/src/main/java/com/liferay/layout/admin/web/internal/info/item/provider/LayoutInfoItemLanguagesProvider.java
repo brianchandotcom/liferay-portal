@@ -44,7 +44,7 @@ public class LayoutInfoItemLanguagesProvider
 	public String[] getAvailableLanguageIds(Layout layout)
 		throws PortalException {
 
-		if (!layout.isTypeContent()) {
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
 			return layout.getAvailableLanguageIds();
 		}
 

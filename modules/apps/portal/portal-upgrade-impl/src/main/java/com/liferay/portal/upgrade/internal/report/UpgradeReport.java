@@ -193,42 +193,30 @@ public class UpgradeReport {
 				"com.liferay.portal.store.file.system." +
 					"AdvancedFileSystemStore")) {
 
-			try {
-				Dictionary<String, String> configurations =
-					_persistenceManager.load(
-						_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
+			rootDir = _getRootDir(
+				_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
 
-				if (configurations != null) {
-					rootDir = configurations.get("rootDir");
-				}
-			}
-			catch (IOException ioException) {
+			if (rootDir == null) {
+				sb.append("rootDir was required. Configure it in ");
+				sb.append(_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
+				sb.append(".config");
 			}
 		}
 		else if (dlStore.equals(
 					"com.liferay.portal.store.file.system.FileSystemStore")) {
 
-			try {
-				Dictionary<String, String> configurations =
-					_persistenceManager.load(
-						_FILE_SYSTEM_STORE_CONFIGURATION_PID);
+			rootDir = _getRootDir(_FILE_SYSTEM_STORE_CONFIGURATION_PID);
 
-				if (configurations != null) {
-					rootDir = configurations.get("rootDir");
-				}
-			}
-			catch (IOException ioException) {
+			if (rootDir == null) {
+				sb.append("rootDir was not set, default directory was used");
 			}
 		}
 
 		if (rootDir != null) {
 			sb.append("rootDir=" + rootDir);
-			sb.append(StringPool.NEW_LINE);
 		}
-		else if (dlStore.contains("FileSystemStore")) {
-			sb.append("rootDir was not set");
-			sb.append(StringPool.NEW_LINE);
-		}
+
+		sb.append(StringPool.NEW_LINE);
 
 		sb.append(
 			"locales.enabled=" + Arrays.toString(PropsValues.LOCALES_ENABLED));
@@ -271,6 +259,24 @@ public class UpgradeReport {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getRootDir(String dlStoreConfigurationPid) {
+		try {
+			Dictionary<String, String> configurations =
+				_persistenceManager.load(dlStoreConfigurationPid);
+
+			if (configurations != null) {
+				return configurations.get("rootDir");
+			}
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get DL store root dir");
+			}
+		}
+
+		return null;
 	}
 
 	private String _getSchemaVersion() {

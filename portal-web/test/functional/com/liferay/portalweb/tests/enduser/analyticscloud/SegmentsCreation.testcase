@@ -1017,95 +1017,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
-	@priority = "3"
-	test CanFilterSegmentByAddMembers {
-		task ("Add one more user with a given birth date") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
-		task ("View the page as different users") {
-			for (var username : list "userea,user1") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
-		task ("Add a new static segment") {
-			ACNavigation.goToSegments();
-
-			ACSegments.createStaticSegment();
-		}
-
-		task ("Search username in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.searchBar(searchItem = "userfn userln");
-		}
-
-		task ("View only the userea shown in modal") {
-			AssertVisible(
-				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
-
-			AssertElementNotPresent(
-				key_assetName = "user1 user1",
-				locator1 = "ACAssets#ASSETS_TABLE");
-		}
-
-		task ("Search email in Add Members modal") {
-			ACUtils.clearSearchBar();
-
-			ACUtils.searchBar(searchItem = "user1@liferay.com");
-		}
-
-		task ("View only the user1 shown in modal") {
-			AssertVisible(
-				key_assetName = "user1 user1",
-				locator1 = "ACAssets#ASSETS_TABLE");
-
-			AssertElementNotPresent(
-				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8471 | Test Summary: Paginate Segment Profile in Membership List"
 	@priority = "3"
 	test CanPaginateSegmentProfileInMembershipList {
@@ -1395,6 +1306,95 @@ definition {
 			ACSegments.previewSegmentMembership();
 
 			ACAssets.viewAssets(assetName = "user1 user1");
+
+			AssertElementNotPresent(
+				key_assetName = "userfn userln",
+				locator1 = "ACAssets#ASSETS_TABLE");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
+	@priority = "3"
+	test CanSearchUserInAddMembersModal {
+		task ("Add one more user with a given birth date") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Search username in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.searchBar(searchItem = "userfn userln");
+		}
+
+		task ("View only the userea shown in modal") {
+			AssertVisible(
+				key_assetName = "userfn userln",
+				locator1 = "ACAssets#ASSETS_TABLE");
+
+			AssertElementNotPresent(
+				key_assetName = "user1 user1",
+				locator1 = "ACAssets#ASSETS_TABLE");
+		}
+
+		task ("Search email in Add Members modal") {
+			ACUtils.clearSearchBar();
+
+			ACUtils.searchBar(searchItem = "user1@liferay.com");
+		}
+
+		task ("View only the user1 shown in modal") {
+			AssertVisible(
+				key_assetName = "user1 user1",
+				locator1 = "ACAssets#ASSETS_TABLE");
 
 			AssertElementNotPresent(
 				key_assetName = "userfn userln",

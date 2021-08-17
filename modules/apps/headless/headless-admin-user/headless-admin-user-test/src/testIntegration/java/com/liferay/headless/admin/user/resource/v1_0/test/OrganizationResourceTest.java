@@ -196,7 +196,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		}
 
 		organizationResource.postUserAccountsByEmailAddress(
-			organization.getId(), _toEmailAddresses(users));
+			organization.getId(), null, _toEmailAddresses(users));
 
 		for (User user : users) {
 			Assert.assertTrue(
@@ -226,6 +226,27 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return _addUserOrganization(_user.getUserId(), randomOrganization());
+	}
+
+	@Override
+	protected Organization
+			testGetOrganizationChildOrganizationsPage_addOrganization(
+				String parentOrganizationId, Organization organization)
+		throws Exception {
+
+		return _toOrganization(
+			_addOrganization(organization, parentOrganizationId));
+	}
+
+	@Override
+	protected String
+			testGetOrganizationChildOrganizationsPage_getOrganizationId()
+		throws Exception {
+
+		Organization organization = organizationResource.postOrganization(
+			randomOrganization());
+
+		return String.valueOf(organization.getId());
 	}
 
 	@Override

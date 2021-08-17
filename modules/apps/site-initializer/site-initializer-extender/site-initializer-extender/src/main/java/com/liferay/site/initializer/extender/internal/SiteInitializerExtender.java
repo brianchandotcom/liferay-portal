@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -21,6 +22,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.util.List;
@@ -59,10 +61,11 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				bundle, _bundleContext, _documentResourceFactory,
-				_fragmentsImporter, _jsonFactory,
-				_objectDefinitionResourceFactory, _styleBookEntryZipProcessor,
-				_taxonomyVocabularyResourceFactory, _userLocalService);
+				bundle, _bundleContext, _defaultDDMStructureHelper,
+				_documentResourceFactory, _fragmentsImporter, _jsonFactory,
+				_objectDefinitionResourceFactory, _portal,
+				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
+				_userLocalService);
 
 		siteInitializerExtension.start();
 
@@ -102,6 +105,9 @@ public class SiteInitializerExtender
 	private BundleTracker<?> _bundleTracker;
 
 	@Reference
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
+	@Reference
 	private DocumentResource.Factory _documentResourceFactory;
 
 	@Reference
@@ -112,6 +118,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private StyleBookEntryZipProcessor _styleBookEntryZipProcessor;

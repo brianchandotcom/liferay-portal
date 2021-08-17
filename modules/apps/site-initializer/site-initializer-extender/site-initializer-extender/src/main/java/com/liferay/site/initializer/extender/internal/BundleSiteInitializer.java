@@ -14,23 +14,29 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
@@ -53,6 +59,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,19 +67,22 @@ import org.osgi.framework.Bundle;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		Bundle bundle, DocumentResource.Factory documentResourceFactory,
+		Bundle bundle, DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		ServletContext servletContext,
+		Portal portal, ServletContext servletContext,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
 		_bundle = bundle;
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_portal = portal;
 		_servletContext = servletContext;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
@@ -118,6 +128,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public boolean isActive(long companyId) {
 		return true;
+	}
+
+	private void _addDDMStructures(long groupId, User user) throws Exception {
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/ddm-structures");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+			_defaultDDMStructureHelper.addDDMStructures(
+				user.getUserId(), groupId,
+				_portal.getClassNameId(JournalArticle.class),
+				bundleWiring.getClassLoader(), resourcePath, _serviceContext);
+		}
 	}
 
 	private void _addDocuments(long groupId, User user) throws Exception {
@@ -277,7 +305,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _createServiceContext(long groupId) throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+
+		serviceContext.setScopeGroupId(groupId);
+
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+
+		serviceContext.setTimeZone(user.getTimeZone());
+		serviceContext.setUserId(user.getUserId());
+
+		_serviceContext = serviceContext;
+	}
+
 	private void _initialize(long groupId, User user) throws Exception {
+		_createServiceContext(groupId);
+		_addDDMStructures(groupId, user);
 		_addDocuments(groupId, user);
 		_addFragmentEntries(groupId, user);
 		_addObjectDefinitions(user);
@@ -300,11 +350,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BundleSiteInitializer.class);
 
 	private final Bundle _bundle;
+	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final FragmentsImporter _fragmentsImporter;
 	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
+	private final Portal _portal;
+	private ServiceContext _serviceContext;
 	private final ServletContext _servletContext;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 	private final TaxonomyVocabularyResource.Factory

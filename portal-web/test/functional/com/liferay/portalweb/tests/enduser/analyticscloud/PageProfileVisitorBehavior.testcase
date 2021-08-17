@@ -218,6 +218,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8517 | Test Summary: Assert Sites Page Overview time filter changes to 180 days"
 	@priority = "5"
 	test TimeFilterByLast180DaysInPagesOverview {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-8731
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

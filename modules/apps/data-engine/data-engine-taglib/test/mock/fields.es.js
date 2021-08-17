@@ -157,6 +157,10 @@ export const FIELDS = [
 		type: 'document_library',
 		value: 'document_library',
 	},
+	{
+		rulesActionDisabled: true,
+		rulesConditionDisabled: true,
+	},
 ];
 
 export const FIELDS_TYPES = [

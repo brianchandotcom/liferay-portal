@@ -218,6 +218,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONJUNCTION_BUTTON</td>
+	<td>xpath=(//button[contains(@class,'conjunction-button')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATE_PICKER</td>
 	<td>//div[contains(@class,'date-picker')]</td>
 	<td></td>

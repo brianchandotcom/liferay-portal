@@ -54,6 +54,8 @@ public class RepositoryTableReferenceDefinition
 			RepositoryTable.INSTANCE.repositoryId,
 			DLFileVersionTable.INSTANCE.repositoryId
 		).singleColumnReference(
+			RepositoryTable.INSTANCE.dlFolderId, DLFolderTable.INSTANCE.folderId
+		).singleColumnReference(
 			RepositoryTable.INSTANCE.repositoryId,
 			DLFolderTable.INSTANCE.repositoryId
 		);
@@ -64,11 +66,7 @@ public class RepositoryTableReferenceDefinition
 		ParentTableReferenceInfoBuilder<RepositoryTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(
-			RepositoryTable.INSTANCE
-		).singleColumnReference(
-			RepositoryTable.INSTANCE.dlFolderId, DLFolderTable.INSTANCE.folderId
-		);
+		parentTableReferenceInfoBuilder.groupedModel(RepositoryTable.INSTANCE);
 	}
 
 	@Override

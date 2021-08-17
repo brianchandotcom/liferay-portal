@@ -1,5 +1,68 @@
 definition {
 
+	macro addCSVDataSource {
+		ACSettings.goToDataSources();
+
+		Button.click(button = "Add Data Source");
+
+		Click(
+			key_sourceType = "CSV File",
+			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
+
+		Type(
+			key_text = "Name Data Source",
+			locator1 = "TextInput#ANY",
+			value1 = "${dataSourceName}");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "${sourceFileName}");
+
+		WaitForVisible(locator1 = "ACSettings#FILE_UPLOAD_SUCCESS_ICON");
+
+		WaitForElementNotPresent(
+			key_text = "Next",
+			locator1 = "Button#ANY_DISABLED");
+
+		Button.clickNext();
+
+		if (isSet(selectAnalyticsCloudField)) {
+			Button.click(button = "Select Analytics Cloud Field");
+
+			if (isSet(newField)) {
+				Button.click(button = "New Field");
+
+				Type(
+					key_text = "New Field Name",
+					locator1 = "TextInput#ANY",
+					value1 = "${fieldName}");
+
+				Button.click(button = "Select");
+
+				MenuItem.click(menuItem = "${fieldType}");
+
+				WaitForElementNotPresent(
+					key_text = "Create",
+					locator1 = "Button#ANY_DISABLED");
+
+				Button.click(button = "Create");
+			}
+			else {
+				MenuItem.click(menuItem = "${fieldName}");
+			}
+		}
+
+		WaitForElementNotPresent(
+			key_text = "Done",
+			locator1 = "Button#ANY_DISABLED");
+
+		Button.click(button = "Done");
+
+		AssertVisible(
+			key_title = "${dataSourceName}",
+			locator1 = "Header#H3_TITLE");
+	}
+
 	macro addKeywords {
 		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
 

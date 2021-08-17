@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.model.Layout;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Adolfo Pérez
@@ -54,7 +56,7 @@ public class InfoFieldUtil {
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			Map<String, String> editableTypes =
 				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					fragmentEntryLink.getHtml());
+					_getHtml(fragmentEntryLink));
 
 			for (Map.Entry<String, String> entry : editableTypes.entrySet()) {
 				String type = entry.getValue();
@@ -72,6 +74,12 @@ public class InfoFieldUtil {
 				}
 			}
 		}
+	}
+
+	private static String _getHtml(FragmentEntryLink fragmentEntryLink) {
+		Matcher matcher = _pattern.matcher(fragmentEntryLink.getHtml());
+
+		return matcher.replaceAll("element");
 	}
 
 	private static InfoField<TextInfoFieldType> _getInfoField(
@@ -106,5 +114,7 @@ public class InfoFieldUtil {
 
 		return false;
 	}
+
+	private static final Pattern _pattern = Pattern.compile("\\$\\{[^}]*\\}");
 
 }

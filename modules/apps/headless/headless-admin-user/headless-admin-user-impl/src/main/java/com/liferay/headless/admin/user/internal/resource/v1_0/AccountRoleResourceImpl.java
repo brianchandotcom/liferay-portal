@@ -61,7 +61,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception {
@@ -77,7 +77,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception {
@@ -123,24 +123,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public Page<AccountRole>
-			getAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeAccountRolesPage(
-				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
-		throws Exception {
-
-		return Page.of(
-			transform(
-				_accountRoleLocalService.getAccountRoles(
-					_accountResourceDTOConverter.getAccountEntryId(
-						accountExternalReferenceCode),
-					_userResourceDTOConverter.getUserId(
-						userAccountExternalReferenceCode)),
-				accountRole -> _toAccountRole(accountRole)));
-	}
-
-	@Override
-	public Page<AccountRole>
-			getAccountByExternalReferenceCodeUserAccountByEmailAddresEmailAddressAccountRolesPage(
+			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
 				String externalReferenceCode, String emailAddress)
 		throws Exception {
 
@@ -153,6 +136,23 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 					_accountResourceDTOConverter.getAccountEntryId(
 						externalReferenceCode),
 					user.getUserId()),
+				accountRole -> _toAccountRole(accountRole)));
+	}
+
+	@Override
+	public Page<AccountRole>
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception {
+
+		return Page.of(
+			transform(
+				_accountRoleLocalService.getAccountRoles(
+					_accountResourceDTOConverter.getAccountEntryId(
+						accountExternalReferenceCode),
+					_userResourceDTOConverter.getUserId(
+						userAccountExternalReferenceCode)),
 				accountRole -> _toAccountRole(accountRole)));
 	}
 
@@ -199,7 +199,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByEmailAddresEmailAddress(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception {
@@ -215,7 +215,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception {

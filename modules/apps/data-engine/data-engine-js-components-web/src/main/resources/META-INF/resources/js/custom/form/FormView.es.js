@@ -209,7 +209,7 @@ const useFormSubmit = ({apiRef, containerRef}) => {
  * Liferay.Component register.
  */
 const usePublicAPI = ({apiRef, containerRef, unstable_onEventRef}) => {
-	const {containerId, groupId, portletNamespace, viewMode} = useConfig();
+	const {containerId, groupId, portletNamespace} = useConfig();
 	const {
 		activePage,
 		ddmStructureLayoutId,
@@ -222,6 +222,7 @@ const usePublicAPI = ({apiRef, containerRef, unstable_onEventRef}) => {
 		readOnly,
 		rules,
 		successPageSettings,
+		viewMode,
 		...otherProps
 	} = useFormState();
 	const dispatch = useForm();

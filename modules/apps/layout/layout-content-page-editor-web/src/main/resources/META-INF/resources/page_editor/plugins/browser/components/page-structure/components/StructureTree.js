@@ -74,19 +74,6 @@ function getCollectionAncestor(layoutData, itemId) {
 		: getCollectionAncestor(layoutData, item.parentId);
 }
 
-function isAncestorHidden(item, layoutData, selectedViewportSize) {
-	const parentItem = layoutData.items[item.parentId];
-
-	if (!parentItem) {
-		return false;
-	}
-
-	return (
-		isItemHidden(parentItem, selectedViewportSize) ||
-		isAncestorHidden(parentItem, layoutData, selectedViewportSize)
-	);
-}
-
 function isItemHidden(item, selectedViewportSize) {
 	const responsiveConfig = getResponsiveConfig(
 		item.config,
@@ -207,6 +194,7 @@ function visit(
 		canUpdateItemConfiguration,
 		dragAndDropHoveredItemId,
 		fragmentEntryLinks,
+		hasHiddenAncestor,
 		isMasterPage,
 		layoutData,
 		mappingFields,
@@ -221,6 +209,8 @@ function visit(
 	const itemInMasterLayout =
 		masterLayoutData &&
 		Object.keys(masterLayoutData.items).includes(item.itemId);
+
+	const hidden = isItemHidden(item, selectedViewportSize);
 
 	let icon = LAYOUT_DATA_ITEM_TYPE_ICONS[item.type];
 
@@ -285,12 +275,8 @@ function visit(
 					dragAndDropHoveredItemId,
 					draggable: false,
 					expanded: childId === activeItemId,
-					hidden: isItemHidden(item, selectedViewportSize),
-					hiddenAncestor: isAncestorHidden(
-						item,
-						layoutData,
-						selectedViewportSize
-					),
+					hidden: false,
+					hiddenAncestor: hasHiddenAncestor || hidden,
 					icon: EDITABLE_TYPE_ICONS[type],
 					id: childId,
 					itemType: ITEM_TYPES.editable,
@@ -311,6 +297,7 @@ function visit(
 						canUpdateItemConfiguration,
 						dragAndDropHoveredItemId,
 						fragmentEntryLinks,
+						hasHiddenAncestor: hasHiddenAncestor || hidden,
 						isMasterPage,
 						layoutData,
 						mappingFields,
@@ -350,6 +337,7 @@ function visit(
 						canUpdateItemConfiguration,
 						dragAndDropHoveredItemId,
 						fragmentEntryLinks,
+						hasHiddenAncestor: hasHiddenAncestor || hidden,
 						isMasterPage,
 						layoutData,
 						mappingFields,
@@ -369,6 +357,7 @@ function visit(
 					canUpdateItemConfiguration,
 					dragAndDropHoveredItemId,
 					fragmentEntryLinks,
+					hasHiddenAncestor: hasHiddenAncestor || hidden,
 					isMasterPage,
 					layoutData,
 					mappingFields,
@@ -395,12 +384,8 @@ function visit(
 		expanded:
 			item.itemId === activeItemId ||
 			dragAndDropHoveredItemId === item.itemId,
-		hidden: isItemHidden(item, selectedViewportSize),
-		hiddenAncestor: isAncestorHidden(
-			item,
-			layoutData,
-			selectedViewportSize
-		),
+		hidden,
+		hiddenAncestor: hasHiddenAncestor,
 		icon,
 		id: item.itemId,
 		itemType: ITEM_TYPES.layoutDataItem,

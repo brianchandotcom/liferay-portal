@@ -26,6 +26,8 @@ CPDefinitionDiagramSetting cpDefinitionDiagramSetting = cpDefinitionDiagramSetti
 String type = BeanParamUtil.getString(cpDefinitionDiagramSetting, renderRequest, "type", DefaultCPDefinitionDiagramType.KEY);
 
 CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramType(type);
+
+PortletURL portletURL = cpDefinitionDiagramSettingDisplayContext.getPortletURL();
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
@@ -72,7 +74,7 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 
 		<div class="col-4">
 			<commerce-ui:panel
-				elementClasses="flex-fill h-100"
+				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(resourceBundle, "diagram-file") %>'
 			>
 				<div class="row">
@@ -102,10 +104,19 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 				</div>
 			</commerce-ui:panel>
 			<commerce-ui:panel
-				elementClasses="flex-fill h-100"
+				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
 			>
-
+				<clay:headless-data-set-display
+					apiURL="<%= cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramEntriesApiURL() %>"
+					formId="fm"
+					id="<%= CommerceDiagramDataSetConstants.COMMERCE_DATA_SET_KEY_DIAGRAM_MAPPED_PRODUCTS %>"
+					itemsPerPage="<%= 10 %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
+					pageNumber="<%= 1 %>"
+					portletURL="<%= portletURL %>"
+					style="stacked"
+				/>
 			</commerce-ui:panel>
 		</div>
 	</div>

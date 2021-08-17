@@ -14,9 +14,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
@@ -29,12 +29,11 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import CollectionService from '../../../../../../app/services/CollectionService';
-import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
 import {isLayoutDataItemDeleted} from '../../../../../../app/utils/isLayoutDataItemDeleted';
+import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import {useId} from '../../../../../../app/utils/useId';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
 import {FieldSet} from './FieldSet';
-import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 
 const selectConfiguredCollectionDisplays = (state) =>
 	Object.values(state.layoutData.items).filter(
@@ -174,18 +173,19 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 		}
 	}, [hasConfiguredCollections, collectionFilters]);
 
-	const onValueSelect = (name, value) =>
-		dispatch(
-			updateFragmentConfiguration({
-				configurationValues: {
-					...(configurationValues || {}),
-					...(selectedFilter?.defaultConfigurationValues || {}),
-					[name]: value,
-				},
+	const onValueSelect = useCallback(
+		(name, value) => {
+			updateConfigurationValue({
+				configuration: selectedFilter?.configuration,
+				dispatch,
 				fragmentEntryLink,
 				languageId,
-			})
-		);
+				name,
+				value,
+			});
+		},
+		[dispatch, selectedFilter, fragmentEntryLink, languageId]
+	);
 
 	if (!hasConfiguredCollections) {
 		return (

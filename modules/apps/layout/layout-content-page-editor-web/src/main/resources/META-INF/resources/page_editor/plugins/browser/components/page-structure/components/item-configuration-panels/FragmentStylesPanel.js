@@ -26,9 +26,8 @@ import {
 	useSelectorCallback,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
+import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {CommonStyles} from './CommonStyles';
 import {FieldSet} from './FieldSet';
@@ -44,8 +43,6 @@ export const FragmentStylesPanel = ({item}) => {
 	);
 
 	const languageId = useSelector(selectLanguageId);
-
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -56,25 +53,16 @@ export const FragmentStylesPanel = ({item}) => {
 
 	const onCustomStyleValueSelect = useCallback(
 		(name, value) => {
-			const configurationValues = getConfigurationValues(
-				fragmentEntryLink
-			);
-
-			const nextConfigurationValues = {
-				...configurationValues,
-				[name]: value,
-			};
-
-			dispatch(
-				updateFragmentConfiguration({
-					configurationValues: nextConfigurationValues,
-					fragmentEntryLink,
-					languageId,
-					segmentsExperienceId,
-				})
-			);
+			updateConfigurationValue({
+				configuration: fragmentEntryLink.configuration,
+				dispatch,
+				fragmentEntryLink,
+				languageId,
+				name,
+				value,
+			});
 		},
-		[dispatch, fragmentEntryLink, languageId, segmentsExperienceId]
+		[dispatch, fragmentEntryLink, languageId]
 	);
 
 	return (

@@ -73,7 +73,11 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 			CPPortletKeys.CP_CONTENT_WEB);
 
-		Layout layout = _layoutLocalService.getLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
 
 		if (layoutUuid.equals(layout.getUuid())) {
 			long groupId =

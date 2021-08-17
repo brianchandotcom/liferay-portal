@@ -67,7 +67,11 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 			CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
 
-		Layout layout = _layoutLocalService.getLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
 
 		if (layoutUuid.equals(layout.getUuid())) {
 			Group group = layoutSet.getGroup();

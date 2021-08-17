@@ -108,7 +108,7 @@ public class UserAccountResourceImpl
 
 	@Override
 	public void
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
 				String userAccountExternalReferenceCode)
 		throws Exception {
@@ -318,7 +318,7 @@ public class UserAccountResourceImpl
 
 	@Override
 	public void
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
 				String userAccountExternalReferenceCode)
 		throws Exception {

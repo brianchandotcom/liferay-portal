@@ -975,6 +975,7 @@ paths:
             # @review
             description:
                 Unassigns account users by email address from the account role
+            operationId: deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1004,6 +1005,7 @@ paths:
             # @review
             description:
                 Assigns account users by email address to the account role
+            operationId: postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1034,6 +1036,7 @@ paths:
             # @review
             description:
                 Unassigns account users by external reference code from the account role
+            operationId: deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1062,7 +1065,8 @@ paths:
         post:
             # @review
             description:
-                Assigns account users by extenal reference code to the account role
+                Assigns account users by external reference code to the account role
+            operationId: postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1093,6 +1097,7 @@ paths:
             # @review
             description:
                 Removes a user by their external reference code from an account by external reference code
+            operationId: deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1116,6 +1121,7 @@ paths:
             # @review
             description:
                 Assigns a user by their external reference code to an account by external reference code
+            operationId: postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1140,6 +1146,7 @@ paths:
             # @review
             description:
                 Gets a user's account roles by their external reference code from an account by external reference code
+            operationId: getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage
             parameters:
                 - in: path
                   name: accountExternalReferenceCode
@@ -1559,6 +1566,7 @@ paths:
             # @review
             description:
                 Gets a user's account roles by their email address from an account by external reference code
+            operationId: getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage
             parameters:
                 - in: path
                   name: externalReferenceCode

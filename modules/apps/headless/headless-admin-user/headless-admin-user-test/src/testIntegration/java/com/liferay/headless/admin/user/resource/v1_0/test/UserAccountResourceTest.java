@@ -107,7 +107,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode()
+	public void testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
 
 		UserAccount userAccount =
@@ -123,7 +123,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntry.getAccountEntryId(), userAccount.getId()));
 
 		userAccountResource.
-			deleteAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 				_accountEntry.getExternalReferenceCode(),
 				userAccount.getExternalReferenceCode());
 
@@ -410,7 +410,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
-	public void testPostAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode()
+	public void testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
 
 		UserAccount userAccount =
@@ -423,7 +423,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntry.getAccountEntryId(), userAccount.getId()));
 
 		userAccountResource.
-			postAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeHttpResponse(
+			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 				_accountEntry.getExternalReferenceCode(),
 				userAccount.getExternalReferenceCode());
 

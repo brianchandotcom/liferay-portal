@@ -126,7 +126,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 				selectedItems.forEach((item) => {
 					redirectURL = addParams(
-						`${portletNamespace}extension=${item}`,
+						`${portletNamespace}fileExtension=${item}`,
 						redirectURL
 					);
 				});

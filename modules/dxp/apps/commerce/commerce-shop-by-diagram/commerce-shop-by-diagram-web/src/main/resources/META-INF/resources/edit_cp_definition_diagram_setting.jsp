@@ -28,17 +28,17 @@ String type = BeanParamUtil.getString(cpDefinitionDiagramSetting, renderRequest,
 CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramType(type);
 %>
 
-<div class="pt-4">
-	<portlet:actionURL name="/cp_definitions/edit_cp_definition_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
+<portlet:actionURL name="/cp_definitions/edit_cp_definition_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
 
-	<aui:form action="<%= editProductDefinitionDiagramSettingActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCPDefinitionDiagramSetting" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+<aui:form action="<%= editProductDefinitionDiagramSettingActionURL %>" cssClass="mt-4" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCPDefinitionDiagramSetting" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 
-		<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
-		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
+	<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
+	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
 
+	<div class="row">
 		<div class="col-8">
 			<commerce-ui:panel
 				title='<%= LanguageUtil.get(resourceBundle, "diagram-settings") %>'
@@ -102,8 +102,8 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 				</div>
 			</commerce-ui:panel>
 		</div>
-	</aui:form>
-</div>
+	</div>
+</aui:form>
 
 <liferay-frontend:component
 	context='<%=

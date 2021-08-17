@@ -243,6 +243,38 @@
 		</field>
 		<field name="status" type="int" />
 	</model>
+	<model name="com.liferay.commerce.model.CommerceOrderType">
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceOrderTypeId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="active" type="boolean" />
+		<field name="displayDate" type="Date" />
+		<field name="displayOrder" type="int" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceOrderTypeRel">
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceOrderTypeRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commerceOrderTypeId" type="long" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceShipment">
 		<field name="commerceShipmentId" type="long" />
 		<field name="groupId" type="long" />

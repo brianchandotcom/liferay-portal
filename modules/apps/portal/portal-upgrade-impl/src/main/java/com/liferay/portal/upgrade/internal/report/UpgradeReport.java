@@ -147,10 +147,9 @@ public class UpgradeReport {
 
 			reportFile.renameTo(
 				new File(
-					PropsValues.LIFERAY_HOME,
-					logFileName + "." + reportFile.lastModified()));
+					reportsDir, logFileName + "." + reportFile.lastModified()));
 
-			reportFile = new File(PropsValues.LIFERAY_HOME, logFileName);
+			reportFile = new File(reportsDir, logFileName);
 		}
 
 		return reportFile;

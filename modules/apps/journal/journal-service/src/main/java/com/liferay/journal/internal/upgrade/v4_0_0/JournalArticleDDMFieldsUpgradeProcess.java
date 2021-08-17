@@ -59,7 +59,7 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 					"JournalArticle where ctCollectionId = 0");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			concurrentUpgrade(
+			processConcurrently(
 				() -> {
 					if (resultSet.next()) {
 						return new JournalArticleInfo(

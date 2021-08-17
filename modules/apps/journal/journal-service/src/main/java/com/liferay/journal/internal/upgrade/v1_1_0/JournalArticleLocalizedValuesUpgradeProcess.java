@@ -116,7 +116,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 						"defaultLanguageId from JournalArticle");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
-			concurrentUpgrade(
+			processConcurrently(
 				() -> {
 					if (resultSet.next()) {
 						return new Object[] {
@@ -262,7 +262,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 
 			Map<Long, Locale> defaultSiteLocales = new HashMap<>();
 
-			concurrentUpgrade(
+			processConcurrently(
 				() -> {
 					if (resultSet.next()) {
 						String columnValue = resultSet.getString(3);

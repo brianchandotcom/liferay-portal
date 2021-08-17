@@ -15,8 +15,12 @@
 package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -26,6 +30,13 @@ import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.naming.NamingException;
 
@@ -154,6 +165,56 @@ public abstract class BaseDBProcess implements DBProcess {
 		throws IOException, NamingException, SQLException {
 
 		runSQLTemplateString(template, failOnError);
+	}
+
+	protected static <T> void processConcurrently(
+			UnsafeSupplier<T, Exception> unsafeSupplier,
+			UnsafeConsumer<T, Exception> unsafeConsumer)
+		throws Exception {
+
+		Objects.requireNonNull(unsafeSupplier);
+		Objects.requireNonNull(unsafeConsumer);
+
+		ExecutorService executorService = Executors.newWorkStealingPool();
+
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
+		List<Future<Void>> futures = new ArrayList<>();
+
+		try {
+			long companyId = CompanyThreadLocal.getCompanyId();
+
+			T next = null;
+
+			while ((next = unsafeSupplier.get()) != null) {
+				T current = next;
+
+				Future<Void> future = executorService.submit(
+					() -> {
+						try (SafeCloseable safeCloseable =
+								CompanyThreadLocal.lock(companyId)) {
+
+							unsafeConsumer.accept(current);
+						}
+						catch (Exception exception) {
+							throwableCollector.collect(exception);
+						}
+
+						return null;
+					});
+
+				futures.add(future);
+			}
+		}
+		finally {
+			executorService.shutdown();
+
+			for (Future<Void> future : futures) {
+				future.get();
+			}
+		}
+
+		throwableCollector.rethrow();
 	}
 
 	protected boolean doHasTable(String tableName) throws Exception {

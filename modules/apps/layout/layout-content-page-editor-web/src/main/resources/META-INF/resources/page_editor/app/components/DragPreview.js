@@ -85,7 +85,7 @@ export default function DragPreview() {
 		item: monitor.getItem(),
 	}));
 
-	if (!isDragging) {
+	if (!isDragging || !item?.id) {
 		return null;
 	}
 

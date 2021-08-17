@@ -23,6 +23,7 @@ import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderM
 import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -59,6 +61,9 @@ public class AccountSelectorTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		_commerceOrderTypeLocalService =
+			ServletContextUtil.getCommerceOrderTypeLocalService();
+
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
@@ -70,6 +75,7 @@ public class AccountSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_commerceOrderTypeLocalService = null;
 		_spritemap = null;
 	}
 
@@ -154,7 +160,7 @@ public class AccountSelectorTag extends IncludeTag {
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:createNewOrderURL",
-				_getAddCommerceOrderURL(themeDisplay));
+				_getAddCommerceOrderURL(themeDisplay, httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:selectOrderURL",
 				_getEditOrderURL(themeDisplay));
@@ -175,8 +181,32 @@ public class AccountSelectorTag extends IncludeTag {
 		}
 	}
 
-	private String _getAddCommerceOrderURL(ThemeDisplay themeDisplay)
+	private String _getAddCommerceOrderURL(
+			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
 		throws PortalException {
+
+		int commerceOrderTypesCount =
+			_commerceOrderTypeLocalService.getCommerceOrderTypesCount();
+
+		if (commerceOrderTypesCount > 1) {
+			httpServletRequest.setAttribute(
+				"liferay-commerce:account-selector:showOrderTypeModal",
+				Boolean.TRUE);
+
+			return PortletURLBuilder.create(
+				_getPortletURL(
+					themeDisplay.getRequest(),
+					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
+			).setMVCRenderCommandName(
+				"/commerce_order_content/view_commerce_order_order_type_modal"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
+		}
+
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:showOrderTypeModal",
+			Boolean.FALSE);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			themeDisplay.getScopeGroupId(),
@@ -244,6 +274,7 @@ public class AccountSelectorTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountSelectorTag.class);
 
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 	private String _spritemap;
 
 }

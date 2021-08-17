@@ -35,6 +35,7 @@ CurrentCommerceOrderModel currentCommerceOrder = (CurrentCommerceOrderModel)requ
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
 String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");
+boolean showOrderTypeModal = (boolean)request.getAttribute("liferay-commerce:account-selector:showOrderTypeModal");
 String spritemap = (String)request.getAttribute("liferay-commerce:account-selector:spritemap");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_account_selector") + StringPool.UNDERLINE;

@@ -25,6 +25,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 
@@ -60,6 +61,12 @@ public class ServletContextUtil {
 		getCommerceOrderItemLocalService() {
 
 		return _servletContextUtil._getCommerceOrderItemLocalService();
+	}
+
+	public static CommerceOrderTypeLocalService
+		getCommerceOrderTypeLocalService() {
+
+		return _servletContextUtil._getCommerceOrderTypeLocalService();
 	}
 
 	public static CommerceProductPriceCalculation
@@ -116,6 +123,13 @@ public class ServletContextUtil {
 		CommerceOrderItemLocalService commerceOrderItemLocalService) {
 
 		_commerceOrderItemLocalService = commerceOrderItemLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setCommerceOrderTypeLocalService(
+		CommerceOrderTypeLocalService commerceOrderTypeLocalService) {
+
+		_commerceOrderTypeLocalService = commerceOrderTypeLocalService;
 	}
 
 	@Activate
@@ -219,6 +233,10 @@ public class ServletContextUtil {
 		return _commerceOrderItemLocalService;
 	}
 
+	private CommerceOrderTypeLocalService _getCommerceOrderTypeLocalService() {
+		return _commerceOrderTypeLocalService;
+	}
+
 	private CommerceProductPriceCalculation
 		_getCommerceProductPriceCalculation() {
 
@@ -267,6 +285,7 @@ public class ServletContextUtil {
 	private CommerceInventoryEngine _commerceInventoryEngine;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private ConfigurationProvider _configurationProvider;
 	private CPCompareHelper _cpCompareHelper;

@@ -30,6 +30,7 @@
 			refreshPageOnAccountSelected: true,
 			selectOrderURL: '<%= selectOrderURL %>',
 			setCurrentAccountURL: '<%= setCurrentAccountURL %>',
+			showOrderTypeModal: <%= showOrderTypeModal %>,
 			spritemap: '<%= spritemap %>',
 		}
 	);

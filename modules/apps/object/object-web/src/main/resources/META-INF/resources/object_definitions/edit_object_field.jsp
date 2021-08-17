@@ -40,9 +40,9 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 						<liferay-ui:message key="basic-info" />
 					</h2>
 
-					<aui:input name="name" required="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" value="<%= objectField.getName() %>" />
+					<aui:input disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
-					<aui:select name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>">
+					<aui:select disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
 						<aui:option label="BigDecimal" selected='<%= objectField.getType().equals("BigDecimal") %>' value="BigDecimal" />
 						<aui:option label="Blob" selected='<%= objectField.getType().equals("Blob") %>' value="Blob" />
 						<aui:option label="Boolean" selected='<%= objectField.getType().equals("Boolean") %>' value="Boolean" />

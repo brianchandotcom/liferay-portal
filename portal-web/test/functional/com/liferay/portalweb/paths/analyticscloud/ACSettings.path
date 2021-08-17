@@ -98,7 +98,7 @@
 <!-- PROPERTIES -->
 <tr>
 	<td>SEARCH_BAR</td>
-	<td>//div[@class='input-group-item']/input</td>
+	<td>//input[@type='text' and @placeholder='Search' and not(@disabled)]</td>
 	<td></td>
 </tr>
 <tr>

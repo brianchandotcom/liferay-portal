@@ -247,7 +247,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 				rightRender = _getRender(
 					httpServletRequest, httpServletResponse, ctCollectionId,
-					ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
+					ctDisplayRenderer, ctEntryId, ctSQLMode,
+					themeDisplay.getLocale(), rightModel,
 					CTConstants.TYPE_AFTER);
 			}
 		}
@@ -329,7 +330,8 @@ public class GetEntryRenderDataMVCResourceCommand
 					leftRender = _getRender(
 						httpServletRequest, httpServletResponse,
 						leftCtCollectionId, ctDisplayRenderer, ctEntryId,
-						leftCTSQLMode, leftModel, CTConstants.TYPE_AFTER);
+						leftCTSQLMode, themeDisplay.getLocale(), leftModel,
+						CTConstants.TYPE_AFTER);
 				}
 			}
 		}
@@ -386,7 +388,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 				leftRender = _getRender(
 					httpServletRequest, httpServletResponse, leftCtCollectionId,
-					ctDisplayRenderer, ctEntryId, leftCTSQLMode, leftModel,
+					ctDisplayRenderer, ctEntryId, leftCTSQLMode,
+					themeDisplay.getLocale(), leftModel,
 					CTConstants.TYPE_BEFORE);
 			}
 		}
@@ -466,7 +469,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 					rightRender = _getRender(
 						httpServletRequest, httpServletResponse, ctCollectionId,
-						ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
+						ctDisplayRenderer, ctEntryId, ctSQLMode,
+						themeDisplay.getLocale(), rightModel,
 						CTConstants.TYPE_AFTER);
 				}
 			}
@@ -639,6 +643,11 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
 
@@ -657,8 +666,8 @@ public class GetEntryRenderDataMVCResourceCommand
 				CTConstants.CT_COLLECTION_ID_PRODUCTION,
 				_ctDisplayRendererRegistry.getCTDisplayRenderer(
 					modelClassNameId),
-				0, CTSQLModeThreadLocal.CTSQLMode.DEFAULT, model,
-				CTConstants.TYPE_BEFORE));
+				0, CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+				themeDisplay.getLocale(), model, CTConstants.TYPE_BEFORE));
 
 		return jsonObject;
 	}
@@ -667,7 +676,8 @@ public class GetEntryRenderDataMVCResourceCommand
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long ctCollectionId,
 			CTDisplayRenderer<T> ctDisplayRenderer, long ctEntryId,
-			CTSQLModeThreadLocal.CTSQLMode ctSQLMode, T model, String type)
+			CTSQLModeThreadLocal.CTSQLMode ctSQLMode, Locale locale, T model,
+			String type)
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
@@ -683,8 +693,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			ctDisplayRenderer.render(
 				new DisplayContextImpl<>(
-					httpServletRequest, pipingServletResponse, model, ctEntryId,
-					type));
+					httpServletRequest, pipingServletResponse, ctEntryId,
+					locale, model, type));
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -705,8 +715,8 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			ctDisplayRenderer.render(
 				new DisplayContextImpl<>(
-					httpServletRequest, pipingServletResponse, model, ctEntryId,
-					type));
+					httpServletRequest, pipingServletResponse, ctEntryId,
+					locale, model, type));
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 

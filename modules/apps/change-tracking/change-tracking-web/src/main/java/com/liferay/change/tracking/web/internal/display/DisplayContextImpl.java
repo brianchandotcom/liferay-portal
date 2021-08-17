@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,13 +35,14 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 
 	public DisplayContextImpl(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, T model, long ctEntryId,
-		String type) {
+		HttpServletResponse httpServletResponse, long ctEntryId, Locale locale,
+		T model, String type) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
-		_model = model;
 		_ctEntryId = ctEntryId;
+		_locale = locale;
+		_model = model;
 		_type = type;
 	}
 
@@ -98,6 +101,11 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 	}
 
 	@Override
+	public Locale getLocale() {
+		return _locale;
+	}
+
+	@Override
 	public T getModel() {
 		return _model;
 	}
@@ -105,6 +113,7 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 	private final long _ctEntryId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final Locale _locale;
 	private final T _model;
 	private final String _type;
 

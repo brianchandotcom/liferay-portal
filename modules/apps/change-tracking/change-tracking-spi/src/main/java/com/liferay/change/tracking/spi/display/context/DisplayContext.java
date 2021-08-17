@@ -14,6 +14,8 @@
 
 package com.liferay.change.tracking.spi.display.context;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,6 +59,8 @@ public interface DisplayContext<T> {
 	 * @return the response used for rendering
 	 */
 	public HttpServletResponse getHttpServletResponse();
+
+	public Locale getLocale();
 
 	/**
 	 * Returns the model to be rendered.

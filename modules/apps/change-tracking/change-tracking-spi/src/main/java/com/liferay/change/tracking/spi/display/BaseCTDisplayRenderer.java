@@ -134,7 +134,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(), getClass());
+			displayContext.getLocale(), getClass());
 
 		buildDisplay(
 			new DisplayBuilderImpl<>(

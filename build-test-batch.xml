@@ -2914,7 +2914,7 @@ log.sanitizer.enabled=false</echo>
 
 	<macrodef name="run-modules-integration-test">
 		<attribute default="tomcat" name="app.server.type" />
-		<attribute name="aws.store.enabled" />
+		<attribute default="" name="aws.store.enabled" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="refreshdependencies" />

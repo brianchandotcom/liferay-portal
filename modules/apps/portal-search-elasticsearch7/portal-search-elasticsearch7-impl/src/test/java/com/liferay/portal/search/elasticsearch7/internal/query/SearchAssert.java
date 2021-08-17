@@ -65,8 +65,8 @@ public class SearchAssert {
 	}
 
 	public static void assertSearch(
-			RestHighLevelClient restHighLevelClient, String field,
-			QueryBuilder queryBuilder, String... expectedValues)
+			final RestHighLevelClient restHighLevelClient, final String field,
+			final QueryBuilder queryBuilder, final String... expectedValues)
 		throws Exception {
 
 		assertSearch(

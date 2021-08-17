@@ -40,7 +40,7 @@ public class RESTBuilderDefaultsPlugin
 
 	@Override
 	protected void applyPluginDefaults(
-		Project project, RESTBuilderPlugin restBuilderPlugin) {
+		final Project project, RESTBuilderPlugin restBuilderPlugin) {
 
 		// Dependencies
 

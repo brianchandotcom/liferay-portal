@@ -86,7 +86,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
+			final PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -126,7 +126,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
+			final PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -172,7 +172,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getRatingsEntryActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
+		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_ratingsEntryLocalService.getExportActionableDynamicQuery(

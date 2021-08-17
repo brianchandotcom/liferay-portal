@@ -282,7 +282,8 @@ public class FileUtil {
 		}
 	}
 
-	public static void zip(Path sourcePath, File zipFile, boolean includeFolder)
+	public static void zip(
+			Path sourcePath, final File zipFile, boolean includeFolder)
 		throws Exception {
 
 		final Path parentPath;

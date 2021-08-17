@@ -882,7 +882,7 @@ public class LayoutPageTemplatesImporterTest {
 		}
 	}
 
-	private void _registerTestPortlet(String portletId) throws Exception {
+	private void _registerTestPortlet(final String portletId) throws Exception {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				Portlet.class,

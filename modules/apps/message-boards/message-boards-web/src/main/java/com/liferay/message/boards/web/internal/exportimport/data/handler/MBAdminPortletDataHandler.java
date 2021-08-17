@@ -149,7 +149,7 @@ public class MBAdminPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
+			final PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 

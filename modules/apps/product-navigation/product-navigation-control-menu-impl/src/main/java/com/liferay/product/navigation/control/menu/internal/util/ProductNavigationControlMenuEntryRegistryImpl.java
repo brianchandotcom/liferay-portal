@@ -65,7 +65,7 @@ public class ProductNavigationControlMenuEntryRegistryImpl
 		getProductNavigationControlMenuEntries(
 			ProductNavigationControlMenuCategory
 				productNavigationControlMenuCategory,
-			HttpServletRequest httpServletRequest) {
+			final HttpServletRequest httpServletRequest) {
 
 		List<ProductNavigationControlMenuEntry>
 			productNavigationControlMenuEntries =

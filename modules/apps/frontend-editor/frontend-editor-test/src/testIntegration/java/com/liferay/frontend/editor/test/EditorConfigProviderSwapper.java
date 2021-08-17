@@ -44,7 +44,7 @@ public class EditorConfigProviderSwapper implements Closeable {
 
 				@Override
 				protected void visitEditorContributors(
-					Consumer<EditorConfigContributor> consumer,
+					final Consumer<EditorConfigContributor> consumer,
 					String portletName, String editorConfigKey,
 					String editorName) {
 

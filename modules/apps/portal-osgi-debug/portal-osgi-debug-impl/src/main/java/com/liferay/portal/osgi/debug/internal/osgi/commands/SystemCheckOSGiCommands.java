@@ -49,7 +49,7 @@ public class SystemCheckOSGiCommands {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(final BundleContext bundleContext) {
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, SystemChecker.class, null);
 

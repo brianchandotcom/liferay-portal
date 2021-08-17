@@ -27,7 +27,7 @@ public class UADDynamicQueryUtil {
 
 	public static ActionableDynamicQuery addActionableDynamicQueryCriteria(
 		ActionableDynamicQuery actionableDynamicQuery,
-		String[] userIdFieldNames, long userId) {
+		final String[] userIdFieldNames, final long userId) {
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> dynamicQuery.add(

@@ -150,7 +150,7 @@ public class DLFileVersionLocalServiceImpl
 	}
 
 	@Override
-	public void setTreePaths(long folderId, String treePath)
+	public void setTreePaths(final long folderId, final String treePath)
 		throws PortalException {
 
 		if (treePath == null) {

@@ -801,8 +801,8 @@ public class SocialActivityCounterLocalServiceImpl
 	}
 
 	protected SocialActivityCounter addActivityCounter(
-			long groupId, User user, SocialActivity activity,
-			SocialActivityCounterDefinition activityCounterDefinition)
+			final long groupId, final User user, final SocialActivity activity,
+			final SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException {
 
 		int ownerType = activityCounterDefinition.getOwnerType();

@@ -39,7 +39,8 @@ public abstract class BaseLDAPExportModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> {
 
 	protected void exportToLDAP(
-			User user, UserExporter userExporter, LDAPSettings ldapSettings)
+			final User user, final UserExporter userExporter,
+			final LDAPSettings ldapSettings)
 		throws Exception {
 
 		if ((user == null) || user.isDefaultUser() ||

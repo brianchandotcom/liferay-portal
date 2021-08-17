@@ -186,7 +186,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			"osgi/war",
 			new Closure<Void>(project) {
 
-				public void doCall(CopySpec copySpec) {
+				public void doCall(final CopySpec copySpec) {
 					Project project = assembleTask.getProject();
 
 					File warFile = _getWarFile(project);

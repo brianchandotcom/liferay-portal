@@ -139,7 +139,7 @@ public class DDMFormInstanceStagedModelRepository
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
+		final PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_ddmFormInstanceLocalService.getExportActionableDynamicQuery(

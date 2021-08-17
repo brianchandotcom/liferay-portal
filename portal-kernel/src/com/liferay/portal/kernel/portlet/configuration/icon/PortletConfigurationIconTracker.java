@@ -51,7 +51,7 @@ public class PortletConfigurationIconTracker {
 	}
 
 	public static List<PortletConfigurationIcon> getPortletConfigurationIcons(
-		String portletId, PortletRequest portletRequest,
+		String portletId, final PortletRequest portletRequest,
 		Comparator<?> comparator) {
 
 		List<PortletConfigurationIcon> portletConfigurationIcons =

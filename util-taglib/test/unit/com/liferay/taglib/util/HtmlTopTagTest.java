@@ -113,7 +113,7 @@ public class HtmlTopTagTest {
 	}
 
 	private void _testDataSennaTrackAttributeAdded(
-			String element, String expectedDataSennaTrackValue)
+			final String element, String expectedDataSennaTrackValue)
 		throws Exception {
 
 		HtmlTopTag htmlTopTag = new HtmlTopTag();

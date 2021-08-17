@@ -341,7 +341,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public String getUnambiguousName(
-			List<DDMStructure> structures, long groupId, Locale locale)
+			List<DDMStructure> structures, long groupId, final Locale locale)
 		throws PortalException {
 
 		if (getGroupId() == groupId) {

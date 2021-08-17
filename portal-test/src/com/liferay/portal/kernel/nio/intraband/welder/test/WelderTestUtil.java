@@ -37,7 +37,7 @@ import org.junit.Assert;
 public class WelderTestUtil {
 
 	public static void assertConnectted(
-			ScatteringByteChannel scatteringByteChannel,
+			final ScatteringByteChannel scatteringByteChannel,
 			final GatheringByteChannel gatheringByteChannel)
 		throws Exception {
 

@@ -664,7 +664,7 @@ public class PingbackMethodImplTest {
 	}
 
 	protected void whenFriendlyURLMapperPopulateParams(
-		String friendlyURLPath, String name, String value) {
+		String friendlyURLPath, final String name, final String value) {
 
 		Mockito.doAnswer(
 			invocationOnMock -> {

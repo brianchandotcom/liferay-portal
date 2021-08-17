@@ -108,7 +108,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	}
 
 	private void _configureEclipseClasspath(
-		Project project, EclipseModel eclipseModelExtension) {
+		final Project project, EclipseModel eclipseModelExtension) {
 
 		EclipseClasspath eclipseClasspath =
 			eclipseModelExtension.getClasspath();

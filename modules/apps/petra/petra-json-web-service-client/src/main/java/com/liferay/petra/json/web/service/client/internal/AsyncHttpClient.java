@@ -60,7 +60,8 @@ public class AsyncHttpClient implements Closeable {
 	}
 
 	public Future<HttpResponse> execute(
-		HttpHost httpHost, HttpRequest httpRequest, HttpContext httpContext) {
+		final HttpHost httpHost, HttpRequest httpRequest,
+		HttpContext httpContext) {
 
 		for (int i = 1; i <= _maxAttempts; i++) {
 			if ((_maxAttempts == 1) || (_maxAttempts == i)) {

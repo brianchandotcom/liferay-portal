@@ -223,8 +223,8 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private ActionableDynamicQuery _getDDMTemplateActionableDynamicQuery(
-		PortletDataContext portletDataContext, Long[] classNameIds,
-		StagedModelType stagedModelType) {
+		final PortletDataContext portletDataContext, final Long[] classNameIds,
+		final StagedModelType stagedModelType) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_ddmTemplateLocalService.getExportActionableDynamicQuery(

@@ -72,7 +72,9 @@ public class ServletContextListenerExceptionAdapter
 	}
 
 	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
+	public void contextInitialized(
+		final ServletContextEvent servletContextEvent) {
+
 		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
 			ServletContext servletContext =
 				servletContextEvent.getServletContext();

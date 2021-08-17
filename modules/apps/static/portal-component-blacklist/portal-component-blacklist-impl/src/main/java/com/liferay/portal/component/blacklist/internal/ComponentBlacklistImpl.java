@@ -108,7 +108,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 	}
 
 	protected void enableComponents(
-		Bundle bundle, Set<String> reactivateComponentNames) {
+		final Bundle bundle, final Set<String> reactivateComponentNames) {
 
 		_performComponentDescriptionDTOOperation(
 			bundle, reactivateComponentNames,
@@ -205,7 +205,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 	private class ComponentDisablingBundleListener implements BundleListener {
 
 		@Override
-		public void bundleChanged(BundleEvent bundleEvent) {
+		public void bundleChanged(final BundleEvent bundleEvent) {
 			if (bundleEvent.getType() != BundleEvent.STARTED) {
 				return;
 			}

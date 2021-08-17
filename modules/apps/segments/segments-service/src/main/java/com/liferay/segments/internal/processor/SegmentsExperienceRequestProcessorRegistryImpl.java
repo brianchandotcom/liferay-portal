@@ -100,7 +100,7 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(final BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SegmentsExperienceRequestProcessor.class,
 			Collections.reverseOrder(

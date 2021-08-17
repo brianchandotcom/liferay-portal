@@ -54,7 +54,8 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	public static final Plugin<Project> INSTANCE = new IdeaDefaultsPlugin();
 
 	@Override
-	protected void applyPluginDefaults(Project project, IdeaPlugin ideaPlugin) {
+	protected void applyPluginDefaults(
+		Project project, final IdeaPlugin ideaPlugin) {
 
 		// Conventions
 

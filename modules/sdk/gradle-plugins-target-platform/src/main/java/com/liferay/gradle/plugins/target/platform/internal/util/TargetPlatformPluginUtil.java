@@ -30,7 +30,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 public class TargetPlatformPluginUtil {
 
 	public static void configureTargetPlatform(
-		Project project, List<String> configurationNames,
+		final Project project, List<String> configurationNames,
 		final Configuration targetPlatformBomsConfiguration) {
 
 		ConfigurationContainer configurationContainer =

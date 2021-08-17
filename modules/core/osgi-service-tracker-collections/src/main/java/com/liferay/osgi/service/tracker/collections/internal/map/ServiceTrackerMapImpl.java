@@ -233,7 +233,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		@Override
 		@SuppressWarnings({"rawtypes", "unchecked"})
 		public KeyedServiceReferenceServiceTuple<SR, TS, K> addingService(
-			ServiceReference<SR> serviceReference) {
+			final ServiceReference<SR> serviceReference) {
 
 			DefaultEmitter defaultEmitter = new DefaultEmitter(
 				serviceReference);
@@ -271,8 +271,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 		@Override
 		public void removedService(
-			ServiceReference<SR> serviceReference,
-			KeyedServiceReferenceServiceTuple<SR, TS, K>
+			final ServiceReference<SR> serviceReference,
+			final KeyedServiceReferenceServiceTuple<SR, TS, K>
 				keyedServiceReferenceServiceTuple) {
 
 			_removeKeys(keyedServiceReferenceServiceTuple);

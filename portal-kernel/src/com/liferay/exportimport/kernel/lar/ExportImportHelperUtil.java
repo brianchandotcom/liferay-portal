@@ -136,7 +136,7 @@ public class ExportImportHelperUtil {
 	}
 
 	public static long getLayoutModelDeletionCount(
-			PortletDataContext portletDataContext, boolean privateLayout)
+			final PortletDataContext portletDataContext, boolean privateLayout)
 		throws PortalException {
 
 		return _exportImportHelper.getLayoutModelDeletionCount(
@@ -177,8 +177,8 @@ public class ExportImportHelperUtil {
 	}
 
 	public static long getModelDeletionCount(
-			PortletDataContext portletDataContext,
-			StagedModelType stagedModelType)
+			final PortletDataContext portletDataContext,
+			final StagedModelType stagedModelType)
 		throws PortalException {
 
 		return _exportImportHelper.getModelDeletionCount(
@@ -264,7 +264,7 @@ public class ExportImportHelperUtil {
 	}
 
 	public static MissingReferences validateMissingReferences(
-			PortletDataContext portletDataContext)
+			final PortletDataContext portletDataContext)
 		throws Exception {
 
 		return _exportImportHelper.validateMissingReferences(

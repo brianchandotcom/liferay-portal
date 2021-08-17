@@ -124,7 +124,7 @@ public class UpgradeResourceActionTest {
 	}
 
 	private void _createResourceAction(
-			String name, String actionId, long bitwiseValue)
+			final String name, final String actionId, final long bitwiseValue)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(

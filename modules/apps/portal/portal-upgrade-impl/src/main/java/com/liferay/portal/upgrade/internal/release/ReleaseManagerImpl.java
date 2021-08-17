@@ -148,7 +148,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(final BundleContext bundleContext) {
 		DB db = DBManagerUtil.getDB();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
@@ -354,7 +354,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		@Override
 		public void keyEmitted(
 			ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap,
-			String key, UpgradeInfo upgradeInfo,
+			final String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
 			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled() &&

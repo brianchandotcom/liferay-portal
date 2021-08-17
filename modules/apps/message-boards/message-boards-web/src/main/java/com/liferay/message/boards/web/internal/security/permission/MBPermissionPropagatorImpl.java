@@ -91,8 +91,8 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 	}
 
 	protected void propagateCategoryRolePermissions(
-			ActionRequest actionRequest, String className, String primKey,
-			long[] roleIds)
+			final ActionRequest actionRequest, final String className,
+			String primKey, final long[] roleIds)
 		throws PortalException {
 
 		long categoryId = GetterUtil.getLong(primKey);
@@ -157,8 +157,8 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 	}
 
 	protected void propagateMBRolePermissions(
-			ActionRequest actionRequest, String className, String primKey,
-			long[] roleIds)
+			final ActionRequest actionRequest, final String className,
+			String primKey, final long[] roleIds)
 		throws PortalException {
 
 		long groupId = GetterUtil.getLong(primKey);

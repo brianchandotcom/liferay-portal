@@ -40,7 +40,7 @@ public class ConfigurationPersistenceImplBundleActivator
 	implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(final BundleContext bundleContext) throws Exception {
 		Collection<ServiceReference<DataSource>> serviceReferences =
 			bundleContext.getServiceReferences(
 				DataSource.class, "(bean.id=liferayDataSource)");

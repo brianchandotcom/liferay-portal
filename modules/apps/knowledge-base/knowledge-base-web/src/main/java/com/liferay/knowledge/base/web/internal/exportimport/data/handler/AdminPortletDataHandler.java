@@ -287,7 +287,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getKBArticleActionableDynamicQuery(
-			PortletDataContext portletDataContext)
+			final PortletDataContext portletDataContext)
 		throws Exception {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =

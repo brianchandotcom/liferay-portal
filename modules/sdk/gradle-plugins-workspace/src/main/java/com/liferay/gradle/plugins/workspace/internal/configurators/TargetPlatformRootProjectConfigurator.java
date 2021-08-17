@@ -42,7 +42,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		new TargetPlatformRootProjectConfigurator();
 
 	@Override
-	public void apply(Project project) {
+	public void apply(final Project project) {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 

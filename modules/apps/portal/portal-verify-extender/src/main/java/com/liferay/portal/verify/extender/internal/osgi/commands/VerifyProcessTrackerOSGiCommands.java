@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
 public class VerifyProcessTrackerOSGiCommands {
 
 	@Descriptor("List latest execution result for a specific verify process")
-	public void check(String verifyProcessName) {
+	public void check(final String verifyProcessName) {
 		try {
 			getVerifyProcesses(_verifyProcesses, verifyProcessName);
 		}
@@ -125,7 +125,7 @@ public class VerifyProcessTrackerOSGiCommands {
 	}
 
 	@Descriptor("Execute a specific verify process")
-	public void execute(String verifyProcessName) {
+	public void execute(final String verifyProcessName) {
 		_execute(_verifyProcesses, verifyProcessName, null, true);
 	}
 
@@ -388,8 +388,8 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	private void _execute(
 		ServiceTrackerMap<String, List<VerifyProcess>> verifyProcessTrackerMap,
-		String verifyProcessName, String outputStreamContainerFactoryName,
-		boolean force) {
+		final String verifyProcessName, String outputStreamContainerFactoryName,
+		final boolean force) {
 
 		executeVerifyProcesses(
 			verifyProcessTrackerMap, verifyProcessName,

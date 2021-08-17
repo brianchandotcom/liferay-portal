@@ -107,7 +107,7 @@ public class LiferayProcessorCapability
 	}
 
 	protected void registerDLProcessorCallback(
-		FileEntry fileEntry, FileVersion fileVersion) {
+		final FileEntry fileEntry, final FileVersion fileVersion) {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {

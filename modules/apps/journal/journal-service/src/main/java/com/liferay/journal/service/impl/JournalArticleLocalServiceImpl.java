@@ -5332,7 +5332,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public void setTreePaths(long folderId, String treePath, boolean reindex)
+	public void setTreePaths(
+			final long folderId, final String treePath, final boolean reindex)
 		throws PortalException {
 
 		if (treePath == null) {

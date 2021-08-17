@@ -68,7 +68,7 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 
 	@Override
 	protected void waitForStarted(
-		StartedProcess startedProcess, OutputStream outputStream) {
+		StartedProcess startedProcess, final OutputStream outputStream) {
 
 		waitFor(
 			new Callable<Boolean>() {

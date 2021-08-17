@@ -105,7 +105,8 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public String getUnambiguousTitle(
-			List<AssetVocabulary> vocabularies, long groupId, Locale locale)
+			List<AssetVocabulary> vocabularies, long groupId,
+			final Locale locale)
 		throws PortalException {
 
 		if (getGroupId() == groupId) {
@@ -136,7 +137,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean hasMoreThanOneCategorySelected(long[] categoryIds) {
+	public boolean hasMoreThanOneCategorySelected(final long[] categoryIds) {
 		int count = ListUtil.count(
 			getCategories(),
 			assetCategory -> ArrayUtil.contains(
@@ -168,7 +169,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMissingRequiredCategory(
-		long classNameId, long classTypePK, long[] categoryIds) {
+		long classNameId, long classTypePK, final long[] categoryIds) {
 
 		if (!isRequired(classNameId, classTypePK)) {
 			return false;

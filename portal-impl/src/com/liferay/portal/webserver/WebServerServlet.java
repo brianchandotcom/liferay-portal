@@ -1520,8 +1520,8 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	private Callable<Void> _createFileServingCallable(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, User user) {
+		final HttpServletRequest httpServletRequest,
+		final HttpServletResponse httpServletResponse, final User user) {
 
 		return () -> {
 			String path = HttpUtil.fixPath(httpServletRequest.getPathInfo());

@@ -57,7 +57,7 @@ public class ServletExceptionAdapter implements Servlet {
 	}
 
 	@Override
-	public void init(ServletConfig servletConfig) {
+	public void init(final ServletConfig servletConfig) {
 		try {
 			_servlet.init(
 				new ServletConfigWrapper(

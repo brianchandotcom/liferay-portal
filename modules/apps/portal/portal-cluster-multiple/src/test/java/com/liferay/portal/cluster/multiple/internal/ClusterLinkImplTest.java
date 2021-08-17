@@ -248,7 +248,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		Assert.assertSame(address, unicastMessage.getValue());
 	}
 
-	protected ClusterLinkImpl getClusterLinkImpl(int channels) {
+	protected ClusterLinkImpl getClusterLinkImpl(final int channels) {
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
 		Properties channelNameProperties = new Properties();

@@ -70,7 +70,8 @@ public class DependencyLocalCopyPlugin implements Plugin<Project> {
 	}
 
 	private Sync _addTaskSyncLocalCopy(
-		final Project project, Project dependencyProject, boolean transitive) {
+		final Project project, final Project dependencyProject,
+		boolean transitive) {
 
 		final String dependencyProjectPath = dependencyProject.getPath();
 

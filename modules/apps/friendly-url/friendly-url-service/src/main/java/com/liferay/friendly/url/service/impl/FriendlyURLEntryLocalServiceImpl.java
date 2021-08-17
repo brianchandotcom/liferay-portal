@@ -252,7 +252,9 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId) {
+	public void deleteGroupFriendlyURLEntries(
+		final long groupId, final long classNameId) {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 

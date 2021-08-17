@@ -91,7 +91,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
+			final PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -145,7 +145,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getPasswordPolicyActionableDynamicQuery(
-		PortletDataContext portletDataContext, boolean export) {
+		final PortletDataContext portletDataContext, final boolean export) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_passwordPolicyLocalService.getExportActionableDynamicQuery(

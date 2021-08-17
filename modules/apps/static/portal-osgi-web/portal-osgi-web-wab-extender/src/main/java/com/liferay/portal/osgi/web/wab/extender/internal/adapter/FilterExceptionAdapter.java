@@ -51,7 +51,7 @@ public class FilterExceptionAdapter implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig filterConfig) {
+	public void init(final FilterConfig filterConfig) {
 		try {
 			_filter.init(filterConfig);
 		}

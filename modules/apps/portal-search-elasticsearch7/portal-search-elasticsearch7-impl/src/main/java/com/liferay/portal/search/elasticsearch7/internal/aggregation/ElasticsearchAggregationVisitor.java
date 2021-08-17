@@ -315,7 +315,7 @@ public class ElasticsearchAggregationVisitor
 
 	@Override
 	public AggregationBuilder visit(
-		PercentileRanksAggregation percentileRanksAggregation) {
+		final PercentileRanksAggregation percentileRanksAggregation) {
 
 		PercentileRanksAggregationBuilder percentileRanksAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(

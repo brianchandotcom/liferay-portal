@@ -717,7 +717,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	public void rebuildTree(
 			long companyId, long parentFolderId, String parentTreePath,
-			boolean reindex)
+			final boolean reindex)
 		throws PortalException {
 
 		TreePathUtil.rebuildTree(

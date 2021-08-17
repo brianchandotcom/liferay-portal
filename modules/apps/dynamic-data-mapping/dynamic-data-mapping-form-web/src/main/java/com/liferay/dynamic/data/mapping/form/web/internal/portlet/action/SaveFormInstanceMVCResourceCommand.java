@@ -65,7 +65,8 @@ public class SaveFormInstanceMVCResourceCommand
 	}
 
 	protected DDMFormInstance saveFormInstanceInTransaction(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			final ResourceRequest resourceRequest,
+			final ResourceResponse resourceResponse)
 		throws Throwable {
 
 		return TransactionInvokerUtil.invoke(

@@ -351,6 +351,16 @@ definition {
 		PortletEntry.inputDescription(description = "${exportTemplateDescription}");
 	}
 
+	macro clickExportButton {
+		AssertClick(
+			locator1 = "SitePagesExport#EXPORT_BUTTON",
+			value1 = "Export");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful");
+	}
+
 	macro configureExportOptions {
 		LAR._configureExportSiteOptions(
 			checkContentNameList = "${checkContentNameList}",
@@ -619,6 +629,21 @@ definition {
 			uploadFrom = "${uploadFrom}");
 
 		IFrame.closeFrame();
+	}
+
+	macro isExistedFolder {
+		var tempDir = PropsUtil.get("output.dir.name");
+
+		var folderName = "${folderName}";
+		var companyId = JSONCompany.getCompanyId();
+		var folderExists = FileUtil.exists("${tempDir}/company/${companyId}/${folderName}");
+
+		if ("${folderExists}" == "true") {
+			return "true";
+		}
+		else {
+			return "false";
+		}
 	}
 
 	macro moveToTheRecycleBinExportTemplate {

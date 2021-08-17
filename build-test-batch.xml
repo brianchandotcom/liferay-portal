@@ -3629,33 +3629,6 @@ log.sanitizer.enabled=false</echo>
 		<run-archived-modules-test />
 	</target>
 
-	<target name="modules-integration-aws-test-jdk8">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="aws.bucket.id" />
-		</tstamp>
-
-		<ant antfile="build-test-aws-s3.xml" target="configure-aws-cli" />
-		
-		<prepare-aws-s3-configuration />
-
-		<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
-
-		<trycatch>
-			<try>
-				<run-modules-integration-test
-					aws.store.enabled="true"
-					database.type="mysql"
-					database.version="5.7" />
-			</try>
-
-			<finally>
-				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
-			</finally>
-		</trycatch>
-	</target>
-
 	<target name="blade-samples-jdk8">
 		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
 
@@ -5554,6 +5527,33 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="modules-functional-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
+	</target>
+
+	<target name="modules-integration-aws-s3-mysql57-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="aws.bucket.id" />
+		</tstamp>
+
+		<ant antfile="build-test-aws-s3.xml" target="configure-aws-cli" />
+
+		<prepare-aws-s3-configuration />
+
+		<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
+
+		<trycatch>
+			<try>
+				<run-modules-integration-test
+					aws.store.enabled="true"
+					database.type="mysql"
+					database.version="5.7" />
+			</try>
+
+			<finally>
+				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="modules-integration-bundle-db2111-jdk8">

@@ -68,7 +68,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8296 | Test Summary: Show Top 5 Entrance Pages"
 	@priority = "5"
 	test ShowTop5EntrancePages {
-
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: the issue is due to data not appearing on time
@@ -101,11 +100,6 @@ definition {
 			ACUtils.closeAllSessions();
 
 			Pause(locator1 = "60000");
-
-
-
-
-
 		}
 		task ("AC launch") {
 			ACUtils.launchAC();

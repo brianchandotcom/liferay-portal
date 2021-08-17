@@ -124,7 +124,8 @@ public class RemoteAppPortlet extends MVCPortlet {
 	}
 
 	private String _getPortletName() {
-		return "remote_app_" + _remoteAppEntry.getRemoteAppEntryId();
+		return "com_liferay_remote_app_admin_web_internal_portlet_" +
+			"RemoteAppPortlet#" + _remoteAppEntry.getRemoteAppEntryId();
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

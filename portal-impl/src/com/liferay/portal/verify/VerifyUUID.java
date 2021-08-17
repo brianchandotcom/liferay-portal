@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
@@ -29,10 +28,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Brian Wing Shun Chan
@@ -61,17 +59,19 @@ public class VerifyUUID extends VerifyProcess {
 	protected void doVerify(VerifiableUUIDModel... verifiableUUIDModels)
 		throws Exception {
 
-		List<VerifyUUIDUpgradeCallable> verifyUUIDUpgradeCallables =
-			new ArrayList<>(verifiableUUIDModels.length);
+		AtomicInteger atomicInteger = new AtomicInteger();
 
-		for (VerifiableUUIDModel verifiableUUIDModel : verifiableUUIDModels) {
-			VerifyUUIDUpgradeCallable verifyUUIDUpgradeCallable =
-				new VerifyUUIDUpgradeCallable(verifiableUUIDModel);
+		processConcurrently(
+			() -> {
+				int index = atomicInteger.getAndIncrement();
 
-			verifyUUIDUpgradeCallables.add(verifyUUIDUpgradeCallable);
-		}
+				if (index < verifiableUUIDModels.length) {
+					return verifiableUUIDModels[index];
+				}
 
-		doVerify(verifyUUIDUpgradeCallables);
+				return null;
+			},
+			this::verifyUUID);
 	}
 
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
@@ -126,25 +126,6 @@ public class VerifyUUID extends VerifyProcess {
 
 			preparedStatement2.executeBatch();
 		}
-	}
-
-	private class VerifyUUIDUpgradeCallable extends BaseUpgradeCallable<Void> {
-
-		@Override
-		protected Void doCall() throws Exception {
-			verifyUUID(_verifiableUUIDModel);
-
-			return null;
-		}
-
-		private VerifyUUIDUpgradeCallable(
-			VerifiableUUIDModel verifiableUUIDModel) {
-
-			_verifiableUUIDModel = verifiableUUIDModel;
-		}
-
-		private final VerifiableUUIDModel _verifiableUUIDModel;
-
 	}
 
 }

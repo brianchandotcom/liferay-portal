@@ -102,11 +102,17 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		task ("View Interests card with top interests") {
+		task ("Assert Interests card is set to Last 30 days by default and there are no results") {
 			ACNavigation.goToSites();
 
 			ACCards.viewCards(cardTitle = "Interests");
 
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 30 days");
+
+			ACInterests.assertNoCurrentInterests();
+		}
+
+		task ("View Interests card with top interests") {
 			ACTimeFilter.clickTimeFilterButton(cardName = "Interests");
 
 			ACTimeFilter.setLast24Hours();

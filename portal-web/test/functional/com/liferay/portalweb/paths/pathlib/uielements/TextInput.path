@@ -236,8 +236,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRATION_DATE_DISABLED</td>
+	<td>//input[contains(@class,'disabled') and contains(@id,'expirationDate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRATION_DATE_TIME</td>
 	<td>//input[contains(@id,'expirationDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_TIME_DISABLED</td>
+	<td>//input[contains(@class,'disabled') and contains(@id,'expirationDateTime')]</td>
 	<td></td>
 </tr>
 <tr>

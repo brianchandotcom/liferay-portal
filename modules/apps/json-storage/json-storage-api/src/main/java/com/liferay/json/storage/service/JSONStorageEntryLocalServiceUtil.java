@@ -237,11 +237,21 @@ public class JSONStorageEntryLocalServiceUtil {
 	}
 
 	public static List<Long> getClassPKs(
+		long companyId, long classNameId, int start, int end) {
+
+		return getService().getClassPKs(companyId, classNameId, start, end);
+	}
+
+	public static List<Long> getClassPKs(
 		long companyId, long classNameId, Object[] pathParts, Object value,
 		int start, int end) {
 
 		return getService().getClassPKs(
 			companyId, classNameId, pathParts, value, start, end);
+	}
+
+	public static int getClassPKsCount(long companyId, long classNameId) {
+		return getService().getClassPKsCount(companyId, classNameId);
 	}
 
 	public static int getClassPKsCount(

@@ -220,8 +220,15 @@ public interface JSONStorageEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getClassPKs(
+		long companyId, long classNameId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getClassPKs(
 		long companyId, long classNameId, Object[] pathParts, Object value,
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getClassPKsCount(long companyId, long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getClassPKsCount(

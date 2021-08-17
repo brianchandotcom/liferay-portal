@@ -112,29 +112,97 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	}
 
 	protected void updateJournalArticleLocalizedFields() throws Exception {
+		String sql =
+			"insert into JournalArticleLocalization(articleLocalizationId, " +
+				"companyId, articlePK, title, description, languageId) " +
+					"values(?, ?, ?, ?, ?, ?)";
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select id_, companyId, title, description, " +
-					"defaultLanguageId from JournalArticle");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					"select id_, companyId, title, description, " +
+						"defaultLanguageId from JournalArticle");
+			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			concurrentUpgrade(
 				() -> {
 					if (resultSet.next()) {
-						return new UpdateJournalArticleLocalizedFieldsUpgradeCallable(
+						return new Object[] {
 							resultSet.getLong(1), resultSet.getLong(2),
 							resultSet.getString(3), resultSet.getString(4),
-							resultSet.getString(5),
-							StringBundler.concat(
-								"insert into JournalArticleLocalization(",
-								"articleLocalizationId, companyId, articlePK, ",
-								"title, description, languageId) values(?, ?, ",
-								"?, ?, ?, ?)"));
+							resultSet.getString(5)
+						};
 					}
 
 					return null;
 				},
-				UpdateJournalArticleLocalizedFieldsUpgradeCallable::doCall);
+				values -> {
+					long id = (Long)values[0];
+					long companyId = (Long)values[1];
+
+					String title = (String)values[2];
+					String description = (String)values[3];
+					String defaultLanguageId = (String)values[4];
+
+					Map<Locale, String> titleMap = _getLocalizationMap(
+						title, defaultLanguageId);
+					Map<Locale, String> descriptionMap = _getLocalizationMap(
+						description, defaultLanguageId);
+
+					Set<Locale> locales = new HashSet<>();
+
+					locales.addAll(titleMap.keySet());
+					locales.addAll(descriptionMap.keySet());
+
+					try (PreparedStatement updatePreparedStatement =
+							AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+								connection, sql)) {
+
+						for (Locale locale : locales) {
+							String localizedTitle = titleMap.get(locale);
+							String localizedDescription = descriptionMap.get(
+								locale);
+
+							if ((localizedTitle != null) &&
+								(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
+
+								localizedTitle = StringUtil.shorten(
+									localizedTitle, _MAX_LENGTH_TITLE);
+
+								_log(id, "title");
+							}
+
+							if (localizedDescription != null) {
+								String safeLocalizedDescription = _truncate(
+									localizedDescription,
+									_MAX_LENGTH_DESCRIPTION);
+
+								if (localizedDescription !=
+										safeLocalizedDescription) {
+
+									_log(id, "description");
+								}
+
+								localizedDescription = safeLocalizedDescription;
+							}
+
+							updatePreparedStatement.setLong(
+								1, _counterLocalService.increment());
+							updatePreparedStatement.setLong(2, companyId);
+							updatePreparedStatement.setLong(3, id);
+							updatePreparedStatement.setString(
+								4, localizedTitle);
+							updatePreparedStatement.setString(
+								5, localizedDescription);
+							updatePreparedStatement.setString(
+								6, LocaleUtil.toLanguageId(locale));
+
+							updatePreparedStatement.addBatch();
+						}
+
+						updatePreparedStatement.executeBatch();
+					}
+				});
 		}
 	}
 
@@ -295,98 +363,6 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 		private final String _defaultLanguageId;
 		private final long _id;
 		private final String _xml;
-
-	}
-
-	private class UpdateJournalArticleLocalizedFieldsUpgradeCallable
-		extends BaseUpgradeCallable<Boolean> {
-
-		public UpdateJournalArticleLocalizedFieldsUpgradeCallable(
-				long id, long companyId, String title, String description,
-				String defaultLanguageId, String sql)
-			throws Exception {
-
-			_id = id;
-			_companyId = companyId;
-			_title = title;
-			_description = description;
-			_defaultLanguageId = defaultLanguageId;
-			_sql = sql;
-		}
-
-		@Override
-		protected Boolean doCall() throws Exception {
-			Map<Locale, String> titleMap = _getLocalizationMap(
-				_title, _defaultLanguageId);
-			Map<Locale, String> descriptionMap = _getLocalizationMap(
-				_description, _defaultLanguageId);
-
-			Set<Locale> locales = new HashSet<>();
-
-			locales.addAll(titleMap.keySet());
-			locales.addAll(descriptionMap.keySet());
-
-			try (PreparedStatement preparedStatement =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection, _sql)) {
-
-				for (Locale locale : locales) {
-					String localizedTitle = titleMap.get(locale);
-					String localizedDescription = descriptionMap.get(locale);
-
-					if ((localizedTitle != null) &&
-						(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
-
-						localizedTitle = StringUtil.shorten(
-							localizedTitle, _MAX_LENGTH_TITLE);
-
-						_log(_id, "title");
-					}
-
-					if (localizedDescription != null) {
-						String safeLocalizedDescription = _truncate(
-							localizedDescription, _MAX_LENGTH_DESCRIPTION);
-
-						if (localizedDescription != safeLocalizedDescription) {
-							_log(_id, "description");
-						}
-
-						localizedDescription = safeLocalizedDescription;
-					}
-
-					preparedStatement.setLong(
-						1, _counterLocalService.increment());
-					preparedStatement.setLong(2, _companyId);
-					preparedStatement.setLong(3, _id);
-					preparedStatement.setString(4, localizedTitle);
-					preparedStatement.setString(5, localizedDescription);
-					preparedStatement.setString(
-						6, LocaleUtil.toLanguageId(locale));
-
-					preparedStatement.addBatch();
-				}
-
-				try {
-					preparedStatement.executeBatch();
-				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to update localized fields for article " + _id,
-						exception);
-
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		private final long _companyId;
-		private final String _defaultLanguageId;
-		private final String _description;
-		private final long _id;
-		private final String _sql;
-		private final String _title;
 
 	}
 

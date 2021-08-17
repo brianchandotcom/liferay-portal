@@ -255,8 +255,6 @@ definition {
 	}
 
 	macro searchBar {
-		Click(locator1 = "ACSettings#SEARCH_BAR");
-
 		Type(
 			locator1 = "ACSettings#SEARCH_BAR",
 			value1 = "${searchItem}");

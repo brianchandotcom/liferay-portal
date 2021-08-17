@@ -64,6 +64,7 @@ let lastEditedPages = [];
 export default function fieldChange({
 	defaultLanguageId,
 	editingLanguageId,
+	objectFields,
 	pages,
 	portletNamespace,
 	properties,
@@ -97,6 +98,7 @@ export default function fieldChange({
 				let evaluatedPages = await evaluate(fieldName, {
 					defaultLanguageId,
 					editingLanguageId,
+					objectFields,
 					pages: editedPages,
 					portletNamespace,
 					rules,

@@ -5547,7 +5547,8 @@ log.sanitizer.enabled=false</echo>
 				<run-modules-integration-test
 					aws.store.enabled="true"
 					database.type="mysql"
-					database.version="5.7" />
+					database.version="5.7"
+				/>
 			</try>
 
 			<finally>

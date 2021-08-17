@@ -24,7 +24,7 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-		}
+	}
 
 		ACUtils.tearDownAC();
 	}
@@ -48,12 +48,60 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: 180 Days time period filter in Sites"
-	@ignore = "true"
 	@priority = "3"
 	test PeriodFilter180Days {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8317
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8723
 
+		task ("Site and blogs creation and connection with AC") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with pages") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Test 2");
+
+			ACUtils.closeAllSessions();
+		}
+
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset 180 Days time period filter") {
+
+
+			
+
+			// It is not possible to perform the assert because this test needs data from the past
+
+			ACNavigation.switchTab(tabName = "Overview");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "${propertyName} Activities");
+
+			ACTimeFilter.setLast180Days();
+
+			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
+
+			for (var cardTitle : list "Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology") {
+				ACCards.viewCards(cardTitle = "${cardTitle}");
+
+				ACTimeFilter.clickTimeFilterButton(cardName = "${cardTitle}");
+
+				ACTimeFilter.setLast180Days();
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8318 | Test Summary: Last Year time period filter in Sites"

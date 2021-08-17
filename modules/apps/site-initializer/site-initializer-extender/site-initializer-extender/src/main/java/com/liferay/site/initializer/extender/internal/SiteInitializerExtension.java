@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
@@ -41,6 +43,8 @@ public class SiteInitializerExtension {
 	public SiteInitializerExtension(
 		Bundle bundle, BundleContext bundleContext,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DDMStructureLocalService ddmStructureLocalService,
+		DDMTemplateLocalService ddmTemplateLocalService,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -55,6 +59,7 @@ public class SiteInitializerExtension {
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
 				bundle, bundleContext, defaultDDMStructureHelper,
+				ddmStructureLocalService, ddmTemplateLocalService,
 				documentResourceFactory, fragmentsImporter, jsonFactory,
 				objectDefinitionResourceFactory, portal,
 				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,

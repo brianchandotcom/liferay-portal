@@ -14,6 +14,10 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
@@ -24,6 +28,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,8 +37,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,6 +59,7 @@ import java.net.URLConnection;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -68,6 +76,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		Bundle bundle, DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DDMStructureLocalService ddmStructureLocalService,
+		DDMTemplateLocalService ddmTemplateLocalService,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -78,6 +88,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_bundle = bundle;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
@@ -145,6 +157,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 				user.getUserId(), groupId,
 				_portal.getClassNameId(JournalArticle.class),
 				bundleWiring.getClassLoader(), resourcePath, _serviceContext);
+		}
+	}
+
+	private void _addDDMTemplates(long groupId, User user) throws Exception {
+		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			"/site-initializer/ddm-templates", "ddm_template.json", true);
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			JSONObject ddmTemplateJSONObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(url.openStream()));
+
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchStructure(
+					_serviceContext.getScopeGroupId(), resourceClassNameId,
+					ddmTemplateJSONObject.getString("ddmStructureKey"));
+
+			_ddmTemplateLocalService.addTemplate(
+				user.getUserId(), groupId,
+				_portal.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), resourceClassNameId,
+				ddmTemplateJSONObject.getString("ddmTemplateKey"),
+				HashMapBuilder.put(
+					LocaleUtil.getSiteDefault(),
+					ddmTemplateJSONObject.getString("name")
+				).build(),
+				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+				TemplateConstants.LANG_TYPE_FTL, _read("ddm_template.ftl", url),
+				false, false, null, null, _serviceContext);
 		}
 	}
 
@@ -328,6 +372,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _initialize(long groupId, User user) throws Exception {
 		_createServiceContext(groupId);
 		_addDDMStructures(groupId, user);
+		_addDDMTemplates(groupId, user);
 		_addDocuments(groupId, user);
 		_addFragmentEntries(groupId, user);
 		_addObjectDefinitions(user);
@@ -346,10 +391,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return StringUtil.read(inputStream);
 	}
 
+	private String _read(String fileName, URL url) throws Exception {
+		String path = url.getPath();
+
+		URL entryURL = _bundle.getEntry(
+			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
+
+		return StringUtil.read(entryURL.openStream());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BundleSiteInitializer.class);
 
 	private final Bundle _bundle;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final FragmentsImporter _fragmentsImporter;

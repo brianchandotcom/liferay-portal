@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
@@ -40,6 +42,8 @@ public class SiteInitializerRegistrar {
 	public SiteInitializerRegistrar(
 		Bundle bundle, BundleContext bundleContext,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DDMStructureLocalService ddmStructureLocalService,
+		DDMTemplateLocalService ddmTemplateLocalService,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -50,6 +54,8 @@ public class SiteInitializerRegistrar {
 		_bundle = bundle;
 		_bundleContext = bundleContext;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
@@ -68,7 +74,8 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_bundle, _defaultDDMStructureHelper, _documentResourceFactory,
+				_bundle, _defaultDDMStructureHelper, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _documentResourceFactory,
 				_fragmentsImporter, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
@@ -83,6 +90,8 @@ public class SiteInitializerRegistrar {
 
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final FragmentsImporter _fragmentsImporter;

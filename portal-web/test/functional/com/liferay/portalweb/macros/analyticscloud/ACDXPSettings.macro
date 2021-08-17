@@ -93,7 +93,7 @@ definition {
 
 		var assignedPropertyName = selenium.getText("//tr[@data-qa-id='row'][contains(.,'${siteName}')]//td[contains(@class,'assigned-property-column')]");
 
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
+		ACNavigation.clickCancelButton();
 
 		return "${assignedPropertyName}";
 	}

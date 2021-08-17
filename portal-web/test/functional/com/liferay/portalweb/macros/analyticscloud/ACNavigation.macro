@@ -6,6 +6,10 @@ definition {
 			value1 = "${headerTitle}");
 	}
 
+	macro clickCancelButton {
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
+	}
+
 	macro clickHeaderTab {
 		Click(
 			key_tabName = "${tabName}",

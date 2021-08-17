@@ -99,9 +99,7 @@ const SelectExtension = ({
 			const isChildNode = !node.children;
 
 			if (selectedNodes.has(node.id) && isChildNode) {
-				data.push({
-					extension: node.id,
-				});
+				data.push(node.id);
 			}
 		});
 

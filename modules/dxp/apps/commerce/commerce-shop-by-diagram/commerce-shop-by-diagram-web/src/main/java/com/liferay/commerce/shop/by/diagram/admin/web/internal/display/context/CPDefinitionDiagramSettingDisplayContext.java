@@ -17,6 +17,7 @@ package com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.shop.by.diagram.configuration.CPDefinitionDiagramSettingImageConfiguration;
@@ -108,6 +109,13 @@ public class CPDefinitionDiagramSettingDisplayContext
 
 			return null;
 		}
+	}
+
+	public String getCPDefinitionDiagramEntriesApiURL() throws PortalException {
+		CPDefinition cpDefinition = getCPDefinition();
+
+		return "/o/headless-commerce-admin-catalog/v1.0/products/" +
+			cpDefinition.getCProductId() + "/diagramEntries";
 	}
 
 	public CPDefinitionDiagramType getCPDefinitionDiagramType(String type) {

@@ -8,17 +8,25 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 
-		ACUtils.addSiteAndPage();
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
 
-		ACUtils.createDMAndAddToPage();
+		task ("Create a Document And Media") {
+			ACUtils.createDMAndAddToPage();
+		}
 	}
 
 	tearDown {
@@ -55,12 +63,83 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8402 | Test Summary: Documents audience card shows expected amount of know and anonymous individuals"
-	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM {
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8402 AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM
+		task ("Add 2 more new users") {
+			for (var name : list "ac,liferay") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Log in and download the document") {
+			for (var name : list "ac,liferay") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Download the document with anonymous user") {
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC and go to Documents and Media tab") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Go to the Documents And Media overview") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Open document by name") {
+			ACNavigation.openItem(itemName = "Document_1.jpg");
+		}
+
+		task ("Assert views by download number of know and anoymous users") {
+			ACUtils.assertAudienceCard(
+				index = "1",
+				percentageList = "66.67%,33.33%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8403 | Test Summary: Documents audience card shows expected amount of segmented and unsegmented individuals"

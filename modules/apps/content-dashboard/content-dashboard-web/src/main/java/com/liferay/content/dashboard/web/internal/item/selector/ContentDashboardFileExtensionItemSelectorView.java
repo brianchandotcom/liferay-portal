@@ -148,7 +148,9 @@ public class ContentDashboardFileExtensionItemSelectorView
 		).put(
 			"icon", icon
 		).put(
-			"label", LanguageUtil.get(locale, labelKey)
+			"label",
+			LanguageUtil.get(
+				ResourceBundleUtil.getBundle(locale, getClass()), labelKey)
 		);
 	}
 

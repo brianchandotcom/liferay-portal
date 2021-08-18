@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>PopulateObjectFormsConfiguration</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PopulateObjectFormsConfiguration</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>OPEN_FORM_SETTINGS</td>
+		<td>//button[@class='btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm lfr-ddm-button lfr-ddm-settings-button']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DEFAULT_STORAGE_TYPE</td>
+		<td>//div[(@class='option-selected') and contains(text(),'Default')]/../../div[@class='form-control results-chosen select-field-trigger']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DISPLAY_SELECT_OBJECT</td>
+		<td>//button[@label='${key_label}']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DEFAULT_SELECT_OBJECT</td>
+		<td>//div[(@class='form-builder-select-field input-group-container')and contains(.,'Choose an Option')]/div[@class='form-control results-chosen select-field-trigger']</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

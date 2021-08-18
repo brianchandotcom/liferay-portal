@@ -74,8 +74,25 @@ definition {
 	test CanSelectObjectStorageType {
 		property portal.acceptance = "true";
 
-		// TODO LPS-137349 CanSelectObjectStorageType pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.createCustomObject(name = "CustomObject");
+
+		ObjectAdmin.publishCustomObject(name = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+        
+		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "CommerceOrder");
+
+		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "User");
+
+		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "C_CustomObject");
 	}
 
 }

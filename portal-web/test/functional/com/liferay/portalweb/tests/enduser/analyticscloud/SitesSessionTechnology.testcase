@@ -34,6 +34,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8312 | Test Summary: Session technology card shows what browsers are accessing the site the most"
 	@priority = "5"
 	test ShowsBrowsersAccessingSiteMost {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-8746
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -99,6 +104,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8313 | Test Summary: Session technology card shows what devices are accessing the site the most"
 	@priority = "5"
 	test ShowsDevicesAccessingSiteMost {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-8745
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

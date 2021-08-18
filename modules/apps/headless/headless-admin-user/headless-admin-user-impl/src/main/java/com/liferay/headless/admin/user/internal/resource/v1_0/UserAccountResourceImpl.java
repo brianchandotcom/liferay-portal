@@ -480,11 +480,11 @@ public class UserAccountResourceImpl
 			return Page.of(userAccounts);
 		}
 
-		String[] accRoleIds = StringUtil.split(
+		String[] accountRoleIdsArray = StringUtil.split(
 			accountRoleIds, CharPool.COMMA);
 
 		for (UserAccount userAccount : userAccounts) {
-			for (String accountRoleId : accRoleIds) {
+			for (String accountRoleId : accountRoleIdsArray) {
 				_accountRoleResource.
 					postAccountAccountRoleUserAccountAssociation(
 						accountId, Long.valueOf(accountRoleId),

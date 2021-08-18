@@ -118,7 +118,7 @@
 </tr>
 <tr>
 	<td>DELETE_CONFIRMATION_MESSAGE</td>
-	<td>//span[contains(@class,'text-secondary')]</td>
+	<td>//span[contains(@class,'text-secondary') or contains(@class,'copy-text')]</td>
 	<td></td>
 </tr>
 <tr>

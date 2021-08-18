@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_WORKFLOW_TASK_ITEM_POSITION</td>
+	<td>//tr[@data-qa-id='row'][${key_rowPosition}]//a//span[@class='text-truncate' and contains(text(),'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

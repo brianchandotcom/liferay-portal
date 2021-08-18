@@ -478,12 +478,54 @@ definition {
 	}
 
 	@description = "Verify that the user can order the results inside Assigned to My Roles by Due Date"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanOrderAssignedtoMyRolesTasksByDueDate {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68840 CanOrderAssignedtoMyRolesTasksByDueDate pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.updateDueDateTaskByActions(
+			workflowAssetTitle = "Blogs Entry 2",
+			workflowAssetType = "Blogs Entry",
+			workflowDueDateTime = "1:45 PM",
+			workflowTask = "Review");
+
+		Workflow.updateDueDateTaskByActions(
+			workflowAssetTitle = "Blogs Entry 1",
+			workflowAssetType = "Blogs Entry",
+			workflowDueDateTime = "2:45 PM",
+			workflowTask = "Review");
+
+		Notifications.goToFilterValues(filterValues = "Due Date");
+
+		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
+			rowPosition = "1",
+			title = "Blogs Entry 2");
+
+		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
+			rowPosition = "2",
+			title = "Blogs Entry 1");
+
+			
 	}
 
 	@description = "Verify that the user can order the results inside Assigned to My Roles by Last Activity Date"

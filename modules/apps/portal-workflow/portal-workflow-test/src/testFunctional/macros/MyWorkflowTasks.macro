@@ -1,5 +1,6 @@
 definition {
 
+<<<<<<< HEAD
 	macro searchMyWorkflowTasks {
 		Type(
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
@@ -47,6 +48,18 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
 			value1 = "Please enter a valid due date.");
+=======
+	macro viewMyWorkflowTaskItemPosition {
+		var key_rowPosition = "${rowPosition}";
+		var key_title = "${title}";
+
+		AssertElementPresent(
+			key_rowPosition = "${rowPosition}",
+			key_title = "${title}",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASK_ITEM_POSITION");
+			
+
+>>>>>>> 2e6bb9e (LRQA-68840 Add CanOrderAssignedtoMyRolesTasksByDueDate Test)
 	}
 
 }

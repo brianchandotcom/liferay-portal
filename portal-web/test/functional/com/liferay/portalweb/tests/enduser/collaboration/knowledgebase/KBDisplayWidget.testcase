@@ -203,11 +203,11 @@ definition {
 
 		KBArticle.editPGViaKBDisplay(
 			kbArticleContentEdit = "Knowledge Base Child Article Content Edited 1",
-			kbArticleTitleEdit = "Knowledge Base Article Parent Title Edited 1 Child 1");
+			kbArticleTitleEdit = "Knowledge Base Article Parent Title 1 Child 1");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}

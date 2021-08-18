@@ -305,10 +305,9 @@ public class UserAccountResourceImpl
 			String externalReferenceCode)
 		throws Exception {
 
-		User user = _userService.getUserByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
-
-		return _toUserAccount(user);
+		return _toUserAccount(
+			_userService.getUserByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode));
 	}
 
 	@Override

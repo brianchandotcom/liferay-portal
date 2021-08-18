@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>DELETE_CONFIRMATION_INPUT</td>
-	<td>//input[@data-testid='delete-confirmation-input']</td>
+	<td>//input[contains(@data-testid,'confirmation-input')]</td>
 	<td></td>
 </tr>
 <tr>

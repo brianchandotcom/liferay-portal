@@ -12,23 +12,13 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect, ClayToggle} from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import RequiredMask from './RequiredMask';
-
-interface IErrorFeedback extends React.HTMLAttributes<HTMLElement> {
-	description: string;
-	spritemap: string;
-}
-
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-	apiURL: string;
-	spritemap: string;
-}
 
 const objectFieldTypes = [
 	'BigDecimal',
@@ -41,31 +31,35 @@ const objectFieldTypes = [
 	'String',
 ];
 
-type THandleFormStateFn = (key: string, value: boolean | string) => void;
+interface IProps extends React.HTMLAttributes<HTMLElement> {
+	apiURL: string;
+	spritemap: string;
+}
+
+type THandleFormStateFn = (
+	key: string,
+	value: boolean | string | TLocalizableLable
+) => void;
+
+type TLocalizableLable = {
+	[key: string]: string;
+};
 
 type TFormState = {
+	label: TLocalizableLable;
 	name: string;
 	required: boolean;
 	type: string;
 };
 
-const ErrorFeedback: React.FC<IErrorFeedback> = ({description, spritemap}) => {
-	return (
-		<ClayForm.FeedbackGroup>
-			<ClayForm.FeedbackItem>
-				<ClayForm.FeedbackIndicator
-					spritemap={spritemap}
-					symbol="exclamation-full"
-				/>
-				{description}
-			</ClayForm.FeedbackItem>
-		</ClayForm.FeedbackGroup>
-	);
-};
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
+		label: {
+			[defaultLanguageId]: '',
+		},
 		name: '',
 		required: false,
 		type: '',
@@ -77,13 +71,14 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 	});
 
 	const handleSaveObjectField = () => {
-		const {name, required, type} = formState;
+		const {label, name, required, type} = formState;
 
 		Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
 				indexed: false,
 				indexedAsKeyword: false,
 				indexedLanguageId: null,
+				label,
 				name,
 				required,
 				type,
@@ -121,6 +116,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 	const handleChangeForm: THandleFormStateFn = (key, value) => {
 		setError('');
+
 		setFormState({
 			...formState,
 			[key]: value,
@@ -136,13 +132,37 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 					</ClayModal.Header>
 
 					<ClayModal.Body>
-						<ClayForm.Group
-							className={classNames({
-								'has-error': error && !error.includes('type'),
-							})}
-						>
+						{error && (
+							<ClayAlert
+								displayType="danger"
+								spritemap={spritemap}
+							>
+								{error}
+							</ClayAlert>
+						)}
+
+						<ClayForm.Group>
+							<label htmlFor="objectFieldLabel">
+								{Liferay.Language.get('label')}
+
+								<RequiredMask />
+							</label>
+
+							<ClayInput
+								id="objectFieldLabel"
+								onChange={({target: {value}}) =>
+									handleChangeForm('label', {
+										[defaultLanguageId]: value,
+									})
+								}
+								type="text"
+								value={formState.label[defaultLanguageId]}
+							/>
+						</ClayForm.Group>
+
+						<ClayForm.Group>
 							<label htmlFor="objectFieldName">
-								{Liferay.Language.get('name')}
+								{Liferay.Language.get('field-name')}
 
 								<RequiredMask />
 							</label>
@@ -155,20 +175,9 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 								type="text"
 								value={formState.name}
 							/>
-
-							{error && !error.includes('type') && (
-								<ErrorFeedback
-									description={error}
-									spritemap={spritemap}
-								/>
-							)}
 						</ClayForm.Group>
 
-						<ClayForm.Group
-							className={classNames({
-								'has-error': error && error.includes('type'),
-							})}
-						>
+						<ClayForm.Group>
 							<label htmlFor="objectFieldType">
 								{Liferay.Language.get('type')}
 
@@ -192,13 +201,6 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 									/>
 								))}
 							</ClaySelect>
-
-							{error && error.includes('type') && (
-								<ErrorFeedback
-									description={error}
-									spritemap={spritemap}
-								/>
-							)}
 						</ClayForm.Group>
 
 						<ClayToggle

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
@@ -28,26 +29,58 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	spritemap: string;
 }
 
-interface ObjectDefinitionRequest {
+type THandleFormStateFn = (
+	key: string,
+	value: boolean | string | TLocalizableLable
+) => void;
+
+type TLocalizableLable = {
+	[key: string]: string;
+};
+
+type TFormState = {
+	label: {
+		[key: string]: string;
+	};
+	pluralLabel: {
+		[key: string]: string;
+	};
 	name: string;
-	objectFields: {}[];
-}
+	required: boolean;
+	type: string;
+};
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
-	const [error, setError] = useState<string>('');
-	const [value, setValue] = useState<string>('');
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
+	const [formState, setFormState] = useState<TFormState>({
+		label: {
+			[defaultLanguageId]: '',
+		},
+		name: '',
+		pluralLabel: {
+			[defaultLanguageId]: '',
+		},
+		required: false,
+		type: '',
+	});
+	const [error, setError] = useState<string>('');
 
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
 	});
 
 	const handleSaveObjectDefinition = () => {
+		const {label, name, pluralLabel} = formState;
+
 		Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
-				name: value,
+				label,
+				name,
 				objectFields: [],
-			} as ObjectDefinitionRequest),
+				pluralLabel,
+			}),
 			headers: new Headers({
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -82,6 +115,15 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 		};
 	}, []);
 
+	const handleChangeForm: THandleFormStateFn = (key, value) => {
+		setError('');
+
+		setFormState({
+			...formState,
+			[key]: value,
+		});
+	};
+
 	return (
 		<>
 			{visibleModal && (
@@ -90,9 +132,56 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 						{Liferay.Language.get('new-custom-object')}
 					</ClayModal.Header>
 					<ClayModal.Body>
-						<ClayForm.Group className={error ? 'has-error' : ''}>
+						{error && (
+							<ClayAlert
+								displayType="danger"
+								spritemap={spritemap}
+							>
+								{error}
+							</ClayAlert>
+						)}
+
+						<ClayForm.Group>
+							<label htmlFor="objectDefinitionLabel">
+								{Liferay.Language.get('label')}
+
+								<RequiredMask />
+							</label>
+
+							<ClayInput
+								id="objectDefinitionLabel"
+								onChange={({target: {value}}) =>
+									handleChangeForm('label', {
+										[defaultLanguageId]: value,
+									})
+								}
+								type="text"
+								value={formState.label[defaultLanguageId]}
+							/>
+						</ClayForm.Group>
+
+						<ClayForm.Group>
+							<label htmlFor="objectDefinitionPluralLabel">
+								{Liferay.Language.get('plural-label')}
+
+								<RequiredMask />
+							</label>
+
+							<ClayInput
+								id="objectDefinitionPluralLabel"
+								onChange={({target: {value}}) =>
+									handleChangeForm('pluralLabel', {
+										[defaultLanguageId]: value,
+									})
+								}
+								type="text"
+								value={formState.pluralLabel[defaultLanguageId]}
+							/>
+						</ClayForm.Group>
+
+						<ClayForm.Group>
 							<label htmlFor="objectDefinitionName">
-								{Liferay.Language.get('name')}
+								{Liferay.Language.get('object-name')}
 
 								<RequiredMask />
 							</label>
@@ -100,23 +189,11 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 							<ClayInput
 								id="objectDefinitionName"
 								onChange={({target: {value}}) =>
-									setValue(value)
+									handleChangeForm('name', value)
 								}
 								type="text"
-								value={value}
+								value={formState.name}
 							/>
-
-							{error && (
-								<ClayForm.FeedbackGroup>
-									<ClayForm.FeedbackItem>
-										<ClayForm.FeedbackIndicator
-											spritemap={spritemap}
-											symbol="exclamation-full"
-										/>
-										{error}
-									</ClayForm.FeedbackItem>
-								</ClayForm.FeedbackGroup>
-							)}
 						</ClayForm.Group>
 					</ClayModal.Body>
 					<ClayModal.Footer

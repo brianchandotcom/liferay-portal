@@ -1029,7 +1029,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.gotoSitePage(
+		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
@@ -1039,7 +1039,7 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Navigator.gotoSitePage(
+		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 

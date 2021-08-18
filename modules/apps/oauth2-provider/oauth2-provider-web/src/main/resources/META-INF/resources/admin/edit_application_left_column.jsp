@@ -23,7 +23,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 <aui:model-context bean="<%= oAuth2Application %>" model="<%= OAuth2Application.class %>" />
 
 <aui:fieldset>
-	<aui:input helpMessage="application-name-help" label="application-name" name="name" required="<%= true %>" />
+	<aui:input helpMessage="application-name-help" label="name" name="name" required="<%= true %>" />
 
 	<aui:input helpMessage="home-page-url-help" name="homePageURL" />
 

@@ -425,20 +425,20 @@ public class UserAccountResourceImpl
 			Long accountId, String emailAddress)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setLanguageId(
-			contextAcceptLanguage.getPreferredLanguageId());
-		serviceContext.setUserId(contextUser.getUserId());
-
 		AccountEntryUserRel accountEntryUserRel =
 			_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
-				accountId, emailAddress, new long[0], null, serviceContext);
+				accountId, emailAddress, new long[0], null,
+				new ServiceContext() {
+					{
+						setCompanyId(contextCompany.getCompanyId());
+						setLanguageId(
+							contextAcceptLanguage.getPreferredLanguageId());
+						setUserId(contextUser.getUserId());
+					}
+				});
 
 		return _toUserAccount(
-			_userLocalService.getUser(
-				accountEntryUserRel.getAccountUserId()));
+			_userLocalService.getUser(accountEntryUserRel.getAccountUserId()));
 	}
 
 	@Override

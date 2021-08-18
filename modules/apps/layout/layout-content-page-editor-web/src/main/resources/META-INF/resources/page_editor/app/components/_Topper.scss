@@ -59,7 +59,7 @@ html#{$cadmin-selector} {
 				white-space: nowrap;
 			}
 
-			.page-editor__topper--inset {
+			&--inset {
 				border-radius: 0 0 2px;
 				top: $borderWidth;
 				transform: translateY(0);

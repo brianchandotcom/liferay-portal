@@ -60,6 +60,85 @@ definition {
 		SystemSettings.viewSettingsText(settingsText = "Uncheck to avoid deleting the temporary LAR during a successful staging publish process. In remote staging contexts, this only applies for the staging environment.");
 	}
 
+	@description = "This is a test for LPS-83011."
+	@priority = "4"
+	test AssetLinksCanBeConfiguredWhenExport {
+		property test.name.skip.portal.instance = "ExportImport#AssetLinksCanBeConfiguredWhenExport";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		for (var count : list "1,2") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content ${count}",
+				groupName = "Site Name",
+				title = "Web Content Title ${count}");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+		WebContent.addExistingRelatedAssetCP(
+			assetTitle = "Web Content Title 1",
+			assetType = "Basic Web Content",
+			siteName = "Site Name");
+
+		LAR.configureExportSiteCP(
+			siteScopeName = "Site Name",
+			uncheckContentNameList = "Web Content");
+
+		LAR.clickExportButton();
+
+		var larFileName1 = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-download-temp-file -DfileName=${larFileName1}");
+
+		var folderExisted1 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
+
+		if ("${folderExisted1}" == "false") {
+			echo("The download temp file doesn't contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+		}
+		else {
+			fail("The download temp file contains the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+		}
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Export/Import, Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Include All Asset Links");
+
+		LAR.configureExportSiteCP(
+			siteScopeName = "Site Name",
+			uncheckContentNameList = "Web Content");
+
+		LAR.clickExportButton();
+
+		var larFileName2 = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-download-temp-file -DfileName=${larFileName2}");
+
+		var folderExisted2 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
+
+		if ("${folderExisted2}" == "true") {
+			echo("The download temp file contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+		}
+		else {
+			fail("The download temp file doesn't contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
+		}
+	}
+
 	@description = "This is a test for LPS-84223."
 	@priority = "3"
 	test DLLinkValidationInWebContent {

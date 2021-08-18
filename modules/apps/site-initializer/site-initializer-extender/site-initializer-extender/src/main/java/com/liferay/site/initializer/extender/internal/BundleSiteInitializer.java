@@ -67,6 +67,15 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.journal.model.JournalArticle;
+import java.util.List;
+import java.util.HashMap;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+
 
 /**
  * @author Brian Wing Shun Chan
@@ -74,23 +83,28 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
+		AssetListEntryLocalService assetListEntryLocalService,
 		Bundle bundle, DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentResource.Factory documentResourceFactory,
-		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
+		FragmentsImporter fragmentsImporter,
+		JournalArticleLocalService journalArticleLocalService,
+		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal, ServletContext servletContext,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
+		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
+		_journalArticleLocalService = journalArticleLocalService;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
@@ -150,6 +164,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
+			_addLayouts(serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -281,6 +296,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
+	private void _addLayouts(ServiceContext serviceContext) throws Exception {
+		Map<String, String> resourcesMap = _getResourcesMap(serviceContext);
+		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray(
+			_read("/layouts/layouts.json"));
+	}
+
+
+	private Map<String, String> _getResourcesMap(ServiceContext serviceContext) {
+		Map<String, String> resourcesMap = new HashMap<>();
+
+		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
+			serviceContext.getScopeGroupId());
+
+		for (JournalArticle article : articles) {
+			resourcesMap.put(
+				article.getArticleId(),
+				String.valueOf(article.getResourcePrimKey()));
+		}
+		List<AssetListEntry> assetListEntries =
+			_assetListEntryLocalService.getAssetListEntries(
+				serviceContext.getScopeGroupId());
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			resourcesMap.put(
+				StringUtil.toUpperCase(assetListEntry.getAssetListEntryKey()),
+				String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
+		return resourcesMap;
+	}
+
+
 	private void _addObjectDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
@@ -405,6 +452,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BundleSiteInitializer.class);
 
+	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
 	private final DDMStructureLocalService _ddmStructureLocalService;
@@ -412,6 +460,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final FragmentsImporter _fragmentsImporter;
+	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

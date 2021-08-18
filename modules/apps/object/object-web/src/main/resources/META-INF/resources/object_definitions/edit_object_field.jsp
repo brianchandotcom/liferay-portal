@@ -22,10 +22,6 @@ ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(Objec
 ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/side-panel.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <liferay-frontend:side-panel-content
 	screenNavigatorKey="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_FIELD %>"
 	screenNavigatorModelBean="<%= (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD) %>"
@@ -119,6 +115,27 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		return document.querySelector('#<portlet:namespace />' + name);
 	}
 
+	function <portlet:namespace />onChangeFieldType(event) {
+		const searchableContainer = getNode('searchableContainer');
+
+		searchableContainer.style.display =
+			event.target.value !== 'Blob' ? 'block' : 'none';
+	}
+
+	function <portlet:namespace />onChangeSeachableSwitch(event) {
+		const indexedGroup = getNode('indexedGroup');
+		const type = '<%= objectField.getType() %>';
+
+		indexedGroup.style.display =
+			event.target.checked && type === 'String' ? 'block' : 'none';
+	}
+
+	function <portlet:namespace />onChangeSeachableType(value) {
+		const indexedLanguageIdGroup = getNode('indexedLanguageIdGroup');
+
+		indexedLanguageIdGroup.style.display = value === 'text' ? 'block' : 'none';
+	}
+
 	function <portlet:namespace />saveObjectField() {
 		const inputName = getNode('name');
 		const inputType = getNode('type');
@@ -191,26 +208,5 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					});
 				}
 			});
-	}
-
-	function <portlet:namespace />onChangeSeachableSwitch(event) {
-		const indexedGroup = getNode('indexedGroup');
-		const type = '<%= objectField.getType() %>';
-
-		indexedGroup.style.display =
-			event.target.checked && type === 'String' ? 'block' : 'none';
-	}
-
-	function <portlet:namespace />onChangeSeachableType(value) {
-		const indexedLanguageIdGroup = getNode('indexedLanguageIdGroup');
-
-		indexedLanguageIdGroup.style.display = value === 'text' ? 'block' : 'none';
-	}
-
-	function <portlet:namespace />onChangeFieldType(event) {
-		const searchableContainer = getNode('searchableContainer');
-
-		searchableContainer.style.display =
-			event.target.value !== 'Blob' ? 'block' : 'none';
 	}
 </script>

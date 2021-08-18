@@ -27,6 +27,15 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-69474. Verify that if it is possible to create a Dynamic Data List. "
+	@ignore = "true"
+	@priority = "3"
+	test CanCreateDDL {
+
+		// TODO LRQA-69474 CanCreateDDL pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-61212."
 	@priority = "5"
 	test EditDDLRecordViaMyWorkflowTasks {
@@ -139,6 +148,33 @@ definition {
 			workflowAssetTitle = "New Data Definition Name for List: DDL List Name",
 			workflowAssetType = "Dynamic Data Lists Record",
 			workflowTask = "Review");
+	}
+
+	@description = "This is a test for LRQA-69477. Verify if when the user Hover tem Item Subject, the type of DDL is displayed(Dynamic Data Lists Record: New Contacts for List: Data Test). "
+	@ignore = "true"
+	@priority = "3"
+	test HoverItemSubjectTypeDDLDisplayed {
+
+		// TODO LRQA-69477 HoverItemSubjectTypeDDLDisplayed pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69479. Verify if when click on View Icon on Submission Page, the user is redirected to a new page with the list details. "
+	@ignore = "true"
+	@priority = "3"
+	test OpenListDetailsInAnotherTab {
+
+		// TODO LRQA-69479 OpenListDetailsInAnotherTab pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69478. Verify if when click on "Go to Submission Page", a new tab is opened with DDL preview. "
+	@ignore = "true"
+	@priority = "3"
+	test OpenSubmissionPageInAnotherTabDDLPreviewDisplayed {
+
+		// TODO LRQA-69478 OpenSubmissionPageInAnotherTabDDLPreviewDisplayed pending implementation
+
 	}
 
 	@priority = "4"
@@ -257,6 +293,51 @@ definition {
 			fieldFieldLabel = "Text Label",
 			fieldName = "TextName",
 			workflowStatus = "Update");
+	}
+
+	@description = "This is a test for LRQA-69476. Verify if when the Data Definition of DDL is changed, the data on All Items disappears. "
+	@ignore = "true"
+	@priority = "3"
+	test ViewDataIsNotDisplayedOnAllItems {
+
+		// TODO LRQA-69476 ViewDataIsNotDisplayedOnAllItems pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69475. Verify if when Data is created on DDL, it is displayed on All Items. "
+	@ignore = "true"
+	@priority = "3"
+	test ViewDDLDisplayedOnAllItems {
+
+		// TODO LRQA-69475 ViewDDLDisplayedOnAllItems pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69482. Verify if when the DDL is approved, it is displayed on performance tab. "
+	@ignore = "true"
+	@priority = "3"
+	test ViewDDLDisplayedPerformanceTab {
+
+		// TODO LRQA-69482 ViewDDLDisplayedPerformanceTab pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69481. Verify if when a SLA is active within 2 minutes, the DDL will change to On Time. "
+	@ignore = "true"
+	@priority = "3"
+	test ViewUserCanDDLOntime {
+
+		// TODO LRQA-69481 ViewUserCanDDLOntime pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69480. Verify if when a SLA is active after 1 minute, the DDL will change to Overdue. "
+	@ignore = "true"
+	@priority = "3"
+	test ViewUserCanDDLOverdue {
+
+		// TODO LRQA-69480 ViewUserCanDDLOverdue pending implementation
+
 	}
 
 }

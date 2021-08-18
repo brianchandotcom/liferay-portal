@@ -662,6 +662,7 @@ definition {
 	@description = "Verify that each type of Node has Actions property"
 	@priority = "4"
 	test HasActionsProperty {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasActionsProperty";
 
 		ApplicationsMenu.gotoPortlet(

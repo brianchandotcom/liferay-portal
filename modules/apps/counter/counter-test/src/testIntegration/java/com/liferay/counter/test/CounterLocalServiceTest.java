@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -156,6 +157,15 @@ public class CounterLocalServiceTest {
 		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(
 			portalProcessConfig.getBootstrapClassPath());
+		builder.setEnvironment(
+			HashMapBuilder.putAll(
+				System.getenv()
+			).put(
+				"LIFERAY_COM_PERIOD_LIFERAY_PERIOD_PORTAL_PERIOD_SEARCH_" +
+					"PERIOD_ELASTICSEARCH7_PERIOD_CONFIGURATION_PERIOD_" +
+						"ELASTICSEARCHCONFIGURATION_PERIOD_SIDECARJVMOPTIONS",
+				"-Xms128m -Xmx256m"
+			).build());
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(
 			StringBundler.concat(

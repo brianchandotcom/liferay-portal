@@ -246,6 +246,7 @@
 		<exception>AccountEntryType</exception>
 		<exception>AccountEntryUserRelEmailAddress</exception>
 		<exception>DefaultAccountGroup</exception>
+		<exception>DuplicateAccountEntryExternalReferenceCode</exception>
 		<exception>DuplicateAccountEntryId</exception>
 		<exception>DuplicateAccountEntryOrganizationRel</exception>
 		<exception>DuplicateAccountEntryUserRel</exception>

@@ -492,17 +492,16 @@ public class UserAccountResourceImpl
 			}
 		}
 
-		List<UserAccount> userAccountList = new ArrayList<>();
+		return Page.of(
+			transform(
+				userAccounts,
+				userAccount -> {
+					User userByEmailAddress = _userService.getUserByEmailAddress(
+						contextCompany.getCompanyId(),
+						userAccount.getEmailAddress());
 
-		for (UserAccount userAccount : userAccounts) {
-			User userByEmailAddress = _userService.getUserByEmailAddress(
-				contextCompany.getCompanyId(),
-				userAccount.getEmailAddress());
-
-			userAccountList.add(_toUserAccount(userByEmailAddress));
-		}
-
-		return Page.of(userAccountList);
+					return _toUserAccount(userByEmailAddress);
+				}));
 	}
 
 	@Override

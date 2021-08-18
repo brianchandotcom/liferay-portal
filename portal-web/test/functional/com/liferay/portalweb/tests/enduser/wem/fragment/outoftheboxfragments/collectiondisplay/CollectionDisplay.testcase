@@ -1321,7 +1321,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-86141. The fragment should be added to all cells of the Collection Display when add it to one cell."
+	@description = "This is a use case for LPS-86141 and for LPS-107665. The fragment should be added to all cells of the Collection Display when add it to one cell."
 	@priority = "5"
 	test AddFragmentToOneCell {
 		property portal.acceptance = "true";
@@ -6077,7 +6077,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."
+	@description = "This is a use case for LPS-86141 and for LPS-107665. The title of asset entries in selected collection should be shown as a list in the Collection Display."
 	@priority = "5"
 	test ViewTitleOfCollectionItems {
 		property portal.acceptance = "true";

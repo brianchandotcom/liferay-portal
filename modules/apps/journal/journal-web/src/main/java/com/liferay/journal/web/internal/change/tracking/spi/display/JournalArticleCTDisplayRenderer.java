@@ -16,7 +16,6 @@ package com.liferay.journal.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -174,27 +173,11 @@ public class JournalArticleCTDisplayRenderer
 	protected void buildDisplay(DisplayBuilder<JournalArticle> displayBuilder) {
 		JournalArticle journalArticle = displayBuilder.getModel();
 
-		Locale locale = displayBuilder.getLocale();
-
-		DisplayContext<JournalArticle> displayContext =
-			displayBuilder.getDisplayContext();
-
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		JournalArticleDisplay journalArticleDisplay =
-			_journalContent.getDisplay(
-				journalArticle, "", "", _language.getLanguageId(locale), 1,
-				null, themeDisplay);
-
 		displayBuilder.display(
-			"name", journalArticle.getTitle(locale)
+			"name", journalArticle.getTitle(displayBuilder.getLocale())
 		).display(
-			"description", journalArticle.getDescription(locale)
+			"description",
+			journalArticle.getDescription(displayBuilder.getLocale())
 		).display(
 			"created-by",
 			() -> {
@@ -217,17 +200,15 @@ public class JournalArticleCTDisplayRenderer
 			() -> {
 				DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-				return ddmStructure.getName(locale);
+				return ddmStructure.getName(displayBuilder.getLocale());
 			}
 		).display(
 			"template",
 			() -> {
 				DDMTemplate ddmTemplate = journalArticle.getDDMTemplate();
 
-				return ddmTemplate.getName(locale);
+				return ddmTemplate.getName(displayBuilder.getLocale());
 			}
-		).display(
-			"content", journalArticleDisplay.getContent(), false
 		);
 	}
 

@@ -55,6 +55,16 @@ public class CalendarBookingCTDisplayRenderer
 	extends BaseCTDisplayRenderer<CalendarBooking> {
 
 	@Override
+	public String[] getAvailableLanguageIds(CalendarBooking calendarBooking) {
+		return calendarBooking.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(CalendarBooking calendarBooking) {
+		return calendarBooking.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getEditURL(
 			HttpServletRequest httpServletRequest,
 			CalendarBooking calendarBooking)

@@ -44,6 +44,16 @@ public class AssetCategoryCTDisplayRenderer
 	extends BaseCTDisplayRenderer<AssetCategory> {
 
 	@Override
+	public String[] getAvailableLanguageIds(AssetCategory assetCategory) {
+		return assetCategory.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(AssetCategory assetCategory) {
+		return assetCategory.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getEditURL(
 			HttpServletRequest httpServletRequest, AssetCategory assetCategory)
 		throws Exception {

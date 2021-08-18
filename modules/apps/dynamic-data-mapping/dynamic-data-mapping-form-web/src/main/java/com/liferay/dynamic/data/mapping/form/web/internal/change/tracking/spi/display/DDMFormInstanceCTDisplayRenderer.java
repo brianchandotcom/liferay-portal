@@ -49,6 +49,11 @@ public class DDMFormInstanceCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DDMFormInstance> {
 
 	@Override
+	public String[] getAvailableLanguageIds(DDMFormInstance ddmFormInstance) {
+		return ddmFormInstance.getAvailableLanguageIds();
+	}
+
+	@Override
 	public String getContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale locale,
@@ -76,6 +81,11 @@ public class DDMFormInstanceCTDisplayRenderer
 
 		return DDMFormRendererUtil.render(
 			ddmFormInstance.getDDMForm(), ddmFormFieldRenderingContext);
+	}
+
+	@Override
+	public String getDefaultLanguageId(DDMFormInstance ddmFormInstance) {
+		return ddmFormInstance.getDefaultLanguageId();
 	}
 
 	@Override

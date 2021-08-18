@@ -30,6 +30,16 @@ public class DDMStructureCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DDMStructure> {
 
 	@Override
+	public String[] getAvailableLanguageIds(DDMStructure ddmStructure) {
+		return ddmStructure.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(DDMStructure ddmStructure) {
+		return ddmStructure.getDefaultLanguageId();
+	}
+
+	@Override
 	public Class<DDMStructure> getModelClass() {
 		return DDMStructure.class;
 	}

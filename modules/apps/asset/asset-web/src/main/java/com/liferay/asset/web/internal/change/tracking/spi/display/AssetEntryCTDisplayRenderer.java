@@ -30,6 +30,16 @@ public class AssetEntryCTDisplayRenderer
 	extends BaseCTDisplayRenderer<AssetEntry> {
 
 	@Override
+	public String[] getAvailableLanguageIds(AssetEntry assetEntry) {
+		return assetEntry.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(AssetEntry assetEntry) {
+		return assetEntry.getDefaultLanguageId();
+	}
+
+	@Override
 	public Class<AssetEntry> getModelClass() {
 		return AssetEntry.class;
 	}

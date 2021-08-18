@@ -57,6 +57,16 @@ public class AssetVocabularyCTDisplayRenderer
 	extends BaseCTDisplayRenderer<AssetVocabulary> {
 
 	@Override
+	public String[] getAvailableLanguageIds(AssetVocabulary assetVocabulary) {
+		return assetVocabulary.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(AssetVocabulary assetVocabulary) {
+		return assetVocabulary.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getEditURL(
 			HttpServletRequest httpServletRequest,
 			AssetVocabulary assetVocabulary)

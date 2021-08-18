@@ -49,6 +49,16 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 
 	@Override
+	public String[] getAvailableLanguageIds(Layout layout) {
+		return layout.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(Layout layout) {
+		return layout.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getEditURL(
 			HttpServletRequest httpServletRequest, Layout layout)
 		throws PortalException {

@@ -30,6 +30,16 @@ public class DDMTemplateCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DDMTemplate> {
 
 	@Override
+	public String[] getAvailableLanguageIds(DDMTemplate ddmTemplate) {
+		return ddmTemplate.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(DDMTemplate ddmTemplate) {
+		return ddmTemplate.getDefaultLanguageId();
+	}
+
+	@Override
 	public Class<DDMTemplate> getModelClass() {
 		return DDMTemplate.class;
 	}

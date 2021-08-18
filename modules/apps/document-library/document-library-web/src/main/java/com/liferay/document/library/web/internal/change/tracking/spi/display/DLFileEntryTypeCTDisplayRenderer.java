@@ -31,6 +31,16 @@ public class DLFileEntryTypeCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DLFileEntryType> {
 
 	@Override
+	public String[] getAvailableLanguageIds(DLFileEntryType dlFileEntryType) {
+		return dlFileEntryType.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(DLFileEntryType dlFileEntryType) {
+		return dlFileEntryType.getDefaultLanguageId();
+	}
+
+	@Override
 	public Class<DLFileEntryType> getModelClass() {
 		return DLFileEntryType.class;
 	}

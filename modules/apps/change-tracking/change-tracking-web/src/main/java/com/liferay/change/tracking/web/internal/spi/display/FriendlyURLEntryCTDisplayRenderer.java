@@ -34,6 +34,16 @@ public class FriendlyURLEntryCTDisplayRenderer
 	extends BaseCTDisplayRenderer<FriendlyURLEntry> {
 
 	@Override
+	public String[] getAvailableLanguageIds(FriendlyURLEntry friendlyURLEntry) {
+		return friendlyURLEntry.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(FriendlyURLEntry friendlyURLEntry) {
+		return friendlyURLEntry.getDefaultLanguageId();
+	}
+
+	@Override
 	public Class<FriendlyURLEntry> getModelClass() {
 		return FriendlyURLEntry.class;
 	}

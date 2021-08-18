@@ -44,6 +44,16 @@ import org.osgi.service.component.annotations.Reference;
 public class CalendarCTDisplayRenderer extends BaseCTDisplayRenderer<Calendar> {
 
 	@Override
+	public String[] getAvailableLanguageIds(Calendar calendar) {
+		return calendar.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(Calendar calendar) {
+		return calendar.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getEditURL(
 			HttpServletRequest httpServletRequest, Calendar calendar)
 		throws Exception {

@@ -29,6 +29,16 @@ import org.osgi.service.component.annotations.Component;
 public class GroupCTDisplayRenderer extends BaseCTDisplayRenderer<Group> {
 
 	@Override
+	public String[] getAvailableLanguageIds(Group group) {
+		return group.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(Group group) {
+		return group.getDefaultLanguageId();
+	}
+
+	@Override
 	public Class<Group> getModelClass() {
 		return Group.class;
 	}

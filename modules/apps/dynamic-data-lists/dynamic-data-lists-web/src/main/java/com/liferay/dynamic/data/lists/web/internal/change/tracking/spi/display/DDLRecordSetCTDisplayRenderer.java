@@ -53,6 +53,16 @@ public class DDLRecordSetCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DDLRecordSet> {
 
 	@Override
+	public String[] getAvailableLanguageIds(DDLRecordSet ddlRecordSet) {
+		return ddlRecordSet.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(DDLRecordSet ddlRecordSet) {
+		return ddlRecordSet.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getEditURL(
 			HttpServletRequest httpServletRequest, DDLRecordSet ddlRecordSet)
 		throws PortalException {

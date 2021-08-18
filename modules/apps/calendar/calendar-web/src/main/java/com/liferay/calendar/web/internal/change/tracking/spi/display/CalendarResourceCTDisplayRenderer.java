@@ -44,6 +44,16 @@ public class CalendarResourceCTDisplayRenderer
 	extends BaseCTDisplayRenderer<CalendarResource> {
 
 	@Override
+	public String[] getAvailableLanguageIds(CalendarResource calendarResource) {
+		return calendarResource.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(CalendarResource calendarResource) {
+		return calendarResource.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getEditURL(
 			HttpServletRequest httpServletRequest,
 			CalendarResource calendarResource)

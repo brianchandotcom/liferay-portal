@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cluster.sample.internal;
+package com.liferay.portal.cluster.multiple.sample.internal;
 
-import com.liferay.portal.cluster.sample.configuration.ClusterTestConfiguration;
+import com.liferay.portal.cluster.multiple.sample.configuration.ClusterTestConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  */
 @Component(
-	configurationPid = "com.liferay.portal.cluster.sample.configuration.ClusterTestConfiguration",
+	configurationPid = "com.liferay.portal.cluster.multiple.sample.configuration.ClusterTestConfiguration",
 	immediate = true, service = {}
 )
 public class ClusterTestDispatcher {

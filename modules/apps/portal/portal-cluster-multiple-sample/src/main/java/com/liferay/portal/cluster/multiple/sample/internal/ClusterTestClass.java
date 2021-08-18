@@ -12,22 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.cluster.sample.configuration;
+package com.liferay.portal.cluster.multiple.sample.internal;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import java.io.Serializable;
 
 /**
  * @author Tina Tian
  */
-@ExtendedObjectClassDefinition(generateUI = false)
-@Meta.OCD(
-	id = "com.liferay.portal.cluster.sample.configuration.ClusterTestConfiguration"
-)
-public abstract interface ClusterTestConfiguration {
+public class ClusterTestClass implements Serializable {
 
-	@Meta.AD(deflt = "", required = false)
-	public String clusterTestCommand();
+	public static int getPortalLocalPort() {
+		ClusterNode clusterNode = ClusterExecutorUtil.getLocalClusterNode();
+
+		return clusterNode.getPortalPort();
+	}
+
+	public ClusterTestClass(String name) {
+		_name = name;
+	}
+
+	@Override
+	public String toString() {
+		return _name;
+	}
+
+	private final String _name;
 
 }

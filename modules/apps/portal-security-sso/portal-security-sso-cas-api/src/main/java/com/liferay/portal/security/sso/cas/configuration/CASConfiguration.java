@@ -44,7 +44,8 @@ public interface CASConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false", description = "import-from-ldap-help",
+		deflt = "false",
+		description = "a-user-may-be-authenticated-by-cas-and-not-yet-exist-in-the-portal",
 		name = "import-from-ldap", required = false
 	)
 	public boolean importFromLDAP();

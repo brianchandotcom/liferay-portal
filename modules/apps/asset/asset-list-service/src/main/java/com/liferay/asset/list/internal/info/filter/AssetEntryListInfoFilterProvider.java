@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "infoFilterKey=" + AssetEntryListInfoFilter.KEY,
 	service = InfoRequestItemProvider.class
 )
-public class AssetEntryListInfoRequestItemProvider
+public class AssetEntryListInfoFilterProvider
 	implements InfoRequestItemProvider<InfoFilter> {
 
 	@Override

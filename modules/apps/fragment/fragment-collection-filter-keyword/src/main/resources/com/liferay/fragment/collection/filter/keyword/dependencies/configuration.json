@@ -1,0 +1,21 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "show-label",
+					"name": "showLabel",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "",
+					"label": "label-text",
+					"localizable": true,
+					"name": "label",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -81,7 +81,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -495,12 +494,10 @@ public class UserAccountResourceImpl
 		return Page.of(
 			transform(
 				userAccounts,
-				userAccount -> {
-					return _toUserAccount(
-						_userService.getUserByEmailAddress(
-							contextCompany.getCompanyId(),
-							userAccount.getEmailAddress()));
-				}));
+				userAccount -> _toUserAccount(
+					_userService.getUserByEmailAddress(
+						contextCompany.getCompanyId(),
+						userAccount.getEmailAddress()))));
 	}
 
 	@Override

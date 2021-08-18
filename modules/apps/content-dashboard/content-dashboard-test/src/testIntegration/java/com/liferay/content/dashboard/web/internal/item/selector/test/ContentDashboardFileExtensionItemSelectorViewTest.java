@@ -84,22 +84,22 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 			"document-code", "Code",
 			fileExtensionGroupsJSONArray.getJSONObject(1));
 		_assertExtensionGroupJSONObject(
-			"document-compressed", "compressed",
+			"document-compressed", "Compressed",
 			fileExtensionGroupsJSONArray.getJSONObject(2));
 		_assertExtensionGroupJSONObject(
 			"document-image", "Image",
 			fileExtensionGroupsJSONArray.getJSONObject(3));
 		_assertExtensionGroupJSONObject(
-			"document-presentation", "presentation",
+			"document-presentation", "Presentation",
 			fileExtensionGroupsJSONArray.getJSONObject(4));
 		_assertExtensionGroupJSONObject(
-			"document-table", "spreadsheet",
+			"document-table", "Spreadsheet",
 			fileExtensionGroupsJSONArray.getJSONObject(5));
 		_assertExtensionGroupJSONObject(
 			"document-text", "Text",
 			fileExtensionGroupsJSONArray.getJSONObject(6));
 		_assertExtensionGroupJSONObject(
-			"document-pdf", "vectorial",
+			"document-pdf", "Vectorial",
 			fileExtensionGroupsJSONArray.getJSONObject(7));
 		_assertExtensionGroupJSONObject(
 			"document-multimedia", "Video",

@@ -611,21 +611,24 @@ public class AxisBuild extends BaseBuild {
 			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_FILE), "|",
 			Pattern.quote(JenkinsResultsParserUtil.URL_DEPENDENCIES_HTTP),
 			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)/",
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/",
+			"(?<axisVariable>" + AxisBuild._AXIS_VARIABLE_REGEX + ")/",
 			"(?<buildNumber>\\d+)/?"));
 	protected static final MultiPattern buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/",
 			"(?<buildNumber>\\d+)/",
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/?"),
+			"(?<axisVariable>" + AxisBuild._AXIS_VARIABLE_REGEX + ")/?"),
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/",
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/",
+			"(?<axisVariable>" + AxisBuild._AXIS_VARIABLE_REGEX + ")/",
 			"(?<buildNumber>\\d+)/?"));
 	protected static final String defaultLogBaseURL =
 		"https://testray.liferay.com/reports/production/logs";
 
 	protected String axisVariable;
+
+	private static final String _AXIS_VARIABLE_REGEX =
+		"AXIS_VARIABLE=(?<axisNumber>\\d+)(,[^/]+)?";
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
@@ -650,6 +653,6 @@ public class AxisBuild extends BaseBuild {
 	private static final Pattern _axisStartTimestampPattern = Pattern.compile(
 		"\\s*\\[echo\\] startTime: (?<startTime>[^\\n]+)");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
-		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
+		_AXIS_VARIABLE_REGEX);
 
 }

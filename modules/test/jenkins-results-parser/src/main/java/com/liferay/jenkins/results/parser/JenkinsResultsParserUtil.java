@@ -887,16 +887,10 @@ public class JenkinsResultsParserUtil {
 			throw new RuntimeException("Unable to encode " + axisBuildURL);
 		}
 
-		String label = "AXIS_VARIABLE=";
+		Matcher matcher = _axisVariablePattern.matcher(url);
 
-		int x = url.indexOf(label);
-
-		if (x != -1) {
-			url = url.substring(x + label.length());
-
-			int y = url.indexOf(",");
-
-			return url.substring(0, y);
+		if (matcher.find()) {
+			return matcher.group("axisVariable");
 		}
 
 		return "";
@@ -4689,6 +4683,8 @@ public class JenkinsResultsParserUtil {
 	private static final Log _log = LogFactory.getLog(
 		JenkinsResultsParserUtil.class);
 
+	private static final Pattern _axisVariablePattern = Pattern.compile(
+		".*AXIS_VARIABLE=(?<axisVariable>\\d+).*");
 	private static final Pattern _buildIDPattern = Pattern.compile(
 		"(?<cohortNumber>[\\d]{1})(?<masterNumber>[\\d]{2})" +
 			"(?<jobID>[\\d]+)_(?<buildNumber>[\\d]+)");

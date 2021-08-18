@@ -202,28 +202,31 @@ definition {
 			layoutName = "AC Page";
 		}
 
-		ACUtils.addWidgetToPage(
-			layoutName = "${layoutName}",
-			widgetName = "Web Content Display");
-
 		if (!(isSet(webContentTitle))) {
 			webContentTitle = "Web Content AC Title";
 		}
 
-		if (!(isSet(webContentRichText))) {
-			webContentRichText = "This is the web content test for AC";
+		if (!(isSet(webContentContent))) {
+			webContentContent = "This is the web content test for AC";
+
+			JSONWebcontent.addWebContent(
+				content = "${webContentContent}",
+				groupName = "Site Name",
+				title = "${webContentTitle}");
+		}
+		else {
+			JSONWebcontent.addWebContent(
+				content = "${webContentContent}",
+				groupName = "Site Name",
+				source = "true",
+				title = "${webContentTitle}");
 		}
 
-		if (isSet(webContentRichText)) {
-			webContentRichText = "${webContentRichText}";
-		}
+		ACUtils.addWidgetToPage(
+			layoutName = "${layoutName}",
+			widgetName = "Web Content Display");
 
-		WebContent.addPGViaWCD(
-			fieldFieldLabel = "content",
-			webContentRichText = "${webContentRichText}",
-			webContentTitle = "${webContentTitle}");
-
-		Pause(locator1 = "500");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "${webContentTitle}");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",

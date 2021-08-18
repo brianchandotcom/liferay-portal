@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1438,7 +1439,17 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		Stream<Locale> localesStream = stream.map(LocaleUtil::fromLanguageId);
 
-		return localesStream.collect(Collectors.toSet());
+		Set<Locale> availableLocales = localesStream.collect(
+			Collectors.toSet());
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
+			_layout.getGroupId());
+
+		if (!availableLocales.contains(siteDefaultLocale)) {
+			availableLocales.add(siteDefaultLocale);
+		}
+
+		return availableLocales;
 	}
 
 	private long _getDDMStructureId() throws Exception {
@@ -1683,6 +1694,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

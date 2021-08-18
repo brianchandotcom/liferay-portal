@@ -157,17 +157,17 @@ public class AccountEntryUserRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByAEI() throws Exception {
-		_persistence.countByAEI(RandomTestUtil.nextLong());
+	public void testCountByAccountEntryId() throws Exception {
+		_persistence.countByAccountEntryId(RandomTestUtil.nextLong());
 
-		_persistence.countByAEI(0L);
+		_persistence.countByAccountEntryId(0L);
 	}
 
 	@Test
-	public void testCountByAUI() throws Exception {
-		_persistence.countByAUI(RandomTestUtil.nextLong());
+	public void testCountByAccountUserId() throws Exception {
+		_persistence.countByAccountUserId(RandomTestUtil.nextLong());
 
-		_persistence.countByAUI(0L);
+		_persistence.countByAccountUserId(0L);
 	}
 
 	@Test

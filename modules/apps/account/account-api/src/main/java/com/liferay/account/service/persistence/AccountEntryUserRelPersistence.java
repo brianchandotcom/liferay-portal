@@ -47,7 +47,8 @@ public interface AccountEntryUserRelPersistence
 	 * @param accountEntryId the account entry ID
 	 * @return the matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAEI(long accountEntryId);
+	public java.util.List<AccountEntryUserRel> findByAccountEntryId(
+		long accountEntryId);
 
 	/**
 	 * Returns a range of all the account entry user rels where accountEntryId = &#63;.
@@ -61,7 +62,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param end the upper bound of the range of account entry user rels (not inclusive)
 	 * @return the range of matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAEI(
+	public java.util.List<AccountEntryUserRel> findByAccountEntryId(
 		long accountEntryId, int start, int end);
 
 	/**
@@ -77,7 +78,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAEI(
+	public java.util.List<AccountEntryUserRel> findByAccountEntryId(
 		long accountEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator);
@@ -96,7 +97,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAEI(
+	public java.util.List<AccountEntryUserRel> findByAccountEntryId(
 		long accountEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator,
@@ -110,7 +111,7 @@ public interface AccountEntryUserRelPersistence
 	 * @return the first matching account entry user rel
 	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel findByAEI_First(
+	public AccountEntryUserRel findByAccountEntryId_First(
 			long accountEntryId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AccountEntryUserRel> orderByComparator)
@@ -123,7 +124,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel fetchByAEI_First(
+	public AccountEntryUserRel fetchByAccountEntryId_First(
 		long accountEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator);
@@ -136,7 +137,7 @@ public interface AccountEntryUserRelPersistence
 	 * @return the last matching account entry user rel
 	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel findByAEI_Last(
+	public AccountEntryUserRel findByAccountEntryId_Last(
 			long accountEntryId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AccountEntryUserRel> orderByComparator)
@@ -149,7 +150,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel fetchByAEI_Last(
+	public AccountEntryUserRel fetchByAccountEntryId_Last(
 		long accountEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator);
@@ -163,7 +164,7 @@ public interface AccountEntryUserRelPersistence
 	 * @return the previous, current, and next account entry user rel
 	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
 	 */
-	public AccountEntryUserRel[] findByAEI_PrevAndNext(
+	public AccountEntryUserRel[] findByAccountEntryId_PrevAndNext(
 			long accountEntryUserRelId, long accountEntryId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AccountEntryUserRel> orderByComparator)
@@ -174,7 +175,7 @@ public interface AccountEntryUserRelPersistence
 	 *
 	 * @param accountEntryId the account entry ID
 	 */
-	public void removeByAEI(long accountEntryId);
+	public void removeByAccountEntryId(long accountEntryId);
 
 	/**
 	 * Returns the number of account entry user rels where accountEntryId = &#63;.
@@ -182,7 +183,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param accountEntryId the account entry ID
 	 * @return the number of matching account entry user rels
 	 */
-	public int countByAEI(long accountEntryId);
+	public int countByAccountEntryId(long accountEntryId);
 
 	/**
 	 * Returns all the account entry user rels where accountUserId = &#63;.
@@ -190,7 +191,8 @@ public interface AccountEntryUserRelPersistence
 	 * @param accountUserId the account user ID
 	 * @return the matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAUI(long accountUserId);
+	public java.util.List<AccountEntryUserRel> findByAccountUserId(
+		long accountUserId);
 
 	/**
 	 * Returns a range of all the account entry user rels where accountUserId = &#63;.
@@ -204,7 +206,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param end the upper bound of the range of account entry user rels (not inclusive)
 	 * @return the range of matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAUI(
+	public java.util.List<AccountEntryUserRel> findByAccountUserId(
 		long accountUserId, int start, int end);
 
 	/**
@@ -220,7 +222,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAUI(
+	public java.util.List<AccountEntryUserRel> findByAccountUserId(
 		long accountUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator);
@@ -239,7 +241,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching account entry user rels
 	 */
-	public java.util.List<AccountEntryUserRel> findByAUI(
+	public java.util.List<AccountEntryUserRel> findByAccountUserId(
 		long accountUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator,
@@ -253,7 +255,7 @@ public interface AccountEntryUserRelPersistence
 	 * @return the first matching account entry user rel
 	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel findByAUI_First(
+	public AccountEntryUserRel findByAccountUserId_First(
 			long accountUserId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AccountEntryUserRel> orderByComparator)
@@ -266,7 +268,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel fetchByAUI_First(
+	public AccountEntryUserRel fetchByAccountUserId_First(
 		long accountUserId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator);
@@ -279,7 +281,7 @@ public interface AccountEntryUserRelPersistence
 	 * @return the last matching account entry user rel
 	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel findByAUI_Last(
+	public AccountEntryUserRel findByAccountUserId_Last(
 			long accountUserId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AccountEntryUserRel> orderByComparator)
@@ -292,7 +294,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
-	public AccountEntryUserRel fetchByAUI_Last(
+	public AccountEntryUserRel fetchByAccountUserId_Last(
 		long accountUserId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator);
@@ -306,7 +308,7 @@ public interface AccountEntryUserRelPersistence
 	 * @return the previous, current, and next account entry user rel
 	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
 	 */
-	public AccountEntryUserRel[] findByAUI_PrevAndNext(
+	public AccountEntryUserRel[] findByAccountUserId_PrevAndNext(
 			long accountEntryUserRelId, long accountUserId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<AccountEntryUserRel> orderByComparator)
@@ -317,7 +319,7 @@ public interface AccountEntryUserRelPersistence
 	 *
 	 * @param accountUserId the account user ID
 	 */
-	public void removeByAUI(long accountUserId);
+	public void removeByAccountUserId(long accountUserId);
 
 	/**
 	 * Returns the number of account entry user rels where accountUserId = &#63;.
@@ -325,7 +327,7 @@ public interface AccountEntryUserRelPersistence
 	 * @param accountUserId the account user ID
 	 * @return the number of matching account entry user rels
 	 */
-	public int countByAUI(long accountUserId);
+	public int countByAccountUserId(long accountUserId);
 
 	/**
 	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.

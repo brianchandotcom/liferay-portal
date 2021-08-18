@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
-import com.liferay.headless.admin.user.client.dto.v1_0.OrganizationBrief;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
@@ -32,24 +32,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class OrganizationBriefSerDes {
+public class AccountBriefSerDes {
 
-	public static OrganizationBrief toDTO(String json) {
-		OrganizationBriefJSONParser organizationBriefJSONParser =
-			new OrganizationBriefJSONParser();
+	public static AccountBrief toDTO(String json) {
+		AccountBriefJSONParser accountBriefJSONParser =
+			new AccountBriefJSONParser();
 
-		return organizationBriefJSONParser.parseToDTO(json);
+		return accountBriefJSONParser.parseToDTO(json);
 	}
 
-	public static OrganizationBrief[] toDTOs(String json) {
-		OrganizationBriefJSONParser organizationBriefJSONParser =
-			new OrganizationBriefJSONParser();
+	public static AccountBrief[] toDTOs(String json) {
+		AccountBriefJSONParser accountBriefJSONParser =
+			new AccountBriefJSONParser();
 
-		return organizationBriefJSONParser.parseToDTOs(json);
+		return accountBriefJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(OrganizationBrief organizationBrief) {
-		if (organizationBrief == null) {
+	public static String toJSON(AccountBrief accountBrief) {
+		if (accountBrief == null) {
 			return "null";
 		}
 
@@ -57,17 +57,17 @@ public class OrganizationBriefSerDes {
 
 		sb.append("{");
 
-		if (organizationBrief.getId() != null) {
+		if (accountBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(organizationBrief.getId());
+			sb.append(accountBrief.getId());
 		}
 
-		if (organizationBrief.getName() != null) {
+		if (accountBrief.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -76,12 +76,12 @@ public class OrganizationBriefSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(organizationBrief.getName()));
+			sb.append(_escape(accountBrief.getName()));
 
 			sb.append("\"");
 		}
 
-		if (organizationBrief.getRoleBriefs() != null) {
+		if (accountBrief.getRoleBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -90,10 +90,10 @@ public class OrganizationBriefSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < organizationBrief.getRoleBriefs().length; i++) {
-				sb.append(String.valueOf(organizationBrief.getRoleBriefs()[i]));
+			for (int i = 0; i < accountBrief.getRoleBriefs().length; i++) {
+				sb.append(String.valueOf(accountBrief.getRoleBriefs()[i]));
 
-				if ((i + 1) < organizationBrief.getRoleBriefs().length) {
+				if ((i + 1) < accountBrief.getRoleBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -107,79 +107,75 @@ public class OrganizationBriefSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		OrganizationBriefJSONParser organizationBriefJSONParser =
-			new OrganizationBriefJSONParser();
+		AccountBriefJSONParser accountBriefJSONParser =
+			new AccountBriefJSONParser();
 
-		return organizationBriefJSONParser.parseToMap(json);
+		return accountBriefJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		OrganizationBrief organizationBrief) {
-
-		if (organizationBrief == null) {
+	public static Map<String, String> toMap(AccountBrief accountBrief) {
+		if (accountBrief == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (organizationBrief.getId() == null) {
+		if (accountBrief.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(organizationBrief.getId()));
+			map.put("id", String.valueOf(accountBrief.getId()));
 		}
 
-		if (organizationBrief.getName() == null) {
+		if (accountBrief.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(organizationBrief.getName()));
+			map.put("name", String.valueOf(accountBrief.getName()));
 		}
 
-		if (organizationBrief.getRoleBriefs() == null) {
+		if (accountBrief.getRoleBriefs() == null) {
 			map.put("roleBriefs", null);
 		}
 		else {
-			map.put(
-				"roleBriefs",
-				String.valueOf(organizationBrief.getRoleBriefs()));
+			map.put("roleBriefs", String.valueOf(accountBrief.getRoleBriefs()));
 		}
 
 		return map;
 	}
 
-	public static class OrganizationBriefJSONParser
-		extends BaseJSONParser<OrganizationBrief> {
+	public static class AccountBriefJSONParser
+		extends BaseJSONParser<AccountBrief> {
 
 		@Override
-		protected OrganizationBrief createDTO() {
-			return new OrganizationBrief();
+		protected AccountBrief createDTO() {
+			return new AccountBrief();
 		}
 
 		@Override
-		protected OrganizationBrief[] createDTOArray(int size) {
-			return new OrganizationBrief[size];
+		protected AccountBrief[] createDTOArray(int size) {
+			return new AccountBrief[size];
 		}
 
 		@Override
 		protected void setField(
-			OrganizationBrief organizationBrief, String jsonParserFieldName,
+			AccountBrief accountBrief, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					organizationBrief.setId(
+					accountBrief.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					organizationBrief.setName((String)jsonParserFieldValue);
+					accountBrief.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
 				if (jsonParserFieldValue != null) {
-					organizationBrief.setRoleBriefs(
+					accountBrief.setRoleBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(

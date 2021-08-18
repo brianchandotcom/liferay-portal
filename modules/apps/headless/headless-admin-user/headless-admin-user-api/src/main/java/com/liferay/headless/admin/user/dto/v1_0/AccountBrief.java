@@ -45,18 +45,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "Represents an organization's basic information, to be embedded in other resources. This resource's ID can be used to query the organization's complete information.",
-	value = "OrganizationBrief"
+	description = "Represents an account's basic information, to be embedded in other resources. This resource's ID can be used to query the account's complete information.",
+	value = "AccountBrief"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "OrganizationBrief")
-public class OrganizationBrief implements Serializable {
+@XmlRootElement(name = "AccountBrief")
+public class AccountBrief implements Serializable {
 
-	public static OrganizationBrief toDTO(String json) {
-		return ObjectMapperUtil.readValue(OrganizationBrief.class, json);
+	public static AccountBrief toDTO(String json) {
+		return ObjectMapperUtil.readValue(AccountBrief.class, json);
 	}
 
-	@Schema(description = "The organization's ID.")
+	@Schema(description = "The account's ID.")
 	public Long getId() {
 		return id;
 	}
@@ -78,11 +78,11 @@ public class OrganizationBrief implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The organization's ID.")
+	@GraphQLField(description = "The account's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(description = "The organization's name.")
+	@Schema(description = "The account's name.")
 	public String getName() {
 		return name;
 	}
@@ -104,7 +104,7 @@ public class OrganizationBrief implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The organization's name.")
+	@GraphQLField(description = "The account's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -143,13 +143,13 @@ public class OrganizationBrief implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof OrganizationBrief)) {
+		if (!(object instanceof AccountBrief)) {
 			return false;
 		}
 
-		OrganizationBrief organizationBrief = (OrganizationBrief)object;
+		AccountBrief accountBrief = (AccountBrief)object;
 
-		return Objects.equals(toString(), organizationBrief.toString());
+		return Objects.equals(toString(), accountBrief.toString());
 	}
 
 	@Override
@@ -215,7 +215,7 @@ public class OrganizationBrief implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief",
+		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.AccountBrief",
 		name = "x-class-name"
 	)
 	public String xClassName;

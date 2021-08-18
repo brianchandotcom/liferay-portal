@@ -63,6 +63,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
@@ -90,6 +91,7 @@ public abstract class BaseRoleResourceImpl
 	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "types"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -97,7 +99,9 @@ public abstract class BaseRoleResourceImpl
 	@Path("/roles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Role")})
-	public Page<Role> getRolesPage(@Context Pagination pagination)
+	public Page<Role> getRolesPage(
+			@Parameter(hidden = true) @QueryParam("types") Integer[] types,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -324,7 +328,7 @@ public abstract class BaseRoleResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getRolesPage(pagination);
+		return getRolesPage((Integer[])parameters.get("types"), pagination);
 	}
 
 	@Override

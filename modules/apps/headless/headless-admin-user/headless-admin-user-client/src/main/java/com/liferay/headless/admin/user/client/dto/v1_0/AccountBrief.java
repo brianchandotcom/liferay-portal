@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.user.client.serdes.v1_0.OrganizationBriefSerDes;
+import com.liferay.headless.admin.user.client.serdes.v1_0.AccountBriefSerDes;
 
 import java.io.Serializable;
 
@@ -28,10 +28,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class OrganizationBrief implements Cloneable, Serializable {
+public class AccountBrief implements Cloneable, Serializable {
 
-	public static OrganizationBrief toDTO(String json) {
-		return OrganizationBriefSerDes.toDTO(json);
+	public static AccountBrief toDTO(String json) {
+		return AccountBriefSerDes.toDTO(json);
 	}
 
 	public Long getId() {
@@ -94,8 +94,8 @@ public class OrganizationBrief implements Cloneable, Serializable {
 	protected RoleBrief[] roleBriefs;
 
 	@Override
-	public OrganizationBrief clone() throws CloneNotSupportedException {
-		return (OrganizationBrief)super.clone();
+	public AccountBrief clone() throws CloneNotSupportedException {
+		return (AccountBrief)super.clone();
 	}
 
 	@Override
@@ -104,13 +104,13 @@ public class OrganizationBrief implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof OrganizationBrief)) {
+		if (!(object instanceof AccountBrief)) {
 			return false;
 		}
 
-		OrganizationBrief organizationBrief = (OrganizationBrief)object;
+		AccountBrief accountBrief = (AccountBrief)object;
 
-		return Objects.equals(toString(), organizationBrief.toString());
+		return Objects.equals(toString(), accountBrief.toString());
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class OrganizationBrief implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return OrganizationBriefSerDes.toJSON(this);
+		return AccountBriefSerDes.toJSON(this);
 	}
 
 }

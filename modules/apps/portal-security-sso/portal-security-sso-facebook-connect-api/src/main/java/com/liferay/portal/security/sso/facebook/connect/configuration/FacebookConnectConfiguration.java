@@ -33,7 +33,7 @@ public interface FacebookConnectConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false", name = "require-verified-account", required = false
+		deflt = "false", name = "verified-account-required", required = false
 	)
 	public boolean verifiedAccountRequired();
 
@@ -63,7 +63,7 @@ public interface FacebookConnectConfiguration {
 
 	@Meta.AD(
 		deflt = "http://localhost:8080/c/portal/facebook_connect_oauth",
-		name = "redirect-url", required = false
+		name = "redirect-url[oauth]", required = false
 	)
 	public String oauthRedirectURL();
 

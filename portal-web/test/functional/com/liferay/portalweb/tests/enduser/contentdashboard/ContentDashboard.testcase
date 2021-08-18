@@ -2905,12 +2905,13 @@ definition {
 	@description = "LPS-131187 Given the Content Dashboard table
 	When a document is added
 	Then its type will be shown in the Type column"
+
 	@priority = "3"
 	test TypeColumnForDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
-		
+
 		task ("Create document via JSON") {
 			task ("Create a new Document") {
 				JSONDocument.addFile(
@@ -2937,6 +2938,7 @@ definition {
 	@description = "LPS-131187 Given the Content Dashboard table
 	When a web content is added
 	Then its type will be shown in the Type column"
+
 	@priority = "3"
 	test TypeColumnForWebContent {
 		task ("Create WC via JSON") {

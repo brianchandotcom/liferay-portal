@@ -57,7 +57,6 @@ definition {
 			key_rowPosition = "${rowPosition}",
 			key_title = "${title}",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASK_ITEM_POSITION");
-			
 	}
 
 }

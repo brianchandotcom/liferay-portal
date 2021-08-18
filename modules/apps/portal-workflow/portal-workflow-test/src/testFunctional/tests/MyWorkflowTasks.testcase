@@ -605,8 +605,6 @@ definition {
 		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
 			rowPosition = "2",
 			title = "Blogs Entry 2");
-
-			
 	}
 
 	@description = "Verify that the user can assign a task to another user in the Assigned to Me tab"

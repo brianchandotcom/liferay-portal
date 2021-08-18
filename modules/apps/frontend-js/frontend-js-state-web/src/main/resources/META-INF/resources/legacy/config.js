@@ -12,13 +12,12 @@
  * details.
  */
 
-module.exports = {
-	build: {
-		bundler: {
-			exclude: {
-				lodash: false,
+(function () {
+	AUI().applyConfig({
+		groups: {
+			state: {
+				mainModule: MODULE_MAIN,
 			},
-			ignore: ['**/legacy/config.js'],
 		},
-	},
-};
+	});
+})();

@@ -15,9 +15,6 @@
 module.exports = {
 	build: {
 		bundler: {
-			exclude: {
-				lodash: false,
-			},
 			ignore: ['**/legacy/config.js'],
 		},
 	},

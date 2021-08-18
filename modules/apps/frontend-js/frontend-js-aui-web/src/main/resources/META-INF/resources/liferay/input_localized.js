@@ -373,8 +373,8 @@ AUI.add(
 
 					Liferay.Loader.require(
 						[
-							'frontend-js-components-web@2.0.7/index',
-							'@liferay/frontend-js-react-web@5.0.8/js/index',
+							A.config.groups.components.mainModule,
+							A.config.groups.react.mainModule,
 						],
 
 						(
@@ -763,8 +763,8 @@ AUI.add(
 
 						Liferay.Loader.require(
 							[
-								'@liferay/frontend-js-state-web@1.0.6/index',
-								'frontend-js-components-web@2.0.7/index',
+								A.config.groups.state.mainModule,
+								A.config.groups.components.mainModule,
 							],
 
 							(stateModule, frontendJsComponentsWebModule) => {

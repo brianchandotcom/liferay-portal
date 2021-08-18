@@ -131,6 +131,7 @@ public class ContentDashboardFileExtensionItemSelectorView
 			MimeTypesUtil::getExtensions
 		).flatMap(
 			Set::stream
+		).sorted(
 		).distinct(
 		).map(
 			fileExtension -> fileExtension.replaceAll("^\\.", StringPool.BLANK)

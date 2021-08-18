@@ -728,42 +728,6 @@ public class DLFileEntryFinderImpl
 		return sb.toString();
 	}
 
-	private String _getDLFileEntryColumnsSQL(String sql) {
-		String replacementSQL = null;
-
-		DB db = getDB();
-
-		if (db.getDBType() == DBType.ORACLE) {
-			replacementSQL =
-				"DLFileEntry.fileEntryId, DLFileEntry.modifiedDate";
-		}
-		else {
-			replacementSQL = "{DLFileEntry.*}";
-		}
-
-		return StringUtil.replace(
-			sql, "[$DL_FILE_ENTRY_COLUMNS$]", replacementSQL);
-	}
-
-	private String _getExtraSettingsSQL(String sql) {
-		String replacementSQL = null;
-
-		DB db = getDB();
-
-		if (db.getDBType() == DBType.ORACLE) {
-			replacementSQL =
-				"(LENGTH(DLFileEntry.extraSettings) > 0) OR " +
-					"(LENGTH(DLFileVersion.extraSettings) > 0)";
-		}
-		else {
-			replacementSQL =
-				"(CAST_TEXT(DLFileEntry.extraSettings) != '') OR " +
-					"(CAST_TEXT(DLFileVersion.extraSettings) != '')";
-		}
-
-		return StringUtil.replace(sql, "[$EXTRA_SETTINGS$]", replacementSQL);
-	}
-
 	protected String getFileEntriesSQL(
 		String id, long groupId, List<Long> repositoryIds, List<Long> folderIds,
 		String[] mimeTypes, QueryDefinition<DLFileEntry> queryDefinition,
@@ -896,6 +860,42 @@ public class DLFileEntryFinderImpl
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
+	}
+
+	private String _getDLFileEntryColumnsSQL(String sql) {
+		String replacementSQL = null;
+
+		DB db = getDB();
+
+		if (db.getDBType() == DBType.ORACLE) {
+			replacementSQL =
+				"DLFileEntry.fileEntryId, DLFileEntry.modifiedDate";
+		}
+		else {
+			replacementSQL = "{DLFileEntry.*}";
+		}
+
+		return StringUtil.replace(
+			sql, "[$DL_FILE_ENTRY_COLUMNS$]", replacementSQL);
+	}
+
+	private String _getExtraSettingsSQL(String sql) {
+		String replacementSQL = null;
+
+		DB db = getDB();
+
+		if (db.getDBType() == DBType.ORACLE) {
+			replacementSQL =
+				"(LENGTH(DLFileEntry.extraSettings) > 0) OR " +
+					"(LENGTH(DLFileVersion.extraSettings) > 0)";
+		}
+		else {
+			replacementSQL =
+				"(CAST_TEXT(DLFileEntry.extraSettings) != '') OR " +
+					"(CAST_TEXT(DLFileVersion.extraSettings) != '')";
+		}
+
+		return StringUtil.replace(sql, "[$EXTRA_SETTINGS$]", replacementSQL);
 	}
 
 }

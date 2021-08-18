@@ -1,0 +1,467 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "product-header"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "Action",
+							"value": {
+								"fragmentLink": {
+									"href": {
+										"value": "#"
+									}
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "File a New Claim"
+									}
+								}
+							}
+						},
+						{
+							"id": "Title",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "Claims"
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"backgroundColor": "",
+					"backgroundFragmentImage": {
+					},
+					"fragmentStyle": {
+						"backgroundColor": "gray100Color",
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "6",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "5",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 4,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"backgroundColor": "",
+							"backgroundFragmentImage": {
+							},
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+								},
+								"borderRadius": "",
+								"borderWidth": "0",
+								"fontFamily": "",
+								"fontSize": "",
+								"fontWeight": "",
+								"height": "",
+								"marginBottom": "",
+								"marginLeft": "",
+								"marginRight": "",
+								"marginTop": "",
+								"maxHeight": "",
+								"maxWidth": "",
+								"minHeight": "",
+								"minWidth": "",
+								"opacity": "100",
+								"overflow": "",
+								"paddingBottom": "",
+								"paddingLeft": "3",
+								"paddingRight": "3",
+								"paddingTop": "",
+								"shadow": "",
+								"textAlign": "",
+								"width": ""
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 1,
+								"paddingRight": 1,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h5"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"text": {
+													"value_i18n": {
+														"en_US": "Open Claims"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+										},
+										"borderRadius": "",
+										"borderWidth": "0",
+										"fontFamily": "",
+										"fontSize": "",
+										"fontWeight": "",
+										"height": "",
+										"marginBottom": "5",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"maxHeight": "",
+										"maxWidth": "",
+										"minHeight": "",
+										"minWidth": "",
+										"opacity": "100",
+										"overflow": "",
+										"paddingBottom": "",
+										"paddingLeft": "",
+										"paddingRight": "",
+										"paddingTop": "",
+										"shadow": "",
+										"textAlign": "",
+										"textColor": "secondaryColor",
+										"width": ""
+									}
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"collectionConfig": {
+										"collectionReference": {
+											"className": "com.liferay.asset.list.model.AssetListEntry",
+											"classPK": "[$OPEN-CLAIMS$]"
+										},
+										"collectionType": "Collection"
+									},
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+										},
+										"borderRadius": "",
+										"borderWidth": "0",
+										"fontFamily": "",
+										"fontSize": "",
+										"fontWeight": "",
+										"height": "",
+										"marginBottom": "",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"maxHeight": "",
+										"maxWidth": "",
+										"minHeight": "",
+										"minWidth": "",
+										"opacity": "100",
+										"overflow": "",
+										"paddingBottom": "",
+										"paddingLeft": "",
+										"paddingRight": "",
+										"paddingTop": "",
+										"shadow": "",
+										"textAlign": "",
+										"width": ""
+									},
+									"listItemStyle": "",
+									"listStyle": "",
+									"numberOfColumns": 3,
+									"numberOfItems": 5,
+									"templateKey": ""
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"collectionItemConfig": {
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"backgroundFragmentImage": {
+														},
+														"borderRadius": "",
+														"borderWidth": "0",
+														"fontFamily": "",
+														"fontSize": "",
+														"fontWeight": "",
+														"height": "",
+														"marginBottom": "5",
+														"marginLeft": "",
+														"marginRight": "",
+														"marginTop": "",
+														"maxHeight": "",
+														"maxWidth": "",
+														"minHeight": "",
+														"minWidth": "",
+														"opacity": "100",
+														"overflow": "",
+														"paddingBottom": "",
+														"paddingLeft": "",
+														"paddingRight": "",
+														"paddingTop": "",
+														"shadow": "",
+														"textAlign": "",
+														"width": ""
+													}
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "CollectionItem"
+									}
+								],
+								"type": "Collection"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h5"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"text": {
+													"value_i18n": {
+														"en_US": "Closed Claims"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+										},
+										"borderRadius": "",
+										"borderWidth": "0",
+										"fontFamily": "",
+										"fontSize": "",
+										"fontWeight": "",
+										"height": "",
+										"marginBottom": "5",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "2",
+										"maxHeight": "",
+										"maxWidth": "",
+										"minHeight": "",
+										"minWidth": "",
+										"opacity": "100",
+										"overflow": "",
+										"paddingBottom": "0",
+										"paddingLeft": "",
+										"paddingRight": "",
+										"paddingTop": "0",
+										"shadow": "",
+										"textAlign": "",
+										"textColor": "secondaryColor",
+										"width": ""
+									}
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"collectionConfig": {
+										"collectionReference": {
+											"className": "com.liferay.asset.list.model.AssetListEntry",
+											"classPK": "[$CLOSED-CLAIMS$]"
+										},
+										"collectionType": "Collection"
+									},
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+										},
+										"borderRadius": "",
+										"borderWidth": "0",
+										"fontFamily": "",
+										"fontSize": "",
+										"fontWeight": "",
+										"height": "",
+										"marginBottom": "",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"maxHeight": "",
+										"maxWidth": "",
+										"minHeight": "",
+										"minWidth": "",
+										"opacity": "100",
+										"overflow": "",
+										"paddingBottom": "",
+										"paddingLeft": "",
+										"paddingRight": "",
+										"paddingTop": "",
+										"shadow": "",
+										"textAlign": "",
+										"width": ""
+									},
+									"listItemStyle": "",
+									"listStyle": "",
+									"numberOfColumns": 3,
+									"numberOfItems": 5,
+									"templateKey": ""
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"collectionItemConfig": {
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"backgroundFragmentImage": {
+														},
+														"borderRadius": "",
+														"borderWidth": "0",
+														"fontFamily": "",
+														"fontSize": "",
+														"fontWeight": "",
+														"height": "",
+														"marginBottom": "5",
+														"marginLeft": "",
+														"marginRight": "",
+														"marginTop": "",
+														"maxHeight": "",
+														"maxWidth": "",
+														"minHeight": "",
+														"minWidth": "",
+														"opacity": "100",
+														"overflow": "",
+														"paddingBottom": "",
+														"paddingLeft": "",
+														"paddingRight": "",
+														"paddingTop": "",
+														"shadow": "",
+														"textAlign": "",
+														"width": ""
+													}
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "CollectionItem"
+									}
+								],
+								"type": "Collection"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "customer-portal"
+		}
+	}
+}

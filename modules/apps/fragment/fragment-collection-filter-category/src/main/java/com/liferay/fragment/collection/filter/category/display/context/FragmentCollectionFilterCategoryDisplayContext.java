@@ -28,11 +28,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,8 +40,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Rubén Pulido
  */
@@ -51,16 +47,12 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 	public FragmentCollectionFilterCategoryDisplayContext(
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+		FragmentRendererContext fragmentRendererContext) {
 
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentRendererContext = fragmentRendererContext;
-		_httpServletRequest = httpServletRequest;
 
 		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAssetCategoryTreeNodeTitle() throws PortalException {
@@ -252,9 +244,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;
 	private final FragmentRendererContext _fragmentRendererContext;
-	private final HttpServletRequest _httpServletRequest;
 	private Map<String, Object> _props;
 	private JSONObject _sourceJSONObject;
-	private final ThemeDisplay _themeDisplay;
 
 }

@@ -2,6 +2,7 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -461,12 +462,94 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8451 | Test Summary: Web content submissions by location card shows expected views by location"
-	@ignore = "true"
 	@priority = "5"
 	test WebContentLocationCardShowsViewsByExpectedLocation {
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		// TODO LRAC-8451 WebContentLocationCardShowsViewsByExpectedLocation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get the ip country") {
+			var country = ACUtils.getIPCountry();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Web Content tab") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Web Content");
+		}
+
+		task ("Select the Last 24 Hours in time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Access to the web content report entry") {
+			ACNavigation.openItem(itemName = "Web Content AC Title");
+		}
+
+		task ("View the time filter of Views by Location map is Last 24 Hours") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Views by Location",
+				timeFilterRange = "Last 24 hours");
+		}
+
+		task ("View the views by location info shown in geomap") {
+			AssertElementNotPresent(
+				key_noResultMessage = "There are no views on any location on the selected period.",
+				locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE");
+
+			ACCards.viewGeomapContainerFillColor(
+				cardTitle = "Views by Location",
+				country = "${country}",
+				fillColor = "rgb(0, 101, 228)");
+
+			ACCards.viewGeomapTableText(
+				cardTitle = "Views by Location",
+				leftText = "${country}",
+				rightText = "1 100%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8454 | Test Summary: Web content submissions by technology card shows views by expected browser"

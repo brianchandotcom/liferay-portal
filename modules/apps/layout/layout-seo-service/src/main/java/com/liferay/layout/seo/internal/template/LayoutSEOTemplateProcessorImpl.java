@@ -16,27 +16,19 @@ package com.liferay.layout.seo.internal.template;
 
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.layout.seo.internal.configuration.FFSEOInlineFieldMapping;
 import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	configurationPid = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping",
-	service = LayoutSEOTemplateProcessor.class
-)
+@Component(service = LayoutSEOTemplateProcessor.class)
 public class LayoutSEOTemplateProcessorImpl
 	implements LayoutSEOTemplateProcessor {
 
@@ -47,17 +39,6 @@ public class LayoutSEOTemplateProcessorImpl
 
 		if ((infoItemFieldValues == null) || Validator.isNull(template)) {
 			return null;
-		}
-
-		if (!_ffSEOInlineFieldMapping.enabled()) {
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValues.getInfoFieldValue(template);
-
-			if (infoFieldValue == null) {
-				return null;
-			}
-
-			return String.valueOf(infoFieldValue.getValue(locale));
 		}
 
 		StringBuffer sb = new StringBuffer();
@@ -87,15 +68,6 @@ public class LayoutSEOTemplateProcessorImpl
 		return sb.toString();
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffSEOInlineFieldMapping = ConfigurableUtil.createConfigurable(
-			FFSEOInlineFieldMapping.class, properties);
-	}
-
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]+)\\}");
-
-	private volatile FFSEOInlineFieldMapping _ffSEOInlineFieldMapping;
 
 }

@@ -37,7 +37,6 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
 import com.liferay.layout.seo.web.internal.configuration.FFLayoutTranslatedLanguagesConfiguration;
-import com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -85,10 +84,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  */
 @Component(
-	configurationPid = {
-		"com.liferay.layout.seo.web.internal.configuration.FFLayoutTranslatedLanguagesConfiguration",
-		"com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping"
-	},
+	configurationPid = "com.liferay.layout.seo.web.internal.configuration.FFLayoutTranslatedLanguagesConfiguration",
 	service = DynamicInclude.class
 )
 public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
@@ -194,8 +190,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			Optional<String> descriptionOptional = _getMappedValueOptional(
 				layout.getTypeSettingsProperty(
-					"mapped-openGraphDescription",
-					_getDefaultDescriptionTemplate()),
+					"mapped-openGraphDescription", "${description}"),
 				infoItemFieldValues, themeDisplay.getLocale());
 
 			String description = descriptionOptional.orElseGet(
@@ -231,7 +226,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			Optional<String> titleOptional = _getMappedValueOptional(
 				layout.getTypeSettingsProperty(
-					"mapped-openGraphTitle", _getDefaultTitleTemplate()),
+					"mapped-openGraphTitle", "${title}"),
 				infoItemFieldValues, themeDisplay.getLocale());
 
 			String title = titleOptional.orElseGet(
@@ -322,8 +317,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		_ffLayoutTranslatedLanguagesConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFLayoutTranslatedLanguagesConfiguration.class, properties);
-		_ffSEOInlineFieldMapping = ConfigurableUtil.createConfigurable(
-			FFSEOInlineFieldMapping.class, properties);
 
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
@@ -390,22 +383,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		}
 
 		return availableLocales;
-	}
-
-	private String _getDefaultDescriptionTemplate() {
-		if (_ffSEOInlineFieldMapping.enabled()) {
-			return "${description}";
-		}
-
-		return "description";
-	}
-
-	private String _getDefaultTitleTemplate() {
-		if (_ffSEOInlineFieldMapping.enabled()) {
-			return "${title}";
-		}
-
-		return "title";
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValues(
@@ -491,7 +468,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	private volatile FFLayoutTranslatedLanguagesConfiguration
 		_ffLayoutTranslatedLanguagesConfiguration;
-	private volatile FFSEOInlineFieldMapping _ffSEOInlineFieldMapping;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

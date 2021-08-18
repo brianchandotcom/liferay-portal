@@ -933,9 +933,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testIncludeMappedTitleAndDescriptionWithoutSEOInlineFieldMapping()
-		throws Exception {
-
+	public void testIncludeMappedTitleAndDescription() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -955,50 +953,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_testWithMockInfoItem(
 			httpServletRequest,
-			() -> _testWithSEOInlineMappingConfiguration(
-				() -> _testWithLayoutSEOCompanyConfiguration(
-					() -> _dynamicInclude.include(
-						httpServletRequest, mockHttpServletResponse,
-						RandomTestUtil.randomString()),
-					true),
-				false));
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(document, "og:description", "mappedDescription");
-		_assertMetaTag(document, "og:title", "mappedTitle");
-	}
-
-	@Test
-	public void testIncludeMappedTitleAndDescriptionWithSEOInlineFieldMapping()
-		throws Exception {
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			_layout.getTypeSettingsProperties();
-
-		typeSettingsUnicodeProperties.put(
-			"mapped-openGraphDescription", "mappedDescriptionFieldName");
-		typeSettingsUnicodeProperties.put(
-			"mapped-openGraphTitle", "mappedTitleFieldName");
-
-		_layoutLocalService.updateLayout(_layout);
-
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
-		_testWithMockInfoItem(
-			httpServletRequest,
-			() -> _testWithSEOInlineMappingConfiguration(
-				() -> _testWithLayoutSEOCompanyConfiguration(
-					() -> _dynamicInclude.include(
-						httpServletRequest, mockHttpServletResponse,
-						RandomTestUtil.randomString()),
-					true),
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					httpServletRequest, mockHttpServletResponse,
+					RandomTestUtil.randomString()),
 				true));
 
 		Document document = Jsoup.parse(
@@ -1639,21 +1597,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		}
 	}
 
-	private void _testWithSEOInlineMappingConfiguration(
-			UnsafeRunnable<Exception> unsafeRunnable, boolean enable)
-		throws Exception {
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_SEO_INLINE_FIELD_MAPPING_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", enable
-					).build())) {
-
-			unsafeRunnable.run();
-		}
-	}
-
 	private static final String
 		_FF_LAYOUT_TRANSLATED_LANGUAGES_CONFIGURATION_PID =
 			"com.liferay.layout.seo.web.internal.configuration." +
@@ -1666,10 +1609,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	private static final String _LAYOUT_SEO_GROUP_CONFIGURATION_PID =
 		"com.liferay.layout.seo.internal.configuration." +
 			"LayoutSEOGroupConfiguration";
-
-	private static final String _SEO_INLINE_FIELD_MAPPING_PID =
-		"com.liferay.layout.seo.web.internal.configuration." +
-			"FFSEOInlineFieldMapping";
 
 	@Inject
 	private AssetDisplayPageEntryLocalService

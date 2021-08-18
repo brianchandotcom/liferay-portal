@@ -3200,7 +3200,6 @@ definition {
 	}
 
 	@description = "LRQA-58272 Automate LPS-107777: Move Workflow Metrics reindex actions out of the Search Settings"
-	@ignore = "true"
 	@priority = "5"
 	test WorkflowMetricsReindex {
 		property portal.acceptance = "true";

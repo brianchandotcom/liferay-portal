@@ -47,6 +47,11 @@ public class DefaultLayoutListRetrieverContext
 	}
 
 	@Override
+	public Optional<Map<String, String[]>> getFilterValues() {
+		return Optional.ofNullable(_filterValues);
+	}
+
+	@Override
 	public Optional<HttpServletRequest> getHttpServletRequestOptional() {
 		return Optional.ofNullable(_httpServletRequest);
 	}
@@ -86,6 +91,10 @@ public class DefaultLayoutListRetrieverContext
 		_contextObject = contextObject;
 	}
 
+	public void setFilterValues(Map<String, String[]> filterValues) {
+		_filterValues = filterValues;
+	}
+
 	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
 	}
@@ -118,6 +127,7 @@ public class DefaultLayoutListRetrieverContext
 	private long[][] _assetCategoryIds;
 	private Map<String, String[]> _configuration;
 	private Object _contextObject;
+	private Map<String, String[]> _filterValues;
 	private HttpServletRequest _httpServletRequest;
 	private Pagination _pagination;
 	private long[] _segmentsEntryIds;

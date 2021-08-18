@@ -39,6 +39,8 @@ public interface LayoutListRetrieverContext {
 
 	public Optional<Object> getContextObjectOptional();
 
+	public Optional<Map<String, String[]>> getFilterValues();
+
 	public Optional<HttpServletRequest> getHttpServletRequestOptional();
 
 	public Optional<Pagination> getPaginationOptional();

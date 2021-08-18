@@ -34,6 +34,8 @@ import org.apache.felix.dm.ServiceDependency;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 
 /**
  * @author Preston Crary
@@ -41,12 +43,15 @@ import org.osgi.framework.BundleContext;
 public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
+		AssetListEntryLocalService assetListEntryLocalService,
 		Bundle bundle, BundleContext bundleContext,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentResource.Factory documentResourceFactory,
-		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
+		FragmentsImporter fragmentsImporter,
+		JournalArticleLocalService journalArticleLocalService,
+		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal, StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
@@ -58,9 +63,11 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
+				assetListEntryLocalService,
 				bundle, bundleContext, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper,
-				documentResourceFactory, fragmentsImporter, jsonFactory,
+				documentResourceFactory, fragmentsImporter,
+				journalArticleLocalService, jsonFactory,
 				objectDefinitionResourceFactory, portal,
 				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,
 				userLocalService));

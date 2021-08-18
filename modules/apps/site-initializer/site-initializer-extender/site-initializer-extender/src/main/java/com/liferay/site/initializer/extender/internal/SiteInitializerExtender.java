@@ -40,6 +40,8 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 
 /**
  * @author Brian Wing Shun Chan
@@ -63,9 +65,11 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
+				_assetListEntryLocalService,
 				bundle, _bundleContext, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_documentResourceFactory, _fragmentsImporter, _jsonFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
 				_userLocalService);
@@ -108,6 +112,9 @@ public class SiteInitializerExtender
 	private BundleTracker<?> _bundleTracker;
 
 	@Reference
+    private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -121,6 +128,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

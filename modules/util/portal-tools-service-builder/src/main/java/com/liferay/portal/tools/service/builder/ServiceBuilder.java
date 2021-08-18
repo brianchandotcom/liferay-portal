@@ -536,6 +536,8 @@ public class ServiceBuilder {
 		_tplJsonJs = _getTplProperty("json_js", _tplJsonJs);
 		_tplJsonJsMethod = _getTplProperty("json_js_method", _tplJsonJsMethod);
 		_tplModel = _getTplProperty("model", _tplModel);
+		_tplModelArgumentsResolver = _getTplProperty(
+			"model_arguments_resolver", _tplModelArgumentsResolver);
 		_tplModelCache = _getTplProperty("model_cache", _tplModelCache);
 		_tplModelHintsXml = _getTplProperty(
 			"model_hints_xml", _tplModelHintsXml);
@@ -816,6 +818,8 @@ public class ServiceBuilder {
 							_createPersistenceImpl(entity);
 							_createPersistence(entity);
 							_createPersistenceUtil(entity);
+
+							_createModelArgumentsResolver(entity);
 
 							if (Validator.isNotNull(_testDirName)) {
 								_createPersistenceTest(entity);
@@ -3069,6 +3073,31 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/model/", entity.getName(), "Model.java"));
 
 		_write(modelFile, content, _modifiedFileNames);
+	}
+
+	private void _createModelArgumentsResolver(Entity entity) throws Exception {
+		if (!entity.hasPersistence() || isVersionLTE_7_3_0()) {
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			StringBundler.concat(
+				_outputPath, "/model/impl/", entity.getName(), "Impl.java"));
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
+
+		String content = _processTemplate(_tplModelArgumentsResolver, context);
+
+		File argumentsResolverFile = new File(
+			StringBundler.concat(
+				_outputPath, "/service/persistence/impl/", entity.getName(),
+				"ModelArgumentsResolver.java"));
+
+		_write(argumentsResolverFile, content, _modifiedFileNames);
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
@@ -7969,6 +7998,8 @@ public class ServiceBuilder {
 	private String _tplJsonJs = _TPL_ROOT + "json_js.ftl";
 	private String _tplJsonJsMethod = _TPL_ROOT + "json_js_method.ftl";
 	private String _tplModel = _TPL_ROOT + "model.ftl";
+	private String _tplModelArgumentsResolver =
+		_TPL_ROOT + "model_arguments_resolver.ftl";
 	private String _tplModelCache = _TPL_ROOT + "model_cache.ftl";
 	private String _tplModelHintsXml = _TPL_ROOT + "model_hints_xml.ftl";
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";

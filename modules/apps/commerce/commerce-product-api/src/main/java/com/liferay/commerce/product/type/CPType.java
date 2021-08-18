@@ -29,4 +29,40 @@ public interface CPType {
 
 	public String getName();
 
+	public default boolean isConfigurationEnabled() {
+		return true;
+	}
+
+	public default boolean isDetailsEnabled() {
+		return true;
+	}
+
+	public default boolean isMediaEnabled() {
+		return true;
+	}
+
+	public default boolean isOptionsEnabled() {
+		return true;
+	}
+
+	public default boolean isProductGroupsEnabled() {
+		return true;
+	}
+
+	public default boolean isProductRelationsEnabled() {
+		return true;
+	}
+
+	public default boolean isSkusEnabled() {
+		return true;
+	}
+
+	public default boolean isSubscriptionEnabled() {
+		return true;
+	}
+
+	public default boolean isVisibilityEnabled() {
+		return true;
+	}
+
 }

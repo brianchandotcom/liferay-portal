@@ -458,7 +458,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 
 		userAccountResource.postAccountUserAccountsByEmailAddress(
-			_accountEntry.getAccountEntryId(), _toEmailAddresses(users));
+			_accountEntry.getAccountEntryId(), null, _toEmailAddresses(users));
 
 		for (User user : users) {
 			Assert.assertNotNull(

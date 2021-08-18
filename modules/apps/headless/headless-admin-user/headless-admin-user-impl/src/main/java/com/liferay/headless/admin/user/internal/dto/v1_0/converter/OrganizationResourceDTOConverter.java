@@ -14,12 +14,9 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
@@ -47,11 +44,12 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -182,10 +180,17 @@ public class OrganizationResourceDTOConverter
 					}
 				};
 				name = organization.getName();
+				numberOfAccounts =
+					_accountEntryOrganizationRelLocalService.
+						getAccountEntryOrganizationRelsByOrganizationIdCount(
+							organization.getOrganizationId());
 				numberOfOrganizations =
 					_organizationService.getOrganizationsCount(
 						organization.getCompanyId(),
 						organization.getOrganizationId());
+				numberOfUsers = _userService.getOrganizationUsersCount(
+					organization.getOrganizationId(),
+					WorkflowConstants.STATUS_ANY);
 				organizationContactInformation =
 					new OrganizationContactInformation() {
 						{
@@ -300,16 +305,8 @@ public class OrganizationResourceDTOConverter
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
-
-	@Reference(
-		target = "(dto.class.name=com.liferay.account.model.AccountEntry)"
-	)
-	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
@@ -333,10 +330,10 @@ public class OrganizationResourceDTOConverter
 	private PhoneService _phoneService;
 
 	@Reference
-	private Portal _portal;
+	private RegionService _regionService;
 
 	@Reference
-	private RegionService _regionService;
+	private UserService _userService;
 
 	@Reference
 	private WebsiteService _websiteService;

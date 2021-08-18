@@ -21,11 +21,18 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,11 +43,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -163,6 +172,34 @@ public class AccountResourceImpl
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@NestedField(
+		parentClass = com.liferay.headless.admin.user.dto.v1_0.Organization.class,
+		value = "organizationAccounts"
+	)
+	@Override
+	public Page<Account> getOrganizationAccountsPage(
+			String organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		Organization organization = _organizationResourceDTOConverter.getObject(
+			organizationId);
+
+		return _getOrganizationAccountsPage(
+			Collections.emptyMap(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"organizationIds",
+						String.valueOf(organization.getOrganizationId())),
+					BooleanClauseOccur.MUST);
+			},
+			search, filter, pagination, sorts);
 	}
 
 	public void patchOrganizationMoveAccounts(
@@ -348,6 +385,25 @@ public class AccountResourceImpl
 			contextUser);
 	}
 
+	private Page<Account> _getOrganizationAccountsPage(
+			Map<String, Map<String, String>> actions,
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			actions, booleanQueryUnsafeConsumer, filter,
+			AccountEntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toAccount(
+				_accountEntryLocalService.getAccountEntry(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
 	private long[] _getOrganizationIds(Account account) {
 		return Optional.ofNullable(
 			account.getOrganizationIds()
@@ -396,5 +452,8 @@ public class AccountResourceImpl
 	private AccountResourceDTOConverter _accountResourceDTOConverter;
 
 	private final EntityModel _entityModel = new AccountEntityModel();
+
+	@Reference
+	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
 
 }

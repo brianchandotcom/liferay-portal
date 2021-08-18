@@ -58,6 +58,28 @@ public class Organization implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Organization[] getChildOrganizations() {
+		return childOrganizations;
+	}
+
+	public void setChildOrganizations(Organization[] childOrganizations) {
+		this.childOrganizations = childOrganizations;
+	}
+
+	public void setChildOrganizations(
+		UnsafeSupplier<Organization[], Exception>
+			childOrganizationsUnsafeSupplier) {
+
+		try {
+			childOrganizations = childOrganizationsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Organization[] childOrganizations;
+
 	public String getComment() {
 		return comment;
 	}
@@ -243,6 +265,27 @@ public class Organization implements Cloneable, Serializable {
 
 	protected String name;
 
+	public Integer getNumberOfAccounts() {
+		return numberOfAccounts;
+	}
+
+	public void setNumberOfAccounts(Integer numberOfAccounts) {
+		this.numberOfAccounts = numberOfAccounts;
+	}
+
+	public void setNumberOfAccounts(
+		UnsafeSupplier<Integer, Exception> numberOfAccountsUnsafeSupplier) {
+
+		try {
+			numberOfAccounts = numberOfAccountsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfAccounts;
+
 	public Integer getNumberOfOrganizations() {
 		return numberOfOrganizations;
 	}
@@ -264,6 +307,49 @@ public class Organization implements Cloneable, Serializable {
 	}
 
 	protected Integer numberOfOrganizations;
+
+	public Integer getNumberOfUsers() {
+		return numberOfUsers;
+	}
+
+	public void setNumberOfUsers(Integer numberOfUsers) {
+		this.numberOfUsers = numberOfUsers;
+	}
+
+	public void setNumberOfUsers(
+		UnsafeSupplier<Integer, Exception> numberOfUsersUnsafeSupplier) {
+
+		try {
+			numberOfUsers = numberOfUsersUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfUsers;
+
+	public Account[] getOrganizationAccounts() {
+		return organizationAccounts;
+	}
+
+	public void setOrganizationAccounts(Account[] organizationAccounts) {
+		this.organizationAccounts = organizationAccounts;
+	}
+
+	public void setOrganizationAccounts(
+		UnsafeSupplier<Account[], Exception>
+			organizationAccountsUnsafeSupplier) {
+
+		try {
+			organizationAccounts = organizationAccountsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Account[] organizationAccounts;
 
 	public OrganizationContactInformation getOrganizationContactInformation() {
 		return organizationContactInformation;
@@ -332,6 +418,27 @@ public class Organization implements Cloneable, Serializable {
 	}
 
 	protected Service[] services;
+
+	public UserAccount[] getUserAccounts() {
+		return userAccounts;
+	}
+
+	public void setUserAccounts(UserAccount[] userAccounts) {
+		this.userAccounts = userAccounts;
+	}
+
+	public void setUserAccounts(
+		UnsafeSupplier<UserAccount[], Exception> userAccountsUnsafeSupplier) {
+
+		try {
+			userAccounts = userAccountsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected UserAccount[] userAccounts;
 
 	@Override
 	public Organization clone() throws CloneNotSupportedException {

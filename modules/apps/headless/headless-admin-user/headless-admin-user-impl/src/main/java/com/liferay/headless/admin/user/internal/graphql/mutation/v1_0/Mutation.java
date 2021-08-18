@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.function.BiFunction;
 
@@ -576,19 +577,22 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns users to an organization by their email addresses"
 	)
-	public boolean createUserAccountsByEmailAddress(
+	public java.util.Collection<UserAccount> createUserAccountsByEmailAddress(
 			@GraphQLName("organizationId") String organizationId,
+			@GraphQLName("organizationRoleIds") String organizationRoleIds,
 			@GraphQLName("strings") String[] strings)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_organizationResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			organizationResource ->
-				organizationResource.postUserAccountsByEmailAddress(
-					organizationId, strings));
+			organizationResource -> {
+				Page paginationPage =
+					organizationResource.postUserAccountsByEmailAddress(
+						organizationId, organizationRoleIds, strings);
 
-		return true;
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -612,19 +616,17 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns a user to an organization by their email address"
 	)
-	public boolean createUserAccountByEmailAddress(
+	public UserAccount createUserAccountByEmailAddress(
 			@GraphQLName("organizationId") String organizationId,
 			@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_organizationResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			organizationResource ->
 				organizationResource.postUserAccountByEmailAddress(
 					organizationId, emailAddress));
-
-		return true;
 	}
 
 	@GraphQLField(description = "Unassociates a role with a user account")
@@ -894,19 +896,23 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns users to an account by their email addresses"
 	)
-	public boolean createAccountUserAccountsByEmailAddress(
-			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("strings") String[] strings)
+	public java.util.Collection<UserAccount>
+			createAccountUserAccountsByEmailAddress(
+				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("accountRoleIds") String accountRoleIds,
+				@GraphQLName("strings") String[] strings)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource ->
-				userAccountResource.postAccountUserAccountsByEmailAddress(
-					accountId, strings));
+			userAccountResource -> {
+				Page paginationPage =
+					userAccountResource.postAccountUserAccountsByEmailAddress(
+						accountId, accountRoleIds, strings);
 
-		return true;
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -930,19 +936,17 @@ public class Mutation {
 	@GraphQLField(
 		description = "Assigns a user to an account by their email address"
 	)
-	public boolean createAccountUserAccountByEmailAddress(
+	public UserAccount createAccountUserAccountByEmailAddress(
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource ->
 				userAccountResource.postAccountUserAccountByEmailAddress(
 					accountId, emailAddress));
-
-		return true;
 	}
 
 	@GraphQLField(description = "Creates a new user account")

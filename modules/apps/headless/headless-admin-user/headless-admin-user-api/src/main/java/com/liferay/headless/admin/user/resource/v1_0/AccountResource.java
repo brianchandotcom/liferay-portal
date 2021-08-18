@@ -103,6 +103,11 @@ public interface AccountResource {
 	public void deleteOrganizationAccounts(Long organizationId, Long[] longs)
 		throws Exception;
 
+	public Page<Account> getOrganizationAccountsPage(
+			String organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public void postOrganizationAccounts(Long organizationId, Long[] longs)
 		throws Exception;
 

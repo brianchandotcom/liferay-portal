@@ -5,6 +5,12 @@ components:
             description:
                 An account represents an external account, for example a customer business.
             properties:
+                accountUserAccounts:
+                    description:
+                        The users linked to the account
+                    items:
+                        $ref: "#/components/schemas/UserAccount"
+                    type: array
                 actions:
                     additionalProperties:
                         additionalProperties:
@@ -37,6 +43,11 @@ components:
                     type: integer
                 name:
                     type: string
+                numberOfUsers:
+                    description:
+                        The number of this account's associated users.
+                    readOnly: true
+                    type: integer
                 organizationIds:
                     items:
                         format: int64
@@ -204,6 +215,10 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                childOrganizations:
+                    items:
+                        $ref: "#/components/schemas/Organization"
+                    type: array
                 comment:
                     description:
                         The text of a comment associated with the organization.
@@ -270,11 +285,25 @@ components:
                     description:
                         The organization's name.
                     type: string
+                numberOfAccounts:
+                    description:
+                        The number of this organization's associated accounts.
+                    readOnly: true
+                    type: integer
                 numberOfOrganizations:
                     description:
                         The number of this organization's child organizations.
                     readOnly: true
                     type: integer
+                numberOfUsers:
+                    description:
+                        The number of this organization's associated users.
+                    readOnly: true
+                    type: integer
+                organizationAccounts:
+                    items:
+                        $ref: "#/components/schemas/Account"
+                    type: array
                 organizationContactInformation:
                     description:
                         The organization's contact information, which includes email addresses, postal addresses, phone
@@ -342,6 +371,10 @@ components:
                                     The type of service the organization provides.
                                 type: string
                         type: object
+                    type: array
+                userAccounts:
+                    items:
+                        $ref: "#/components/schemas/UserAccount"
                     type: array
             type: object
         OrganizationBrief:
@@ -1805,6 +1838,11 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: accountRoleIds
+                  required: false
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1824,10 +1862,18 @@ paths:
                     A list of user email addresses to assign to the account
                 required: true
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
                     description:
                         ""
             tags: ["UserAccount"]
@@ -1875,10 +1921,14 @@ paths:
                   schema:
                       type: string
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
                     description:
                         ""
             tags: ["UserAccount"]
@@ -2314,6 +2364,53 @@ paths:
                     description:
                         ""
             tags: ["Account"]
+        get:
+            description:
+                Retrieves the organization's members (accounts). Results can be paginated, filtered, searched, and
+                sorted.
+            operationId: getOrganizationAccountsPage
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                    description:
+                        ""
+            tags: ["Account"]
         post:
             operationId: postOrganizationAccounts
             parameters:
@@ -2413,6 +2510,58 @@ paths:
                     description:
                         ""
             tags: ["Account"]
+    "/organizations/{organizationId}/child-organizations":
+        get:
+            description:
+                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched,
+                and sorted.
+            operationId: getOrganizationChildOrganizationsPage
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                    description:
+                        ""
+            tags: ["Organization"]
     "/organizations/{organizationId}/email-addresses":
         get:
             description:
@@ -2590,6 +2739,11 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: organizationRoleIds
+                  required: false
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2609,10 +2763,18 @@ paths:
                     A list of user email addresses to assign to the organization
                 required: true
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
                     description:
                         ""
             tags: ["Organization"]
@@ -2658,10 +2820,14 @@ paths:
                   schema:
                       type: string
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
                     description:
                         ""
             tags: ["Organization"]

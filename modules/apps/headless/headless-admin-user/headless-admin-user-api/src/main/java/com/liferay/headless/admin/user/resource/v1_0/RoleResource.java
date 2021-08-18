@@ -48,7 +48,8 @@ public interface RoleResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
+	public Page<Role> getRolesPage(Integer[] types, Pagination pagination)
+		throws Exception;
 
 	public Role getRole(Long roleId) throws Exception;
 

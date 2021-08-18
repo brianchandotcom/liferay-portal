@@ -106,14 +106,15 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	@Override
 	@Test
 	public void testGetRolesPage() throws Exception {
-		Page<Role> page = roleResource.getRolesPage(Pagination.of(1, 100));
+		Page<Role> page = roleResource.getRolesPage(
+			null, Pagination.of(1, 100));
 
 		List<Role> roles = new ArrayList<>(page.getItems());
 
 		roles.add(_addRole(randomRole()));
 		roles.add(_addRole(randomRole()));
 
-		page = roleResource.getRolesPage(Pagination.of(1, roles.size()));
+		page = roleResource.getRolesPage(null, Pagination.of(1, roles.size()));
 
 		Assert.assertEquals(roles.size(), page.getTotalCount());
 

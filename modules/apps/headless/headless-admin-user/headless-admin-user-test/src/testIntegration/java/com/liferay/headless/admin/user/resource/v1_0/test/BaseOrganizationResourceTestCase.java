@@ -1661,6 +1661,14 @@ public abstract class BaseOrganizationResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalUserAccountAssertFieldNames()) {
 
+			if (Objects.equals("accountBriefs", additionalAssertFieldName)) {
+				if (userAccount.getAccountBriefs() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (userAccount.getActions() == null) {
 					valid = false;
@@ -2175,6 +2183,17 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalUserAccountAssertFieldNames()) {
+
+			if (Objects.equals("accountBriefs", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getAccountBriefs(),
+						userAccount2.getAccountBriefs())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(

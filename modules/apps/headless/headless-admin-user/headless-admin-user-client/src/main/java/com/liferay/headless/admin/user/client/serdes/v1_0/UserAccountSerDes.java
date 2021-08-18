@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
@@ -65,6 +66,26 @@ public class UserAccountSerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (userAccount.getAccountBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userAccount.getAccountBriefs().length; i++) {
+				sb.append(String.valueOf(userAccount.getAccountBriefs()[i]));
+
+				if ((i + 1) < userAccount.getAccountBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (userAccount.getActions() != null) {
 			if (sb.length() > 1) {
@@ -453,6 +474,15 @@ public class UserAccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (userAccount.getAccountBriefs() == null) {
+			map.put("accountBriefs", null);
+		}
+		else {
+			map.put(
+				"accountBriefs",
+				String.valueOf(userAccount.getAccountBriefs()));
+		}
+
 		if (userAccount.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -665,7 +695,19 @@ public class UserAccountSerDes {
 			UserAccount userAccount, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "accountBriefs")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setAccountBriefs(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> AccountBriefSerDes.toDTO((String)object)
+						).toArray(
+							size -> new AccountBrief[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setActions(
 						(Map)UserAccountSerDes.toMap(

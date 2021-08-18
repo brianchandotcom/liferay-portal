@@ -48,16 +48,21 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8341 | Test Summary: Filter Page Table by Last Year"
 	@priority = "3"
 	test PeriodFilterLastYearPageTable {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test needs data from past dates to assert
+		// AC Refactor ticket: LRAC-8747
+
 		task ("Open Analytics Cloud as active window") {
 			ACUtils.launchAC();
 		}
 
-		task ("Select Pages tab and change default period range from Last 30 days to Last Year") {
-			ACPages.navigateToPages();
+		task ("Select Pages tab and set time period filter to Last Year") {
+			ACNavigation.switchTab(tabName = "Pages");
 
-			ACPages.filterPagesListBySelectPeriod(
-				currentPeriod = "Last 30 days",
-				selectPeriod = "Last Year");
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLastYear();
 		}
 	}
 

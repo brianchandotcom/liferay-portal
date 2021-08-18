@@ -245,11 +245,10 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content Parent",
 			kbArticleTitle = "Knowledge Base Article Title Parent");
 
-		JSONKnowledgeBase.addkBChildArticle(
+		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
-			kbArticleTitle = "Knowledge Base Article Title Parent",
-			kbChildArticleContent = "Knowledge Base Article Content Child",
-			kbChildArticleTitle = "Knowledge Base Article Title Child");
+			kbArticleContent = "Knowledge Base Article Content Child",
+			kbArticleTitle = "Knowledge Base Article Title Child");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

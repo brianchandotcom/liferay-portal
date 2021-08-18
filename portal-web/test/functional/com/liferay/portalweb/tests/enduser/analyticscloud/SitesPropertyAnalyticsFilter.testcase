@@ -41,16 +41,14 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8321 | Test Summary: 1st user access and no property was selected yet"
 	@priority = "4"
 	test FirstAccessAndNoProperty {
-
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: this test needs to simulate the first access
 		// AC Refactor ticket: LRAC-8752
 
-
 		task ("AC launch") {
-			// this test needs to simulate the first access, it would be when the user is creating a new/fresh workspace.
 
+			// This test needs to simulate the first access, it would be when the user is creating a new/fresh workspace.
 
 			ACUtils.launchAC();
 		}
@@ -59,10 +57,6 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToProperties();
-
-
-
-
 
 			AssertElementPresent(locator1 = "ACDXPSettings#AVAILABLE_NO_PROPERTIES_FOUND");
 		}

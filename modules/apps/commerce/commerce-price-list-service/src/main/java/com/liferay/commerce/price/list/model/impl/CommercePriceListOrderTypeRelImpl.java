@@ -14,9 +14,20 @@
 
 package com.liferay.commerce.price.list.model.impl;
 
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommercePriceListOrderTypeRelImpl
 	extends CommercePriceListOrderTypeRelBaseImpl {
+
+	@Override
+	public CommercePriceList getCommercePriceList() throws PortalException {
+		return CommercePriceListLocalServiceUtil.getCommercePriceList(
+			getCommercePriceListId());
+	}
+
 }

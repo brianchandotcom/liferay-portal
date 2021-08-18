@@ -442,6 +442,12 @@ public class CommercePriceListLocalServiceImpl
 			deleteCommercePriceListDiscountRels(
 				commercePriceList.getCommercePriceListId());
 
+		// Commerce price list commerce order type rels
+
+		commercePriceListOrderTypeRelLocalService.
+			deleteCommercePriceListOrderTypeRels(
+				commercePriceList.getCommercePriceListId());
+
 		// Commerce price list commerce price modifier
 
 		_commercePriceModifierLocalService.

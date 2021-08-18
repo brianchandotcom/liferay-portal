@@ -60,7 +60,7 @@ public interface MFAEmailOTPConfiguration {
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
 		description = "set-the-sender-address-on-the-one-time-password-email",
-		name = "email-from-address", required = false
+		name = "email-from-field[template]", required = false
 	)
 	public String emailFromAddress();
 

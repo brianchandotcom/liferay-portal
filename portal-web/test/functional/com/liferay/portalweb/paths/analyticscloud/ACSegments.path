@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>TABLE_CHECKBOX</td>
-	<td>//div[text()='${key_TableMember}']/ancestor::tr</td>
+	<td>//tr[.//*[normalize-space(text())='${key_TableMember}']]</td>
 	<td></td>
 </tr>
 <tr>

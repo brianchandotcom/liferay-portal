@@ -153,6 +153,19 @@ definition {
 		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION_OPTION");
 	}
 
+	macro editNumberCriterion {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Type(
+			index = "${index}",
+			locator1 = "ACSegments#NUMBER_INPUT",
+			value1 = "${numberInput}");
+
+		Click(locator1 = "ACSegments#TOTAL_MEMBERS");
+	}
+
 	macro editSegment {
 		if (!IsTextEqual.isPartialText(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "SEGMENT")) {
 			ACSegments.searchSegment(findSegment = "${searchTerm}");

@@ -170,6 +170,64 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8095 | Test Summary: Can delete a custom asset report"
+	@priority = "5"
+	test CanDeleteCustomAssetReport {
+		property portal.upstream = "quarantine";
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-8737
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Access the Custom Asset") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Change property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+		task ("Add a new Custom Asset Report") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Custom");
+			// Custom asset data doesn't appear, so the custom asset report cannot be added. 
+			ACAssets.addCustomAssetReport(
+				assetName = "Custom Asset Analytics Cloud",
+				metric = "Asset Views (sum)",
+				reportName = "Report 1");
+		}
+
+		task ("Assert that the Custom Asset Report was added") {
+			ACCards.viewCards(cardTitle = "Report 1");
+		}
+
+		task ("Delete the Custom Asset Report") {
+			ACAssets.removeCustomAssetReport(reportName = "Report 1");
+		}
+
+		task ("Assert that the Custom Asset Report was deleted") {
+			AssertElementNotPresent(
+				key_cardTitle = "Report 1",
+				locator1 = "ACCards#CARD_TITLE");
+		}
+	}
+
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8542 | Test Summary: Delete multiple custom asset report"
 	@priority = "5"
 	test CanDeleteMultipleCustomAssetReport {

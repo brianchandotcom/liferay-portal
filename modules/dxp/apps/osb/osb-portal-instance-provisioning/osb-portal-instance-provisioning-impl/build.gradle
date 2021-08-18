@@ -1,0 +1,3 @@
+dependencies {
+	compileOnly project(":dxp:apps:osb:osb-portal-instance-provisioning:osb-portal-instance-provisioning-api")
+}

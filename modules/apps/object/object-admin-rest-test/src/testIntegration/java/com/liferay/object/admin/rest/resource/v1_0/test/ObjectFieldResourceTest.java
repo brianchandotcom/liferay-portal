@@ -66,21 +66,9 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	public void testGraphQLGetObjectFieldNotFound() {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPatchObjectField() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPutObjectField() {
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name"};
+		return new String[] {"label"};
 	}
 
 	@Override
@@ -89,7 +77,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		objectField.setIndexedAsKeyword(false);
 		objectField.setLabel(
-			Collections.singletonMap("en_US", "A" + objectField.getName()));
+			Collections.singletonMap("en-US", "a" + objectField.getName()));
 		objectField.setName("a" + objectField.getName());
 		objectField.setType("String");
 

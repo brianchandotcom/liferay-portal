@@ -35,6 +35,9 @@ public class ObjectFieldUtil {
 					serviceBuilderObjectField.getIndexedAsKeyword();
 				indexedLanguageId =
 					serviceBuilderObjectField.getIndexedLanguageId();
+				label =
+					com.liferay.portal.vulcan.util.LocalizedMapUtil.getI18nMap(
+						true, serviceBuilderObjectField.getLabelMap());
 				name = serviceBuilderObjectField.getName();
 				required = serviceBuilderObjectField.isRequired();
 				type = serviceBuilderObjectField.getType();

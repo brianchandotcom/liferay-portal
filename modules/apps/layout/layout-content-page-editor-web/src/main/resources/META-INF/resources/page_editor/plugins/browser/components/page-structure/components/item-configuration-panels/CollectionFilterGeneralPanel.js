@@ -161,7 +161,8 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 
 	const [collectionFilters, setCollectionFilters] = useState(null);
 
-	const selectedFilter = collectionFilters?.[configurationValues['filter']];
+	const selectedFilter =
+		collectionFilters?.[configurationValues['filterKey']];
 
 	useEffect(() => {
 		if (hasConfiguredCollections && !collectionFilters) {
@@ -208,7 +209,7 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 				<SelectField
 					field={{
 						label: Liferay.Language.get('filter'),
-						name: 'filter',
+						name: 'filterKey',
 						typeOptions: {
 							validValues: [
 								{
@@ -222,7 +223,7 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 						},
 					}}
 					onValueSelect={onValueSelect}
-					value={configurationValues['filter']}
+					value={configurationValues['filterKey']}
 				/>
 			)}
 

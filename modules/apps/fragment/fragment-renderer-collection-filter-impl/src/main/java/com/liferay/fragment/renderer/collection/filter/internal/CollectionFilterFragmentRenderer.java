@@ -132,7 +132,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 		return (String)
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-				fragmentEntryLink.getEditableValues(), "string", "filter");
+				fragmentEntryLink.getEditableValues(), "string", "filterKey");
 	}
 
 	private volatile FFFragmentRendererCollectionFilterConfiguration

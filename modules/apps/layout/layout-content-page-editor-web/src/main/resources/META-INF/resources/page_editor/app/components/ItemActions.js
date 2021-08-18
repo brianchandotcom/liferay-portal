@@ -160,10 +160,10 @@ export default function ItemActions({item}) {
 					{dropdownItems.map((dropdownItem, index, array) =>
 						dropdownItem.type === 'separator' ? (
 							index !== array.length - 1 && (
-								<ClayDropDown.Divider />
+								<ClayDropDown.Divider key={index} />
 							)
 						) : (
-							<React.Fragment key={dropdownItem.label}>
+							<React.Fragment key={index}>
 								<ClayDropDown.Item
 									onClick={() => {
 										setActive(false);

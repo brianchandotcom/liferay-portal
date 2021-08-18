@@ -27,4 +27,10 @@ public interface FilteredInfoCollectionProvider<T, F extends InfoFilter>
 		return (Class<F>)GenericUtil.getGenericClass(this, 1);
 	}
 
+	public default String getInfoFilterClassName() {
+		Class<?> clazz = getInfoFilterClass();
+
+		return clazz.getName();
+	}
+
 }

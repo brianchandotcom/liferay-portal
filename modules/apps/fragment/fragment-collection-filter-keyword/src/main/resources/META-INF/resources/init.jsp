@@ -16,7 +16,8 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
 <%@ page import="com.liferay.fragment.collection.filter.keyword.display.context.FragmentCollectionFilterKeywordDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

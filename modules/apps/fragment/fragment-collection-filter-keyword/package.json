@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"@liferay/fragment-renderer-collection-filter-impl": "1.0.7"
+	},
+	"name": "@liferay/fragment-collection-filter-keyword",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

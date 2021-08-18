@@ -19,7 +19,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +47,15 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 
 	public String getLabel() {
 		return GetterUtil.getString(_getFieldValue("label"));
+	}
+
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"fragmentEntryLinkId",
+			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId())
+		).put(
+			"isDisabled", isDisabled()
+		).build();
 	}
 
 	public boolean isDisabled() {

@@ -23,14 +23,13 @@ import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.filter.InfoFilter;
-import com.liferay.info.filter.InfoRequestItemProvider;
+import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.filter.PropertyInfoItemServiceFilter;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
@@ -47,8 +46,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -266,28 +263,25 @@ public class InfoCollectionProviderLayoutListRetriever
 			filteredInfoCollectionProvider,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			layoutListRetrieverContext.getHttpServletRequestOptional();
+		Optional<Map<String, String[]>> filterValuesOptional =
+			layoutListRetrieverContext.getFilterValues();
 
-		HttpServletRequest httpServletRequest =
-			httpServletRequestOptional.orElse(null);
+		Map<String, String[]> filterValues = filterValuesOptional.orElse(null);
 
-		if (!httpServletRequestOptional.isPresent()) {
+		if (filterValues == null) {
 			return null;
 		}
 
-		InfoRequestItemProvider<InfoFilter> infoRequestItemProvider =
+		InfoFilterProvider<?> infoFilterProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoRequestItemProvider.class, InfoFilter.class.getName(),
-				new PropertyInfoItemServiceFilter(
-					"infoFilterKey",
-					filteredInfoCollectionProvider.getInfoFilterClassName()));
+				InfoFilterProvider.class,
+				filteredInfoCollectionProvider.getInfoFilterClassName());
 
-		if (infoRequestItemProvider != null) {
+		if (infoFilterProvider != null) {
 			return null;
 		}
 
-		return infoRequestItemProvider.create(httpServletRequest);
+		return infoFilterProvider.create(filterValues);
 	}
 
 	private String _getModelClassName(Object contextObject) {

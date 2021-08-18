@@ -21,9 +21,8 @@ import com.liferay.asset.list.info.filter.AssetEntryListInfoFilter;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.info.filter.InfoFilter;
-import com.liferay.info.filter.InfoRequestItemProvider;
+import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.filter.PropertyInfoItemServiceFilter;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
@@ -35,10 +34,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -125,24 +123,25 @@ public class AssetEntryListLayoutListRetriever
 	private AssetEntryListInfoFilter _getAssetEntryListInfoFilter(
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			layoutListRetrieverContext.getHttpServletRequestOptional();
+		Optional<Map<String, String[]>> filterValuesOptional =
+			layoutListRetrieverContext.getFilterValues();
 
-		HttpServletRequest httpServletRequest =
-			httpServletRequestOptional.orElse(null);
+		Map<String, String[]> filterValues = filterValuesOptional.orElse(null);
 
-		if (!httpServletRequestOptional.isPresent()) {
+		if (filterValues == null) {
 			return new AssetEntryListInfoFilter();
 		}
 
-		InfoRequestItemProvider<InfoFilter> infoRequestItemProvider =
+		InfoFilterProvider<?> infoFilterProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoRequestItemProvider.class, InfoFilter.class.getName(),
-				new PropertyInfoItemServiceFilter(
-					"infoFilterKey", AssetEntryListInfoFilter.KEY));
+				InfoFilterProvider.class,
+				AssetEntryListInfoFilter.class.getName());
 
-		InfoFilter infoFilter = infoRequestItemProvider.create(
-			httpServletRequest);
+		if (infoFilterProvider == null) {
+			return new AssetEntryListInfoFilter();
+		}
+
+		InfoFilter infoFilter = infoFilterProvider.create(filterValues);
 
 		if (!(infoFilter instanceof AssetEntryListInfoFilter)) {
 			throw new UnsupportedOperationException();

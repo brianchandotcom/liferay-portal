@@ -50,11 +50,21 @@ public class ObjectFieldUtil {
 		return objectField;
 	}
 
+	public static ObjectField createObjectField(String name, String type) {
+		return createObjectField(name, name, false, type);
+	}
+
 	public static ObjectField createObjectField(
 		String label, String name, boolean required, String type) {
 
 		return createObjectField(
 			null, false, false, null, label, name, required, type);
+	}
+
+	public static ObjectField createObjectField(
+		String label, String name, String type) {
+
+		return createObjectField(label, name, false, type);
 	}
 
 }

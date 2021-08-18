@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
@@ -30,9 +31,11 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderList
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderPhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderWebsiteUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserAccountEntityModel;
+import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
@@ -64,13 +67,17 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -93,10 +100,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user-account.properties",
-	scope = ServiceScope.PROTOTYPE, service = UserAccountResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, UserAccountResource.class}
 )
 public class UserAccountResourceImpl
-	extends BaseUserAccountResourceImpl implements EntityModelResource {
+	extends BaseUserAccountResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public void deleteAccountUserAccountByEmailAddress(
@@ -167,6 +175,7 @@ public class UserAccountResourceImpl
 			search, filter, pagination, sorts);
 	}
 
+	@NestedField(parentClass = Account.class, value = "accountUserAccounts")
 	@Override
 	public Page<UserAccount> getAccountUserAccountsPage(
 			Long accountId, String search, Filter filter, Pagination pagination,
@@ -230,6 +239,10 @@ public class UserAccountResourceImpl
 			_userService.getUserById(permissionChecker.getUserId()));
 	}
 
+	@NestedField(
+		parentClass = com.liferay.headless.admin.user.dto.v1_0.Organization.class,
+		value = "userAccounts"
+	)
 	@Override
 	public Page<UserAccount> getOrganizationUserAccountsPage(
 			String organizationId, String search, Filter filter,
@@ -408,19 +421,24 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public void postAccountUserAccountByEmailAddress(
+	public UserAccount postAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+				accountId, emailAddress, new long[0], null,
+				new ServiceContext() {
+					{
+						setCompanyId(contextCompany.getCompanyId());
+						setLanguageId(
+							contextAcceptLanguage.getPreferredLanguageId());
+						setUserId(contextUser.getUserId());
+					}
+				});
 
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setLanguageId(
-			contextAcceptLanguage.getPreferredLanguageId());
-		serviceContext.setUserId(contextUser.getUserId());
-
-		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
-			accountId, emailAddress, new long[0], null, serviceContext);
+		return _toUserAccount(
+			_userLocalService.getUser(accountEntryUserRel.getAccountUserId()));
 	}
 
 	@Override
@@ -446,13 +464,38 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public void postAccountUserAccountsByEmailAddress(
-			Long accountId, String[] emailAddresses)
+	public Page<UserAccount> postAccountUserAccountsByEmailAddress(
+			Long accountId, String accountRoleIds, String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : emailAddresses) {
-			postAccountUserAccountByEmailAddress(accountId, emailAddress);
+		List<UserAccount> userAccounts = transformToList(
+			emailAddresses,
+			emailAddress -> postAccountUserAccountByEmailAddress(
+				accountId, emailAddress));
+
+		if (Validator.isNull(accountRoleIds)) {
+			return Page.of(userAccounts);
 		}
+
+		String[] accountRoleIdsArray = StringUtil.split(
+			accountRoleIds, CharPool.COMMA);
+
+		for (UserAccount userAccount : userAccounts) {
+			for (String accountRoleId : accountRoleIdsArray) {
+				_accountRoleResource.
+					postAccountAccountRoleUserAccountAssociation(
+						accountId, Long.valueOf(accountRoleId),
+						userAccount.getId());
+			}
+		}
+
+		return Page.of(
+			transform(
+				userAccounts,
+				userAccount -> _toUserAccount(
+					_userService.getUserByEmailAddress(
+						contextCompany.getCompanyId(),
+						userAccount.getEmailAddress()))));
 	}
 
 	@Override
@@ -505,6 +548,13 @@ public class UserAccountResourceImpl
 			_contactLocalService.updateContact(contact);
 
 			user = _userService.getUserById(user.getUserId());
+		}
+
+		if (userAccount.getExternalReferenceCode() != null) {
+			user.setExternalReferenceCode(
+				userAccount.getExternalReferenceCode());
+
+			user = _userLocalService.updateUser(user);
 		}
 
 		return _toUserAccount(user);
@@ -912,11 +962,17 @@ public class UserAccountResourceImpl
 	private AccountResourceDTOConverter _accountResourceDTOConverter;
 
 	@Reference
+	private AccountRoleResource _accountRoleResource;
+
+	@Reference
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 
 	@Reference
 	private ContactLocalService _contactLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"

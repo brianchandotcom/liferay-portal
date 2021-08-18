@@ -323,6 +323,43 @@
 			<finder-column name="commercePriceListId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommercePriceListOrderTypeRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="CPriceListOrderTypeRelId" name="commercePriceListOrderTypeRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commercePriceListId" type="long" />
+		<column name="commerceOrderTypeId" type="long" />
+		<column name="priority" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePriceListId" return-type="Collection">
+			<finder-column name="commercePriceListId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePriceListOrderTypeRel" unique="true">
+			<finder-column name="commercePriceListId" />
+			<finder-column name="commerceOrderTypeId" />
+		</finder>
+	</entity>
 	<entity external-reference-code="true" local-service="true" name="CommerceTierPriceEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

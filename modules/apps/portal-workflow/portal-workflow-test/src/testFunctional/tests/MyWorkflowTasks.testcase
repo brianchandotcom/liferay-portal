@@ -524,8 +524,6 @@ definition {
 		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
 			rowPosition = "2",
 			title = "Blogs Entry 1");
-
-			
 	}
 
 	@description = "Verify that the user can order the results inside Assigned to My Roles by Last Activity Date"

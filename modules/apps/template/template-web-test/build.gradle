@@ -4,5 +4,6 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:portlet-display-template:portlet-display-template-api")
+	testIntegrationCompile project(":apps:template:template-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

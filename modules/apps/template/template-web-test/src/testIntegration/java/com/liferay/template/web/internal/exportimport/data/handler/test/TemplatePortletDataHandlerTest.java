@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.web.internal.exportimport.data.handler.test;
+package com.liferay.template.web.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
@@ -20,9 +20,9 @@ import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.template.constants.TemplatePortletKeys;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -30,9 +30,10 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Kocsis
+ * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class PortletDisplayTemplatePortletDataHandlerTest
+public class TemplatePortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
@@ -54,7 +55,7 @@ public class PortletDisplayTemplatePortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.PORTLET_DISPLAY_TEMPLATE;
+		return TemplatePortletKeys.TEMPLATE;
 	}
 
 	@Override

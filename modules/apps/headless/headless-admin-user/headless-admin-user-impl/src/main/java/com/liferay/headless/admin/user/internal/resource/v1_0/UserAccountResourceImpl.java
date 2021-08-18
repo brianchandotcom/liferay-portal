@@ -476,33 +476,33 @@ public class UserAccountResourceImpl
 			emailAddress -> postAccountUserAccountByEmailAddress(
 				accountId, emailAddress));
 
-		if (Validator.isNotNull(accountRoleIds)) {
-			String[] accRoleIds = StringUtil.split(
-				accountRoleIds, CharPool.COMMA);
-
-			for (UserAccount userAccount : userAccounts) {
-				for (String accountRoleId : accRoleIds) {
-					_accountRoleResource.
-						postAccountAccountRoleUserAccountAssociation(
-							accountId, Long.valueOf(accountRoleId),
-							userAccount.getId());
-				}
-			}
-
-			List<UserAccount> userAccountList = new ArrayList<>();
-
-			for (UserAccount userAccount : userAccounts) {
-				User userByEmailAddress = _userService.getUserByEmailAddress(
-					contextCompany.getCompanyId(),
-					userAccount.getEmailAddress());
-
-				userAccountList.add(_toUserAccount(userByEmailAddress));
-			}
-
-			return Page.of(userAccountList);
+		if (Validator.isNull(accountRoleIds)) {
+			return Page.of(userAccounts);
 		}
 
-		return Page.of(userAccounts);
+		String[] accRoleIds = StringUtil.split(
+			accountRoleIds, CharPool.COMMA);
+
+		for (UserAccount userAccount : userAccounts) {
+			for (String accountRoleId : accRoleIds) {
+				_accountRoleResource.
+					postAccountAccountRoleUserAccountAssociation(
+						accountId, Long.valueOf(accountRoleId),
+						userAccount.getId());
+			}
+		}
+
+		List<UserAccount> userAccountList = new ArrayList<>();
+
+		for (UserAccount userAccount : userAccounts) {
+			User userByEmailAddress = _userService.getUserByEmailAddress(
+				contextCompany.getCompanyId(),
+				userAccount.getEmailAddress());
+
+			userAccountList.add(_toUserAccount(userByEmailAddress));
+		}
+
+		return Page.of(userAccountList);
 	}
 
 	@Override

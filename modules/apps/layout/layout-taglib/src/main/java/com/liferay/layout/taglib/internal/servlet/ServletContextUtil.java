@@ -18,6 +18,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
@@ -56,6 +57,12 @@ public class ServletContextUtil {
 		getFragmentCollectionContributorTracker() {
 
 		return _fragmentCollectionContributorTracker;
+	}
+
+	public static FragmentEntryConfigurationParser
+		getFragmentEntryConfigurationParser() {
+
+		return _fragmentEntryConfigurationParser;
 	}
 
 	public static FragmentEntryProcessorHelper
@@ -170,6 +177,13 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setFragmentEntryConfigurationParser(
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser) {
+
+		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+	}
+
+	@Reference(unbind = "-")
 	protected void setFragmentEntryProcessorHelper(
 		FragmentEntryProcessorHelper fragmentEntryProcessorHelper) {
 
@@ -263,6 +277,8 @@ public class ServletContextUtil {
 
 	private static FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+	private static FragmentEntryConfigurationParser
+		_fragmentEntryConfigurationParser;
 	private static FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 	private static FragmentRendererController _fragmentRendererController;
 	private static FragmentRendererTracker _fragmentRendererTracker;

@@ -3,23 +3,25 @@ definition {
 	macro openForm {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_mvcRenderCommandName=%2Fadmin%2Fedit_form_instance&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_redirect=%2Fgroup%2Fguest%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D20125&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_groupId=20125#/");
 	}
-    macro openFormSettings {
-        
-        Click(locator1 = "PopulateObjectFormsConfiguration#OPEN_FORM_SETTINGS");
-		
+
+	macro openFormSettings {
+		Click(locator1 = "PopulateObjectFormsConfiguration#OPEN_FORM_SETTINGS");
+
 		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_STORAGE_TYPE");
-    }
+	}
 
-    macro selectObject {
-        
-        Click(key_label = "${label}", locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+	macro selectObject {
+		Click(
+			key_label = "${label}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 
-        Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
-	
-    }
+		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
+	}
 
-    macro viewDisplaySelectOption {
-        AssertElementPresent(key_label = "${label}", locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-    }
+	macro viewDisplaySelectOption {
+		AssertElementPresent(
+			key_label = "${label}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+	}
 
 }

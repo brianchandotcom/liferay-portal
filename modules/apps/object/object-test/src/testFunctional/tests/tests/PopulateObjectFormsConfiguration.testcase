@@ -83,7 +83,7 @@ definition {
 		PopulateObjectFormsConfiguration.openForm();
 
 		PopulateObjectFormsConfiguration.openFormSettings();
-        
+
 		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "Object");
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");

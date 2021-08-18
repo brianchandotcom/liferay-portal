@@ -276,14 +276,12 @@ public class InfoCollectionProviderLayoutListRetriever
 			return null;
 		}
 
-		Class<?> infoFilterClass =
-			filteredInfoCollectionProvider.getInfoFilterClass();
-
 		InfoRequestItemProvider<InfoFilter> infoRequestItemProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoRequestItemProvider.class, InfoFilter.class.getName(),
 				new PropertyInfoItemServiceFilter(
-					"infoFilterKey", infoFilterClass.getName()));
+					"infoFilterKey",
+					filteredInfoCollectionProvider.getInfoFilterClassName()));
 
 		return infoRequestItemProvider.create(httpServletRequest);
 	}

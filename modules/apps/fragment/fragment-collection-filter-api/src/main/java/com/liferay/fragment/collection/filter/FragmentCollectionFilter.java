@@ -17,8 +17,7 @@ package com.liferay.fragment.collection.filter;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
 
@@ -31,8 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 @ProviderType
 public interface FragmentCollectionFilter {
 
-	public default JSONObject getConfiguration() {
-		return JSONFactoryUtil.createJSONObject();
+	public default String getConfiguration() {
+		return StringPool.BLANK;
 	}
 
 	public String getFilterKey();

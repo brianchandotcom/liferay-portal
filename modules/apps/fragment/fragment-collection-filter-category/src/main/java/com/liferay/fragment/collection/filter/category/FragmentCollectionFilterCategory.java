@@ -18,9 +18,9 @@ import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.category.display.context.FragmentCollectionFilterCategoryDisplayContext;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +47,7 @@ public class FragmentCollectionFilterCategory
 	implements FragmentCollectionFilter {
 
 	@Override
-	public JSONObject getConfiguration() {
+	public String getConfiguration() {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
@@ -57,12 +57,11 @@ public class FragmentCollectionFilterCategory
 				"/com/liferay/fragment/collection/filter/category" +
 					"/dependencies/configuration.json");
 
-			return JSONFactoryUtil.createJSONObject(
-				_fragmentEntryConfigurationParser.translateConfiguration(
-					JSONFactoryUtil.createJSONObject(json), resourceBundle));
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				JSONFactoryUtil.createJSONObject(json), resourceBundle);
 		}
 		catch (JSONException jsonException) {
-			return JSONFactoryUtil.createJSONObject();
+			return StringPool.BLANK;
 		}
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -64,7 +65,9 @@ public class GetCollectionFiltersMVCResourceCommand
 			fragmentCollectionFiltersJSONObject.put(
 				fragmentCollectionFilter.getFilterKey(),
 				JSONUtil.put(
-					"configuration", fragmentCollectionFilter.getConfiguration()
+					"configuration",
+					_getConfigurationJSONObject(
+						fragmentCollectionFilter.getConfiguration())
 				).put(
 					"key", fragmentCollectionFilter.getFilterKey()
 				).put(
@@ -76,6 +79,15 @@ public class GetCollectionFiltersMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			fragmentCollectionFiltersJSONObject);
+	}
+
+	private JSONObject _getConfigurationJSONObject(String configuration) {
+		try {
+			return JSONFactoryUtil.createJSONObject(configuration);
+		}
+		catch (JSONException jsonException) {
+			return JSONFactoryUtil.createJSONObject();
+		}
 	}
 
 	@Reference

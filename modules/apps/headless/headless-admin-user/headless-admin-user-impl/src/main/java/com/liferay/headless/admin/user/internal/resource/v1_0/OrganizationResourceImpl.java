@@ -78,7 +78,6 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -232,16 +231,16 @@ public class OrganizationResourceImpl
 			String organizationId, String emailAddress)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setLanguageId(
-			contextAcceptLanguage.getPreferredLanguageId());
-		serviceContext.setUserId(contextUser.getUserId());
-
 		User user = _organizationService.addOrganizationUserByEmailAddress(
 			emailAddress, _getServiceBuilderOrganizationId(organizationId),
-			serviceContext);
+			new ServiceContext() {
+				{
+					setCompanyId(contextCompany.getCompanyId());
+					setLanguageId(
+						contextAcceptLanguage.getPreferredLanguageId());
+					setUserId(contextUser.getUserId());
+				}
+			});
 
 		return _userResourceDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -258,46 +257,38 @@ public class OrganizationResourceImpl
 			String[] emailAddresses)
 		throws Exception {
 
-		List<UserAccount> userAccounts = new ArrayList<>();
+		List<UserAccount> userAccounts = transformToList(
+			emailAddresses,
+			emailAddress -> postUserAccountByEmailAddress(
+				organizationId, emailAddress));
 
-		for (String emailAddress : emailAddresses) {
-			userAccounts.add(
-				postUserAccountByEmailAddress(organizationId, emailAddress));
+		if (Validator.isNull(organizationRoleIds)) {
+			return Page.of(userAccounts);
 		}
 
-		if (Validator.isNotNull(organizationRoleIds)) {
-			String[] orgRoleIds = StringUtil.split(
-				organizationRoleIds, CharPool.COMMA);
+		String[] organizationRoleIdsArray = StringUtil.split(
+			organizationRoleIds, CharPool.COMMA);
 
-			for (UserAccount userAccount : userAccounts) {
-				for (String organizationRoleId : orgRoleIds) {
-					_roleResource.postOrganizationRoleUserAccountAssociation(
-						Long.valueOf(organizationRoleId), userAccount.getId(),
-						Long.valueOf(organizationId));
-				}
+		for (UserAccount userAccount : userAccounts) {
+			for (String organizationRoleId : organizationRoleIdsArray) {
+				_roleResource.postOrganizationRoleUserAccountAssociation(
+					Long.valueOf(organizationRoleId), userAccount.getId(),
+					Long.valueOf(organizationId));
 			}
-
-			List<UserAccount> userAccountList = new ArrayList<>();
-
-			for (UserAccount userAccount : userAccounts) {
-				User userByEmailAddress = _userService.getUserByEmailAddress(
-					contextCompany.getCompanyId(),
-					userAccount.getEmailAddress());
-
-				userAccountList.add(
-					_userResourceDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							contextAcceptLanguage.isAcceptAllLanguages(), null,
-							_dtoConverterRegistry, userAccount.getId(),
-							contextAcceptLanguage.getPreferredLocale(),
-							contextUriInfo, contextUser),
-						userByEmailAddress));
-			}
-
-			return Page.of(userAccountList);
 		}
 
-		return Page.of(userAccounts);
+		return Page.of(
+			transform(
+				userAccounts,
+				userAccount -> _userResourceDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						contextAcceptLanguage.isAcceptAllLanguages(), null,
+						_dtoConverterRegistry, userAccount.getId(),
+						contextAcceptLanguage.getPreferredLocale(),
+						contextUriInfo, contextUser),
+					_userService.getUserByEmailAddress(
+						contextCompany.getCompanyId(),
+						userAccount.getEmailAddress()))));
 	}
 
 	@Override

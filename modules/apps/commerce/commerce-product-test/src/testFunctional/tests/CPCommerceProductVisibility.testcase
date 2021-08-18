@@ -157,6 +157,7 @@ definition {
 	@priority = "3"
 	test RemoveAChannelFilter {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAChannelFilter";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

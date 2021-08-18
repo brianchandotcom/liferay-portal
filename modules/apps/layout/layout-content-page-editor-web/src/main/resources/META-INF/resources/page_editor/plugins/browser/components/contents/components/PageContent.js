@@ -39,6 +39,7 @@ import {
 } from '../../../../../app/contexts/StoreContext';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import {selectPageContentDropdownItems} from '../../../../../app/selectors/selectPageContentDropdownItems';
+import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import ImageEditorModal from './ImageEditorModal';
 
 export default function PageContent({
@@ -55,6 +56,7 @@ export default function PageContent({
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
+	const layoutData = useSelector((state) => state.layoutData);
 	const [
 		nextEditableProcessorUniqueId,
 		setNextEditableProcessorUniqueId,
@@ -169,12 +171,25 @@ export default function PageContent({
 			return;
 		}
 
-		selectItem(`${editableId}`, {
+		const itemId = getFirstControlsId({
+			item: {
+				id: editableId,
+				itemType: ITEM_TYPES.editable,
+				parentId: Object.values(layoutData.items).find(
+					(item) =>
+						item.config.fragmentEntryLinkId ===
+						editableId.split('-')[0]
+				)?.itemId,
+			},
+			layoutData,
+		});
+
+		selectItem(itemId, {
 			itemType: ITEM_TYPES.editable,
 			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		});
 
-		setNextEditableProcessorUniqueId(toControlsId(editableId));
+		setNextEditableProcessorUniqueId(itemId);
 	};
 
 	return (

@@ -43,7 +43,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.document.library.web.internal.configuration.util.FFExpirationDateReviewDateConfigurationUtil;
 import com.liferay.document.library.web.internal.exception.FileEntryExpirationDateException;
 import com.liferay.document.library.web.internal.exception.FileEntryReviewDateException;
 import com.liferay.document.library.web.internal.exception.FileNameExtensionException;
@@ -869,12 +868,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			boolean neverExpireDefaultValue, TimeZone timeZone)
 		throws PortalException {
 
-		if (!FFExpirationDateReviewDateConfigurationUtil.
-				expirationDateEnabled()) {
-
-			return null;
-		}
-
 		boolean neverExpire = ParamUtil.getBoolean(
 			uploadPortletRequest, "neverExpire", neverExpireDefaultValue);
 
@@ -916,10 +909,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			UploadPortletRequest uploadPortletRequest,
 			boolean neverReviewDefaultValue, TimeZone timeZone)
 		throws PortalException {
-
-		if (!FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled()) {
-			return null;
-		}
 
 		boolean neverReview = ParamUtil.getBoolean(
 			uploadPortletRequest, "neverReview", neverReviewDefaultValue);

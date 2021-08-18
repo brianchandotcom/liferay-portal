@@ -8,13 +8,25 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 	}
 
 	tearDown {
@@ -30,12 +42,39 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8155 | Test Summary: Delete a CSV data source and assert that the details from that data source are removed"
-	@ignore = "true"
 	@priority = "5"
 	test DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8155 DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved pending implementation
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Gender",
+				sourceFileName = "contacts_gender.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Remove the CSV Data Source") {
+			ACSettings.deleteDataSource(dataSourceName = "CSV Gender");
+		}
+
+		task ("View the CSV Data Source is deleted") {
+			ACUtils.searchBar(searchItem = "CSV Gender");
+
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "There are no Data Sources found.");
+		}
 	}
 
 }

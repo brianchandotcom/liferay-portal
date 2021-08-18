@@ -174,6 +174,7 @@ definition {
 	@priority = "5"
 	test CanDeleteCustomAssetReport {
 		property portal.upstream = "quarantine";
+
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-8737
 
@@ -206,7 +207,9 @@ definition {
 			ACNavigation.goToAssets();
 
 			ACNavigation.switchTab(tabName = "Custom");
-			// Custom asset data doesn't appear, so the custom asset report cannot be added. 
+
+			// Custom asset data doesn't appear, so the custom asset report cannot be added.
+
 			ACAssets.addCustomAssetReport(
 				assetName = "Custom Asset Analytics Cloud",
 				metric = "Asset Views (sum)",

@@ -460,6 +460,15 @@ definition {
 			metricValue = "4");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8451 | Test Summary: Web content submissions by location card shows expected views by location"
+	@ignore = "true"
+	@priority = "5"
+	test WebContentLocationCardShowsViewsByExpectedLocation {
+
+		// TODO LRAC-8451 WebContentLocationCardShowsViewsByExpectedLocation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8454 | Test Summary: Web content submissions by technology card shows views by expected browser"
 	@priority = "5"
 	test WebContentTechnologyCardShowsViewsByExpectedBrowser {

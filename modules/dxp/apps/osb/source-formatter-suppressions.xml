@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="GradleDependencyArtifactsCheck" files=".*/build\.gradle" />
-		<suppress checks="GradleDependencyVersionCheck" files=".*/build\.gradle" />
+		<suppress checks="GradleDependenciesCheck" files=".*/build\.gradle" />
 	</source-check>
 </suppressions>

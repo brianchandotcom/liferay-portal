@@ -1,3 +1,6 @@
 Bundle-Name: Liferay OSB Portal Instance Provisioning API
 Bundle-SymbolicName: com.liferay.osb.portal.instance.provisioning.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.portal.instance.provisioning.configuration,\
+	com.liferay.osb.portal.instance.provisioning.constants

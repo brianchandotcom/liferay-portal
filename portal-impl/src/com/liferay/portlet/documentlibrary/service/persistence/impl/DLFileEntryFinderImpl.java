@@ -97,17 +97,9 @@ public class DLFileEntryFinderImpl
 		try {
 			session = openSession();
 
-			DB db = getDB();
-
-			boolean oracle = false;
-
-			if (db.getDBType() == DBType.ORACLE) {
-				oracle = true;
-			}
-
 			String sql = CustomSQLUtil.get(COUNT_BY_EXTRA_SETTINGS);
 
-			sql = getExtraSettingsSQL(sql, oracle);
+			sql = _getExtraSettingsSQL(sql);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -385,22 +377,16 @@ public class DLFileEntryFinderImpl
 		try {
 			session = openSession();
 
-			DB db = getDB();
-
-			boolean oracle = false;
-
-			if (db.getDBType() == DBType.ORACLE) {
-				oracle = true;
-			}
-
 			String sql = CustomSQLUtil.get(FIND_BY_EXTRA_SETTINGS);
 
-			sql = getDLFileEntryColumnsSQL(sql, oracle);
-			sql = getExtraSettingsSQL(sql, oracle);
+			sql = _getDLFileEntryColumnsSQL(sql);
+			sql = _getExtraSettingsSQL(sql);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			if (!oracle) {
+			DB db = getDB();
+
+			if (db.getDBType() != DBType.ORACLE) {
 				sqlQuery.addEntity(
 					DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
 
@@ -742,10 +728,12 @@ public class DLFileEntryFinderImpl
 		return sb.toString();
 	}
 
-	protected String getDLFileEntryColumnsSQL(String sql, boolean oracle) {
+	private String _getDLFileEntryColumnsSQL(String sql) {
 		String replacementSQL = null;
 
-		if (oracle) {
+		DB db = getDB();
+
+		if (db.getDBType() == DBType.ORACLE) {
 			replacementSQL =
 				"DLFileEntry.fileEntryId, DLFileEntry.modifiedDate";
 		}
@@ -757,10 +745,12 @@ public class DLFileEntryFinderImpl
 			sql, "[$DL_FILE_ENTRY_COLUMNS$]", replacementSQL);
 	}
 
-	protected String getExtraSettingsSQL(String sql, boolean oracle) {
+	private String _getExtraSettingsSQL(String sql) {
 		String replacementSQL = null;
 
-		if (oracle) {
+		DB db = getDB();
+
+		if (db.getDBType() == DBType.ORACLE) {
 			replacementSQL =
 				"(LENGTH(DLFileEntry.extraSettings) > 0) OR " +
 					"(LENGTH(DLFileVersion.extraSettings) > 0)";

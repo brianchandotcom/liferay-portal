@@ -161,16 +161,18 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddThreadWithUTF8Characters {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
 			threadBody = "MB Thrèad Mèssagè Body",
 			threadSubject = "MB Thrèad Mèssagè Subjèct");
 
-		MessageboardsThread.openToThread(
-			categoryName = "MB Category Name",
-			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "MB Thrèad Mèssagè Body",
 			threadSubject = "MB Thrèad Mèssagè Subjèct");
 
 		MessageboardsThread.viewPG(

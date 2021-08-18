@@ -88,6 +88,10 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			_fragmentCollectionFilterTracker.getFragmentCollectionFilter(
 				_getInfoFilterKey(fragmentRendererContext));
 
+		if (fragmentCollectionFilter == null) {
+			return;
+		}
+
 		fragmentCollectionFilter.render(
 			fragmentRendererContext, httpServletRequest, httpServletResponse);
 

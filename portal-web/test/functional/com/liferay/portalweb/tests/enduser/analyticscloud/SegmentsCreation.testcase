@@ -889,12 +889,103 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8479 | Test Summary: Create a Segment with a Number Property"
-	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentWithNumberProperty {
+		task ("Add three more new users") {
+			for (var n : list "1,2,3") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8479 CanCreateSegmentWithNumberProperty
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "user1,user2,user3") {
+				var fullName = "${username} ${username}";
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Age",
+				fieldName = "age",
+				fieldType = "Number",
+				newField = "true",
+				selectAnalyticsCloudField = "true",
+				sourceFileName = "contacts_age.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add an age criteria from Individual Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "age");
+
+			ACSegments.selectOperator(operator = "less than");
+
+			ACSegments.editNumberCriterion(numberInput = "40");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Navigate to Segments admin") {
+			ACNavigation.goToSegments();
+		}
+
+		task ("Search the new segment") {
+			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
+
+			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+		}
+
+		task ("View the number of Membership is 2") {
+			ACAssets.viewAssetsInfo(
+				assetName = "Dynamic Segment Test",
+				index = "1",
+				value = "2");
+		}
 	}
 
 	@description = "Create a static segment with individual"

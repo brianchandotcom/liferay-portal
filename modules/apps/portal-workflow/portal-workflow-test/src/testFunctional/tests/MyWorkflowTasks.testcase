@@ -595,11 +595,35 @@ definition {
 	}
 
 	@description = "Verify that in Update Due Date modal, the user can not insert a past date"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DueDateMustBeInFuture {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68862 DueDateMustBeInFuture pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		MyWorkflowTasks.updateDueDateAtMyWorkflowTastks(
+			dueDate = "01/01/2010"
+		);
+
+		MyWorkflowTasks.viewErrorRequestFailed();
+
+		MyWorkflowTasks.viewErrorValidDueDate();
+
+
+
 
 	}
 

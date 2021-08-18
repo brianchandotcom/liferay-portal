@@ -8,4 +8,47 @@ definition {
 		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
 	}
 
+	macro updateDueDateAtMyWorkflowTastks {
+		Workflow.viewTaskAssignedToMyRoles(
+			ddlDataDefinitionName = "Data Definition Name",
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.gotoTaskAssignedToMyRolesActionsCmd(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowTask = "Review");
+
+		var key_workflowAssetTitle = "Blogs Entry Title 1";
+		var key_workflowTask = "Review";
+
+		MenuItem.click(menuItem = "Update Due Date");
+
+		SelectFrame(locator1 = "MyWorkflowTasks#IFRAME_UPDATE_DUE_DATE");
+
+		SelectFrame(locator1 = "WorkflowDefinition#DIALOG_BOX_BODY");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+			value1 = "${dueDate}");
+
+		Workflow.confirmWorkflowAction();
+	}
+
+	macro viewErrorRequestFailed {
+		AssertTextPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Your request failed to complete.");
+	}
+
+	macro viewErrorValidDueDate {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Please enter a valid due date.");
+	}
+
+		
+
 }

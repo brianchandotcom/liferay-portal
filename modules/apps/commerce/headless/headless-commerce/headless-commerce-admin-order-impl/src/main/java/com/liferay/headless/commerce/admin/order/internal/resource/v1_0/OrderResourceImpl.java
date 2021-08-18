@@ -296,10 +296,9 @@ public class OrderResourceImpl
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.addOrUpdateCommerceOrder(
-				order.getExternalReferenceCode(), contextUser.getUserId(),
-				commerceChannel.getGroupId(),
+				order.getExternalReferenceCode(), commerceChannel.getGroupId(),
 				commerceAccount.getCommerceAccountId(),
-				commerceCurrency.getCommerceCurrencyId(),
+				commerceCurrency.getCommerceCurrencyId(), 0,
 				GetterUtil.getLong(order.getBillingAddressId()),
 				GetterUtil.getLong(order.getShippingAddressId()),
 				order.getPaymentMethod(), commerceShippingMethodId,

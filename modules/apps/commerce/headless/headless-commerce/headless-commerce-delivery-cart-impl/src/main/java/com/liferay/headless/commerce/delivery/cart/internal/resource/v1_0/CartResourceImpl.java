@@ -214,7 +214,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		CommerceOrder commerceOrder = _addCommerceOrder(
-			cart, commerceChannel.getGroupId(), contextUser.getUserId());
+			cart, commerceChannel.getGroupId());
 
 		_updateOrder(commerceOrder, cart);
 
@@ -250,7 +250,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	private CommerceOrder _addCommerceOrder(
-			Cart cart, long commerceChannelGroupId, long userId)
+			Cart cart, long commerceChannelGroupId)
 		throws Exception {
 
 		long commerceCurrencyId = 0;
@@ -267,8 +267,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			_commerceAccountService.getCommerceAccount(cart.getAccountId());
 
 		return _commerceOrderService.addCommerceOrder(
-			userId, commerceChannelGroupId,
-			commerceAccount.getCommerceAccountId(), commerceCurrencyId);
+			commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+			commerceCurrencyId, 0);
 	}
 
 	private void _addOrUpdateBillingAddress(

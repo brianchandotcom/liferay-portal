@@ -550,13 +550,6 @@ public class UserAccountResourceImpl
 			user = _userService.getUserById(user.getUserId());
 		}
 
-		if (userAccount.getExternalReferenceCode() != null) {
-			user.setExternalReferenceCode(
-				userAccount.getExternalReferenceCode());
-
-			user = _userLocalService.updateUser(user);
-		}
-
 		return _toUserAccount(user);
 	}
 

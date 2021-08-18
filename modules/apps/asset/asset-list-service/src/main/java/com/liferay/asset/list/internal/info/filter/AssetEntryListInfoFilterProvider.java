@@ -16,81 +16,51 @@ package com.liferay.asset.list.internal.info.filter;
 
 import com.liferay.asset.list.info.filter.AssetEntryListInfoFilter;
 import com.liferay.info.filter.InfoFilter;
-import com.liferay.info.filter.InfoRequestItemProvider;
+import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = "infoFilterKey=" + AssetEntryListInfoFilter.KEY,
-	service = InfoRequestItemProvider.class
-)
+@Component(immediate = true, service = InfoFilterProvider.class)
 public class AssetEntryListInfoFilterProvider
-	implements InfoRequestItemProvider<InfoFilter> {
+	implements InfoFilterProvider<InfoFilter> {
 
 	@Override
-	public InfoFilter create(HttpServletRequest httpServletRequest) {
+	public InfoFilter create(Map<String, String[]> values) {
 		AssetEntryListInfoFilter assetEntryListInfoFilter =
 			new AssetEntryListInfoFilter();
 
 		assetEntryListInfoFilter.setAssetCategoryIds(
-			_getAssetCategoryIds(httpServletRequest));
+			_getAssetCategoryIds(values));
 
 		return assetEntryListInfoFilter;
 	}
 
-	private long[][] _getAssetCategoryIds(
-		HttpServletRequest httpServletRequest) {
-
+	private long[][] _getAssetCategoryIds(Map<String, String[]> values) {
 		Set<long[]> assetCategoryIdsSet = new HashSet<>();
 
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
-
-		Map<String, String[]> parameterMap =
-			originalHttpServletRequest.getParameterMap();
-
-		Set<String> parameterNames = parameterMap.keySet();
-
-		Stream<String> parameterNamesStream = parameterNames.stream();
-
-		Set<String> categoryIdParameterNames = parameterNamesStream.filter(
-			parameterName -> parameterName.startsWith("categoryId_")
-		).collect(
-			Collectors.toSet()
-		);
-
-		for (String categoryIdParameterName : categoryIdParameterNames) {
-			String[] values = parameterMap.get(categoryIdParameterName);
-
-			if (ArrayUtil.isNotEmpty(values)) {
-				assetCategoryIdsSet.add(
-					ArrayUtil.filter(
-						GetterUtil.getLongValues(values),
-						categoryId -> categoryId != 0));
+		for (Map.Entry<String, String[]> entry : values.entrySet()) {
+			if (!StringUtil.startsWith(entry.getKey(), "categoryId_")) {
+				continue;
 			}
+
+			assetCategoryIdsSet.add(
+				ArrayUtil.filter(
+					GetterUtil.getLongValues(entry.getValue()),
+					categoryId -> categoryId != 0));
 		}
 
 		return assetCategoryIdsSet.toArray(
 			new long[assetCategoryIdsSet.size()][]);
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

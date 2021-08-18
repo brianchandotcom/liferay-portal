@@ -56,8 +56,8 @@ export default function PageContent({
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
 	const [
-		nextEditbleProcessorUniqueId,
-		setEditableNextProcessorUniqueId,
+		nextEditableProcessorUniqueId,
+		setNextEditableProcessorUniqueId,
 	] = useState(null);
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
@@ -96,15 +96,15 @@ export default function PageContent({
 	);
 
 	useEffect(() => {
-		if (editableProcessorUniqueId || !nextEditbleProcessorUniqueId) {
+		if (editableProcessorUniqueId || !nextEditableProcessorUniqueId) {
 			return;
 		}
 
-		setEditableProcessorUniqueId(nextEditbleProcessorUniqueId);
-		setEditableNextProcessorUniqueId(null);
+		setEditableProcessorUniqueId(nextEditableProcessorUniqueId);
+		setNextEditableProcessorUniqueId(null);
 	}, [
 		editableProcessorUniqueId,
-		nextEditbleProcessorUniqueId,
+		nextEditableProcessorUniqueId,
 		setEditableProcessorUniqueId,
 	]);
 
@@ -174,7 +174,7 @@ export default function PageContent({
 			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		});
 
-		setEditableNextProcessorUniqueId(toControlsId(editableId));
+		setNextEditableProcessorUniqueId(toControlsId(editableId));
 	};
 
 	return (

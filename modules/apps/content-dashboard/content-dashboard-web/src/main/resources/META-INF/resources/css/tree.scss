@@ -1,6 +1,7 @@
 @import 'atlas-variables';
 
-.select-type-and-subtype {
+.select-type-and-subtype,
+.select-file-extension {
 	&-filter {
 		border-bottom: 1px solid $gray-300;
 	}

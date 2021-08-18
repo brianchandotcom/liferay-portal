@@ -36,7 +36,25 @@ definition {
 
 	}
 
-	@description = "This test ensures that the guest can see an expired document."
+	@description = "This test ensures that a user cannot set a previous expiration date."
+	@priority = "3"
+	test CannotPublishInvalidExpirationDate {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
+		DMNavigator.openToAddEntry(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentFile = "Document_5.txt",
+			dmDocumentTitle = "Document_5.txt");
+
+		DMDocument.setExpirationDate(
+			enableExpirationDate = "true",
+			invalidExpirationDate = "true");
+	}
+
+	@description = "This test ensures that the guest cannot see an expired document."
 	@priority = "4"
 	test CannotViewExpiredDocumentAsGuest {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
@@ -80,7 +98,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.viewCPStatus(
+		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
 			dmDocumentTitle = "Document_5.txt");
 
@@ -89,6 +107,47 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/documents-and-media-page");
 
 		DMDocument.viewDefault();
+	}
+
+	@description = "This test ensures that the user can republish an expired document after disabling expiration date."
+	@priority = "4"
+	test CanRepublishDocumentAfterDisablingExpirationDate {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.name.skip.portal.instance = "DMFileEntry#CanRepublishDocumentAfterDisablingExpirationDate";
+
+		DMDocument.updateCheckInterval(fieldValue = "2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_5.txt");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.setExpirationDate(
+			enableExpirationDate = "true",
+			increaseMinutes = "2");
+
+		Pause(locator1 = "120000");
+
+		Navigator.openURL();
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "Document_5.txt");
+
+		DMDocument.publishExpiredDocument(
+			disableExpirationDate = "true",
+			dmDocumentTitle = "Document_5.txt");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Approved",
+			dmDocumentTitle = "Document_5.txt");
 	}
 
 	@description = "This test ensures that the user can review a document when the date is changed."
@@ -241,6 +300,104 @@ definition {
 			dmDocumentTitle = "Document_5.txt",
 			reviewDate = "true",
 			user = "Test Test");
+	}
+
+	@description = "This test ensures that the user can view an expired document."
+	@priority = "5"
+	test CanViewExpiredDocument {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocument";
+
+		DMDocument.updateCheckInterval(fieldValue = "2");
+
+		DMNavigator.openToAddEntry(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_5.txt",
+			dmDocumentTitle = "Document_5.txt");
+
+		DMDocument.setExpirationDate(
+			enableExpirationDate = "true",
+			increaseMinutes = "2");
+
+		Pause(locator1 = "120000");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewExpiredContent(
+			contentBody = "Document_5.txt",
+			user = "Test Test");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Expired",
+			dmDocumentTitle = "Document_5.txt");
+	}
+
+	@description = "This test ensures that a user who has content review permissions can see an expired document."
+	@priority = "4"
+	test CanViewExpiredDocumentAsContentReviewer {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocumentAsContentReviewer";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "userea@liferay.com");
+
+		DMDocument.updateCheckInterval(fieldValue = "2");
+
+		DMNavigator.openToAddEntry(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentFile = "Document_5.txt",
+			dmDocumentTitle = "Document_5.txt");
+
+		DMDocument.setExpirationDate(
+			enableExpirationDate = "true",
+			increaseMinutes = "2");
+
+		Pause(locator1 = "120000");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Expired",
+			dmDocumentTitle = "Document_5.txt");
 	}
 
 }

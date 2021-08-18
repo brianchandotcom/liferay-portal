@@ -436,10 +436,9 @@ public class UserAccountResourceImpl
 			_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
 				accountId, emailAddress, new long[0], null, serviceContext);
 
-		User user = _userLocalService.getUser(
-			accountEntryUserRel.getAccountUserId());
-
-		return _toUserAccount(user);
+		return _toUserAccount(
+			_userLocalService.getUser(
+				accountEntryUserRel.getAccountUserId()));
 	}
 
 	@Override

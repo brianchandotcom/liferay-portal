@@ -272,14 +272,14 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content Parent",
 			kbArticleTitle = "Knowledge Base Article Title Parent");
 
-		Navigator.gotoPage(pageName = "Knowledge Base Page");
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.addChildPGViaKBDisplay(
 			kbArticleContent = "Knowledge Base Child Article Content",
 			kbArticleTitle = "Knowledge Base Child Article Title",
 			saveAsDraft = "true");
 
-		Navigator.gotoPage(pageName = "Knowledge Base Page");
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
 
@@ -382,11 +382,11 @@ definition {
 		ProductMenu.gotoScopedPortlet(
 			category = "Content &amp; Data",
 			portlet = "Knowledge Base",
-			scope = "Knowledge Base Display Page 1");
+			scope = "Knowledge Base Display Page");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title for Page 1");
+			kbArticleTitle = "Knowledge Base Article Title for Page");
 
 		Navigator.openURL();
 
@@ -399,11 +399,11 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title for Page 2");
 
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page 1");
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.viewPG(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title for Page 1");
+			kbArticleTitle = "Knowledge Base Article Title for Page");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page 2");
 
@@ -596,7 +596,7 @@ definition {
 			kbArticleFriendlyURL = "custom-friendly-url",
 			kbArticleTitle = "Article Title");
 
-		Navigator.gotoPage(pageName = "Knowledge Base Display");
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "Article Title");
 
@@ -613,7 +613,7 @@ definition {
 			kbArticleContent = "KB Article Content",
 			kbArticleTitle = "KB Article Title");
 
-		Navigator.gotoPage(pageName = "Knowledge Base Display");
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title");
 

@@ -166,7 +166,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102173. The contributed fragments can be copied."
+	@description = "This is a test for LPS-101354 and for LPS-89115. The contributed fragments can be copied."
 	@priority = "5"
 	@uitest
 	test CopyContributedFragment {
@@ -543,7 +543,7 @@ definition {
 		}
 	}
 
-	@description = "Can see contributed fragment collections in fragment administration"
+	@description = "This is a test for LPS-89115. Can see contributed fragment collections in fragment administration"
 	@priority = "5"
 	test ViewContributedFragmentCollections {
 		property portal.acceptance = "true";

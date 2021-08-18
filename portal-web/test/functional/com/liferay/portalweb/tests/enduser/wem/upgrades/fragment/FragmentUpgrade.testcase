@@ -21,7 +21,7 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
-	@description = "This is a use case for LPS-106057."
+	@description = "This is a use case for LPS-102202."
 	@priority = "5"
 	test PagesFragments704 {
 		property data.archive.type = "data-archive-fragments";
@@ -42,6 +42,7 @@ definition {
 		echo(value1 = "Checked Portlet");
 	}
 
+	@description = "This is a use case for LPS-102202."
 	@priority = "5"
 	test PagesFragments713 {
 		property data.archive.type = "data-archive-fragments";
@@ -118,6 +119,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#CANCEL");
 	}
 
+	@description = "This is a use case for LPS-102202."
 	@priority = "5"
 	test PagesFragments721 {
 		property data.archive.type = "data-archive-fragments";
@@ -211,7 +213,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#CANCEL");
 	}
 
-	@description = "This is a use case for LPS-106057."
+	@description = "This is a use case for LPS-102202."
 	@priority = "5"
 	test PagesFragments7016 {
 		property data.archive.type = "data-archive-fragments";
@@ -232,6 +234,7 @@ definition {
 		echo(value1 = "Checked Portlet");
 	}
 
+	@description = "This is a use case for LPS-102202."
 	@priority = "5"
 	test PagesFragments71103 {
 		property data.archive.type = "data-archive-fragments";
@@ -308,6 +311,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#CANCEL");
 	}
 
+	@description = "This is a use case for LPS-102202."
 	@priority = "5"
 	test PagesFragments72101 {
 		property data.archive.type = "data-archive-fragments";

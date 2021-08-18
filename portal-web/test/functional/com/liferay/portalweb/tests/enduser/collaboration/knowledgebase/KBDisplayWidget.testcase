@@ -580,8 +580,8 @@ definition {
 		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 1");
 
 		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
-			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1");
+			kbArticleContent = "Knowledge Base Article Folder Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder Title 1");
 	}
 
 	@priority = "4"

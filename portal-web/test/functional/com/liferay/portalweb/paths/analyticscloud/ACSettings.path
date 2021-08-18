@@ -92,7 +92,7 @@
 <!-- DELETE DATA SOURCE SCREEN -->
 <tr>
 	<td>DELETE_BUTTON_DATA_SOURCE</td>
-	<td>//button[contains(@class,'btn-secondary') and contains(text(),'Delete')]</td>
+	<td>//button[contains(@class,'btn-secondary') and contains(text(),'Delete')] | //a[contains(@class,'btn-secondary') and contains(text(),'Delete')]</td>
 	<td></td>
 </tr>
 <!-- PROPERTIES -->

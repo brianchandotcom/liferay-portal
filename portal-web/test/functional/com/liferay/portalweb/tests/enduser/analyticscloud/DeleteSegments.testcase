@@ -266,12 +266,111 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8594 | Test Summary: Deleting a data source causes individuals to be removed from segment"
-	@ignore = "true"
 	@priority = "4"
-	test DeleteDataSourceIndividualsRemovedSegmet {
+	test DeleteDataSourceIndividualsRemovedSegment {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8594 DeleteDataSourceIndividualsRemovedSegmet pending implementation
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Job Title",
+				sourceFileName = "jobTitle.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "New Segment Test");
+		}
+
+		task ("Add a jobTitle field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "jobTitle");
+
+			ACSegments.editTextCriterion(textInput = "farmer");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Known Individuals") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Assert the segment displays under the contact user") {
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+
+			ACNavigation.switchTab(tabName = "Segments");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "New Segment Test");
+		}
+
+		task ("Delete the CSV Data Source") {
+			ACSettings.deleteDataSource(
+				dataSourceName = "CSV Job Title",
+				dataSourceType = "CSV");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Assert the segment doesn't displays under the contact user") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+
+			ACNavigation.switchTab(tabName = "Segments");
+
+			AssertElementNotPresent(
+				key_individualAttribute = "New Segment Test",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
+		}
 	}
 
 }

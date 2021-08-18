@@ -195,7 +195,9 @@ public class ProductSubscriptionConfiguration
 
 		public static SubscriptionType create(String value) {
 			for (SubscriptionType subscriptionType : values()) {
-				if (Objects.equals(subscriptionType.getValue(), value)) {
+				if (Objects.equals(subscriptionType.getValue(), value) ||
+					Objects.equals(subscriptionType.name(), value)) {
+
 					return subscriptionType;
 				}
 			}

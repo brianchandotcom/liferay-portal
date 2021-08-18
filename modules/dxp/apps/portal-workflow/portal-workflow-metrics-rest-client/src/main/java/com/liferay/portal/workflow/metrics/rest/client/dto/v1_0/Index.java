@@ -138,7 +138,9 @@ public class Index implements Cloneable, Serializable {
 
 		public static Group create(String value) {
 			for (Group group : values()) {
-				if (Objects.equals(group.getValue(), value)) {
+				if (Objects.equals(group.getValue(), value) ||
+					Objects.equals(group.name(), value)) {
+
 					return group;
 				}
 			}

@@ -163,7 +163,9 @@ public class FragmentLink implements Cloneable, Serializable {
 
 		public static Target create(String value) {
 			for (Target target : values()) {
-				if (Objects.equals(target.getValue(), value)) {
+				if (Objects.equals(target.getValue(), value) ||
+					Objects.equals(target.name(), value)) {
+
 					return target;
 				}
 			}

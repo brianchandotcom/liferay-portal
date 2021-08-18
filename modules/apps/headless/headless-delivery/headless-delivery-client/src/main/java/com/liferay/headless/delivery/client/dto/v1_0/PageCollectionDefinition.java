@@ -293,7 +293,9 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 		public static PaginationType create(String value) {
 			for (PaginationType paginationType : values()) {
-				if (Objects.equals(paginationType.getValue(), value)) {
+				if (Objects.equals(paginationType.getValue(), value) ||
+					Objects.equals(paginationType.name(), value)) {
+
 					return paginationType;
 				}
 			}

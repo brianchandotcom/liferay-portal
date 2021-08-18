@@ -418,7 +418,9 @@ public class DataDefinitionField implements Cloneable, Serializable {
 
 		public static IndexType create(String value) {
 			for (IndexType indexType : values()) {
-				if (Objects.equals(indexType.getValue(), value)) {
+				if (Objects.equals(indexType.getValue(), value) ||
+					Objects.equals(indexType.name(), value)) {
+
 					return indexType;
 				}
 			}

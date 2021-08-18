@@ -271,7 +271,9 @@ public class NavigationMenu implements Cloneable, Serializable {
 
 		public static NavigationType create(String value) {
 			for (NavigationType navigationType : values()) {
-				if (Objects.equals(navigationType.getValue(), value)) {
+				if (Objects.equals(navigationType.getValue(), value) ||
+					Objects.equals(navigationType.name(), value)) {
+
 					return navigationType;
 				}
 			}

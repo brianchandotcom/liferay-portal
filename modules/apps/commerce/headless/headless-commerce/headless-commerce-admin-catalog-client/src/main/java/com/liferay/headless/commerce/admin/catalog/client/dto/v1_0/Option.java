@@ -353,7 +353,9 @@ public class Option implements Cloneable, Serializable {
 
 		public static FieldType create(String value) {
 			for (FieldType fieldType : values()) {
-				if (Objects.equals(fieldType.getValue(), value)) {
+				if (Objects.equals(fieldType.getValue(), value) ||
+					Objects.equals(fieldType.name(), value)) {
+
 					return fieldType;
 				}
 			}

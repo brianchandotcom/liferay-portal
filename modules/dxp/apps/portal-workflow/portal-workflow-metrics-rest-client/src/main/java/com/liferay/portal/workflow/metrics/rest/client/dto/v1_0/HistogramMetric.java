@@ -141,7 +141,9 @@ public class HistogramMetric implements Cloneable, Serializable {
 
 		public static Unit create(String value) {
 			for (Unit unit : values()) {
-				if (Objects.equals(unit.getValue(), value)) {
+				if (Objects.equals(unit.getValue(), value) ||
+					Objects.equals(unit.name(), value)) {
+
 					return unit;
 				}
 			}

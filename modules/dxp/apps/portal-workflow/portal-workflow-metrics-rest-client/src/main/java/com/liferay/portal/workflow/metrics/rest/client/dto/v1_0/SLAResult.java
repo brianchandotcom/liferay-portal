@@ -223,7 +223,9 @@ public class SLAResult implements Cloneable, Serializable {
 
 		public static Status create(String value) {
 			for (Status status : values()) {
-				if (Objects.equals(status.getValue(), value)) {
+				if (Objects.equals(status.getValue(), value) ||
+					Objects.equals(status.name(), value)) {
+
 					return status;
 				}
 			}

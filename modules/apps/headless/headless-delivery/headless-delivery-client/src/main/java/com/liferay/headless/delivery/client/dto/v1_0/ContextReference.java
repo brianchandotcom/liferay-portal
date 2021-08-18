@@ -100,7 +100,9 @@ public class ContextReference implements Cloneable, Serializable {
 
 		public static ContextSource create(String value) {
 			for (ContextSource contextSource : values()) {
-				if (Objects.equals(contextSource.getValue(), value)) {
+				if (Objects.equals(contextSource.getValue(), value) ||
+					Objects.equals(contextSource.name(), value)) {
+
 					return contextSource;
 				}
 			}

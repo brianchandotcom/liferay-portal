@@ -501,7 +501,9 @@ public class Instance implements Cloneable, Serializable {
 
 		public static SLAStatus create(String value) {
 			for (SLAStatus slaStatus : values()) {
-				if (Objects.equals(slaStatus.getValue(), value)) {
+				if (Objects.equals(slaStatus.getValue(), value) ||
+					Objects.equals(slaStatus.name(), value)) {
+
 					return slaStatus;
 				}
 			}

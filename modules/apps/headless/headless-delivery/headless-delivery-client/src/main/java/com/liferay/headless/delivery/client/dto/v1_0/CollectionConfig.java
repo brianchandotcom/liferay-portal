@@ -122,7 +122,9 @@ public class CollectionConfig implements Cloneable, Serializable {
 
 		public static CollectionType create(String value) {
 			for (CollectionType collectionType : values()) {
-				if (Objects.equals(collectionType.getValue(), value)) {
+				if (Objects.equals(collectionType.getValue(), value) ||
+					Objects.equals(collectionType.name(), value)) {
+
 					return collectionType;
 				}
 			}

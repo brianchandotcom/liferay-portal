@@ -273,6 +273,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NUMBER_INPUT</td>
+	<td>xpath=(//div[contains(@class,'criteria-statement')]//div[contains(@class,'group-item')]//input[@type='number'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OCCURENCE_INPUT</td>
 	<td>//input[@data-testid='occurence-count-input']</td>
 	<td></td>

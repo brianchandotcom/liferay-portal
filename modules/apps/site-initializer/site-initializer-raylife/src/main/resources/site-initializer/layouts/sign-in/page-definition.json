@@ -1,0 +1,68 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "sign-in"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "nav",
+							"value": {
+								"fragmentLink": {
+									"href": {
+										"value": "/web/guest/dashboard"
+									},
+									"target": "Self"
+								}
+							}
+						},
+						{
+							"id": "home",
+							"value": {
+								"fragmentLink": {
+									"href": {
+										"value": "/web/guest/home"
+									},
+									"target": "Self"
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	}
+}

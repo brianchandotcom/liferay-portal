@@ -1,0 +1,112 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"backgroundColor": "",
+					"backgroundFragmentImage": {
+					},
+					"fragmentStyle": {
+						"backgroundColor": "",
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "6",
+						"paddingLeft": "0",
+						"paddingRight": "0",
+						"paddingTop": "6",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 6,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"backgroundColor": "",
+							"backgroundFragmentImage": {
+							},
+							"fragmentStyle": {
+								"backgroundColor": "",
+								"backgroundFragmentImage": {
+								},
+								"borderRadius": "",
+								"borderWidth": "0",
+								"fontFamily": "",
+								"fontSize": "",
+								"fontWeight": "",
+								"height": "",
+								"marginBottom": "0",
+								"marginLeft": "0",
+								"marginRight": "0",
+								"marginTop": "0",
+								"maxHeight": "",
+								"maxWidth": "",
+								"minHeight": "",
+								"minWidth": "",
+								"opacity": "100",
+								"overflow": "",
+								"paddingBottom": "0",
+								"paddingLeft": "0",
+								"paddingRight": "0",
+								"paddingTop": "0",
+								"shadow": "",
+								"textAlign": "",
+								"width": ""
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "public"
+		}
+	}
+}

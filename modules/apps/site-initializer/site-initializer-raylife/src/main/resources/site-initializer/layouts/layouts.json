@@ -1,0 +1,32 @@
+[
+	{
+		"path": "home"
+	},
+	{
+		"path": "product"
+	},
+	{
+		"path": "news"
+	},
+	{
+		"path": "contact"
+	},
+	{
+		"path": "dashboard"
+	},
+	{
+		"path": "sign-in"
+	},
+	{
+		"path": "policies"
+	},
+	{
+		"path": "claims"
+	},
+	{
+		"path": "documents"
+	},
+	{
+		"path": "search"
+	}
+]

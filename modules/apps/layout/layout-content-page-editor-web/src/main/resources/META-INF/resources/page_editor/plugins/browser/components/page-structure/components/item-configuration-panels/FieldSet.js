@@ -79,7 +79,7 @@ export const FieldSet = ({
 							field.type &&
 							FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
-						const fieldValueObject = values[field.name];
+						const fieldValueObject = values[field.name] || {};
 						let fieldValue = field.defaultValue;
 
 						if (field.localizable) {

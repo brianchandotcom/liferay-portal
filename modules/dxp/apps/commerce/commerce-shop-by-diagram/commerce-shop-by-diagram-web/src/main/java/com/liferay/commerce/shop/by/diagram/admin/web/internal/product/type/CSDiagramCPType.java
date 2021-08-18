@@ -15,6 +15,7 @@
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.product.type;
 
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryLocalService;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinLocalService;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingLocalService;
@@ -36,11 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=5",
-		"commerce.product.type.name=" + DiagramCPType.NAME
+		"commerce.product.type.name=" + CSDiagramCPTypeConstants.NAME
 	},
 	service = CPType.class
 )
-public class DiagramCPType implements CPType {
+public class CSDiagramCPType implements CPType {
 
 	public static final String NAME = "diagram";
 
@@ -61,12 +62,12 @@ public class DiagramCPType implements CPType {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, NAME);
+		return LanguageUtil.get(resourceBundle, CSDiagramCPTypeConstants.NAME);
 	}
 
 	@Override
 	public String getName() {
-		return NAME;
+		return CSDiagramCPTypeConstants.NAME;
 	}
 
 	@Override

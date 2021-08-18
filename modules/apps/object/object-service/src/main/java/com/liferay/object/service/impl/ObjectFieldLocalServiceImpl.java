@@ -137,8 +137,8 @@ public class ObjectFieldLocalServiceImpl
 	@Override
 	public ObjectField updateCustomObjectField(
 			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap,
-			boolean required)
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws PortalException {
 
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(

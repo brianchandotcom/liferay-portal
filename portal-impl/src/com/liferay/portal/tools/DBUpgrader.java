@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.module.util.ServiceLatch;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -49,8 +51,6 @@ import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.dependency.ServiceDependencyListener;
-import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -256,38 +256,20 @@ public class DBUpgrader {
 	}
 
 	private static void _startUpgradeReportLogAppender() {
-		Registry registry = RegistryUtil.getRegistry();
+		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
+		serviceLatch.<Appender>waitFor(
+			StringBundler.concat(
+				"(&(appender.name=UpgradeReportLogAppender)(objectClass=",
+				Appender.class.getName(), "))"),
+			appender -> {
+				_appender = appender;
 
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
-
-				@Override
-				public void dependenciesFulfilled() {
-					_appenderServiceReference = registry.getServiceReference(
-						Appender.class);
-
-					ServiceReference<? extends Appender>
-						appenderServiceReference = _appenderServiceReference;
-
-					_appender = registry.getService(appenderServiceReference);
-
-					_appender.start();
-				}
-
-				@Override
-				public void destroy() {
-				}
-
+				_appender.start();
 			});
-
-		serviceDependencyManager.registerDependencies(
-			registry.getFilter(
-				StringBundler.concat(
-					"(&(appender.name=UpgradeReportLogAppender)(objectClass=",
-					Appender.class.getName(), "))")));
+		serviceLatch.openOn(
+			() -> {
+			});
 	}
 
 	private static void _stopUpgradeReportLogAppender() {

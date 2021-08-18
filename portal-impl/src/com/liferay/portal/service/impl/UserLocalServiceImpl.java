@@ -78,6 +78,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.ServiceLatch;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -152,10 +154,6 @@ import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.dependency.ServiceDependencyListener;
-import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.social.kernel.model.SocialRelation;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -1483,13 +1481,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
+		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
-		serviceDependencyManager.addServiceDependencyListener(
-			_serviceDependencyListener);
+		serviceLatch.waitFor(
+			EntityCache.class,
+			entityCache -> PortalCacheMapSynchronizeUtil.synchronize(
+				entityCache.getPortalCache(UserImpl.class), _defaultUsers,
+				_synchronizer));
 
-		serviceDependencyManager.registerDependencies(EntityCache.class);
+		serviceLatch.openOn(
+			() -> {
+			});
 	}
 
 	/**
@@ -7434,30 +7436,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"_userFileUploadsSettings", false);
 
 	private final Map<Long, User> _defaultUsers = new ConcurrentHashMap<>();
-
-	private final ServiceDependencyListener _serviceDependencyListener =
-		new ServiceDependencyListener() {
-
-			@Override
-			public void dependenciesFulfilled() {
-				Registry registry = RegistryUtil.getRegistry();
-
-				registry.callService(
-					EntityCache.class,
-					entityCache -> {
-						PortalCacheMapSynchronizeUtil.synchronize(
-							entityCache.getPortalCache(UserImpl.class),
-							_defaultUsers, _synchronizer);
-
-						return null;
-					});
-			}
-
-			@Override
-			public void destroy() {
-			}
-
-		};
 
 	private final PortalCacheMapSynchronizeUtil.Synchronizer
 		<Serializable, Serializable> _synchronizer =

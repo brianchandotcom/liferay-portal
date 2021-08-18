@@ -84,6 +84,10 @@ public class SystemBundleUtil {
 		return systemBundle.getBundleContext();
 	}
 
+	public static ServiceLatch newServiceLatch() {
+		return new ServiceLatch(getBundleContext());
+	}
+
 	private static final SystemBundleProvider _systemBundleProvider;
 
 	static {

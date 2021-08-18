@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.module.util.ServiceLatch;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
@@ -98,19 +100,15 @@ import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletURLListenerFactory;
-import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.dependency.ServiceDependencyListener;
-import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -761,66 +759,53 @@ public class MainServlet extends HttpServlet {
 	}
 
 	private void _initLayoutTemplates(final PluginPackage pluginPackage) {
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
-
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
-
-				@Override
-				public void dependenciesFulfilled() {
-					try {
-						if (_log.isDebugEnabled()) {
-							_log.debug("Initialize layout templates");
-						}
-
-						ServletContext servletContext = getServletContext();
-
-						List<LayoutTemplate> layoutTemplates =
-							LayoutTemplateLocalServiceUtil.init(
-								servletContext,
-								new String[] {
-									StreamUtil.toString(
-										servletContext.getResourceAsStream(
-											"/WEB-INF/liferay-layout-" +
-												"templates.xml")),
-									StreamUtil.toString(
-										servletContext.getResourceAsStream(
-											"/WEB-INF/liferay-layout-" +
-												"templates-ext.xml"))
-								},
-								pluginPackage);
-
-						servletContext.setAttribute(
-							WebKeys.PLUGIN_LAYOUT_TEMPLATES, layoutTemplates);
-					}
-					catch (Exception exception) {
-						_log.error(exception, exception);
-					}
-				}
-
-				@Override
-				public void destroy() {
-				}
-
-			});
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Collection<Filter> filters = new ArrayList<>();
+		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
 		for (String langType :
 				LayoutTemplateLocalServiceImpl.supportedLangTypes) {
 
-			filters.add(
-				registry.getFilter(
-					StringBundler.concat(
-						"(&(language.type=", langType, ")(objectClass=",
-						TemplateManager.class.getName(), "))")));
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("(&(language.type=");
+			sb.append(langType);
+			sb.append(")(objectClass=");
+			sb.append(TemplateManager.class.getName());
+			sb.append("))");
+
+			serviceLatch.waitFor(sb.toString());
 		}
 
-		serviceDependencyManager.registerDependencies(
-			filters.toArray(new Filter[0]));
+		serviceLatch.openOn(
+			() -> {
+				try {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Initialize layout templates");
+					}
+
+					ServletContext servletContext = getServletContext();
+
+					List<LayoutTemplate> layoutTemplates =
+						LayoutTemplateLocalServiceUtil.init(
+							servletContext,
+							new String[] {
+								StreamUtil.toString(
+									servletContext.getResourceAsStream(
+										"/WEB-INF/liferay-layout-" +
+											"templates.xml")),
+								StreamUtil.toString(
+									servletContext.getResourceAsStream(
+										"/WEB-INF/liferay-layout-templates-" +
+											"ext.xml"))
+							},
+							pluginPackage);
+
+					servletContext.setAttribute(
+						WebKeys.PLUGIN_LAYOUT_TEMPLATES, layoutTemplates);
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
+			});
 	}
 
 	private ModuleConfig _initModuleConfig() throws Exception {

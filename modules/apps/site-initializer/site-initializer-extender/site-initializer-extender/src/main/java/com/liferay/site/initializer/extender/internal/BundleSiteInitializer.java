@@ -32,8 +32,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -78,7 +81,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentResource.Factory documentResourceFactory,
-		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
+		FragmentsImporter fragmentsImporter,
+		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal, ServletContext servletContext,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -91,6 +95,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
+		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
@@ -137,6 +142,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				{
 					setAddGroupPermissions(true);
 					setAddGuestPermissions(true);
+					setCompanyId(CompanyThreadLocal.getCompanyId());
 					setScopeGroupId(groupId);
 					setTimeZone(user.getTimeZone());
 					setUserId(user.getUserId());
@@ -360,24 +366,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			String json = _read(resourcePath);
+			Set<String> resourcePathsSpecific =
+				_servletContext.getResourcePaths(resourcePath);
 
-			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
-				json);
-
-			if (taxonomyVocabulary == null) {
-				_log.error(
-					"Unable to transform taxonomy vocabulary from JSON: " +
-						json);
-
-				continue;
+			if (SetUtil.isEmpty(resourcePathsSpecific)) {
+				return;
 			}
 
-			// TODO
+			for (String resourcePathSpecific : resourcePathsSpecific) {
+				String json = _read(resourcePathSpecific);
 
-			if (false) {
-				taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-					serviceContext.getScopeGroupId(), taxonomyVocabulary);
+				TaxonomyVocabulary taxonomyVocabulary =
+					TaxonomyVocabulary.toDTO(json);
+
+				if (taxonomyVocabulary == null) {
+					_log.error(
+						"Unable to transform taxonomy vocabulary from JSON: " +
+							json);
+
+					continue;
+				}
+
+				if (resourcePathSpecific.contains("company")) {
+					Group group = _groupLocalService.getCompanyGroup(
+						serviceContext.getCompanyId());
+
+					taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+						group.getGroupId(), taxonomyVocabulary);
+				}
+				else if (resourcePathSpecific.contains("group")) {
+					taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+						serviceContext.getScopeGroupId(), taxonomyVocabulary);
+				}
 			}
 		}
 	}
@@ -412,6 +432,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final FragmentsImporter _fragmentsImporter;
+	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

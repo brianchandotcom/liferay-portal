@@ -22,6 +22,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
@@ -46,7 +47,8 @@ public class SiteInitializerExtension {
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentResource.Factory documentResourceFactory,
-		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
+		FragmentsImporter fragmentsImporter,
+		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal, StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
@@ -60,8 +62,8 @@ public class SiteInitializerExtension {
 			new SiteInitializerRegistrar(
 				bundle, bundleContext, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper,
-				documentResourceFactory, fragmentsImporter, jsonFactory,
-				objectDefinitionResourceFactory, portal,
+				documentResourceFactory, fragmentsImporter, groupLocalService,
+				jsonFactory, objectDefinitionResourceFactory, portal,
 				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,
 				userLocalService));
 

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -85,7 +86,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 		FragmentCollectionFilter fragmentCollectionFilter =
 			_fragmentCollectionFilterTracker.getFragmentCollectionFilter(
-				"category");
+				_getInfoFilterKey(fragmentRendererContext));
 
 		fragmentCollectionFilter.render(
 			fragmentRendererContext, httpServletRequest, httpServletResponse);
@@ -123,11 +124,25 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				properties);
 	}
 
+	private String _getInfoFilterKey(
+		FragmentRendererContext fragmentRendererContext) {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		return (String)
+			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+				fragmentEntryLink.getEditableValues(), "string", "filter");
+	}
+
 	private volatile FFFragmentRendererCollectionFilterConfiguration
 		_ffFragmentRendererCollectionFilterConfiguration;
 
 	@Reference
 	private FragmentCollectionFilterTracker _fragmentCollectionFilterTracker;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.collection.filter.impl)"

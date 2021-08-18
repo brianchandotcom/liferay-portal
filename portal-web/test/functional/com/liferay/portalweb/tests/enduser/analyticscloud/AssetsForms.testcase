@@ -46,12 +46,75 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8423 | Test Summary: Forms audience card shows expected amount of known and anonymous individuals"
-	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms {
+		task ("Create users and connect to AC") {
+			for (var n : list "ac,ac2") {
+				JSONUser.addUser(
+					userEmailAddress = "${n}@liferay.com",
+					userFirstName = "${n}",
+					userLastName = "${n}",
+					userScreenName = "${n}");
+			}
 
-		// TODO LRAC-8423 AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Go to form and submit") {
+			for (var n : list "ac,ac2,unknown") {
+				if ("${n}" != "unknown") {
+					User.logoutAndLoginPG(
+						userLoginEmailAddress = "${n}@liferay.com",
+						userLoginFullName = "${n} ${n}");
+				}
+
+				if ("${n}" == "unknown") {
+					User.logoutPG();
+				}
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				FormFields.editText(
+					fieldName = "Text",
+					fieldValue = "Test Assets");
+
+				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Close all sessions and go to AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+		}
+
+		task ("Change to the right property and go to assets form tab") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Forms");
+		}
+
+		task ("Change filter to 24 hours and go to the current form") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Created Form Name");
+		}
+
+		task ("Assert the correct persentage") {
+			ACUtils.assertAudienceCard(
+				index = "1",
+				percentageList = "66.67%,33.33%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8424 | Test Summary: Forms audience card shows expected amount of segmented and unsegmented individuals"

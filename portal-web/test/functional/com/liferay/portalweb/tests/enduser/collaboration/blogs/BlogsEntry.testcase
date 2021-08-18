@@ -168,6 +168,16 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddHTMLToContentField {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
 		JSONBlog.addEntry(
 			entryContent = "<b>Bold Type</b> <i>Italics</i>",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -218,6 +228,16 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddWithCustomURL {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
@@ -938,6 +958,16 @@ definition {
 	@refactordone
 	test ShouldHaveUniqueURLForDuplicate {
 		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

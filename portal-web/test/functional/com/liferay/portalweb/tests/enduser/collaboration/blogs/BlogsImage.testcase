@@ -27,6 +27,16 @@ definition {
 	@refactordone
 	@uitest
 	test CanAddInlineImage {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");

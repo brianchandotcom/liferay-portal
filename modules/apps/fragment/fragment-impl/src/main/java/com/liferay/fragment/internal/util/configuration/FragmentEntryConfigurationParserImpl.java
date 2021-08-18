@@ -79,6 +79,36 @@ public class FragmentEntryConfigurationParserImpl
 		return defaultValuesJSONObject;
 	}
 
+	@Override
+	public Object getConfigurationFieldValue(
+		String editableValues, String dataType, String fieldName) {
+
+		try {
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(editableValues);
+
+			JSONObject configurationValuesJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			if (configurationValuesJSONObject == null) {
+				return null;
+			}
+
+			return _getFieldValue(
+				dataType, configurationValuesJSONObject.getString(fieldName));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to parse configuration JSON: " + editableValues,
+					jsonException);
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * #getConfigurationJSONObject(String, String, Locale)}

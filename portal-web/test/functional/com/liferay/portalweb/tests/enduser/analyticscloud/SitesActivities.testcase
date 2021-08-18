@@ -15,8 +15,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
-
-		ACUtils.launchAC();
 	}
 
 	tearDown {
@@ -104,12 +102,57 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8280 | Test Summary: Anon and known visitors legend shown"
-	@ignore = "true"
 	@priority = "5"
 	test CanShownAnonAndKnownVisitorsLegend {
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		// TODO LRAC-8280 CanShownAnonAndKnownVisitorsLegend
+		task ("Visits the site with known user") {
+			Navigator.openURL();
 
+			Pause(locator1 = "5000");
+		}
+
+		task ("Visits the site with anonymous user") {
+			User.logoutPG();
+
+			Navigator.openURL();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC and go to Sites") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSites();
+		}
+
+		task ("Go to Sites overview") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Verify if anonymous and known users legends are shown") {
+			for (var visitor : list "Anonymous,Known") {
+				AssertElementPresent(
+					key_visitorLegend = "${visitor} Visitors",
+					locator1 = "ACIndividualsDashboard#VISITORS_LEGEND");
+
+				MouseOver(
+					key_visitorLegend = "${visitor} Visitors",
+					locator1 = "ACIndividualsDashboard#VISITORS_LEGEND");
+
+				AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8281 | Test Summary: Anon and known visitors popover shows breakdown"

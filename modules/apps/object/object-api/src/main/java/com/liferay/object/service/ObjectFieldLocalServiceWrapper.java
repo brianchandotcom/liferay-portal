@@ -402,12 +402,13 @@ public class ObjectFieldLocalServiceWrapper
 	public com.liferay.object.model.ObjectField updateCustomObjectField(
 			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, boolean required)
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.updateCustomObjectField(
 			objectFieldId, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, required);
+			labelMap, name, required, type);
 	}
 
 	/**

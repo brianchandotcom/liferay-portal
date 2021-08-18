@@ -355,12 +355,12 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField updateCustomObjectField(
 			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			boolean required)
+			String name, boolean required, String type)
 		throws PortalException {
 
 		return getService().updateCustomObjectField(
 			objectFieldId, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, required);
+			labelMap, name, required, type);
 	}
 
 	/**

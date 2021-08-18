@@ -357,8 +357,9 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanReplyToThreadAsGuest {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 

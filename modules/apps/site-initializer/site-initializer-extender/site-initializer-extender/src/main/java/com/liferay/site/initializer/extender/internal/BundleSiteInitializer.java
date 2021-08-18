@@ -299,7 +299,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addLayouts(ServiceContext serviceContext) throws Exception {
 		Map<String, String> resourcesMap = _getResourcesMap(serviceContext);
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray(
-			_read("/layouts/layouts.json"));
+			_read("/site-initializer/layouts/layouts.json"));
 	}
 
 

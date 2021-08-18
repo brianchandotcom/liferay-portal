@@ -65,12 +65,66 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8706 | Test Summary: Check webContentClicked triggers and check its properties (see reference document in comments)"
-	@ignore = "true"
 	@priority = "5"
 	test CheckWebContentClickedAndCheckProperties {
+		property proxy.server.enabled = "true";
 
-		// TODO LRAC-8706 CheckWebContentClickedAndCheckProperties pending implementation
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Get articleId of web content") {
+			var articleId = JSONWebcontentSetter.setArticleId(
+				groupName = "Site Name",
+				title = "Custom Asset AC Title");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("webContentClicked");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Click the content in Web Content Display") {
+			Click(
+				key_content = '''//h1[normalize-space(text())="What's your favorite portal?"]''',
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("View the articleId of webContentClicked event") {
+			ACUtils.assertEventPropertyValue(
+				eventId = "webContentClicked",
+				property = "articleId",
+				value = "${articleId}");
+		}
+
+		task ("View the title of webContentClicked event") {
+			ACUtils.assertEventPropertyValue(
+				eventId = "webContentClicked",
+				property = "title",
+				value = "Custom Asset AC Title");
+		}
+
+		task ("View the tagName of webContentClicked event") {
+			ACUtils.assertEventPropertyValue(
+				eventId = "webContentClicked",
+				property = "tagName",
+				value = "h1");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8707 | Test Summary: Check webContentViewed triggers and check its properties (see reference document in comments)"

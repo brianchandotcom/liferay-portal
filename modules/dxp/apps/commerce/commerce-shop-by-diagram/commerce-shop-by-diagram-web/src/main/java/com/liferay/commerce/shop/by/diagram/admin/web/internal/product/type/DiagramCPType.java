@@ -69,6 +69,36 @@ public class DiagramCPType implements CPType {
 		return NAME;
 	}
 
+	@Override
+	public boolean isConfigurationEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isMediaEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isOptionsEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isProductGroupsEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isSkusEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isSubscriptionEnabled() {
+		return false;
+	}
+
 	@Reference
 	private CPDefinitionDiagramEntryLocalService
 		_cpDefinitionDiagramEntryLocalService;

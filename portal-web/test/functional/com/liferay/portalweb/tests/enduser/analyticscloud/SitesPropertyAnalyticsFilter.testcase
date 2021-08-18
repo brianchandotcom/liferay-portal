@@ -39,12 +39,39 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8321 | Test Summary: 1st user access and no property was selected yet"
-	@ignore = "true"
 	@priority = "4"
 	test FirstAccessAndNoProperty {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8321
+		// AC Refactor: this test needs to simulate the first access
+		// AC Refactor ticket: LRAC-8752
 
+		task ("AC launch") {
+
+			// This test needs to simulate the first access, it would be when the user is creating a new/fresh workspace.
+
+			ACUtils.launchAC();
+		}
+
+		task ("Asset that no longer properties exists") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			AssertElementPresent(locator1 = "ACDXPSettings#AVAILABLE_NO_PROPERTIES_FOUND");
+		}
+
+		task ("Asset that there are no more properties on the sites page") {
+			Navigator.gotoBack();
+
+			AssertTextEquals(
+				locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES",
+				value1 = "No Properties");
+
+			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");
+
+			AssertElementNotPresent(locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: 180 Days time period filter in Sites"

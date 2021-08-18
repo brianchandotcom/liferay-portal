@@ -2902,6 +2902,64 @@ definition {
 		}
 	}
 
+	@description = "LPS-131187 Given the Content Dashboard table
+	When a document is added
+	Then its type will be shown in the Type column"
+	@priority = "3"
+	test TypeColumnForDocument {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
+		
+		task ("Create document via JSON") {
+			task ("Create a new Document") {
+				JSONDocument.addFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Assert the type of the web content is shown in the Type column") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#TYPE_COLUMN_VALUE",
+				value1 = "Document");
+		}
+	}
+
+	@description = "LPS-131187 Given the Content Dashboard table
+	When a web content is added
+	Then its type will be shown in the Type column"
+	@priority = "3"
+	test TypeColumnForWebContent {
+		task ("Create WC via JSON") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Assert the type of the web content is shown in the Type column") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#TYPE_COLUMN_VALUE",
+				value1 = "Web Content Article");
+		}
+	}
+
 	@description = "LPS-122873 When the user uncheck any checkbox from the vocab2, the relative ordering of the categories remain the same"
 	@priority = "3"
 	test UncheckACategoryInTheContentPanel {

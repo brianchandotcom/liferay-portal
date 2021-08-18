@@ -210,6 +210,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_VIEW_LISTED_MODIFIED_DATE</td>
+	<td>//a[contains(@label,'View')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_OPTION</td>
 	<td>//*[contains(@data-action, 'showInfo')]</td>
 	<td></td>
@@ -235,8 +240,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_INFO_VIEW</td>
+	<td>//*[contains(@title,'View')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVERSE_SORT_DIRECTION_BUTTON</td>
 	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROW_PANEL_WC</td>
+	<td>//tr[contains(@data-qa-id, 'row')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -295,6 +310,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_COLUMN_CONTENT</td>
+	<td>//td[contains(@class,'lfr-title-column')]//a[contains(@title,'${title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_COLUMN_VALUE</td>
+	<td>//td[contains(@class,'lfr-type-column') and contains(text(),'${assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'View')]</td>
 	<td></td>
@@ -310,28 +335,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROW_PANEL_WC</td>
-	<td>//tr[contains(@data-qa-id, 'row')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TITLE_COLUMN_CONTENT</td>
-	<td>//td[contains(@class,'lfr-title-column')]//a[contains(@title,'${title}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ICON_INFO_LISTED_MODIFIED_DATE</td>
 	<td>//button[contains(@class,'component-action quick-action-item btn btn-monospaced btn-sm btn-unstyled')] //*[contains(@class,'circle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_VIEW_LISTED_MODIFIED_DATE</td>
-	<td>//a[contains(@label,'View')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PANEL_INFO_VIEW</td>
-	<td>//*[contains(@title,'View')]</td>
 	<td></td>
 </tr>
 </tbody>

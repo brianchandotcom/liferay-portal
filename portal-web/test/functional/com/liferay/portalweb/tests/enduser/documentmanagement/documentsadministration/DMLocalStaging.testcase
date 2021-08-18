@@ -1010,7 +1010,7 @@ definition {
 	test StagingDemoDocumentsAndMedia {
 		property custom.properties = "default.layout.template.id=1_column";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "StagingDMWithVariation#StagingDemoDocumentsAndMedia";
+		property test.name.skip.portal.instance = "DMLocalStaging#StagingDemoDocumentsAndMedia";
 		property testray.component.names = "Training";
 
 		SystemSettings.openSystemSettingsAdmin();

@@ -429,15 +429,21 @@ public class FinderCacheImpl
 	}
 
 	public void removeByEntityCache(String className, BaseModel<?> baseModel) {
+		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
+			className);
+
+		if (argumentsResolver == null) {
+			clearByEntityCache(className);
+
+			return;
+		}
+
 		clearLocalCache();
 
 		_clearCache(_getCacheNameWithPagination(className));
 		_clearCache(_getCacheNameWithoutPagination(className));
 
 		_clearDSLQueryCache(className);
-
-		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
-			className);
 
 		for (FinderPath finderPath : _getFinderPaths(className)) {
 			removeResult(
@@ -491,14 +497,20 @@ public class FinderCacheImpl
 			return;
 		}
 
+		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
+			className);
+
+		if (argumentsResolver == null) {
+			clearByEntityCache(className);
+
+			return;
+		}
+
 		clearLocalCache();
 
 		_clearCache(_getCacheNameWithPagination(className));
 
 		_clearDSLQueryCache(className);
-
-		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
-			className);
 
 		Set<FinderPath> finderPaths = new HashSet<>();
 

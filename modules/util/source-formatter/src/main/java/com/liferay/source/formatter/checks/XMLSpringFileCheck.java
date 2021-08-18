@@ -182,6 +182,15 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 				if (matcher.find()) {
 					_beanObjectName = matcher.group(1);
 					_type = _FINDER;
+
+					return;
+				}
+
+				matcher = _modelArgumentsResolverPattern.matcher(name);
+
+				if (matcher.find()) {
+					_beanObjectName = matcher.group(1);
+					_type = _MODEL_ARGUMENTS_RESOLVER;
 				}
 			}
 
@@ -211,11 +220,13 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 				return _type;
 			}
 
-			private static final int _FINDER = 4;
+			private static final int _FINDER = 5;
 
 			private static final int _LOCAL_SERVICE = 1;
 
-			private static final int _PERSISTENCE = 3;
+			private static final int _MODEL_ARGUMENTS_RESOLVER = 3;
+
+			private static final int _PERSISTENCE = 4;
 
 			private static final int _SERVICE = 2;
 
@@ -224,6 +235,10 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 				"\\.service\\.persistence\\.(\\w+)Finder");
 			private final Pattern _localServicePattern = Pattern.compile(
 				"\\.service\\.(\\w+)LocalService");
+			private final Pattern _modelArgumentsResolverPattern =
+				Pattern.compile(
+					"\\.service\\.persistence\\.impl\\.(\\w+)" +
+						"ModelArgumentsResolver");
 			private final Pattern _persistencePattern = Pattern.compile(
 				"\\.service\\.persistence\\.(\\w+)Persistence");
 			private final Pattern _servicePattern = Pattern.compile(

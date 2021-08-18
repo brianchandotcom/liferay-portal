@@ -692,6 +692,25 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateExternalReferenceCode(
+			com.liferay.account.model.AccountEntry accountEntry,
+			String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateExternalReferenceCode(
+			accountEntry, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry updateExternalReferenceCode(
+			long accountEntryId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateExternalReferenceCode(
+			accountEntryId, externalReferenceCode);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateStatus(
 		com.liferay.account.model.AccountEntry accountEntry, int status) {
 

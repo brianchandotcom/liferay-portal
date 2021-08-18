@@ -608,6 +608,22 @@ public class AccountEntryLocalServiceUtil {
 			accountEntryId, addressId);
 	}
 
+	public static AccountEntry updateExternalReferenceCode(
+			AccountEntry accountEntry, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			accountEntry, externalReferenceCode);
+	}
+
+	public static AccountEntry updateExternalReferenceCode(
+			long accountEntryId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			accountEntryId, externalReferenceCode);
+	}
+
 	public static AccountEntry updateStatus(
 		AccountEntry accountEntry, int status) {
 

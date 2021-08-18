@@ -218,6 +218,12 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 		Object sourceObject = _getFieldValue("source");
 
+		if (sourceObject == null) {
+			_sourceJSONObject = JSONFactoryUtil.createJSONObject();
+
+			return _sourceJSONObject;
+		}
+
 		try {
 			_sourceJSONObject = JSONFactoryUtil.createJSONObject(
 				sourceObject.toString());

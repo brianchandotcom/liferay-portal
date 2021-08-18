@@ -496,11 +496,10 @@ public class UserAccountResourceImpl
 			transform(
 				userAccounts,
 				userAccount -> {
-					User userByEmailAddress = _userService.getUserByEmailAddress(
-						contextCompany.getCompanyId(),
-						userAccount.getEmailAddress());
-
-					return _toUserAccount(userByEmailAddress);
+					return _toUserAccount(
+						_userService.getUserByEmailAddress(
+							contextCompany.getCompanyId(),
+							userAccount.getEmailAddress()));
 				}));
 	}
 

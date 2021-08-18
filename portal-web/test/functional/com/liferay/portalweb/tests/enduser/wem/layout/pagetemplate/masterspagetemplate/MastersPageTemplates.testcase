@@ -122,7 +122,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-103687. Validate if the Blank page template can not be edited and deleted."
+	@description = "This is for LPS-102202. Validate if the Blank page template can not be edited and deleted."
 	@priority = "5"
 	test CannotDeleteBlankPageTemplate {
 		property portal.acceptance = "true";

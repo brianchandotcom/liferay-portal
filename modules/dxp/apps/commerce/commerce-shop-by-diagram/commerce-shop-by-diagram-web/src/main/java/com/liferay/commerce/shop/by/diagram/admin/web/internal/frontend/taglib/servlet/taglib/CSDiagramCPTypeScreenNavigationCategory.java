@@ -17,8 +17,8 @@ package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CPDefinitionDiagramSettingDisplayContext;
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.product.type.DiagramCPType;
 import com.liferay.commerce.shop.by.diagram.configuration.CPDefinitionDiagramSettingImageConfiguration;
+import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramTypeRegistry;
 import com.liferay.document.library.util.DLURLHelper;
@@ -60,17 +60,17 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CPDefinitionCPTypeDiagramScreenNavigationCategory
+public class CSDiagramCPTypeScreenNavigationCategory
 	implements ScreenNavigationCategory, ScreenNavigationEntry<CPDefinition> {
 
 	@Override
 	public String getCategoryKey() {
-		return DiagramCPType.NAME;
+		return CSDiagramCPTypeConstants.NAME;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return DiagramCPType.NAME;
+		return CSDiagramCPTypeConstants.NAME;
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class CPDefinitionCPTypeDiagramScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, DiagramCPType.NAME);
+		return LanguageUtil.get(resourceBundle, CSDiagramCPTypeConstants.NAME);
 	}
 
 	@Override
@@ -92,9 +92,9 @@ public class CPDefinitionCPTypeDiagramScreenNavigationCategory
 			return false;
 		}
 
-		String productTypeName = cpDefinition.getProductTypeName();
+		if (CSDiagramCPTypeConstants.NAME.equals(
+				cpDefinition.getProductTypeName())) {
 
-		if (productTypeName.equals(DiagramCPType.NAME)) {
 			return true;
 		}
 

@@ -282,7 +282,7 @@ function StructureTreeNodeContent({
 					event.target.focus();
 
 					const itemId = getFirstControlsId({
-						itemId: node.id,
+						item: node,
 						layoutData: layoutDataRef.current,
 					});
 

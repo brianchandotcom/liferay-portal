@@ -13,6 +13,7 @@
  */
 
 import {getToControlsId} from '../components/layout-data-items/Collection';
+import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 /**
@@ -22,20 +23,23 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
  * but there are place where this context is not available. In those cases this function
  * may be used as an alternative.
  */
-export default function getFirstControlsId({itemId, layoutData}) {
-	const collectionItems = getCollectionItems(itemId, layoutData);
+export default function getFirstControlsId({item, layoutData}) {
+	const collectionItems = getCollectionItems(
+		item.itemType === ITEM_TYPES.editable ? item.parentId : item.id,
+		layoutData
+	);
 
 	if (!collectionItems.length) {
-		return itemId;
+		return item.id;
 	}
 
 	const toControlsId = collectionItems.reduce(
 		(acc, collectionItemId) => {
 
-			// If the itemId correspond to a collectionId ignore it,
+			// If the item.id correspond to a collectionId ignore it,
 			// that id is only applied to the children not to the collection itself.
 
-			if (collectionItemId === itemId) {
+			if (collectionItemId === item.id) {
 				return acc;
 			}
 
@@ -44,7 +48,7 @@ export default function getFirstControlsId({itemId, layoutData}) {
 		(itemId) => itemId
 	);
 
-	return toControlsId(itemId);
+	return toControlsId(item.id);
 }
 
 function getCollectionItems(itemId, layoutData, collectionItems = []) {

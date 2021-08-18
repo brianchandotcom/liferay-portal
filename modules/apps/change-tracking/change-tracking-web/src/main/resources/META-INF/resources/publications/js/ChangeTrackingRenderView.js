@@ -211,7 +211,14 @@ export default ({
 			}
 			else if (
 				cachedData.changeType === CHANGE_TYPE_MODIFIED &&
-				!Object.prototype.hasOwnProperty.call(cachedData, 'leftRender')
+				!Object.prototype.hasOwnProperty.call(
+					cachedData,
+					'leftRender'
+				) &&
+				!Object.prototype.hasOwnProperty.call(
+					cachedData,
+					'leftLocalizedRender'
+				)
 			) {
 				newState.view = VIEW_SPLIT;
 			}
@@ -282,7 +289,11 @@ export default ({
 				}
 				else if (
 					json.changeType === CHANGE_TYPE_MODIFIED &&
-					!Object.prototype.hasOwnProperty.call(json, 'leftRender')
+					!Object.prototype.hasOwnProperty.call(json, 'leftRender') &&
+					!Object.prototype.hasOwnProperty.call(
+						json,
+						'leftLocalizedRender'
+					)
 				) {
 					newState.view = VIEW_SPLIT;
 				}
@@ -366,6 +377,32 @@ export default ({
 			);
 		}
 		else if (
+			state.contentType === CONTENT_TYPE_DATA &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'leftLocalizedRender'
+			)
+		) {
+			if (state.renderData.leftLocalizedRender[currentLocale.label]) {
+				return (
+					<div
+						dangerouslySetInnerHTML={{
+							__html:
+								state.renderData.leftLocalizedRender[
+									currentLocale.label
+								],
+						}}
+					/>
+				);
+			}
+
+			return (
+				<ClayAlert displayType="info" spritemap={spritemap}>
+					{Liferay.Language.get('content-is-empty')}
+				</ClayAlert>
+			);
+		}
+		else if (
 			state.contentType === CONTENT_TYPE_DISPLAY &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
@@ -422,6 +459,10 @@ export default ({
 			!Object.prototype.hasOwnProperty.call(
 				state.renderData,
 				'leftRender'
+			) &&
+			!Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'leftLocalizedRender'
 			)
 		) {
 			return (
@@ -454,6 +495,32 @@ export default ({
 						__html: state.renderData.rightRender,
 					}}
 				/>
+			);
+		}
+		else if (
+			state.contentType === CONTENT_TYPE_DATA &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'rightLocalizedRender'
+			)
+		) {
+			if (state.renderData.rightLocalizedRender[currentLocale.label]) {
+				return (
+					<div
+						dangerouslySetInnerHTML={{
+							__html:
+								state.renderData.rightLocalizedRender[
+									currentLocale.label
+								],
+						}}
+					/>
+				);
+			}
+
+			return (
+				<ClayAlert displayType="info" spritemap={spritemap}>
+					{Liferay.Language.get('content-is-empty')}
+				</ClayAlert>
 			);
 		}
 		else if (
@@ -534,6 +601,34 @@ export default ({
 						}}
 					/>
 				</div>
+			);
+		}
+		else if (
+			state.contentType === CONTENT_TYPE_DATA &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'unifiedLocalizedRender'
+			)
+		) {
+			if (state.renderData.unifiedLocalizedRender[currentLocale.label]) {
+				return (
+					<div className="taglib-diff-html">
+						<div
+							dangerouslySetInnerHTML={{
+								__html:
+									state.renderData.unifiedLocalizedRender[
+										currentLocale.label
+									],
+							}}
+						/>
+					</div>
+				);
+			}
+
+			return (
+				<ClayAlert displayType="info" spritemap={spritemap}>
+					{Liferay.Language.get('content-is-empty')}
+				</ClayAlert>
 			);
 		}
 		else if (
@@ -767,7 +862,14 @@ export default ({
 
 		if (
 			state.renderData.changeType !== CHANGE_TYPE_MODIFIED ||
-			Object.prototype.hasOwnProperty.call(state.renderData, 'leftRender')
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'leftRender'
+			) ||
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'leftLocalizedRender'
+			)
 		) {
 			pushItem(items, VIEW_UNIFIED);
 

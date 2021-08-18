@@ -2,6 +2,7 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -9,13 +10,19 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
+
 		ACSettings.takeTokenFromAnalyticsCloud();
+
 		TestCase.setUpPortalInstance();
+
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
@@ -34,12 +41,66 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8313 | Test Summary: Session technology card shows what devices are accessing the site the most"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsDevicesAccessingSiteMost {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8313 ShowsDevicesAccessingSiteMost
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the site page as ac user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Assert Session Technology card is present") {
+			ACNavigation.goToSites();
+
+			ACCards.viewCards(cardTitle = "Session Technology");
+		}
+
+		task ("Assert desktop is accessing the site the most") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Session Technology");
+
+			ACTimeFilter.setLast24Hours();
+
+			ACAssets.viewTechnologyDeviceViewsAndPercentage(
+				actionValue = "1 Sessions",
+				cardTitle = "Session Technology",
+				deviceName = "Desktop",
+				percentageValue = "100%");
+		}
 	}
 
 }

@@ -60,7 +60,7 @@ definition {
 
 		Clustering.deployClusteringModule(nodePort = "8080");
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample_");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -80,7 +80,7 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
+		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 
@@ -115,7 +115,7 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 
@@ -125,13 +125,13 @@ definition {
 
 		Portlet.shutdownServer();
 
-		FileInstall.deletePortalJarOffline(jarFile = "com.liferay.portal.cluster.sample.jar");
+		FileInstall.deletePortalJarOffline(jarFile = "com.liferay.portal.cluster.multiple.sample.jar");
 
 		Portlet.startServer(keepOSGiState = "true");
 
 		GogoShell.openGogoShellAdmin();
 
-		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.sample_");
+		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample_");
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
 

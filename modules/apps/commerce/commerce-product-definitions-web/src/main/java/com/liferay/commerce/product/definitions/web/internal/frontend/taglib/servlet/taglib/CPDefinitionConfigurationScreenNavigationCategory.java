@@ -27,6 +27,8 @@ import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
@@ -104,10 +106,17 @@ public class CPDefinitionConfigurationScreenNavigationCategory
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		CPType cpType = _cpTypeServicesTracker.getCPType(
+			cpDefinition.getProductTypeName());
+
 		try {
-			return _commerceCatalogModelResourcePermission.contains(
-				permissionChecker, cpDefinition.getCommerceCatalog(),
-				ActionKeys.VIEW);
+			if (_commerceCatalogModelResourcePermission.contains(
+					permissionChecker, cpDefinition.getCommerceCatalog(),
+					ActionKeys.VIEW) &&
+				cpType.isConfigurationEnabled()) {
+
+				return true;
+			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -198,6 +207,9 @@ public class CPDefinitionConfigurationScreenNavigationCategory
 
 	@Reference
 	private CPTaxCategoryService _cpTaxCategoryService;
+
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

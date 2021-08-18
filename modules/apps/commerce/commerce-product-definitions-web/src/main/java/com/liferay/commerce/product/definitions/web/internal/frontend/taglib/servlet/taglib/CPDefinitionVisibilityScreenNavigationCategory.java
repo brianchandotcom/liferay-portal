@@ -23,6 +23,8 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -96,10 +98,17 @@ public class CPDefinitionVisibilityScreenNavigationCategory
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		CPType cpType = _cpTypeServicesTracker.getCPType(
+			cpDefinition.getProductTypeName());
+
 		try {
-			return _commerceCatalogModelResourcePermission.contains(
-				permissionChecker, cpDefinition.getCommerceCatalog(),
-				ActionKeys.VIEW);
+			if (_commerceCatalogModelResourcePermission.contains(
+					permissionChecker, cpDefinition.getCommerceCatalog(),
+					ActionKeys.VIEW) &&
+				cpType.isVisibilityEnabled()) {
+
+				return true;
+			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -155,6 +164,9 @@ public class CPDefinitionVisibilityScreenNavigationCategory
 
 	@Reference
 	private CPFriendlyURL _cpFriendlyURL;
+
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

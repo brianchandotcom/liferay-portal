@@ -124,7 +124,7 @@ public class ${schemaName} implements Cloneable, Serializable {
 
 		public static ${enumName} create(String value) {
 			for (${enumName} ${freeMarkerTool.getSchemaVarName(enumName)} : values()) {
-				if (Objects.equals(${freeMarkerTool.getSchemaVarName(enumName)}.getValue(), value)) {
+				if (Objects.equals(${freeMarkerTool.getSchemaVarName(enumName)}.getValue(), value) || Objects.equals(${freeMarkerTool.getSchemaVarName(enumName)}.name(), value)) {
 					return ${freeMarkerTool.getSchemaVarName(enumName)};
 				}
 			}

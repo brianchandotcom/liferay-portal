@@ -64,7 +64,7 @@ const getFilter = (filterQuery) => {
 		node.name.toLowerCase().indexOf(filterQueryLowerCase) !== -1;
 };
 
-const SelectExtension = ({
+const SelectFileExtension = ({
 	fileExtensionGroups,
 	itemSelectorSaveEvent,
 	portletNamespace,
@@ -123,9 +123,9 @@ const SelectExtension = ({
 	};
 
 	return (
-		<div className="select-mime-type">
+		<div className="select-file-extension">
 			<form
-				className="mb-4 pb-3 pt-3 select-mime-type-filter"
+				className="mb-4 pb-3 pt-3 select-file-extension-filter"
 				onSubmit={(event) => event.preventDefault()}
 				role="search"
 			>
@@ -170,7 +170,7 @@ const SelectExtension = ({
 								<div className="taglib-empty-result-message-header"></div>
 								<div className="sheet-text text-center">
 									{Liferay.Language.get(
-										'no-fileExtensions-were-found'
+										'no-file-extensions-were-found'
 									)}
 								</div>
 							</div>
@@ -182,10 +182,10 @@ const SelectExtension = ({
 	);
 };
 
-SelectExtension.propTypes = {
+SelectFileExtension.propTypes = {
 	fileExtensionGroups: PropTypes.array.isRequired,
 	itemSelectorSaveEvent: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };
 
-export default SelectExtension;
+export default SelectFileExtension;

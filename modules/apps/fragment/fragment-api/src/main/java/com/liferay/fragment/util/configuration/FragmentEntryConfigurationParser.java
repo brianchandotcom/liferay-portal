@@ -33,6 +33,9 @@ public interface FragmentEntryConfigurationParser {
 	public JSONObject getConfigurationDefaultValuesJSONObject(
 		String configuration);
 
+	public Object getConfigurationFieldValue(
+		String editableValues, String dataType, String fieldName);
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * #getConfigurationJSONObject(String, String, Locale)}

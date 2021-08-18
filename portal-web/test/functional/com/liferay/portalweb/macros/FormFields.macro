@@ -823,6 +823,18 @@ definition {
 			rowNumber = "${rowNumber}");
 	}
 
+	macro selectDataProviderInputType {
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		Click(locator1 = "Form#DATA_PROVIDER_INPUT_PARAMETER_TYPE_FIELD");
+
+		var key_inputParameterType = "${inputParameterType}";
+
+		AssertClick(
+			locator1 = "Form#DATA_PROVIDER_INPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST",
+			value1 = "${inputParameterType}");
+	}
+
 	macro selectDataProviderOutputType {
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 

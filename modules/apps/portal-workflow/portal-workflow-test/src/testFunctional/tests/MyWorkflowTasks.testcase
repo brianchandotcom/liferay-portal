@@ -569,12 +569,44 @@ definition {
 	}
 
 	@description = "Verify that the user can order the results inside Assigned to My Roles by Last Activity Date"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderAssignedtoMyRolesTasksByLastActivityDate {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68839 CanOrderAssignedtoMyRolesTasksByLastActivityDate pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Notifications.goToFilterValues(filterValues = "Last Activity Date");
+
+		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
+			rowPosition = "1",
+			title = "Blogs Entry 1");
+
+		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
+			rowPosition = "2",
+			title = "Blogs Entry 2");
+
+			
 	}
 
 	@description = "Verify that the user can assign a task to another user in the Assigned to Me tab"

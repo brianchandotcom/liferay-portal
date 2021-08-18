@@ -36,7 +36,7 @@ public interface JournalFileUploadsConfiguration {
 	public String[] imageExtensions();
 
 	@Meta.AD(
-		deflt = "51200", name = "maximum-file-size-small-image",
+		deflt = "51200", name = "maximum-file-size-of-small-image",
 		required = false
 	)
 	public long smallImageMaxSize();

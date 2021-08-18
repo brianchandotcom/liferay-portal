@@ -38,9 +38,12 @@ const getColumn = ({objectFields}) => ({children, column, index}) => {
 			{column.fields.map((field, index) => {
 				const {fieldName} = field;
 
-				// Avoid using repeatable field when object storage type is selected
+				// Avoid using repeatable and searchable fields when object storage type is selected
 
-				if (objectFields.length && fieldName === 'repeatable') {
+				if (
+					objectFields.length &&
+					(fieldName === 'repeatable' || fieldName === 'indexType')
+				) {
 					return <React.Fragment key={index} />;
 				}
 

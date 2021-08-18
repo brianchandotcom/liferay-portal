@@ -43,6 +43,15 @@ definition {
 		AssertElementPresent(locator1 = "ACSettings#ITEM_ON_LIST");
 	}
 
+	macro assertEventPropertyValue {
+		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
+		var actual = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['eventId'] == '${eventId}')]..${property}");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${value}");
+	}
+
 	@summary = "Asserts a list of items by the name"
 	macro assertItemsName {
 		for (var key_itemName : list "${itemList}") {

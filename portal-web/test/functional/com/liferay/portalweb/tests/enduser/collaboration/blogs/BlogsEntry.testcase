@@ -26,7 +26,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test AbstractDescriptionPersistsWhenTypingInContentField {
-		property test.name.skip.portal.instance = "BlogsPage#AbstractDescriptionPersistsWhenTypingInContentField";
+		property test.name.skip.portal.instance = "BlogsEntry#AbstractDescriptionPersistsWhenTypingInContentField";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -414,7 +414,7 @@ definition {
 	@refactordone
 	@uitest
 	test CanChangeAScheduledEntryToThePresentAndPublish {
-		property test.name.skip.portal.instance = "BlogsUsecase#CanChangeAScheduledEntryToThePresentAndPublish";
+		property test.name.skip.portal.instance = "BlogsEntry#CanChangeAScheduledEntryToThePresentAndPublish";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -898,7 +898,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanViewDefaultAbstract {
-		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryWithDefaultAbstract";
+		property test.name.skip.portal.instance = "BlogsEntry#CanViewDefaultAbstract";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

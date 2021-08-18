@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101330. A user should be able to add a Video URL fragment and display a video."
+	@description = "This is a test for LPS-99176. A user should be able to add a Video URL fragment and display a video."
 	@priority = "5"
 	test DisplayVideoInVideoURL {
 		property portal.acceptance = "true";

@@ -48,24 +48,10 @@ import java.util.Locale;
  */
 public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
 	@Override
 	public CommerceOrder addCommerceOrder(
-			long userId, long groupId, long commerceAccountId,
-			long commerceCurrencyId)
-		throws PortalException {
-
-		return commerceOrderService.addCommerceOrder(
-			userId, groupId, commerceAccountId, commerceCurrencyId, 0);
-	}
-
-	@Override
-	public CommerceOrder addCommerceOrder(
-			long userId, long groupId, long commerceAccountId,
-			long commerceCurrencyId, long commerceOrderTypeId)
+			long groupId, long commerceAccountId, long commerceCurrencyId,
+			long commerceOrderTypeId)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -73,19 +59,19 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
 
 		return commerceOrderLocalService.addCommerceOrder(
-			userId, groupId, commerceAccountId, commerceCurrencyId,
+			getUserId(), groupId, commerceAccountId, commerceCurrencyId,
 			commerceOrderTypeId);
 	}
 
 	@Override
 	public CommerceOrder addOrUpdateCommerceOrder(
-			String externalReferenceCode, long userId, long groupId,
-			long commerceAccountId, long commerceCurrencyId,
-			long commerceOrderTypeId, long billingAddressId,
-			long shippingAddressId, String commercePaymentMethodKey,
-			long commerceShippingMethodId, String shippingOptionName,
-			String purchaseOrderNumber, BigDecimal subtotal,
-			BigDecimal shippingAmount, BigDecimal taxAmount, BigDecimal total,
+			String externalReferenceCode, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long commerceOrderTypeId,
+			long billingAddressId, long shippingAddressId,
+			String commercePaymentMethodKey, long commerceShippingMethodId,
+			String shippingOptionName, String purchaseOrderNumber,
+			BigDecimal subtotal, BigDecimal shippingAmount,
+			BigDecimal taxAmount, BigDecimal total,
 			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
 			BigDecimal totalWithTaxAmount, int paymentStatus,
 			int orderDateMonth, int orderDateDay, int orderDateYear,
@@ -109,7 +95,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		}
 
 		return commerceOrderLocalService.addOrUpdateCommerceOrder(
-			externalReferenceCode, userId, groupId, commerceAccountId,
+			externalReferenceCode, getUserId(), groupId, commerceAccountId,
 			commerceCurrencyId, commerceOrderTypeId, billingAddressId,
 			shippingAddressId, commercePaymentMethodKey,
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
@@ -120,42 +106,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
 	@Override
 	public CommerceOrder addOrUpdateCommerceOrder(
-			String externalReferenceCode, long userId, long groupId,
-			long commerceAccountId, long commerceCurrencyId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			BigDecimal subtotal, BigDecimal shippingAmount,
-			BigDecimal taxAmount, BigDecimal total,
-			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, int paymentStatus,
-			int orderDateMonth, int orderDateDay, int orderDateYear,
-			int orderDateHour, int orderDateMinute, int orderStatus,
-			String advanceStatus, CommerceContext commerceContext,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return commerceOrderService.addOrUpdateCommerceOrder(
-			externalReferenceCode, userId, groupId, commerceAccountId,
-			commerceCurrencyId, 0, billingAddressId, shippingAddressId,
-			commercePaymentMethodKey, commerceShippingMethodId,
-			shippingOptionName, purchaseOrderNumber, subtotal, shippingAmount,
-			taxAmount, total, subtotalWithTaxAmount, shippingWithTaxAmount,
-			totalWithTaxAmount, paymentStatus, orderDateMonth, orderDateDay,
-			orderDateYear, orderDateHour, orderDateMinute, orderStatus,
-			advanceStatus, commerceContext, serviceContext);
-	}
-
-	@Override
-	public CommerceOrder addOrUpdateCommerceOrder(
-			String externalReferenceCode, long userId, long groupId,
-			long commerceAccountId, long commerceCurrencyId,
+			String externalReferenceCode, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long commerceOrderTypeId,
 			long billingAddressId, long shippingAddressId,
 			String commercePaymentMethodKey, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
@@ -168,13 +122,13 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		throws PortalException {
 
 		return commerceOrderService.addOrUpdateCommerceOrder(
-			externalReferenceCode, userId, groupId, commerceAccountId,
-			commerceCurrencyId, billingAddressId, shippingAddressId,
-			commercePaymentMethodKey, commerceShippingMethodId,
-			shippingOptionName, purchaseOrderNumber, subtotal, shippingAmount,
-			taxAmount, total, subtotalWithTaxAmount, shippingWithTaxAmount,
-			totalWithTaxAmount, paymentStatus, 0, 0, 0, 0, 0, orderStatus,
-			advanceStatus, commerceContext, serviceContext);
+			externalReferenceCode, groupId, commerceAccountId,
+			commerceCurrencyId, commerceOrderTypeId, billingAddressId,
+			shippingAddressId, commercePaymentMethodKey,
+			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
+			subtotal, shippingAmount, taxAmount, total, subtotalWithTaxAmount,
+			shippingWithTaxAmount, totalWithTaxAmount, paymentStatus, 0, 0, 0,
+			0, 0, orderStatus, advanceStatus, commerceContext, serviceContext);
 	}
 
 	@Override

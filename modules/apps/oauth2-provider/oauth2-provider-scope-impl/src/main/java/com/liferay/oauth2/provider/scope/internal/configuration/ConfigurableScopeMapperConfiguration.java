@@ -44,8 +44,8 @@ public interface ConfigurableScopeMapperConfiguration {
 
 	@Meta.AD(
 		deflt = "GET\\,HEAD\\,OPTIONS=everything.read,PUT\\,POST\\,PATCH\\,DELETE=everything\\,everything.write",
-		description = "mapping-description", id = "mapping", name = "mapping",
-		required = false
+		description = "mapping-description[oauth2]", id = "mapping",
+		name = "mapping[oauth2]", required = false
 	)
 	public String[] mappings();
 

@@ -129,7 +129,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 
 	@Override
 	public void deleteCommerceNotificationQueueEntries(Date sentDate) {
-		commerceNotificationQueueEntryPersistence.removeByLtS(sentDate);
+		commerceNotificationQueueEntryPersistence.removeByLtSentDate(sentDate);
 	}
 
 	@Override

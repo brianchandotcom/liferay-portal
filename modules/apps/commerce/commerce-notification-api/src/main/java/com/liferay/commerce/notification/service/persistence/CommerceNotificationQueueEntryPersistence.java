@@ -493,7 +493,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @param sentDate the sent date
 	 * @return the matching commerce notification queue entries
 	 */
-	public java.util.List<CommerceNotificationQueueEntry> findByLtS(
+	public java.util.List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate);
 
 	/**
@@ -508,7 +508,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
 	 * @return the range of matching commerce notification queue entries
 	 */
-	public java.util.List<CommerceNotificationQueueEntry> findByLtS(
+	public java.util.List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate, int start, int end);
 
 	/**
@@ -524,7 +524,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce notification queue entries
 	 */
-	public java.util.List<CommerceNotificationQueueEntry> findByLtS(
+	public java.util.List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationQueueEntry> orderByComparator);
@@ -543,7 +543,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce notification queue entries
 	 */
-	public java.util.List<CommerceNotificationQueueEntry> findByLtS(
+	public java.util.List<CommerceNotificationQueueEntry> findByLtSentDate(
 		Date sentDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationQueueEntry> orderByComparator,
@@ -557,7 +557,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @return the first matching commerce notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
 	 */
-	public CommerceNotificationQueueEntry findByLtS_First(
+	public CommerceNotificationQueueEntry findByLtSentDate_First(
 			Date sentDate,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceNotificationQueueEntry> orderByComparator)
@@ -570,7 +570,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
 	 */
-	public CommerceNotificationQueueEntry fetchByLtS_First(
+	public CommerceNotificationQueueEntry fetchByLtSentDate_First(
 		Date sentDate,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationQueueEntry> orderByComparator);
@@ -583,7 +583,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @return the last matching commerce notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a matching commerce notification queue entry could not be found
 	 */
-	public CommerceNotificationQueueEntry findByLtS_Last(
+	public CommerceNotificationQueueEntry findByLtSentDate_Last(
 			Date sentDate,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceNotificationQueueEntry> orderByComparator)
@@ -596,7 +596,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce notification queue entry, or <code>null</code> if a matching commerce notification queue entry could not be found
 	 */
-	public CommerceNotificationQueueEntry fetchByLtS_Last(
+	public CommerceNotificationQueueEntry fetchByLtSentDate_Last(
 		Date sentDate,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationQueueEntry> orderByComparator);
@@ -610,7 +610,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @return the previous, current, and next commerce notification queue entry
 	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
 	 */
-	public CommerceNotificationQueueEntry[] findByLtS_PrevAndNext(
+	public CommerceNotificationQueueEntry[] findByLtSentDate_PrevAndNext(
 			long commerceNotificationQueueEntryId, Date sentDate,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceNotificationQueueEntry> orderByComparator)
@@ -621,7 +621,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 *
 	 * @param sentDate the sent date
 	 */
-	public void removeByLtS(Date sentDate);
+	public void removeByLtSentDate(Date sentDate);
 
 	/**
 	 * Returns the number of commerce notification queue entries where sentDate &lt; &#63;.
@@ -629,7 +629,7 @@ public interface CommerceNotificationQueueEntryPersistence
 	 * @param sentDate the sent date
 	 * @return the number of matching commerce notification queue entries
 	 */
-	public int countByLtS(Date sentDate);
+	public int countByLtSentDate(Date sentDate);
 
 	/**
 	 * Returns all the commerce notification queue entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.

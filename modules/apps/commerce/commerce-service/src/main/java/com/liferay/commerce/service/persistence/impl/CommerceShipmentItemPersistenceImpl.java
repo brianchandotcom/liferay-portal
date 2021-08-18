@@ -590,9 +590,9 @@ public class CommerceShipmentItemPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
 		"commerceShipmentItem.groupId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceShipment;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceShipment;
-	private FinderPath _finderPathCountByCommerceShipment;
+	private FinderPath _finderPathWithPaginationFindByCommerceShipmentId;
+	private FinderPath _finderPathWithoutPaginationFindByCommerceShipmentId;
+	private FinderPath _finderPathCountByCommerceShipmentId;
 
 	/**
 	 * Returns all the commerce shipment items where commerceShipmentId = &#63;.
@@ -601,10 +601,10 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @return the matching commerce shipment items
 	 */
 	@Override
-	public List<CommerceShipmentItem> findByCommerceShipment(
+	public List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId) {
 
-		return findByCommerceShipment(
+		return findByCommerceShipmentId(
 			commerceShipmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -621,10 +621,10 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @return the range of matching commerce shipment items
 	 */
 	@Override
-	public List<CommerceShipmentItem> findByCommerceShipment(
+	public List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId, int start, int end) {
 
-		return findByCommerceShipment(commerceShipmentId, start, end, null);
+		return findByCommerceShipmentId(commerceShipmentId, start, end, null);
 	}
 
 	/**
@@ -641,11 +641,11 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @return the ordered range of matching commerce shipment items
 	 */
 	@Override
-	public List<CommerceShipmentItem> findByCommerceShipment(
+	public List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId, int start, int end,
 		OrderByComparator<CommerceShipmentItem> orderByComparator) {
 
-		return findByCommerceShipment(
+		return findByCommerceShipmentId(
 			commerceShipmentId, start, end, orderByComparator, true);
 	}
 
@@ -664,7 +664,7 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @return the ordered range of matching commerce shipment items
 	 */
 	@Override
-	public List<CommerceShipmentItem> findByCommerceShipment(
+	public List<CommerceShipmentItem> findByCommerceShipmentId(
 		long commerceShipmentId, int start, int end,
 		OrderByComparator<CommerceShipmentItem> orderByComparator,
 		boolean useFinderCache) {
@@ -676,12 +676,13 @@ public class CommerceShipmentItemPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCommerceShipment;
+				finderPath =
+					_finderPathWithoutPaginationFindByCommerceShipmentId;
 				finderArgs = new Object[] {commerceShipmentId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCommerceShipment;
+			finderPath = _finderPathWithPaginationFindByCommerceShipmentId;
 			finderArgs = new Object[] {
 				commerceShipmentId, start, end, orderByComparator
 			};
@@ -719,7 +720,7 @@ public class CommerceShipmentItemPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMMERCESHIPMENT_COMMERCESHIPMENTID_2);
+			sb.append(_FINDER_COLUMN_COMMERCESHIPMENTID_COMMERCESHIPMENTID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -771,13 +772,13 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
 	 */
 	@Override
-	public CommerceShipmentItem findByCommerceShipment_First(
+	public CommerceShipmentItem findByCommerceShipmentId_First(
 			long commerceShipmentId,
 			OrderByComparator<CommerceShipmentItem> orderByComparator)
 		throws NoSuchShipmentItemException {
 
 		CommerceShipmentItem commerceShipmentItem =
-			fetchByCommerceShipment_First(
+			fetchByCommerceShipmentId_First(
 				commerceShipmentId, orderByComparator);
 
 		if (commerceShipmentItem != null) {
@@ -804,11 +805,11 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @return the first matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
 	 */
 	@Override
-	public CommerceShipmentItem fetchByCommerceShipment_First(
+	public CommerceShipmentItem fetchByCommerceShipmentId_First(
 		long commerceShipmentId,
 		OrderByComparator<CommerceShipmentItem> orderByComparator) {
 
-		List<CommerceShipmentItem> list = findByCommerceShipment(
+		List<CommerceShipmentItem> list = findByCommerceShipmentId(
 			commerceShipmentId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -827,13 +828,14 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @throws NoSuchShipmentItemException if a matching commerce shipment item could not be found
 	 */
 	@Override
-	public CommerceShipmentItem findByCommerceShipment_Last(
+	public CommerceShipmentItem findByCommerceShipmentId_Last(
 			long commerceShipmentId,
 			OrderByComparator<CommerceShipmentItem> orderByComparator)
 		throws NoSuchShipmentItemException {
 
 		CommerceShipmentItem commerceShipmentItem =
-			fetchByCommerceShipment_Last(commerceShipmentId, orderByComparator);
+			fetchByCommerceShipmentId_Last(
+				commerceShipmentId, orderByComparator);
 
 		if (commerceShipmentItem != null) {
 			return commerceShipmentItem;
@@ -859,17 +861,17 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @return the last matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
 	 */
 	@Override
-	public CommerceShipmentItem fetchByCommerceShipment_Last(
+	public CommerceShipmentItem fetchByCommerceShipmentId_Last(
 		long commerceShipmentId,
 		OrderByComparator<CommerceShipmentItem> orderByComparator) {
 
-		int count = countByCommerceShipment(commerceShipmentId);
+		int count = countByCommerceShipmentId(commerceShipmentId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceShipmentItem> list = findByCommerceShipment(
+		List<CommerceShipmentItem> list = findByCommerceShipmentId(
 			commerceShipmentId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -889,7 +891,7 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @throws NoSuchShipmentItemException if a commerce shipment item with the primary key could not be found
 	 */
 	@Override
-	public CommerceShipmentItem[] findByCommerceShipment_PrevAndNext(
+	public CommerceShipmentItem[] findByCommerceShipmentId_PrevAndNext(
 			long commerceShipmentItemId, long commerceShipmentId,
 			OrderByComparator<CommerceShipmentItem> orderByComparator)
 		throws NoSuchShipmentItemException {
@@ -904,13 +906,13 @@ public class CommerceShipmentItemPersistenceImpl
 
 			CommerceShipmentItem[] array = new CommerceShipmentItemImpl[3];
 
-			array[0] = getByCommerceShipment_PrevAndNext(
+			array[0] = getByCommerceShipmentId_PrevAndNext(
 				session, commerceShipmentItem, commerceShipmentId,
 				orderByComparator, true);
 
 			array[1] = commerceShipmentItem;
 
-			array[2] = getByCommerceShipment_PrevAndNext(
+			array[2] = getByCommerceShipmentId_PrevAndNext(
 				session, commerceShipmentItem, commerceShipmentId,
 				orderByComparator, false);
 
@@ -924,7 +926,7 @@ public class CommerceShipmentItemPersistenceImpl
 		}
 	}
 
-	protected CommerceShipmentItem getByCommerceShipment_PrevAndNext(
+	protected CommerceShipmentItem getByCommerceShipmentId_PrevAndNext(
 		Session session, CommerceShipmentItem commerceShipmentItem,
 		long commerceShipmentId,
 		OrderByComparator<CommerceShipmentItem> orderByComparator,
@@ -943,7 +945,7 @@ public class CommerceShipmentItemPersistenceImpl
 
 		sb.append(_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE);
 
-		sb.append(_FINDER_COLUMN_COMMERCESHIPMENT_COMMERCESHIPMENTID_2);
+		sb.append(_FINDER_COLUMN_COMMERCESHIPMENTID_COMMERCESHIPMENTID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -1041,9 +1043,9 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @param commerceShipmentId the commerce shipment ID
 	 */
 	@Override
-	public void removeByCommerceShipment(long commerceShipmentId) {
+	public void removeByCommerceShipmentId(long commerceShipmentId) {
 		for (CommerceShipmentItem commerceShipmentItem :
-				findByCommerceShipment(
+				findByCommerceShipmentId(
 					commerceShipmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -1058,8 +1060,8 @@ public class CommerceShipmentItemPersistenceImpl
 	 * @return the number of matching commerce shipment items
 	 */
 	@Override
-	public int countByCommerceShipment(long commerceShipmentId) {
-		FinderPath finderPath = _finderPathCountByCommerceShipment;
+	public int countByCommerceShipmentId(long commerceShipmentId) {
+		FinderPath finderPath = _finderPathCountByCommerceShipmentId;
 
 		Object[] finderArgs = new Object[] {commerceShipmentId};
 
@@ -1070,7 +1072,7 @@ public class CommerceShipmentItemPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMMERCESHIPMENT_COMMERCESHIPMENTID_2);
+			sb.append(_FINDER_COLUMN_COMMERCESHIPMENTID_COMMERCESHIPMENTID_2);
 
 			String sql = sb.toString();
 
@@ -1101,7 +1103,7 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 	private static final String
-		_FINDER_COLUMN_COMMERCESHIPMENT_COMMERCESHIPMENTID_2 =
+		_FINDER_COLUMN_COMMERCESHIPMENTID_COMMERCESHIPMENTID_2 =
 			"commerceShipmentItem.commerceShipmentId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCommerceOrderItemId;
@@ -3043,22 +3045,22 @@ public class CommerceShipmentItemPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathWithPaginationFindByCommerceShipment = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceShipment",
+		_finderPathWithPaginationFindByCommerceShipmentId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceShipmentId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"commerceShipmentId"}, true);
 
-		_finderPathWithoutPaginationFindByCommerceShipment = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceShipment",
-			new String[] {Long.class.getName()},
+		_finderPathWithoutPaginationFindByCommerceShipmentId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCommerceShipmentId", new String[] {Long.class.getName()},
 			new String[] {"commerceShipmentId"}, true);
 
-		_finderPathCountByCommerceShipment = new FinderPath(
+		_finderPathCountByCommerceShipmentId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceShipment", new String[] {Long.class.getName()},
+			"countByCommerceShipmentId", new String[] {Long.class.getName()},
 			new String[] {"commerceShipmentId"}, false);
 
 		_finderPathWithPaginationFindByCommerceOrderItemId = new FinderPath(

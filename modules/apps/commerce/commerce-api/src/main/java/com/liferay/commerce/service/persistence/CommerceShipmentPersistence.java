@@ -47,7 +47,7 @@ public interface CommerceShipmentPersistence
 	 * @param groupId the group ID
 	 * @return the matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(long groupId);
+	public java.util.List<CommerceShipment> findByGroupId(long groupId);
 
 	/**
 	 * Returns a range of all the commerce shipments where groupId = &#63;.
@@ -61,7 +61,7 @@ public interface CommerceShipmentPersistence
 	 * @param end the upper bound of the range of commerce shipments (not inclusive)
 	 * @return the range of matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(
+	public java.util.List<CommerceShipment> findByGroupId(
 		long groupId, int start, int end);
 
 	/**
@@ -77,7 +77,7 @@ public interface CommerceShipmentPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(
+	public java.util.List<CommerceShipment> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator);
@@ -96,7 +96,7 @@ public interface CommerceShipmentPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(
+	public java.util.List<CommerceShipment> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator,
@@ -110,7 +110,7 @@ public interface CommerceShipmentPersistence
 	 * @return the first matching commerce shipment
 	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
 	 */
-	public CommerceShipment findByGroupIds_First(
+	public CommerceShipment findByGroupId_First(
 			long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 				orderByComparator)
@@ -123,7 +123,7 @@ public interface CommerceShipmentPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
 	 */
-	public CommerceShipment fetchByGroupIds_First(
+	public CommerceShipment fetchByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator);
@@ -136,7 +136,7 @@ public interface CommerceShipmentPersistence
 	 * @return the last matching commerce shipment
 	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
 	 */
-	public CommerceShipment findByGroupIds_Last(
+	public CommerceShipment findByGroupId_Last(
 			long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 				orderByComparator)
@@ -149,7 +149,7 @@ public interface CommerceShipmentPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
 	 */
-	public CommerceShipment fetchByGroupIds_Last(
+	public CommerceShipment fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator);
@@ -163,7 +163,7 @@ public interface CommerceShipmentPersistence
 	 * @return the previous, current, and next commerce shipment
 	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
 	 */
-	public CommerceShipment[] findByGroupIds_PrevAndNext(
+	public CommerceShipment[] findByGroupId_PrevAndNext(
 			long commerceShipmentId, long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 				orderByComparator)
@@ -179,7 +179,7 @@ public interface CommerceShipmentPersistence
 	 * @param groupIds the group IDs
 	 * @return the matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(long[] groupIds);
+	public java.util.List<CommerceShipment> findByGroupId(long[] groupIds);
 
 	/**
 	 * Returns a range of all the commerce shipments where groupId = any &#63;.
@@ -193,7 +193,7 @@ public interface CommerceShipmentPersistence
 	 * @param end the upper bound of the range of commerce shipments (not inclusive)
 	 * @return the range of matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(
+	public java.util.List<CommerceShipment> findByGroupId(
 		long[] groupIds, int start, int end);
 
 	/**
@@ -209,7 +209,7 @@ public interface CommerceShipmentPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(
+	public java.util.List<CommerceShipment> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator);
@@ -228,7 +228,7 @@ public interface CommerceShipmentPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce shipments
 	 */
-	public java.util.List<CommerceShipment> findByGroupIds(
+	public java.util.List<CommerceShipment> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShipment>
 			orderByComparator,
@@ -239,7 +239,7 @@ public interface CommerceShipmentPersistence
 	 *
 	 * @param groupId the group ID
 	 */
-	public void removeByGroupIds(long groupId);
+	public void removeByGroupId(long groupId);
 
 	/**
 	 * Returns the number of commerce shipments where groupId = &#63;.
@@ -247,7 +247,7 @@ public interface CommerceShipmentPersistence
 	 * @param groupId the group ID
 	 * @return the number of matching commerce shipments
 	 */
-	public int countByGroupIds(long groupId);
+	public int countByGroupId(long groupId);
 
 	/**
 	 * Returns the number of commerce shipments where groupId = any &#63;.
@@ -255,7 +255,7 @@ public interface CommerceShipmentPersistence
 	 * @param groupIds the group IDs
 	 * @return the number of matching commerce shipments
 	 */
-	public int countByGroupIds(long[] groupIds);
+	public int countByGroupId(long[] groupIds);
 
 	/**
 	 * Returns all the commerce shipments where groupId = &#63; and commerceAddressId = &#63;.

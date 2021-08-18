@@ -270,7 +270,7 @@ public class CommerceShipmentLocalServiceImpl
 		long[] groupIds, int start, int end,
 		OrderByComparator<CommerceShipment> orderByComparator) {
 
-		return commerceShipmentPersistence.findByGroupIds(
+		return commerceShipmentPersistence.findByGroupId(
 			groupIds, start, end, orderByComparator);
 	}
 
@@ -308,7 +308,7 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Override
 	public int getCommerceShipmentsCount(long[] groupIds) {
-		return commerceShipmentPersistence.countByGroupIds(groupIds);
+		return commerceShipmentPersistence.countByGroupId(groupIds);
 	}
 
 	@Override

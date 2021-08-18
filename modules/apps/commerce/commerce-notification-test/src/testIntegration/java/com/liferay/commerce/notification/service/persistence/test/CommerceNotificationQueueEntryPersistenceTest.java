@@ -288,10 +288,10 @@ public class CommerceNotificationQueueEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLtS() throws Exception {
-		_persistence.countByLtS(RandomTestUtil.nextDate());
+	public void testCountByLtSentDate() throws Exception {
+		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
 
-		_persistence.countByLtS(RandomTestUtil.nextDate());
+		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
 	}
 
 	@Test

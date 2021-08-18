@@ -161,38 +161,45 @@ public class JournalFeedStagedModelDataHandlerTest
 
 	@Test
 	public void testDoubleExportImport() throws Exception {
-		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			addDependentStagedModelsMap(stagingGroup);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.internal.exportimport.data.handler." +
+					"JournalFeedStagedModelDataHandler",
+				LoggerTestUtil.WARN)) {
 
-		StagedModel stagedModel = addStagedModel(
-			stagingGroup, dependentStagedModelsMap);
+			Map<String, List<StagedModel>> dependentStagedModelsMap =
+				addDependentStagedModelsMap(stagingGroup);
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
+			StagedModel stagedModel = addStagedModel(
+				stagingGroup, dependentStagedModelsMap);
 
-		try {
-			exportImportStagedModel(stagedModel);
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			try {
+				exportImportStagedModel(stagedModel);
+			}
+			finally {
+				ExportImportThreadLocal.setPortletImportInProcess(false);
+			}
+
+			StagedModel importedStagedModel = getStagedModel(
+				stagedModel.getUuid(), liveGroup);
+
+			Assert.assertNotNull(importedStagedModel);
+
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			try {
+				exportImportStagedModel(stagedModel);
+			}
+			finally {
+				ExportImportThreadLocal.setPortletImportInProcess(false);
+			}
+
+			importedStagedModel = getStagedModel(
+				stagedModel.getUuid(), liveGroup);
+
+			Assert.assertNotNull(importedStagedModel);
 		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-
-		StagedModel importedStagedModel = getStagedModel(
-			stagedModel.getUuid(), liveGroup);
-
-		Assert.assertNotNull(importedStagedModel);
-
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(stagedModel);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-
-		importedStagedModel = getStagedModel(stagedModel.getUuid(), liveGroup);
-
-		Assert.assertNotNull(importedStagedModel);
 	}
 
 	@Override

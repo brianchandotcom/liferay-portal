@@ -293,23 +293,63 @@ definition {
 			ACNavigation.goToSettings();
 		}
 
-		if (!(isSet(dataSourceName))) {
-			Click(locator1 = "ACSettings#ITEM_TABLE");
-		}
-
 		if (isSet(dataSourceName)) {
+			ACUtils.searchBar(searchItem = "${dataSourceName}");
+
 			ACNavigation.openItem(itemName = "${dataSourceName}");
 		}
 
-		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+		else {
+			Click(locator1 = "ACSettings#ITEM_TABLE");
+		}
 
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+		WaitForVisible(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+		if (IsElementPresent(key_text = "Edit CSV", locator1 = "Button#ANY")) {
+			var dataSourceName = selenium.getText("//div[contains(@class,'sheet-header')]//h3");
 
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Delete Data Source");
+
+			AssertTextPresent(
+				locator1 = "Modal#BODY",
+				value1 = "Are you sure you want to delete ${dataSourceName}?");
+
+			AssertTextPresent(
+				locator1 = "Modal#BODY",
+				value1 = "You will permanently lose all contacts and analytics data collected from this data source. You will not be able to undo this action.");
+
+			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+		}
+
+		else {
+			var dataSourceName = selenium.getText("//h3");
+
+			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Delete ${dataSourceName}");
+
+			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+		}
 	}
 
 	macro deleteKeywordCheckbox {

@@ -471,12 +471,10 @@ public class UserAccountResourceImpl
 			Long accountId, String accountRoleIds, String[] emailAddresses)
 		throws Exception {
 
-		List<UserAccount> userAccounts = new ArrayList<>();
-
-		for (String emailAddress : emailAddresses) {
-			userAccounts.add(
-				postAccountUserAccountByEmailAddress(accountId, emailAddress));
-		}
+		List<UserAccount> userAccounts = transformToList(
+			emailAddresses,
+			emailAddress -> postAccountUserAccountByEmailAddress(
+				accountId, emailAddress));
 
 		if (Validator.isNotNull(accountRoleIds)) {
 			String[] accRoleIds = StringUtil.split(

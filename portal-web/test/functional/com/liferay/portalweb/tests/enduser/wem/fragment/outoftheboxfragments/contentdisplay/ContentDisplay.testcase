@@ -172,7 +172,7 @@ definition {
 		}
 	}
 
-	@description = "Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
+	@description = "This is a test for LPS-97182. Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
 	@priority = "4"
 	test DeletedContentIsInvisible {
 		JSONWebcontent.addWebContent(
@@ -220,7 +220,7 @@ definition {
 		}
 	}
 
-	@description = "Given a published content page with an unconfigured Content fragment, when the page is viewed the fragment should not be visible."
+	@description = "This is a test for LPS-97182. Given a published content page with an unconfigured Content fragment, when the page is viewed the fragment should not be visible."
 	@priority = "4"
 	test UnconfiguredContentDisplayIsInvisible {
 		ContentPagesNavigator.openEditContentPage(
@@ -643,7 +643,7 @@ definition {
 		}
 	}
 
-	@description = "This case ensures that a user can map a blogs content field to a fragment via the content display."
+	@description = "This is a test for LPS-97182. This case ensures that a user can map a blogs content field to a fragment via the content display."
 	@priority = "5"
 	test ViewSelectedBlog {
 		property portal.acceptance = "true";
@@ -748,7 +748,7 @@ definition {
 		}
 	}
 
-	@description = "This case ensures that a user can map an image to a fragment via the content display."
+	@description = "This is a test for LPS-97182. This case ensures that a user can map an image to a fragment via the content display."
 	@priority = "5"
 	test ViewSelectedDocument {
 		property portal.acceptance = "true";

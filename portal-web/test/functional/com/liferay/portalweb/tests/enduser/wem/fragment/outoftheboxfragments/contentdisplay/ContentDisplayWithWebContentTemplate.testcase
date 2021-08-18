@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-101248. Delete a web content template used in Content Display fragment."
+	@description = "This is a use test for LPS-101248. Delete a web content template used in Content Display fragment."
 	@priority = "2"
 	test DeleteSelectedTemplate {
 		task ("Add a web content based on Basic Web Content") {

@@ -614,17 +614,11 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		MyWorkflowTasks.updateDueDateAtMyWorkflowTastks(
-			dueDate = "01/01/2010"
-		);
+		MyWorkflowTasks.updateDueDateAtMyWorkflowTastks(dueDate = "01/01/2010");
 
 		MyWorkflowTasks.viewErrorRequestFailed();
 
 		MyWorkflowTasks.viewErrorValidDueDate();
-
-
-
-
 	}
 
 	@description = "Verify that the pagination button indicates the selected page, even when there is only 1 page"

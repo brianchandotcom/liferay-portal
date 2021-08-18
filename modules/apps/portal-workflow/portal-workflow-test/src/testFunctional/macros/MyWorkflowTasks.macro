@@ -49,6 +49,4 @@ definition {
 			value1 = "Please enter a valid due date.");
 	}
 
-		
-
 }

@@ -1,5 +1,25 @@
 definition {
 
+	macro addObjectFieldViaAPI {
+		JSONObject.addObjectField(
+			fieldLabelName = "${fieldLabelName}",
+			fieldName = "${fieldName}",
+			fieldType = "${fieldType}",
+			isRequired = "${isRequired}",
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
+	macro addObjectViaAPI {
+		JSONObject.addObject(
+			labelName = "${labelName}",
+			objectName = "${objectName}",
+			pluralLabelName = "${pluralLabelName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
 	macro createCustomObject {
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
 
@@ -10,8 +30,37 @@ definition {
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
+	macro deleteAllCustomObjectsViaAPI {
+		JSONObject.deleteAllCustomObjects(
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
+	macro deleteObjectEntryViaAPI {
+		JSONObject.deleteObjectEntry(
+			fieldName = "${fieldName}",
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			value = "${value}");
+	}
+
+	macro deleteObjectViaAPI {
+		JSONObject.deleteObject(
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
 	macro openObjectAdmin {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
+	}
+
+	macro publishObjectViaAPI {
+		JSONObject.publishObject(
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	macro viewCustomObject {

@@ -1,0 +1,219 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add an object"
+	macro addObject {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"label": {
+				"en_US": "${labelName}"
+			},
+			"name": "${objectName}",
+			"objectFields": [],
+			"pluralLabel": {
+				"en_US": "${pluralLabelName}"
+			}
+			}'
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to add a field in an object"
+	macro addObjectField {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectID = JSONObject.getObjectId(
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectID}/object-fields \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "${fieldLabelName}"
+			},
+			"name": "${fieldName}",
+			"required": ${isRequired},
+			"type": "${fieldType}"
+			}'
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to delete all custom objects"
+	macro deleteAllCustomObjects {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var objectIdList = JSONCurlUtil.get("${curl}", "$.items[?(@['system'] == false)]['id']");
+
+		if ("${objectIdList}" != "") {
+			for (var objectId : list "${objectIdList}") {
+				var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
+				-u ${userEmailAddress}:${userPassword}
+			''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+	}
+
+	@summary = "This calls the JSON WS API to delete an object"
+	macro deleteObject {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectID = JSONObject.getObjectId(
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectID} \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to delete an entry in an object"
+	macro deleteObjectEntry {
+		var portalURL = JSONCompany.getPortalURL();
+		var entryId = JSONObject.getObjectEntryId(
+			objectName = "${objectName}",
+			fieldName = "${fieldName}",
+			entryValue = "${value}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var objectName = StringUtil.toLowerCase("${objectName}");
+		var curl = '''
+			${portalURL}/o/${objectName}s/${entryId} \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	macro getObjectEntryId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var objectName = StringUtil.toLowerCase("${objectName}");
+		var curl = '''
+			${portalURL}/o/${objectName}s \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var entryId = JSONCurlUtil.get("${curl}", "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
+
+		return "${entryId}";
+	}
+
+	macro getObjectId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${objectName}')]['id']");
+
+		return "${objectId}";
+	}
+
+	@summary = "This calls the JSON WS API to publish an object"
+	macro publishObject {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectID = JSONObject.getObjectId(
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectID}/publish \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+}

@@ -1,7 +1,4 @@
 <#--
-Web content templates are used to lay out the fields defined in a web
-content structure.
-
-Please use the right panel to quickly add commonly used variables.
-Autocomplete is also available and can be invoked by typing "${".
+Add elements from the sidebar to define your Template. During code
+editing, type "${" to use the autocomplete feature.
 -->

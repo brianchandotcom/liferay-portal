@@ -16,6 +16,27 @@
 	<td>//button[contains(@class, 'close')]</td>
 	<td></td>
 </tr>
+<!-- FILTER ORDER -->
+<tr>
+	<td>ORDER_ARROW_BUTTON_ASC</td>
+	<td>//a[contains(@class, 'nav-link-monospaced btn-outline-borderless')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-ascending')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_ARROW_BUTTON_DES</td>
+	<td>//a[contains(@class, 'nav-link-monospaced btn-outline-borderless')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-descending')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_ARROW_TABLE_BUTTON_UP</td>
+	<td>//a[contains(@class, 'text-truncate-inline')]/span[contains(@class, 'inline-item-after')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-up')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_ARROW_TABLE_BUTTON_DOWN</td>
+	<td>//a[contains(@class, 'text-truncate-inline')]/span[contains(@class, 'inline-item-after')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-down')]]</td>
+	<td></td>
+</tr>
 <!-- PAGE_PAGINATION-->
 <tr>
 	<td>ANY_PAGE</td>

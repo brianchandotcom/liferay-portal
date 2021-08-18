@@ -17,8 +17,8 @@ package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CPDefinitionDiagramSettingDisplayContext;
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.product.type.DiagramCPType;
 import com.liferay.commerce.shop.by.diagram.configuration.CPDefinitionDiagramSettingImageConfiguration;
+import com.liferay.commerce.shop.by.diagram.constants.DiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramTypeRegistry;
 import com.liferay.document.library.util.DLURLHelper;
@@ -65,12 +65,12 @@ public class CPDefinitionCPTypeDiagramScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return DiagramCPType.NAME;
+		return DiagramCPTypeConstants.NAME;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return DiagramCPType.NAME;
+		return DiagramCPTypeConstants.NAME;
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class CPDefinitionCPTypeDiagramScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, DiagramCPType.NAME);
+		return LanguageUtil.get(resourceBundle, DiagramCPTypeConstants.NAME);
 	}
 
 	@Override
@@ -92,9 +92,9 @@ public class CPDefinitionCPTypeDiagramScreenNavigationCategory
 			return false;
 		}
 
-		String productTypeName = cpDefinition.getProductTypeName();
+		if (DiagramCPTypeConstants.NAME.equals(
+				cpDefinition.getProductTypeName())) {
 
-		if (productTypeName.equals(DiagramCPType.NAME)) {
 			return true;
 		}
 

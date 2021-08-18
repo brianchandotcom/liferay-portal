@@ -194,7 +194,9 @@ public abstract class BaseFragmentCollectionContributor
 			_fragmentEntryNames = new HashMap<>();
 
 			if (MapUtil.isEmpty(names) ||
-				(!fragmentEntriesEnumeration.hasMoreElements() &&
+				((fragmentEntriesEnumeration != null) &&
+				 !fragmentEntriesEnumeration.hasMoreElements() &&
+				 (fragmentCompositionsEnumeration != null) &&
 				 !fragmentCompositionsEnumeration.hasMoreElements())) {
 
 				return;
@@ -202,22 +204,26 @@ public abstract class BaseFragmentCollectionContributor
 
 			_names = names;
 
-			while (fragmentEntriesEnumeration.hasMoreElements()) {
-				URL url = fragmentEntriesEnumeration.nextElement();
+			if (fragmentEntriesEnumeration != null) {
+				while (fragmentEntriesEnumeration.hasMoreElements()) {
+					URL url = fragmentEntriesEnumeration.nextElement();
 
-				FragmentEntry fragmentEntry = _getFragmentEntry(url);
+					FragmentEntry fragmentEntry = _getFragmentEntry(url);
 
-				List<FragmentEntry> fragmentEntryList =
-					_fragmentEntries.computeIfAbsent(
-						fragmentEntry.getType(), type -> new ArrayList<>());
+					List<FragmentEntry> fragmentEntryList =
+						_fragmentEntries.computeIfAbsent(
+							fragmentEntry.getType(), type -> new ArrayList<>());
 
-				fragmentEntryList.add(fragmentEntry);
+					fragmentEntryList.add(fragmentEntry);
+				}
 			}
 
-			while (fragmentCompositionsEnumeration.hasMoreElements()) {
-				URL url = fragmentCompositionsEnumeration.nextElement();
+			if (fragmentCompositionsEnumeration != null) {
+				while (fragmentCompositionsEnumeration.hasMoreElements()) {
+					URL url = fragmentCompositionsEnumeration.nextElement();
 
-				_fragmentCompositions.add(_getFragmentComposition(url));
+					_fragmentCompositions.add(_getFragmentComposition(url));
+				}
 			}
 		}
 		catch (Exception exception) {

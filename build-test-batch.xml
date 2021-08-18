@@ -6381,9 +6381,9 @@ ${output.content}</echo>
 
 								<wait-for-license-activation />
 
-								<antcall inheritall="false" target="run-selenium-test">
+								<!--<antcall inheritall="false" target="run-selenium-test">
 									<param name="test.class" value="CommerceLicense#ViewCommerceEnabled" />
-								</antcall>
+								</antcall>-->
 							</try>
 
 							<finally>

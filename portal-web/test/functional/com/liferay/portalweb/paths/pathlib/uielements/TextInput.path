@@ -391,6 +391,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NO_PROPERTIES_AVAILABLE_TEXT</td>
+	<td>//span[contains(@class,'text-truncate') and text()='No Properties Available']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NUMBER</td>
 	<td>//div[label[contains(.,'Number')]]/input</td>
 	<td></td>

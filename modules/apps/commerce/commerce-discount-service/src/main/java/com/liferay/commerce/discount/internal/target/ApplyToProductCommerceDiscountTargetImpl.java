@@ -72,7 +72,7 @@ public class ApplyToProductCommerceDiscountTargetImpl
 
 		long[] cpDefinitionIds = longStream.toArray();
 
-		document.addKeyword("target_product_ids", cpDefinitionIds);
+		document.addKeyword("commerce_target_product_ids", cpDefinitionIds);
 	}
 
 	@Override
@@ -98,10 +98,10 @@ public class ApplyToProductCommerceDiscountTargetImpl
 		BooleanFilter contextBooleanFilter, CPDefinition cpDefinition) {
 
 		TermFilter termFilter = new TermFilter(
-			"target_product_ids",
+			"commerce_target_product_ids",
 			String.valueOf(cpDefinition.getCPDefinitionId()));
 
-		Filter existFilter = new ExistsFilter("target_product_ids");
+		Filter existFilter = new ExistsFilter("commerce_target_product_ids");
 
 		BooleanFilter existBooleanFilter = new BooleanFilter();
 

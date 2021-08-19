@@ -18,10 +18,12 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
+import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -274,6 +276,23 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			).toArray();
 
 		document.addNumber("commerceAccountGroupIds", commerceAccountGroupIds);
+
+		List<CommercePriceListOrderTypeRel> commercePriceListOrderTypeRels =
+			_commercePriceListOrderTypeRelLocalService.
+				getCommercePriceListOrderTypeRels(
+					commercePriceList.getCommercePriceListId());
+
+		Stream<CommercePriceListOrderTypeRel>
+			commercePriceListOrderTypeRelsStream =
+				commercePriceListOrderTypeRels.stream();
+
+		long[] commerceOrderTypeIds =
+			commercePriceListOrderTypeRelsStream.mapToLong(
+				CommercePriceListOrderTypeRel::getCommerceOrderTypeId
+			).toArray();
+
+		document.addNumber("commerceOrderTypeId", commerceOrderTypeIds);
+
 		document.addNumber(
 			"commerceAccountGroupIds_required_matches",
 			commerceAccountGroupIds.length);
@@ -384,6 +403,10 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private CommercePriceListOrderTypeRelLocalService
+		_commercePriceListOrderTypeRelLocalService;
 
 	@Reference
 	private FilterBuilders _filterBuilders;

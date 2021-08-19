@@ -14,9 +14,20 @@
 
 package com.liferay.commerce.discount.model.impl;
 
+import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marco Leo
  */
 public class CommerceDiscountOrderTypeRelImpl
 	extends CommerceDiscountOrderTypeRelBaseImpl {
+
+	@Override
+	public CommerceDiscount getCommerceDiscount() throws PortalException {
+		return CommerceDiscountLocalServiceUtil.getCommerceDiscount(
+			getCommerceDiscountId());
+	}
+
 }

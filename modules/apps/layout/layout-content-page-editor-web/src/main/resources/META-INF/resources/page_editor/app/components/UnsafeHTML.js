@@ -33,7 +33,7 @@ export default class UnsafeHTML extends React.PureComponent {
 			this._syncRefProps();
 
 			if (
-				!this.state.ref.innerHTML ||
+				(!this.state.ref.childNodes.length && this.props.markup) ||
 				prevProps.markup !== this.props.markup
 			) {
 				this._syncRefContent();

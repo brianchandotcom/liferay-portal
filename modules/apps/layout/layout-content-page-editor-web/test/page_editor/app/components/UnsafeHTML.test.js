@@ -109,4 +109,11 @@ describe('UnsafeHTML', () => {
 		expect(portalContent).toBeInTheDocument();
 		expect(portalContent.innerHTML).toBe('Some portal 123');
 	});
+
+	it('does nothing if there is no markup', () => {
+		const onRender = jest.fn();
+
+		render(<UnsafeHTML markup="" onRender={onRender} />);
+		expect(onRender).not.toHaveBeenCalled();
+	});
 });

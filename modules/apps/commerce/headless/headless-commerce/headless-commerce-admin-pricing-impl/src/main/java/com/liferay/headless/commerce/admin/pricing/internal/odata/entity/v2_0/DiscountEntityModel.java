@@ -39,7 +39,10 @@ public class DiscountEntityModel implements EntityModel {
 					"accountGroupId", locale -> "commerceAccountGroupIds")),
 			new CollectionEntityField(
 				new IntegerEntityField(
-					"channelId", locale -> "commerceChannelId"))
+					"channelId", locale -> "commerceChannelId")),
+			new CollectionEntityField(
+				new IntegerEntityField(
+					"orderTypeId", locale -> "commerceOrderTypeId"))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

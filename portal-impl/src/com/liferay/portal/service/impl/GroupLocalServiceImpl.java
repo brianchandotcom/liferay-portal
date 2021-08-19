@@ -122,8 +122,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
-import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
@@ -1008,29 +1006,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Workflow
 
-			List<WorkflowHandler<?>> scopeableWorkflowHandlers =
-				WorkflowHandlerRegistryUtil.getScopeableWorkflowHandlers();
+			List<WorkflowDefinitionLink> workflowDefinitionLinks =
+				workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					group.getCompanyId(), group.getGroupId(), 0);
 
-			for (WorkflowHandler<?> scopeableWorkflowHandler :
-					scopeableWorkflowHandlers) {
-
-				if (!scopeableWorkflowHandler.isVisible()) {
-					continue;
-				}
-
-				WorkflowDefinitionLink workflowDefinitionLink =
-					workflowDefinitionLinkLocalService.
-						fetchWorkflowDefinitionLink(
-							group.getCompanyId(), group.getGroupId(),
-							scopeableWorkflowHandler.getClassName(), 0, 0,
-							true);
-
-				if ((workflowDefinitionLink == null) ||
-					(workflowDefinitionLink.getGroupId() ==
-						group.getLiveGroupId())) {
-
-					continue;
-				}
+			for (WorkflowDefinitionLink workflowDefinitionLink :
+					workflowDefinitionLinks) {
 
 				workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 					workflowDefinitionLink);

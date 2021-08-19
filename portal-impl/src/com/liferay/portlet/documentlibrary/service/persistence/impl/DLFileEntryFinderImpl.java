@@ -37,6 +37,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -376,11 +377,20 @@ public class DLFileEntryFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addEntity(
-				DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
+			sqlQuery.addScalar("fileEntryId", Type.LONG);
 
-			return (List<DLFileEntry>)QueryUtil.list(
+			List<Long> fileEntryIds = (List<Long>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
+
+			List<DLFileEntry> dlFileEntries = new ArrayList<>(
+				fileEntryIds.size());
+
+			for (long fileEntryId : fileEntryIds) {
+				dlFileEntries.add(
+					dlFileEntryPersistence.findByPrimaryKey(fileEntryId));
+			}
+
+			return Collections.unmodifiableList(dlFileEntries);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

@@ -138,7 +138,7 @@
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByExtraSettings">
 		<![CDATA[
 			SELECT
-				DISTINCT {DLFileEntry.*}
+				DISTINCT DLFileEntry.fileEntryId, DLFileEntry.modifiedDate
 			FROM
 				DLFileEntry
 			INNER JOIN

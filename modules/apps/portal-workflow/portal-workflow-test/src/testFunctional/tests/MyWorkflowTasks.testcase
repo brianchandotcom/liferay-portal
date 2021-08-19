@@ -305,7 +305,7 @@ definition {
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userEmailAddress = "usersn@liferay.com");		
+			userEmailAddress = "usersn@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -323,8 +323,6 @@ definition {
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
-
-
 	}
 
 	@description = "LPS-135888 - Verify that the task is assigned to the user with Account role type"

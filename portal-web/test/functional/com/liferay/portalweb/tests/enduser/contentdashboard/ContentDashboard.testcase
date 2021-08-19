@@ -1449,6 +1449,7 @@ definition {
 	@description = "LPS-119966 Given a document with and associated Display Page Template
 	When the user with permissions clicks on the info panel button
 	Then the user is lead to the info panel"
+
 	@priority = "4"
 	test DocumentViewInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";

@@ -80,7 +80,8 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				objectField.getIndexedLanguageId(),
 				com.liferay.object.util.LocalizedMapUtil.getLocalizedMap(
 					objectField.getName()),
-				objectField.getRequired()));
+				objectField.getName(), objectField.getRequired(),
+				objectField.getType()));
 	}
 
 	@Reference

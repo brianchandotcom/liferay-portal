@@ -152,17 +152,25 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectDefinitionStatusException();
 		}
 
-		_validateIndexed(
-			indexed, indexedAsKeyword, indexedLanguageId,
-			objectField.getType());
-
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
+
+		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+
+		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return objectFieldPersistence.update(objectField);
+		}
+
+		validateType(type);
+
+		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
+		_validateName(objectDefinition, name);
 
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
-		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectField.setName(name);
 		objectField.setRequired(required);
+		objectField.setType(type);
 
 		return objectFieldPersistence.update(objectField);
 	}

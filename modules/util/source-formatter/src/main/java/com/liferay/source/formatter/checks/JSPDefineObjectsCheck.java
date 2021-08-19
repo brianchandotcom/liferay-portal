@@ -148,7 +148,6 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 	};
 
 	private static final String[][] _LIFERAY_THEME_DEFINE_OBJECTS = {
-		{"Account", "account", "themeDisplay.getAccount()"},
 		{"ColorScheme", "colorScheme", "themeDisplay.getColorScheme()"},
 		{"Company", "company", "themeDisplay.getCompany()"},
 		{"Contact", "contact", "themeDisplay.getContact()"},

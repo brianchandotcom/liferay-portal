@@ -102,6 +102,18 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition
+			updateCustomObjectDefinition(
+				Long objectDefinitionId,
+				java.util.Map<java.util.Locale, String> labelMap, String name,
+				java.util.Map<java.util.Locale, String> pluralLabelMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.updateCustomObjectDefinition(
+			objectDefinitionId, labelMap, name, pluralLabelMap);
+	}
+
+	@Override
 	public ObjectDefinitionService getWrappedService() {
 		return _objectDefinitionService;
 	}

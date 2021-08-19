@@ -205,6 +205,35 @@ public class ObjectDefinitionServiceSoap {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectDefinitionSoap
+			updateCustomObjectDefinition(
+				Long objectDefinitionId, String[] labelMapLanguageIds,
+				String[] labelMapValues, String name,
+				String[] pluralLabelMapLanguageIds,
+				String[] pluralLabelMapValues)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
+				labelMapLanguageIds, labelMapValues);
+			Map<Locale, String> pluralLabelMap =
+				LocalizationUtil.getLocalizationMap(
+					pluralLabelMapLanguageIds, pluralLabelMapValues);
+
+			com.liferay.object.model.ObjectDefinition returnValue =
+				ObjectDefinitionServiceUtil.updateCustomObjectDefinition(
+					objectDefinitionId, labelMap, name, pluralLabelMap);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionServiceSoap.class);
 

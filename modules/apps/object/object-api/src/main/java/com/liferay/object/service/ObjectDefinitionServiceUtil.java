@@ -94,6 +94,15 @@ public class ObjectDefinitionServiceUtil {
 		return getService().publishCustomObjectDefinition(objectDefinitionId);
 	}
 
+	public static ObjectDefinition updateCustomObjectDefinition(
+			Long objectDefinitionId, Map<java.util.Locale, String> labelMap,
+			String name, Map<java.util.Locale, String> pluralLabelMap)
+		throws PortalException {
+
+		return getService().updateCustomObjectDefinition(
+			objectDefinitionId, labelMap, name, pluralLabelMap);
+	}
+
 	public static ObjectDefinitionService getService() {
 		return _service;
 	}

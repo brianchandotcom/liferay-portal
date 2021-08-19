@@ -86,4 +86,9 @@ public interface ObjectDefinitionService extends BaseService {
 			long objectDefinitionId)
 		throws PortalException;
 
+	public ObjectDefinition updateCustomObjectDefinition(
+			Long objectDefinitionId, Map<Locale, String> labelMap, String name,
+			Map<Locale, String> pluralLabelMap)
+		throws PortalException;
+
 }

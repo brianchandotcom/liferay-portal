@@ -330,6 +330,50 @@ public class ObjectDefinitionServiceHttp {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectDefinition
+			updateCustomObjectDefinition(
+				HttpPrincipal httpPrincipal, Long objectDefinitionId,
+				java.util.Map<java.util.Locale, String> labelMap, String name,
+				java.util.Map<java.util.Locale, String> pluralLabelMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectDefinitionServiceUtil.class,
+				"updateCustomObjectDefinition",
+				_updateCustomObjectDefinitionParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectDefinitionId, labelMap, name, pluralLabelMap);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectDefinition)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionServiceHttp.class);
 
@@ -351,6 +395,10 @@ public class ObjectDefinitionServiceHttp {
 	private static final Class<?>[]
 		_publishCustomObjectDefinitionParameterTypes6 = new Class[] {
 			long.class
+		};
+	private static final Class<?>[]
+		_updateCustomObjectDefinitionParameterTypes7 = new Class[] {
+			Long.class, java.util.Map.class, String.class, java.util.Map.class
 		};
 
 }

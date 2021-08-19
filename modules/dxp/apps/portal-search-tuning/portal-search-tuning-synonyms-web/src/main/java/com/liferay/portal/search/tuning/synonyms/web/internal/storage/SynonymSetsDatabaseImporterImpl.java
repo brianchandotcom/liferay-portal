@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.storage;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -67,6 +68,10 @@ public class SynonymSetsDatabaseImporterImpl
 		List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
 		for (SearchHit searchHit : searchHitsList) {
+			if (_isStandardFormat(searchHit.getId())) {
+				continue;
+			}
+
 			SynonymSet synonymSet = documentToSynonymSetTranslator.translate(
 				searchHit.getDocument(), searchHit.getId());
 
@@ -111,6 +116,16 @@ public class SynonymSetsDatabaseImporterImpl
 
 	@Reference
 	protected SynonymSetJSONStorageHelper synonymSetJSONStorageHelper;
+
+	private boolean _isStandardFormat(String id) {
+		String[] parts = StringUtil.split(id, "_PORTLET_");
+
+		if (parts.length == 2) {
+			return true;
+		}
+
+		return false;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SynonymSetsDatabaseImporterImpl.class);

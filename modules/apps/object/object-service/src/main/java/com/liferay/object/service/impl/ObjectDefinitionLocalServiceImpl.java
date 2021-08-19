@@ -462,6 +462,23 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
+	@Override
+	public ObjectDefinition updateCustomObjectDefinition(
+			Long objectDefinitionId, Map<Locale, String> labelMap, String name,
+			Map<Locale, String> pluralLabelMap)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition.isSystem()) {
+			throw new ObjectDefinitionStatusException();
+		}
+
+		return _updateObjectDefinition(
+			objectDefinition, null, labelMap, name, null, null, pluralLabelMap);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -509,42 +526,18 @@ public class ObjectDefinitionLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		name = StringUtil.trim(name);
-
-		if (!system) {
-			name = "C_" + name;
-		}
+		name = _getName(name, system);
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
-		if (Validator.isNull(dbTableName)) {
-			if (system) {
-				dbTableName = name;
-			}
-			else {
-				dbTableName = StringBundler.concat(
-					"O_", user.getCompanyId(), StringPool.UNDERLINE, shortName);
-			}
-		}
+		dbTableName = _getDbTableName(
+			dbTableName, name, system, user.getCompanyId(), shortName);
 
-		if (Validator.isNull(pkObjectFieldName)) {
-			pkObjectFieldName = TextFormatter.format(
-				shortName + "Id", TextFormatter.I);
+		pkObjectFieldName = _getPkObjectFieldName(
+			pkObjectFieldName, system, shortName);
 
-			if (!system) {
-				pkObjectFieldName = "c_" + pkObjectFieldName;
-			}
-		}
-
-		if (Validator.isNull(pkObjectFieldDBColumnName)) {
-			if (system) {
-				pkObjectFieldDBColumnName = pkObjectFieldName;
-			}
-			else {
-				pkObjectFieldDBColumnName =
-					pkObjectFieldName + StringPool.UNDERLINE;
-			}
-		}
+		pkObjectFieldDBColumnName = _getPkObjectFieldDBColumnName(
+			pkObjectFieldDBColumnName, pkObjectFieldName, system);
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validateName(user.getCompanyId(), name, system);
@@ -630,6 +623,71 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(sql);
 	}
 
+	private String _getDbTableName(
+		String dbTableName, String name, boolean system, Long companyId,
+		String shortName) {
+
+		if (Validator.isNotNull(dbTableName)) {
+			return dbTableName;
+		}
+
+		if (system) {
+			dbTableName = name;
+		}
+		else {
+			dbTableName = StringBundler.concat(
+				"O_", companyId, StringPool.UNDERLINE, shortName);
+		}
+
+		return dbTableName;
+	}
+
+	private String _getName(String name, boolean system) {
+		name = StringUtil.trim(name);
+
+		if (!system) {
+			name = "C_" + name;
+		}
+
+		return name;
+	}
+
+	private String _getPkObjectFieldDBColumnName(
+		String pkObjectFieldDBColumnName, String pkObjectFieldName,
+		boolean system) {
+
+		if (Validator.isNotNull(pkObjectFieldDBColumnName)) {
+			return pkObjectFieldDBColumnName;
+		}
+
+		if (system) {
+			pkObjectFieldDBColumnName = pkObjectFieldName;
+		}
+		else {
+			pkObjectFieldDBColumnName =
+				pkObjectFieldName + StringPool.UNDERLINE;
+		}
+
+		return pkObjectFieldDBColumnName;
+	}
+
+	private String _getPkObjectFieldName(
+		String pkObjectFieldName, boolean system, String shortName) {
+
+		if (Validator.isNotNull(pkObjectFieldName)) {
+			return pkObjectFieldName;
+		}
+
+		pkObjectFieldName = TextFormatter.format(
+			shortName + "Id", TextFormatter.I);
+
+		if (!system) {
+			pkObjectFieldName = "c_" + pkObjectFieldName;
+		}
+
+		return pkObjectFieldName;
+	}
+
 	private boolean _hasObjectField(
 		List<ObjectField> newObjectFields, ObjectField oldObjectField) {
 
@@ -642,6 +700,50 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private ObjectDefinition _updateObjectDefinition(
+			ObjectDefinition objectDefinition, String dbTableName,
+			Map<Locale, String> labelMap, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap)
+		throws PortalException {
+
+		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
+		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
+
+		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectDefinition.setPluralLabelMap(pluralLabelMap);
+
+		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return objectDefinitionPersistence.update(objectDefinition);
+		}
+
+		name = _getName(name, objectDefinition.isSystem());
+
+		String shortName = ObjectDefinitionImpl.getShortName(name);
+
+		dbTableName = _getDbTableName(
+			dbTableName, name, objectDefinition.isSystem(),
+			objectDefinition.getCompanyId(), shortName);
+
+		pkObjectFieldName = _getPkObjectFieldName(
+			pkObjectFieldName, objectDefinition.isSystem(), shortName);
+
+		pkObjectFieldDBColumnName = _getPkObjectFieldDBColumnName(
+			pkObjectFieldDBColumnName, pkObjectFieldName,
+			objectDefinition.isSystem());
+
+		_validateName(
+			objectDefinition.getCompanyId(), name, objectDefinition.isSystem());
+
+		objectDefinition.setDBTableName(dbTableName);
+		objectDefinition.setName(name);
+		objectDefinition.setPKObjectFieldDBColumnName(
+			pkObjectFieldDBColumnName);
+		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
+
+		return objectDefinitionPersistence.update(objectDefinition);
 	}
 
 	private void _validateLabel(

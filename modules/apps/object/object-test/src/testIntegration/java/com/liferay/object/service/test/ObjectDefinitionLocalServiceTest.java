@@ -743,6 +743,56 @@ public class ObjectDefinitionLocalServiceTest {
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
 	}
 
+	@Test
+	public void testUpdateCustomObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				Collections.emptyList());
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Able"),
+			objectDefinition.getLabelMap());
+		Assert.assertEquals("C_Able", objectDefinition.getName());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Ables"),
+			objectDefinition.getPluralLabelMap());
+
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.updateCustomObjectDefinition(
+				objectDefinition.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker",
+				LocalizedMapUtil.getLocalizedMap("Bakers"));
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Baker"),
+			objectDefinition.getLabelMap());
+		Assert.assertEquals("C_Baker", objectDefinition.getName());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Bakers"),
+			objectDefinition.getPluralLabelMap());
+
+		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.updateCustomObjectDefinition(
+				objectDefinition.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
+				LocalizedMapUtil.getLocalizedMap("Charlies"));
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Charlie"),
+			objectDefinition.getLabelMap());
+		Assert.assertEquals("C_Baker", objectDefinition.getName());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Charlies"),
+			objectDefinition.getPluralLabelMap());
+	}
+
 	private void _assertObjectField(
 			ObjectDefinition objectDefinition, String dbColumnName, String name,
 			boolean required, String type)

@@ -71,6 +71,11 @@
 	<td>//div[contains(@class,'cohort-analysis')]//h5[text()='Cohort Analysis']</td>
 	<td></td>
 </tr>
+<tr>	
+	<td>COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE</td>
+	<td>//th[text()='Day 0']/ancestor::tr/following-sibling::tr//th[3]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SEARCHED_KEYWORD</td>
 	<td>//span[contains(@class,'text-truncate title')and contains(text(),'${key_keyword}')]</td>

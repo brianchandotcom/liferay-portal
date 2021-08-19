@@ -309,7 +309,8 @@ definition {
 
 	@description = "View related assets in Related Assets widget."
 	@priority = "3"
-	test ViewRelatedAssetsInRelatedAssetsWidget {
+	@uitest
+	test ShouldBeShownInRelatedAssetsWidget {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",

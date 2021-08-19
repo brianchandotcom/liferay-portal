@@ -23,6 +23,7 @@ import com.liferay.object.exception.ReservedObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -261,6 +263,71 @@ public class ObjectFieldLocalServiceTest {
 			Assert.assertEquals(
 				"Invalid type STRING", objectFieldTypeException.getMessage());
 		}
+	}
+
+	@Test
+	public void testUpdateCustomObjectField() throws Exception {
+
+		// Update all properties before publishing object and do not update
+		// name and type after publishing
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap("Test"), "Test",
+				LocalizedMapUtil.getLocalizedMap("Tests"), null);
+
+		ObjectField objectField =
+			ObjectFieldLocalServiceUtil.addCustomObjectField(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(), true, true, "",
+				LocalizedMapUtil.getLocalizedMap("able"), "able", false,
+				"Long");
+
+		Locale locale = LocaleUtil.getDefault();
+
+		ObjectField updateCustomObjectField =
+			ObjectFieldLocalServiceUtil.updateCustomObjectField(
+				objectField.getObjectFieldId(), true, false,
+				locale.getLanguage(), LocalizedMapUtil.getLocalizedMap("able2"),
+				"able2", true, "String");
+
+		Assert.assertTrue(updateCustomObjectField.isIndexed());
+		Assert.assertFalse(updateCustomObjectField.isIndexedAsKeyword());
+		Assert.assertEquals(
+			updateCustomObjectField.getIndexedLanguageId(),
+			locale.getLanguage());
+		Assert.assertEquals(
+			updateCustomObjectField.getLabelMap(),
+			LocalizedMapUtil.getLocalizedMap("able2"));
+		Assert.assertEquals("able2", updateCustomObjectField.getName());
+		Assert.assertTrue(updateCustomObjectField.isRequired());
+		Assert.assertEquals("String", updateCustomObjectField.getType());
+
+		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		updateCustomObjectField =
+			ObjectFieldLocalServiceUtil.updateCustomObjectField(
+				objectField.getObjectFieldId(), false, false, "",
+				LocalizedMapUtil.getLocalizedMap("able3"), "able3", false,
+				"Integer");
+
+		Assert.assertTrue(updateCustomObjectField.isIndexed());
+		Assert.assertFalse(updateCustomObjectField.isIndexedAsKeyword());
+		Assert.assertEquals(
+			locale.getLanguage(),
+			updateCustomObjectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			updateCustomObjectField.getLabelMap(),
+			LocalizedMapUtil.getLocalizedMap("able3"));
+		Assert.assertEquals("able2", updateCustomObjectField.getName());
+		Assert.assertTrue(updateCustomObjectField.isRequired());
+		Assert.assertEquals("String", updateCustomObjectField.getType());
+
+		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private void _testAddSystemObjectField(ObjectField... objectFields)

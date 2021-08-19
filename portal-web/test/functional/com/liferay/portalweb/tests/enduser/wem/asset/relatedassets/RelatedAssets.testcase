@@ -34,11 +34,10 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Web Content Display Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = "Site Name");
 
 		JSONCategory.addVocabulary(
 			groupName = "Site Name (Staging)",

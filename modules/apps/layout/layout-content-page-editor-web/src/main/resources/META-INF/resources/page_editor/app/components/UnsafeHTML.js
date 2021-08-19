@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import RawDOM from '../../common/components/RawDOM';
+import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 /**
  * DOM node which will be manually updated and injects
@@ -113,7 +114,7 @@ export default class UnsafeHTML extends React.PureComponent {
 		ref.removeAttribute('style');
 
 		Object.entries(this.props.style).forEach(([key, value]) => {
-			if (value !== undefined && value !== null) {
+			if (!isNullOrUndefined(value)) {
 				ref.style[key] = value;
 			}
 		});

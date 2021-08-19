@@ -634,11 +634,33 @@ definition {
 	}
 
 	@description = "Verify that the Clear All option cleans the search results"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanClearAllSearchResults {
 
-		// TODO LRQA-68856 CanClearAllSearchResults pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "@");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no tasks assigned to your roles with the specified search criteria.");
+
+		MyWorkflowTasks.clearSearchResultMyWorkflowTasks();
+
+		 AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title",
+			key_workflowTask = "Blogs Entry",
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE");
+		
+
+		
+
 
 	}
 

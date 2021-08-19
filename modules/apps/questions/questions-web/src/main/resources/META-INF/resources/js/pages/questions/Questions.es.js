@@ -28,7 +28,7 @@ import Breadcrumb from '../../components/Breadcrumb.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import ResultsMessage from '../../components/ResultsMessage.es';
-import SectionSubscription from '../../components/SectionSubscription.es';
+import SubscriptionButton from '../../components/SubscriptionButton.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	getRankedThreadsQuery,
@@ -37,6 +37,8 @@ import {
 	getSectionsQuery,
 	getSubscriptionsQuery,
 	getThreadsQuery,
+	subscribeSectionQuery,
+	unsubscribeSectionQuery,
 } from '../../utils/client.es';
 import {
 	deleteCacheKey,
@@ -573,7 +575,8 @@ export default withRouter(
 							section.actions &&
 							section.actions.subscribe && (
 								<div className="c-ml-3">
-									<SectionSubscription
+									<SubscriptionButton
+										isSubscribed={section.subscribed}
 										onSubscription={() => {
 											deleteCacheKey(
 												sectionQuery,
@@ -587,7 +590,15 @@ export default withRouter(
 												}
 											);
 										}}
-										section={section}
+										parentSection={section.parentSection}
+										queryVariables={{
+											messageBoardSectionId: section.id,
+										}}
+										showTitle={true}
+										subscribeQuery={subscribeSectionQuery}
+										unsubscribeQuery={
+											unsubscribeSectionQuery
+										}
 									/>
 								</div>
 							)}

@@ -243,16 +243,11 @@ definition {
 			layoutName = "Test Page 2",
 			widgetName = "Blogs");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page 2",
-			siteName = "Site Name");
-
-		Blogs.addEntry(
-			assetTitle = "Web Content Title",
-			assetType = "Basic Web Content",
-			entryAddRelatedAsset = "true",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title",
+					groupName = "Site Name");
+		}
 
 		JSONBookmarks.addFolder(
 			folderDescription = "Bookmarks Folder Description",

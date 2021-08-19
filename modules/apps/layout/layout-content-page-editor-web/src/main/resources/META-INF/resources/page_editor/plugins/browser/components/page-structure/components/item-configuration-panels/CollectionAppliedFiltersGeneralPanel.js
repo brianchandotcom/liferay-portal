@@ -1,0 +1,103 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import PropTypes from 'prop-types';
+import React, {useCallback} from 'react';
+
+import {CheckboxField} from '../../../../../../app/components/fragment-configuration-fields/CheckboxField';
+import {
+	TargetCollectionsField,
+	selectConfiguredCollectionDisplays,
+} from '../../../../../../app/components/fragment-configuration-fields/TargetCollectionsField';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../../../../../app/contexts/StoreContext';
+import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
+import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
+
+export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
+	const dispatch = useDispatch();
+	const fragmentEntryLink = useSelectorCallback(
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
+		[item.config.fragmentEntryLinkId]
+	);
+	const hasConfiguredCollections = useSelectorCallback(
+		(state) => selectConfiguredCollectionDisplays(state).length > 0,
+		[]
+	);
+	const languageId = useSelector(selectLanguageId);
+
+	const configurationValues =
+		fragmentEntryLink.editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR] ||
+		{};
+
+	const onValueSelect = useCallback(
+		(name, value) => {
+			updateConfigurationValue({
+				dispatch,
+				fragmentEntryLink,
+				languageId,
+				name,
+				value,
+			});
+		},
+		[dispatch, fragmentEntryLink, languageId]
+	);
+
+	if (!hasConfiguredCollections) {
+		return (
+			<p className="alert alert-info text-center" role="alert">
+				{Liferay.Language.get(
+					'display-a-collection-on-the-page-so-that-you-can-use-the-applied-filters-fragment'
+				)}
+			</p>
+		);
+	}
+
+	return (
+		<>
+			<p className="alert alert-info text-center" role="alert">
+				{Liferay.Language.get(
+					'you-will-see-this-fragment-on-the-page-only-after-applying-a-filter'
+				)}
+			</p>
+
+			<TargetCollectionsField
+				onValueSelect={onValueSelect}
+				value={configurationValues.targetCollections}
+			/>
+
+			<CheckboxField
+				field={{
+					label: Liferay.Language.get('include-clear-filters-option'),
+					name: 'showClearFilters',
+				}}
+				onValueSelect={onValueSelect}
+				value={configurationValues.showClearFilters}
+			/>
+		</>
+	);
+};
+
+CollectionAppliedFiltersGeneralPanel.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			fragmentEntryLinkId: PropTypes.string.isRequired,
+		}).isRequired,
+	}),
+};

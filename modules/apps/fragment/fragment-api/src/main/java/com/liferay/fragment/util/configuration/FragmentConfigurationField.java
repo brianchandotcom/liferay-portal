@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.util.configuration;
 
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -92,6 +94,28 @@ public class FragmentConfigurationField {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public FragmentConfigurationFieldDataType
+		getFragmentConfigurationFieldDataType() {
+
+		if (StringUtil.equalsIgnoreCase(getDataType(), "bool")) {
+			return FragmentConfigurationFieldDataType.BOOLEAN;
+		}
+		else if (StringUtil.equalsIgnoreCase(getDataType(), "double")) {
+			return FragmentConfigurationFieldDataType.DOUBLE;
+		}
+		else if (StringUtil.equalsIgnoreCase(getDataType(), "int")) {
+			return FragmentConfigurationFieldDataType.INTEGER;
+		}
+		else if (StringUtil.equalsIgnoreCase(getDataType(), "object")) {
+			return FragmentConfigurationFieldDataType.OBJECT;
+		}
+		else if (StringUtil.equalsIgnoreCase(getDataType(), "string")) {
+			return FragmentConfigurationFieldDataType.STRING;
+		}
+
+		return null;
 	}
 
 	public String getName() {

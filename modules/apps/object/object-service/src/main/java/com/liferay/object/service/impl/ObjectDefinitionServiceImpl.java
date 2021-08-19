@@ -114,6 +114,19 @@ public class ObjectDefinitionServiceImpl
 			getUserId(), objectDefinitionId);
 	}
 
+	@Override
+	public ObjectDefinition updateCustomObjectDefinition(
+			Long objectDefinitionId, Map<Locale, String> labelMap, String name,
+			Map<Locale, String> pluralLabelMap)
+		throws PortalException {
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
+
+		return _objectDefinitionLocalService.updateCustomObjectDefinition(
+			objectDefinitionId, labelMap, name, pluralLabelMap);
+	}
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 

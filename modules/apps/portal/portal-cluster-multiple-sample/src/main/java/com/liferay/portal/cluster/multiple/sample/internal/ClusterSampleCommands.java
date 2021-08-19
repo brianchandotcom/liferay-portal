@@ -14,31 +14,19 @@
 
 package com.liferay.portal.cluster.multiple.sample.internal;
 
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterNode;
-
-import java.io.Serializable;
-
 /**
  * @author Tina Tian
  */
-public class ClusterTestClass implements Serializable {
+public class ClusterSampleCommands {
 
-	public static int getPortalLocalPort() {
-		ClusterNode clusterNode = ClusterExecutorUtil.getLocalClusterNode();
+	public static final String INVOKE_METHOD_MODULE = "invoke-method-module";
 
-		return clusterNode.getPortalPort();
-	}
+	public static final String INVOKE_METHOD_MODULE_ON_MASTER =
+		"invoke-method-module-on-master";
 
-	public ClusterTestClass(String name) {
-		_name = name;
-	}
+	public static final String INVOKE_METHOD_PORTAL = "invoke-method-portal";
 
-	@Override
-	public String toString() {
-		return _name;
-	}
-
-	private final String _name;
+	public static final String INVOKE_METHOD_PORTAL_ON_MASTER =
+		"invoke-method-portal-on-master";
 
 }

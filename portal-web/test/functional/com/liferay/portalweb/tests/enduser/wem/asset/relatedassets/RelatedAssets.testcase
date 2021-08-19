@@ -194,8 +194,10 @@ definition {
 			relatedAssetTitles = "Web Content Title 1");
 	}
 
+	@description = "Folders should not be shown as related assets"
 	@priority = "3"
-	test ViewNoFolders {
+	@uitest
+	test DontShowFolders {
 		property portal.release = "false";
 		property testray.component.names = "Related Assets";
 

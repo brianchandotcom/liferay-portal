@@ -1,3 +1,5 @@
+// Global Variables
+
 $clay-unset: clay-unset !default;
 
 // An alias for `$clay-unset`
@@ -122,16 +124,16 @@ $dark-l1: lighten(saturate($dark, 0.18), 4.12) !default;
 $dark-l2: lighten(desaturate($dark, 0.36), 8.04) !default;
 
 $theme-colors: () !default;
-$theme-colors: map-deep-merge(
+$theme-colors: map-merge(
 	(
-		danger: $danger,
-		dark: $dark,
-		info: $info,
-		light: $light,
-		primary: $primary,
-		secondary: $secondary,
-		success: $success,
-		warning: $warning,
+		'danger': $danger,
+		'dark': $dark,
+		'info': $info,
+		'light': $light,
+		'primary': $primary,
+		'secondary': $secondary,
+		'success': $success,
+		'warning': $warning,
 	),
 	$theme-colors
 );
@@ -173,10 +175,10 @@ $spacers: map-deep-merge(
 $sizes: () !default;
 $sizes: map-merge(
 	(
+		100: 100%,
 		25: 25%,
 		50: 50%,
 		75: 75%,
-		100: 100%,
 		auto: auto,
 	),
 	$sizes
@@ -254,10 +256,10 @@ $container-form-lg: () !default;
 $container-form-lg: map-deep-merge(
 	(
 		breakpoint-up: lg,
-		padding-bottom: 3rem,
-		padding-top: 3rem,
 		padding-bottom-mobile: 1rem,
+		padding-bottom: 3rem,
 		padding-top-mobile: 1rem,
+		padding-top: 3rem,
 	),
 	$container-form-lg
 );
@@ -330,6 +332,24 @@ $body-moz-osx-font-smoothing: $moz-osx-font-smoothing !default;
 $body-text-align: inherit !default;
 $body-webkit-font-smoothing: $webkit-font-smoothing !default;
 
+$c-body: () !default;
+$c-body: map-merge(
+	(
+		-moz-osx-font-smoothing: $body-moz-osx-font-smoothing,
+		-ms-overflow-style: scrollbar,
+		-webkit-font-smoothing: $body-webkit-font-smoothing,
+		background-color: $body-bg,
+		color: $body-color,
+		font-family: $font-family-base,
+		font-size: var(--font-size-base, $font-size-base),
+		font-weight: $font-weight-base,
+		line-height: $line-height-base,
+		margin: 0,
+		text-align: $body-text-align
+	),
+	$c-body
+);
+
 // Link
 
 $link-color: $primary !default;
@@ -359,6 +379,7 @@ $display1-weight: var(--display1-weight, 300) !default;
 $display2-weight: var(--display2-weight, 300) !default;
 $display3-weight: var(--display3-weight, 300) !default;
 $display4-weight: var(--display4-weight, 300) !default;
+
 $display-line-height: var(
 	--display-line-height,
 	$headings-line-height
@@ -410,14 +431,9 @@ $mark-bg: #fcf8e3 !default;
 
 $c-button-base: () !default;
 $c-button-base: map-merge(
-	(
-		cursor: $link-cursor,
-		-webkit-appearance: button,
-	),
+	(-webkit-appearance: button, cursor: $link-cursor),
 	$c-button-base
 );
-
-$close-text-shadow: none !default;
 
 // Buttons + Forms
 
@@ -452,7 +468,7 @@ $input-btn-border-width: $border-width !default;
 $print-body-min-width: map-get($grid-breakpoints, 'lg') !default;
 $print-page-size: a3 !default;
 
-// Start Theme
+// Btn
 
 $btn-primary: () !default;
 $btn-primary: map-deep-merge(
@@ -601,16 +617,129 @@ $btn-link: map-deep-merge(
 			color: $c-unset,
 			text-decoration: none,
 		),
-		font-weight: $font-weight-normal,
-		text-decoration: $link-decoration,
 		focus: (
 			box-shadow: $c-unset,
 			text-decoration: $link-decoration,
 		),
+		font-weight: $font-weight-normal,
 		hover: (
 			color: var(--btn-link-hover-color, $link-hover-color),
 			text-decoration: $link-hover-decoration,
 		),
+		text-decoration: $link-decoration,
 	),
 	$btn-link
+);
+
+// Utilities
+
+$bg-theme-colors: () !default;
+$bg-theme-colors: map-deep-merge(
+	(
+		'danger': (
+			background-color: var(--danger, $danger) !important,
+		),
+		'dark': (
+			background-color: var(--dark, $dark) !important,
+		),
+		'gray-dark': (
+			background-color: var(--gray-800, $gray-800) !important,
+		),
+		'info': (
+			background-color: var(--info, $info) !important,
+		),
+		'light': (
+			background-color: var(--light, $light) !important,
+		),
+		'lighter': (
+			background-color: var(--gray-100, $gray-100) !important,
+		),
+		'primary': (
+			background-color: var(--primary, $primary) !important,
+		),
+		'secondary': (
+			background-color: var(--secondary, $secondary) !important,
+		),
+		'success': (
+			background-color: var(--success, $success) !important,
+		),
+		'warning': (
+			background-color: var(--warning, $warning) !important,
+		),
+	),
+	$bg-theme-colors
+);
+
+$border-theme-colors: () !default;
+$border-theme-colors: map-deep-merge(
+	(
+		'danger': (
+			border-color: var(--danger, $danger) !important,
+		),
+		'dark': (
+			border-color: var(--dark, $dark) !important,
+		),
+		'gray-dark': (
+			border-color: var(--gray-800, $gray-800) !important,
+		),
+		'info': (
+			border-color: var(--info, $info) !important,
+		),
+		'light': (
+			border-color: var(--light, $light) !important,
+		),
+		'lighter': (
+			border-color: var(-gray-100, $gray-100) !important,
+		),
+		'primary': (
+			border-color: var(--primary, $primary) !important,
+		),
+		'secondary': (
+			border-color: var(--secondary, $secondary) !important,
+		),
+		'success': (
+			border-color: var(--success, $success) !important,
+		),
+		'warning': (
+			border-color: var(--warning, $warning) !important,
+		),
+	),
+	$border-theme-colors
+);
+
+$text-theme-colors: () !default;
+$text-theme-colors: map-deep-merge(
+	(
+		'danger': (
+			color: var(--danger, $danger) !important,
+		),
+		'dark': (
+			color: var(--dark, $dark) !important,
+		),
+		'gray-dark': (
+			color: var(--gray-800, $gray-800) !important,
+		),
+		'info': (
+			color: var(--info, $info) !important,
+		),
+		'light': (
+			color: var(--light, $light) !important,
+		),
+		'lighter': (
+			color: var(--gray-100, $gray-100) !important,
+		),
+		'primary': (
+			color: var(--primary, $primary) !important,
+		),
+		'secondary': (
+			color: var(--secondary, $secondary) !important,
+		),
+		'success': (
+			color: var(--success, $success) !important,
+		),
+		'warning': (
+			color: var(--warning, $warning) !important,
+		),
+	),
+	$text-theme-colors
 );

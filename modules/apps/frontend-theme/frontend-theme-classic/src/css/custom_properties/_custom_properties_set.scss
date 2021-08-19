@@ -20,25 +20,13 @@
 	padding-bottom: var(--aspect-ratio-16-to-9, 56.25%);
 }
 
-// Background and text color variants
-
-@each $color, $value in $custom-properties-theme-colors {
-	.bg-#{$color} {
-		background-color: $value !important;
-	}
-
-	.text-#{$color} {
-		color: $value !important;
-	}
-}
-
 // Body
 
-body {
-	font-size: var(--font-size-base, $font-size-base);
-}
-
 #wrapper {
+	--portlet-topper-bg: var(--primary);
+	--portlet-topper-color: var(--white);
+	--portlet-topper-link-color: var(--portlet-topper-color);
+
 	background-color: var(--body-bg, $body-bg);
 	color: var(--body-color, $body-color);
 	font-size: var(--font-size-base, $font-size-base);

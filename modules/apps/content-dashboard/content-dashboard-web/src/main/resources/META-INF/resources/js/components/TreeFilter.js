@@ -70,10 +70,15 @@ const TreeFilter = ({
 			const isChildNode = !node.children;
 
 			if (selectedNodes.has(node.id) && isChildNode) {
-				let newSelectedNode = {};
-                necessaryKeys.forEach(key => {
-                    newSelectedNode[key] = node[key]
-                });
+                let newSelectedNode = {};
+
+                if (necessaryKeys.length === 1) {
+                    newSelectedNode = node[necessaryKeys[0]];
+                } else {
+                    necessaryKeys.forEach(key => {
+                        newSelectedNode[key] = node[key]
+                    });
+                }
 				data.push(newSelectedNode);
 			}
 		});

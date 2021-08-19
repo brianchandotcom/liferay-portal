@@ -87,7 +87,7 @@ public class BundleSiteInitializerTest {
 	private void _assertDocuments(Group group) throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Table of Contents.md");
+			"Table of Contents.markdown");
 
 		String string = new String(
 			StreamUtil.toByteArray(

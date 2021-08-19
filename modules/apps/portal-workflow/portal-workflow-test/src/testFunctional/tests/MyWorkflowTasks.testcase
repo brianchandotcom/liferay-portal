@@ -787,7 +787,7 @@ definition {
 			workflowAssetTitle = "Blogs Entry 1",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
-		
+
 		Workflow.assignToMeTaskByDetails(
 			workflowAssetTitle = "Blogs Entry 2",
 			workflowAssetType = "Blogs Entry",

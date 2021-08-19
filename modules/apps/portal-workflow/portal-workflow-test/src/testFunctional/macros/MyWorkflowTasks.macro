@@ -59,4 +59,4 @@ definition {
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASK_ITEM_POSITION");
 	}
 
-} 
+}

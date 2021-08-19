@@ -72,9 +72,107 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test AssertCustomFieldsNotAppearInACFilterWhenRemovedFromDXP {
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
 
-		// TODO LRAC-8571 AssertCustomFieldsNotAppearInACFilterWhenRemovedFromDXP pending implementation
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Assign the new user to organization") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Add Custom Fields for organization") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "AC Org Custom Fields",
+				customFieldType = "Text Area",
+				resourceName = "Organization");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Assert custom fields appears in AC filter") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Using Organization Custom Fields");
+
+			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
+
+			ACSegments.assertSegmentAttributePresent(segmentField = "AC Org Custom Fields");
+		}
+
+		task ("Delete Custom Fields for organization") {
+			ACUtils.launchDXP();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.deleteCP(
+				customFieldName = "AC Org Custom Fields",
+				resourceName = "Organization");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Assert custom fields not appears in AC filter") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Using Organization Custom Fields");
+
+			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
+
+			ACSegments.assertSegmentAttributeNotPresent(segmentField = "AC Org Custom Fields");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8565 | Test Summary: Add segment using an individual property 'role'"

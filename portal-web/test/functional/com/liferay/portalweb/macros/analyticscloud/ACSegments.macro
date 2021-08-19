@@ -45,6 +45,18 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro assertSegmentAttributeNotPresent {
+		var key_SegmentField = "${segmentField}";
+
+		AssertElementNotPresent(locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
+	}
+
+	macro assertSegmentAttributePresent {
+		var key_SegmentField = "${segmentField}";
+
+		AssertElementPresent(locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
+	}
+
 	macro assertSegmentPresent {
 		var key_segmentName = "${segmentName}";
 

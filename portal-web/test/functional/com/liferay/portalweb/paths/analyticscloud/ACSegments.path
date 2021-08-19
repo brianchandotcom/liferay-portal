@@ -269,7 +269,7 @@
 </tr>
 <tr>
 	<td>SEGMENT_CRITERION_ITEM</td>
-	<td>//div[@class='sidebar-collapse']//li[text()='${segmentField}']</td>
+	<td>//div[@class='sidebar-collapse']//li[text()='${key_SegmentField}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -940,11 +940,18 @@ definition {
 	}
 
 	@description = "Verify that when there are no results for the search in Assigned to Me, the page is displaying -There are no tasks assigned to you with the specified search criteria.-"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test ViewMessageNoTasksAssignedToYouWithSearchCriteria {
+		
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		// TODO LRQA-68844 ViewMessageNoTasksAssignedToYouWithSearchCriteria pending implementation
+		Workflow.searchMyWorkflowTasks(searchTerm = "54321");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no tasks assigned to you with the specified search criteria.");
+
+
 
 	}
 

@@ -300,52 +300,63 @@
 				placeholder = placeholder + 'Editor';
 			</c:if>
 
-			Liferay.Loader.require(
-			[
-				A.config.groups.components.mainModule,
-				A.config.groups.react.mainModule,
-				A.config.groups.state.mainModule,
-			],
-			(frontendJsComponentsWebModule, frontendJsReactWebModule, frontendJsStateWebModule) => {
+			var inputLocalizedProps = {
+				adminMode: <%= adminMode %>,
+				availableLocales: available,
+				boundingBox: '#<%= namespace + id %>PaletteBoundingBox',
+				columns: 20,
+				contentBox: '#<%= namespace + id %>PaletteContentBox',
+				defaultLanguageId: defaultLanguageId,
 
-				Liferay.InputLocalized.register(
-					'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
-					{
-						<c:if test="<%= Validator.isNotNull(activeLocales) && !activeLocales.isEmpty() %>">
-							activeLocales: <%= JSONFactoryUtil.createJSONArray(activeLocales) %>,
-						</c:if>
+				<c:if test='<%= type.equals("editor") %>'>
+					editor: window['<%= namespace + HtmlUtil.escapeJS(fieldName) + "Editor" %>'],
+				</c:if>
 
-						adminMode: <%= adminMode %>,
-						availableLocales: available,
-						boundingBox: '#<%= namespace + id %>PaletteBoundingBox',
-						columns: 20,
-						contentBox: '#<%= namespace + id %>PaletteContentBox',
-						defaultLanguageId: defaultLanguageId,
+				fieldPrefix: '<%= fieldPrefix %>',
+				fieldPrefixSeparator: '<%= fieldPrefixSeparator %>',
+				helpMessage: '<%= HtmlUtil.escapeJS(helpMessage) %>',
+				id: '<%= id %>',
+				inputPlaceholder: placeholder,
+				inputBox: '#<%= namespace + id %>BoundingBox',
+				items: availableLanguageIds,
+				itemsError: errorLanguageIds,
+				lazy: <%= !type.equals("editor") %>,
+				name: '<%= HtmlUtil.escapeJS(name) %>',
+				namespace: '<%= namespace %>',
+				selectedLanguageId: '<%= selectedLanguageId %>',
+				toggleSelection: false,
+				translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
+			};
 
-						<c:if test='<%= type.equals("editor") %>'>
-							editor: window['<%= namespace + HtmlUtil.escapeJS(fieldName) + "Editor" %>'],
-						</c:if>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(activeLocales) && !activeLocales.isEmpty() %>">
+					Liferay.Loader.require(
+					[
+						A.config.groups.components.mainModule,
+						A.config.groups.react.mainModule,
+						A.config.groups.state.mainModule,
+					],
+					(frontendJsComponentsWebModule, frontendJsReactWebModule, frontendJsStateWebModule) => {
 
-						fieldPrefix: '<%= fieldPrefix %>',
-						fieldPrefixSeparator: '<%= fieldPrefixSeparator %>',
-						frontendJsComponentsWebModule,
-						frontendJsReactWebModule,
-						frontendJsStateWebModule,
-						helpMessage: '<%= HtmlUtil.escapeJS(helpMessage) %>',
-						id: '<%= id %>',
-						inputPlaceholder: placeholder,
-						inputBox: '#<%= namespace + id %>BoundingBox',
-						items: availableLanguageIds,
-						itemsError: errorLanguageIds,
-						lazy: <%= !type.equals("editor") %>,
-						name: '<%= HtmlUtil.escapeJS(name) %>',
-						namespace: '<%= namespace %>',
-						selectedLanguageId: '<%= selectedLanguageId %>',
-						toggleSelection: false,
-						translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
-					}
-				);
-			});
+						Liferay.InputLocalized.register(
+							'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
+							{
+								activeLocales: <%= JSONFactoryUtil.createJSONArray(activeLocales) %>,
+								frontendJsComponentsWebModule,
+								frontendJsReactWebModule,
+								frontendJsStateWebModule,
+								...inputLocalizedProps
+							}
+						);
+					});
+				</c:when>
+				<c:otherwise>
+					Liferay.InputLocalized.register(
+						'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
+						inputLocalizedProps
+					);
+				</c:otherwise>
+			</c:choose>
 
 			<c:if test="<%= autoFocus %>">
 				Liferay.Util.focusFormField('#<%= namespace + HtmlUtil.escapeJS(id + HtmlUtil.getAUICompatibleId(fieldSuffix)) %>');

@@ -753,14 +753,15 @@ AUI.add(
 
 					var activeLocales = instance.get('activeLocales');
 
-					instance._activeLocalesAtom = instance.get(
-						'frontendJsComponentsWebModule'
-					).activeLocalesAtom;
-					instance._State = instance.get(
-						'frontendJsStateWebModule'
-					).State;
-
 					if (activeLocales) {
+						instance._activeLocalesAtom = instance.get(
+							'frontendJsComponentsWebModule'
+						).activeLocalesAtom;
+
+						instance._State = instance.get(
+							'frontendJsStateWebModule'
+						).State;
+
 						instance._flagsInitialContent = instance._flags.cloneNode(
 							true
 						);

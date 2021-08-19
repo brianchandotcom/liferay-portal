@@ -2,6 +2,7 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -15,6 +16,23 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 	}
 
 	tearDown {
@@ -30,12 +48,135 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8490 | Test Summary: Order a Dynamic Segment's Membership Preview Modal"
-	@ignore = "true"
 	@priority = "3"
-	test OrderDynamicSegmentMembershipPreview.feature {
+	test OrderDynamicSegmentMembershipPreview {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8490 PENDING IMPLEMENTATION
+		task ("Add 3 new users") {
+			for (var n : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+
+			JSONUser.addUser(
+				birthdayDay = "01",
+				birthdayMonth = "01",
+				birthdayYear = "2020",
+				userEmailAddress = "user3@liferay.com",
+				userFirstName = "user3",
+				userLastName = "user3",
+				userScreenName = "user3");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user3@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "userea,user1,user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add 3 dynamic segments") {
+			for (var n : list "1,2,3") {
+				ACNavigation.goToSegments();
+
+				ACSegments.createDynamicSegment();
+
+				ACSegments.nameSegment(segmentName = "Dynamic Segment Test ${n}");
+
+				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+				ACSegments.addSegmentField(segmentField = "givenName");
+
+				ACSegments.selectOperator(operator = "contains");
+
+				ACSegments.editTextCriterion(textInput = "user");
+
+				ACSegments.saveSegment();
+			}
+		}
+
+		task ("Edit a segment to have less members") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Dynamic Segment Test 3");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "birthDate");
+
+			ACSegments.selectOperator(
+				index = "2",
+				operator = "is after");
+
+			ACSegments.editDateCriterion(
+				day = "8",
+				month = "September",
+				year = "2000");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Edit a segment to have no members") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Dynamic Segment Test 2");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.editTextCriterion(
+				index = "2",
+				textInput = "liferay@liferay.com");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Order by Membership descending ") {
+			ACNavigation.goToSegments();
+
+			ACSegments.filterAndOrderForSegLists(filterName = "Membership");
+
+			ACSegments.viewSegmentSpecificOrder(segments = "Dynamic Segment Test 1,Dynamic Segment Test 3,Dynamic Segment Test 2");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8486 | Test Summary: Membership card exists and shows members added"

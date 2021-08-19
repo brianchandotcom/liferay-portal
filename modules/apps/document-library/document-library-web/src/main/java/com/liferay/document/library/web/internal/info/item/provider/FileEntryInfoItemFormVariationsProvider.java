@@ -77,27 +77,37 @@ public class FileEntryInfoItemFormVariationsProvider
 		infoItemFormVariations.add(getBasicDocumentInfoItemFormVariation());
 
 		try {
-			long[] groupIds = _getCurrentAndAncestorSiteGroupIds(groupId);
-
-			List<DLFileEntryType> dlFileEntryTypes =
-				_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
-
-			for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-				infoItemFormVariations.add(
-					new InfoItemFormVariation(
-						String.valueOf(dlFileEntryType.getFileEntryTypeId()),
-						InfoLocalizedValue.<String>builder(
-						).values(
-							dlFileEntryType.getNameMap()
-						).build()));
-			}
-
-			return infoItemFormVariations;
+			return getInfoItemFormVariations(
+				_getCurrentAndAncestorSiteGroupIds(groupId));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
 				"An unexpected error occurred", portalException);
 		}
+	}
+
+	@Override
+	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
+		long[] groupIds) {
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
+
+		infoItemFormVariations.add(getBasicDocumentInfoItemFormVariation());
+
+		List<DLFileEntryType> dlFileEntryTypes =
+			_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
+
+		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+			infoItemFormVariations.add(
+				new InfoItemFormVariation(
+					String.valueOf(dlFileEntryType.getFileEntryTypeId()),
+					InfoLocalizedValue.<String>builder(
+					).values(
+						dlFileEntryType.getNameMap()
+					).build()));
+		}
+
+		return infoItemFormVariations;
 	}
 
 	protected InfoItemFormVariation getBasicDocumentInfoItemFormVariation() {

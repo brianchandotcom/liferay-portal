@@ -68,32 +68,38 @@ public class JournalArticleInfoItemFormVariationsProvider
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId) {
 
-		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
-
 		try {
-			long[] groupIds = _getCurrentAndAncestorSiteGroupIds(groupId);
-
-			List<DDMStructure> ddmStructures =
-				_ddmStructureLocalService.getStructures(
-					groupIds,
-					_portal.getClassNameId(JournalArticle.class.getName()));
-
-			for (DDMStructure ddmStructure : ddmStructures) {
-				infoItemFormVariations.add(
-					new InfoItemFormVariation(
-						String.valueOf(ddmStructure.getStructureId()),
-						InfoLocalizedValue.<String>builder(
-						).values(
-							ddmStructure.getNameMap()
-						).build()));
-			}
-
-			return infoItemFormVariations;
+			return getInfoItemFormVariations(
+				_getCurrentAndAncestorSiteGroupIds(groupId));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
 				"An unexpected error occurred", portalException);
 		}
+	}
+
+	@Override
+	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
+		long[] groupIds) {
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				groupIds,
+				_portal.getClassNameId(JournalArticle.class.getName()));
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			infoItemFormVariations.add(
+				new InfoItemFormVariation(
+					String.valueOf(ddmStructure.getStructureId()),
+					InfoLocalizedValue.<String>builder(
+					).values(
+						ddmStructure.getNameMap()
+					).build()));
+		}
+
+		return infoItemFormVariations;
 	}
 
 	private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)

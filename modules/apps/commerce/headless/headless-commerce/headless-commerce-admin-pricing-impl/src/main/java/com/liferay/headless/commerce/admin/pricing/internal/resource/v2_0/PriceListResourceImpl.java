@@ -477,7 +477,6 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 					_commercePriceModifierService.
 						addOrUpdateCommercePriceModifier(
 							priceModifier.getExternalReferenceCode(),
-							serviceContext.getUserId(),
 							GetterUtil.getLong(priceModifier.getId()),
 							commercePriceList.getGroupId(),
 							priceModifier.getTitle(), priceModifier.getTarget(),

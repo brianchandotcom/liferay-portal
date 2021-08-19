@@ -192,9 +192,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		PortletLayoutListener portletLayoutListener =
 			portlet.getPortletLayoutListenerInstance();
 
-		if (portletLayoutListener != null) {
-			Layout layout = themeDisplay.getLayout();
+		Layout layout = themeDisplay.getLayout();
 
+		if ((portletLayoutListener != null) && !layout.isDraftLayout()) {
 			portletLayoutListener.onSetup(
 				portlet.getPortletId(), layout.getPlid());
 		}

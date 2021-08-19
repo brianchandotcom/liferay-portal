@@ -16,6 +16,22 @@ definition {
 			value1 = "${metricValue}");
 	}
 
+	macro viewMetricBarStyle {
+		AssertAttributeValue(
+			attribute1 = "style",
+			entryName = "${entryName}",
+			key_cardTitle = "${cardTitle}",
+			locator1 = "ACCards#METRIC_BAR",
+			value1 = "${style}");
+
+		AssertCssValue(
+			entryName = "${entryName}",
+			key_cardTitle = "${cardTitle}",
+			locator1 = "ACCards#METRIC_BAR",
+			locator2 = "background-color",
+			value1 = "${backgroundColor}");
+	}
+
 	macro viewTopSitesByIndexes {
 		AssertElementPresent(
 			key_entryName = "${key_entry}",

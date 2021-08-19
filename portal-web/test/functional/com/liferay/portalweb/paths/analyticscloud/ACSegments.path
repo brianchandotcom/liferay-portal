@@ -211,6 +211,11 @@
 	<td>//tbody//a[@class='text-truncate'and text()='${key_userName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_SPECIFIC_SEGMENT_TABLE</td>
+	<td>//tbody//tr[${resultOrder}]//a[@class='text-truncate'and text()='${key_segmentName}']</td>
+	<td></td>
+</tr>
 <!-- Dynamic Segments -->
 <tr>
 	<td>ANONYMOUS_SWITCH</td>

@@ -16,6 +16,7 @@
 	AUI().applyConfig({
 		groups: {
 			react: {
+				// eslint-disable-next-line
 				mainModule: MODULE_MAIN,
 			},
 		},

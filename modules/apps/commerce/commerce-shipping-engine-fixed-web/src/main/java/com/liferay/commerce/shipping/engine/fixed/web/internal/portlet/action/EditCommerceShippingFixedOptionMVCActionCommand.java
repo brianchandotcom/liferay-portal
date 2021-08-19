@@ -185,7 +185,6 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			commerceShippingFixedOption =
 				_commerceShippingFixedOptionService.
 					addCommerceShippingFixedOption(
-						_portal.getUserId(actionRequest),
 						commerceShippingMethod.getGroupId(),
 						commerceShippingMethod.getCommerceShippingMethodId(),
 						nameMap, descriptionMap, amount, priority);

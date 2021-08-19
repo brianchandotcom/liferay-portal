@@ -42,7 +42,7 @@ public class CommerceShippingFixedOptionServiceImpl
 
 	@Override
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
-			long userId, long groupId, long commerceShippingMethodId,
+			long groupId, long commerceShippingMethodId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			BigDecimal amount, double priority)
 		throws PortalException {
@@ -51,7 +51,7 @@ public class CommerceShippingFixedOptionServiceImpl
 
 		return commerceShippingFixedOptionLocalService.
 			addCommerceShippingFixedOption(
-				userId, groupId, commerceShippingMethodId, nameMap,
+				getUserId(), groupId, commerceShippingMethodId, nameMap,
 				descriptionMap, amount, priority);
 	}
 
@@ -68,9 +68,8 @@ public class CommerceShippingFixedOptionServiceImpl
 
 		return commerceShippingFixedOptionService.
 			addCommerceShippingFixedOption(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				commerceShippingMethodId, nameMap, descriptionMap, amount,
-				priority);
+				serviceContext.getScopeGroupId(), commerceShippingMethodId,
+				nameMap, descriptionMap, amount, priority);
 	}
 
 	@Override

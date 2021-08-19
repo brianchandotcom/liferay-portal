@@ -39,6 +39,7 @@ jest.mock(
 
 const renderFragment = ({
 	activeItemId = 'fragment',
+	fragmentConfig = {styles: {}},
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 } = {}) => {
@@ -50,8 +51,8 @@ const renderFragment = ({
 	const fragment = {
 		children: [],
 		config: {
+			...fragmentConfig,
 			fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
-			styles: {},
 		},
 		itemId: 'fragment',
 		parentId: null,
@@ -106,5 +107,37 @@ describe('FragmentWithControls', () => {
 
 		expect(queryByText(document.body, 'delete')).not.toBeInTheDocument();
 		expect(queryByText(document.body, 'duplicate')).not.toBeInTheDocument();
+	});
+
+	it('does not show the fragment if it has been hidden by the user', async () => {
+		const {baseElement} = renderFragment({
+			fragmentConfig: {
+				styles: {
+					display: 'none',
+				},
+			},
+		});
+
+		const fragment = baseElement.querySelector(
+			'.page-editor__fragment-content'
+		);
+
+		expect(fragment).not.toBeVisible();
+	});
+
+	it('shows the fragment if it has not been hidden by the user', async () => {
+		const {baseElement} = renderFragment({
+			fragmentConfig: {
+				styles: {
+					display: 'block',
+				},
+			},
+		});
+
+		const fragment = baseElement.querySelector(
+			'.page-editor__fragment-content'
+		);
+
+		expect(fragment).toBeVisible();
 	});
 });

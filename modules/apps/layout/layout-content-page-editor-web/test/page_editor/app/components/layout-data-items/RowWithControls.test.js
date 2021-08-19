@@ -41,6 +41,7 @@ const renderRow = ({
 	columnConfiguration = [],
 	hasUpdatePermissions = true,
 	lockedExperience = false,
+	rowConfig = {styles: {}},
 	viewportSize = VIEWPORT_SIZES.desktop,
 } = {}) => {
 	const childrenItems = {};
@@ -62,7 +63,7 @@ const renderRow = ({
 
 	const row = {
 		children: Object.keys(childrenItems),
-		config: {styles: {}},
+		config: rowConfig,
 		itemId: 'row',
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.row,
@@ -159,5 +160,33 @@ describe('RowWithControls', () => {
 		expect(
 			baseElement.querySelector('.page-editor__row.empty')
 		).toBeInTheDocument();
+	});
+
+	it('does not show the row if it has been hidden by the user', async () => {
+		const {baseElement} = renderRow({
+			rowConfig: {
+				styles: {
+					display: 'none',
+				},
+			},
+		});
+
+		const row = baseElement.querySelector('.page-editor__row');
+
+		expect(row).not.toBeVisible();
+	});
+
+	it('shows the row if it has not been hidden by the user', async () => {
+		const {baseElement} = renderRow({
+			rowConfig: {
+				styles: {
+					display: 'block',
+				},
+			},
+		});
+
+		const row = baseElement.querySelector('.page-editor__row');
+
+		expect(row).toBeVisible();
 	});
 });

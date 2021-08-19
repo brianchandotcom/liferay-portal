@@ -38,12 +38,13 @@ jest.mock(
 
 const renderContainer = ({
 	activeItemId = 'container',
+	containerConfig = {styles: {}},
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 } = {}) => {
 	const container = {
 		children: [],
-		config: {styles: {}},
+		config: containerConfig,
 		itemId: 'container',
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.container,
@@ -96,5 +97,33 @@ describe('ContainerWithControls', () => {
 
 		expect(queryByText(baseElement, 'delete')).not.toBeInTheDocument();
 		expect(queryByText(baseElement, 'duplicate')).not.toBeInTheDocument();
+	});
+
+	it('does not show the container if it has been hidden by the user', async () => {
+		const {baseElement} = renderContainer({
+			containerConfig: {
+				styles: {
+					display: 'none',
+				},
+			},
+		});
+
+		const container = baseElement.querySelector('.page-editor__container');
+
+		expect(container).not.toBeVisible();
+	});
+
+	it('shows the container if it has not been hidden by the user', async () => {
+		const {baseElement} = renderContainer({
+			containerConfig: {
+				styles: {
+					display: 'block',
+				},
+			},
+		});
+
+		const container = baseElement.querySelector('.page-editor__container');
+
+		expect(container).toBeVisible();
 	});
 });

@@ -108,8 +108,20 @@ export default class UnsafeHTML extends React.PureComponent {
 	 */
 	_syncRefProps() {
 		const ref = this.state.ref;
-		ref.className = this.props.className;
-		ref.id = this.props.id;
+
+		if (this.props.className) {
+			ref.className = this.props.className;
+		}
+		else {
+			ref.removeAttribute('class');
+		}
+
+		if (this.props.id) {
+			ref.id = this.props.id;
+		}
+		else {
+			ref.removeAttribute('id');
+		}
 
 		ref.removeAttribute('style');
 

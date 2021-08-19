@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_4_2;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -33,9 +34,11 @@ public class FragmentEntryLinkEditableValuesUpgradeProcess
 				"select fragmentEntryLinkId,editableValues,rendererKey from " +
 					"FragmentEntryLink where rendererKey = " +
 						"'BASIC_COMPONENT-separator'");
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"update FragmentEntryLink set editableValues = ? where " +
-					"fragmentEntryLinkId = ?");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update FragmentEntryLink set editableValues = ? " +
+							"where fragmentEntryLinkId = ?"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

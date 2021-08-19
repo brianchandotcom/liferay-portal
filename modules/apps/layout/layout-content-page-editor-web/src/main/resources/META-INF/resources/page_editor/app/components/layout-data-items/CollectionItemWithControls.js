@@ -20,9 +20,17 @@ import TopperEmpty from '../TopperEmpty';
 
 const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 	const {collectionItem} = useContext(CollectionItemContext);
+	const title =
+		collectionItem.title ||
+		collectionItem.name ||
+		collectionItem.defaultTitle;
 
 	return (
-		<div className="page-editor__collection__block">
+		<div
+			className={classNames('page-editor__collection__block', {
+				empty: !title,
+			})}
+		>
 			<TopperEmpty item={item}>
 				{React.Children.count(children) === 0 ? (
 					<div
@@ -31,13 +39,19 @@ const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 						})}
 						ref={ref}
 					>
-						<div className="page-editor__collection-item__border">
-							<p className="page-editor__collection-item__title">
-								{collectionItem.title ||
-									collectionItem.name ||
-									collectionItem.defaultTitle}
-							</p>
-						</div>
+						{title ? (
+							<div className="page-editor__collection-item__border">
+								<p className="page-editor__collection-item__title">
+									{title}
+								</p>
+							</div>
+						) : (
+							<div className="alert alert-info">
+								{Liferay.Language.get(
+									'the-items-in-the-collection-will-be-displayed-here'
+								)}
+							</div>
+						)}
 					</div>
 				) : (
 					<div ref={ref}>{children}</div>

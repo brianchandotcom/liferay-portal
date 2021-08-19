@@ -164,8 +164,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 
 		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
 			_cpDefinitionDiagramEntryService.addCPDefinitionDiagramEntry(
-				contextUser.getUserId(), cpDefinitionId,
-				GetterUtil.getString(diagramEntry.getSkuUuid()),
+				cpDefinitionId, GetterUtil.getString(diagramEntry.getSkuUuid()),
 				GetterUtil.getLong(diagramEntry.getProductId()),
 				GetterUtil.getBoolean(diagramEntry.getDiagram()),
 				GetterUtil.getInteger(diagramEntry.getQuantity()),

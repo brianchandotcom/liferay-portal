@@ -45,8 +45,8 @@ public class CPDefinitionDiagramEntryServiceImpl
 
 	@Override
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
-			long userId, long cpDefinitionId, String cpInstanceUuid,
-			long cProductId, boolean diagram, int number, String sku,
+			long cpDefinitionId, String cpInstanceUuid, long cProductId,
+			boolean diagram, int number, String sku,
 			String sequence, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -54,8 +54,8 @@ public class CPDefinitionDiagramEntryServiceImpl
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionDiagramEntryLocalService.addCPDefinitionDiagramEntry(
-			userId, cpDefinitionId, cpInstanceUuid, cProductId, diagram, number,
-			sku, sequence, serviceContext);
+			getUserId(), cpDefinitionId, cpInstanceUuid, cProductId, diagram,
+			number, sku, sequence, serviceContext);
 	}
 
 	@Override

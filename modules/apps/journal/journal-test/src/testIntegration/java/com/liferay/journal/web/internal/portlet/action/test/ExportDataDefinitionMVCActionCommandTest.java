@@ -71,14 +71,6 @@ public class ExportDataDefinitionMVCActionCommandTest {
 		_mvcResourceCommand.serveResource(
 			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
-		_assertResponse(json, mockLiferayResourceResponse);
-	}
-
-	private void _assertResponse(
-			String json,
-			MockLiferayResourceResponse mockLiferayResourceResponse)
-		throws Exception {
-
 		ByteArrayOutputStream byteArrayOutputStream =
 			(ByteArrayOutputStream)
 				mockLiferayResourceResponse.getPortletOutputStream();

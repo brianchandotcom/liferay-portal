@@ -18,4 +18,6 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:osb:osb-portal-instance-provisioning:osb-portal-instance-provisioning-api")
+
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 }

@@ -153,8 +153,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 	private Pin _addPin(long cpDefinitionId, Pin pin) throws Exception {
 		CPDefinitionDiagramPin cpDefinitionDiagramPin =
 			_cpDefinitionDiagramPinService.addCPDefinitionDiagramPin(
-				contextUser.getUserId(), cpDefinitionId,
-				GetterUtil.getDouble(pin.getPositionX()),
+				cpDefinitionId, GetterUtil.getDouble(pin.getPositionX()),
 				GetterUtil.getDouble(pin.getPositionY()),
 				GetterUtil.getString(pin.getSequence()));
 

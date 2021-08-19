@@ -44,15 +44,15 @@ public class CPDefinitionDiagramPinServiceImpl
 
 	@Override
 	public CPDefinitionDiagramPin addCPDefinitionDiagramPin(
-			long userId, long cpDefinitionId, double positionX,
-			double positionY, String sequence)
+			long cpDefinitionId, double positionX, double positionY,
+			String sequence)
 		throws PortalException {
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionDiagramPinLocalService.addCPDefinitionDiagramPin(
-			userId, cpDefinitionId, positionX, positionY, sequence);
+			getUserId(), cpDefinitionId, positionX, positionY, sequence);
 	}
 
 	@Override

@@ -370,6 +370,8 @@ public class ViewChangesDisplayContext {
 				return getCTCommentsURL.toString();
 			}
 		).put(
+			"keywordsFromURL", ParamUtil.getString(_renderRequest, "keywords")
+		).put(
 			"modelData",
 			() -> {
 				JSONObject modelDataJSONObject =

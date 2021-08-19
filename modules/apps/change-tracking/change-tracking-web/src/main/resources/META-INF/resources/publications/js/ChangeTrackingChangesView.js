@@ -23,7 +23,9 @@ import ClayForm, {
 	ClayToggle,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import ClayManagementToolbar, {
+	ClayResultsBar,
+} from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
@@ -560,6 +562,7 @@ export default ({
 	discardURL,
 	expired,
 	getCTCommentsURL,
+	keywordsFromURL,
 	modelData,
 	namespace,
 	pathFromURL,
@@ -1134,7 +1137,10 @@ export default ({
 		showHideable: initialShowHideable,
 		viewType: initialViewType,
 	});
+	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
+	const [searchTerms, setSearchTerms] = useState(keywordsFromURL);
 	const [showComments, setShowComments] = useState(false);
+	const [searchMobile, setSearchMobile] = useState(false);
 
 	const handleNavigationUpdate = useCallback(
 		(json) => {
@@ -2126,10 +2132,72 @@ export default ({
 		);
 	};
 
+	const onSubmit = (keywords) => {
+		setResultsKeywords(keywords);
+	}
+
 	const renderManagementToolbar = () => {
 		return (
-			<ClayManagementToolbar>
+			<ClayManagementToolbar className={renderState.viewType === VIEW_TYPE_CONTEXT ? 'nav-item-expand' : ''}>
+				{renderState.viewType === VIEW_TYPE_CHANGES && (
+					<ClayManagementToolbar.Search
+						onSubmit={(event) => {
+							event.preventDefault();
+
+							onSubmit(searchTerms.trim());
+						}}
+						showMobile={searchMobile}
+					>
+						<ClayInput.Group>
+							<ClayInput.GroupItem>
+								<ClayInput
+									aria-label={Liferay.Language.get('search')}
+									className="form-control input-group-inset input-group-inset-after"
+									disabled={changes.length === 0}
+									onChange={(event) =>
+										setSearchTerms(event.target.value)
+									}
+									placeholder={`${Liferay.Language.get(
+										'search'
+									)}...`}
+									type="text"
+									value={searchTerms}
+								/>
+								<ClayInput.GroupInsetItem after tag="span">
+									<ClayButtonWithIcon
+										className="navbar-breakpoint-d-none"
+										disabled={changes.length === 0}
+										displayType="unstyled"
+										onClick={() => setSearchMobile(false)}
+										spritemap={spritemap}
+										symbol="times"
+									/>
+									<ClayButtonWithIcon
+										displayType="unstyled"
+										spritemap={spritemap}
+										symbol="search"
+										type="submit"
+									/>
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayManagementToolbar.Search>
+				)}
+
 				<ClayManagementToolbar.ItemList>
+					{renderState.viewType === VIEW_TYPE_CHANGES && (
+						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+							<ClayButton
+								className="nav-link nav-link-monospaced"
+								disabled={changes.length === 0}
+								displayType="unstyled"
+								onClick={() => setSearchMobile(true)}
+							>
+								<ClayIcon spritemap={spritemap} symbol="search" />
+							</ClayButton>
+						</ClayManagementToolbar.Item>
+					)}
+
 					{renderState.viewType === VIEW_TYPE_CONTEXT && (
 						<ClayManagementToolbar.Item>
 							<ClayDropDownWithItems
@@ -2209,8 +2277,9 @@ export default ({
 							</ClayButton>
 						</ClayManagementToolbar.Item>
 					)}
-
-					<ClayManagementToolbar.Item className="nav-item-expand" />
+					{renderState.viewType === VIEW_TYPE_CONTEXT && (
+						<ClayManagementToolbar.Item className="nav-item-expand" />
+					)}
 
 					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
@@ -2310,6 +2379,56 @@ export default ({
 			</div>
 		);
 	};
+
+	const renderResultsBar = () => {
+		const items = [];
+
+		if (resultsKeywords) {
+			items.push(
+				<ClayResultsBar.Item>
+					<span className="component-text text-truncate-inline">
+						<span className="text-truncate">
+							{Liferay.Util.sub(
+								renderState.children && renderState.children.length === 1
+									? Liferay.Language.get('x-result-for')
+									: Liferay.Language.get('x-results-for'),
+								renderState.children ? renderState.children.length.toString() : '0'
+							) + " "}
+							<strong>{resultsKeywords}</strong>
+						</span>
+					</span>
+				</ClayResultsBar.Item>
+			);
+		}
+
+		if (items.length === 0) {
+			return '';
+		}
+
+		items.push(
+			<ClayResultsBar.Item expand />
+		);
+		items.push(
+			<ClayResultsBar.Item>
+				<ClayButton
+					className="component-link tbar-link"
+					displayType="unstyled"
+					onClick={() => {
+						onSubmit('');
+						setSearchTerms('');
+					}}
+				>
+					{Liferay.Language.get('clear')}
+				</ClayButton>
+			</ClayResultsBar.Item>
+		);
+
+		return (
+			<ClayResultsBar>
+				{items}
+			</ClayResultsBar>
+		);
+	}
 
 	const renderTable = () => {
 		if (!renderState.children || renderState.children.length === 0) {
@@ -2436,6 +2555,7 @@ export default ({
 	return (
 		<>
 			{renderManagementToolbar()}
+			{renderResultsBar()}
 			<div
 				className={`sidenav-container sidenav-right ${
 					showComments ? 'open' : 'closed'

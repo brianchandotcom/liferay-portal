@@ -50,46 +50,6 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 	}
 
-	@description = "This test adds an account specific role and ensures this role is not shared across accounts"
-	@priority = "4"
-	test AccountSpecificRoleIsNotSharedAcrossAccounts {
-		property portal.acceptance = "true";
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account with Role",
-			accountEntryType = "Business");
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account without Role",
-			accountEntryType = "Business");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account with Role");
-
-		Accounts.addAccountSpecificRole(accountRoleTitle = "Account Specific Role");
-
-		Navigator.gotoBack();
-
-		LexiconEntry.viewEntryName(rowEntry = "Account Specific Role");
-
-		AssertTextEquals(
-			key_columnName = "lfr-type",
-			key_tableEntry = "Account Specific Role",
-			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
-			value1 = "Owned");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account without Role");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
-
-		LexiconEntry.viewEntryName(rowEntry = "Account Administrator");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Account without Role");
-	}
-
 	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
 	@priority = "4"
 	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
@@ -188,9 +148,9 @@ definition {
 		Accounts.viewAssignee(assigneeName = "userfn");
 	}
 
-	@description = "This test adds and removes a user assignee to an account specific role."
+	@description = "This test adds and removes a user assignee to an Owned or account specific role."
 	@priority = "4"
-	test CanAddAndRemoveAssigneeToAccountSpecificRole {
+	test CanAddAndRemoveAssigneeToAnOwnedAccountRole {
 		property portal.acceptance = "true";
 
 		JSONAccountEntry.addAccountEntry(
@@ -213,7 +173,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		Accounts.addAccountSpecificRole(accountRoleTitle = "Account Role Title");
+		Accounts.addOwnedAccountRole(accountRoleTitle = "Account Role Title");
 
 		Accounts.addAssigneeToRole(
 			accountRoleTitle = "Account Role Title",
@@ -591,10 +551,10 @@ definition {
 		}
 	}
 
-	@description = "This only tests the UI for defining permissions for an account specific role. Permissioning will be covered when 2B widgets are implemented."
+	@description = "This only tests the UI for defining permissions for an Owned or account specific role. Permissioning will be covered when 2B widgets are implemented."
 	@priority = "4"
-	test CanDefinePermissionsForAccountSpecificRole {
-		task ("Add a business account with account specific role and navigate to Define Permissions") {
+	test CanDefinePermissionsForOwnedAccountRole {
+		task ("Add a business account with Owned or account specific role and navigate to Define Permissions") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Business Account with Role",
 				accountEntryType = "Business");
@@ -603,7 +563,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Business Account with Role");
 
-			Accounts.addAccountSpecificRole(accountRoleTitle = "Account Specific Role");
+			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
 
 			Navigator.gotoBack();
 
@@ -1698,6 +1658,46 @@ definition {
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+	}
+
+	@description = "This test adds an Owned or account specific role and ensures this role is not shared across accounts"
+	@priority = "4"
+	test OwnedAccountRoleIsNotSharedAcrossAccounts {
+		property portal.acceptance = "true";
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with Role",
+			accountEntryType = "Business");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account without Role",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Role");
+
+		Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Specific Role");
+
+		AssertTextEquals(
+			key_columnName = "lfr-type",
+			key_tableEntry = "Account Specific Role",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "Owned");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account without Role");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Administrator");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Account without Role");
 	}
 
 	@description = "This test replaces user in Person Account with another existing user. It asserts that first user was replaced by the second user and isn't assigned to the account anymore."

@@ -1,6 +1,6 @@
 definition {
 
-	macro addAccountSpecificRole {
+	macro addOwnedAccountRole {
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
 		LexiconEntry.gotoAdd();

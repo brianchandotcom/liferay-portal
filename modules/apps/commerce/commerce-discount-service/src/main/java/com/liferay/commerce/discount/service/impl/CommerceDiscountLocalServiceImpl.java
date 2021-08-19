@@ -566,6 +566,12 @@ public class CommerceDiscountLocalServiceImpl
 			deleteCommerceDiscountCommerceAccountGroupRelsByCommerceDiscountId(
 				commerceDiscount.getCommerceDiscountId());
 
+		// Commerce discount order type rels
+
+		commerceDiscountOrderTypeRelLocalService.
+			deleteCommerceDiscountOrderTypeRels(
+				commerceDiscount.getCommerceDiscountId());
+
 		// Commerce discount
 
 		commerceDiscountPersistence.remove(commerceDiscount);

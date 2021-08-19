@@ -174,7 +174,6 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 			commerceNotificationTemplate =
 				_commerceNotificationTemplateService.
 					addCommerceNotificationTemplate(
-						_portal.getUserId(actionRequest),
 						commerceChannel.getGroupId(), name, description, from,
 						fromNameMap, to, cc, bcc, type, enabled, subjectMap,
 						bodyMap, serviceContext);

@@ -39,11 +39,10 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public CommerceCurrency addCommerceCurrency(
-			long userId, String code, Map<Locale, String> nameMap,
-			String symbol, BigDecimal rate,
-			Map<Locale, String> formatPatternMap, int maxFractionDigits,
-			int minFractionDigits, String roundingMode, boolean primary,
-			double priority, boolean active)
+			String code, Map<Locale, String> nameMap, String symbol,
+			BigDecimal rate, Map<Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -51,7 +50,7 @@ public class CommerceCurrencyServiceImpl
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		return commerceCurrencyLocalService.addCommerceCurrency(
-			userId, code, nameMap, symbol, rate, formatPatternMap,
+			getUserId(), code, nameMap, symbol, rate, formatPatternMap,
 			maxFractionDigits, minFractionDigits, roundingMode, primary,
 			priority, active);
 	}

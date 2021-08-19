@@ -201,6 +201,14 @@ public class ServiceContext implements Cloneable, Serializable {
 				guestPermissionsList.toArray(new String[0]), modelName));
 	}
 
+	public User fetchUser() {
+		if (_userId == 0) {
+			return null;
+		}
+
+		return UserLocalServiceUtil.fetchUserById(_userId);
+	}
+
 	/**
 	 * Returns the asset category IDs to be applied to an asset entry if the
 	 * service context is being passed as a parameter to a method which
@@ -747,14 +755,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public long getUserId() {
 		return _userId;
-	}
-
-	public User fetchUser() {
-		if (_userId == 0) {
-			return null;
-		}
-
-		return UserLocalServiceUtil.fetchUserById(_userId);
 	}
 
 	/**

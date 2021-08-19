@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.util.configuration;
 
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -81,7 +82,8 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public Object getConfigurationFieldValue(
-		String editableValues, String dataType, String fieldName) {
+		String editableValues, String fieldName,
+		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType) {
 
 		try {
 			JSONObject editableValuesJSONObject =
@@ -96,7 +98,8 @@ public class FragmentEntryConfigurationParserImpl
 			}
 
 			return _getFieldValue(
-				dataType, configurationValuesJSONObject.getString(fieldName));
+				fragmentConfigurationFieldDataType,
+				configurationValuesJSONObject.getString(fieldName));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -274,7 +277,8 @@ public class FragmentEntryConfigurationParserImpl
 		if (StringUtil.equalsIgnoreCase(
 				fragmentConfigurationField.getType(), "checkbox")) {
 
-			return _getFieldValue("bool", value);
+			return _getFieldValue(
+				FragmentConfigurationFieldDataType.BOOLEAN, value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(),
@@ -285,7 +289,8 @@ public class FragmentEntryConfigurationParserImpl
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "colorPalette")) {
 
-			JSONObject jsonObject = (JSONObject)_getFieldValue("object", value);
+			JSONObject jsonObject = (JSONObject)_getFieldValue(
+				FragmentConfigurationFieldDataType.OBJECT, value);
 
 			if (jsonObject.isNull("color") && !jsonObject.isNull("cssClass")) {
 				jsonObject.put("color", jsonObject.getString("cssClass"));
@@ -303,16 +308,20 @@ public class FragmentEntryConfigurationParserImpl
 				 StringUtil.equalsIgnoreCase(
 					 fragmentConfigurationField.getType(), "text")) {
 
-			String dataType = fragmentConfigurationField.getDataType();
+			FragmentConfigurationFieldDataType
+				fragmentConfigurationFieldDataType =
+					fragmentConfigurationField.
+						getFragmentConfigurationFieldDataType();
 
-			if (Validator.isNull(dataType)) {
-				dataType = "string";
+			if (fragmentConfigurationFieldDataType == null) {
+				fragmentConfigurationFieldDataType =
+					FragmentConfigurationFieldDataType.STRING;
 			}
 
-			return _getFieldValue(dataType, value);
+			return _getFieldValue(fragmentConfigurationFieldDataType, value);
 		}
 
-		return _getFieldValue("string", value);
+		return _getFieldValue(FragmentConfigurationFieldDataType.STRING, value);
 	}
 
 	/**
@@ -506,17 +515,28 @@ public class FragmentEntryConfigurationParserImpl
 		return null;
 	}
 
-	private Object _getFieldValue(String dataType, String value) {
-		if (StringUtil.equalsIgnoreCase(dataType, "bool")) {
+	private Object _getFieldValue(
+		FragmentConfigurationFieldDataType fragmentConfigurationFieldDataType,
+		String value) {
+
+		if (fragmentConfigurationFieldDataType ==
+				FragmentConfigurationFieldDataType.BOOLEAN) {
+
 			return GetterUtil.getBoolean(value);
 		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "double")) {
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.DOUBLE) {
+
 			return GetterUtil.getDouble(value);
 		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "int")) {
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.INTEGER) {
+
 			return GetterUtil.getInteger(value);
 		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "object")) {
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.OBJECT) {
+
 			try {
 				return JSONFactoryUtil.createJSONObject(value);
 			}
@@ -528,7 +548,9 @@ public class FragmentEntryConfigurationParserImpl
 				}
 			}
 		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "string")) {
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.STRING) {
+
 			return value;
 		}
 

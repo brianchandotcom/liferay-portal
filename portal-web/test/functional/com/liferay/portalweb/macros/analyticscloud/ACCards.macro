@@ -8,14 +8,6 @@ definition {
 			value1 = "${cardTitle}");
 	}
 
-	macro viewMetricValue {
-		AssertTextEquals(
-			key_cardTitle = "${cardTitle}",
-			key_metricName = "${metricName}",
-			locator1 = "ACCards#METRIC_VALUE",
-			value1 = "${metricValue}");
-	}
-
 	macro viewMetricBarStyle {
 		AssertAttributeValue(
 			attribute1 = "style",
@@ -30,6 +22,14 @@ definition {
 			locator1 = "ACCards#METRIC_BAR",
 			locator2 = "background-color",
 			value1 = "${backgroundColor}");
+	}
+
+	macro viewMetricValue {
+		AssertTextEquals(
+			key_cardTitle = "${cardTitle}",
+			key_metricName = "${metricName}",
+			locator1 = "ACCards#METRIC_VALUE",
+			value1 = "${metricValue}");
 	}
 
 	macro viewTableEntryInfo {

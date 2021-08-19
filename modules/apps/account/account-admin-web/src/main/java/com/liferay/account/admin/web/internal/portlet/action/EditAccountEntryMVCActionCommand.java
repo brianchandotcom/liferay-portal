@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -103,22 +106,31 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					String redirect = ParamUtil.getString(
+						actionRequest, "redirect");
 
-			if (cmd.equals(Constants.ADD)) {
-				AccountEntry accountEntry = addAccountEntry(actionRequest);
+					if (cmd.equals(Constants.ADD)) {
+						AccountEntry accountEntry = addAccountEntry(
+							actionRequest);
 
-				redirect = _http.setParameter(
-					redirect, actionResponse.getNamespace() + "accountEntryId",
-					accountEntry.getAccountEntryId());
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateAccountEntry(actionRequest);
-			}
+						redirect = _http.setParameter(
+							redirect,
+							actionResponse.getNamespace() + "accountEntryId",
+							accountEntry.getAccountEntryId());
+					}
+					else if (cmd.equals(Constants.UPDATE)) {
+						updateAccountEntry(actionRequest);
+					}
 
-			if (Validator.isNotNull(redirect)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
+					if (Validator.isNotNull(redirect)) {
+						sendRedirect(actionRequest, actionResponse, redirect);
+					}
+
+					return null;
+				});
 		}
 		catch (Exception exception) {
 			if (exception instanceof PrincipalException) {
@@ -141,6 +153,9 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw exception;
 			}
+		}
+		catch (Throwable throwable) {
+			_log.error(throwable);
 		}
 	}
 
@@ -216,6 +231,10 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditAccountEntryMVCActionCommand.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

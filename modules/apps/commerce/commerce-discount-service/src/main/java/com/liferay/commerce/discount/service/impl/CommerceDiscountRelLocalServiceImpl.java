@@ -156,20 +156,19 @@ public class CommerceDiscountRelLocalServiceImpl
 	public List<CommerceDiscountRel> getCategoriesByCommerceDiscountId(
 		long commerceDiscountId, String name, int start, int end) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
-			CommerceDiscountRelTable.INSTANCE
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			AssetCategoryTable.INSTANCE,
-			AssetCategoryTable.INSTANCE.categoryId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		);
-
 		return dslQuery(
 			_getGroupByStep(
-				joinStep, AssetCategory.class.getName(), commerceDiscountId,
-				name, AssetCategoryTable.INSTANCE.name
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountRelTable.INSTANCE
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					AssetCategoryTable.INSTANCE,
+					AssetCategoryTable.INSTANCE.categoryId.eq(
+						CommerceDiscountRelTable.INSTANCE.classPK)
+				),
+				AssetCategory.class.getName(), commerceDiscountId, name,
+				AssetCategoryTable.INSTANCE.name
 			).limit(
 				start, end
 			));
@@ -179,20 +178,19 @@ public class CommerceDiscountRelLocalServiceImpl
 	public int getCategoriesByCommerceDiscountIdCount(
 		long commerceDiscountId, String name) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.countDistinct(
-			CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			AssetCategoryTable.INSTANCE,
-			AssetCategoryTable.INSTANCE.categoryId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		);
-
 		return dslQueryCount(
 			_getGroupByStep(
-				joinStep, AssetCategory.class.getName(), commerceDiscountId,
-				name, AssetCategoryTable.INSTANCE.name));
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					AssetCategoryTable.INSTANCE,
+					AssetCategoryTable.INSTANCE.categoryId.eq(
+						CommerceDiscountRelTable.INSTANCE.classPK)
+				),
+				AssetCategory.class.getName(), commerceDiscountId, name,
+				AssetCategoryTable.INSTANCE.name));
 	}
 
 	@Override
@@ -237,20 +235,18 @@ public class CommerceDiscountRelLocalServiceImpl
 		getCommercePricingClassesByCommerceDiscountId(
 			long commerceDiscountId, String title, int start, int end) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
-			CommerceDiscountRelTable.INSTANCE
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			CommercePricingClassTable.INSTANCE,
-			CommercePricingClassTable.INSTANCE.commercePricingClassId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		);
-
 		return dslQuery(
 			_getGroupByStep(
-				joinStep, CommercePricingClass.class.getName(),
-				commerceDiscountId, title,
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountRelTable.INSTANCE
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					CommercePricingClassTable.INSTANCE,
+					CommercePricingClassTable.INSTANCE.commercePricingClassId.
+						eq(CommerceDiscountRelTable.INSTANCE.classPK)
+				),
+				CommercePricingClass.class.getName(), commerceDiscountId, title,
 				CommercePricingClassTable.INSTANCE.title
 			).limit(
 				start, end
@@ -261,20 +257,18 @@ public class CommerceDiscountRelLocalServiceImpl
 	public int getCommercePricingClassesByCommerceDiscountIdCount(
 		long commerceDiscountId, String title) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.countDistinct(
-			CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			CommercePricingClassTable.INSTANCE,
-			CommercePricingClassTable.INSTANCE.commercePricingClassId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		);
-
 		return dslQueryCount(
 			_getGroupByStep(
-				joinStep, CommercePricingClass.class.getName(),
-				commerceDiscountId, title,
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					CommercePricingClassTable.INSTANCE,
+					CommercePricingClassTable.INSTANCE.commercePricingClassId.
+						eq(CommerceDiscountRelTable.INSTANCE.classPK)
+				),
+				CommercePricingClass.class.getName(), commerceDiscountId, title,
 				CommercePricingClassTable.INSTANCE.title));
 	}
 
@@ -283,27 +277,27 @@ public class CommerceDiscountRelLocalServiceImpl
 		long commerceDiscountId, String name, String languageId, int start,
 		int end) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
-			CommerceDiscountRelTable.INSTANCE
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			CPDefinitionTable.INSTANCE,
-			CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		).leftJoinOn(
-			CPDefinitionLocalizationTable.INSTANCE,
-			CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
-				CPDefinitionLocalizationTable.INSTANCE.CPDefinitionId
-			).and(
-				CPDefinitionLocalizationTable.INSTANCE.languageId.eq(languageId)
-			)
-		);
-
 		return dslQuery(
 			_getGroupByStep(
-				joinStep, CPDefinition.class.getName(), commerceDiscountId,
-				name, CPDefinitionLocalizationTable.INSTANCE.name
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountRelTable.INSTANCE
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					CPDefinitionTable.INSTANCE,
+					CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+						CommerceDiscountRelTable.INSTANCE.classPK)
+				).leftJoinOn(
+					CPDefinitionLocalizationTable.INSTANCE,
+					CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+						CPDefinitionLocalizationTable.INSTANCE.CPDefinitionId
+					).and(
+						CPDefinitionLocalizationTable.INSTANCE.languageId.eq(
+							languageId)
+					)
+				),
+				CPDefinition.class.getName(), commerceDiscountId, name,
+				CPDefinitionLocalizationTable.INSTANCE.name
 			).limit(
 				start, end
 			));
@@ -313,46 +307,45 @@ public class CommerceDiscountRelLocalServiceImpl
 	public int getCPDefinitionsByCommerceDiscountIdCount(
 		long commerceDiscountId, String name, String languageId) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.countDistinct(
-			CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			CPDefinitionTable.INSTANCE,
-			CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		).leftJoinOn(
-			CPDefinitionLocalizationTable.INSTANCE,
-			CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
-				CPDefinitionLocalizationTable.INSTANCE.CPDefinitionId
-			).and(
-				CPDefinitionLocalizationTable.INSTANCE.languageId.eq(languageId)
-			)
-		);
-
 		return dslQueryCount(
 			_getGroupByStep(
-				joinStep, CPDefinition.class.getName(), commerceDiscountId,
-				name, CPDefinitionLocalizationTable.INSTANCE.name));
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					CPDefinitionTable.INSTANCE,
+					CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+						CommerceDiscountRelTable.INSTANCE.classPK)
+				).leftJoinOn(
+					CPDefinitionLocalizationTable.INSTANCE,
+					CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+						CPDefinitionLocalizationTable.INSTANCE.CPDefinitionId
+					).and(
+						CPDefinitionLocalizationTable.INSTANCE.languageId.eq(
+							languageId)
+					)
+				),
+				CPDefinition.class.getName(), commerceDiscountId, name,
+				CPDefinitionLocalizationTable.INSTANCE.name));
 	}
 
 	@Override
 	public List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
 		long commerceDiscountId, String sku, int start, int end) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
-			CommerceDiscountRelTable.INSTANCE
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			CPInstanceTable.INSTANCE,
-			CPInstanceTable.INSTANCE.CPInstanceId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		);
-
 		return dslQuery(
 			_getGroupByStep(
-				joinStep, CPInstance.class.getName(), commerceDiscountId, sku,
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountRelTable.INSTANCE
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					CPInstanceTable.INSTANCE,
+					CPInstanceTable.INSTANCE.CPInstanceId.eq(
+						CommerceDiscountRelTable.INSTANCE.classPK)
+				),
+				CPInstance.class.getName(), commerceDiscountId, sku,
 				CPInstanceTable.INSTANCE.sku
 			).limit(
 				start, end
@@ -363,19 +356,18 @@ public class CommerceDiscountRelLocalServiceImpl
 	public int getCPInstancesByCommerceDiscountIdCount(
 		long commerceDiscountId, String sku) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.countDistinct(
-			CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
-		).from(
-			CommerceDiscountRelTable.INSTANCE
-		).innerJoinON(
-			CPInstanceTable.INSTANCE,
-			CPInstanceTable.INSTANCE.CPInstanceId.eq(
-				CommerceDiscountRelTable.INSTANCE.classPK)
-		);
-
 		return dslQueryCount(
 			_getGroupByStep(
-				joinStep, CPInstance.class.getName(), commerceDiscountId, sku,
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+				).from(
+					CommerceDiscountRelTable.INSTANCE
+				).innerJoinON(
+					CPInstanceTable.INSTANCE,
+					CPInstanceTable.INSTANCE.CPInstanceId.eq(
+						CommerceDiscountRelTable.INSTANCE.classPK)
+				),
+				CPInstance.class.getName(), commerceDiscountId, sku,
 				CPInstanceTable.INSTANCE.sku));
 	}
 

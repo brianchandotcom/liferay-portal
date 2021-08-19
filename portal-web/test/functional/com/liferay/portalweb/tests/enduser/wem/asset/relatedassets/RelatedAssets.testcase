@@ -24,8 +24,10 @@ definition {
 		}
 	}
 
+	@description = "Related assets should be displayed with category."
 	@priority = "4"
-	test AssertRelatedAssetsDisplayWithCategory {
+	@uitest
+	test ShouldBeDisplayWithCategory {
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
 		JSONLayout.addPublicLayout(

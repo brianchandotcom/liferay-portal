@@ -16,6 +16,7 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -453,8 +454,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			String targetCollections =
 				(String)
 					fragmentEntryConfigurationParser.getConfigurationFieldValue(
-						fragmentEntryLink.getEditableValues(), "string",
-						"targetCollections");
+						fragmentEntryLink.getEditableValues(),
+						"targetCollections",
+						FragmentConfigurationFieldDataType.STRING);
 
 			try {
 				JSONArray targetCollectionsJSONArray =

@@ -16,6 +16,7 @@ package com.liferay.fragment.renderer.collection.filter.internal;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -107,7 +108,8 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 		return (String)
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-				fragmentEntryLink.getEditableValues(), "string", "filterKey");
+				fragmentEntryLink.getEditableValues(), "filterKey",
+				FragmentConfigurationFieldDataType.STRING);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

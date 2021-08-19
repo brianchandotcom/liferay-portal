@@ -77,27 +77,29 @@ const ImagePins = ({
 
 		svg.call(zoom);
 
-		svg.on('dblclick.zoom', () => {
-			const x =
-				(d3event.offsetX - transform.current.x) / transform.current.k;
-			const y =
-				(d3event.offsetY - transform.current.y) / transform.current.k;
-
-			setCpins(
-				cPins.concat({
-					cx: x,
-					cy: y,
-					draggable: true,
-					fill: `#${addNewPinState.fill}`,
-					id: cPins.length,
-					label: `new${cPins.length}`,
-					linked_to_sku: 'sku',
-					quantity: 0,
-					r: addNewPinState.radius,
-					sku: addNewPinState.sku,
-				})
-			);
-		});
+		if (isAdmin) {
+			svg.on('dblclick.zoom', () => {
+				const x =
+					(d3event.offsetX - transform.current.x) /
+					transform.current.k;
+				const y =
+					(d3event.offsetY - transform.current.y) /
+					transform.current.k;
+				setCpins(
+					cPins.concat({
+						cx: x,
+						cy: y,
+						draggable: true,
+						fill: `#${addNewPinState.fill}`,
+						label: '',
+						linked_to_sku: 'sku',
+						quantity: 0,
+						r: addNewPinState.radius,
+						sku: addNewPinState.sku,
+					})
+				);
+			});
+		}
 
 		if (resetZoom) {
 			setResetZoom(false);

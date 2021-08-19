@@ -57,7 +57,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 		}
 
 		return new InfoItemFormVariation(
-			String.valueOf(ddmStructure.getStructureId()),
+			groupId, String.valueOf(ddmStructure.getStructureId()),
 			InfoLocalizedValue.<String>builder(
 			).values(
 				ddmStructure.getNameMap()
@@ -92,6 +92,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 		for (DDMStructure ddmStructure : ddmStructures) {
 			infoItemFormVariations.add(
 				new InfoItemFormVariation(
+					ddmStructure.getGroupId(),
 					String.valueOf(ddmStructure.getStructureId()),
 					InfoLocalizedValue.<String>builder(
 					).values(

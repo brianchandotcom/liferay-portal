@@ -45,7 +45,7 @@ public class ObjectEntryInfoItemFormVariationsProvider
 				GetterUtil.getLong(formVariationKey));
 
 		return new InfoItemFormVariation(
-			String.valueOf(objectDefinition.getObjectDefinitionId()),
+			groupId, String.valueOf(objectDefinition.getObjectDefinitionId()),
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFormVariationsProvider.class,
 				objectDefinition.getName()));
@@ -59,6 +59,7 @@ public class ObjectEntryInfoItemFormVariationsProvider
 			_objectDefinitionLocalService.getObjectDefinitions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			objectDefinition -> new InfoItemFormVariation(
+				groupId,
 				String.valueOf(objectDefinition.getObjectDefinitionId()),
 				InfoLocalizedValue.localize(
 					ObjectEntryInfoItemFormVariationsProvider.class,

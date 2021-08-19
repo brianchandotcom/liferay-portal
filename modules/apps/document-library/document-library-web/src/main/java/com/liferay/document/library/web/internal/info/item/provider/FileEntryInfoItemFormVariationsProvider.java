@@ -61,7 +61,7 @@ public class FileEntryInfoItemFormVariationsProvider
 		}
 
 		return new InfoItemFormVariation(
-			String.valueOf(dlFileEntryType.getFileEntryTypeId()),
+			groupId, String.valueOf(dlFileEntryType.getFileEntryTypeId()),
 			InfoLocalizedValue.<String>builder(
 			).values(
 				dlFileEntryType.getNameMap()
@@ -100,6 +100,7 @@ public class FileEntryInfoItemFormVariationsProvider
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			infoItemFormVariations.add(
 				new InfoItemFormVariation(
+					dlFileEntryType.getGroupId(),
 					String.valueOf(dlFileEntryType.getFileEntryTypeId()),
 					InfoLocalizedValue.<String>builder(
 					).values(
@@ -116,6 +117,7 @@ public class FileEntryInfoItemFormVariationsProvider
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 		return new InfoItemFormVariation(
+			basicDocumentDLFileEntryType.getGroupId(),
 			String.valueOf(basicDocumentDLFileEntryType.getFileEntryTypeId()),
 			InfoLocalizedValue.localize(
 				FileEntryInfoItemFormVariationsProvider.class,

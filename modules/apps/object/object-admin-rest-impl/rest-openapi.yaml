@@ -189,6 +189,35 @@ paths:
                     description:
                         ""
             tags: ["ObjectDefinition"]
+        put:
+            operationId: putObjectDefinition
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectDefinition"
+                    description:
+                        ""
+            tags: ["ObjectDefinition"]
     "/object-definitions/{objectDefinitionId}/object-fields":
         get:
             operationId: getObjectDefinitionObjectFieldsPage

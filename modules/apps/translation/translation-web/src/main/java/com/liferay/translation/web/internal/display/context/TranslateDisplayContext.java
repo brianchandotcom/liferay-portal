@@ -53,6 +53,7 @@ import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
+import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,6 +81,8 @@ public class TranslateDisplayContext {
 		List<String> availableSourceLanguageIds,
 		List<String> availableTargetLanguageIds,
 		BooleanSupplier booleanSupplier, String className, long classPK,
+		FFLayoutExperienceSelectorConfiguration
+			ffLayoutExperienceSelectorConfiguration,
 		InfoForm infoForm, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Object object,
 		String segmentsExperienceId,
@@ -92,6 +95,8 @@ public class TranslateDisplayContext {
 		_booleanSupplier = booleanSupplier;
 		_className = className;
 		_classPK = classPK;
+		_ffLayoutExperienceSelectorConfiguration =
+			ffLayoutExperienceSelectorConfiguration;
 		_infoForm = infoForm;
 		_liferayPortletResponse = liferayPortletResponse;
 		_object = object;
@@ -464,7 +469,9 @@ public class TranslateDisplayContext {
 	private Map<String, Object> _getExperiencesSelectorData()
 		throws PortalException {
 
-		if (!Objects.equals(_className, Layout.class.getName())) {
+		if (!_ffLayoutExperienceSelectorConfiguration.enabled() ||
+			!Objects.equals(_className, Layout.class.getName())) {
+
 			return null;
 		}
 
@@ -579,6 +586,8 @@ public class TranslateDisplayContext {
 	private final BooleanSupplier _booleanSupplier;
 	private final String _className;
 	private final long _classPK;
+	private final FFLayoutExperienceSelectorConfiguration
+		_ffLayoutExperienceSelectorConfiguration;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoForm _infoForm;

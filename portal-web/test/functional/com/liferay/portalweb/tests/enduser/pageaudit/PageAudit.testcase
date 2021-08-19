@@ -138,7 +138,7 @@ definition {
 
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are images on the page with a displayed ratio different from the actual one
-	Then the users will see the matching failing elements, with its source link and the occurrences separately, and the Displayed Aspect Ratio and the Actual Aspect Ratio  for each one of them"
+	Then the users will see the matching failing elements, with its source link and the occurrences separately, and the Displayed Aspect Ratio and the Actual Aspect Ratio for each one of them"
 
 	@priority = "4"
 	@uitest
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When the page has any invalid hreflang link 
+	When the page has any invalid hreflang link
 	Then the users will see the matching failing elements, with the incorrect hreflang links"
 
 	@priority = "4"
@@ -305,11 +305,12 @@ definition {
 	}
 
 	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When  the link texts are not title as the link text
+	When the link texts are not title as the link text
 	Then the users will see the link text and the link destination URL"
-	
+
 	@priority = "4"
 	@uitest
+	test CheckLinksTexts {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckLinksTexts";
 
@@ -350,7 +351,7 @@ definition {
 
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are texts on the page with insufficient contrast ratio
-	Then the users will see the matching failing elements, with its current ratio, foreground color code, background color code, font size, font weight and expected ratio"	
+	Then the users will see the matching failing elements, with its current ratio, foreground color code, background color code, font size, font weight and expected ratio"
 
 	@priority = "4"
 	@uitest
@@ -391,7 +392,7 @@ definition {
 
 	@description = "LPS-132234: Given the page audit panel detail view
 	When there are images on the page with no alt text
-	Then the users will see the matching failing elements, and the current code snippet "	
+	Then the users will see the matching failing elements, and the current code snippet "
 
 	@priority = "4"
 	@uitest
@@ -1069,6 +1070,7 @@ definition {
 	@description = "LPS-132232: Given the Page Audit Panel
 	When the user opens it and there are no failing elements retrieved for any of the checks
 	Then a message "Your page has no issues" and the matching image show, the two sections SEO and Accessibility show and they are collapsed by default"
+
 	@priority = "3"
 	@uitest
 	test PageWithNoIssues {

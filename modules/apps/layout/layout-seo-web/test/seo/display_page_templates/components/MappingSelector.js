@@ -13,13 +13,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, getByRole, render} from '@testing-library/react';
 import React from 'react';
 
 import MappingSelector from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingSelector';
 
 const baseProps = {
-	fieldType: 'text',
+	fieldType: 'image',
 	fields: [
 		{key: 'field-1', label: 'Field 1', type: 'text'},
 		{key: 'field-2', label: 'Field 2', type: 'text'},
@@ -27,7 +27,7 @@ const baseProps = {
 		{key: 'field-4', label: 'Field 4', type: 'text'},
 		{key: 'field-5', label: 'Field 5', type: 'text'},
 	],
-	helpMessage: 'Map a text field, it will be used as Title.',
+	helpMessage: 'Map a image field, it will be used as Image.',
 	label: 'Label test mapping field',
 	name: 'testMappingSelector',
 	selectedFieldKey: 'field-2',
@@ -47,6 +47,7 @@ describe('MappingSelector', () => {
 		let mappingButton;
 		let result;
 		let mappingPanel;
+		let mappingPanelButton;
 		let inputFeedback;
 
 		beforeEach(() => {
@@ -92,6 +93,7 @@ describe('MappingSelector', () => {
 					'.dpt-mapping-panel'
 				);
 				fieldSelect = result.getByLabelText('field');
+				mappingPanelButton = getByRole(mappingPanel, 'button');
 			});
 
 			it('opens the mapping panel', () => {
@@ -107,6 +109,7 @@ describe('MappingSelector', () => {
 					fireEvent.change(fieldSelect, {
 						target: {value: baseProps.fields[0].key},
 					});
+					fireEvent.click(mappingPanelButton);
 				});
 
 				it('sets the new field key in the hidden input', () => {
@@ -145,6 +148,7 @@ describe('MappingSelector', () => {
 					fireEvent.change(fieldSelect, {
 						target: {value: ''},
 					});
+					fireEvent.click(mappingPanelButton);
 				});
 
 				it('sets the new field key in the hidden input', () => {

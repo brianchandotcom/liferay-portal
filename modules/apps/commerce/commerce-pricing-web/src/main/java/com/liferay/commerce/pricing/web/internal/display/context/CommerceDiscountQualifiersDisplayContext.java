@@ -20,6 +20,7 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
 import com.liferay.commerce.discount.service.CommerceDiscountAccountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
+import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
@@ -28,6 +29,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -56,6 +58,7 @@ public class CommerceDiscountQualifiersDisplayContext
 		CommerceDiscountAccountRelService commerceDiscountAccountRelService,
 		CommerceDiscountCommerceAccountGroupRelService
 			commerceDiscountCommerceAccountGroupRelService,
+		CommerceDiscountOrderTypeRelService commerceDiscountOrderTypeRelService,
 		CommerceDiscountService commerceDiscountService,
 		CommerceDiscountRuleService commerceDiscountRuleService,
 		CommerceDiscountRuleTypeRegistry commerceDiscountRuleTypeRegistry,
@@ -74,6 +77,8 @@ public class CommerceDiscountQualifiersDisplayContext
 		_commerceDiscountAccountRelService = commerceDiscountAccountRelService;
 		_commerceDiscountCommerceAccountGroupRelService =
 			commerceDiscountCommerceAccountGroupRelService;
+		_commerceDiscountOrderTypeRelService =
+			commerceDiscountOrderTypeRelService;
 	}
 
 	public List<ClayDataSetActionDropdownItem>
@@ -142,6 +147,19 @@ public class CommerceDiscountQualifiersDisplayContext
 		return "all";
 	}
 
+	public String getActiveOrderTypeEligibility() throws PortalException {
+		int commerceDiscountOrderTypeRelsCount =
+			_commerceDiscountOrderTypeRelService.
+				getCommerceDiscountOrderTypeRelsCount(
+					getCommerceDiscountId(), StringPool.BLANK);
+
+		if (commerceDiscountOrderTypeRelsCount > 0) {
+			return "orderTypes";
+		}
+
+		return "all";
+	}
+
 	public String getDiscountAccountGroupsApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() +
@@ -177,10 +195,29 @@ public class CommerceDiscountQualifiersDisplayContext
 			getCommerceDiscountId() + "/discount-channels?nestedFields=channel";
 	}
 
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountOrderTypeClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		return ListUtil.fromArray(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "headless"));
+	}
+
+	public String getDiscountOrderTypesApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
+			getCommerceDiscountId() +
+				"/discount-order-types?nestedFields=orderType";
+	}
+
 	private final CommerceChannelRelService _commerceChannelRelService;
 	private final CommerceDiscountAccountRelService
 		_commerceDiscountAccountRelService;
 	private final CommerceDiscountCommerceAccountGroupRelService
 		_commerceDiscountCommerceAccountGroupRelService;
+	private final CommerceDiscountOrderTypeRelService
+		_commerceDiscountOrderTypeRelService;
 
 }

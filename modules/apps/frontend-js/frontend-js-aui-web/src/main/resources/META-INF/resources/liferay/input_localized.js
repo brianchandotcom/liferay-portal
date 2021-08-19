@@ -78,6 +78,18 @@ AUI.add(
 					validator: Lang.isString,
 				},
 
+				frontendJsComponentsWebModule: {
+					validator: Lang.isObject,
+				},
+
+				frontendJsReactWebModule: {
+					validator: Lang.isObject,
+				},
+
+				frontendJsStateWebModule: {
+					validator: Lang.isObject,
+				},
+
 				helpMessage: {
 					validator: Lang.isString,
 				},
@@ -371,78 +383,65 @@ AUI.add(
 				_onManageTranslationsClick() {
 					var instance = this;
 
-					Liferay.Loader.require(
-						[
-							A.config.groups.components.mainModule,
-							A.config.groups.react.mainModule,
-						],
+					var modalContainerId =
+						instance.get('namespace') + 'modal-container';
 
-						(
-							frontendJsComponentsWebModule,
-							frontendJsReactWebModule
-						) => {
-							var modalContainerId =
-								instance.get('namespace') + 'modal-container';
+					if (!document.getElementById(modalContainerId)) {
+						var modalContainer = document.createElement('div');
+						document.body.appendChild(modalContainer);
+					}
 
-							if (!document.getElementById(modalContainerId)) {
-								var modalContainer = document.createElement(
-									'div'
-								);
-								document.body.appendChild(modalContainer);
+					var availableLocales = Object.entries(
+						instance.get('availableLocales')
+					).map((entry) => {
+						var key = entry[0];
+						var value = entry[1];
+
+						var label = key.replace(/_/, '-');
+
+						return {
+							displayName: value,
+							id: key,
+							label,
+							symbol: label.toLowerCase(),
+						};
+					});
+
+					var translations = instance
+						.get('translatedLanguages')
+						.values()
+						.reduce((accumulator, item) => {
+							var language = item.replace(/_/, '-');
+
+							if (!accumulator[language]) {
+								accumulator[language] = language;
 							}
 
-							var availableLocales = Object.entries(
-								instance.get('availableLocales')
-							).map((entry) => {
-								var key = entry[0];
-								var value = entry[1];
+							return accumulator;
+						}, {});
 
-								var label = key.replace(/_/, '-');
-
-								return {
-									displayName: value,
-									id: key,
-									label,
-									symbol: label.toLowerCase(),
-								};
-							});
-
-							var translations = instance
-								.get('translatedLanguages')
-								.values()
-								.reduce((accumulator, item) => {
-									var language = item.replace(/_/, '-');
-
-									if (!accumulator[language]) {
-										accumulator[language] = language;
-									}
-
-									return accumulator;
-								}, {});
-
-							var props = {
-								activeLocales: instance.get('activeLocales'),
-								availableLocales,
-								defaultLocaleId: instance.get(
-									'defaultLanguageId'
-								),
-								onClose(newActiveLocales) {
-									instance._State.writeAtom(
-										instance._activeLocalesAtom,
-										newActiveLocales
-									);
-								},
-								translations,
-								visible: true,
-							};
-
-							frontendJsReactWebModule.render(
-								frontendJsComponentsWebModule.TranslationAdminModal,
-								props,
-								modalContainer
+					var props = {
+						activeLocales: instance.get('activeLocales'),
+						availableLocales,
+						defaultLocaleId: instance.get('defaultLanguageId'),
+						onClose(newActiveLocales) {
+							instance._State.writeAtom(
+								instance._activeLocalesAtom,
+								newActiveLocales
 							);
-						}
-					);
+						},
+						translations,
+						visible: true,
+					};
+
+					instance
+						.get('frontendJsReactWebModule')
+						.render(
+							instance.get('frontendJsComponentsWebModule')
+								.TranslationAdminModal,
+							props,
+							modalContainer
+						);
 				},
 
 				_onSelectFlag(event) {
@@ -754,6 +753,13 @@ AUI.add(
 
 					var activeLocales = instance.get('activeLocales');
 
+					instance._activeLocalesAtom = instance.get(
+						'frontendJsComponentsWebModule'
+					).activeLocalesAtom;
+					instance._State = instance.get(
+						'frontendJsStateWebModule'
+					).State;
+
 					if (activeLocales) {
 						instance._flagsInitialContent = instance._flags.cloneNode(
 							true
@@ -761,33 +767,16 @@ AUI.add(
 
 						instance._renderActiveLocales();
 
-						Liferay.Loader.require(
-							[
-								A.config.groups.state.mainModule,
-								A.config.groups.components.mainModule,
-							],
+						var State = instance._State;
+						var activeLocalesAtom = instance._activeLocalesAtom;
 
-							(stateModule, frontendJsComponentsWebModule) => {
-								instance._State = stateModule.State;
-								instance._activeLocalesAtom =
-									frontendJsComponentsWebModule.activeLocalesAtom;
+						if (instance.get('adminMode')) {
+							State.writeAtom(activeLocalesAtom, activeLocales);
+						}
 
-								var State = instance._State;
-								var activeLocalesAtom =
-									instance._activeLocalesAtom;
-
-								if (instance.get('adminMode')) {
-									State.writeAtom(
-										activeLocalesAtom,
-										activeLocales
-									);
-								}
-
-								instance._availableLanguagesSubscription = State.subscribe(
-									activeLocalesAtom,
-									A.bind('_onActiveLocalesChange', instance)
-								);
-							}
+						instance._availableLanguagesSubscription = State.subscribe(
+							activeLocalesAtom,
+							A.bind('_onActiveLocalesChange', instance)
 						);
 					}
 				},

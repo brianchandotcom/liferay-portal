@@ -124,6 +124,29 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetRolesPageWithPagination() throws Exception {
+		Page<Role> systemRolesPage = roleResource.getRolesPage(null, null);
+
+		testGetRolesPage_addRole(randomRole());
+
+		testGetRolesPage_addRole(randomRole());
+
+		testGetRolesPage_addRole(randomRole());
+
+		Page<Role> page1 = roleResource.getRolesPage(null, Pagination.of(1, 2));
+
+		List<Role> roles1 = (List<Role>)page1.getItems();
+
+		Assert.assertEquals(roles1.toString(), 2, roles1.size());
+
+		Page<Role> page2 = roleResource.getRolesPage(null, Pagination.of(2, 2));
+
+		Assert.assertEquals(
+			systemRolesPage.getTotalCount() + 3, page2.getTotalCount());
+	}
+
+	@Override
+	@Test
 	public void testGraphQLGetRolesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
 			"roles",
@@ -287,6 +310,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	@Override
 	protected Role testGetRole_addRole() throws Exception {
 		return _addRole(randomRole());
+	}
+
+	@Override
+	protected Role testGetRolesPage_addRole(Role role) throws Exception {
+		return _addRole(role);
 	}
 
 	@Override

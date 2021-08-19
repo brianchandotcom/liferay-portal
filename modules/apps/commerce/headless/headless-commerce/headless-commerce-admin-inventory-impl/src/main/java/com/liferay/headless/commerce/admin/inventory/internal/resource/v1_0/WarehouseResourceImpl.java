@@ -249,7 +249,6 @@ public class WarehouseResourceImpl
 			for (WarehouseItem warehouseItem : warehouseItems) {
 				_commerceInventoryWarehouseItemService.
 					addOrUpdateCommerceInventoryWarehouseItem(
-						contextUser.getUserId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
 						warehouseItem.getSku(), warehouseItem.getQuantity());

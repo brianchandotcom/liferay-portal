@@ -61,13 +61,9 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceInventoryWarehouseItem.class.getName(), actionRequest);
-
 		_commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
-				serviceContext.getUserId(), commerceInventoryWarehouseId, sku,
-				quantity);
+				commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	protected void deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -132,13 +128,9 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 					commerceInventoryWarehouseId, sku);
 
 		if (commerceInventoryWarehouseItem == null) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceInventoryWarehouseItem.class.getName(), actionRequest);
-
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					serviceContext.getUserId(), commerceInventoryWarehouseId,
-					sku, quantity);
+					commerceInventoryWarehouseId, sku, quantity);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.

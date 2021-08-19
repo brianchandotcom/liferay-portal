@@ -101,7 +101,6 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					addCommerceInventoryWarehouseItem(
-						_portal.getUserId(actionRequest),
 						commerceInventoryWarehouseId, sku, quantity);
 		}
 

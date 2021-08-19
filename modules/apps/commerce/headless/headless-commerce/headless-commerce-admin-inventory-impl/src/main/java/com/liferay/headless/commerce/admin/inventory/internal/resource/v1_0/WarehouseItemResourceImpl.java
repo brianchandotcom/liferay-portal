@@ -281,7 +281,7 @@ public class WarehouseItemResourceImpl
 				_commerceInventoryWarehouseItemService.
 					addOrUpdateCommerceInventoryWarehouseItem(
 						warehouseItem.getExternalReferenceCode(),
-						contextUser.getCompanyId(), contextUser.getUserId(),
+						contextUser.getCompanyId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
 						warehouseItem.getSku(), warehouseItem.getQuantity());
@@ -290,7 +290,6 @@ public class WarehouseItemResourceImpl
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					addOrUpdateCommerceInventoryWarehouseItem(
-						contextUser.getUserId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
 						warehouseItem.getSku(), warehouseItem.getQuantity());
@@ -342,7 +341,7 @@ public class WarehouseItemResourceImpl
 		commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					externalReferenceCode, contextUser.getUserId(),
+					externalReferenceCode,
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
 					warehouseItem.getSku(), warehouseItem.getQuantity());
@@ -367,7 +366,6 @@ public class WarehouseItemResourceImpl
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
 					warehouseItem.getExternalReferenceCode(),
-					contextUser.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
 					warehouseItem.getSku(), warehouseItem.getQuantity());

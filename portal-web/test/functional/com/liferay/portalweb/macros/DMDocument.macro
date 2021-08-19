@@ -1622,9 +1622,9 @@ definition {
 		WaitForPageLoad();
 
 		if (IsElementPresent(locator1 = "Button#INFO")) {
-			WaitForVisible(
-				key_tagName = "infoPanel",
-				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+			WaitForElementPresent(
+				key_href = "infoPanel",
+				locator1 = "DocumentsAndMedia#DOCUMENT_ANY_HREF");
 		}
 
 		if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {

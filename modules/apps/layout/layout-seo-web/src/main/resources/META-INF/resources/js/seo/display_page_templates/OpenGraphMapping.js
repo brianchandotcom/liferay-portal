@@ -19,7 +19,6 @@ import MappingFields from './components/MappingFields';
 import lang from './utils/lang';
 
 export default function OpenGraphMapping({
-	ffSEOInlineFieldMappingEnabled = false,
 	fields,
 	openGraphDescription,
 	openGraphImage,
@@ -30,7 +29,6 @@ export default function OpenGraphMapping({
 }) {
 	return (
 		<MappingFields
-			ffSEOInlineFieldMappingEnabled={ffSEOInlineFieldMappingEnabled}
 			fields={fields}
 			inputs={[
 				{

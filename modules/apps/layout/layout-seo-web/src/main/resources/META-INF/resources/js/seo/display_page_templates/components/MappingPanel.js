@@ -17,11 +17,10 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {PropTypes} from 'prop-types';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {FIELD_TYPES} from '../constants';
 import useOnClickOutside from '../hooks/useOnClickOutside';
-import MappingContext from './MappingContext';
 
 const noop = () => {};
 
@@ -44,7 +43,6 @@ function MappingPanel({
 	const [fieldValue, setFieldValue] = useState(
 		initialField?.key || fields[0].key
 	);
-	const {ffSEOInlineFieldMappingEnabled} = useContext(MappingContext);
 	const wrapperRef = useRef(null);
 
 	const handleOnClose = () => {
@@ -64,13 +62,6 @@ function MappingPanel({
 		const field = fields.find(({key}) => key === value);
 
 		setFieldValue(field.key);
-
-		if (!ffSEOInlineFieldMappingEnabled) {
-			onSelect({
-				field,
-				source,
-			});
-		}
 	};
 
 	const handleOnSelect = () => {
@@ -126,18 +117,17 @@ function MappingPanel({
 								value={fieldValue}
 							/>
 						</ClayForm.Group>
-						{ffSEOInlineFieldMappingEnabled && (
-							<ClayButton
-								block
-								disabled={initialField?.key === fieldValue}
-								displayType="primary"
-								onClick={handleOnSelect}
-							>
-								{fieldType === FIELD_TYPES.TEXT
-									? Liferay.Language.get('add-field')
-									: Liferay.Language.get('map-content')}
-							</ClayButton>
-						)}
+
+						<ClayButton
+							block
+							disabled={initialField?.key === fieldValue}
+							displayType="primary"
+							onClick={handleOnSelect}
+						>
+							{fieldType === FIELD_TYPES.TEXT
+								? Liferay.Language.get('add-field')
+								: Liferay.Language.get('map-content')}
+						</ClayButton>
 					</div>
 				</div>
 			)}

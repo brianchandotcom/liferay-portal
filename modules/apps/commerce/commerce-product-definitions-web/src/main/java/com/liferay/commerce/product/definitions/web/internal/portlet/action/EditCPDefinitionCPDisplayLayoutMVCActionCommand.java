@@ -175,7 +175,6 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 			_cpDisplayLayoutService.addCPDisplayLayout(
-				_portal.getUserId(actionRequest),
 				commerceChannel.getSiteGroupId(), CPDefinition.class, classPK,
 				layoutUuid);
 		}

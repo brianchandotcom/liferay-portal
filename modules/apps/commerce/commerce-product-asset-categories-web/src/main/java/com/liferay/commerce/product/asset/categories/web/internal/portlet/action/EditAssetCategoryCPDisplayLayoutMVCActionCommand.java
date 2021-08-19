@@ -202,7 +202,6 @@ public class EditAssetCategoryCPDisplayLayoutMVCActionCommand
 
 			for (long curClassPK : classPKs) {
 				_cpDisplayLayoutService.addCPDisplayLayout(
-					_portal.getUserId(actionRequest),
 					commerceChannel.getSiteGroupId(), AssetCategory.class,
 					curClassPK, layoutUuid);
 			}

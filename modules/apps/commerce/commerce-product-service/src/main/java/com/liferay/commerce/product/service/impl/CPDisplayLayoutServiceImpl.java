@@ -38,8 +38,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			long groupId, Class<?> clazz, long classPK, String layoutUuid)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
@@ -48,7 +47,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		_checkCPDisplayLayout(clazz.getName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.addCPDisplayLayout(
-			userId, groupId, clazz, classPK, layoutUuid);
+			getUserId(), groupId, clazz, classPK, layoutUuid);
 	}
 
 	@Override

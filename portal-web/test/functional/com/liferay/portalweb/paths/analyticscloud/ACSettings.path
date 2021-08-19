@@ -168,6 +168,41 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTIES_SELECT_USERS_BUTTON</td>
+	<td>//span[contains(@class,'custom-control-label-text')]//b[text()='Select Users']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_SELECT_USERS_OKAY_BUTTON</td>
+	<td>//button[contains(@class,'button-root btn btn-warning') and text()='Okay']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_ADD_USER_BUTTON</td>
+	<td>//button[contains(@class,'button-root btn btn-primary nav-btn px-3') and text()='Add User']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_SELECT_USER_EMAIL</td>
+	<td>//div[contains(@class,'secondary-info text-truncate') and text()='${emailAddress}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_SUBMIT_BUTTON</td>
+	<td>//button[text()='Submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_ASSET_LIST</td>
+	<td>//tr//td[3][contains(@class,'table-cell-expand') and text()='${emailAddress}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_ASSET_TITLE_LIST</td>
+	<td>//span[contains(@class,'text-truncate') and text()='${propertyName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[text()='Save']</td>
 	<td></td>

@@ -171,11 +171,10 @@ public class CommerceUsersImporter {
 
 			user = _userLocalService.addUser(
 				creatorUserId, companyId, autoPassword, password, password,
-				autoScreenName, screenName, emailAddress, facebookId, openId,
-				locale, firstName, middleName, lastName, prefixId, suffixId,
-				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-				groupIds, organizationIds, roleIds, userGroupIds, false,
-				serviceContext);
+				autoScreenName, screenName, emailAddress, locale, firstName,
+				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+				roleIds, userGroupIds, false, serviceContext);
 		}
 		else {
 			groupIds = ArrayUtil.append(user.getGroupIds(), groupIds);
@@ -187,12 +186,11 @@ public class CommerceUsersImporter {
 			user = _userLocalService.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, userReminderQueryQuestion,
-				userReminderQueryAnswer, screenName, emailAddress, facebookId,
-				openId, portrait, portraitBytes,
-				LocaleUtil.toLanguageId(locale), timeZoneId, greeting, comments,
-				firstName, middleName, lastName, prefixId, suffixId, male,
-				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-				jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
+				userReminderQueryAnswer, screenName, emailAddress, portrait,
+				portraitBytes, LocaleUtil.toLanguageId(locale), timeZoneId,
+				greeting, comments, firstName, middleName, lastName, prefixId,
+				suffixId, male, birthdayMonth, birthdayDay, birthdayYear, smsSn,
+				facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 				organizationIds, roleIds, null, userGroupIds, serviceContext);
 		}
 		else if (portrait) {

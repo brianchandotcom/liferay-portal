@@ -120,9 +120,8 @@ public class EditCommerceTaxMethodMVCActionCommand
 				actionRequest, "commerceTaxMethodEngineKey");
 
 			commerceTaxMethod = _commerceTaxMethodService.addCommerceTaxMethod(
-				_portal.getUserId(actionRequest), commerceChannel.getGroupId(),
-				nameMap, descriptionMap, commerceTaxMethodEngineKey, percentage,
-				active);
+				commerceChannel.getGroupId(), nameMap, descriptionMap,
+				commerceTaxMethodEngineKey, percentage, active);
 		}
 		else {
 			commerceTaxMethod =

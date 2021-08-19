@@ -38,7 +38,7 @@ public class CommerceTaxMethodServiceImpl
 
 	@Override
 	public CommerceTaxMethod addCommerceTaxMethod(
-			long userId, long groupId, Map<Locale, String> nameMap,
+			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String engineKey,
 			boolean percentage, boolean active)
 		throws PortalException {
@@ -46,8 +46,8 @@ public class CommerceTaxMethodServiceImpl
 		_checkCommerceChannel(groupId);
 
 		return commerceTaxMethodLocalService.addCommerceTaxMethod(
-			userId, groupId, nameMap, descriptionMap, engineKey, percentage,
-			active);
+			getUserId(), groupId, nameMap, descriptionMap, engineKey,
+			percentage, active);
 	}
 
 	/**
@@ -62,8 +62,8 @@ public class CommerceTaxMethodServiceImpl
 		throws PortalException {
 
 		return commerceTaxMethodService.addCommerceTaxMethod(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			nameMap, descriptionMap, engineKey, percentage, active);
+			serviceContext.getScopeGroupId(), nameMap, descriptionMap,
+			engineKey, percentage, active);
 	}
 
 	@Override

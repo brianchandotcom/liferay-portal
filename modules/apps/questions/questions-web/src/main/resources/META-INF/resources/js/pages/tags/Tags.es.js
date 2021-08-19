@@ -12,12 +12,11 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput, ClaySelect} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useManualQuery, useMutation} from 'graphql-hooks';
+import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -25,6 +24,7 @@ import {AppContext} from '../../AppContext.es';
 import Alert from '../../components/Alert.es';
 import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
+import SubscriptionButton from '../../components/SubscriptionButton.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	getTagsOrderByDateCreatedQuery,
@@ -145,27 +145,6 @@ export default withRouter(({history, location}) => {
 		(search) => changePage(search, 1, 20),
 		500
 	);
-
-	const [subscribe] = useMutation(subscribeTagQuery);
-	const [unsubscribe] = useMutation(unsubscribeTagQuery);
-
-	const changeSubscription = (keywordId, subscribed) => {
-		const fn = subscribed ? unsubscribe : subscribe;
-		fn({variables: {keywordId}}).then((_) => {
-			deleteCacheKey(getTagsOrderByDateCreatedQuery, {
-				page,
-				pageSize,
-				search,
-				siteKey: context.siteKey,
-			});
-			deleteCacheKey(getTagsOrderByNumberOfUsagesQuery, {
-				page,
-				pageSize,
-				search,
-				siteKey: context.siteKey,
-			});
-		});
-	};
 
 	return (
 		<>
@@ -341,32 +320,42 @@ export default withRouter(({history, location}) => {
 										{tag.actions.subscribe && (
 											<div className="autofit-col">
 												<div className="autofit-section">
-													<ClayButton
-														data-tooltip-align="top"
-														displayType={
+													<SubscriptionButton
+														isSubscribed={
 															tag.subscribed
-																? 'primary'
-																: 'secondary'
 														}
-														monospaced
-														onClick={() => {
-															changeSubscription(
-																tag.id,
-																tag.subscribed
+														onSubscription={() => {
+															deleteCacheKey(
+																getTagsOrderByDateCreatedQuery,
+																{
+																	page,
+																	pageSize,
+																	search,
+																	siteKey:
+																		context.siteKey,
+																}
+															);
+															deleteCacheKey(
+																getTagsOrderByNumberOfUsagesQuery,
+																{
+																	page,
+																	pageSize,
+																	search,
+																	siteKey:
+																		context.siteKey,
+																}
 															);
 														}}
-														title={
-															tag.subscribed
-																? Liferay.Language.get(
-																		'unsubscribe'
-																  )
-																: Liferay.Language.get(
-																		'subscribe'
-																  )
+														queryVariables={{
+															keywordId: tag.id,
+														}}
+														subscribeQuery={
+															subscribeTagQuery
 														}
-													>
-														<ClayIcon symbol="bell-on" />
-													</ClayButton>
+														unsubscribeQuery={
+															unsubscribeTagQuery
+														}
+													/>
 												</div>
 											</div>
 										)}

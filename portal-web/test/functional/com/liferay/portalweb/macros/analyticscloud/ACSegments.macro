@@ -424,6 +424,19 @@ definition {
 		AssertElementPresent(locator1 = "ACSegments#ANONYMOUS_LABEL");
 	}
 
+	macro viewKnownSegmentMembersSpecificOrder {
+		var resultOrder = "0";
+
+		for (var username : list "${username}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertVisible(
+				key_userName = "${username}",
+				locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_VIEW_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}");
+		}
+	}
+
 	macro viewSegmentComposition {
 		if ("${individualsType}" == "Active") {
 			AssertTextEquals(
@@ -558,19 +571,6 @@ definition {
 		AssertTextPresent(
 			locator1 = "ACSegments#SEGMENT_BREAKDOWN_CARD",
 			value1 = "Add a Breakdown by Attribute");
-	}
-
-	macro viewSegmentSpecificOrder {
-		var resultOrder = "0";
-
-		for (var segments : list "${segments}") {
-			var resultOrder = ${resultOrder} + 1;
-
-			AssertVisible(
-				key_segmentName = "${segments}",
-				locator1 = "ACSegments#VIEW_SPECIFIC_SEGMENT_TABLE",
-				resultOrder = "${resultOrder}");
-		}
 	}
 
 }

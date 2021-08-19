@@ -389,6 +389,45 @@ definition {
 		Accounts.viewAssignee(assigneeName = "Organization for Account");
 	}
 
+	@description = "This test updates an account's status from Active to Inactive asserts change saves successfully."
+	@priority = "4"
+	test CanChangeAccountStatusToInactiveThenActiveViaEdit {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Change Account Status",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.editCP(
+			accountName = "Change Account Status",
+			accountNameEdit = "Edited Account Name",
+			accountStatusEdit = "Inactive");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.viewNoEntry(rowEntry = "Edited Account Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Edited Account Name",
+			rowStatus = "Inactive");
+
+		LexiconEntry.gotoEntry(rowEntry = "Edited Account Name");
+
+		Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Edited Account Name",
+			rowStatus = "Active");
+	}
+
 	@description = "This test asserts that address type can be changed from Billing to Shipping and vice versa."
 	@priority = "5"
 	test CanChangeAddressType {
@@ -868,32 +907,17 @@ definition {
 		Accounts.editCP(
 			accountDescriptionEdit = "Update Accounts Name Description for Test",
 			accountName = "Accounts Name for Test",
-			accountNameEdit = "Update Accounts Name for Test",
-			accountStatusEdit = "Inactive");
+			accountNameEdit = "Update Accounts Name for Test");
 
 		Accounts.openAccountsAdmin();
-
-		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name for Test");
 
-		LexiconEntry.viewEntryStatus(
-			rowEntry = "Update Accounts Name for Test",
-			rowStatus = "Inactive");
-
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		LexiconEntry.gotoEntry(rowEntry = "Update Accounts Name for Test");
 
 		PortletEntry.inputName(name = "Update Accounts Name via Name Link");
-
-		Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 
 		Button.clickSave();
 
@@ -906,10 +930,6 @@ definition {
 		Accounts.openAccountsAdmin();
 
 		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name via Name Link");
-
-		LexiconEntry.viewEntryStatus(
-			rowEntry = "Update Accounts Name via Name Link",
-			rowStatus = "Active");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}

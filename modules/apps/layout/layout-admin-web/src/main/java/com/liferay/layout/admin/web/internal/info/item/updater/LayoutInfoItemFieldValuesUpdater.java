@@ -56,12 +56,13 @@ public class LayoutInfoItemFieldValuesUpdater
 
 		_updateFragmentEntryLinks(infoItemFieldValues);
 
-		layout.setNameMap(
-			_getFieldMap(
-				LayoutInfoItemFields.nameInfoField.getName(),
-				infoItemFieldValues, layout.getNameMap()));
+		if (layout.isDraftLayout()) {
+			_updateLayout(
+				_layoutLocalService.fetchLayout(layout.getClassPK()),
+				infoItemFieldValues);
+		}
 
-		return _layoutLocalService.updateLayout(layout);
+		return _updateLayout(layout, infoItemFieldValues);
 	}
 
 	private JSONObject _createEditableValuesJSONObject(
@@ -167,6 +168,21 @@ public class LayoutInfoItemFieldValuesUpdater
 					fragmentEntryLink);
 			}
 		}
+	}
+
+	private Layout _updateLayout(
+		Layout layout, InfoItemFieldValues infoItemFieldValues) {
+
+		if (layout == null) {
+			return null;
+		}
+
+		layout.setNameMap(
+			_getFieldMap(
+				LayoutInfoItemFields.nameInfoField.getName(),
+				infoItemFieldValues, layout.getNameMap()));
+
+		return _layoutLocalService.updateLayout(layout);
 	}
 
 	private static final Pattern _fragmentEntryLinkInfoFieldPattern =

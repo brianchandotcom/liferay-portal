@@ -603,6 +603,77 @@ definition {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
+	@description = "This test asserts that a user can update the general informations. Including update the default site name, default mail domain and so."
+	@priority = "4"
+	test CanUpdateGeneralInfos {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.editText(
+			fieldName = "name",
+			fieldValue = "EditedLiferay");
+
+		FormFields.editText(
+			fieldName = "mx",
+			fieldValue = "newliferay.com");
+
+		PortletEntry.save();
+
+		ApplicationsMenu.gotoSite(site = "EditedLiferay");
+
+		User.logoutPG();
+
+		Navigator.gotoLoginPage();
+
+		AssertTextEquals(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "@newliferay.com");
+
+		User.loginUserPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.editText(
+			fieldName = "cdn-host-http",
+			fieldValue = "http://localhost:8080");
+
+		FormFields.editText(
+			fieldName = "cdn-host-https",
+			fieldValue = "https://localhost:8080");
+
+		for (var fieldName : list "legalName,tickerSymbol,legalId,industry,legalType,type,sicCode") {
+			FormFields.editText(
+				fieldName = "${fieldName}",
+				fieldValue = "${fieldName}");
+		}
+
+		Button.clickSave();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewTextValue(
+			fieldName = "cdn-host-http",
+			fieldValue = "http://localhost:8080");
+
+		FormFields.viewTextValue(
+			fieldName = "cdn-host-https",
+			fieldValue = "https://localhost:8080");
+
+		for (var fieldName : list "legalName,tickerSymbol,legalId,industry,legalType,type,sicCode") {
+			FormFields.viewTextValue(
+				fieldName = "${fieldName}",
+				fieldValue = "${fieldName}");
+		}
+	}
+
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
 		ApplicationsMenu.gotoPortlet(

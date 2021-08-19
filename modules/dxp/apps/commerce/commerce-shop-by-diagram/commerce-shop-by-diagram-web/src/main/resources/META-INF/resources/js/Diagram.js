@@ -14,6 +14,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {UPDATE_DATASET_DISPLAY} from "frontend-taglib-clay/data_set_display/utils/eventsDefinitions";
 import AdminTooltip from './AdminTooltip';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
@@ -29,6 +30,7 @@ const HEADERS = new Headers({
 });
 
 const Diagram = ({
+	datasetDisplayId,
 	enablePanZoom,
 	enableResetZoom,
 	imageSettings,
@@ -114,6 +116,14 @@ const Diagram = ({
 				HEADERS,
 				body: JSON.stringify(node),
 				method: 'POST',
+			}).then((response) => {
+				response.json();
+			}).then((jsonResponse) => {
+				if(datasetDisplayId?.length > 0){
+					Liferay.fire(UPDATE_DATASET_DISPLAY, {
+						id: datasetDisplayId,
+					});
+				}
 			});
 		}
 	};
@@ -342,7 +352,6 @@ Diagram.propTypes = {
 			sku: PropTypes.string,
 		})
 	),
-	deletePin: PropTypes.func,
 	enablePanZoom: PropTypes.bool,
 	enableResetZoom: PropTypes.bool,
 	imageSettings: PropTypes.shape({

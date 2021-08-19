@@ -27,6 +27,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRIC_BAR</td>
+	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//tbody[.//td[contains(@class,'name')][normalize-space()='${entryName}']]//div[contains(@class,'metric-bar-root')]//div[contains(@class,'bar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRIC_VALUE</td>
 	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//li[contains(@class,'card-tab')][.//*[normalize-space(text())='${key_metricName}']]//div[contains(@class,'metric-value')]</td>
 	<td></td>

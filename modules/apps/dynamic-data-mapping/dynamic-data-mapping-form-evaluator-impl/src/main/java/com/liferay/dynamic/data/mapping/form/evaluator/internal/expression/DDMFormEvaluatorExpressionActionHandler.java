@@ -41,31 +41,11 @@ public class DDMFormEvaluatorExpressionActionHandler
 		String action = executeActionRequest.getAction();
 
 		if (action.equals("jumpPage")) {
-			return jumpPage(executeActionRequest);
+			return _jumpPage(executeActionRequest);
 		}
 
 		ExecuteActionResponse.Builder builder =
 			ExecuteActionResponse.Builder.newBuilder(false);
-
-		return builder.build();
-	}
-
-	protected ExecuteActionResponse jumpPage(
-		ExecuteActionRequest executeActionRequest) {
-
-		Optional<Integer> fromOptional =
-			executeActionRequest.getParameterOptional("from");
-		Optional<Integer> toOptional =
-			executeActionRequest.getParameterOptional("to");
-
-		if (fromOptional.isPresent() && toOptional.isPresent() &&
-			!_hasIntervalOnPageFlow(fromOptional.get(), toOptional.get())) {
-
-			_pageFlow.put(fromOptional.get(), toOptional.get());
-		}
-
-		ExecuteActionResponse.Builder builder =
-			ExecuteActionResponse.Builder.newBuilder(true);
 
 		return builder.build();
 	}
@@ -87,6 +67,26 @@ public class DDMFormEvaluatorExpressionActionHandler
 		}
 
 		return false;
+	}
+
+	private ExecuteActionResponse _jumpPage(
+		ExecuteActionRequest executeActionRequest) {
+
+		Optional<Integer> fromOptional =
+			executeActionRequest.getParameterOptional("from");
+		Optional<Integer> toOptional =
+			executeActionRequest.getParameterOptional("to");
+
+		if (fromOptional.isPresent() && toOptional.isPresent() &&
+			!_hasIntervalOnPageFlow(fromOptional.get(), toOptional.get())) {
+
+			_pageFlow.put(fromOptional.get(), toOptional.get());
+		}
+
+		ExecuteActionResponse.Builder builder =
+			ExecuteActionResponse.Builder.newBuilder(true);
+
+		return builder.build();
 	}
 
 	private final Map<Integer, Integer> _pageFlow;

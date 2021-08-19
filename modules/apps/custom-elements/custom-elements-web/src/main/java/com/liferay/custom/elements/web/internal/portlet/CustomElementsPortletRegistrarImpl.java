@@ -12,14 +12,20 @@
  * details.
  */
 
-package com.liferay.custom.elements.web.internal;
+package com.liferay.custom.elements.web.internal.portlet;
 
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
+import com.liferay.custom.elements.portlet.CustomElementsPortletRegistrar;
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalService;
-import com.liferay.custom.elements.web.internal.portlet.CustomElementsPortlet;
+import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -33,15 +39,20 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = CustomElementsPortletRegistrar.class)
-public class CustomElementsPortletRegistrar {
+@Component(immediate = true, service = AopService.class)
+public class CustomElementsPortletRegistrarImpl
+	implements AopService, CustomElementsPortletRegistrar {
 
+	@Clusterable
+	@Override
 	public void registerPortlet(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
 		_registerPortlet(customElementsPortletDescriptor);
 	}
 
+	@Clusterable
+	@Override
 	public void unregisterPortlet(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
@@ -80,27 +91,50 @@ public class CustomElementsPortletRegistrar {
 		}
 	}
 
-	private void _registerPortlet(
+	private boolean _isPortletRegistered(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
-		CustomElementsPortlet customElementsPortlet = new CustomElementsPortlet(
-			customElementsPortletDescriptor);
+		String portletId = StringUtil.replace(
+			CustomElementsPortlet.getPortletName(
+				customElementsPortletDescriptor),
+			new char[] {'.', '$'}, new char[] {'_', '_'});
+
+		portletId = _portal.getJsSafePortletId(portletId);
+
+		Portlet portletModel = _portletLocalService.getPortletById(portletId);
+
+		if (portletModel != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _registerPortlet(
+		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
 		long customElementsPortletDescriptorId =
 			customElementsPortletDescriptor.
 				getCustomElementsPortletDescriptorId();
 
-		CustomElementsPortlet existingCustomElementsPortlet =
-			_customElementsPortlets.putIfAbsent(
-				customElementsPortletDescriptorId, customElementsPortlet);
+		if (_isPortletRegistered(customElementsPortletDescriptor)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Custom elements portlet " +
+						customElementsPortletDescriptorId +
+							" is already registered");
+			}
 
-		if (existingCustomElementsPortlet != null) {
-			throw new IllegalStateException(
-				"Custom elements portlet " + customElementsPortletDescriptorId +
-					" is already registered");
+			return;
 		}
 
+		CustomElementsPortlet customElementsPortlet = new CustomElementsPortlet(
+			customElementsPortletDescriptor);
+
 		customElementsPortlet.register(_bundleContext);
+
+		_customElementsPortlets.put(
+			customElementsPortletDescriptorId, customElementsPortlet);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -125,7 +159,7 @@ public class CustomElementsPortletRegistrar {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomElementsPortletRegistrar.class);
+		CustomElementsPortletRegistrarImpl.class);
 
 	private BundleContext _bundleContext;
 
@@ -135,5 +169,11 @@ public class CustomElementsPortletRegistrar {
 
 	private final ConcurrentMap<Long, CustomElementsPortlet>
 		_customElementsPortlets = new ConcurrentHashMap<>();
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

@@ -4,5 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.custom.elements.exception,\
 	com.liferay.custom.elements.model,\
+	com.liferay.custom.elements.portlet,\
 	com.liferay.custom.elements.service,\
 	com.liferay.custom.elements.service.persistence

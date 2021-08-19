@@ -286,13 +286,4 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8345 | Test Summary: Assert Sites Acquisition change time filter"
-	@ignore = "true"
-	@priority = "3"
-	test AssertSitesAcquisitionChangeTimeFilter {
-
-		// TODO LRAC-8345 AssertSitesAcquisitionChangeTimeFilter
-
-	}
-
 }

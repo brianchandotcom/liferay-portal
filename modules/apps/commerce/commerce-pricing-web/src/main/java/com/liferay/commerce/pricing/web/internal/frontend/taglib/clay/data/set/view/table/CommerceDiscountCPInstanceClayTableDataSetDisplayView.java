@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -41,10 +41,10 @@ public class CommerceDiscountCPInstanceClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField skuField =
+		ClayTableSchemaField skuClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("sku.name", "sku");
 
-		skuField.setContentRenderer("actionLink");
+		skuClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"productName.LANG", "product");

@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.storage;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -65,6 +66,10 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 		List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
 		for (SearchHit searchHit : searchHitsList) {
+			if (_isStandardFormat(searchHit.getId())) {
+				continue;
+			}
+
 			Ranking ranking = documentToRankingTranslator.translate(
 				searchHit.getDocument(), searchHit.getId());
 
@@ -109,6 +114,16 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
+
+	private boolean _isStandardFormat(String id) {
+		String[] parts = StringUtil.split(id, "_PORTLET_");
+
+		if (parts.length == 2) {
+			return true;
+		}
+
+		return false;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RankingsDatabaseImporterImpl.class);

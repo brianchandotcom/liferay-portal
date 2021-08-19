@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_ANY_HREF</td>
+	<td>//a[contains(@href,"${key_href}")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_VERSION_ANY</td>
 	<td>//li[contains(.,'${key_dmDocumentVersionNumber}')]//div[@class='list-group-title']</td>
 	<td></td>

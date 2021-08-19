@@ -19,6 +19,7 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
 import com.liferay.commerce.discount.service.CommerceDiscountAccountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
+import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
@@ -127,6 +128,7 @@ public class CommerceDiscountQualifiersScreenNavigationCategory
 					_commerceDiscountModelResourcePermission,
 					_commerceDiscountAccountRelService,
 					_commerceDiscountCommerceAccountGroupRelService,
+					_commerceDiscountOrderTypeRelService,
 					_commerceDiscountService, _commerceDiscountRuleService,
 					_commerceDiscountRuleTypeRegistry,
 					_commerceDiscountTargetRegistry, _percentageFormatter,
@@ -163,6 +165,10 @@ public class CommerceDiscountQualifiersScreenNavigationCategory
 	)
 	private ModelResourcePermission<CommerceDiscount>
 		_commerceDiscountModelResourcePermission;
+
+	@Reference
+	private CommerceDiscountOrderTypeRelService
+		_commerceDiscountOrderTypeRelService;
 
 	@Reference
 	private CommerceDiscountRuleService _commerceDiscountRuleService;

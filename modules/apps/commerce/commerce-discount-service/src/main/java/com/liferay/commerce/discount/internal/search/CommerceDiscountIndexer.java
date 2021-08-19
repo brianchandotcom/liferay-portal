@@ -17,9 +17,11 @@ package com.liferay.commerce.discount.internal.search;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
+import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRel;
 import com.liferay.commerce.discount.service.CommerceDiscountAccountRelLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalService;
 import com.liferay.commerce.discount.target.CommerceDiscountOrderTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountProductTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
@@ -393,6 +395,23 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 
 		document.addNumber("commerceChannelId", channelIds);
 
+		List<CommerceDiscountOrderTypeRel> commerceDiscountOrderTypeRels =
+			_commerceDiscountOrderTypeRelLocalService.
+				getCommerceDiscountOrderTypeRels(
+					commerceDiscount.getCommerceDiscountId());
+
+		Stream<CommerceDiscountOrderTypeRel>
+			commerceDiscountOrderTypeRelsStream =
+				commerceDiscountOrderTypeRels.stream();
+
+		LongStream commerceOrderTypeIdLongStream =
+			commerceDiscountOrderTypeRelsStream.mapToLong(
+				CommerceDiscountOrderTypeRel::getCommerceOrderTypeId);
+
+		long[] commerceOrderTypeIds = commerceOrderTypeIdLongStream.toArray();
+
+		document.addNumber("commerceOrderTypeId", commerceOrderTypeIds);
+
 		Stream<Long> groupIdStream = groupIdList.stream();
 
 		long[] groupIds = groupIdStream.mapToLong(
@@ -544,6 +563,11 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 
 	private final List<CommerceDiscountOrderTarget>
 		_commerceDiscountOrderTargets = new CopyOnWriteArrayList<>();
+
+	@Reference
+	private CommerceDiscountOrderTypeRelLocalService
+		_commerceDiscountOrderTypeRelLocalService;
+
 	private final List<CommerceDiscountProductTarget>
 		_commerceDiscountProductTargets = new CopyOnWriteArrayList<>();
 

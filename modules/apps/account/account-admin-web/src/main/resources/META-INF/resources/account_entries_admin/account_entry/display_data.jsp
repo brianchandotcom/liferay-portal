@@ -54,6 +54,8 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "taxIdNumber") %></aui:validator>
 			</aui:input>
 
+			<liferay-ui:error embed="<%= false %>" key="<%= DuplicateAccountEntryExternalReferenceCodeException.class.getName() %>" message="the-given-external-reference-code-belongs-to-another-account" />
+
 			<aui:input label="external-reference-code" name="externalReferenceCode" type="text" value="<%= accountEntryDisplay.getExternalReferenceCode() %>" />
 
 			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">

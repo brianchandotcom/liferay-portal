@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -120,18 +121,26 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			String mvcPath = "/account_entries_admin/edit_account_entry.jsp";
-
 			if (exception instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, exception.getClass());
 
-				mvcPath = "/account_entries_admin/error.jsp";
+				actionResponse.setRenderParameter(
+					"mvcPath", "/account_entries_admin/error.jsp");
+			}
+			else if (exception instanceof
+						DuplicateAccountEntryExternalReferenceCodeException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				hideDefaultErrorMessage(actionRequest);
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"/account_admin/edit_account_entry");
 			}
 			else {
 				throw exception;
 			}
-
-			actionResponse.setRenderParameter("mvcPath", mvcPath);
 		}
 	}
 

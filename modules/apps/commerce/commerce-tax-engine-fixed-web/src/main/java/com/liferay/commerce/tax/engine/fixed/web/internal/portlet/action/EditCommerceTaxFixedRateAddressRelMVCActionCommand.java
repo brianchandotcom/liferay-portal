@@ -151,7 +151,6 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 
 			_commerceTaxFixedRateAddressRelService.
 				addCommerceTaxFixedRateAddressRel(
-					_portal.getUserId(actionRequest),
 					commerceTaxMethod.getGroupId(),
 					commerceTaxMethod.getCommerceTaxMethodId(), cpTaxCategoryId,
 					countryId, regionId, zip, rate.doubleValue());

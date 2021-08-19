@@ -20,10 +20,10 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
-import {useToControlsId} from '../../../../../app/contexts/CollectionItemContext';
 import {
 	useHoverItem,
 	useHoveredItemId,
@@ -64,11 +64,10 @@ export default function PageContent({
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const [imageEditorParams, setImageEditorParams] = useState(null);
-	const toControlsId = useToControlsId();
 
 	const isBeingEdited = useMemo(
-		() => toControlsId(editableId) === editableProcessorUniqueId,
-		[toControlsId, editableId, editableProcessorUniqueId]
+		() => editableId === fromControlsId(editableProcessorUniqueId),
+		[editableId, editableProcessorUniqueId]
 	);
 
 	const dropdownItems = useSelectorCallback(

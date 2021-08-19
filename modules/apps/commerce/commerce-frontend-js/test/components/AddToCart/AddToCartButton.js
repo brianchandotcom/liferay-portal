@@ -30,6 +30,7 @@ describe('AddToCartButton', () => {
 	const INITIAL_PROPS = {
 		channel: {
 			currencyCode: 'USD',
+			groupId: 56789,
 			id: 12345,
 		},
 		cpInstance: {

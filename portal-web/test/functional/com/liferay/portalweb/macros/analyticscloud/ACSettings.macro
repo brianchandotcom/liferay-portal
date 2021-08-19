@@ -338,6 +338,23 @@ definition {
 		}
 	}
 
+	macro getPropertyId {
+		ACSettings.goToProperties();
+
+		ACUtils.searchBar(searchItem = "${propertyName}");
+
+		ACNavigation.openItem(itemName = "${propertyName}");
+
+		WaitForVisible(
+			locator1 = "ACSettings#HEADER_TITLE",
+			title = "${propertyName}");
+
+		var propertyId = selenium.getText("ACSettings#HEADER_DESCRIPTION");
+		var propertyId = StringUtil.extractDigits("${propertyId}");
+
+		return "${propertyId}";
+	}
+
 	macro goToApis {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "apis");
 	}

@@ -81,4 +81,10 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	macro createCategoryDisplayPage {
+		
+		CommerceChannels.addCategory(key_card = "${vocabulary}");
+
+		CommerceChannels.addCategoryDiplayPage(key_card = "${page}");
+	}
 }

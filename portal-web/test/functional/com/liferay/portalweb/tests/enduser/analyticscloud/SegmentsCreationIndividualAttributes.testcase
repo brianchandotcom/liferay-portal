@@ -389,9 +389,69 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForOrganizations {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8570 CanAddSegmentWithCustomFieldsForOrganizations pending implementation
+		task ("Add a new organization and assign to the user") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Add Custom Fields for organization") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "AC Org Custom Fields",
+				customFieldType = "Text Area",
+				resourceName = "Organization");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment using Organization Custom Fields") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Using Organization Custom Fields");
+
+			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
+
+			ACSegments.addSegmentField(segmentField = "AC Org Custom Fields");
+
+			ACSegments.selectOperator(operator = "is not");
+
+			ACSegments.editTextCriterion(textInput = "defined");
+		}
+
+		task ("View the user showns on the Preview mode") {
+			Click(locator1 = "Icon#EYE_PREVIEW");
+
+			ACAssets.viewAssets(assetName = "ac ac");
+
+			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+		}
 	}
 
 }

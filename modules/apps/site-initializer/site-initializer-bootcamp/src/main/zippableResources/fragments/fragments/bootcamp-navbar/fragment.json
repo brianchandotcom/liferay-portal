@@ -1,8 +1,8 @@
 {
-  "configurationPath": "index.json",
-  "jsPath": "index.js",
-  "htmlPath": "index.html",
-  "cssPath": "index.css",
-  "name": "Bootcamp Navbar",
-  "type": "section"
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Bootcamp Navbar",
+	"type": "section"
 }

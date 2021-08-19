@@ -68,6 +68,31 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a single field entry in an object"
+	macro addObjectSingleFieldEntry {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var objectName = StringUtil.toLowerCase("${objectName}");
+		var curl = '''
+			${portalURL}/o/c_${objectName}s \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"${fieldName}": "${value}"
+			}'
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to delete all custom objects"
 	macro deleteAllCustomObjects {
 		var portalURL = JSONCompany.getPortalURL();

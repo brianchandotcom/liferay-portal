@@ -11,6 +11,15 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro addObjectSingleFieldEntryViaAPI {
+		JSONObject.addObjectSingleFieldEntry(
+			fieldName = "${fieldName}",
+			objectName = "${objectName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			value = "${value}");
+	}
+
 	macro addObjectViaAPI {
 		JSONObject.addObject(
 			labelName = "${labelName}",

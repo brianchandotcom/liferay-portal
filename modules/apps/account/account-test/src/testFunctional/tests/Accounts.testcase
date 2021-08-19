@@ -927,6 +927,10 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
+		LexiconEntry.viewEntryName(rowEntry = "Business Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "Person Account");
+
 		ManagementBar.setFilterAndOrder(filterBy = "Business");
 
 		LexiconEntry.viewEntryName(rowEntry = "Business Account");
@@ -938,12 +942,6 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Person Account");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Business Account");
-
-		ManagementBar.setFilterAndOrder(filterBy = "All");
-
-		LexiconEntry.viewEntryName(rowEntry = "Business Account");
-
-		LexiconEntry.viewEntryName(rowEntry = "Person Account");
 	}
 
 	@description = "This asserts that filter in setting default shipping will not change to billing and that billing addresses do not display as options."

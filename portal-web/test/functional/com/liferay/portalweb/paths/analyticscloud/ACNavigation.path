@@ -34,7 +34,7 @@
 </tr>
 <tr>
 	<td>OPEN_ITEM</td>
-	<td>//a[@class='text-truncate'and text()='${key_itemName}']</td>
+	<td>//a[normalize-space()='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>

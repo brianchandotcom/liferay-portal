@@ -28,11 +28,11 @@ const baseProps = {
 	],
 	inputs: [
 		{
-			fieldType: 'text',
-			helpMessage: 'help message for input title',
-			label: 'Title',
-			name: 'title',
-			selectedFieldKey: 'field-5',
+			fieldType: 'image',
+			helpMessage: 'help message for input image with default value',
+			label: 'Image with default value',
+			name: 'image_small',
+			selectedFieldKey: 'field-3',
 		},
 		{
 			fieldType: 'image',
@@ -53,42 +53,46 @@ describe('MappingFields', () => {
 	afterEach(cleanup);
 
 	describe('when rendered', () => {
-		let result;
-		let feedbackTitleInput;
 		let feedbackImageInput;
-		let hiddenTitleInput;
+		let feedbackImageWithDefaultValueInput;
 		let hiddenImageInput;
+		let hiddenImageWithDefaulInput;
+		let result;
 
 		beforeEach(() => {
 			result = renderComponent();
-			feedbackTitleInput = result.getByLabelText(
+			feedbackImageWithDefaultValueInput = result.getByLabelText(
 				baseProps.inputs[0].label
 			);
 			feedbackImageInput = result.getByLabelText(
 				baseProps.inputs[1].label
 			);
 
-			hiddenTitleInput = result.getAllByRole('textbox')[1];
+			hiddenImageWithDefaulInput = result.getAllByRole('textbox')[1];
 			hiddenImageInput = result.getAllByRole('textbox')[3];
 		});
 
 		it('has two read only inputs for user feedback with the selected field names', () => {
-			expect(feedbackTitleInput).toBeInTheDocument();
+			expect(feedbackImageWithDefaultValueInput).toBeInTheDocument();
 			expect(feedbackImageInput).toBeInTheDocument();
 		});
 
-		it('renders the title inputs for user feedback with the correct value', () => {
-			expect(feedbackTitleInput.value).toBe('Label source type: Field 5');
+		it('renders the image with default value input for user feedback with the correct value', () => {
+			expect(feedbackImageWithDefaultValueInput.value).toBe(
+				'Label source type: Field 3'
+			);
 		});
 
 		it('renders the image input for user feedback with unmapped value', () => {
 			expect(feedbackImageInput.value).toBe('-- unmapped --');
 		});
 
-		it('has a title hidden input with the correct selected field key', () => {
-			expect(hiddenTitleInput.type).toBe('hidden');
-			expect(hiddenTitleInput.name).toBe(baseProps.inputs[0].name);
-			expect(hiddenTitleInput.value).toBe(
+		it('has an image with default value hidden input with the correct selected field key', () => {
+			expect(hiddenImageWithDefaulInput.type).toBe('hidden');
+			expect(hiddenImageWithDefaulInput.name).toBe(
+				baseProps.inputs[0].name
+			);
+			expect(hiddenImageWithDefaulInput.value).toBe(
 				baseProps.inputs[0].selectedFieldKey
 			);
 		});
@@ -101,9 +105,9 @@ describe('MappingFields', () => {
 	});
 
 	describe('when rendered with filtered fieldType image', () => {
-		let result;
 		let fieldSelect;
 		let options;
+		let result;
 
 		beforeEach(() => {
 			result = renderComponent();

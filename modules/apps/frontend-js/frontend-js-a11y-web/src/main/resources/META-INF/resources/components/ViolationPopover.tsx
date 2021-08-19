@@ -43,6 +43,33 @@ type ViolationProps = {
 	violations: Array<string>;
 };
 
+function isVisible(
+	bounds: React.CSSProperties | undefined,
+	node: Element | null
+) {
+	if (!node || !bounds) {
+		return false;
+	}
+
+	// Elements with `sr-only` are considered invisible and a strategy for
+	// dealing with screen reader tools.
+
+	if (node.classList.contains('sr-only')) {
+		return false;
+	}
+
+	if (
+		bounds.height === 0 &&
+		bounds.left === 0 &&
+		bounds.top === 0 &&
+		bounds.width === 0
+	) {
+		return false;
+	}
+
+	return true;
+}
+
 export function ViolationPopover({
 	onClick,
 	rules,
@@ -80,6 +107,10 @@ export function ViolationPopover({
 		),
 		node
 	);
+
+	if (!isVisible(bounds, node)) {
+		return null;
+	}
 
 	return (
 		<ClayPopover

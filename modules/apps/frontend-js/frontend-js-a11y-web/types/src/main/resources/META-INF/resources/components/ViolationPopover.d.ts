@@ -27,5 +27,5 @@ export declare function ViolationPopover({
 	rules,
 	target,
 	violations,
-}: ViolationProps): JSX.Element;
+}: ViolationProps): JSX.Element | null;
 export {};

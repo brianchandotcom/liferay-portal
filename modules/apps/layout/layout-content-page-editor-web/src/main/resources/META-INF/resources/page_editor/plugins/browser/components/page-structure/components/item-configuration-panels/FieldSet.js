@@ -22,6 +22,8 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/lay
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
+import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
+import isNullOrUndefined from '../../../../../../app/utils/isNullOrUndefined';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {ConfigurationFieldPropTypes} from '../../../../../../prop-types/index';
 
@@ -79,28 +81,6 @@ export const FieldSet = ({
 							field.type &&
 							FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
-						const fieldValueObject = values[field.name] || {};
-						let fieldValue = field.defaultValue;
-
-						if (field.localizable) {
-							fieldValue = Object.keys(fieldValueObject).includes(
-								languageId
-							)
-								? fieldValueObject[languageId]
-								: Object.keys(fieldValueObject).includes(
-										config.defaultLanguageId
-								  )
-								? values[field.name][config.defaultLanguageId]
-								: field.defaultValue;
-						}
-						else {
-							fieldValue = Object.keys(values).includes(
-								field.name
-							)
-								? values[field.name]
-								: field.defaultValue;
-						}
-
 						return (
 							<div
 								className={classNames(
@@ -119,7 +99,11 @@ export const FieldSet = ({
 										disabled={fieldIsDisabled(item, field)}
 										field={field}
 										onValueSelect={onValueSelect}
-										value={fieldValue}
+										value={getFieldValue({
+											field,
+											languageId,
+											values,
+										})}
 									/>
 								</div>
 
@@ -134,6 +118,20 @@ export const FieldSet = ({
 		)
 	);
 };
+
+function getFieldValue({field, languageId, values}) {
+	const value = values[field.name];
+
+	if (isNullOrUndefined(value)) {
+		return field.defaultValue;
+	}
+
+	if (!field.localizable || typeof value !== 'object') {
+		return value;
+	}
+
+	return getEditableLocalizedValue(value, languageId, field.defaultValue);
+}
 
 FieldSet.propTypes = {
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),

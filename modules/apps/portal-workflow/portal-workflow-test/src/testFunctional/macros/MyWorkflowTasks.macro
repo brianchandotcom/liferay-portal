@@ -1,0 +1,15 @@
+definition {
+
+	macro searchMyWorkflowTasks {
+		Type(
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
+			value1 = "${searchTerm}");
+
+		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
+
+
+
+		
+	}
+
+}

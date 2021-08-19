@@ -114,6 +114,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD</td>
+	<td>//input[contains(@name,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_WORKFLOW_TASKS_SEARCH_ICON</td>
+	<td>//button[contains(@class, 'btn btn-monospaced btn-unstyled')][2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
 	<td>//tr[contains(.,'${key_workflowTask}') and contains(.,'${key_workflowAssetTitle}')]/td[3]//a</td>
 	<td></td>

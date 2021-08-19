@@ -802,11 +802,20 @@ definition {
 	}
 
 	@description = "Verify that when there are no results for the search in Assigned to My Roles tab, the page displays the message -There are no tasks assigned to your roles with the specified search criteria-"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test ShowsMessageWhenSearchReturnsNoResults {
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		// TODO LRQA-68830 ShowsMessageWhenSearchReturnsNoResults pending implementation
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "12345");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no tasks assigned to your roles with the specified search criteria.");
+
+
+
 
 	}
 

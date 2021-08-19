@@ -813,10 +813,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no tasks assigned to your roles with the specified search criteria.");
-
-
-
-
 	}
 
 	@description = "Verify that when the user updates the due date of a task, the time until the due date shows in the table"

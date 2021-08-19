@@ -6,10 +6,6 @@ definition {
 			value1 = "${searchTerm}");
 
 		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
-
-
-
-		
 	}
 
 }

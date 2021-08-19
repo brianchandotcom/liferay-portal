@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -117,7 +118,8 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			itemSubtypeJSONObject.getString("className"));
 		Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
 		Assert.assertEquals(
-			"Basic Web Content", itemSubtypeJSONObject.getString("label"));
+			"Basic Web Content (Global)",
+			itemSubtypeJSONObject.getString("label"));
 
 		itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
 
@@ -128,7 +130,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			ddmStructure.getStructureId(),
 			itemSubtypeJSONObject.getLong("classPK"));
 		Assert.assertEquals(
-			ddmStructure.getName(LocaleUtil.US),
+			_getLabel(ddmStructure.getName(LocaleUtil.US), _group),
 			itemSubtypeJSONObject.getString("label"));
 
 		contentDashboardItemTypeJSONObject =
@@ -222,7 +224,8 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				itemSubtypeJSONObject.getString("className"));
 			Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
 			Assert.assertEquals(
-				"Basic Web Content", itemSubtypeJSONObject.getString("label"));
+				"Basic Web Content (Global)",
+				itemSubtypeJSONObject.getString("label"));
 
 			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
 
@@ -233,7 +236,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				ddmStructure1.getStructureId(),
 				itemSubtypeJSONObject.getLong("classPK"));
 			Assert.assertEquals(
-				ddmStructure1.getName(LocaleUtil.US),
+				_getLabel(ddmStructure1.getName(LocaleUtil.US), _group),
 				itemSubtypeJSONObject.getString("label"));
 
 			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(2);
@@ -245,7 +248,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				ddmStructure2.getStructureId(),
 				itemSubtypeJSONObject.getLong("classPK"));
 			Assert.assertEquals(
-				ddmStructure2.getName(LocaleUtil.US),
+				_getLabel(ddmStructure2.getName(LocaleUtil.US), group2),
 				itemSubtypeJSONObject.getString("label"));
 
 			Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
@@ -320,7 +323,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				String.valueOf(dlFileEntryType1.getFileEntryTypeId()),
 				itemSubtypeJSONObject.getString("classPK"));
 			Assert.assertEquals(
-				dlFileEntryType1.getName(LocaleUtil.US),
+				_getLabel(dlFileEntryType1.getName(LocaleUtil.US), _group),
 				itemSubtypeJSONObject.getString("label"));
 
 			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(4);
@@ -332,7 +335,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				String.valueOf(dlFileEntryType2.getFileEntryTypeId()),
 				itemSubtypeJSONObject.getString("classPK"));
 			Assert.assertEquals(
-				dlFileEntryType2.getName(LocaleUtil.US),
+				_getLabel(dlFileEntryType2.getName(LocaleUtil.US), group2),
 				itemSubtypeJSONObject.getString("label"));
 
 			Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
@@ -400,6 +403,11 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			).build(),
 			null, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private String _getLabel(String name, Group group) {
+		return StringBundler.concat(
+			name, " (", group.getName(LocaleUtil.US), ")");
 	}
 
 	@Inject(

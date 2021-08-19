@@ -36,8 +36,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -175,6 +177,36 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		return null;
 	}
 
+	private String _getInfoItemFormVariationLabel(
+		InfoItemFormVariation infoItemFormVariation, Locale locale) {
+
+		Optional<Long> groupIdOptional =
+			infoItemFormVariation.getGroupIdOptional();
+
+		InfoLocalizedValue<String> labelInfoLocalizedValue =
+			infoItemFormVariation.getLabelInfoLocalizedValue();
+
+		return groupIdOptional.map(
+			groupId -> {
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				if (group == null) {
+					return labelInfoLocalizedValue.getValue(locale);
+				}
+
+				return LanguageUtil.format(
+					ResourceBundleUtil.getBundle(locale, getClass()),
+					"x-group-x",
+					new String[] {
+						labelInfoLocalizedValue.getValue(locale),
+						group.getName(locale)
+					});
+			}
+		).orElseGet(
+			() -> labelInfoLocalizedValue.getValue(locale)
+		);
+	}
+
 	private void _populateContentDashboardItemTypesJSONArray(
 		String className,
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory,
@@ -206,10 +238,6 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		for (InfoItemFormVariation infoItemFormVariation :
 				infoItemFormVariations) {
 
-			InfoLocalizedValue<String>
-				infoItemFormVariationLabelInfoLocalizedValue =
-					infoItemFormVariation.getLabelInfoLocalizedValue();
-
 			try {
 				ContentDashboardItemSubtype contentDashboardItemSubtype =
 					contentDashboardItemSubtypeFactory.create(
@@ -226,8 +254,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 						String.valueOf(infoItemFormVariation.getKey())
 					).put(
 						"label",
-						infoItemFormVariationLabelInfoLocalizedValue.getValue(
-							themeDisplay.getLocale())
+						_getInfoItemFormVariationLabel(
+							infoItemFormVariation, themeDisplay.getLocale())
 					).put(
 						"selected",
 						checkedContentDashboardItemSubtypes.contains(

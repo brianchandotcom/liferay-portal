@@ -1,0 +1,32 @@
+{
+  "fieldSets": [
+    {
+      "configurationRole": "style",
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "nm",
+          "label": "size",
+          "name": "linkSize",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "small",
+                "value": "sm"
+              },
+              {
+                "label": "normal",
+                "value": "nm"
+              },
+              {
+                "label": "large",
+                "value": "lg"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

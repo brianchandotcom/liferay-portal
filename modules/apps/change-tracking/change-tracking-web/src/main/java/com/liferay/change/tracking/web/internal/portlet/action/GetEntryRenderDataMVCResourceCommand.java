@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -219,9 +220,7 @@ public class GetEntryRenderDataMVCResourceCommand
 					_ctDisplayRendererRegistry.getDefaultLanguageId(
 						rightModel, ctEntry.getModelClassNameId());
 
-				if ((availableLanguageIds != null) &&
-					(availableLanguageIds.length > 0)) {
-
+				if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 					for (String languageId : availableLanguageIds) {
 						localizedTitlesJSONObject.put(
 							languageId,
@@ -314,9 +313,7 @@ public class GetEntryRenderDataMVCResourceCommand
 						rightVersionName, " (",
 						_language.get(httpServletRequest, "publication"), ")");
 
-					if ((availableLanguageIds != null) &&
-						(availableLanguageIds.length > 0)) {
-
+					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 						leftLocalizedContentJSONObject =
 							_getLocalizedContentJSONObject(
 								availableLanguageIds, leftCtCollectionId,
@@ -368,9 +365,7 @@ public class GetEntryRenderDataMVCResourceCommand
 							leftModel, ctEntry.getModelClassNameId());
 				}
 
-				if ((availableLanguageIds != null) &&
-					(availableLanguageIds.length > 0)) {
-
+				if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 					for (String languageId : availableLanguageIds) {
 						localizedTitlesJSONObject.put(
 							languageId,
@@ -462,9 +457,7 @@ public class GetEntryRenderDataMVCResourceCommand
 							ctCollectionId, ctSQLMode, rightModel,
 							ctEntry.getModelClassNameId());
 
-					if ((availableLanguageIds != null) &&
-						(availableLanguageIds.length > 0)) {
-
+					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 						rightLocalizedContentJSONObject =
 							_getLocalizedContentJSONObject(
 								availableLanguageIds, ctCollectionId,
@@ -618,9 +611,7 @@ public class GetEntryRenderDataMVCResourceCommand
 					new UnsyncStringReader(rightRender)));
 		}
 
-		if ((availableLanguageIds != null) &&
-			(availableLanguageIds.length > 0)) {
-
+		if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 			JSONArray localesJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (String languageId : availableLanguageIds) {
@@ -655,7 +646,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, T model) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = null;
 
 		try (SafeCloseable safeCloseable1 =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -664,11 +655,17 @@ public class GetEntryRenderDataMVCResourceCommand
 				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
 
 			for (String languageId : availableLanguageIds) {
-				jsonObject.put(
-					languageId,
-					ctDisplayRenderer.getContent(
-						httpServletRequest, httpServletResponse,
-						LocaleUtil.fromLanguageId(languageId), model));
+				String content = ctDisplayRenderer.getContent(
+					httpServletRequest, httpServletResponse,
+					LocaleUtil.fromLanguageId(languageId), model);
+
+				if (content != null) {
+					if (jsonObject == null) {
+						jsonObject = JSONFactoryUtil.createJSONObject();
+					}
+
+					jsonObject.put(languageId, content);
+				}
 			}
 
 			return jsonObject;

@@ -155,7 +155,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"classPK", String.valueOf(classPK));
 
 		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
-			_group.getGroupId());
+			_group);
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

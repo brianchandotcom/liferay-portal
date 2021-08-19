@@ -16,7 +16,10 @@ package com.liferay.content.dashboard.web.test.util;
 
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,13 +31,17 @@ import java.util.Dictionary;
  */
 public class ContentDashboardTestUtil {
 
-	public static ThemeDisplay getThemeDisplay(long groupId) {
+	public static ThemeDisplay getThemeDisplay(Group group)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setScopeGroupId(groupId);
+		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.fetchCompany(group.getCompanyId()));
 
 		return themeDisplay;
 	}

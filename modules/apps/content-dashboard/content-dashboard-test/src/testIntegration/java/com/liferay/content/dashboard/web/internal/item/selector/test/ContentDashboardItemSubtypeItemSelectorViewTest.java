@@ -17,6 +17,8 @@ package com.liferay.content.dashboard.web.internal.item.selector.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -37,6 +39,8 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -124,7 +128,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 			ddmStructure.getStructureId(),
 			itemSubtypeJSONObject.getLong("classPK"));
 		Assert.assertEquals(
-			ddmStructure.getName(LocaleUtil.getDefault()),
+			ddmStructure.getName(LocaleUtil.US),
 			itemSubtypeJSONObject.getString("label"));
 
 		contentDashboardItemTypeJSONObject =
@@ -169,6 +173,175 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 	}
 
+	@Test
+	public void testGetDataWithDDMStructuresFromSeveralSites()
+		throws Exception {
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		try {
+			DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+				"content", "string", "text", true, "textarea",
+				new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+
+			DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+				_group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+				LocaleUtil.US,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
+				group2.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+				LocaleUtil.US,
+				ServiceContextTestUtil.getServiceContext(group2.getGroupId()));
+
+			Map<String, Object> data = _getData();
+
+			JSONArray contentDashboardItemTypesJSONArray = (JSONArray)data.get(
+				"contentDashboardItemTypes");
+
+			JSONObject contentDashboardItemTypeJSONObject =
+				contentDashboardItemTypesJSONArray.getJSONObject(0);
+
+			Assert.assertEquals(
+				"web-content",
+				contentDashboardItemTypeJSONObject.getString("icon"));
+			Assert.assertEquals(
+				"Web Content Article",
+				contentDashboardItemTypeJSONObject.getString("label"));
+
+			JSONArray itemSubtypesJSONArray =
+				contentDashboardItemTypeJSONObject.getJSONArray("itemSubtypes");
+
+			Assert.assertEquals(3, itemSubtypesJSONArray.length());
+
+			JSONObject itemSubtypeJSONObject =
+				itemSubtypesJSONArray.getJSONObject(0);
+
+			Assert.assertEquals(
+				DDMStructure.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+			Assert.assertEquals(
+				"Basic Web Content", itemSubtypeJSONObject.getString("label"));
+
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
+
+			Assert.assertEquals(
+				DDMStructure.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertEquals(
+				ddmStructure1.getStructureId(),
+				itemSubtypeJSONObject.getLong("classPK"));
+			Assert.assertEquals(
+				ddmStructure1.getName(LocaleUtil.US),
+				itemSubtypeJSONObject.getString("label"));
+
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(2);
+
+			Assert.assertEquals(
+				DDMStructure.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertEquals(
+				ddmStructure2.getStructureId(),
+				itemSubtypeJSONObject.getLong("classPK"));
+			Assert.assertEquals(
+				ddmStructure2.getName(LocaleUtil.US),
+				itemSubtypeJSONObject.getString("label"));
+
+			Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group2);
+		}
+	}
+
+	@Test
+	public void testGetDataWithDLFileEntryTypesFromSeveralSites()
+		throws Exception {
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		try {
+			DLFileEntryType dlFileEntryType1 = _getDlFileEntryType(_group);
+			DLFileEntryType dlFileEntryType2 = _getDlFileEntryType(group2);
+
+			Map<String, Object> data = _getData();
+
+			JSONArray contentDashboardItemTypesJSONArray = (JSONArray)data.get(
+				"contentDashboardItemTypes");
+
+			JSONObject contentDashboardItemTypeJSONObject =
+				contentDashboardItemTypesJSONArray.getJSONObject(1);
+
+			Assert.assertEquals(
+				"documents-and-media",
+				contentDashboardItemTypeJSONObject.getString("icon"));
+			Assert.assertEquals(
+				"Document",
+				contentDashboardItemTypeJSONObject.getString("label"));
+
+			JSONArray itemSubtypesJSONArray =
+				contentDashboardItemTypeJSONObject.getJSONArray("itemSubtypes");
+
+			Assert.assertEquals(5, itemSubtypesJSONArray.length());
+
+			JSONObject itemSubtypeJSONObject =
+				itemSubtypesJSONArray.getJSONObject(0);
+
+			Assert.assertEquals(
+				DLFileEntryType.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+			Assert.assertEquals(
+				"Basic Document", itemSubtypeJSONObject.getString("label"));
+
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
+
+			Assert.assertEquals(
+				DLFileEntryType.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+			Assert.assertNotNull(itemSubtypeJSONObject.getString("label"));
+
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(2);
+
+			Assert.assertEquals(
+				DLFileEntryType.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+			Assert.assertNotNull(itemSubtypeJSONObject.getString("label"));
+
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(3);
+
+			Assert.assertEquals(
+				DLFileEntryType.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertEquals(
+				String.valueOf(dlFileEntryType1.getFileEntryTypeId()),
+				itemSubtypeJSONObject.getString("classPK"));
+			Assert.assertEquals(
+				dlFileEntryType1.getName(LocaleUtil.US),
+				itemSubtypeJSONObject.getString("label"));
+
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(4);
+
+			Assert.assertEquals(
+				DLFileEntryType.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertEquals(
+				String.valueOf(dlFileEntryType2.getFileEntryTypeId()),
+				itemSubtypeJSONObject.getString("classPK"));
+			Assert.assertEquals(
+				dlFileEntryType2.getName(LocaleUtil.US),
+				itemSubtypeJSONObject.getString("label"));
+
+			Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group2);
+		}
+	}
+
 	private Map<String, Object> _getData() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -189,7 +362,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
-			ContentDashboardTestUtil.getThemeDisplay(_group.getGroupId()));
+			ContentDashboardTestUtil.getThemeDisplay(_group));
 
 		ContentDashboardTestUtil.
 			withFFContentDashboardDocumentConfigurationEnabled(
@@ -207,6 +380,26 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 		return ReflectionTestUtil.invoke(
 			contentDashboardItemSubtypeItemSelectorViewDisplayContext,
 			"getData", new Class<?>[0], null);
+	}
+
+	private DLFileEntryType _getDlFileEntryType(Group group) throws Exception {
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"content", "string", "text", true, "textarea",
+			new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+			LocaleUtil.US,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			ddmStructure.getStructureId(), RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Inject(

@@ -210,7 +210,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountService.addOrUpdateCommerceDiscount(
-				discount.getExternalReferenceCode(), contextUser.getUserId(),
+				discount.getExternalReferenceCode(),
 				GetterUtil.getLong(discount.getId()), discount.getTitle(),
 				discount.getTarget(),
 				GetterUtil.getBoolean(discount.getUseCouponCode()),

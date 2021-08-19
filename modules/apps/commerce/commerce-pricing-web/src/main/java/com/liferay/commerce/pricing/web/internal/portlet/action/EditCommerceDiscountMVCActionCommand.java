@@ -180,10 +180,10 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			CommerceDiscount.class.getName(), actionRequest);
 
 		return _commerceDiscountService.addOrUpdateCommerceDiscount(
-			externalReferenceCode, serviceContext.getUserId(),
-			commerceDiscountId, title, target, useCouponCode, couponCode,
-			usePercentage, maximumDiscountAmount, level, discountLevels[0],
-			discountLevels[1], discountLevels[2], discountLevels[3],
+			externalReferenceCode, commerceDiscountId, title, target,
+			useCouponCode, couponCode, usePercentage, maximumDiscountAmount,
+			level, discountLevels[0], discountLevels[1], discountLevels[2],
+			discountLevels[3],
 			_getLimitationType(limitationTimes, limitationTimesPerAccount),
 			limitationTimes, limitationTimesPerAccount, rulesConjunction,
 			active, displayDateMonth, displayDateDay, displayDateYear,

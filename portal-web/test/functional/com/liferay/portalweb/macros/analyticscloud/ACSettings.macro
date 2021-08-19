@@ -338,6 +338,23 @@ definition {
 		}
 	}
 
+	macro getDXPInstanceId {
+		ACSettings.goToDataSources();
+
+		ACUtils.searchBar(searchItem = "${dataSourceName}");
+
+		ACNavigation.openItem(itemName = "${dataSourceName}");
+
+		AssertTextEquals(
+			inputFieldId = "dataSourceName",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${dataSourceName}");
+
+		var dxpInstanceId = selenium.getElementValue("//input[contains(@id,'dxpInstanceId')]");
+
+		return "${dxpInstanceId}";
+	}
+
 	macro getPropertyId {
 		ACSettings.goToProperties();
 

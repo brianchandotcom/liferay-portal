@@ -8,13 +8,29 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
 	}
 
 	tearDown {
@@ -39,12 +55,75 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8346 | Test Summary: Assert Sites Acquisition card Channels highest session"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesAcquisitionCardChannelsHighestSession {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8346 AssertSitesAcquisitionCardChannelsHighestSession
+		task ("Sign out then sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for page loading") {
+			WaitForPageLoad();
+		}
+
+		task ("Close session") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview in Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("Select the Last 24 hours in Acquisitions report") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Acquisitions");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to Channels tab in Acquisitions report") {
+			ACNavigation.switchTabInCard(tabName = "Channels");
+		}
+
+		task ("View the details of direct session entry in Channels tab") {
+			ACCards.viewMetricBarStyle(
+				backgroundColor = "rgba(80, 210, 160, 1)",
+				cardTitle = "Acquisitions",
+				entryName = "direct",
+				style = "width: 100%;");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "cell-expand",
+				entryInfo = "1",
+				entryName = "direct");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "column-text-end",
+				entryInfo = "100.00%",
+				entryName = "direct");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8347 | Test Summary: Assert Sites Acquisition card Referrers highest session"

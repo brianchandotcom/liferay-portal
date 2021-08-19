@@ -53,10 +53,9 @@ const getDefaultContainer = () => {
 };
 
 export default (props: Omit<A11yCheckerOptions, 'callback' | 'targets'>) => {
-	if (window.themeDisplay.isStatePopUp()) {
-		render(A11yIframe, props, getDefaultContainer());
-	}
-	else {
-		render(A11y, props, getDefaultContainer());
-	}
+	render(
+		window.themeDisplay.isStatePopUp() ? A11yIframe : A11y,
+		props,
+		getDefaultContainer()
+	);
 };

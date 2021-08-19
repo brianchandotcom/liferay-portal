@@ -962,7 +962,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
-	@ignore = "true"
 	@priority = "5"
 	test ExportImportSavedCompositionWithoutSaveInlineContent {
 		property portal.acceptance = "true";
@@ -1140,7 +1139,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
-	@ignore = "true"
 	@priority = "5"
 	test ExportImportSavedCompositionWithSaveInlineContent {
 		property portal.acceptance = "true";

@@ -30,7 +30,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101333. Freemarker codes should not be executed in a HTML fragment."
-	@ignore = "true"
 	@priority = "5"
 	test CannotExecuteFreemarkerCodeInHTMLFragment {
 		property portal.acceptance = "true";

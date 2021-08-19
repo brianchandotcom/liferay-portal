@@ -141,7 +141,7 @@ public class CommerceMLForecastAlertEntryServiceImpl
 
 	@Override
 	public CommerceMLForecastAlertEntry updateStatus(
-			long userId, long commerceMLForecastAlertEntryId, int status)
+			long commerceMLForecastAlertEntryId, int status)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -149,7 +149,7 @@ public class CommerceMLForecastAlertEntryServiceImpl
 			CommerceMLForecastAlertActionKeys.MANAGE_ALERT_STATUS);
 
 		return commerceMLForecastAlertEntryLocalService.updateStatus(
-			userId, commerceMLForecastAlertEntryId, status);
+			getUserId(), commerceMLForecastAlertEntryId, status);
 	}
 
 	private long[] _getUserCommerceAccountIds(long userId)

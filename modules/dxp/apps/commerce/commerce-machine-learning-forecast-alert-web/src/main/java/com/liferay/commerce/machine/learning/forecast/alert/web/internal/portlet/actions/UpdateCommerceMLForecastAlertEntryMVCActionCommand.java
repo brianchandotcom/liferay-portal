@@ -52,9 +52,6 @@ public class UpdateCommerceMLForecastAlertEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceMLForecastAlertEntry.class.getName(), actionRequest);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
@@ -67,8 +64,7 @@ public class UpdateCommerceMLForecastAlertEntryMVCActionCommand
 				int status = ParamUtil.getInteger(actionRequest, "status");
 
 				_commerceMLForecastAlertEntryService.updateStatus(
-					serviceContext.getUserId(), commerceMLForecastAlertEntryId,
-					status);
+					commerceMLForecastAlertEntryId, status);
 			}
 		}
 		catch (Throwable throwable) {

@@ -69,7 +69,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8571 | Test Summary: Custom field does not appear in AC after it has been removed in DXP"
-	@ignore = "true"
 	@priority = "4"
 	test AssertCustomFieldsNotAppearInACFilterWhenRemovedFromDXP {
 		task ("Add a new site with a public widget page") {
@@ -176,7 +175,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8565 | Test Summary: Add segment using an individual property 'role'"
-	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyRole {
 		task ("Get site assigned property name") {
@@ -237,7 +235,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8564 | Test Summary: Add segment using an individual property 'site'"
-	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertySite {
 		task ("Get site assigned property name") {
@@ -294,7 +291,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8566 | Test Summary: Add segment using an individual property 'team'"
-	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyTeam {
 		task ("Get site assigned property name") {
@@ -372,7 +368,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8567 | Test Summary: Add segment using an individual property 'user group'"
-	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyUserGroup {
 		task ("Get site assigned property name") {
@@ -435,7 +430,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
-	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForIndividuals {
 		task ("Get site assigned property name") {
@@ -484,7 +478,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
-	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForOrganizations {
 		task ("Get site assigned property name") {

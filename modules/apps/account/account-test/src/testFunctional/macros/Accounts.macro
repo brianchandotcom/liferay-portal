@@ -1,21 +1,5 @@
 definition {
 
-	macro addOwnedAccountRole {
-		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
-
-		LexiconEntry.gotoAdd();
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Add New Role");
-
-		PortletEntry.inputTitle(title = "${accountRoleTitle}");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro addAccountWithDomain {
 		LexiconEntry.gotoAdd();
 
@@ -425,6 +409,22 @@ definition {
 		AssertClick(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro addOwnedAccountRole {
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add New Role");
+
+		PortletEntry.inputTitle(title = "${accountRoleTitle}");
+
+		Button.clickSave();
 
 		Alert.viewSuccessMessage();
 	}

@@ -16,16 +16,24 @@ package com.liferay.fragment.collection.filter.internal;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
+import com.liferay.fragment.exception.FragmentEntryConfigurationException;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Pablo Molina
@@ -53,7 +61,9 @@ public class FragmentCollectionFilterTrackerImpl
 					bundleContext.getService(serviceReference);
 
 				emitter.emit(fragmentCollectionFilter.getFilterKey());
-			});
+			},
+			new FragmentCollectionFilterServiceTrackerCustomizer(
+				bundleContext));
 	}
 
 	@Deactivate
@@ -61,7 +71,71 @@ public class FragmentCollectionFilterTrackerImpl
 		_serviceTrackerMap.close();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentCollectionFilterTrackerImpl.class);
+
+	@Reference
+	private FragmentEntryValidator _fragmentEntryValidator;
+
 	private ServiceTrackerMap<String, FragmentCollectionFilter>
 		_serviceTrackerMap;
+
+	private class FragmentCollectionFilterServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<FragmentCollectionFilter, FragmentCollectionFilter> {
+
+		public FragmentCollectionFilterServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public FragmentCollectionFilter addingService(
+			ServiceReference<FragmentCollectionFilter> serviceReference) {
+
+			FragmentCollectionFilter fragmentCollectionFilter =
+				_bundleContext.getService(serviceReference);
+
+			try {
+				_fragmentEntryValidator.validateConfiguration(
+					fragmentCollectionFilter.getConfiguration());
+
+				return fragmentCollectionFilter;
+			}
+			catch (FragmentEntryConfigurationException
+						fragmentEntryConfigurationException) {
+
+				_log.error(
+					String.format(
+						"Fragment collection filter with filter key %s and " +
+							"label %s could not be registered due to invalid " +
+								"configuration",
+						fragmentCollectionFilter.getFilterKey(),
+						fragmentCollectionFilter.getLabel(
+							LocaleUtil.getMostRelevantLocale())),
+					fragmentEntryConfigurationException);
+			}
+
+			return null;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<FragmentCollectionFilter> serviceReference,
+			FragmentCollectionFilter fragmentCollectionFilter) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<FragmentCollectionFilter> serviceReference,
+			FragmentCollectionFilter fragmentCollectionFilter) {
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+
+	}
 
 }

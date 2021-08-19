@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration",
 	service = DynamicInclude.class
 )
-public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
+public class A11yBottomJSPDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(
@@ -143,7 +143,7 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 
 		if (FFA11yConfigurationUtil.getEnable()) {
 			dynamicIncludeRegistry.register(
-				"/html/common/themes/top_head.jsp#post");
+				"/html/common/themes/bottom.jsp#post");
 		}
 	}
 

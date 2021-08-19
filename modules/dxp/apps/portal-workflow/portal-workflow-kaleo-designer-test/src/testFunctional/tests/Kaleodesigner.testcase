@@ -51,6 +51,7 @@ definition {
 
 	@priority = "4"
 	test AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(

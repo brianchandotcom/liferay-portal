@@ -134,7 +134,6 @@ public class EditCommercePaymentMethodGroupRelAddressRestrictionMVCActionCommand
 
 				_commercePaymentMethodGroupRelService.
 					addCommerceAddressRestriction(
-						_portal.getUserId(actionRequest),
 						commerceChannel.getGroupId(),
 						commercePaymentMethodGroupRelId,
 						country.getCountryId());

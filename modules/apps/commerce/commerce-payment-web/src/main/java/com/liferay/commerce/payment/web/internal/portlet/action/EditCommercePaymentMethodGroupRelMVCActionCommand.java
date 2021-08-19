@@ -189,7 +189,6 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 			commercePaymentMethodGroupRel =
 				_commercePaymentMethodGroupRelService.
 					addCommercePaymentMethodGroupRel(
-						_portal.getUserId(actionRequest),
 						commerceChannel.getGroupId(), nameMap, descriptionMap,
 						imageFile, commercePaymentMethodEngineKey, priority,
 						active);

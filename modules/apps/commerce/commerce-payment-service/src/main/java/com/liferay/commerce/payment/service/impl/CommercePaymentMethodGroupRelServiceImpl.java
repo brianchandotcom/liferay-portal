@@ -44,13 +44,14 @@ public class CommercePaymentMethodGroupRelServiceImpl
 
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long userId, long groupId, long classPK, long countryId)
+			long groupId, long classPK, long countryId)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
-			addCommerceAddressRestriction(userId, groupId, classPK, countryId);
+			addCommerceAddressRestriction(
+				getUserId(), groupId, classPK, countryId);
 	}
 
 	/**
@@ -64,13 +65,12 @@ public class CommercePaymentMethodGroupRelServiceImpl
 
 		return commercePaymentMethodGroupRelService.
 			addCommerceAddressRestriction(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				classPK, countryId);
+				serviceContext.getScopeGroupId(), classPK, countryId);
 	}
 
 	@Override
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
-			long userId, long groupId, Map<Locale, String> nameMap,
+			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, File imageFile,
 			String engineKey, double priority, boolean active)
 		throws PortalException {
@@ -79,8 +79,8 @@ public class CommercePaymentMethodGroupRelServiceImpl
 
 		return commercePaymentMethodGroupRelLocalService.
 			addCommercePaymentMethodGroupRel(
-				userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
-				priority, active);
+				getUserId(), groupId, nameMap, descriptionMap, imageFile,
+				engineKey, priority, active);
 	}
 
 	@Override

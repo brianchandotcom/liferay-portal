@@ -10,6 +10,12 @@
 </thead>
 
 <tbody>
+<!-- SETTINGS HEADER -->
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//div[contains(@class,'content-header')]//span[contains(@class,'title')][normalize-space(text())='${title}']</td>
+	<td></td>
+</tr>
 <!-- SETTINGS NAVIGATION -->
 <tr>
 	<td>SETTINGS_NAVIGATION</td>

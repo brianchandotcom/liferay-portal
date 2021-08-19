@@ -199,7 +199,7 @@ public class BuildFactory {
 
 	private static final String _BUILD_URL_SUFFIX_REGEX =
 		JenkinsResultsParserUtil.combine(
-			"((?<axisVariable>AXIS_VARIABLE=\\d+(,[^/]+)?)|)/?",
+			"((?<axisVariable>AXIS_VARIABLE=[^,/]+(,[^/]+)?)|)/?",
 			"((?<buildNumber>\\d+)|buildWithParameters\\?" +
 				"(?<queryString>.*))/?");
 

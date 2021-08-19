@@ -628,7 +628,7 @@ public class AxisBuild extends BaseBuild {
 	protected String axisVariable;
 
 	private static final String _AXIS_VARIABLE_REGEX =
-		"AXIS_VARIABLE=(?<axisNumber>\\d+)(,[^/]+)?";
+		"AXIS_VARIABLE=(?<axisNumber>[^,/]+)(,[^/]+)?";
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{

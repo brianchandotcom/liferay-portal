@@ -14,8 +14,8 @@
 
 package com.liferay.headless.admin.batch.planner.internal.resource.v1_0;
 
-import com.liferay.headless.admin.batch.planner.dto.v1_0.Plan;
-import com.liferay.headless.admin.batch.planner.resource.v1_0.PlanResource;
+import com.liferay.headless.admin.batch.planner.dto.v1_0.LogEntry;
+import com.liferay.headless.admin.batch.planner.resource.v1_0.LogEntryResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -46,11 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -63,97 +59,31 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BasePlanResourceImpl implements PlanResource {
+public abstract class BaseLogEntryResourceImpl implements LogEntryResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}/log-entries'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "id"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/plans")
+	@Path("/plans/{planId}/log-entries")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Plan")})
-	public Page<Plan> getPlansPage(@Context Pagination pagination)
+	@Tags(value = {@Tag(name = "LogEntry")})
+	public Page<LogEntry> getPlanLogEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Path("/plans")
-	@POST
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Plan")})
-	public Plan postPlan(Plan plan) throws Exception {
-		return new Plan();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
-	 */
-	@DELETE
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/plans/{planId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Plan")})
-	public void deletePlan(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
-	 */
-	@GET
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/plans/{planId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Plan")})
-	public Plan getPlan(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
-		throws Exception {
-
-		return new Plan();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@PATCH
-	@Path("/plans/{planId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Plan")})
-	public Plan patchPlan(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			Plan plan)
-		throws Exception {
-
-		return new Plan();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

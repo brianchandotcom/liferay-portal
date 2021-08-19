@@ -22,14 +22,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.admin.batch.planner.client.dto.v1_0.Plan;
+import com.liferay.headless.admin.batch.planner.client.dto.v1_0.LogEntry;
 import com.liferay.headless.admin.batch.planner.client.http.HttpInvoker;
 import com.liferay.headless.admin.batch.planner.client.pagination.Page;
-import com.liferay.headless.admin.batch.planner.client.resource.v1_0.PlanResource;
-import com.liferay.headless.admin.batch.planner.client.serdes.v1_0.PlanSerDes;
+import com.liferay.headless.admin.batch.planner.client.pagination.Pagination;
+import com.liferay.headless.admin.batch.planner.client.resource.v1_0.LogEntryResource;
+import com.liferay.headless.admin.batch.planner.client.serdes.v1_0.LogEntrySerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -83,7 +83,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BasePlanResourceTestCase {
+public abstract class BaseLogEntryResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -104,11 +104,11 @@ public abstract class BasePlanResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_planResource.setContextCompany(testCompany);
+		_logEntryResource.setContextCompany(testCompany);
 
-		PlanResource.Builder builder = PlanResource.builder();
+		LogEntryResource.Builder builder = LogEntryResource.builder();
 
-		planResource = builder.authentication(
+		logEntryResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -139,13 +139,13 @@ public abstract class BasePlanResourceTestCase {
 			}
 		};
 
-		Plan plan1 = randomPlan();
+		LogEntry logEntry1 = randomLogEntry();
 
-		String json = objectMapper.writeValueAsString(plan1);
+		String json = objectMapper.writeValueAsString(logEntry1);
 
-		Plan plan2 = PlanSerDes.toDTO(json);
+		LogEntry logEntry2 = LogEntrySerDes.toDTO(json);
 
-		Assert.assertTrue(equals(plan1, plan2));
+		Assert.assertTrue(equals(logEntry1, logEntry2));
 	}
 
 	@Test
@@ -165,10 +165,10 @@ public abstract class BasePlanResourceTestCase {
 			}
 		};
 
-		Plan plan = randomPlan();
+		LogEntry logEntry = randomLogEntry();
 
-		String json1 = objectMapper.writeValueAsString(plan);
-		String json2 = PlanSerDes.toJSON(plan);
+		String json1 = objectMapper.writeValueAsString(logEntry);
+		String json2 = LogEntrySerDes.toJSON(logEntry);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -178,212 +178,124 @@ public abstract class BasePlanResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Plan plan = randomPlan();
+		LogEntry logEntry = randomLogEntry();
 
-		plan.setExternalType(regex);
-		plan.setExternalURL(regex);
-		plan.setInternalClassName(regex);
-		plan.setName(regex);
+		logEntry.setDispatchTriggerExternalReferenceCode(regex);
+		logEntry.setExportTaskExternalReferenceCode(regex);
+		logEntry.setImportTaskExternalReferenceCode(regex);
 
-		String json = PlanSerDes.toJSON(plan);
+		String json = LogEntrySerDes.toJSON(logEntry);
 
 		Assert.assertFalse(json.contains(regex));
 
-		plan = PlanSerDes.toDTO(json);
-
-		Assert.assertEquals(regex, plan.getExternalType());
-		Assert.assertEquals(regex, plan.getExternalURL());
-		Assert.assertEquals(regex, plan.getInternalClassName());
-		Assert.assertEquals(regex, plan.getName());
-	}
-
-	@Test
-	public void testGetPlansPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGraphQLGetPlansPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"plans",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 2);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		JSONObject plansJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/plans");
-
-		Assert.assertEquals(0, plansJSONObject.get("totalCount"));
-
-		Plan plan1 = testGraphQLPlan_addPlan();
-		Plan plan2 = testGraphQLPlan_addPlan();
-
-		plansJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/plans");
-
-		Assert.assertEquals(2, plansJSONObject.get("totalCount"));
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(plan1, plan2),
-			Arrays.asList(
-				PlanSerDes.toDTOs(plansJSONObject.getString("items"))));
-	}
-
-	@Test
-	public void testPostPlan() throws Exception {
-		Plan randomPlan = randomPlan();
-
-		Plan postPlan = testPostPlan_addPlan(randomPlan);
-
-		assertEquals(randomPlan, postPlan);
-		assertValid(postPlan);
-	}
-
-	protected Plan testPostPlan_addPlan(Plan plan) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeletePlan() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Plan plan = testDeletePlan_addPlan();
-
-		assertHttpResponseStatusCode(
-			204, planResource.deletePlanHttpResponse(plan.getId()));
-
-		assertHttpResponseStatusCode(
-			404, planResource.getPlanHttpResponse(plan.getId()));
-
-		assertHttpResponseStatusCode(
-			404, planResource.getPlanHttpResponse(plan.getId()));
-	}
-
-	protected Plan testDeletePlan_addPlan() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeletePlan() throws Exception {
-		Plan plan = testGraphQLPlan_addPlan();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePlan",
-						new HashMap<String, Object>() {
-							{
-								put("id", plan.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePlan"));
-
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"plan",
-					new HashMap<String, Object>() {
-						{
-							put("id", plan.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray.length() > 0);
-	}
-
-	@Test
-	public void testGetPlan() throws Exception {
-		Plan postPlan = testGetPlan_addPlan();
-
-		Plan getPlan = planResource.getPlan(postPlan.getId());
-
-		assertEquals(postPlan, getPlan);
-		assertValid(getPlan);
-	}
-
-	protected Plan testGetPlan_addPlan() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPlan() throws Exception {
-		Plan plan = testGraphQLPlan_addPlan();
-
-		Assert.assertTrue(
-			equals(
-				plan,
-				PlanSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"plan",
-								new HashMap<String, Object>() {
-									{
-										put("id", plan.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/plan"))));
-	}
-
-	@Test
-	public void testGraphQLGetPlanNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+		logEntry = LogEntrySerDes.toDTO(json);
 
 		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"plan",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+			regex, logEntry.getDispatchTriggerExternalReferenceCode());
+		Assert.assertEquals(
+			regex, logEntry.getExportTaskExternalReferenceCode());
+		Assert.assertEquals(
+			regex, logEntry.getImportTaskExternalReferenceCode());
 	}
 
 	@Test
-	public void testPatchPlan() throws Exception {
-		Plan postPlan = testPatchPlan_addPlan();
+	public void testGetPlanLogEntriesPage() throws Exception {
+		Page<LogEntry> page = logEntryResource.getPlanLogEntriesPage(
+			testGetPlanLogEntriesPage_getId(), Pagination.of(1, 2));
 
-		Plan randomPatchPlan = randomPatchPlan();
+		Assert.assertEquals(0, page.getTotalCount());
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Plan patchPlan = planResource.patchPlan(
-			postPlan.getId(), randomPatchPlan);
+		Long id = testGetPlanLogEntriesPage_getId();
+		Long irrelevantId = testGetPlanLogEntriesPage_getIrrelevantId();
 
-		Plan expectedPatchPlan = postPlan.clone();
+		if (irrelevantId != null) {
+			LogEntry irrelevantLogEntry = testGetPlanLogEntriesPage_addLogEntry(
+				irrelevantId, randomIrrelevantLogEntry());
 
-		_beanUtilsBean.copyProperties(expectedPatchPlan, randomPatchPlan);
+			page = logEntryResource.getPlanLogEntriesPage(
+				irrelevantId, Pagination.of(1, 2));
 
-		Plan getPlan = planResource.getPlan(patchPlan.getId());
+			Assert.assertEquals(1, page.getTotalCount());
 
-		assertEquals(expectedPatchPlan, getPlan);
-		assertValid(getPlan);
+			assertEquals(
+				Arrays.asList(irrelevantLogEntry),
+				(List<LogEntry>)page.getItems());
+			assertValid(page);
+		}
+
+		LogEntry logEntry1 = testGetPlanLogEntriesPage_addLogEntry(
+			id, randomLogEntry());
+
+		LogEntry logEntry2 = testGetPlanLogEntriesPage_addLogEntry(
+			id, randomLogEntry());
+
+		page = logEntryResource.getPlanLogEntriesPage(id, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(logEntry1, logEntry2),
+			(List<LogEntry>)page.getItems());
+		assertValid(page);
 	}
 
-	protected Plan testPatchPlan_addPlan() throws Exception {
+	@Test
+	public void testGetPlanLogEntriesPageWithPagination() throws Exception {
+		Long id = testGetPlanLogEntriesPage_getId();
+
+		LogEntry logEntry1 = testGetPlanLogEntriesPage_addLogEntry(
+			id, randomLogEntry());
+
+		LogEntry logEntry2 = testGetPlanLogEntriesPage_addLogEntry(
+			id, randomLogEntry());
+
+		LogEntry logEntry3 = testGetPlanLogEntriesPage_addLogEntry(
+			id, randomLogEntry());
+
+		Page<LogEntry> page1 = logEntryResource.getPlanLogEntriesPage(
+			id, Pagination.of(1, 2));
+
+		List<LogEntry> logEntries1 = (List<LogEntry>)page1.getItems();
+
+		Assert.assertEquals(logEntries1.toString(), 2, logEntries1.size());
+
+		Page<LogEntry> page2 = logEntryResource.getPlanLogEntriesPage(
+			id, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<LogEntry> logEntries2 = (List<LogEntry>)page2.getItems();
+
+		Assert.assertEquals(logEntries2.toString(), 1, logEntries2.size());
+
+		Page<LogEntry> page3 = logEntryResource.getPlanLogEntriesPage(
+			id, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(logEntry1, logEntry2, logEntry3),
+			(List<LogEntry>)page3.getItems());
+	}
+
+	protected LogEntry testGetPlanLogEntriesPage_addLogEntry(
+			Long id, LogEntry logEntry)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Plan testGraphQLPlan_addPlan() throws Exception {
+	protected Long testGetPlanLogEntriesPage_getId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetPlanLogEntriesPage_getIrrelevantId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected LogEntry testGraphQLLogEntry_addLogEntry() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -396,78 +308,63 @@ public abstract class BasePlanResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Plan plan1, Plan plan2) {
+	protected void assertEquals(LogEntry logEntry1, LogEntry logEntry2) {
 		Assert.assertTrue(
-			plan1 + " does not equal " + plan2, equals(plan1, plan2));
+			logEntry1 + " does not equal " + logEntry2,
+			equals(logEntry1, logEntry2));
 	}
 
-	protected void assertEquals(List<Plan> plans1, List<Plan> plans2) {
-		Assert.assertEquals(plans1.size(), plans2.size());
+	protected void assertEquals(
+		List<LogEntry> logEntries1, List<LogEntry> logEntries2) {
 
-		for (int i = 0; i < plans1.size(); i++) {
-			Plan plan1 = plans1.get(i);
-			Plan plan2 = plans2.get(i);
+		Assert.assertEquals(logEntries1.size(), logEntries2.size());
 
-			assertEquals(plan1, plan2);
+		for (int i = 0; i < logEntries1.size(); i++) {
+			LogEntry logEntry1 = logEntries1.get(i);
+			LogEntry logEntry2 = logEntries2.get(i);
+
+			assertEquals(logEntry1, logEntry2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Plan> plans1, List<Plan> plans2) {
+		List<LogEntry> logEntries1, List<LogEntry> logEntries2) {
 
-		Assert.assertEquals(plans1.size(), plans2.size());
+		Assert.assertEquals(logEntries1.size(), logEntries2.size());
 
-		for (Plan plan1 : plans1) {
+		for (LogEntry logEntry1 : logEntries1) {
 			boolean contains = false;
 
-			for (Plan plan2 : plans2) {
-				if (equals(plan1, plan2)) {
+			for (LogEntry logEntry2 : logEntries2) {
+				if (equals(logEntry1, logEntry2)) {
 					contains = true;
 
 					break;
 				}
 			}
 
-			Assert.assertTrue(plans2 + " does not contain " + plan1, contains);
+			Assert.assertTrue(
+				logEntries2 + " does not contain " + logEntry1, contains);
 		}
 	}
 
-	protected void assertValid(Plan plan) throws Exception {
+	protected void assertValid(LogEntry logEntry) throws Exception {
 		boolean valid = true;
 
-		if (plan.getId() == null) {
+		if (logEntry.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("active", additionalAssertFieldName)) {
-				if (plan.getActive() == null) {
-					valid = false;
-				}
+			if (Objects.equals(
+					"dispatchTriggerExternalReferenceCode",
+					additionalAssertFieldName)) {
 
-				continue;
-			}
+				if (logEntry.getDispatchTriggerExternalReferenceCode() ==
+						null) {
 
-			if (Objects.equals("export", additionalAssertFieldName)) {
-				if (plan.getExport() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("externalType", additionalAssertFieldName)) {
-				if (plan.getExternalType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("externalURL", additionalAssertFieldName)) {
-				if (plan.getExternalURL() == null) {
 					valid = false;
 				}
 
@@ -475,33 +372,53 @@ public abstract class BasePlanResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"internalClassName", additionalAssertFieldName)) {
+					"exportTaskExternalReferenceCode",
+					additionalAssertFieldName)) {
 
-				if (plan.getInternalClassName() == null) {
+				if (logEntry.getExportTaskExternalReferenceCode() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("mappings", additionalAssertFieldName)) {
-				if (plan.getMappings() == null) {
+			if (Objects.equals(
+					"importTaskExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (logEntry.getImportTaskExternalReferenceCode() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (plan.getName() == null) {
+			if (Objects.equals("planId", additionalAssertFieldName)) {
+				if (logEntry.getPlanId() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("policies", additionalAssertFieldName)) {
-				if (plan.getPolicies() == null) {
+			if (Objects.equals("size", additionalAssertFieldName)) {
+				if (logEntry.getSize() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (logEntry.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("total", additionalAssertFieldName)) {
+				if (logEntry.getTotal() == null) {
 					valid = false;
 				}
 
@@ -516,12 +433,12 @@ public abstract class BasePlanResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Plan> page) {
+	protected void assertValid(Page<LogEntry> page) {
 		boolean valid = false;
 
-		java.util.Collection<Plan> plans = page.getItems();
+		java.util.Collection<LogEntry> logEntries = page.getItems();
 
-		int size = plans.size();
+		int size = logEntries.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -542,7 +459,7 @@ public abstract class BasePlanResourceTestCase {
 
 		for (Field field :
 				getDeclaredFields(
-					com.liferay.headless.admin.batch.planner.dto.v1_0.Plan.
+					com.liferay.headless.admin.batch.planner.dto.v1_0.LogEntry.
 						class)) {
 
 			if (!ArrayUtil.contains(
@@ -590,33 +507,21 @@ public abstract class BasePlanResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Plan plan1, Plan plan2) {
-		if (plan1 == plan2) {
+	protected boolean equals(LogEntry logEntry1, LogEntry logEntry2) {
+		if (logEntry1 == logEntry2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("active", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(plan1.getActive(), plan2.getActive())) {
-					return false;
-				}
+			if (Objects.equals(
+					"dispatchTriggerExternalReferenceCode",
+					additionalAssertFieldName)) {
 
-				continue;
-			}
-
-			if (Objects.equals("export", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(plan1.getExport(), plan2.getExport())) {
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("externalType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						plan1.getExternalType(), plan2.getExternalType())) {
+						logEntry1.getDispatchTriggerExternalReferenceCode(),
+						logEntry2.getDispatchTriggerExternalReferenceCode())) {
 
 					return false;
 				}
@@ -624,9 +529,13 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("externalURL", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"exportTaskExternalReferenceCode",
+					additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						plan1.getExternalURL(), plan2.getExternalURL())) {
+						logEntry1.getExportTaskExternalReferenceCode(),
+						logEntry2.getExportTaskExternalReferenceCode())) {
 
 					return false;
 				}
@@ -635,7 +544,7 @@ public abstract class BasePlanResourceTestCase {
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(plan1.getId(), plan2.getId())) {
+				if (!Objects.deepEquals(logEntry1.getId(), logEntry2.getId())) {
 					return false;
 				}
 
@@ -643,11 +552,12 @@ public abstract class BasePlanResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"internalClassName", additionalAssertFieldName)) {
+					"importTaskExternalReferenceCode",
+					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						plan1.getInternalClassName(),
-						plan2.getInternalClassName())) {
+						logEntry1.getImportTaskExternalReferenceCode(),
+						logEntry2.getImportTaskExternalReferenceCode())) {
 
 					return false;
 				}
@@ -655,9 +565,9 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("mappings", additionalAssertFieldName)) {
+			if (Objects.equals("planId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						plan1.getMappings(), plan2.getMappings())) {
+						logEntry1.getPlanId(), logEntry2.getPlanId())) {
 
 					return false;
 				}
@@ -665,17 +575,29 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(plan1.getName(), plan2.getName())) {
+			if (Objects.equals("size", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						logEntry1.getSize(), logEntry2.getSize())) {
+
 					return false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("policies", additionalAssertFieldName)) {
+			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						plan1.getPolicies(), plan2.getPolicies())) {
+						logEntry1.getStatus(), logEntry2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("total", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						logEntry1.getTotal(), logEntry2.getTotal())) {
 
 					return false;
 				}
@@ -731,13 +653,13 @@ public abstract class BasePlanResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_planResource instanceof EntityModelResource)) {
+		if (!(_logEntryResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_planResource;
+			(EntityModelResource)_logEntryResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -766,7 +688,7 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Plan plan) {
+		EntityField entityField, String operator, LogEntry logEntry) {
 
 		StringBundler sb = new StringBundler();
 
@@ -778,27 +700,20 @@ public abstract class BasePlanResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("active")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("export")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("externalType")) {
+		if (entityFieldName.equals("dispatchTriggerExternalReferenceCode")) {
 			sb.append("'");
-			sb.append(String.valueOf(plan.getExternalType()));
+			sb.append(
+				String.valueOf(
+					logEntry.getDispatchTriggerExternalReferenceCode()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("externalURL")) {
+		if (entityFieldName.equals("exportTaskExternalReferenceCode")) {
 			sb.append("'");
-			sb.append(String.valueOf(plan.getExternalURL()));
+			sb.append(
+				String.valueOf(logEntry.getExportTaskExternalReferenceCode()));
 			sb.append("'");
 
 			return sb.toString();
@@ -809,28 +724,31 @@ public abstract class BasePlanResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("internalClassName")) {
+		if (entityFieldName.equals("importTaskExternalReferenceCode")) {
 			sb.append("'");
-			sb.append(String.valueOf(plan.getInternalClassName()));
+			sb.append(
+				String.valueOf(logEntry.getImportTaskExternalReferenceCode()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("mappings")) {
+		if (entityFieldName.equals("planId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(plan.getName()));
-			sb.append("'");
-
-			return sb.toString();
+		if (entityFieldName.equals("size")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("policies")) {
+		if (entityFieldName.equals("status")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("total")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -876,34 +794,35 @@ public abstract class BasePlanResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected Plan randomPlan() throws Exception {
-		return new Plan() {
+	protected LogEntry randomLogEntry() throws Exception {
+		return new LogEntry() {
 			{
-				active = RandomTestUtil.randomBoolean();
-				export = RandomTestUtil.randomBoolean();
-				externalType = StringUtil.toLowerCase(
+				dispatchTriggerExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				externalURL = StringUtil.toLowerCase(
+				exportTaskExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				internalClassName = StringUtil.toLowerCase(
+				importTaskExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				planId = RandomTestUtil.randomLong();
+				size = RandomTestUtil.randomInt();
+				status = RandomTestUtil.randomInt();
+				total = RandomTestUtil.randomInt();
 			}
 		};
 	}
 
-	protected Plan randomIrrelevantPlan() throws Exception {
-		Plan randomIrrelevantPlan = randomPlan();
+	protected LogEntry randomIrrelevantLogEntry() throws Exception {
+		LogEntry randomIrrelevantLogEntry = randomLogEntry();
 
-		return randomIrrelevantPlan;
+		return randomIrrelevantLogEntry;
 	}
 
-	protected Plan randomPatchPlan() throws Exception {
-		return randomPlan();
+	protected LogEntry randomPatchLogEntry() throws Exception {
+		return randomLogEntry();
 	}
 
-	protected PlanResource planResource;
+	protected LogEntryResource logEntryResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -980,7 +899,7 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BasePlanResourceTestCase.class);
+		BaseLogEntryResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -997,7 +916,8 @@ public abstract class BasePlanResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.headless.admin.batch.planner.resource.v1_0.PlanResource
-		_planResource;
+	private
+		com.liferay.headless.admin.batch.planner.resource.v1_0.LogEntryResource
+			_logEntryResource;
 
 }

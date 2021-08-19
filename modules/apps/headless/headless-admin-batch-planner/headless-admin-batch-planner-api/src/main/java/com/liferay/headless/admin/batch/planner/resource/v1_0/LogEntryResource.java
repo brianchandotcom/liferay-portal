@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.batch.planner.resource.v1_0;
 
-import com.liferay.headless.admin.batch.planner.dto.v1_0.Plan;
+import com.liferay.headless.admin.batch.planner.dto.v1_0.LogEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -42,21 +42,14 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface PlanResource {
+public interface LogEntryResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Plan> getPlansPage(Pagination pagination) throws Exception;
-
-	public Plan postPlan(Plan plan) throws Exception;
-
-	public void deletePlan(Long id) throws Exception;
-
-	public Plan getPlan(Long id) throws Exception;
-
-	public Plan patchPlan(Long id, Plan plan) throws Exception;
+	public Page<LogEntry> getPlanLogEntriesPage(Long id, Pagination pagination)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -92,7 +85,7 @@ public interface PlanResource {
 	@ProviderType
 	public interface Builder {
 
-		public PlanResource build();
+		public LogEntryResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

@@ -1,0 +1,177 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.journal.web.internal.instance.lifecycle;
+
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.web.internal.info.collection.provider.DDMStructureRelatedInfoCollectionProvider;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jürgen Kappler
+ */
+@Component(
+	immediate = true,
+	service = {ModelListener.class, PortalInstanceLifecycleListener.class}
+)
+public class DDMStructureModelListener
+	extends BaseModelListener<DDMStructure>
+	implements PortalInstanceLifecycleListener {
+
+	@Override
+	public void onAfterCreate(DDMStructure ddmStructure)
+		throws ModelListenerException {
+
+		if (ddmStructure.getClassNameId() != _portal.getClassNameId(
+				JournalArticle.class.getName())) {
+
+			return;
+		}
+
+		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
+			_serviceRegistrationsMaps.computeIfAbsent(
+				ddmStructure.getCompanyId(), key -> new HashMap<>());
+
+		ddmStructureServiceRegistrationMap.put(
+			ddmStructure.getStructureId(),
+			_bundleContext.registerService(
+				RelatedInfoItemCollectionProvider.class,
+				new DDMStructureRelatedInfoCollectionProvider(
+					ddmStructure, _journalArticleLocalService),
+				null));
+	}
+
+	@Override
+	public void onAfterRemove(DDMStructure ddmStructure)
+		throws ModelListenerException {
+
+		if (ddmStructure.getClassNameId() != _portal.getClassNameId(
+				JournalArticle.class.getName())) {
+
+			return;
+		}
+
+		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
+			_serviceRegistrationsMaps.get(ddmStructure.getCompanyId());
+
+		if (MapUtil.isNotEmpty(ddmStructureServiceRegistrationMap)) {
+			ServiceRegistration<?> serviceRegistration =
+				ddmStructureServiceRegistrationMap.remove(
+					ddmStructure.getStructureId());
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
+		}
+	}
+
+	@Override
+	public void portalInstanceRegistered(Company company) {
+		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
+			new HashMap<>();
+
+		for (DDMStructure ddmStructure : _getDDMStructures(company)) {
+			ddmStructureServiceRegistrationMap.put(
+				ddmStructure.getStructureId(),
+				_bundleContext.registerService(
+					RelatedInfoItemCollectionProvider.class,
+					new DDMStructureRelatedInfoCollectionProvider(
+						ddmStructure, _journalArticleLocalService),
+					null));
+		}
+
+		if (MapUtil.isNotEmpty(ddmStructureServiceRegistrationMap)) {
+			_serviceRegistrationsMaps.put(
+				company.getCompanyId(), ddmStructureServiceRegistrationMap);
+		}
+	}
+
+	@Override
+	public void portalInstanceUnregistered(Company company) {
+		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
+			_serviceRegistrationsMaps.remove(company.getCompanyId());
+
+		for (Map.Entry<Long, ServiceRegistration<?>> entry :
+				ddmStructureServiceRegistrationMap.entrySet()) {
+
+			ServiceRegistration<?> serviceRegistration = entry.getValue();
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
+		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private List<DDMStructure> _getDDMStructures(Company company) {
+		List<Long> groupIdsList = _groupLocalService.getGroupIds(
+			company.getCompanyId(), true);
+
+		Stream<Long> stream = groupIdsList.stream();
+
+		long[] groupIds = stream.mapToLong(
+			groupId -> groupId
+		).toArray();
+
+		return _ddmStructureLocalService.getStructures(
+			groupIds, _portal.getClassNameId(JournalArticle.class.getName()));
+	}
+
+	private BundleContext _bundleContext;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	private final Map<Long, Map<Long, ServiceRegistration<?>>>
+		_serviceRegistrationsMaps = Collections.synchronizedMap(
+			new LinkedHashMap<>());
+
+}

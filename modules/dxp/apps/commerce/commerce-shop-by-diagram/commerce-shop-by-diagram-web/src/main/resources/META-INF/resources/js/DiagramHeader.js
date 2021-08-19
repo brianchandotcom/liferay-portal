@@ -149,14 +149,6 @@ const DiagramHeader = ({
 					</ClayDropDown>
 				</div>
 			)}
-
-			<ClayButton
-				aria-label={Liferay.Language.get('auto-mapping')}
-				className="auto-mapping my-auto pull-right"
-				displayType="secondary"
-			>
-				{Liferay.Language.get('auto-mapping')}
-			</ClayButton>
 		</div>
 	);
 };

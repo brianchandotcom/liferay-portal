@@ -84,12 +84,16 @@ const Grid = ({
 	collectionLength,
 	customCollectionSelectorURL,
 }) => {
-	const maxNumberOfItems = Math.min(
-		collectionLength,
-		collectionConfig.paginationType
-			? collectionConfig.numberOfItemsPerPage
-			: collectionConfig.numberOfItems
-	);
+	const maxNumberOfItems =
+		Math.min(
+			collectionLength,
+			collectionConfig.paginationType
+				? Math.min(
+						collectionConfig.numberOfItems,
+						collectionConfig.numberOfItemsPerPage
+				  )
+				: collectionConfig.numberOfItems
+		) || 1;
 	const numberOfRows = Math.ceil(
 		maxNumberOfItems / collectionConfig.numberOfColumns
 	);
@@ -172,15 +176,18 @@ const Collection = React.forwardRef(
 	({children, item, withinTopper = false}, ref) => {
 		const child = React.Children.toArray(children)[0];
 		const collectionConfig = item.config;
-		const emptyCollection = useMemo(() => ({
-			fakeCollection: true,
-			items: Array.from(
-				Array(collectionConfig.numberOfItems || 1),
-				() => ({})
-			),
-			length: collectionConfig.numberOfItems || 1,
-			totalNumberOfItems: collectionConfig.numberOfItems || 1,
-		}), [collectionConfig.numberOfItems]);
+		const emptyCollection = useMemo(
+			() => ({
+				fakeCollection: true,
+				items: Array.from(
+					Array(collectionConfig.numberOfItems || 1),
+					() => ({})
+				),
+				length: collectionConfig.numberOfItems || 1,
+				totalNumberOfItems: collectionConfig.numberOfItems || 1,
+			}),
+			[collectionConfig.numberOfItems]
+		);
 
 		const dispatch = useDispatch();
 		const languageId = useSelector(selectLanguageId);

@@ -52,6 +52,10 @@ definition {
 			}
 		}
 
+		WaitForVisible(locator1 = "ACSettings#LOADING_ANIMATION");
+
+		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
+
 		WaitForElementNotPresent(
 			key_text = "Done",
 			locator1 = "Button#ANY_DISABLED");

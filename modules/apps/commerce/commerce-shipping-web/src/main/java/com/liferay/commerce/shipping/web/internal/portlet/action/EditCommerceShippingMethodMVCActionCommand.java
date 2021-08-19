@@ -127,7 +127,6 @@ public class EditCommerceShippingMethodMVCActionCommand
 
 			commerceShippingMethod =
 				_commerceShippingMethodService.addCommerceShippingMethod(
-					_portal.getUserId(actionRequest),
 					commerceChannel.getGroupId(), nameMap, descriptionMap,
 					imageFile, commerceShippingMethodEngineKey, priority,
 					active);

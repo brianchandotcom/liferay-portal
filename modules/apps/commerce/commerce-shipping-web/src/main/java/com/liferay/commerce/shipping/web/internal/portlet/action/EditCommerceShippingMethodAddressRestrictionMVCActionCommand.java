@@ -130,7 +130,6 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 				}
 
 				_commerceShippingMethodService.addCommerceAddressRestriction(
-					_portal.getUserId(actionRequest),
 					commerceChannel.getGroupId(),
 					commercePaymentMethodGroupRelId, country.getCountryId());
 			}

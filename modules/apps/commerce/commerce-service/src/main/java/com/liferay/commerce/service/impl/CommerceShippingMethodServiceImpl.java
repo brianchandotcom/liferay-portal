@@ -42,14 +42,13 @@ public class CommerceShippingMethodServiceImpl
 
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long userId, long groupId, long commerceShippingMethodId,
-			long countryId)
+			long groupId, long commerceShippingMethodId, long countryId)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.addCommerceAddressRestriction(
-			userId, groupId, commerceShippingMethodId, countryId);
+			getUserId(), groupId, commerceShippingMethodId, countryId);
 	}
 
 	/**
@@ -63,13 +62,13 @@ public class CommerceShippingMethodServiceImpl
 		throws PortalException {
 
 		return commerceShippingMethodService.addCommerceAddressRestriction(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			commerceShippingMethodId, countryId);
+			serviceContext.getScopeGroupId(), commerceShippingMethodId,
+			countryId);
 	}
 
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
-			long userId, long groupId, Map<Locale, String> nameMap,
+			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, File imageFile,
 			String engineKey, double priority, boolean active)
 		throws PortalException {
@@ -77,7 +76,7 @@ public class CommerceShippingMethodServiceImpl
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.addCommerceShippingMethod(
-			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+			getUserId(), groupId, nameMap, descriptionMap, imageFile, engineKey,
 			priority, active);
 	}
 

@@ -61,7 +61,7 @@ const DEFAULT_LIST_STYLE = {
 
 const ERROR_MESSAGES = {
 	maximumItems: Liferay.Language.get(
-		'the-maximum-number-of-items-in-this-collection-is-x'
+		'the-current-number-of-items-in-this-collection-is-x'
 	),
 	maximumItemsPerPage: Liferay.Language.get(
 		'you-can-only-display-a-maximum-of-x-items-per-page'

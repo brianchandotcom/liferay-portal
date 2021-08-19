@@ -187,7 +187,7 @@ describe('CollectionGeneralPanel', () => {
 
 			const label = await waitForElement(() =>
 				getByText(
-					'the-maximum-number-of-items-in-this-collection-is-x-32'
+					'the-current-number-of-items-in-this-collection-is-x-32'
 				)
 			);
 

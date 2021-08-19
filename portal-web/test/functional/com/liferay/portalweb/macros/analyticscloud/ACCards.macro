@@ -32,6 +32,15 @@ definition {
 			value1 = "${backgroundColor}");
 	}
 
+	macro viewTableEntryInfo {
+		AssertVisible(
+			column = "${column}",
+			entryInfo = "${entryInfo}",
+			entryName = "${entryName}",
+			key_cardTitle = "${cardTitle}",
+			locator1 = "ACCards#TABLE_ENTRY_INFO");
+	}
+
 	macro viewTopSitesByIndexes {
 		AssertElementPresent(
 			key_entryName = "${key_entry}",

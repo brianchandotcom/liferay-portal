@@ -68,6 +68,32 @@ definition {
 			value1 = "${pageTitle}");
 	}
 
+	macro assertRequestCommonPropertiesValue {
+		var actualChannelId = ACUtils.getRequestCommonPropertyValue(property = "channelId");
+
+		TestUtils.assertEquals(
+			actual = "${actualChannelId}",
+			expected = "${expectedChannelId}");
+
+		var actualDataSourceId = ACUtils.getRequestCommonPropertyValue(property = "dataSourceId");
+
+		TestUtils.assertEquals(
+			actual = "${actualDataSourceId}",
+			expected = "${expectedDataSourceId}");
+
+		var id = ACUtils.getRequestCommonPropertyValue(property = "id");
+
+		TestUtils.assertNotEquals(
+			actual = "${id}",
+			expected = "");
+
+		var userId = ACUtils.getRequestCommonPropertyValue(property = "userId");
+
+		TestUtils.assertNotEquals(
+			actual = "${userId}",
+			expected = "");
+	}
+
 	macro assertXAxisTimedGraph {
 		var key_parentName = "${parentName}";
 		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");

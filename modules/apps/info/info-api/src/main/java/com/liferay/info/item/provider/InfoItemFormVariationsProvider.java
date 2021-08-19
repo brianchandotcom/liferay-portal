@@ -17,6 +17,7 @@ package com.liferay.info.item.provider;
 import com.liferay.info.item.InfoItemFormVariation;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -45,5 +46,11 @@ public interface InfoItemFormVariationsProvider<T> {
 
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId);
+
+	public default Collection<InfoItemFormVariation> getInfoItemFormVariations(
+		long[] groupIds) {
+
+		return Collections.emptyList();
+	}
 
 }

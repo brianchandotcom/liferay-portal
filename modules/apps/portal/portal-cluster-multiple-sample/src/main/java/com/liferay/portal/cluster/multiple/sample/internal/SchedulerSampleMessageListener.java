@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = SchedulerTestMessageListener.class)
-public class SchedulerTestMessageListener extends BaseMessageListener {
+@Component(immediate = true, service = SchedulerSampleMessageListener.class)
+public class SchedulerSampleMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate() {
@@ -87,7 +87,7 @@ public class SchedulerTestMessageListener extends BaseMessageListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SchedulerTestMessageListener.class);
+		SchedulerSampleMessageListener.class);
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
 	private TriggerFactory _triggerFactory;

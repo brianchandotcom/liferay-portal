@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cluster.multiple.sample.internal;
 
-import com.liferay.portal.cluster.multiple.sample.configuration.ClusterTestConfiguration;
+import com.liferay.portal.cluster.multiple.sample.configuration.ClusterSampleConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -33,53 +33,53 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  */
 @Component(
-	configurationPid = "com.liferay.portal.cluster.multiple.sample.configuration.ClusterTestConfiguration",
+	configurationPid = "com.liferay.portal.cluster.multiple.sample.configuration.ClusterSampleConfiguration",
 	immediate = true, service = {}
 )
-public class ClusterTestDispatcher {
+public class ClusterSampleDispatcher {
 
 	@Activate
 	@Modified
 	protected void activate(ComponentContext componentContext) {
-		ClusterTestConfiguration clusterTestConfiguration =
-			(ClusterTestConfiguration)ConfigurableUtil.createConfigurable(
-				ClusterTestConfiguration.class,
+		ClusterSampleConfiguration clusterSampleConfiguration =
+			(ClusterSampleConfiguration)ConfigurableUtil.createConfigurable(
+				ClusterSampleConfiguration.class,
 				componentContext.getProperties());
 
-		String clusterTestCommand =
-			clusterTestConfiguration.clusterTestCommand();
+		String clusterSampleCommand =
+			clusterSampleConfiguration.clusterSampleCommand();
 
-		if (Validator.isNull(clusterTestCommand)) {
+		if (Validator.isNull(clusterSampleCommand)) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Cluster Test Command is null");
+				_log.info("Cluster Sample Command is null");
 			}
 
 			return;
 		}
 
 		try {
-			if (clusterTestCommand.equals("invoke-method-module")) {
+			if (clusterSampleCommand.equals("invoke-method-module")) {
 				ClusterMethodInvoker.invokeMethodModule(
 					_clusterExecutor, getTargetClusterNode());
 			}
-			else if (clusterTestCommand.equals(
+			else if (clusterSampleCommand.equals(
 						"invoke-method-module-on-master")) {
 
 				ClusterMethodInvoker.invokeMethodModuleOnMaster(
 					_clusterMasterExecutor);
 			}
-			else if (clusterTestCommand.equals("invoke-method-portal")) {
+			else if (clusterSampleCommand.equals("invoke-method-portal")) {
 				ClusterMethodInvoker.invokeMethodPortal(
 					_clusterExecutor, getTargetClusterNode());
 			}
-			else if (clusterTestCommand.equals(
+			else if (clusterSampleCommand.equals(
 						"invoke-method-portal-on-master")) {
 
 				ClusterMethodInvoker.invokeMethodPortalOnMaster(
 					_clusterMasterExecutor);
 			}
 			else {
-				_log.error("Unable to find command " + clusterTestCommand);
+				_log.error("Unable to find command " + clusterSampleCommand);
 			}
 		}
 		catch (Exception exception) {
@@ -112,7 +112,7 @@ public class ClusterTestDispatcher {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClusterTestDispatcher.class);
+		ClusterSampleDispatcher.class);
 
 	private ClusterExecutor _clusterExecutor;
 	private ClusterMasterExecutor _clusterMasterExecutor;

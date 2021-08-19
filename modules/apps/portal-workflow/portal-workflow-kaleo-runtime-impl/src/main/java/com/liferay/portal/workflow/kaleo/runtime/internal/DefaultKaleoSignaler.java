@@ -36,7 +36,6 @@ import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -148,7 +147,7 @@ public class DefaultKaleoSignaler
 				noticeableFuture.addFutureListener(
 					future -> countDownLatch.countDown());
 
-				countDownLatch.await(5, TimeUnit.SECONDS);
+				countDownLatch.await();
 			}
 			catch (InterruptedException interruptedException) {
 				_log.error(interruptedException, interruptedException);

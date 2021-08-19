@@ -96,11 +96,11 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			</c:if>
 
 			<div class="form-group-item">
-				<aui:input name="policyName_0" placeholder="name policy" value="" />
+				<aui:input name="policyName" placeholder="name policy" value="" />
 			</div>
 
 			<div class="form-group-item">
-				<aui:input name="policyValue_0" placeholder="policy value" value="" />
+				<aui:input name="policyValue" placeholder="policy value" value="" />
 			</div>
 		</div>
 

@@ -17,12 +17,10 @@ package com.liferay.batch.planner.web.internal.portlet.action;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.persistence.BatchPlannerMappingUtil;
-import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -70,13 +68,15 @@ public class AddBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				export, externalType, externalURL, internalClassName, name);
 
-		List<BatchPlannerPolicy> batchPlannerPolicies =
-			_getBatchPlannerPolicies(actionRequest);
+		if (Validator.isNotNull(
+				ParamUtil.getString(actionRequest, "policyName")) &&
+			Validator.isNotNull(
+				ParamUtil.getString(actionRequest, "policyValue"))) {
 
-		for (BatchPlannerPolicy batchPlannerPolicy : batchPlannerPolicies) {
 			_batchPlannerPolicyService.addBatchPlannerPolicy(
 				batchPlannerPlan.getBatchPlannerPlanId(),
-				batchPlannerPolicy.getName(), batchPlannerPolicy.getValue());
+				ParamUtil.getString(actionRequest, "policyName"),
+				ParamUtil.getString(actionRequest, "policyValue"));
 		}
 
 		List<BatchPlannerMapping> batchPlannerMappings =
@@ -132,47 +132,6 @@ public class AddBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return batchPlannerMappings;
-	}
-
-	private List<BatchPlannerPolicy> _getBatchPlannerPolicies(
-		ActionRequest actionRequest) {
-
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
-
-		List<BatchPlannerPolicy> batchPlannerPolicies = new ArrayList<>();
-
-		while (enumeration.hasMoreElements()) {
-			String policyNameParameter = enumeration.nextElement();
-
-			if (!policyNameParameter.startsWith("policyName_") ||
-				Validator.isNull(
-					ParamUtil.getString(actionRequest, policyNameParameter))) {
-
-				continue;
-			}
-
-			String suffix = StringUtil.extractLast(
-				policyNameParameter, StringPool.UNDERLINE);
-
-			if (Validator.isNull(
-					ParamUtil.getString(
-						actionRequest, "policyValue_" + suffix))) {
-
-				continue;
-			}
-
-			BatchPlannerPolicy batchPlannerPolicy =
-				BatchPlannerPolicyUtil.create(0);
-
-			batchPlannerPolicy.setName(
-				ParamUtil.getString(actionRequest, policyNameParameter));
-			batchPlannerPolicy.setValue(
-				ParamUtil.getString(actionRequest, "policyValue_" + suffix));
-
-			batchPlannerPolicies.add(batchPlannerPolicy);
-		}
-
-		return batchPlannerPolicies;
 	}
 
 	@Reference

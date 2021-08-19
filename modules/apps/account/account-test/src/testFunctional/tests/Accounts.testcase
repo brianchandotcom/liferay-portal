@@ -361,9 +361,9 @@ definition {
 		Accounts.viewAssignee(assigneeName = "userfn");
 	}
 
-	@description = "This test adds an organization as an assignee of a business account."
+	@description = "This test adds an organization as an assignee of a business account with domain."
 	@priority = "4"
-	test CanAssignOrganizationToAccount {
+	test CanAssignOrganizationToAccountWithDomain {
 		JSONOrganization.addOrganization(
 			organizationName = "Organization for Account",
 			organizationSite = "true");

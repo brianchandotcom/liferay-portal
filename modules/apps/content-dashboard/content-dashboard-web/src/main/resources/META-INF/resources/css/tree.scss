@@ -1,10 +1,36 @@
 @import 'atlas-variables';
 
-.select-type-and-subtype,
-.select-file-extension {
+.select-file-extension,
+.select-type-and-subtype {
+	&-clear {
+		cursor: pointer;
+	}
+
+	&-count-feedback {
+		align-items: center;
+		background: $primary-l2;
+		display: flex;
+		min-height: 40px;
+		padding: 0 24px;
+
+		p {
+			font-size: 12px;
+		}
+	}
+
+	&-filter {
+		.container-fluid {
+			height: 40px;
+		}
+	}
+
 	&-loader {
 		top: 50%;
 		transform: translateY(-50%);
+	}
+
+	&-tree {
+		margin-top: 24px;
 	}
 }
 

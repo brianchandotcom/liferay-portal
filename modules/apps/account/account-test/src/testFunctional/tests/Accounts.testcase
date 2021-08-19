@@ -73,6 +73,12 @@ definition {
 
 		LexiconEntry.viewEntryName(rowEntry = "Account Specific Role");
 
+		AssertTextEquals(
+			key_columnName = "lfr-type",
+			key_tableEntry = "Account Specific Role",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "Owned");
+
 		Accounts.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Account without Role");
@@ -1772,6 +1778,12 @@ definition {
 
 		LexiconEntry.viewEntryName(rowEntry = "Shared Account Role");
 
+		AssertTextEquals(
+			key_columnName = "lfr-type",
+			key_tableEntry = "Shared Account Role",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "Shared");
+
 		Accounts.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Account 2");
@@ -1779,6 +1791,12 @@ definition {
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
 		LexiconEntry.viewEntryName(rowEntry = "Shared Account Role");
+
+		AssertTextEquals(
+			key_columnName = "lfr-type",
+			key_tableEntry = "Shared Account Role",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "Shared");
 	}
 
 	@priority = "5"

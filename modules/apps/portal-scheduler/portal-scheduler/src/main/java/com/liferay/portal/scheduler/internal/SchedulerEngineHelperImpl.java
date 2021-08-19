@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -782,7 +783,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				")",
 			new SchedulerEventMessageListenerServiceTrackerCustomizer());
 
-		start();
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				start();
+
+				return null;
+			});
 	}
 
 	protected void addWeeklyDayPos(

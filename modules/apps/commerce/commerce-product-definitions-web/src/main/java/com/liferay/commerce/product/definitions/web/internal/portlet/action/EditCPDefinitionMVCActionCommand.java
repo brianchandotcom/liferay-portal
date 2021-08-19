@@ -356,16 +356,16 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product definition
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
-				null, commerceCatalogGroupId, serviceContext.getUserId(),
-				nameMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-				metaTitleMap, metaDescriptionMap, metaKeywordsMap,
-				productTypeName, true, true, false, false, 0D, 0D, 0D, 0D, 0D,
-				0L, false, false, null, published, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, CPInstanceConstants.DEFAULT_SKU, false, 1, null,
-				null, 0L, serviceContext);
+				null, commerceCatalogGroupId, nameMap, shortDescriptionMap,
+				descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
+				metaKeywordsMap, productTypeName, true, true, false, false, 0D,
+				0D, 0D, 0D, 0D, 0L, false, false, null, published,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire,
+				CPInstanceConstants.DEFAULT_SKU, false, 1, null, null, 0L,
+				serviceContext);
 		}
 		else {
 
@@ -426,8 +426,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		if (cpDefinitionInventoryId <= 0) {
 			_cpDefinitionInventoryService.addCPDefinitionInventory(
-				serviceContext.getUserId(), cpDefinitionId,
-				cpDefinitionInventoryEngine, lowStockActivity,
+				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
 				displayAvailability, displayStockQuantity, minStockQuantity,
 				backOrders, minOrderQuantity, maxOrderQuantity,
 				allowedOrderQuantities, multipleOrderQuantity);

@@ -39,7 +39,7 @@ public class ClusterMethodInvoker {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				ClusterTestClass.class, "getPortalLocalPort", new Class<?>[0]);
+				ClusterSampleClass.class, "getPortalLocalPort", new Class<?>[0]);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, new Object[0]);
@@ -74,7 +74,7 @@ public class ClusterMethodInvoker {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				ClusterTestClass.class, "getPortalLocalPort", new Class<?>[0]);
+				ClusterSampleClass.class, "getPortalLocalPort", new Class<?>[0]);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, new Object[0]);

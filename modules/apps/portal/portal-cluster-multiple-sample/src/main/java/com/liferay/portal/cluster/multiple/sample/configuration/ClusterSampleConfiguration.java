@@ -23,11 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.cluster.multiple.sample.configuration.ClusterTestConfiguration"
+	id = "com.liferay.portal.cluster.multiple.sample.configuration.ClusterSampleConfiguration"
 )
-public abstract interface ClusterTestConfiguration {
+public abstract interface ClusterSampleConfiguration {
 
 	@Meta.AD(deflt = "", required = false)
-	public String clusterTestCommand();
+	public String clusterSampleCommand();
 
 }

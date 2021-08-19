@@ -224,7 +224,7 @@ definition {
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Scheduler job com.liferay.portal.cluster.multiple.sample.internal.SchedulerTestMessageListener.com.liferay.portal.cluster.multiple.sample.internal.SchedulerTestMessageListener already exists",
+			expectedText = "Scheduler job com.liferay.portal.cluster.multiple.sample.internal.SchedulerSampleMessageListener.com.liferay.portal.cluster.multiple.sample.internal.SchedulerSampleMessageListener already exists",
 			nodePort = "9080");
 
 		Clustering.viewTextPresentOnSpecificNode(

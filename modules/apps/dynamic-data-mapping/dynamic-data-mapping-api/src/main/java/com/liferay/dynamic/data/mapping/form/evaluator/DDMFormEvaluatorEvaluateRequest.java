@@ -57,6 +57,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _locale;
 	}
 
+	public String getObjectFields() {
+		return _objectFields;
+	}
+
 	public String getTimeZoneId() {
 		return _timeZoneId;
 	}
@@ -124,6 +128,12 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return this;
 		}
 
+		public Builder withObjectFields(String objectFields) {
+			_ddmFormEvaluatorEvaluateRequest._objectFields = objectFields;
+
+			return this;
+		}
+
 		public Builder withTimeZoneId(String timeZoneId) {
 			_ddmFormEvaluatorEvaluateRequest._timeZoneId = timeZoneId;
 
@@ -168,6 +178,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 	private String _googlePlacesAPIKey;
 	private long _groupId;
 	private Locale _locale;
+	private String _objectFields;
 	private String _timeZoneId;
 	private long _userId;
 	private boolean _viewMode;

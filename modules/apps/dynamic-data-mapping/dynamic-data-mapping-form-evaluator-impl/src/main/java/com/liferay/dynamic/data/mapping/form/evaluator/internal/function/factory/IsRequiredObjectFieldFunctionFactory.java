@@ -27,7 +27,8 @@ import org.osgi.service.component.annotations.Component;
 	property = "name=" + IsRequiredObjectFieldFunction.NAME,
 	service = DDMExpressionFunctionFactory.class
 )
-public class IsRequiredObjectFieldFunctionFactory implements DDMExpressionFunctionFactory {
+public class IsRequiredObjectFieldFunctionFactory
+	implements DDMExpressionFunctionFactory {
 
 	@Override
 	public DDMExpressionFunction create() {

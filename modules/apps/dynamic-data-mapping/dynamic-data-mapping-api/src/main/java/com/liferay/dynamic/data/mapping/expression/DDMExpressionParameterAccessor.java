@@ -32,6 +32,8 @@ public interface DDMExpressionParameterAccessor {
 
 	public Locale getLocale();
 
+	public String getObjectFields();
+
 	public String getTimeZoneId();
 
 	public long getUserId();

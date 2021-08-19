@@ -37,8 +37,7 @@ public class IsRequiredObjectFieldFunction
 		GetFieldPropertyResponse getFieldPropertyResponse =
 			_ddmExpressionFieldAccessor.getFieldProperty(builder.build());
 
-
-		return (Boolean) getFieldPropertyResponse.getValue();
+		return (Boolean)getFieldPropertyResponse.getValue();
 	}
 
 	@Override

@@ -127,12 +127,83 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8347 | Test Summary: Assert Sites Acquisition card Referrers highest session"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesAcquisitionCardReferrersHighestSession {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8347 AssertSitesAcquisitionCardReferrersHighestSession
+		task ("Get the portal URL") {
+			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+		}
 
+		task ("Sign out then sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Navigate to the new site via Applications Menu") {
+			ApplicationsMenu.gotoSite(site = "Site Name");
+		}
+
+		task ("View the site page") {
+			Page.viewCurrentPage(pageName = "AC Page");
+		}
+
+		task ("Wait for page loading") {
+			WaitForPageLoad();
+		}
+
+		task ("Close session") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview in Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("Select the Last 24 hours in Acquisitions report") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Acquisitions");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to Referrers tab in Acquisitions report") {
+			ACNavigation.switchTabInCard(tabName = "Referrers");
+		}
+
+		task ("View the details of session entry in Referrers tab") {
+			ACCards.viewMetricBarStyle(
+				backgroundColor = "rgba(80, 210, 160, 1)",
+				cardTitle = "Acquisitions",
+				entryName = "${portalURL}",
+				style = "width: 100%;");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "cell-expand",
+				entryInfo = "1",
+				entryName = "${portalURL}");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "column-text-end",
+				entryInfo = "100.00%",
+				entryName = "${portalURL}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8348 | Test Summary: Assert Sites Acquisition card Source|Medium highest session"

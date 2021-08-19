@@ -336,7 +336,7 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"openGraphDescription",
 			_selLayout.getTypeSettingsProperty(
-				"mapped-openGraphDescription", "description")
+				"mapped-openGraphDescription", "${description}")
 		).put(
 			"openGraphImage",
 			_selLayout.getTypeSettingsProperty("mapped-openGraphImage", null)
@@ -345,7 +345,8 @@ public class LayoutsSEODisplayContext {
 			_selLayout.getTypeSettingsProperty("mapped-openGraphImageAlt", null)
 		).put(
 			"openGraphTitle",
-			_selLayout.getTypeSettingsProperty("mapped-openGraphTitle", "title")
+			_selLayout.getTypeSettingsProperty(
+				"mapped-openGraphTitle", "${title}")
 		).build();
 	}
 
@@ -422,9 +423,10 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"description",
 			_selLayout.getTypeSettingsProperty(
-				"mapped-description", "description")
+				"mapped-description", "${description}")
 		).put(
-			"title", _selLayout.getTypeSettingsProperty("mapped-title", "title")
+			"title",
+			_selLayout.getTypeSettingsProperty("mapped-title", "${title}")
 		).build();
 	}
 

@@ -65,6 +65,7 @@ MappingFields.propTypes = {
 			label: PropTypes.string,
 			name: PropTypes.string,
 			selectedFieldKey: PropTypes.string,
+			value: PropTypes.string,
 		})
 	).isRequired,
 };

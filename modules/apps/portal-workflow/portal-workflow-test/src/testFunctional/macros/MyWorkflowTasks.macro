@@ -8,6 +8,7 @@ definition {
 		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
 	}
 
+<<<<<<< HEAD
 	macro updateDueDateAtMyWorkflowTastks {
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = "Data Definition Name",
@@ -58,4 +59,6 @@ definition {
 			key_title = "${title}",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASK_ITEM_POSITION");
 	}
+=======
+>>>>>>> 785d396 (LRQA-68834 SF)
 }

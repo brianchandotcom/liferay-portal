@@ -959,9 +959,8 @@ definition {
 		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
 
 		AssertElementPresent(
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR",
-			key_resultBarMessage = "1 Results for Blogs Entry");
-
+			key_resultBarMessage = "1 Results for Blogs Entry",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
 	@description = "Verify that the user can search for Task on Assigned to My Roles page"

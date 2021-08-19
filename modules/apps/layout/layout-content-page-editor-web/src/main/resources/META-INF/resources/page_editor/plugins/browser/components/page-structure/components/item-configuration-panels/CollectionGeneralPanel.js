@@ -94,9 +94,11 @@ export const CollectionGeneralPanel = ({item}) => {
 		numberOfItems: item.config.numberOfItems,
 		numberOfItemsPerPage: item.config.numberOfItemsPerPage,
 	});
-	const [numberOfItemsError, setNumberOfItemsError] = useState(null);
+	const [numberOfItemsError, setNumberOfItemsError] = useState(
+		item.config.numberOfItems < 1 ? ERROR_MESSAGES.noItems : null
+	);
 	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
-		null
+		item.config.numberOfItemsPerPage < 1 ? ERROR_MESSAGES.noItems : null
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
@@ -142,7 +144,7 @@ export const CollectionGeneralPanel = ({item}) => {
 			);
 
 			handleConfigurationChanged({
-				numberOfItems: Number(event.target.value) || 1,
+				numberOfItems: Number(event.target.value),
 			});
 		}
 	};
@@ -172,7 +174,7 @@ export const CollectionGeneralPanel = ({item}) => {
 			}
 
 			handleConfigurationChanged({
-				numberOfItemsPerPage: Number(event.target.value) || 1,
+				numberOfItemsPerPage: Number(event.target.value),
 			});
 		}
 	};

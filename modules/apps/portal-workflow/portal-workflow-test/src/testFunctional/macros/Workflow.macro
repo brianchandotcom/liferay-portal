@@ -816,18 +816,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro searchMyWorkflowTasks {
-		Type(
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
-			value1 = "${searchTerm}");
-
-		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
-
-
-
-		
-	}
-
 	macro searchFieldPresent {
 		Type(
 			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
@@ -836,6 +824,14 @@ definition {
 		Click(locator1 = "WorkflowConfiguration#PROCESS_BUILDER_SEARCH_BAR_BUTTON");
 
 		Pause(locator1 = "1000");
+	}
+
+	macro searchMyWorkflowTasks {
+		Type(
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
+			value1 = "${searchTerm}");
+
+		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
 	}
 
 	macro tearDownPortalWorkflow {

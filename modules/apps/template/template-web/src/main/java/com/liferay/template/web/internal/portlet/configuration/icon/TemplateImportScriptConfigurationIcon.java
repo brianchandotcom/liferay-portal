@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
-		"path=/edit_ddm_template.jsp"
+		"path=/template/edit_ddm_template"
 	},
 	service = PortletConfigurationIcon.class
 )

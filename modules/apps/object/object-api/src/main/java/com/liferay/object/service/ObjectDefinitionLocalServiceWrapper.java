@@ -460,6 +460,18 @@ public class ObjectDefinitionLocalServiceWrapper
 			objectDefinition);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			updateCustomObjectDefinition(
+				Long objectDefinitionId,
+				java.util.Map<java.util.Locale, String> labelMap, String name,
+				java.util.Map<java.util.Locale, String> pluralLabelMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.updateCustomObjectDefinition(
+			objectDefinitionId, labelMap, name, pluralLabelMap);
+	}
+
 	/**
 	 * Updates the object definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

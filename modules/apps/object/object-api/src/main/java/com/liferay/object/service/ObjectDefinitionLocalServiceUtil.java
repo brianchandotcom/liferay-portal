@@ -409,6 +409,15 @@ public class ObjectDefinitionLocalServiceUtil {
 		getService().undeployObjectDefinition(objectDefinition);
 	}
 
+	public static ObjectDefinition updateCustomObjectDefinition(
+			Long objectDefinitionId, Map<java.util.Locale, String> labelMap,
+			String name, Map<java.util.Locale, String> pluralLabelMap)
+		throws PortalException {
+
+		return getService().updateCustomObjectDefinition(
+			objectDefinitionId, labelMap, name, pluralLabelMap);
+	}
+
 	/**
 	 * Updates the object definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

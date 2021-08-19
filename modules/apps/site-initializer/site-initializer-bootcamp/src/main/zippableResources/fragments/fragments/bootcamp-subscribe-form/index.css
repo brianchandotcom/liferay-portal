@@ -1,0 +1,7 @@
+.newsletter-form {
+  align-content: center;
+  display: flex;
+}
+.newsletter-form .form-control {
+  margin-right: var(--spacer);
+}

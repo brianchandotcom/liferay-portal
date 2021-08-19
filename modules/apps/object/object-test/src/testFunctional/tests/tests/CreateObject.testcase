@@ -18,7 +18,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			ObjectAdmin.deleteAllCustomObjects();
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
 		}
 	}
 

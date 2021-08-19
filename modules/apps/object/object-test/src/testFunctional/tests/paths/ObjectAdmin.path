@@ -16,21 +16,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SELECT_CUSTOM_OBJECT</td>
-		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]/../..//div[(@class='dnd-td item-actions')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>EDIT_CUSTOM_OBJECT</td>
-		<td>//a[(@class='dropdown-item')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>PUBLISH_CUSTOM_OBJECT</td>
-		<td>//button[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_publish']</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>SAVE_CUSTOM_OBJECT</td>
 		<td>//button[contains(text(),'Save')]</td>
 		<td></td>

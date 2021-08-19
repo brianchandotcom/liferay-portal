@@ -33,12 +33,16 @@ definition {
 	@priority = "5"
 	test ObjectDisplayedToCollectionProdiver {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "VisualizeObjectCollectionDisplay#ObjectDisplayedToCollectionProdiver";
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.createCustomObject(name = "CustomObject");
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		ObjectAdmin.publishCustomObject(name = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
 

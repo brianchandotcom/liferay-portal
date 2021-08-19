@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.account.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateAccountEntryExternalReferenceCodeException extends PortalException {
+public class DuplicateAccountEntryExternalReferenceCodeException
+	extends PortalException {
 
 	public DuplicateAccountEntryExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateAccountEntryExternalReferenceCodeException extends PortalE
 		super(msg);
 	}
 
-	public DuplicateAccountEntryExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateAccountEntryExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateAccountEntryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateAccountEntryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

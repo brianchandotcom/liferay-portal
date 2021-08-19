@@ -63,10 +63,6 @@ definition {
 		}
 	}
 
-	@description = "Given the Page Audit panel
-	When the API key is set but it is not valid
-	Then the Page Speed API will show a 'Show details' link, that will display the info details of the error, provided by the API."
-
 	@priority = "3"
 	test CheckErrorDetailsDisplayedInvalidApiKey {
 		property portal.acceptance = "true";
@@ -101,36 +97,6 @@ definition {
 		}
 	}
 
-	@description = "Given the Page Audit panel in a private page
-	Then the reload button won't be visible."
-
-	@priority = "3"
-	test CheckNotVisibleReloadbButtonInPrivatePage {
-		task ("Create a Private Page") {
-			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
-				layoutName = "Private Page Name");
-		}
-
-		task ("Go to Private Page") {
-			Navigator.gotoPrivateSitePage(
-				pageName = "Private Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Open Page Audit tab and Assert reload button id not present") {
-			PageAudit.openPanelBeforeConfiguration();
-
-			IsElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
-
-			IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
-		}
-	}
-
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there is more than the 60% of the texts on the page with insufficient font sizes
-	Then the users will see the matching failing elements, with the size of the illegible font and the percentage of text it covers"
-
 	@priority = "4"
 	@uitest
 	test CheckIllegibleFontSizes {
@@ -163,10 +129,6 @@ definition {
 				value1 = "Illegible Font Sizes");
 		}
 	}
-
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are images on the page with a displayed ratio different from the actual one
-	Then the users will see the matching failing elements, with its source link and the occurrences separately, and the Displayed Aspect Ratio and the Actual Aspect Ratio for each one of them"
 
 	@priority = "4"
 	@uitest
@@ -213,10 +175,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions to edit Instance Settings
-	When there is no canonical URL, or it doesnt coincide with the pages URL
-	Then the users will see the invalid canonical URL, and a text with a link to the instance settings: If the problem is that the canonical URL doesnt match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO"
-
 	@priority = "4"
 	@uitest
 	test CheckInvalidCanonicalURL {
@@ -249,10 +207,6 @@ definition {
 				value1 = "Invalid Canonical URL");
 		}
 	}
-
-	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When the page has any invalid hreflang link
-	Then the users will see the matching failing elements, with the incorrect hreflang links"
 
 	@priority = "4"
 	@uitest
@@ -291,10 +245,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view for Crawlable-anchors check
-	When the user display the Description section
-	Then There will be a general description coming from the API: Search engines may use 'href' attributes on links to crawl websites. Learn More about Not crawlable links https://support.google.com/webmasters/answer/9112205"
-
 	@priority = "4"
 	@uitest
 	test CheckLinksCrawlable {
@@ -331,10 +281,6 @@ definition {
 				value1 = "crawlable-anchors");
 		}
 	}
-
-	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When the link texts are not title as the link text
-	Then the users will see the link text and the link destination URL"
 
 	@priority = "4"
 	@uitest
@@ -377,10 +323,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are texts on the page with insufficient contrast ratio
-	Then the users will see the matching failing elements, with its current ratio, foreground color code, background color code, font size, font weight and expected ratio"
-
 	@priority = "4"
 	@uitest
 	test CheckLowContrastRatio {
@@ -417,10 +359,6 @@ definition {
 				value1 = "color-contrast");
 		}
 	}
-
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are images on the page with no alt text
-	Then the users will see the matching failing elements, and the current code snippet"
 
 	@priority = "4"
 	@uitest
@@ -459,10 +397,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are input-type images on the page with no alt text
-	Then the users will see the matching failing elements, and the current code snippet "
-
 	@priority = "4"
 	@uitest
 	test CheckMissingInputALTAttributes {
@@ -499,10 +433,6 @@ definition {
 				value1 = "input");
 		}
 	}
-
-	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When there is no meta description for the page
-	Then the users will see a text with a link to the configuration section: Add a meta-description from the Configuration section of this page."
 
 	@priority = "4"
 	@uitest
@@ -541,10 +471,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view and a user with permissions for editing the page
-	When there is no title for the page
-	Then the users will see a text with a link to the configuration section: Add a title from the Configuration section of this page"
-
 	@priority = "4"
 	@uitest
 	test CheckMissingTitleElement {
@@ -582,9 +508,28 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are input-type images on the page with no alt text
-	Then the users will see the matching failing elements, and the current code snippet "
+	@priority = "3"
+	test CheckNotVisibleReloadbButtonInPrivatePage {
+		task ("Create a Private Page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Private Page Name");
+		}
+
+		task ("Go to Private Page") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Private Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open Page Audit tab and Assert reload button id not present") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			IsElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
+
+			IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
+		}
+	}
 
 	@priority = "4"
 	@uitest
@@ -623,10 +568,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there tap targets on the page that are too small or are overlapping with others
-	Then the users will see the matching failing elements, with the tap target snippet, size and Overlapping Target if there is one"
-
 	@priority = "4"
 	@uitest
 	test CheckSmallTapTargets {
@@ -663,10 +604,6 @@ definition {
 				value1 = "a");
 		}
 	}
-
-	@description = "LPS-127668: Given the page audit panel
-	When the users access the second level
-	Then they can see the title of the issue, the description and tips sections"
 
 	@priority = "4"
 	@uitest
@@ -716,10 +653,6 @@ definition {
 				value1 = "color-contrast");
 		}
 	}
-
-	@description = "LPS-135681 Given the Page Audit panel in its initial state (no API Key configured)
-	When the user clicks on the Configure button
-	Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
 
 	@priority = "4"
 	test NavigateToSiteSettingsWhenApiKeyNotConfigured {

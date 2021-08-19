@@ -77,44 +77,6 @@ definition {
 	}
 
 	macro goToDetailView {
-		if (IsElementPresent(key_text = "Configure", locator1 = "Button#ANY")) {
-			ClickNoError(
-				key_text = "Configure",
-				locator1 = "Button#ANY");
-
-			Click(locator1 = "PageAudit#API_FIELD");
-
-			Type(
-				locator1 = "PageAudit#API_FIELD",
-				value1 = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-
-			if (IsElementPresent(locator1 = "Button#SAVE")) {
-				Click(locator1 = "Button#SAVE");
-			}
-
-			if (IsElementPresent(locator1 = "Button#UPDATE")) {
-				Click(locator1 = "Button#UPDATE");
-			}
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			if (IsElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_PANEL_TITLE")) {
-				Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-			}
-
-			if (IsElementPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
-				ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
-
-				AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
-			}
-		}
-
-		if (IsElementPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
-			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
-
-			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
-		}
-
 		Click(locator1 = "PageAudit#FAILING_CHECK_NAME");
 	}
 

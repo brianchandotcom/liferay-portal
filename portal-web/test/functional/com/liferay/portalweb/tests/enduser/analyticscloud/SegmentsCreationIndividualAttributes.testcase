@@ -81,9 +81,61 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyRole {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8565 CanAddSegmentUsingIndividualPropertyRole pending implementation
+		task ("Add a new regular role and assign to the user") {
+			JSONRole.addRegularRole(
+				roleKey = "AC Seg Reg Role",
+				roleTitle = "AC Seg Reg Role");
 
+			JSONRole.assignRoleToUser(
+				roleTitle = "AC Seg Reg Role",
+				userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment using Individual Property Role") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Using Individual Property Role");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Role");
+
+			ACSegments.selectOperator(operator = "is");
+
+			ACSegments.selectDocument(
+				documentTitle = "AC Seg Reg Role",
+				indexField = "1");
+		}
+
+		task ("View the user showns on the Preview mode") {
+			Click(locator1 = "Icon#EYE_PREVIEW");
+
+			ACAssets.viewAssets(assetName = "ac ac");
+
+			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8564 | Test Summary: Add segment using an individual property 'site'"

@@ -2075,6 +2075,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
+	@priority = "4"
+	test KeepInfomationOfDeleteVocabularyInSegment {
+		property test.name.skip.portal.instance = "ContentDashboardAuditGraph#KeepInfomationOfDeleteVocabularyInSegment";
+
+		task ("Set Session Property Vocabulary") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "System Scope");
+
+			Button.click(button = "Add");
+
+			ContentDashboard.setVocabularySessionPropertyDropdown(
+				propertyName = "Browser",
+				vocabularyName = "Audience");
+		}
+
+		task ("Create Segment with Vocabulary") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Browser",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "KeepInfomationOfDeleteVocabularyInSegment Test",
+				text = "Audience 1");
+		}
+
+		task ("Delete category of vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			Category.deleteCategoriesCP(vocabularyName = "Audience");
+		}
+
+		task ("Assert if segment kept category") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.editSegment(entry = "KeepInfomationOfDeleteVocabularyInSegment Test");
+
+			AssertValue(
+				locator1 = "Segmentation#PROPERTY_FIELD",
+				value1 = "Audience 1");
+		}
+	}
+
 	@description = "Validate if the members are assigned correctly depending on the criteria selected"
 	@priority = "5"
 	@uitest
@@ -2536,6 +2585,50 @@ definition {
 					key_typeName = "${fieldType}",
 					locator1 = "Segmentation#SEGMENT_FIELDS_TYPE");
 			}
+		}
+	}
+
+	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
+	@priority = "4"
+	test VocabulariesListedInSystemSettingsSegments {
+		property test.name.skip.portal.instance = "ContentDashboardAuditGraph#VocabulariesListedInSystemSettingsSegments";
+
+		task ("Add two vocabularies to global site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "Categories");
+
+			for (var n : list "1,2") {
+				Vocabulary.addCP(vocabularyName = "Vocabulary Name ${n}");
+			}
+		}
+
+		task ("Go to Session Property Vocabularies > Add") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "System Scope");
+
+			Button.click(button = "Add");
+		}
+
+		task ("Check if Vocabularies Created are being displayed") {
+			Click(locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY");
+
+			AssertElementPresent(
+				locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
+				vocabularyName = "Vocabulary Name 1");
+
+			AssertElementPresent(
+				locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
+				vocabularyName = "Vocabulary Name 2");
 		}
 	}
 

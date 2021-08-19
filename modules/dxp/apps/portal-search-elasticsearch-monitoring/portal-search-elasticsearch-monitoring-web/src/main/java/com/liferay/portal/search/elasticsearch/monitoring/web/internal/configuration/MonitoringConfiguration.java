@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration",
 	localization = "content/Language",
-	name = "elasticsearch-monitoring-configuration-name"
+	name = "monitoring-configuration-name[elasticsearch]"
 )
 public interface MonitoringConfiguration {
 

@@ -31,7 +31,7 @@ Exception e = errorDisplayContext.getException();
 %>
 
 <div>
-	<liferay-ui:message arguments="elasticsearch-monitoring-configuration-name" key="is-temporarily-unavailable" translateArguments="<%= true %>" />
+	<liferay-ui:message arguments="monitoring-configuration-name[elasticsearch]" key="is-temporarily-unavailable" translateArguments="<%= true %>" />
 </div>
 
 <div>

@@ -50,6 +50,17 @@ import org.osgi.framework.ServiceRegistration;
  */
 public class CustomElementsPortlet extends MVCPortlet {
 
+	public static String getPortletName(
+		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
+
+		long customElementsPortletDescriptorId =
+			customElementsPortletDescriptor.
+				getCustomElementsPortletDescriptorId();
+
+		return "com_liferay_custom_elements_web_internal_portlet_" +
+			"CustomElementsPortlet#" + customElementsPortletDescriptorId;
+	}
+
 	public CustomElementsPortlet(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
@@ -81,7 +92,8 @@ public class CustomElementsPortlet extends MVCPortlet {
 				"com.liferay.portlet.instanceable",
 				_customElementsPortletDescriptor.isInstanceable()
 			).put(
-				"javax.portlet.name", _getPortletName()
+				"javax.portlet.name",
+				getPortletName(_customElementsPortletDescriptor)
 			).put(
 				"javax.portlet.resource-bundle", _getResourceBundleName()
 			).put(
@@ -156,15 +168,6 @@ public class CustomElementsPortlet extends MVCPortlet {
 		return cssURLs.toArray(new String[0]);
 	}
 
-	private String _getPortletName() {
-		long customElementsPortletDescriptorId =
-			_customElementsPortletDescriptor.
-				getCustomElementsPortletDescriptorId();
-
-		return "com_liferay_custom_elements_web_internal_portlet_" +
-			"CustomElementsPortlet#" + customElementsPortletDescriptorId;
-	}
-
 	private Properties _getProperties() {
 		Properties properties = new Properties();
 
@@ -197,7 +200,8 @@ public class CustomElementsPortlet extends MVCPortlet {
 			}
 
 			private final Map<String, String> _labels = HashMapBuilder.put(
-				"javax.portlet.title." + _getPortletName(),
+				"javax.portlet.title." +
+					getPortletName(_customElementsPortletDescriptor),
 				_customElementsPortletDescriptor.getName()
 			).build();
 
@@ -205,7 +209,7 @@ public class CustomElementsPortlet extends MVCPortlet {
 	}
 
 	private String _getResourceBundleName() {
-		return _getPortletName() + ".Language";
+		return getPortletName(_customElementsPortletDescriptor) + ".Language";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

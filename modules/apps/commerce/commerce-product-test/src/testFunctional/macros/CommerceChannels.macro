@@ -87,4 +87,27 @@ definition {
 
 		CommerceChannels.addCategoryDiplayPage(key_card = "${page}");
 	}
+
+	macro addCategory {
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select"); 
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "Treeview#NODE_COLLAPSED");
+
+		Click(
+			key_card = "${key_card}",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Done");
+	}
 }

@@ -14,8 +14,11 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
+import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRel;
+import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService;
 import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelService;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountOrderType;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.OrderType;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListOrderType;
 import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.OrderTypeDTOConverter;
@@ -37,6 +40,19 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
+	@NestedField(parentClass = DiscountOrderType.class, value = "orderType")
+	@Override
+	public OrderType getDiscountOrderTypeOrderType(Long id) throws Exception {
+		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel =
+			_commerceDiscountOrderTypeRelService.
+				getCommerceDiscountOrderTypeRel(id);
+
+		return _orderTypeDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceDiscountOrderTypeRel.getCommerceOrderTypeId(),
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	@NestedField(parentClass = PriceListOrderType.class, value = "orderType")
 	@Override
 	public OrderType getPriceListOrderTypeOrderType(Long id) throws Exception {
@@ -49,6 +65,10 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 				commercePriceListOrderTypeRel.getCommerceOrderTypeId(),
 				contextAcceptLanguage.getPreferredLocale()));
 	}
+
+	@Reference
+	private CommerceDiscountOrderTypeRelService
+		_commerceDiscountOrderTypeRelService;
 
 	@Reference
 	private CommercePriceListOrderTypeRelService

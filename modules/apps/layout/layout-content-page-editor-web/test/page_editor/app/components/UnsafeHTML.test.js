@@ -29,6 +29,14 @@ describe('UnsafeHTML', () => {
 		expect(getByRole('heading')).toBeInTheDocument();
 	});
 
+	it('allows adding any id', () => {
+		const {container} = render(
+			<UnsafeHTML id="food" markup="Pi<strong>zz</strong>a" />
+		);
+
+		expect(container.querySelector('#food')).toBeInTheDocument();
+	});
+
 	it('allows adding any className', () => {
 		const {container} = render(
 			<UnsafeHTML className="food" markup="Pi<strong>zz</strong>a" />

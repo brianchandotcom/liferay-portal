@@ -26,6 +26,7 @@ PortletURL portletDiscountRuleURL = commerceDiscountQualifiersDisplayContext.get
 
 String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", commerceDiscountQualifiersDisplayContext.getActiveAccountEligibility());
 String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", commerceDiscountQualifiersDisplayContext.getActiveChannelEligibility());
+String orderTypeQualifiers = ParamUtil.getString(request, "orderTypeQualifiers", commerceDiscountQualifiersDisplayContext.getActiveOrderTypeEligibility());
 
 boolean hasPermission = commerceDiscountQualifiersDisplayContext.hasPermission(ActionKeys.UPDATE);
 %>
@@ -91,6 +92,28 @@ boolean hasPermission = commerceDiscountQualifiersDisplayContext.hasPermission(A
 	<c:if test='<%= Objects.equals(channelQualifiers, "channels") %>'>
 		<%@ include file="/discount/qualifier/channels.jspf" %>
 	</c:if>
+
+	<div class="row">
+		<div class="col-12">
+			<commerce-ui:panel
+				bodyClasses="flex-fill"
+				collapsed="<%= false %>"
+				collapsible="<%= false %>"
+				title='<%= LanguageUtil.get(request, "order-type-eligibility") %>'
+			>
+				<div class="row">
+					<aui:fieldset markupView="lexicon">
+						<aui:input checked='<%= Objects.equals(orderTypeQualifiers, "all") %>' label="all-order-types" name="qualifiers--orderType--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseOrderTypeQualifiers('all');" %>' type="radio" />
+						<aui:input checked='<%= Objects.equals(orderTypeQualifiers, "orderTypes") %>' label="specific-order-types" name="qualifiers--orderType--" onChange='<%= liferayPortletResponse.getNamespace() + "chooseOrderTypeQualifiers('orderTypes');" %>' type="radio" />
+					</aui:fieldset>
+				</div>
+			</commerce-ui:panel>
+		</div>
+	</div>
+
+	<c:if test='<%= Objects.equals(orderTypeQualifiers, "orderTypes") %>'>
+		<%@ include file="/discount/qualifier/order_types.jspf" %>
+	</c:if>
 </aui:form>
 
 <aui:script>
@@ -118,6 +141,21 @@ boolean hasPermission = commerceDiscountQualifiersDisplayContext.hasPermission(A
 			);
 
 			portletURL.setParameter('channelQualifiers', value);
+
+			window.location.replace(portletURL.toString());
+		},
+		['liferay-portlet-url']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />chooseOrderTypeQualifiers',
+		(value) => {
+			var portletURL = new Liferay.PortletURL.createURL(
+				'<%= currentURLObj %>'
+			);
+
+			portletURL.setParameter('orderTypeQualifiers', value);
 
 			window.location.replace(portletURL.toString());
 		},

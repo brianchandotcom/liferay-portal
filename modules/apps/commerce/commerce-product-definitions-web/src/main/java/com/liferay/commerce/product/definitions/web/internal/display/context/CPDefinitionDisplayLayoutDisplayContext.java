@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -71,7 +71,8 @@ public class CPDefinitionDisplayLayoutDisplayContext
 		CommerceChannelLocalService commerceChannelLocalService,
 		CPDefinitionService cpDefinitionService,
 		CPDisplayLayoutService cpDisplayLayoutService,
-		GroupLocalService groupLocalService, ItemSelector itemSelector) {
+		GroupLocalService groupLocalService, ItemSelector itemSelector,
+		LayoutLocalService layoutLocalService) {
 
 		super(actionHelper, httpServletRequest);
 
@@ -80,6 +81,7 @@ public class CPDefinitionDisplayLayoutDisplayContext
 		_cpDisplayLayoutService = cpDisplayLayoutService;
 		_groupLocalService = groupLocalService;
 		_itemSelector = itemSelector;
+		_layoutLocalService = layoutLocalService;
 	}
 
 	public String getAddProductDisplayPageURL() throws Exception {
@@ -154,11 +156,11 @@ public class CPDefinitionDisplayLayoutDisplayContext
 		Layout layout = null;
 
 		if (Validator.isNotNull(layoutUuid)) {
-			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layoutUuid, commerceChannel.getSiteGroupId(), false);
 
 			if (layout == null) {
-				layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 					layoutUuid, commerceChannel.getSiteGroupId(), true);
 			}
 		}
@@ -263,5 +265,6 @@ public class CPDefinitionDisplayLayoutDisplayContext
 	private final CPDisplayLayoutService _cpDisplayLayoutService;
 	private final GroupLocalService _groupLocalService;
 	private final ItemSelector _itemSelector;
+	private final LayoutLocalService _layoutLocalService;
 
 }

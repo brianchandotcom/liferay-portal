@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -123,7 +124,8 @@ public class CommerceChannelProductDisplayLayoutsScreenNavigationCategory
 				new CPDefinitionDisplayLayoutDisplayContext(
 					_actionHelper, httpServletRequest,
 					_commerceChannelLocalService, _cpDefinitionService,
-					_cpDisplayLayoutService, _groupLocalService, _itemSelector);
+					_cpDisplayLayoutService, _groupLocalService, _itemSelector,
+					_layoutLocalService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -157,6 +159,9 @@ public class CommerceChannelProductDisplayLayoutsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"

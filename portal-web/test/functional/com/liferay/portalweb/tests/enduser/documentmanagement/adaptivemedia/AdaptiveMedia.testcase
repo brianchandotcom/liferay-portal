@@ -257,18 +257,18 @@ definition {
 			portlet = "Adaptive Media");
 
 		AdaptiveMedia.addImageResolution(
-			description = "1234567890!@#$%^&amp;*()~`",
-			imageName = "1234567890!@#$%^&amp;*()~`",
+			description = '''1234567890!@#$%^&amp;*()~`''',
+			imageName = '''1234567890!@#$%^&amp;*()~`''',
 			maxHeight = "25",
 			maxWidth = "25");
 
 		AdaptiveMedia.editImageResolution(
-			imageName = "1234567890!@#$%^&amp;*()~`",
-			imageNameEdit = "[]\{}|:&quot;;&apos;,./&gt;&lt;?");
+			imageName = '''1234567890!@#$%^&amp;*()~`''',
+			imageNameEdit = '''[]\{}|:&quot;;&apos;,./&gt;&lt;?''');
 
-		AdaptiveMedia.gotoImageVariantEntry(imageName = "[]\{}|:&quot;;&apos;,./&gt;&lt;?");
+		AdaptiveMedia.gotoImageVariantEntry(imageName = '''[]\{}|:&quot;;&apos;,./&gt;&lt;?''');
 
-		AdaptiveMedia.viewImageVariantDescription(description = "1234567890!@#$%^&amp;*()~`");
+		AdaptiveMedia.viewImageVariantDescription(description = '''1234567890!@#$%^&amp;*()~`''');
 	}
 
 	@priority = "4"

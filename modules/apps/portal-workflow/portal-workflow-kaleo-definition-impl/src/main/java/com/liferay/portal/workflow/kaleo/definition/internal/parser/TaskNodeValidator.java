@@ -24,6 +24,7 @@ import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -83,15 +84,12 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 			task.getOutgoingTransitions();
 
 		if (outgoingTransitions.size() > 1) {
-			Set<Map.Entry<String, Transition>> entryTransition =
-				outgoingTransitions.entrySet();
-
-			Stream<Map.Entry<String, Transition>> entryTransitionStream =
-				entryTransition.stream();
-
-			List<Object> defaultTransitions = entryTransitionStream.filter(
-				transition -> transition.getValue(
-				).isDefault()
+			List<Transition> defaultTransitions = Stream.of(
+				outgoingTransitions.values()
+			).flatMap(
+				Collection::stream
+			).filter(
+				Transition::isDefault
 			).collect(
 				Collectors.toList()
 			);

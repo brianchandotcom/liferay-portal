@@ -131,4 +131,45 @@ definition {
 
 		Button.clickSave();
 	}
+
+	macro editCategoryDisplayPage {
+
+		Click(
+			key_value = "${name}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			key_selectAction = "Edit",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Choose");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if ("${tabName}" == "Private+Pages") {
+			if(IsElementNotPresent(locator1 = "AppBuilderAppAdmin#APP_TAB", key_tabName = "Private+Pages")) {
+
+				Click(
+					key_text = "Public Pages",
+					locator1 = "Button#ANY_WITH_SPAN");
+			} 
+			Click(
+				key_tabName = "Private+Pages",
+				locator1 = "AppBuilderAppAdmin#APP_TAB");
+		}
+
+		Click(
+			key_card = "${key_card}",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+	}
+
 }

@@ -22,6 +22,48 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	macro addCategory {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "Treeview#NODE_COLLAPSED");
+
+		Click(
+			key_card = "${key_card}",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Done");
+	}
+
+	macro addCategoryDiplayPage {
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Choose");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_card = "${key_card}",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+	}
+
 	macro assertMercanetConfigurationEnvironment {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "${paymentMethod}",
@@ -82,58 +124,12 @@ definition {
 	}
 
 	macro createCategoryDisplayPage {
-		
 		CommerceChannels.addCategory(key_card = "${vocabulary}");
 
 		CommerceChannels.addCategoryDiplayPage(key_card = "${page}");
 	}
 
-	macro addCategory {
-
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Select"); 
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Treeview#NODE_COLLAPSED");
-
-		Click(
-			key_card = "${key_card}",
-			locator1 = "Card#CARD_TITLE");
-
-		SelectFrame.selectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Done");
-	}
-
-	macro addCategoryDiplayPage {
-
-		SelectFrame.selectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Choose");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_card = "${key_card}",
-			locator1 = "Card#CARD_TITLE");
-
-		SelectFrame.selectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.clickSave();
-	}
-
 	macro editCategoryDisplayPage {
-
 		Click(
 			key_value = "${name}",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -149,12 +145,11 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${tabName}" == "Private+Pages") {
-			if(IsElementNotPresent(locator1 = "AppBuilderAppAdmin#APP_TAB", key_tabName = "Private+Pages")) {
-
+			if (IsElementNotPresent(locator1 = "AppBuilderAppAdmin#APP_TAB", key_tabName = "Private+Pages")) {
 				Click(
 					key_text = "Public Pages",
 					locator1 = "Button#ANY_WITH_SPAN");
-			} 
+			}
 			Click(
 				key_tabName = "Private+Pages",
 				locator1 = "AppBuilderAppAdmin#APP_TAB");
@@ -169,7 +164,6 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Button.clickSave();
-
 	}
 
 }

@@ -952,8 +952,8 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Category Display Pages");
 
 		CommerceChannels.createCategoryDisplayPage(
-			vocabulary = "Brake System",
-			page = "Login");
+			page = "Login",
+			vocabulary = "Brake System");
 
 		Alert.viewSuccessMessage();
 
@@ -966,10 +966,10 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 		CommerceChannels.editCategoryDisplayPage(
+			key_card = "Catalog",
 			name = "Brake System",
-			tabName = "Private+Pages",
-			key_card = "Catalog");
-		
+			tabName = "Private+Pages");
+
 		Alert.viewSuccessMessage();
 
 		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");

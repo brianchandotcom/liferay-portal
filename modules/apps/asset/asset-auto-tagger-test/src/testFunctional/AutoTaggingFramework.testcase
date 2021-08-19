@@ -38,6 +38,7 @@ definition {
 	test AutoTagImagesOnSeparateNodes {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
+		property minimum.slave.ram = "32";
 		property test.name.skip.portal.instance = "DMAutoTagging#AutoTagImagesOnSeparateNodes";
 
 		Clustering.viewClusterStatusInConsole();

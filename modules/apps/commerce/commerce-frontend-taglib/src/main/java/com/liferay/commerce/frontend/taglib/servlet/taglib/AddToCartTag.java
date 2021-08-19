@@ -66,6 +66,8 @@ public class AddToCartTag extends IncludeTag {
 				_commerceAccountId = commerceAccount.getCommerceAccountId();
 			}
 
+			_commerceChannelGroupId =
+				commerceContext.getCommerceChannelGroupId();
 			_commerceChannelId = commerceContext.getCommerceChannelId();
 
 			CommerceCurrency commerceCurrency =
@@ -180,6 +182,9 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(
 			httpServletRequest, "commerceAccountId", _commerceAccountId);
 		setNamespacedAttribute(
+			httpServletRequest, "commerceChannelGroupId",
+			_commerceChannelGroupId);
+		setNamespacedAttribute(
 			httpServletRequest, "commerceChannelId", _commerceChannelId);
 		setNamespacedAttribute(
 			httpServletRequest, "commerceCurrencyCode", _commerceCurrencyCode);
@@ -254,6 +259,7 @@ public class AddToCartTag extends IncludeTag {
 
 		_block = false;
 		_commerceAccountId = 0;
+		_commerceChannelGroupId = 0;
 		_commerceChannelId = 0;
 		_commerceCurrencyCode = null;
 		_commerceInventoryEngine = null;
@@ -287,6 +293,7 @@ public class AddToCartTag extends IncludeTag {
 
 	private boolean _block;
 	private long _commerceAccountId;
+	private long _commerceChannelGroupId;
 	private long _commerceChannelId;
 	private String _commerceCurrencyCode;
 	private CommerceInventoryEngine _commerceInventoryEngine;

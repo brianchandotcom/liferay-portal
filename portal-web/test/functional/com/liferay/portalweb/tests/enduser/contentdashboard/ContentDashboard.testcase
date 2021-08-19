@@ -1446,18 +1446,20 @@ definition {
 		}
 	}
 
+	@description = "LPS-119966 Given a document with and associated Display Page Template
+	When the user with permissions clicks on the info panel button
+	Then the user is lead to the info panel"
 	@priority = "4"
 	test DocumentViewInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "true";
 
-		task ("Add a document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+		task ("Create a new Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
 		}
 
 		task ("Go to Content Dashboard") {
@@ -1472,7 +1474,7 @@ definition {
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-				value1 = "Content Info");
+				value1 = "DM Document Title");
 
 			Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
 		}
@@ -3073,29 +3075,29 @@ definition {
 	test WebContentViewInfoPanel {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		task ("Create a new Document") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-		Pause(locator1 = "3000");
+		task ("Open the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
-		ContentDashboard.openInfoPanelByDropdownMenu();
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+				value1 = "WC Title");
 
-		AssertTextPresent(
-			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-			value1 = "Content Info");
-
-		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title");
+			Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
+		}
 	}
 
 }

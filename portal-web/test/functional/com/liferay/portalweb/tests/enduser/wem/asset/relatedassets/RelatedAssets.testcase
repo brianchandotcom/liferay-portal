@@ -126,9 +126,9 @@ definition {
 		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 2");
 	}
 
-	@description = "This is a use case for LPS-72472."
+	@description = "This is a use case for LPS-72472. When an article has related asset from the global site, the related asset is not displayed in live after publication"
 	@priority = "4"
-	test AssertRelatedAssetsWithGlobalWebContent {
+	test ShouldBeDisplayedWithGlobalWebContent {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Test Page");

@@ -1,0 +1,9 @@
+{
+  "configurationPath": "index.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "name": "Bootcamp Border",
+  "thumbnailPath": "thumbnail.png",
+  "type": "component"
+}

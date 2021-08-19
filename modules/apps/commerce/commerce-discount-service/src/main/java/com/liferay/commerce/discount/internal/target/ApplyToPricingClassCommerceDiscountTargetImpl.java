@@ -74,7 +74,9 @@ public class ApplyToPricingClassCommerceDiscountTargetImpl
 
 		long[] assetCategoryIds = longStream.toArray();
 
-		document.addKeyword("target_pricing_class_ids", assetCategoryIds);
+		document.addKeyword(
+			"commerce_discount_target_commerce_pricing_class_ids",
+			assetCategoryIds);
 	}
 
 	@Override
@@ -104,11 +106,13 @@ public class ApplyToPricingClassCommerceDiscountTargetImpl
 				getCommercePricingClassByCPDefinition(
 					cpDefinition.getCPDefinitionId());
 
-		TermsFilter termsFilter = new TermsFilter("target_pricing_class_ids");
+		TermsFilter termsFilter = new TermsFilter(
+			"commerce_discount_target_commerce_pricing_class_ids");
 
 		termsFilter.addValues(ArrayUtil.toStringArray(pricingClassIds));
 
-		Filter existFilter = new ExistsFilter("target_pricing_class_ids");
+		Filter existFilter = new ExistsFilter(
+			"commerce_discount_target_commerce_pricing_class_ids");
 
 		BooleanFilter existBooleanFilter = new BooleanFilter();
 

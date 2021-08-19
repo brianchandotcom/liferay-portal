@@ -82,7 +82,8 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 
 		long[] assetCategoryIds = longStream.toArray();
 
-		document.addKeyword("target_asset_category_ids", assetCategoryIds);
+		document.addKeyword(
+			"commerce_discount_target_asset_category_ids", assetCategoryIds);
 	}
 
 	@Override
@@ -110,11 +111,13 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 
 		long[] assetCategoryIds = _getAssetCategoryIds(cpDefinition);
 
-		TermsFilter termsFilter = new TermsFilter("target_asset_category_ids");
+		TermsFilter termsFilter = new TermsFilter(
+			"commerce_discount_target_asset_category_ids");
 
 		termsFilter.addValues(ArrayUtil.toStringArray(assetCategoryIds));
 
-		Filter existFilter = new ExistsFilter("target_asset_category_ids");
+		Filter existFilter = new ExistsFilter(
+			"commerce_discount_target_asset_category_ids");
 
 		BooleanFilter existBooleanFilter = new BooleanFilter();
 

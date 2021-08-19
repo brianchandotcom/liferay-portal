@@ -149,7 +149,6 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 
 			_commerceShippingFixedOptionRelService.
 				addCommerceShippingFixedOptionRel(
-					_portal.getUserId(actionRequest),
 					commerceShippingMethod.getGroupId(),
 					commerceShippingMethod.getCommerceShippingMethodId(),
 					commerceShippingFixedOptionId, commerceInventoryWarehouseId,

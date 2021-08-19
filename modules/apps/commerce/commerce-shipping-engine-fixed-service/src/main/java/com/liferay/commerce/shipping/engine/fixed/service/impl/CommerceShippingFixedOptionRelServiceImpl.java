@@ -40,7 +40,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 
 	@Override
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-			long userId, long groupId, long commerceShippingMethodId,
+			long groupId, long commerceShippingMethodId,
 			long commerceShippingFixedOptionId,
 			long commerceInventoryWarehouseId, long countryId, long regionId,
 			String zip, double weightFrom, double weightTo,
@@ -52,7 +52,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 
 		return commerceShippingFixedOptionRelLocalService.
 			addCommerceShippingFixedOptionRel(
-				userId, groupId, commerceShippingMethodId,
+				getUserId(), groupId, commerceShippingMethodId,
 				commerceShippingFixedOptionId, commerceInventoryWarehouseId,
 				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
 				rateUnitWeightPrice, ratePercentage);
@@ -73,11 +73,10 @@ public class CommerceShippingFixedOptionRelServiceImpl
 
 		return commerceShippingFixedOptionRelService.
 			addCommerceShippingFixedOptionRel(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				commerceShippingMethodId, commerceShippingFixedOptionId,
-				commerceInventoryWarehouseId, countryId, regionId, zip,
-				weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
-				ratePercentage);
+				serviceContext.getScopeGroupId(), commerceShippingMethodId,
+				commerceShippingFixedOptionId, commerceInventoryWarehouseId,
+				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
+				rateUnitWeightPrice, ratePercentage);
 	}
 
 	@Override

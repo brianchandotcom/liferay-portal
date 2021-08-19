@@ -40,7 +40,7 @@ import PaginatedList from '../../components/PaginatedList.es';
 import Rating from '../../components/Rating.es';
 import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
-import Subscription from '../../components/Subscription.es';
+import SubscriptionButton from '../../components/SubscriptionButton.es';
 import TagList from '../../components/TagList.es';
 import {
 	createAnswerQuery,
@@ -48,6 +48,8 @@ import {
 	getSubscriptionsQuery,
 	getThread,
 	markAsAnswerMessageBoardMessageQuery,
+	subscribeQuery,
+	unsubscribeQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
@@ -276,7 +278,10 @@ export default withRouter(
 												spaced={true}
 											>
 												{question.actions.subscribe && (
-													<Subscription
+													<SubscriptionButton
+														isSubscribed={
+															question.subscribed
+														}
 														onSubscription={() =>
 															deleteCacheKey(
 																getSubscriptionsQuery,
@@ -286,9 +291,15 @@ export default withRouter(
 																}
 															)
 														}
-														question={question}
-														siteKey={
-															context.siteKey
+														queryVariables={{
+															messageBoardThreadId:
+																question.id,
+														}}
+														subscribeQuery={
+															subscribeQuery
+														}
+														unsubscribeQuery={
+															unsubscribeQuery
 														}
 													/>
 												)}

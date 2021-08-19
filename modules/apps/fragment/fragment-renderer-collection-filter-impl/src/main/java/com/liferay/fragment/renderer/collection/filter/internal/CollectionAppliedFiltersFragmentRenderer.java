@@ -16,16 +16,13 @@ package com.liferay.fragment.renderer.collection.filter.internal;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
 import com.liferay.fragment.renderer.collection.filter.internal.display.context.CollectionAppliedFiltersFragmentRendererDisplayContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
@@ -34,16 +31,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Molina
  */
-@Component(
-	configurationPid = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration",
-	service = FragmentRenderer.class
-)
+@Component(enabled = false, service = FragmentRenderer.class)
 public class CollectionAppliedFiltersFragmentRenderer
 	implements FragmentRenderer {
 
@@ -63,15 +56,6 @@ public class CollectionAppliedFiltersFragmentRenderer
 			"content.Language", getClass());
 
 		return LanguageUtil.get(resourceBundle, "applied-filters");
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (!_ffFragmentRendererCollectionFilterConfiguration.enabled()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override
@@ -97,19 +81,8 @@ public class CollectionAppliedFiltersFragmentRenderer
 		}
 	}
 
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffFragmentRendererCollectionFilterConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFFragmentRendererCollectionFilterConfiguration.class,
-				properties);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CollectionAppliedFiltersFragmentRenderer.class);
-
-	private volatile FFFragmentRendererCollectionFilterConfiguration
-		_ffFragmentRendererCollectionFilterConfiguration;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.collection.filter.impl)"

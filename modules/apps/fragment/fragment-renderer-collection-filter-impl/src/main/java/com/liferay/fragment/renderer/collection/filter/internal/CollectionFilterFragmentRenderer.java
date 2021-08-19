@@ -19,18 +19,15 @@ import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -39,16 +36,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
  */
-@Component(
-	configurationPid = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration",
-	service = FragmentRenderer.class
-)
+@Component(enabled = false, service = FragmentRenderer.class)
 public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 	@Override
@@ -67,15 +60,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			"content.Language", getClass());
 
 		return LanguageUtil.get(resourceBundle, "collection-filter");
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (!_ffFragmentRendererCollectionFilterConfiguration.enabled()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override
@@ -115,14 +99,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffFragmentRendererCollectionFilterConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFFragmentRendererCollectionFilterConfiguration.class,
-				properties);
-	}
-
 	private String _getInfoFilterKey(
 		FragmentRendererContext fragmentRendererContext) {
 
@@ -133,9 +109,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
 				fragmentEntryLink.getEditableValues(), "string", "filterKey");
 	}
-
-	private volatile FFFragmentRendererCollectionFilterConfiguration
-		_ffFragmentRendererCollectionFilterConfiguration;
 
 	@Reference
 	private FragmentCollectionFilterTracker _fragmentCollectionFilterTracker;

@@ -145,7 +145,6 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 					commerceTaxMethodId);
 
 			_commerceTaxFixedRateService.addCommerceTaxFixedRate(
-				_portal.getUserId(actionRequest),
 				commerceTaxMethod.getGroupId(),
 				commerceTaxMethod.getCommerceTaxMethodId(), cpTaxCategoryId,
 				rate.doubleValue());

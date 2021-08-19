@@ -46,20 +46,20 @@ public class CommerceTaxFixedRateServiceImpl
 		throws PortalException {
 
 		return commerceTaxFixedRateService.addCommerceTaxFixedRate(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			commerceTaxMethodId, cpTaxCategoryId, rate);
+			serviceContext.getScopeGroupId(), commerceTaxMethodId,
+			cpTaxCategoryId, rate);
 	}
 
 	@Override
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
-			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, double rate)
+			long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
+			double rate)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceTaxFixedRateLocalService.addCommerceTaxFixedRate(
-			userId, groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
+			getUserId(), groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
 	}
 
 	@Override

@@ -411,6 +411,28 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testIsSharedURL() throws Exception {
+		DDMFormDisplayContext ddmFormDisplayContext = spy(
+			_createDDMFormDisplayContext());
+
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+
+		when(
+			themeDisplay.getURLCurrent()
+		).thenReturn(
+			"http://localhost:8080/web/forms/shared/-/form/123"
+		);
+
+		Mockito.doReturn(
+			themeDisplay
+		).when(
+			ddmFormDisplayContext
+		).getThemeDisplay();
+
+		Assert.assertTrue(ddmFormDisplayContext.isSharedURL());
+	}
+
+	@Test
 	public void testIsShowIconInEditMode() throws Exception {
 		_mockHttpServletRequest.addParameter("p_l_mode", Constants.EDIT);
 

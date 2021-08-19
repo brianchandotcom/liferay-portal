@@ -133,15 +133,10 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
+		JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = "Site Name");
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content 1",

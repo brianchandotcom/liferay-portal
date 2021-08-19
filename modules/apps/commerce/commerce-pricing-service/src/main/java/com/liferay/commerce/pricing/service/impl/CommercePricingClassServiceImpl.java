@@ -46,37 +46,6 @@ import java.util.Map;
 public class CommercePricingClassServiceImpl
 	extends CommercePricingClassServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 *             #addCommercePricingClass(String, Map, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CommercePricingClass addCommercePricingClass(
-			long userId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addCommercePricingClass(
-			null, titleMap, descriptionMap, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 *             #addCommercePricingClass(String, Map, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CommercePricingClass addCommercePricingClass(
-			String externalReferenceCode, long userId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addCommercePricingClass(
-			externalReferenceCode, titleMap, descriptionMap, serviceContext);
-	}
-
 	@Override
 	public CommercePricingClass addCommercePricingClass(
 			String externalReferenceCode, Map<Locale, String> titleMap,
@@ -96,14 +65,14 @@ public class CommercePricingClassServiceImpl
 	@Override
 	public CommercePricingClass addOrUpdateCommercePricingClass(
 			String externalReferenceCode, long commercePricingClassId,
-			long userId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (commercePricingClassId > 0) {
 			try {
 				return updateCommercePricingClass(
-					commercePricingClassId, userId, titleMap, descriptionMap,
+					commercePricingClassId, titleMap, descriptionMap,
 					serviceContext);
 			}
 			catch (NoSuchPricingClassException noSuchPricingClassException) {
@@ -124,14 +93,13 @@ public class CommercePricingClassServiceImpl
 			if (commercePricingClass != null) {
 				return commercePricingClassLocalService.
 					updateCommercePricingClass(
-						commercePricingClassId, userId, titleMap,
+						commercePricingClassId, getUserId(), titleMap,
 						descriptionMap, serviceContext);
 			}
 		}
 
 		return addCommercePricingClass(
-			externalReferenceCode, userId, titleMap, descriptionMap,
-			serviceContext);
+			externalReferenceCode, titleMap, descriptionMap, serviceContext);
 	}
 
 	@Override
@@ -248,16 +216,15 @@ public class CommercePricingClassServiceImpl
 
 	@Override
 	public CommercePricingClass updateCommercePricingClass(
-			long commercePricingClassId, long userId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
+			long commercePricingClassId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commercePricingClassResourcePermission.check(
 			getPermissionChecker(), commercePricingClassId, ActionKeys.UPDATE);
 
 		return commercePricingClassLocalService.updateCommercePricingClass(
-			commercePricingClassId, userId, titleMap, descriptionMap,
+			commercePricingClassId, getUserId(), titleMap, descriptionMap,
 			serviceContext);
 	}
 

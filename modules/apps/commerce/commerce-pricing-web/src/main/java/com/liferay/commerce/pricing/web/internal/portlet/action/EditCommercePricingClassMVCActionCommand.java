@@ -89,14 +89,13 @@ public class EditCommercePricingClassMVCActionCommand
 		if (commercePricingClassId <= 0) {
 			commercePricingClass =
 				_commercePricingClassService.addCommercePricingClass(
-					serviceContext.getUserId(), titleMap, descriptionMap,
-					serviceContext);
+					null, titleMap, descriptionMap, serviceContext);
 		}
 		else {
 			commercePricingClass =
 				_commercePricingClassService.updateCommercePricingClass(
-					commercePricingClassId, serviceContext.getUserId(),
-					titleMap, descriptionMap, serviceContext);
+					commercePricingClassId, titleMap, descriptionMap,
+					serviceContext);
 		}
 
 		return commercePricingClass;

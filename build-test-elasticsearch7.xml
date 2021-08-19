@@ -18,7 +18,7 @@
 			</then>
 		</elseif>
 		<else>
-			<property name="elasticsearch.version" value="7.12.0" />
+			<property name="elasticsearch.version" value="7.14.0" />
 		</else>
 	</if>
 

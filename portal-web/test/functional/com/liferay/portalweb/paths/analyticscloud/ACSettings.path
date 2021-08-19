@@ -12,6 +12,11 @@
 <tbody>
 <!-- SETTINGS HEADER -->
 <tr>
+	<td>HEADER_DESCRIPTION</td>
+	<td>//div[contains(@class,'content-header')]//div[contains(@class,'description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_TITLE</td>
 	<td>//div[contains(@class,'content-header')]//span[contains(@class,'title')][normalize-space(text())='${title}']</td>
 	<td></td>

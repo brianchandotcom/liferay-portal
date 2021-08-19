@@ -64,6 +64,15 @@ public interface BatchPlannerLogService extends BaseService {
 	public List<BatchPlannerLog> getBatchPlannerLogs(long batchPlannerPlanId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getBatchPlannerLogs(
+			long batchPlannerPlanId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBatchPlannerLogsCount(long batchPlannerPlanId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

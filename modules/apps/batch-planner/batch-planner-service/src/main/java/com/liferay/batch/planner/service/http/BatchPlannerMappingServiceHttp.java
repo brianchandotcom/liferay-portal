@@ -186,6 +186,52 @@ public class BatchPlannerMappingServiceHttp {
 		}
 	}
 
+	public static com.liferay.batch.planner.model.BatchPlannerMapping
+			updateBatchPlannerMapping(
+				HttpPrincipal httpPrincipal, long batchPlannerMappingId,
+				String externalFieldName, String externalFieldType,
+				String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchPlannerMappingServiceUtil.class,
+				"updateBatchPlannerMapping",
+				_updateBatchPlannerMappingParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, batchPlannerMappingId, externalFieldName,
+				externalFieldType, script);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.planner.model.BatchPlannerMapping)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		BatchPlannerMappingServiceHttp.class);
 
@@ -198,5 +244,7 @@ public class BatchPlannerMappingServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 	private static final Class<?>[] _getBatchPlannerMappingsParameterTypes2 =
 		new Class[] {long.class};
+	private static final Class<?>[] _updateBatchPlannerMappingParameterTypes3 =
+		new Class[] {long.class, String.class, String.class, String.class};
 
 }

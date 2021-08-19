@@ -127,6 +127,28 @@ public class BatchPlannerMappingServiceSoap {
 		}
 	}
 
+	public static com.liferay.batch.planner.model.BatchPlannerMappingSoap
+			updateBatchPlannerMapping(
+				long batchPlannerMappingId, String externalFieldName,
+				String externalFieldType, String script)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerMapping returnValue =
+				BatchPlannerMappingServiceUtil.updateBatchPlannerMapping(
+					batchPlannerMappingId, externalFieldName, externalFieldType,
+					script);
+
+			return com.liferay.batch.planner.model.BatchPlannerMappingSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		BatchPlannerMappingServiceSoap.class);
 

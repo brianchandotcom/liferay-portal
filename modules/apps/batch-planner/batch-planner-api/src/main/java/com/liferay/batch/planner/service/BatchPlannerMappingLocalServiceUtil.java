@@ -130,11 +130,11 @@ public class BatchPlannerMappingLocalServiceUtil {
 
 	public static BatchPlannerMapping deleteBatchPlannerMapping(
 			long batchPlannerPlanId, String externalFieldName,
-			String internalName)
+			String internalFieldName)
 		throws PortalException {
 
 		return getService().deleteBatchPlannerMapping(
-			batchPlannerPlanId, externalFieldName, internalName);
+			batchPlannerPlanId, externalFieldName, internalFieldName);
 	}
 
 	/**
@@ -329,6 +329,16 @@ public class BatchPlannerMappingLocalServiceUtil {
 		BatchPlannerMapping batchPlannerMapping) {
 
 		return getService().updateBatchPlannerMapping(batchPlannerMapping);
+	}
+
+	public static BatchPlannerMapping updateBatchPlannerMapping(
+			long batchPlannerMappingId, String externalFieldName,
+			String externalFieldType, String script)
+		throws PortalException {
+
+		return getService().updateBatchPlannerMapping(
+			batchPlannerMappingId, externalFieldName, externalFieldType,
+			script);
 	}
 
 	public static BatchPlannerMappingLocalService getService() {

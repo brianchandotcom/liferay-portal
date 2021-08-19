@@ -121,7 +121,23 @@ definition {
 		task ("Go to pages and open the page created in DXP") {
 			ACUtils.launchAC();
 
-			ACSites.assertAudienceCardItems(siteName = "Order History");
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "AC Page - Site Name - Liferay DXP");
+		}
+
+		task ("Assert that Known, Anonymous, Segmented and Unsegmented Individuals are displayed") {
+			ACUtils.assertAudienceCard(
+				index = "1",
+				percentageList = "66.67%,33.33%");
+
+			ACUtils.assertAudienceCard(
+				index = "2",
+				percentageList = "66.67%,33.33%");
 		}
 	}
 

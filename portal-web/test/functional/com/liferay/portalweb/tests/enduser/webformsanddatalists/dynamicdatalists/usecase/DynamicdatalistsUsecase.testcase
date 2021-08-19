@@ -2312,6 +2312,158 @@ definition {
 			ddlRecordFieldData2 = "Contenido 3");
 	}
 
+	@priority = "4"
+	test RolesPermissionsDynamicDataLists {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONRole.addSiteRole(
+			roleKey = "Data Recorder Name",
+			roleTitle = "Data Recorder Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_RECORD",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Data Recorder Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "View",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Data Recorder Name",
+			roleType = "site");
+
+		JSONRole.addSiteRole(
+			roleKey = "Records Manager Name",
+			roleTitle = "Records Manager Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Records Manager Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			roleTitle = "Records Manager Name",
+			roleType = "site");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Data Recorder Name",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Records Manager Name",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Dynamic Data Lists Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Dynamic Data Lists Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		Portlet.addPG(portletName = "Dynamic Data Lists Display");
+
+		DDLList.addViaDDLDisplayPG(
+			ddlListDescription = "Liferay Employee Profiles",
+			ddlListName = "Employees");
+
+		DDLDataDefinition.addViaDDLDisplayPG(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Employee Profile Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Boolean",
+			fieldFieldLabel = "Employee",
+			fieldName = "Employee");
+
+		DDLDataDefinition.saveViaDDLDisplayPG();
+
+		DDLDataDefinition.selectViaDDLDisplayPG(ddlDataDefinitionName = "Employee Profile Data Definition");
+
+		DDLList.saveViaDDLDisplayPG();
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Employee Profile Data Definition");
+
+		DDLRecord.populateFieldBoolean(
+			ddlRecordFieldData = "Yes",
+			fieldFieldLabel = "Employee",
+			fieldName = "Employee");
+
+		PortletEntry.publish();
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		var key_ddlDataDefinitionName = "Employee Profile Data Definition";
+
+		AssertElementPresent(locator1 = "DDL#TOOLBAR_ADD");
+
+		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
+
+		AssertElementNotPresent(locator1 = "DDL#TOOLBAR_ADD");
+
+		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+	}
+
 	@description = "This is a use case for LPS-69667."
 	@priority = "2"
 	test SelectLinkToPagePage {

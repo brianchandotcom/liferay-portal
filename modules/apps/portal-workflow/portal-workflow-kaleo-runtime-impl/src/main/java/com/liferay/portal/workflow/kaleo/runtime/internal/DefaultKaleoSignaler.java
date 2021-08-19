@@ -35,7 +35,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -142,12 +142,10 @@ public class DefaultKaleoSignaler
 
 		if (waitForCompletion || PortalRunMode.isTestMode()) {
 			try {
-				CountDownLatch countDownLatch = new CountDownLatch(1);
-
-				noticeableFuture.addFutureListener(
-					future -> countDownLatch.countDown());
-
-				countDownLatch.await();
+				noticeableFuture.get();
+			}
+			catch (ExecutionException executionException) {
+				_log.error(executionException, executionException);
 			}
 			catch (InterruptedException interruptedException) {
 				_log.error(interruptedException, interruptedException);

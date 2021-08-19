@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=translateEditor",
+		"editor.config.key=defaultTranslateEditor",
 		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION
 	},
 	service = EditorConfigContributor.class
 )
-public class TranslateEditorConfigContributor
+public class DefaultTranslateEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override

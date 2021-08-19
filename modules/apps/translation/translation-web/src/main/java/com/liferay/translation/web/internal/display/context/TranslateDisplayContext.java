@@ -541,7 +541,7 @@ public class TranslateDisplayContext {
 	private Map<String, Object> _getInfoFieldEditorConfig(String infoFieldId) {
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				TranslationPortletKeys.TRANSLATION, "translateEditor",
+				TranslationPortletKeys.TRANSLATION, "defaultTranslateEditor",
 				"ckeditor",
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true

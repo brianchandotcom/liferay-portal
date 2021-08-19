@@ -55,16 +55,18 @@ import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.InputStream;
 
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -156,7 +158,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
-			_addDocuments(null, null, serviceContext);
+			_addDocuments(null, "/site-initializer/documents", serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
@@ -229,15 +231,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addDocuments(Long documentFolderId, String path, ServiceContext serviceContext) throws Exception {
-		Set<String> resourcePaths = null; //TODO change null for empty set
-
-		if (path != null) {
-			resourcePaths = _servletContext.getResourcePaths(
-				path);
-		} else {
-			resourcePaths = _servletContext.getResourcePaths(
-				"/site-initializer/documents");
-		}
+		Set<String> resourcePaths = _servletContext.getResourcePaths(path);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -259,25 +253,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
+			if (resourcePath.endsWith("._si.json")) {
+				continue;
+			}
+
 			String fileName = FileUtil.getShortFileName(resourcePath);
 
 			URL url = _servletContext.getResource(resourcePath);
 
 			URLConnection urlConnection = url.openConnection();
 
-			Map<String, String> values = Collections.emptyMap();
+			Map<String, String> values = new HashMap<>();
+
+			ObjectMapper objectMapper = new ObjectMapper();
 
 			String json = _read(resourcePath + "._si.json");
 
 			if (json != null) {
-				JSONObject jsonObject = _jsonFactory.createJSONObject(json);
-
-				for (String key : jsonObject.keySet()) {
-					values.put(key, jsonObject.getString(key));
-				}
+				values = Collections.singletonMap("document", json);
 			}
 
-			if (documentFolderId != null){
+			if (documentFolderId != null) {
 				documentResource.postDocumentFolderDocument(
 					documentFolderId,
 					MultipartBody.of(
@@ -287,7 +283,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								MimeTypesUtil.getContentType(fileName), fileName,
 								urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
-						null, values));
+						__ -> objectMapper, values));
 			} else {
 				documentResource.postSiteDocument(
 					serviceContext.getScopeGroupId(),
@@ -298,7 +294,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								MimeTypesUtil.getContentType(fileName), fileName,
 								urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
-						null, values));
+						__ -> objectMapper, values));
 			}
 		}
 	}
@@ -311,19 +307,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			user
 		).build();
 
-		//TODO Improve
-		String[] folderNameList = StringUtil.split(resourcePath,"/");
-		String folderName = folderNameList[folderNameList.length - 1];
+		resourcePath = StringUtil.replaceLast(resourcePath, StringPool.FORWARD_SLASH, StringPool.BLANK);
 
-		String json = _read(folderName + "._si.json");
+		String json = _read(resourcePath + "._si.json");
 
 		DocumentFolder documentFolder = null;
 
-		if(json != null){
+		if (json != null) {
 			documentFolder = DocumentFolder.toDTO(json);
 		} else {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
-			jsonObject.put("name",folderName);
+
+			jsonObject.put("name", FileUtil.getShortFileName(resourcePath));
+
 			documentFolder = DocumentFolder.toDTO(jsonObject.toString());
 		}
 

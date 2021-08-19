@@ -73,9 +73,7 @@ definition {
 
 		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric");
 
-		Click(
-			key_trueOrFalse = "true",
-			locator1 = "Form#COLLAPSE_BUTTON");
+		Click(locator1 = "Form#COLLAPSE_BUTTON");
 
 		Form.viewCollapsedCollapseButton();
 

@@ -22,7 +22,17 @@
 </tr>
 <tr>
 	<td>COLLAPSE_BUTTON</td>
-	<td>//button[contains(concat(' ',normalize-space(@class),' '),'collapse-icon')][@aria-expanded='${key_trueOrFalse}']</td>
+	<td>//button[contains(concat(' ',normalize-space(@class),' '),'collapse-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_GROUP_COLLAPSED</td>
+	<td>//button[contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_GROUP_EXPANDED</td>
+	<td>//button[contains(@class,'collapse-icon')]//following-sibling::div[contains(@class,'collapse show')]</td>
 	<td></td>
 </tr>
 <tr>

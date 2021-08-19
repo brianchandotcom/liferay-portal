@@ -881,15 +881,11 @@ definition {
 	}
 
 	macro viewCollapsedCollapseButton {
-		AssertElementPresent(
-			key_trueOrFalse = "false",
-			locator1 = "Form#COLLAPSE_BUTTON");
+		AssertElementPresent(locator1 = "Form#FIELDS_GROUP_COLLAPSED");
 	}
 
 	macro viewExpandedCollapseButton {
-		AssertElementPresent(
-			key_trueOrFalse = "true",
-			locator1 = "Form#COLLAPSE_BUTTON");
+		AssertElementPresent(locator1 = "Form#FIELDS_GROUP_EXPANDED");
 	}
 
 	macro viewFieldReference {

@@ -636,7 +636,6 @@ definition {
 	@description = "Verify that the Clear All option cleans the search results"
 	@priority = "3"
 	test CanClearAllSearchResults {
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -653,15 +652,10 @@ definition {
 
 		MyWorkflowTasks.clearSearchResultMyWorkflowTasks();
 
-		 AssertElementPresent(
+		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title",
 			key_workflowTask = "Blogs Entry",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE");
-		
-
-		
-
-
 	}
 
 	@description = "Verify that in Update Due Date modal, the user can expand the comment box"

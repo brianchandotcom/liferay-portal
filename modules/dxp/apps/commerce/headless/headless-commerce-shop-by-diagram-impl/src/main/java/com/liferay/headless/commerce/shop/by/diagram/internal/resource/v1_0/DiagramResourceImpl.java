@@ -128,7 +128,7 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 			cpDefinitionDiagramSetting =
 				_cpDefinitionDiagramSettingService.
 					addCPDefinitionDiagramSetting(
-						contextUser.getUserId(), cpDefinitionId,
+						cpDefinitionId,
 						GetterUtil.getLong(diagram.getImageId()),
 						GetterUtil.getString(diagram.getColor()),
 						GetterUtil.getDouble(diagram.getRadius()),

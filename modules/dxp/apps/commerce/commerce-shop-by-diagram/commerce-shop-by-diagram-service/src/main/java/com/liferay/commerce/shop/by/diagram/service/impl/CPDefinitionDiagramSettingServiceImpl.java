@@ -42,8 +42,8 @@ public class CPDefinitionDiagramSettingServiceImpl
 
 	@Override
 	public CPDefinitionDiagramSetting addCPDefinitionDiagramSetting(
-			long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
-			String color, double radius, String type)
+			long cpDefinitionId, long cpAttachmentFileEntryId, String color,
+			double radius, String type)
 		throws PortalException {
 
 		_cpDefinitionModelResourcePermission.check(
@@ -51,8 +51,8 @@ public class CPDefinitionDiagramSettingServiceImpl
 
 		return cpDefinitionDiagramSettingLocalService.
 			addCPDefinitionDiagramSetting(
-				userId, cpDefinitionId, cpAttachmentFileEntryId, color, radius,
-				type);
+				getUserId(), cpDefinitionId, cpAttachmentFileEntryId, color,
+				radius, type);
 	}
 
 	@Override

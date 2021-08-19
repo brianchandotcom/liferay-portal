@@ -180,12 +180,9 @@ public class EditCPDefinitionDiagramSettingMVCActionCommand
 				actionRequest, cpDefinitionDiagramSetting, cpDefinitionId);
 
 		if (cpDefinitionDiagramSetting == null) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CPDefinitionDiagramSetting.class.getName(), actionRequest);
-
 			return _cpDefinitionDiagramSettingService.
 				addCPDefinitionDiagramSetting(
-					serviceContext.getUserId(), cpDefinitionId,
+					cpDefinitionId,
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId(), null,
 					0D, type);
 		}

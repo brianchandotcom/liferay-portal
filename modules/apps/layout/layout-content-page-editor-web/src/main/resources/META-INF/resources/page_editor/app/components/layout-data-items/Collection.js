@@ -168,23 +168,25 @@ const ColumnContext = ({
 	);
 };
 
-const DEFAULT_COLLECTION = {
-	fakeCollection: true,
-	items: [{}],
-	length: 1,
-	totalNumberOfItems: 1,
-};
-
 const Collection = React.forwardRef(
 	({children, item, withinTopper = false}, ref) => {
 		const child = React.Children.toArray(children)[0];
 		const collectionConfig = item.config;
+		const emptyCollection = useMemo(() => ({
+			fakeCollection: true,
+			items: Array.from(
+				Array(collectionConfig.numberOfItems || 1),
+				() => ({})
+			),
+			length: collectionConfig.numberOfItems || 1,
+			totalNumberOfItems: collectionConfig.numberOfItems || 1,
+		}), [collectionConfig.numberOfItems]);
 
 		const dispatch = useDispatch();
 		const languageId = useSelector(selectLanguageId);
 
 		const [activePage, setActivePage] = useState(1);
-		const [collection, setCollection] = useState(DEFAULT_COLLECTION);
+		const [collection, setCollection] = useState(emptyCollection);
 		const [loading, setLoading] = useState(false);
 
 		const totalPages = Math.ceil(
@@ -237,7 +239,7 @@ const Collection = React.forwardRef(
 						setCollection(
 							response.length > 0 && response.items?.length > 0
 								? response
-								: {...response, ...DEFAULT_COLLECTION}
+								: {...response, ...emptyCollection}
 						);
 					})
 					.catch((error) => {
@@ -251,8 +253,6 @@ const Collection = React.forwardRef(
 			}
 		}, [
 			activePage,
-			itemClassNameId,
-			itemClassPK,
 			collectionConfig.collection,
 			collectionConfig.listItemStyle,
 			collectionConfig.listStyle,
@@ -261,6 +261,9 @@ const Collection = React.forwardRef(
 			collectionConfig.paginationType,
 			collectionConfig.templateKey,
 			dispatch,
+			emptyCollection,
+			itemClassNameId,
+			itemClassPK,
 			languageId,
 			totalPages,
 		]);

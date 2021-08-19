@@ -228,10 +228,6 @@ definition {
 		task ("Log in as the user corbin.murakami@faro.io and go to the properties menu") {
 			ACWorkspace.signOut();
 
-
-
-
-
 			ACLogin.loginAs(
 				emailAddress = "corbin.murakami@faro.io",
 				password = "test");
@@ -252,5 +248,5 @@ definition {
 			ACProperties.assertPropertyTitleList(propertyName = "Property Name 3");
 		}
 	}
-}
 
+}

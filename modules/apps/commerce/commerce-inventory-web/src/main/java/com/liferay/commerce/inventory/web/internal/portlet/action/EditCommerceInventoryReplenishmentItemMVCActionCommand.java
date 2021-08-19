@@ -71,13 +71,10 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		calendar.set(year, month, day);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceInventoryReplenishmentItem.class.getName(), actionRequest);
-
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
-				serviceContext.getUserId(), commerceInventoryWarehouseId, sku,
-				calendar.getTime(), quantity);
+				commerceInventoryWarehouseId, sku, calendar.getTime(),
+				quantity);
 	}
 
 	protected void deleteCommerceInventoryReplenishmentItem(

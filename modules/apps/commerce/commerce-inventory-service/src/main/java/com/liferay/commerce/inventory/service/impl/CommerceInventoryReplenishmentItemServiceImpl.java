@@ -37,7 +37,7 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 	@Override
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
+				long commerceInventoryWarehouseId, String sku,
 				Date availabilityDate, int quantity)
 		throws PortalException {
 
@@ -47,8 +47,8 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 
 		return commerceInventoryReplenishmentItemLocalService.
 			addCommerceInventoryReplenishmentItem(
-				userId, commerceInventoryWarehouseId, sku, availabilityDate,
-				quantity);
+				getUserId(), commerceInventoryWarehouseId, sku,
+				availabilityDate, quantity);
 	}
 
 	@Override

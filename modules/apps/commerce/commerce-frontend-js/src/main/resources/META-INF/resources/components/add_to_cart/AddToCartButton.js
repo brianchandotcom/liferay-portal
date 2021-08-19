@@ -102,7 +102,7 @@ function AddToCartButton({
 
 					setDisabled(disabled || !isPurchasable);
 				}),
-		[activeOrder, CartResource, catalogItem]
+		[activeOrder, CartResource, catalogItem, disabled]
 	);
 
 	const changeOrder = useCallback(

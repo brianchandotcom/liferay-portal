@@ -45,6 +45,7 @@ else {
 	const initialProps = {
 		channel: {
 			currencyCode: '<%= commerceCurrencyCode %>',
+			groupId: <%= commerceChannelGroupId %>,
 			id: <%= commerceChannelId %>,
 		},
 		cpInstance: {

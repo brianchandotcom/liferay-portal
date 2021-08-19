@@ -621,66 +621,7 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String userId, int start, int end) {
 
-		List<AssetEntry> dynamicAssetEntries = new ArrayList<>();
-
-		if (_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-				for (long segmentsEntryId :
-						_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
-
-					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-						assetListEntry, segmentsEntryId, userId);
-
-					List<AssetEntry> assetEntries = _search(
-						assetListEntry.getCompanyId(), assetCategoryIds,
-						assetEntryQuery);
-
-					dynamicAssetEntries.addAll(assetEntries);
-				}
-			}
-			else {
-				int count = 0;
-				int remaining = Math.max(0, end - start);
-				int subtotal = 0;
-
-				for (long segmentsEntryId :
-						_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
-
-					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-						assetListEntry, segmentsEntryId, userId);
-
-					count = (int)_searchCount(
-						assetListEntry.getCompanyId(), assetEntryQuery);
-
-					if ((subtotal + count) < start) {
-						subtotal = +count;
-
-						continue;
-					}
-
-					List<AssetEntry> assetEntries = _search(
-						assetListEntry.getCompanyId(), assetCategoryIds,
-						assetEntryQuery);
-
-					count = assetEntries.size();
-
-					List<AssetEntry> assetEntriesSublist = assetEntries.subList(
-						Math.max(start - subtotal, 0),
-						Math.min(remaining, count));
-
-					dynamicAssetEntries.addAll(assetEntriesSublist);
-
-					remaining -= assetEntriesSublist.size();
-
-					subtotal += count;
-
-					if (remaining <= 0) {
-						break;
-					}
-				}
-			}
-		}
-		else {
+		if (!_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 				assetListEntry,
 				_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
@@ -689,9 +630,67 @@ public class AssetListAssetEntryProviderImpl
 			assetEntryQuery.setEnd(end);
 			assetEntryQuery.setStart(start);
 
-			dynamicAssetEntries = _search(
+			return _search(
 				assetListEntry.getCompanyId(), assetCategoryIds,
 				assetEntryQuery);
+		}
+
+		List<AssetEntry> dynamicAssetEntries = new ArrayList<>();
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+			for (long segmentsEntryId :
+					_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
+
+				AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+					assetListEntry, segmentsEntryId, userId);
+
+				List<AssetEntry> assetEntries = _search(
+					assetListEntry.getCompanyId(), assetCategoryIds,
+					assetEntryQuery);
+
+				dynamicAssetEntries.addAll(assetEntries);
+			}
+
+			return dynamicAssetEntries;
+		}
+
+		int count = 0;
+		int remaining = Math.max(0, end - start);
+		int subtotal = 0;
+
+		for (long segmentsEntryId :
+				_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
+
+			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+				assetListEntry, segmentsEntryId, userId);
+
+			count = (int)_searchCount(
+				assetListEntry.getCompanyId(), assetEntryQuery);
+
+			if ((subtotal + count) < start) {
+				subtotal = +count;
+
+				continue;
+			}
+
+			List<AssetEntry> assetEntries = _search(
+				assetListEntry.getCompanyId(), assetCategoryIds,
+				assetEntryQuery);
+
+			count = assetEntries.size();
+
+			List<AssetEntry> assetEntriesSublist = assetEntries.subList(
+				Math.max(start - subtotal, 0), Math.min(remaining, count));
+
+			dynamicAssetEntries.addAll(assetEntriesSublist);
+
+			remaining -= assetEntriesSublist.size();
+
+			subtotal += count;
+
+			if (remaining <= 0) {
+				break;
+			}
 		}
 
 		return dynamicAssetEntries;
@@ -701,9 +700,9 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String userId) {
 
-		int totalCount = 0;
-
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
+			int totalCount = 0;
+
 			for (long segmentsEntryId :
 					_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
 
@@ -714,19 +713,16 @@ public class AssetListAssetEntryProviderImpl
 					assetListEntry.getCompanyId(), assetCategoryIds,
 					assetEntryQuery);
 			}
-		}
-		else {
-			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-				assetListEntry,
-				_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
-				userId);
 
-			totalCount = _searchCount(
-				assetListEntry.getCompanyId(), assetCategoryIds,
-				assetEntryQuery);
+			return totalCount;
 		}
 
-		return totalCount;
+		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+			assetListEntry,
+			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds), userId);
+
+		return _searchCount(
+			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQuery);
 	}
 
 	private String _getFieldReference(

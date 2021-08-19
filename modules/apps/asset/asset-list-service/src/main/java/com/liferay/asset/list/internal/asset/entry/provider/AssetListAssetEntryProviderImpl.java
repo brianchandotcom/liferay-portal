@@ -664,8 +664,9 @@ public class AssetListAssetEntryProviderImpl
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 				assetListEntry, segmentsEntryId, userId);
 
-			count = (int)_searchCount(
-				assetListEntry.getCompanyId(), assetEntryQuery);
+			count = _searchCount(
+				assetListEntry.getCompanyId(), assetCategoryIds,
+				assetEntryQuery);
 
 			if ((subtotal + count) < start) {
 				subtotal = +count;
@@ -937,6 +938,37 @@ public class AssetListAssetEntryProviderImpl
 		return assetEntryQuery;
 	}
 
+	private SearchContext _getSearchContext(
+		long companyId, long[][] assetCategoryIds,
+		AssetEntryQuery assetEntryQuery) {
+
+		SearchContext searchContext = new SearchContext();
+
+		String ddmStructureFieldName = GetterUtil.getString(
+			assetEntryQuery.getAttribute("ddmStructureFieldName"));
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+
+		searchContext.setBooleanClauses(
+			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
+		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(assetEntryQuery.getEnd());
+		searchContext.setKeywords(assetEntryQuery.getKeywords());
+		searchContext.setStart(assetEntryQuery.getStart());
+
+		return searchContext;
+	}
+
 	private void _processAssetEntryQuery(
 		long companyId, String userId, UnicodeProperties unicodeProperties,
 		AssetEntryQuery assetEntryQuery) {
@@ -954,33 +986,10 @@ public class AssetListAssetEntryProviderImpl
 		long companyId, long[][] assetCategoryIds,
 		AssetEntryQuery assetEntryQuery) {
 
-		SearchContext searchContext = new SearchContext();
-
-		String ddmStructureFieldName = GetterUtil.getString(
-			assetEntryQuery.getAttribute("ddmStructureFieldName"));
-		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
-			"ddmStructureFieldValue");
-
-		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
-
-			searchContext.setAttribute(
-				"ddmStructureFieldName", ddmStructureFieldName);
-			searchContext.setAttribute(
-				"ddmStructureFieldValue", ddmStructureFieldValue);
-		}
-
-		searchContext.setBooleanClauses(
-			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
-		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
-		searchContext.setCompanyId(companyId);
-		searchContext.setEnd(assetEntryQuery.getEnd());
-		searchContext.setKeywords(assetEntryQuery.getKeywords());
-		searchContext.setStart(assetEntryQuery.getStart());
-
 		try {
 			Hits hits = _assetHelper.search(
-				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
+				_getSearchContext(companyId, assetCategoryIds, assetEntryQuery),
+				assetEntryQuery, assetEntryQuery.getStart(),
 				assetEntryQuery.getEnd());
 
 			return _assetHelper.getAssetEntries(hits);
@@ -992,70 +1001,14 @@ public class AssetListAssetEntryProviderImpl
 		return Collections.emptyList();
 	}
 
-	private long _searchCount(long companyId, AssetEntryQuery assetEntryQuery) {
-		SearchContext searchContext = new SearchContext();
-
-		String ddmStructureFieldName = GetterUtil.getString(
-			assetEntryQuery.getAttribute("ddmStructureFieldName"));
-		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
-			"ddmStructureFieldValue");
-
-		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
-
-			searchContext.setAttribute(
-				"ddmStructureFieldName", ddmStructureFieldName);
-			searchContext.setAttribute(
-				"ddmStructureFieldValue", ddmStructureFieldValue);
-		}
-
-		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
-		searchContext.setCompanyId(companyId);
-		searchContext.setEnd(assetEntryQuery.getEnd());
-		searchContext.setKeywords(assetEntryQuery.getKeywords());
-		searchContext.setStart(assetEntryQuery.getStart());
-
-		try {
-			return _assetHelper.searchCount(searchContext, assetEntryQuery);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get asset entries", exception);
-		}
-
-		return 0;
-	}
-
 	private int _searchCount(
 		long companyId, long[][] assetCategoryIds,
 		AssetEntryQuery assetEntryQuery) {
 
-		SearchContext searchContext = new SearchContext();
-
-		String ddmStructureFieldName = GetterUtil.getString(
-			assetEntryQuery.getAttribute("ddmStructureFieldName"));
-		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
-			"ddmStructureFieldValue");
-
-		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
-
-			searchContext.setAttribute(
-				"ddmStructureFieldName", ddmStructureFieldName);
-			searchContext.setAttribute(
-				"ddmStructureFieldValue", ddmStructureFieldValue);
-		}
-
-		searchContext.setBooleanClauses(
-			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
-		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
-		searchContext.setCompanyId(companyId);
-		searchContext.setEnd(assetEntryQuery.getEnd());
-		searchContext.setKeywords(assetEntryQuery.getKeywords());
-		searchContext.setStart(assetEntryQuery.getStart());
-
 		try {
 			Long count = _assetHelper.searchCount(
-				searchContext, assetEntryQuery);
+				_getSearchContext(companyId, assetCategoryIds, assetEntryQuery),
+				assetEntryQuery);
 
 			return count.intValue();
 		}

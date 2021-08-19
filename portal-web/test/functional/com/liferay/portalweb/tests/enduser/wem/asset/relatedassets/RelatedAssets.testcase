@@ -201,49 +201,60 @@ definition {
 		property portal.release = "false";
 		property testray.component.names = "Related Assets";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page 1");
+		task ("Add two widget pages with one widget each") {
+			JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page 1");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page 2");
+			JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page 2");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page 1",
-			widgetName = "Web Content Display");
+			JSONLayout.addWidgetToPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page 1",
+					widgetName = "Web Content Display");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page 1",
-			widgetName = "Asset Publisher");
+			JSONLayout.addWidgetToPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page 1",
+					widgetName = "Asset Publisher");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page 1",
-			siteName = "Site Name");
+		}
 
-		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
+		task ("Configure Asset Link Behavior") {
+			Navigator.gotoSitePage(
+					pageName = "Test Page 1",
+					siteName = "Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page 1",
-			widgetName = "Related Assets");
+			AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+					assetLinkBehavior = "Show Full Content");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page 1",
-			siteName = "Site Name");
+		task ("Add Related Assets widget to Page 1") {
+			JSONLayout.addWidgetToPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page 1",
+					widgetName = "Related Assets");
+		}
 
-		WebContent.addPGViaWCD(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		task ("Add Web Content via Web Content Display on Page 1") {
+			Navigator.gotoSitePage(
+					pageName = "Test Page 1",
+					siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+			WebContent.addPGViaWCD(
+					webContentContent = "Web Content Content",
+					webContentTitle = "Web Content Title");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page 2",
-			widgetName = "Blogs");
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+		}
+
+		task ("Add Blogs portlet to Page 2 and create a blog") {
+			JSONLayout.addWidgetToPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page 2",
+					widgetName = "Blogs");
 
 			JSONBlog.addEntry(
 					entryContent = "Blogs Entry Content",
@@ -251,57 +262,70 @@ definition {
 					groupName = "Site Name");
 		}
 
-		JSONBookmarks.addFolder(
-			folderDescription = "Bookmarks Folder Description",
-			folderName = "Bookmarks Folder Name",
-			groupName = "Guest");
+		task ("Create folders") {
+			JSONBookmarks.addFolder(
+					folderDescription = "Bookmarks Folder Description",
+					folderName = "Bookmarks Folder Name",
+					groupName = "Guest");
 
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
+			JSONDocument.addFolder(
+					dmFolderDescription = "DM Folder Description",
+					dmFolderName = "DM Folder Name",
+					groupName = "Guest");
 
-		JSONWebcontent.addFolder(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name",
-			groupName = "Guest");
+			JSONWebcontent.addFolder(
+					folderDescription = "WC Folder Description",
+					folderName = "WC Folder Name",
+					groupName = "Guest");
+		}
+		task ("Assert assets are shown in Page 1") {
+			Navigator.gotoSitePage(
+					pageName = "Test Page 1",
+					siteName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page 1",
-			siteName = "Site Name");
+			AssetPublisherPortlet.viewAssetPG(
+					assetContent = "Blogs Entry Content",
+					assetTitle = "Blogs Entry Title");
 
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "Blogs Entry Content",
-			assetTitle = "Blogs Entry Title");
+			AssetPublisherPortlet.viewAssetPG(
+					assetContent = "Web Content Content",
+					assetTitle = "Web Content Title");
+		}
+		task ("Assert folders are not shown in Page1") {
+			RelatedAssets.viewNoPG(
+					assetTitleList =
+							"Blogs Entry Title,Web Content Title,DM Folder Name,WC Folder Name,Bookmarks Folder Name");
+		}
 
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "Web Content Content",
-			assetTitle = "Web Content Title");
+		task ("Edit Web Content") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		RelatedAssets.viewNoPG(assetTitleList = "Blogs Entry Title,Web Content Title,DM Folder Name,WC Folder Name,Bookmarks Folder Name");
+			ProductMenu.gotoPortlet(
+					category = "Content &amp; Data",
+					portlet = "Web Content");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+			WebContentNavigator.gotoEditCP(
+					webContentTitle = "Web Content Title");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		task ("Add existing related assets") {
+			WebContent.addExistingRelatedAssetCP(
+					assetTitle = "Blogs Entry Title",
+					assetType = "Blogs Entry",
+					siteName = "Site Name");
+		}
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		task ("Assert assets on blog entry") {
+			Navigator.gotoSitePage(
+					pageName = "Test Page 1",
+					siteName = "Site Name");
 
-		WebContent.addExistingRelatedAssetCP(
-			assetTitle = "Blogs Entry Title",
-			assetType = "Blogs Entry",
-			siteName = "Site Name");
+			AssetPublisherPortlet.viewAssetDetailsPG(
+					assetContent = "Blogs Entry Content",
+					assetTitle = "Blogs Entry Title");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page 1",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetDetailsPG(
-			assetContent = "Blogs Entry Content",
-			assetTitle = "Blogs Entry Title");
-
-		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title");
+			RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title");
+		}
 	}
 
 	@description = "View related assets in Related Assets widget."

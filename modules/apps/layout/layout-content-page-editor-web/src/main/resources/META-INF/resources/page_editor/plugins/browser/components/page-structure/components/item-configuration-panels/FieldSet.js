@@ -101,45 +101,32 @@ export const FieldSet = ({
 								: field.defaultValue;
 						}
 
-						const visible =
-							!field.dependencies ||
-							field.dependencies.every(
-								(dependency) =>
-									values[dependency.styleName] ===
-									dependency.value
-							);
-
 						return (
-							visible && (
-								<div
-									className={classNames(
-										'autofit-row',
-										'page-editor__sidebar__fieldset__field align-items-end',
-										{
-											'page-editor__sidebar__fieldset__field-small':
-												field.displaySize ===
-												DISPLAY_SIZES.small,
-										}
-									)}
-									key={index}
-								>
-									<div className="autofit-col autofit-col-expand">
-										<FieldComponent
-											disabled={fieldIsDisabled(
-												item,
-												field
-											)}
-											field={field}
-											onValueSelect={onValueSelect}
-											value={fieldValue}
-										/>
-									</div>
-
-									{field.localizable && (
-										<CurrentLanguageFlag className="ml-2" />
-									)}
+							<div
+								className={classNames(
+									'autofit-row',
+									'page-editor__sidebar__fieldset__field align-items-end',
+									{
+										'page-editor__sidebar__fieldset__field-small':
+											field.displaySize ===
+											DISPLAY_SIZES.small,
+									}
+								)}
+								key={index}
+							>
+								<div className="autofit-col autofit-col-expand">
+									<FieldComponent
+										disabled={fieldIsDisabled(item, field)}
+										field={field}
+										onValueSelect={onValueSelect}
+										value={fieldValue}
+									/>
 								</div>
-							)
+
+								{field.localizable && (
+									<CurrentLanguageFlag className="ml-2" />
+								)}
+							</div>
 						);
 					})}
 				</div>

@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -104,7 +105,9 @@ public class LayoutActionDropdownItemsProvider {
 										_themeDisplay.getScopeGroupId(),
 										PortalUtil.getClassNameId(
 											Layout.class.getName()),
-										layout.getPlid(),
+										BeanPropertiesUtil.getLong(
+											draftLayout, "plid",
+											layout.getPlid()),
 										RequestBackedPortletURLFactoryUtil.
 											create(_httpServletRequest))
 								).setRedirect(
@@ -268,7 +271,11 @@ public class LayoutActionDropdownItemsProvider {
 						dropdownItem -> {
 							dropdownItem.putData("action", "exportTranslation");
 							dropdownItem.putData(
-								"plid", String.valueOf(layout.getPlid()));
+								"plid",
+								String.valueOf(
+									BeanPropertiesUtil.getLong(
+										draftLayout, "plid",
+										layout.getPlid())));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest,
@@ -284,7 +291,9 @@ public class LayoutActionDropdownItemsProvider {
 											layout.getGroupId(),
 											PortalUtil.getClassNameId(
 												Layout.class.getName()),
-											layout.getPlid(),
+											BeanPropertiesUtil.getLong(
+												draftLayout, "plid",
+												layout.getPlid()),
 											RequestBackedPortletURLFactoryUtil.
 												create(_httpServletRequest))
 								).setRedirect(

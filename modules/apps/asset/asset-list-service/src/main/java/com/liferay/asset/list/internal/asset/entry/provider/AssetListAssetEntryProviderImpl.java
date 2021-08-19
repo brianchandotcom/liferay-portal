@@ -195,17 +195,12 @@ public class AssetListAssetEntryProviderImpl
 				assetListEntry.getType(),
 				AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
-			return _assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRelsCount(
-					assetListEntry.getAssetListEntryId(),
-					new long[] {
-						_getFirstSegmentsEntryId(
-							assetListEntry, segmentsEntryIds)
-					});
+			return _getManualAssetEntriesCount(
+				assetListEntry, segmentsEntryIds, assetCategoryIds);
 		}
 
-		return _assetEntryLocalService.getEntriesCount(
-			getAssetEntryQuery(assetListEntry, segmentsEntryIds, userId));
+		return _getDynamicAssetEntriesCount(
+			assetListEntry, segmentsEntryIds, assetCategoryIds, userId);
 	}
 
 	@Override
@@ -702,6 +697,38 @@ public class AssetListAssetEntryProviderImpl
 		return dynamicAssetEntries;
 	}
 
+	private int _getDynamicAssetEntriesCount(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String userId) {
+
+		int totalCount = 0;
+
+		if (_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
+			for (long segmentsEntryId :
+					_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
+
+				AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+					assetListEntry, segmentsEntryId, userId);
+
+				totalCount += _searchCount(
+					assetListEntry.getCompanyId(), assetCategoryIds,
+					assetEntryQuery);
+			}
+		}
+		else {
+			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+				assetListEntry,
+				_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
+				userId);
+
+			totalCount = _searchCount(
+				assetListEntry.getCompanyId(), assetCategoryIds,
+				assetEntryQuery);
+		}
+
+		return totalCount;
+	}
+
 	private String _getFieldReference(
 		DDMStructure ddmStructure, String fieldName) {
 
@@ -838,6 +865,54 @@ public class AssetListAssetEntryProviderImpl
 		return Collections.emptyList();
 	}
 
+	private int _getManualAssetEntriesCount(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds) {
+
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return _assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					assetListEntry.getAssetListEntryId(),
+					new long[] {
+						_getFirstSegmentsEntryId(
+							assetListEntry, segmentsEntryIds)
+					});
+		}
+
+		SearchContext searchContext = new SearchContext();
+
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_getAssetListEntryAssetEntryRels(
+				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		List<Long> assetEntryIds = ListUtil.toList(
+			assetListEntryAssetEntryRels,
+			AssetListEntryAssetEntryRelModel::getAssetEntryId);
+
+		searchContext.setAttribute(
+			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
+
+		searchContext.setBooleanClauses(
+			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
+		searchContext.setCompanyId(assetListEntry.getCompanyId());
+
+		AssetEntryQuery assetEntryQuery = _getManualAssetEntryQuery(
+			assetListEntry);
+
+		try {
+			Long count = _assetHelper.searchCount(
+				searchContext, assetEntryQuery);
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get asset entries count", exception);
+		}
+
+		return 0;
+	}
+
 	private AssetEntryQuery _getManualAssetEntryQuery(
 		AssetListEntry assetListEntry) {
 
@@ -949,6 +1024,47 @@ public class AssetListAssetEntryProviderImpl
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);
+		}
+
+		return 0;
+	}
+
+	private int _searchCount(
+		long companyId, long[][] assetCategoryIds,
+		AssetEntryQuery assetEntryQuery) {
+
+		SearchContext searchContext = new SearchContext();
+
+		String ddmStructureFieldName = GetterUtil.getString(
+			assetEntryQuery.getAttribute("ddmStructureFieldName"));
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+
+		searchContext.setBooleanClauses(
+			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
+		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(assetEntryQuery.getEnd());
+		searchContext.setKeywords(assetEntryQuery.getKeywords());
+		searchContext.setStart(assetEntryQuery.getStart());
+
+		try {
+			Long count = _assetHelper.searchCount(
+				searchContext, assetEntryQuery);
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get asset entries count", exception);
 		}
 
 		return 0;

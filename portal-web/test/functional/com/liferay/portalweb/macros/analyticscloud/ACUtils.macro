@@ -242,6 +242,13 @@ definition {
 			siteName = "Site Name");
 	}
 
+	macro getRequestCommonPropertyValue {
+		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
+		var value = JSONUtil.getWithJSONPath("[${postDataText}]","$.[0].${property}");
+
+		return "${value}";
+	}
+
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 

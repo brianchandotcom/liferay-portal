@@ -12,7 +12,7 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import AdminTooltip from './AdminTooltip';
 import DiagramFooter from './DiagramFooter';
@@ -22,6 +22,11 @@ import ImagePins from './ImagePins';
 import '../css/diagram.scss';
 const PRODUCTS = 'products';
 const PINS = 'pins';
+
+const HEADERS = new Headers({
+	Accept: 'application/json',
+	'Content-Type': 'application/json',
+});
 
 const Diagram = ({
 	enablePanZoom,
@@ -37,13 +42,14 @@ const Diagram = ({
 	spritemap,
 	zoomController,
 }) => {
-	const [imageState, setImageState] = useState(imageURL)
+	const [imageState] = useState(imageURL);
 	const [pinClickHandler, setPinClickHandler] = useState(false);
 	const [addPinHandler, setAddPinHandler] = useState(false);
 	const [removePinHandler, setRemovePinHandler] = useState({
 		handler: false,
 		pin: null,
 	});
+	const [skus, setSkus] = useState([]);
 	const [diagramSizes, setDiagramSizes] = useState({k: 1, x: 0, y: 0});
 	const [resetZoom, setResetZoom] = useState(false);
 	const [zoomInHandler, setZoomInHandler] = useState(false);
@@ -52,8 +58,6 @@ const Diagram = ({
 	const [scale, setScale] = useState(1);
 	const [selectedOption, setSelectedOption] = useState(1);
 	const [cPins, setCpins] = useState([]);
-	const [skus, setSkus] = useState([]);
-	const [skusListState, setSkusListState] = useState([]);
 	const [showTooltip, setShowTooltip] = useState({
 		details: {
 			cx: 0,
@@ -71,105 +75,83 @@ const Diagram = ({
 		radius: newPinSettings.defaultRadius,
 	});
 
-	useEffect(() => {
-		fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-			headers: new Headers({
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
+	const loadPins = useCallback(
+		() =>
+			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
+				HEADERS,
 			})
-		})
-			.then((response) => response.json())
-			.then((jsonResponse) => {
-				const loadedPins = jsonResponse.items
-				.map((item) => ({
-					cx: item.positionX,
-					cy: item.positionY,
-					id: item.id,
-					label: item.number,
-				}));
-				console.log({loadedPins})
-				setCpins(loadedPins);
-			})
-	}, [pinsEndpoint, productId]);
-
-	const loadPins = () => 
-		fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-			headers: new Headers({
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			})
-		})
-			.then((response) => response.json())
-			.then((jsonResponse) => {
-				const loadedPins = jsonResponse.items
-					.map((item) => ({
+				.then((response) => response.json())
+				.then((jsonResponse) => {
+					const loadedPins = jsonResponse.items.map((item) => ({
 						cx: item.positionX,
 						cy: item.positionY,
 						id: item.id,
 						label: item.number,
 					}));
-				console.log({ loadedPins })
 
-				setCpins(loadedPins);
-			})
-	
-	
+					setCpins(loadedPins);
+				}),
+		[pinsEndpoint, productId]
+	);
+
 	const deletePin = (node) => {
 		fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
-			headers: new Headers({
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			}),
+			HEADERS,
 			method: 'DELETE',
-		})
-		// toast "pins deleted"
-	}
-
-	const searchSkus = () => {
-		return fetch(`${pinsEndpoint}skus`, {
-			headers: new Headers({
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			})
-		})
-			.then((response) => response.json())
-			.then((jsonResponse) => {
-				debugger;
-				console.log(jsonResponse)
-				setSkusListState(jsonResponse.items)
-				return jsonResponse
-			})
-	}
+		});
+	};
 
 	const updatePin = (node) => {
-		if (node.id !== undefined) {
+		if (node.id) {
 			fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
+				HEADERS,
 				body: JSON.stringify(node),
-				headers: new Headers({
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				}),
 				method: 'PATCH',
-			}).then((response) => {
-				response.json();
 			});
-		} else {
+		}
+		else {
 			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
+				HEADERS,
 				body: JSON.stringify(node),
-				headers: new Headers({
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				}),
 				method: 'POST',
-			}).then((response) => {
-				response.json();
 			});
-		};
-		// toast pin updated?
+		}
+	};
+
+	const searchSkus = (query, linkedValue) => {
+		if (linkedValue === 'sku') {
+			let queryParam = '';
+
+			if (query) {
+				queryParam = `?search=${query}`;
+			}
+
+			return fetch(`${pinsEndpoint}skus/${queryParam}`, {
+				HEADERS,
+			})
+				.then((response) => response.json())
+				.then((jsonResponse) => {
+					setSkus(jsonResponse.items);
+				});
+		}
+		else if (linkedValue === 'diagram') {
+			let queryParam = '';
+
+			if (query) {
+				queryParam = `?filter=productType eq ${linkedValue}`;
+			}
+
+			return fetch(`${pinsEndpoint}products/${queryParam}`, {
+				HEADERS,
+			})
+				.then((response) => response.json())
+				.then((jsonResponse) => {
+					setSkus(jsonResponse.items);
+				});
+		}
 	};
 
 	const pinClickAction = (updatedPin) => {
-		console.log('culo')
 		setShowTooltip({
 			details: {
 				cx: updatedPin.cx,
@@ -184,30 +166,9 @@ const Diagram = ({
 		});
 	};
 
-	// useLayoutEffect(() => {
-	// 	if (showTooltip?.tooltip && cPins) {
-	// 		const newCPinState = cPins.map((element, i) => {
-	// 			if (element.id === showTooltip.details.id) {
-	// 				return {
-	// 					cx: cPins[i].cx,
-	// 					cy: cPins[i].cy,
-	// 					draggable: cPins[i].draggable || true,
-	// 					fill: cPins[i].fill || '#000000',
-	// 					id: showTooltip.details.id,
-	// 					label: showTooltip.details.label,
-	// 					linked_to_sku: showTooltip.details.linked_to_sku,
-	// 					quantity: showTooltip.details.quantity,
-	// 					r: cPins[i].r || 15,
-	// 					sku: showTooltip.details.sku || '',
-	// 				};
-	// 			}
-	// 			else {
-	// 				return element;
-	// 			}
-	// 		});
-	// 		setCpins(newCPinState);
-	// 	}
-	// }, [showTooltip, cPins]);
+	useEffect(() => {
+		loadPins();
+	}, [pinsEndpoint, productId, loadPins]);
 
 	return imageState ? (
 		<div className="diagram mx-auto">
@@ -237,13 +198,12 @@ const Diagram = ({
 					navigationController={navigationController}
 					pinClickAction={pinClickAction}
 					pinClickHandler={pinClickHandler}
-					removePinHandler={removePinHandler}
 					pinsEndpoint={pinsEndpoint}
 					productId={productId}
+					removePinHandler={removePinHandler}
 					resetZoom={resetZoom}
-					searchSkus={searchSkus}
 					scale={scale}
-					skus={skus}
+					searchSkus={searchSkus}
 					selectedOption={selectedOption}
 					setAddPinHandler={setAddPinHandler}
 					setChangedScale={setChangedScale}
@@ -263,15 +223,17 @@ const Diagram = ({
 				>
 					{showTooltip.tooltip && (
 						<AdminTooltip
-							endpointURL={pinsEndpoint}
+							deletePin={deletePin}
 							namespace={namespace}
+							pinsEndpoint={pinsEndpoint}
 							removePinHandler={removePinHandler}
+							searchSkus={searchSkus}
 							setRemovePinHandler={setRemovePinHandler}
 							setShowTooltip={setShowTooltip}
+							setSkus={setSkus}
 							showTooltip={showTooltip}
+							skus={skus}
 							updatePin={updatePin}
-							deletePin={deletePin}
-							skusListState={skusListState}
 						/>
 					)}
 				</ImagePins>
@@ -351,7 +313,7 @@ Diagram.defaultProps = {
 			quantity: null,
 			sku: '',
 		},
-	tooltip: false,
+		tooltip: false,
 	},
 	spritemap: './assets/clay/icons.svg',
 	zoomController: {
@@ -380,8 +342,8 @@ Diagram.propTypes = {
 			sku: PropTypes.string,
 		})
 	),
-	enablePanZoom: PropTypes.bool,
 	deletePin: PropTypes.func,
+	enablePanZoom: PropTypes.bool,
 	enableResetZoom: PropTypes.bool,
 	imageSettings: PropTypes.shape({
 		height: PropTypes.string,
@@ -411,8 +373,8 @@ Diagram.propTypes = {
 	}),
 	pinClickAction: PropTypes.func,
 	productId: PropTypes.number,
-	setPins: PropTypes.func,
 	searchSkus: PropTypes.func,
+	setPins: PropTypes.func,
 	showTooltip: PropTypes.shape({
 		details: PropTypes.shape({
 			cx: PropTypes.double,

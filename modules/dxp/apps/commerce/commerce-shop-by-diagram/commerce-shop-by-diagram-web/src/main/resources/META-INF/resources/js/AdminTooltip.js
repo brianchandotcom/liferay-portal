@@ -15,61 +15,30 @@ import ClayCard from '@clayui/card';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useLayoutEffect, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const AdminTooltip = ({
+	deletePin,
 	namespace,
+	searchSkus,
 	setRemovePinHandler,
 	setShowTooltip,
 	showTooltip,
-	endpointURL,
-	deletePin,
+	skus,
 	updatePin,
 }) => {
-	const [pinLabel, setPinLabel] = useState(showTooltip.details.label);
+	const [pinPositionLabel, setPinPositionLabel] = useState(
+		showTooltip.details.label
+	);
 	const [linkedValue, setLinkedValue] = useState(
 		showTooltip.details.linked_to_sku
 	);
-	const [sku, setSku] = useState(showTooltip.details.sku || "");
+	const [sku, setSku] = useState(showTooltip.details.sku);
 	const [quantity, setQuantity] = useState(showTooltip.details.quantity);
-	const [skus, setSkus] = useState([])
-
-	const getSkus = (query) => {
-		let queryParam = ""
-		if (query) {
-			queryParam = `?search=${query}`
-		}
-		return fetch(`${endpointURL}skus/${queryParam}`, {
-			headers: new Headers({
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			})
-		}).then((response) =>  response.json())
-		.then((jsonResponse) => {
-			console.log({jsonResponse})
-			setSkus(jsonResponse)
-			return jsonResponse.items
-		});
-	}
-	// const searchSkus = () => {
-	// 	return fetch(`${pinsEndpoint}skus`, {
-	// 		headers: new Headers({
-	// 			Accept: 'application/json',
-	// 			'Content-Type': 'application/json',
-	// 		})
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((jsonResponse) => {
-	// 			console.log(jsonResponse)
-	// 			setSkus(jsonResponse.items)
-	// 			return jsonResponse
-	// 		})
-	// }
 
 	useEffect(() => {
-		const skuLoaded = getSkus(sku)
-		console.log({skuLoaded})
-	}, [sku])
+		searchSkus(sku, linkedValue);
+	}, [sku, searchSkus, linkedValue]);
 
 	return (
 		<ClayCard
@@ -80,23 +49,25 @@ const AdminTooltip = ({
 			}}
 		>
 			<ClayCard.Body className="row">
-				<ClayForm.Group className="col-12 form-group-sm text-left">
+				<ClayForm.Group className="col-12 text-left" small>
 					<label htmlFor={`${namespace}pin-position`}>
 						{Liferay.Language.get('position')}
 					</label>
 
 					<ClayInput
 						id={`${namespace}pin-position`}
-						onChange={(event) => setPinLabel(event.target.value)}
+						onChange={(event) =>
+							setPinPositionLabel(event.target.value)
+						}
 						placeholder={Liferay.Language.get(
 							'insert-your-name-here'
 						)}
 						type="text"
-						value={pinLabel}
+						value={pinPositionLabel}
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group className="col-12 form-group-sm">
+				<ClayForm.Group className="col-12" small>
 					<ClayRadioGroup
 						className="d-flex justify-content-start mt-4"
 						inline
@@ -115,39 +86,42 @@ const AdminTooltip = ({
 					</ClayRadioGroup>
 				</ClayForm.Group>
 
-				<ClayForm.Group className="col-9 form-group-sm text-left">
+				<ClayForm.Group className="col-9 text-left" small>
 					<label htmlFor={`${namespace}pin-sku`}>
 						{Liferay.Language.get('select-sku')}
 					</label>
 					<ClayAutocomplete>
 						<ClayAutocomplete.Input
-							onChange={event => setSku(event.target.value)}
+							onChange={(event) => setSku(event.target.value)}
 							value={sku}
 						/>
-						<ClayAutocomplete.DropDown
-							active={skus}
-						>
-							<ClayDropDown.ItemList>
-								{skus && !skus.length && (
-									<ClayDropDown.Item className="disabled">
-										{"No Results Found"}
+						<ClayAutocomplete.DropDown active={skus}>
+							<ClayDropDown.ItemList
+								onClick={(event) => {
+									setSku(event.target.innerText);
+								}}
+							>
+								{skus?.length && (
+									<ClayDropDown.Item disabled>
+										{Liferay.Language.get(
+											'no-results-found'
+										)}
 									</ClayDropDown.Item>
 								)}
-								{
-									skus?.length &&
-									skus.map(item => (
-									 <ClayAutocomplete.Item
-										 key={item.id}
-										 match={sku}
-										 value={item.sku}
-									 />
-								 ))}
+								{skus?.length &&
+									skus.map((item) => (
+										<ClayAutocomplete.Item
+											key={item.id}
+											match={sku}
+											value={item.sku}
+										/>
+									))}
 							</ClayDropDown.ItemList>
 						</ClayAutocomplete.DropDown>
 					</ClayAutocomplete>
 				</ClayForm.Group>
 
-				<ClayForm.Group className="col-3 form-group-sm">
+				<ClayForm.Group className="col-3" small>
 					<label htmlFor={`${namespace}pin-quantity`}>
 						{Liferay.Language.get('quantity')}
 					</label>
@@ -162,17 +136,19 @@ const AdminTooltip = ({
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group className="col-6 d-flex form-group-sm justify-content-start mt-4">
+				<ClayForm.Group
+					className="col-6 d-flex justify-content-start mt-4"
+					small
+				>
 					<ClayButton
 						displayType="link"
 						onClick={() => {
-							const pinToDelete = ({
+							deletePin({
 								id: showTooltip.details.id,
-								number: pinLabel,
+								number: pinPositionLabel,
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
 							});
-							deletePin(pinToDelete)
 							setRemovePinHandler({
 								handler: true,
 								pin: showTooltip.details.id,
@@ -195,7 +171,10 @@ const AdminTooltip = ({
 					</ClayButton>
 				</ClayForm.Group>
 
-				<ClayForm.Group className="col-6 d-flex form-group-sm justify-content-between mt-4">
+				<ClayForm.Group
+					className="col-6 d-flex justify-content-between mt-4"
+					small
+				>
 					<ClayButton
 						displayType="secondary"
 						onClick={() => {
@@ -210,32 +189,29 @@ const AdminTooltip = ({
 									sku: '',
 								},
 								tooltip: false,
-							})
-						}
-						}
+							});
+						}}
 					>
 						{Liferay.Language.get('close')}
 					</ClayButton>
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
-							const node = {	
+							updatePin({
 								id: showTooltip.details.id,
-								number: pinLabel,
+								number: parseInt(pinPositionLabel, 10),
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
-							
-							}
-							updatePin(node);
+							});
 							setShowTooltip({
 								details: {
 									cx: showTooltip.details.cx,
 									cy: showTooltip.details.cy,
 									id: showTooltip.details.id,
-									label: pinLabel,
+									label: pinPositionLabel,
 									linked_to_sku: linkedValue,
 									quantity,
-									sku: sku || "",
+									sku,
 								},
 								tooltip: false,
 							});

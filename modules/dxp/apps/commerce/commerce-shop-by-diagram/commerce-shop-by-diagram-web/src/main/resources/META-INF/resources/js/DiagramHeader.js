@@ -121,7 +121,7 @@ const DiagramHeader = ({
 
 						<ClayDropDown.Caption>
 							<ClayForm>
-								<ClayForm.Group className="form-group-sm">
+								<ClayForm.Group small>
 									<label htmlFor="slider">
 										{Liferay.Language.get('custom-radius')}
 									</label>

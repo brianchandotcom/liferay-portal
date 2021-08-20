@@ -1048,11 +1048,27 @@ definition {
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Asset Title"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSearchTasksAssignedtoMeByAssetTitle {
 
-		// TODO LRQA-68846 CanSearchTasksAssignedtoMeByAssetTitle pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "New Blog Title");
+
+		AssertElementPresent(
+			key_resultBarMessage = "1 Results for New Blog Title",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+		
+
+
+
 
 	}
 

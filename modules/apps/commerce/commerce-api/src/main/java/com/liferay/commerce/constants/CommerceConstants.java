@@ -21,70 +21,37 @@ package com.liferay.commerce.constants;
  */
 public class CommerceConstants {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String ORDER_FIELDS_SERVICE_NAME =
-		"com.liferay.commerce.order.fields";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String ORDER_SERVICE_NAME =
-		"com.liferay.commerce.order";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String PRICE_SERVICE_NAME =
-		"com.liferay.commerce.price";
-
-	public static final String RESOURCE_NAME_ADDRESS =
+	public static final String RESOURCE_NAME_COMMERCE_ADDRESS =
 		"com.liferay.commerce.address";
 
-	public static final String RESOURCE_NAME_AVAILABILITY =
+	public static final String RESOURCE_NAME_COMMERCE_AVAILABILITY =
 		"com.liferay.commerce.availability";
 
-	public static final String RESOURCE_NAME_HEALTH =
+	public static final String RESOURCE_NAME_COMMERCE_HEALTH =
 		"com.liferay.commerce.health";
 
-	public static final String RESOURCE_NAME_ORDER_TYPE =
+	public static final String RESOURCE_NAME_COMMERCE_ORDER_TYPE =
 		"com.liferay.commerce.order.type";
 
-	public static final String RESOURCE_NAME_SHIPMENT =
+	public static final String RESOURCE_NAME_COMMERCE_SHIPMENT =
 		"com.liferay.commerce.shipment";
 
-	public static final String RESOURCE_NAME_SUBSCRIPTION =
+	public static final String RESOURCE_NAME_COMMERCE_SUBSCRIPTION =
 		"com.liferay.commerce.subscription";
 
-	public static final String SERVICE_NAME_ORDER =
+	public static final String SERVICE_NAME_COMMERCE_ORDER =
 		"com.liferay.commerce.order";
 
-	public static final String SERVICE_NAME_ORDER_FIELDS =
+	public static final String SERVICE_NAME_COMMERCE_ORDER_FIELDS =
 		"com.liferay.commerce.order.fields";
 
-	public static final String SERVICE_NAME_PRICE =
+	public static final String SERVICE_NAME_COMMERCE_PRICE =
 		"com.liferay.commerce.price";
 
-	public static final String SERVICE_NAME_SHIPPING =
+	public static final String SERVICE_NAME_COMMERCE_SHIPPING =
 		"com.liferay.commerce.shipping";
 
-	public static final String SERVICE_NAME_TAX = "com.liferay.commerce.tax";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String SHIPPING_SERVICE_NAME =
-		"com.liferay.commerce.shipping";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String TAX_SERVICE_NAME = "com.liferay.commerce.tax";
+	public static final String SERVICE_NAME_COMMERCE_TAX =
+		"com.liferay.commerce.tax";
 
 }

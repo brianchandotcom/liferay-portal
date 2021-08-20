@@ -119,6 +119,16 @@ public class ObjectFieldSerDes {
 			sb.append(_toJSON(objectField.getLabel()));
 		}
 
+		if (objectField.getListTypeDefinitionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listTypeDefinitionId\": ");
+
+			sb.append(objectField.getListTypeDefinitionId());
+		}
+
 		if (objectField.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -222,6 +232,15 @@ public class ObjectFieldSerDes {
 			map.put("label", String.valueOf(objectField.getLabel()));
 		}
 
+		if (objectField.getListTypeDefinitionId() == null) {
+			map.put("listTypeDefinitionId", null);
+		}
+		else {
+			map.put(
+				"listTypeDefinitionId",
+				String.valueOf(objectField.getListTypeDefinitionId()));
+		}
+
 		if (objectField.getName() == null) {
 			map.put("name", null);
 		}
@@ -299,6 +318,14 @@ public class ObjectFieldSerDes {
 					objectField.setLabel(
 						(Map)ObjectFieldSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "listTypeDefinitionId")) {
+
+				if (jsonParserFieldValue != null) {
+					objectField.setListTypeDefinitionId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

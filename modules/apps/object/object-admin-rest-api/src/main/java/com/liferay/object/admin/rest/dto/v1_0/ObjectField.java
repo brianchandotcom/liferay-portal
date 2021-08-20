@@ -223,6 +223,34 @@ public class ObjectField implements Serializable {
 	protected Map<String, String> label;
 
 	@Schema
+	public Long getListTypeDefinitionId() {
+		return listTypeDefinitionId;
+	}
+
+	public void setListTypeDefinitionId(Long listTypeDefinitionId) {
+		this.listTypeDefinitionId = listTypeDefinitionId;
+	}
+
+	@JsonIgnore
+	public void setListTypeDefinitionId(
+		UnsafeSupplier<Long, Exception> listTypeDefinitionIdUnsafeSupplier) {
+
+		try {
+			listTypeDefinitionId = listTypeDefinitionIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long listTypeDefinitionId;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -395,6 +423,16 @@ public class ObjectField implements Serializable {
 			sb.append("\"label\": ");
 
 			sb.append(_toJSON(label));
+		}
+
+		if (listTypeDefinitionId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listTypeDefinitionId\": ");
+
+			sb.append(listTypeDefinitionId);
 		}
 
 		if (name != null) {

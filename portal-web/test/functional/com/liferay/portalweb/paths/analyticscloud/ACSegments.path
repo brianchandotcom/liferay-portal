@@ -92,6 +92,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KNOWN_SEGMENT_MEMBERS_FILTER</td>
+	<td>//button[contains(@class,'btn')]/span[@class='text-truncate' and text()='Name | Email']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KNOWN_SEGMENT_MEMBERS_FILTER_ARROW_DESC</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-down')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KNOWN_SEGMENT_MEMBERS_VIEW_SPECIFIC_ORDER</td>
 	<td>//tbody//tr[${resultOrder}]//div[contains(@class,'table-title')and text()='${key_userName}']</td>
 	<td></td>

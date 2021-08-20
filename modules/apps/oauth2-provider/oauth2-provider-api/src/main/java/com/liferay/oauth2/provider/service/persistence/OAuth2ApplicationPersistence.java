@@ -47,7 +47,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param companyId the company ID
 	 * @return the matching o auth2 applications
 	 */
-	public java.util.List<OAuth2Application> findByC(long companyId);
+	public java.util.List<OAuth2Application> findByCompanyId(long companyId);
 
 	/**
 	 * Returns a range of all the o auth2 applications where companyId = &#63;.
@@ -61,7 +61,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
 	 * @return the range of matching o auth2 applications
 	 */
-	public java.util.List<OAuth2Application> findByC(
+	public java.util.List<OAuth2Application> findByCompanyId(
 		long companyId, int start, int end);
 
 	/**
@@ -77,7 +77,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth2 applications
 	 */
-	public java.util.List<OAuth2Application> findByC(
+	public java.util.List<OAuth2Application> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 			orderByComparator);
@@ -96,7 +96,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 applications
 	 */
-	public java.util.List<OAuth2Application> findByC(
+	public java.util.List<OAuth2Application> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 			orderByComparator,
@@ -110,7 +110,7 @@ public interface OAuth2ApplicationPersistence
 	 * @return the first matching o auth2 application
 	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
 	 */
-	public OAuth2Application findByC_First(
+	public OAuth2Application findByCompanyId_First(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 				orderByComparator)
@@ -123,7 +123,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
-	public OAuth2Application fetchByC_First(
+	public OAuth2Application fetchByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 			orderByComparator);
@@ -136,7 +136,7 @@ public interface OAuth2ApplicationPersistence
 	 * @return the last matching o auth2 application
 	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
 	 */
-	public OAuth2Application findByC_Last(
+	public OAuth2Application findByCompanyId_Last(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 				orderByComparator)
@@ -149,7 +149,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
-	public OAuth2Application fetchByC_Last(
+	public OAuth2Application fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 			orderByComparator);
@@ -163,7 +163,7 @@ public interface OAuth2ApplicationPersistence
 	 * @return the previous, current, and next o auth2 application
 	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
 	 */
-	public OAuth2Application[] findByC_PrevAndNext(
+	public OAuth2Application[] findByCompanyId_PrevAndNext(
 			long oAuth2ApplicationId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 				orderByComparator)
@@ -175,7 +175,8 @@ public interface OAuth2ApplicationPersistence
 	 * @param companyId the company ID
 	 * @return the matching o auth2 applications that the user has permission to view
 	 */
-	public java.util.List<OAuth2Application> filterFindByC(long companyId);
+	public java.util.List<OAuth2Application> filterFindByCompanyId(
+		long companyId);
 
 	/**
 	 * Returns a range of all the o auth2 applications that the user has permission to view where companyId = &#63;.
@@ -189,7 +190,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
 	 * @return the range of matching o auth2 applications that the user has permission to view
 	 */
-	public java.util.List<OAuth2Application> filterFindByC(
+	public java.util.List<OAuth2Application> filterFindByCompanyId(
 		long companyId, int start, int end);
 
 	/**
@@ -205,7 +206,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth2 applications that the user has permission to view
 	 */
-	public java.util.List<OAuth2Application> filterFindByC(
+	public java.util.List<OAuth2Application> filterFindByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 			orderByComparator);
@@ -219,7 +220,7 @@ public interface OAuth2ApplicationPersistence
 	 * @return the previous, current, and next o auth2 application
 	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
 	 */
-	public OAuth2Application[] filterFindByC_PrevAndNext(
+	public OAuth2Application[] filterFindByCompanyId_PrevAndNext(
 			long oAuth2ApplicationId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<OAuth2Application>
 				orderByComparator)
@@ -230,7 +231,7 @@ public interface OAuth2ApplicationPersistence
 	 *
 	 * @param companyId the company ID
 	 */
-	public void removeByC(long companyId);
+	public void removeByCompanyId(long companyId);
 
 	/**
 	 * Returns the number of o auth2 applications where companyId = &#63;.
@@ -238,7 +239,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param companyId the company ID
 	 * @return the number of matching o auth2 applications
 	 */
-	public int countByC(long companyId);
+	public int countByCompanyId(long companyId);
 
 	/**
 	 * Returns the number of o auth2 applications that the user has permission to view where companyId = &#63;.
@@ -246,7 +247,7 @@ public interface OAuth2ApplicationPersistence
 	 * @param companyId the company ID
 	 * @return the number of matching o auth2 applications that the user has permission to view
 	 */
-	public int filterCountByC(long companyId);
+	public int filterCountByCompanyId(long companyId);
 
 	/**
 	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or throws a <code>NoSuchOAuth2ApplicationException</code> if it could not be found.

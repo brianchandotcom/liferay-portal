@@ -101,9 +101,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByC;
-	private FinderPath _finderPathWithoutPaginationFindByC;
-	private FinderPath _finderPathCountByC;
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where companyId = &#63;.
@@ -112,8 +112,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @return the matching o auth2 application scope aliaseses
 	 */
 	@Override
-	public List<OAuth2ApplicationScopeAliases> findByC(long companyId) {
-		return findByC(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<OAuth2ApplicationScopeAliases> findByCompanyId(long companyId) {
+		return findByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -129,10 +130,10 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @return the range of matching o auth2 application scope aliaseses
 	 */
 	@Override
-	public List<OAuth2ApplicationScopeAliases> findByC(
+	public List<OAuth2ApplicationScopeAliases> findByCompanyId(
 		long companyId, int start, int end) {
 
-		return findByC(companyId, start, end, null);
+		return findByCompanyId(companyId, start, end, null);
 	}
 
 	/**
@@ -149,11 +150,11 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
 	@Override
-	public List<OAuth2ApplicationScopeAliases> findByC(
+	public List<OAuth2ApplicationScopeAliases> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
-		return findByC(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -171,7 +172,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
 	@Override
-	public List<OAuth2ApplicationScopeAliases> findByC(
+	public List<OAuth2ApplicationScopeAliases> findByCompanyId(
 		long companyId, int start, int end,
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
 		boolean useFinderCache) {
@@ -183,12 +184,12 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC;
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC;
+			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
@@ -228,7 +229,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 			sb.append(_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -280,13 +281,13 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	 */
 	@Override
-	public OAuth2ApplicationScopeAliases findByC_First(
+	public OAuth2ApplicationScopeAliases findByCompanyId_First(
 			long companyId,
 			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
 		throws NoSuchOAuth2ApplicationScopeAliasesException {
 
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			fetchByC_First(companyId, orderByComparator);
+			fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (oAuth2ApplicationScopeAliases != null) {
 			return oAuth2ApplicationScopeAliases;
@@ -312,11 +313,11 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @return the first matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	 */
 	@Override
-	public OAuth2ApplicationScopeAliases fetchByC_First(
+	public OAuth2ApplicationScopeAliases fetchByCompanyId_First(
 		long companyId,
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
-		List<OAuth2ApplicationScopeAliases> list = findByC(
+		List<OAuth2ApplicationScopeAliases> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -335,13 +336,13 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	 */
 	@Override
-	public OAuth2ApplicationScopeAliases findByC_Last(
+	public OAuth2ApplicationScopeAliases findByCompanyId_Last(
 			long companyId,
 			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
 		throws NoSuchOAuth2ApplicationScopeAliasesException {
 
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			fetchByC_Last(companyId, orderByComparator);
+			fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (oAuth2ApplicationScopeAliases != null) {
 			return oAuth2ApplicationScopeAliases;
@@ -367,17 +368,17 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	 */
 	@Override
-	public OAuth2ApplicationScopeAliases fetchByC_Last(
+	public OAuth2ApplicationScopeAliases fetchByCompanyId_Last(
 		long companyId,
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
-		int count = countByC(companyId);
+		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<OAuth2ApplicationScopeAliases> list = findByC(
+		List<OAuth2ApplicationScopeAliases> list = findByCompanyId(
 			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -397,7 +398,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
 	 */
 	@Override
-	public OAuth2ApplicationScopeAliases[] findByC_PrevAndNext(
+	public OAuth2ApplicationScopeAliases[] findByCompanyId_PrevAndNext(
 			long oAuth2ApplicationScopeAliasesId, long companyId,
 			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
 		throws NoSuchOAuth2ApplicationScopeAliasesException {
@@ -413,13 +414,13 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			OAuth2ApplicationScopeAliases[] array =
 				new OAuth2ApplicationScopeAliasesImpl[3];
 
-			array[0] = getByC_PrevAndNext(
+			array[0] = getByCompanyId_PrevAndNext(
 				session, oAuth2ApplicationScopeAliases, companyId,
 				orderByComparator, true);
 
 			array[1] = oAuth2ApplicationScopeAliases;
 
-			array[2] = getByC_PrevAndNext(
+			array[2] = getByCompanyId_PrevAndNext(
 				session, oAuth2ApplicationScopeAliases, companyId,
 				orderByComparator, false);
 
@@ -433,7 +434,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		}
 	}
 
-	protected OAuth2ApplicationScopeAliases getByC_PrevAndNext(
+	protected OAuth2ApplicationScopeAliases getByCompanyId_PrevAndNext(
 		Session session,
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases,
 		long companyId,
@@ -453,7 +454,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 		sb.append(_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -551,9 +552,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @param companyId the company ID
 	 */
 	@Override
-	public void removeByC(long companyId) {
+	public void removeByCompanyId(long companyId) {
 		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
-				findByC(
+				findByCompanyId(
 					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(oAuth2ApplicationScopeAliases);
@@ -567,8 +568,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 * @return the number of matching o auth2 application scope aliaseses
 	 */
 	@Override
-	public int countByC(long companyId) {
-		FinderPath finderPath = _finderPathCountByC;
+	public int countByCompanyId(long companyId) {
+		FinderPath finderPath = _finderPathCountByCompanyId;
 
 		Object[] finderArgs = new Object[] {companyId};
 
@@ -579,7 +580,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 			sb.append(_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -609,7 +610,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"oAuth2ApplicationScopeAliases.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByOAuth2ApplicationId;
@@ -1727,21 +1728,21 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC",
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC",
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC",
+		_finderPathCountByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 

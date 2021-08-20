@@ -47,7 +47,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @param companyId the company ID
 	 * @return the matching o auth2 application scope aliaseses
 	 */
-	public java.util.List<OAuth2ApplicationScopeAliases> findByC(
+	public java.util.List<OAuth2ApplicationScopeAliases> findByCompanyId(
 		long companyId);
 
 	/**
@@ -62,7 +62,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
 	 * @return the range of matching o auth2 application scope aliaseses
 	 */
-	public java.util.List<OAuth2ApplicationScopeAliases> findByC(
+	public java.util.List<OAuth2ApplicationScopeAliases> findByCompanyId(
 		long companyId, int start, int end);
 
 	/**
@@ -78,7 +78,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
-	public java.util.List<OAuth2ApplicationScopeAliases> findByC(
+	public java.util.List<OAuth2ApplicationScopeAliases> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuth2ApplicationScopeAliases> orderByComparator);
@@ -97,7 +97,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
-	public java.util.List<OAuth2ApplicationScopeAliases> findByC(
+	public java.util.List<OAuth2ApplicationScopeAliases> findByCompanyId(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuth2ApplicationScopeAliases> orderByComparator,
@@ -111,7 +111,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @return the first matching o auth2 application scope aliases
 	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	 */
-	public OAuth2ApplicationScopeAliases findByC_First(
+	public OAuth2ApplicationScopeAliases findByCompanyId_First(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuth2ApplicationScopeAliases> orderByComparator)
@@ -124,7 +124,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	 */
-	public OAuth2ApplicationScopeAliases fetchByC_First(
+	public OAuth2ApplicationScopeAliases fetchByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuth2ApplicationScopeAliases> orderByComparator);
@@ -137,7 +137,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @return the last matching o auth2 application scope aliases
 	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	 */
-	public OAuth2ApplicationScopeAliases findByC_Last(
+	public OAuth2ApplicationScopeAliases findByCompanyId_Last(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuth2ApplicationScopeAliases> orderByComparator)
@@ -150,7 +150,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	 */
-	public OAuth2ApplicationScopeAliases fetchByC_Last(
+	public OAuth2ApplicationScopeAliases fetchByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuth2ApplicationScopeAliases> orderByComparator);
@@ -164,7 +164,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @return the previous, current, and next o auth2 application scope aliases
 	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
 	 */
-	public OAuth2ApplicationScopeAliases[] findByC_PrevAndNext(
+	public OAuth2ApplicationScopeAliases[] findByCompanyId_PrevAndNext(
 			long oAuth2ApplicationScopeAliasesId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<OAuth2ApplicationScopeAliases> orderByComparator)
@@ -175,7 +175,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 *
 	 * @param companyId the company ID
 	 */
-	public void removeByC(long companyId);
+	public void removeByCompanyId(long companyId);
 
 	/**
 	 * Returns the number of o auth2 application scope aliaseses where companyId = &#63;.
@@ -183,7 +183,7 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @param companyId the company ID
 	 * @return the number of matching o auth2 application scope aliaseses
 	 */
-	public int countByC(long companyId);
+	public int countByCompanyId(long companyId);
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63;.

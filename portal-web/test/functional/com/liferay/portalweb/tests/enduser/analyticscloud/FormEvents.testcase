@@ -101,7 +101,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8691 | Test Summary: Check formSubmitted triggers after submitting a form and check its properties (see reference document in comments)"
 	@priority = "5"
-	test CheckFormSubmittedAfterSubmittingFormAndCheckProperties {
+	test CheckFormSubmittedAfterSubmittingForm {
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

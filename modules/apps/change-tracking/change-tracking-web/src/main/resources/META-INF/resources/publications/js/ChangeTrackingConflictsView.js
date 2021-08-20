@@ -500,6 +500,7 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 				<div className="publications-modal-body">
 					<ChangeTrackingRenderView
 						dataURL={viewConflict.dataURL}
+						showHeader={false}
 						spritemap={spritemap}
 					/>
 				</div>

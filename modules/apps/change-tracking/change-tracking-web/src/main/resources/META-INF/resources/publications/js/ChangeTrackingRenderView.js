@@ -129,6 +129,7 @@ export default ({
 	discardURL,
 	getCache,
 	showDropdown,
+	showHeader = true,
 	spritemap,
 	title,
 	updateCache,
@@ -317,7 +318,7 @@ export default ({
 	let currentLocale = selectedLocale;
 	let currentTitle = title;
 
-	if (state.renderData) {
+	if (showHeader && state.renderData) {
 		if (
 			!state.renderData.locales ||
 			!state.renderData.locales.find(
@@ -1109,6 +1110,10 @@ export default ({
 			</tr>
 		);
 	};
+
+	if (!showHeader) {
+		return renderEntry();
+	}
 
 	return (
 		<div className={`sheet ${loading ? 'publications-loading' : ''}`}>

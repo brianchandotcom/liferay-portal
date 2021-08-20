@@ -210,6 +210,7 @@ export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 				<div className="publications-modal-body">
 					<ChangeTrackingRenderView
 						dataURL={viewEntry.dataURL}
+						showHeader={false}
 						spritemap={spritemap}
 					/>
 				</div>

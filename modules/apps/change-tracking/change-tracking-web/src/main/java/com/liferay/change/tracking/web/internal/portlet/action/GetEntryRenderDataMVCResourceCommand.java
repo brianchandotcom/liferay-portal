@@ -162,6 +162,8 @@ public class GetEntryRenderDataMVCResourceCommand
 			changeType = "deleted";
 		}
 
+		boolean localize = ParamUtil.getBoolean(resourceRequest, "localize");
+
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
@@ -211,14 +213,16 @@ public class GetEntryRenderDataMVCResourceCommand
 						httpServletRequest, rightModel);
 				}
 
-				availableLanguageIds =
-					_ctDisplayRendererRegistry.getAvailableLanguageIds(
-						ctCollectionId, ctSQLMode, rightModel,
-						ctEntry.getModelClassNameId());
+				if (localize) {
+					availableLanguageIds =
+						_ctDisplayRendererRegistry.getAvailableLanguageIds(
+							ctCollectionId, ctSQLMode, rightModel,
+							ctEntry.getModelClassNameId());
 
-				defaultLanguageId =
-					_ctDisplayRendererRegistry.getDefaultLanguageId(
-						rightModel, ctEntry.getModelClassNameId());
+					defaultLanguageId =
+						_ctDisplayRendererRegistry.getDefaultLanguageId(
+							rightModel, ctEntry.getModelClassNameId());
+				}
 
 				if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 					for (String languageId : availableLanguageIds) {
@@ -352,8 +356,9 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 			if (leftModel != null) {
-				if (ctEntry.getChangeType() ==
-						CTConstants.CT_CHANGE_TYPE_DELETION) {
+				if (localize &&
+					(ctEntry.getChangeType() ==
+						CTConstants.CT_CHANGE_TYPE_DELETION)) {
 
 					availableLanguageIds =
 						_ctDisplayRendererRegistry.getAvailableLanguageIds(
@@ -451,11 +456,6 @@ public class GetEntryRenderDataMVCResourceCommand
 						_language.get(httpServletRequest, "version"), ": ",
 						leftVersionName, " (",
 						_language.get(httpServletRequest, "deleted"), ")");
-
-					availableLanguageIds =
-						_ctDisplayRendererRegistry.getAvailableLanguageIds(
-							ctCollectionId, ctSQLMode, rightModel,
-							ctEntry.getModelClassNameId());
 
 					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 						rightLocalizedContentJSONObject =

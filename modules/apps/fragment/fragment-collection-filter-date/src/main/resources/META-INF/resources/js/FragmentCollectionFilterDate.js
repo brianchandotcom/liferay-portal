@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+import ClayDatePicker from '@clayui/date-picker';
+import {
+	getCollectionFilterValue,
+	setCollectionFilterValue,
+} from '@liferay/fragment-renderer-collection-filter-impl';
+import React from 'react';
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %>
+export default function FragmentCollectionFilterDate({
+	date,
+	fragmentEntryLinkId,
+	isDisabled,
+}) {
+	const value = getCollectionFilterValue(date, fragmentEntryLinkId);
 
-<%@ page import="com.liferay.fragment.collection.filter.date.display.context.FragmentCollectionFilterDateDisplayContext" %>
-
-<%
-FragmentCollectionFilterDateDisplayContext fragmentCollectionFilterDateDisplayContext = (FragmentCollectionFilterDateDisplayContext)request.getAttribute(FragmentCollectionFilterDateDisplayContext.class.getName());
-%>
+	return (
+		<ClayDatePicker
+			disabled={isDisabled}
+			onValueChange={(value) =>
+				setCollectionFilterValue(date, fragmentEntryLinkId, value)
+			}
+			placeholder="YYYY-MM-DD"
+			value={value}
+		/>
+	);
+}

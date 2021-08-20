@@ -570,11 +570,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DATA_PROVIDER_INPUT_PARAMETER_REPEAT_ICON</td>
-	<td>//div[contains(@data-field-name,'inputParameters')]//div[contains(@class,'field-repeatable')]//button[contains(@class,'add-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -17,6 +17,7 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-product-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-test-util")
+	testIntegrationCompile project(":apps:commerce:headless:headless-commerce-core-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-order-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-order-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

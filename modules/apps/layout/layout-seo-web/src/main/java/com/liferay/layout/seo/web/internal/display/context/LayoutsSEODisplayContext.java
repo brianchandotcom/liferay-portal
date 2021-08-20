@@ -44,6 +44,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.layout.seo.web.internal.constants.LayoutSEOTemplateConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -336,7 +337,8 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"openGraphDescription",
 			_selLayout.getTypeSettingsProperty(
-				"mapped-openGraphDescription", "${description}")
+				"mapped-openGraphDescription",
+				LayoutSEOTemplateConstants.DESCRIPTION_DEFAULT_TEMPLATE)
 		).put(
 			"openGraphImage",
 			_selLayout.getTypeSettingsProperty("mapped-openGraphImage", null)
@@ -346,7 +348,8 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"openGraphTitle",
 			_selLayout.getTypeSettingsProperty(
-				"mapped-openGraphTitle", "${title}")
+				"mapped-openGraphTitle",
+				LayoutSEOTemplateConstants.TITLE_DEFAULT_TEMPLATE)
 		).build();
 	}
 
@@ -423,10 +426,13 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"description",
 			_selLayout.getTypeSettingsProperty(
-				"mapped-description", "${description}")
+				"mapped-description",
+				LayoutSEOTemplateConstants.DESCRIPTION_DEFAULT_TEMPLATE)
 		).put(
 			"title",
-			_selLayout.getTypeSettingsProperty("mapped-title", "${title}")
+			_selLayout.getTypeSettingsProperty(
+				"mapped-title",
+				LayoutSEOTemplateConstants.TITLE_DEFAULT_TEMPLATE)
 		).build();
 	}
 

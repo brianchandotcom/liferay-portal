@@ -140,12 +140,73 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsListOfPages {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8111 ShowsListOfPages pending implementation
+		// AC Refactor: The data on Pages doesn't appear
+		// AC Refactor ticket: LRAC-8777
 
+		task ("Add pages") {
+			for (var layoutName : list "AC Page 2,AC Page 3") {
+				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+			}
+		}
+
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to sites pages tab") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Choose Last 24 Hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+
+		//Couldn't assert the list due to missing data.
+		task ("Assert that the page list is beeing showed") {
+			ACUtils.assertItemsName(itemList = "AC Page,AC Page 2, AC Page 3");
+		
+		}
+
+		
 	}
 
 }

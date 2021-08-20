@@ -172,7 +172,7 @@ definition {
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInForms {
 		task ("Create users and Sync") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-			
+
 			for (var n : list "ac,ac2") {
 				JSONUser.addUser(
 					userEmailAddress = "${n}@liferay.com",
@@ -281,7 +281,6 @@ definition {
 				index = "2",
 				percentageList = "66.67%,33.33%");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"

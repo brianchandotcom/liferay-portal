@@ -25,10 +25,19 @@ public class AssetEntryListInfoFilter implements InfoFilter {
 		return _assetCategoryIds;
 	}
 
+	public String getKeywords() {
+		return _keywords;
+	}
+
 	public void setAssetCategoryIds(long[][] assetCategoryIds) {
 		_assetCategoryIds = assetCategoryIds;
 	}
 
+	public void setKeywords(String keywords) {
+		_keywords = keywords;
+	}
+
 	private long[][] _assetCategoryIds;
+	private String _keywords;
 
 }

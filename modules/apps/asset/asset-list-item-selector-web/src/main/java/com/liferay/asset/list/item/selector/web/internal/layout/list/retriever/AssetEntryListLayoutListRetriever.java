@@ -81,7 +81,8 @@ public class AssetEntryListLayoutListRetriever
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, segmentsEntryIds,
 				assetEntryListInfoFilter.getAssetCategoryIds(),
-				StringPool.BLANK, pagination.getStart(), pagination.getEnd());
+				assetEntryListInfoFilter.getKeywords(), StringPool.BLANK,
+				pagination.getStart(), pagination.getEnd());
 
 		if (Objects.equals(
 				AssetEntry.class.getName(),
@@ -117,7 +118,8 @@ public class AssetEntryListLayoutListRetriever
 
 		return _assetListAssetEntryProvider.getAssetEntriesCount(
 			assetListEntry, segmentsEntryIds,
-			assetEntryListInfoFilter.getAssetCategoryIds(), StringPool.BLANK);
+			assetEntryListInfoFilter.getAssetCategoryIds(),
+			assetEntryListInfoFilter.getKeywords(), StringPool.BLANK);
 	}
 
 	private AssetEntryListInfoFilter _getAssetEntryListInfoFilter(

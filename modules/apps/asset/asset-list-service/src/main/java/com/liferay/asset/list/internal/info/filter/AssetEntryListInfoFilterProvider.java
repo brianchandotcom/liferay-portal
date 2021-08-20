@@ -16,10 +16,12 @@ package com.liferay.asset.list.internal.info.filter;
 
 import com.liferay.asset.list.info.filter.AssetEntryListInfoFilter;
 import com.liferay.info.filter.InfoFilterProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -40,6 +42,7 @@ public class AssetEntryListInfoFilterProvider
 
 		assetEntryListInfoFilter.setAssetCategoryIds(
 			_getAssetCategoryIds(values));
+		assetEntryListInfoFilter.setKeywords(_getKeywords(values));
 
 		return assetEntryListInfoFilter;
 	}
@@ -60,6 +63,20 @@ public class AssetEntryListInfoFilterProvider
 
 		return assetCategoryIdsSet.toArray(
 			new long[assetCategoryIdsSet.size()][]);
+	}
+
+	private String _getKeywords(Map<String, String[]> values) {
+		Set<String> keywordsSet = new HashSet<>();
+
+		for (Map.Entry<String, String[]> entry : values.entrySet()) {
+			if (!StringUtil.startsWith(entry.getKey(), "keywords_")) {
+				continue;
+			}
+
+			Collections.addAll(keywordsSet, entry.getValue());
+		}
+
+		return StringUtil.merge(keywordsSet, StringPool.SPACE);
 	}
 
 }

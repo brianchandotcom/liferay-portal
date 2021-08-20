@@ -124,6 +124,7 @@ definition {
 
 		task ("View the articleId of webContentClicked event") {
 			ACUtils.assertEventPropertyValue(
+				applicationId = "WebContent",
 				eventId = "webContentClicked",
 				property = "articleId",
 				value = "${articleId}");
@@ -131,6 +132,7 @@ definition {
 
 		task ("View the title of webContentClicked event") {
 			ACUtils.assertEventPropertyValue(
+				applicationId = "WebContent",
 				eventId = "webContentClicked",
 				property = "title",
 				value = "Custom Asset AC Title");
@@ -138,6 +140,7 @@ definition {
 
 		task ("View the tagName of webContentClicked event") {
 			ACUtils.assertEventPropertyValue(
+				applicationId = "WebContent",
 				eventId = "webContentClicked",
 				property = "tagName",
 				value = "h1");
@@ -204,6 +207,7 @@ definition {
 
 		task ("View the articleId of webContentViewed event") {
 			ACUtils.assertEventPropertyValue(
+				applicationId = "WebContent",
 				eventId = "webContentViewed",
 				property = "articleId",
 				value = "${articleId}");
@@ -211,6 +215,7 @@ definition {
 
 		task ("View the title of webContentViewed event") {
 			ACUtils.assertEventPropertyValue(
+				applicationId = "WebContent",
 				eventId = "webContentViewed",
 				property = "title",
 				value = "Custom Asset AC Title");
@@ -218,6 +223,7 @@ definition {
 
 		task ("View the numberOfWords of webContentViewed event") {
 			ACUtils.assertEventPropertyValue(
+				applicationId = "WebContent",
 				eventId = "webContentViewed",
 				property = "numberOfWords",
 				value = "4");

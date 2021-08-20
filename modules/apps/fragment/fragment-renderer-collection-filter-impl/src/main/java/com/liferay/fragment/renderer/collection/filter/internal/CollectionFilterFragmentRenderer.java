@@ -20,20 +20,18 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,26 +74,22 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
-		fragmentCollectionFilter.render(
-			fragmentRendererContext, httpServletRequest, httpServletResponse);
-
 		try {
-			ComponentTag componentTag = new ComponentTag();
+			httpServletRequest.setAttribute(
+				FragmentCollectionFilter.class.getName(),
+				fragmentCollectionFilter);
+			httpServletRequest.setAttribute(
+				FragmentRendererContext.class.getName(),
+				fragmentRendererContext);
 
-			componentTag.setContext(
-				HashMapBuilder.<String, Object>put(
-					"collectionFilterParameterPrefix", "filter_"
-				).build());
-			componentTag.setModule("js/CollectionFilterRegister");
-			componentTag.setServletContext(_servletContext);
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/page.jsp");
 
-			PageContext pageContext = PageContextFactoryUtil.create(
-				httpServletRequest, httpServletResponse);
-
-			componentTag.doTag(pageContext);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
+			_log.error(
+				"Unable to render collection filter fragment", exception);
 		}
 	}
 
@@ -109,6 +103,9 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
 				fragmentEntryLink.getEditableValues(), "string", "filterKey");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CollectionFilterFragmentRenderer.class);
 
 	@Reference
 	private FragmentCollectionFilterTracker _fragmentCollectionFilterTracker;

@@ -14,12 +14,22 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ page import="com.liferay.fragment.renderer.collection.filter.internal.display.context.CollectionAppliedFiltersFragmentRendererDisplayContext" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<%@ page import="com.liferay.fragment.collection.filter.FragmentCollectionFilter" %><%@
+page import="com.liferay.fragment.renderer.FragmentRendererContext" %><%@
+page import="com.liferay.fragment.renderer.collection.filter.internal.display.context.CollectionAppliedFiltersFragmentRendererDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 
 <%@ page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />

@@ -3,9 +3,10 @@ definition {
 
 	property analytics.cloud.enabled = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
-	property minimum.slave.ram = "32";
+	property minimum.slave.ram = "24";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property slave.label = "slave-1";
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {

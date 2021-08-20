@@ -344,9 +344,9 @@ const Main = ({
 	autocompleteEnabled,
 	defaultLanguageId,
 	displayStyle = 'singleline',
-	editingLanguageId,
 	fieldName,
 	id,
+	locale,
 	localizable,
 	localizedValue = {},
 	maxLength,
@@ -387,7 +387,7 @@ const Main = ({
 			<Component
 				defaultLanguageId={defaultLanguageId}
 				disabled={readOnly}
-				editingLanguageId={editingLanguageId}
+				editingLanguageId={locale}
 				fieldName={fieldName}
 				id={fieldDetailsId}
 				localizable={localizable}

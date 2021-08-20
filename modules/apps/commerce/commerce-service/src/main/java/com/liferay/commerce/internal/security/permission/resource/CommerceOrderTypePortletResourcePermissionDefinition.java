@@ -41,7 +41,7 @@ public class CommerceOrderTypePortletResourcePermissionDefinition
 
 	@Override
 	public String getResourceName() {
-		return CommerceConstants.RESOURCE_NAME_ORDER_TYPE;
+		return CommerceConstants.RESOURCE_NAME_COMMERCE_ORDER_TYPE;
 	}
 
 }

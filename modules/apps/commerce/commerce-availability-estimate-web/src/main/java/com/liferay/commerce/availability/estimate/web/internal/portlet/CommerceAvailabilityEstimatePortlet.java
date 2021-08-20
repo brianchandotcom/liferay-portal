@@ -82,7 +82,7 @@ public class CommerceAvailabilityEstimatePortlet extends MVCPortlet {
 		_commerceAvailabilityEstimateService;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_AVAILABILITY + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_AVAILABILITY + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

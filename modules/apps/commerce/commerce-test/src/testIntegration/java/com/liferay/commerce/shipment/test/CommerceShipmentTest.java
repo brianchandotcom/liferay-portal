@@ -797,7 +797,7 @@ public class CommerceShipmentTest {
 		Settings settings = SettingsFactoryUtil.getSettings(
 			new GroupServiceSettingsLocator(
 				_commerceChannel.getGroupId(),
-				CommerceConstants.SERVICE_NAME_TAX));
+				CommerceConstants.SERVICE_NAME_COMMERCE_TAX));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

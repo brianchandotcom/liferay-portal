@@ -34,7 +34,7 @@ public class CommerceShippingGroupServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return CommerceConstants.SERVICE_NAME_SHIPPING;
+		return CommerceConstants.SERVICE_NAME_COMMERCE_SHIPPING;
 	}
 
 }

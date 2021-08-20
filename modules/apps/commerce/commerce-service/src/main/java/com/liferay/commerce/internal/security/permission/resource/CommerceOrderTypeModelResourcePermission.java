@@ -90,7 +90,7 @@ public class CommerceOrderTypeModelResourcePermission
 	private CommerceOrderTypePermission _commerceOrderTypePermission;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_ORDER_TYPE + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_ORDER_TYPE + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

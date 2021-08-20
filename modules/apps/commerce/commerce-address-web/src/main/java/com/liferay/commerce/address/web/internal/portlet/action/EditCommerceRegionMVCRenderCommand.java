@@ -76,7 +76,7 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 	private ActionHelper _actionHelper;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_ADDRESS + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_ADDRESS + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

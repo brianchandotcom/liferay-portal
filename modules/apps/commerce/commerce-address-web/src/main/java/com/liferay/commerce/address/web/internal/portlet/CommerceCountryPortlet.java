@@ -98,7 +98,7 @@ public class CommerceCountryPortlet extends MVCPortlet {
 	private CountryService _countryService;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_ADDRESS + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_ADDRESS + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

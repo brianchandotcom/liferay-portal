@@ -231,6 +231,6 @@ public class CommerceShipmentItemServiceImpl
 			PortletResourcePermissionFactory.getInstance(
 				CommerceShipmentItemServiceImpl.class,
 				"_portletResourcePermission",
-				CommerceConstants.RESOURCE_NAME_SHIPMENT);
+				CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT);
 
 }

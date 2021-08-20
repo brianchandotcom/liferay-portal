@@ -234,12 +234,6 @@ definition {
 			ACSettings.deleteAllProperties();
 		}
 
-
-
-
-
-
-
 		task ("Log in as the user corbin.murakami@faro.io, go to the properties menu and checks if the property has been deleted for the user") {
 			ACWorkspace.signOut();
 

@@ -97,10 +97,6 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-
-
-		
-
 		task ("Asset in the Activity card graph by month filter") {
 
 			// Unable to perform the declaration because the data does not appear at the time

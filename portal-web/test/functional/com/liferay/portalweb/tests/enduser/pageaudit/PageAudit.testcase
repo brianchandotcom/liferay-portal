@@ -568,10 +568,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When a user with permissions to edit blogs visits the page
-	Then the issue icon for displaying the page audit panel shows"
-	
+	@description = "LPS-137227 Given a content page	When a user with permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInContentPageWithEditBlogsPermission {
 		task ("Create user") {
@@ -1755,7 +1752,7 @@ definition {
 		}
 	}
 
-	@description = "Given a display page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
+	@description = "LPS-137227 Given a display page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditPagesPermission {
 		task ("Create user") {
@@ -1960,6 +1957,7 @@ definition {
 		}
 	}
 
+	@description = "Given a widget page When a user with permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInWidgetPageWithEditBlogsPermission {
 		task ("Create user") {
@@ -2447,7 +2445,7 @@ definition {
 		}
 	}
 
-	@description = "Given a widget page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
+	@description = "LPS-137227 Given a widget page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditPagesPermission {
 		task ("Create user") {

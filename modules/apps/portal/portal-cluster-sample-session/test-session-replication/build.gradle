@@ -1,0 +1,5 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "default"
+
+	cssBuilder project(":util:css-builder")
+}

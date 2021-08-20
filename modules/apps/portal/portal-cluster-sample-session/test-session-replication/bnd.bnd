@@ -1,0 +1,3 @@
+Bundle-Name: test-session-replication
+Bundle-SymbolicName: test.session.replication
+Bundle-Version: 1.0.0

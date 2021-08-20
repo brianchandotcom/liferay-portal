@@ -1096,11 +1096,29 @@ definition {
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Asset Type"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSearchTasksAssignedtoMeByAssetType {
 
-		// TODO LRQA-68879 CanSearchTasksAssignedtoMeByAssetType pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry");
+
+		AssertElementPresent(
+			key_resultBarMessage = "1 Results for Blogs Entry",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+
+
+
 
 	}
 

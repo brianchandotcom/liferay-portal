@@ -26,6 +26,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.LocalGitBranch;
 import com.liferay.jenkins.results.parser.NotificationUtil;
+import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
@@ -52,11 +53,14 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -242,7 +246,7 @@ public class TestrayImporter {
 		return pullRequestBuild.getPullRequest();
 	}
 
-	public TestrayBuild getTestrayBuild(File testBaseDir) {
+	public synchronized TestrayBuild getTestrayBuild(File testBaseDir) {
 		TestrayBuild testrayBuild = _testrayBuilds.get(testBaseDir);
 
 		if (testrayBuild != null) {
@@ -485,7 +489,9 @@ public class TestrayImporter {
 		return null;
 	}
 
-	public TestrayProductVersion getTestrayProductVersion(File testBaseDir) {
+	public synchronized TestrayProductVersion getTestrayProductVersion(
+		File testBaseDir) {
+
 		TestrayProductVersion testrayProductVersion =
 			_testrayProductVersions.get(testBaseDir);
 
@@ -610,7 +616,7 @@ public class TestrayImporter {
 		return null;
 	}
 
-	public TestrayProject getTestrayProject(File testBaseDir) {
+	public synchronized TestrayProject getTestrayProject(File testBaseDir) {
 		TestrayProject testrayProject = _testrayProjects.get(testBaseDir);
 
 		if (testrayProject != null) {
@@ -711,7 +717,7 @@ public class TestrayImporter {
 		throw new RuntimeException("Please set TESTRAY_PROJECT_NAME");
 	}
 
-	public TestrayRoutine getTestrayRoutine(File testBaseDir) {
+	public synchronized TestrayRoutine getTestrayRoutine(File testBaseDir) {
 		TestrayRoutine testrayRoutine = _testrayRoutines.get(testBaseDir);
 
 		if (testrayRoutine != null) {
@@ -821,7 +827,7 @@ public class TestrayImporter {
 		throw new RuntimeException("Please set TESTRAY_ROUTINE_NAME");
 	}
 
-	public TestrayServer getTestrayServer(File testBaseDir) {
+	public synchronized TestrayServer getTestrayServer(File testBaseDir) {
 		TestrayServer testrayServer = _testrayServers.get(testBaseDir);
 
 		if (testrayServer != null) {
@@ -938,193 +944,251 @@ public class TestrayImporter {
 				batchDependentJob.getDependentAxisTestClassGroups());
 		}
 
-		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
-			TestrayBuild testrayBuild = getTestrayBuild(
-				axisTestClassGroup.getTestBaseDir());
+		List<Callable<Void>> callables = new ArrayList<>();
 
-			TestrayRun testrayRun = new TestrayRun(
-				testrayBuild, axisTestClassGroup.getBatchName(),
-				_getPropertiesList(axisTestClassGroup.getTestBaseDir()));
+		for (final AxisTestClassGroup axisTestClassGroup :
+				axisTestClassGroups) {
 
-			long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+			callables.add(
+				new Callable<Void>() {
 
-			Document document = DocumentHelper.createDocument();
+					@Override
+					public Void call() throws Exception {
+						TestrayBuild testrayBuild = getTestrayBuild(
+							axisTestClassGroup.getTestBaseDir());
 
-			Element rootElement = document.addElement("testsuite");
+						TestrayRun testrayRun = new TestrayRun(
+							testrayBuild, axisTestClassGroup.getBatchName(),
+							_getPropertiesList(
+								axisTestClassGroup.getTestBaseDir()));
 
-			Element environmentsElement = rootElement.addElement(
-				"environments");
+						long start =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-			for (TestrayRun.Factor factor : testrayRun.getFactors()) {
-				Element environmentElement = environmentsElement.addElement(
-					"environment");
+						Document document = DocumentHelper.createDocument();
 
-				environmentElement.addAttribute("type", factor.getName());
-				environmentElement.addAttribute("option", factor.getValue());
-			}
+						Element rootElement = document.addElement("testsuite");
 
-			Map<String, String> propertiesMap = new HashMap<>();
+						Element environmentsElement = rootElement.addElement(
+							"environments");
 
-			propertiesMap.put("testray.build.name", testrayBuild.getName());
+						for (TestrayRun.Factor factor :
+								testrayRun.getFactors()) {
 
-			TestrayRoutine testrayRoutine = testrayBuild.getTestrayRoutine();
+							Element environmentElement =
+								environmentsElement.addElement("environment");
 
-			propertiesMap.put("testray.build.type", testrayRoutine.getName());
+							environmentElement.addAttribute(
+								"type", factor.getName());
+							environmentElement.addAttribute(
+								"option", factor.getValue());
+						}
 
-			TestrayProductVersion testrayProductVersion =
-				testrayBuild.getTestrayProductVersion();
+						Map<String, String> propertiesMap = new HashMap<>();
 
-			if (testrayProductVersion != null) {
-				propertiesMap.put(
-					"testray.product.version", testrayProductVersion.getName());
-			}
+						propertiesMap.put(
+							"testray.build.name", testrayBuild.getName());
 
-			TestrayProject testrayProject = testrayBuild.getTestrayProject();
+						TestrayRoutine testrayRoutine =
+							testrayBuild.getTestrayRoutine();
 
-			propertiesMap.put("testray.project.name", testrayProject.getName());
+						propertiesMap.put(
+							"testray.build.type", testrayRoutine.getName());
 
-			propertiesMap.put("testray.run.id", testrayRun.getRunIDString());
+						TestrayProductVersion testrayProductVersion =
+							testrayBuild.getTestrayProductVersion();
 
-			_addPropertyElements(
-				rootElement.addElement("properties"), propertiesMap);
+						if (testrayProductVersion != null) {
+							propertiesMap.put(
+								"testray.product.version",
+								testrayProductVersion.getName());
+						}
 
-			List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+						TestrayProject testrayProject =
+							testrayBuild.getTestrayProject();
 
-			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
-				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
-				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
+						propertiesMap.put(
+							"testray.project.name", testrayProject.getName());
 
-				for (TestClassGroup.TestClass testClass :
-						axisTestClassGroup.getTestClasses()) {
+						propertiesMap.put(
+							"testray.run.id", testrayRun.getRunIDString());
 
-					testrayCaseResults.add(
-						TestrayFactory.newTestrayCaseResult(
-							testrayBuild, getTopLevelBuild(),
-							axisTestClassGroup, testClass));
-				}
-			}
-			else {
-				testrayCaseResults.add(
-					TestrayFactory.newTestrayCaseResult(
-						testrayBuild, getTopLevelBuild(), axisTestClassGroup,
-						null));
-			}
+						_addPropertyElements(
+							rootElement.addElement("properties"),
+							propertiesMap);
 
-			for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-				Element testcaseElement = rootElement.addElement("testcase");
+						List<TestrayCaseResult> testrayCaseResults =
+							new ArrayList<>();
 
-				Map<String, String> testcasePropertiesMap = new HashMap<>();
+						if (axisTestClassGroup instanceof
+								CucumberAxisTestClassGroup ||
+							axisTestClassGroup instanceof
+								FunctionalAxisTestClassGroup ||
+							axisTestClassGroup instanceof
+								JUnitAxisTestClassGroup) {
 
-				testcasePropertiesMap.put(
-					"testray.case.type.name", testrayCaseResult.getType());
-				testcasePropertiesMap.put(
-					"testray.component.names",
-					testrayCaseResult.getSubcomponentNames());
-				testcasePropertiesMap.put(
-					"testray.main.component.name",
-					testrayCaseResult.getComponentName());
-				testcasePropertiesMap.put(
-					"testray.team.name", testrayCaseResult.getTeamName());
+							for (TestClassGroup.TestClass testClass :
+									axisTestClassGroup.getTestClasses()) {
 
-				String testrayCaseName = testrayCaseResult.getName();
+								testrayCaseResults.add(
+									TestrayFactory.newTestrayCaseResult(
+										testrayBuild, getTopLevelBuild(),
+										axisTestClassGroup, testClass));
+							}
+						}
+						else {
+							testrayCaseResults.add(
+								TestrayFactory.newTestrayCaseResult(
+									testrayBuild, getTopLevelBuild(),
+									axisTestClassGroup, null));
+						}
 
-				if (testrayCaseName.length() > 150) {
-					testrayCaseName = testrayCaseName.substring(0, 150);
-				}
+						for (TestrayCaseResult testrayCaseResult :
+								testrayCaseResults) {
 
-				testcasePropertiesMap.put(
-					"testray.testcase.name", testrayCaseName);
+							Element testcaseElement = rootElement.addElement(
+								"testcase");
 
-				testcasePropertiesMap.put(
-					"testray.testcase.priority",
-					String.valueOf(testrayCaseResult.getPriority()));
+							Map<String, String> testcasePropertiesMap =
+								new HashMap<>();
 
-				TestrayCaseResult.Status testrayCaseStatus =
-					testrayCaseResult.getStatus();
+							testcasePropertiesMap.put(
+								"testray.case.type.name",
+								testrayCaseResult.getType());
+							testcasePropertiesMap.put(
+								"testray.component.names",
+								testrayCaseResult.getSubcomponentNames());
+							testcasePropertiesMap.put(
+								"testray.main.component.name",
+								testrayCaseResult.getComponentName());
+							testcasePropertiesMap.put(
+								"testray.team.name",
+								testrayCaseResult.getTeamName());
 
-				testcasePropertiesMap.put(
-					"testray.testcase.status", testrayCaseStatus.getName());
+							String testrayCaseName =
+								testrayCaseResult.getName();
 
-				Element propertiesElement = testcaseElement.addElement(
-					"properties");
+							if (testrayCaseName.length() > 150) {
+								testrayCaseName = testrayCaseName.substring(
+									0, 150);
+							}
 
-				_addPropertyElements(propertiesElement, testcasePropertiesMap);
+							testcasePropertiesMap.put(
+								"testray.testcase.name", testrayCaseName);
 
-				String[] warnings = testrayCaseResult.getWarnings();
+							testcasePropertiesMap.put(
+								"testray.testcase.priority",
+								String.valueOf(
+									testrayCaseResult.getPriority()));
 
-				if ((warnings != null) && (warnings.length > 0)) {
-					Element warningsPropertyElement =
-						propertiesElement.addElement("property");
+							TestrayCaseResult.Status testrayCaseStatus =
+								testrayCaseResult.getStatus();
 
-					warningsPropertyElement.addAttribute(
-						"name", "testray.testcase.warnings");
+							testcasePropertiesMap.put(
+								"testray.testcase.status",
+								testrayCaseStatus.getName());
 
-					for (String warning : warnings) {
-						Element warningPropertyElement =
-							warningsPropertyElement.addElement("value");
+							Element propertiesElement =
+								testcaseElement.addElement("properties");
 
-						warningPropertyElement.addText(
-							StringEscapeUtils.escapeHtml(warning));
+							_addPropertyElements(
+								propertiesElement, testcasePropertiesMap);
+
+							String[] warnings = testrayCaseResult.getWarnings();
+
+							if ((warnings != null) && (warnings.length > 0)) {
+								Element warningsPropertyElement =
+									propertiesElement.addElement("property");
+
+								warningsPropertyElement.addAttribute(
+									"name", "testray.testcase.warnings");
+
+								for (String warning : warnings) {
+									Element warningPropertyElement =
+										warningsPropertyElement.addElement(
+											"value");
+
+									warningPropertyElement.addText(
+										StringEscapeUtils.escapeHtml(warning));
+								}
+							}
+
+							Element attachmentsElement =
+								testcaseElement.addElement("attachments");
+
+							for (TestrayAttachment testrayAttachment :
+									testrayCaseResult.getTestrayAttachments()) {
+
+								Element attachmentFileElement =
+									attachmentsElement.addElement("file");
+
+								attachmentFileElement.addAttribute(
+									"name", testrayAttachment.getName());
+								attachmentFileElement.addAttribute(
+									"url",
+									String.valueOf(testrayAttachment.getURL()));
+								attachmentFileElement.addAttribute(
+									"value", testrayAttachment.getKey());
+							}
+
+							String errors = testrayCaseResult.getErrors();
+
+							if (!JenkinsResultsParserUtil.isNullOrEmpty(
+									errors)) {
+
+								Element failureElement =
+									testcaseElement.addElement("failure");
+
+								failureElement.addAttribute("message", errors);
+							}
+						}
+
+						TestrayServer testrayServer =
+							testrayBuild.getTestrayServer();
+
+						TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+						JenkinsMaster jenkinsMaster =
+							topLevelBuild.getJenkinsMaster();
+
+						try {
+							String axisName = axisTestClassGroup.getAxisName();
+
+							testrayServer.writeCaseResult(
+								JenkinsResultsParserUtil.combine(
+									"TESTS-", jenkinsMaster.getName(), "_",
+									topLevelBuild.getJobName(), "_",
+									String.valueOf(
+										topLevelBuild.getBuildNumber()),
+									"_", axisName.replace("/", "_"), ".xml"),
+								Dom4JUtil.format(rootElement));
+						}
+						catch (IOException ioException) {
+							throw new RuntimeException(ioException);
+						}
+
+						long currentTimeMillis =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"Recorded ",
+								String.valueOf(testrayCaseResults.size()),
+								" case results for ",
+								axisTestClassGroup.getAxisName(), " in ",
+								JenkinsResultsParserUtil.toDurationString(
+									currentTimeMillis - start)));
+
+						return null;
 					}
-				}
 
-				Element attachmentsElement = testcaseElement.addElement(
-					"attachments");
-
-				for (TestrayAttachment testrayAttachment :
-						testrayCaseResult.getTestrayAttachments()) {
-
-					Element attachmentFileElement =
-						attachmentsElement.addElement("file");
-
-					attachmentFileElement.addAttribute(
-						"name", testrayAttachment.getName());
-					attachmentFileElement.addAttribute(
-						"url", String.valueOf(testrayAttachment.getURL()));
-					attachmentFileElement.addAttribute(
-						"value", testrayAttachment.getKey());
-				}
-
-				String errors = testrayCaseResult.getErrors();
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(errors)) {
-					Element failureElement = testcaseElement.addElement(
-						"failure");
-
-					failureElement.addAttribute("message", errors);
-				}
-			}
-
-			TestrayServer testrayServer = testrayBuild.getTestrayServer();
-
-			TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-			JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
-
-			try {
-				String axisName = axisTestClassGroup.getAxisName();
-
-				testrayServer.writeCaseResult(
-					JenkinsResultsParserUtil.combine(
-						"TESTS-", jenkinsMaster.getName(), "_",
-						topLevelBuild.getJobName(), "_",
-						String.valueOf(topLevelBuild.getBuildNumber()), "_",
-						axisName.replace("/", "_"), ".xml"),
-					Dom4JUtil.format(rootElement));
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Recorded ", String.valueOf(testrayCaseResults.size()),
-					" case results for ", axisTestClassGroup.getAxisName(),
-					" in ",
-					JenkinsResultsParserUtil.toDurationString(
-						JenkinsResultsParserUtil.getCurrentTimeMillis() -
-							start)));
+				});
 		}
+
+		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
+			callables, _executorService);
+
+		parallelExecutor.execute();
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -2140,16 +2204,22 @@ public class TestrayImporter {
 		}
 	}
 
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 	private static final Pattern _releaseArtifactURLPattern = Pattern.compile(
 		"https?://.+/(?<releaseName>[^/]+)(.7z|.tar.gz|.war|.zip)");
 
 	private Job _job;
-	private final Map<File, TestrayBuild> _testrayBuilds = new HashMap<>();
+	private final Map<File, TestrayBuild> _testrayBuilds =
+		Collections.synchronizedMap(new HashMap<File, TestrayBuild>());
 	private final Map<File, TestrayProductVersion> _testrayProductVersions =
-		new HashMap<>();
-	private final Map<File, TestrayProject> _testrayProjects = new HashMap<>();
-	private final Map<File, TestrayRoutine> _testrayRoutines = new HashMap<>();
-	private final Map<File, TestrayServer> _testrayServers = new HashMap<>();
+		Collections.synchronizedMap(new HashMap<File, TestrayProductVersion>());
+	private final Map<File, TestrayProject> _testrayProjects =
+		Collections.synchronizedMap(new HashMap<File, TestrayProject>());
+	private final Map<File, TestrayRoutine> _testrayRoutines =
+		Collections.synchronizedMap(new HashMap<File, TestrayRoutine>());
+	private final Map<File, TestrayServer> _testrayServers =
+		Collections.synchronizedMap(new HashMap<File, TestrayServer>());
 	private final TopLevelBuild _topLevelBuild;
 
 }

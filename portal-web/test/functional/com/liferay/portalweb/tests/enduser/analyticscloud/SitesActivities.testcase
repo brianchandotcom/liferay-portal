@@ -82,10 +82,6 @@ definition {
 			ACUtils.closeAllSessions();
 		}
 
-
-
-
-
 		task ("AC launch and go to property menu") {
 			ACUtils.launchAC();
 

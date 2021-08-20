@@ -261,11 +261,11 @@ public class CProductItemSelectorView
 			entriesSearchContainer.setTotal(
 				_cProductLocalService.getCProductsCount());
 
-			List<CProduct> cpProducts = _cProductLocalService.getCProducts(
+			List<CProduct> cProducts = _cProductLocalService.getCProducts(
 				entriesSearchContainer.getStart(),
 				entriesSearchContainer.getEnd());
 
-			entriesSearchContainer.setResults(cpProducts);
+			entriesSearchContainer.setResults(cProducts);
 
 			return entriesSearchContainer;
 		}

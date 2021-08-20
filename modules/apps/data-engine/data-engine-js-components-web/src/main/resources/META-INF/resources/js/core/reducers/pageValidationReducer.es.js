@@ -57,6 +57,7 @@ export default (state, action) => {
 					return {
 						...field,
 						displayErrors,
+						pageValidationFailed: true,
 					};
 				},
 				true,

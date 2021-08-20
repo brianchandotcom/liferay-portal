@@ -48,6 +48,7 @@ const Field = ({
 	onBlur,
 	onChange,
 	onFocus,
+	pageValidationFailed = false,
 	parsedValue,
 	placeholder,
 	readOnly,
@@ -58,6 +59,13 @@ const Field = ({
 	...otherProps
 }) => {
 	const [valid, setValid] = useState(true);
+
+	useEffect(() => {
+		if (pageValidationFailed) {
+			setValid(initialValid);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pageValidationFailed]);
 
 	return (
 		<FieldBase

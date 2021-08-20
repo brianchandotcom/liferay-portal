@@ -69,7 +69,7 @@ public interface MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration {
 	 * API.
 	 */
 	@Meta.AD(
-		description = "enable-auto-tagging-of-images-in-the-document-library-using-microsoft-cognitive-services",
+		description = "enabled-description[microsoft-cognitive-services]",
 		name = "enabled", required = false
 	)
 	public boolean enabled();

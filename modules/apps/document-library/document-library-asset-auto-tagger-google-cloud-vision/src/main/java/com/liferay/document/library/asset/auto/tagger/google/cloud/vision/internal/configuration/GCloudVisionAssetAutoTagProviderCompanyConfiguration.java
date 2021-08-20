@@ -51,7 +51,7 @@ public interface GCloudVisionAssetAutoTagProviderCompanyConfiguration {
 	 * Enables auto tagging of images using the G Cloud Vision API.
 	 */
 	@Meta.AD(
-		description = "enable-auto-tagging-of-images-in-the-document-library-using-the-google-cloud-vision-api",
+		description = "enabled-description[google-cloud-vision]",
 		name = "enabled", required = false
 	)
 	public boolean enabled();

@@ -31,7 +31,7 @@ public interface GoogleCloudTranslatorConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "enable-or-disable-the-integration-with-google-cloud-translation-api-for-automatic-translations",
+		description = "enabled-description[google-cloud-translation]",
 		name = "enabled", required = false
 	)
 	public boolean enabled();

@@ -103,7 +103,9 @@ definition {
 			actionRowNumber = "1",
 			actionTarget = "Countries of the World");
 
-		FormRules.selectAutofillOutput(dataProviderOutput = "Country");
+		FormRules.selectAutofillFromDataProvider(
+			dataProviderOption = "Country",
+			dataProviderParameterName = "Country Name");
 
 		FormRules.save();
 

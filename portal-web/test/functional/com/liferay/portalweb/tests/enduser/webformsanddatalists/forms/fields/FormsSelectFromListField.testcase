@@ -460,7 +460,9 @@ definition {
 			actionRowNumber = "1",
 			actionTarget = "Countries of the World");
 
-		FormRules.selectAutofillOutput(dataProviderOutput = "Select from List");
+		FormRules.selectAutofillFromDataProvider(
+			dataProviderOption = "Select from List",
+			dataProviderParameterName = "Country Names");
 
 		FormRules.save();
 

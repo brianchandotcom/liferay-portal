@@ -8,44 +8,11 @@ definition {
 			value1 = "${cardTitle}");
 	}
 
-	macro viewGeomapContainerFillColor {
-		MouseOver(
-			element = "",
-			key_cardTitle = "${cardTitle}",
-			locator1 = "ACCards#GEOMAP_CONTAINER");
-
-		MouseMove(
-			element = "",
-			key_cardTitle = "${cardTitle}",
-			locator1 = "ACCards#GEOMAP_CONTAINER",
-			value1 = "0,100");
-
-		MouseMove(
-			element = "",
-			key_cardTitle = "${cardTitle}",
-			locator1 = "ACCards#GEOMAP_CONTAINER",
-			value1 = "0,-100");
-
-		MouseMove(
-			element = "",
-			key_cardTitle = "${cardTitle}",
-			locator1 = "ACCards#GEOMAP_CONTAINER",
-			value1 = "100,0");
-
-		MouseMove(
-			element = "",
-			key_cardTitle = "${cardTitle}",
-			locator1 = "ACCards#GEOMAP_CONTAINER",
-			value1 = "-100,0");
-
-		MouseOver(
-			element = "//*[name()='path'][contains(@style,'fill: ${fillColor}')]",
-			key_cardTitle = "${cardTitle}",
-			locator1 = "ACCards#GEOMAP_CONTAINER");
-
+	macro viewGeomapContainer {
 		AssertVisible(
-			key_content = "${country}",
-			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+			element = "",
+			key_cardTitle = "${cardTitle}",
+			locator1 = "ACCards#GEOMAP_CONTAINER");
 	}
 
 	macro viewGeomapTableText {

@@ -554,41 +554,63 @@ public class JenkinsResultsParserUtil {
 		String jenkinsMasterName, String script) {
 
 		try {
-			URL urlObject = new URL(
-				fixURL(getLocalURL("http://" + jenkinsMasterName + "/script")));
-
-			HttpURLConnection httpURLConnection =
-				(HttpURLConnection)urlObject.openConnection();
-
-			httpURLConnection.setDoOutput(true);
-			httpURLConnection.setRequestMethod("POST");
-
 			Properties buildProperties = getBuildProperties(false);
 
-			HTTPAuthorization httpAuthorization = new BasicHTTPAuthorization(
-				buildProperties.getProperty("jenkins.admin.user.token"),
-				buildProperties.getProperty("jenkins.admin.user.name"));
+			String jenkinsAdminUserToken = buildProperties.getProperty(
+				"jenkins.admin.user.token");
+			String jenkinsAdminUserName = buildProperties.getProperty(
+				"jenkins.admin.user.name");
 
-			httpURLConnection.setRequestProperty(
-				"Authorization", httpAuthorization.toString());
+			String urlString = fixURL(
+				getLocalURL("http://" + jenkinsMasterName + "/script"));
 
-			try (OutputStream outputStream =
-					httpURLConnection.getOutputStream()) {
+			while (true) {
+				URL urlObject = new URL(urlString);
 
-				script = "script=" + URLEncoder.encode(script, "UTF-8");
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)urlObject.openConnection();
 
-				outputStream.write(script.getBytes("UTF-8"));
+				httpURLConnection.setDoOutput(true);
+				httpURLConnection.setRequestMethod("POST");
 
-				outputStream.flush();
+				HTTPAuthorization httpAuthorization =
+					new BasicHTTPAuthorization(
+						jenkinsAdminUserToken, jenkinsAdminUserName);
+
+				httpURLConnection.setRequestProperty(
+					"Authorization", httpAuthorization.toString());
+
+				try (OutputStream outputStream =
+						httpURLConnection.getOutputStream()) {
+
+					String post =
+						"script=" + URLEncoder.encode(script, "UTF-8");
+
+					outputStream.write(post.getBytes("UTF-8"));
+
+					outputStream.flush();
+				}
+
+				httpURLConnection.connect();
+
+				int responseCode = httpURLConnection.getResponseCode();
+
+				if ((responseCode == 401) &&
+					!jenkinsAdminUserName.endsWith("@liferay.com")) {
+
+					jenkinsAdminUserName += "@liferay.com";
+
+					continue;
+				}
+
+				System.out.println(
+					combine(
+						"Response from ", urlObject.toString(), ": ",
+						String.valueOf(httpURLConnection.getResponseCode()),
+						" ", httpURLConnection.getResponseMessage()));
+
+				break;
 			}
-
-			httpURLConnection.connect();
-
-			System.out.println(
-				combine(
-					"Response from ", urlObject.toString(), ": ",
-					String.valueOf(httpURLConnection.getResponseCode()), " ",
-					httpURLConnection.getResponseMessage()));
 		}
 		catch (IOException ioException) {
 			System.out.println("Unable to execute Jenkins script");

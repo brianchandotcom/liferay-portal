@@ -46,7 +46,7 @@ const getEditableValues = (fragmentEntryLinks, segmentsExperienceId) =>
 			const editableValues = Object.entries(
 				fragmentEntryLink.editableValues[
 					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				]
+				] ?? {}
 			);
 
 			return editableValues

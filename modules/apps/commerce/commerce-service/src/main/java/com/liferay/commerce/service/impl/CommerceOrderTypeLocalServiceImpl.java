@@ -66,9 +66,7 @@ public class CommerceOrderTypeLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		User user = userLocalService.getUser(userId);
-
-		validate(nameMap);
+		_validate(nameMap);
 
 		long commerceOrderTypeId = counterLocalService.increment();
 
@@ -76,9 +74,13 @@ public class CommerceOrderTypeLocalServiceImpl
 			commerceOrderTypePersistence.create(commerceOrderTypeId);
 
 		commerceOrderType.setExternalReferenceCode(externalReferenceCode);
-		commerceOrderType.setCompanyId(serviceContext.getCompanyId());
+
+		User user = userLocalService.getUser(userId);
+
+		commerceOrderType.setCompanyId(user.getCompanyId());
 		commerceOrderType.setUserId(user.getUserId());
 		commerceOrderType.setUserName(user.getFullName());
+
 		commerceOrderType.setNameMap(nameMap);
 		commerceOrderType.setDescriptionMap(descriptionMap);
 		commerceOrderType.setActive(active);
@@ -117,21 +119,17 @@ public class CommerceOrderTypeLocalServiceImpl
 		commerceOrderType = commerceOrderTypePersistence.update(
 			commerceOrderType);
 
-		// Resources
-
 		resourceLocalService.addModelResources(
 			commerceOrderType, serviceContext);
 
-		// Workflow
-
-		return startWorkflowInstance(
+		return _startWorkflowInstance(
 			user.getUserId(), commerceOrderType, serviceContext);
 	}
 
 	@Override
 	public void checkCommerceOrderTypes() throws PortalException {
-		checkCommerceOrderTypesByDisplayDate();
-		checkCommerceOrderTypesByExpirationDate();
+		_checkCommerceOrderTypesByDisplayDate();
+		_checkCommerceOrderTypesByExpirationDate();
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -141,28 +139,18 @@ public class CommerceOrderTypeLocalServiceImpl
 			CommerceOrderType commerceOrderType)
 		throws PortalException {
 
-		// Commerce order type rel
-
-		commerceOrderTypeRelLocalService.deleteCommerceOrderTypeRels(
-			commerceOrderType.getCommerceOrderTypeId());
-
-		// Commerce order type
-
 		commerceOrderTypePersistence.remove(commerceOrderType);
-
-		// Resources
 
 		resourceLocalService.deleteResource(
 			commerceOrderType.getCompanyId(), CommerceOrderType.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			commerceOrderType.getCommerceOrderTypeId());
 
-		// Expando
+		commerceOrderTypeRelLocalService.deleteCommerceOrderTypeRels(
+			commerceOrderType.getCommerceOrderTypeId());
 
 		expandoRowLocalService.deleteRows(
 			commerceOrderType.getCommerceOrderTypeId());
-
-		// Workflow
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			commerceOrderType.getCompanyId(), 0L,
@@ -198,7 +186,7 @@ public class CommerceOrderTypeLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderType updateCommerceOrderType(
-			String externalReferenceCode, long commerceOrderTypeId,
+			String externalReferenceCode, long userId, long commerceOrderTypeId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			boolean active, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -208,19 +196,28 @@ public class CommerceOrderTypeLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		_validate(nameMap);
 
 		CommerceOrderType commerceOrderType =
 			commerceOrderTypePersistence.findByPrimaryKey(commerceOrderTypeId);
 
-		validate(nameMap);
+		commerceOrderType.setExternalReferenceCode(externalReferenceCode);
+
+		commerceOrderType.setNameMap(nameMap);
+		commerceOrderType.setDescriptionMap(descriptionMap);
+		commerceOrderType.setActive(active);
 
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, user.getTimeZone(),
-			CommerceOrderTypeDisplayDateException.class);
+		User user = userLocalService.getUser(userId);
+
+		commerceOrderType.setDisplayDate(
+			PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, user.getTimeZone(),
+				CommerceOrderTypeDisplayDateException.class));
+
+		commerceOrderType.setDisplayOrder(displayOrder);
 
 		Date expirationDate = null;
 
@@ -231,12 +228,6 @@ public class CommerceOrderTypeLocalServiceImpl
 				CommerceOrderTypeExpirationDateException.class);
 		}
 
-		commerceOrderType.setExternalReferenceCode(externalReferenceCode);
-		commerceOrderType.setNameMap(nameMap);
-		commerceOrderType.setDescriptionMap(descriptionMap);
-		commerceOrderType.setActive(active);
-		commerceOrderType.setDisplayDate(displayDate);
-		commerceOrderType.setDisplayOrder(displayOrder);
 		commerceOrderType.setExpirationDate(expirationDate);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
@@ -253,7 +244,7 @@ public class CommerceOrderTypeLocalServiceImpl
 		commerceOrderType = commerceOrderTypePersistence.update(
 			commerceOrderType);
 
-		return startWorkflowInstance(
+		return _startWorkflowInstance(
 			user.getUserId(), commerceOrderType, serviceContext);
 	}
 
@@ -280,11 +271,10 @@ public class CommerceOrderTypeLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-		Date date = new Date();
-
 		CommerceOrderType commerceOrderType =
 			commerceOrderTypePersistence.findByPrimaryKey(commerceOrderTypeId);
+
+		Date date = new Date();
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(commerceOrderType.getDisplayDate() != null) &&
@@ -315,14 +305,18 @@ public class CommerceOrderTypeLocalServiceImpl
 		}
 
 		commerceOrderType.setStatus(status);
+
+		User user = userLocalService.getUser(userId);
+
 		commerceOrderType.setStatusByUserId(user.getUserId());
 		commerceOrderType.setStatusByUserName(user.getFullName());
+
 		commerceOrderType.setStatusDate(serviceContext.getModifiedDate(date));
 
 		return commerceOrderTypePersistence.update(commerceOrderType);
 	}
 
-	protected void checkCommerceOrderTypesByDisplayDate()
+	private void _checkCommerceOrderTypesByDisplayDate()
 		throws PortalException {
 
 		List<CommerceOrderType> commerceOrderTypes =
@@ -345,7 +339,7 @@ public class CommerceOrderTypeLocalServiceImpl
 		}
 	}
 
-	protected void checkCommerceOrderTypesByExpirationDate()
+	private void _checkCommerceOrderTypesByExpirationDate()
 		throws PortalException {
 
 		List<CommerceOrderType> commerceOrderTypes =
@@ -374,7 +368,7 @@ public class CommerceOrderTypeLocalServiceImpl
 		}
 	}
 
-	protected CommerceOrderType startWorkflowInstance(
+	private CommerceOrderType _startWorkflowInstance(
 			long userId, CommerceOrderType commerceOrderType,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -388,9 +382,7 @@ public class CommerceOrderTypeLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
-	protected void validate(Map<Locale, String> nameMap)
-		throws PortalException {
-
+	private void _validate(Map<Locale, String> nameMap) throws PortalException {
 		if ((nameMap == null) || nameMap.isEmpty()) {
 			throw new CommerceOrderTypeNameException();
 		}

@@ -49,31 +49,32 @@ public class CommerceOrderTypeRelLocalServiceImpl
 
 	@Override
 	public CommerceOrderTypeRel addCommerceOrderTypeRel(
-			String className, long classPK, long commerceOrderTypeId,
+			long userId, String className, long classPK, long commerceOrderTypeId,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		CommerceOrderTypeRel commerceOrderTypeRel =
 			commerceOrderTypeRelPersistence.create(
 				counterLocalService.increment());
 
+		User user = userLocalService.getUser(userId);
+
 		commerceOrderTypeRel.setCompanyId(user.getCompanyId());
 		commerceOrderTypeRel.setUserId(user.getUserId());
 		commerceOrderTypeRel.setUserName(user.getFullName());
-		commerceOrderTypeRel.setClassNameId(classNameId);
+
+		commerceOrderTypeRel.setClassNameId(
+			classNameLocalService.getClassNameId(className));
 		commerceOrderTypeRel.setClassPK(classPK);
 		commerceOrderTypeRel.setCommerceOrderTypeId(commerceOrderTypeId);
 		commerceOrderTypeRel.setExpandoBridgeAttributes(serviceContext);
 
-		// Commerce order type
+		commerceOrderTypeRel = commerceOrderTypeRelPersistence.update(
+			commerceOrderTypeRel);
 
-		reindexCommerceOrderType(commerceOrderTypeId);
+		_reindexCommerceOrderType(commerceOrderTypeId);
 
-		return commerceOrderTypeRelPersistence.update(commerceOrderTypeRel);
+		return commerceOrderTypeRel;
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class CommerceOrderTypeRelLocalServiceImpl
 
 		commerceOrderTypeRelPersistence.remove(commerceOrderTypeRel);
 
-		reindexCommerceOrderType(commerceOrderTypeRel.getCommerceOrderTypeId());
+		_reindexCommerceOrderType(commerceOrderTypeRel.getCommerceOrderTypeId());
 
 		return commerceOrderTypeRel;
 	}
@@ -186,7 +187,7 @@ public class CommerceOrderTypeRelLocalServiceImpl
 			classNameLocalService.getClassNameId(className), classPK);
 	}
 
-	protected void reindexCommerceOrderType(long commerceOrderTypeId)
+	private void _reindexCommerceOrderType(long commerceOrderTypeId)
 		throws PortalException {
 
 		Indexer<CommerceOrderType> indexer =

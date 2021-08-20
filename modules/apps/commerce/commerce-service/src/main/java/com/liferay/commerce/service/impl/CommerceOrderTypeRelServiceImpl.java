@@ -44,7 +44,8 @@ public class CommerceOrderTypeRelServiceImpl
 			getPermissionChecker(), commerceOrderTypeId, ActionKeys.UPDATE);
 
 		return commerceOrderTypeRelLocalService.addCommerceOrderTypeRel(
-			className, classPK, commerceOrderTypeId, serviceContext);
+			getUserId(), className, classPK, commerceOrderTypeId,
+			serviceContext);
 	}
 
 	@Override

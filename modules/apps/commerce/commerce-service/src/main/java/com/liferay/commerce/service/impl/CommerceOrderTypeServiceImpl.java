@@ -127,9 +127,9 @@ public class CommerceOrderTypeServiceImpl
 			getPermissionChecker(), commerceOrderTypeId, ActionKeys.UPDATE);
 
 		return commerceOrderTypeLocalService.updateCommerceOrderType(
-			externalReferenceCode, commerceOrderTypeId, nameMap, descriptionMap,
-			active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, displayOrder,
+			externalReferenceCode, getUserId(), commerceOrderTypeId, nameMap,
+			descriptionMap, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute, displayOrder,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);

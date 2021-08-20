@@ -261,10 +261,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="E1" return-type="Collection">
+		<finder name="EntryId1" return-type="Collection">
 			<finder-column name="entryId1" />
 		</finder>
-		<finder name="E2" return-type="Collection">
+		<finder name="EntryId2" return-type="Collection">
 			<finder-column name="entryId2" />
 		</finder>
 		<finder name="E_E" return-type="Collection">

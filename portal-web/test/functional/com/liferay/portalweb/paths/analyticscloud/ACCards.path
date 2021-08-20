@@ -32,6 +32,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GEOMAP_TABLE_TEXT</td>
+	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//table[contains(@class,'geomap-table')]//td[contains(@class,'text-${position}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRIC_BAR</td>
 	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//tbody[.//td[contains(@class,'name')][normalize-space()='${entryName}']]//div[contains(@class,'metric-bar-root')]//div[contains(@class,'bar')]</td>
 	<td></td>

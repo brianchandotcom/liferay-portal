@@ -1045,12 +1045,6 @@ definition {
 		AssertElementPresent(
 			key_resultBarMessage = "1 Results for Review",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
-
-
-
-
-
-
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Task"

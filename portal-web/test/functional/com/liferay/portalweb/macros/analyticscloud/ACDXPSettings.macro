@@ -148,4 +148,28 @@ definition {
 		ACDXPSettings.syncContactData();
 	}
 
+	macro syncNewUserData {
+		ACDXPSettings.goToInstanceSettingsAC();
+
+		ACDXPSettings.navToSyncedContactDataMenu();
+
+		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+		Check.checkToggleSwitch(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_TOGGLE");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_USER_TAB");
+
+		for (var fieldName : list "${fieldNameList}") {
+			Check(
+				key_fieldName = "${fieldName}",
+				locator1 = "ACDXPSettings#FIELD_NAME_CHECKBOX");
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 }

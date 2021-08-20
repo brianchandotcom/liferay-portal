@@ -137,17 +137,29 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String userId, int start, int end) {
 
+		return getAssetEntries(
+			assetListEntry, segmentsEntryIds, assetCategoryIds,
+			StringPool.BLANK, userId, start, end);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String keywords, String userId, int start,
+		int end) {
+
 		if (Objects.equals(
 				assetListEntry.getType(),
 				AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
 			return _getManualAssetEntries(
-				assetListEntry, segmentsEntryIds, assetCategoryIds, start, end);
+				assetListEntry, segmentsEntryIds, assetCategoryIds, keywords,
+				start, end);
 		}
 
 		return _getDynamicAssetEntries(
-			assetListEntry, segmentsEntryIds, assetCategoryIds, userId, start,
-			end);
+			assetListEntry, segmentsEntryIds, assetCategoryIds, keywords,
+			userId, start, end);
 	}
 
 	@Override
@@ -190,16 +202,27 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String userId) {
 
+		return getAssetEntriesCount(
+			assetListEntry, segmentsEntryIds, assetCategoryIds,
+			StringPool.BLANK, userId);
+	}
+
+	@Override
+	public int getAssetEntriesCount(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String keywords, String userId) {
+
 		if (Objects.equals(
 				assetListEntry.getType(),
 				AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
 			return _getManualAssetEntriesCount(
-				assetListEntry, segmentsEntryIds, assetCategoryIds);
+				assetListEntry, segmentsEntryIds, assetCategoryIds, keywords);
 		}
 
 		return _getDynamicAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, assetCategoryIds, userId);
+			assetListEntry, segmentsEntryIds, assetCategoryIds, keywords,
+			userId);
 	}
 
 	@Override
@@ -618,7 +641,8 @@ public class AssetListAssetEntryProviderImpl
 
 	private List<AssetEntry> _getDynamicAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String userId, int start, int end) {
+		long[][] assetCategoryIds, String keywords, String userId, int start,
+		int end) {
 
 		if (!_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
@@ -631,7 +655,7 @@ public class AssetListAssetEntryProviderImpl
 
 			return _search(
 				assetListEntry.getCompanyId(), assetCategoryIds,
-				assetEntryQuery);
+				assetEntryQuery, keywords);
 		}
 
 		List<AssetEntry> dynamicAssetEntries = new ArrayList<>();
@@ -645,7 +669,7 @@ public class AssetListAssetEntryProviderImpl
 
 				List<AssetEntry> assetEntries = _search(
 					assetListEntry.getCompanyId(), assetCategoryIds,
-					assetEntryQuery);
+					assetEntryQuery, keywords);
 
 				dynamicAssetEntries.addAll(assetEntries);
 			}
@@ -665,7 +689,7 @@ public class AssetListAssetEntryProviderImpl
 
 			count = _searchCount(
 				assetListEntry.getCompanyId(), assetCategoryIds,
-				assetEntryQuery);
+				assetEntryQuery, keywords);
 
 			if ((subtotal + count) < start) {
 				subtotal = +count;
@@ -675,7 +699,7 @@ public class AssetListAssetEntryProviderImpl
 
 			List<AssetEntry> assetEntries = _search(
 				assetListEntry.getCompanyId(), assetCategoryIds,
-				assetEntryQuery);
+				assetEntryQuery, keywords);
 
 			count = assetEntries.size();
 
@@ -698,7 +722,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private int _getDynamicAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String userId) {
+		long[][] assetCategoryIds, String keywords, String userId) {
 
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
 			int totalCount = 0;
@@ -711,7 +735,7 @@ public class AssetListAssetEntryProviderImpl
 
 				totalCount += _searchCount(
 					assetListEntry.getCompanyId(), assetCategoryIds,
-					assetEntryQuery);
+					assetEntryQuery, keywords);
 			}
 
 			return totalCount;
@@ -722,7 +746,8 @@ public class AssetListAssetEntryProviderImpl
 			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds), userId);
 
 		return _searchCount(
-			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQuery);
+			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQuery,
+			keywords);
 	}
 
 	private String _getFieldReference(
@@ -797,7 +822,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private List<AssetEntry> _getManualAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, int start, int end) {
+		long[][] assetCategoryIds, String keywords, int start, int end) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -816,6 +841,7 @@ public class AssetListAssetEntryProviderImpl
 		searchContext.setBooleanClauses(
 			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
 		searchContext.setCompanyId(assetListEntry.getCompanyId());
+		searchContext.setKeywords(keywords);
 
 		AssetEntryQuery assetEntryQuery = _getManualAssetEntryQuery(
 			assetListEntry);
@@ -844,7 +870,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private int _getManualAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds) {
+		long[][] assetCategoryIds, String keywords) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -863,6 +889,7 @@ public class AssetListAssetEntryProviderImpl
 		searchContext.setBooleanClauses(
 			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
 		searchContext.setCompanyId(assetListEntry.getCompanyId());
+		searchContext.setKeywords(keywords);
 
 		AssetEntryQuery assetEntryQuery = _getManualAssetEntryQuery(
 			assetListEntry);
@@ -910,7 +937,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private SearchContext _getSearchContext(
 		long companyId, long[][] assetCategoryIds,
-		AssetEntryQuery assetEntryQuery) {
+		AssetEntryQuery assetEntryQuery, String keywords) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -933,7 +960,7 @@ public class AssetListAssetEntryProviderImpl
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(assetEntryQuery.getEnd());
-		searchContext.setKeywords(assetEntryQuery.getKeywords());
+		searchContext.setKeywords(keywords);
 		searchContext.setStart(assetEntryQuery.getStart());
 
 		return searchContext;
@@ -954,11 +981,12 @@ public class AssetListAssetEntryProviderImpl
 
 	private List<AssetEntry> _search(
 		long companyId, long[][] assetCategoryIds,
-		AssetEntryQuery assetEntryQuery) {
+		AssetEntryQuery assetEntryQuery, String keywords) {
 
 		try {
 			Hits hits = _assetHelper.search(
-				_getSearchContext(companyId, assetCategoryIds, assetEntryQuery),
+				_getSearchContext(
+					companyId, assetCategoryIds, assetEntryQuery, keywords),
 				assetEntryQuery, assetEntryQuery.getStart(),
 				assetEntryQuery.getEnd());
 
@@ -973,11 +1001,12 @@ public class AssetListAssetEntryProviderImpl
 
 	private int _searchCount(
 		long companyId, long[][] assetCategoryIds,
-		AssetEntryQuery assetEntryQuery) {
+		AssetEntryQuery assetEntryQuery, String keywords) {
 
 		try {
 			Long count = _assetHelper.searchCount(
-				_getSearchContext(companyId, assetCategoryIds, assetEntryQuery),
+				_getSearchContext(
+					companyId, assetCategoryIds, assetEntryQuery, keywords),
 				assetEntryQuery);
 
 			return count.intValue();

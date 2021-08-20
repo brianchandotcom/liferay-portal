@@ -37,8 +37,6 @@ definition {
 	test ObjectDisplayedToCollectionProdiver {
 		property portal.acceptance = "true";
 
-		ObjectAdmin.openObjectAdmin();
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

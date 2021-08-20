@@ -27,9 +27,12 @@ definition {
 	test ViewCustomObjects {
 		property portal.acceptance = "true";
 
-		ObjectAdmin.openObjectAdmin();
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		ObjectAdmin.createCustomObject(name = "CustomObject");
+		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.viewCustomObject(name = "CustomObject");
 	}

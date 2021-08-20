@@ -76,6 +76,11 @@
 	<td>//th[text()='Day 0']/ancestor::tr/following-sibling::tr//th[3]</td>
 	<td></td>
 </tr>
+<tr>	
+	<td>COHORT_ANALYSIS_SELECT_VISITOR_TYPE</td>
+	<td>//select[contains(@class,'visitors-type-select')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SEARCHED_KEYWORD</td>
 	<td>//span[contains(@class,'text-truncate title')and contains(text(),'${key_keyword}')]</td>

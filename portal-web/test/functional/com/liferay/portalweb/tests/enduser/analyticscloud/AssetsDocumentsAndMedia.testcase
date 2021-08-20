@@ -187,12 +187,99 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8403 | Test Summary: Documents audience card shows expected amount of segmented and unsegmented individuals"
-	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8403 AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM
+		// This test relies on the test LRAC-7890
 
+		task ("Create new users and connect the DXP to AC") {
+			for (var name : list "ac,ac2,ac3") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Logout and login the AC") {
+			for (var name : list "ac,ac2,ac3") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				if ("${name}" != "ac") {
+					DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+				}
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Create segment") {
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			ACSegments.addStaticMember(tableMember = "ac ac");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to DXP") {
+			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+		}
+
+		task ("Login and download the document") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+
+			Pause(locator1 = "10000");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+		}
+
+		task ("Assert segmented and unsegmented in documents and media") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Assert views by download number of know and anoymous users") {
+			ACUtils.assertAudienceCard(
+				index = "2",
+				percentageList = "66.67%,33.33%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8395 | Test Summary: Custom Range time filter in Documents and Media assets page"

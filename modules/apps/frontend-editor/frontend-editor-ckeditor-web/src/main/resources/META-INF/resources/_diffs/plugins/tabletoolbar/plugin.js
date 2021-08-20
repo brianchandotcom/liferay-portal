@@ -1132,6 +1132,7 @@
 			addCmd(
 				{
 					commandName: 'rowDelete',
+					name: 'RowDelete',
 				},
 				createDef({
 					exec(editor) {
@@ -1145,6 +1146,7 @@
 			addCmd(
 				{
 					commandName: 'rowInsertBefore',
+					name: 'RowInsertBefore',
 				},
 				createDef({
 					exec(editor) {
@@ -1157,6 +1159,7 @@
 			addCmd(
 				{
 					commandName: 'rowInsertAfter',
+					name: 'RowInsertAfter',
 				},
 				createDef({
 					exec(editor) {
@@ -1210,6 +1213,7 @@
 			addCmd(
 				{
 					commandName: 'columnDelete',
+					name: 'ColumnDelete',
 				},
 				createDef({
 					exec(editor) {
@@ -1226,6 +1230,7 @@
 			addCmd(
 				{
 					commandName: 'columnInsertBefore',
+					name: 'ColumnInsertBefore',
 				},
 				createDef({
 					exec(editor) {
@@ -1238,6 +1243,7 @@
 			addCmd(
 				{
 					commandName: 'columnInsertAfter',
+					name: 'ColumnInsertAfter',
 				},
 				createDef({
 					exec(editor) {
@@ -1311,6 +1317,7 @@
 			addCmd(
 				{
 					commandName: 'cellDelete',
+					name: 'CellDelete',
 				},
 				createDef({
 					exec(editor) {
@@ -1324,6 +1331,7 @@
 			addCmd(
 				{
 					commandName: 'cellMerge',
+					name: 'CellMerge',
 				},
 				createDef({
 					allowedContent: 'td[colspan,rowspan]',
@@ -1340,6 +1348,7 @@
 			addCmd(
 				{
 					commandName: 'cellMergeRight',
+					name: 'CellMergeRight',
 				},
 				createDef({
 					allowedContent: 'td[colspan]',
@@ -1356,6 +1365,7 @@
 			addCmd(
 				{
 					commandName: 'cellMergeDown',
+					name: 'CellMergeDown',
 				},
 				createDef({
 					allowedContent: 'td[rowspan]',
@@ -1372,6 +1382,7 @@
 			addCmd(
 				{
 					commandName: 'cellVerticalSplit',
+					name: 'CellVerticalSplit',
 				},
 				createDef({
 					allowedContent: 'td[rowspan]',
@@ -1387,6 +1398,7 @@
 			addCmd(
 				{
 					commandName: 'cellHorizontalSplit',
+					name: 'CellHorizontalSplit',
 				},
 				createDef({
 					allowedContent: 'td[colspan]',
@@ -1402,6 +1414,7 @@
 			addCmd(
 				{
 					commandName: 'cellInsertBefore',
+					name: 'CellInsertBefore',
 				},
 				createDef({
 					exec(editor) {
@@ -1415,6 +1428,7 @@
 			addCmd(
 				{
 					commandName: 'cellInsertAfter',
+					name: 'CellInsertAfter',
 				},
 				createDef({
 					exec(editor) {

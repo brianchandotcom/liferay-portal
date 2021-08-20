@@ -171,32 +171,15 @@ definition {
 			value1 = "${actionTarget}");
 	}
 
-	macro selectAutofill {
-		var key_dataProviderInput = "${dataProviderInput}";
+	macro selectAutofillFromDataProvider {
+		var key_dataProviderOption = "${dataProviderOption}";
+		var key_dataProviderParameterName = "${dataProviderParameterName}";
 
-		Click(locator1 = "FormRules#RULE_BUILDER_AUTOFILL_INPUT_FIELD");
-
-		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_AUTOFILL_SELECT_INPUT_FIELD",
-			value1 = "${dataProviderInput}");
-
-		var key_dataProviderOutput = "${dataProviderOutput}";
-
-		Click(locator1 = "FormRules#RULE_BUILDER_AUTOFILL_OUTPUT_FIELD_2");
+		Click(locator1 = "FormRules#RULE_BUILDER_AUTOFILL_FROM_DATA_PROVIDER");
 
 		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD",
-			value1 = "${dataProviderOutput}");
-	}
-
-	macro selectAutofillOutput {
-		var key_dataProviderOutput = "${dataProviderOutput}";
-
-		Click(locator1 = "FormRules#RULE_BUILDER_AUTOFILL_OUTPUT_FIELD");
-
-		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD",
-			value1 = "${dataProviderOutput}");
+			locator1 = "FormRules#RULE_BUILDER_AUTOFILL_SELECT_OPTION_FIELD",
+			value1 = "${dataProviderOption}");
 	}
 
 	macro selectCalculateField {

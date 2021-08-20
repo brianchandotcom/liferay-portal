@@ -174,6 +174,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro openFormsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet");
+	}
+
 	macro saveDataProvider {
 		PortletEntry.save();
 

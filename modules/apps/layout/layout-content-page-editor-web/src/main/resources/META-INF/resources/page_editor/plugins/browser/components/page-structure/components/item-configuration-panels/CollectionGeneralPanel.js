@@ -66,9 +66,10 @@ const ERROR_MESSAGES = {
 	maximumItemsPerPage: Liferay.Language.get(
 		'you-can-only-display-a-maximum-of-x-items-per-page'
 	),
-	noItems: Liferay.Language.get(
-		'you-need-at-least-one-item-to-use-pagination'
+	neededItem: Liferay.Language.get(
+		'you-need-at-least-one-item-to-use-this-configuration'
 	),
+	noItems: Liferay.Language.get('this-collection-has-no-items'),
 };
 
 export const CollectionGeneralPanel = ({item}) => {
@@ -94,13 +95,20 @@ export const CollectionGeneralPanel = ({item}) => {
 		numberOfItems: item.config.numberOfItems,
 		numberOfItemsPerPage: item.config.numberOfItemsPerPage,
 	});
+	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
+	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
 	const [numberOfItemsError, setNumberOfItemsError] = useState(
-		item.config.numberOfItems < 1 ? ERROR_MESSAGES.noItems : null
+		totalNumberOfItems
+			? item.config.numberOfItems < 1
+				? ERROR_MESSAGES.neededItem
+				: null
+			: ERROR_MESSAGES.noItems
 	);
 	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
-		item.config.numberOfItemsPerPage < 1 ? ERROR_MESSAGES.noItems : null
+		item.config.numberOfItemsPerPage < 1 ? ERROR_MESSAGES.neededItem : null
 	);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const {
 		observer: filterConfigurationObserver,
@@ -125,9 +133,6 @@ export const CollectionGeneralPanel = ({item}) => {
 		[collectionConfiguration, setFilterConfigurationVisible]
 	);
 
-	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
-	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
-
 	const handleCollectionListItemStyleChanged = ({target}) => {
 		const options = target.options;
 
@@ -139,9 +144,13 @@ export const CollectionGeneralPanel = ({item}) => {
 
 	const handleCollectionNumberOfItemsBlurred = (event) => {
 		if (Number(nextValue.numberOfItems) !== item.config.numberOfItems) {
-			setNumberOfItemsError(
-				Number(event.target.value) < 1 ? ERROR_MESSAGES.noItems : null
-			);
+			if (totalNumberOfItems) {
+				setNumberOfItemsError(
+					Number(event.target.value) < 1
+						? ERROR_MESSAGES.neededItem
+						: null
+				);
+			}
 
 			handleConfigurationChanged({
 				numberOfItems: Number(event.target.value),
@@ -165,7 +174,7 @@ export const CollectionGeneralPanel = ({item}) => {
 			nextValue.numberOfItemsPerPage !== item.config.numberOfItemsPerPage
 		) {
 			if (Number(event.target.value) < 1) {
-				setNumberOfItemsPerPageError(ERROR_MESSAGES.noItems);
+				setNumberOfItemsPerPageError(ERROR_MESSAGES.neededItem);
 			}
 			else if (
 				Number(event.target.value) <= config.searchContainerPageMaxDelta
@@ -271,18 +280,16 @@ export const CollectionGeneralPanel = ({item}) => {
 				onNetworkStatus: () => {},
 			}).then(({totalNumberOfItems}) => {
 				if (isMounted()) {
-					const numberOfItems = totalNumberOfItems || 1;
-
-					setTotalNumberOfItems(numberOfItems);
+					setTotalNumberOfItems(totalNumberOfItems);
 
 					if (showAllItems) {
 						handleConfigurationChanged({
-							numberOfItems,
+							numberOfItems: totalNumberOfItems,
 						});
 
 						setNextValue((prevValue) => ({
 							...prevValue,
-							numberOfItems,
+							numberOfItems: totalNumberOfItems,
 						}));
 
 						setNumberOfItemsError(null);

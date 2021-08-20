@@ -37,7 +37,7 @@ public interface TensorFlowImageAssetAutoTagProviderCompanyConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "false", description = "enabled-description[tensorflow]",
-		name = "enable-tensor-flow-image-auto-tagging", required = false
+		name = "enabled[tensorflow]", required = false
 	)
 	public boolean enabled();
 

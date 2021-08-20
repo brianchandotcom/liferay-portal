@@ -35,7 +35,8 @@ public interface AssetAutoTaggerCompanyConfiguration {
 	 * Enables asset auto tagging.
 	 */
 	@Meta.AD(
-		deflt = "true", name = "enable-auto-tagging-of-assets", required = false
+		deflt = "true", name = "enabled[asset-auto-tagger-service]",
+		required = false
 	)
 	public boolean enabled();
 

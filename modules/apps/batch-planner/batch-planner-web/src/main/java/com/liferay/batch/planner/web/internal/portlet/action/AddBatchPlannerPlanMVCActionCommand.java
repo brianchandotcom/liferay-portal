@@ -103,8 +103,7 @@ public class AddBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 
 			if (!parameterName.startsWith("externalFieldName_") ||
 				Validator.isNull(
-					ParamUtil.getString(
-						actionRequest, parameterName))) {
+					ParamUtil.getString(actionRequest, parameterName))) {
 
 				continue;
 			}

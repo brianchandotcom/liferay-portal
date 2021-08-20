@@ -49,8 +49,8 @@ public class CommerceOrderTypeRelLocalServiceImpl
 
 	@Override
 	public CommerceOrderTypeRel addCommerceOrderTypeRel(
-			long userId, String className, long classPK, long commerceOrderTypeId,
-			ServiceContext serviceContext)
+			long userId, String className, long classPK,
+			long commerceOrderTypeId, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderTypeRel commerceOrderTypeRel =
@@ -88,7 +88,8 @@ public class CommerceOrderTypeRelLocalServiceImpl
 
 		commerceOrderTypeRelPersistence.remove(commerceOrderTypeRel);
 
-		_reindexCommerceOrderType(commerceOrderTypeRel.getCommerceOrderTypeId());
+		_reindexCommerceOrderType(
+			commerceOrderTypeRel.getCommerceOrderTypeId());
 
 		return commerceOrderTypeRel;
 	}
@@ -187,15 +188,6 @@ public class CommerceOrderTypeRelLocalServiceImpl
 			classNameLocalService.getClassNameId(className), classPK);
 	}
 
-	private void _reindexCommerceOrderType(long commerceOrderTypeId)
-		throws PortalException {
-
-		Indexer<CommerceOrderType> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderType.class);
-
-		indexer.reindex(CommerceOrderType.class.getName(), commerceOrderTypeId);
-	}
-
 	private GroupByStep _getGroupByStep(
 			FromStep fromStep, Table innerJoinTable,
 			Predicate innerJoinPredicate, Long commerceOrderTypeId,
@@ -234,6 +226,15 @@ public class CommerceOrderTypeRelLocalServiceImpl
 
 				return predicate;
 			});
+	}
+
+	private void _reindexCommerceOrderType(long commerceOrderTypeId)
+		throws PortalException {
+
+		Indexer<CommerceOrderType> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderType.class);
+
+		indexer.reindex(CommerceOrderType.class.getName(), commerceOrderTypeId);
 	}
 
 	@ServiceReference(type = CustomSQL.class)

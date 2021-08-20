@@ -8,6 +8,20 @@ definition {
 			value1 = "${cardTitle}");
 	}
 
+	macro viewGeomapTableText {
+		AssertTextEquals(
+			key_cardTitle = "${cardTitle}",
+			locator1 = "ACCards#GEOMAP_TABLE_TEXT",
+			position = "left",
+			value1 = "${leftText}");
+
+		AssertTextEquals(
+			key_cardTitle = "${cardTitle}",
+			locator1 = "ACCards#GEOMAP_TABLE_TEXT",
+			position = "right",
+			value1 = "${rightText}");
+	}
+
 	macro viewMetricBarStyle {
 		AssertAttributeValue(
 			attribute1 = "style",

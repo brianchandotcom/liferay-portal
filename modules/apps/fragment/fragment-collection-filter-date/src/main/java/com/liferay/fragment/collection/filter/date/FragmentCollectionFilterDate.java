@@ -21,6 +21,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,10 +30,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Molina
@@ -73,8 +78,28 @@ public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher("/page.jsp");
+
+		try {
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to render collection filter fragment", exception);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentCollectionFilterDate.class);
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.fragment.collection.filter.date)"
+	)
+	private ServletContext _servletContext;
+
 }

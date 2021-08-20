@@ -58,6 +58,11 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 				<liferay-ui:message key="open-graph-description" />
 			</p>
 
+			<clay:alert
+				displayType="info"
+				message='<%= LanguageUtil.get(request, "add-multiple-fields-to-define-how-the-meta-tags-will-be-filled") %>'
+			/>
+
 			<c:choose>
 				<c:when test="<%= selLayout.isTypeAssetDisplay() %>">
 					<div class="dpt-mapping">

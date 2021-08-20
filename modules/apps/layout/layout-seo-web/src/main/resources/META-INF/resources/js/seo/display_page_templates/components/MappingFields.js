@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
@@ -21,36 +20,27 @@ import MappingInput from './MappingInput';
 import MappingSelector from './MappingSelector';
 
 function MappingFields({fields, inputs, selectedSource}) {
-	return (
-		<>
-			<ClayAlert displayType="info" title={Liferay.Language.get('info')}>
-				{Liferay.Language.get(
-					'add-multiple-fields-to-define-how-the-meta-tags-will-be-filled'
-				)}
-			</ClayAlert>
-			{inputs.map((props) => {
-				const filteredFields = fields.filter(
-					({type}) => type === props.fieldType
-				);
+	return inputs.map((props) => {
+		const filteredFields = fields.filter(
+			({type}) => type === props.fieldType
+		);
 
-				return props.fieldType === FIELD_TYPES.TEXT ? (
-					<MappingInput
-						fields={filteredFields}
-						key={props.name}
-						selectedSource={selectedSource}
-						{...props}
-					/>
-				) : (
-					<MappingSelector
-						fields={filteredFields}
-						key={props.name}
-						selectedSource={selectedSource}
-						{...props}
-					/>
-				);
-			})}
-		</>
-	);
+		return props.fieldType === FIELD_TYPES.TEXT ? (
+			<MappingInput
+				fields={filteredFields}
+				key={props.name}
+				selectedSource={selectedSource}
+				{...props}
+			/>
+		) : (
+			<MappingSelector
+				fields={filteredFields}
+				key={props.name}
+				selectedSource={selectedSource}
+				{...props}
+			/>
+		);
+	});
 }
 
 MappingFields.propTypes = {

@@ -15,7 +15,6 @@
 package com.liferay.asset.list.internal.info.filter;
 
 import com.liferay.asset.list.info.filter.AssetEntryListInfoFilter;
-import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,10 +31,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = InfoFilterProvider.class)
 public class AssetEntryListInfoFilterProvider
-	implements InfoFilterProvider<InfoFilter> {
+	implements InfoFilterProvider<AssetEntryListInfoFilter> {
 
 	@Override
-	public InfoFilter create(Map<String, String[]> values) {
+	public AssetEntryListInfoFilter create(Map<String, String[]> values) {
 		AssetEntryListInfoFilter assetEntryListInfoFilter =
 			new AssetEntryListInfoFilter();
 

@@ -23,8 +23,6 @@ import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.servlet.PortalSessionContext;
-import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -32,19 +30,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpSession;
 
 /**
  * @author Pei-Jung Lan
@@ -56,31 +46,6 @@ public class CurrentAccountEntryManagerTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		_originalHttpSession = PortalSessionThreadLocal.getHttpSession();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		if (_originalHttpSession != null) {
-			PortalSessionThreadLocal.setHttpSession(_originalHttpSession);
-		}
-	}
-
-	@Before
-	public void setUp() {
-		_httpSession = new MockHttpSession();
-
-		PortalSessionContext.put(_httpSession.getId(), _httpSession);
-		PortalSessionThreadLocal.setHttpSession(_httpSession);
-	}
-
-	@After
-	public void tearDown() {
-		PortalSessionContext.remove(_httpSession.getId());
-	}
 
 	@Test
 	public void testGetCurrentAccountEntry() throws Exception {
@@ -149,9 +114,6 @@ public class CurrentAccountEntryManagerTest {
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 	}
-
-	private static HttpSession _httpSession;
-	private static HttpSession _originalHttpSession;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

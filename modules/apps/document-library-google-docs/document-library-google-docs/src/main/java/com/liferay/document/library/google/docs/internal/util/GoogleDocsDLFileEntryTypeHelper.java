@@ -26,12 +26,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Iván Zaera
@@ -110,10 +111,6 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			_company.getCompanyId());
 
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			LocaleUtil.getDefault(), GoogleDocsConstants.DL_FILE_ENTRY_TYPE_NAME
-		).build();
-
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -125,9 +122,28 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 		_dlFileEntryTypeLocalService.addFileEntryType(
 			defaultUserId, _company.getGroupId(), ddmStructureId,
-			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap, descriptionMap,
+			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY,
+			_getGoogleDriveShortcutNameMap(LanguageUtil.getAvailableLocales()),
+			descriptionMap,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM,
 			serviceContext);
+	}
+
+	private Map<Locale, String> _getGoogleDriveShortcutNameMap(
+		Set<Locale> locales) {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		for (Locale locale : locales) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, GoogleDocsDLFileEntryTypeHelper.class);
+
+			nameMap.put(
+				locale,
+				LanguageUtil.get(resourceBundle, "google-drive-shortcut"));
+		}
+
+		return nameMap;
 	}
 
 	private Map<Locale, String> _updateNameMap(Map<Locale, String> nameMap) {

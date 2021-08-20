@@ -108,7 +108,9 @@ public class InfoFieldUtil {
 	}
 
 	private static boolean _isTextFieldType(String type) {
-		if (type.equals("rich-text") || type.equals("text")) {
+		if (type.equals("link") || type.equals("rich-text") ||
+			type.equals("text")) {
+
 			return true;
 		}
 

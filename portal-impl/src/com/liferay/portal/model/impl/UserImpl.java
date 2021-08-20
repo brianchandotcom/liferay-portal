@@ -884,6 +884,11 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public void setContact(Contact contact) {
+		_contact = contact;
+	}
+
+	@Override
 	public void setLanguageId(String languageId) {
 		_locale = LocaleUtil.fromLanguageId(languageId);
 

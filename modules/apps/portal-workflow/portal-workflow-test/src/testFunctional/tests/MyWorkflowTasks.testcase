@@ -1148,7 +1148,6 @@ definition {
 	@description = "Verify that in Update Due Date, the due date is required"
 	@priority = "3"
 	test DueDateIsRequired {
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
@@ -1156,19 +1155,12 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		MyWorkflowTasks.updateDueDateAtMyWorkflowTastks(
-			workflowAssetTitle = "Blogs Entry Title 1",
-			workflowTask = "Review",
 			dueDate = "  ",
-			dueDateTime = "05:30 PM"
-		);
+			dueDateTime = "05:30 PM",
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowTask = "Review");
 
 		Alert.viewErrorMessage(errorMessage = "Please enter a valid due date.");
-
-
-
-
-
-
 	}
 
 	@description = "Verify that in Update Due Date modal, the user can not insert a past date"

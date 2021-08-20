@@ -92,6 +92,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KNOWN_SEGMENT_MEMBERS_VIEW_SPECIFIC_ORDER</td>
+	<td>//tbody//tr[${resultOrder}]//div[contains(@class,'table-title')and text()='${key_userName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_CHECKBOX</td>
 	<td>//div[text()='${key_TableMember}']/ancestor::tr</td>
 	<td></td>
@@ -209,11 +214,6 @@
 <tr>
 	<td>SEGMENT_MEMBERS</td>
 	<td>//tbody//a[@class='text-truncate'and text()='${key_userName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_SPECIFIC_SEGMENT_TABLE</td>
-	<td>//tbody//tr[${resultOrder}]//a[@class='text-truncate'and text()='${key_segmentName}']</td>
 	<td></td>
 </tr>
 <!-- Dynamic Segments -->

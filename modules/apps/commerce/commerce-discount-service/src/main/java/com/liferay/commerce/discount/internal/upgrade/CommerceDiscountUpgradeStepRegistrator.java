@@ -22,6 +22,7 @@ import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountUsa
 import com.liferay.commerce.discount.internal.upgrade.v2_1_0.CommerceDiscountExternalReferenceCodeUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountAccountRelUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountRuleNameUpgradeProcess;
+import com.liferay.commerce.discount.internal.upgrade.v2_6_0.CommerceDiscountOrderTypeRelUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -83,6 +84,9 @@ public class CommerceDiscountUpgradeStepRegistrator
 		registry.register("2.4.1", "2.4.2", new DummyUpgradeStep());
 
 		registry.register("2.4.2", "2.5.0", new DummyUpgradeStep());
+
+		registry.register(
+			"2.5.0", "2.6.0", new CommerceDiscountOrderTypeRelUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce discount upgrade step registrator finished");

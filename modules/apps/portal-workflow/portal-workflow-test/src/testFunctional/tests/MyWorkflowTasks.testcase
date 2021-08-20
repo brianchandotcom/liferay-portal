@@ -992,11 +992,26 @@ definition {
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Title"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSearchForAssetTitleOnAssignedToMyRolesTab {
 
-		// TODO LRQA-68835 CanSearchForAssetTitleOnAssignedToMyRolesTab pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Blogs Entry Title");
+
+		AssertElementPresent(
+			key_resultBarMessage = "1 Results for Blogs Entry Title",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+
+
+
 
 	}
 

@@ -829,9 +829,7 @@ public class AssetListAssetEntryProviderImpl
 					assetEntry -> assetEntryIds.indexOf(
 						assetEntry.getEntryId())));
 
-			return ListUtil.subList(
-				assetEntries, assetEntryQuery.getStart(),
-				assetEntryQuery.getEnd());
+			return ListUtil.subList(assetEntries, start, end);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);

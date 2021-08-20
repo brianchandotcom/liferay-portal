@@ -37,6 +37,19 @@ import org.osgi.framework.BundleContext;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 
+import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import java.util.Map;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import java.util.List;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+
 /**
  * @author Preston Crary
  */
@@ -51,10 +64,19 @@ public class SiteInitializerExtension {
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter,
 		JournalArticleLocalService journalArticleLocalService,
-		JSONFactory jsonFactory,
+		JSONFactory jsonFactory, LayoutCopyHelper layoutCopyHelper,
+		LayoutLocalService layoutLocalService,
+		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
+		LayoutPageTemplatesImporter layoutPageTemplatesImporter,
+		LayoutPageTemplateStructureLocalService layoutPageTemplateStructureLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal, StyleBookEntryZipProcessor styleBookEntryZipProcessor,
+		Portal portal,
+		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
+		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
+		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
+		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
+		ThemeLocalService themeLocalService,
 		UserLocalService userLocalService) {
 
 		_dependencyManager = new DependencyManager(bundle.getBundleContext());
@@ -68,8 +90,17 @@ public class SiteInitializerExtension {
 				ddmTemplateLocalService, defaultDDMStructureHelper,
 				documentResourceFactory, fragmentsImporter,
 				journalArticleLocalService, jsonFactory,
-				objectDefinitionResourceFactory, portal,
-				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,
+				layoutCopyHelper, layoutLocalService,
+				layoutPageTemplateEntryLocalService,
+				layoutPageTemplatesImporter,
+				layoutPageTemplateStructureLocalService,
+				objectDefinitionResourceFactory,
+				portal, siteNavigationMenuItemLocalService,
+				siteNavigationMenuItemTypeRegistry,
+				siteNavigationMenuLocalService,
+				styleBookEntryZipProcessor,
+				taxonomyVocabularyResourceFactory,
+				themeLocalService,
 				userLocalService));
 
 		ServiceDependency serviceDependency =

@@ -27,12 +27,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -42,6 +51,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -164,7 +175,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			_portalInstancesLocalService.initializePortalInstance(
 				servletContext, company.getWebId());
 
-			// Initialize instance with portal instance initializer
+			// Initialize instance with site initializer
 
 			String siteInitializerKey = ParamUtil.getString(
 				actionRequest, "siteInitializerKey");
@@ -179,10 +190,36 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 						"Invalid site initializer key " + siteInitializerKey);
 				}
 
+				Role role = _roleLocalService.fetchRole(
+					company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+				List<User> roleUsers = _userLocalService.getRoleUsers(
+					role.getRoleId());
+
+				User user = roleUsers.get(0);
+
+				String name = PrincipalThreadLocal.getName();
+
+				PrincipalThreadLocal.setName(user.getUserId());
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				PermissionThreadLocal.setPermissionChecker(
+					_permissionCheckerFactory.create(user));
+
 				Group group = _groupLocalService.getGroup(
 					company.getCompanyId(), GroupConstants.GUEST);
 
-				siteInitializer.initialize(group.getGroupId());
+				try {
+					siteInitializer.initialize(group.getGroupId());
+				}
+				finally {
+					PrincipalThreadLocal.setName(name);
+
+					PermissionThreadLocal.setPermissionChecker(
+						permissionChecker);
+				}
 			}
 		}
 		else {
@@ -209,12 +246,21 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;
 
 	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

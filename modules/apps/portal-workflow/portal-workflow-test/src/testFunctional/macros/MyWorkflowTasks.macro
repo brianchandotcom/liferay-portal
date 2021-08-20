@@ -6,6 +6,7 @@ definition {
 			value1 = "${searchTerm}");
 
 		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
+<<<<<<< HEAD
 	}
 
 	macro updateDueDateAtMyWorkflowTastks {
@@ -127,6 +128,8 @@ definition {
 			key_workflowTask = "${workflowTask}",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE",
 			value1 = "${dueDateValue}");
+=======
+>>>>>>> 02d8455 (LRQA-68879 SF)
 	}
 
 }

@@ -1098,7 +1098,6 @@ definition {
 	@description = "Verify that the user can search for results inside Assigned to Me by Asset Type"
 	@priority = "3"
 	test CanSearchTasksAssignedtoMeByAssetType {
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry");
@@ -1115,11 +1114,6 @@ definition {
 		AssertElementPresent(
 			key_resultBarMessage = "1 Results for Blogs Entry",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
-
-
-
-
-
 	}
 
 	@description = "Verify that, in the Assigned to Me table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"

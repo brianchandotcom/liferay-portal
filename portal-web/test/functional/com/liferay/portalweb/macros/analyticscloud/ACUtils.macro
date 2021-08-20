@@ -45,7 +45,7 @@ definition {
 
 	macro assertEventPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-		var actual = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['eventId'] == '${eventId}')]..${property}");
+		var actual = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
 
 		TestUtils.assertEquals(
 			actual = "${actual}",

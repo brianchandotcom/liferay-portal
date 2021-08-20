@@ -105,13 +105,13 @@
 </tr>
 <!-- SYNC CONTACT DATA SCREEN -->
 <tr>
-	<td>SYNC_CONTACTS_OPTION</td>
-	<td>//fieldset//*[contains(@href, 'synced-contact-data')]</td>
+	<td>SYNC_ALL_CONTACTS_TOGGLE</td>
+	<td>//*[contains(@class, 'toggle-switch-check')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SYNC_ALL_CONTACTS_TOGGLE</td>
-	<td>//*[contains(@class, 'toggle-switch-check')]</td>
+	<td>SYNC_CONTACTS_OPTION</td>
+	<td>//fieldset//*[contains(@href, 'synced-contact-data')]</td>
 	<td></td>
 </tr>
 </tbody>

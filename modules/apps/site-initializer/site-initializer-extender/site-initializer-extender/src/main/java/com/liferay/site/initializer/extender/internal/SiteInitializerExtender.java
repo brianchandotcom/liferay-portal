@@ -43,6 +43,19 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 
+import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import java.util.Map;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import java.util.List;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -70,8 +83,18 @@ public class SiteInitializerExtender
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
 				_documentResourceFactory, _fragmentsImporter,
 				_journalArticleLocalService, _jsonFactory,
-				_objectDefinitionResourceFactory, _portal,
-				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
+				_layoutCopyHelper, _layoutLocalService,
+				_layoutPageTemplateEntryLocalService,
+				_layoutPageTemplatesImporter,
+				_layoutPageTemplateStructureLocalService,
+				_objectDefinitionResourceFactory,
+				_portal,
+				_siteNavigationMenuItemLocalService,
+				_siteNavigationMenuItemTypeRegistry,
+				_siteNavigationMenuLocalService,
+				_styleBookEntryZipProcessor,
+				_taxonomyVocabularyResourceFactory,
+				_themeLocalService,
 				_userLocalService);
 
 		siteInitializerExtension.start();
@@ -136,10 +159,36 @@ public class SiteInitializerExtender
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteNavigationMenuItemLocalService _siteNavigationMenuItemLocalService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry _siteNavigationMenuItemTypeRegistry;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Reference
 	private StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
@@ -147,6 +196,9 @@ public class SiteInitializerExtender
 	@Reference
 	private TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

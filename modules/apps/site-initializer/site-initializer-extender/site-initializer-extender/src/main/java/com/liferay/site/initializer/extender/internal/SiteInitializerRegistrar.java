@@ -36,6 +36,20 @@ import org.osgi.framework.ServiceRegistration;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 
+import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import java.util.Map;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import java.util.List;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+
+
 /**
  * @author Preston Crary
  */
@@ -50,10 +64,19 @@ public class SiteInitializerRegistrar {
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter,
 		JournalArticleLocalService journalArticleLocalService,
-		JSONFactory jsonFactory,
+		JSONFactory jsonFactory, LayoutCopyHelper layoutCopyHelper,
+		LayoutLocalService layoutLocalService,
+		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
+		LayoutPageTemplatesImporter layoutPageTemplatesImporter,
+		LayoutPageTemplateStructureLocalService layoutPageTemplateStructureLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal, StyleBookEntryZipProcessor styleBookEntryZipProcessor,
+		Portal portal,
+		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
+		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
+		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
+		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
+		ThemeLocalService themeLocalService,
 		UserLocalService userLocalService) {
 
 		_assetListEntryLocalService = assetListEntryLocalService;
@@ -66,10 +89,19 @@ public class SiteInitializerRegistrar {
 		_fragmentsImporter = fragmentsImporter;
 		_journalArticleLocalService = journalArticleLocalService;
 		_jsonFactory = jsonFactory;
-		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_layoutCopyHelper = layoutCopyHelper;
+		_layoutLocalService = layoutLocalService;
+		_layoutPageTemplateEntryLocalService = layoutPageTemplateEntryLocalService;
+		_layoutPageTemplatesImporter = layoutPageTemplatesImporter;
+		_layoutPageTemplateStructureLocalService = layoutPageTemplateStructureLocalService;
+ 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
+		_siteNavigationMenuItemLocalService = siteNavigationMenuItemLocalService;
+		_siteNavigationMenuItemTypeRegistry = siteNavigationMenuItemTypeRegistry;
+		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
+		_themeLocalService = themeLocalService;
 		_userLocalService = userLocalService;
 	}
 
@@ -85,8 +117,13 @@ public class SiteInitializerRegistrar {
 				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _documentResourceFactory,
 				_fragmentsImporter, _journalArticleLocalService, _jsonFactory,
+				_layoutCopyHelper, _layoutLocalService,
+				_layoutPageTemplateEntryLocalService, _layoutPageTemplatesImporter,
+				_layoutPageTemplateStructureLocalService,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
-				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
+				_siteNavigationMenuItemLocalService, _siteNavigationMenuItemTypeRegistry,
+				_siteNavigationMenuLocalService, _styleBookEntryZipProcessor,
+				_taxonomyVocabularyResourceFactory, _themeLocalService,
 				_userLocalService),
 			MapUtil.singletonDictionary(
 				"site.initializer.key", _bundle.getSymbolicName()));
@@ -106,14 +143,25 @@ public class SiteInitializerRegistrar {
 	private final FragmentsImporter _fragmentsImporter;
 	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JSONFactory _jsonFactory;
+	private final LayoutCopyHelper _layoutCopyHelper;
+	private final LayoutLocalService _layoutLocalService;
+	private final LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+	private final LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+	private final LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
+	private final SiteNavigationMenuItemLocalService _siteNavigationMenuItemLocalService;
+	private final SiteNavigationMenuItemTypeRegistry _siteNavigationMenuItemTypeRegistry;
+	private final SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
+	private final ThemeLocalService _themeLocalService;
 	private final UserLocalService _userLocalService;
 
 }

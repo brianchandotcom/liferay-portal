@@ -223,7 +223,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Layout _addContentLayout(
-			JSONObject pageJSONObject, JSONObject pageDefinitionJSONObject,
+			JSONObject pageDefinitionJSONObject,
+			JSONObject pageJSONObject,
 			Map<String, String> resourcesMap, ServiceContext serviceContext)
 		throws Exception {
 
@@ -434,8 +435,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					"\"[$", "$]\"", resourcesMap);
 
 				layout = _addContentLayout(
-					pageJSONObject,
 					JSONFactoryUtil.createJSONObject(pageDefinitionJSON),
+					pageJSONObject,
 					resourcesMap, serviceContext);
 			}
 			else {

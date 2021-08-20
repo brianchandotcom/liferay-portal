@@ -12,6 +12,16 @@
 <tbody>
 <!-- GENERAL CARDS -->
 <tr>
+	<td>CARD_FILTER_BY_DAY_ACTIVE</td>
+	<td>//button[contains(@class,'interval-option text-uppercase active btn btn-sm btn-secondary') and text()='D']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_FILTER_BY_DAY</td>
+	<td>//button[contains(@class,'interval-option text-uppercase btn btn-sm btn-secondary') and text()='D']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_TITLE</td>
 	<td>//h5[@class='card-title'and text()='${key_cardTitle}']</td>
 	<td></td>

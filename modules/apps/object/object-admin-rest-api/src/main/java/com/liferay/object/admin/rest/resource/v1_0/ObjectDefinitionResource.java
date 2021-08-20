@@ -70,6 +70,13 @@ public interface ObjectDefinitionResource {
 	public ObjectDefinition getObjectDefinition(Long objectDefinitionId)
 		throws Exception;
 
+	public ObjectDefinition putObjectDefinition(
+			Long objectDefinitionId, ObjectDefinition objectDefinition)
+		throws Exception;
+
+	public Response putObjectDefinitionBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void postObjectDefinitionPublish(Long objectDefinitionId)
 		throws Exception;
 

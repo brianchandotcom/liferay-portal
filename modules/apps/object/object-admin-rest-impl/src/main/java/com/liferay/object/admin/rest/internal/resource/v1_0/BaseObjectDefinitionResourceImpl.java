@@ -60,6 +60,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -236,6 +237,65 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"label": ___, "name": ___, "objectFields": ___, "pluralLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectDefinitionId")}
+	)
+	@Path("/object-definitions/{objectDefinitionId}")
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "ObjectDefinition")})
+	public ObjectDefinition putObjectDefinition(
+			@NotNull @Parameter(hidden = true) @PathParam("objectDefinitionId")
+				Long objectDefinitionId,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return new ObjectDefinition();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/object-definitions/batch")
+	@Produces("application/json")
+	@PUT
+	@Tags(value = {@Tag(name = "ObjectDefinition")})
+	public Response putObjectDefinitionBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				ObjectDefinition.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/publish'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -326,6 +386,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 			java.util.Collection<ObjectDefinition> objectDefinitions,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			putObjectDefinition(
+				objectDefinition.getId() != null ? objectDefinition.getId() :
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+				objectDefinition);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

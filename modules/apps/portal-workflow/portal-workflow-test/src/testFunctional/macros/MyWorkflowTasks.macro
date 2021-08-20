@@ -39,7 +39,60 @@ definition {
 			value1 = "${dueDateTime}");
 
 		Workflow.confirmWorkflowAction();
-<<<<<<< HEAD
+	}
+
+	macro updateDueDateMyWorkflowTasksFutureDate {
+		var key_workflowAssetTitle = "${key_workflowAssetTitle}";
+		var key_workflowTask = "${key_workflowTask}";
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var currentYear = DateUtil.getCurrentYear();
+		var futureDay = ${displayDateDay} + 1;
+		var futureMonth = ${displayDateMonth} + 1;
+		var futureYear = ${currentYear} + 1;
+		timePeriod = "${key_timePeriod}";
+
+		Workflow.viewTaskAssignedToMyRoles(
+			ddlDataDefinitionName = "${ddlDataDefinitionName}",
+			workflowAssetTitle = "${key_workflowAssetTitle}",
+			workflowAssetType = "${workflowAssetType}",
+			workflowTask = "${key_workflowTask}");
+
+		Workflow.gotoTaskAssignedToMyRolesActionsCmd(
+			workflowAssetTitle = "${key_workflowAssetTitle}",
+			workflowTask = "${key_workflowTask}");
+
+		MenuItem.click(menuItem = "Update Due Date");
+
+		SelectFrame(locator1 = "MyWorkflowTasks#IFRAME_UPDATE_DUE_DATE");
+
+		SelectFrame(locator1 = "WorkflowDefinition#DIALOG_BOX_BODY");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		if ("${key_timePeriod}" == "day") {
+			Type(
+				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+				value1 = "${displayDateMonth}/${futureDay}/${displayDateYear}");
+
+			Type(
+				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
+				value1 = "07:30 PM");
+		}
+
+		if ("${key_timePeriod}" == "month") {
+			Type(
+				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+				value1 = "${futureMonth}/${displayDateDay}/${displayDateYear}");
+		}
+
+		if ("${key_timePeriod}" == "year") {
+			Type(
+				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+				value1 = "${displayDateMonth}/${displayDateDay}/${futureYear}");
+		}
+
+		Workflow.confirmWorkflowAction();
 	}
 
 	macro viewErrorRequestFailed {
@@ -66,13 +119,14 @@ definition {
 
 	macro clearSearchResultMyWorkflowTasks {
 		Click(locator1 = "Link#CLEAR");
-		Type(
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
-			value1 = "${dueDateTime}");
+	}
 
-		Workflow.confirmWorkflowAction();
-=======
->>>>>>> 31d8333 (LRQA-68861 SF)
+	macro viewDueDateValue {
+		AssertTextEquals(
+			key_workflowAssetTitle = "${workflowAssetTitle}",
+			key_workflowTask = "${workflowTask}",
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE",
+			value1 = "${dueDateValue}");
 	}
 
 }

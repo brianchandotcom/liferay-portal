@@ -1673,11 +1673,58 @@ definition {
 	}
 
 	@description = "Verify that when the user updates the due date of a task, the time until the due date shows in the table"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TableShowsTimeLeft {
 
-		// TODO LRQA-68863 TableShowsTimeLeft pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		MyWorkflowTasks.updateDueDateMyWorkflowTasksFutureDate(
+			ddlDataDefinitionName = "Data Definition Name",
+			key_timePeriod = "day",
+			key_workflowAssetTitle = "Blogs Entry Title 1",
+			key_workflowTask = "Review",
+			workflowAssetType = "Blogs Entry");
+
+		MyWorkflowTasks.viewDueDateValue(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowTask = "Blogs Entry",
+			dueDateValue = "Within 1 Day"
+		);
+
+		MyWorkflowTasks.updateDueDateMyWorkflowTasksFutureDate(
+			ddlDataDefinitionName = "Data Definition Name",
+			key_timePeriod = "month",
+			key_workflowAssetTitle = "Blogs Entry Title 1",
+			key_workflowTask = "Review",
+			workflowAssetType = "Blogs Entry");
+
+		MyWorkflowTasks.viewDueDateValue(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowTask = "Blogs Entry",
+			dueDateValue = "Within 1 Month"
+		);
+
+		MyWorkflowTasks.updateDueDateMyWorkflowTasksFutureDate(
+			ddlDataDefinitionName = "Data Definition Name",
+			key_timePeriod = "year",
+			key_workflowAssetTitle = "Blogs Entry Title 1",
+			key_workflowTask = "Review",
+			workflowAssetType = "Blogs Entry");
+
+		MyWorkflowTasks.viewDueDateValue(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowTask = "Blogs Entry",
+			dueDateValue = "Within 1 Year"
+		);
+
+
+
+
+
 
 	}
 

@@ -1675,7 +1675,6 @@ definition {
 	@description = "Verify that when the user updates the due date of a task, the time until the due date shows in the table"
 	@priority = "4"
 	test TableShowsTimeLeft {
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
@@ -1690,10 +1689,9 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
+			dueDateValue = "Within 1 Day",
 			workflowAssetTitle = "Blogs Entry Title 1",
-			workflowTask = "Blogs Entry",
-			dueDateValue = "Within 1 Day"
-		);
+			workflowTask = "Blogs Entry");
 
 		MyWorkflowTasks.updateDueDateMyWorkflowTasksFutureDate(
 			ddlDataDefinitionName = "Data Definition Name",
@@ -1703,10 +1701,9 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
+			dueDateValue = "Within 1 Month",
 			workflowAssetTitle = "Blogs Entry Title 1",
-			workflowTask = "Blogs Entry",
-			dueDateValue = "Within 1 Month"
-		);
+			workflowTask = "Blogs Entry");
 
 		MyWorkflowTasks.updateDueDateMyWorkflowTasksFutureDate(
 			ddlDataDefinitionName = "Data Definition Name",
@@ -1716,16 +1713,9 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
+			dueDateValue = "Within 1 Year",
 			workflowAssetTitle = "Blogs Entry Title 1",
-			workflowTask = "Blogs Entry",
-			dueDateValue = "Within 1 Year"
-		);
-
-
-
-
-
-
+			workflowTask = "Blogs Entry");
 	}
 
 	@description = "LPS-135888 - Verify that when the user delete the order, the task is not displayed under My Workflow Tasks"

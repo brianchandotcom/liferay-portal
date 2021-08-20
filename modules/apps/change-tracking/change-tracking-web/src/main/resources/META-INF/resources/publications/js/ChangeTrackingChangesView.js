@@ -1006,20 +1006,32 @@ export default ({
 	const commentsCache = useRef({});
 	const renderCache = useRef({});
 
-	const filterHideableNodes = (nodes, showHideable) => {
-		if (!nodes || showHideable) {
+	const filterNodes = (keywords, nodes, showHideable, viewType) => {
+		if (!nodes || (!keywords && showHideable)) {
 			return nodes;
 		}
 
-		const filterNodes = [];
+		const filteredNodes = nodes.slice(0);
 
-		for (let i = 0; i < nodes.length; i++) {
-			if (!nodes[i].hideable) {
-				filterNodes.push(nodes[i]);
+		return filteredNodes.filter((node) => {
+			if (!showHideable && node.hideable) {
+				return false;
 			}
-		}
+			else if (viewType === VIEW_TYPE_CONTEXT || !keywords) {
+				return true;
+			}
 
-		return filterNodes;
+			const pattern = keywords
+				.toLowerCase()
+				.replace(/[^0-9a-z]+/g, '|')
+				.replace(/^\||\|$/g, '');
+
+			if (node.title && node.title.toLowerCase().match(pattern)) {
+				return true;
+			}
+
+			return false;
+		});
 	};
 
 	const setParameter = useCallback(
@@ -1133,9 +1145,11 @@ export default ({
 	const [columnState, setColumnState] = useState(COLUMN_TITLE);
 	const [deltaState, setDeltaState] = useState(20);
 	const [renderState, setRenderState] = useState({
-		children: filterHideableNodes(
+		children: filterNodes(
+			keywordsFromURL,
 			initialNode.children,
-			initialShowHideable
+			initialShowHideable,
+			initialViewType
 		),
 		filterClass: initialFilterClass,
 		id: initialNodeId,
@@ -1202,7 +1216,12 @@ export default ({
 			window.history.pushState(state, document.title, path);
 
 			setRenderState({
-				children: filterHideableNodes(node.children, showHideable),
+				children: filterNodes(
+					resultsKeywords,
+					node.children,
+					showHideable,
+					viewType
+				),
 				filterClass,
 				id: nodeId,
 				node,
@@ -1289,7 +1308,12 @@ export default ({
 					: !!renderState.showHideable;
 
 			setRenderState({
-				children: filterHideableNodes(node.children, showHideable),
+				children: filterNodes(
+					keywords,
+					node.children,
+					showHideable,
+					viewType
+				),
 				filterClass,
 				id: nodeId,
 				node,
@@ -2086,9 +2110,11 @@ export default ({
 		}
 
 		setRenderState({
-			children: filterHideableNodes(
+			children: filterNodes(
+				resultsKeywords,
 				renderState.node.children,
-				showHideable
+				showHideable,
+				renderState.viewType
 			),
 			filterClass: renderState.filterClass,
 			id: renderState.id,
@@ -2167,9 +2193,11 @@ export default ({
 		window.history.pushState(state, document.title, path);
 
 		setRenderState({
-			children: filterHideableNodes(
+			children: filterNodes(
+				keywords,
 				renderState.node.children,
-				renderState.showHideable
+				renderState.showHideable,
+				renderState.viewType
 			),
 			filterClass: renderState.filterClass,
 			id: renderState.id,

@@ -53,7 +53,7 @@ public class CommerceCurrencyServiceHttp {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrency
 			addCommerceCurrency(
-				HttpPrincipal httpPrincipal, long userId, String code,
+				HttpPrincipal httpPrincipal, String code,
 				java.util.Map<java.util.Locale, String> nameMap, String symbol,
 				java.math.BigDecimal rate,
 				java.util.Map<java.util.Locale, String> formatPatternMap,
@@ -68,9 +68,9 @@ public class CommerceCurrencyServiceHttp {
 				_addCommerceCurrencyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, code, nameMap, symbol, rate,
-				formatPatternMap, maxFractionDigits, minFractionDigits,
-				roundingMode, primary, priority, active);
+				methodKey, code, nameMap, symbol, rate, formatPatternMap,
+				maxFractionDigits, minFractionDigits, roundingMode, primary,
+				priority, active);
 
 			Object returnObj = null;
 
@@ -653,7 +653,7 @@ public class CommerceCurrencyServiceHttp {
 
 	private static final Class<?>[] _addCommerceCurrencyParameterTypes0 =
 		new Class[] {
-			long.class, String.class, java.util.Map.class, String.class,
+			String.class, java.util.Map.class, String.class,
 			java.math.BigDecimal.class, java.util.Map.class, int.class,
 			int.class, String.class, boolean.class, double.class, boolean.class
 		};

@@ -40,14 +40,13 @@ public class CommerceTaxMethodServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceTaxMethod addCommerceTaxMethod(
-			long userId, long groupId, Map<java.util.Locale, String> nameMap,
+			long groupId, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap, String engineKey,
 			boolean percentage, boolean active)
 		throws PortalException {
 
 		return getService().addCommerceTaxMethod(
-			userId, groupId, nameMap, descriptionMap, engineKey, percentage,
-			active);
+			groupId, nameMap, descriptionMap, engineKey, percentage, active);
 	}
 
 	/**

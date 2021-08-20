@@ -38,8 +38,7 @@ public class CommerceNotificationTemplateServiceWrapper
 	@Override
 	public com.liferay.commerce.notification.model.CommerceNotificationTemplate
 			addCommerceNotificationTemplate(
-				long userId, long groupId, String name, String description,
-				String from,
+				long groupId, String name, String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap, String to,
 				String cc, String bcc, String type, boolean enabled,
 				java.util.Map<java.util.Locale, String> subjectMap,
@@ -49,8 +48,8 @@ public class CommerceNotificationTemplateServiceWrapper
 
 		return _commerceNotificationTemplateService.
 			addCommerceNotificationTemplate(
-				userId, groupId, name, description, from, fromNameMap, to, cc,
-				bcc, type, enabled, subjectMap, bodyMap, serviceContext);
+				groupId, name, description, from, fromNameMap, to, cc, bcc,
+				type, enabled, subjectMap, bodyMap, serviceContext);
 	}
 
 	/**

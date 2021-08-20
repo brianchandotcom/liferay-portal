@@ -66,9 +66,8 @@ public class CPDefinitionDiagramSettingServiceSoap {
 	public static
 		com.liferay.commerce.shop.by.diagram.model.
 			CPDefinitionDiagramSettingSoap addCPDefinitionDiagramSetting(
-					long userId, long cpDefinitionId,
-					long cpAttachmentFileEntryId, String color, double radius,
-					String type)
+					long cpDefinitionId, long cpAttachmentFileEntryId,
+					String color, double radius, String type)
 				throws RemoteException {
 
 		try {
@@ -76,8 +75,8 @@ public class CPDefinitionDiagramSettingServiceSoap {
 				CPDefinitionDiagramSetting returnValue =
 					CPDefinitionDiagramSettingServiceUtil.
 						addCPDefinitionDiagramSetting(
-							userId, cpDefinitionId, cpAttachmentFileEntryId,
-							color, radius, type);
+							cpDefinitionId, cpAttachmentFileEntryId, color,
+							radius, type);
 
 			return com.liferay.commerce.shop.by.diagram.model.
 				CPDefinitionDiagramSettingSoap.toSoapModel(returnValue);

@@ -54,7 +54,7 @@ public class CommerceShippingFixedOptionServiceHttp {
 	public static
 		com.liferay.commerce.shipping.engine.fixed.model.
 			CommerceShippingFixedOption addCommerceShippingFixedOption(
-					HttpPrincipal httpPrincipal, long userId, long groupId,
+					HttpPrincipal httpPrincipal, long groupId,
 					long commerceShippingMethodId,
 					java.util.Map<java.util.Locale, String> nameMap,
 					java.util.Map<java.util.Locale, String> descriptionMap,
@@ -68,7 +68,7 @@ public class CommerceShippingFixedOptionServiceHttp {
 				_addCommerceShippingFixedOptionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, commerceShippingMethodId, nameMap,
+				methodKey, groupId, commerceShippingMethodId, nameMap,
 				descriptionMap, amount, priority);
 
 			Object returnObj = null;
@@ -514,8 +514,8 @@ public class CommerceShippingFixedOptionServiceHttp {
 
 	private static final Class<?>[]
 		_addCommerceShippingFixedOptionParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.util.Map.class,
-			java.util.Map.class, java.math.BigDecimal.class, double.class
+			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			java.math.BigDecimal.class, double.class
 		};
 	private static final Class<?>[]
 		_addCommerceShippingFixedOptionParameterTypes1 = new Class[] {

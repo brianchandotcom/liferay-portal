@@ -53,7 +53,7 @@ public class CPDefinitionInventoryServiceHttp {
 
 	public static com.liferay.commerce.model.CPDefinitionInventory
 			addCPDefinitionInventory(
-				HttpPrincipal httpPrincipal, long userId, long cpDefinitionId,
+				HttpPrincipal httpPrincipal, long cpDefinitionId,
 				String cpDefinitionInventoryEngine, String lowStockActivity,
 				boolean displayAvailability, boolean displayStockQuantity,
 				int minStockQuantity, boolean backOrders, int minOrderQuantity,
@@ -68,7 +68,7 @@ public class CPDefinitionInventoryServiceHttp {
 				_addCPDefinitionInventoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, cpDefinitionId, cpDefinitionInventoryEngine,
+				methodKey, cpDefinitionId, cpDefinitionInventoryEngine,
 				lowStockActivity, displayAvailability, displayStockQuantity,
 				minStockQuantity, backOrders, minOrderQuantity,
 				maxOrderQuantity, allowedOrderQuantities,
@@ -289,7 +289,7 @@ public class CPDefinitionInventoryServiceHttp {
 
 	private static final Class<?>[] _addCPDefinitionInventoryParameterTypes0 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, boolean.class,
+			long.class, String.class, String.class, boolean.class,
 			boolean.class, int.class, boolean.class, int.class, int.class,
 			String.class, int.class
 		};

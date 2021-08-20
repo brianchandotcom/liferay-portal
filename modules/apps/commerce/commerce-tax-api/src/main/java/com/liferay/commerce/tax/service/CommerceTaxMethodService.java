@@ -63,7 +63,7 @@ public interface CommerceTaxMethodService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce tax method remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceTaxMethodServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceTaxMethod addCommerceTaxMethod(
-			long userId, long groupId, Map<Locale, String> nameMap,
+			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String engineKey,
 			boolean percentage, boolean active)
 		throws PortalException;

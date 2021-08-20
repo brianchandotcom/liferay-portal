@@ -53,8 +53,8 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				HttpPrincipal httpPrincipal, long userId, long groupId,
-				long classPK, long countryId)
+				HttpPrincipal httpPrincipal, long groupId, long classPK,
+				long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -64,7 +64,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 				_addCommerceAddressRestrictionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, classPK, countryId);
+				methodKey, groupId, classPK, countryId);
 
 			Object returnObj = null;
 
@@ -142,7 +142,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 	public static
 		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
 				addCommercePaymentMethodGroupRel(
-					HttpPrincipal httpPrincipal, long userId, long groupId,
+					HttpPrincipal httpPrincipal, long groupId,
 					java.util.Map<java.util.Locale, String> nameMap,
 					java.util.Map<java.util.Locale, String> descriptionMap,
 					java.io.File imageFile, String engineKey, double priority,
@@ -156,7 +156,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 				_addCommercePaymentMethodGroupRelParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, nameMap, descriptionMap, imageFile,
+				methodKey, groupId, nameMap, descriptionMap, imageFile,
 				engineKey, priority, active);
 
 			Object returnObj = null;
@@ -979,7 +979,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 
 	private static final Class<?>[]
 		_addCommerceAddressRestrictionParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, long.class
+			long.class, long.class, long.class
 		};
 	private static final Class<?>[]
 		_addCommerceAddressRestrictionParameterTypes1 = new Class[] {
@@ -988,7 +988,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 		};
 	private static final Class<?>[]
 		_addCommercePaymentMethodGroupRelParameterTypes2 = new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			long.class, java.util.Map.class, java.util.Map.class,
 			java.io.File.class, String.class, double.class, boolean.class
 		};
 	private static final Class<?>[]

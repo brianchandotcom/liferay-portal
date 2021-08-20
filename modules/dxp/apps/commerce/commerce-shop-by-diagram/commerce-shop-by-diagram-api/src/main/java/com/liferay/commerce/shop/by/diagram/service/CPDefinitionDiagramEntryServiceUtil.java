@@ -39,15 +39,14 @@ public class CPDefinitionDiagramEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
-			long userId, long cpDefinitionId, String cpInstanceUuid,
-			long cProductId, boolean diagram, int number, String sku,
-			String sequence,
+			long cpDefinitionId, String cpInstanceUuid, long cProductId,
+			boolean diagram, int number, String sku, String sequence,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPDefinitionDiagramEntry(
-			userId, cpDefinitionId, cpInstanceUuid, cProductId, diagram, number,
-			sku, sequence, serviceContext);
+			cpDefinitionId, cpInstanceUuid, cProductId, diagram, number, sku,
+			sequence, serviceContext);
 	}
 
 	public static void deleteCPDefinitionDiagramEntry(

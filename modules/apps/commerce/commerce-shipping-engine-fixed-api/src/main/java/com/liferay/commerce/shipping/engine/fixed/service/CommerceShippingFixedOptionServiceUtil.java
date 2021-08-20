@@ -41,15 +41,15 @@ public class CommerceShippingFixedOptionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
-			long userId, long groupId, long commerceShippingMethodId,
+			long groupId, long commerceShippingMethodId,
 			Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
 			java.math.BigDecimal amount, double priority)
 		throws PortalException {
 
 		return getService().addCommerceShippingFixedOption(
-			userId, groupId, commerceShippingMethodId, nameMap, descriptionMap,
-			amount, priority);
+			groupId, commerceShippingMethodId, nameMap, descriptionMap, amount,
+			priority);
 	}
 
 	/**

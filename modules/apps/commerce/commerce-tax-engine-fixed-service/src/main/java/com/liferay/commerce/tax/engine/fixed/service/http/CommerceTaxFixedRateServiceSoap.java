@@ -95,7 +95,7 @@ public class CommerceTaxFixedRateServiceSoap {
 	public static
 		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateSoap
 				addCommerceTaxFixedRate(
-					long userId, long groupId, long commerceTaxMethodId,
+					long groupId, long commerceTaxMethodId,
 					long cpTaxCategoryId, double rate)
 			throws RemoteException {
 
@@ -103,8 +103,7 @@ public class CommerceTaxFixedRateServiceSoap {
 			com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
 				returnValue =
 					CommerceTaxFixedRateServiceUtil.addCommerceTaxFixedRate(
-						userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
-						rate);
+						groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
 
 			return com.liferay.commerce.tax.engine.fixed.model.
 				CommerceTaxFixedRateSoap.toSoapModel(returnValue);

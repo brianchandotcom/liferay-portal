@@ -70,12 +70,12 @@ public class CommerceNotificationTemplateServiceSoap {
 	public static
 		com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap
 				addCommerceNotificationTemplate(
-					long userId, long groupId, String name, String description,
-					String from, String[] fromNameMapLanguageIds,
-					String[] fromNameMapValues, String to, String cc,
-					String bcc, String type, boolean enabled,
-					String[] subjectMapLanguageIds, String[] subjectMapValues,
-					String[] bodyMapLanguageIds, String[] bodyMapValues,
+					long groupId, String name, String description, String from,
+					String[] fromNameMapLanguageIds, String[] fromNameMapValues,
+					String to, String cc, String bcc, String type,
+					boolean enabled, String[] subjectMapLanguageIds,
+					String[] subjectMapValues, String[] bodyMapLanguageIds,
+					String[] bodyMapValues,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -94,9 +94,9 @@ public class CommerceNotificationTemplateServiceSoap {
 				returnValue =
 					CommerceNotificationTemplateServiceUtil.
 						addCommerceNotificationTemplate(
-							userId, groupId, name, description, from,
-							fromNameMap, to, cc, bcc, type, enabled, subjectMap,
-							bodyMap, serviceContext);
+							groupId, name, description, from, fromNameMap, to,
+							cc, bcc, type, enabled, subjectMap, bodyMap,
+							serviceContext);
 
 			return com.liferay.commerce.notification.model.
 				CommerceNotificationTemplateSoap.toSoapModel(returnValue);

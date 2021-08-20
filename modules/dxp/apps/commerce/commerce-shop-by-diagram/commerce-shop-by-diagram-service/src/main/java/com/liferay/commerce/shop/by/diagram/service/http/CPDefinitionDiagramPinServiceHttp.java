@@ -54,9 +54,8 @@ public class CPDefinitionDiagramPinServiceHttp {
 	public static
 		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
 				addCPDefinitionDiagramPin(
-					HttpPrincipal httpPrincipal, long userId,
-					long cpDefinitionId, double positionX, double positionY,
-					String sequence)
+					HttpPrincipal httpPrincipal, long cpDefinitionId,
+					double positionX, double positionY, String sequence)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,8 +65,7 @@ public class CPDefinitionDiagramPinServiceHttp {
 				_addCPDefinitionDiagramPinParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, cpDefinitionId, positionX, positionY,
-				sequence);
+				methodKey, cpDefinitionId, positionX, positionY, sequence);
 
 			Object returnObj = null;
 
@@ -316,9 +314,7 @@ public class CPDefinitionDiagramPinServiceHttp {
 		CPDefinitionDiagramPinServiceHttp.class);
 
 	private static final Class<?>[] _addCPDefinitionDiagramPinParameterTypes0 =
-		new Class[] {
-			long.class, long.class, double.class, double.class, String.class
-		};
+		new Class[] {long.class, double.class, double.class, String.class};
 	private static final Class<?>[]
 		_deleteCPDefinitionDiagramPinParameterTypes1 = new Class[] {long.class};
 	private static final Class<?>[] _getCPDefinitionDiagramPinParameterTypes2 =

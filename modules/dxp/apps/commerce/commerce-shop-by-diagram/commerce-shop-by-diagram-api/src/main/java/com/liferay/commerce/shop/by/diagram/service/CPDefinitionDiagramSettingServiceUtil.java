@@ -37,13 +37,12 @@ public class CPDefinitionDiagramSettingServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramSettingServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CPDefinitionDiagramSetting addCPDefinitionDiagramSetting(
-			long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
-			String color, double radius, String type)
+			long cpDefinitionId, long cpAttachmentFileEntryId, String color,
+			double radius, String type)
 		throws PortalException {
 
 		return getService().addCPDefinitionDiagramSetting(
-			userId, cpDefinitionId, cpAttachmentFileEntryId, color, radius,
-			type);
+			cpDefinitionId, cpAttachmentFileEntryId, color, radius, type);
 	}
 
 	public static CPDefinitionDiagramSetting

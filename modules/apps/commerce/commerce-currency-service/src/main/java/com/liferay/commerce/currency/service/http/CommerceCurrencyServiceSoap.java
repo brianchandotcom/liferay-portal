@@ -69,7 +69,7 @@ public class CommerceCurrencyServiceSoap {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap
 			addCommerceCurrency(
-				long userId, String code, String[] nameMapLanguageIds,
+				String code, String[] nameMapLanguageIds,
 				String[] nameMapValues, String symbol,
 				java.math.BigDecimal rate, String[] formatPatternMapLanguageIds,
 				String[] formatPatternMapValues, int maxFractionDigits,
@@ -86,7 +86,7 @@ public class CommerceCurrencyServiceSoap {
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue =
 				CommerceCurrencyServiceUtil.addCommerceCurrency(
-					userId, code, nameMap, symbol, rate, formatPatternMap,
+					code, nameMap, symbol, rate, formatPatternMap,
 					maxFractionDigits, minFractionDigits, roundingMode, primary,
 					priority, active);
 

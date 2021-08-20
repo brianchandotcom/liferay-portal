@@ -66,9 +66,8 @@ public class CPDefinitionDiagramEntryServiceSoap {
 	public static
 		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntrySoap
 				addCPDefinitionDiagramEntry(
-					long userId, long cpDefinitionId, String cpInstanceUuid,
-					long cProductId, boolean diagram, int number, String sku,
-					String sequence,
+					long cpDefinitionId, String cpInstanceUuid, long cProductId,
+					boolean diagram, int number, String sku, String sequence,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -78,8 +77,8 @@ public class CPDefinitionDiagramEntryServiceSoap {
 				returnValue =
 					CPDefinitionDiagramEntryServiceUtil.
 						addCPDefinitionDiagramEntry(
-							userId, cpDefinitionId, cpInstanceUuid, cProductId,
-							diagram, number, sku, sequence, serviceContext);
+							cpDefinitionId, cpInstanceUuid, cProductId, diagram,
+							number, sku, sequence, serviceContext);
 
 			return com.liferay.commerce.shop.by.diagram.model.
 				CPDefinitionDiagramEntrySoap.toSoapModel(returnValue);

@@ -69,7 +69,7 @@ public class CommerceShippingFixedOptionServiceSoap {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.
 		CommerceShippingFixedOptionSoap addCommerceShippingFixedOption(
-				long userId, long groupId, long commerceShippingMethodId,
+				long groupId, long commerceShippingMethodId,
 				String[] nameMapLanguageIds, String[] nameMapValues,
 				String[] descriptionMapLanguageIds,
 				String[] descriptionMapValues, java.math.BigDecimal amount,
@@ -87,7 +87,7 @@ public class CommerceShippingFixedOptionServiceSoap {
 				CommerceShippingFixedOption returnValue =
 					CommerceShippingFixedOptionServiceUtil.
 						addCommerceShippingFixedOption(
-							userId, groupId, commerceShippingMethodId, nameMap,
+							groupId, commerceShippingMethodId, nameMap,
 							descriptionMap, amount, priority);
 
 			return com.liferay.commerce.shipping.engine.fixed.model.

@@ -66,11 +66,10 @@ public interface CommerceCurrencyService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce currency remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceCurrencyServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceCurrency addCommerceCurrency(
-			long userId, String code, Map<Locale, String> nameMap,
-			String symbol, BigDecimal rate,
-			Map<Locale, String> formatPatternMap, int maxFractionDigits,
-			int minFractionDigits, String roundingMode, boolean primary,
-			double priority, boolean active)
+			String code, Map<Locale, String> nameMap, String symbol,
+			BigDecimal rate, Map<Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active)
 		throws PortalException;
 
 	public void deleteCommerceCurrency(long commerceCurrencyId)

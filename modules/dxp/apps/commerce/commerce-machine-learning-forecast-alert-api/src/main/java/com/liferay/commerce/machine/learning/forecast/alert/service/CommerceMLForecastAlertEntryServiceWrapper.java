@@ -117,11 +117,11 @@ public class CommerceMLForecastAlertEntryServiceWrapper
 	@Override
 	public com.liferay.commerce.machine.learning.forecast.alert.model.
 		CommerceMLForecastAlertEntry updateStatus(
-				long userId, long commerceMLForecastAlertEntryId, int status)
+				long commerceMLForecastAlertEntryId, int status)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceMLForecastAlertEntryService.updateStatus(
-			userId, commerceMLForecastAlertEntryId, status);
+			commerceMLForecastAlertEntryId, status);
 	}
 
 	@Override

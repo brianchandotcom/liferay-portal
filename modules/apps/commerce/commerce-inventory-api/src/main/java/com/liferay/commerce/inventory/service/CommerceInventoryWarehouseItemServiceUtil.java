@@ -40,61 +40,41 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 	 */
 	public static CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws PortalException {
-
-		return getService().addCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommerceInventoryWarehouseItem(String,
-	 long, long, String, int)}
-	 */
-	@Deprecated
-	public static CommerceInventoryWarehouseItem
-			addCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId,
-				String externalReferenceCode, String sku, int quantity)
-		throws PortalException {
-
-		return getService().addCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouseId, externalReferenceCode, sku,
-			quantity);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			addCommerceInventoryWarehouseItem(
-				String externalReferenceCode, long userId,
 				long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException {
 
 		return getService().addCommerceInventoryWarehouseItem(
-			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
-			quantity);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws PortalException {
-
-		return getService().addOrUpdateCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
-				String externalReferenceCode, long companyId, long userId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
-		throws PortalException {
-
-		return getService().addOrUpdateCommerceInventoryWarehouseItem(
-			externalReferenceCode, companyId, userId,
 			commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	public static CommerceInventoryWarehouseItem
+			addCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long commerceInventoryWarehouseId,
+				String sku, int quantity)
+		throws PortalException {
+
+		return getService().addCommerceInventoryWarehouseItem(
+			externalReferenceCode, commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	public static CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceInventoryWarehouseItem(
+			commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	public static CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long companyId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceInventoryWarehouseItem(
+			externalReferenceCode, companyId, commerceInventoryWarehouseId, sku,
+			quantity);
 	}
 
 	public static void deleteCommerceInventoryWarehouseItem(
@@ -291,23 +271,6 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 
 		return getService().updateCommerceInventoryWarehouseItem(
 			commerceInventoryWarehouseItemId, quantity, mvccVersion);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommerceInventoryWarehouseItem(String,
-	 long, long, long, String, int)}
-	 */
-	@Deprecated
-	public static CommerceInventoryWarehouseItem
-			upsertCommerceInventoryWarehouseItem(
-				long companyId, long userId, long commerceInventoryWarehouseId,
-				String externalReferenceCode, String sku, int quantity)
-		throws PortalException {
-
-		return getService().upsertCommerceInventoryWarehouseItem(
-			companyId, userId, commerceInventoryWarehouseId,
-			externalReferenceCode, sku, quantity);
 	}
 
 	public static CommerceInventoryWarehouseItemService getService() {

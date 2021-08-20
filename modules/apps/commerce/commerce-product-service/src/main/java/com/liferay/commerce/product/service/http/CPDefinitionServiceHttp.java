@@ -54,8 +54,7 @@ public class CPDefinitionServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinition
 			addCPDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, long userId,
-				java.util.Map<java.util.Locale, String> nameMap,
+				long groupId, java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.util.Map<java.util.Locale, String> urlTitleMap,
@@ -91,7 +90,7 @@ public class CPDefinitionServiceHttp {
 				_addCPDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				methodKey, externalReferenceCode, groupId, nameMap,
 				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 				metaDescriptionMap, metaKeywordsMap, productTypeName,
 				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -139,8 +138,7 @@ public class CPDefinitionServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinition
 			addCPDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, long userId,
-				java.util.Map<java.util.Locale, String> nameMap,
+				long groupId, java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.util.Map<java.util.Locale, String> urlTitleMap,
@@ -172,7 +170,7 @@ public class CPDefinitionServiceHttp {
 				_addCPDefinitionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				methodKey, externalReferenceCode, groupId, nameMap,
 				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 				metaDescriptionMap, metaKeywordsMap, productTypeName,
 				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -217,8 +215,7 @@ public class CPDefinitionServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinition
 			addOrUpdateCPDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, long userId,
-				java.util.Map<java.util.Locale, String> nameMap,
+				long groupId, java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.util.Map<java.util.Locale, String> urlTitleMap,
@@ -254,7 +251,7 @@ public class CPDefinitionServiceHttp {
 				_addOrUpdateCPDefinitionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				methodKey, externalReferenceCode, groupId, nameMap,
 				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 				metaDescriptionMap, metaKeywordsMap, productTypeName,
 				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -302,8 +299,7 @@ public class CPDefinitionServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinition
 			addOrUpdateCPDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, long userId,
-				java.util.Map<java.util.Locale, String> nameMap,
+				long groupId, java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.util.Map<java.util.Locale, String> urlTitleMap,
@@ -335,7 +331,7 @@ public class CPDefinitionServiceHttp {
 				_addOrUpdateCPDefinitionParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				methodKey, externalReferenceCode, groupId, nameMap,
 				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 				metaDescriptionMap, metaKeywordsMap, productTypeName,
 				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -1316,8 +1312,7 @@ public class CPDefinitionServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateStatus(
-			HttpPrincipal httpPrincipal, long userId, long cpDefinitionId,
-			int status,
+			HttpPrincipal httpPrincipal, long cpDefinitionId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext,
 			java.util.Map<String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1328,7 +1323,7 @@ public class CPDefinitionServiceHttp {
 				_updateStatusParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, cpDefinitionId, status, serviceContext,
+				methodKey, cpDefinitionId, status, serviceContext,
 				workflowContext);
 
 			Object returnObj = null;
@@ -1514,16 +1509,16 @@ public class CPDefinitionServiceHttp {
 
 	private static final Class<?>[] _addCPDefinitionParameterTypes0 =
 		new Class[] {
-			String.class, long.class, long.class, java.util.Map.class,
+			String.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			String.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, double.class, double.class, double.class,
-			double.class, double.class, long.class, boolean.class,
-			boolean.class, String.class, boolean.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			double.class, double.class, double.class, double.class,
+			double.class, long.class, boolean.class, boolean.class,
+			String.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class, String.class, boolean.class,
-			int.class, String.class,
+			int.class, boolean.class, String.class, boolean.class, int.class,
+			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
@@ -1531,31 +1526,31 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 =
 		new Class[] {
-			String.class, long.class, long.class, java.util.Map.class,
+			String.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			String.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, double.class, double.class, double.class,
-			double.class, double.class, long.class, boolean.class,
-			boolean.class, String.class, boolean.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			double.class, double.class, double.class, double.class,
+			double.class, long.class, boolean.class, boolean.class,
+			String.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class, String.class, boolean.class,
-			int.class, String.class,
+			int.class, boolean.class, String.class, boolean.class, int.class,
+			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCPDefinitionParameterTypes2 =
 		new Class[] {
-			String.class, long.class, long.class, java.util.Map.class,
+			String.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			String.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, double.class, double.class, double.class,
-			double.class, double.class, long.class, boolean.class,
-			boolean.class, String.class, boolean.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			double.class, double.class, double.class, double.class,
+			double.class, long.class, boolean.class, boolean.class,
+			String.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class, String.class, boolean.class,
-			int.class, String.class,
+			int.class, boolean.class, String.class, boolean.class, int.class,
+			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
@@ -1563,16 +1558,16 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _addOrUpdateCPDefinitionParameterTypes3 =
 		new Class[] {
-			String.class, long.class, long.class, java.util.Map.class,
+			String.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			String.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, double.class, double.class, double.class,
-			double.class, double.class, long.class, boolean.class,
-			boolean.class, String.class, boolean.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, String.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			double.class, double.class, double.class, double.class,
+			double.class, long.class, boolean.class, boolean.class,
+			String.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class, String.class, boolean.class,
-			int.class, String.class,
+			int.class, boolean.class, String.class, boolean.class, int.class,
+			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -1663,7 +1658,7 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _updateStatusParameterTypes26 =
 		new Class[] {
-			long.class, long.class, int.class,
+			long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			java.util.Map.class
 		};

@@ -50,8 +50,8 @@ public interface CPDefinitionDiagramSettingService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramSettingServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp definition diagram setting remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPDefinitionDiagramSettingServiceUtil} if injection and service tracking are not available.
 	 */
 	public CPDefinitionDiagramSetting addCPDefinitionDiagramSetting(
-			long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
-			String color, double radius, String type)
+			long cpDefinitionId, long cpAttachmentFileEntryId, String color,
+			double radius, String type)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

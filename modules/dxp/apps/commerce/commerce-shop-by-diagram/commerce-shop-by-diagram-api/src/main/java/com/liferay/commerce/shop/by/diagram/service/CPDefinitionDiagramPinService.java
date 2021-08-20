@@ -52,8 +52,8 @@ public interface CPDefinitionDiagramPinService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramPinServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp definition diagram pin remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPDefinitionDiagramPinServiceUtil} if injection and service tracking are not available.
 	 */
 	public CPDefinitionDiagramPin addCPDefinitionDiagramPin(
-			long userId, long cpDefinitionId, double positionX,
-			double positionY, String sequence)
+			long cpDefinitionId, double positionX, double positionY,
+			String sequence)
 		throws PortalException;
 
 	public void deleteCPDefinitionDiagramPin(long cpDefinitionDiagramPinId)

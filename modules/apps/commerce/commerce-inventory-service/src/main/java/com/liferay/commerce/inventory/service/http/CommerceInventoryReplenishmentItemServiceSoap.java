@@ -67,9 +67,8 @@ public class CommerceInventoryReplenishmentItemServiceSoap {
 		com.liferay.commerce.inventory.model.
 			CommerceInventoryReplenishmentItemSoap
 					addCommerceInventoryReplenishmentItem(
-						long userId, long commerceInventoryWarehouseId,
-						String sku, java.util.Date availabilityDate,
-						int quantity)
+						long commerceInventoryWarehouseId, String sku,
+						java.util.Date availabilityDate, int quantity)
 				throws RemoteException {
 
 		try {
@@ -77,8 +76,8 @@ public class CommerceInventoryReplenishmentItemServiceSoap {
 				CommerceInventoryReplenishmentItem returnValue =
 					CommerceInventoryReplenishmentItemServiceUtil.
 						addCommerceInventoryReplenishmentItem(
-							userId, commerceInventoryWarehouseId, sku,
-							availabilityDate, quantity);
+							commerceInventoryWarehouseId, sku, availabilityDate,
+							quantity);
 
 			return com.liferay.commerce.inventory.model.
 				CommerceInventoryReplenishmentItemSoap.toSoapModel(returnValue);

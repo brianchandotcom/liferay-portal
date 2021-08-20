@@ -36,13 +36,12 @@ public class CPDefinitionDiagramSettingServiceWrapper
 	@Override
 	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
 			addCPDefinitionDiagramSetting(
-				long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
-				String color, double radius, String type)
+				long cpDefinitionId, long cpAttachmentFileEntryId, String color,
+				double radius, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionDiagramSettingService.addCPDefinitionDiagramSetting(
-			userId, cpDefinitionId, cpAttachmentFileEntryId, color, radius,
-			type);
+			cpDefinitionId, cpAttachmentFileEntryId, color, radius, type);
 	}
 
 	@Override

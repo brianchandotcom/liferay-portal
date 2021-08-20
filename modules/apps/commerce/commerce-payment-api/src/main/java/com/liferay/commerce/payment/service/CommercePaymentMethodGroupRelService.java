@@ -67,7 +67,7 @@ public interface CommercePaymentMethodGroupRelService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.payment.service.impl.CommercePaymentMethodGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce payment method group rel remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommercePaymentMethodGroupRelServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long userId, long groupId, long classPK, long countryId)
+			long groupId, long classPK, long countryId)
 		throws PortalException;
 
 	/**
@@ -79,7 +79,7 @@ public interface CommercePaymentMethodGroupRelService extends BaseService {
 		throws PortalException;
 
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
-			long userId, long groupId, Map<Locale, String> nameMap,
+			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, File imageFile,
 			String engineKey, double priority, boolean active)
 		throws PortalException;

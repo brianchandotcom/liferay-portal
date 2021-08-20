@@ -36,7 +36,7 @@ public class CommercePriceModifierServiceWrapper
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePriceModifier
 			addCommercePriceModifier(
-				long userId, long groupId, String title, String target,
+				long groupId, String title, String target,
 				long commercePriceListId, String modifierType,
 				java.math.BigDecimal modifierAmount, double priority,
 				boolean active, int displayDateMonth, int displayDateDay,
@@ -48,7 +48,7 @@ public class CommercePriceModifierServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierService.addCommercePriceModifier(
-			userId, groupId, title, target, commercePriceListId, modifierType,
+			groupId, title, target, commercePriceListId, modifierType,
 			modifierAmount, priority, active, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -59,9 +59,9 @@ public class CommercePriceModifierServiceWrapper
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePriceModifier
 			addOrUpdateCommercePriceModifier(
-				String externalReferenceCode, long userId,
-				long commercePriceModifierId, long groupId, String title,
-				String target, long commercePriceListId, String modifierType,
+				String externalReferenceCode, long commercePriceModifierId,
+				long groupId, String title, String target,
+				long commercePriceListId, String modifierType,
 				java.math.BigDecimal modifierAmount, double priority,
 				boolean active, int displayDateMonth, int displayDateDay,
 				int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -72,9 +72,9 @@ public class CommercePriceModifierServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierService.addOrUpdateCommercePriceModifier(
-			externalReferenceCode, userId, commercePriceModifierId, groupId,
-			title, target, commercePriceListId, modifierType, modifierAmount,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
+			externalReferenceCode, commercePriceModifierId, groupId, title,
+			target, commercePriceListId, modifierType, modifierAmount, priority,
+			active, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, serviceContext);

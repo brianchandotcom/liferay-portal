@@ -54,9 +54,9 @@ public class CPDefinitionDiagramEntryServiceHttp {
 	public static
 		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
 				addCPDefinitionDiagramEntry(
-					HttpPrincipal httpPrincipal, long userId,
-					long cpDefinitionId, String cpInstanceUuid, long cProductId,
-					boolean diagram, int number, String sku, String sequence,
+					HttpPrincipal httpPrincipal, long cpDefinitionId,
+					String cpInstanceUuid, long cProductId, boolean diagram,
+					int number, String sku, String sequence,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -68,8 +68,8 @@ public class CPDefinitionDiagramEntryServiceHttp {
 				_addCPDefinitionDiagramEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, cpDefinitionId, cpInstanceUuid, cProductId,
-				diagram, number, sku, sequence, serviceContext);
+				methodKey, cpDefinitionId, cpInstanceUuid, cProductId, diagram,
+				number, sku, sequence, serviceContext);
 
 			Object returnObj = null;
 
@@ -414,8 +414,8 @@ public class CPDefinitionDiagramEntryServiceHttp {
 
 	private static final Class<?>[]
 		_addCPDefinitionDiagramEntryParameterTypes0 = new Class[] {
-			long.class, long.class, String.class, long.class, boolean.class,
-			int.class, String.class, String.class,
+			long.class, String.class, long.class, boolean.class, int.class,
+			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

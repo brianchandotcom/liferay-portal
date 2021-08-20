@@ -41,7 +41,7 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 	 */
 	public static CommerceShippingFixedOptionRel
 			addCommerceShippingFixedOptionRel(
-				long userId, long groupId, long commerceShippingMethodId,
+				long groupId, long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
 				long commerceInventoryWarehouseId, long countryId,
 				long regionId, String zip, double weightFrom, double weightTo,
@@ -50,10 +50,9 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 		throws PortalException {
 
 		return getService().addCommerceShippingFixedOptionRel(
-			userId, groupId, commerceShippingMethodId,
-			commerceShippingFixedOptionId, commerceInventoryWarehouseId,
-			countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
-			rateUnitWeightPrice, ratePercentage);
+			groupId, commerceShippingMethodId, commerceShippingFixedOptionId,
+			commerceInventoryWarehouseId, countryId, regionId, zip, weightFrom,
+			weightTo, fixedPrice, rateUnitWeightPrice, ratePercentage);
 	}
 
 	/**

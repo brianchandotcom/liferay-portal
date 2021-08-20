@@ -72,8 +72,8 @@ public interface CommerceTaxFixedRateService extends BaseService {
 		throws PortalException;
 
 	public CommerceTaxFixedRate addCommerceTaxFixedRate(
-			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, double rate)
+			long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
+			double rate)
 		throws PortalException;
 
 	public void deleteCommerceTaxFixedRate(long commerceTaxFixedRateId)

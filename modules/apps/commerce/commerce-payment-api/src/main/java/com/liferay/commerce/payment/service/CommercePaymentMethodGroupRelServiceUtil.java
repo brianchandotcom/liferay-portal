@@ -42,11 +42,11 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 	 */
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long userId, long groupId, long classPK, long countryId)
+				long groupId, long classPK, long countryId)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			userId, groupId, classPK, countryId);
+			groupId, classPK, countryId);
 	}
 
 	/**
@@ -65,16 +65,15 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 
 	public static CommercePaymentMethodGroupRel
 			addCommercePaymentMethodGroupRel(
-				long userId, long groupId,
-				Map<java.util.Locale, String> nameMap,
+				long groupId, Map<java.util.Locale, String> nameMap,
 				Map<java.util.Locale, String> descriptionMap,
 				java.io.File imageFile, String engineKey, double priority,
 				boolean active)
 		throws PortalException {
 
 		return getService().addCommercePaymentMethodGroupRel(
-			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
-			priority, active);
+			groupId, nameMap, descriptionMap, imageFile, engineKey, priority,
+			active);
 	}
 
 	public static void deleteCommerceAddressRestriction(

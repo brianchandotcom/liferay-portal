@@ -197,14 +197,14 @@ public class CommerceMLForecastAlertEntryServiceSoap {
 
 	public static com.liferay.commerce.machine.learning.forecast.alert.model.
 		CommerceMLForecastAlertEntrySoap updateStatus(
-				long userId, long commerceMLForecastAlertEntryId, int status)
+				long commerceMLForecastAlertEntryId, int status)
 			throws RemoteException {
 
 		try {
 			com.liferay.commerce.machine.learning.forecast.alert.model.
 				CommerceMLForecastAlertEntry returnValue =
 					CommerceMLForecastAlertEntryServiceUtil.updateStatus(
-						userId, commerceMLForecastAlertEntryId, status);
+						commerceMLForecastAlertEntryId, status);
 
 			return com.liferay.commerce.machine.learning.forecast.alert.model.
 				CommerceMLForecastAlertEntrySoap.toSoapModel(returnValue);

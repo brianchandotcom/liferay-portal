@@ -65,14 +65,13 @@ public class CommerceShippingMethodServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap
 			addCommerceAddressRestriction(
-				long userId, long groupId, long commerceShippingMethodId,
-				long countryId)
+				long groupId, long commerceShippingMethodId, long countryId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
 				CommerceShippingMethodServiceUtil.addCommerceAddressRestriction(
-					userId, groupId, commerceShippingMethodId, countryId);
+					groupId, commerceShippingMethodId, countryId);
 
 			return com.liferay.commerce.model.CommerceAddressRestrictionSoap.
 				toSoapModel(returnValue);

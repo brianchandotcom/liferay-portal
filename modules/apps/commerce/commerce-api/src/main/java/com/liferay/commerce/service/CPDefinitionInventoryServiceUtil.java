@@ -37,18 +37,17 @@ public class CPDefinitionInventoryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CPDefinitionInventoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CPDefinitionInventory addCPDefinitionInventory(
-			long userId, long cpDefinitionId,
-			String cpDefinitionInventoryEngine, String lowStockActivity,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minOrderQuantity,
-			int maxOrderQuantity, String allowedOrderQuantities,
-			int multipleOrderQuantity)
+			long cpDefinitionId, String cpDefinitionInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity)
 		throws PortalException {
 
 		return getService().addCPDefinitionInventory(
-			userId, cpDefinitionId, cpDefinitionInventoryEngine,
-			lowStockActivity, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
+			cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
+			displayAvailability, displayStockQuantity, minStockQuantity,
+			backOrders, minOrderQuantity, maxOrderQuantity,
 			allowedOrderQuantities, multipleOrderQuantity);
 	}
 

@@ -62,7 +62,7 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 	 */
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
+				long commerceInventoryWarehouseId, String sku,
 				Date availabilityDate, int quantity)
 		throws PortalException;
 

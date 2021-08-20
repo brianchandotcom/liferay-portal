@@ -103,11 +103,11 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 	}
 
 	public static CommerceMLForecastAlertEntry updateStatus(
-			long userId, long commerceMLForecastAlertEntryId, int status)
+			long commerceMLForecastAlertEntryId, int status)
 		throws PortalException {
 
 		return getService().updateStatus(
-			userId, commerceMLForecastAlertEntryId, status);
+			commerceMLForecastAlertEntryId, status);
 	}
 
 	public static CommerceMLForecastAlertEntryService getService() {

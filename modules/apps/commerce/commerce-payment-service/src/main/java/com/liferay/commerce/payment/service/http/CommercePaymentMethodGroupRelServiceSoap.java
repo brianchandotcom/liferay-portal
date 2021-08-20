@@ -65,14 +65,13 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long userId, long groupId, long classPK, long countryId)
+				long groupId, long classPK, long countryId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
 				CommercePaymentMethodGroupRelServiceUtil.
-					addCommerceAddressRestriction(
-						userId, groupId, classPK, countryId);
+					addCommerceAddressRestriction(groupId, classPK, countryId);
 
 			return returnValue;
 		}

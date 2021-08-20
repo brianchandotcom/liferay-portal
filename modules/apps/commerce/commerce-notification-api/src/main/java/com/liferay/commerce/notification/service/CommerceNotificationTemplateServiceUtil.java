@@ -41,17 +41,17 @@ public class CommerceNotificationTemplateServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceNotificationTemplate addCommerceNotificationTemplate(
-			long userId, long groupId, String name, String description,
-			String from, Map<java.util.Locale, String> fromNameMap, String to,
-			String cc, String bcc, String type, boolean enabled,
+			long groupId, String name, String description, String from,
+			Map<java.util.Locale, String> fromNameMap, String to, String cc,
+			String bcc, String type, boolean enabled,
 			Map<java.util.Locale, String> subjectMap,
 			Map<java.util.Locale, String> bodyMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceNotificationTemplate(
-			userId, groupId, name, description, from, fromNameMap, to, cc, bcc,
-			type, enabled, subjectMap, bodyMap, serviceContext);
+			groupId, name, description, from, fromNameMap, to, cc, bcc, type,
+			enabled, subjectMap, bodyMap, serviceContext);
 	}
 
 	/**

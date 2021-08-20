@@ -60,8 +60,7 @@ public interface CPDisplayLayoutService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp display layout remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPDisplayLayoutServiceUtil} if injection and service tracking are not available.
 	 */
 	public CPDisplayLayout addCPDisplayLayout(
-			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			long groupId, Class<?> clazz, long classPK, String layoutUuid)
 		throws PortalException;
 
 	public void deleteCPDisplayLayout(long cpDisplayLayoutId)

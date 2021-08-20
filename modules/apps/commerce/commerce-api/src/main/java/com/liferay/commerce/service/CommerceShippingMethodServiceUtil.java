@@ -42,12 +42,11 @@ public class CommerceShippingMethodServiceUtil {
 	 */
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long userId, long groupId, long commerceShippingMethodId,
-				long countryId)
+				long groupId, long commerceShippingMethodId, long countryId)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			userId, groupId, commerceShippingMethodId, countryId);
+			groupId, commerceShippingMethodId, countryId);
 	}
 
 	/**
@@ -65,15 +64,15 @@ public class CommerceShippingMethodServiceUtil {
 	}
 
 	public static CommerceShippingMethod addCommerceShippingMethod(
-			long userId, long groupId, Map<java.util.Locale, String> nameMap,
+			long groupId, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
 			java.io.File imageFile, String engineKey, double priority,
 			boolean active)
 		throws PortalException {
 
 		return getService().addCommerceShippingMethod(
-			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
-			priority, active);
+			groupId, nameMap, descriptionMap, imageFile, engineKey, priority,
+			active);
 	}
 
 	public static CommerceShippingMethod createCommerceShippingMethod(

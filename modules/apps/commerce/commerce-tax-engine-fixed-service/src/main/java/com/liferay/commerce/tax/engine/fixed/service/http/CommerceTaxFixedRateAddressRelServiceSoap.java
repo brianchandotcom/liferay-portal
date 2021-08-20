@@ -65,9 +65,8 @@ public class CommerceTaxFixedRateAddressRelServiceSoap {
 
 	public static com.liferay.commerce.tax.engine.fixed.model.
 		CommerceTaxFixedRateAddressRelSoap addCommerceTaxFixedRateAddressRel(
-				long userId, long groupId, long commerceTaxMethodId,
-				long cpTaxCategoryId, long countryId, long regionId, String zip,
-				double rate)
+				long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
+				long countryId, long regionId, String zip, double rate)
 			throws RemoteException {
 
 		try {
@@ -75,8 +74,8 @@ public class CommerceTaxFixedRateAddressRelServiceSoap {
 				CommerceTaxFixedRateAddressRel returnValue =
 					CommerceTaxFixedRateAddressRelServiceUtil.
 						addCommerceTaxFixedRateAddressRel(
-							userId, groupId, commerceTaxMethodId,
-							cpTaxCategoryId, countryId, regionId, zip, rate);
+							groupId, commerceTaxMethodId, cpTaxCategoryId,
+							countryId, regionId, zip, rate);
 
 			return com.liferay.commerce.tax.engine.fixed.model.
 				CommerceTaxFixedRateAddressRelSoap.toSoapModel(returnValue);

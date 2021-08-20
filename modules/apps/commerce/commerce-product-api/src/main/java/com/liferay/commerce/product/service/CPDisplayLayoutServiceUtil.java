@@ -37,12 +37,11 @@ public class CPDisplayLayoutServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CPDisplayLayout addCPDisplayLayout(
-			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			long groupId, Class<?> clazz, long classPK, String layoutUuid)
 		throws PortalException {
 
 		return getService().addCPDisplayLayout(
-			userId, groupId, clazz, classPK, layoutUuid);
+			groupId, clazz, classPK, layoutUuid);
 	}
 
 	public static void deleteCPDisplayLayout(long cpDisplayLayoutId)

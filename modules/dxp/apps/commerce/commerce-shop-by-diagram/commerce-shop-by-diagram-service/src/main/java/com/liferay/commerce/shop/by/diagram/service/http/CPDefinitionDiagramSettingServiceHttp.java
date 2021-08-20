@@ -54,9 +54,9 @@ public class CPDefinitionDiagramSettingServiceHttp {
 	public static
 		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
 				addCPDefinitionDiagramSetting(
-					HttpPrincipal httpPrincipal, long userId,
-					long cpDefinitionId, long cpAttachmentFileEntryId,
-					String color, double radius, String type)
+					HttpPrincipal httpPrincipal, long cpDefinitionId,
+					long cpAttachmentFileEntryId, String color, double radius,
+					String type)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,8 +66,8 @@ public class CPDefinitionDiagramSettingServiceHttp {
 				_addCPDefinitionDiagramSettingParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, cpDefinitionId, cpAttachmentFileEntryId,
-				color, radius, type);
+				methodKey, cpDefinitionId, cpAttachmentFileEntryId, color,
+				radius, type);
 
 			Object returnObj = null;
 
@@ -284,8 +284,7 @@ public class CPDefinitionDiagramSettingServiceHttp {
 
 	private static final Class<?>[]
 		_addCPDefinitionDiagramSettingParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, String.class, double.class,
-			String.class
+			long.class, long.class, String.class, double.class, String.class
 		};
 	private static final Class<?>[]
 		_fetchCPDefinitionDiagramSettingByCPDefinitionIdParameterTypes1 =

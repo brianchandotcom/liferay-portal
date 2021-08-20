@@ -38,7 +38,7 @@ public class CommerceShippingFixedOptionRelServiceWrapper
 	@Override
 	public com.liferay.commerce.shipping.engine.fixed.model.
 		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-				long userId, long groupId, long commerceShippingMethodId,
+				long groupId, long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
 				long commerceInventoryWarehouseId, long countryId,
 				long regionId, String zip, double weightFrom, double weightTo,
@@ -48,7 +48,7 @@ public class CommerceShippingFixedOptionRelServiceWrapper
 
 		return _commerceShippingFixedOptionRelService.
 			addCommerceShippingFixedOptionRel(
-				userId, groupId, commerceShippingMethodId,
+				groupId, commerceShippingMethodId,
 				commerceShippingFixedOptionId, commerceInventoryWarehouseId,
 				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
 				rateUnitWeightPrice, ratePercentage);

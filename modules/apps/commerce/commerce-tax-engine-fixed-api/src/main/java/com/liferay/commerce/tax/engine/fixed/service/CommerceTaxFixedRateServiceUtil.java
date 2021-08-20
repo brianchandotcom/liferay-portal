@@ -54,12 +54,12 @@ public class CommerceTaxFixedRateServiceUtil {
 	}
 
 	public static CommerceTaxFixedRate addCommerceTaxFixedRate(
-			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, double rate)
+			long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
+			double rate)
 		throws PortalException {
 
 		return getService().addCommerceTaxFixedRate(
-			userId, groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
+			groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
 	}
 
 	public static void deleteCommerceTaxFixedRate(long commerceTaxFixedRateId)

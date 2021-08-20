@@ -67,8 +67,7 @@ public interface CommerceShippingMethodService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce shipping method remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceShippingMethodServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long userId, long groupId, long commerceShippingMethodId,
-			long countryId)
+			long groupId, long commerceShippingMethodId, long countryId)
 		throws PortalException;
 
 	/**
@@ -81,7 +80,7 @@ public interface CommerceShippingMethodService extends BaseService {
 		throws PortalException;
 
 	public CommerceShippingMethod addCommerceShippingMethod(
-			long userId, long groupId, Map<Locale, String> nameMap,
+			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, File imageFile,
 			String engineKey, double priority, boolean active)
 		throws PortalException;

@@ -66,15 +66,15 @@ public class CPDefinitionDiagramPinServiceSoap {
 	public static
 		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPinSoap
 				addCPDefinitionDiagramPin(
-					long userId, long cpDefinitionId, double positionX,
-					double positionY, String sequence)
+					long cpDefinitionId, double positionX, double positionY,
+					String sequence)
 			throws RemoteException {
 
 		try {
 			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
 				returnValue =
 					CPDefinitionDiagramPinServiceUtil.addCPDefinitionDiagramPin(
-						userId, cpDefinitionId, positionX, positionY, sequence);
+						cpDefinitionId, positionX, positionY, sequence);
 
 			return com.liferay.commerce.shop.by.diagram.model.
 				CPDefinitionDiagramPinSoap.toSoapModel(returnValue);

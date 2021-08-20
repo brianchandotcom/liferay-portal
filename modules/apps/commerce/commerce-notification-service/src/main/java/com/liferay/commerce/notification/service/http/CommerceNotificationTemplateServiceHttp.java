@@ -54,8 +54,8 @@ public class CommerceNotificationTemplateServiceHttp {
 	public static
 		com.liferay.commerce.notification.model.CommerceNotificationTemplate
 				addCommerceNotificationTemplate(
-					HttpPrincipal httpPrincipal, long userId, long groupId,
-					String name, String description, String from,
+					HttpPrincipal httpPrincipal, long groupId, String name,
+					String description, String from,
 					java.util.Map<java.util.Locale, String> fromNameMap,
 					String to, String cc, String bcc, String type,
 					boolean enabled,
@@ -72,9 +72,8 @@ public class CommerceNotificationTemplateServiceHttp {
 				_addCommerceNotificationTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, name, description, from,
-				fromNameMap, to, cc, bcc, type, enabled, subjectMap, bodyMap,
-				serviceContext);
+				methodKey, groupId, name, description, from, fromNameMap, to,
+				cc, bcc, type, enabled, subjectMap, bodyMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -479,7 +478,7 @@ public class CommerceNotificationTemplateServiceHttp {
 
 	private static final Class<?>[]
 		_addCommerceNotificationTemplateParameterTypes0 = new Class[] {
-			long.class, long.class, String.class, String.class, String.class,
+			long.class, String.class, String.class, String.class,
 			java.util.Map.class, String.class, String.class, String.class,
 			String.class, boolean.class, java.util.Map.class,
 			java.util.Map.class,

@@ -323,7 +323,7 @@ public class CommerceMLForecastAlertEntryServiceHttp {
 
 	public static com.liferay.commerce.machine.learning.forecast.alert.model.
 		CommerceMLForecastAlertEntry updateStatus(
-				HttpPrincipal httpPrincipal, long userId,
+				HttpPrincipal httpPrincipal,
 				long commerceMLForecastAlertEntryId, int status)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -333,7 +333,7 @@ public class CommerceMLForecastAlertEntryServiceHttp {
 				_updateStatusParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, commerceMLForecastAlertEntryId, status);
+				methodKey, commerceMLForecastAlertEntryId, status);
 
 			Object returnObj = null;
 
@@ -394,7 +394,7 @@ public class CommerceMLForecastAlertEntryServiceHttp {
 			long.class, long.class, int.class
 		};
 	private static final Class<?>[] _updateStatusParameterTypes6 = new Class[] {
-		long.class, long.class, int.class
+		long.class, int.class
 	};
 
 }

@@ -58,12 +58,11 @@ public interface CPDefinitionInventoryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CPDefinitionInventoryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp definition inventory remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPDefinitionInventoryServiceUtil} if injection and service tracking are not available.
 	 */
 	public CPDefinitionInventory addCPDefinitionInventory(
-			long userId, long cpDefinitionId,
-			String cpDefinitionInventoryEngine, String lowStockActivity,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minOrderQuantity,
-			int maxOrderQuantity, String allowedOrderQuantities,
-			int multipleOrderQuantity)
+			long cpDefinitionId, String cpDefinitionInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity)
 		throws PortalException;
 
 	public void deleteCPDefinitionInventory(long cpDefinitionInventoryId)

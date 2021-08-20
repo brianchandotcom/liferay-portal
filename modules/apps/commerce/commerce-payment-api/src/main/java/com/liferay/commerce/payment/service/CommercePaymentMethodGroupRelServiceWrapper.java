@@ -38,11 +38,11 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long userId, long groupId, long classPK, long countryId)
+				long groupId, long classPK, long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentMethodGroupRelService.
-			addCommerceAddressRestriction(userId, groupId, classPK, countryId);
+			addCommerceAddressRestriction(groupId, classPK, countryId);
 	}
 
 	/**
@@ -63,8 +63,7 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
 			addCommercePaymentMethodGroupRel(
-				long userId, long groupId,
-				java.util.Map<java.util.Locale, String> nameMap,
+				long groupId, java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				java.io.File imageFile, String engineKey, double priority,
 				boolean active)
@@ -72,7 +71,7 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 
 		return _commercePaymentMethodGroupRelService.
 			addCommercePaymentMethodGroupRel(
-				userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
+				groupId, nameMap, descriptionMap, imageFile, engineKey,
 				priority, active);
 	}
 

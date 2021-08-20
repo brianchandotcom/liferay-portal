@@ -41,17 +41,16 @@ public class CommerceCurrencyServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceCurrency addCommerceCurrency(
-			long userId, String code, Map<java.util.Locale, String> nameMap,
-			String symbol, java.math.BigDecimal rate,
+			String code, Map<java.util.Locale, String> nameMap, String symbol,
+			java.math.BigDecimal rate,
 			Map<java.util.Locale, String> formatPatternMap,
 			int maxFractionDigits, int minFractionDigits, String roundingMode,
 			boolean primary, double priority, boolean active)
 		throws PortalException {
 
 		return getService().addCommerceCurrency(
-			userId, code, nameMap, symbol, rate, formatPatternMap,
-			maxFractionDigits, minFractionDigits, roundingMode, primary,
-			priority, active);
+			code, nameMap, symbol, rate, formatPatternMap, maxFractionDigits,
+			minFractionDigits, roundingMode, primary, priority, active);
 	}
 
 	public static void deleteCommerceCurrency(long commerceCurrencyId)

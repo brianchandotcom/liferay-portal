@@ -62,35 +62,22 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce inventory warehouse item remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceInventoryWarehouseItemServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommerceInventoryWarehouseItem(String,
-	 long, long, String, int)}
-	 */
-	@Deprecated
-	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId,
-			String externalReferenceCode, String sku, int quantity)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			String externalReferenceCode, long userId,
 			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;
 
-	public CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
+	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
+			String externalReferenceCode, long commerceInventoryWarehouseId,
+			String sku, int quantity)
 		throws PortalException;
 
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
-				String externalReferenceCode, long companyId, long userId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException;
+
+	public CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long companyId,
 				long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;
 
@@ -212,17 +199,6 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId, int quantity,
 			long mvccVersion)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommerceInventoryWarehouseItem(String,
-	 long, long, long, String, int)}
-	 */
-	@Deprecated
-	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
-			long companyId, long userId, long commerceInventoryWarehouseId,
-			String externalReferenceCode, String sku, int quantity)
 		throws PortalException;
 
 }

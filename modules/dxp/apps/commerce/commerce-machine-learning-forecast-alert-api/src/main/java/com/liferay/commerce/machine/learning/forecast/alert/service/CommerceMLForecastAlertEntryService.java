@@ -101,7 +101,7 @@ public interface CommerceMLForecastAlertEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public CommerceMLForecastAlertEntry updateStatus(
-			long userId, long commerceMLForecastAlertEntryId, int status)
+			long commerceMLForecastAlertEntryId, int status)
 		throws PortalException;
 
 }

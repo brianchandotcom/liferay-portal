@@ -53,15 +53,14 @@ public class CommercePriceModifierServiceHttp {
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifier
 			addCommercePriceModifier(
-				HttpPrincipal httpPrincipal, long userId, long groupId,
-				String title, String target, long commercePriceListId,
-				String modifierType, java.math.BigDecimal modifierAmount,
-				double priority, boolean active, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				HttpPrincipal httpPrincipal, long groupId, String title,
+				String target, long commercePriceListId, String modifierType,
+				java.math.BigDecimal modifierAmount, double priority,
+				boolean active, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -72,7 +71,7 @@ public class CommercePriceModifierServiceHttp {
 				_addCommercePriceModifierParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, title, target, commercePriceListId,
+				methodKey, groupId, title, target, commercePriceListId,
 				modifierType, modifierAmount, priority, active,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
@@ -111,15 +110,14 @@ public class CommercePriceModifierServiceHttp {
 	public static com.liferay.commerce.pricing.model.CommercePriceModifier
 			addOrUpdateCommercePriceModifier(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long userId, long commercePriceModifierId, long groupId,
-				String title, String target, long commercePriceListId,
-				String modifierType, java.math.BigDecimal modifierAmount,
-				double priority, boolean active, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				long commercePriceModifierId, long groupId, String title,
+				String target, long commercePriceListId, String modifierType,
+				java.math.BigDecimal modifierAmount, double priority,
+				boolean active, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -130,13 +128,13 @@ public class CommercePriceModifierServiceHttp {
 				_addOrUpdateCommercePriceModifierParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, userId,
-				commercePriceModifierId, groupId, title, target,
-				commercePriceListId, modifierType, modifierAmount, priority,
-				active, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				methodKey, externalReferenceCode, commercePriceModifierId,
+				groupId, title, target, commercePriceListId, modifierType,
+				modifierAmount, priority, active, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -624,20 +622,19 @@ public class CommercePriceModifierServiceHttp {
 
 	private static final Class<?>[] _addCommercePriceModifierParameterTypes0 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, long.class,
-			String.class, java.math.BigDecimal.class, double.class,
-			boolean.class, int.class, int.class, int.class, int.class,
+			long.class, String.class, String.class, long.class, String.class,
+			java.math.BigDecimal.class, double.class, boolean.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCommercePriceModifierParameterTypes1 = new Class[] {
-			String.class, long.class, long.class, long.class, String.class,
-			String.class, long.class, String.class, java.math.BigDecimal.class,
-			double.class, boolean.class, int.class, int.class, int.class,
+			String.class, long.class, long.class, String.class, String.class,
+			long.class, String.class, java.math.BigDecimal.class, double.class,
+			boolean.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

@@ -65,7 +65,7 @@ public class CommercePriceModifierServiceSoap {
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifierSoap
 			addCommercePriceModifier(
-				long userId, long groupId, String title, String target,
+				long groupId, String title, String target,
 				long commercePriceListId, String modifierType,
 				java.math.BigDecimal modifierAmount, double priority,
 				boolean active, int displayDateMonth, int displayDateDay,
@@ -80,7 +80,7 @@ public class CommercePriceModifierServiceSoap {
 			com.liferay.commerce.pricing.model.CommercePriceModifier
 				returnValue =
 					CommercePriceModifierServiceUtil.addCommercePriceModifier(
-						userId, groupId, title, target, commercePriceListId,
+						groupId, title, target, commercePriceListId,
 						modifierType, modifierAmount, priority, active,
 						displayDateMonth, displayDateDay, displayDateYear,
 						displayDateHour, displayDateMinute, expirationDateMonth,
@@ -100,9 +100,9 @@ public class CommercePriceModifierServiceSoap {
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifierSoap
 			addOrUpdateCommercePriceModifier(
-				String externalReferenceCode, long userId,
-				long commercePriceModifierId, long groupId, String title,
-				String target, long commercePriceListId, String modifierType,
+				String externalReferenceCode, long commercePriceModifierId,
+				long groupId, String title, String target,
+				long commercePriceListId, String modifierType,
 				java.math.BigDecimal modifierAmount, double priority,
 				boolean active, int displayDateMonth, int displayDateDay,
 				int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -117,11 +117,11 @@ public class CommercePriceModifierServiceSoap {
 				returnValue =
 					CommercePriceModifierServiceUtil.
 						addOrUpdateCommercePriceModifier(
-							externalReferenceCode, userId,
-							commercePriceModifierId, groupId, title, target,
-							commercePriceListId, modifierType, modifierAmount,
-							priority, active, displayDateMonth, displayDateDay,
-							displayDateYear, displayDateHour, displayDateMinute,
+							externalReferenceCode, commercePriceModifierId,
+							groupId, title, target, commercePriceListId,
+							modifierType, modifierAmount, priority, active,
+							displayDateMonth, displayDateDay, displayDateYear,
+							displayDateHour, displayDateMinute,
 							expirationDateMonth, expirationDateDay,
 							expirationDateYear, expirationDateHour,
 							expirationDateMinute, neverExpire, serviceContext);

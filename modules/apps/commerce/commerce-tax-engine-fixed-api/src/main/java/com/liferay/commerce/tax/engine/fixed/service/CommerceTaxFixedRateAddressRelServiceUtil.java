@@ -41,14 +41,13 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 	 */
 	public static CommerceTaxFixedRateAddressRel
 			addCommerceTaxFixedRateAddressRel(
-				long userId, long groupId, long commerceTaxMethodId,
-				long cpTaxCategoryId, long countryId, long regionId, String zip,
-				double rate)
+				long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
+				long countryId, long regionId, String zip, double rate)
 		throws PortalException {
 
 		return getService().addCommerceTaxFixedRateAddressRel(
-			userId, groupId, commerceTaxMethodId, cpTaxCategoryId, countryId,
-			regionId, zip, rate);
+			groupId, commerceTaxMethodId, cpTaxCategoryId, countryId, regionId,
+			zip, rate);
 	}
 
 	/**

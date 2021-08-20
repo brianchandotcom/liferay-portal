@@ -65,18 +65,17 @@ public class CPDefinitionInventoryServiceSoap {
 
 	public static com.liferay.commerce.model.CPDefinitionInventorySoap
 			addCPDefinitionInventory(
-				long userId, long cpDefinitionId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
+				long cpDefinitionId, String cpDefinitionInventoryEngine,
+				String lowStockActivity, boolean displayAvailability,
+				boolean displayStockQuantity, int minStockQuantity,
+				boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+				String allowedOrderQuantities, int multipleOrderQuantity)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CPDefinitionInventory returnValue =
 				CPDefinitionInventoryServiceUtil.addCPDefinitionInventory(
-					userId, cpDefinitionId, cpDefinitionInventoryEngine,
+					cpDefinitionId, cpDefinitionInventoryEngine,
 					lowStockActivity, displayAvailability, displayStockQuantity,
 					minStockQuantity, backOrders, minOrderQuantity,
 					maxOrderQuantity, allowedOrderQuantities,

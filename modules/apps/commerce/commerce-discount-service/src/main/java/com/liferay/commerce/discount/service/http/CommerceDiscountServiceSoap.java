@@ -65,7 +65,7 @@ public class CommerceDiscountServiceSoap {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
 			addCommerceDiscount(
-				long userId, String title, String target, boolean useCouponCode,
+				String title, String target, boolean useCouponCode,
 				String couponCode, boolean usePercentage,
 				java.math.BigDecimal maximumDiscountAmount,
 				java.math.BigDecimal level1, java.math.BigDecimal level2,
@@ -82,12 +82,12 @@ public class CommerceDiscountServiceSoap {
 		try {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
 				CommerceDiscountServiceUtil.addCommerceDiscount(
-					userId, title, target, useCouponCode, couponCode,
-					usePercentage, maximumDiscountAmount, level1, level2,
-					level3, level4, limitationType, limitationTimes, active,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					title, target, useCouponCode, couponCode, usePercentage,
+					maximumDiscountAmount, level1, level2, level3, level4,
+					limitationType, limitationTimes, active, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.discount.model.CommerceDiscountSoap.
@@ -102,7 +102,7 @@ public class CommerceDiscountServiceSoap {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
 			addCommerceDiscount(
-				long userId, String title, String target, boolean useCouponCode,
+				String title, String target, boolean useCouponCode,
 				String couponCode, boolean usePercentage,
 				java.math.BigDecimal maximumDiscountAmount, String level,
 				java.math.BigDecimal level1, java.math.BigDecimal level2,
@@ -120,64 +120,13 @@ public class CommerceDiscountServiceSoap {
 		try {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
 				CommerceDiscountServiceUtil.addCommerceDiscount(
-					userId, title, target, useCouponCode, couponCode,
-					usePercentage, maximumDiscountAmount, level, level1, level2,
-					level3, level4, limitationType, limitationTimes,
-					rulesConjunction, active, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
-
-			return com.liferay.commerce.discount.model.CommerceDiscountSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommerceDiscount(String, long, String, String boolean,
-	 String, boolean, BigDecimal, String, BigDecimal, BigDecimal,
-	 BigDecimal, BigDecimal, BigDecimal, String, int, int,
-	 boolean, boolean, int, int, int, int, int, int, int, int,
-	 int, int, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
-			addCommerceDiscount(
-				long userId, String title, String target, boolean useCouponCode,
-				String couponCode, boolean usePercentage,
-				java.math.BigDecimal maximumDiscountAmount, String level,
-				java.math.BigDecimal level1, java.math.BigDecimal level2,
-				java.math.BigDecimal level3, java.math.BigDecimal level4,
-				String limitationType, int limitationTimes,
-				int limitationTimesPerAccount, boolean rulesConjunction,
-				boolean active, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, String externalReferenceCode,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
-				CommerceDiscountServiceUtil.addCommerceDiscount(
-					userId, title, target, useCouponCode, couponCode,
-					usePercentage, maximumDiscountAmount, level, level1, level2,
-					level3, level4, limitationType, limitationTimes,
-					limitationTimesPerAccount, rulesConjunction, active,
-					displayDateMonth, displayDateDay, displayDateYear,
+					title, target, useCouponCode, couponCode, usePercentage,
+					maximumDiscountAmount, level, level1, level2, level3,
+					level4, limitationType, limitationTimes, rulesConjunction,
+					active, displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, externalReferenceCode, neverExpire,
-					serviceContext);
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.discount.model.CommerceDiscountSoap.
 				toSoapModel(returnValue);
@@ -191,9 +140,8 @@ public class CommerceDiscountServiceSoap {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
 			addCommerceDiscount(
-				String externalReferenceCode, long userId, String title,
-				String target, boolean useCouponCode, String couponCode,
-				boolean usePercentage,
+				String externalReferenceCode, String title, String target,
+				boolean useCouponCode, String couponCode, boolean usePercentage,
 				java.math.BigDecimal maximumDiscountAmount, String level,
 				java.math.BigDecimal level1, java.math.BigDecimal level2,
 				java.math.BigDecimal level3, java.math.BigDecimal level4,
@@ -210,7 +158,7 @@ public class CommerceDiscountServiceSoap {
 		try {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
 				CommerceDiscountServiceUtil.addCommerceDiscount(
-					externalReferenceCode, userId, title, target, useCouponCode,
+					externalReferenceCode, title, target, useCouponCode,
 					couponCode, usePercentage, maximumDiscountAmount, level,
 					level1, level2, level3, level4, limitationType,
 					limitationTimes, limitationTimesPerAccount,
@@ -232,9 +180,9 @@ public class CommerceDiscountServiceSoap {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
 			addOrUpdateCommerceDiscount(
-				String externalReferenceCode, long userId,
-				long commerceDiscountId, String title, String target,
-				boolean useCouponCode, String couponCode, boolean usePercentage,
+				String externalReferenceCode, long commerceDiscountId,
+				String title, String target, boolean useCouponCode,
+				String couponCode, boolean usePercentage,
 				java.math.BigDecimal maximumDiscountAmount,
 				java.math.BigDecimal level1, java.math.BigDecimal level2,
 				java.math.BigDecimal level3, java.math.BigDecimal level4,
@@ -250,8 +198,8 @@ public class CommerceDiscountServiceSoap {
 		try {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
 				CommerceDiscountServiceUtil.addOrUpdateCommerceDiscount(
-					externalReferenceCode, userId, commerceDiscountId, title,
-					target, useCouponCode, couponCode, usePercentage,
+					externalReferenceCode, commerceDiscountId, title, target,
+					useCouponCode, couponCode, usePercentage,
 					maximumDiscountAmount, level1, level2, level3, level4,
 					limitationType, limitationTimes, active, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
@@ -271,9 +219,9 @@ public class CommerceDiscountServiceSoap {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
 			addOrUpdateCommerceDiscount(
-				String externalReferenceCode, long userId,
-				long commerceDiscountId, String title, String target,
-				boolean useCouponCode, String couponCode, boolean usePercentage,
+				String externalReferenceCode, long commerceDiscountId,
+				String title, String target, boolean useCouponCode,
+				String couponCode, boolean usePercentage,
 				java.math.BigDecimal maximumDiscountAmount, String level,
 				java.math.BigDecimal level1, java.math.BigDecimal level2,
 				java.math.BigDecimal level3, java.math.BigDecimal level4,
@@ -290,8 +238,8 @@ public class CommerceDiscountServiceSoap {
 		try {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
 				CommerceDiscountServiceUtil.addOrUpdateCommerceDiscount(
-					externalReferenceCode, userId, commerceDiscountId, title,
-					target, useCouponCode, couponCode, usePercentage,
+					externalReferenceCode, commerceDiscountId, title, target,
+					useCouponCode, couponCode, usePercentage,
 					maximumDiscountAmount, level, level1, level2, level3,
 					level4, limitationType, limitationTimes, rulesConjunction,
 					active, displayDateMonth, displayDateDay, displayDateYear,
@@ -311,9 +259,9 @@ public class CommerceDiscountServiceSoap {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
 			addOrUpdateCommerceDiscount(
-				String externalReferenceCode, long userId,
-				long commerceDiscountId, String title, String target,
-				boolean useCouponCode, String couponCode, boolean usePercentage,
+				String externalReferenceCode, long commerceDiscountId,
+				String title, String target, boolean useCouponCode,
+				String couponCode, boolean usePercentage,
 				java.math.BigDecimal maximumDiscountAmount, String level,
 				java.math.BigDecimal level1, java.math.BigDecimal level2,
 				java.math.BigDecimal level3, java.math.BigDecimal level4,
@@ -330,8 +278,8 @@ public class CommerceDiscountServiceSoap {
 		try {
 			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
 				CommerceDiscountServiceUtil.addOrUpdateCommerceDiscount(
-					externalReferenceCode, userId, commerceDiscountId, title,
-					target, useCouponCode, couponCode, usePercentage,
+					externalReferenceCode, commerceDiscountId, title, target,
+					useCouponCode, couponCode, usePercentage,
 					maximumDiscountAmount, level, level1, level2, level3,
 					level4, limitationType, limitationTimes,
 					limitationTimesPerAccount, rulesConjunction, active,
@@ -684,156 +632,6 @@ public class CommerceDiscountServiceSoap {
 				CommerceDiscountServiceUtil.
 					updateCommerceDiscountExternalReferenceCode(
 						externalReferenceCode, commerceDiscountId);
-
-			return com.liferay.commerce.discount.model.CommerceDiscountSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommerceDiscount(String, long, long, String, String,
-	 boolean, String, boolean, BigDecimal, BigDecimal,
-	 BigDecimal, BigDecimal, BigDecimal, String, int, boolean,
-	 int, int, int, int, int, int, int, int, int, int, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
-			upsertCommerceDiscount(
-				long userId, long commerceDiscountId, String title,
-				String target, boolean useCouponCode, String couponCode,
-				boolean usePercentage,
-				java.math.BigDecimal maximumDiscountAmount,
-				java.math.BigDecimal level1, java.math.BigDecimal level2,
-				java.math.BigDecimal level3, java.math.BigDecimal level4,
-				String limitationType, int limitationTimes, boolean active,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, String externalReferenceCode,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
-				CommerceDiscountServiceUtil.upsertCommerceDiscount(
-					userId, commerceDiscountId, title, target, useCouponCode,
-					couponCode, usePercentage, maximumDiscountAmount, level1,
-					level2, level3, level4, limitationType, limitationTimes,
-					active, displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, externalReferenceCode, neverExpire,
-					serviceContext);
-
-			return com.liferay.commerce.discount.model.CommerceDiscountSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommerceDiscount(String, long, long, String, String,
-	 boolean, String, boolean, BigDecimal, String, BigDecimal,
-	 BigDecimal, BigDecimal, BigDecimal, String, int, boolean,
-	 boolean, int, int, int, int, int, int, int, int, int, int,
-	 boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
-			upsertCommerceDiscount(
-				long userId, long commerceDiscountId, String title,
-				String target, boolean useCouponCode, String couponCode,
-				boolean usePercentage,
-				java.math.BigDecimal maximumDiscountAmount, String level,
-				java.math.BigDecimal level1, java.math.BigDecimal level2,
-				java.math.BigDecimal level3, java.math.BigDecimal level4,
-				String limitationType, int limitationTimes,
-				boolean rulesConjunction, boolean active, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				String externalReferenceCode, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
-				CommerceDiscountServiceUtil.upsertCommerceDiscount(
-					userId, commerceDiscountId, title, target, useCouponCode,
-					couponCode, usePercentage, maximumDiscountAmount, level,
-					level1, level2, level3, level4, limitationType,
-					limitationTimes, rulesConjunction, active, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, externalReferenceCode, neverExpire,
-					serviceContext);
-
-			return com.liferay.commerce.discount.model.CommerceDiscountSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommerceDiscount(String, long, long, String, String,
-	 boolean, String, boolean, BigDecimal, String, BigDecimal,
-	 BigDecimal, BigDecimal, BigDecimal, String, int, int,
-	 boolean, boolean, int, int, int, int, int, int, int, int,
-	 int, int, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.commerce.discount.model.CommerceDiscountSoap
-			upsertCommerceDiscount(
-				long userId, long commerceDiscountId, String title,
-				String target, boolean useCouponCode, String couponCode,
-				boolean usePercentage,
-				java.math.BigDecimal maximumDiscountAmount, String level,
-				java.math.BigDecimal level1, java.math.BigDecimal level2,
-				java.math.BigDecimal level3, java.math.BigDecimal level4,
-				String limitationType, int limitationTimes,
-				int limitationTimesPerAccount, boolean rulesConjunction,
-				boolean active, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, String externalReferenceCode,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.discount.model.CommerceDiscount returnValue =
-				CommerceDiscountServiceUtil.upsertCommerceDiscount(
-					userId, commerceDiscountId, title, target, useCouponCode,
-					couponCode, usePercentage, maximumDiscountAmount, level,
-					level1, level2, level3, level4, limitationType,
-					limitationTimes, limitationTimesPerAccount,
-					rulesConjunction, active, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute,
-					externalReferenceCode, neverExpire, serviceContext);
 
 			return com.liferay.commerce.discount.model.CommerceDiscountSoap.
 				toSoapModel(returnValue);

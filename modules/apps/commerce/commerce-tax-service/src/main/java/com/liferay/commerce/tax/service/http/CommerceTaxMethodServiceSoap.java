@@ -69,7 +69,7 @@ public class CommerceTaxMethodServiceSoap {
 
 	public static com.liferay.commerce.tax.model.CommerceTaxMethodSoap
 			addCommerceTaxMethod(
-				long userId, long groupId, String[] nameMapLanguageIds,
+				long groupId, String[] nameMapLanguageIds,
 				String[] nameMapValues, String[] descriptionMapLanguageIds,
 				String[] descriptionMapValues, String engineKey,
 				boolean percentage, boolean active)
@@ -84,8 +84,8 @@ public class CommerceTaxMethodServiceSoap {
 
 			com.liferay.commerce.tax.model.CommerceTaxMethod returnValue =
 				CommerceTaxMethodServiceUtil.addCommerceTaxMethod(
-					userId, groupId, nameMap, descriptionMap, engineKey,
-					percentage, active);
+					groupId, nameMap, descriptionMap, engineKey, percentage,
+					active);
 
 			return com.liferay.commerce.tax.model.CommerceTaxMethodSoap.
 				toSoapModel(returnValue);

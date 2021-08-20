@@ -415,19 +415,6 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 		return commercePaymentMethod.refundPayment(commercePaymentRequest);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by  {@link #updateOrderPaymentStatus(long, int, String, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceOrder updateOrderPaymentStatus(
-			long commerceOrderId, int paymentStatus, String transactionId)
-		throws PortalException {
-
-		return updateOrderPaymentStatus(
-			commerceOrderId, paymentStatus, transactionId, StringPool.BLANK);
-	}
-
 	@Override
 	public CommerceOrder updateOrderPaymentStatus(
 			long commerceOrderId, int paymentStatus, String transactionId,

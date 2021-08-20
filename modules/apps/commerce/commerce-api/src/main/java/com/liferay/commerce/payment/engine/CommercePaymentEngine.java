@@ -85,14 +85,6 @@ public interface CommercePaymentEngine {
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by  {@link #updateOrderPaymentStatus(long, int, String, String)}
-	 */
-	@Deprecated
-	public CommerceOrder updateOrderPaymentStatus(
-			long commerceOrderId, int paymentStatus, String transactionId)
-		throws PortalException;
-
 	public CommerceOrder updateOrderPaymentStatus(
 			long commerceOrderId, int paymentStatus, String transactionId,
 			String result)

@@ -55,17 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by  {@link CommercePaymentUtils#emptyResult(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommercePaymentResult emptyResult(long commerceOrderId) {
-		return new CommercePaymentResult(
-			null, commerceOrderId, -1, false, null, null,
-			Collections.emptyList(), false);
-	}
-
 	@Override
 	public CommercePaymentResult emptyResult(
 		long commerceOrderId, String transactionId) {

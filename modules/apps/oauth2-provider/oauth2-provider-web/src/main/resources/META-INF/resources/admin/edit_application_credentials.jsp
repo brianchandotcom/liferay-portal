@@ -98,7 +98,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 							<div class="pencil-wrapper">
 								<aui:button href="" onClick='<%= liferayPortletResponse.getNamespace() + "showEditClientIdModal();" %>' value="edit" />
 
-								<aui:input helpMessage="set-the-public-identifier-for-your-application" name="clientId" readonly="true" required="<%= true %>" type="text" />
+								<aui:input helpMessage="client-id-help[oauth2]" name="clientId" readonly="true" required="<%= true %>" type="text" />
 							</div>
 
 							<aui:input name="originalClientId" type="hidden" value="<%= clientId %>" />
@@ -196,7 +196,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				</div>
 			</div>
 
-			<aui:input helpMessage="set-the-public-identifier-for-your-application" label="client-id" name="newClientId" onKeyup='<%= liferayPortletResponse.getNamespace() + "updatePadlock('clientIdPadlock', this.value, '" + HtmlUtil.escapeJS(clientId) + "')" %>' type="text" value="<%= clientId %>" />
+			<aui:input helpMessage="client-id-help[oauth2]" label="client-id" name="newClientId" onKeyup='<%= liferayPortletResponse.getNamespace() + "updatePadlock('clientIdPadlock', this.value, '" + HtmlUtil.escapeJS(clientId) + "')" %>' type="text" value="<%= clientId %>" />
 
 			<aui:button-row>
 				<aui:button href="" icon="icon-undo" onClick='<%= liferayPortletResponse.getNamespace() + "setControlEqualTo('newClientId', 'originalClientId')" %>' value="revert" />

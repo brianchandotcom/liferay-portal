@@ -36,7 +36,7 @@ public interface GoogleAuthorizationConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "", description = "set-this-to-client-id-provided-by-google",
+		deflt = "", description = "client-id-help[sso-google]",
 		name = "client-id", required = false
 	)
 	public String clientId();

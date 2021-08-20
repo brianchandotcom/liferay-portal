@@ -100,13 +100,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 			componentTag.setContext(
 				HashMapBuilder.<String, Object>put(
-					"fragmentEntryLinkId",
-					() -> {
-						FragmentEntryLink fragmentEntryLink =
-							fragmentRendererContext.getFragmentEntryLink();
-
-						return fragmentEntryLink.getFragmentEntryLinkId();
-					}
+					"collectionFilterParameterPrefix", "filter_"
 				).build());
 			componentTag.setModule("js/CollectionFilterRegister");
 			componentTag.setServletContext(_servletContext);

@@ -12,12 +12,7 @@
  * details.
  */
 
-const COLLECTION_FILTER_PARAMETER_PREFIX = 'filter_';
-
-/**
- * @type {Map<string, {filterFragmentEntryLinkId: string, filterType: string, value: *}>}
- */
-const collectionFilterValues = new Map();
+let _collectionFilterParameterPrefix = '';
 
 /**
  * @param {string} filterType
@@ -29,7 +24,7 @@ export const getCollectionFilterValue = (
 	filterFragmentEntryLinkId
 ) => {
 	let value = new URL(window.location.href).searchParams.getAll(
-		`${COLLECTION_FILTER_PARAMETER_PREFIX}${filterType}_${filterFragmentEntryLinkId}`
+		`${_collectionFilterParameterPrefix}${filterType}_${filterFragmentEntryLinkId}`
 	);
 
 	if (value.length === 0) {
@@ -52,83 +47,34 @@ export const setCollectionFilterValue = (
 	filterFragmentEntryLinkId,
 	value
 ) => {
-	if (collectionFilterValues.has(filterFragmentEntryLinkId)) {
-		collectionFilterValues.set(filterFragmentEntryLinkId, {
-			filterFragmentEntryLinkId,
-			filterType,
-			value,
-		});
-
-		if (document.body.classList.contains('has-edit-mode-menu')) {
-			return;
-		}
-
-		const url = new URL(window.location.href);
-
-		url.searchParams.forEach((_, paramName) => {
-			if (paramName.startsWith(COLLECTION_FILTER_PARAMETER_PREFIX)) {
-				const [
-					,
-					urlFilterType,
-					urlFilterFragmentEntryLinkId,
-				] = paramName.split('_');
-
-				const entry = collectionFilterValues.get(
-					urlFilterFragmentEntryLinkId
-				);
-
-				if (
-					entry &&
-					entry.filterType === urlFilterType &&
-					entry.filterFragmentEntryLinkId ===
-						urlFilterFragmentEntryLinkId
-				) {
-					url.searchParams.delete(paramName);
-				}
-			}
-		});
-
-		collectionFilterValues.forEach((entry) => {
-			if (entry.value === null) {
-				return;
-			}
-
-			const key = `${COLLECTION_FILTER_PARAMETER_PREFIX}${entry.filterType}_${entry.filterFragmentEntryLinkId}`;
-
-			if (Array.isArray(entry.value)) {
-				entry.value.forEach((valueChunk) => {
-					url.searchParams.append(key, valueChunk);
-				});
-			}
-			else {
-				url.searchParams.set(key, value);
-			}
-		});
-
-		window.location.href = url.toString();
+	if (document.body.classList.contains('has-edit-mode-menu')) {
+		return;
 	}
-	else if (process.env.NODE_ENV === 'development') {
-		console.error(
-			`Collection Filter "${filterFragmentEntryLinkId}" has not been registered`
-		);
+
+	const paramName = `${_collectionFilterParameterPrefix}${filterType}_${filterFragmentEntryLinkId}`;
+	const url = new URL(window.location.href);
+
+	if (Array.isArray(value)) {
+		url.searchParams.delete(paramName);
+
+		value.forEach((valueChunk) => {
+			url.searchParams.append(paramName, valueChunk);
+		});
 	}
+	else {
+		url.searchParams.set(paramName, value);
+	}
+
+	window.location.href = url.toString();
 };
 
 /**
  *
  * @param {object} data
- * @param {string} data.fragmentEntryLinkId
+ * @param {string} data.collectionFilterParameterPrefix
  */
 export default function CollectionFilterRegister({
-	fragmentEntryLinkId: filterFragmentEntryLinkId,
+	collectionFilterParameterPrefix,
 }) {
-	collectionFilterValues.set(filterFragmentEntryLinkId, {
-		filterFragmentEntryLinkId,
-		filterType: null,
-		value: null,
-	});
-
-	return () => {
-		collectionFilterValues.delete(filterFragmentEntryLinkId);
-	};
+	_collectionFilterParameterPrefix = collectionFilterParameterPrefix;
 }

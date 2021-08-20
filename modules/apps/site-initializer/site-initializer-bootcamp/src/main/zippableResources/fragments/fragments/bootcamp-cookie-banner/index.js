@@ -18,23 +18,24 @@ const cookieBanner = fragmentElement.querySelector('.cookie-banner');
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 function handleButtonClick() {
-  hideBanner();
+	hideBanner();
 
-  localStorage.setItem('liferay.cookie.consent', 'accepted');
+	localStorage.setItem('liferay.cookie.consent', 'accepted');
 }
 
 function hideBanner() {
-  cookieBanner.style.display = 'none';
+	cookieBanner.style.display = 'none';
 }
 
 function main() {
-  if (!editMode) {
-    if (localStorage.getItem('liferay.cookie.consent') == 'accepted') {
-      hideBanner();
-    } else {
-      button.addEventListener('click', handleButtonClick);
-    }
-  }
+	if (!editMode) {
+		if (localStorage.getItem('liferay.cookie.consent') == 'accepted') {
+			hideBanner();
+		}
+		else {
+			button.addEventListener('click', handleButtonClick);
+		}
+	}
 }
 
 main();

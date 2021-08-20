@@ -1,5 +1,9 @@
 definition {
 
+	macro clickFilterByWeek {
+		Click(locator1 = "ACCards#CARD_FILTER_BY_WEEK");
+	}
+
 	macro viewCards {
 		var key_cardTitle = "${cardTitle}";
 

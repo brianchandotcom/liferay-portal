@@ -68,6 +68,10 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> label = createColumn(
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldTable, Long> listTypeDefinitionId =
+		createColumn(
+			"listTypeDefinitionId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> pluralLabel = createColumn(

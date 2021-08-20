@@ -48,6 +48,7 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setIndexedAsKeyword(model.isIndexedAsKeyword());
 		soapModel.setIndexedLanguageId(model.getIndexedLanguageId());
 		soapModel.setLabel(model.getLabel());
+		soapModel.setListTypeDefinitionId(model.getListTypeDefinitionId());
 		soapModel.setName(model.getName());
 		soapModel.setPluralLabel(model.getPluralLabel());
 		soapModel.setRequired(model.isRequired());
@@ -233,6 +234,14 @@ public class ObjectFieldSoap implements Serializable {
 		_label = label;
 	}
 
+	public long getListTypeDefinitionId() {
+		return _listTypeDefinitionId;
+	}
+
+	public void setListTypeDefinitionId(long listTypeDefinitionId) {
+		_listTypeDefinitionId = listTypeDefinitionId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -284,6 +293,7 @@ public class ObjectFieldSoap implements Serializable {
 	private boolean _indexedAsKeyword;
 	private String _indexedLanguageId;
 	private String _label;
+	private long _listTypeDefinitionId;
 	private String _name;
 	private String _pluralLabel;
 	private boolean _required;

@@ -409,6 +409,20 @@ public interface ObjectFieldModel
 	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
 
 	/**
+	 * Returns the list type definition ID of this object field.
+	 *
+	 * @return the list type definition ID of this object field
+	 */
+	public long getListTypeDefinitionId();
+
+	/**
+	 * Sets the list type definition ID of this object field.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID of this object field
+	 */
+	public void setListTypeDefinitionId(long listTypeDefinitionId);
+
+	/**
 	 * Returns the name of this object field.
 	 *
 	 * @return the name of this object field

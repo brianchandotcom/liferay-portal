@@ -152,6 +152,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setLabel(RandomTestUtil.randomString());
 
+		newObjectField.setListTypeDefinitionId(RandomTestUtil.nextLong());
+
 		newObjectField.setName(RandomTestUtil.randomString());
 
 		newObjectField.setPluralLabel(RandomTestUtil.randomString());
@@ -204,6 +206,9 @@ public class ObjectFieldPersistenceTest {
 			newObjectField.getIndexedLanguageId());
 		Assert.assertEquals(
 			existingObjectField.getLabel(), newObjectField.getLabel());
+		Assert.assertEquals(
+			existingObjectField.getListTypeDefinitionId(),
+			newObjectField.getListTypeDefinitionId());
 		Assert.assertEquals(
 			existingObjectField.getName(), newObjectField.getName());
 		Assert.assertEquals(
@@ -288,7 +293,8 @@ public class ObjectFieldPersistenceTest {
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
 			true, "dbColumnName", true, "dbTableName", true, "indexed", true,
 			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
-			"name", true, "pluralLabel", true, "required", true, "type", true);
+			"listTypeDefinitionId", true, "name", true, "pluralLabel", true,
+			"required", true, "type", true);
 	}
 
 	@Test
@@ -595,6 +601,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setIndexedLanguageId(RandomTestUtil.randomString());
 
 		objectField.setLabel(RandomTestUtil.randomString());
+
+		objectField.setListTypeDefinitionId(RandomTestUtil.nextLong());
 
 		objectField.setName(RandomTestUtil.randomString());
 

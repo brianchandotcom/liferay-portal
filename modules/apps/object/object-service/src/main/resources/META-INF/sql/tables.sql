@@ -56,6 +56,7 @@ create table ObjectField (
 	indexedAsKeyword BOOLEAN,
 	indexedLanguageId VARCHAR(75) null,
 	label STRING null,
+	listTypeDefinitionId LONG,
 	name VARCHAR(75) null,
 	pluralLabel STRING null,
 	required BOOLEAN,

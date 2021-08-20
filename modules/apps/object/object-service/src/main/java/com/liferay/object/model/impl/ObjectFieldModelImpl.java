@@ -90,8 +90,9 @@ public class ObjectFieldModelImpl
 		{"dbTableName", Types.VARCHAR}, {"indexed", Types.BOOLEAN},
 		{"indexedAsKeyword", Types.BOOLEAN},
 		{"indexedLanguageId", Types.VARCHAR}, {"label", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"pluralLabel", Types.VARCHAR},
-		{"required", Types.BOOLEAN}, {"type_", Types.VARCHAR}
+		{"listTypeDefinitionId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"pluralLabel", Types.VARCHAR}, {"required", Types.BOOLEAN},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -113,6 +114,7 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("indexedAsKeyword", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("indexedLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("listTypeDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pluralLabel", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
@@ -120,7 +122,7 @@ public class ObjectFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,pluralLabel STRING null,required BOOLEAN,type_ VARCHAR(75) null)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,listTypeDefinitionId LONG,name VARCHAR(75) null,pluralLabel STRING null,required BOOLEAN,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -208,6 +210,7 @@ public class ObjectFieldModelImpl
 		model.setIndexedAsKeyword(soapModel.isIndexedAsKeyword());
 		model.setIndexedLanguageId(soapModel.getIndexedLanguageId());
 		model.setLabel(soapModel.getLabel());
+		model.setListTypeDefinitionId(soapModel.getListTypeDefinitionId());
 		model.setName(soapModel.getName());
 		model.setPluralLabel(soapModel.getPluralLabel());
 		model.setRequired(soapModel.isRequired());
@@ -428,6 +431,12 @@ public class ObjectFieldModelImpl
 		attributeGetterFunctions.put("label", ObjectField::getLabel);
 		attributeSetterBiConsumers.put(
 			"label", (BiConsumer<ObjectField, String>)ObjectField::setLabel);
+		attributeGetterFunctions.put(
+			"listTypeDefinitionId", ObjectField::getListTypeDefinitionId);
+		attributeSetterBiConsumers.put(
+			"listTypeDefinitionId",
+			(BiConsumer<ObjectField, Long>)
+				ObjectField::setListTypeDefinitionId);
 		attributeGetterFunctions.put("name", ObjectField::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<ObjectField, String>)ObjectField::setName);
@@ -868,6 +877,21 @@ public class ObjectFieldModelImpl
 
 	@JSON
 	@Override
+	public long getListTypeDefinitionId() {
+		return _listTypeDefinitionId;
+	}
+
+	@Override
+	public void setListTypeDefinitionId(long listTypeDefinitionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_listTypeDefinitionId = listTypeDefinitionId;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -1213,6 +1237,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setIndexedAsKeyword(isIndexedAsKeyword());
 		objectFieldImpl.setIndexedLanguageId(getIndexedLanguageId());
 		objectFieldImpl.setLabel(getLabel());
+		objectFieldImpl.setListTypeDefinitionId(getListTypeDefinitionId());
 		objectFieldImpl.setName(getName());
 		objectFieldImpl.setPluralLabel(getPluralLabel());
 		objectFieldImpl.setRequired(isRequired());
@@ -1375,6 +1400,8 @@ public class ObjectFieldModelImpl
 			objectFieldCacheModel.label = null;
 		}
 
+		objectFieldCacheModel.listTypeDefinitionId = getListTypeDefinitionId();
+
 		objectFieldCacheModel.name = getName();
 
 		String name = objectFieldCacheModel.name;
@@ -1491,6 +1518,7 @@ public class ObjectFieldModelImpl
 	private String _indexedLanguageId;
 	private String _label;
 	private String _labelCurrentLanguageId;
+	private long _listTypeDefinitionId;
 	private String _name;
 	private String _pluralLabel;
 	private String _pluralLabelCurrentLanguageId;
@@ -1541,6 +1569,8 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("indexedAsKeyword", _indexedAsKeyword);
 		_columnOriginalValues.put("indexedLanguageId", _indexedLanguageId);
 		_columnOriginalValues.put("label", _label);
+		_columnOriginalValues.put(
+			"listTypeDefinitionId", _listTypeDefinitionId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("pluralLabel", _pluralLabel);
 		_columnOriginalValues.put("required", _required);
@@ -1599,13 +1629,15 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("label", 16384L);
 
-		columnBitmasks.put("name", 32768L);
+		columnBitmasks.put("listTypeDefinitionId", 32768L);
 
-		columnBitmasks.put("pluralLabel", 65536L);
+		columnBitmasks.put("name", 65536L);
 
-		columnBitmasks.put("required", 131072L);
+		columnBitmasks.put("pluralLabel", 131072L);
 
-		columnBitmasks.put("type_", 262144L);
+		columnBitmasks.put("required", 262144L);
+
+		columnBitmasks.put("type_", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

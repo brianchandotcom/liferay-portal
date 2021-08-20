@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -109,6 +109,8 @@ public class ObjectFieldCacheModel
 		sb.append(indexedLanguageId);
 		sb.append(", label=");
 		sb.append(label);
+		sb.append(", listTypeDefinitionId=");
+		sb.append(listTypeDefinitionId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", pluralLabel=");
@@ -193,6 +195,8 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setLabel(label);
 		}
 
+		objectFieldImpl.setListTypeDefinitionId(listTypeDefinitionId);
+
 		if (name == null) {
 			objectFieldImpl.setName("");
 		}
@@ -244,6 +248,8 @@ public class ObjectFieldCacheModel
 		indexedAsKeyword = objectInput.readBoolean();
 		indexedLanguageId = objectInput.readUTF();
 		label = objectInput.readUTF();
+
+		listTypeDefinitionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		pluralLabel = objectInput.readUTF();
 
@@ -312,6 +318,8 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(label);
 		}
 
+		objectOutput.writeLong(listTypeDefinitionId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -351,6 +359,7 @@ public class ObjectFieldCacheModel
 	public boolean indexedAsKeyword;
 	public String indexedLanguageId;
 	public String label;
+	public long listTypeDefinitionId;
 	public String name;
 	public String pluralLabel;
 	public boolean required;

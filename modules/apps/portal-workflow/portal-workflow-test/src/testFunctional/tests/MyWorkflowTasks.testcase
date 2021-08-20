@@ -1030,11 +1030,26 @@ definition {
 	}
 
 	@description = "Verify that the user can search for Task on Assigned to My Roles page"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanSearchForTaskOnAssignedToMyRolesTab {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		// TODO LRQA-68833 CanSearchForTaskOnAssignedToMyRolesTab pending implementation
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
+
+		AssertElementPresent(
+			key_resultBarMessage = "1 Results for Review",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+
+
+
+
 
 	}
 

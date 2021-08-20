@@ -6,6 +6,7 @@ definition {
 			value1 = "${searchTerm}");
 
 		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
+<<<<<<< HEAD
 	}
 
 	macro updateDueDateAtMyWorkflowTastks {
@@ -130,6 +131,8 @@ definition {
 
 
 		
+=======
+>>>>>>> 9e9cbe5 (LRQA-68845 SF)
 	}
 
 }

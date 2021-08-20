@@ -2,11 +2,12 @@
 
 .select-type-and-subtype,
 .select-file-extension {
-	&-filter {
-		border-bottom: 1px solid $gray-300;
-	}
 	&-loader {
 		top: 50%;
 		transform: translateY(-50%);
 	}
+}
+
+.tree-filter-search {
+	border-bottom: 1px solid $gray-300;
 }

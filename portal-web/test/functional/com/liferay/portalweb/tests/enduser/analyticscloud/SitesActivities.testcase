@@ -75,12 +75,54 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8276 | Test Summary: Site Activity Card: Can filter graph by week"
-	@ignore = "true"
 	@priority = "5"
 	test CanFilterActivityCardGraphByWeek {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8276 CanFilterActivityCardGraphByWeek
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8771
 
+		task ("Site and blogs creation and connection with AC") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+
+
+
+
+
+		task ("Interation with pages") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Test 2");
+
+			ACUtils.closeAllSessions();
+		}
+
+		task ("AC launch and go to property menu") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset in the Activity card graph by week filter") {
+
+			// It is not possible to perform the assert because this test needs data from the past
+
+			ACNavigation.switchTab(tabName = "Overview");
+
+			ACCards.viewCards(cardTitle = "${propertyName} Activities");
+
+			ACCards.clickFilterByWeek();
+
+			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8279 | Test Summary: Site Activity Card: Can hover over a point on the graph to get detailed stats"

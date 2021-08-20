@@ -153,7 +153,7 @@ const TreeFilter = ({
 								<div className="taglib-empty-result-message-header"></div>
 								<div className="sheet-text text-center">
 									{Liferay.Language.get(
-										'no-types-were-found'
+										'no-results-were-found'
 									)}
 								</div>
 							</div>

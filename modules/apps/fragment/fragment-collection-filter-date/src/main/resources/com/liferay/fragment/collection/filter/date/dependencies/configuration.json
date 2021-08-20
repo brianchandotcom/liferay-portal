@@ -1,0 +1,48 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "createDate",
+					"label": "date",
+					"name": "date",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "create-date",
+								"value": "createDate"
+							},
+							{
+								"label": "modified-date",
+								"value": "modifiedDate"
+							},
+							{
+								"label": "publish-date",
+								"value": "publishDate"
+							},
+							{
+								"label": "expiration-date",
+								"value": "expirationDate"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "show-label",
+					"name": "showLabel",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "",
+					"label": "label-text",
+					"localizable": true,
+					"name": "label",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

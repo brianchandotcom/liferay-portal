@@ -281,6 +281,12 @@ definition {
 		Click(locator1 = "ACSegments#FILTER_AND_ORDER_BUTTON");
 	}
 
+	macro filterKnownSegmentMembersList {
+		Click(locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_FILTER");
+
+		AssertElementPresent(locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_FILTER_ARROW_DESC");
+	}
+
 	macro goToSidebarAttributes {
 		var key_Criterion = "${criterion}";
 

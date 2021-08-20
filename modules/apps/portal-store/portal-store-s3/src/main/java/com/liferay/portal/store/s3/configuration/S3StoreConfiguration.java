@@ -38,10 +38,7 @@ public interface S3StoreConfiguration {
 	)
 	public String secretKey();
 
-	@Meta.AD(
-		description = "set-the-bucket-name-used-by-s3-to-store-files",
-		name = "bucket-name"
-	)
+	@Meta.AD(description = "bucket-name-help[s3]", name = "bucket-name")
 	public String bucketName();
 
 	@Meta.AD(

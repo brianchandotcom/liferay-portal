@@ -585,6 +585,7 @@ export default ({
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
 	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
 	const PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
+	const PARAM_KEYWORDS = namespace + 'keywords';
 	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
 	const PARAM_PATH = namespace + 'path';
 	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
@@ -996,6 +997,7 @@ export default ({
 		window.history.replaceState(state, document.title);
 	}
 
+	params.delete(PARAM_KEYWORDS);
 	params.delete(PARAM_PATH);
 	params.delete(PARAM_SHOW_HIDEABLE);
 
@@ -1045,8 +1047,8 @@ export default ({
 	);
 
 	const getPath = useCallback(
-		(pathParam, showHideable) => {
-			return (
+		(keywords, pathParam, showHideable) => {
+			const path =
 				basePath.current +
 				'&' +
 				PARAM_PATH +
@@ -1055,10 +1057,15 @@ export default ({
 				'&' +
 				PARAM_SHOW_HIDEABLE +
 				'=' +
-				showHideable.toString()
-			);
+				showHideable.toString();
+
+			if (keywords) {
+				return path + '&' + PARAM_KEYWORDS + '=' + keywords.toString();
+			}
+
+			return path;
 		},
-		[PARAM_PATH, PARAM_SHOW_HIDEABLE]
+		[PARAM_KEYWORDS, PARAM_PATH, PARAM_SHOW_HIDEABLE]
 	);
 
 	const getPathParam = (filterClass, node, viewType) => {
@@ -1185,7 +1192,7 @@ export default ({
 
 			const pathParam = getPathParam(filterClass, node, viewType);
 
-			const path = getPath(pathParam, showHideable);
+			const path = getPath(resultsKeywords, pathParam, showHideable);
 
 			const state = {
 				path,
@@ -1206,7 +1213,7 @@ export default ({
 
 			window.scrollTo(0, 0);
 		},
-		[VIEW_TYPE_CONTEXT, getNode, getPath, renderState]
+		[VIEW_TYPE_CONTEXT, getNode, getPath, renderState, resultsKeywords]
 	);
 
 	const handlePopState = useCallback(
@@ -1268,6 +1275,12 @@ export default ({
 
 			const node = getNode(filterClass, nodeId, viewType);
 
+			let keywords = params.get(PARAM_KEYWORDS);
+
+			if (!keywords) {
+				keywords = '';
+			}
+
 			const showHideable =
 				node.hideable ||
 				(filterClass !== FILTER_CLASS_EVERYTHING &&
@@ -1284,8 +1297,11 @@ export default ({
 				showHideable,
 				viewType,
 			});
+			setResultsKeywords(keywords);
+			setSearchTerms(keywords);
 		},
 		[
+			PARAM_KEYWORDS,
 			PARAM_PATH,
 			VIEW_TYPE_CONTEXT,
 			getNode,
@@ -2053,7 +2069,7 @@ export default ({
 			isWithinApp(params) &&
 			(!oldPathParam || oldPathParam === pathParam)
 		) {
-			const path = getPath(pathParam, showHideable);
+			const path = getPath(resultsKeywords, pathParam, showHideable);
 
 			let newState = {
 				path,
@@ -2134,11 +2150,48 @@ export default ({
 
 	const onSubmit = (keywords) => {
 		setResultsKeywords(keywords);
-	}
+
+		const pathParam = getPathParam(
+			renderState.filterClass,
+			renderState.node,
+			renderState.viewType
+		);
+
+		const path = getPath(keywords, pathParam, renderState.showHideable);
+
+		const state = {
+			path,
+			senna: true,
+		};
+
+		window.history.pushState(state, document.title, path);
+
+		setRenderState({
+			children: filterHideableNodes(
+				renderState.node.children,
+				renderState.showHideable
+			),
+			filterClass: renderState.filterClass,
+			id: renderState.id,
+			node: renderState.node,
+			page: renderState.page,
+			showHideable: renderState.showHideable,
+			viewType: renderState.viewType,
+		});
+		setResultsKeywords(keywords);
+
+		window.scrollTo(0, 0);
+	};
 
 	const renderManagementToolbar = () => {
 		return (
-			<ClayManagementToolbar className={renderState.viewType === VIEW_TYPE_CONTEXT ? 'nav-item-expand' : ''}>
+			<ClayManagementToolbar
+				className={
+					renderState.viewType === VIEW_TYPE_CONTEXT
+						? 'nav-item-expand'
+						: ''
+				}
+			>
 				{renderState.viewType === VIEW_TYPE_CHANGES && (
 					<ClayManagementToolbar.Search
 						onSubmit={(event) => {
@@ -2193,7 +2246,10 @@ export default ({
 								displayType="unstyled"
 								onClick={() => setSearchMobile(true)}
 							>
-								<ClayIcon spritemap={spritemap} symbol="search" />
+								<ClayIcon
+									spritemap={spritemap}
+									symbol="search"
+								/>
 							</ClayButton>
 						</ClayManagementToolbar.Item>
 					)}
@@ -2381,6 +2437,10 @@ export default ({
 	};
 
 	const renderResultsBar = () => {
+		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
+			return '';
+		}
+
 		const items = [];
 
 		if (resultsKeywords) {
@@ -2389,11 +2449,14 @@ export default ({
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
 							{Liferay.Util.sub(
-								renderState.children && renderState.children.length === 1
+								renderState.children &&
+									renderState.children.length === 1
 									? Liferay.Language.get('x-result-for')
 									: Liferay.Language.get('x-results-for'),
-								renderState.children ? renderState.children.length.toString() : '0'
-							) + " "}
+								renderState.children
+									? renderState.children.length.toString()
+									: '0'
+							) + ' '}
 							<strong>{resultsKeywords}</strong>
 						</span>
 					</span>
@@ -2405,9 +2468,7 @@ export default ({
 			return '';
 		}
 
-		items.push(
-			<ClayResultsBar.Item expand />
-		);
+		items.push(<ClayResultsBar.Item expand />);
 		items.push(
 			<ClayResultsBar.Item>
 				<ClayButton
@@ -2423,12 +2484,8 @@ export default ({
 			</ClayResultsBar.Item>
 		);
 
-		return (
-			<ClayResultsBar>
-				{items}
-			</ClayResultsBar>
-		);
-	}
+		return <ClayResultsBar>{items}</ClayResultsBar>;
+	};
 
 	const renderTable = () => {
 		if (!renderState.children || renderState.children.length === 0) {

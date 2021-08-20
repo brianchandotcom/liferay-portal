@@ -46,21 +46,30 @@ definition {
 			fieldName = "$url",
 			fieldValue = "${url}");
 
-		FormFields.editText(
-			fieldName = "$username",
-			fieldValue = "${username}");
-
-		var key_fieldName = "$password";
-
-		if (IsElementPresent(locator1 = "FormFields#PASSWORD_FIELD")) {
-			FormFields.editPassword(
-				fieldName = "$password",
-				fieldValue = "${password}");
-		}
-		else {
+		if (isSet(username)) {
 			FormFields.editText(
-				fieldName = "$password",
-				fieldValue = "${password}");
+				fieldName = "$username",
+				fieldValue = "${username}");
+
+			var key_fieldName = "$password";
+
+			if (IsElementPresent(locator1 = "FormFields#PASSWORD_FIELD")) {
+				FormFields.editPassword(
+					fieldName = "$password",
+					fieldValue = "${password}");
+			}
+			else {
+				FormFields.editText(
+					fieldName = "$password",
+					fieldValue = "${password}");
+			}
+		}
+
+		if (isSet(inputParameterLabel)) {
+			FormsAdmin.editDataProviderInputParameter(
+				inputParameterLabel = "${inputParameterLabel}",
+				inputParameterName = "${inputParameterName}",
+				inputParameterType = "${inputParameterType}");
 		}
 
 		FormsAdmin.editDataProviderOutputParameter(
@@ -72,6 +81,18 @@ definition {
 			outputParameterPath2 = "${outputParameterPath2}",
 			outputParameterType = "${outputParameterType}",
 			outputParameterType2 = "${outputParameterType2}");
+	}
+
+	macro editDataProviderInputParameter {
+		Type(
+			locator1 = "Form#DATA_PROVIDER_INPUT_PARAMETER_LABEL_FIELD",
+			value1 = "${inputParameterLabel}");
+
+		Type(
+			locator1 = "Form#DATA_PROVIDER_INPUT_PARAMETER_NAME_FIELD",
+			value1 = "${inputParameterName}");
+
+		FormFields.selectDataProviderInputType(inputParameterType = "${inputParameterType}");
 	}
 
 	macro editDataProviderLocalNetwork {

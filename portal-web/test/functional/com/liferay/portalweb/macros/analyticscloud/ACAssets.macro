@@ -35,6 +35,28 @@ definition {
 			locator1 = "ACCards#TRASH_ICON");
 	}
 
+	macro viewAssetAppearsOnMetric {
+		var key_cardTitle = "${cardTitle}";
+
+		ScrollWebElementIntoView(locator1 = "ACCards#CARD_TITLE");
+
+		AssertTextEquals(
+			locator1 = "ACAssets#APPEARS_ON_PAGE_NAME",
+			value1 = "${pageNmae}");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ACAssets#APPEARS_ON_CANONICAL_URL",
+			value1 = "${canonicalURL}");
+
+		if (isSet(canonicalURLSuffix)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ACAssets#APPEARS_ON_CANONICAL_URL",
+				value1 = "${canonicalURLSuffix}");
+		}
+	}
+
 	macro viewAssets {
 		var key_assetName = "${assetName}";
 

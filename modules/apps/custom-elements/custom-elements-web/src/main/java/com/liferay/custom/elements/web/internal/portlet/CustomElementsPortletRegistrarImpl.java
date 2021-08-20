@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,7 +42,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AopService.class)
 public class CustomElementsPortletRegistrarImpl
-	implements AopService, CustomElementsPortletRegistrar {
+	implements AopService, CustomElementsPortletRegistrar,
+			   IdentifiableOSGiService {
+
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return CustomElementsPortletRegistrar.class.getName();
+	}
 
 	@Clusterable
 	@Override

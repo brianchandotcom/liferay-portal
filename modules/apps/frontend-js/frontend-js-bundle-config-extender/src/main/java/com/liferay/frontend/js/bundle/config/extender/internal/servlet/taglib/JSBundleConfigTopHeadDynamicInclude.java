@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -149,11 +150,16 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 					String moduleName = jsonObject.getString("name");
 					String moduleVersion = jsonObject.getString("version");
-					String moduleMainFile = ModuleNameUtil.toModuleName(
-						jsonObject.getString("main"));
+
+					String moduleMainFile = jsonObject.getString("main");
+
+					if (Validator.isNull(moduleMainFile)) {
+						moduleMainFile = "index.js";
+					}
 
 					return StringBundler.concat(
-						moduleName, "@", moduleVersion, "/", moduleMainFile);
+						moduleName, "@", moduleVersion, "/",
+						ModuleNameUtil.toModuleName(moduleMainFile));
 				}
 			}
 

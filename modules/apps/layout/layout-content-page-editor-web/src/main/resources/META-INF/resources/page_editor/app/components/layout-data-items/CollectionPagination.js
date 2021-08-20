@@ -73,7 +73,7 @@ export default function CollectionPagination({
 						activePage={activePage}
 						onPageChange={onPageChange}
 						totalPages={
-							Number.isFinite(totalPages) ? totalPages : 0
+							(Number.isFinite(totalPages) && totalPages) || 1
 						}
 					/>
 				</ClayPaginationBar>

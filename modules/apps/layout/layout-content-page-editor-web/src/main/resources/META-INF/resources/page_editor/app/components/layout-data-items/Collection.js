@@ -324,7 +324,11 @@ const Collection = React.forwardRef(
 						collectionConfig={collectionConfig}
 						collectionId={item.itemId}
 						onPageChange={setActivePage}
-						totalNumberOfItems={collection.totalNumberOfItems || 0}
+						totalNumberOfItems={
+							collection.fakeCollection
+								? 0
+								: collection.totalNumberOfItems
+						}
 						totalPages={totalPages}
 					/>
 				)}

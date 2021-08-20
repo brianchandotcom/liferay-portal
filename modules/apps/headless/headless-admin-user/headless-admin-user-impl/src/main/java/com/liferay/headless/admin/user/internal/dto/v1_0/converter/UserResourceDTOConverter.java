@@ -114,7 +114,7 @@ public class UserResourceDTOConverter
 						getAccountEntryUserRelsByAccountUserId(
 							user.getUserId()),
 					accountEntryUserRel -> _toAccountBrief(
-						user, dtoConverterContext, accountEntryUserRel),
+						accountEntryUserRel, dtoConverterContext, user),
 					AccountBrief.class);
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
@@ -145,7 +145,7 @@ public class UserResourceDTOConverter
 				organizationBriefs = TransformUtil.transformToArray(
 					user.getOrganizations(),
 					organization -> _toOrganizationBrief(
-						user, dtoConverterContext, organization),
+						dtoConverterContext, organization, user),
 					OrganizationBrief.class);
 				roleBriefs = TransformUtil.transformToArray(
 					_roleService.getUserRoles(user.getUserId()),
@@ -237,8 +237,8 @@ public class UserResourceDTOConverter
 	}
 
 	private AccountBrief _toAccountBrief(
-			User user, DTOConverterContext dtoConverterContext,
-			AccountEntryUserRel accountEntryUserRel)
+			AccountEntryUserRel accountEntryUserRel,
+			DTOConverterContext dtoConverterContext, User user)
 		throws PortalException {
 
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
@@ -252,15 +252,15 @@ public class UserResourceDTOConverter
 					_accountRoleLocalService.getAccountRoles(
 						accountEntry.getAccountEntryId(), user.getUserId()),
 					accountRole -> _toRoleBrief(
-						dtoConverterContext, accountRole),
+						accountRole, dtoConverterContext),
 					RoleBrief.class);
 			}
 		};
 	}
 
 	private OrganizationBrief _toOrganizationBrief(
-			User user, DTOConverterContext dtoConverterContext,
-			Organization organization)
+			DTOConverterContext dtoConverterContext, Organization organization,
+			User user)
 		throws PortalException {
 
 		return new OrganizationBrief() {
@@ -277,7 +277,7 @@ public class UserResourceDTOConverter
 	}
 
 	private RoleBrief _toRoleBrief(
-			DTOConverterContext dtoConverterContext, AccountRole accountRole)
+			AccountRole accountRole, DTOConverterContext dtoConverterContext)
 		throws PortalException {
 
 		Role role = accountRole.getRole();

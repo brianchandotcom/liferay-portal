@@ -36,7 +36,4 @@ public class DLVideoConstants {
 	public static final String DL_FILE_ENTRY_TYPE_KEY =
 		"DL_VIDEO_EXTERNAL_SHORTCUT";
 
-	public static final String DL_FILE_ENTRY_TYPE_NAME =
-		"External Video Shortcut";
-
 }

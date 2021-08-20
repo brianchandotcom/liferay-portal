@@ -26,14 +26,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Iván Zaera
@@ -118,10 +117,6 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			_company.getCompanyId());
 
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			LocaleUtil.getDefault(), DLVideoConstants.DL_FILE_ENTRY_TYPE_NAME
-		).build();
-
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -133,9 +128,29 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 
 		_dlFileEntryTypeLocalService.addFileEntryType(
 			defaultUserId, _company.getGroupId(), ddmStructureId,
-			DLVideoConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap, descriptionMap,
+			DLVideoConstants.DL_FILE_ENTRY_TYPE_KEY,
+			_getExternalVideoShortcutNameMap(
+				LanguageUtil.getAvailableLocales()),
+			descriptionMap,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM,
 			serviceContext);
+	}
+
+	private Map<Locale, String> _getExternalVideoShortcutNameMap(
+		Set<Locale> locales) {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		for (Locale locale : locales) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, DLVideoExternalShortcutDLFileEntryTypeHelper.class);
+
+			nameMap.put(
+				locale,
+				LanguageUtil.get(resourceBundle, "external-video-shortcut"));
+		}
+
+		return nameMap;
 	}
 
 	private Map<Locale, String> _updateDescriptionMap(

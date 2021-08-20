@@ -30,101 +30,127 @@ definition {
 	test ShouldBeDisplayWithCategory {
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Web Content Display Page");
+		task ("Add a public page with JSON") {
+			JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Web Content Display Page");
+		}
 
-		JSONStaging.enableLocalStaging(
-				branchingPrivate = "false",
-				branchingPublic = "false",
-				groupName = "Site Name");
+		task ("Enable staging from JSON") {
+			JSONStaging.enableLocalStaging(
+					branchingPrivate = "false",
+					branchingPublic = "false",
+					groupName = "Site Name");
+		}
 
-		JSONCategory.addVocabulary(
-			groupName = "Site Name (Staging)",
-			site = "false",
-			title = "Vocabulary Name");
+		task ("Add a vocabulary and a category with JSON") {
+			JSONCategory.addVocabulary(
+					groupName = "Site Name (Staging)",
+					site = "false",
+					title = "Vocabulary Name");
 
-		JSONCategory.addCategory(
-			groupName = "Site Name (Staging)",
-			site = "false",
-			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
+			JSONCategory.addCategory(
+					groupName = "Site Name (Staging)",
+					site = "false",
+					title = "Category Name",
+					vocabularyName = "Vocabulary Name");
+		}
 
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content 1",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			title = "Web Content Title 1");
+		task ("Add new web content that use the created category") {
+			JSONWebcontent.addWebContent(
+					content = "Web Content Content 1",
+					groupName = "Site Name (Staging)",
+					site = "false",
+					title = "Web Content Title 1");
 
-		var categoryId = JSONCategory.getCategoryId(
-			categoryName = "Category Name",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			vocabularyName = "Vocabulary Name");
+			var categoryId = JSONCategory.getCategoryId(
+					categoryName = "Category Name",
+					groupName = "Site Name (Staging)",
+					site = "false",
+					vocabularyName = "Vocabulary Name");
 
-		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
-			content = "Web Content Content 2",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			title = "Web Content Title 2");
+			JSONWebcontent.addWebContent(
+					assetCategoryIds = "${categoryId}",
+					content = "Web Content Content 2",
+					groupName = "Site Name (Staging)",
+					site = "false",
+					title = "Web Content Title 2");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		task ("Assert added category is shown in web content") {
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "site-name-staging");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+			WebContentNavigator.gotoEditCP(
+					webContentTitle = "Web Content Title 2");
 
-		WebContent.viewCategorizationCategoryCP(
-			categoryNameList = "Category Name",
-			vocabularyName = "Vocabulary Name");
+			WebContent.viewCategorizationCategoryCP(
+					categoryNameList = "Category Name",
+					vocabularyName = "Vocabulary Name");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		task ("Add Web Content 1 as related asset for Web Contetn 2") {
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "site-name-staging");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+			WebContentNavigator.gotoEditCP(
+					webContentTitle = "Web Content Title 2");
 
-		WebContent.addExistingRelatedAssetCP(
-			assetTitle = "Web Content Title 1",
-			assetType = "Basic Web Content",
-			siteName = "Site Name");
+			WebContent.addExistingRelatedAssetCP(
+					assetTitle = "Web Content Title 1",
+					assetType = "Basic Web Content",
+					siteName = "Site Name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+		task ("Add a private page with an Asset Publisher that shows Web Content 1") {
+			SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		SitePages.addPrivatePage(pageName = "Private Page Name");
+			SitePages.addPrivatePage(pageName = "Private Page Name");
 
-		Navigator.gotoPrivateStagedSitePage(
-			pageName = "Private Page Name",
-			siteName = "Site Name");
+			Navigator.gotoPrivateStagedSitePage(
+					pageName = "Private Page Name",
+					siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+			Portlet.addPG(portletName = "Asset Publisher");
 
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "Web Content Title 1",
-			assetType = "Basic Web Content");
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+					assetTitle = "Web Content Title 1",
+					assetType = "Basic Web Content");
+		}
 
-		Navigator.gotoPrivateStagedSitePage(
-			pageName = "Private Page Name",
-			siteName = "Site Name");
+		task ("Configure asset publisher template to use Fill Content one") {
+			Navigator.gotoPrivateStagedSitePage(
+					pageName = "Private Page Name",
+					siteName = "Site Name");
 
-		Portlet.gotoPortletOptions(
-			portletName = "Asset Publisher",
-			portletOption = "Configuration");
+			Portlet.gotoPortletOptions(
+					portletName = "Asset Publisher",
+					portletOption = "Configuration");
 
-		AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Full Content");
+			AssetPublisherPortlet.configureDisplayTemplatePG(
+					displayTemplate = "Full Content");
+		}
 
-		Navigator.gotoPrivateStagedSitePage(
-			pageName = "Private Page Name",
-			siteName = "Site Name");
+		task ("Add and configure related assets portlet") {
+			Navigator.gotoPrivateStagedSitePage(
+					pageName = "Private Page Name",
+					siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Related Assets");
+			Portlet.addPG(portletName = "Related Assets");
 
-		AssetPublisherPortlet.configureCategoriesFilterPG(
-			categoryName = "Category Name",
-			portletName = "Related Assets");
+			AssetPublisherPortlet.configureCategoriesFilterPG(
+					categoryName = "Category Name",
+					portletName = "Related Assets");
 
-		Navigator.gotoPrivateStagedSitePage(
-			pageName = "Private Page Name",
-			siteName = "Site Name");
+		}
 
-		RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 2");
+		task ("Assert Web Content 2 appears as related asset") {
+			Navigator.gotoPrivateStagedSitePage(
+					pageName = "Private Page Name",
+					siteName = "Site Name");
+
+			RelatedAssets.viewPG(relatedAssetTitle = "Web Content Title 2");
+		}
 	}
 
 	@description = "This is a use case for LPS-72472. When an article has related asset from the global site, the related asset is not displayed in live after publication"

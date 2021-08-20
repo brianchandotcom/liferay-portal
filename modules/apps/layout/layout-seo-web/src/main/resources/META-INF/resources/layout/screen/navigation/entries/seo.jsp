@@ -77,7 +77,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 								<liferay-ui:message arguments='<%= new String[] {"text", "html-title"} %>' key="map-a-x-field-it-will-be-used-as-x" />
 							</div>
 
-							<aui:input disabled="<%= true %>" id="descriptionSEO" localized="<%= false %>" name="description" placeholder="description" />
+							<aui:input disabled="<%= true %>" id="descriptionSEO" localized="<%= false %>" name="description" placeholder="description" type="textarea" />
 
 							<div class="form-text">
 								<liferay-ui:message arguments='<%= new String[] {"text", "description"} %>' key="map-a-x-field-it-will-be-used-as-x" />

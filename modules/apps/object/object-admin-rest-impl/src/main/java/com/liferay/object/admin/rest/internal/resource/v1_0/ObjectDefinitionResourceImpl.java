@@ -98,6 +98,20 @@ public class ObjectDefinitionResourceImpl
 			objectDefinitionId);
 	}
 
+	@Override
+	public ObjectDefinition putObjectDefinition(
+			Long objectDefinitionId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _toObjectDefinition(
+			_objectDefinitionService.updateCustomObjectDefinition(
+				objectDefinitionId,
+				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
+				objectDefinition.getName(),
+				LocalizedMapUtil.getLocalizedMap(
+					objectDefinition.getPluralLabel())));
+	}
+
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 

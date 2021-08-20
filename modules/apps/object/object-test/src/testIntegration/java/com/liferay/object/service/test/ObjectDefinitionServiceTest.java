@@ -146,6 +146,25 @@ public class ObjectDefinitionServiceTest {
 		_testPublishCustomObjectDefinition(_user);
 	}
 
+	@Test
+	public void testUpdateCustomObjectDefinition() throws Exception {
+		try {
+			_testUpdateCustomObjectDefinition(_defaultUser);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _defaultUser.getUserId() +
+						" must have UPDATE permission for"));
+		}
+
+		_testUpdateCustomObjectDefinition(_user);
+	}
+
 	private ObjectDefinition _addCustomObjectDefinition(User user)
 		throws Exception {
 
@@ -247,6 +266,30 @@ public class ObjectDefinitionServiceTest {
 			objectDefinition =
 				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
 					objectDefinition.getObjectDefinitionId());
+		}
+		finally {
+			if (objectDefinition != null) {
+				ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
+	}
+
+	private void _testUpdateCustomObjectDefinition(User user) throws Exception {
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			_setUser(user);
+
+			objectDefinition =
+				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+					user.getUserId(), _labelMap, "Test", _pluralLabelMap, null);
+
+			objectDefinition =
+				ObjectDefinitionServiceUtil.updateCustomObjectDefinition(
+					objectDefinition.getObjectDefinitionId(),
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able",
+					LocalizedMapUtil.getLocalizedMap("Ables"));
 		}
 		finally {
 			if (objectDefinition != null) {

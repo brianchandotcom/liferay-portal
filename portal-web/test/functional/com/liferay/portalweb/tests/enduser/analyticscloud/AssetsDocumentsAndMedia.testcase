@@ -45,12 +45,56 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8419 | Test Summary: Document asset appears on list shows pages that the document exists on"
-	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesDocumentsExists {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		// TODO LRAC-8419 AssertAppearsOnListShowsPagesDocumentsExists
+		task ("Visit the document") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC and go to DM tab") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Go to the docuemnt overview") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Assert appears on metric") {
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "DM AC Title",
+				groupName = "Site Name");
+
+			var portalURL = PropsUtil.get("portal.url");
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+			ACAssets.viewAssetAppearsOnMetric(
+				canonicalURL = "${portalURL}/web/site-name/ac-page/-/document_library",
+				canonicalURLSuffix = "/view_file/${fileEntryId}",
+				cardTitle = "Asset Appears On",
+				pageNmae = "AC Page - Site Name - ${siteName}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8394 | Test Summary: Assert 180 day time filter in Documents and Media"

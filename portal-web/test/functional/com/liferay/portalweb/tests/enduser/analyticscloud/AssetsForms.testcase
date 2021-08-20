@@ -40,9 +40,59 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesFormsExists {
+		task ("Submit the form") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
-		// TODO LRAC-8433 AssertAppearsOnListShowsPagesFormsExists
+			FormPortlet.waitFormRenderer(text = "Submit");
 
+			FormFields.viewTextLabel(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Assets");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC and go to forms tab") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Forms");
+		}
+
+		task ("Go to the form overview") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Created Form Name");
+		}
+
+		task ("Assert appears on metric") {
+			var portalURL = PropsUtil.get("portal.url");
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+			ACAssets.viewAssetAppearsOnMetric(
+				canonicalURL = "${portalURL}/web/site-name",
+				cardTitle = "Asset Appears On",
+				pageNmae = "AC Page - Site Name - ${siteName}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8423 | Test Summary: Forms audience card shows expected amount of known and anonymous individuals"

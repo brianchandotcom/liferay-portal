@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CPDefinitionDiagramSettingDisplayContext" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.type.DefaultCPDefinitionDiagramType" %><%@
+page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.type.SVGCPDefinitionDiagramType" %><%@
 page import="com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting" %><%@
 page import="com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramType" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@

@@ -36,7 +36,6 @@ definition {
 	@priority = "5"
 	test ObjectDisplayedToCollectionProdiver {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VisualizeObjectCollectionDisplay#ObjectDisplayedToCollectionProdiver";
 
 		ObjectAdmin.openObjectAdmin();
 

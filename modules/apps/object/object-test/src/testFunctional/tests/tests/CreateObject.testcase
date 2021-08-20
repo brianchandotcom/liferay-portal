@@ -26,7 +26,6 @@ definition {
 	@priority = "5"
 	test ViewCustomObjects {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CreateObject#ViewCustomObjects";
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -39,7 +38,6 @@ definition {
 	@priority = "5"
 	test ViewSystemObjects {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CreateObject#ViewSystemObjects";
 
 		ObjectAdmin.openObjectAdmin();
 

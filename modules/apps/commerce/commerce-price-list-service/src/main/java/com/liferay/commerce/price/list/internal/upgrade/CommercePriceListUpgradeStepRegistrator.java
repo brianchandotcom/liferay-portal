@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.CommercePriceList
 import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.CommerceTierPriceEntryUpgradeProcess;
 import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.CommercePriceListChannelRelUpgradeProcess;
 import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.CommercePriceListDiscountRelUpgradeProcess;
+import com.liferay.commerce.price.list.internal.upgrade.v2_2_0.CommercePriceListOrderTypeRelUpgradeProcess;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -88,6 +89,10 @@ public class CommercePriceListUpgradeStepRegistrator
 					_resourceActionLocalService, _resourceLocalService));
 
 		registry.register("2.1.2", "2.1.3", new DummyUpgradeProcess());
+
+		registry.register(
+			"2.1.3", "2.2.0",
+			new CommercePriceListOrderTypeRelUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price list upgrade step registrator finished");

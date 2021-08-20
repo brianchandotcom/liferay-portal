@@ -23,12 +23,22 @@ definition {
 	}
 
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ObjectDisplayedForPageTemplate {
 		property portal.acceptance = "true";
 
-		// TODO LPS-137102 ObjectDisplayedForPageTemplate pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		VisualizeObjectDisplayPageTemplate.createObjectPageTemplate(pageTemplateName = "Object Display Page Template", contentType = "Object", subtype = "C_CustomObject");
+
+		VisualizeObjectDisplayPageTemplate.validateObjectContentType(contentType ="Object");
+
+		VisualizeObjectDisplayPageTemplate.validateObjectSubtype(subtype = "C_CustomObject");
 
 	}
 

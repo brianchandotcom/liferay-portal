@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>VisualizeObjectDisplayPageTemplate</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">VisualizeObjectDisplayPageTemplate</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>SELECT_BLANK_OBJECT_DISPLAY_PAGE_TEMPLATE</td>
+		<td>//div[@class='card-item-first aspect-ratio']</td>
+		<td></td>
+	</tr>
+		<tr>
+		<td>NAME_OBJECT_DISPLAY_PAGE_TEMPLATE</td>
+		<td>//label[@for='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_name']/../input</td>
+		<td></td>
+	</tr>
+			<tr>
+		<td>OBJECT_CONTENT_TYPE</td>
+		<td>//select[@name='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_classNameId']</td>
+		<td></td>
+	</tr>
+				<tr>
+		<td>OBJECT_SUBTYPE</td>
+		<td>//select[@name='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_classTypeId']</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

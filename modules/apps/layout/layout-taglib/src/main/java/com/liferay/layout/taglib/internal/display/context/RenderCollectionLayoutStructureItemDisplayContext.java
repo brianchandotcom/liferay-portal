@@ -464,7 +464,11 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 						JSONUtil.toStringArray(targetCollectionsJSONArray),
 						_collectionStyledLayoutStructureItem.getItemId())) {
 
-					filterValues.put(filterParameterName, entry.getValue());
+					filterValues.put(
+						filterParameterName.replaceFirst(
+							FragmentCollectionFilterConstants.FILTER_PREFIX,
+							StringPool.BLANK),
+						entry.getValue());
 				}
 			}
 			catch (Exception exception) {

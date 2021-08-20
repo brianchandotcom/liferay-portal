@@ -268,6 +268,38 @@ definition {
 			siteName = "Site Name");
 	}
 
+	macro getIPCountry {
+		var curl = '''https://ipinfo.io''';
+
+		var code = JSONCurlUtil.get("${curl}", "$.country");
+
+		if ("${code}" == "GB") {
+			var country = "United Kingdom";
+		}
+
+		if ("${code}" == "BR") {
+			var country = "Brazil";
+		}
+
+		if ("${code}" == "US") {
+			var country = "United States";
+		}
+
+		if ("${code}" == "CN") {
+			var country = "China";
+		}
+
+		if ("${code}" == "ES") {
+			var country = "Spain";
+		}
+
+		if ("${code}" == "NZ") {
+			var country = "New Zealand";
+		}
+
+		return "${country}";
+	}
+
 	macro getRequestCommonPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]","$.[0].${property}");

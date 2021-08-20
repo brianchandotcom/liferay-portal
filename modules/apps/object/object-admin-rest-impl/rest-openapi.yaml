@@ -72,6 +72,9 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                listTypeDefinitionId:
+                    format: int64
+                    type: integer
                 name:
                     type: string
                 required:

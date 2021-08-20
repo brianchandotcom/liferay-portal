@@ -170,6 +170,13 @@ public class ObjectDefinitionResourceTest
 		return _addObjectDefinition(randomObjectDefinition());
 	}
 
+	@Override
+	protected ObjectDefinition testPutObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return _addObjectDefinition(randomObjectDefinition());
+	}
+
 	private ObjectDefinition _addObjectDefinition(
 			ObjectDefinition randomObjectDefinition)
 		throws Exception {

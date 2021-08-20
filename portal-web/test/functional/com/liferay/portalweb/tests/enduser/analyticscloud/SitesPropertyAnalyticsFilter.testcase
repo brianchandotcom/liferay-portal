@@ -182,12 +182,81 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
-	@ignore = "true"
 	@priority = "4"
 	test UserLostAccess {
+		task ("AC launch and go to the porpreties menu") {
+			ACUtils.launchAC();
 
-		// TODO LRAC-8323
+			ACNavigation.goToSettings();
 
+			ACSettings.goToProperties();
+		}
+
+		task ("Create property 1, check if it was created and add an admin user") {
+			ACProperties.addNewProperty(propertyName = "Property Name 1");
+
+			ACProperties.assertNewCreatedProperty(propertyName = "Property Name 1");
+
+			ACProperties.addUserProperty(emailAddress = "corbin.murakami@faro.io");
+		}
+
+		task ("Log in as the user corbin.murakami@faro.io and go to the properties menu") {
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Checks if only property 2 and property 3 are present") {
+			ACProperties.assertPropertyTitleList(propertyName = "Property Name 1");
+		}
+
+		task ("Log in as the user test@liferay.com, go to the properties menu and delete all properties") {
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "test@liferay.com",
+				password = "test");
+
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACSettings.deleteAllProperties();
+		}
+
+
+
+
+
+
+
+		task ("Log in as the user corbin.murakami@faro.io, go to the properties menu and checks if the property has been deleted for the user") {
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			AssertElementNotPresent(
+				locator1 = "ACSettings#PROPERTIES_ASSET_TITLE_LIST",
+				propertyName = "Property Name 1");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8322 | Test Summary: A user (independent of user role) should only see the properties they are invited to by the AC admin or the properties which the user is owner"

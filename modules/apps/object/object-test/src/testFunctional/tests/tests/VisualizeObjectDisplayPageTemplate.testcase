@@ -34,12 +34,14 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		VisualizeObjectDisplayPageTemplate.createObjectPageTemplate(pageTemplateName = "Object Display Page Template", contentType = "Object", subtype = "C_CustomObject");
+		VisualizeObjectDisplayPageTemplate.createObjectPageTemplate(
+			contentType = "Object",
+			pageTemplateName = "Object Display Page Template",
+			subtype = "C_CustomObject");
 
-		VisualizeObjectDisplayPageTemplate.validateObjectContentType(contentType ="Object");
+		VisualizeObjectDisplayPageTemplate.validateObjectContentType(contentType = "Object");
 
 		VisualizeObjectDisplayPageTemplate.validateObjectSubtype(subtype = "C_CustomObject");
-
 	}
 
 	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"

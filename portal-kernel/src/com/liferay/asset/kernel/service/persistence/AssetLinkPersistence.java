@@ -48,7 +48,7 @@ public interface AssetLinkPersistence
 	 * @param entryId1 the entry id1
 	 * @return the matching asset links
 	 */
-	public java.util.List<AssetLink> findByE1(long entryId1);
+	public java.util.List<AssetLink> findByEntryId1(long entryId1);
 
 	/**
 	 * Returns a range of all the asset links where entryId1 = &#63;.
@@ -62,7 +62,7 @@ public interface AssetLinkPersistence
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @return the range of matching asset links
 	 */
-	public java.util.List<AssetLink> findByE1(
+	public java.util.List<AssetLink> findByEntryId1(
 		long entryId1, int start, int end);
 
 	/**
@@ -78,7 +78,7 @@ public interface AssetLinkPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset links
 	 */
-	public java.util.List<AssetLink> findByE1(
+	public java.util.List<AssetLink> findByEntryId1(
 		long entryId1, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator);
@@ -97,7 +97,7 @@ public interface AssetLinkPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	public java.util.List<AssetLink> findByE1(
+	public java.util.List<AssetLink> findByEntryId1(
 		long entryId1, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator,
@@ -111,7 +111,7 @@ public interface AssetLinkPersistence
 	 * @return the first matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public AssetLink findByE1_First(
+	public AssetLink findByEntryId1_First(
 			long entryId1,
 			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 				orderByComparator)
@@ -124,7 +124,7 @@ public interface AssetLinkPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public AssetLink fetchByE1_First(
+	public AssetLink fetchByEntryId1_First(
 		long entryId1,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator);
@@ -137,7 +137,7 @@ public interface AssetLinkPersistence
 	 * @return the last matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public AssetLink findByE1_Last(
+	public AssetLink findByEntryId1_Last(
 			long entryId1,
 			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 				orderByComparator)
@@ -150,7 +150,7 @@ public interface AssetLinkPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public AssetLink fetchByE1_Last(
+	public AssetLink fetchByEntryId1_Last(
 		long entryId1,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator);
@@ -164,7 +164,7 @@ public interface AssetLinkPersistence
 	 * @return the previous, current, and next asset link
 	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
 	 */
-	public AssetLink[] findByE1_PrevAndNext(
+	public AssetLink[] findByEntryId1_PrevAndNext(
 			long linkId, long entryId1,
 			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 				orderByComparator)
@@ -175,7 +175,7 @@ public interface AssetLinkPersistence
 	 *
 	 * @param entryId1 the entry id1
 	 */
-	public void removeByE1(long entryId1);
+	public void removeByEntryId1(long entryId1);
 
 	/**
 	 * Returns the number of asset links where entryId1 = &#63;.
@@ -183,7 +183,7 @@ public interface AssetLinkPersistence
 	 * @param entryId1 the entry id1
 	 * @return the number of matching asset links
 	 */
-	public int countByE1(long entryId1);
+	public int countByEntryId1(long entryId1);
 
 	/**
 	 * Returns all the asset links where entryId2 = &#63;.
@@ -191,7 +191,7 @@ public interface AssetLinkPersistence
 	 * @param entryId2 the entry id2
 	 * @return the matching asset links
 	 */
-	public java.util.List<AssetLink> findByE2(long entryId2);
+	public java.util.List<AssetLink> findByEntryId2(long entryId2);
 
 	/**
 	 * Returns a range of all the asset links where entryId2 = &#63;.
@@ -205,7 +205,7 @@ public interface AssetLinkPersistence
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @return the range of matching asset links
 	 */
-	public java.util.List<AssetLink> findByE2(
+	public java.util.List<AssetLink> findByEntryId2(
 		long entryId2, int start, int end);
 
 	/**
@@ -221,7 +221,7 @@ public interface AssetLinkPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset links
 	 */
-	public java.util.List<AssetLink> findByE2(
+	public java.util.List<AssetLink> findByEntryId2(
 		long entryId2, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator);
@@ -240,7 +240,7 @@ public interface AssetLinkPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	public java.util.List<AssetLink> findByE2(
+	public java.util.List<AssetLink> findByEntryId2(
 		long entryId2, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator,
@@ -254,7 +254,7 @@ public interface AssetLinkPersistence
 	 * @return the first matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public AssetLink findByE2_First(
+	public AssetLink findByEntryId2_First(
 			long entryId2,
 			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 				orderByComparator)
@@ -267,7 +267,7 @@ public interface AssetLinkPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public AssetLink fetchByE2_First(
+	public AssetLink fetchByEntryId2_First(
 		long entryId2,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator);
@@ -280,7 +280,7 @@ public interface AssetLinkPersistence
 	 * @return the last matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public AssetLink findByE2_Last(
+	public AssetLink findByEntryId2_Last(
 			long entryId2,
 			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 				orderByComparator)
@@ -293,7 +293,7 @@ public interface AssetLinkPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public AssetLink fetchByE2_Last(
+	public AssetLink fetchByEntryId2_Last(
 		long entryId2,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 			orderByComparator);
@@ -307,7 +307,7 @@ public interface AssetLinkPersistence
 	 * @return the previous, current, and next asset link
 	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
 	 */
-	public AssetLink[] findByE2_PrevAndNext(
+	public AssetLink[] findByEntryId2_PrevAndNext(
 			long linkId, long entryId2,
 			com.liferay.portal.kernel.util.OrderByComparator<AssetLink>
 				orderByComparator)
@@ -318,7 +318,7 @@ public interface AssetLinkPersistence
 	 *
 	 * @param entryId2 the entry id2
 	 */
-	public void removeByE2(long entryId2);
+	public void removeByEntryId2(long entryId2);
 
 	/**
 	 * Returns the number of asset links where entryId2 = &#63;.
@@ -326,7 +326,7 @@ public interface AssetLinkPersistence
 	 * @param entryId2 the entry id2
 	 * @return the number of matching asset links
 	 */
-	public int countByE2(long entryId2);
+	public int countByEntryId2(long entryId2);
 
 	/**
 	 * Returns all the asset links where entryId1 = &#63; and entryId2 = &#63;.

@@ -175,17 +175,17 @@ public class AssetLinkPersistenceTest {
 	}
 
 	@Test
-	public void testCountByE1() throws Exception {
-		_persistence.countByE1(RandomTestUtil.nextLong());
+	public void testCountByEntryId1() throws Exception {
+		_persistence.countByEntryId1(RandomTestUtil.nextLong());
 
-		_persistence.countByE1(0L);
+		_persistence.countByEntryId1(0L);
 	}
 
 	@Test
-	public void testCountByE2() throws Exception {
-		_persistence.countByE2(RandomTestUtil.nextLong());
+	public void testCountByEntryId2() throws Exception {
+		_persistence.countByEntryId2(RandomTestUtil.nextLong());
 
-		_persistence.countByE2(0L);
+		_persistence.countByEntryId2(0L);
 	}
 
 	@Test

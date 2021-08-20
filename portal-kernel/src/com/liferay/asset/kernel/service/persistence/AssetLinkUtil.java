@@ -126,8 +126,8 @@ public class AssetLinkUtil {
 	 * @param entryId1 the entry id1
 	 * @return the matching asset links
 	 */
-	public static List<AssetLink> findByE1(long entryId1) {
-		return getPersistence().findByE1(entryId1);
+	public static List<AssetLink> findByEntryId1(long entryId1) {
+		return getPersistence().findByEntryId1(entryId1);
 	}
 
 	/**
@@ -142,8 +142,10 @@ public class AssetLinkUtil {
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @return the range of matching asset links
 	 */
-	public static List<AssetLink> findByE1(long entryId1, int start, int end) {
-		return getPersistence().findByE1(entryId1, start, end);
+	public static List<AssetLink> findByEntryId1(
+		long entryId1, int start, int end) {
+
+		return getPersistence().findByEntryId1(entryId1, start, end);
 	}
 
 	/**
@@ -159,11 +161,11 @@ public class AssetLinkUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset links
 	 */
-	public static List<AssetLink> findByE1(
+	public static List<AssetLink> findByEntryId1(
 		long entryId1, int start, int end,
 		OrderByComparator<AssetLink> orderByComparator) {
 
-		return getPersistence().findByE1(
+		return getPersistence().findByEntryId1(
 			entryId1, start, end, orderByComparator);
 	}
 
@@ -181,12 +183,12 @@ public class AssetLinkUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	public static List<AssetLink> findByE1(
+	public static List<AssetLink> findByEntryId1(
 		long entryId1, int start, int end,
 		OrderByComparator<AssetLink> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByE1(
+		return getPersistence().findByEntryId1(
 			entryId1, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -198,11 +200,12 @@ public class AssetLinkUtil {
 	 * @return the first matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public static AssetLink findByE1_First(
+	public static AssetLink findByEntryId1_First(
 			long entryId1, OrderByComparator<AssetLink> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
 
-		return getPersistence().findByE1_First(entryId1, orderByComparator);
+		return getPersistence().findByEntryId1_First(
+			entryId1, orderByComparator);
 	}
 
 	/**
@@ -212,10 +215,11 @@ public class AssetLinkUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public static AssetLink fetchByE1_First(
+	public static AssetLink fetchByEntryId1_First(
 		long entryId1, OrderByComparator<AssetLink> orderByComparator) {
 
-		return getPersistence().fetchByE1_First(entryId1, orderByComparator);
+		return getPersistence().fetchByEntryId1_First(
+			entryId1, orderByComparator);
 	}
 
 	/**
@@ -226,11 +230,12 @@ public class AssetLinkUtil {
 	 * @return the last matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public static AssetLink findByE1_Last(
+	public static AssetLink findByEntryId1_Last(
 			long entryId1, OrderByComparator<AssetLink> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
 
-		return getPersistence().findByE1_Last(entryId1, orderByComparator);
+		return getPersistence().findByEntryId1_Last(
+			entryId1, orderByComparator);
 	}
 
 	/**
@@ -240,10 +245,11 @@ public class AssetLinkUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public static AssetLink fetchByE1_Last(
+	public static AssetLink fetchByEntryId1_Last(
 		long entryId1, OrderByComparator<AssetLink> orderByComparator) {
 
-		return getPersistence().fetchByE1_Last(entryId1, orderByComparator);
+		return getPersistence().fetchByEntryId1_Last(
+			entryId1, orderByComparator);
 	}
 
 	/**
@@ -255,12 +261,12 @@ public class AssetLinkUtil {
 	 * @return the previous, current, and next asset link
 	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
 	 */
-	public static AssetLink[] findByE1_PrevAndNext(
+	public static AssetLink[] findByEntryId1_PrevAndNext(
 			long linkId, long entryId1,
 			OrderByComparator<AssetLink> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
 
-		return getPersistence().findByE1_PrevAndNext(
+		return getPersistence().findByEntryId1_PrevAndNext(
 			linkId, entryId1, orderByComparator);
 	}
 
@@ -269,8 +275,8 @@ public class AssetLinkUtil {
 	 *
 	 * @param entryId1 the entry id1
 	 */
-	public static void removeByE1(long entryId1) {
-		getPersistence().removeByE1(entryId1);
+	public static void removeByEntryId1(long entryId1) {
+		getPersistence().removeByEntryId1(entryId1);
 	}
 
 	/**
@@ -279,8 +285,8 @@ public class AssetLinkUtil {
 	 * @param entryId1 the entry id1
 	 * @return the number of matching asset links
 	 */
-	public static int countByE1(long entryId1) {
-		return getPersistence().countByE1(entryId1);
+	public static int countByEntryId1(long entryId1) {
+		return getPersistence().countByEntryId1(entryId1);
 	}
 
 	/**
@@ -289,8 +295,8 @@ public class AssetLinkUtil {
 	 * @param entryId2 the entry id2
 	 * @return the matching asset links
 	 */
-	public static List<AssetLink> findByE2(long entryId2) {
-		return getPersistence().findByE2(entryId2);
+	public static List<AssetLink> findByEntryId2(long entryId2) {
+		return getPersistence().findByEntryId2(entryId2);
 	}
 
 	/**
@@ -305,8 +311,10 @@ public class AssetLinkUtil {
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @return the range of matching asset links
 	 */
-	public static List<AssetLink> findByE2(long entryId2, int start, int end) {
-		return getPersistence().findByE2(entryId2, start, end);
+	public static List<AssetLink> findByEntryId2(
+		long entryId2, int start, int end) {
+
+		return getPersistence().findByEntryId2(entryId2, start, end);
 	}
 
 	/**
@@ -322,11 +330,11 @@ public class AssetLinkUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset links
 	 */
-	public static List<AssetLink> findByE2(
+	public static List<AssetLink> findByEntryId2(
 		long entryId2, int start, int end,
 		OrderByComparator<AssetLink> orderByComparator) {
 
-		return getPersistence().findByE2(
+		return getPersistence().findByEntryId2(
 			entryId2, start, end, orderByComparator);
 	}
 
@@ -344,12 +352,12 @@ public class AssetLinkUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	public static List<AssetLink> findByE2(
+	public static List<AssetLink> findByEntryId2(
 		long entryId2, int start, int end,
 		OrderByComparator<AssetLink> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByE2(
+		return getPersistence().findByEntryId2(
 			entryId2, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -361,11 +369,12 @@ public class AssetLinkUtil {
 	 * @return the first matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public static AssetLink findByE2_First(
+	public static AssetLink findByEntryId2_First(
 			long entryId2, OrderByComparator<AssetLink> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
 
-		return getPersistence().findByE2_First(entryId2, orderByComparator);
+		return getPersistence().findByEntryId2_First(
+			entryId2, orderByComparator);
 	}
 
 	/**
@@ -375,10 +384,11 @@ public class AssetLinkUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public static AssetLink fetchByE2_First(
+	public static AssetLink fetchByEntryId2_First(
 		long entryId2, OrderByComparator<AssetLink> orderByComparator) {
 
-		return getPersistence().fetchByE2_First(entryId2, orderByComparator);
+		return getPersistence().fetchByEntryId2_First(
+			entryId2, orderByComparator);
 	}
 
 	/**
@@ -389,11 +399,12 @@ public class AssetLinkUtil {
 	 * @return the last matching asset link
 	 * @throws NoSuchLinkException if a matching asset link could not be found
 	 */
-	public static AssetLink findByE2_Last(
+	public static AssetLink findByEntryId2_Last(
 			long entryId2, OrderByComparator<AssetLink> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
 
-		return getPersistence().findByE2_Last(entryId2, orderByComparator);
+		return getPersistence().findByEntryId2_Last(
+			entryId2, orderByComparator);
 	}
 
 	/**
@@ -403,10 +414,11 @@ public class AssetLinkUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	public static AssetLink fetchByE2_Last(
+	public static AssetLink fetchByEntryId2_Last(
 		long entryId2, OrderByComparator<AssetLink> orderByComparator) {
 
-		return getPersistence().fetchByE2_Last(entryId2, orderByComparator);
+		return getPersistence().fetchByEntryId2_Last(
+			entryId2, orderByComparator);
 	}
 
 	/**
@@ -418,12 +430,12 @@ public class AssetLinkUtil {
 	 * @return the previous, current, and next asset link
 	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
 	 */
-	public static AssetLink[] findByE2_PrevAndNext(
+	public static AssetLink[] findByEntryId2_PrevAndNext(
 			long linkId, long entryId2,
 			OrderByComparator<AssetLink> orderByComparator)
 		throws com.liferay.asset.kernel.exception.NoSuchLinkException {
 
-		return getPersistence().findByE2_PrevAndNext(
+		return getPersistence().findByEntryId2_PrevAndNext(
 			linkId, entryId2, orderByComparator);
 	}
 
@@ -432,8 +444,8 @@ public class AssetLinkUtil {
 	 *
 	 * @param entryId2 the entry id2
 	 */
-	public static void removeByE2(long entryId2) {
-		getPersistence().removeByE2(entryId2);
+	public static void removeByEntryId2(long entryId2) {
+		getPersistence().removeByEntryId2(entryId2);
 	}
 
 	/**
@@ -442,8 +454,8 @@ public class AssetLinkUtil {
 	 * @param entryId2 the entry id2
 	 * @return the number of matching asset links
 	 */
-	public static int countByE2(long entryId2) {
-		return getPersistence().countByE2(entryId2);
+	public static int countByEntryId2(long entryId2) {
+		return getPersistence().countByEntryId2(entryId2);
 	}
 
 	/**

@@ -138,6 +138,7 @@
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/mail/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portal/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portlet/exportimport/service\.xml" />
+		<suppress checks="XMLSpringFileCheck" files="portal-impl/src/META-INF/portal-spring\.xml" />
 
 		<!-- Temporary suppressions for deprecated apps (LPS-100170) -->
 

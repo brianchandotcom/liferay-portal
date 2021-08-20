@@ -53,17 +53,25 @@ public class TestrayAttachmentRecorder {
 
 		JenkinsResultsParserUtil.delete(getTestrayLogsDir());
 
-		_recordJenkinsConsole();
+		try {
+			_recordJenkinsConsole();
 
-		if (_build instanceof TopLevelBuild) {
-			_recordBuildResult();
-			_recordJenkinsReport();
+			if (_build instanceof TopLevelBuild) {
+				_recordBuildResult();
+				_recordJenkinsReport();
+			}
+			else {
+				_recordLiferayLogs();
+				_recordLiferayOSGiLogs();
+				_recordPoshiReportFiles();
+				_recordPoshiWarnings();
+			}
 		}
-		else {
-			_recordLiferayLogs();
-			_recordLiferayOSGiLogs();
-			_recordPoshiReportFiles();
-			_recordPoshiWarnings();
+		catch (IllegalArgumentException illegalArgumentException) {
+			System.out.println(
+				"Unable to record attachments for: " + _build.getBuildURL());
+
+			illegalArgumentException.printStackTrace();
 		}
 
 		_recorded = true;

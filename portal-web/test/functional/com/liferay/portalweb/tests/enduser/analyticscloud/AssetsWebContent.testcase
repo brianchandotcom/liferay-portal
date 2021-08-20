@@ -161,99 +161,97 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
-
 		task ("Create users and sync") {
-            var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-            for (var name : list "ac,liferay") {
-                JSONUser.addUser(
-                    userEmailAddress = "${name}@liferay.com",
-                    userFirstName = "${name}",
-                    userLastName = "${name}",
-                    userScreenName = "${name}");
-            }
+			for (var name : list "ac,liferay") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
 
-            ACDXPSettings.syncNewContactData();
-        }
+			ACDXPSettings.syncNewContactData();
+		}
 
-        task ("Go to page and get data for unsegmented individuals") {
-            for (var name : list "ac,liferay") {
-                User.logoutAndLoginPG(
-                    userLoginEmailAddress = "${name}@liferay.com",
-                    userLoginFullName = "${name} ${name}");
+		task ("Go to page and get data for unsegmented individuals") {
+			for (var name : list "ac,liferay") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
 
-                Navigator.gotoSitePage(
-                    pageName = "AC Page",
-                    siteName = "Site Name");
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-                Pause(locator1 = "5000");
+				Pause(locator1 = "5000");
 
-                User.logoutPG();
+				User.logoutPG();
 
-                Navigator.gotoSitePage(
-                    pageName = "AC Page",
-                    siteName = "Site Name");
-            }
-        }
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
 
-        task ("Go to AC and create segment for the user") {
-            ACUtils.launchAC();
+		task ("Go to AC and create segment for the user") {
+			ACUtils.launchAC();
 
-            ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${propertyName}");
 
-            ACNavigation.goToSegments();
+			ACNavigation.goToSegments();
 
-            ACSegments.createStaticSegment();
+			ACSegments.createStaticSegment();
 
-            ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
 
-            ACSegments.addStaticMember(tableMember = "ac ac");
+			ACSegments.addStaticMember(tableMember = "ac ac");
 
-            ACSegments.saveSegment();
-        }
+			ACSegments.saveSegment();
+		}
 
-        task ("Go to page and get data for segmented individuals") {
-            ACUtils.launchDXP();
+		task ("Go to page and get data for segmented individuals") {
+			ACUtils.launchDXP();
 
-            User.logoutAndLoginPG(
-                userLoginEmailAddress = "ac@liferay.com",
-                userLoginFullName = "ac ac");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
 
-            Navigator.gotoSitePage(
-                pageName = "AC Page",
-                siteName = "Site Name");
-        }
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-        task ("Close all sessions") {
-            ACUtils.closeAllSessions();
+		task ("Close all sessions") {
+			ACUtils.closeAllSessions();
 
-            Pause(locator1 = "30000");
-        }
+			Pause(locator1 = "30000");
+		}
 
-        task ("Go to created WC") {
-            ACUtils.launchAC();
+		task ("Go to created WC") {
+			ACUtils.launchAC();
 
-            ACNavigation.goToAssets();
+			ACNavigation.goToAssets();
 
-            ACNavigation.switchTab(tabName = "Web Content");
+			ACNavigation.switchTab(tabName = "Web Content");
 
-            ACTimeFilter.clickTimeFilterButton();
+			ACTimeFilter.clickTimeFilterButton();
 
-            ACTimeFilter.setLast24Hours();
+			ACTimeFilter.setLast24Hours();
 
-            ACNavigation.openItem(itemName = "Web Content AC Title");
-        }
+			ACNavigation.openItem(itemName = "Web Content AC Title");
+		}
 
-        task("Assert the correct percentage") {
-            ACIndividualsDashboard.goToOverviewTab();
+		task ("Assert the correct percentage") {
+			ACIndividualsDashboard.goToOverviewTab();
 
-            ACNavigation.viewActiveSwitchTab(tabName = "Overview");
+			ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
-            ACUtils.assertAudienceCard(
-                index = "2",
-                percentageList = "66.67%,33.33%");
-        }
-
+			ACUtils.assertAudienceCard(
+				index = "2",
+				percentageList = "66.67%,33.33%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8444 | Test Summary: Custom Range time filter in Web Content assets page"

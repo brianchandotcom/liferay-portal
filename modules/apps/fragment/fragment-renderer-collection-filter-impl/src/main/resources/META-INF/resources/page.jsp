@@ -19,16 +19,28 @@
 <%
 FragmentCollectionFilter fragmentCollectionFilter = (FragmentCollectionFilter)request.getAttribute(FragmentCollectionFilter.class.getName());
 FragmentRendererContext fragmentRendererContext = (FragmentRendererContext)request.getAttribute(FragmentRendererContext.class.getName());
-
-fragmentCollectionFilter.render(fragmentRendererContext, request, response);
 %>
 
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"collectionFilterParameterPrefix", "filter_"
-		).build()
-	%>'
-	module="js/CollectionFilterRegister"
-	servletContext="<%= application %>"
-/>
+<c:choose>
+	<c:when test="<%= fragmentCollectionFilter != null %>">
+
+		<%
+		fragmentCollectionFilter.render(fragmentRendererContext, request, response);
+		%>
+
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"collectionFilterParameterPrefix", "filter_"
+				).build()
+			%>'
+			module="js/CollectionFilterRegister"
+			servletContext="<%= application %>"
+		/>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<liferay-ui:message key="display-a-collection-on-the-page-so-that-you-can-use-the-collection-filter-fragment" />
+		</div>
+	</c:otherwise>
+</c:choose>

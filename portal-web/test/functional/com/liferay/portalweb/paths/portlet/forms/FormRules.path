@@ -113,28 +113,13 @@
 </tr>
 <!--RULE_BUILDER_AUTOFILL-->
 <tr>
-	<td>RULE_BUILDER_AUTOFILL_INPUT_FIELD</td>
-	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'data-provider-parameter-container')]//div[contains(@class,'field-trigger')]</td>
+	<td>RULE_BUILDER_AUTOFILL_FROM_DATA_PROVIDER</td>
+	<td>//span[contains(.,'${key_dataProviderParameterName}')]/../following-sibling::div//div[contains(@class,'option-selected')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RULE_BUILDER_AUTOFILL_SELECT_INPUT_FIELD</td>
-	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//button[contains(text(),'${key_dataProviderInput}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_AUTOFILL_OUTPUT_FIELD</td>
-	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'data-provider-parameter-container')]//div[contains(@class,'field-trigger')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_AUTOFILL_OUTPUT_FIELD_2</td>
-	<td>//div[contains(@class,'option-selected-placeholder')][1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_AUTOFILL_SELECT_OUTPUT_FIELD</td>
-	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//button[contains(text(),'${key_dataProviderOutput}')]</td>
+	<td>RULE_BUILDER_AUTOFILL_SELECT_OPTION_FIELD</td>
+	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//button[contains(text(),'${key_dataProviderOption}')]</td>
 	<td></td>
 </tr>
 <tr>

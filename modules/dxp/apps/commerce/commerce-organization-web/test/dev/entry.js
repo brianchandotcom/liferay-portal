@@ -18,7 +18,7 @@ import '../../src/main/resources/META-INF/resources/style/main.scss';
 render(
 	OrganizationChart,
 	{
-		rootOrganizationId: 42235,
+		rootOrganizationId: 42616,
 		spritemap: './assets/clay/icons.svg',
 		templatesURL: {
 			accountsDetailsPage: '/account/{id}',

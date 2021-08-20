@@ -90,6 +90,7 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 
 			<div className={classnames('org-chart-container', {expanded})}>
 				<svg className="svg-chart" ref={chartSVGRef} />
+
 				<div className="zoom-controls">
 					<ClayButtonWithIcon
 						displayType="secondary"
@@ -97,6 +98,7 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 						small
 						symbol="expand"
 					/>
+
 					<ClayButton.Group className="ml-3">
 						<ClayButtonWithIcon
 							displayType="secondary"
@@ -104,6 +106,7 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 							small
 							symbol="hr"
 						/>
+
 						<ClayButtonWithIcon
 							displayType="secondary"
 							ref={zoomInRef}
@@ -113,11 +116,13 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 					</ClayButton.Group>
 				</div>
 			</div>
+
 			<MenuProvider
 				alignElementRef={clickedMenuButtonRef}
 				data={menuData}
 				parentData={menuParentData}
 			/>
+
 			<ModalProvider
 				active={modalActive}
 				closeModal={() => updateModalActive(false)}

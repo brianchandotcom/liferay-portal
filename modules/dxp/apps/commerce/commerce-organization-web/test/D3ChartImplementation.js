@@ -17,6 +17,7 @@ import {
 	ORGANIZATIONS_PROPERTY_NAME,
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
 } from '../src/main/resources/META-INF/resources/js/utils/constants';
+import {USER_INVITATION_ENABLED} from '../src/main/resources/META-INF/resources/js/utils/flags';
 
 jest.mock(
 	'../src/main/resources/META-INF/resources/js/data/organizations',
@@ -67,7 +68,7 @@ jest.mock(
 jest.mock('../src/main/resources/META-INF/resources/js/data/accounts', () => ({
 	getAccount: () =>
 		Promise.resolve({
-			type: 'accountUserAccounts',
+			type: 'account',
 			userAccounts: [
 				{
 					id: '2000',
@@ -387,6 +388,26 @@ describe('D3OrganizationChart implementation', () => {
 
 			expect(lastActionPerformed.name).toBe('modal opened');
 			expect(lastActionPerformed.details.type).toBe('account');
+		});
+
+		it('Must open a invite user modal when a creation button is clicked', async () => {
+			const openActionsWrapper = addButton.querySelector(
+				'.open-actions-wrapper'
+			);
+
+			await d3click(openActionsWrapper);
+
+			const inviteUserButton = addButton.querySelector(
+				'.add-action-wrapper.user'
+			);
+			expect(!!inviteUserButton).toBe(USER_INVITATION_ENABLED);
+
+			if (USER_INVITATION_ENABLED) {
+				await d3click(inviteUserButton);
+
+				expect(lastActionPerformed.name).toBe('modal opened');
+				expect(lastActionPerformed.details.type).toBe('user');
+			}
 		});
 	});
 

@@ -13,6 +13,7 @@ import {USERS_PROPERTY_NAME_IN_ACCOUNT} from '../utils/constants';
 import {fetchFromHeadless} from '../utils/fetch';
 
 const ACCOUNTS_ROOT_ENDPOINT = '/o/account-rest/v1.0/accounts';
+const ACCOUNTS_MOVING_ENDPOINT = `/o/account-rest/v1.0/organizations/move-accounts`;
 
 export function getAccounts(query) {
 	const url = new URL(ACCOUNTS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
@@ -29,6 +30,18 @@ export function deleteAccount(id) {
 	);
 
 	return fetchFromHeadless(url, {method: 'DELETE'}, null, true);
+}
+
+export function changeOrganizationParent(accountId, source, target) {
+	const url = new URL(
+		`${ACCOUNTS_MOVING_ENDPOINT}/${source}/${target}`,
+		themeDisplay.getPortalURL()
+	);
+
+	return fetchFromHeadless(url, {
+		body: JSON.stringify([accountId]),
+		method: 'PATCH',
+	});
 }
 
 export function getAccount(id) {

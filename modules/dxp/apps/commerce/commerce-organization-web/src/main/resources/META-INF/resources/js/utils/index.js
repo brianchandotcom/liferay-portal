@@ -11,6 +11,8 @@
 
 import {hierarchy, tree as d3Tree} from 'd3';
 
+import {changeOrganizationParent} from '../data/accounts';
+import {updateOrganization} from '../data/organizations';
 import {
 	ACCOUNTS_PROPERTY_NAME,
 	DX,
@@ -256,4 +258,46 @@ export function getMinWidth(nodes) {
 
 		return maxWidth > width ? maxWidth : width;
 	}, 0);
+}
+
+export function changeNodesParentOrganization(nodes, target) {
+	const movings = [];
+
+	nodes.forEach((node) => {
+		switch (node.data.type) {
+			case 'organization':
+				movings.push(
+					updateOrganization(node.data.id, {
+						parentOrganization: {id: target.data.id},
+					})
+				);
+				break;
+			case 'account':
+				movings.push(
+					changeOrganizationParent(
+						node.data.id,
+						node.parent.data.id,
+						target.data.id
+					)
+				);
+				break;
+			default:
+				throw new Error(`Node type '${node.data.type}' not draggable`);
+		}
+	});
+
+	return Promise.allSettled(movings).then((results) => {
+		const formatted = results.reduce(
+			(formattedNodes, result, i) => ({
+				...formattedNodes,
+				[result.status]: [...formattedNodes[result.status], nodes[i]],
+			}),
+			{
+				fulfilled: [],
+				rejected: [],
+			}
+		);
+
+		return formatted;
+	});
 }

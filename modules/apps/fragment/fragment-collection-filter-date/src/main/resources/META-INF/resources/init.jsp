@@ -18,4 +18,8 @@
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 
-<portlet:defineObjects />
+<%@ page import="com.liferay.fragment.collection.filter.date.display.context.FragmentCollectionFilterDateDisplayContext" %>
+
+<%
+FragmentCollectionFilterDateDisplayContext fragmentCollectionFilterDateDisplayContext = (FragmentCollectionFilterDateDisplayContext)request.getAttribute(FragmentCollectionFilterDateDisplayContext.class.getName());
+%>

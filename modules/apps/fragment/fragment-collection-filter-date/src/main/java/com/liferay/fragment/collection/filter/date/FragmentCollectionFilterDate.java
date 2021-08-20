@@ -15,6 +15,7 @@
 package com.liferay.fragment.collection.filter.date;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
+import com.liferay.fragment.collection.filter.date.display.context.FragmentCollectionFilterDateDisplayContext;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
@@ -83,6 +84,12 @@ public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 			_servletContext.getRequestDispatcher("/page.jsp");
 
 		try {
+			httpServletRequest.setAttribute(
+				FragmentCollectionFilterDateDisplayContext.class.getName(),
+				new FragmentCollectionFilterDateDisplayContext(
+					getConfiguration(), _fragmentEntryConfigurationParser,
+					fragmentRendererContext));
+
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {

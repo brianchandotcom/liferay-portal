@@ -16,11 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<label class="control-label <%= fragmentCollectionFilterDateDisplayContext.isShowLabel() ? "" : "sr-only" %>" for="<portlet:namespace />dateInput">
+	<%= fragmentCollectionFilterDateDisplayContext.getLabel() %>
+</label>
+
 <div class="input-group">
 	<div class="input-group-item">
 		<input name="datePicker" type="hidden" value="" />
 
-		<input class="form-control input-group-inset input-group-inset-after" placeholder="YYYY-MM-DD" type="text" value="" />
+		<input class="form-control input-group-inset input-group-inset-after" id="<portlet:namespace />dateInput" placeholder="YYYY-MM-DD" type="text" value="" />
 
 		<div class="input-group-inset-item input-group-inset-item-after">
 			<clay:button

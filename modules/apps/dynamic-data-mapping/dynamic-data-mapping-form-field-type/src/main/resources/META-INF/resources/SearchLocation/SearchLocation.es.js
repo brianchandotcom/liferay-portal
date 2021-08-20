@@ -53,9 +53,12 @@ const Field = ({
 	readOnly,
 	repeatable,
 	showLabel,
+	valid: initialValid,
 	visibleField,
 	...otherProps
 }) => {
+	const [valid, setValid] = useState(true);
+
 	return (
 		<FieldBase
 			{...otherProps}
@@ -66,7 +69,7 @@ const Field = ({
 			readOnly={readOnly}
 			repeatable={repeatable}
 			showLabel={showLabel}
-			valid={!!parsedValue[visibleField]}
+			valid={!!parsedValue[visibleField] || valid}
 		>
 			<ClayInput
 				className="ddm-field-text"
@@ -74,8 +77,14 @@ const Field = ({
 				disabled={disabled}
 				id={id}
 				name={name}
-				onBlur={onBlur}
+				onBlur={(event) => {
+					setValid(initialValid);
+
+					onBlur(event);
+				}}
 				onChange={(event) => {
+					setValid(initialValid);
+
 					const value = !isEmpty(parsedValue)
 						? {
 								...parsedValue,

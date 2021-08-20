@@ -180,11 +180,11 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public void deleteLinks(long entryId) {
-		for (AssetLink link : assetLinkPersistence.findByE1(entryId)) {
+		for (AssetLink link : assetLinkPersistence.findByEntryId1(entryId)) {
 			deleteLink(link);
 		}
 
-		for (AssetLink link : assetLinkPersistence.findByE2(entryId)) {
+		for (AssetLink link : assetLinkPersistence.findByEntryId2(entryId)) {
 			deleteLink(link);
 		}
 	}
@@ -220,7 +220,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	public List<AssetLink> getDirectLinks(
 		long entryId, boolean excludeInvisibleLinks) {
 
-		List<AssetLink> assetLinks = assetLinkPersistence.findByE1(entryId);
+		List<AssetLink> assetLinks = assetLinkPersistence.findByEntryId1(
+			entryId);
 
 		return filterAssetLinks(assetLinks, excludeInvisibleLinks);
 	}
@@ -263,8 +264,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getLinks(long entryId) {
-		List<AssetLink> e1Links = assetLinkPersistence.findByE1(entryId);
-		List<AssetLink> e2Links = assetLinkPersistence.findByE2(entryId);
+		List<AssetLink> e1Links = assetLinkPersistence.findByEntryId1(entryId);
+		List<AssetLink> e2Links = assetLinkPersistence.findByEntryId2(entryId);
 
 		List<AssetLink> links = new ArrayList<>(
 			e1Links.size() + e2Links.size());

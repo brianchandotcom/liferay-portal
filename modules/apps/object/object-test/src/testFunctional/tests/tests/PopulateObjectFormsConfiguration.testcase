@@ -82,6 +82,7 @@ definition {
 	@priority = "5"
 	test CanSelectObjectStorageType {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanSelectObjectStorageType";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

@@ -543,9 +543,35 @@ definition {
 	}
 
 	@description = "LPS-134760: Given the Page Audit panel in a private page
+	Then the reload button won't be visible."
+	
+	@priority = "3"
+	test CheckNotVisibleReloadbButtonInPrivatePage {
+		task ("Create a Private Page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Private Page Name");
+		}
+
+		task ("Go to Private Page") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Private Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open Page Audit tab and Assert reload button id not present") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			IsElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
+
+			IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
+		}
+	}
+
 	@description = "LPS-137227 Given a content page
 	When a user with permissions to edit blogs visits the page
 	Then the issue icon for displaying the page audit panel shows"
+	
 	@priority = "4"
 	test CheckPageAuditIconInContentPageWithEditBlogsPermission {
 		task ("Create user") {
@@ -615,9 +641,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When a user with permissions to edit documents visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a content page When a user with permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInContentPageWithEditDocumentsPermission {
 		task ("Create user") {
@@ -687,9 +711,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When the user with permissions to edit pages visits the view mode
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a content page When the user with permissions to edit pages visits the view mode	Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInContentPageWithEditPagesPermission {
 		task ("Create user") {
@@ -709,7 +731,7 @@ definition {
 			JSONRole.addRegularRole(
 				roleKey = "PagesEditorRole",
 				roleTitle = "PagesEditorRole");
-			
+
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
@@ -759,9 +781,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When a user with permissions to edit web content visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a content page	When a user with permissions to edit web content visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInContentPageWithEditWebContentPermission {
 		task ("Create user") {
@@ -831,9 +851,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When a user with NO permissions to edit blogs visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditBlogsPermission {
 		task ("Create user") {
@@ -898,9 +916,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When a user with NO permissions to edit documents visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditDocumentsPermission {
 		task ("Create user") {
@@ -965,9 +981,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When the user with NO permissions to edit pages visits the view mode
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a content page	When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditPagesPermission {
 		task ("Create user") {
@@ -1032,9 +1046,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a content page
-	When a user with NO permissions to edit web content visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit web content visits the page	Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditWebContentPermission {
 		task ("Create user") {
@@ -1099,9 +1111,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When a user with permissions to edit blogs visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a display page	When a user with permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInDisplayPageWithEditBlogsPermission {
 		task ("Create user") {
@@ -1121,7 +1131,7 @@ definition {
 			JSONRole.addRegularRole(
 				roleKey = "BlogsEditorRole",
 				roleTitle = "BlogsEditorRole");
-			
+
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "${resourceActionIndex}",
@@ -1210,9 +1220,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When a user with permissions to edit documents visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a display page	When a user with permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInDisplayPageWithEditDocumentsPermission {
 		task ("Create user") {
@@ -1322,9 +1330,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When the user with permissions to edit pages visits the view mode
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a display page	When the user with permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInDisplayPageWithEditPagesPermission {
 		task ("Create user") {
@@ -1344,7 +1350,7 @@ definition {
 			JSONRole.addRegularRole(
 				roleKey = "PagesEditorRole",
 				roleTitle = "PagesEditorRole");
-			
+
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
@@ -1431,9 +1437,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When a user with permissions to edit web content visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a display page	When a user with permissions to edit web content visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInDisplayPageWithEditWebContentPermission {
 		task ("Create user") {
@@ -1541,9 +1545,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When a user with NO permissions to edit blogs visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a display page	When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditBlogsPermission {
 		task ("Create user") {
@@ -1645,9 +1647,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When a user with NO permissions to edit documents visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a display page	When a user with NO permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditDocumentsPermission {
 		task ("Create user") {
@@ -1755,11 +1755,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a widget page
-	When the user with NO permissions to edit pages visits the view mode
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "Given a display page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
 	@priority = "3"
-	test CheckPageAuditIconInWidgetPageWithoutEditPagesPermission {
+	test CheckPageAuditIconInDisplayPageWithoutEditPagesPermission {
 		task ("Create user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1783,17 +1781,6 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Create Widget Page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
 		task ("Disable option to strangers to verify email") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -1808,6 +1795,41 @@ definition {
 			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
 		task ("Login with user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1816,6 +1838,8 @@ definition {
 
 		task ("Assert if Audit Page icon is not present") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
@@ -1833,9 +1857,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When a user with NO permissions to edit web content visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a display page	When a user with NO permissions to edit web content visits the page	Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditWebContentPermission {
 		task ("Create user") {
@@ -1938,10 +1960,6 @@ definition {
 		}
 	}
 
-
-	@description = "LPS-137227 Given a widget page
-	When a user with permissions to edit blogs visits the page
-	Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInWidgetPageWithEditBlogsPermission {
 		task ("Create user") {
@@ -2024,9 +2042,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a widget page
- 	When a user with permissions to edit documents visits the page
- 	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a widget page When a user with permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInWidgetPageWithEditDocumentsPermission {
 		task ("Create user") {
@@ -2109,9 +2125,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a widget page
-	When the user with permissions to edit pages visits the view mode
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a widget page When the user with permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInWidgetPageWithEditPagesPermission {
 		task ("Create user") {
@@ -2131,7 +2145,7 @@ definition {
 			JSONRole.addRegularRole(
 				roleKey = "PagesEditorRole",
 				roleTitle = "PagesEditorRole");
-			
+
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
@@ -2194,9 +2208,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a widget page
-	When a user with permissions to edit web content visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a widget page When a user with permissions to edit web content visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "4"
 	test CheckPageAuditIconInWidgetPageWithEditWebContentPermission {
 		task ("Create user") {
@@ -2279,9 +2291,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a widget page
-	When a user with NO permissions to edit blogs visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a widget page When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditBlogsPermission {
 		task ("Create user") {
@@ -2359,9 +2369,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a widget page
- 	When a user with NO permissions to edit documents visits the page
- 	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a widget page When a user with NO permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditDocumentsPermission {
 		task ("Create user") {
@@ -2439,11 +2447,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a display page
-	When the user with NO permissions to edit pages visits the view mode
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "Given a widget page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
 	@priority = "3"
-	test CheckPageAuditIconInDisplayPageWithoutEditPagesPermission {
+	test CheckPageAuditIconInWidgetPageWithoutEditPagesPermission {
 		task ("Create user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -2467,6 +2473,17 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
 		task ("Disable option to strangers to verify email") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -2481,41 +2498,6 @@ definition {
 			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 		}
 
-		task ("Add Display Page and mark it as default") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Blogs Entry",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Create a Blog Entry") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add 'Asset Publisher' to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Widget Page Name",
-				widgetName = "Asset Publisher");
-		}
-
 		task ("Login with user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -2524,8 +2506,6 @@ definition {
 
 		task ("Assert if Audit Page icon is not present") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
@@ -2543,9 +2523,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-137227 Given a widget page
-	When a user with NO permissions to edit web content visits the page
-	Then the issue icon for displaying the page audit panel shows"
+	@description = "LPS-137227 Given a widget page	When a user with NO permissions to edit web content visits the page	Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditWebContentPermission {
 		task ("Create user") {

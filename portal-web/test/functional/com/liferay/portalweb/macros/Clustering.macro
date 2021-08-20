@@ -28,6 +28,24 @@ definition {
 			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=modules/apps/portal/portal-cluster-multiple-sample -DliferayHome=${liferayHome}");
 	}
 
+	macro deployModuleOnServer {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+
+		var bundleIndex = ${leadingPortNumber} - 8;
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		if ("${bundleIndex}" != "0") {
+			var liferayHome = "${liferayHome}-${bundleIndex}";
+		}
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=${moduleBaseDir} -DliferayHome=${liferayHome}");
+
+		Pause(locator1 = "10000");
+	}
+
 	macro enableDebugging {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
@@ -121,6 +139,32 @@ definition {
 		return "${fileContent}";
 	}
 
+	@description = "This will get the log content for session replication on specific clustered server bundle"
+	macro getLogFileSpecificServerSessionReplication {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+
+		if ("${leadingPortNumber}" != "0") {
+			var bundleIndex = ${leadingPortNumber} - 8;
+		}
+		else {
+			var bundleIndex = "${leadingPortNumber}";
+		}
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "cluster-session-replication-log -Dapp.server.bundle.index=${bundleIndex}");
+
+		Pause(locator1 = "10000");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
+
+		return "${fileContent}";
+
+		echo("${liferayHome}/cluster${bundleIndex}.log");
+		echo("${fileContent}");
+	}
+
 	macro runGroovyScript {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
@@ -204,6 +248,28 @@ definition {
 		var countNotPresent = 1 + ${count};
 
 		Clustering._viewNoLiveSession(count = "${countNotPresent}");
+	}
+
+	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
+	macro viewNoSessionReplicateLogErrorOnSpecificNode {
+		if ("${nodePort}" == "8080") {
+			AssertConsoleTextNotPresent(value1 = "${exceptionText}");
+		}
+		else {
+			var nodeLog = Clustering.getLogFileSpecificServerSessionReplication(nodePort = "${nodePort}");
+
+			if (contains("${nodeLog}", "${exceptionText}")) {
+				fail("Able to find exception: ${exceptionText} on cluser node at ${nodePort}");
+			}
+		}
+	}
+
+	macro viewSessionData {
+		var key_sessionContent = "${sessionContent}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#LOADED_1",
+			value1 = "${sessionContent}");
 	}
 
 	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."

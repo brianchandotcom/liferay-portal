@@ -1,122 +1,122 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    setUp {
-        ACUtils.launchAC();
+	setUp {
+		ACUtils.launchAC();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        ACUtils.launchDXP();
-    }
+		ACUtils.launchDXP();
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        ACUtils.tearDownDXP();
+		ACUtils.tearDownDXP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-        ACUtils.tearDownAC();
-    }
+		ACUtils.tearDownAC();
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8785 | Test Summary: Add a keyword that already exists"
-        @ignore = "true"
-        @priority = "3"
-        test AddKeywordAlreadyExists {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8785 | Test Summary: Add a keyword that already exists"
+	@ignore = "true"
+	@priority = "3"
+	test AddKeywordAlreadyExists {
 
-            // TODO LRAC-8785 AddKeywordAlreadyExists pending implementation
+		// TODO LRAC-8785 AddKeywordAlreadyExists pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8786 | Test Summary: Add keyword when there are none"
-        @ignore = "true"
-        @priority = "3"
-        test AddKeywordCurrentlyNone {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8786 | Test Summary: Add keyword when there are none"
+	@ignore = "true"
+	@priority = "3"
+	test AddKeywordCurrentlyNone {
 
-            // TODO LRAC-8786 AddKeywordCurrentlyNone pending implementation
+		// TODO LRAC-8786 AddKeywordCurrentlyNone pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8787 | Test Summary: Add multiple keywords"
-        @ignore = "true"
-        @priority = "3"
-        test AddMultipleKeywords {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8787 | Test Summary: Add multiple keywords"
+	@ignore = "true"
+	@priority = "3"
+	test AddMultipleKeywords {
 
-            // TODO LRAC-8787 AddMultipleKeywords pending implementation
+		// TODO LRAC-8787 AddMultipleKeywords pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8788 | Test Summary: Add multiple of the same keyword"
-        @ignore = "true"
-        @priority = "3"
-        test AddMultipleSameKeyword {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8788 | Test Summary: Add multiple of the same keyword"
+	@ignore = "true"
+	@priority = "3"
+	test AddMultipleSameKeyword {
 
-            // TODO LRAC-8788 AddMultipleSameKeyword pending implementation
+		// TODO LRAC-8788 AddMultipleSameKeyword pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8789 | Test Summary: View only selected keywords"
-        @ignore = "true"
-        @priority = "3"
-        test AssertSelectedKeywords {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8789 | Test Summary: View only selected keywords"
+	@ignore = "true"
+	@priority = "3"
+	test AssertSelectedKeywords {
 
-            // TODO LRAC-8789 AssertSelectedKeywords pending implementation
+		// TODO LRAC-8789 AssertSelectedKeywords pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8790 | Test Summary: Delete a keyword block"
-        @ignore = "true"
-        @priority = "3"
-        test DeleteKeywordBlock {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8790 | Test Summary: Delete a keyword block"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteKeywordBlock {
 
-            // TODO LRAC-8790 DeleteKeywordBlock pending implementation
+		// TODO LRAC-8790 DeleteKeywordBlock pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete keyword using the check box"
-        @ignore = "true"
-        @priority = "3"
-        test DeleteKeywordUsingTheCheckBox {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete keyword using the check box"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteKeywordUsingTheCheckBox {
 
-            // TODO LRAC-8791 DeleteKeywordUsingTheCheckBox pending implementation
+		// TODO LRAC-8791 DeleteKeywordUsingTheCheckBox pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8792 | Test Summary: Delete multiple keywords"
-        @ignore = "true"
-        @priority = "3"
-        test DeleteMultipleKeywords {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8792 | Test Summary: Delete multiple keywords"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteMultipleKeywords {
 
-            // TODO LRAC-8792 DeleteMultipleKeywords pending implementation
+		// TODO LRAC-8792 DeleteMultipleKeywords pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8793 | Test Summary: Paginate keyword block list"
-        @ignore = "true"
-        @priority = "3"
-        test PaginateKeywordBlockList {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8793 | Test Summary: Paginate keyword block list"
+	@ignore = "true"
+	@priority = "3"
+	test PaginateKeywordBlockList {
 
-            // TODO LRAC-8793 PaginateKeywordBlockList pending implementation
+		// TODO LRAC-8793 PaginateKeywordBlockList pending implementation
 
-        }
+	}
 
-        @description = "Feature ID: Legacy | Automation ID: LRAC-8795 | Test Summary: Search for a blocked keyword"
-        @ignore = "true"
-        @priority = "3"
-        test SearchForBlockedKeyword {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8795 | Test Summary: Search for a blocked keyword"
+	@ignore = "true"
+	@priority = "3"
+	test SearchForBlockedKeyword {
 
-            // TODO LRAC-8795 SearchForBlockedKeyword pending implementation
+		// TODO LRAC-8795 SearchForBlockedKeyword pending implementation
 
-        }
+	}
 
 }

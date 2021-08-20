@@ -257,12 +257,138 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteCustomFieldUsedSegmentResetData {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8592 DeleteCustomFieldUsedSegmentResetData pending implementation
+		task ("Add a user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
 
+			CustomFields.addCP(
+				customFieldName = "Hobby",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "User",
+				startingValue = "reading");
+		}
+
+		task ("Add a new user in DXP and View the Custom Fields") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.gotoEditCP(userScreenName = "ac");
+
+			User.viewUserCustomFieldsCP(
+				customFieldName = "Hobby",
+				customFieldType = "Input Field",
+				startingValue = "reading");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewUserData(fieldNameList = "hobby");
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "New Segment Test");
+		}
+
+		task ("Add a Hobby Custom Fields field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Hobby");
+
+			ACSegments.selectOperator(operator = "contains");
+
+			ACSegments.editTextCriterion(textInput = "reading");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View the segment membership") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "New Segment Test");
+
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "0",
+				knownNumber = "1",
+				totalNumber = "1");
+		}
+
+		task ("Sign in DXP") {
+			ACUtils.launchDXP();
+		}
+
+		task ("Delete the user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.deleteCP(
+				customFieldName = "Hobby",
+				resourceName = "User");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("View the segment membership") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "New Segment Test");
+
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "0",
+				knownNumber = "0",
+				totalNumber = "0");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8594 | Test Summary: Deleting a data source causes individuals to be removed from segment"
@@ -358,7 +484,7 @@ definition {
 			ACNavigation.exitSettings();
 		}
 
-		task ("Assert the segment doesn't displays under the contact user") {
+		task ("Assert the segment doesn't display under the contact user") {
 			ACNavigation.goToIndividuals();
 
 			ACNavigation.switchTab(tabName = "Known Individuals");

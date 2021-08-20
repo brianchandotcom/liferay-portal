@@ -46,7 +46,15 @@ definition {
 	}
 
 	macro viewUnmappedError {
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_MODAL_TITLE");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_MODAL_BODY");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_PANEL_TITLE");
+
+		var fieldType = StringUtil.toLowerCase("${fieldType}");
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldType = "${fieldType}",
+			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_PANEL_BODY");
 	}
 
 }

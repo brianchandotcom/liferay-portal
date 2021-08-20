@@ -61,12 +61,9 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to save or publish the Form if a added Form field is not mapped to a Object field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMapped {
 		property portal.acceptance = "true";
-
-		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -87,13 +84,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.publishFormObject();
 
-		PopulateObjectFormsConfiguration.viewUnmappedError();
+		PopulateObjectFormsConfiguration.viewUnmappedError(
+			fieldLabel = "Text",
+			fieldType = "Text");
 
 		PopulateObjectFormsConfiguration.closeUnmappedError();
 
 		PopulateObjectFormsConfiguration.saveFormObject();
 
-		PopulateObjectFormsConfiguration.viewUnmappedError();
+		PopulateObjectFormsConfiguration.viewUnmappedError(
+			fieldLabel = "Text",
+			fieldType = "Text");
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to save or publish the Form if a added Form field is not mapped to a Object field in a Field Group"

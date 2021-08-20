@@ -1455,6 +1455,11 @@ public class UserWrapper
 		model.setCompanyId(companyId);
 	}
 
+	@Override
+	public void setContact(Contact contact) {
+		model.setContact(contact);
+	}
+
 	/**
 	 * Sets the contact ID of this user.
 	 *

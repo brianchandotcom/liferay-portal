@@ -350,6 +350,8 @@ public interface User extends PersistedModel, UserModel {
 
 	public boolean isTermsOfUseComplete();
 
+	public void setContact(Contact contact);
+
 	public void setPasswordModified(boolean passwordModified);
 
 	public void setPasswordUnencrypted(String passwordUnencrypted);

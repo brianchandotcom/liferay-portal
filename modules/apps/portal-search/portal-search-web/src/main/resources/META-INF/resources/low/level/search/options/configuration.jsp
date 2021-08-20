@@ -51,7 +51,7 @@ LowLevelSearchOptionsPortletPreferences lowLevelSearchOptionsPortletPreferences 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<aui:fieldset>
-				<aui:select helpMessage="select-the-connection-id-of-the-connection-that-will-be-used-to-perform-the-search" label="connection-id" name="<%= PortletPreferencesJspUtil.getInputName(LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_CONNECTION_ID) %>">
+				<aui:select helpMessage="connection-id-help[web]" label="connection-id" name="<%= PortletPreferencesJspUtil.getInputName(LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_CONNECTION_ID) %>">
 
 					<%
 					for (String connectionId : configurationDisplayContext.getConnectionIds()) {

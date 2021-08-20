@@ -45,11 +45,44 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8327 | Test Summary: Assert Sites Cohort Analysis sort Anonymous Visitors"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesCohortAnalysisSortAnonymousVisitors {
 
-		// TODO LRAC-8327 AssertSitesCohortAnalysisSortAnonymousVisitors
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Logout from DXP") {
+
+			User.logoutPG();
+		}
+
+		task ("View the site page as anonymous visitor") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+		task ("Assert that the cohort analysis card shows anonymous visitors after their first views") {
+			Select(
+				locator1 = "ACSites#COHORT_ANALYSIS_SELECT_VISITOR_TYPE",
+				value1 = "Anonymous Visitors");
+			
+			AssertTextEquals(
+				locator1 = "ACSites#COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE",
+				value1 = "100.00%");
+		}
 
 	}
 

@@ -121,14 +121,15 @@ definition {
 		Click(locator1 = "Link#CLEAR");
 	}
 
-	}
-
 	macro viewDueDateValue {
 		AssertTextEquals(
 			key_workflowAssetTitle = "${workflowAssetTitle}",
 			key_workflowTask = "${workflowTask}",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE",
 			value1 = "${dueDateValue}");
+
+
+		
 	}
 
 }

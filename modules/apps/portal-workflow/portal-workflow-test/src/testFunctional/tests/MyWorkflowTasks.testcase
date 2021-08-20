@@ -1039,12 +1039,27 @@ definition {
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Task"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSearchTasksAssignedToMe {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		// TODO LRQA-68845 CanSearchTasksAssignedToMe pending implementation
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "Review");
+
+		AssertElementPresent(
+			key_resultBarMessage = "1 Results for Review",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+
+
+			
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to Me by Asset Title"

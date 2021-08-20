@@ -27,6 +27,77 @@ definition {
 	@description = "Ignore until LPS-135570 is fixed."
 	@ignore = "true"
 	@priority = "4"
+	test CanModuleBeShutdownDuringReplicateSession {
+		property cluster.session.replicated = "true";
+		property custom.properties = "portlet.session.replicate.enabled=true";
+		property test.name.skip.portal.instance = "ClusteringCache#CanModuleBeShutdownDuringReplicateSession";
+
+		Clustering.deployModuleOnServer(
+			moduleBaseDir = "modules/apps/portal/portal-cluster-sample-session",
+			nodePort = "8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Session Replication Test");
+
+		Navigator.gotoPage(pageName = "Session Replication Test");
+
+		Portlet.addPG(portletName = "TestSessionReplication");
+
+		Clustering.viewSessionData(sessionContent = "No session data exists, generating a new one with random string:");
+
+		Clustering.deployModuleOnServer(
+			moduleBaseDir = "modules/apps/portal/portal-cluster-sample-session",
+			nodePort = "9080");
+
+		Navigator.gotoPage(pageName = "Session Replication Test");
+
+		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TEXT");
+
+		var sessionData = selenium.getText("Portlet#SPECIFIC_TEXT");
+
+		echo("${sessionData}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		GogoShell.executeCommand(commandName = "lb | grep test-session-replication");
+
+		var moduleID = GogoShell.getModuleID(moduleName = "test-session-replication");
+
+		GogoShell.stopModule(moduleID = "${moduleID}");
+
+		GogoShell.viewModuleStatus(
+			moduleName = "test-session-replication",
+			moduleStatus = "Resolved");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Session Replication Test",
+			url = "http://localhost:9080");
+
+		AssertTextEquals(
+			locator1 = "Portlet#SPECIFIC_TEXT",
+			value1 = "${sessionData}");
+
+		for (var serverPort : list "8080,9080") {
+			Clustering.viewNoSessionReplicateLogErrorOnSpecificNode(
+				exceptionText = "Unable to deserialize object",
+				nodePort = "${serverPort}");
+		}
+	}
+
+	@description = "Ignore until LPS-135570 is fixed."
+	@ignore = "true"
+	@priority = "4"
 	test CanSessionReplicateBetweenNodes {
 		property cluster.session.replicated = "true";
 		property custom.properties = "portlet.session.replicate.enabled=true";

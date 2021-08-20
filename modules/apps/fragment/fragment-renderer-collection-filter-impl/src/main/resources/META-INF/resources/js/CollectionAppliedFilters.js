@@ -15,7 +15,7 @@
 import {delegate} from 'frontend-js-web';
 
 export default function CollectionAppliedFilters({
-	collectionFilterParameterPrefix,
+	filterPrefix,
 	removeButtonSelector,
 }) {
 	const clickHandler = delegate(
@@ -29,7 +29,7 @@ export default function CollectionAppliedFilters({
 				filterValue,
 			} = event.delegateTarget.dataset;
 
-			const paramName = `${collectionFilterParameterPrefix}${filterType}_${filterFragmentEntryLinkId}`;
+			const paramName = `${filterPrefix}${filterType}_${filterFragmentEntryLinkId}`;
 			const searchParams = [];
 			const url = new URL(window.location.href);
 

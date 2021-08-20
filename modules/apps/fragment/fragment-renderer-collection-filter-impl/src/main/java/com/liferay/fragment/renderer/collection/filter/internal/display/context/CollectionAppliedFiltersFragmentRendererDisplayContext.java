@@ -79,8 +79,7 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 		}
 
 		_collectionAppliedFiltersProps = HashMapBuilder.<String, Object>put(
-			"collectionFilterParameterPrefix",
-			FragmentCollectionFilterConstants.FILTER_PREFIX
+			"filterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
 		).build();
 
 		return _collectionAppliedFiltersProps;

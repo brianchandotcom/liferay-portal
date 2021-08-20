@@ -12,7 +12,7 @@
  * details.
  */
 
-let _collectionFilterParameterPrefix = '';
+let _filterPrefix = '';
 
 /**
  * @param {string} filterType
@@ -24,7 +24,7 @@ export const getCollectionFilterValue = (
 	filterFragmentEntryLinkId
 ) => {
 	let value = new URL(window.location.href).searchParams.getAll(
-		`${_collectionFilterParameterPrefix}${filterType}_${filterFragmentEntryLinkId}`
+		`${_filterPrefix}${filterType}_${filterFragmentEntryLinkId}`
 	);
 
 	if (value.length === 0) {
@@ -51,7 +51,7 @@ export const setCollectionFilterValue = (
 		return;
 	}
 
-	const paramName = `${_collectionFilterParameterPrefix}${filterType}_${filterFragmentEntryLinkId}`;
+	const paramName = `${_filterPrefix}${filterType}_${filterFragmentEntryLinkId}`;
 	const url = new URL(window.location.href);
 
 	if (Array.isArray(value)) {
@@ -71,10 +71,8 @@ export const setCollectionFilterValue = (
 /**
  *
  * @param {object} data
- * @param {string} data.collectionFilterParameterPrefix
+ * @param {string} data.filterPrefix
  */
-export default function CollectionFilterRegister({
-	collectionFilterParameterPrefix,
-}) {
-	_collectionFilterParameterPrefix = collectionFilterParameterPrefix;
+export default function CollectionFilterRegister({filterPrefix}) {
+	_filterPrefix = filterPrefix;
 }

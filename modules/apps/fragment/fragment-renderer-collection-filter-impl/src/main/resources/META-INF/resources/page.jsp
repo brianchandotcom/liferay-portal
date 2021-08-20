@@ -31,7 +31,7 @@ FragmentRendererContext fragmentRendererContext = (FragmentRendererContext)reque
 		<liferay-frontend:component
 			context='<%=
 				HashMapBuilder.<String, Object>put(
-					"collectionFilterParameterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
+					"filterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
 				).build()
 			%>'
 			module="js/CollectionFilterRegister"

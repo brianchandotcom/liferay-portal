@@ -102,8 +102,7 @@ public interface GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration {
 	 * @review
 	 */
 	@Meta.AD(
-		deflt = "",
-		name = "enable-google-cloud-natural-language-text-auto-tagging-for",
+		deflt = "", name = "enabled-class-names[google-cloud-natural-language]",
 		required = false
 	)
 	public String[] enabledClassNames();

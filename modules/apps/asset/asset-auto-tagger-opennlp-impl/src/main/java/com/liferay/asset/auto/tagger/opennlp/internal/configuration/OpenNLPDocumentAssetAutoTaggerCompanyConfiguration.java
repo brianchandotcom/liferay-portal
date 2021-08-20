@@ -50,8 +50,7 @@ public interface OpenNLPDocumentAssetAutoTaggerCompanyConfiguration {
 	 * @review
 	 */
 	@Meta.AD(
-		deflt = "", name = "enable-open-nlp-text-auto-tagging-for",
-		required = false
+		deflt = "", name = "enabled-class-names[opennlp]", required = false
 	)
 	public String[] enabledClassNames();
 

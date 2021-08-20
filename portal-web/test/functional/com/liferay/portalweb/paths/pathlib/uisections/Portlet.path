@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOADED_1</td>
+	<td>//div[@data-qa-id='app-loaded']//div[@class='portlet-body']//p[contains(.,'${key_sessionContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_INFO</td>
 	<td>//div[contains(@class,'portlet-msg-info')]</td>
 	<td></td>
@@ -173,6 +178,11 @@
 <tr>
 	<td>SPECIFIC_DEFAULT_TITLE</td>
 	<td>//div[@id='main-content']//div[contains(@class,'portlet-title-default')][normalize-space()='${key_portletName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_TEXT</td>
+	<td>//div[@class='portlet-body']/ul/li[contains(.,'Stored data')]</td>
 	<td></td>
 </tr>
 <tr>

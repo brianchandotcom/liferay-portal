@@ -540,10 +540,7 @@ definition {
 				key_noResultMessage = "There are no views on any location on the selected period.",
 				locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE");
 
-			ACCards.viewGeomapContainerFillColor(
-				cardTitle = "Views by Location",
-				country = "${country}",
-				fillColor = "rgb(0, 101, 228)");
+			ACCards.viewGeomapContainer(cardTitle = "Views by Location");
 
 			ACCards.viewGeomapTableText(
 				cardTitle = "Views by Location",

@@ -30,8 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface LearningToRankConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
-		description = "by-checking-this-option,-all-elasticsearch-queries-will-be-rescored-by-the-learning-to-rank-model",
+		deflt = "false", description = "enabled-help[learning-to-rank]",
 		name = "enabled", required = false
 	)
 	public boolean enabled();

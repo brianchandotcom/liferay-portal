@@ -37,9 +37,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CASConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
-		description = "set-this-to-true-to-enable-cas-single-sign-on",
-		name = "enabled", required = false
+		deflt = "false", description = "enabled-help[cas]", name = "enabled",
+		required = false
 	)
 	public boolean enabled();
 

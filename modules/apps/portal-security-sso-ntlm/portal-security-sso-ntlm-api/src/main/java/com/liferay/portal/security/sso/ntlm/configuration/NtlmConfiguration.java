@@ -37,9 +37,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface NtlmConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
-		description = "set-this-to-true-to-enable-ntlm-single-sign-on",
-		name = "enabled", required = false
+		deflt = "false", description = "enabled-help[ntlm]", name = "enabled",
+		required = false
 	)
 	public boolean enabled();
 

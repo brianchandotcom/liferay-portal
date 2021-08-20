@@ -182,10 +182,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addDDMTemplates(ServiceContext serviceContext)
 		throws Exception {
 
-		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
-
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			"/site-initializer/ddm-templates", "ddm-template.json", true);
+
+		if (enumeration == null) {
+			return;
+		}
+
+		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();

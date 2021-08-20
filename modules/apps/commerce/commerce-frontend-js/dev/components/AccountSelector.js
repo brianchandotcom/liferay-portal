@@ -19,13 +19,13 @@ import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 import '../../../../../frontend-theme/frontend-theme-styled/src/main/resources/META-INF/resources/_styled/css/application/_account_selector.scss';
 
 launcher('account_selector', 'account-selector', {
-	channelId: 24324,
+	commerceChannelId: 24324,
 	createNewOrderURL: '/asdasdasd',
-	currentAccount: {
+	currentCommerceAccount: {
 		id: 42332,
 		name: 'My AccountName',
 	},
-	currentOrder: {
+	currentCommerceOrder: {
 		id: 34234,
 		orderStatusInfo: {
 			label_i18n: 'Completed',

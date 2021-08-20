@@ -28,10 +28,10 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <liferay-theme:defineObjects />
 
 <%
-long channelId = (long)request.getAttribute("liferay-commerce:account-selector:channelId");
+long commerceChannelId = (long)request.getAttribute("liferay-commerce:account-selector:commerceChannelId");
 String createNewOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:createNewOrderURL");
-CurrentCommerceAccountModel currentAccount = (CurrentCommerceAccountModel)request.getAttribute("liferay-commerce:account-selector:currentAccount");
-CurrentCommerceOrderModel currentOrder = (CurrentCommerceOrderModel)request.getAttribute("liferay-commerce:account-selector:currentOrder");
+CurrentCommerceAccountModel currentCommerceAccount = (CurrentCommerceAccountModel)request.getAttribute("liferay-commerce:account-selector:currentCommerceAccount");
+CurrentCommerceOrderModel currentCommerceOrder = (CurrentCommerceOrderModel)request.getAttribute("liferay-commerce:account-selector:currentCommerceOrder");
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
 String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");

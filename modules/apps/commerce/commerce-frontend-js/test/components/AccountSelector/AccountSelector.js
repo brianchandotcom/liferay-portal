@@ -59,7 +59,7 @@ describe('AccountSelector', () => {
 		beforeEach(() => {
 			renderedComponent = render(
 				<AccountSelector
-					channelId={24324}
+					commerceChannelId={24324}
 					createNewOrderURL="/order-link"
 					selectOrderURL="/test-url/{id}"
 					setCurrentAccountURL="/account-selector/setCurrentAccounts"
@@ -151,9 +151,9 @@ describe('AccountSelector', () => {
 		beforeEach(() => {
 			renderedComponent = render(
 				<AccountSelector
-					channelId={24324}
+					commerceChannelId={24324}
 					createNewOrderURL="/order-link"
-					currentAccount={{
+					currentCommerceAccount={{
 						id: 42332,
 						name: 'My Account Name',
 					}}
@@ -220,13 +220,13 @@ describe('AccountSelector', () => {
 		beforeEach(() => {
 			renderedComponent = render(
 				<AccountSelector
-					channelId={24324}
+					commerceChannelId={24324}
 					createNewOrderURL="/order-link"
-					currentAccount={{
+					currentCommerceAccount={{
 						id: 42332,
 						name: 'My Account Name',
 					}}
-					currentOrder={{
+					currentCommerceOrder={{
 						orderId: 34234,
 						workflowStatusInfo: {
 							label_i18n: 'Completed',

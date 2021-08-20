@@ -24,7 +24,7 @@ import EmptyListView from './EmptyListView';
 import ListView from './ListView';
 
 function OrdersListView({
-	channelId,
+	commerceChannelId,
 	createOrderURL,
 	currentAccount,
 	disabled,
@@ -58,7 +58,7 @@ function OrdersListView({
 				<ListView
 					apiUrl={CartResource.cartsByAccountIdAndChannelIdURL(
 						currentAccount.id,
-						channelId
+						commerceChannelId
 					)}
 					contentWrapperRef={ordersListRef}
 					customView={({items, loading}) => {

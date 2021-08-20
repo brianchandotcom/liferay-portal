@@ -30,8 +30,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface GoogleAuthorizationConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "enabled-help[google]", name = "enabled",
-		required = false
+		deflt = "false", description = "enabled-help[sso-google]",
+		name = "enabled", required = false
 	)
 	public boolean enabled();
 

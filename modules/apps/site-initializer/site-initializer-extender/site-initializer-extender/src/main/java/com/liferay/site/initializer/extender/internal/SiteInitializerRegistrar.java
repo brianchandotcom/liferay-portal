@@ -14,18 +14,29 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import javax.servlet.ServletContext;
@@ -33,22 +44,6 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
-
-import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import java.util.Map;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
-import java.util.List;
-import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
-import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
-import com.liferay.portal.kernel.service.ThemeLocalService;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
-
 
 /**
  * @author Preston Crary
@@ -56,8 +51,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 public class SiteInitializerRegistrar {
 
 	public SiteInitializerRegistrar(
-		AssetListEntryLocalService assetListEntryLocalService,
-		Bundle bundle, BundleContext bundleContext,
+		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		BundleContext bundleContext,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -68,7 +63,8 @@ public class SiteInitializerRegistrar {
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplatesImporter layoutPageTemplatesImporter,
-		LayoutPageTemplateStructureLocalService layoutPageTemplateStructureLocalService,
+		LayoutPageTemplateStructureLocalService
+			layoutPageTemplateStructureLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
@@ -91,13 +87,17 @@ public class SiteInitializerRegistrar {
 		_jsonFactory = jsonFactory;
 		_layoutCopyHelper = layoutCopyHelper;
 		_layoutLocalService = layoutLocalService;
-		_layoutPageTemplateEntryLocalService = layoutPageTemplateEntryLocalService;
+		_layoutPageTemplateEntryLocalService =
+			layoutPageTemplateEntryLocalService;
 		_layoutPageTemplatesImporter = layoutPageTemplatesImporter;
-		_layoutPageTemplateStructureLocalService = layoutPageTemplateStructureLocalService;
- 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_layoutPageTemplateStructureLocalService =
+			layoutPageTemplateStructureLocalService;
+		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
-		_siteNavigationMenuItemLocalService = siteNavigationMenuItemLocalService;
-		_siteNavigationMenuItemTypeRegistry = siteNavigationMenuItemTypeRegistry;
+		_siteNavigationMenuItemLocalService =
+			siteNavigationMenuItemLocalService;
+		_siteNavigationMenuItemTypeRegistry =
+			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
@@ -113,15 +113,16 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_assetListEntryLocalService,
-				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _documentResourceFactory,
-				_fragmentsImporter, _journalArticleLocalService, _jsonFactory,
-				_layoutCopyHelper, _layoutLocalService,
-				_layoutPageTemplateEntryLocalService, _layoutPageTemplatesImporter,
+				_assetListEntryLocalService, _bundle, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_documentResourceFactory, _fragmentsImporter,
+				_journalArticleLocalService, _jsonFactory, _layoutCopyHelper,
+				_layoutLocalService, _layoutPageTemplateEntryLocalService,
+				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
-				_siteNavigationMenuItemLocalService, _siteNavigationMenuItemTypeRegistry,
+				_siteNavigationMenuItemLocalService,
+				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService, _styleBookEntryZipProcessor,
 				_taxonomyVocabularyResourceFactory, _themeLocalService,
 				_userLocalService),
@@ -155,9 +156,12 @@ public class SiteInitializerRegistrar {
 	private final Portal _portal;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
-	private final SiteNavigationMenuItemLocalService _siteNavigationMenuItemLocalService;
-	private final SiteNavigationMenuItemTypeRegistry _siteNavigationMenuItemTypeRegistry;
-	private final SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+	private final SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+	private final SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
+	private final SiteNavigationMenuLocalService
+		_siteNavigationMenuLocalService;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;

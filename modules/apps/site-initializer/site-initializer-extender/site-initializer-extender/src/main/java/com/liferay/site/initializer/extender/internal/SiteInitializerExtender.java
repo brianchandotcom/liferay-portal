@@ -14,17 +14,28 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.util.List;
@@ -40,21 +51,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
-import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
-
-import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import java.util.Map;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
-import java.util.List;
-import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
-import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
-import com.liferay.portal.kernel.service.ThemeLocalService;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 /**
  * @author Brian Wing Shun Chan
@@ -78,23 +74,19 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				_assetListEntryLocalService,
-				bundle, _bundleContext, _ddmStructureLocalService,
-				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_documentResourceFactory, _fragmentsImporter,
-				_journalArticleLocalService, _jsonFactory,
+				_assetListEntryLocalService, bundle, _bundleContext,
+				_ddmStructureLocalService, _ddmTemplateLocalService,
+				_defaultDDMStructureHelper, _documentResourceFactory,
+				_fragmentsImporter, _journalArticleLocalService, _jsonFactory,
 				_layoutCopyHelper, _layoutLocalService,
 				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
-				_objectDefinitionResourceFactory,
-				_portal,
+				_objectDefinitionResourceFactory, _portal,
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
-				_siteNavigationMenuLocalService,
-				_styleBookEntryZipProcessor,
-				_taxonomyVocabularyResourceFactory,
-				_themeLocalService,
+				_siteNavigationMenuLocalService, _styleBookEntryZipProcessor,
+				_taxonomyVocabularyResourceFactory, _themeLocalService,
 				_userLocalService);
 
 		siteInitializerExtension.start();
@@ -131,11 +123,11 @@ public class SiteInitializerExtender
 		_bundleTracker.close();
 	}
 
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
-
-	@Reference
-    private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
@@ -182,10 +174,12 @@ public class SiteInitializerExtender
 	private Portal _portal;
 
 	@Reference
-	private SiteNavigationMenuItemLocalService _siteNavigationMenuItemLocalService;
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
 
 	@Reference
-	private SiteNavigationMenuItemTypeRegistry _siteNavigationMenuItemTypeRegistry;
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

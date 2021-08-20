@@ -208,7 +208,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
-				CommerceConstants.SERVICE_NAME_ORDER_FIELDS));
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
@@ -230,7 +230,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
-				CommerceConstants.SERVICE_NAME_ORDER));
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
@@ -252,7 +252,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
-				CommerceConstants.SERVICE_NAME_TAX));
+				CommerceConstants.SERVICE_NAME_COMMERCE_TAX));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

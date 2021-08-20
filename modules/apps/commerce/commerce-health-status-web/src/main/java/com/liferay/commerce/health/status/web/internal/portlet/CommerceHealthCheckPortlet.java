@@ -84,7 +84,7 @@ public class CommerceHealthCheckPortlet extends MVCPortlet {
 	private CommerceHealthHttpStatusRegistry _commerceHealthHttpStatusRegistry;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_HEALTH + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_HEALTH + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

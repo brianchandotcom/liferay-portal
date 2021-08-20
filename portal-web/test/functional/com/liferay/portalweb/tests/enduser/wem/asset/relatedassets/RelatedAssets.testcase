@@ -129,65 +129,76 @@ definition {
 
 	@description = "This is a use case for LPS-72472. When an article has related asset from the global site, the related asset is not displayed in live after publication"
 	@priority = "4"
-	test ShouldBeDisplayedWithGlobalWebContent {
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page");
+	test ShouldBeDisplayedWithGlobalWebContentAfterPublishToLive {
+		task ("Add a public page with JSON") {
+			JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page");
+		}
+		task ("Enable staging from JSON") {
+			JSONStaging.enableLocalStaging(
+					branchingPrivate = "false",
+					branchingPublic = "false",
+					groupName = "Site Name");
+		}
+		task ("Add two web content with JSON") {
+			JSONWebcontent.addWebContent(
+					content = "Web Content Content 1",
+					groupName = "Global",
+					title = "Web Content Title 1");
 
-		JSONStaging.enableLocalStaging(
-				branchingPrivate = "false",
-				branchingPublic = "false",
-				groupName = "Site Name");
+			JSONWebcontent.addWebContent(
+					content = "Web Content Content 2",
+					groupName = "Site Name (Staging)",
+					site = "false",
+					title = "Web Content Title 2");
+		}
+		task ("Add existing related assets to Web Content 2") {
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "site-name-staging");
 
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content 1",
-			groupName = "Global",
-			title = "Web Content Title 1");
+			WebContentNavigator.gotoEditCP(
+					webContentTitle = "Web Content Title 2");
 
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content 2",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			title = "Web Content Title 2");
+			WebContent.addExistingRelatedAssetCP(
+					assetTitle = "Web Content Title 1",
+					assetType = "Basic Web Content",
+					scopeSite = "Everywhere",
+					siteName = "Global",
+					webContentTitle = "Web Content Title 2");
+		}
+		task ("Add related assets to Test Page") {
+			Navigator.gotoStagedSitePage(
+					pageName = "Test Page",
+					siteName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			Portlet.addPG(portletName = "Asset Publisher");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+			AssetPublisherPortlet.configureDisplaySettings(
+					displaySettings = "Related Assets");
 
-		WebContent.addExistingRelatedAssetCP(
-			assetTitle = "Web Content Title 1",
-			assetType = "Basic Web Content",
-			scopeSite = "Everywhere",
-			siteName = "Global",
-			webContentTitle = "Web Content Title 2");
+			AssetPublisherPortlet.viewAssetDetailsPG(
+					assetContent = "Web Content Content 2",
+					assetTitle = "Web Content Title 2",
+					relatedAssetTitles = "Web Content Title 1");
+		}
+		task ("Publish to live") {
+			Staging.gotoPublishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+			Staging.configurePublishToLive(
+					checkContentNameList = "Web Content",
+					checkPageName = "Test Page");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+			Staging.publishToLive();
+		}
+		task ("Assert assets are whone in live after been published") {
+			ProductMenu.gotoLiveSite(site = "Site Name");
 
-		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Related Assets");
-
-		AssetPublisherPortlet.viewAssetDetailsPG(
-			assetContent = "Web Content Content 2",
-			assetTitle = "Web Content Title 2",
-			relatedAssetTitles = "Web Content Title 1");
-
-		Staging.gotoPublishToLive();
-
-		Staging.configurePublishToLive(
-			checkContentNameList = "Web Content",
-			checkPageName = "Test Page");
-
-		Staging.publishToLive();
-
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		AssetPublisherPortlet.viewAssetDetailsPG(
-			assetContent = "Web Content Content 2",
-			assetTitle = "Web Content Title 2",
-			relatedAssetTitles = "Web Content Title 1");
+			AssetPublisherPortlet.viewAssetDetailsPG(
+					assetContent = "Web Content Content 2",
+					assetTitle = "Web Content Title 2",
+					relatedAssetTitles = "Web Content Title 1");
+		}
 	}
 
 	@description = "Folders should not be shown as related assets"

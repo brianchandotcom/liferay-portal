@@ -6687,6 +6687,96 @@ go</echo>
 		</if>
 	</target>
 
+	<target name="cluster-session-replication">
+		<replace
+			file="${app.server.tomcat.dir}/conf/server.xml"
+		>
+			<replacetoken><![CDATA[<Engine name="Catalina" defaultHost="localhost">]]></replacetoken>
+			<replacevalue><![CDATA[<Engine defaultHost="localhost" name="Catalina">
+
+    	<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>]]></replacevalue>
+		</replace>
+
+		<replace
+			file="${app.server.tomcat.dir}/conf/context.xml"
+		>
+			<replacetoken><![CDATA[<Context>]]></replacetoken>
+			<replacevalue><![CDATA[<Context>
+
+		<Manager className="org.apache.catalina.ha.session.DeltaManager"
+			expireSessionsOnShutdown="false"
+			notifyListenersOnReplication="true"/>]]></replacevalue>
+		</replace>
+
+		<replace
+			file="${app.server.tomcat.dir}/webapps/ROOT/WEB-INF/web.xml"
+		>
+			<replacetoken><![CDATA[xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">]]></replacetoken>
+			<replacevalue><![CDATA[xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<distributable />]]></replacevalue>
+		</replace>
+
+		<replace
+			file="${app.server.tomcat.dir}/conf/logging.properties"
+		>
+			<replacetoken><![CDATA[3manager.org.apache.juli.AsyncFileHandler,]]></replacetoken>
+			<replacevalue><![CDATA[3manager.org.apache.juli.AsyncFileHandler, 5cluster.org.apache.juli.AsyncFileHandler,]]></replacevalue>
+		</replace>
+
+		<echo append="true" file="${app.server.tomcat.dir}/conf/logging.properties">
+			<![CDATA[
+##CLUSTER LOG
+5cluster.org.apache.juli.AsyncFileHandler.level = FINER
+5cluster.org.apache.juli.AsyncFileHandler.directory = ${catalina.base}/logs
+5cluster.org.apache.juli.AsyncFileHandler.prefix = cluster.
+
+# just the clustering logs - all others are stock logging.properties
+org.apache.catalina.tribes.MESSAGES.level = FINE
+org.apache.catalina.tribes.MESSAGES.handlers = 5cluster.org.apache.juli.AsyncFileHandler
+
+org.apache.catalina.tribes.level = FINE
+org.apache.catalina.tribes.handlers = 5cluster.org.apache.juli.AsyncFileHandler
+
+org.apache.catalina.ha.level = FINE
+org.apache.catalina.ha.handlers = 5cluster.org.apache.juli.AsyncFileHandler
+
+org.apache.catalina.ha.deploy.level = INFO
+org.apache.catalina.ha.deploy.handlers = 5cluster.org.apache.juli.AsyncFileHandler]]>
+		</echo>
+	</target>
+
+	<target name="cluster-session-replication-log">
+		<local name="log.dir" />
+
+		<condition else="${app.server.parent.dir}-${app.server.bundle.index}/tomcat-${app.server.version}/logs" property="log.dir" value="${app.server.parent.dir}/tomcat-${app.server.version}/logs">
+			<or>
+				<not>
+					<isset property="app.server.bundle.index" />
+				</not>
+				<equals arg1="${app.server.bundle.index}" arg2="0" />
+			</or>
+		</condition>
+
+		<for param="log.file">
+			<path>
+				<fileset
+					dir="${log.dir}"
+				>
+					<include name="cluster*.log" />
+				</fileset>
+			</path>
+			<sequential>
+				<copy
+					file="@{log.file}"
+					overwrite="true"
+					tofile="${liferay.home}/cluster${app.server.bundle.index}.log"
+				/>
+
+				<echo> ${liferay.home}/cluster${app.server.bundle.index}.log </echo>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="copy-cluster-log">
 		<local name="log.dir" />
 
@@ -13470,6 +13560,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		</if>
 
 		<antcall target="deploy-extra-apps" />
+
+		<get-testcase-property property.name="cluster.session.replicated" />
+
+		<if>
+			<equals arg1="${cluster.session.replicated}" arg2="true" />
+			<then>
+				<antcall target="cluster-session-replication" />
+			</then>
+		</if>
 
 		<set-up-search-engine />
 

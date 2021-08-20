@@ -734,7 +734,12 @@ public class ObjectEntryLocalServiceTest {
 			ObjectEntryLocalServiceUtil.getValues(
 				objectEntry.getObjectEntryId());
 
-		//Assert.assertEquals(_getValuesFromCacheField(objectEntry), values);
+		ObjectEntry cachedObjectEntry =
+			ObjectEntryLocalServiceUtil.getObjectEntry(
+				objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(values, cachedObjectEntry.getValues());
+
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertEquals(false, values.get("authorOfGospel"));
 		Assert.assertEquals(null, values.get("birthday"));

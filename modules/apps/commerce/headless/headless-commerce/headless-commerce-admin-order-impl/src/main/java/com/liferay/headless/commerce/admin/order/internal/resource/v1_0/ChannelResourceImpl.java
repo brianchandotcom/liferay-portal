@@ -30,13 +30,9 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.PathParam;
 
 /**
  * @author Andrea Sbarra
@@ -87,9 +83,7 @@ public class ChannelResourceImpl
 
 	@NestedField(parentClass = OrderTypeChannel.class, value = "channel")
 	@Override
-	public Channel getOrderTypeChannelChannel(Long id)
-		throws Exception {
-
+	public Channel getOrderTypeChannelChannel(Long id) throws Exception {
 		CommerceOrderTypeRel commerceOrderTypeRel =
 			_commerceOrderTypeRelService.getCommerceOrderTypeRel(id);
 

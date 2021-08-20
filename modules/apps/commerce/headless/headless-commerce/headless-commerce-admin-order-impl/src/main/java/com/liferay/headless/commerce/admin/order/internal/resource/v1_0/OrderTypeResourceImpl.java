@@ -80,7 +80,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
-				"Unable to find Order Type with externalReferenceCode: " +
+				"Unable to find order type with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -111,7 +111,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
-				"Unable to find Order Type with externalReferenceCode: " +
+				"Unable to find order type with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -164,7 +164,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
-				"Unable to find Order Type with externalReferenceCode: " +
+				"Unable to find order type with external reference code " +
 					externalReferenceCode);
 		}
 

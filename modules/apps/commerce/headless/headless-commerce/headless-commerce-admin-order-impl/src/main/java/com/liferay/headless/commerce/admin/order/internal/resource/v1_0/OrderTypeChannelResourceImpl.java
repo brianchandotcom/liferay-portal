@@ -77,24 +77,21 @@ public class OrderTypeChannelResourceImpl
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
-				"Unable to find Order Type with externalReferenceCode: " +
+				"Unable to find order type with external reference code " +
 					externalReferenceCode);
 		}
 
-		List<CommerceOrderTypeRel> commerceOrderTypeRels =
-			_commerceOrderTypeRelService.
-				getCommerceOrderTypeCommerceChannelRels(
-					commerceOrderType.getCommerceOrderTypeId(), null,
-					pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems =
+		return Page.of(
+			_toOrderTypeChannels(
+				_commerceOrderTypeRelService.
+					getCommerceOrderTypeCommerceChannelRels(
+						commerceOrderType.getCommerceOrderTypeId(), null,
+						pagination.getStartPosition(),
+						pagination.getEndPosition())),
+			pagination,
 			_commerceOrderTypeRelService.
 				getCommerceOrderTypeCommerceChannelRelsCount(
-					commerceOrderType.getCommerceOrderTypeId(), null);
-
-		return Page.of(
-			_toOrderTypeChannels(commerceOrderTypeRels), pagination,
-			totalItems);
+					commerceOrderType.getCommerceOrderTypeId(), null));
 	}
 
 	@NestedField(parentClass = OrderType.class, value = "orderTypeChannels")
@@ -110,19 +107,15 @@ public class OrderTypeChannelResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
-		List<CommerceOrderTypeRel> commerceOrderTypeRels =
-			_commerceOrderTypeRelService.
-				getCommerceOrderTypeCommerceChannelRels(
-					id, search, pagination.getStartPosition(),
-					pagination.getEndPosition());
-
-		int totalItems =
-			_commerceOrderTypeRelService.
-				getCommerceOrderTypeCommerceChannelRelsCount(id, search);
-
 		return Page.of(
-			_toOrderTypeChannels(commerceOrderTypeRels), pagination,
-			totalItems);
+			_toOrderTypeChannels(
+				_commerceOrderTypeRelService.
+					getCommerceOrderTypeCommerceChannelRels(
+						id, search, pagination.getStartPosition(),
+						pagination.getEndPosition())),
+			pagination,
+			_commerceOrderTypeRelService.
+				getCommerceOrderTypeCommerceChannelRelsCount(id, search));
 	}
 
 	@Override
@@ -137,7 +130,7 @@ public class OrderTypeChannelResourceImpl
 
 		if (commerceOrderType == null) {
 			throw new NoSuchOrderTypeException(
-				"Unable to find Order Type with externalReferenceCode: " +
+				"Unable to find order type with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -176,7 +169,7 @@ public class OrderTypeChannelResourceImpl
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(
-					"Unable to find Channel with externalReferenceCode: " +
+					"Unable to find channel with external reference code " +
 						orderTypeChannel.getChannelExternalReferenceCode());
 			}
 		}

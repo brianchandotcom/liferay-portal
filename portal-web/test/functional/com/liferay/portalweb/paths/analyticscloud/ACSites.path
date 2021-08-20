@@ -76,6 +76,11 @@
 	<td>//span[contains(@class,'text-truncate title')and contains(text(),'${key_keyword}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TOOLTIP_UNIQUE_VISITORS</td>
+	<td>//tr[@class='analytics-tooltip-chart-row']//div[text()='${key_visitors}']/ancestor::tr//div[text()='${key_value}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

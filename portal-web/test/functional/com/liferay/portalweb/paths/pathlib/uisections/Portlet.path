@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOADED_1</td>
+	<td>//div[@data-qa-id='app-loaded']//div[@class='portlet-body']//p[contains(.,'${key_sessionContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_INFO</td>
 	<td>//div[contains(@class,'portlet-msg-info')]</td>
 	<td></td>
@@ -148,6 +153,11 @@
 <tr>
 	<td>SPECIFIC_PORTLET_BORDER_DECORATOR</td>
 	<td>//div[@id='main-content']//div[contains(@class,'portlet-${key_decorator}')]//h2[contains(@class,'portlet-title') and (.='${key_portletTitleName}')] | //div[@id='main-content']//div[contains(@class,'portlet-${key_decorator}')]//section[contains(@id,'${key_portletTitleName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_TEXT</td>
+	<td>//div[@class='portlet-body']/ul/li[contains(.,'Stored data')]</td>
 	<td></td>
 </tr>
 <tr>

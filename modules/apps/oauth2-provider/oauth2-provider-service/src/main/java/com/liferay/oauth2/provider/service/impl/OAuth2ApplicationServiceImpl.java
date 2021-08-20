@@ -215,13 +215,13 @@ public class OAuth2ApplicationServiceImpl
 		long companyId, int start, int end,
 		OrderByComparator<OAuth2Application> orderByComparator) {
 
-		return oAuth2ApplicationPersistence.filterFindByC(
+		return oAuth2ApplicationPersistence.filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getOAuth2ApplicationsCount(long companyId) {
-		return oAuth2ApplicationPersistence.filterCountByC(companyId);
+		return oAuth2ApplicationPersistence.filterCountByCompanyId(companyId);
 	}
 
 	@Override

@@ -381,7 +381,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		throws PortalException {
 
 		for (OAuth2Application oAuth2Application :
-				oAuth2ApplicationPersistence.findByC(companyId)) {
+				oAuth2ApplicationPersistence.findByCompanyId(companyId)) {
 
 			deleteOAuth2Application(oAuth2Application.getOAuth2ApplicationId());
 		}
@@ -404,7 +404,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 	@Override
 	public List<OAuth2Application> getOAuth2Applications(long companyId) {
-		return oAuth2ApplicationPersistence.findByC(companyId);
+		return oAuth2ApplicationPersistence.findByCompanyId(companyId);
 	}
 
 	@Override

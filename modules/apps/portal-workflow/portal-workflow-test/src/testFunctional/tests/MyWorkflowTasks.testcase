@@ -994,7 +994,6 @@ definition {
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Title"
 	@priority = "5"
 	test CanSearchForAssetTitleOnAssignedToMyRolesTab {
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1008,11 +1007,6 @@ definition {
 		AssertElementPresent(
 			key_resultBarMessage = "1 Results for Blogs Entry Title",
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
-
-
-
-
-
 	}
 
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Type"

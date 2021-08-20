@@ -191,7 +191,6 @@ public class UserAccountResourceImpl
 
 		return SearchUtil.search(
 			_getModelActions(
-				accountId,
 				Collections.singletonMap(
 					ActionKeys.MANAGE_USERS,
 					new String[] {
@@ -211,7 +210,7 @@ public class UserAccountResourceImpl
 						"postAccountUserAccountsByExternalReferenceCodeBy" +
 							"EmailAddress"
 					}),
-				_accountEntryModelResourcePermission),
+				accountId, _accountEntryModelResourcePermission),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -261,10 +260,10 @@ public class UserAccountResourceImpl
 
 		return _getUserAccountsPage(
 			_getModelActions(
-				organization.getOrganizationId(),
 				Collections.singletonMap(
 					ActionKeys.MANAGE_USERS,
 					new String[] {"getOrganizationUserAccountsPage"}),
+				organization.getOrganizationId(),
 				_organizationModelResourcePermission),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -276,7 +275,7 @@ public class UserAccountResourceImpl
 						String.valueOf(organization.getOrganizationId())),
 					BooleanClauseOccur.MUST);
 			},
-			search, filter, pagination, sorts);
+			filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -299,7 +298,7 @@ public class UserAccountResourceImpl
 					new TermFilter("groupId", String.valueOf(siteId)),
 					BooleanClauseOccur.MUST);
 			},
-			search, filter, pagination, sorts);
+			filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -332,15 +331,16 @@ public class UserAccountResourceImpl
 		return _getUserAccountsPage(
 			HashMapBuilder.<String, Map<String, String>>putAll(
 				_getCompanyScopeActions(
-					new String[] {"getUserAccountsPage"}, ActionKeys.VIEW,
+					ActionKeys.VIEW, new String[] {"getUserAccountsPage"},
 					User.class.getName())
 			).putAll(
 				_getCompanyScopeActions(
+					ActionKeys.ADD_USER,
 					new String[] {
 						"postUserAccount",
 						"putUserAccountByExternalReferenceCode"
 					},
-					ActionKeys.ADD_USER, PortletKeys.PORTAL)
+					PortletKeys.PORTAL)
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -350,7 +350,7 @@ public class UserAccountResourceImpl
 					new TermFilter("userName", StringPool.BLANK),
 					BooleanClauseOccur.MUST_NOT);
 			},
-			search, filter, pagination, sorts);
+			filter, search, pagination, sorts);
 	}
 
 	@Override
@@ -820,7 +820,7 @@ public class UserAccountResourceImpl
 	}
 
 	private Map<String, Map<String, String>> _getCompanyScopeActions(
-		String[] methodNames, String actionName, String resourceName) {
+		String actionName, String[] methodNames, String resourceName) {
 
 		Map<String, Map<String, String>> actions = new HashMap<>();
 
@@ -837,7 +837,6 @@ public class UserAccountResourceImpl
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),
 			_getModelActions(
-				userId,
 				HashMapBuilder.put(
 					ActionKeys.DELETE,
 					new String[] {
@@ -858,14 +857,14 @@ public class UserAccountResourceImpl
 						"getUserAccountByExternalReferenceCode"
 					}
 				).build(),
-				_userModelResourcePermission),
+				userId, _userModelResourcePermission),
 			null, contextHttpServletRequest, userId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
 	}
 
 	private Map<String, Map<String, String>> _getModelActions(
-		long id, Map<String, String[]> actionMethodMap,
+		Map<String, String[]> actionMethodMap, long id,
 		ModelResourcePermission<?> modelResourcePermission) {
 
 		Map<String, Map<String, String>> actions = new HashMap<>();
@@ -947,7 +946,7 @@ public class UserAccountResourceImpl
 	private Page<UserAccount> _getUserAccountsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Filter filter, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

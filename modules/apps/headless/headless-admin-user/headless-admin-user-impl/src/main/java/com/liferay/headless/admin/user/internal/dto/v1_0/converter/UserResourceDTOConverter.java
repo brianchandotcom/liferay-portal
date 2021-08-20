@@ -114,7 +114,7 @@ public class UserResourceDTOConverter
 						getAccountEntryUserRelsByAccountUserId(
 							user.getUserId()),
 					accountEntryUserRel -> _toAccountBrief(
-						user, dtoConverterContext, accountEntryUserRel),
+						accountEntryUserRel, user, dtoConverterContext),
 					AccountBrief.class);
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
@@ -145,17 +145,17 @@ public class UserResourceDTOConverter
 				organizationBriefs = TransformUtil.transformToArray(
 					user.getOrganizations(),
 					organization -> _toOrganizationBrief(
-						user, dtoConverterContext, organization),
+						organization, user, dtoConverterContext),
 					OrganizationBrief.class);
 				roleBriefs = TransformUtil.transformToArray(
 					_roleService.getUserRoles(user.getUserId()),
-					role -> _toRoleBrief(dtoConverterContext, role),
+					role -> _toRoleBrief(role, dtoConverterContext),
 					RoleBrief.class);
 				siteBriefs = TransformUtil.transformToArray(
 					_groupService.getGroups(
 						user.getCompanyId(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
-					group -> _toSiteBrief(dtoConverterContext, group),
+					group -> _toSiteBrief(group, dtoConverterContext),
 					SiteBrief.class);
 				userAccountContactInformation =
 					new UserAccountContactInformation() {
@@ -237,8 +237,8 @@ public class UserResourceDTOConverter
 	}
 
 	private AccountBrief _toAccountBrief(
-			User user, DTOConverterContext dtoConverterContext,
-			AccountEntryUserRel accountEntryUserRel)
+			AccountEntryUserRel accountEntryUserRel, User user,
+			DTOConverterContext dtoConverterContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
@@ -252,15 +252,15 @@ public class UserResourceDTOConverter
 					_accountRoleLocalService.getAccountRoles(
 						accountEntry.getAccountEntryId(), user.getUserId()),
 					accountRole -> _toRoleBrief(
-						dtoConverterContext, accountRole),
+						accountRole, dtoConverterContext),
 					RoleBrief.class);
 			}
 		};
 	}
 
 	private OrganizationBrief _toOrganizationBrief(
-			User user, DTOConverterContext dtoConverterContext,
-			Organization organization)
+			Organization organization, User user,
+			DTOConverterContext dtoConverterContext)
 		throws PortalException {
 
 		return new OrganizationBrief() {
@@ -270,14 +270,14 @@ public class UserResourceDTOConverter
 				roleBriefs = TransformUtil.transformToArray(
 					_roleService.getUserGroupRoles(
 						user.getUserId(), organization.getGroupId()),
-					role -> _toRoleBrief(dtoConverterContext, role),
+					role -> _toRoleBrief(role, dtoConverterContext),
 					RoleBrief.class);
 			}
 		};
 	}
 
 	private RoleBrief _toRoleBrief(
-			DTOConverterContext dtoConverterContext, AccountRole accountRole)
+			AccountRole accountRole, DTOConverterContext dtoConverterContext)
 		throws PortalException {
 
 		Role role = accountRole.getRole();
@@ -294,7 +294,7 @@ public class UserResourceDTOConverter
 	}
 
 	private RoleBrief _toRoleBrief(
-		DTOConverterContext dtoConverterContext, Role role) {
+		Role role, DTOConverterContext dtoConverterContext) {
 
 		return new RoleBrief() {
 			{
@@ -308,7 +308,7 @@ public class UserResourceDTOConverter
 	}
 
 	private SiteBrief _toSiteBrief(
-		DTOConverterContext dtoConverterContext, Group group) {
+		Group group, DTOConverterContext dtoConverterContext) {
 
 		return new SiteBrief() {
 			{

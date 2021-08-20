@@ -62,7 +62,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	@Override
 	public void
 			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-				String accountExternalReferenceCode, Long accountRoleId,
+				String externalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception {
 
@@ -71,7 +71,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 		deleteAccountAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
-				accountExternalReferenceCode),
+				externalReferenceCode),
 			accountRoleId, user.getUserId());
 	}
 
@@ -200,7 +200,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	@Override
 	public void
 			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-				String accountExternalReferenceCode, Long accountRoleId,
+				String externalReferenceCode, Long accountRoleId,
 				String emailAddress)
 		throws Exception {
 
@@ -209,7 +209,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 		postAccountAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
-				accountExternalReferenceCode),
+				externalReferenceCode),
 			accountRoleId, user.getUserId());
 	}
 

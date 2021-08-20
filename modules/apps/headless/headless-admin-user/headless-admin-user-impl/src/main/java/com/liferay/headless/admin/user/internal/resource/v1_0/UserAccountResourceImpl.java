@@ -372,17 +372,18 @@ public class UserAccountResourceImpl
 		User user = _userLocalService.getUserByExternalReferenceCode(
 			contextCompany.getCompanyId(), userAccountExternalReferenceCode);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setLanguageId(
-			contextAcceptLanguage.getPreferredLanguageId());
-		serviceContext.setUserId(contextUser.getUserId());
-
 		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
 			_accountResourceDTOConverter.getAccountEntryId(
 				accountExternalReferenceCode),
-			user.getEmailAddress(), new long[0], null, serviceContext);
+			user.getEmailAddress(), new long[0], null,
+			new ServiceContext() {
+				{
+					setCompanyId(contextCompany.getCompanyId());
+					setLanguageId(
+						contextAcceptLanguage.getPreferredLanguageId());
+					setUserId(contextUser.getUserId());
+				}
+			});
 	}
 
 	@Override

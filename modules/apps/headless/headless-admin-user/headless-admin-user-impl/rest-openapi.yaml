@@ -1003,67 +1003,6 @@ paths:
                     description:
                         "Account successfully created"
             tags: ["Account"]
-    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-email-address/{emailAddress}":
-        delete:
-            # @review
-            description:
-                Unassigns account users by email address from the account role
-            operationId: deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress
-            parameters:
-                - in: path
-                  name: accountExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: accountRoleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["AccountRole"]
-        post:
-            # @review
-            description:
-                Assigns account users by email address to the account role
-            operationId: postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress
-            parameters:
-                - in: path
-                  name: accountExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: accountRoleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}":
         delete:
             # @review
@@ -1388,6 +1327,67 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/AccountRole"
                     # @review
+                    description:
+                        ""
+            tags: ["AccountRole"]
+    "/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-email-address/{emailAddress}":
+        delete:
+            # @review
+            description:
+                Unassigns account users by email address from the account role
+            operationId: deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: emailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["AccountRole"]
+        post:
+            # @review
+            description:
+                Assigns account users by email address to the account role
+            operationId: postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: emailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["AccountRole"]

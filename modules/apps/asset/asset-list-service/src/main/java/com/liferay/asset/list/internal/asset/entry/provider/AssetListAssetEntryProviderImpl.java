@@ -894,34 +894,24 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords, int start, int end) {
 
-		SearchContext searchContext = new SearchContext();
-
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(
-				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		List<Long> assetEntryIds = ListUtil.toList(
-			assetListEntryAssetEntryRels,
-			AssetListEntryAssetEntryRelModel::getAssetEntryId);
-
-		searchContext.setAttribute(
-			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
-
-		searchContext.setBooleanClauses(
-			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
-		searchContext.setCompanyId(assetListEntry.getCompanyId());
-		searchContext.setKeywords(keywords);
-
-		AssetEntryQuery assetEntryQuery = _getManualAssetEntryQuery(
-			assetListEntry);
-
 		try {
 			Hits hits = _assetHelper.search(
-				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				_getManualSearchContext(
+					assetListEntry, segmentsEntryIds, assetCategoryIds,
+					keywords),
+				_getManualAssetEntryQuery(assetListEntry), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 			List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
+
+			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+				_getAssetListEntryAssetEntryRels(
+					assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			List<Long> assetEntryIds = ListUtil.toList(
+				assetListEntryAssetEntryRels,
+				AssetListEntryAssetEntryRelModel::getAssetEntryId);
 
 			ListUtil.sort(
 				assetEntries,
@@ -942,31 +932,12 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords) {
 
-		SearchContext searchContext = new SearchContext();
-
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(
-				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		List<Long> assetEntryIds = ListUtil.toList(
-			assetListEntryAssetEntryRels,
-			AssetListEntryAssetEntryRelModel::getAssetEntryId);
-
-		searchContext.setAttribute(
-			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
-
-		searchContext.setBooleanClauses(
-			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
-		searchContext.setCompanyId(assetListEntry.getCompanyId());
-		searchContext.setKeywords(keywords);
-
-		AssetEntryQuery assetEntryQuery = _getManualAssetEntryQuery(
-			assetListEntry);
-
 		try {
 			Long count = _assetHelper.searchCount(
-				searchContext, assetEntryQuery);
+				_getManualSearchContext(
+					assetListEntry, segmentsEntryIds, assetCategoryIds,
+					keywords),
+				_getManualAssetEntryQuery(assetListEntry));
 
 			return count.intValue();
 		}
@@ -1003,6 +974,32 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return assetEntryQuery;
+	}
+
+	private SearchContext _getManualSearchContext(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String keywords) {
+
+		SearchContext searchContext = new SearchContext();
+
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_getAssetListEntryAssetEntryRels(
+				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		List<Long> assetEntryIds = ListUtil.toList(
+			assetListEntryAssetEntryRels,
+			AssetListEntryAssetEntryRelModel::getAssetEntryId);
+
+		searchContext.setAttribute(
+			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
+
+		searchContext.setBooleanClauses(
+			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
+		searchContext.setCompanyId(assetListEntry.getCompanyId());
+		searchContext.setKeywords(keywords);
+
+		return searchContext;
 	}
 
 	private void _processAssetEntryQuery(

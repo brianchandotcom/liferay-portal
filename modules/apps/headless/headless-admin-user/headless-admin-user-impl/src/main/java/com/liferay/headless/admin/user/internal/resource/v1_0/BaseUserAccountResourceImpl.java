@@ -86,6 +86,78 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Removes a user by their external reference code from an account by external reference code"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "accountExternalReferenceCode"
+			),
+			@Parameter(
+				in = ParameterIn.PATH, name = "userAccountExternalReferenceCode"
+			)
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void
+			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("userAccountExternalReferenceCode")
+				String userAccountExternalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@Operation(
+		description = "Assigns a user by their external reference code to an account by external reference code"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "accountExternalReferenceCode"
+			),
+			@Parameter(
+				in = ParameterIn.PATH, name = "userAccountExternalReferenceCode"
+			)
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}"
+	)
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void
+			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("userAccountExternalReferenceCode")
+				String userAccountExternalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts'  -u 'test@liferay.com:test'
 	 */
 	@GET

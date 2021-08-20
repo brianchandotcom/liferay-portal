@@ -224,6 +224,58 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					null, null));
+	}
+
+	protected UserAccount
+			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount =
+			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					null, null));
+	}
+
+	protected UserAccount
+			testPostAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountUserAccountsByExternalReferenceCodePage()
 		throws Exception {
 

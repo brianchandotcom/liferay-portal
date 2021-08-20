@@ -42,6 +42,30 @@ public interface UserAccountResource {
 		return new Builder();
 	}
 
+	public void
+			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+				String accountExternalReferenceCode,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
 	public Page<UserAccount> getAccountUserAccountsByExternalReferenceCodePage(
 			String externalReferenceCode, String search, String filterString,
 			Pagination pagination, String sortString)
@@ -348,6 +372,190 @@ public interface UserAccountResource {
 	}
 
 	public static class UserAccountResourceImpl implements UserAccountResource {
+
+		public void
+				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+					String accountExternalReferenceCode,
+					String userAccountExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					accountExternalReferenceCode,
+					userAccountExternalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					String accountExternalReferenceCode,
+					String userAccountExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
+
+			httpInvoker.path(
+				"accountExternalReferenceCode", accountExternalReferenceCode);
+			httpInvoker.path(
+				"userAccountExternalReferenceCode",
+				userAccountExternalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+					String accountExternalReferenceCode,
+					String userAccountExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					accountExternalReferenceCode,
+					userAccountExternalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					String accountExternalReferenceCode,
+					String userAccountExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
+
+			httpInvoker.path(
+				"accountExternalReferenceCode", accountExternalReferenceCode);
+			httpInvoker.path(
+				"userAccountExternalReferenceCode",
+				userAccountExternalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
 
 		public Page<UserAccount>
 				getAccountUserAccountsByExternalReferenceCodePage(

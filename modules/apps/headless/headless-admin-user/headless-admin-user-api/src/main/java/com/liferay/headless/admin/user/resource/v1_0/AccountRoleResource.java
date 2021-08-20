@@ -51,14 +51,20 @@ public interface AccountRoleResource {
 	}
 
 	public void
-			deleteAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public void
-			postAccountAccountRoleUserAccountAssociationByExternalReferenceCode(
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
+				String userAccountExternalReferenceCode)
+		throws Exception;
+
+	public Page<AccountRole>
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
+				String accountExternalReferenceCode,
 				String userAccountExternalReferenceCode)
 		throws Exception;
 
@@ -69,6 +75,23 @@ public interface AccountRoleResource {
 
 	public AccountRole postAccountAccountRoleByExternalReferenceCode(
 			String externalReferenceCode, AccountRole accountRole)
+		throws Exception;
+
+	public void
+			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+				String externalReferenceCode, Long accountRoleId,
+				String emailAddress)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+				String externalReferenceCode, Long accountRoleId,
+				String emailAddress)
+		throws Exception;
+
+	public Page<AccountRole>
+			getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
+				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public Page<AccountRole> getAccountAccountRolesPage(

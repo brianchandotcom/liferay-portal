@@ -66,12 +66,53 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8278 | Test Summary: Site Activity Card: Can filter graph by month"
-	@ignore = "true"
 	@priority = "5"
 	test CanFilterActivityCardGraphByMonth {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8278 CanFilterActivityCardGraphByMonth
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8772
 
+		task ("Site and blogs creation and connection with AC") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with pages") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Test 2");
+
+			ACUtils.closeAllSessions();
+		}
+
+		task ("AC launch and go to property menu") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+
+
+		
+
+		task ("Asset in the Activity card graph by month filter") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			ACNavigation.switchTab(tabName = "Overview");
+
+			ACCards.viewCards(cardTitle = "${propertyName} Activities");
+
+			ACCards.clickFilterByMonth();
+
+			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8276 | Test Summary: Site Activity Card: Can filter graph by week"

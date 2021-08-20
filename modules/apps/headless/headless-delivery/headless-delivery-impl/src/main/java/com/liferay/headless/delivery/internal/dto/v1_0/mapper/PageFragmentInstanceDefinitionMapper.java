@@ -50,6 +50,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -174,15 +175,17 @@ public class PageFragmentInstanceDefinitionMapper {
 							if (valueJSONObject.has("color")) {
 								value = valueJSONObject.getString("color");
 							}
-							else {
-								JSONDeserializer<Map<String, Object>>
-									jsonDeserializer =
-										JSONFactoryUtil.
-											createJSONDeserializer();
+						}
 
-								value = jsonDeserializer.deserialize(
-									value.toString());
-							}
+						if (value instanceof JSONArray ||
+							value instanceof JSONObject) {
+
+							JSONDeserializer<Map<String, Object>>
+								jsonDeserializer =
+									JSONFactoryUtil.createJSONDeserializer();
+
+							value = jsonDeserializer.deserialize(
+								value.toString());
 						}
 
 						put(key, value);

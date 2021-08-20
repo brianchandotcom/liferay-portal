@@ -106,7 +106,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 							<div class="pencil-wrapper">
 								<aui:button href="" onClick='<%= liferayPortletResponse.getNamespace() + "showEditClientSecretModal();" %>' value="edit" />
 
-								<aui:input helpMessage="set-the-secret-identifier-known-only-to-the-application-and-the-authorization-server" name="clientSecret" readonly="true" type="password" value="<%= clientSecret %>" />
+								<aui:input helpMessage="client-secret-help[oauth2]" name="clientSecret" readonly="true" type="password" value="<%= clientSecret %>" />
 							</div>
 
 							<aui:input name="originalClientSecret" type="hidden" value="<%= clientSecret %>" />

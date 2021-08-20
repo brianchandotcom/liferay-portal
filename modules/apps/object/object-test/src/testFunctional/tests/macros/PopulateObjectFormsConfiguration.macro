@@ -18,10 +18,35 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
 	}
 
+	macro selectCustomObject {
+		Click(
+			key_label = "${label}",
+			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");	
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");	
+	}
+
 	macro viewDisplaySelectOption {
 		AssertElementPresent(
 			key_label = "${label}",
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+	}
+
+	macro publishFormObject {
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_PUBLISH_FORM");
+	}
+
+	macro saveFormObject {
+					AssertClick(
+				locator1 = "PopulateObjectFormsConfiguration#BUTTON_SAVE_FORM",
+				value1 = "Save");
+	}
+
+	macro viewUnmappedError {
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR");
+	}
+
+	macro closeUnmappedError {
+		Click(locator1 = "PopulateObjectFormsConfiguration#CLOSE_UNMAPPED_ERROR");
 	}
 
 }

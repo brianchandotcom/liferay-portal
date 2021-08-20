@@ -64,8 +64,37 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMapped {
+		property portal.acceptance = "true";
 
-		// TODO LPS-137351 CannotSaveOrPublishWhenAddedFieldNotMapped pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.publishFormObject();
+
+		PopulateObjectFormsConfiguration.viewUnmappedError();
+
+		PopulateObjectFormsConfiguration.closeUnmappedError();
+
+		PopulateObjectFormsConfiguration.saveFormObject();
+
+		PopulateObjectFormsConfiguration.viewUnmappedError();
+		
 
 	}
 
@@ -107,5 +136,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "C_CustomObject");
 	}
+
+
 
 }

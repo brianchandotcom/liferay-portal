@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.renderer.collection.filter.internal.display.context;
 
+import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -45,7 +46,7 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 			String parameterName = entry.getKey();
 
 			if (!parameterName.startsWith(
-					_COLLECTION_FILTER_PARAMETER_PREFIX)) {
+					FragmentCollectionFilterConstants.FILTER_PREFIX)) {
 
 				continue;
 			}
@@ -79,13 +80,11 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 		_collectionAppliedFiltersProps = HashMapBuilder.<String, Object>put(
 			"collectionFilterParameterPrefix",
-			_COLLECTION_FILTER_PARAMETER_PREFIX
+			FragmentCollectionFilterConstants.FILTER_PREFIX
 		).build();
 
 		return _collectionAppliedFiltersProps;
 	}
-
-	private static final String _COLLECTION_FILTER_PARAMETER_PREFIX = "filter_";
 
 	private Map<String, Object> _collectionAppliedFiltersProps;
 	private final HttpServletRequest _httpServletRequest;

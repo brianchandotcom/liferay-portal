@@ -15,6 +15,7 @@
 package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -431,7 +432,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String filterParameterName = entry.getKey();
 
-			if (!filterParameterName.startsWith("filter_") ||
+			if (!filterParameterName.startsWith(
+					FragmentCollectionFilterConstants.FILTER_PREFIX) ||
 				ArrayUtil.isEmpty(entry.getValue())) {
 
 				continue;

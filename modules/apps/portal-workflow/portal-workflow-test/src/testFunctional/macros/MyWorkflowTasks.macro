@@ -6,7 +6,6 @@ definition {
 			value1 = "${searchTerm}");
 
 		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
-<<<<<<< HEAD
 	}
 
 	macro updateDueDateAtMyWorkflowTastks {
@@ -20,8 +19,8 @@ definition {
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Review");
 
-		var key_workflowAssetTitle = "Blogs Entry Title 1";
-		var key_workflowTask = "Review";
+		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowTask = "${workflowTask}";
 
 		MenuItem.click(menuItem = "Update Due Date");
 
@@ -34,6 +33,10 @@ definition {
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
 			value1 = "${dueDate}");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
+			value1 = "${dueDateTime}");
 
 		Workflow.confirmWorkflowAction();
 	}
@@ -62,8 +65,11 @@ definition {
 
 	macro clearSearchResultMyWorkflowTasks {
 		Click(locator1 = "Link#CLEAR");
-=======
->>>>>>> 95ff826 (LRQA-68846 SF)
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
+			value1 = "${dueDateTime}");
+
+		Workflow.confirmWorkflowAction();
 	}
 
 }

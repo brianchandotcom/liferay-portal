@@ -1146,11 +1146,28 @@ definition {
 	}
 
 	@description = "Verify that in Update Due Date, the due date is required"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DueDateIsRequired {
 
-		// TODO LRQA-68861 DueDateIsRequired pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		MyWorkflowTasks.updateDueDateAtMyWorkflowTastks(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowTask = "Review",
+			dueDate = "  ",
+			dueDateTime = "05:30 PM"
+		);
+
+		Alert.viewErrorMessage(errorMessage = "Please enter a valid due date.");
+
+
+
+
+
 
 	}
 

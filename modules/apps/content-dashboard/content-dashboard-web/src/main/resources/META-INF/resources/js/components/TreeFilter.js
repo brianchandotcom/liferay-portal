@@ -70,15 +70,16 @@ const TreeFilter = ({
 			const isChildNode = !node.children;
 
 			if (selectedNodes.has(node.id) && isChildNode) {
-                let newSelectedNode = {};
+				let newSelectedNode = {};
 
-                if (necessaryKeys.length === 1) {
-                    newSelectedNode = node[necessaryKeys[0]];
-                } else {
-                    necessaryKeys.forEach(key => {
-                        newSelectedNode[key] = node[key]
-                    });
-                }
+				if (necessaryKeys.length === 1) {
+					newSelectedNode = node[necessaryKeys[0]];
+				}
+				else {
+					necessaryKeys.forEach((key) => {
+						newSelectedNode[key] = node[key];
+					});
+				}
 				data.push(newSelectedNode);
 			}
 		});
@@ -166,8 +167,8 @@ const TreeFilter = ({
 };
 
 TreeFilter.propTypes = {
-    itemSelectorSaveEvent: PropTypes.string.isRequired,
-    necessaryKeys: PropTypes.array.isRequired,
+	itemSelectorSaveEvent: PropTypes.string.isRequired,
+	necessaryKeys: PropTypes.array.isRequired,
 	nodes: PropTypes.array.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };

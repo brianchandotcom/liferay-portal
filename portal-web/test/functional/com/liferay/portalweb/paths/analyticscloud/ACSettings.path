@@ -168,6 +168,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NO_PROPERTIES_FOUND</td>
+	<td>//span[contains(@class,'title') and text()='No Properties Found']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTY_NAME</td>
 	<td>//span[@class='title-value']</td>
 	<td></td>

@@ -543,6 +543,2087 @@ definition {
 	}
 
 	@description = "LPS-134760: Given the Page Audit panel in a private page
+	@description = "LPS-137227 Given a content page
+	When a user with permissions to edit blogs visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInContentPageWithEditBlogsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "BlogsEditorRole",
+				roleTitle = "BlogsEditorRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.blogs.model.BlogsEntry",
+				roleTitle = "BlogsEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "BlogsEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a content page
+	When a user with permissions to edit documents visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInContentPageWithEditDocumentsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "DocumentEditorRole",
+				roleTitle = "DocumentEditorRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+				roleTitle = "DocumentEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "DocumentEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a content page
+	When the user with permissions to edit pages visits the view mode
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInContentPageWithEditPagesPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "PagesEditorRole",
+				roleTitle = "PagesEditorRole");
+			
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "PagesEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "PagesEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a content page
+	When a user with permissions to edit web content visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInContentPageWithEditWebContentPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole",
+				roleTitle = "WebContentEditorRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a content page
+	When a user with NO permissions to edit blogs visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInContentPageWithoutEditBlogsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "BlogsRole",
+				roleTitle = "BlogsRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "BlogsRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "BlogsRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a content page
+	When a user with NO permissions to edit documents visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInContentPageWithoutEditDocumentsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "DocumentRole",
+				roleTitle = "DocumentRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "DocumentRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "DocumentRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a content page
+	When the user with NO permissions to edit pages visits the view mode
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInContentPageWithoutEditPagesPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "PagesRole",
+				roleTitle = "PagesRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "PagesRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "PagesRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a content page
+	When a user with NO permissions to edit web content visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInContentPageWithoutEditWebContentPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentRole",
+				roleTitle = "WebContentRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "WebContentRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When a user with permissions to edit blogs visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInDisplayPageWithEditBlogsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "BlogsEditorRole",
+				roleTitle = "BlogsEditorRole");
+			
+			for (var resourceActionIndex : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.blogs.model.BlogsEntry",
+					roleTitle = "BlogsEditorRole");
+			}
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "BlogsEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When a user with permissions to edit documents visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInDisplayPageWithEditDocumentsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "DocumentEditorRole",
+				roleTitle = "DocumentEditorRole");
+
+			for (var resourceActionIndex : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+					roleTitle = "DocumentEditorRole");
+			}
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "DocumentEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When the user with permissions to edit pages visits the view mode
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInDisplayPageWithEditPagesPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "PagesEditorRole",
+				roleTitle = "PagesEditorRole");
+			
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "PagesEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "PagesEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When a user with permissions to edit web content visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInDisplayPageWithEditWebContentPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole",
+				roleTitle = "WebContentEditorRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content Title",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When a user with NO permissions to edit blogs visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInDisplayPageWithoutEditBlogsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "BlogsRole",
+				roleTitle = "BlogsRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "BlogsRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "BlogsRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When a user with NO permissions to edit documents visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInDisplayPageWithoutEditDocumentsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "DocumentRole",
+				roleTitle = "DocumentRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+				roleTitle = "DocumentRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "DocumentRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "DocumentRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a widget page
+	When the user with NO permissions to edit pages visits the view mode
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInWidgetPageWithoutEditPagesPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "PagesRole",
+				roleTitle = "PagesRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "PagesRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "PagesRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When a user with NO permissions to edit web content visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInDisplayPageWithoutEditWebContentPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentRole",
+				roleTitle = "WebContentRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content Title",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "WebContentRole");
+		}
+	}
+
+
+	@description = "LPS-137227 Given a widget page
+	When a user with permissions to edit blogs visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInWidgetPageWithEditBlogsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "BlogsEditorRole",
+				roleTitle = "BlogsEditorRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.blogs.model.BlogsEntry",
+				roleTitle = "BlogsEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "BlogsEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a widget page
+ 	When a user with permissions to edit documents visits the page
+ 	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInWidgetPageWithEditDocumentsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "DocumentEditorRole",
+				roleTitle = "DocumentEditorRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+				roleTitle = "DocumentEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "DocumentEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a widget page
+	When the user with permissions to edit pages visits the view mode
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInWidgetPageWithEditPagesPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "PagesEditorRole",
+				roleTitle = "PagesEditorRole");
+			
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "PagesEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "PagesEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a widget page
+	When a user with permissions to edit web content visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "4"
+	test CheckPageAuditIconInWidgetPageWithEditWebContentPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentEditorRole",
+				roleTitle = "WebContentEditorRole");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "WebContentEditorRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentEditorRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a widget page
+	When a user with NO permissions to edit blogs visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInWidgetPageWithoutEditBlogsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "BlogsRole",
+				roleTitle = "BlogsRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "BlogsRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "BlogsRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a widget page
+ 	When a user with NO permissions to edit documents visits the page
+ 	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInWidgetPageWithoutEditDocumentsPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "DocumentRole",
+				roleTitle = "DocumentRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "DocumentRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "DocumentRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a display page
+	When the user with NO permissions to edit pages visits the view mode
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInDisplayPageWithoutEditPagesPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "PagesRole",
+				roleTitle = "PagesRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "PagesRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a Blog Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add 'Asset Publisher' to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "PagesRole");
+		}
+	}
+
+	@description = "LPS-137227 Given a widget page
+	When a user with NO permissions to edit web content visits the page
+	Then the issue icon for displaying the page audit panel shows"
+	@priority = "3"
+	test CheckPageAuditIconInWidgetPageWithoutEditWebContentPermission {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create role and assign to user") {
+			JSONRole.addRegularRole(
+				roleKey = "WebContentRole",
+				roleTitle = "WebContentRole");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "WebContentRole",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Disable option to strangers to verify email") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		}
+
+		task ("Login with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert if Audit Page icon is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Login with Test user, to allow tearDown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Remove user and role created") {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONRole.deleteRole(roleTitle = "WebContentRole");
+		}
+	}
+
+	@description = "Given the Page Audit panel in a private page
 	Then the reload button won't be visible."
 	@priority = "3"
 	test CheckNotVisibleReloadbButtonInPrivatePage {

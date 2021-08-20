@@ -26,16 +26,34 @@ const mockTags = {
 		keywordsRanked: {
 			items: [
 				{
+					actions: {
+						subscribe: {
+							operation: 'updateKeywordSubscribe',
+							type: 'mutation',
+						},
+					},
 					id: 37018,
 					keywordUsageCount: 1,
 					name: 'new',
 				},
 				{
+					actions: {
+						subscribe: {
+							operation: 'updateKeywordSubscribe',
+							type: 'mutation',
+						},
+					},
 					id: 37019,
 					keywordUsageCount: 1,
 					name: 'osgi',
 				},
 				{
+					actions: {
+						subscribe: {
+							operation: 'updateKeywordSubscribe',
+							type: 'mutation',
+						},
+					},
 					id: 37020,
 					keywordUsageCount: 1,
 					name: 'tag',

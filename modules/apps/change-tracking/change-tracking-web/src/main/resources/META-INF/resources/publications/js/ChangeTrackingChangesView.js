@@ -16,7 +16,12 @@ import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
-import {ClayInput, ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import {
+	ClayInput,
+	ClayRadio,
+	ClayRadioGroup,
+	ClayToggle,
+} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayManagementToolbar, {
@@ -204,30 +209,63 @@ export default ({
 		}
 	}
 
+	const typesRef = useRef(null);
+
+	if (typesRef.current === null) {
+		typesRef.current = {};
+
+		const ctEntryTypes = [];
+		const nonHideableTypes = [];
+
+		const modelKeys = Object.keys(modelsRef.current);
+
+		for (let i = 0; i < modelKeys.length; i++) {
+			const model = modelsRef.current[modelKeys[i]];
+
+			if (model.ctEntryId && !ctEntryTypes.includes(model.typeName)) {
+				ctEntryTypes.push(model.typeName);
+			}
+
+			if (!model.hideable && !nonHideableTypes.includes(model.typeName)) {
+				nonHideableTypes.push(model.typeName);
+			}
+		}
+
+		const typeNameKeys = Object.keys(typeNames);
+
+		for (let i = 0; i < typeNameKeys.length; i++) {
+			const typeName = typeNames[typeNameKeys[i]];
+
+			typesRef.current[typeNameKeys[i]] = {
+				ctEntry: !!ctEntryTypes.includes(typeName),
+				hideable: !nonHideableTypes.includes(typeName),
+				label: typeName.replace(/.*\./g, ''),
+				name: typeName,
+			};
+		}
+	}
+
 	const contextViewRef = useRef(null);
 
 	if (contextViewRef.current === null) {
 		contextViewRef.current = JSON.parse(JSON.stringify(contextView));
 
 		for (let i = 0; i < rootDisplayClasses.length; i++) {
-			const rootClass = contextViewRef.current[rootDisplayClasses[i]];
+			const className = rootDisplayClasses[i];
 
-			let hideable = true;
+			const rootClass = contextViewRef.current[className];
 
-			for (let j = 0; j < rootClass.children.length; j++) {
-				const model =
-					modelsRef.current[
-						rootClass.children[j].modelKey.toString()
-					];
+			const keys = Object.keys(typesRef.current);
 
-				if (model && !model.hideable) {
-					hideable = false;
+			for (let j = 0; j < keys.length; j++) {
+				const type = typesRef.current[keys[j]];
+
+				if (type.name === className && type.hideable) {
+					rootClass.hideable = true;
 
 					break;
 				}
 			}
-
-			rootClass.hideable = hideable;
 		}
 	}
 

@@ -188,7 +188,7 @@ definition {
 		}
 
 		task ("View the user showns on the Preview mode") {
-			Click(locator1 = "Icon#EYE_PREVIEW");
+			ACSegments.previewSegmentMembership();
 
 			ACAssets.viewAssets(assetName = "ac ac");
 		}
@@ -246,7 +246,7 @@ definition {
 		}
 
 		task ("View the user showns on the Preview mode") {
-			Click(locator1 = "Icon#EYE_PREVIEW");
+			ACSegments.previewSegmentMembership();
 
 			ACAssets.viewAssets(assetName = "ac ac");
 		}
@@ -316,7 +316,7 @@ definition {
 		}
 
 		task ("View the user showns on the Preview mode") {
-			Click(locator1 = "Icon#EYE_PREVIEW");
+			ACSegments.previewSegmentMembership();
 
 			ACAssets.viewAssets(assetName = "ac ac");
 		}
@@ -389,7 +389,7 @@ definition {
 		}
 
 		task ("View the user showns on the Preview mode") {
-			Click(locator1 = "Icon#EYE_PREVIEW");
+			ACSegments.previewSegmentMembership();
 
 			ACAssets.viewAssets(assetName = "ac ac");
 		}
@@ -439,7 +439,7 @@ definition {
 		}
 
 		task ("View the user showns on the Preview mode") {
-			Click(locator1 = "Icon#EYE_PREVIEW");
+			ACSegments.previewSegmentMembership();
 
 			ACAssets.viewAssets(assetName = "ac ac");
 		}
@@ -509,7 +509,7 @@ definition {
 		}
 
 		task ("View the user showns on the Preview mode") {
-			Click(locator1 = "Icon#EYE_PREVIEW");
+			ACSegments.previewSegmentMembership();
 
 			ACAssets.viewAssets(assetName = "ac ac");
 		}

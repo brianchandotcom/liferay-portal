@@ -1733,6 +1733,13 @@ definition {
 				value1 = "${userMiddleNameEdit}");
 		}
 
+		if (isSet(userCustomField)) {
+			Type(
+				key_fieldLabel = "${userCustomFieldLabel}",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${userCustomField}");
+		}
+
 		PortletEntry.save();
 
 		if (isSet(userScreenNameEdit)) {

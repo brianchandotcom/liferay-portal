@@ -40,20 +40,6 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "ac@liferay.com");
 		}
-
-		task ("View the page as the new added user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-
-			Navigator.openSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Lauch DXP") {
-			ACUtils.launchDXP();
-		}
 	}
 
 	tearDown {
@@ -71,34 +57,15 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8571 | Test Summary: Custom field does not appear in AC after it has been removed in DXP"
 	@priority = "4"
 	test AssertCustomFieldsNotAppearInACFilterWhenRemovedFromDXP {
-		task ("Add a new site with a public widget page") {
-			ACUtils.addSiteAndPage();
-		}
-
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Assign the new user to organization") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
-
+		task ("Add an organization") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
-
-			JSONOrganization.assignUserToOrganization(
-				organizationName = "Organization Name",
-				userEmailAddress = "ac@liferay.com");
 		}
 
-		task ("Add Custom Fields for organization") {
+		task ("Add a custom field for organization") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -195,12 +162,6 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -229,8 +190,6 @@ definition {
 			Click(locator1 = "Icon#EYE_PREVIEW");
 
 			ACAssets.viewAssets(assetName = "ac ac");
-
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
 	}
 
@@ -249,12 +208,6 @@ definition {
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -285,8 +238,6 @@ definition {
 			Click(locator1 = "Icon#EYE_PREVIEW");
 
 			ACAssets.viewAssets(assetName = "ac ac");
-
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
 	}
 
@@ -319,12 +270,6 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -353,8 +298,6 @@ definition {
 			Click(locator1 = "Icon#EYE_PREVIEW");
 
 			ACAssets.viewAssets(assetName = "ac ac");
-
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
 	}
 
@@ -390,12 +333,6 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -424,8 +361,6 @@ definition {
 			Click(locator1 = "Icon#EYE_PREVIEW");
 
 			ACAssets.viewAssets(assetName = "ac ac");
-
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
 	}
 
@@ -438,12 +373,6 @@ definition {
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -472,8 +401,6 @@ definition {
 			Click(locator1 = "Icon#EYE_PREVIEW");
 
 			ACAssets.viewAssets(assetName = "ac ac");
-
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
 	}
 
@@ -508,12 +435,6 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -540,8 +461,6 @@ definition {
 			Click(locator1 = "Icon#EYE_PREVIEW");
 
 			ACAssets.viewAssets(assetName = "ac ac");
-
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
 	}
 

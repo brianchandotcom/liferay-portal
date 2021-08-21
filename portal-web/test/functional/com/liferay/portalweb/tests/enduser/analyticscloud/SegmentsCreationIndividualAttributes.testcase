@@ -402,8 +402,34 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
+		task ("Add a user custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "User Custom Field",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "User");
+		}
+
+		task ("Define the value of custom field for new user") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.gotoEditCP(userScreenName = "ac");
+
+			User.editUserInformation(
+				userCustomField = "VIP",
+				userCustomFieldLabel = "User Custom Field");
+		}
+
 		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+			ACDXPSettings.syncNewUserData(fieldNameList = "User Custom Field");
 		}
 
 		task ("View the page as the new added user") {
@@ -431,11 +457,11 @@ definition {
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "Custom Field");
+			ACSegments.addSegmentField(segmentField = "User Custom Field");
 
-			ACSegments.selectOperator(operator = "is not");
+			ACSegments.selectOperator(operator = "contains");
 
-			ACSegments.editTextCriterion(textInput = "defined");
+			ACSegments.editTextCriterion(textInput = "VIP");
 		}
 
 		task ("View the user showns on the Preview mode") {

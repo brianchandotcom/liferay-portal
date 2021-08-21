@@ -215,6 +215,7 @@ public class QuestionsConfigurationModelListener
 					"MBCategoryService#getCategoriesCount\n", mbPackage,
 					"MBMessageService#fetchMBMessageByUrlSubject\n", mbPackage,
 					"MBMessageService#getChildMessages\n", mbPackage,
+					"MBMessageService#getChildMessagesCount\n", mbPackage,
 					"MBMessageService#getMessage\n", mbPackage,
 					"MBThreadService#getThreads\n", mbPackage,
 					"MBThreadService#getThreadsCount\n"),

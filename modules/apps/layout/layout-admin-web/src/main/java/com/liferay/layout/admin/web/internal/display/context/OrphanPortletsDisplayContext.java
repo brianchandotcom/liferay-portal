@@ -184,13 +184,11 @@ public class OrphanPortletsDisplayContext {
 
 		List<Portlet> portlets = getOrphanPortlets();
 
+		orphanPortletsSearchContainer.setResults(
+			ListUtil.subList(
+				portlets, orphanPortletsSearchContainer.getStart(),
+				orphanPortletsSearchContainer.getEnd()));
 		orphanPortletsSearchContainer.setTotal(portlets.size());
-
-		portlets = ListUtil.subList(
-			portlets, orphanPortletsSearchContainer.getStart(),
-			orphanPortletsSearchContainer.getEnd());
-
-		orphanPortletsSearchContainer.setResults(portlets);
 
 		_orphanPortletsSearchContainer = orphanPortletsSearchContainer;
 

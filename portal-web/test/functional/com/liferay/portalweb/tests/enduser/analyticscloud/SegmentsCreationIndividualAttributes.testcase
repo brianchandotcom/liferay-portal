@@ -73,7 +73,7 @@ definition {
 				portlet = "Custom Fields");
 
 			CustomFields.addCP(
-				customFieldName = "AC Org Custom Fields",
+				customFieldName = "Org Custom Field",
 				customFieldType = "Text Area",
 				resourceName = "Organization");
 		}
@@ -97,7 +97,7 @@ definition {
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
-			ACSegments.assertSegmentAttributePresent(segmentField = "AC Org Custom Fields");
+			ACSegments.assertSegmentAttributePresent(segmentField = "org custom field");
 		}
 
 		task ("Delete Custom Fields for organization") {
@@ -109,7 +109,7 @@ definition {
 				portlet = "Custom Fields");
 
 			CustomFields.deleteCP(
-				customFieldName = "AC Org Custom Fields",
+				customFieldName = "Org Custom Field",
 				resourceName = "Organization");
 		}
 
@@ -128,7 +128,7 @@ definition {
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
-			ACSegments.assertSegmentAttributeNotPresent(segmentField = "AC Org Custom Fields");
+			ACSegments.assertSegmentAttributeNotPresent(segmentField = "org custom field");
 		}
 	}
 
@@ -429,7 +429,7 @@ definition {
 		}
 
 		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewUserData(fieldNameList = "User Custom Field");
+			ACDXPSettings.syncNewUserData(fieldNameList = "user custom field");
 		}
 
 		task ("View the page as the new added user") {
@@ -457,7 +457,7 @@ definition {
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "User Custom Field");
+			ACSegments.addSegmentField(segmentField = "user custom field");
 
 			ACSegments.selectOperator(operator = "contains");
 
@@ -493,7 +493,7 @@ definition {
 				portlet = "Custom Fields");
 
 			CustomFields.addCP(
-				customFieldName = "AC Org Custom Fields",
+				customFieldName = "Org Custom Field",
 				customFieldType = "Text Area",
 				resourceName = "Organization");
 		}
@@ -527,7 +527,7 @@ definition {
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
-			ACSegments.addSegmentField(segmentField = "AC Org Custom Fields");
+			ACSegments.addSegmentField(segmentField = "org custom field");
 
 			ACSegments.selectOperator(operator = "is not");
 

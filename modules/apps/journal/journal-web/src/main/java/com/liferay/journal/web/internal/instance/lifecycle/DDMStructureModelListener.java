@@ -34,7 +34,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -105,7 +104,12 @@ public class DDMStructureModelListener
 		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
 			new HashMap<>();
 
-		for (DDMStructure ddmStructure : _getDDMStructures(company)) {
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getClassStructures(
+				company.getCompanyId(),
+				_portal.getClassNameId(JournalArticle.class.getName()));
+
+		for (DDMStructure ddmStructure : ddmStructures) {
 			ddmStructureServiceRegistrationMap.put(
 				ddmStructure.getStructureId(),
 				_bundleContext.registerService(
@@ -140,20 +144,6 @@ public class DDMStructureModelListener
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-	}
-
-	private List<DDMStructure> _getDDMStructures(Company company) {
-		List<Long> groupIdsList = _groupLocalService.getGroupIds(
-			company.getCompanyId(), true);
-
-		Stream<Long> stream = groupIdsList.stream();
-
-		long[] groupIds = stream.mapToLong(
-			groupId -> groupId
-		).toArray();
-
-		return _ddmStructureLocalService.getStructures(
-			groupIds, _portal.getClassNameId(JournalArticle.class.getName()));
 	}
 
 	private BundleContext _bundleContext;

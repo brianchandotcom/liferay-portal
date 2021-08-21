@@ -82,16 +82,6 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
-		task ("View the page as the new added user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -163,6 +153,16 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -209,6 +209,16 @@ definition {
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -269,6 +279,16 @@ definition {
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -334,6 +354,16 @@ definition {
 			ACDXPSettings.syncNewContactData();
 		}
 
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -374,6 +404,16 @@ definition {
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {
@@ -434,6 +474,16 @@ definition {
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Switch to new property in AC") {

@@ -30,7 +30,6 @@ import com.liferay.headless.admin.batch.planner.client.resource.v1_0.PlanResourc
 import com.liferay.headless.admin.batch.planner.client.serdes.v1_0.PlanSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -203,40 +202,6 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetPlansPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"plans",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 2);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		JSONObject plansJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/plans");
-
-		Assert.assertEquals(0, plansJSONObject.get("totalCount"));
-
-		Plan plan1 = testGraphQLPlan_addPlan();
-		Plan plan2 = testGraphQLPlan_addPlan();
-
-		plansJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/plans");
-
-		Assert.assertEquals(2, plansJSONObject.get("totalCount"));
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(plan1, plan2),
-			Arrays.asList(
-				PlanSerDes.toDTOs(plansJSONObject.getString("items"))));
-	}
-
-	@Test
 	public void testPostPlan() throws Exception {
 		Plan randomPlan = randomPlan();
 
@@ -272,37 +237,6 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLDeletePlan() throws Exception {
-		Plan plan = testGraphQLPlan_addPlan();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePlan",
-						new HashMap<String, Object>() {
-							{
-								put("id", plan.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePlan"));
-
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"plan",
-					new HashMap<String, Object>() {
-						{
-							put("id", plan.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray.length() > 0);
-	}
-
-	@Test
 	public void testGetPlan() throws Exception {
 		Plan postPlan = testGetPlan_addPlan();
 
@@ -315,47 +249,6 @@ public abstract class BasePlanResourceTestCase {
 	protected Plan testGetPlan_addPlan() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPlan() throws Exception {
-		Plan plan = testGraphQLPlan_addPlan();
-
-		Assert.assertTrue(
-			equals(
-				plan,
-				PlanSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"plan",
-								new HashMap<String, Object>() {
-									{
-										put("id", plan.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/plan"))));
-	}
-
-	@Test
-	public void testGraphQLGetPlanNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"plan",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
 	}
 
 	@Test

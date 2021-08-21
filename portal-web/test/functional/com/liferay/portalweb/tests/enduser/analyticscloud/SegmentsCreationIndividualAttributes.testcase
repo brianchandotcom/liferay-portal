@@ -59,7 +59,7 @@ definition {
 	@priority = "4"
 	test AssertCustomFieldsNotAppearInACFilterWhenRemovedFromDXP {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
 		task ("Add an organization") {

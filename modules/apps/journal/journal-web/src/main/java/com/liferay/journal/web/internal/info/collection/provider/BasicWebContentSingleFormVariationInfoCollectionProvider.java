@@ -230,7 +230,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		return searchContext;
 	}
 
-	private InfoField _getAssetTagsInfoField() {
+	private InfoField<?> _getAssetTagsInfoField() {
 		List<SelectInfoFieldType.Option> options = new ArrayList<>();
 
 		ServiceContext serviceContext =
@@ -248,7 +248,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 					assetTag.getName(), assetTag.getName()));
 		}
 
-		InfoField.FinalStep finalStep = InfoField.builder(
+		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(
 			SelectInfoFieldType.INSTANCE
 		).name(

@@ -68,9 +68,12 @@ public class ObjectDefinitionResourceImpl
 		return Page.of(
 			transform(
 				_objectDefinitionService.getObjectDefinitions(
+					contextCompany.getCompanyId(),
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toObjectDefinition),
-			pagination, _objectDefinitionService.getObjectDefinitionsCount());
+			pagination,
+			_objectDefinitionService.getObjectDefinitionsCount(
+				contextCompany.getCompanyId()));
 	}
 
 	@Override

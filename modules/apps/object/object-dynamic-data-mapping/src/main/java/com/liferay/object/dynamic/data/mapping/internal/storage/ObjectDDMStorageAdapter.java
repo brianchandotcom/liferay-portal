@@ -31,9 +31,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -133,9 +137,23 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			long objectDefinitionId = _getObjectDefinitionId(
 				ddmStorageAdapterSaveRequest);
 
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
+
+			ObjectScopeProvider objectScopeProvider =
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition.getScope());
+
+			long groupId = 0;
+
+			if (objectScopeProvider.isGroupAware()) {
+				groupId = ddmStorageAdapterSaveRequest.getScopeGroupId();
+			}
+
 			ObjectEntry addObjectEntry = _objectEntryManager.addObjectEntry(
 				_getDTOConverterContext(null, user, ddmForm.getDefaultLocale()),
-				user.getUserId(), objectDefinitionId,
+				user.getUserId(), groupId, objectDefinitionId,
 				new ObjectEntry() {
 					{
 						properties = _getObjectEntryProperties(
@@ -343,10 +361,16 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
 	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

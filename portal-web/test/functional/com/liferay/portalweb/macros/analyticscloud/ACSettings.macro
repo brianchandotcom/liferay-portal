@@ -342,9 +342,11 @@ definition {
 
 			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 
-			AssertTextEquals(
-				locator1 = "Modal#HEADER",
-				value1 = "Delete ${dataSourceName}");
+			if (!(contains("${dataSourceName}", "Salesforce"))) {
+				AssertTextEquals(
+					locator1 = "Modal#HEADER",
+					value1 = "Delete ${dataSourceName}");
+			}
 
 			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
 

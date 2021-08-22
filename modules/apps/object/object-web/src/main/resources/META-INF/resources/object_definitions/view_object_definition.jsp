@@ -19,22 +19,35 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
+EditObjectDefinitionDisplayContext editObjectDefinitionDisplayContext = (EditObjectDefinitionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+ObjectDefinition objectDefinition = editObjectDefinitionDisplayContext.getObjectDefinition();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.getName(), false));
+renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.getShortName(), false));
 %>
 
+<portlet:actionURL name="/object_definitions/edit_object_definition" var="editObjectDefinitionURL" />
+
 <liferay-frontend:edit-form
-	action="javascript:;"
-	onSubmit='<%= liferayPortletResponse.getNamespace() + "submitObjectDefinition();" %>'
+	action="<%= editObjectDefinitionURL %>"
+	name="fm"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-frontend:edit-form-body>
+		<aui:model-context bean="<%= objectDefinition %>" model="<%= ObjectDefinition.class %>" />
+
+		<liferay-ui:error exception="<%= DuplicateObjectDefinitionException.class %>" />
+		<liferay-ui:error exception="<%= ObjectDefinitionLabelException.class %>" />
+		<liferay-ui:error exception="<%= ObjectDefinitionNameException.class %>" />
+		<liferay-ui:error exception="<%= ObjectDefinitionPluralLabelException.class %>" />
+		<liferay-ui:error exception="<%= ObjectDefinitionScopeException.class %>" />
+		<liferay-ui:error exception="<%= ObjectDefinitionStatusException.class %>" />
+
 		<h2 class="sheet-title">
 			<%= LanguageUtil.get(request, "information") %>
 		</h2>
@@ -49,11 +62,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:input cssClass="disabled" label="object-definition-id" name="objectDefinitionId" readonly="true" type="text" value="<%= String.valueOf(objectDefinition.getObjectDefinitionId()) %>" />
-
-						<aui:input cssClass="disabled" label="name" name="name" readonly="true" type="text" value="<%= String.valueOf(objectDefinition.getName()) %>" />
-
-						<aui:input cssClass="disabled" label="object-definition-table-name" name="dbTableName" readonly="true" type="text" value="<%= String.valueOf(objectDefinition.getDBTableName()) %>" />
+						<aui:input cssClass="disabled" label="object-definition-id" name="objectDefinitionId" readonly="true" type="text" />
+						<aui:input disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
+						<aui:input name="label" />
+						<aui:input name="pluralLabel" />
+						<aui:input cssClass="disabled" label="object-definition-table-name" name="DBTableName" readonly="true" type="text" />
 					</clay:col>
 				</clay:row>
 
@@ -61,65 +74,88 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isSystem() %>" />
 				</aui:field-wrapper>
 			</clay:sheet-section>
+
+			<clay:sheet-section>
+				<h3 class="sheet-subtitle">
+					<%= LanguageUtil.get(request, "scope") %>
+				</h3>
+
+				<clay:row>
+					<clay:col
+						md="11"
+					>
+						<aui:select disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
+
+							<%
+							for (ObjectScopeProvider objectScopeProvider : editObjectDefinitionDisplayContext.getObjectScopeProvider()) {
+								String scope = editObjectDefinitionDisplayContext.getScope();
+							%>
+
+								<aui:option label="<%= objectScopeProvider.getLabel(locale) %>" selected="<%= scope.equals(objectScopeProvider.getKey()) %>" value="<%= objectScopeProvider.getKey() %>" />
+							<%} %>
+						</aui:select>
+					</clay:col>
+				</clay:row>
+
+				<clay:row>
+					<clay:col
+						md="11"
+					>
+						<aui:select name="panelCategoryKey" showEmptyOption="<%= true %>">
+							<% for(KeyValuePair keyValuePair : editObjectDefinitionDisplayContext.getPanelCategories()) {
+									String panelCategoryKey = objectDefinition.getPanelCategoryKey();
+							%>
+
+								<aui:option label="<%= keyValuePair.getValue() %>" selected="<%= panelCategoryKey.equals(keyValuePair.getKey()) %>" value="<%= keyValuePair.getKey() %>" />
+							<%} %>
+						</aui:select>
+					</clay:col>
+				</clay:row>
+			</clay:sheet-section>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button disabled="<%= true %>" name="save" onClick='<%= liferayPortletResponse.getNamespace() + "saveObjectDefinition();" %>' value='<%= LanguageUtil.get(request, "save") %>' />
+		<aui:button name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(true);" %>' primary="<%= false %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
-		<aui:button disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="publish" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
+		<aui:button disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
 
 		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <script>
-	function <portlet:namespace />submitObjectDefinition() {
-		const objectDefinitionId =
-			'<%= objectDefinition.getObjectDefinitionId() %>';
+	function <portlet:namespace />submitObjectDefinition(draft) {
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		Liferay.Util.fetch(
-			'/o/object-admin/v1.0/object-definitions/' +
-				objectDefinitionId +
-				'/publish',
-			{
-				body: JSON.stringify({id: objectDefinitionId}),
-				headers: new Headers({
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				}),
-				method: 'POST',
-			}
-		)
-			.then((response) => {
-				if (response.status === 401) {
-					window.location.reload();
-				}
-				else if (response.ok) {
-					Liferay.Util.openToast({
-						message:
-							'<%= LanguageUtil.get(request, "the-object-was-published-successfully") %>',
-						type: 'success',
-					});
+		var cmd = form.querySelector(
+			'#<portlet:namespace /><%= Constants.CMD %>'
+		);
 
-					const publishButton = document.querySelector(
-						'#<portlet:namespace />publish'
-					);
-					publishButton.setAttribute('disabled', true);
-				}
-				else {
-					return response.json();
-				}
-			})
-			.then((response) => {
-				if (response && response.title) {
-					Liferay.Util.openToast({
-						message: response.title,
-						type: 'danger',
-					});
-				}
-			});
+		if (!draft) {
+			cmd.setAttribute(
+				'value',
+				'<%= Constants.PUBLISH %>'
+			);
+		}
+
+		submitForm(form);
+
 	}
 
-	function <portlet:namespace />saveObjectDefinition() {}
+	function <portlet:namespace />selectScope() {
+
+		const scope = document.getElementById('<portlet:namespace />scope');
+
+		let url = new URL(window.location.href);
+
+		url.searchParams.set('<portlet:namespace />scope', scope.value);
+
+		if (Liferay.SPA) {
+			Liferay.SPA.app.navigate(url);
+		}
+		else {
+			window.location.href = url;
+		}
+	}
 </script>

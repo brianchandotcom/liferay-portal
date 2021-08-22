@@ -26,7 +26,7 @@ ViewObjectFieldsDisplayContext viewObjectFieldsDisplayContext = (ViewObjectField
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(objectDefinition.getName());
+renderResponse.setTitle(objectDefinition.getShortName());
 %>
 
 <clay:headless-data-set-display

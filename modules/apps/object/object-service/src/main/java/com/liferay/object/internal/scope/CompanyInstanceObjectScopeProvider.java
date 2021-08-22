@@ -15,11 +15,13 @@
 package com.liferay.object.internal.scope;
 
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.object.scope.ObjectScopeGroupHttpRetriever;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,6 +35,11 @@ import org.osgi.service.component.annotations.Component;
 public class CompanyInstanceObjectScopeProvider implements ObjectScopeProvider {
 
 	@Override
+	public long getGroupId(HttpServletRequest httpServletRequest) {
+		return GroupConstants.DEFAULT_LIVE_GROUP_ID;
+	}
+
+	@Override
 	public String getKey() {
 		return "company";
 	}
@@ -40,11 +47,6 @@ public class CompanyInstanceObjectScopeProvider implements ObjectScopeProvider {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "company");
-	}
-
-	@Override
-	public ObjectScopeGroupHttpRetriever getObjectScopeGroupHttpRetriever() {
-		return new DefaultObjectScopeGroupHttpRetriever();
 	}
 
 	@Override

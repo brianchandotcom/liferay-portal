@@ -14,14 +14,16 @@
 
 package com.liferay.object.internal.scope;
 
-import com.liferay.object.scope.ObjectScopeGroupHttpRetriever;
 import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,6 +38,13 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotObjectScopeProvider implements ObjectScopeProvider {
 
 	@Override
+	public long getGroupId(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		return _portal.getScopeGroupId(httpServletRequest);
+	}
+
+	@Override
 	public String getKey() {
 		return "depot";
 	}
@@ -43,11 +52,6 @@ public class DepotObjectScopeProvider implements ObjectScopeProvider {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "depot");
-	}
-
-	@Override
-	public ObjectScopeGroupHttpRetriever getObjectScopeGroupHttpRetriever() {
-		return new PortalObjectScopeGroupHttpRetriever(_portal);
 	}
 
 	@Override

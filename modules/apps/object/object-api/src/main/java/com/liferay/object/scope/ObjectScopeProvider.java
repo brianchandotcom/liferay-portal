@@ -14,18 +14,23 @@
 
 package com.liferay.object.scope;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
  */
 public interface ObjectScopeProvider {
 
+	public long getGroupId(HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public String getKey();
 
 	public String getLabel(Locale locale);
-
-	public ObjectScopeGroupHttpRetriever getObjectScopeGroupHttpRetriever();
 
 	public String[] getRootPanelCategoryKeys();
 

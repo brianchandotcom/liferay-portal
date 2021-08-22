@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaAPISignatureCheck" files="object-api/src/main/java/com/liferay/object/scope/ObjectScopeProvider\.java" />
+	</source-check>
+</suppressions>

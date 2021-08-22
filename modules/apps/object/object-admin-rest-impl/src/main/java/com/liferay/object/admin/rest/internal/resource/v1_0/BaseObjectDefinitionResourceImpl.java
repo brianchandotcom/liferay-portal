@@ -59,6 +59,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -107,7 +108,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions' -d $'{"label": ___, "name": ___, "objectFields": ___, "pluralLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions' -d $'{"label": ___, "name": ___, "objectFields": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "scope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -237,7 +238,81 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"label": ___, "name": ___, "objectFields": ___, "pluralLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"label": ___, "name": ___, "objectFields": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "scope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectDefinitionId")}
+	)
+	@PATCH
+	@Path("/object-definitions/{objectDefinitionId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectDefinition")})
+	public ObjectDefinition patchObjectDefinition(
+			@NotNull @Parameter(hidden = true) @PathParam("objectDefinitionId")
+				Long objectDefinitionId,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectDefinition existingObjectDefinition = getObjectDefinition(
+			objectDefinitionId);
+
+		if (objectDefinition.getActions() != null) {
+			existingObjectDefinition.setActions(objectDefinition.getActions());
+		}
+
+		if (objectDefinition.getDateCreated() != null) {
+			existingObjectDefinition.setDateCreated(
+				objectDefinition.getDateCreated());
+		}
+
+		if (objectDefinition.getDateModified() != null) {
+			existingObjectDefinition.setDateModified(
+				objectDefinition.getDateModified());
+		}
+
+		if (objectDefinition.getLabel() != null) {
+			existingObjectDefinition.setLabel(objectDefinition.getLabel());
+		}
+
+		if (objectDefinition.getName() != null) {
+			existingObjectDefinition.setName(objectDefinition.getName());
+		}
+
+		if (objectDefinition.getPanelAppOrder() != null) {
+			existingObjectDefinition.setPanelAppOrder(
+				objectDefinition.getPanelAppOrder());
+		}
+
+		if (objectDefinition.getPanelCategoryKey() != null) {
+			existingObjectDefinition.setPanelCategoryKey(
+				objectDefinition.getPanelCategoryKey());
+		}
+
+		if (objectDefinition.getPluralLabel() != null) {
+			existingObjectDefinition.setPluralLabel(
+				objectDefinition.getPluralLabel());
+		}
+
+		if (objectDefinition.getScope() != null) {
+			existingObjectDefinition.setScope(objectDefinition.getScope());
+		}
+
+		if (objectDefinition.getSystem() != null) {
+			existingObjectDefinition.setSystem(objectDefinition.getSystem());
+		}
+
+		preparePatch(objectDefinition, existingObjectDefinition);
+
+		return putObjectDefinition(
+			objectDefinitionId, existingObjectDefinition);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"label": ___, "name": ___, "objectFields": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "scope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -468,6 +543,11 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		ObjectDefinition objectDefinition,
+		ObjectDefinition existingObjectDefinition) {
 	}
 
 	protected <T, R> List<R> transform(

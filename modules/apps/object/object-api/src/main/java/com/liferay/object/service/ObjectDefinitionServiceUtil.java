@@ -41,12 +41,14 @@ public class ObjectDefinitionServiceUtil {
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
 			Map<java.util.Locale, String> labelMap, String name,
-			Map<java.util.Locale, String> pluralLabelMap,
+			String panelAppOrder, String panelCategoryKey,
+			Map<java.util.Locale, String> pluralLabelMap, String scope,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			labelMap, name, pluralLabelMap, objectFields);
+			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
+			scope, objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(
@@ -102,11 +104,13 @@ public class ObjectDefinitionServiceUtil {
 
 	public static ObjectDefinition updateCustomObjectDefinition(
 			Long objectDefinitionId, Map<java.util.Locale, String> labelMap,
-			String name, Map<java.util.Locale, String> pluralLabelMap)
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<java.util.Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
-			objectDefinitionId, labelMap, name, pluralLabelMap);
+			objectDefinitionId, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope);
 	}
 
 	public static ObjectDefinitionService getService() {

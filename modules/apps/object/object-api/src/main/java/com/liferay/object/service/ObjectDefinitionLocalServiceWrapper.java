@@ -36,12 +36,15 @@ public class ObjectDefinitionLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
 			long userId, java.util.Map<java.util.Locale, String> labelMap,
-			String name, java.util.Map<java.util.Locale, String> pluralLabelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			java.util.Map<java.util.Locale, String> pluralLabelMap,
+			String scope,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			userId, labelMap, name, pluralLabelMap, objectFields);
+			userId, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope, objectFields);
 	}
 
 	/**
@@ -79,13 +82,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			long userId, String dbTableName,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			java.util.Map<java.util.Locale, String> pluralLabelMap, int version,
+			java.util.Map<java.util.Locale, String> pluralLabelMap,
+			String scope, int version,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addSystemObjectDefinition(
 			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, version, objectFields);
+			pkObjectFieldName, pluralLabelMap, scope, version, objectFields);
 	}
 
 	/**
@@ -465,11 +469,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			updateCustomObjectDefinition(
 				Long objectDefinitionId,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
-				java.util.Map<java.util.Locale, String> pluralLabelMap)
+				String panelAppOrder, String panelCategoryKey,
+				java.util.Map<java.util.Locale, String> pluralLabelMap,
+				String scope)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
-			objectDefinitionId, labelMap, name, pluralLabelMap);
+			objectDefinitionId, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope);
 	}
 
 	/**

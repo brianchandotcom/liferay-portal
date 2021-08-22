@@ -10,6 +10,8 @@ create table ObjectDefinition (
 	dbTableName VARCHAR(75) null,
 	label STRING null,
 	name VARCHAR(75) null,
+	panelAppOrder VARCHAR(75) null,
+	panelCategoryKey VARCHAR(75) null,
 	pkObjectFieldDBColumnName VARCHAR(75) null,
 	pkObjectFieldName VARCHAR(75) null,
 	pluralLabel STRING null,

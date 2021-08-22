@@ -338,6 +338,36 @@ public interface ObjectDefinitionModel
 	public void setName(String name);
 
 	/**
+	 * Returns the panel app order of this object definition.
+	 *
+	 * @return the panel app order of this object definition
+	 */
+	@AutoEscape
+	public String getPanelAppOrder();
+
+	/**
+	 * Sets the panel app order of this object definition.
+	 *
+	 * @param panelAppOrder the panel app order of this object definition
+	 */
+	public void setPanelAppOrder(String panelAppOrder);
+
+	/**
+	 * Returns the panel category key of this object definition.
+	 *
+	 * @return the panel category key of this object definition
+	 */
+	@AutoEscape
+	public String getPanelCategoryKey();
+
+	/**
+	 * Sets the panel category key of this object definition.
+	 *
+	 * @param panelCategoryKey the panel category key of this object definition
+	 */
+	public void setPanelCategoryKey(String panelCategoryKey);
+
+	/**
 	 * Returns the pk object field db column name of this object definition.
 	 *
 	 * @return the pk object field db column name of this object definition

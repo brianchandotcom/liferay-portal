@@ -55,8 +55,9 @@ public interface ObjectDefinitionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object definition remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectDefinitionServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectDefinition addCustomObjectDefinition(
-			Map<Locale, String> labelMap, String name,
-			Map<Locale, String> pluralLabelMap, List<ObjectField> objectFields)
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String scope, List<ObjectField> objectFields)
 		throws PortalException;
 
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
@@ -92,7 +93,8 @@ public interface ObjectDefinitionService extends BaseService {
 
 	public ObjectDefinition updateCustomObjectDefinition(
 			Long objectDefinitionId, Map<Locale, String> labelMap, String name,
-			Map<Locale, String> pluralLabelMap)
+			String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException;
 
 }

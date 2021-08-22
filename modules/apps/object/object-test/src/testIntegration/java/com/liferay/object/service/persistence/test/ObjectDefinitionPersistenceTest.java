@@ -144,6 +144,10 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setPanelAppOrder(RandomTestUtil.randomString());
+
+		newObjectDefinition.setPanelCategoryKey(RandomTestUtil.randomString());
+
 		newObjectDefinition.setPKObjectFieldDBColumnName(
 			RandomTestUtil.randomString());
 
@@ -195,6 +199,12 @@ public class ObjectDefinitionPersistenceTest {
 			newObjectDefinition.getLabel());
 		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
+		Assert.assertEquals(
+			existingObjectDefinition.getPanelAppOrder(),
+			newObjectDefinition.getPanelAppOrder());
+		Assert.assertEquals(
+			existingObjectDefinition.getPanelCategoryKey(),
+			newObjectDefinition.getPanelCategoryKey());
 		Assert.assertEquals(
 			existingObjectDefinition.getPKObjectFieldDBColumnName(),
 			newObjectDefinition.getPKObjectFieldDBColumnName());
@@ -295,10 +305,10 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"dbTableName", true, "label", true, "name", true,
-			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "scope", true, "system", true, "version", true,
-			"status", true);
+			"dbTableName", true, "label", true, "name", true, "panelAppOrder",
+			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
+			"pkObjectFieldName", true, "pluralLabel", true, "scope", true,
+			"system", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -606,6 +616,10 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setLabel(RandomTestUtil.randomString());
 
 		objectDefinition.setName(RandomTestUtil.randomString());
+
+		objectDefinition.setPanelAppOrder(RandomTestUtil.randomString());
+
+		objectDefinition.setPanelCategoryKey(RandomTestUtil.randomString());
 
 		objectDefinition.setPKObjectFieldDBColumnName(
 			RandomTestUtil.randomString());

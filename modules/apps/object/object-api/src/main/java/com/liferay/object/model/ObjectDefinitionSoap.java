@@ -44,6 +44,8 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setDBTableName(model.getDBTableName());
 		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
+		soapModel.setPanelAppOrder(model.getPanelAppOrder());
+		soapModel.setPanelCategoryKey(model.getPanelCategoryKey());
 		soapModel.setPKObjectFieldDBColumnName(
 			model.getPKObjectFieldDBColumnName());
 		soapModel.setPKObjectFieldName(model.getPKObjectFieldName());
@@ -201,6 +203,22 @@ public class ObjectDefinitionSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getPanelAppOrder() {
+		return _panelAppOrder;
+	}
+
+	public void setPanelAppOrder(String panelAppOrder) {
+		_panelAppOrder = panelAppOrder;
+	}
+
+	public String getPanelCategoryKey() {
+		return _panelCategoryKey;
+	}
+
+	public void setPanelCategoryKey(String panelCategoryKey) {
+		_panelCategoryKey = panelCategoryKey;
+	}
+
 	public String getPKObjectFieldDBColumnName() {
 		return _pkObjectFieldDBColumnName;
 	}
@@ -272,6 +290,8 @@ public class ObjectDefinitionSoap implements Serializable {
 	private String _dbTableName;
 	private String _label;
 	private String _name;
+	private String _panelAppOrder;
+	private String _panelCategoryKey;
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;
 	private String _pluralLabel;

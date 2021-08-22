@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,10 @@ public class ObjectDefinitionCacheModel
 		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", panelAppOrder=");
+		sb.append(panelAppOrder);
+		sb.append(", panelCategoryKey=");
+		sb.append(panelCategoryKey);
 		sb.append(", pkObjectFieldDBColumnName=");
 		sb.append(pkObjectFieldDBColumnName);
 		sb.append(", pkObjectFieldName=");
@@ -180,6 +184,20 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setName(name);
 		}
 
+		if (panelAppOrder == null) {
+			objectDefinitionImpl.setPanelAppOrder("");
+		}
+		else {
+			objectDefinitionImpl.setPanelAppOrder(panelAppOrder);
+		}
+
+		if (panelCategoryKey == null) {
+			objectDefinitionImpl.setPanelCategoryKey("");
+		}
+		else {
+			objectDefinitionImpl.setPanelCategoryKey(panelCategoryKey);
+		}
+
 		if (pkObjectFieldDBColumnName == null) {
 			objectDefinitionImpl.setPKObjectFieldDBColumnName("");
 		}
@@ -234,6 +252,8 @@ public class ObjectDefinitionCacheModel
 		dbTableName = objectInput.readUTF();
 		label = objectInput.readUTF();
 		name = objectInput.readUTF();
+		panelAppOrder = objectInput.readUTF();
+		panelCategoryKey = objectInput.readUTF();
 		pkObjectFieldDBColumnName = objectInput.readUTF();
 		pkObjectFieldName = objectInput.readUTF();
 		pluralLabel = objectInput.readUTF();
@@ -294,6 +314,20 @@ public class ObjectDefinitionCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (panelAppOrder == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(panelAppOrder);
+		}
+
+		if (panelCategoryKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(panelCategoryKey);
+		}
+
 		if (pkObjectFieldDBColumnName == null) {
 			objectOutput.writeUTF("");
 		}
@@ -340,6 +374,8 @@ public class ObjectDefinitionCacheModel
 	public String dbTableName;
 	public String label;
 	public String name;
+	public String panelAppOrder;
+	public String panelCategoryKey;
 	public String pkObjectFieldDBColumnName;
 	public String pkObjectFieldName;
 	public String pluralLabel;

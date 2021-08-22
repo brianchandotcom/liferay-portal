@@ -36,12 +36,15 @@ public class ObjectDefinitionServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
 			java.util.Map<java.util.Locale, String> labelMap, String name,
+			String panelAppOrder, String panelCategoryKey,
 			java.util.Map<java.util.Locale, String> pluralLabelMap,
+			String scope,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.addCustomObjectDefinition(
-			labelMap, name, pluralLabelMap, objectFields);
+			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
+			scope, objectFields);
 	}
 
 	@Override
@@ -114,11 +117,14 @@ public class ObjectDefinitionServiceWrapper
 			updateCustomObjectDefinition(
 				Long objectDefinitionId,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
-				java.util.Map<java.util.Locale, String> pluralLabelMap)
+				String panelAppOrder, String panelCategoryKey,
+				java.util.Map<java.util.Locale, String> pluralLabelMap,
+				String scope)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.updateCustomObjectDefinition(
-			objectDefinitionId, labelMap, name, pluralLabelMap);
+			objectDefinitionId, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope);
 	}
 
 	@Override

@@ -69,6 +69,14 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getObjectDefinitions(long companyId, int start, int end) {
+
+		return _objectDefinitionService.getObjectDefinitions(
+			companyId, start, end);
+	}
+
+	@Override
 	public int getObjectDefinitionsCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -68,6 +68,12 @@ public class ObjectDefinitionServiceUtil {
 		return getService().getObjectDefinitions(start, end);
 	}
 
+	public static List<ObjectDefinition> getObjectDefinitions(
+		long companyId, int start, int end) {
+
+		return getService().getObjectDefinitions(companyId, start, end);
+	}
+
 	public static int getObjectDefinitionsCount() throws PortalException {
 		return getService().getObjectDefinitionsCount();
 	}

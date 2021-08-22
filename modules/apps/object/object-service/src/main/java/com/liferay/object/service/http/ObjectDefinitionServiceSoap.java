@@ -155,6 +155,25 @@ public class ObjectDefinitionServiceSoap {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectDefinitionSoap[]
+			getObjectDefinitions(long companyId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.object.model.ObjectDefinition>
+				returnValue = ObjectDefinitionServiceUtil.getObjectDefinitions(
+					companyId, start, end);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getObjectDefinitionsCount() throws RemoteException {
 		try {
 			int returnValue =

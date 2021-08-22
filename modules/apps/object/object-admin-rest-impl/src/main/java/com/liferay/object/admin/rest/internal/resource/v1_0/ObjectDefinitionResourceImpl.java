@@ -112,9 +112,11 @@ public class ObjectDefinitionResourceImpl
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId,
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
-				objectDefinition.getName(),
+				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
+				objectDefinition.getPanelCategoryKey(),
 				LocalizedMapUtil.getLocalizedMap(
-					objectDefinition.getPluralLabel())));
+					objectDefinition.getPluralLabel()),
+				objectDefinition.getScope()));
 	}
 
 	private ObjectDefinition _toObjectDefinition(

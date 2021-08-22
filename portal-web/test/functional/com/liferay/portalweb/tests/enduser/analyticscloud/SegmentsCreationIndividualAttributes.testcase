@@ -343,11 +343,9 @@ definition {
 				userGroupDescription = "UG UserGroup Description",
 				userGroupName = "UG UserGroup Name");
 
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.assignMemberCP(
-				userGroupName = "UG UserGroup Name",
-				userScreenName = "ac");
+			JSONUser.addUserToUserGroup(
+				userEmailAddress = "ac@liferay.com",
+				userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Sync the Contact Data") {

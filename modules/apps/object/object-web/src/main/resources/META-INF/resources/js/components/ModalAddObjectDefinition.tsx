@@ -78,6 +78,7 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 			body: JSON.stringify({
 				label,
 				name,
+				scope: 'company',
 				objectFields: [],
 				pluralLabel,
 			}),

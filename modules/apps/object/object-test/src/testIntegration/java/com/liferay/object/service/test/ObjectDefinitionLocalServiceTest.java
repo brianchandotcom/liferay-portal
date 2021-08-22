@@ -180,7 +180,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), _labelMap, "Test", _pluralLabelMap,
+				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
+				_pluralLabelMap, "company",
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -205,7 +206,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), _labelMap, "Test", _pluralLabelMap,
+				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
+				_pluralLabelMap, "company",
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Able", "able", false, "String"),
@@ -356,6 +358,11 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
+					public String getScope() {
+						return "company";
+					}
+
+					@Override
 					public int getVersion() {
 						return 1;
 					}
@@ -421,6 +428,11 @@ public class ObjectDefinitionLocalServiceTest {
 					public Map<Locale, String> getPluralLabelMap() {
 						return LocalizedMapUtil.getLocalizedMap(
 							"User Notification Events");
+					}
+
+					@Override
+					public String getScope() {
+						return "company";
 					}
 
 					@Override
@@ -565,7 +577,8 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, 1, Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, "company", 1,
+				Collections.<ObjectField>emptyList());
 
 		try {
 			_testAddSystemObjectDefinition("Test");
@@ -586,7 +599,7 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, -1,
+				null, _pluralLabelMap, "company", -1,
 				Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
@@ -600,7 +613,8 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, 0, Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, "company", 0,
+				Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -615,7 +629,8 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, 1, Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, "company", 1,
+				Collections.<ObjectField>emptyList());
 
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
@@ -703,7 +718,8 @@ public class ObjectDefinitionLocalServiceTest {
 	public void testDeleteObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), _labelMap, "Test", _pluralLabelMap,
+				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
+				_pluralLabelMap, "company",
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -748,8 +764,8 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
-				LocalizedMapUtil.getLocalizedMap("Ables"),
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"), "company",
 				Collections.emptyList());
 
 		Assert.assertEquals(
@@ -763,8 +779,9 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.updateCustomObjectDefinition(
 				objectDefinition.getObjectDefinitionId(),
-				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker",
-				LocalizedMapUtil.getLocalizedMap("Bakers"));
+				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
+				LocalizedMapUtil.getLocalizedMap("Bakers"),
+				objectDefinition.getScope());
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
@@ -781,8 +798,9 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.updateCustomObjectDefinition(
 				objectDefinition.getObjectDefinitionId(),
-				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
-				LocalizedMapUtil.getLocalizedMap("Charlies"));
+				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
+				null, LocalizedMapUtil.getLocalizedMap("Charlies"),
+				objectDefinition.getScope());
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Charlie"),
@@ -847,8 +865,8 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 					TestPropsValues.getUserId(),
-					LocalizedMapUtil.getLocalizedMap(label), name,
-					LocalizedMapUtil.getLocalizedMap(pluralLabel),
+					LocalizedMapUtil.getLocalizedMap(label), name, null, null,
+					LocalizedMapUtil.getLocalizedMap(pluralLabel), "company",
 					Collections.<ObjectField>emptyList());
 
 			objectDefinition =
@@ -878,7 +896,8 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 					TestPropsValues.getUserId(), null,
 					LocalizedMapUtil.getLocalizedMap(label), name, null, null,
-					_pluralLabelMap, 1, Collections.<ObjectField>emptyList());
+					_pluralLabelMap, "company", 1,
+					Collections.<ObjectField>emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {

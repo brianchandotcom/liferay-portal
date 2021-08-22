@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal;
 
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -85,8 +86,10 @@ public class ObjectDefinitionSampleGenerator {
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Sample Object Definition"),
-				"SampleObjectDefinition",
+				"SampleObjectDefinition", "100",
+				PanelCategoryKeys.CONTROL_PANEL_SITES,
 				LocalizedMapUtil.getLocalizedMap("Sample Object Definitions"),
+				"company",
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						true, false, "Able", "able", false, "Long"),

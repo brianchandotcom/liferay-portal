@@ -173,10 +173,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Map<Long, ObjectDefinition> objectDefinitions =
 			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
 
-		objectDefinitions.remove(objectDefinition.getCompanyId());
+		if (objectDefinitions != null) {
+			objectDefinitions.remove(objectDefinition.getCompanyId());
 
-		if (objectDefinitions.isEmpty()) {
-			_objectDefinitionsMap.remove(objectDefinition.getRESTContextPath());
+			if (objectDefinitions.isEmpty()) {
+				_objectDefinitionsMap.remove(
+					objectDefinition.getRESTContextPath());
+			}
 		}
 
 		if (!_objectDefinitionsMap.containsKey(
@@ -186,8 +189,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_componentInstancesMap.get(
 					objectDefinition.getRESTContextPath());
 
-			for (ComponentInstance componentInstance : componentInstances) {
-				componentInstance.dispose();
+			if (componentInstances != null) {
+				for (ComponentInstance componentInstance : componentInstances) {
+					componentInstance.dispose();
+				}
 			}
 		}
 	}

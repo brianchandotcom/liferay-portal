@@ -718,8 +718,10 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 
 		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			undeployObjectDefinition(objectDefinition);
-			deployObjectDefinition(objectDefinition);
+			objectDefinitionLocalService.undeployObjectDefinition(
+				objectDefinition);
+			objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition);
 
 			return objectDefinitionPersistence.update(objectDefinition);
 		}

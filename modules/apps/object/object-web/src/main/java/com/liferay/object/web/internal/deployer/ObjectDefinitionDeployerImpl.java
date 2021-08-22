@@ -62,9 +62,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				PanelApp.class, new ObjectEntriesPanelApp(objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"panel.app.order:Integer", "300"
+					"panel.app.order:Integer",
+					objectDefinition.getPanelAppOrder()
 				).put(
-					"panel.category.key", PanelCategoryKeys.CONTROL_PANEL_USERS
+					"panel.category.key", objectDefinition.getPanelCategoryKey()
 				).build()),
 			_bundleContext.registerService(
 				Portlet.class,

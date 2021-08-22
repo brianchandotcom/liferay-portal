@@ -31,10 +31,16 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectField"
                     type: array
+                panelAppOrder:
+                    type: string
+                panelCategoryKey:
+                    type: string
                 pluralLabel:
                     additionalProperties:
                         type: string
                     type: object
+                scope:
+                    type: string
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true

@@ -14,14 +14,24 @@
 
 package com.liferay.object.web.internal.object.definitions.frontend.taglib.servlet.taglib;
 
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
+import com.liferay.object.web.internal.object.definitions.display.context.EditObjectDefinitionDisplayContext;
+import com.liferay.object.web.internal.object.definitions.display.context.ViewObjectFieldsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.io.IOException;
 import java.util.Locale;
 
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Marco Leo
@@ -55,8 +65,29 @@ public class ObjectDefinitionsDetailsScreenNavigationCategory
 	}
 
 	@Override
+	public void render(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) throws IOException {
+
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new EditObjectDefinitionDisplayContext(
+				httpServletRequest, _objectScopeProviderRegistry,
+				_panelCategoryRegistry));
+
+
+		super.render(httpServletRequest, httpServletResponse);
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "details");
 	}
+
+	@Reference
+	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	immediate = true, property = "object.scope.provider.key=virtual-instance",
+	immediate = true, property = "object.scope.provider.key=company",
 	service = ObjectScopeProvider.class
 )
-public class VirtualInstanceObjectScopeProvider implements ObjectScopeProvider {
+public class CompanyInstanceObjectScopeProvider implements ObjectScopeProvider {
 
 	@Override
 	public String getKey() {

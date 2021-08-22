@@ -548,7 +548,7 @@ public class ObjectDefinitionLocalServiceImpl
 			pkObjectFieldDBColumnName, pkObjectFieldName, system);
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
-		_validateName(user.getCompanyId(), name, system);
+		_validateName(user.getCompanyId(), 0, name, system);
 		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
 		_validateScope(scope);
 		_validateVersion(system, version);
@@ -709,8 +709,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private ObjectDefinition _updateObjectDefinition(
 			ObjectDefinition objectDefinition, String dbTableName,
-			Map<Locale, String> labelMap, String name,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, String pkObjectFieldDBColumnName,
 			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
@@ -745,7 +743,9 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.isSystem());
 
 		_validateName(
-			objectDefinition.getCompanyId(), name, objectDefinition.isSystem());
+			objectDefinition.getCompanyId(),
+			objectDefinition.getObjectDefinitionId(), name,
+			objectDefinition.isSystem());
 		_validateScope(scope);
 
 		objectDefinition.setDBTableName(dbTableName);
@@ -770,7 +770,9 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
-	private void _validateName(long companyId, String name, boolean system)
+	private void _validateName(
+			long companyId, long objectDefinitionId, String name,
+			boolean system)
 		throws PortalException {
 
 		if (Validator.isNull(name) || (!system && name.equals("C_"))) {
@@ -820,7 +822,12 @@ public class ObjectDefinitionLocalServiceImpl
 				"Names must be less than 41 characters");
 		}
 
-		if (objectDefinitionPersistence.fetchByC_N(companyId, name) != null) {
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.fetchByC_N(companyId, name);
+
+		if ((objectDefinition != null) &&
+			(objectDefinition.getObjectDefinitionId() != objectDefinitionId)) {
+
 			throw new DuplicateObjectDefinitionException(
 				"Duplicate name " + name);
 		}

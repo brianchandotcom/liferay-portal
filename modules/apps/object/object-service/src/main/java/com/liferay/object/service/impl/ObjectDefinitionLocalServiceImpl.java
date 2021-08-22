@@ -288,10 +288,7 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void deployObjectDefinition(ObjectDefinition objectDefinition) {
-		if ((objectDefinition.getStatus() !=
-				WorkflowConstants.STATUS_APPROVED) ||
-			objectDefinition.isSystem()) {
-
+		if (objectDefinition.isSystem()) {
 			return;
 		}
 
@@ -435,10 +432,7 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition) {
-		if ((objectDefinition.getStatus() !=
-				WorkflowConstants.STATUS_APPROVED) ||
-			objectDefinition.isSystem()) {
-
+		if (objectDefinition.isSystem()) {
 			return;
 		}
 
@@ -724,6 +718,9 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 
 		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			undeployObjectDefinition(objectDefinition);
+			deployObjectDefinition(objectDefinition);
+
 			return objectDefinitionPersistence.update(objectDefinition);
 		}
 

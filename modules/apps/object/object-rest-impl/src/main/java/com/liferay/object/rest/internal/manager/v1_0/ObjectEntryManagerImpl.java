@@ -19,6 +19,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -62,14 +64,14 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			DTOConverterContext dtoConverterContext, long userId,
+			DTOConverterContext dtoConverterContext, long userId, long groupId,
 			long objectDefinitionId, ObjectEntry objectEntry)
 		throws Exception {
 
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.addObjectEntry(
-				userId, 0L, objectDefinitionId,
+				userId, groupId, objectDefinitionId,
 				_toObjectValues(
 					objectDefinitionId, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
@@ -109,14 +111,18 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public Page<ObjectEntry> getObjectEntries(
-			long companyId, long objectDefinitionId, Aggregation aggregation,
-			DTOConverterContext dtoConverterContext, Filter filter,
-			Pagination pagination, String search, Sort[] sorts)
+			long companyId, long groupId, long objectDefinitionId,
+			Aggregation aggregation, DTOConverterContext dtoConverterContext,
+			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinitionId);
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
 
 		return SearchUtil.search(
 			new HashMap<>(),
@@ -138,6 +144,10 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				searchContext.setAttribute(
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(companyId);
+
+				if (objectScopeProvider.isGroupAware()) {
+					searchContext.setGroupIds(new long[] {groupId});
+				}
 			},
 			sorts,
 			document -> getObjectEntry(
@@ -248,5 +258,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

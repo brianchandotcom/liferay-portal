@@ -28,7 +28,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 public interface ObjectEntryManager {
 
 	public ObjectEntry addObjectEntry(
-			DTOConverterContext dtoConverterContext, long userId,
+			DTOConverterContext dtoConverterContext, long userId, long groupId,
 			long objectDefinitionId, ObjectEntry objectEntry)
 		throws Exception;
 
@@ -45,9 +45,9 @@ public interface ObjectEntryManager {
 		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntries(
-			long companyId, long objectDefinitionId, Aggregation aggregation,
-			DTOConverterContext dtoConverterContext, Filter filter,
-			Pagination pagination, String search, Sort[] sorts)
+			long companyId, long groupId, long objectDefinitionId,
+			Aggregation aggregation, DTOConverterContext dtoConverterContext,
+			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception;
 
 	public ObjectEntry getObjectEntry(

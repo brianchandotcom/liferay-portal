@@ -79,8 +79,9 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(_objectDefinitionLabel),
-				_objectDefinitionName,
+				_objectDefinitionName, null, null,
 				LocalizedMapUtil.getLocalizedMap(_objectDefinitionPluralLabel),
+				"company",
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						true, true, _objectFieldLabel, _objectFieldName, false,

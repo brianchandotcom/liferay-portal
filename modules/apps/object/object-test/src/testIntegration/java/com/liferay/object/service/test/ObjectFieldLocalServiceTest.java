@@ -270,8 +270,8 @@ public class ObjectFieldLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap("Test"), "Test",
-				LocalizedMapUtil.getLocalizedMap("Tests"), null);
+				LocalizedMapUtil.getLocalizedMap("Test"), "Test", null, null,
+				LocalizedMapUtil.getLocalizedMap("Tests"), "company", null);
 
 		ObjectField objectField =
 			ObjectFieldLocalServiceUtil.addCustomObjectField(
@@ -342,8 +342,8 @@ public class ObjectFieldLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 					TestPropsValues.getUserId(), null,
 					LocalizedMapUtil.getLocalizedMap("Test"), "Test", null,
-					null, LocalizedMapUtil.getLocalizedMap("Tests"), 1,
-					Arrays.asList(objectFields));
+					null, LocalizedMapUtil.getLocalizedMap("Tests"), "company",
+					1, Arrays.asList(objectFields));
 		}
 		finally {
 			if (objectDefinition != null) {

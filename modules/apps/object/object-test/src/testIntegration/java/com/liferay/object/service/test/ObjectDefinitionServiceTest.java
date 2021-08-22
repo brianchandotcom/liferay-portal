@@ -179,7 +179,8 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			user.getUserId(), _labelMap, "Test", _pluralLabelMap, null);
+			user.getUserId(), _labelMap, "Test", null, null, _pluralLabelMap,
+			"company", null);
 	}
 
 	private void _setUser(User user) {
@@ -197,7 +198,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					_labelMap, "Test", _pluralLabelMap, null);
+					_labelMap, "Test", null, null, _pluralLabelMap, "company",
+					null);
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -261,7 +263,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-					user.getUserId(), _labelMap, "Test", _pluralLabelMap, null);
+					user.getUserId(), _labelMap, "Test", null, null,
+					_pluralLabelMap, "company", null);
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
@@ -283,13 +286,15 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-					user.getUserId(), _labelMap, "Test", _pluralLabelMap, null);
+					user.getUserId(), _labelMap, "Test", null, null,
+					_pluralLabelMap, "company", null);
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.updateCustomObjectDefinition(
 					objectDefinition.getObjectDefinitionId(),
-					LocalizedMapUtil.getLocalizedMap("Able"), "Able",
-					LocalizedMapUtil.getLocalizedMap("Ables"));
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
+					null, LocalizedMapUtil.getLocalizedMap("Ables"),
+					objectDefinition.getScope());
 		}
 		finally {
 			if (objectDefinition != null) {

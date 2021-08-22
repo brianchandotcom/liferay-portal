@@ -49,8 +49,9 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
-			Map<Locale, String> labelMap, String name,
-			Map<Locale, String> pluralLabelMap, List<ObjectField> objectFields)
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String scope, List<ObjectField> objectFields)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -58,7 +59,8 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			getUserId(), labelMap, name, pluralLabelMap, objectFields);
+			getUserId(), labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope, objectFields);
 	}
 
 	@Override
@@ -125,14 +127,16 @@ public class ObjectDefinitionServiceImpl
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
 			Long objectDefinitionId, Map<Locale, String> labelMap, String name,
-			Map<Locale, String> pluralLabelMap)
+			String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
-			objectDefinitionId, labelMap, name, pluralLabelMap);
+			objectDefinitionId, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope);
 	}
 
 	@Reference

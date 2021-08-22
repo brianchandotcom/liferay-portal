@@ -20,18 +20,18 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.EditObjectDefinitionDisplayContext;
-import com.liferay.object.web.internal.object.definitions.display.context.ViewObjectFieldsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-import java.util.Locale;
 
-import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -65,9 +65,15 @@ public class ObjectDefinitionsDetailsScreenNavigationCategory
 	}
 
 	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "details");
+	}
+
+	@Override
 	public void render(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) throws IOException {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -75,19 +81,13 @@ public class ObjectDefinitionsDetailsScreenNavigationCategory
 				httpServletRequest, _objectScopeProviderRegistry,
 				_panelCategoryRegistry));
 
-
 		super.render(httpServletRequest, httpServletResponse);
 	}
 
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "details");
-	}
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
-
-	@Reference
-	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

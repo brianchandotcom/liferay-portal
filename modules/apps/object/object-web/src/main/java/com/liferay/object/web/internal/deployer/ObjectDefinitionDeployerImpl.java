@@ -15,7 +15,6 @@
 package com.liferay.object.web.internal.deployer;
 
 import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;

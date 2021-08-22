@@ -47,11 +47,6 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	}
 
 	@Override
-	public String getScope() {
-		return "company";
-	}
-
-	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField("order-status", "orderStatus", true, "Integer"),
@@ -62,6 +57,11 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	@Override
 	public Map<Locale, String> getPluralLabelMap() {
 		return createLabelMap("commerce-orders");
+	}
+
+	@Override
+	public String getScope() {
+		return "company";
 	}
 
 	@Override

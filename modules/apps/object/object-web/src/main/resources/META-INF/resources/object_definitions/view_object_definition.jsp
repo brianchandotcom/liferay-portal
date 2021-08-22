@@ -128,23 +128,16 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 	function <portlet:namespace />submitObjectDefinition(draft) {
 		var form = document.getElementById('<portlet:namespace />fm');
 
-		var cmd = form.querySelector(
-			'#<portlet:namespace /><%= Constants.CMD %>'
-		);
+		var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 		if (!draft) {
-			cmd.setAttribute(
-				'value',
-				'<%= Constants.PUBLISH %>'
-			);
+			cmd.setAttribute('value', '<%= Constants.PUBLISH %>');
 		}
 
 		submitForm(form);
-
 	}
 
 	function <portlet:namespace />selectScope() {
-
 		const scope = document.getElementById('<portlet:namespace />scope');
 
 		let url = new URL(window.location.href);

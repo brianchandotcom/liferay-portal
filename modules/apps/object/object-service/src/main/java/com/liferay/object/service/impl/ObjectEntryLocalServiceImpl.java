@@ -18,12 +18,15 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.base.ObjectEntryLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -118,6 +121,11 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		_validateGroupId(groupId, objectDefinition.getScope());
+
 		long objectEntryId = counterLocalService.increment();
 
 		_insertIntoTable(
@@ -143,10 +151,6 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
 
 		objectEntry = objectEntryPersistence.update(objectEntry);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
 
 		_resourceLocalService.addResources(
 			objectEntry.getCompanyId(), objectEntry.getGroupId(),
@@ -1113,6 +1117,20 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateGroupId(long groupId, String scope)
+		throws PortalException {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(scope);
+
+		if (objectScopeProvider.isGroupAware() &&
+			!objectScopeProvider.isValidGroupId(groupId)) {
+
+			throw new ObjectDefinitionScopeException(
+				"The provided Group Id is not valid for the configured scope");
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);
 
@@ -1136,6 +1154,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

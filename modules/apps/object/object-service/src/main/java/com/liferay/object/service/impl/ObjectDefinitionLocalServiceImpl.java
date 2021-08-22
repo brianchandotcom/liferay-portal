@@ -292,6 +292,8 @@ public class ObjectDefinitionLocalServiceImpl
 			return;
 		}
 
+		undeployObjectDefinition(objectDefinition);
+
 		for (Map.Entry
 				<ObjectDefinitionDeployer,
 				 Map<Long, List<ServiceRegistration<?>>>> entry :
@@ -718,8 +720,6 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 
 		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			objectDefinitionLocalService.undeployObjectDefinition(
-				objectDefinition);
 			objectDefinitionLocalService.deployObjectDefinition(
 				objectDefinition);
 

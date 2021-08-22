@@ -84,9 +84,11 @@ public class ObjectDefinitionResourceImpl
 		return _toObjectDefinition(
 			_objectDefinitionService.addCustomObjectDefinition(
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
-				objectDefinition.getName(),
+				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
+				objectDefinition.getPanelCategoryKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
+				objectDefinition.getScope(),
 				transformToList(
 					objectDefinition.getObjectFields(),
 					objectField -> ObjectFieldUtil.toObjectField(

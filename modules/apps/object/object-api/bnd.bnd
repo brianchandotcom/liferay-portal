@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.object.deployer,\
 	com.liferay.object.exception,\
 	com.liferay.object.model,\
+	com.liferay.object.scope,\
 	com.liferay.object.service,\
 	com.liferay.object.service.persistence,\
 	com.liferay.object.system,\

@@ -10,12 +10,20 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="DBTableName" type="String" />
-		<field localized="true" name="label" type="String" />
+		<field name="DBTableName" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="label" type="String">
+			<validator name="required" />
+		</field>
 		<field name="name" type="String" />
+		<field name="panelAppOrder" type="String" />
+		<field name="panelCategoryKey" type="String" />
 		<field name="PKObjectFieldDBColumnName" type="String" />
 		<field name="PKObjectFieldName" type="String" />
-		<field localized="true" name="pluralLabel" type="String" />
+		<field localized="true" name="pluralLabel" type="String">
+			<validator name="required" />
+		</field>
 		<field name="scope" type="String" />
 		<field name="system" type="boolean" />
 		<field name="version" type="int" />

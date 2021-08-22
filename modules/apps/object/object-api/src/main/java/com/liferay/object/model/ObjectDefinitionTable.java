@@ -59,6 +59,13 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, String> panelAppOrder =
+		createColumn(
+			"panelAppOrder", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, String> panelCategoryKey =
+		createColumn(
+			"panelCategoryKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String>
 		pkObjectFieldDBColumnName = createColumn(
 			"pkObjectFieldDBColumnName", String.class, Types.VARCHAR,

@@ -47,12 +47,14 @@ public class ObjectDefinitionLocalServiceUtil {
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
 			long userId, Map<java.util.Locale, String> labelMap, String name,
-			Map<java.util.Locale, String> pluralLabelMap,
+			String panelAppOrder, String panelCategoryKey,
+			Map<java.util.Locale, String> pluralLabelMap, String scope,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			userId, labelMap, name, pluralLabelMap, objectFields);
+			userId, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope, objectFields);
 	}
 
 	/**
@@ -85,13 +87,14 @@ public class ObjectDefinitionLocalServiceUtil {
 			long userId, String dbTableName,
 			Map<java.util.Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<java.util.Locale, String> pluralLabelMap, int version,
+			Map<java.util.Locale, String> pluralLabelMap, String scope,
+			int version,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addSystemObjectDefinition(
 			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, version, objectFields);
+			pkObjectFieldName, pluralLabelMap, scope, version, objectFields);
 	}
 
 	/**
@@ -411,11 +414,13 @@ public class ObjectDefinitionLocalServiceUtil {
 
 	public static ObjectDefinition updateCustomObjectDefinition(
 			Long objectDefinitionId, Map<java.util.Locale, String> labelMap,
-			String name, Map<java.util.Locale, String> pluralLabelMap)
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<java.util.Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
-			objectDefinitionId, labelMap, name, pluralLabelMap);
+			objectDefinitionId, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope);
 	}
 
 	/**

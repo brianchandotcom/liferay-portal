@@ -55,7 +55,9 @@ public class ObjectDefinitionServiceHttp {
 			addCustomObjectDefinition(
 				HttpPrincipal httpPrincipal,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
+				String panelAppOrder, String panelCategoryKey,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
+				String scope,
 				java.util.List<com.liferay.object.model.ObjectField>
 					objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,7 +68,8 @@ public class ObjectDefinitionServiceHttp {
 				_addCustomObjectDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, labelMap, name, pluralLabelMap, objectFields);
+				methodKey, labelMap, name, panelAppOrder, panelCategoryKey,
+				pluralLabelMap, scope, objectFields);
 
 			Object returnObj = null;
 
@@ -334,7 +337,9 @@ public class ObjectDefinitionServiceHttp {
 			updateCustomObjectDefinition(
 				HttpPrincipal httpPrincipal, Long objectDefinitionId,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
-				java.util.Map<java.util.Locale, String> pluralLabelMap)
+				String panelAppOrder, String panelCategoryKey,
+				java.util.Map<java.util.Locale, String> pluralLabelMap,
+				String scope)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -344,7 +349,8 @@ public class ObjectDefinitionServiceHttp {
 				_updateCustomObjectDefinitionParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectDefinitionId, labelMap, name, pluralLabelMap);
+				methodKey, objectDefinitionId, labelMap, name, panelAppOrder,
+				panelCategoryKey, pluralLabelMap, scope);
 
 			Object returnObj = null;
 
@@ -379,8 +385,8 @@ public class ObjectDefinitionServiceHttp {
 
 	private static final Class<?>[] _addCustomObjectDefinitionParameterTypes0 =
 		new Class[] {
-			java.util.Map.class, String.class, java.util.Map.class,
-			java.util.List.class
+			java.util.Map.class, String.class, String.class, String.class,
+			java.util.Map.class, String.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes1 =
 		new Class[] {long.class};
@@ -398,7 +404,8 @@ public class ObjectDefinitionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCustomObjectDefinitionParameterTypes7 = new Class[] {
-			Long.class, java.util.Map.class, String.class, java.util.Map.class
+			Long.class, java.util.Map.class, String.class, String.class,
+			String.class, java.util.Map.class, String.class
 		};
 
 }

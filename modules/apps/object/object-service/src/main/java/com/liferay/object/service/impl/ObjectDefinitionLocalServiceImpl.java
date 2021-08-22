@@ -19,6 +19,7 @@ import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
+import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
@@ -27,6 +28,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
@@ -89,11 +91,14 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, Map<Locale, String> labelMap, String name,
-			Map<Locale, String> pluralLabelMap, List<ObjectField> objectFields)
+			String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, String scope,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, null, labelMap, name, null, null, pluralLabelMap, false, 0,
+			userId, null, labelMap, name, panelAppOrder, panelCategoryKey, null,
+			null, pluralLabelMap, scope, false, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -177,13 +182,13 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, String dbTableName, Map<Locale, String> labelMap,
 			String name, String pkObjectFieldDBColumnName,
 			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			int version, List<ObjectField> objectFields)
+			String scope, int version, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, true, version,
-			WorkflowConstants.STATUS_APPROVED, objectFields);
+			userId, dbTableName, labelMap, name, null, null,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
+			true, version, WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
 	@Override
@@ -465,7 +470,8 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
 			Long objectDefinitionId, Map<Locale, String> labelMap, String name,
-			Map<Locale, String> pluralLabelMap)
+			String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -476,7 +482,8 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return _updateObjectDefinition(
-			objectDefinition, null, labelMap, name, null, null, pluralLabelMap);
+			objectDefinition, null, labelMap, name, panelAppOrder,
+			panelCategoryKey, null, null, pluralLabelMap, scope);
 	}
 
 	@Activate
@@ -518,10 +525,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private ObjectDefinition _addObjectDefinition(
 			long userId, String dbTableName, Map<Locale, String> labelMap,
-			String name, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			boolean system, int version, int status,
-			List<ObjectField> objectFields)
+			String name, String panelAppOrder, String panelCategoryKey,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope, boolean system,
+			int version, int status, List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -542,6 +549,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validateName(user.getCompanyId(), name, system);
 		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
+		_validateScope(scope);
 		_validateVersion(system, version);
 
 		long objectDefinitionId = counterLocalService.increment();
@@ -555,10 +563,13 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setName(name);
+		objectDefinition.setPanelAppOrder(panelAppOrder);
+		objectDefinition.setPanelCategoryKey(panelCategoryKey);
 		objectDefinition.setPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName);
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
+		objectDefinition.setScope(scope);
 		objectDefinition.setSystem(system);
 		objectDefinition.setVersion(version);
 		objectDefinition.setStatus(status);
@@ -699,12 +710,17 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition objectDefinition, String dbTableName,
 			Map<Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap)
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			String scope)
 		throws PortalException {
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
 
+		objectDefinition.setPanelAppOrder(panelAppOrder);
+		objectDefinition.setPanelCategoryKey(panelCategoryKey);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 
@@ -729,12 +745,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_validateName(
 			objectDefinition.getCompanyId(), name, objectDefinition.isSystem());
+		_validateScope(scope);
 
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setName(name);
 		objectDefinition.setPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName);
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
+		objectDefinition.setScope(scope);
 
 		return objectDefinitionPersistence.update(objectDefinition);
 	}
@@ -820,6 +838,20 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
+	private void _validateScope(String scope) throws PortalException {
+		if (Validator.isNull(scope)) {
+			throw new ObjectDefinitionScopeException(
+				"Must provide a scope for the object");
+		}
+
+		try {
+			_objectScopeProviderRegistry.getObjectScopeProvider(scope);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			throw new ObjectDefinitionScopeException(illegalArgumentException);
+		}
+	}
+
 	private void _validateVersion(boolean system, int version)
 		throws PortalException {
 
@@ -863,6 +895,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private PersistedModelLocalServiceRegistry

@@ -34,6 +34,8 @@ public interface SystemObjectDefinitionMetadata {
 
 	public String getName();
 
+	public String getScope();
+
 	public List<ObjectField> getObjectFields();
 
 	public default String getPKObjectFieldDBColumnName() {

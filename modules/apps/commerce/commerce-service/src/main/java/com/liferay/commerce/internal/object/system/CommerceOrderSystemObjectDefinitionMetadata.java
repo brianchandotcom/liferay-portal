@@ -47,6 +47,11 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public String getScope() {
+		return "company";
+	}
+
+	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField("order-status", "orderStatus", true, "Integer"),

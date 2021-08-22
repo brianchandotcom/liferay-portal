@@ -63,6 +63,11 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public String getScope() {
+		return "company";
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}

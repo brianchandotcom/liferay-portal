@@ -129,6 +129,7 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionMetadata.getPKObjectFieldDBColumnName(),
 				systemObjectDefinitionMetadata.getPKObjectFieldName(),
 				systemObjectDefinitionMetadata.getPluralLabelMap(),
+				systemObjectDefinitionMetadata.getScope(),
 				systemObjectDefinitionMetadata.getVersion(),
 				systemObjectDefinitionMetadata.getObjectFields());
 		}

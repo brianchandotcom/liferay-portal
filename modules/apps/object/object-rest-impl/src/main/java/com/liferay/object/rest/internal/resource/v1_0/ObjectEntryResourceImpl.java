@@ -108,7 +108,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntries(
-			contextCompany.getCompanyId(),
+			contextCompany.getCompanyId(), 0,
 			_objectDefinition.getObjectDefinitionId(), aggregation,
 			_getDTOConverterContext(null), filter, pagination, search, sorts);
 	}
@@ -134,7 +134,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_getDTOConverterContext(null), contextUser.getUserId(),
+			_getDTOConverterContext(null), contextUser.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), objectEntry);
 	}
 

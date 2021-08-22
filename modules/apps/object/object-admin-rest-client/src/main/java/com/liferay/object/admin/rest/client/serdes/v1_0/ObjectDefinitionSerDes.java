@@ -162,6 +162,34 @@ public class ObjectDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (objectDefinition.getPanelAppOrder() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"panelAppOrder\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getPanelAppOrder()));
+
+			sb.append("\"");
+		}
+
+		if (objectDefinition.getPanelCategoryKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"panelCategoryKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getPanelCategoryKey()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getPluralLabel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -170,6 +198,20 @@ public class ObjectDefinitionSerDes {
 			sb.append("\"pluralLabel\": ");
 
 			sb.append(_toJSON(objectDefinition.getPluralLabel()));
+		}
+
+		if (objectDefinition.getScope() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scope\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getScope()));
+
+			sb.append("\"");
 		}
 
 		if (objectDefinition.getStatus() != null) {
@@ -271,6 +313,24 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getObjectFields()));
 		}
 
+		if (objectDefinition.getPanelAppOrder() == null) {
+			map.put("panelAppOrder", null);
+		}
+		else {
+			map.put(
+				"panelAppOrder",
+				String.valueOf(objectDefinition.getPanelAppOrder()));
+		}
+
+		if (objectDefinition.getPanelCategoryKey() == null) {
+			map.put("panelCategoryKey", null);
+		}
+		else {
+			map.put(
+				"panelCategoryKey",
+				String.valueOf(objectDefinition.getPanelCategoryKey()));
+		}
+
 		if (objectDefinition.getPluralLabel() == null) {
 			map.put("pluralLabel", null);
 		}
@@ -278,6 +338,13 @@ public class ObjectDefinitionSerDes {
 			map.put(
 				"pluralLabel",
 				String.valueOf(objectDefinition.getPluralLabel()));
+		}
+
+		if (objectDefinition.getScope() == null) {
+			map.put("scope", null);
+		}
+		else {
+			map.put("scope", String.valueOf(objectDefinition.getScope()));
 		}
 
 		if (objectDefinition.getStatus() == null) {
@@ -364,11 +431,28 @@ public class ObjectDefinitionSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "panelAppOrder")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setPanelAppOrder(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "panelCategoryKey")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setPanelCategoryKey(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "pluralLabel")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setPluralLabel(
 						(Map)ObjectDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "scope")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setScope((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

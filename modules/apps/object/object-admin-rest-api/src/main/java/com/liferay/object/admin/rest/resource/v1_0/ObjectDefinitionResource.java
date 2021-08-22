@@ -70,6 +70,10 @@ public interface ObjectDefinitionResource {
 	public ObjectDefinition getObjectDefinition(Long objectDefinitionId)
 		throws Exception;
 
+	public ObjectDefinition patchObjectDefinition(
+			Long objectDefinitionId, ObjectDefinition objectDefinition)
+		throws Exception;
+
 	public ObjectDefinition putObjectDefinition(
 			Long objectDefinitionId, ObjectDefinition objectDefinition)
 		throws Exception;

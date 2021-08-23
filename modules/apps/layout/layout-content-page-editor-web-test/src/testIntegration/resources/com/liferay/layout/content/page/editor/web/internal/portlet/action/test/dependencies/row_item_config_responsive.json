@@ -10,11 +10,13 @@
 		"modulesPerRow": 3,
 		"reverseOrder": true,
 		"styles": {
+			"display": "none"
 		},
 		"verticalAlignment": "bottom"
 	},
 	"reverseOrder": false,
 	"styles": {
+		"display": "block"
 	},
 	"tablet": {
 		"modulesPerRow": 2,

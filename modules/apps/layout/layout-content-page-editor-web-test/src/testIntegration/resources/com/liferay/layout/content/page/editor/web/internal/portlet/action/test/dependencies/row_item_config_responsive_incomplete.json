@@ -3,10 +3,12 @@
 		"modulesPerRow": 3,
 		"reverseOrder": true,
 		"styles": {
+			"display": "none"
 		},
 		"verticalAlignment": "bottom"
 	},
 	"styles": {
+		"display": "block"
 	},
 	"tablet": {
 		"modulesPerRow": 2,

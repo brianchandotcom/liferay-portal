@@ -116,7 +116,8 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		_organizationService.deleteUserOrganizationByEmailAddress(
-			emailAddress, _getServiceBuilderOrganizationId(organizationId));
+			emailAddress, _getServiceBuilderOrganizationId(organizationId),
+			ServiceContextFactory.getInstance(contextHttpServletRequest));
 	}
 
 	@Override

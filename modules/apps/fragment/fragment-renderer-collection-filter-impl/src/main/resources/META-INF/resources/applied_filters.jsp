@@ -18,12 +18,14 @@
 
 <%
 CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersFragmentRendererDisplayContext = (CollectionAppliedFiltersFragmentRendererDisplayContext)request.getAttribute(CollectionAppliedFiltersFragmentRendererDisplayContext.class.getName());
+
+List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRendererDisplayContext.getAppliedFilters();
 %>
 
 <div class="d-flex py-1" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>">
 	<div class="flex-grow-1">
 		<c:choose>
-			<c:when test="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getAppliedFilters().isEmpty() %>">
+			<c:when test="<%= appliedFilters.isEmpty() %>">
 				<span class="text-secondary">
 					<liferay-ui:message key="no-active-filters" />
 				</span>
@@ -31,7 +33,7 @@ CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersF
 			<c:otherwise>
 
 				<%
-				for (Map<String, String> appliedFilter : collectionAppliedFiltersFragmentRendererDisplayContext.getAppliedFilters()) {
+				for (Map<String, String> appliedFilter : appliedFilters) {
 				%>
 
 					<span class="label label-lg label-secondary">

@@ -425,6 +425,8 @@ public class LayoutsAdminDisplayContext {
 			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
 			"privateLayout", privatePages
+		).setParameter(
+			"selPlid", LayoutConstants.DEFAULT_PLID
 		).buildString();
 	}
 

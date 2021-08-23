@@ -25,7 +25,7 @@ CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersF
 		<c:choose>
 			<c:when test="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getAppliedFilters().isEmpty() %>">
 				<span class="text-secondary">
-					<%= LanguageUtil.get(request, "no-active-filters") %>
+					<liferay-ui:message key="no-active-filters" />
 				</span>
 			</c:when>
 			<c:otherwise>
@@ -39,7 +39,7 @@ CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersF
 							<%= appliedFilter.get("filterValue") %>
 						</span>
 						<span class="label-item label-item-after">
-							<button aria-label="<%= LanguageUtil.get(request, "remove-filter") %>" class="close remove-collection-applied-filter-button" data-filter-fragment-entry-link-id="<%= appliedFilter.get("filterFragmentEntryLinkId") %>" data-filter-type="<%= appliedFilter.get("filterType") %>" data-filter-value="<%= appliedFilter.get("filterValue") %>" type="button">
+							<button aria-label="<liferay-ui:message key="remove-filter" />" class="close remove-collection-applied-filter-button" data-filter-fragment-entry-link-id="<%= appliedFilter.get("filterFragmentEntryLinkId") %>" data-filter-type="<%= appliedFilter.get("filterType") %>" data-filter-value="<%= appliedFilter.get("filterValue") %>" type="button">
 								<span class="c-inner">
 									<clay:icon
 										symbol="times"
@@ -59,7 +59,7 @@ CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersF
 
 	<c:if test="<%= collectionAppliedFiltersFragmentRendererDisplayContext.showClearFiltersButton() %>">
 		<button class="btn btn-link btn-sm flex-shrink-0 p-0 pl-2 remove-all-collection-filters-button text-secondary" type="button">
-			<%= LanguageUtil.get(request, "clear-filters") %>
+			<liferay-ui:message key="clear-filters" />
 		</button>
 	</c:if>
 </div>

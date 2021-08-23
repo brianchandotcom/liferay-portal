@@ -22,8 +22,8 @@ CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersF
 List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRendererDisplayContext.getAppliedFilters();
 %>
 
-<div class="d-flex py-1" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>">
-	<div class="flex-grow-1">
+<div class="align-items-sm-start align-items-stretch d-flex flex-column flex-sm-row py-1" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>">
+	<div class="filter-list flex-grow-1 overflow-hidden" style="max-height: 4em;">
 		<c:choose>
 			<c:when test="<%= appliedFilters.isEmpty() %>">
 				<span class="text-secondary">
@@ -59,11 +59,29 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 		</c:choose>
 	</div>
 
-	<c:if test="<%= collectionAppliedFiltersFragmentRendererDisplayContext.showClearFiltersButton() %>">
-		<button class="btn btn-link btn-sm flex-shrink-0 ml-2 p-0 remove-all-collection-filters-button text-secondary" type="button">
-			<liferay-ui:message key="clear-filters" />
+	<div class="d-flex flex-grow-1 flex-shrink-0 flex-sm-column-reverse flex-sm-grow-0 justify-content-between justify-content-sm-start ml-sm-2 mt-2 mt-sm-0">
+		<button class="btn btn-link btn-sm d-none flex-shrink-0 p-0 text-secondary toggle-expand-filters-button" data-show-less-label="<liferay-ui:message key="show-less" />" data-show-more-label="<liferay-ui:message key="show-more" />" type="button">
+			<span class="inline-item-expand">
+				<liferay-ui:message key="show-more" />
+			</span>
+			<span class="inline-item inline-item-after ml-0">
+				<clay:icon
+					symbol="angle-down-small"
+				/>
+
+				<clay:icon
+					class="d-none"
+					symbol="angle-up-small"
+				/>
+			</span>
 		</button>
-	</c:if>
+
+		<c:if test="<%= !appliedFilters.isEmpty() && collectionAppliedFiltersFragmentRendererDisplayContext.showClearFiltersButton() %>">
+			<button class="btn btn-link btn-sm flex-shrink-0 ml-2 p-0 remove-all-collection-filters-button text-secondary" type="button">
+				<liferay-ui:message key="clear-filters" />
+			</button>
+		</c:if>
+	</div>
 </div>
 
 <liferay-frontend:component

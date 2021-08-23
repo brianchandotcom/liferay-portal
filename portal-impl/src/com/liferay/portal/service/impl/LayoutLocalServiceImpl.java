@@ -910,7 +910,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Layouts
 
-		List<Layout> layouts = layoutPersistence.findByG_P_P(
+		List<Layout> layouts = layoutPersistence.findByG_P_P_S(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new LayoutPriorityComparator(false));

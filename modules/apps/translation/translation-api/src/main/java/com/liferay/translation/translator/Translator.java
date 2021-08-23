@@ -23,6 +23,8 @@ public interface Translator {
 
 	public boolean isEnabled();
 
+	public boolean isEnabled(long companyId) throws ConfigurationException;
+
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException;
 

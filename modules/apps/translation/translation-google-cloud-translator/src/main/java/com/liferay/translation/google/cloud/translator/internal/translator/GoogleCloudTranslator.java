@@ -25,6 +25,8 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration;
@@ -46,6 +48,7 @@ import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -58,6 +61,23 @@ public class GoogleCloudTranslator implements Translator {
 
 	public boolean isEnabled() {
 		if (_googleCloudTranslatorConfiguration.enabled() &&
+			!Validator.isBlank(
+				_googleCloudTranslatorConfiguration.
+					serviceAccountPrivateKey())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isEnabled(long companyId) throws ConfigurationException {
+		GoogleCloudTranslatorConfiguration
+			googleCloudTranslatorCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					GoogleCloudTranslatorConfiguration.class, companyId);
+
+		if (googleCloudTranslatorCompanyConfiguration.enabled() &&
 			!Validator.isBlank(
 				_googleCloudTranslatorConfiguration.
 					serviceAccountPrivateKey())) {
@@ -176,6 +196,9 @@ public class GoogleCloudTranslator implements Translator {
 
 		return list.get(0);
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private GoogleCloudTranslatorConfiguration
 		_googleCloudTranslatorConfiguration;

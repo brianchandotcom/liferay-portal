@@ -43,9 +43,9 @@ renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(reques
 			<aui:fieldset>
 				<aui:input name="name" />
 
-				<aui:input fieldParam="htmlElementName" name="HTMLElementName" />
+				<aui:input name="HTMLElementName" />
 
-				<aui:input fieldParam="urls" helpMessage="urls-help" label="urls" name="URLs" type="textarea" />
+				<aui:input helpMessage="urls-help" label="urls" name="URLs" type="textarea" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

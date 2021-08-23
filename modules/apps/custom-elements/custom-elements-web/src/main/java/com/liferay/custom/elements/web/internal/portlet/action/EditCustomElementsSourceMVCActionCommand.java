@@ -53,9 +53,9 @@ public class EditCustomElementsSourceMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String htmlElementName = ParamUtil.getString(
-			actionRequest, "htmlElementName");
+			actionRequest, "HTMLElementName");
 		String name = ParamUtil.getString(actionRequest, "name");
-		String urls = ParamUtil.getString(actionRequest, "urls");
+		String urls = ParamUtil.getString(actionRequest, "URLs");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CustomElementsSource.class.getName(), actionRequest);

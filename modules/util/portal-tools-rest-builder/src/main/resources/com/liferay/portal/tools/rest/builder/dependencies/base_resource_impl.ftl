@@ -6,6 +6,7 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -121,15 +122,19 @@ public abstract class Base${schemaName}ResourceImpl
 		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
 			<#assign deleteBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "sPage")>
-			<#if !getBatchJavaMethodSignature??>
-				<#assign getBatchJavaMethodSignature = javaMethodSignature />
+			<#if stringUtil.equals(javaMethodSignature.methodName, "getAssetLibrary" + schemaName + "sPage")>
+				<#assign getAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "sPage")>
+				<#assign getSiteBatchJavaMethodSignature = javaMethodSignature />
+			<#elseif !getBatchJavaMethodSignature??>
 				<#assign getBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName)>
-			<#if !postBatchJavaMethodSignature??>
-				<#assign postBatchJavaMethodSignature = javaMethodSignature />
+			<#if stringUtil.equals(javaMethodSignature.methodName, "postAssetLibrary" + schemaName)>
+				<#assign postAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName)>
+				<#assign postSiteBatchJavaMethodSignature = javaMethodSignature />
+			<#elseif !postBatchJavaMethodSignature??>
 				<#assign postBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
@@ -348,23 +353,45 @@ public abstract class Base${schemaName}ResourceImpl
 		@Override
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		public void create(java.util.Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
-			<#if postBatchJavaMethodSignature??>
-				for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-					post${postBatchJavaMethodSignature.parentSchemaName!}${schemaName}(
-						<#list postBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-								${schemaVarName}
-							<#elseif stringUtil.equals(javaMethodParameter.parameterName, postBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-								<@castParameters
-									type=javaMethodParameter.parameterType
-									value="${postBatchJavaMethodSignature.parentSchemaName!?uncap_first}Id"
-								/>
-							<#else>
-								null
-							</#if>
-							<#sep>, </#sep>
-						</#list>
+			<#if postAssetLibraryBatchJavaMethodSignature?? || postSiteBatchJavaMethodSignature?? || postBatchJavaMethodSignature??>
+				UnsafeConsumer<${javaDataType}, Exception> ${schemaVarName}UnsafeConsumer =
+				<#if postBatchJavaMethodSignature??>
+					${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
+						<@getPOSTBatchJavaMethodParameters
+							javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
+							schemaVarName=schemaVarName
+						/>
 					);
+				<#else>
+					${schemaVarName} -> {};
+				</#if>
+
+				<#if postAssetLibraryBatchJavaMethodSignature??>
+					if (parameters.containsKey("assetLibraryId")) {
+						${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+							<@getPOSTBatchJavaMethodParameters
+								javaMethodParameters=postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+								schemaVarName=schemaVarName
+							/>
+						);
+					}
+				</#if>
+				<#if postSiteBatchJavaMethodSignature??>
+					<#if postAssetLibraryBatchJavaMethodSignature??>
+						else
+					</#if>
+					if (parameters.containsKey("siteId")) {
+						${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
+							<@getPOSTBatchJavaMethodParameters
+								javaMethodParameters=postSiteBatchJavaMethodSignature.javaMethodParameters
+								schemaVarName=schemaVarName
+							/>
+						);
+					}
+				</#if>
+
+				for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
+					${schemaVarName}UnsafeConsumer.accept(${schemaVarName});
 				}
 			</#if>
 		}
@@ -396,22 +423,37 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public Page<${javaDataType}> read(Filter filter, Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
-			<#if getBatchJavaMethodSignature??>
-				return get${getBatchJavaMethodSignature.parentSchemaName!}${schemaName}sPage(
-					<#list getBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, "aggregation")>
-							null
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "pagination") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
-							${javaMethodParameter.parameterName}
-						<#else>
-							<@castParameters
-								type=javaMethodParameter.parameterType
-								value=javaMethodParameter.parameterName
-							/>
-						</#if>
-						<#sep>, </#sep>
-					</#list>
+
+			<#if getAssetLibraryBatchJavaMethodSignature?? || getBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature??>
+				<#if getAssetLibraryBatchJavaMethodSignature??>
+					if (parameters.containsKey("assetLibraryId")) {
+						return ${getAssetLibraryBatchJavaMethodSignature.methodName}(
+							<@getGETBatchJavaMethodParameters javaMethodParameters=getAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
+						);
+					} else
+				</#if>
+				<#if getSiteBatchJavaMethodSignature??>
+					if (parameters.containsKey("siteId")) {
+						return ${getSiteBatchJavaMethodSignature.methodName}(
+							<@getGETBatchJavaMethodParameters javaMethodParameters=getSiteBatchJavaMethodSignature.javaMethodParameters />
+						);
+					} else
+				</#if>
+				<#if getBatchJavaMethodSignature??>
+					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature??>
+						{
+					</#if>
+					return ${getBatchJavaMethodSignature.methodName}(
+						<@getGETBatchJavaMethodParameters javaMethodParameters=getBatchJavaMethodSignature.javaMethodParameters />
 					);
+					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature??>
+						}
+					</#if>
+				<#else>
+					{
+						return null;
+					}
+				</#if>
 			<#else>
 				return null;
 			</#if>
@@ -619,7 +661,9 @@ public abstract class Base${schemaName}ResourceImpl
 	type
 	value
 >
-	<#if stringUtil.startsWith(type, "[L")>
+	<#if stringUtil.equals(value, "assetLibraryId") || stringUtil.equals(value, "siteId")>
+		(Long)parameters.get("${value}")
+	<#elseif stringUtil.startsWith(type, "[L")>
 		(
 
 		<#if type?contains("java.lang.Boolean")>
@@ -637,6 +681,8 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 
 		)parameters.get("${value}")
+	<#elseif !stringUtil.startsWith(type, "java")>
+		(${type})parameters.get("${value}")
 	<#else>
 		<#if type?contains("java.lang.Boolean")>
 			Boolean.parseBoolean(
@@ -668,6 +714,41 @@ public abstract class Base${schemaName}ResourceImpl
 	).put(
 		"replace", addAction(ActionKeys.PERMISSIONS, "put${source}Permission", ${resourceName}, ${resourceId})
 	).build()
+</#macro>
+
+<#macro getGETBatchJavaMethodParameters
+	javaMethodParameters
+>
+	<#list javaMethodParameters as javaMethodParameter>
+		<#if stringUtil.equals(javaMethodParameter.parameterName, "aggregation")>
+			null
+		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "pagination") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
+			${javaMethodParameter.parameterName}
+		<#else>
+			<@castParameters
+				type=javaMethodParameter.parameterType
+				value=javaMethodParameter.parameterName
+			/>
+		</#if>
+		<#sep>, </#sep>
+	</#list>
+</#macro>
+
+<#macro getPOSTBatchJavaMethodParameters
+	javaMethodParameters
+	schemaVarName
+>
+	<#list javaMethodParameters as javaMethodParameter>
+		<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+			${schemaVarName}
+		<#else>
+			<@castParameters
+				type=javaMethodParameter.parameterType
+				value=javaMethodParameter.parameterName
+			/>
+		</#if>
+		<#sep>, </#sep>
+	</#list>
 </#macro>
 
 <#macro updateResourcePermissions

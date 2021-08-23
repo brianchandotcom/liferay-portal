@@ -4,6 +4,20 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#CLOSE_UNMAPPED_ERROR");
 	}
 
+	macro gotoBuilderFormFields () {
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUILDER_FORM_FIELDS");
+	}
+
+	macro mapFormField () {
+		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
+
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+	}
+
 	macro openForm {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_mvcRenderCommandName=%2Fadmin%2Fedit_form_instance&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_redirect=%2Fgroup%2Fguest%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D20125&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_groupId=20125#/");
 	}
@@ -55,18 +69,6 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			key_fieldType = "${fieldType}",
 			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_PANEL_BODY");
-	}
-
-	macro gotoBuilderFormFields (){
-		Click(locator1 = "PopulateObjectFormsConfiguration#BUILDER_FORM_FIELDS");
-	}
-
-	macro mapFormField (){
-		Click(locator1 ="PopulateObjectFormsConfiguration#ADVANCED_TAB");
-
-		Click(locator1 ="PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
-
-		Click(key_fieldName = "${fieldName}", locator1 ="PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
 	}
 
 }

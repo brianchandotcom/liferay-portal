@@ -1,57 +1,50 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-    property analytics.cloud.enabled = "true";
-    property minimum.slave.ram = "32";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Analytics Cloud";
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
 
-    setUp {
-        ACUtils.launchAC();
+	setUp {
+		ACUtils.launchAC();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        ACUtils.launchDXP();
+		ACUtils.launchDXP();
+	}
 
-    }
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+		ACUtils.tearDownDXP();
 
-        ACUtils.tearDownDXP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-
-        ACUtils.tearDownAC();
-    }
-
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8855 | Test Summary: Delete a Salesforce data source"
-    @ignore = "true"
-    @priority = "5"
-    test DeleteSalesforceDataSource {
-
-        // TODO LRAC-8855 DeleteSalesforceDataSource pending implementation
-
-    }
+		ACUtils.tearDownAC();
+	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8856 | Test Summary: Cancel Creating a Salesforce Data Source"
-    @ignore = "true"
-    @priority = "2"
-    test CancelCreatingSalesforceDataSource {
+	@ignore = "true"
+	@priority = "2"
+	test CancelCreatingSalesforceDataSource {
 
-        // TODO LRAC-8856 CancelCreatingSalesforceDataSource pending implementation
+		// TODO LRAC-8856 CancelCreatingSalesforceDataSource pending implementation
 
-    }
+	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8855 | Test Summary: Delete a Salesforce data source"
+	@ignore = "true"
+	@priority = "5"
+	test DeleteSalesforceDataSource {
 
+		// TODO LRAC-8855 DeleteSalesforceDataSource pending implementation
 
-
-
-
+	}
 
 }

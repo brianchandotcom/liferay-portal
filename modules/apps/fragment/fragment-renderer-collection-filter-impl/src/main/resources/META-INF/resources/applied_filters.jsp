@@ -58,7 +58,7 @@ CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersF
 	</div>
 
 	<c:if test="<%= collectionAppliedFiltersFragmentRendererDisplayContext.showClearFiltersButton() %>">
-		<button class="btn btn-link btn-sm flex-shrink-0 p-0 pl-2 remove-all-collection-filters-button text-secondary" type="button">
+		<button class="btn btn-link btn-sm flex-shrink-0 ml-2 p-0 remove-all-collection-filters-button text-secondary" type="button">
 			<liferay-ui:message key="clear-filters" />
 		</button>
 	</c:if>

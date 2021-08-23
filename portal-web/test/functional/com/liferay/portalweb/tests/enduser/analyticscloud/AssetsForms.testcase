@@ -229,9 +229,7 @@ definition {
 		task ("Go to form and submit to get data for segmented individuals") {
 			ACUtils.launchDXP();
 
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
+			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
@@ -244,16 +242,6 @@ definition {
 			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 
 			Pause(locator1 = "5000");
-
-			User.logoutPG();
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Assets");
 		}
 
 		task ("Close all sessions and go to AC") {

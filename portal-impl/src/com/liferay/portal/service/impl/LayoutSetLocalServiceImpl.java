@@ -97,14 +97,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
-		boolean includeSystem = true;
-
 		// Layouts
 
 		serviceContext.setAttribute("updatePageCount", Boolean.FALSE);
 
 		layoutLocalService.deleteLayouts(
-			groupId, privateLayout, includeSystem, serviceContext);
+			groupId, privateLayout, true, serviceContext);
 
 		// Logo
 

@@ -51,10 +51,6 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Interation with page") {
-
-
-
-			
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");

@@ -53,6 +53,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,6 +71,7 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Ignore
 	@Override
 	@Test
 	public void testCleanStagedModelDataHandler() throws Exception {

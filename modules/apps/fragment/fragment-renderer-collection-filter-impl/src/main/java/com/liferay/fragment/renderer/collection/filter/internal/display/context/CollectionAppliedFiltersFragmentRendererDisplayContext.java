@@ -80,6 +80,8 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 		_collectionAppliedFiltersProps = HashMapBuilder.<String, Object>put(
 			"filterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
+		).put(
+			"removeButtonSelector", ".remove-collection-applied-filter-button"
 		).build();
 
 		return _collectionAppliedFiltersProps;

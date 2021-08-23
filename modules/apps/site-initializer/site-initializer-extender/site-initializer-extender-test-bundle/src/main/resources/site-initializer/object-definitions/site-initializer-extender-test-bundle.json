@@ -1,3 +1,9 @@
 {
-	"name": "BundleSiteInitializerTest"
+	"label": {
+		"en_US": "BundleSiteInitializerTest"
+	},
+	"name": "BundleSiteInitializerTest",
+	"pluralLabel": {
+		"en_US": "BundleSiteInitializerTest"
+	}
 }

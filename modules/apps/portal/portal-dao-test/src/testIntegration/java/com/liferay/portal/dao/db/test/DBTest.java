@@ -16,7 +16,6 @@ package com.liferay.portal.dao.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -69,7 +68,8 @@ public class DBTest {
 
 	@Test
 	public void testAlterColumnTypeAlterSize() throws Exception {
-		_db.runSQL(_getAlterColumType("notNilColumn", "VARCHAR(200) not null"));
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "notNilColumn", "VARCHAR(200) not null");
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
@@ -78,7 +78,8 @@ public class DBTest {
 
 	@Test
 	public void testAlterColumnTypeChangeToNotNull() throws Exception {
-		_db.runSQL(_getAlterColumType("nilColumn", "VARCHAR(75) not null"));
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "nilColumn", "VARCHAR(75) not null");
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
@@ -87,7 +88,8 @@ public class DBTest {
 
 	@Test
 	public void testAlterColumnTypeChangeToNull() throws Exception {
-		_db.runSQL(_getAlterColumType("notNilColumn", "VARCHAR(75) null"));
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "notNilColumn", "VARCHAR(75) null");
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
@@ -96,7 +98,8 @@ public class DBTest {
 
 	@Test
 	public void testAlterColumnTypeNoChangesNotNull() throws Exception {
-		_db.runSQL(_getAlterColumType("notNilColumn", "VARCHAR(75) not null"));
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "notNilColumn", "VARCHAR(75) not null");
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
@@ -105,17 +108,12 @@ public class DBTest {
 
 	@Test
 	public void testAlterColumnTypeNoChangesNull() throws Exception {
-		_db.runSQL(_getAlterColumType("nilColumn", "VARCHAR(75) null"));
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "nilColumn", "VARCHAR(75) null");
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "nilColumn", "VARCHAR(75) null"));
-	}
-
-	private String _getAlterColumType(String columnName, String newType) {
-		return StringBundler.concat(
-			"alter_column_type ", _TABLE_NAME, StringPool.SPACE, columnName,
-			StringPool.SPACE, newType);
 	}
 
 	private static final String _TABLE_NAME = "DBTest";

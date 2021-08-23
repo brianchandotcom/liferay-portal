@@ -80,7 +80,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 						current: isCurrent(currentSteps, node),
 						done: isVisited(visitedNodes, node),
 						initial: node.type == 'INITIAL_STATE',
-						label: node.name,
+						label: node.label,
 					},
 					id: node.name,
 					position,

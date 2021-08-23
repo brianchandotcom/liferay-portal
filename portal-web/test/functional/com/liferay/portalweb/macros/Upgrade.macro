@@ -3370,6 +3370,69 @@ definition {
 			searchTerm = "Drools");
 	}
 
+	macro viewEditableCardFragment {
+		task ("View the inline text of the card fragment at view mode after Upgrade") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Test Title");
+		}
+
+		task ("View the inline text of the card fragment at edit mode after Upgrade") {
+			ContentPages.clickPencil();
+
+			AssertTextEquals(
+				id = "02-title",
+				key_fragmentName = "Card",
+				locator1 = "Fragment#EDITABLE_FIELD",
+				value1 = "Test Title");
+		}
+
+		task ("View the fragment style of the card title after Upgrade") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Card",
+				headingLevel = "h4",
+				text = "Test Title");
+		}
+
+		task ("Edit the inline text of the Card fragment") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			PageEditor.editFragmentTextViaPageContentPanel(
+				itemName = "Test Title",
+				text = "Editable Title");
+		}
+
+		task ("View the updated inline text of the card fragment") {
+			AssertTextEquals(
+				id = "02-title",
+				key_fragmentName = "Card",
+				locator1 = "Fragment#EDITABLE_FIELD",
+				value1 = "Editable Title");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("View the inline text of the card fragment at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Editable Title");
+		}
+	}
+
 	macro viewInstanceSettings {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",

@@ -19,6 +19,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -41,6 +42,8 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentRendererContext = fragmentRendererContext;
 		_httpServletRequest = httpServletRequest;
+
+		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
 	}
 
 	public List<Map<String, String>> getAppliedFilters() {
@@ -89,27 +92,33 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 			"filterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
 		).put(
 			"removeAllFiltersButtonSelector",
-			".remove-all-collection-filters-button"
+			StringPool.POUND + getFragmentEntryLinkNamespace() +
+				" .remove-all-collection-filters-button"
 		).put(
-			"removeButtonSelector", ".remove-collection-applied-filter-button"
+			"removeButtonSelector",
+			StringPool.POUND + getFragmentEntryLinkNamespace() +
+				" .remove-collection-applied-filter-button"
 		).build();
 
 		return _collectionAppliedFiltersProps;
 	}
 
-	public boolean showClearFiltersButton() {
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentRendererContext.getFragmentEntryLink();
+	public String getFragmentEntryLinkNamespace() {
+		return "fragment_" + _fragmentEntryLink.getFragmentEntryLinkId() +
+			StringPool.UNDERLINE + _fragmentEntryLink.getNamespace();
+	}
 
+	public boolean showClearFiltersButton() {
 		return (boolean)
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-				fragmentEntryLink.getEditableValues(), "bool",
+				_fragmentEntryLink.getEditableValues(), "bool",
 				"showClearFilters");
 	}
 
 	private Map<String, Object> _collectionAppliedFiltersProps;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
+	private final FragmentEntryLink _fragmentEntryLink;
 	private final FragmentRendererContext _fragmentRendererContext;
 	private final HttpServletRequest _httpServletRequest;
 

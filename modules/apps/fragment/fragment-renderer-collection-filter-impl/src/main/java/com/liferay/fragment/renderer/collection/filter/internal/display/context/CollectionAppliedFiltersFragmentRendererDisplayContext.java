@@ -15,6 +15,7 @@
 package com.liferay.fragment.renderer.collection.filter.internal.display.context;
 
 import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
+import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -107,8 +108,8 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	public boolean showClearFiltersButton() {
 		return (boolean)
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-				_fragmentEntryLink.getEditableValues(), "bool",
-				"showClearFilters");
+				_fragmentEntryLink.getEditableValues(), "showClearFilters",
+				FragmentConfigurationFieldDataType.BOOLEAN);
 	}
 
 	private Map<String, Object> _collectionAppliedFiltersProps;

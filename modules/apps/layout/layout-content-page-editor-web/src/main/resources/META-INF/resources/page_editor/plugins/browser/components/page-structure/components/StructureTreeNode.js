@@ -138,7 +138,7 @@ export default function StructureTreeNode({node}) {
 		<MemoizedStructureTreeNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
 			isActive={node.activable && isSelected}
-			isDisabled={node.disabled}
+			isDisabled={node.disabled || !node.activable}
 			isHovered={node.id === fromControlsId(hoveredItemId)}
 			isMapped={node.mapped}
 			isSelected={isSelected}
@@ -189,8 +189,6 @@ function StructureTreeNodeContent({
 
 		return null;
 	});
-
-	const isActivable = node.activable && node.itemType !== ITEM_TYPES.editable;
 
 	const item = {
 		children: node.children,
@@ -250,7 +248,7 @@ function StructureTreeNodeContent({
 
 	return (
 		<div
-			aria-disabled={isDisabled || !isActivable}
+			aria-disabled={isDisabled}
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'drag-over-bottom':
@@ -260,7 +258,7 @@ function StructureTreeNodeContent({
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				dragged: isDraggingSource,
-				'page-editor__page-structure__tree-node--activable': isActivable,
+				'font-weight-semi-bold': node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--active': isActive,
 				'page-editor__page-structure__tree-node--disabled': isDisabled,
 				'page-editor__page-structure__tree-node--hovered': isHovered,

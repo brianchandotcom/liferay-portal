@@ -8,13 +8,17 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 	}
 
 	tearDown {
@@ -30,12 +34,38 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8356 | Test Summary: 180 Days time period filter in Path Analysis"
-	@ignore = "true"
 	@priority = "3"
 	test CanTimeFilterUse180DaysPathAnalysis {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8356 CanTimeFilterUse180DaysPathAnalysis pending implementation
+		// AC Refactor: Need past data
+		// AC Refactor ticket: LRAC-8874
 
+		task ("Switch to new property in AC") {
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Pages tab in Sites") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		// Can't assert that the filter is working correctly without past data
+
+
+		task ("Assert 'Last 180 days' time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast180Days();
+
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8358 | Test Summary: Custom Range time period filter in Path Analysis"

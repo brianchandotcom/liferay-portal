@@ -59,8 +59,6 @@ const getLayoutedElements = (elements) => {
 
 	let transitions = elements.filter((element) => isEdge(element));
 
-	let targetNodeIndex;
-
 	transitions = transitions.map((transition) => {
 		const sourceNode = nodes.find((node) => node.id == transition.source);
 
@@ -69,38 +67,76 @@ const getLayoutedElements = (elements) => {
 
 		const targetNode = nodes.find((node) => node.id == transition.target);
 
-		targetNodeIndex = nodes.findIndex(
-			(node) => node.id == transition.target
-		);
+		const targetX = targetNode.position.x;
+		const targetY = targetNode.position.y;
 
-		let targetX = targetNode.position.x;
-		let targetY = targetNode.position.y;
-
-		if (sourceX > targetX && sourceY < targetY) {
-			const newX = sourceNode.position.x + nodeWidth;
-			const newY = sourceNode.position.y + nodeHeight;
-
-			targetX = newX;
-			targetY = newY;
-
-			nodes[targetNodeIndex] = {
-				...nodes[targetNodeIndex],
-				position: {x: newX, y: newY},
-			};
-		}
-
-		if (sourceY > targetY) {
-			transition.targetHandle = 'top';
+		if (sourceX >= targetX) {
+			if (sourceX - targetX < 100) {
+				if (sourceY > targetY) {
+					transition.sourceHandle = 'topSource1';
+					transition.targetHandle = 'bottomTarget2';
+				}
+				else {
+					transition.sourceHandle = 'bottomSource1';
+					transition.targetHandle = 'topTarget2';
+				}
+			}
+			else {
+				if (sourceY > targetY) {
+					if (sourceY - targetY < 100) {
+						transition.sourceHandle = 'leftSource1';
+						transition.targetHandle = 'rightTarget2';
+					}
+					else {
+						transition.sourceHandle = 'topSource1';
+						transition.targetHandle = 'bottomTarget2';
+					}
+				}
+				else {
+					if (targetY - sourceY < 100) {
+						transition.sourceHandle = 'leftSource2';
+						transition.targetHandle = 'rightTarget1';
+					}
+					else {
+						transition.sourceHandle = 'bottomSource1';
+						transition.targetHandle = 'topTarget2';
+					}
+				}
+			}
 		}
 		else {
-			transition.targetHandle = 'left';
-		}
-
-		if (sourceX > targetX) {
-			transition.sourceHandle = 'bottom';
-		}
-		else {
-			transition.sourceHandle = 'right';
+			if (targetX - sourceX < 100) {
+				if (sourceY > targetY) {
+					transition.sourceHandle = 'topSource2';
+					transition.targetHandle = 'bottomTarget1';
+				}
+				else {
+					transition.sourceHandle = 'bottomSource2';
+					transition.targetHandle = 'topTarget1';
+				}
+			}
+			else {
+				if (sourceY > targetY) {
+					if (sourceY - targetY < 100) {
+						transition.sourceHandle = 'rightSource1';
+						transition.targetHandle = 'leftTarget2';
+					}
+					else {
+						transition.sourceHandle = 'topSource2';
+						transition.targetHandle = 'bottomTarget1';
+					}
+				}
+				else {
+					if (targetY - sourceY < 100) {
+						transition.sourceHandle = 'rightSource2';
+						transition.targetHandle = 'leftTarget1';
+					}
+					else {
+						transition.sourceHandle = 'bottomSource2';
+						transition.targetHandle = 'topTarget1';
+					}
+				}
+			}
 		}
 
 		return transition;

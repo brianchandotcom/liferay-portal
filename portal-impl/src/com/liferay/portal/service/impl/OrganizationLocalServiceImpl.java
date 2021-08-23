@@ -89,6 +89,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -539,7 +541,8 @@ public class OrganizationLocalServiceImpl
 
 	@Override
 	public void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Organization organization = organizationPersistence.findByPrimaryKey(
@@ -548,7 +551,19 @@ public class OrganizationLocalServiceImpl
 		User user = userPersistence.findByC_EA(
 			organization.getCompanyId(), emailAddress);
 
-		deleteUserOrganization(user.getUserId(), organizationId);
+		List<Long> organizationIdList = ListUtil.fromArray(
+			user.getOrganizationIds());
+
+		organizationIdList.remove(organizationId);
+
+		Stream<Long> stream = organizationIdList.stream();
+
+		LongStream longStream = stream.mapToLong(l -> l);
+
+		long[] organizationIds = longStream.toArray();
+
+		userLocalService.updateOrganizations(
+			user.getUserId(), organizationIds, serviceContext);
 	}
 
 	/**

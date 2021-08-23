@@ -282,14 +282,15 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 	@Override
 	public void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
 
 		organizationLocalService.deleteUserOrganizationByEmailAddress(
-			emailAddress, organizationId);
+			emailAddress, organizationId, serviceContext);
 	}
 
 	/**

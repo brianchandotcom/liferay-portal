@@ -114,7 +114,7 @@ public class CommerceOrderTypeQualifiersScreenNavigationCategory
 		throws IOException {
 
 		CommerceOrderTypeQualifiersDisplayContext
-			commerceDiscountQualifiersDisplayContext =
+			commerceOrderTypeQualifiersDisplayContext =
 				new CommerceOrderTypeQualifiersDisplayContext(
 					httpServletRequest,
 					_commerceOrderTypeModelResourcePermission,
@@ -123,7 +123,7 @@ public class CommerceOrderTypeQualifiersScreenNavigationCategory
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceDiscountQualifiersDisplayContext);
+			commerceOrderTypeQualifiersDisplayContext);
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,

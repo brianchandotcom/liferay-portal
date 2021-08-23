@@ -38,9 +38,8 @@ public class ObjectScopeProviderRegistryImpl
 	public ObjectScopeProvider getObjectScopeProvider(
 		String objectScopeProviderKey) {
 
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderServiceTrackerMap.getService(
-				objectScopeProviderKey);
+		ObjectScopeProvider objectScopeProvider = _serviceTrackerMap.getService(
+			objectScopeProviderKey);
 
 		if (objectScopeProvider == null) {
 			throw new IllegalArgumentException(
@@ -53,8 +52,7 @@ public class ObjectScopeProviderRegistryImpl
 
 	public List<ObjectScopeProvider> getObjectScopeProviders() {
 		List<ObjectScopeProvider> objectScopeProviders =
-			ListUtil.fromCollection(
-				_objectScopeProviderServiceTrackerMap.values());
+			ListUtil.fromCollection(_serviceTrackerMap.values());
 
 		if (objectScopeProviders == null) {
 			return Collections.emptyList();
@@ -65,18 +63,16 @@ public class ObjectScopeProviderRegistryImpl
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
-		_objectScopeProviderServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ObjectScopeProvider.class,
-				"object.scope.provider.key");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ObjectScopeProvider.class,
+			"object.scope.provider.key");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_objectScopeProviderServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, ObjectScopeProvider>
-		_objectScopeProviderServiceTrackerMap;
+	private ServiceTrackerMap<String, ObjectScopeProvider> _serviceTrackerMap;
 
 }

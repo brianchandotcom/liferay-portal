@@ -187,15 +187,13 @@ export const CollectionGeneralPanel = ({item}) => {
 	const handleShowAllItemsChanged = (event) => {
 		setShowAllItems(event.target.checked);
 
-		const numberOfItems = totalNumberOfItems || 1;
-
 		setNextValue({
 			...nextValue,
-			numberOfItems,
+			numberOfItems: totalNumberOfItems,
 		});
 
 		handleConfigurationChanged({
-			numberOfItems,
+			numberOfItems: totalNumberOfItems,
 			showAllItems: event.target.checked,
 		});
 	};

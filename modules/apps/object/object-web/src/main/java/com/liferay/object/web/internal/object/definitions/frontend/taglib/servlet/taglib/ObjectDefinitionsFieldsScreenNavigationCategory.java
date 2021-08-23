@@ -58,7 +58,7 @@ public class ObjectDefinitionsFieldsScreenNavigationCategory
 
 	@Override
 	public String getJspPath() {
-		return "/object_definitions/view_object_fields.jsp";
+		return "/object_definitions/definition/fields.jsp";
 	}
 
 	@Override

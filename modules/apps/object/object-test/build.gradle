@@ -2,6 +2,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-lang3", version: "3.11"
 	testIntegrationCompile project(":apps:asset:asset-api")
+	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:object:object-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

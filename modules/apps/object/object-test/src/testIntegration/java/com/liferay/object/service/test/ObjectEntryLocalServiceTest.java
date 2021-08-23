@@ -17,8 +17,11 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -28,6 +31,7 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -39,10 +43,12 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -160,6 +166,63 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
+
+		// Scope by company
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		long depotEntryGroupId = depotEntry.getGroupId();
+
+		long siteGroupId = TestPropsValues.getGroupId();
+
+		_testAddObjectEntry(0, ObjectDefinitionConstants.SCOPE_COMPANY, true);
+		_testAddObjectEntry(
+			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+		_testAddObjectEntry(
+			siteGroupId, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+
+		// Scope by depot
+
+		_testAddObjectEntry(0, ObjectDefinitionConstants.SCOPE_DEPOT, false);
+		_testAddObjectEntry(
+			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, true);
+		_testAddObjectEntry(
+			siteGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, false);
+
+		// Scope by site
+
+		_testAddObjectEntry(0, ObjectDefinitionConstants.SCOPE_SITE, false);
+		_testAddObjectEntry(
+			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_SITE, false);
+		_testAddObjectEntry(
+			siteGroupId, ObjectDefinitionConstants.SCOPE_SITE, true);
+
+		// No value was provided for required object field "emailAddress"
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "Judas"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException objectEntryValuesException) {
+			Assert.assertEquals(
+				"No value was provided for required object field " +
+					"\"emailAddress\"",
+				objectEntryValuesException.getMessage());
+		}
+
+		// Count
+
 		_assertCount(0);
 
 		_addObjectEntry(
@@ -188,21 +251,6 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(3);
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "Judas"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException objectEntryValuesException) {
-			Assert.assertEquals(
-				"No value was provided for required object field " +
-					"\"emailAddress\"",
-				objectEntryValuesException.getMessage());
-		}
 	}
 
 	@Test
@@ -998,6 +1046,46 @@ public class ObjectEntryLocalServiceTest {
 		return values;
 	}
 
+	private void _testAddObjectEntry(
+			long groupId, String scope, boolean expectSuccess)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap("Test"),
+				"T" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap("Tests"), scope,
+				Collections.<ObjectField>emptyList());
+
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		try {
+			ObjectEntryLocalServiceUtil.addObjectEntry(
+				TestPropsValues.getUserId(), groupId,
+				objectDefinition.getObjectDefinitionId(),
+				Collections.<String, Serializable>emptyMap(),
+				ServiceContextTestUtil.getServiceContext());
+
+			if (!expectSuccess) {
+				Assert.fail();
+			}
+		}
+		catch (ObjectDefinitionScopeException objectDefinitionScopeException) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Group ID ", groupId, " is not valid for scope \"", scope,
+					"\""),
+				objectDefinitionScopeException.getMessage());
+		}
+
+		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+			objectDefinition);
+	}
+
 	private void _testUpdateStatus() throws Exception {
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
@@ -1036,6 +1124,9 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
 	}
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _irrelevantObjectDefinition;

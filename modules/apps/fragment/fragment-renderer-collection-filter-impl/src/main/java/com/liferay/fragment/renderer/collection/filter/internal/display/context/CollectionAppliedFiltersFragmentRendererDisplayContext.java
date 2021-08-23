@@ -42,7 +42,6 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
-		_fragmentRendererContext = fragmentRendererContext;
 		_httpServletRequest = httpServletRequest;
 
 		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
@@ -116,7 +115,6 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;
-	private final FragmentRendererContext _fragmentRendererContext;
 	private final HttpServletRequest _httpServletRequest;
 
 }

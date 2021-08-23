@@ -1127,7 +1127,9 @@ public class ObjectEntryLocalServiceImpl
 			!objectScopeProvider.isValidGroupId(groupId)) {
 
 			throw new ObjectDefinitionScopeException(
-				"The provided Group Id is not valid for the configured scope");
+				StringBundler.concat(
+					"Group ID ", groupId, " is not valid for scope \"", scope,
+					"\""));
 		}
 	}
 

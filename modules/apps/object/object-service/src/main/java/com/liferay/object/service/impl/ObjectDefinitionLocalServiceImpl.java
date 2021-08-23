@@ -847,15 +847,15 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private void _validateScope(String scope) throws PortalException {
 		if (Validator.isNull(scope)) {
-			throw new ObjectDefinitionScopeException(
-				"Must provide a scope for the object");
+			throw new ObjectDefinitionScopeException("Scope is null");
 		}
 
 		try {
 			_objectScopeProviderRegistry.getObjectScopeProvider(scope);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
-			throw new ObjectDefinitionScopeException(illegalArgumentException);
+			throw new ObjectDefinitionScopeException(
+				illegalArgumentException.getMessage());
 		}
 	}
 

@@ -267,7 +267,8 @@ public interface OrganizationLocalService
 	public void deleteUserOrganization(long userId, Organization organization);
 
 	public void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteUserOrganizations(

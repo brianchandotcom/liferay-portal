@@ -329,11 +329,12 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	public static void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		getService().deleteUserOrganizationByEmailAddress(
-			emailAddress, organizationId);
+			emailAddress, organizationId, serviceContext);
 	}
 
 	public static void deleteUserOrganizations(

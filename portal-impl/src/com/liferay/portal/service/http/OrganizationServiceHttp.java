@@ -375,7 +375,8 @@ public class OrganizationServiceHttp {
 
 	public static void deleteUserOrganizationByEmailAddress(
 			HttpPrincipal httpPrincipal, String emailAddress,
-			long organizationId)
+			long organizationId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -385,7 +386,7 @@ public class OrganizationServiceHttp {
 				_deleteUserOrganizationByEmailAddressParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, emailAddress, organizationId);
+				methodKey, emailAddress, organizationId, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1038,7 +1039,8 @@ public class OrganizationServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_deleteUserOrganizationByEmailAddressParameterTypes8 = new Class[] {
-			String.class, long.class
+			String.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _fetchOrganizationParameterTypes9 =
 		new Class[] {long.class};

@@ -342,11 +342,12 @@ public class OrganizationLocalServiceWrapper
 
 	@Override
 	public void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_organizationLocalService.deleteUserOrganizationByEmailAddress(
-			emailAddress, organizationId);
+			emailAddress, organizationId, serviceContext);
 	}
 
 	@Override

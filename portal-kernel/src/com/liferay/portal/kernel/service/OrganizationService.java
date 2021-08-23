@@ -169,7 +169,8 @@ public interface OrganizationService extends BaseService {
 	public void deleteOrganization(long organizationId) throws PortalException;
 
 	public void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

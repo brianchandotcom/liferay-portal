@@ -294,12 +294,13 @@ public class OrganizationServiceSoap {
 	}
 
 	public static void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			OrganizationServiceUtil.deleteUserOrganizationByEmailAddress(
-				emailAddress, organizationId);
+				emailAddress, organizationId, serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

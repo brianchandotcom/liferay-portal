@@ -188,11 +188,12 @@ public class OrganizationServiceWrapper
 
 	@Override
 	public void deleteUserOrganizationByEmailAddress(
-			String emailAddress, long organizationId)
+			String emailAddress, long organizationId,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_organizationService.deleteUserOrganizationByEmailAddress(
-			emailAddress, organizationId);
+			emailAddress, organizationId, serviceContext);
 	}
 
 	/**

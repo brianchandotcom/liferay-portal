@@ -65,7 +65,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8684 | Test Summary: Check fieldBlurred is triggered when navigating the form hitting the tab key"
 	@priority = "3"
-	test CheckFieldBlurredTriggeredWhenNavigateFormHittingTabKey {
+	test CheckFieldBlurredTriggeredWhenNavigateOutOfFieldViaTabKey {
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

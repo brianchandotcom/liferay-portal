@@ -396,8 +396,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME);
 			_configureConfigurationTest(
 				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
-			_configureEclipse(project, portalTestConfiguration);
-			_configureIdea(project, portalTestConfiguration);
+			_configureEclipse(
+				project, portalConfiguration, portalTestConfiguration);
+			_configureIdea(
+				project, portalConfiguration, portalTestConfiguration);
 			_configureSourceSetTest(
 				project, portalConfiguration, portalTestConfiguration,
 				portalTestSnapshotConfiguration);
@@ -2818,7 +2820,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureEclipse(
-		Project project, Configuration portalTestConfiguration) {
+		Project project, Configuration portalConfiguration,
+		Configuration portalTestConfiguration) {
 
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
@@ -2828,11 +2831,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Collection<Configuration> plusConfigurations =
 			eclipseClasspath.getPlusConfigurations();
 
+		plusConfigurations.add(portalConfiguration);
 		plusConfigurations.add(portalTestConfiguration);
 	}
 
 	private void _configureIdea(
-		Project project, Configuration portalTestConfiguration) {
+		Project project, Configuration portalConfiguration,
+		Configuration portalTestConfiguration) {
 
 		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
 
@@ -2845,6 +2850,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Collection<Configuration> plusConfigurations = testScope.get("plus");
 
+		plusConfigurations.add(portalConfiguration);
 		plusConfigurations.add(portalTestConfiguration);
 	}
 

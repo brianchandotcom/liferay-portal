@@ -379,7 +379,6 @@ function visit(
 			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			canUpdateItemConfiguration,
 		children,
-		disabled: !isMasterPage && itemInMasterLayout,
 		draggable: true,
 		expanded:
 			item.itemId === activeItemId ||
@@ -388,6 +387,7 @@ function visit(
 		hiddenAncestor: hasHiddenAncestor,
 		icon,
 		id: item.itemId,
+		isMasterItem: !isMasterPage && itemInMasterLayout,
 		itemType: ITEM_TYPES.layoutDataItem,
 		name: getLayoutDataItemLabel(item, fragmentEntryLinks),
 		onHoverNode,

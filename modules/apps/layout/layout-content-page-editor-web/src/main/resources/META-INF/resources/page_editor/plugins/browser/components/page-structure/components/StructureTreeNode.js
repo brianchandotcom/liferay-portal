@@ -138,7 +138,6 @@ export default function StructureTreeNode({node}) {
 		<MemoizedStructureTreeNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
 			isActive={node.activable && isSelected}
-			isDisabled={node.disabled || !node.activable}
 			isHovered={node.id === fromControlsId(hoveredItemId)}
 			isMapped={node.mapped}
 			isSelected={isSelected}
@@ -167,7 +166,6 @@ const MemoizedStructureTreeNodeContent = React.memo(
 function StructureTreeNodeContent({
 	activationOrigin,
 	isActive,
-	isDisabled,
 	isHovered,
 	isMapped,
 	isSelected,
@@ -248,7 +246,7 @@ function StructureTreeNodeContent({
 
 	return (
 		<div
-			aria-disabled={isDisabled}
+			aria-disabled={node.isMasterItem || !node.activable}
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
 				'drag-over-bottom':
@@ -258,11 +256,13 @@ function StructureTreeNodeContent({
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				dragged: isDraggingSource,
-				'font-weight-semi-bold': node.itemType !== ITEM_TYPES.editable,
+				'font-weight-semi-bold':
+					node.activable && node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--active': isActive,
-				'page-editor__page-structure__tree-node--disabled': isDisabled,
 				'page-editor__page-structure__tree-node--hovered': isHovered,
 				'page-editor__page-structure__tree-node--mapped': isMapped,
+				'page-editor__page-structure__tree-node--master-item':
+					node.isMasterItem,
 			})}
 			onMouseLeave={(event) => {
 				if (!isDraggingSource && isHovered) {
@@ -305,11 +305,11 @@ function StructureTreeNodeContent({
 			/>
 
 			<NameLabel
-				disabled={node.disabled}
 				hidden={node.hidden || node.hiddenAncestor}
 				icon={node.icon}
 				isActive={isActive}
 				isMapped={isMapped}
+				isMasterItem={node.isMasterItem}
 				name={node.name}
 				ref={nodeRef}
 			/>
@@ -338,15 +338,15 @@ function StructureTreeNodeContent({
 }
 
 const NameLabel = React.forwardRef(
-	({disabled, hidden, icon, isActive, isMapped, name}, ref) => (
+	({hidden, icon, isActive, isMapped, isMasterItem, name}, ref) => (
 		<div
 			className={classNames(
 				'page-editor__page-structure__tree-node__name',
 				{
 					'page-editor__page-structure__tree-node__name--active': isActive,
-					'page-editor__page-structure__tree-node__name--disabled': disabled,
 					'page-editor__page-structure__tree-node__name--hidden': hidden,
 					'page-editor__page-structure__tree-node__name--mapped': isMapped,
+					'page-editor__page-structure__tree-node__name--master-item': isMasterItem,
 				}
 			)}
 			ref={ref}
@@ -379,7 +379,7 @@ const VisibilityButton = ({
 					'page-editor__page-structure__tree-node__visibility-button--visible': visible,
 				}
 			)}
-			disabled={node.disabled}
+			disabled={node.isMasterItem}
 			displayType="unstyled"
 			onClick={() =>
 				updateItemStyle({

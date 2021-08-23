@@ -74,6 +74,16 @@ public class BatchPlannerMappingServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static BatchPlannerMapping updateBatchPlannerMapping(
+			long batchPlannerMappingId, String externalFieldName,
+			String externalFieldType, String script)
+		throws PortalException {
+
+		return getService().updateBatchPlannerMapping(
+			batchPlannerMappingId, externalFieldName, externalFieldType,
+			script);
+	}
+
 	public static BatchPlannerMappingService getService() {
 		return _service;
 	}

@@ -130,7 +130,7 @@ public interface BatchPlannerMappingLocalService
 
 	public BatchPlannerMapping deleteBatchPlannerMapping(
 			long batchPlannerPlanId, String externalFieldName,
-			String internalName)
+			String internalFieldName)
 		throws PortalException;
 
 	/**
@@ -289,5 +289,10 @@ public interface BatchPlannerMappingLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public BatchPlannerMapping updateBatchPlannerMapping(
 		BatchPlannerMapping batchPlannerMapping);
+
+	public BatchPlannerMapping updateBatchPlannerMapping(
+			long batchPlannerMappingId, String externalFieldName,
+			String externalFieldType, String script)
+		throws PortalException;
 
 }

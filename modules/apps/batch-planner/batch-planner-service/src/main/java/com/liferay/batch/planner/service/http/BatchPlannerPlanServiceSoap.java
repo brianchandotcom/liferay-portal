@@ -141,6 +141,42 @@ public class BatchPlannerPlanServiceSoap {
 		}
 	}
 
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap[]
+			getBatchPlannerPlans(long companyId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
+				returnValue = BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+					companyId, start, end);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getBatchPlannerPlansCount(long companyId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
+					companyId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
 			updateBatchPlannerPlan(long batchPlannerPlanId, String name)
 		throws RemoteException {

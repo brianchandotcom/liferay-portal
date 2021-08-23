@@ -62,6 +62,19 @@ public class BatchPlannerLogServiceUtil {
 		return getService().getBatchPlannerLogs(batchPlannerPlanId);
 	}
 
+	public static List<BatchPlannerLog> getBatchPlannerLogs(
+			long batchPlannerPlanId, int start, int end)
+		throws PortalException {
+
+		return getService().getBatchPlannerLogs(batchPlannerPlanId, start, end);
+	}
+
+	public static int getBatchPlannerLogsCount(long batchPlannerPlanId)
+		throws PortalException {
+
+		return getService().getBatchPlannerLogsCount(batchPlannerPlanId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

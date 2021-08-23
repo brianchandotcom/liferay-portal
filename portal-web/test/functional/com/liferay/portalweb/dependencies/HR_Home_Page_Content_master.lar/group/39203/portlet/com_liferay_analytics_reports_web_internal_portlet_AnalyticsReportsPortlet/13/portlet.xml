@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet" root-portlet-id="com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet" scope-group-id="39203" private-layout="false" self-path="/group/39203/portlet/com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet/13/portlet.xml">
+	<portlet-preferences path="/group/39203/portlet/com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet/preferences/layout/39203/0/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+	<portlet-preferences path="/group/39203/portlet/com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet/preferences/layout/0/13/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+</portlet>

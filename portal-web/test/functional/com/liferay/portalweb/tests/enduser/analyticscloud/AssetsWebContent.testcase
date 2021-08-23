@@ -90,11 +90,59 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8446 | Test Summary: Assert 180 day time filter in Assets"
-	@ignore = "true"
 	@priority = "3"
 	test AssertAssetsPageTimeFilter180Days {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8446 AssertAssetsPageTimeFilter180Days
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8860
+
+		task ("Connect DXP to Analytics Cloud and get the property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to Site Page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Navigate to AC workspace") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+			
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Web Content tab in Assets") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Web Content");
+		}
+
+		task ("Set time filter to 24hs and Assert WC presence"){
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACAssets.viewAssets(assetName = "Web Content AC Title");
+		}
+
+		task ("Set time filter use 180Days") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast180Days();
+		}
+		
+		//task ("Assert not present the Web Content when time filter use 180 Days")
+		// It is not possible to perform the assert because this test needs data from the past
+
+		task ("Assert result returns") {
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
+		}
 
 	}
 

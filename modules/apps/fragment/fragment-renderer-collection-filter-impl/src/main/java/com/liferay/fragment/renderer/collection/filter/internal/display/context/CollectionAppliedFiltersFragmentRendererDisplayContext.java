@@ -90,22 +90,9 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 		}
 
 		_collectionAppliedFiltersProps = HashMapBuilder.<String, Object>put(
-			"filterListSelector",
-			StringPool.POUND + getFragmentEntryLinkNamespace() + " .filter-list"
-		).put(
 			"filterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
 		).put(
-			"removeAllFiltersButtonSelector",
-			StringPool.POUND + getFragmentEntryLinkNamespace() +
-				" .remove-all-collection-filters-button"
-		).put(
-			"removeButtonSelector",
-			StringPool.POUND + getFragmentEntryLinkNamespace() +
-				" .remove-collection-applied-filter-button"
-		).put(
-			"toggleExpandFiltersButtonSelector",
-			StringPool.POUND + getFragmentEntryLinkNamespace() +
-				" .toggle-expand-filters-button"
+			"fragmentEntryLinkNamespace", getFragmentEntryLinkNamespace()
 		).build();
 
 		return _collectionAppliedFiltersProps;

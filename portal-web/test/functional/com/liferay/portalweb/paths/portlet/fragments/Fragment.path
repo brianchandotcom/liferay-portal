@@ -250,6 +250,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONFIGURATION_HEADER_CARD</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//${key_headingLevel}[normalize-space(text())='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--${key_textColor})')]</td>
 	<td></td>

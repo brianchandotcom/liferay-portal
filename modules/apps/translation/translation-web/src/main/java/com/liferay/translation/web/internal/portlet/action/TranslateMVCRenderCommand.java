@@ -165,7 +165,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				TranslateDisplayContext.class.getName(),
 				new TranslateDisplayContext(
 					availableSourceLanguageIds, availableTargetLanguageIds,
-					() -> (_translator != null) && _translator.isEnabled(),
+					() ->
+						(_translator != null) &&
+						_translator.isEnabled(themeDisplay.getCompanyId()),
 					className, classPK,
 					_ffLayoutExperienceSelectorConfiguration, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
@@ -236,11 +238,16 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		String className, long classPK) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		renderRequest.setAttribute(
 			TranslateDisplayContext.class.getName(),
 			new TranslateDisplayContext(
 				Collections.emptyList(), Collections.emptyList(),
-				() -> (_translator != null) && _translator.isEnabled(),
+				() ->
+					(_translator != null) &&
+					_translator.isEnabled(themeDisplay.getCompanyId()),
 				className, classPK, _ffLayoutExperienceSelectorConfiguration,
 				null, _portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse), null, null,

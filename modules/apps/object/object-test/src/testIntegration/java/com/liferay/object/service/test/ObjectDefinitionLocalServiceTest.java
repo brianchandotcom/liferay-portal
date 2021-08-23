@@ -21,6 +21,7 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
+import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -202,6 +204,37 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
+
+		// Scope is null
+
+		try {
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
+				_pluralLabelMap, "", Collections.<ObjectField>emptyList());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionScopeException objectDefinitionScopeException) {
+			Assert.assertEquals(
+				"Scope is null", objectDefinitionScopeException.getMessage());
+		}
+
+		// No object scope provider found with key
+
+		String scope = RandomTestUtil.randomString();
+
+		try {
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
+				_pluralLabelMap, scope, Collections.<ObjectField>emptyList());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionScopeException objectDefinitionScopeException) {
+			Assert.assertEquals(
+				"No object scope provider found with key " + scope,
+				objectDefinitionScopeException.getMessage());
+		}
 
 		// Database table, resources, and status
 
@@ -595,6 +628,39 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
 
+		// Scope is null
+
+		try {
+			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
+				null, _pluralLabelMap, "", 1,
+				Collections.<ObjectField>emptyList());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionScopeException objectDefinitionScopeException) {
+			Assert.assertEquals(
+				"Scope is null", objectDefinitionScopeException.getMessage());
+		}
+
+		// No object scope provider found with key
+
+		String scope = RandomTestUtil.randomString();
+
+		try {
+			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
+				null, _pluralLabelMap, scope, 1,
+				Collections.<ObjectField>emptyList());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionScopeException objectDefinitionScopeException) {
+			Assert.assertEquals(
+				"No object scope provider found with key " + scope,
+				objectDefinitionScopeException.getMessage());
+		}
+
 		// System object definition versions must greater than 0
 
 		try {
@@ -769,6 +835,21 @@ public class ObjectDefinitionLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap("Ables"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.emptyList());
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Able"),
+			objectDefinition.getLabelMap());
+		Assert.assertEquals("C_Able", objectDefinition.getName());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Ables"),
+			objectDefinition.getPluralLabelMap());
+
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.updateCustomObjectDefinition(
+				objectDefinition.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				objectDefinition.getScope());
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),

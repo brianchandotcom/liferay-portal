@@ -86,7 +86,7 @@ public class FragmentCollectionFilterKeyword
 				FragmentCollectionFilterKeywordDisplayContext.class.getName(),
 				new FragmentCollectionFilterKeywordDisplayContext(
 					getConfiguration(), _fragmentEntryConfigurationParser,
-					fragmentRendererContext, httpServletRequest));
+					fragmentRendererContext));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");

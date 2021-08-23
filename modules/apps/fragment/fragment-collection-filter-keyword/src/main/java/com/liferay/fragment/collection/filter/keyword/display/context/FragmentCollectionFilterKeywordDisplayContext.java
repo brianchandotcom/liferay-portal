@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Víctor Galán
  */
@@ -34,15 +32,19 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 	public FragmentCollectionFilterKeywordDisplayContext(
 		String configuration,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+		FragmentRendererContext fragmentRendererContext) {
 
 		_configuration = configuration;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+
 		_fragmentRendererContext = fragmentRendererContext;
-		_httpServletRequest = httpServletRequest;
 
 		_fragmentEntryLink = _fragmentRendererContext.getFragmentEntryLink();
+	}
+
+	public String getFragmentEntryLinkNamespace() {
+		return _fragmentEntryLink.getFragmentEntryLinkId() +
+			StringPool.UNDERLINE + _fragmentEntryLink.getNamespace();
 	}
 
 	public String getLabel() {
@@ -79,6 +81,5 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;
 	private final FragmentRendererContext _fragmentRendererContext;
-	private final HttpServletRequest _httpServletRequest;
 
 }

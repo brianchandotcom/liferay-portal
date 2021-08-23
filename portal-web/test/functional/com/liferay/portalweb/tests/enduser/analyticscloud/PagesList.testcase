@@ -199,14 +199,11 @@ definition {
 			ACTimeFilter.setLast24Hours();
 		}
 
+		// Couldn't assert the list due to missing data.
 
-		//Couldn't assert the list due to missing data.
 		task ("Assert that the page list is beeing showed") {
 			ACUtils.assertItemsName(itemList = "AC Page,AC Page 2, AC Page 3");
-		
 		}
-
-		
 	}
 
 }

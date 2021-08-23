@@ -324,7 +324,8 @@ public class OrganizationLocalServiceTest {
 				user.getUserId(), organization.getOrganizationId()));
 
 		_organizationLocalService.deleteUserOrganizationByEmailAddress(
-			user.getEmailAddress(), organization.getOrganizationId());
+			user.getEmailAddress(), organization.getOrganizationId(),
+			new ServiceContext());
 
 		Assert.assertFalse(
 			_organizationLocalService.hasUserOrganization(

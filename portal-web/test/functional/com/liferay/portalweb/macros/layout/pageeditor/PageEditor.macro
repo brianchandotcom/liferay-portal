@@ -3508,10 +3508,19 @@ definition {
 		if (isSet(headingLevel)) {
 			var fragmentName = StringUtil.lowerCase("${fragmentName}");
 
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_headingLevel = "${headingLevel}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER");
+			if ("${fragmentName}" == "card") {
+				AssertElementPresent(
+					key_fragmentName = "${fragmentName}",
+					key_headingLevel = "${headingLevel}",
+					key_text = "${text}",
+					locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER_CARD");
+			}
+			else {
+				AssertElementPresent(
+					key_fragmentName = "${fragmentName}",
+					key_headingLevel = "${headingLevel}",
+					locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER");
+			}
 		}
 
 		if (isSet(height)) {

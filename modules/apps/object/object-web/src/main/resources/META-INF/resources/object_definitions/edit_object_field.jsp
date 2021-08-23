@@ -64,7 +64,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					<div id="<portlet:namespace />indexedGroup" style="display: <%= (objectField.getType().equals("String") && objectField.getIndexed()) ? "block;" : "none;" %>">
 						<div class="form-group">
 							<clay:radio
-								checked="<%= objectField.getIndexedAsKeyword() %>"
+								checked="<%= objectField.getIndexed() && objectField.getIndexedAsKeyword() %>"
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeKeyword" %>'
 								label='<%= LanguageUtil.get(request, "keyword") %>'
 								name="indexedType"
@@ -72,7 +72,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 							/>
 
 							<clay:radio
-								checked="<%= !objectField.getIndexedAsKeyword() %>"
+								checked="<%= objectField.getIndexed() && !objectField.getIndexedAsKeyword() %>"
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeText" %>'
 								label='<%= LanguageUtil.get(request, "text") %>'
 								name="indexedType"
@@ -80,7 +80,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 							/>
 						</div>
 
-						<div id="<portlet:namespace />indexedLanguageIdGroup" style="display: <%= !objectField.getIndexedAsKeyword() ? "block;" : "none;" %>">
+						<div id="<portlet:namespace />indexedLanguageIdGroup" style="display: <%= (!objectField.getIndexed() || objectField.getIndexedAsKeyword()) ? "none;" : "block;" %>">
 							<aui:select label='<%= LanguageUtil.get(request, "language") %>' name="indexedLanguageId">
 
 								<%
@@ -190,7 +190,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 				else if (response.ok) {
 					Liferay.Util.openToast({
 						message:
-							'<%= LanguageUtil.get(request, "the-object-was-published-successfully") %>',
+							'<%= LanguageUtil.get(request, "the-object-field-was-updated-successfully") %>',
 						type: 'success',
 					});
 

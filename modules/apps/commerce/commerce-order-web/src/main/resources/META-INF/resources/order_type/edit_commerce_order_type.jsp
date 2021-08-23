@@ -59,5 +59,5 @@ else {
 			"workflowAction", WorkflowConstants.ACTION_PUBLISH
 		).build()
 	%>'
-	module="js/edit_commerce_order_type"
+	module="js/editCommerceOrderType"
 />

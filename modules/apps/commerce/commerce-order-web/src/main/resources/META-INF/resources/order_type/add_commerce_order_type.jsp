@@ -43,6 +43,6 @@ String defaultLanguageId = LocaleUtil.toLanguageId(locale);
 				"editCommerceOrderTypePortletURL", editCommerceOrderTypePortletURL.toString()
 			).build()
 		%>'
-		module="js/add_commerce_order_type"
+		module="js/addCommerceOrderType"
 	/>
 </commerce-ui:modal-content>

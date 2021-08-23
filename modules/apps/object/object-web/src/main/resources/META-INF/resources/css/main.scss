@@ -1,5 +1,11 @@
-.side-panel-iframe .side-panel-iframe-header {
-	background-color: #fff !important;
+.side-panel-iframe {
+	& &-content {
+		padding: 0 !important;
+	}
+
+	& &-header {
+		background-color: #fff !important;
+	}
 }
 
 .side-panel-content {

@@ -42,6 +42,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
 		ACUtils.tearDownAC();
 	}
 

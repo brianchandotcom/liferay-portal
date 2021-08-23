@@ -41,12 +41,60 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to publish the Form when a required Object field is not mapped to a Form field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMapped {
 		property portal.acceptance = "true";
 
-		// TODO LPS-137350 CannotPublishWhenRequiredFieldNotMapped pending implementation
+			ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Required Field",
+			fieldName = "text",
+			fieldType = "String",
+			isRequired = "true",
+			objectName = "CustomObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "date",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.gotoBuilderFormFields();
+
+		Form.gotoAddField(fieldType = "Date");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "date");
+
+		PopulateObjectFormsConfiguration.publishFormObject();
+
+		PopulateObjectFormsConfiguration.viewUnmappedError(
+			fieldLabel = "Text",
+			fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.closeUnmappedError();
+
+		PopulateObjectFormsConfiguration.saveFormObject();
+
+		PopulateObjectFormsConfiguration.viewUnmappedError(
+			fieldLabel = "Text",
+			fieldType = "Text");
 
 	}
 

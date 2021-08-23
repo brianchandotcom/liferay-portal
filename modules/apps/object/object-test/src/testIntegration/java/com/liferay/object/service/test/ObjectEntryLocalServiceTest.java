@@ -886,7 +886,7 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), values,
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -1000,9 +1000,8 @@ public class ObjectEntryLocalServiceTest {
 
 	private void _testUpdateStatus() throws Exception {
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			TestPropsValues.getGroupId(), _objectDefinition.getClassName(), 0,
-			0, "Single Approver", 1);
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			_objectDefinition.getClassName(), 0, 0, "Single Approver", 1);
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(

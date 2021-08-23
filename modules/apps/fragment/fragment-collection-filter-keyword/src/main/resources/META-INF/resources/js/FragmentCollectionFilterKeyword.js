@@ -21,10 +21,12 @@ const ENTER_KEY = 'Enter';
 
 export default function FragmentCollectionFilterKeyword({
 	fragmentEntryLinkId,
+	fragmentEntryLinkNamespace,
 	isDisabled,
-	namespace,
 }) {
-	const keywordsInput = document.getElementById(`${namespace}keywordsInput`);
+	const keywordsInput = document.getElementById(
+		`${fragmentEntryLinkNamespace}keywordsInput`
+	);
 
 	if (keywordsInput) {
 		keywordsInput.value = getCollectionFilterValue(
@@ -38,7 +40,7 @@ export default function FragmentCollectionFilterKeyword({
 	}
 
 	const keywordsButton = document.getElementById(
-		`${namespace}keywordsButton`
+		`${fragmentEntryLinkNamespace}keywordsButton`
 	);
 
 	const handleSearch = () => {

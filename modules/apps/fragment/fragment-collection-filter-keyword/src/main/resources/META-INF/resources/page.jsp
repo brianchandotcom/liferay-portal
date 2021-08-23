@@ -16,13 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<label class="control-label <%= fragmentCollectionFilterKeywordDisplayContext.isShowLabel() ? "" : "sr-only" %>" for="<portlet:namespace />keywordsInput">
+<label class="control-label <%= fragmentCollectionFilterKeywordDisplayContext.isShowLabel() ? "" : "sr-only" %>" for="<%= fragmentCollectionFilterKeywordDisplayContext.getFragmentEntryLinkNamespace() + "keywordsInput" %>">
 	<%= fragmentCollectionFilterKeywordDisplayContext.getLabel() %>
 </label>
 
 <div class="input-group">
 	<div class="input-group-item">
-		<input class="form-control form-control-sm input-group-inset input-group-inset-after" id="<portlet:namespace />keywordsInput" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" value="" />
+		<input class="form-control form-control-sm input-group-inset input-group-inset-after" id="<%= fragmentCollectionFilterKeywordDisplayContext.getFragmentEntryLinkNamespace() + "keywordsInput" %>" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" value="" />
 
 		<div class="input-group-inset-item input-group-inset-item-after">
 			<clay:button
@@ -30,7 +30,7 @@
 				disabled="<%= fragmentCollectionFilterKeywordDisplayContext.isDisabled() %>"
 				displayType="unstyled"
 				icon="search"
-				id='<%= (liferayPortletRequest != null) ? liferayPortletResponse.getNamespace() : StringPool.BLANK + "keywordsButton" %>'
+				id='<%= fragmentCollectionFilterKeywordDisplayContext.getFragmentEntryLinkNamespace() + "keywordsButton" %>'
 			/>
 		</div>
 	</div>

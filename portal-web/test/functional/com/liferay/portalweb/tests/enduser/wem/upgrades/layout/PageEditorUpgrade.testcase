@@ -20,6 +20,26 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a use case for LPS-130223. The user can edit a inline text of an OOTB Card fragment after Upgrade."
+	@priority = "4"
+	test CanEditInlineTextOfAnOOTBCardFragmentAfterUpgrade730 {
+		property data.archive.type = "data-archive-card-fragment";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+
+		Upgrade.viewEditableCardFragment();
+	}
+
+	@description = "This is a use case for LPS-130223. The user can edit a inline text of an OOTB Card fragment after Upgrade."
+	@priority = "4"
+	test CanEditInlineTextOfAnOOTBCardFragmentAfterUpgrade731016 {
+		property data.archive.type = "data-archive-card-fragment";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.10.16";
+
+		Upgrade.viewEditableCardFragment();
+	}
+
 	@description = "This is a use case for LPS-120693."
 	@priority = "3"
 	test ConfigureContainerStylesAfterUpgrade721 {

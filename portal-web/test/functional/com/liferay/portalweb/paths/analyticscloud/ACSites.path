@@ -71,12 +71,12 @@
 	<td>//div[contains(@class,'cohort-analysis')]//h5[text()='Cohort Analysis']</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>COHORT_ANALYSIS_DAY_ZERO_PERCENTAGE</td>
 	<td>//th[text()='Day 0']/ancestor::tr/following-sibling::tr//th[3]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>COHORT_ANALYSIS_SELECT_VISITOR_TYPE</td>
 	<td>//select[contains(@class,'visitors-type-select')]</td>
 	<td></td>

@@ -55,7 +55,7 @@ public class CustomElementsSourceLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CustomElementsSource addCustomElementsSource(
-			long userId, String htmlElementName, String name, String url,
+			long userId, String htmlElementName, String name, String urls,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -73,7 +73,7 @@ public class CustomElementsSourceLocalServiceImpl
 
 		customElementsSource.setHTMLElementName(htmlElementName);
 		customElementsSource.setName(name);
-		customElementsSource.setURL(url);
+		customElementsSource.setURLs(urls);
 
 		return customElementsSourcePersistence.update(customElementsSource);
 	}
@@ -126,7 +126,7 @@ public class CustomElementsSourceLocalServiceImpl
 	@Override
 	public CustomElementsSource updateCustomElementsSource(
 			long customElementsSourceId, String htmlElementName, String name,
-			String url, ServiceContext serviceContext)
+			String urls, ServiceContext serviceContext)
 		throws PortalException {
 
 		CustomElementsSource customElementsSource =
@@ -135,7 +135,7 @@ public class CustomElementsSourceLocalServiceImpl
 
 		customElementsSource.setHTMLElementName(htmlElementName);
 		customElementsSource.setName(name);
-		customElementsSource.setURL(url);
+		customElementsSource.setURLs(urls);
 
 		return customElementsSourcePersistence.update(customElementsSource);
 	}

@@ -16,6 +16,7 @@ package com.liferay.custom.elements.web.internal.servlet.taglib;
 
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,9 +57,11 @@ public class CustomElementsSourceDynamicInclude implements DynamicInclude {
 		for (CustomElementsSource customElementsSource :
 				customElementsSources) {
 
-			printWriter.print(
-				"<script src=\"" + customElementsSource.getURL() +
-					"\"></script>");
+			String urls = customElementsSource.getURLs();
+
+			for (String url : urls.split(StringPool.NEW_LINE)) {
+				printWriter.print("<script src=\"" + url + "\"></script>");
+			}
 		}
 
 		printWriter.flush();

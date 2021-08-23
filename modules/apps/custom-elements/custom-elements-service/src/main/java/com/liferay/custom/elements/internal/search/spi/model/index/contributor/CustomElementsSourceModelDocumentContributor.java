@@ -43,7 +43,7 @@ public class CustomElementsSourceModelDocumentContributor
 		}
 
 		document.addText(Field.NAME, customElementsSource.getName());
-		document.addText(Field.URL, customElementsSource.getURL());
+		document.addText(Field.URL, customElementsSource.getURLs());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

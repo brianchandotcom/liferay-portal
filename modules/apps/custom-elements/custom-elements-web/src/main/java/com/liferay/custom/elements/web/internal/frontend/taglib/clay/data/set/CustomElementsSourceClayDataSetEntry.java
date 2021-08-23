@@ -15,6 +15,7 @@
 package com.liferay.custom.elements.web.internal.frontend.taglib.clay.data.set;
 
 import com.liferay.custom.elements.model.CustomElementsSource;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Iván Zaera Avellón
@@ -40,7 +41,11 @@ public class CustomElementsSourceClayDataSetEntry {
 	}
 
 	public String getUrl() {
-		return _customElementsSource.getURL();
+		String urls = _customElementsSource.getURLs();
+
+		String[] urlsArray = urls.split(StringPool.NEW_LINE);
+
+		return urlsArray[0];
 	}
 
 	private final CustomElementsSource _customElementsSource;

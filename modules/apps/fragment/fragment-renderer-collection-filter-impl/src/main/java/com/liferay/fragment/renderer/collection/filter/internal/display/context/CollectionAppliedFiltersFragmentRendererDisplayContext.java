@@ -19,6 +19,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -104,8 +105,9 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	}
 
 	public String getFragmentEntryLinkNamespace() {
-		return "fragment_" + _fragmentEntryLink.getFragmentEntryLinkId() +
-			StringPool.UNDERLINE + _fragmentEntryLink.getNamespace();
+		return StringBundler.concat(
+			"fragment_", _fragmentEntryLink.getFragmentEntryLinkId(),
+			StringPool.UNDERLINE, _fragmentEntryLink.getNamespace());
 	}
 
 	public boolean showClearFiltersButton() {

@@ -634,12 +634,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a content page When a user with permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
@@ -703,12 +697,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -774,12 +762,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a content page	When a user with permissions to edit web content visits the page Then the issue icon for displaying the page audit panel shows"
@@ -844,12 +826,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
@@ -908,12 +884,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -974,12 +944,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a content page	When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel shows"
@@ -1039,12 +1003,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "PagesRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit web content visits the page	Then the issue icon for displaying the page audit panel shows"
@@ -1103,12 +1061,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -1212,12 +1164,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -1323,12 +1269,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page	When the user with permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel shows"
@@ -1429,12 +1369,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -1538,12 +1472,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page	When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
@@ -1639,12 +1567,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -1748,12 +1670,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
@@ -1849,12 +1765,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -1953,12 +1863,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
-		}
 	}
 
 	@description = "Given a widget page When a user with permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
@@ -2035,12 +1939,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -2119,12 +2017,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a widget page When the user with permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel shows"
@@ -2201,12 +2093,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -2285,12 +2171,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a widget page When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
@@ -2362,12 +2242,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -2441,12 +2315,6 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a widget page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
@@ -2516,12 +2384,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -2594,12 +2456,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Remove user and role created") {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 

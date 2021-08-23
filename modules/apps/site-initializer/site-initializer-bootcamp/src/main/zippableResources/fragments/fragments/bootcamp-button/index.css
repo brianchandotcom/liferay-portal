@@ -1,30 +1,30 @@
 .bootcamp-button .btn {
-  border-radius: 0;
-  color: inherit;
-  font-family: var(--font-family-sans-serif);
-  font-weight: var(--font-weight-bolder);
-  letter-spacing: 1px;
-  text-transform: uppercase;
+	border-radius: 0;
+	color: inherit;
+	font-family: var(--font-family-sans-serif);
+	font-weight: var(--font-weight-bolder);
+	letter-spacing: 1px;
+	text-transform: uppercase;
 }
 
 .bootcamp-button .btn-nm {
-  font-size: 11px;
-  padding: var(--spacer) var(--spacer-4);
+	font-size: 11px;
+	padding: var(--spacer) var(--spacer-4);
 }
 
 .bootcamp-button .btn-lg {
-  font-size: 13px;
-  padding: var(--spacer) var(--spacer-4);
+	font-size: 13px;
+	padding: var(--spacer) var(--spacer-4);
 }
 
 .bootcamp-button .btn-link {
-  padding: 0;
+	padding: 0;
 }
 
 .bootcamp-button .btn-link a {
-  color: inherit;
+	color: inherit;
 }
 
 .bootcamp-button .link-arrow {
-  margin-left: var(--spacer);
+	margin-left: var(--spacer);
 }

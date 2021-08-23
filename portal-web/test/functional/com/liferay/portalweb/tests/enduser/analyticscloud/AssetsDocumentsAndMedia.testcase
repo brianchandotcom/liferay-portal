@@ -98,12 +98,36 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8394 | Test Summary: Assert 180 day time filter in Documents and Media"
-	@ignore = "true"
 	@priority = "3"
 	test AssertDocumentsAndMediaPageTImeFilter180Days {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8394 AssertDocumentsAndMediaPageTImeFilter180Days
+		// AC Refactor: Need past data.
+		// AC Refactor ticket: LRAC-8876
 
+		task ("Switch to new property in AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Documents and Media assets") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		// Can't assert that the 180 Days filter is working correctly without past data
+
+		task ("Assert 'Last 180 days' time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast180Days();
+
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8402 | Test Summary: Documents audience card shows expected amount of know and anonymous individuals"

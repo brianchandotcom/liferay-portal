@@ -64,12 +64,124 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8684 | Test Summary: Check fieldBlurred is triggered when navigating the form hitting the tab key"
-	@ignore = "true"
 	@priority = "3"
 	test CheckFieldBlurredTriggeredWhenNavigateFormHittingTabKey {
+		property proxy.server.enabled = "true";
 
-		// TODO LRAC-8684 CheckFieldBlurredTriggeredWhenNavigateFormHittingTabKey pending implementation
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
+		task ("Get formId of form") {
+			var formId = JSONDDMForm.getFormInstanceId(
+				formName = "Created Form Name",
+				groupName = "Site Name");
+		}
+
+		task ("Get published form URL") {
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+
+			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
+
+			FormsAdminNavigator.gotoPublishCopyURLLink();
+
+			var publishedFormURL = Form.getPublishedFormPublicURL();
+		}
+
+		task ("Sign out") {
+			User.logoutPG();
+		}
+
+		task ("Get the Property ID in AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+		}
+
+		task ("Get the DXP Instance ID in AC") {
+			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("Sign in as new user") {
+			ACUtils.launchDXP(userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Navigate to the published form") {
+			Navigator.openSpecificURL(url = "${publishedFormURL}");
+
+			FormPortlet.waitFormRenderer(text = "Submit");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("fieldBlurred");
+		}
+
+		task ("Click the input field in form") {
+			Click(
+				key_fieldName = "Text",
+				locator1 = "FormFields#TEXT_FIELD");
+		}
+
+		task ("Stay 2 seconds") {
+			Pause(locator1 = "2000");
+		}
+
+		task ("Navigate to the Submit button via Tab key") {
+			KeyPress(
+				key_fieldName = "Text",
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "\TAB");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("View the formId of fieldBlurred event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Form",
+				eventId = "fieldBlurred",
+				property = "formId",
+				value = "${formId}");
+		}
+
+		task ("View the focusDuration of fieldBlurred event is greater than 2000 ms") {
+			var focusDuration = ACUtils.getEventPropertyValue(
+				applicationId = "Form",
+				eventId = "fieldBlurred",
+				property = "focusDuration");
+
+			TestUtils.isGreaterThan(
+				actual = "${focusDuration}",
+				expected = "2000");
+		}
+
+		task ("View the fieldName of fieldBlurred event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Form",
+				eventId = "fieldBlurred",
+				property = "fieldName",
+				value = "Text");
+		}
+
+		task ("View the page of fieldBlurred event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Form",
+				eventId = "fieldBlurred",
+				property = "page",
+				value = "0");
+		}
+
+		task ("View the request common properties value") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8683 | Test Summary: Check fieldBlurred triggers when a previously focused field loses focus and check its properties (see reference document in comments)"

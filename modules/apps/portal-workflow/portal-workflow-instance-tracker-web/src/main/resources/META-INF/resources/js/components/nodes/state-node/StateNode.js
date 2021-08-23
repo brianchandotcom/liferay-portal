@@ -18,25 +18,22 @@ import React from 'react';
 import {Handle} from 'react-flow-renderer';
 
 import '../../../../css/main.scss';
+import {nodeHandles} from '../../../util/nodeHandles';
 
 export default function StateNode({
 	data: {current = false, done = false, label},
 }) {
 	return (
 		<>
-			<Handle
-				id="left"
-				position="left"
-				style={{top: '50%'}}
-				type="target"
-			/>
-
-			<Handle
-				id="top"
-				position="top"
-				style={{left: '50%'}}
-				type="target"
-			/>
+			{nodeHandles.map((handle, index) => (
+				<Handle
+					id={handle.id}
+					key={index}
+					position={handle.position}
+					style={handle.style}
+					type={handle.type}
+				/>
+			))}
 
 			<div
 				className={classnames(
@@ -54,20 +51,6 @@ export default function StateNode({
 					)
 				)}
 			</div>
-
-			<Handle
-				id="right"
-				position="right"
-				style={{top: '50%'}}
-				type="source"
-			/>
-
-			<Handle
-				id="bottom"
-				position="bottom"
-				style={{left: '50%'}}
-				type="source"
-			/>
 		</>
 	);
 }

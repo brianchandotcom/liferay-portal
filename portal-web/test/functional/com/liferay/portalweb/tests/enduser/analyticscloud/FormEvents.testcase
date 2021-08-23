@@ -382,12 +382,107 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8690 | Test Summary: Check fieldFocused is triggered when navigating the form hitting the tab key"
-	@ignore = "true"
 	@priority = "5"
 	test CheckFieldFocusedWhenNavigatingForm {
+		property proxy.server.enabled = "true";
 
-		// TODO LRAC-8690 CheckFieldFocusedWhenNavigatingForm pending implementation
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
+		task ("Get formId of form") {
+			var formId = JSONDDMForm.getFormInstanceId(
+				formName = "Created Form Name",
+				groupName = "Site Name");
+		}
+
+		task ("Get published form URL") {
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+
+			FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
+
+			FormsAdminNavigator.gotoPublishCopyURLLink();
+
+			var publishedFormURL = Form.getPublishedFormPublicURL();
+		}
+
+		task ("Sign out") {
+			User.logoutPG();
+		}
+
+		task ("Get the Property ID in AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+		}
+
+		task ("Get the DXP Instance ID in AC") {
+			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("Sign in as new user") {
+			ACUtils.launchDXP(userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Navigate to the published form") {
+			Navigator.openSpecificURL(url = "${publishedFormURL}");
+
+			FormPortlet.waitFormRenderer(text = "Submit");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("fieldFocused");
+		}
+
+		task ("Navigate to the form field via Tab key") {
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_fieldLabel = "Text",
+				locator1 = "FormFields#LABEL",
+				value1 = "\TAB");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("View the formId of fieldFocused event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Form",
+				eventId = "fieldFocused",
+				property = "formId",
+				value = "${formId}");
+		}
+
+		task ("View the fieldName of fieldFocused event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Form",
+				eventId = "fieldFocused",
+				property = "fieldName",
+				value = "Text");
+		}
+
+		task ("View the page of fieldFocused event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Form",
+				eventId = "fieldFocused",
+				property = "page",
+				value = "0");
+		}
+
+		task ("View the request common properties value") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8691 | Test Summary: Check formSubmitted triggers after submitting a form and check its properties (see reference document in comments)"

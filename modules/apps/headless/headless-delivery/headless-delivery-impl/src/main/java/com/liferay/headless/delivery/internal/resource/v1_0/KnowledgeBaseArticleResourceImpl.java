@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.search.sort.SortUtil;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -404,11 +405,25 @@ public class KnowledgeBaseArticleResourceImpl
 			return _updateKnowledgeBaseArticle(kbArticle, knowledgeBaseArticle);
 		}
 
+		long parentResourceClassNameId = _portal.getClassNameId(
+			KBFolderConstants.getClassName());
+
+		Long parentResourcePrimaryKey =
+			knowledgeBaseArticle.getParentKnowledgeBaseFolderId();
+
+		if ((knowledgeBaseArticle.getParentKnowledgeBaseArticleId() != null) &&
+			(knowledgeBaseArticle.getParentKnowledgeBaseArticleId() !=
+				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY)) {
+
+			parentResourceClassNameId = _portal.getClassNameId(
+				KBArticleConstants.getClassName());
+			parentResourcePrimaryKey =
+				knowledgeBaseArticle.getParentKnowledgeBaseArticleId();
+		}
+
 		return _addKnowledgeBaseArticle(
-			externalReferenceCode, siteId,
-			_portal.getClassNameId(KBFolder.class.getName()),
-			knowledgeBaseArticle.getParentKnowledgeBaseFolderId(),
-			knowledgeBaseArticle);
+			externalReferenceCode, siteId, parentResourceClassNameId,
+			parentResourcePrimaryKey, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -452,8 +467,10 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		if (parentResourcePrimaryKey == null) {
+			parentResourceClassNameId = _portal.getClassNameId(
+				KBFolderConstants.getClassName());
 			parentResourcePrimaryKey =
-				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY;
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
 		return _toKnowledgeBaseArticle(

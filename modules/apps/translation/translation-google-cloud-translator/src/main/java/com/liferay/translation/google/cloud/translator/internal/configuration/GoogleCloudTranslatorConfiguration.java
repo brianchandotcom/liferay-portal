@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Adolfo Pérez
  */
-@ExtendedObjectClassDefinition(category = "translation")
+@ExtendedObjectClassDefinition(
+	category = "translation",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration",
 	localization = "content/Language",

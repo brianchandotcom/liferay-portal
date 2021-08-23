@@ -61,7 +61,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					null, true, false, "", "", "able", false, "Blob"));
+					null, true, false, "", "", 0, "able", false, "Blob"));
 
 			Assert.fail();
 		}
@@ -77,7 +77,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					null, true, false, "en_US", "", "able", false, "Long"));
+					null, true, false, "en_US", "", 0, "able", false, "Long"));
 
 			Assert.fail();
 		}
@@ -91,7 +91,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					null, true, true, "en_US", "", "able", false, "String"));
+					null, true, true, "en_US", "", 0, "able", false, "String"));
 
 			Assert.fail();
 		}
@@ -279,7 +279,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldLocalServiceUtil.addCustomObjectField(
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(), false, true, "",
-				LocalizedMapUtil.getLocalizedMap("able"), "able", false,
+				LocalizedMapUtil.getLocalizedMap("able"), 0, "able", false,
 				"Long");
 
 		Assert.assertFalse(objectField.isIndexed());
@@ -294,7 +294,7 @@ public class ObjectFieldLocalServiceTest {
 
 		objectField = ObjectFieldLocalServiceUtil.updateCustomObjectField(
 			objectField.getObjectFieldId(), false, true, "",
-			LocalizedMapUtil.getLocalizedMap("able"), "able", false, "Long");
+			LocalizedMapUtil.getLocalizedMap("able"), 0, "able", false, "Long");
 
 		Assert.assertFalse(objectField.isIndexed());
 		Assert.assertTrue(objectField.isIndexedAsKeyword());
@@ -311,7 +311,8 @@ public class ObjectFieldLocalServiceTest {
 
 		objectField = ObjectFieldLocalServiceUtil.updateCustomObjectField(
 			objectField.getObjectFieldId(), true, false, indexedLanguageId,
-			LocalizedMapUtil.getLocalizedMap("baker"), "baker", true, "String");
+			LocalizedMapUtil.getLocalizedMap("baker"), 0, "baker", true,
+			"String");
 
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
@@ -330,7 +331,7 @@ public class ObjectFieldLocalServiceTest {
 
 		objectField = ObjectFieldLocalServiceUtil.updateCustomObjectField(
 			objectField.getObjectFieldId(), false, true, "",
-			LocalizedMapUtil.getLocalizedMap("charlie"), "charlie", false,
+			LocalizedMapUtil.getLocalizedMap("charlie"), 0, "charlie", false,
 			"Integer");
 
 		Assert.assertTrue(objectField.isIndexed());

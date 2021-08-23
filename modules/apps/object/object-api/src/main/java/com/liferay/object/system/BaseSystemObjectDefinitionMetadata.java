@@ -45,7 +45,7 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		String type) {
 
 		return ObjectFieldUtil.createObjectField(
-			dbColumnName, false, false, null, _translate(labelKey), name,
+			dbColumnName, false, false, null, _translate(labelKey), 0, name,
 			required, type);
 	}
 

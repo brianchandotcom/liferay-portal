@@ -27,13 +27,14 @@ public class ObjectFieldUtil {
 		boolean required, String type) {
 
 		return createObjectField(
-			null, indexed, indexedAsKeyword, null, label, name, required, type);
+			null, indexed, indexedAsKeyword, null, label, 0, name, required,
+			type);
 	}
 
 	public static ObjectField createObjectField(
 		String dbColumnName, boolean indexed, boolean indexedAsKeyword,
-		String indexedLanguageId, String label, String name, boolean required,
-		String type) {
+		String indexedLanguageId, String label, long listTypeDefinitionId,
+		String name, boolean required, String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
@@ -43,6 +44,7 @@ public class ObjectFieldUtil {
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
 		objectField.setLabelMap(LocalizedMapUtil.getLocalizedMap(label));
+		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setName(name);
 		objectField.setRequired(required);
 		objectField.setType(type);
@@ -58,7 +60,7 @@ public class ObjectFieldUtil {
 		String label, String name, boolean required, String type) {
 
 		return createObjectField(
-			null, false, false, null, label, name, required, type);
+			null, false, false, null, label, 0, name, required, type);
 	}
 
 	public static ObjectField createObjectField(

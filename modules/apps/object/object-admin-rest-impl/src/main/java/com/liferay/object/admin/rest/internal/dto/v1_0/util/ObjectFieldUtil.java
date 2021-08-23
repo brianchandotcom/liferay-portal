@@ -37,6 +37,8 @@ public class ObjectFieldUtil {
 					serviceBuilderObjectField.getIndexedLanguageId();
 				label = LocalizedMapUtil.getI18nMap(
 					true, serviceBuilderObjectField.getLabelMap());
+				listTypeDefinitionId =
+					serviceBuilderObjectField.getListTypeDefinitionId();
 				name = serviceBuilderObjectField.getName();
 				required = serviceBuilderObjectField.isRequired();
 				type = serviceBuilderObjectField.getType();
@@ -59,6 +61,8 @@ public class ObjectFieldUtil {
 			objectField.getIndexedLanguageId());
 		serviceBuilderObjectField.setLabelMap(
 			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
+		serviceBuilderObjectField.setListTypeDefinitionId(
+			objectField.getListTypeDefinitionId());
 		serviceBuilderObjectField.setName(objectField.getName());
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));

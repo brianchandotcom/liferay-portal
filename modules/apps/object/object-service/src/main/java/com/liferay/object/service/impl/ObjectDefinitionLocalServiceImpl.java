@@ -594,8 +594,10 @@ public class ObjectDefinitionLocalServiceImpl
 						userId, objectDefinitionId, objectField.getIndexed(),
 						objectField.getIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
-						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), objectField.getType());
+						objectField.getLabelMap(),
+						objectField.getListTypeDefinitionId(),
+						objectField.getName(), objectField.isRequired(),
+						objectField.getType());
 				}
 			}
 		}

@@ -56,12 +56,12 @@ public class CustomElementsSourceLocalServiceWrapper
 	@Override
 	public com.liferay.custom.elements.model.CustomElementsSource
 			addCustomElementsSource(
-				long userId, String htmlElementName, String name, String url,
+				long userId, String htmlElementName, String name, String urls,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _customElementsSourceLocalService.addCustomElementsSource(
-			userId, htmlElementName, name, url, serviceContext);
+			userId, htmlElementName, name, urls, serviceContext);
 	}
 
 	/**
@@ -434,12 +434,13 @@ public class CustomElementsSourceLocalServiceWrapper
 	public com.liferay.custom.elements.model.CustomElementsSource
 			updateCustomElementsSource(
 				long customElementsSourceId, String htmlElementName,
-				String name, String url,
+				String name, String urls,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _customElementsSourceLocalService.updateCustomElementsSource(
-			customElementsSourceId, htmlElementName, name, url, serviceContext);
+			customElementsSourceId, htmlElementName, name, urls,
+			serviceContext);
 	}
 
 	@Override

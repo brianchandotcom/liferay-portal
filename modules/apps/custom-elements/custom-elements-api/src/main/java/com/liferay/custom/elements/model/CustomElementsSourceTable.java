@@ -17,6 +17,7 @@ package com.liferay.custom.elements.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -63,8 +64,8 @@ public class CustomElementsSourceTable
 			Column.FLAG_DEFAULT);
 	public final Column<CustomElementsSourceTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CustomElementsSourceTable, String> url = createColumn(
-		"url", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CustomElementsSourceTable, Clob> urls = createColumn(
+		"urls", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CustomElementsSourceTable() {
 		super("CustomElementsSource", CustomElementsSourceTable::new);

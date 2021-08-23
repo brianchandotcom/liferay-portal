@@ -76,7 +76,7 @@ public class CustomElementsSourceModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"htmlElementName", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"url", Types.VARCHAR}
+		{"urls", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,11 +93,11 @@ public class CustomElementsSourceModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("htmlElementName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("urls", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CustomElementsSource (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,customElementsSourceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,htmlElementName VARCHAR(75) null,name VARCHAR(75) null,url VARCHAR(75) null)";
+		"create table CustomElementsSource (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,customElementsSourceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,htmlElementName VARCHAR(75) null,name VARCHAR(75) null,urls TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CustomElementsSource";
@@ -333,11 +333,11 @@ public class CustomElementsSourceModelImpl
 			"name",
 			(BiConsumer<CustomElementsSource, String>)
 				CustomElementsSource::setName);
-		attributeGetterFunctions.put("url", CustomElementsSource::getURL);
+		attributeGetterFunctions.put("urls", CustomElementsSource::getURLs);
 		attributeSetterBiConsumers.put(
-			"url",
+			"urls",
 			(BiConsumer<CustomElementsSource, String>)
-				CustomElementsSource::setURL);
+				CustomElementsSource::setURLs);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -547,22 +547,22 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public String getURL() {
-		if (_url == null) {
+	public String getURLs() {
+		if (_urls == null) {
 			return "";
 		}
 		else {
-			return _url;
+			return _urls;
 		}
 	}
 
 	@Override
-	public void setURL(String url) {
+	public void setURLs(String urls) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_url = url;
+		_urls = urls;
 	}
 
 	@Override
@@ -640,7 +640,7 @@ public class CustomElementsSourceModelImpl
 		customElementsSourceImpl.setModifiedDate(getModifiedDate());
 		customElementsSourceImpl.setHTMLElementName(getHTMLElementName());
 		customElementsSourceImpl.setName(getName());
-		customElementsSourceImpl.setURL(getURL());
+		customElementsSourceImpl.setURLs(getURLs());
 
 		customElementsSourceImpl.resetOriginalValues();
 
@@ -782,12 +782,12 @@ public class CustomElementsSourceModelImpl
 			customElementsSourceCacheModel.name = null;
 		}
 
-		customElementsSourceCacheModel.url = getURL();
+		customElementsSourceCacheModel.urls = getURLs();
 
-		String url = customElementsSourceCacheModel.url;
+		String urls = customElementsSourceCacheModel.urls;
 
-		if ((url != null) && (url.length() == 0)) {
-			customElementsSourceCacheModel.url = null;
+		if ((urls != null) && (urls.length() == 0)) {
+			customElementsSourceCacheModel.urls = null;
 		}
 
 		return customElementsSourceCacheModel;
@@ -876,7 +876,7 @@ public class CustomElementsSourceModelImpl
 	private boolean _setModifiedDate;
 	private String _htmlElementName;
 	private String _name;
-	private String _url;
+	private String _urls;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -918,7 +918,7 @@ public class CustomElementsSourceModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("htmlElementName", _htmlElementName);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("url", _url);
+		_columnOriginalValues.put("urls", _urls);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -962,7 +962,7 @@ public class CustomElementsSourceModelImpl
 
 		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("url", 1024L);
+		columnBitmasks.put("urls", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

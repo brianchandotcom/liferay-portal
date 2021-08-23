@@ -272,8 +272,8 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 			"CustomElementsPortletDesc", "mvccVersion", true, "uuid", true,
 			"customElementsPortletDescriptorId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "cssURLs", true, "htmlElementName", true,
-			"instanceable", true, "name", true, "properties", true);
+			"modifiedDate", true, "htmlElementName", true, "instanceable", true,
+			"name", true);
 	}
 
 	@Test

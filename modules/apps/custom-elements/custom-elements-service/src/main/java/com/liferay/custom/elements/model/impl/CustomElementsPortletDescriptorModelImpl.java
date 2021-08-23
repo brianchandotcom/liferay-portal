@@ -75,9 +75,9 @@ public class CustomElementsPortletDescriptorModelImpl
 		{"customElementsPortletDescId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"cssURLs", Types.VARCHAR},
+		{"modifiedDate", Types.TIMESTAMP}, {"cssURLs", Types.CLOB},
 		{"htmlElementName", Types.VARCHAR}, {"instanceable", Types.BOOLEAN},
-		{"name", Types.VARCHAR}, {"properties", Types.VARCHAR}
+		{"name", Types.VARCHAR}, {"properties", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,15 +92,15 @@ public class CustomElementsPortletDescriptorModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("cssURLs", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("cssURLs", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("htmlElementName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("instanceable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("properties", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("properties", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CustomElementsPortletDesc (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,customElementsPortletDescId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,cssURLs VARCHAR(75) null,htmlElementName VARCHAR(75) null,instanceable BOOLEAN,name VARCHAR(75) null,properties VARCHAR(75) null)";
+		"create table CustomElementsPortletDesc (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,customElementsPortletDescId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,cssURLs TEXT null,htmlElementName VARCHAR(75) null,instanceable BOOLEAN,name VARCHAR(75) null,properties TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CustomElementsPortletDesc";

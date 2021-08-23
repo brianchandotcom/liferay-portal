@@ -235,18 +235,18 @@ public interface CustomElementsSourceModel
 	public void setName(String name);
 
 	/**
-	 * Returns the url of this custom elements source.
+	 * Returns the urls of this custom elements source.
 	 *
-	 * @return the url of this custom elements source
+	 * @return the urls of this custom elements source
 	 */
 	@AutoEscape
-	public String getURL();
+	public String getURLs();
 
 	/**
-	 * Sets the url of this custom elements source.
+	 * Sets the urls of this custom elements source.
 	 *
-	 * @param url the url of this custom elements source
+	 * @param urls the urls of this custom elements source
 	 */
-	public void setURL(String url);
+	public void setURLs(String urls);
 
 }

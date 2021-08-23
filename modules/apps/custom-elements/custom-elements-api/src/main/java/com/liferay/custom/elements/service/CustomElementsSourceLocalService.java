@@ -82,7 +82,7 @@ public interface CustomElementsSourceLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsSource addCustomElementsSource(
-			long userId, String htmlElementName, String name, String url,
+			long userId, String htmlElementName, String name, String urls,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -328,7 +328,7 @@ public interface CustomElementsSourceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsSource updateCustomElementsSource(
 			long customElementsSourceId, String htmlElementName, String name,
-			String url, ServiceContext serviceContext)
+			String urls, ServiceContext serviceContext)
 		throws PortalException;
 
 }

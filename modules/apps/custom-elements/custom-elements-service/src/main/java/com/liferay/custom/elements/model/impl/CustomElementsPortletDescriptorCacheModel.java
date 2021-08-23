@@ -196,7 +196,9 @@ public class CustomElementsPortletDescriptorCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -208,12 +210,12 @@ public class CustomElementsPortletDescriptorCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		cssURLs = objectInput.readUTF();
+		cssURLs = (String)objectInput.readObject();
 		htmlElementName = objectInput.readUTF();
 
 		instanceable = objectInput.readBoolean();
 		name = objectInput.readUTF();
-		properties = objectInput.readUTF();
+		properties = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -244,10 +246,10 @@ public class CustomElementsPortletDescriptorCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		if (cssURLs == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(cssURLs);
+			objectOutput.writeObject(cssURLs);
 		}
 
 		if (htmlElementName == null) {
@@ -267,10 +269,10 @@ public class CustomElementsPortletDescriptorCacheModel
 		}
 
 		if (properties == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(properties);
+			objectOutput.writeObject(properties);
 		}
 	}
 

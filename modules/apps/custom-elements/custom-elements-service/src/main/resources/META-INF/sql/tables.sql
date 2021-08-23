@@ -7,11 +7,11 @@ create table CustomElementsPortletDesc (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	cssURLs VARCHAR(75) null,
+	cssURLs TEXT null,
 	htmlElementName VARCHAR(75) null,
 	instanceable BOOLEAN,
 	name VARCHAR(75) null,
-	properties VARCHAR(75) null
+	properties TEXT null
 );
 
 create table CustomElementsSource (
@@ -25,5 +25,5 @@ create table CustomElementsSource (
 	modifiedDate DATE null,
 	htmlElementName VARCHAR(75) null,
 	name VARCHAR(75) null,
-	url VARCHAR(75) null
+	urls TEXT null
 );

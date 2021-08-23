@@ -17,6 +17,7 @@ package com.liferay.custom.elements.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -57,9 +58,8 @@ public class CustomElementsPortletDescriptorTable
 	public final Column<CustomElementsPortletDescriptorTable, Date>
 		modifiedDate = createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CustomElementsPortletDescriptorTable, String> cssURLs =
-		createColumn(
-			"cssURLs", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CustomElementsPortletDescriptorTable, Clob> cssURLs =
+		createColumn("cssURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CustomElementsPortletDescriptorTable, String>
 		htmlElementName = createColumn(
 			"htmlElementName", String.class, Types.VARCHAR,
@@ -69,9 +69,8 @@ public class CustomElementsPortletDescriptorTable
 			"instanceable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CustomElementsPortletDescriptorTable, String> name =
 		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CustomElementsPortletDescriptorTable, String>
-		properties = createColumn(
-			"properties", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CustomElementsPortletDescriptorTable, Clob> properties =
+		createColumn("properties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CustomElementsPortletDescriptorTable() {
 		super(

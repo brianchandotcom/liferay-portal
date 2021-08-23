@@ -55,7 +55,7 @@ public class CustomElementsSourceWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("htmlElementName", getHTMLElementName());
 		attributes.put("name", getName());
-		attributes.put("url", getURL());
+		attributes.put("urls", getURLs());
 
 		return attributes;
 	}
@@ -123,10 +123,10 @@ public class CustomElementsSourceWrapper
 			setName(name);
 		}
 
-		String url = (String)attributes.get("url");
+		String urls = (String)attributes.get("urls");
 
-		if (url != null) {
-			setURL(url);
+		if (urls != null) {
+			setURLs(urls);
 		}
 	}
 
@@ -211,13 +211,13 @@ public class CustomElementsSourceWrapper
 	}
 
 	/**
-	 * Returns the url of this custom elements source.
+	 * Returns the urls of this custom elements source.
 	 *
-	 * @return the url of this custom elements source
+	 * @return the urls of this custom elements source
 	 */
 	@Override
-	public String getURL() {
-		return model.getURL();
+	public String getURLs() {
+		return model.getURLs();
 	}
 
 	/**
@@ -346,13 +346,13 @@ public class CustomElementsSourceWrapper
 	}
 
 	/**
-	 * Sets the url of this custom elements source.
+	 * Sets the urls of this custom elements source.
 	 *
-	 * @param url the url of this custom elements source
+	 * @param urls the urls of this custom elements source
 	 */
 	@Override
-	public void setURL(String url) {
-		model.setURL(url);
+	public void setURLs(String urls) {
+		model.setURLs(urls);
 	}
 
 	/**

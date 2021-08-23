@@ -100,8 +100,8 @@ public class CustomElementsSourceCacheModel
 		sb.append(htmlElementName);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", url=");
-		sb.append(url);
+		sb.append(", urls=");
+		sb.append(urls);
 		sb.append("}");
 
 		return sb.toString();
@@ -161,11 +161,11 @@ public class CustomElementsSourceCacheModel
 			customElementsSourceImpl.setName(name);
 		}
 
-		if (url == null) {
-			customElementsSourceImpl.setURL("");
+		if (urls == null) {
+			customElementsSourceImpl.setURLs("");
 		}
 		else {
-			customElementsSourceImpl.setURL(url);
+			customElementsSourceImpl.setURLs(urls);
 		}
 
 		customElementsSourceImpl.resetOriginalValues();
@@ -174,7 +174,9 @@ public class CustomElementsSourceCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -188,7 +190,7 @@ public class CustomElementsSourceCacheModel
 		modifiedDate = objectInput.readLong();
 		htmlElementName = objectInput.readUTF();
 		name = objectInput.readUTF();
-		url = objectInput.readUTF();
+		urls = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -232,11 +234,11 @@ public class CustomElementsSourceCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (url == null) {
-			objectOutput.writeUTF("");
+		if (urls == null) {
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(url);
+			objectOutput.writeObject(urls);
 		}
 	}
 
@@ -250,6 +252,6 @@ public class CustomElementsSourceCacheModel
 	public long modifiedDate;
 	public String htmlElementName;
 	public String name;
-	public String url;
+	public String urls;
 
 }

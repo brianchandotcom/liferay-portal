@@ -70,6 +70,26 @@
 		<td>//button[@class='btn btn-secondary']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>BUILDER_FORM_FIELDS</td>
+		<td>//button[@class='mr-2 btn btn-secondary']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADVANCED_TAB</td>
+		<td>//button[@class='nav-link btn btn-unstyled']/span[@class='navbar-text-truncate']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_FIELD_TAB</td>
+		<td>//div[@class='form-control results-chosen select-field-trigger']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>MAP_OBJECT_FIELD</td>
+		<td>//button[@label='${key_fieldName}']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

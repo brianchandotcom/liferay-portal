@@ -198,19 +198,19 @@ public abstract class BaseLogResourceTestCase {
 	@Test
 	public void testGetPlanLogsPage() throws Exception {
 		Page<Log> page = logResource.getPlanLogsPage(
-			testGetPlanLogsPage_getId(), Pagination.of(1, 2));
+			testGetPlanLogsPage_getPlanId(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long id = testGetPlanLogsPage_getId();
-		Long irrelevantId = testGetPlanLogsPage_getIrrelevantId();
+		Long planId = testGetPlanLogsPage_getPlanId();
+		Long irrelevantPlanId = testGetPlanLogsPage_getIrrelevantPlanId();
 
-		if (irrelevantId != null) {
+		if (irrelevantPlanId != null) {
 			Log irrelevantLog = testGetPlanLogsPage_addLog(
-				irrelevantId, randomIrrelevantLog());
+				irrelevantPlanId, randomIrrelevantLog());
 
 			page = logResource.getPlanLogsPage(
-				irrelevantId, Pagination.of(1, 2));
+				irrelevantPlanId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -219,11 +219,11 @@ public abstract class BaseLogResourceTestCase {
 			assertValid(page);
 		}
 
-		Log log1 = testGetPlanLogsPage_addLog(id, randomLog());
+		Log log1 = testGetPlanLogsPage_addLog(planId, randomLog());
 
-		Log log2 = testGetPlanLogsPage_addLog(id, randomLog());
+		Log log2 = testGetPlanLogsPage_addLog(planId, randomLog());
 
-		page = logResource.getPlanLogsPage(id, Pagination.of(1, 2));
+		page = logResource.getPlanLogsPage(planId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -234,21 +234,23 @@ public abstract class BaseLogResourceTestCase {
 
 	@Test
 	public void testGetPlanLogsPageWithPagination() throws Exception {
-		Long id = testGetPlanLogsPage_getId();
+		Long planId = testGetPlanLogsPage_getPlanId();
 
-		Log log1 = testGetPlanLogsPage_addLog(id, randomLog());
+		Log log1 = testGetPlanLogsPage_addLog(planId, randomLog());
 
-		Log log2 = testGetPlanLogsPage_addLog(id, randomLog());
+		Log log2 = testGetPlanLogsPage_addLog(planId, randomLog());
 
-		Log log3 = testGetPlanLogsPage_addLog(id, randomLog());
+		Log log3 = testGetPlanLogsPage_addLog(planId, randomLog());
 
-		Page<Log> page1 = logResource.getPlanLogsPage(id, Pagination.of(1, 2));
+		Page<Log> page1 = logResource.getPlanLogsPage(
+			planId, Pagination.of(1, 2));
 
 		List<Log> logs1 = (List<Log>)page1.getItems();
 
 		Assert.assertEquals(logs1.toString(), 2, logs1.size());
 
-		Page<Log> page2 = logResource.getPlanLogsPage(id, Pagination.of(2, 2));
+		Page<Log> page2 = logResource.getPlanLogsPage(
+			planId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -256,25 +258,26 @@ public abstract class BaseLogResourceTestCase {
 
 		Assert.assertEquals(logs2.toString(), 1, logs2.size());
 
-		Page<Log> page3 = logResource.getPlanLogsPage(id, Pagination.of(1, 3));
+		Page<Log> page3 = logResource.getPlanLogsPage(
+			planId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(log1, log2, log3), (List<Log>)page3.getItems());
 	}
 
-	protected Log testGetPlanLogsPage_addLog(Long id, Log log)
+	protected Log testGetPlanLogsPage_addLog(Long planId, Log log)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetPlanLogsPage_getId() throws Exception {
+	protected Long testGetPlanLogsPage_getPlanId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetPlanLogsPage_getIrrelevantId() throws Exception {
+	protected Long testGetPlanLogsPage_getIrrelevantPlanId() throws Exception {
 		return null;
 	}
 

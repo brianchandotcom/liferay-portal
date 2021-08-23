@@ -48,7 +48,7 @@ public interface LogResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Log> getPlanLogsPage(Long id, Pagination pagination)
+	public Page<Log> getPlanLogsPage(Long planId, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

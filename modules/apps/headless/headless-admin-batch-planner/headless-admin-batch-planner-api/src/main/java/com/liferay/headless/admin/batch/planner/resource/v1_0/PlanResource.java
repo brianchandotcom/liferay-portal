@@ -28,7 +28,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -51,13 +50,13 @@ public interface PlanResource {
 
 	public Page<Plan> getPlansPage(Pagination pagination) throws Exception;
 
-	public Plan postPlan(String fieldNameMapping, Plan plan) throws Exception;
+	public Plan postPlan(Plan plan) throws Exception;
 
-	public Response deletePlan(Long id) throws Exception;
+	public void deletePlan(Long planId) throws Exception;
 
-	public Plan getPlan(Long id) throws Exception;
+	public Plan getPlan(Long planId) throws Exception;
 
-	public Response patchPlan(Long id, Plan plan) throws Exception;
+	public Plan patchPlan(Long planId, Plan plan) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

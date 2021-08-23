@@ -70,7 +70,7 @@ public abstract class BaseLogResourceImpl implements LogResource {
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.PATH, name = "planId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -79,7 +79,7 @@ public abstract class BaseLogResourceImpl implements LogResource {
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Log")})
 	public Page<Log> getPlanLogsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@NotNull @Parameter(hidden = true) @PathParam("planId") Long planId,
 			@Context Pagination pagination)
 		throws Exception {
 

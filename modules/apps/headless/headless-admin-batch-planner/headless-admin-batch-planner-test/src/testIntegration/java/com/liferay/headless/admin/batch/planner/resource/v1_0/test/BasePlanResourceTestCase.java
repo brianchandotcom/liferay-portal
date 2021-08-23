@@ -262,8 +262,7 @@ public abstract class BasePlanResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, planResource.getPlanHttpResponse(plan.getId()));
 
-		assertHttpResponseStatusCode(
-			404, planResource.getPlanHttpResponse(plan.getId()));
+		assertHttpResponseStatusCode(404, planResource.getPlanHttpResponse(0L));
 	}
 
 	protected Plan testDeletePlan_addPlan() throws Exception {
@@ -282,7 +281,7 @@ public abstract class BasePlanResourceTestCase {
 						"deletePlan",
 						new HashMap<String, Object>() {
 							{
-								put("id", plan.getId());
+								put("planId", plan.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePlan"));
@@ -293,7 +292,7 @@ public abstract class BasePlanResourceTestCase {
 					"plan",
 					new HashMap<String, Object>() {
 						{
-							put("id", plan.getId());
+							put("planId", plan.getId());
 						}
 					},
 					new GraphQLField("id"))),
@@ -331,7 +330,7 @@ public abstract class BasePlanResourceTestCase {
 								"plan",
 								new HashMap<String, Object>() {
 									{
-										put("id", plan.getId());
+										put("planId", plan.getId());
 									}
 								},
 								getGraphQLFields())),
@@ -340,7 +339,7 @@ public abstract class BasePlanResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPlanNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantPlanId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
@@ -350,7 +349,7 @@ public abstract class BasePlanResourceTestCase {
 						"plan",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put("planId", irrelevantPlanId);
 							}
 						},
 						getGraphQLFields())),
@@ -360,7 +359,27 @@ public abstract class BasePlanResourceTestCase {
 
 	@Test
 	public void testPatchPlan() throws Exception {
-		Assert.assertTrue(false);
+		Plan postPlan = testPatchPlan_addPlan();
+
+		Plan randomPatchPlan = randomPatchPlan();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Plan patchPlan = planResource.patchPlan(
+			postPlan.getId(), randomPatchPlan);
+
+		Plan expectedPatchPlan = postPlan.clone();
+
+		_beanUtilsBean.copyProperties(expectedPatchPlan, randomPatchPlan);
+
+		Plan getPlan = planResource.getPlan(patchPlan.getId());
+
+		assertEquals(expectedPatchPlan, getPlan);
+		assertValid(getPlan);
+	}
+
+	protected Plan testPatchPlan_addPlan() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Plan testGraphQLPlan_addPlan() throws Exception {

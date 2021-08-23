@@ -942,8 +942,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (!includeSystem) {
 			deleteLayouts(groupId, privateLayout, serviceContext);
 		}
-		// Layouts
 		else {
+			// Layouts
+
 			List<Layout> layouts = layoutPersistence.findByG_P_P_S(
 				groupId, privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,

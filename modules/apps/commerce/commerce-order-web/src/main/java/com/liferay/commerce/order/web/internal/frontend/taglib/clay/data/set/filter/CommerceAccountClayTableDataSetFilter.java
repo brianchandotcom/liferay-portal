@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend;
+package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.filter;
 
 import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;

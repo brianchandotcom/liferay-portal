@@ -12,49 +12,53 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend;
+package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.filter;
 
 import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
-import com.liferay.frontend.taglib.clay.data.set.filter.BaseDateRangeClayDataSetFilter;
+import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.DateClayDataSetFilterItem;
-
-import java.util.Calendar;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Luca Pellizzon
+ * @author Marco Leo
  */
 @Component(
 	enabled = false, immediate = true,
 	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
 	service = ClayDataSetFilter.class
 )
-public class CommerceOrderDateRangeClayTableDataSetFilter
-	extends BaseDateRangeClayDataSetFilter {
+public class CommerceChannelClayTableDataSetFilter
+	extends BaseAutocompleteClayDataSetFilter {
+
+	@Override
+	public String getAPIURL() {
+		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
+	}
 
 	@Override
 	public String getId() {
-		return "createDate";
+		return "channelId";
+	}
+
+	@Override
+	public String getItemKey() {
+		return "id";
+	}
+
+	@Override
+	public String getItemLabel() {
+		return "name";
 	}
 
 	@Override
 	public String getLabel() {
-		return "order-date-range";
-	}
-
-	public DateClayDataSetFilterItem getMaxDateClayDataSetFilterItem() {
-		Calendar calendar = Calendar.getInstance();
-
-		return new DateClayDataSetFilterItem(
-			calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+		return "channel";
 	}
 
 	@Override
-	public DateClayDataSetFilterItem getMinDateClayDataSetFilterItem() {
-		return new DateClayDataSetFilterItem(0, 0, 0);
+	public boolean isMultipleSelection() {
+		return false;
 	}
 
 }

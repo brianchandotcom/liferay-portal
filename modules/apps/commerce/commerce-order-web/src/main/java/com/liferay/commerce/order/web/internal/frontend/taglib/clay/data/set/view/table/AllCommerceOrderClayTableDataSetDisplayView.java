@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend;
+package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -30,14 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = {
-		"clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_COMPLETED_ORDERS,
-		"clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
-		"clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PROCESSING_ORDERS
-	},
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceOrderClayTableDataSetDisplayView
+public class AllCommerceOrderClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -46,34 +42,40 @@ public class CommerceOrderClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField orderIdField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"orderId", "order-id");
+			clayTableSchemaBuilder.addClayTableSchemaField("id", "order-id");
 
 		orderIdField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("account", "account");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"account.name", "account");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"accountCode", "account-number");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("channel", "channel");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
+			"accountId", "account-number");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"orderDate", "order-date");
+			"channel.name", "channel");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"totalFormatted", "amount");
+
+		ClayTableSchemaField dateClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"orderDate", "order-date");
+
+		dateClayTableSchemaField.setContentRenderer("date");
+		dateClayTableSchemaField.setSortable(true);
 
 		ClayTableSchemaField orderStatusField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				"orderStatus", "order-status");
+				"orderStatusInfo", "order-status");
 
-		orderStatusField.setContentRenderer("label");
+		orderStatusField.setContentRenderer("status");
 
 		ClayTableSchemaField fulfillmentWorkflowField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				"fulfillmentWorkflow", "acceptance-workflow-status");
+				"workflowStatusInfo", "acceptance-workflow-status");
 
-		fulfillmentWorkflowField.setContentRenderer("label");
+		fulfillmentWorkflowField.setContentRenderer("status");
 
 		return clayTableSchemaBuilder.build();
 	}

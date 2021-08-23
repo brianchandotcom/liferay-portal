@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend;
+package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.provider;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.frontend.model.ImageField;

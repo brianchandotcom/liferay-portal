@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend;
+package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENTS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceOrderItemClayTableDataSetDisplayView
+public class CommercePaymentClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,34 +41,17 @@ public class CommerceOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField imageField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"image", StringPool.BLANK);
+		ClayTableSchemaField typeField =
+			clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 
-		imageField.setContentRenderer("image");
+		typeField.setContentRenderer("label");
 
-		ClayTableSchemaField skuField =
-			clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
-
-		skuField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
+		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"requestedDeliveryDate", "delivery-date");
+			"createDate", "timestamp");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"deliveryGroup", "delivery-group");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("total", "total");
+		clayTableSchemaBuilder.addClayTableSchemaField("content", "details");
 
 		return clayTableSchemaBuilder.build();
 	}

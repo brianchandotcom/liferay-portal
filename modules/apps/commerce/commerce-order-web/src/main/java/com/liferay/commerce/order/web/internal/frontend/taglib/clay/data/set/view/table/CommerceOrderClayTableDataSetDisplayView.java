@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend;
+package com.liferay.commerce.order.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -30,10 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
+	property = {
+		"clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_COMPLETED_ORDERS,
+		"clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
+		"clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PROCESSING_ORDERS
+	},
 	service = ClayDataSetDisplayView.class
 )
-public class AllCommerceOrderClayTableDataSetDisplayView
+public class CommerceOrderClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,40 +46,34 @@ public class AllCommerceOrderClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField orderIdField =
-			clayTableSchemaBuilder.addClayTableSchemaField("id", "order-id");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"orderId", "order-id");
 
 		orderIdField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"account.name", "account");
+		clayTableSchemaBuilder.addClayTableSchemaField("account", "account");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"accountId", "account-number");
+			"accountCode", "account-number");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("channel", "channel");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"channel.name", "channel");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"totalFormatted", "amount");
-
-		ClayTableSchemaField dateClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"orderDate", "order-date");
-
-		dateClayTableSchemaField.setContentRenderer("date");
-		dateClayTableSchemaField.setSortable(true);
+			"orderDate", "order-date");
 
 		ClayTableSchemaField orderStatusField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				"orderStatusInfo", "order-status");
+				"orderStatus", "order-status");
 
-		orderStatusField.setContentRenderer("status");
+		orderStatusField.setContentRenderer("label");
 
 		ClayTableSchemaField fulfillmentWorkflowField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				"workflowStatusInfo", "acceptance-workflow-status");
+				"fulfillmentWorkflow", "acceptance-workflow-status");
 
-		fulfillmentWorkflowField.setContentRenderer("status");
+		fulfillmentWorkflowField.setContentRenderer("label");
 
 		return clayTableSchemaBuilder.build();
 	}

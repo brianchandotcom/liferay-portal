@@ -49,7 +49,7 @@ const SelectTypeAndSubtype = ({
 	return (
 		<TreeFilter
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
-			necessaryKeys={['className', 'classPK']}
+			mandatoryFieldsForFiltering={['className', 'classPK']}
 			nodes={nodeTreeArrayMapper(contentDashboardItemTypes)}
 			portletNamespace={portletNamespace}
 		/>

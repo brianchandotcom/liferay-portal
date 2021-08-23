@@ -41,7 +41,7 @@ const getFilter = (filterQuery) => {
 
 const TreeFilter = ({
 	itemSelectorSaveEvent,
-	necessaryKeys,
+	mandatoryFieldsForFiltering,
 	nodes,
 	portletNamespace,
 }) => {
@@ -72,11 +72,11 @@ const TreeFilter = ({
 			if (selectedNodes.has(node.id) && isChildNode) {
 				let newSelectedNode = {};
 
-				if (necessaryKeys.length === 1) {
-					newSelectedNode = node[necessaryKeys[0]];
+				if (mandatoryFieldsForFiltering.length === 1) {
+					newSelectedNode = node[mandatoryFieldsForFiltering[0]];
 				}
 				else {
-					necessaryKeys.forEach((key) => {
+					mandatoryFieldsForFiltering.forEach((key) => {
 						newSelectedNode[key] = node[key];
 					});
 				}
@@ -168,7 +168,7 @@ const TreeFilter = ({
 
 TreeFilter.propTypes = {
 	itemSelectorSaveEvent: PropTypes.string.isRequired,
-	necessaryKeys: PropTypes.array.isRequired,
+	mandatoryFieldsForFiltering: PropTypes.array.isRequired,
 	nodes: PropTypes.array.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };

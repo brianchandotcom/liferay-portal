@@ -49,7 +49,7 @@ const SelectFileExtension = ({
 	return (
 		<TreeFilter
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
-			necessaryKeys={['id']}
+			mandatoryFieldsForFiltering={['id']}
 			nodes={nodeTreeArrayMapper(fileExtensionGroups)}
 			portletNamespace={portletNamespace}
 		/>

@@ -25,6 +25,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Translator {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isEnabled(long)}
+	 */
+	@Deprecated
 	public boolean isEnabled();
 
 	public boolean isEnabled(long companyId) throws ConfigurationException;

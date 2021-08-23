@@ -26,7 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface TranslationInfoItemFieldValuesExporterTracker {
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getTranslationInfoItemFieldValuesExporters()}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getTranslationInfoItemFieldValuesExporters()}
 	 */
 	@Deprecated
 	public default Collection<TranslationInfoItemFieldValuesExporter>

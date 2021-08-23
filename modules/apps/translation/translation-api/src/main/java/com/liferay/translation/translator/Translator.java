@@ -15,10 +15,14 @@
 package com.liferay.translation.translator;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface Translator {
 
 	public boolean isEnabled();

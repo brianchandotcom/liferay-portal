@@ -20,7 +20,7 @@
 CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersFragmentRendererDisplayContext = (CollectionAppliedFiltersFragmentRendererDisplayContext)request.getAttribute(CollectionAppliedFiltersFragmentRendererDisplayContext.class.getName());
 %>
 
-<div class="d-flex py-1">
+<div class="d-flex py-1" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>">
 	<div class="flex-grow-1">
 		<c:choose>
 			<c:when test="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getAppliedFilters().isEmpty() %>">

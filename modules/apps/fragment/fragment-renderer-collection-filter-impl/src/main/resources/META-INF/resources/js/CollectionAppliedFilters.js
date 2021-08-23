@@ -128,7 +128,7 @@ export default function CollectionAppliedFilters({
 		'click',
 		handleToggleExpandFiltersButtonClick
 	);
-	removeAllFiltersButton.addEventListener(
+	removeAllFiltersButton?.addEventListener(
 		'click',
 		handleRemoveAllFiltersClick
 	);

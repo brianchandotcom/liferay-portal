@@ -76,11 +76,7 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
 
-		if (!layoutSEOCompanyConfiguration.enableOpenGraph()) {
-			return false;
-		}
-
-		return true;
+		return layoutSEOCompanyConfiguration.enableOpenGraph();
 	}
 
 	@Override

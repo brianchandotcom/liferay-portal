@@ -60,6 +60,9 @@ public class EditCommerceOrderTypeMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				String externalReferenceCode = ParamUtil.getString(
+					actionRequest, "externalReferenceCode");
+
 				long commerceOrderTypeId = ParamUtil.getLong(
 					actionRequest, "commerceOrderTypeId");
 
@@ -118,9 +121,6 @@ public class EditCommerceOrderTypeMVCActionCommand
 
 				int expirationDateMinute = ParamUtil.getInteger(
 					actionRequest, "expirationDateMinute");
-
-				String externalReferenceCode = ParamUtil.getString(
-					actionRequest, "externalReferenceCode");
 
 				boolean neverExpire = ParamUtil.getBoolean(
 					actionRequest, "neverExpire");

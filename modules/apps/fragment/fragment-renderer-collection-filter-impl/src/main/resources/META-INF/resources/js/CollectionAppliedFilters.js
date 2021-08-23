@@ -39,7 +39,7 @@ export default function CollectionAppliedFilters({
 	const handleRemoveAllFiltersClick = () => {
 		const url = new URL(window.location.href);
 
-		Array.from(url.searchParams).forEach(([key, value]) => {
+		Array.from(url.searchParams).forEach(([key]) => {
 			if (key.startsWith(filterPrefix)) {
 				url.searchParams.delete(key);
 			}

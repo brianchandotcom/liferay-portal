@@ -69,6 +69,19 @@ public class BatchPlannerPlanServiceWrapper
 		return _batchPlannerPlanService.getBatchPlannerPlan(batchPlannerPlanId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
+		getBatchPlannerPlans(long companyId, int start, int end) {
+
+		return _batchPlannerPlanService.getBatchPlannerPlans(
+			companyId, start, end);
+	}
+
+	@Override
+	public int getBatchPlannerPlansCount(long companyId) {
+		return _batchPlannerPlanService.getBatchPlannerPlansCount(companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

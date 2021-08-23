@@ -136,11 +136,11 @@ public class BatchPlannerMappingLocalServiceWrapper
 	public com.liferay.batch.planner.model.BatchPlannerMapping
 			deleteBatchPlannerMapping(
 				long batchPlannerPlanId, String externalFieldName,
-				String internalName)
+				String internalFieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerMappingLocalService.deleteBatchPlannerMapping(
-			batchPlannerPlanId, externalFieldName, internalName);
+			batchPlannerPlanId, externalFieldName, internalFieldName);
 	}
 
 	/**
@@ -374,6 +374,18 @@ public class BatchPlannerMappingLocalServiceWrapper
 
 		return _batchPlannerMappingLocalService.updateBatchPlannerMapping(
 			batchPlannerMapping);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerMapping
+			updateBatchPlannerMapping(
+				long batchPlannerMappingId, String externalFieldName,
+				String externalFieldType, String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerMappingLocalService.updateBatchPlannerMapping(
+			batchPlannerMappingId, externalFieldName, externalFieldType,
+			script);
 	}
 
 	@Override

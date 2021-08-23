@@ -77,6 +77,18 @@ public class BatchPlannerMappingServiceWrapper
 	}
 
 	@Override
+	public com.liferay.batch.planner.model.BatchPlannerMapping
+			updateBatchPlannerMapping(
+				long batchPlannerMappingId, String externalFieldName,
+				String externalFieldType, String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerMappingService.updateBatchPlannerMapping(
+			batchPlannerMappingId, externalFieldName, externalFieldType,
+			script);
+	}
+
+	@Override
 	public BatchPlannerMappingService getWrappedService() {
 		return _batchPlannerMappingService;
 	}

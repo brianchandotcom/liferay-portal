@@ -74,4 +74,9 @@ public interface BatchPlannerMappingService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public BatchPlannerMapping updateBatchPlannerMapping(
+			long batchPlannerMappingId, String externalFieldName,
+			String externalFieldType, String script)
+		throws PortalException;
+
 }

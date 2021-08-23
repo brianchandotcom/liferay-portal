@@ -60,6 +60,23 @@ public class BatchPlannerLogServiceWrapper
 		return _batchPlannerLogService.getBatchPlannerLogs(batchPlannerPlanId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+			getBatchPlannerLogs(long batchPlannerPlanId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogService.getBatchPlannerLogs(
+			batchPlannerPlanId, start, end);
+	}
+
+	@Override
+	public int getBatchPlannerLogsCount(long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogService.getBatchPlannerLogsCount(
+			batchPlannerPlanId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

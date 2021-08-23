@@ -15,6 +15,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage(layoutName = "AC Page");
 	}
 
 	tearDown {
@@ -39,12 +41,43 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8291 | Test Summary: Assert Sites Activities 180 Days Time Period Filter In Page Table"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesActivities180DaysTimePeriodFilterInPageTable {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8291 AssertSitesActivities180DaysTimePeriodFilterInPageTable
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8773
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		task ("Interation with page") {
+
+
+
+			
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessions();
+		}
+
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset last 180 days period filter") {
+
+			// It is not possible to perform the assert because this test needs data from the past
+
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast180Days();
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8282 | Test Summary: Anonymous converts to known"

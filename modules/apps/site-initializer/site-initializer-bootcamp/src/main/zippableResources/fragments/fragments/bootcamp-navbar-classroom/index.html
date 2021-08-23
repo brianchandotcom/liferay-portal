@@ -1,128 +1,131 @@
-[#assign privateUserFriendlyURL = themeDisplay.getPathFriendlyURLPrivateUser() +
-"/" + themeDisplay.getUser().getFirstName() publicFriendlyURL =
-themeDisplay.getPathFriendlyURLPublic() +
-themeDisplay.getSiteGroup().getFriendlyURL() userName =
-themeDisplay.getUser().getFirstName() navUserClass = "" publicSiteNavbarClass =
-"" /] [#if !themeDisplay.isSignedIn()] [#assign publicSiteNavbarClass =
-"logged-in" /] [/#if]
+[#assign
+	navUserClass = ""
+	privateUserFriendlyURL = themeDisplay.getPathFriendlyURLPrivateUser() + "/" + themeDisplay.getUser().getFirstName()
+	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+	publicSiteNavbarClass =""
+	userName = themeDisplay.getUser().getFirstName()
+/]
 
-<nav
-	class="align-items-stretch
-	bootcamp-navbar
-	navbar navbar-expand-lg
-	${publicSiteNavbarClass}
-	position-${configuration.position}"
->
-<div class="flex-fill"></div>
-<div class="container-fluid container-fluid-max-xl">
-	<a class="site-logo d-inline-flex" href="${publicFriendlyURL}">
-	<img
-		alt=""
-		class="navbar-logo"
-		data-lfr-editable-id="imageLogo"
-		data-lfr-editable-type="image"
-		src="[resources:bootcamp-symbol.svg]"
-		width="24"
-	/>
-	</a>
+[#if !themeDisplay.isSignedIn()]
+	[#assign publicSiteNavbarClass = "logged-in" /]
+[/#if]
 
-	<button
-		aria-controls="navbarSupportedContent"
-		aria-expanded="false"
-		aria-label="Toggle navigation"
-		class="navbar-toggler border-0 rounded-0 p-2 p-lg-3 brand-bg-color-3"
-		data-target="#navbarSupportedContent"
-		type="button"
-	>
-	<img
-		class="btn btn-monospaced btn-menu p-2"
-		src="[resources:icon-menu.svg]"
-	/>
+<nav class="align-items-stretch bootcamp-navbar navbar navbar-expand-lg ${publicSiteNavbarClass} position-${configuration.position}">
+	<div class="flex-fill"></div>
+	<div class="container-fluid container-fluid-max-xl">
+		<a class="site-logo d-inline-flex" href="${publicFriendlyURL}">
+			<img
+				alt=""
+				class="navbar-logo"
+				data-lfr-editable-id="imageLogo"
+				data-lfr-editable-type="image"
+				src="[resources:bootcamp-symbol.svg]"
+				width="24"
+			/>
+		</a>
 
-	<img
-		class="btn btn-monospaced btn-close p-2"
-		src="[resources:icon-close.svg]"
-	/>
-	</button>
-
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-	<h5
-		class="ml-3 course-name"
-		data-lfr-editable-id="element-text"
-		data-lfr-editable-type="text"
-	>
-		Course Name
-	  </h5>
-
-	<ul class="navbar-nav bootcamp-navbar-user">
-		[#if themeDisplay.isSignedIn()]
-		<li class="dropdown px-3 px-lg-0 nav-item">
-		<a
+		<button
+			aria-controls="navbarSupportedContent"
 			aria-expanded="false"
-			aria-haspopup="true"
-			class="dropdown-toggle nav-link"
-			data-toggle="liferay-dropdown"
-			id="${fragmentEntryLinkNamespace}_dropdown_menu"
+			aria-label="Toggle navigation"
+			class="navbar-toggler border-0 rounded-0 p-2 p-lg-3 brand-bg-color-3"
+			data-target="#navbarSupportedContent"
 			type="button"
 		>
 			<img
-				class="btn btn-monospaced"
-				src="[resources:icon-user-logged.svg]"
+				class="btn btn-monospaced btn-menu p-2"
+				src="[resources:icon-menu.svg]"
 			/>
 
-			<span class="ml-1 mr-2">${userName}</span>
-		  </a>
-
-		<ul
-			aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu"
-			class="dropdown-menu right"
-		>
-			<li>
-			  <a
-				class="dropdown-item"
-				href="http://localhost:8080/en/web/bootcamp/my-courses"
-				>My Courses</a
-
-			>
-			</li>
-			<li>
-			  <a class="dropdown-item" href="${privateUserFriendlyURL}"
-				>Notifications</a
-			  >
-			</li>
-			<li>
-			  <a
-				class="dropdown-item"
-				href="http://localhost:8080/en/web/bootcamp/account-settings"
-				>Account Settings</a
-
-			>
-			</li>
-			<li>
-			  <a
-				class="dropdown-item"
-				href="${htmlUtil.escape(themeDisplay.getURLSignOut())}?referer=${publicFriendlyURL}"
-				>Sign Out</a
-
-			>
-			</li>
-		  </ul>
-		</li>
-		[#else] [#assign navUserClass = "navbar-brand-bg-color-3" /]
-		<li class="nav-item">
-		<a class="nav-link" href="/web/bootcamp/sign-in">
 			<img
-				class="btn btn-monospaced p-2"
-				src="[resources:icon-user-not-logged.svg]"
+				class="btn btn-monospaced btn-close p-2"
+				src="[resources:icon-close.svg]"
 			/>
+		</button>
 
-			<span class="text-uppercase small">Sign In</span>
-		  </a>
-		</li>
-		[/#if]
-	  </ul>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<h5
+				class="ml-3 course-name"
+				data-lfr-editable-id="element-text"
+				data-lfr-editable-type="text"
+			>
+				Course Name
+			</h5>
+
+			<ul class="navbar-nav bootcamp-navbar-user">
+				[#if themeDisplay.isSignedIn()]
+					<li class="dropdown px-3 px-lg-0 nav-item">
+						<a
+							aria-expanded="false"
+							aria-haspopup="true"
+							class="dropdown-toggle nav-link"
+							data-toggle="liferay-dropdown"
+							id="${fragmentEntryLinkNamespace}_dropdown_menu"
+							type="button"
+						>
+							<img
+								class="btn btn-monospaced"
+								src="[resources:icon-user-logged.svg]"
+							/>
+
+							<span class="ml-1 mr-2">${userName}</span>
+						</a>
+
+						<ul
+							aria-labelledby="${fragmentEntryLinkNamespace}_dropdown_menu"
+							class="dropdown-menu right"
+						>
+							<li>
+								<a
+									class="dropdown-item"
+									href="http://localhost:8080/en/web/bootcamp/my-courses"
+								>
+									My Courses
+								</a>
+							</li>
+							<li>
+								<a
+									class="dropdown-item"
+									href="${privateUserFriendlyURL}"
+								>
+									Notifications
+								</a>
+							</li>
+							<li>
+								<a
+									class="dropdown-item"
+									href="http://localhost:8080/en/web/bootcamp/account-settings"
+								>
+									Account Settings
+								</a>
+							</li>
+							<li>
+								<a
+									class="dropdown-item"
+									href="${htmlUtil.escape(themeDisplay.getURLSignOut())}?referer=${publicFriendlyURL}"
+								>
+									Sign Out
+								</a>
+							</li>
+						</ul>
+					</li>
+				[#else]
+					[#assign navUserClass = "navbar-brand-bg-color-3" /]
+
+					<li class="nav-item">
+						<a class="nav-link" href="/web/bootcamp/sign-in">
+							<img
+								class="btn btn-monospaced p-2"
+								src="[resources:icon-user-not-logged.svg]"
+							/>
+
+							<span class="text-uppercase small">Sign In</span>
+						</a>
+					</li>
+				[/#if]
+			</ul>
+		</div>
 	</div>
-</div>
 
-<div class="flex-fill ${navUserClass}"></div>
+	<div class="flex-fill ${navUserClass}"></div>
 </nav>

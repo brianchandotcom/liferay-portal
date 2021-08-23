@@ -22,9 +22,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 %>
 
 <liferay-frontend:side-panel-content
-	screenNavigatorKey="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_FIELD %>"
-	screenNavigatorModelBean="<%= (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD) %>"
-	screenNavigatorPortletURL="<%= currentURLObj %>"
 	title='<%= LanguageUtil.get(request, "field") %>'
 >
 	<form action="javascript:;" onSubmit="<%= liferayPortletResponse.getNamespace() + "saveObjectField();" %>">

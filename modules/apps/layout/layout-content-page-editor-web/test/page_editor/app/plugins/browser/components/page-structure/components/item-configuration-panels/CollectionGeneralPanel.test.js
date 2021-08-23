@@ -159,21 +159,19 @@ describe('CollectionGeneralPanel', () => {
 		});
 
 		it('shows a warning message when the value is 0', async () => {
-			const {getByLabelText, getByText} = renderComponent({
-				config: {...ITEM_CONFIG, paginationType: 'numeric'},
-			});
-			const input = getByLabelText('maximum-number-of-items');
-
-			await wait(() => {
-				fireEvent.change(input, {
-					target: {value: '0'},
-				});
-
-				fireEvent.blur(input);
+			const {getByText} = renderComponent({
+				config: {
+					...ITEM_CONFIG,
+					...{numberOfItems: '0', paginationType: 'numeric'},
+				},
 			});
 
 			expect(
-				getByText('you-need-at-least-one-item-to-use-pagination')
+				await waitForElement(() =>
+					getByText(
+						'you-need-at-least-one-item-to-use-this-configuration'
+					)
+				)
 			).toBeInTheDocument();
 		});
 
@@ -185,13 +183,13 @@ describe('CollectionGeneralPanel', () => {
 				},
 			});
 
-			const label = await waitForElement(() =>
-				getByText(
-					'the-current-number-of-items-in-this-collection-is-x-32'
+			expect(
+				await waitForElement(() =>
+					getByText(
+						'the-current-number-of-items-in-this-collection-is-x-32'
+					)
 				)
-			);
-
-			expect(label).toBeInTheDocument();
+			).toBeInTheDocument();
 		});
 	});
 
@@ -225,21 +223,19 @@ describe('CollectionGeneralPanel', () => {
 		});
 
 		it('shows a warning message in the the value is 0', async () => {
-			const {getByLabelText, getByText} = renderComponent({
-				config: {...ITEM_CONFIG, paginationType: 'numeric'},
-			});
-			const input = getByLabelText('maximum-number-of-items-per-page');
-
-			await wait(() => {
-				fireEvent.change(input, {
-					target: {value: '0'},
-				});
-
-				fireEvent.blur(input);
+			const {getByText} = renderComponent({
+				config: {
+					...ITEM_CONFIG,
+					...{numberOfItemsPerPage: '0', paginationType: 'numeric'},
+				},
 			});
 
 			expect(
-				getByText('you-need-at-least-one-item-to-use-pagination')
+				await waitForElement(() =>
+					getByText(
+						'you-need-at-least-one-item-to-use-this-configuration'
+					)
+				)
 			).toBeInTheDocument();
 		});
 
@@ -251,13 +247,13 @@ describe('CollectionGeneralPanel', () => {
 				},
 			});
 
-			const label = await waitForElement(() =>
-				getByText(
-					'you-can-only-display-a-maximum-of-x-items-per-page-50'
+			expect(
+				await waitForElement(() =>
+					getByText(
+						'you-can-only-display-a-maximum-of-x-items-per-page-50'
+					)
 				)
-			);
-
-			expect(label).toBeInTheDocument();
+			).toBeInTheDocument();
 		});
 	});
 });

@@ -15,9 +15,11 @@
 import {delegate} from 'frontend-js-web';
 
 export default function CollectionAppliedFilters({
+	filterListSelector,
 	filterPrefix,
 	removeAllFiltersButtonSelector,
 	removeButtonSelector,
+	toggleExpandFiltersButtonSelector,
 }) {
 	const removeAllFiltersClickHandler = delegate(
 		document.body,
@@ -72,10 +74,81 @@ export default function CollectionAppliedFilters({
 		}
 	);
 
+	const filterList = document.querySelector(filterListSelector);
+
+	const toggleExpandFiltersButton = document.querySelector(
+		toggleExpandFiltersButtonSelector
+	);
+
+	const toggleExpandFiltersButtonLabel =
+		toggleExpandFiltersButton.firstElementChild;
+
+	const toggleExpandFiltersButtonIconCollapse = toggleExpandFiltersButton.querySelector(
+		'.lexicon-icon-angle-up-small'
+	);
+
+	const toggleExpandFiltersButtonIconExpand = toggleExpandFiltersButton.querySelector(
+		'.lexicon-icon-angle-down-small'
+	);
+
+	const toggleExpand = () => {
+		if (filterList.style.maxHeight) {
+			filterList.style.maxHeight = '';
+
+			toggleExpandFiltersButtonLabel.textContent =
+				toggleExpandFiltersButton.dataset.showLessLabel;
+
+			toggleExpandFiltersButtonIconCollapse.classList.remove('d-none');
+
+			toggleExpandFiltersButtonIconExpand.classList.add('d-none');
+		}
+		else {
+			filterList.style.maxHeight = '4em';
+
+			toggleExpandFiltersButtonLabel.textContent =
+				toggleExpandFiltersButton.dataset.showMoreLabel;
+
+			toggleExpandFiltersButtonIconCollapse.classList.add('d-none');
+
+			toggleExpandFiltersButtonIconExpand.classList.remove('d-none');
+		}
+	};
+
+	const toggleExpandFiltersButtonClickHandler = delegate(
+		document.body,
+		'click',
+		toggleExpandFiltersButtonSelector,
+		toggleExpand
+	);
+
+	const handleWindowResize = () => {
+		const currentListHeight = filterList.getBoundingClientRect().height;
+
+		toggleExpand();
+
+		requestAnimationFrame(() => {
+			const nextListHeight = filterList.getBoundingClientRect().height;
+
+			toggleExpandFiltersButton.classList.toggle(
+				'd-none',
+				currentListHeight === nextListHeight
+			);
+
+			toggleExpand();
+		});
+	};
+
+	handleWindowResize();
+
+	window.addEventListener('resize', handleWindowResize);
+
 	return {
 		dispose() {
 			removeAllFiltersClickHandler.dispose();
 			removeSingleFilterClickHandler.dispose();
+			toggleExpandFiltersButtonClickHandler.dispose();
+
+			window.removeEventListener('resize', handleWindowResize);
 		},
 	};
 }

@@ -15,6 +15,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
@@ -180,7 +181,7 @@ public class ObjectDefinitionServiceTest {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 			user.getUserId(), _labelMap, "Test", null, null, _pluralLabelMap,
-			"company", null);
+			ObjectDefinitionConstants.SCOPE_COMPANY, null);
 	}
 
 	private void _setUser(User user) {
@@ -198,8 +199,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					_labelMap, "Test", null, null, _pluralLabelMap, "company",
-					null);
+					_labelMap, "Test", null, null, _pluralLabelMap,
+					ObjectDefinitionConstants.SCOPE_COMPANY, null);
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -264,7 +265,8 @@ public class ObjectDefinitionServiceTest {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 					user.getUserId(), _labelMap, "Test", null, null,
-					_pluralLabelMap, "company", null);
+					_pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
+					null);
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
@@ -287,7 +289,8 @@ public class ObjectDefinitionServiceTest {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 					user.getUserId(), _labelMap, "Test", null, null,
-					_pluralLabelMap, "company", null);
+					_pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
+					null);
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.updateCustomObjectDefinition(

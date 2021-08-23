@@ -15,6 +15,7 @@
 package com.liferay.object.internal.scope;
 
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true, property = "object.scope.provider.key=site",
+	immediate = true,
+	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_SITE,
 	service = ObjectScopeProvider.class
 )
 public class SiteObjectScopeProvider implements ObjectScopeProvider {
@@ -47,7 +49,7 @@ public class SiteObjectScopeProvider implements ObjectScopeProvider {
 
 	@Override
 	public String getKey() {
-		return "site";
+		return ObjectDefinitionConstants.SCOPE_SITE;
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.DuplicateObjectFieldException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
@@ -271,7 +272,8 @@ public class ObjectFieldLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Test"), "Test", null, null,
-				LocalizedMapUtil.getLocalizedMap("Tests"), "company", null);
+				LocalizedMapUtil.getLocalizedMap("Tests"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null);
 
 		ObjectField objectField =
 			ObjectFieldLocalServiceUtil.addCustomObjectField(
@@ -342,8 +344,9 @@ public class ObjectFieldLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 					TestPropsValues.getUserId(), null,
 					LocalizedMapUtil.getLocalizedMap("Test"), "Test", null,
-					null, LocalizedMapUtil.getLocalizedMap("Tests"), "company",
-					1, Arrays.asList(objectFields));
+					null, LocalizedMapUtil.getLocalizedMap("Tests"),
+					ObjectDefinitionConstants.SCOPE_COMPANY, 1,
+					Arrays.asList(objectFields));
 		}
 		finally {
 			if (objectDefinition != null) {

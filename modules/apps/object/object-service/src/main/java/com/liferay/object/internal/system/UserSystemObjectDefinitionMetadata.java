@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.system;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
@@ -64,7 +65,7 @@ public class UserSystemObjectDefinitionMetadata
 
 	@Override
 	public String getScope() {
-		return "company";
+		return ObjectDefinitionConstants.SCOPE_COMPANY;
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
@@ -181,7 +182,7 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
-				_pluralLabelMap, "company",
+				_pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -207,7 +208,7 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
-				_pluralLabelMap, "company",
+				_pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Able", "able", false, "String"),
@@ -359,7 +360,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 					@Override
 					public String getScope() {
-						return "company";
+						return ObjectDefinitionConstants.SCOPE_COMPANY;
 					}
 
 					@Override
@@ -432,7 +433,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 					@Override
 					public String getScope() {
-						return "company";
+						return ObjectDefinitionConstants.SCOPE_COMPANY;
 					}
 
 					@Override
@@ -577,8 +578,8 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, "company", 1,
-				Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
+				1, Collections.<ObjectField>emptyList());
 
 		try {
 			_testAddSystemObjectDefinition("Test");
@@ -599,8 +600,8 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, "company", -1,
-				Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
+				-1, Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -613,8 +614,8 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, "company", 0,
-				Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
+				0, Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -629,8 +630,8 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
-				null, _pluralLabelMap, "company", 1,
-				Collections.<ObjectField>emptyList());
+				null, _pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
+				1, Collections.<ObjectField>emptyList());
 
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
@@ -719,7 +720,7 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), _labelMap, "Test", null, null,
-				_pluralLabelMap, "company",
+				_pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.<ObjectField>emptyList());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -765,7 +766,8 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
-				LocalizedMapUtil.getLocalizedMap("Ables"), "company",
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.emptyList());
 
 		Assert.assertEquals(
@@ -866,7 +868,8 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 					TestPropsValues.getUserId(),
 					LocalizedMapUtil.getLocalizedMap(label), name, null, null,
-					LocalizedMapUtil.getLocalizedMap(pluralLabel), "company",
+					LocalizedMapUtil.getLocalizedMap(pluralLabel),
+					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Collections.<ObjectField>emptyList());
 
 			objectDefinition =
@@ -896,7 +899,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 					TestPropsValues.getUserId(), null,
 					LocalizedMapUtil.getLocalizedMap(label), name, null, null,
-					_pluralLabelMap, "company", 1,
+					_pluralLabelMap, ObjectDefinitionConstants.SCOPE_COMPANY, 1,
 					Collections.<ObjectField>emptyList());
 		}
 		finally {

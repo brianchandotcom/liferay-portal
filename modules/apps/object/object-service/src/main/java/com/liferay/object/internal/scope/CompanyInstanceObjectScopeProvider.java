@@ -15,9 +15,9 @@
 package com.liferay.object.internal.scope;
 
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 
 import java.util.Locale;
 
@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	immediate = true, property = "object.scope.provider.key=company",
+	immediate = true,
+	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_COMPANY,
 	service = ObjectScopeProvider.class
 )
 public class CompanyInstanceObjectScopeProvider implements ObjectScopeProvider {
@@ -41,7 +42,7 @@ public class CompanyInstanceObjectScopeProvider implements ObjectScopeProvider {
 
 	@Override
 	public String getKey() {
-		return "company";
+		return ObjectDefinitionConstants.SCOPE_COMPANY;
 	}
 
 	@Override

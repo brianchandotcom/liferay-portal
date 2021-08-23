@@ -15,6 +15,7 @@
 package com.liferay.object.graphql.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -81,7 +82,7 @@ public class ObjectDefinitionGraphQLTest {
 				LocalizedMapUtil.getLocalizedMap(_objectDefinitionLabel),
 				_objectDefinitionName, null, null,
 				LocalizedMapUtil.getLocalizedMap(_objectDefinitionPluralLabel),
-				"company",
+				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						true, true, _objectFieldLabel, _objectFieldName, false,

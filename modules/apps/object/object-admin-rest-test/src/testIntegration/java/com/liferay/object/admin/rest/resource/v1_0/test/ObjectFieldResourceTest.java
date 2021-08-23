@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
@@ -47,7 +48,8 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(value), value, null, null,
-				LocalizedMapUtil.getLocalizedMap(value), "company",
+				LocalizedMapUtil.getLocalizedMap(value),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.<com.liferay.object.model.ObjectField>emptyList());
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
@@ -95,7 +96,8 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Irrelevant"), "Irrelevant",
 				null, null, LocalizedMapUtil.getLocalizedMap("Irrelevants"),
-				"company", Collections.<ObjectField>emptyList());
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Collections.<ObjectField>emptyList());
 
 		_irrelevantObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -106,7 +108,8 @@ public class ObjectEntryLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Test"), "Test", null, null,
-				LocalizedMapUtil.getLocalizedMap("Tests"), "company",
+				LocalizedMapUtil.getLocalizedMap("Tests"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						true, false, "Age of Death", "ageOfDeath", false,

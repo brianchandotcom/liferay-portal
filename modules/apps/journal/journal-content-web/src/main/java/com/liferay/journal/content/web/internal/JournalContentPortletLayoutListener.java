@@ -120,10 +120,6 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			if (layout.isSystem()) {
-				layout = _layoutLocalService.getLayout(layout.getClassPK());
-			}
-
 			JournalArticle article = _getArticle(layout, portletId);
 
 			if (article == null) {
@@ -164,18 +160,14 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			JournalArticle article = _getArticle(layout, portletId);
-
-			if (layout.isSystem()) {
-				layout = _layoutLocalService.getLayout(layout.getClassPK());
-			}
-
 			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 				portletId, _portal.getClassNameId(Portlet.class), plid);
 
 			_journalContentSearchLocalService.deleteArticleContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), portletId);
+
+			JournalArticle article = _getArticle(layout, portletId);
 
 			if (article != null) {
 				_addLayoutClassedModelUsage(layout, portletId, article);

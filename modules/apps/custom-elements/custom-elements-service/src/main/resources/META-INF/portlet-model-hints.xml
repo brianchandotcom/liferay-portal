@@ -10,11 +10,15 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="CSSURLs" type="String" />
+		<field name="CSSURLs" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="HTMLElementName" type="String" />
 		<field name="instanceable" type="boolean" />
 		<field name="name" type="String" />
-		<field name="properties" type="String" />
+		<field name="properties" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.custom.elements.model.CustomElementsSource">
 		<field name="mvccVersion" type="long" />
@@ -27,6 +31,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="HTMLElementName" type="String" />
 		<field name="name" type="String" />
-		<field name="URL" type="String" />
+		<field name="URLs" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

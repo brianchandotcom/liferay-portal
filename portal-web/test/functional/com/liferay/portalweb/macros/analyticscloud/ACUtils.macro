@@ -207,9 +207,7 @@ definition {
 			layoutName = "${layoutName}",
 			widgetName = "Form");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
+		FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 
 		FormsAdminNavigator.gotoAddForm();
 

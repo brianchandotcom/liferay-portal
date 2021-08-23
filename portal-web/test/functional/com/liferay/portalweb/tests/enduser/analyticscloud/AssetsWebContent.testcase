@@ -186,12 +186,6 @@ definition {
 					siteName = "Site Name");
 
 				Pause(locator1 = "5000");
-
-				User.logoutPG();
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
 			}
 		}
 
@@ -212,11 +206,7 @@ definition {
 		}
 
 		task ("Go to page and get data for segmented individuals") {
-			ACUtils.launchDXP();
-
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
+			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 			Navigator.gotoSitePage(
 				pageName = "AC Page",

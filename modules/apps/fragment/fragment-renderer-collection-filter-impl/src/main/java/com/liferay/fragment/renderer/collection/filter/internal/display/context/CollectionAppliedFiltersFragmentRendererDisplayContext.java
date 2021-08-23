@@ -15,6 +15,9 @@
 package com.liferay.fragment.renderer.collection.filter.internal.display.context;
 
 import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -31,8 +34,12 @@ import javax.servlet.http.HttpServletRequest;
 public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 	public CollectionAppliedFiltersFragmentRendererDisplayContext(
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
+		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+		_fragmentRendererContext = fragmentRendererContext;
 		_httpServletRequest = httpServletRequest;
 	}
 
@@ -81,13 +88,29 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 		_collectionAppliedFiltersProps = HashMapBuilder.<String, Object>put(
 			"filterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
 		).put(
+			"removeAllFiltersButtonSelector",
+			".remove-all-collection-filters-button"
+		).put(
 			"removeButtonSelector", ".remove-collection-applied-filter-button"
 		).build();
 
 		return _collectionAppliedFiltersProps;
 	}
 
+	public boolean showClearFiltersButton() {
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentRendererContext.getFragmentEntryLink();
+
+		return (boolean)
+			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+				fragmentEntryLink.getEditableValues(), "bool",
+				"showClearFilters");
+	}
+
 	private Map<String, Object> _collectionAppliedFiltersProps;
+	private final FragmentEntryConfigurationParser
+		_fragmentEntryConfigurationParser;
+	private final FragmentRendererContext _fragmentRendererContext;
 	private final HttpServletRequest _httpServletRequest;
 
 }

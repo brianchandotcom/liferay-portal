@@ -17,6 +17,7 @@ package com.liferay.fragment.renderer.collection.filter.internal;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.collection.filter.internal.display.context.CollectionAppliedFiltersFragmentRendererDisplayContext;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,6 +69,7 @@ public class CollectionAppliedFiltersFragmentRenderer
 			CollectionAppliedFiltersFragmentRendererDisplayContext.class.
 				getName(),
 			new CollectionAppliedFiltersFragmentRendererDisplayContext(
+				_fragmentEntryConfigurationParser, fragmentRendererContext,
 				httpServletRequest));
 
 		try {
@@ -83,6 +85,9 @@ public class CollectionAppliedFiltersFragmentRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CollectionAppliedFiltersFragmentRenderer.class);
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.collection.filter.impl)"

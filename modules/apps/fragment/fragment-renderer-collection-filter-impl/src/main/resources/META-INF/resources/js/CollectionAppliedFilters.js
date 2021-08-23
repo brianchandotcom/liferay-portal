@@ -16,9 +16,27 @@ import {delegate} from 'frontend-js-web';
 
 export default function CollectionAppliedFilters({
 	filterPrefix,
+	removeAllFiltersButtonSelector,
 	removeButtonSelector,
 }) {
-	const clickHandler = delegate(
+	const removeAllFiltersClickHandler = delegate(
+		document.body,
+		'click',
+		removeAllFiltersButtonSelector,
+		() => {
+			const url = new URL(window.location.href);
+
+			url.searchParams.forEach((_, key) => {
+				if (key.startsWith(filterPrefix)) {
+					url.searchParams.delete(key);
+				}
+			});
+
+			window.location.href = url.toString();
+		}
+	);
+
+	const removeSingleFilterClickHandler = delegate(
 		document.body,
 		'click',
 		removeButtonSelector,
@@ -56,7 +74,8 @@ export default function CollectionAppliedFilters({
 
 	return {
 		dispose() {
-			clickHandler.dispose();
+			removeAllFiltersClickHandler.dispose();
+			removeSingleFilterClickHandler.dispose();
 		},
 	};
 }

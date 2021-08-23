@@ -307,6 +307,13 @@ definition {
 		return "${country}";
 	}
 
+	macro getPageRefRequestPropertyValue {
+		var postDataText = ProxyUtil.getHarRecording("$..[?(@['pageref'] == '${pageRef}')].request[?(@.method == 'POST' && @.url contains '/${pageRef}')]..text");
+		var value = JSONUtil.getWithJSONPath("[${postDataText}]","$..${property}");
+
+		return "${value}";
+	}
+
 	macro getRequestCommonPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]","$.[0].${property}");

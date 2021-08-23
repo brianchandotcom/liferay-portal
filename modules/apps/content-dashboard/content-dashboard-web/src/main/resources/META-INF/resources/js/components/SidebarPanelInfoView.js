@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import DocumentPreview from './DocumentPreview';
 import ItemLanguages from './ItemLanguages';
@@ -52,30 +52,6 @@ const SidebarPanelInfoView = ({
 	versions = [],
 	viewURLs = [],
 }) => {
-	const sortedViewURLS = useMemo(
-		() =>
-			viewURLs
-				.sort((a, b) => {
-					if (a.languageId < b.languageId) {
-						return -1;
-					}
-
-					if (a.languageId > b.languageId) {
-						return 1;
-					}
-
-					return 0;
-				})
-				.sort((a) => {
-					if (a.default) {
-						return -1;
-					}
-
-					return 0;
-				}),
-		[viewURLs]
-	);
-
 	const stickerColor = parseInt(user.userId, 10) % 10;
 
 	const {
@@ -278,8 +254,8 @@ const SidebarPanelInfoView = ({
 							)
 					)}
 
-				{!!sortedViewURLS.length && (
-					<ItemLanguages urls={sortedViewURLS} />
+				{!!viewURLs.length && (
+					<ItemLanguages urls={viewURLs} />
 				)}
 			</Sidebar.Body>
 		</>

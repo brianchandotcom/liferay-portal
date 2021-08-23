@@ -68,8 +68,8 @@ public interface ObjectFieldLocalService
 	public ObjectField addCustomObjectField(
 			long userId, long objectDefinitionId, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			String type)
+			Map<Locale, String> labelMap, long listTypeDefinitionId,
+			String name, boolean required, String type)
 		throws PortalException;
 
 	/**
@@ -311,8 +311,9 @@ public interface ObjectFieldLocalService
 
 	public ObjectField updateCustomObjectField(
 			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, String type)
+			String indexedLanguageId, Map<Locale, String> labelMap,
+			long listTypeDefinitionId, String name, boolean required,
+			String type)
 		throws PortalException;
 
 	/**

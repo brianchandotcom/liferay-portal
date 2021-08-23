@@ -48,13 +48,14 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField addCustomObjectField(
 			long userId, long objectDefinitionId, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
-			Map<java.util.Locale, String> labelMap, String name,
-			boolean required, String type)
+			Map<java.util.Locale, String> labelMap, long listTypeDefinitionId,
+			String name, boolean required, String type)
 		throws PortalException {
 
 		return getService().addCustomObjectField(
 			userId, objectDefinitionId, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, type);
+			indexedLanguageId, labelMap, listTypeDefinitionId, name, required,
+			type);
 	}
 
 	/**
@@ -355,12 +356,13 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField updateCustomObjectField(
 			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			String name, boolean required, String type)
+			long listTypeDefinitionId, String name, boolean required,
+			String type)
 		throws PortalException {
 
 		return getService().updateCustomObjectField(
 			objectFieldId, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, type);
+			labelMap, listTypeDefinitionId, name, required, type);
 	}
 
 	/**

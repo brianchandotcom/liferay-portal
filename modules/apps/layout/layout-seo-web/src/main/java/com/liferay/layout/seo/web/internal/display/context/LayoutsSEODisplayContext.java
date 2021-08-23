@@ -65,8 +65,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.HashMap;
@@ -477,6 +479,10 @@ public class LayoutsSEODisplayContext {
 			"fields",
 			infoForm.getAllInfoFields(
 			).stream(
+			).filter(
+				infoField -> !StringUtil.startsWith(
+					infoField.getName(),
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)
 			).map(
 				infoField -> JSONUtil.put(
 					"key", infoField.getName()

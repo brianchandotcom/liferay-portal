@@ -15,6 +15,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage(layoutName = "AC Page");
 	}
 
 	tearDown {
@@ -202,12 +204,59 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8295 | Test Summary: Assert Sites Activity time filter able to use Custom Range"
-	@ignore = "true"
 	@priority = "5"
 	test CanSitesActivityTimeFilterUseCustomRange {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8295 CanSitesActivityTimeFilterUseCustomRange
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8776
 
+	
+			
+
+			
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		
+
+		task ("Interation with page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessions();
+		}
+
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset Custom Range time period filter") {
+
+			// It is not possible to perform the assert because this test needs data from the past
+
+			var displayDateDay = DateUtil.getCurrentDate();
+			var displayMonth = DateUtil.getCurrentMonth();
+			var displayDateMonth = DateUtil.getCurrentMonthName();
+			var displayDateYear = DateUtil.getCurrentYear();
+			var previousDay = DateUtil.getFormattedDate("-1", "d");
+			var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
+			var previousYear = DateUtil.getFormattedDate("-1", "yyyy");
+
+			ACNavigation.switchTab(tabName = "Overview");
+
+			ACTimeFilter.setCustomRange(
+				endDay = "${displayDateDay}",
+				endMonth = "${displayDateMonth}",
+				endYear = "${displayDateYear}",
+				startDay = "${previousDay}",
+				startMonth = "${previousMonth}",
+				startYear = "${previousYear}");
+
+			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8290 | Test Summary: Unique Visitors label is shown on the tabs of Pages dashboards"

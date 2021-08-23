@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,6 +82,17 @@ public class CommerceOrderWorkflowHandler
 	}
 
 	@Override
+	public void startWorkflowInstance(
+			long companyId, long groupId, long userId, long classPK,
+			CommerceOrder model, Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		_workflowInstanceLinkLocalService.startWorkflowInstance(
+			companyId, groupId, userId, getClassName(), classPK,
+			workflowContext, true);
+	}
+
+	@Override
 	public CommerceOrder updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
@@ -106,5 +118,8 @@ public class CommerceOrderWorkflowHandler
 	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

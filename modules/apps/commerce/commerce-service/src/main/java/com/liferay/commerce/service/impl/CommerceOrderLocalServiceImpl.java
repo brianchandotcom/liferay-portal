@@ -531,7 +531,7 @@ public class CommerceOrderLocalServiceImpl
 
 		_workflowTaskManager.completeWorkflowTask(
 			companyId, userId, workflowTask.getWorkflowTaskId(), transitionName,
-			comment, null);
+			comment, null, true);
 
 		return commerceOrder;
 	}

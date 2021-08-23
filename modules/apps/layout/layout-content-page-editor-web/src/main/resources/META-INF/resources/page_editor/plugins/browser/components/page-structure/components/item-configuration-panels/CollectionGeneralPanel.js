@@ -99,15 +99,9 @@ export const CollectionGeneralPanel = ({item}) => {
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const [numberOfItemsError, setNumberOfItemsError] = useState(
-		totalNumberOfItems
-			? item.config.numberOfItems < 1
-				? ERROR_MESSAGES.neededItem
-				: null
-			: ERROR_MESSAGES.noItems
-	);
+	const [numberOfItemsError, setNumberOfItemsError] = useState(null);
 	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
-		item.config.numberOfItemsPerPage < 1 ? ERROR_MESSAGES.neededItem : null
+		null
 	);
 
 	const {
@@ -144,14 +138,6 @@ export const CollectionGeneralPanel = ({item}) => {
 
 	const handleCollectionNumberOfItemsBlurred = (event) => {
 		if (Number(nextValue.numberOfItems) !== item.config.numberOfItems) {
-			if (totalNumberOfItems) {
-				setNumberOfItemsError(
-					Number(event.target.value) < 1
-						? ERROR_MESSAGES.neededItem
-						: null
-				);
-			}
-
 			handleConfigurationChanged({
 				numberOfItems: Number(event.target.value),
 			});
@@ -173,15 +159,6 @@ export const CollectionGeneralPanel = ({item}) => {
 		if (
 			nextValue.numberOfItemsPerPage !== item.config.numberOfItemsPerPage
 		) {
-			if (Number(event.target.value) < 1) {
-				setNumberOfItemsPerPageError(ERROR_MESSAGES.neededItem);
-			}
-			else if (
-				Number(event.target.value) <= config.searchContainerPageMaxDelta
-			) {
-				setNumberOfItemsPerPageError(null);
-			}
-
 			handleConfigurationChanged({
 				numberOfItemsPerPage: Number(event.target.value),
 			});
@@ -221,36 +198,44 @@ export const CollectionGeneralPanel = ({item}) => {
 			numberOfItems,
 			showAllItems: event.target.checked,
 		});
-
-		if (numberOfItemsError) {
-			setNumberOfItemsError(null);
-		}
 	};
 
 	useEffect(() => {
-		if (
-			totalNumberOfItems &&
-			item.config.numberOfItems > totalNumberOfItems
-		) {
-			setNumberOfItemsError(
-				Liferay.Util.sub(
+		let errorMessage = null;
+
+		if (totalNumberOfItems) {
+			if (item.config.numberOfItems > totalNumberOfItems) {
+				errorMessage = Liferay.Util.sub(
 					ERROR_MESSAGES.maximumItems,
 					totalNumberOfItems
-				)
-			);
+				);
+			}
+			else if (item.config.numberOfItems < 1) {
+				errorMessage = ERROR_MESSAGES.neededItem;
+			}
 		}
+		else {
+			errorMessage = ERROR_MESSAGES.noItems;
+		}
+
+		setNumberOfItemsError(errorMessage);
 	}, [totalNumberOfItems, item.config.numberOfItems]);
 
 	useEffect(() => {
+		let errorMessage = null;
+
 		if (isMaximumValuePerPageError) {
-			setNumberOfItemsPerPageError(
-				Liferay.Util.sub(
-					ERROR_MESSAGES.maximumItemsPerPage,
-					config.searchContainerPageMaxDelta
-				)
+			errorMessage = Liferay.Util.sub(
+				ERROR_MESSAGES.maximumItemsPerPage,
+				config.searchContainerPageMaxDelta
 			);
 		}
-	}, [isMaximumValuePerPageError]);
+		else if (item.config.numberOfItemsPerPage < 1) {
+			errorMessage = ERROR_MESSAGES.neededItem;
+		}
+
+		setNumberOfItemsPerPageError(errorMessage);
+	}, [isMaximumValuePerPageError, item.config.numberOfItemsPerPage]);
 
 	useEffect(() => {
 		if (collectionItemType) {
@@ -291,8 +276,6 @@ export const CollectionGeneralPanel = ({item}) => {
 							...prevValue,
 							numberOfItems: totalNumberOfItems,
 						}));
-
-						setNumberOfItemsError(null);
 					}
 				}
 			});

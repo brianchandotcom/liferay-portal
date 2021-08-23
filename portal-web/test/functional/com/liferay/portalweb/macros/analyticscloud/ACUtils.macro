@@ -52,6 +52,40 @@ definition {
 			expected = "${value}");
 	}
 
+	macro assertIdentityRequestPropertiesValue {
+		var actualDataSourceId = ACUtils.getPageRefRequestPropertyValue(
+			pageRef = "identity",
+			property = "dataSourceId");
+
+		TestUtils.assertEquals(
+			actual = "${actualDataSourceId}",
+			expected = "${expectedDataSourceId}");
+
+		var emailAddressHashed = ACUtils.getPageRefRequestPropertyValue(
+			pageRef = "identity",
+			property = "emailAddressHashed");
+
+		TestUtils.assertNotEquals(
+			actual = "${emailAddressHashed}",
+			expected = "");
+
+		var id = ACUtils.getPageRefRequestPropertyValue(
+			pageRef = "identity",
+			property = "id");
+
+		TestUtils.assertNotEquals(
+			actual = "${id}",
+			expected = "");
+
+		var userId = ACUtils.getPageRefRequestPropertyValue(
+			pageRef = "identity",
+			property = "userId");
+
+		TestUtils.assertNotEquals(
+			actual = "${userId}",
+			expected = "");
+	}
+
 	@summary = "Asserts a list of items by the name"
 	macro assertItemsName {
 		for (var key_itemName : list "${itemList}") {

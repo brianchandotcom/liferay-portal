@@ -33,6 +33,13 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,6 +51,7 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -85,7 +93,8 @@ public class UpgradeReport {
 			FileUtil.write(
 				_getReportFile(),
 				StringBundler.concat(
-					_getPortalVersions(), _getDialectInfo(), _getProperties()));
+					_getPortalVersions(), _getDialectInfo(), _getProperties(),
+					_getDocLibSize()));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -121,6 +130,112 @@ public class UpgradeReport {
 			StringPool.PERIOD, db.getMinorVersion(), StringPool.NEW_LINE);
 	}
 
+	private String _getDocLibSize() {
+		if (_dlStore.equals("com.liferay.portal.store.db.DBStore")) {
+			return StringPool.BLANK;
+		}
+		else if (_dlStore.contains("FileSystemStore")) {
+			if ((_rootDir == null) &&
+				_dlStore.equals(
+					"com.liferay.portal.store.file.system." +
+						"AdvancedFileSystemStore")) {
+
+				return StringBundler.concat(
+					"\"rootDir\" was not set, unable to determine the size of ",
+					"the document library", StringPool.NEW_LINE);
+			}
+
+			final AtomicLong length = new AtomicLong(0);
+
+			String docLibPath =
+				PropsValues.LIFERAY_HOME + "/data/document_library";
+
+			if (_rootDir != null) {
+				docLibPath = _rootDir + "/data/document_library";
+			}
+
+			try {
+				Files.walkFileTree(
+					Paths.get(docLibPath),
+					new SimpleFileVisitor<Path>() {
+
+						@Override
+						public FileVisitResult postVisitDirectory(
+							Path dir, IOException ioException) {
+
+							if ((ioException != null) &&
+								_log.isDebugEnabled()) {
+
+								_log.debug(
+									StringBundler.concat(
+										"Unable to traverse: ", dir, " (",
+										ioException,
+										StringPool.CLOSE_PARENTHESIS));
+							}
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFile(
+							Path file,
+							BasicFileAttributes basicFileAttributes) {
+
+							length.addAndGet(basicFileAttributes.size());
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
+						public FileVisitResult visitFileFailed(
+							Path file, IOException ioException) {
+
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									StringBundler.concat(
+										"Unable to visit: ", file, " (",
+										ioException,
+										StringPool.CLOSE_PARENTHESIS));
+							}
+
+							return FileVisitResult.CONTINUE;
+						}
+
+					});
+			}
+			catch (IOException ioException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to determine the size of the document library");
+				}
+			}
+
+			double bytes = length.get();
+
+			String[] dictionary = {"bytes", "KB", "MB", "GB", "TB", "PB"};
+
+			int index = 0;
+
+			for (index = 0; index < dictionary.length; index++) {
+				if (bytes < 1024) {
+					break;
+				}
+
+				bytes = bytes / 1024;
+			}
+
+			String size = StringBundler.concat(
+				String.format("%." + 2 + "f", bytes), StringPool.SPACE,
+				dictionary[index]);
+
+			return StringBundler.concat(
+				"The Document Library is ", size, StringPool.NEW_LINE);
+		}
+
+		return "Please check the size of the Liferay Document Library in " +
+			"your cloud storage";
+	}
+
 	private String _getPortalVersions() {
 		Version latestSchemaVersion =
 			PortalUpgradeProcess.getLatestSchemaVersion();
@@ -147,41 +262,39 @@ public class UpgradeReport {
 				Arrays.toString(PropsValues.LOCALES_ENABLED));
 		sb.append(StringPool.NEW_LINE);
 
-		String dlStore = PropsValues.DL_STORE_IMPL;
+		_dlStore = PropsValues.DL_STORE_IMPL;
 
-		sb.append(PropsKeys.DL_STORE_IMPL + StringPool.EQUAL + dlStore);
+		sb.append(PropsKeys.DL_STORE_IMPL + StringPool.EQUAL + _dlStore);
 
 		sb.append(StringPool.NEW_LINE);
 
-		String rootDir = null;
-
-		if (dlStore.equals(
+		if (_dlStore.equals(
 				"com.liferay.portal.store.file.system." +
 					"AdvancedFileSystemStore")) {
 
-			rootDir = _getRootDir(
+			_rootDir = _getRootDir(
 				_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
 
-			if (rootDir == null) {
+			if (_rootDir == null) {
 				sb.append("The configuration \"rootDir\" is required. ");
 				sb.append("Configure it in ");
 				sb.append(_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
 				sb.append(".config");
 			}
 		}
-		else if (dlStore.equals(
+		else if (_dlStore.equals(
 					"com.liferay.portal.store.file.system.FileSystemStore")) {
 
-			rootDir = _getRootDir(_CONFIGURATION_PID_FILE_SYSTEM_STORE);
+			_rootDir = _getRootDir(_CONFIGURATION_PID_FILE_SYSTEM_STORE);
 
-			if (rootDir == null) {
+			if (_rootDir == null) {
 				sb.append("Using the default directory because the ");
 				sb.append("configuration \"rootDir\" was not set");
 			}
 		}
 
-		if (rootDir != null) {
-			sb.append("rootDir=" + rootDir);
+		if (_rootDir != null) {
+			sb.append("rootDir=" + _rootDir);
 		}
 
 		sb.append(StringPool.NEW_LINE);
@@ -293,6 +406,7 @@ public class UpgradeReport {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
+	private String _dlStore;
 	private final Map<String, ArrayList<String>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
@@ -300,6 +414,7 @@ public class UpgradeReport {
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
 	private final PersistenceManager _persistenceManager;
+	private String _rootDir;
 	private final Map<String, ArrayList<String>> _warningMessages =
 		new ConcurrentHashMap<>();
 

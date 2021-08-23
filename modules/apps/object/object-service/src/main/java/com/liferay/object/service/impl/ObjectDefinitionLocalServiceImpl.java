@@ -544,7 +544,7 @@ public class ObjectDefinitionLocalServiceImpl
 			pkObjectFieldDBColumnName, pkObjectFieldName, system);
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
-		_validateName(user.getCompanyId(), 0, name, system);
+		_validateName(0, user.getCompanyId(), name, system);
 		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
 		_validateScope(scope);
 		_validateVersion(system, version);
@@ -742,9 +742,8 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.isSystem());
 
 		_validateName(
-			objectDefinition.getCompanyId(),
-			objectDefinition.getObjectDefinitionId(), name,
-			objectDefinition.isSystem());
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getCompanyId(), name, objectDefinition.isSystem());
 		_validateScope(scope);
 
 		objectDefinition.setDBTableName(dbTableName);
@@ -770,7 +769,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateName(
-			long companyId, long objectDefinitionId, String name,
+			long objectDefinitionId, long companyId, String name,
 			boolean system)
 		throws PortalException {
 

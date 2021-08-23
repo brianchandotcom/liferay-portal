@@ -174,7 +174,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_serviceContext.getRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -199,7 +199,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_serviceContext.getRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -258,7 +258,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -281,7 +281,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				() -> _dynamicInclude.include(
 					_serviceContext.getRequest(), mockHttpServletResponse,
 					RandomTestUtil.randomString()),
-				true));
+				false, true));
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -299,7 +299,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_serviceContext.getRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -335,7 +335,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -401,7 +401,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -434,7 +434,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -481,7 +481,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -524,7 +524,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -561,7 +561,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -583,7 +583,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -606,7 +606,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getAssetDisplayPageHttpServletRequest(fileEntry),
 				mockHttpServletResponse, RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -622,7 +622,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testIncludeLinkAssetDisplayPageLayoutTranslatedLanguages()
+	public void testIncludeLinkAssetDisplayPageLayoutTranslatedLanguagesCompanyEnabled()
 		throws Exception {
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -636,7 +636,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						_getAssetDisplayPageHttpServletRequest(fileEntry),
 						mockHttpServletResponse, RandomTestUtil.randomString()),
-					true),
+					false, true),
 				true),
 			true);
 
@@ -671,7 +671,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				() -> _dynamicInclude.include(
 					_getAssetDisplayPageHttpServletRequest(fileEntry),
 					mockHttpServletResponse, RandomTestUtil.randomString()),
-				true),
+				false, true),
 			true);
 
 		Document document = Jsoup.parse(
@@ -702,7 +702,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						_getAssetDisplayPageHttpServletRequest(fileEntry),
 						mockHttpServletResponse, RandomTestUtil.randomString()),
-					false),
+					false, false),
 				true),
 			true);
 
@@ -720,6 +720,38 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeLinkAssetDisplayPageLayoutTranslatedLanguagesSiteEnabled()
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry fileEntry = _getFileEntry();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOGroupConfiguration(
+				() -> _testWithLayoutSEOCompanyConfiguration(
+					() -> _dynamicInclude.include(
+						_getAssetDisplayPageHttpServletRequest(fileEntry),
+						mockHttpServletResponse, RandomTestUtil.randomString()),
+					false, true),
+				true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertCanonicalLinkTag(
+			document,
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				FileEntry.class.getName(), fileEntry.getFileEntryId(),
+				_getThemeDisplay()));
+		_assertAlternateLinkTagAssetDisplayPage(
+			document, fileEntry,
+			_getAvailableLocalesLayoutTranslatedLanguages());
+	}
+
+	@Test
 	public void testIncludeLinkLayoutTranslatedLanguages() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -730,7 +762,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						_getHttpServletRequest(), mockHttpServletResponse,
 						RandomTestUtil.randomString()),
-					true),
+					false, true),
 				true),
 			true);
 
@@ -745,7 +777,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testIncludeLinkLayoutTranslatedLanguagesContentLayout()
+	public void testIncludeLinkLayoutTranslatedLanguagesContentLayoutCompanyEnabled()
 		throws Exception {
 
 		_layout.setType(LayoutConstants.TYPE_CONTENT);
@@ -761,7 +793,38 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						_getHttpServletRequest(), mockHttpServletResponse,
 						RandomTestUtil.randomString()),
-					true),
+					false, true),
+				true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertCanonicalLinkTag(
+			document,
+			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
+		_assertAlternateLinkTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
+	}
+
+	@Test
+	public void testIncludeLinkLayoutTranslatedLanguagesContentLayoutSiteEnabled()
+		throws Exception {
+
+		_layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOGroupConfiguration(
+				() -> _testWithLayoutSEOCompanyConfiguration(
+					() -> _dynamicInclude.include(
+						_getHttpServletRequest(), mockHttpServletResponse,
+						RandomTestUtil.randomString()),
+					false, true),
 				true),
 			true);
 
@@ -788,7 +851,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						_getHttpServletRequest(), mockHttpServletResponse,
 						RandomTestUtil.randomString()),
-					false),
+					false, false),
 				true),
 			true);
 
@@ -811,7 +874,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -822,18 +885,18 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testIncludeLocalesLayoutTranslatedLanguages() throws Exception {
+	public void testIncludeLocalesLayoutTranslatedLanguagesCompanyEnabled()
+		throws Exception {
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
-			() -> _testWithLayoutSEOGroupConfiguration(
-				() -> _testWithLayoutSEOCompanyConfiguration(
-					() -> _dynamicInclude.include(
-						_getHttpServletRequest(), mockHttpServletResponse,
-						RandomTestUtil.randomString()),
-					true),
-				true),
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					_getHttpServletRequest(), mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				true, true),
 			true);
 
 		Document document = Jsoup.parse(
@@ -845,7 +908,34 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testIncludeLocalesLayoutTranslatedLanguagesContentLayout()
+	public void testIncludeLocalesLayoutTranslatedLanguagesContentLayoutCompanyEnabled()
+		throws Exception {
+
+		_layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					_getHttpServletRequest(), mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				true, true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertAlternateLocalesTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
+	}
+
+	@Test
+	public void testIncludeLocalesLayoutTranslatedLanguagesContentLayoutSiteEnabled()
 		throws Exception {
 
 		_layout.setType(LayoutConstants.TYPE_CONTENT);
@@ -861,7 +951,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						_getHttpServletRequest(), mockHttpServletResponse,
 						RandomTestUtil.randomString()),
-					true),
+					false, true),
 				true),
 			true);
 
@@ -886,7 +976,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						_getHttpServletRequest(), mockHttpServletResponse,
 						RandomTestUtil.randomString()),
-					false),
+					false, false),
 				true),
 			true);
 
@@ -894,6 +984,31 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertNoOpenGraphMetaTagElements(document);
+	}
+
+	@Test
+	public void testIncludeLocalesLayoutTranslatedLanguagesSiteEnabled()
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOGroupConfiguration(
+				() -> _testWithLayoutSEOCompanyConfiguration(
+					() -> _dynamicInclude.include(
+						_getHttpServletRequest(), mockHttpServletResponse,
+						RandomTestUtil.randomString()),
+					false, true),
+				true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertAlternateLocalesTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
 	}
 
 	@Test
@@ -921,7 +1036,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				() -> _dynamicInclude.include(
 					httpServletRequest, mockHttpServletResponse,
 					RandomTestUtil.randomString()),
-				true));
+				false, true));
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -960,7 +1075,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						httpServletRequest, mockHttpServletResponse,
 						RandomTestUtil.randomString()),
-					true),
+					false, true),
 				false));
 
 		Document document = Jsoup.parse(
@@ -998,7 +1113,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					() -> _dynamicInclude.include(
 						httpServletRequest, mockHttpServletResponse,
 						RandomTestUtil.randomString()),
-					true),
+					false, true),
 				true));
 
 		Document document = Jsoup.parse(
@@ -1018,7 +1133,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			false);
+			false, false);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -1050,7 +1165,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -1098,7 +1213,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -1130,7 +1245,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -1147,7 +1262,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
@@ -1191,7 +1306,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
-			true);
+			false, true);
 
 		String content = mockHttpServletResponse.getContentAsString();
 
@@ -1570,13 +1685,17 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	private void _testWithLayoutSEOCompanyConfiguration(
-			UnsafeRunnable<Exception> unsafeRunnable, boolean enableOpenGraph)
+			UnsafeRunnable<Exception> unsafeRunnable,
+			boolean enableLayoutTranslatedLanguages, boolean enableOpenGraph)
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					_LAYOUT_SEO_COMPANY_CONFIGURATION_PID,
 					HashMapDictionaryBuilder.<String, Object>put(
+						"enableLayoutTranslatedLanguages",
+						enableLayoutTranslatedLanguages
+					).put(
 						"enableOpenGraph", enableOpenGraph
 					).build())) {
 

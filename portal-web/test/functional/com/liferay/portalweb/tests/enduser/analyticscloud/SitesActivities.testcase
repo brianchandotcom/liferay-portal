@@ -59,7 +59,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8275 | Test Summary: Site Activity Card: Can filter graph by day"
 	@priority = "5"
 	test CanFilterActivityCardGraphByDay {
-
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: the issue is due to data not appearing on time
@@ -72,11 +71,6 @@ definition {
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
-
-
-
-
-
 
 		task ("Interation with pages") {
 			Navigator.gotoSitePage(
@@ -106,7 +100,6 @@ definition {
 
 			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8278 | Test Summary: Site Activity Card: Can filter graph by month"
@@ -158,7 +151,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8276 | Test Summary: Site Activity Card: Can filter graph by week"
 	@priority = "5"
 	test CanFilterActivityCardGraphByWeek {
-
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: the test needs data from a past date
@@ -171,9 +163,6 @@ definition {
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
-
-
-
 
 		task ("Interation with pages") {
 			Navigator.gotoSitePage(
@@ -203,7 +192,6 @@ definition {
 
 			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8279 | Test Summary: Site Activity Card: Can hover over a point on the graph to get detailed stats"

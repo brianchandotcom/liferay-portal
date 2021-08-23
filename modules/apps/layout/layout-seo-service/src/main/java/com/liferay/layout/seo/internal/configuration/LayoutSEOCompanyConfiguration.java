@@ -57,4 +57,18 @@ public interface LayoutSEOCompanyConfiguration {
 	)
 	public boolean enableOpenGraph();
 
+	/**
+	 * Sets the configuration to allow the site admins to configure if hreflang
+	 * tags in pages are filled only for the translated languages.
+	 *
+	 * @review
+	 */
+	@Meta.AD(
+		deflt = "false",
+		description = "layout-seo-configuration-enable-only-translated-hreflang-description",
+		name = "layout-seo-configuration-enable-only-translated-hreflang",
+		required = false
+	)
+	public boolean enableLayoutTranslatedLanguages();
+
 }

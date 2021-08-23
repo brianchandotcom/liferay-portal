@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,11 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OpenGraphConfiguration.class)
 public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #isLayoutTranslatedLanguagesEnabled(Group)}
-	 */
-	@Deprecated
 	@Override
 	public boolean isLayoutTranslatedLanguagesEnabled(Company company)
 		throws PortalException {
@@ -52,21 +46,26 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			return false;
 		}
 
-		return isLayoutTranslatedLanguagesEnabled(
-			_groupLocalService.getGroup(company.getGroupId()));
+		return layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages();
 	}
 
 	@Override
 	public boolean isLayoutTranslatedLanguagesEnabled(Group group)
 		throws PortalException {
 
-		LayoutSEOGroupConfiguration layoutSEOGroupConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				LayoutSEOGroupConfiguration.class, group.getGroupId());
-
 		if (!isOpenGraphEnabled(group)) {
 			return false;
 		}
+
+		if (isLayoutTranslatedLanguagesEnabled(
+				_companyLocalService.getCompany(group.getCompanyId()))) {
+
+			return true;
+		}
+
+		LayoutSEOGroupConfiguration layoutSEOGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				LayoutSEOGroupConfiguration.class, group.getGroupId());
 
 		return layoutSEOGroupConfiguration.enableLayoutTranslatedLanguages();
 	}
@@ -108,9 +107,6 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;

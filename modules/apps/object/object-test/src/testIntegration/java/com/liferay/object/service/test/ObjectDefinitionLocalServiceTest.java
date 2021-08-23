@@ -851,12 +851,6 @@ public class ObjectDefinitionLocalServiceTest {
 		_testAddCustomObjectDefinition(name, name, name);
 	}
 
-	private void _testAddCustomObjectDefinition(String label, String name)
-		throws Exception {
-
-		_testAddCustomObjectDefinition(label, name, label);
-	}
-
 	private void _testAddCustomObjectDefinition(
 			String label, String name, String pluralLabel)
 		throws Exception {

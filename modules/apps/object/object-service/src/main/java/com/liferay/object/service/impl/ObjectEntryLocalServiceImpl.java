@@ -1123,9 +1123,7 @@ public class ObjectEntryLocalServiceImpl
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(scope);
 
-		if (objectScopeProvider.isGroupAware() &&
-			!objectScopeProvider.isValidGroupId(groupId)) {
-
+		if (!objectScopeProvider.isValidGroupId(groupId)) {
 			throw new ObjectDefinitionScopeException(
 				StringBundler.concat(
 					"Group ID ", groupId, " is not valid for scope \"", scope,

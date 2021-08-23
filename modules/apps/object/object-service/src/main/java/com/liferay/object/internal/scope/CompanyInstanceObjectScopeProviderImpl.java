@@ -66,6 +66,10 @@ public class CompanyInstanceObjectScopeProviderImpl
 
 	@Override
 	public boolean isValidGroupId(long groupId) {
+		if (groupId == 0) {
+			return true;
+		}
+
 		return false;
 	}
 

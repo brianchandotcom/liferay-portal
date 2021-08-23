@@ -36,7 +36,7 @@ public class CompanyInstanceObjectScopeProvider implements ObjectScopeProvider {
 
 	@Override
 	public long getGroupId(HttpServletRequest httpServletRequest) {
-		return GroupConstants.DEFAULT_LIVE_GROUP_ID;
+		return 0;
 	}
 
 	@Override

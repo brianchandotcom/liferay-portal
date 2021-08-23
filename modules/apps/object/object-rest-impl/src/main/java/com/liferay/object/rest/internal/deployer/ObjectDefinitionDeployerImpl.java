@@ -76,7 +76,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.extension.select",
 							"(osgi.jaxrs.name=Liferay.Vulcan)"
 						).put(
-							"osgi.jaxrs.name", objectDefinition.getShortName()
+							"osgi.jaxrs.name", objectDefinition.getName()
 						).build()),
 					_objectEntryResourceComponentFactory.newInstance(
 						HashMapDictionaryBuilder.<String, Object>put(
@@ -85,11 +85,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"batch.engine.task.item.delegate", "true"
 						).put(
 							"batch.engine.task.item.delegate.name",
-							objectDefinition.getShortName()
+							objectDefinition.getName()
 						).put(
 							"osgi.jaxrs.application.select",
-							"(osgi.jaxrs.name=" +
-								objectDefinition.getShortName() + ")"
+							"(osgi.jaxrs.name=" + objectDefinition.getName() +
+								")"
 						).put(
 							"osgi.jaxrs.resource", "true"
 						).build())));
@@ -103,8 +103,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"enabled", "false"
 					).put(
 						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getShortName() +
-							")"
+						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
 					).put(
 						"osgi.jaxrs.extension", "true"
 					).put(
@@ -117,8 +116,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					new RequiredObjectFieldExceptionMapper(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getShortName() +
-							")"
+						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
 					).put(
 						"osgi.jaxrs.extension", "true"
 					).put(

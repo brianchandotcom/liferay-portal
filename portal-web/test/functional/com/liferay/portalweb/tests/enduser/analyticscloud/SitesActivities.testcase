@@ -211,13 +211,7 @@ definition {
 		// AC Refactor: the test needs data from a past date
 		// AC Refactor ticket: LRAC-8776
 
-	
-			
-
-			
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		
 
 		task ("Interation with page") {
 			Navigator.gotoSitePage(

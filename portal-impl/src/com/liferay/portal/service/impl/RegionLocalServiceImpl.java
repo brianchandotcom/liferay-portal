@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.RegionLocalServiceBaseImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -68,7 +70,12 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 	@Override
 	public void deleteCountryRegions(long countryId) {
-		regionPersistence.removeByCountryId(countryId);
+		for (Region region :
+				getRegions(
+					countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			deleteRegion(region);
+		}
 	}
 
 	@Override
@@ -80,6 +87,10 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 	@Override
 	public Region deleteRegion(Region region) throws PortalException {
+
+		// Region Localizations
+
+		updateRegionLocalizations(region, Collections.emptyMap());
 
 		// Region
 

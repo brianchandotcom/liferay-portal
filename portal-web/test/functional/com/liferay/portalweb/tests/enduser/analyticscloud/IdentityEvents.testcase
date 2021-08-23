@@ -55,12 +55,69 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8714 | Test Summary: Check Identity is triggered when logging out and in again"
-	@ignore = "true"
 	@priority = "3"
 	test CheckIdentityTriggeredWhenLoggingOutAndAgain {
+		property proxy.server.enabled = "true";
 
-		// TODO LRAC-8714 CheckIdentityTriggeredWhenLoggingOutAndAgain pending implementation
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
+		task ("Get the Property ID in AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+		}
+
+		task ("Get the DXP Instance ID in AC") {
+			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("Sign in as Test Test") {
+			ACUtils.launchDXP();
+		}
+
+		task ("Navigate to the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Sign out") {
+			UserBar.signOut();
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("identity");
+		}
+
+		task ("Sign in new site") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			User.firstLoginUI(
+				specificURL = "${portalURL}/web/site-name/ac-page",
+				userEmailAddress = "test@liferay.com",
+				userPassword = "test");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("View the identity request properties value") {
+			ACUtils.assertIdentityRequestPropertiesValue(expectedDataSourceId = "${expectedDataSourceId}");
+		}
+
+		task ("View the request common properties value") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8713 | Test Summary: Check Identity triggers upon logging in and check its properties (see reference document in comments)"

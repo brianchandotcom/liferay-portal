@@ -1,5 +1,13 @@
 definition {
 
+	macro clickFilterByDay {
+		Click(locator1 = "ACCards#CARD_FILTER_BY_DAY_ACTIVE");
+	}
+
+	macro clickFilterByWeek {
+		Click(locator1 = "ACCards#CARD_FILTER_BY_WEEK");
+	}
+
 	macro clickFilterByMonth {
 		Click(locator1 = "ACCards#CARD_FILTER_BY_MONTH");
 	}

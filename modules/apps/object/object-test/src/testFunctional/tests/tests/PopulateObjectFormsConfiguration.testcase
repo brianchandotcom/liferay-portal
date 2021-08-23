@@ -23,12 +23,34 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotMapWithDifferentFieldTypes {
 
-		// TODO LPS-137352 CannotMapWithDifferentFieldTypes pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "date",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.viewUnmappedFormField(fieldName = "There are no compatible object fields to map.");
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type in a Field Group"

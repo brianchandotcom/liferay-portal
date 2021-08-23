@@ -137,23 +137,11 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			long objectDefinitionId = _getObjectDefinitionId(
 				ddmStorageAdapterSaveRequest);
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					objectDefinition.getScope());
-
-			long groupId = 0;
-
-			if (objectScopeProvider.isGroupAware()) {
-				groupId = ddmStorageAdapterSaveRequest.getScopeGroupId();
-			}
-
 			ObjectEntry addObjectEntry = _objectEntryManager.addObjectEntry(
 				_getDTOConverterContext(null, user, ddmForm.getDefaultLocale()),
-				user.getUserId(), groupId, objectDefinitionId,
+				user.getUserId(),
+				_getGroupId(ddmStorageAdapterSaveRequest, objectDefinitionId),
+				objectDefinitionId,
 				new ObjectEntry() {
 					{
 						properties = _getObjectEntryProperties(
@@ -252,6 +240,26 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			Collections.singletonMap(
 				"delete", Collections.singletonMap("delete", "")),
 			null, null, objectEntryId, locale, null, user);
+	}
+
+	private long _getGroupId(
+			DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest,
+			long objectDefinitionId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			return ddmStorageAdapterSaveRequest.getScopeGroupId();
+		}
+
+		return 0;
 	}
 
 	private long _getObjectDefinitionId(

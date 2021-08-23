@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.queue.QueuingSearchEngine;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
 import java.util.Collection;
@@ -295,12 +294,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 				public SearchEngineConfigurator addingService(
 					ServiceReference<SearchEngineConfigurator>
 						serviceReference) {
-
-					if (GetterUtil.getBoolean(
-							serviceReference.getProperty("original.bean"))) {
-
-						return null;
-					}
 
 					SearchEngineConfigurator searchEngineConfigurator =
 						bundleContext.getService(serviceReference);

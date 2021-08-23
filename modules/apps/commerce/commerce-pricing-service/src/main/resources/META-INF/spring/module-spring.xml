@@ -9,18 +9,22 @@
 >
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePriceModifierLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePriceModifierLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePriceModifierServiceImpl" id="com.liferay.commerce.pricing.service.CommercePriceModifierService" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierPersistenceImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierFinderImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePriceModifierRelLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePriceModifierRelServiceImpl" id="com.liferay.commerce.pricing.service.CommercePriceModifierRelService" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierRelModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierRelPersistenceImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePriceModifierRelFinderImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassService" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassPersistenceImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassFinderImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassCPDefinitionRelLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassCPDefinitionRelServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelModelArgumentsResolver" id="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelPersistenceImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelFinderImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder" />
 </beans>

@@ -9,5 +9,6 @@
 >
 	<bean class="com.liferay.commerce.machine.learning.forecast.alert.service.impl.CommerceMLForecastAlertEntryLocalServiceImpl" id="com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalService" />
 	<bean class="com.liferay.commerce.machine.learning.forecast.alert.service.impl.CommerceMLForecastAlertEntryServiceImpl" id="com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryService" />
+	<bean class="com.liferay.commerce.machine.learning.forecast.alert.service.persistence.impl.CommerceMLForecastAlertEntryModelArgumentsResolver" id="com.liferay.commerce.machine.learning.forecast.alert.service.persistence.impl.CommerceMLForecastAlertEntryModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.machine.learning.forecast.alert.service.persistence.impl.CommerceMLForecastAlertEntryPersistenceImpl" id="com.liferay.commerce.machine.learning.forecast.alert.service.persistence.CommerceMLForecastAlertEntryPersistence" />
 </beans>

@@ -9,5 +9,6 @@
 >
 	<bean class="com.liferay.commerce.product.type.grouped.service.impl.CPDefinitionGroupedEntryLocalServiceImpl" id="com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService" />
 	<bean class="com.liferay.commerce.product.type.grouped.service.impl.CPDefinitionGroupedEntryServiceImpl" id="com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService" />
+	<bean class="com.liferay.commerce.product.type.grouped.service.persistence.impl.CPDefinitionGroupedEntryModelArgumentsResolver" id="com.liferay.commerce.product.type.grouped.service.persistence.impl.CPDefinitionGroupedEntryModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.type.grouped.service.persistence.impl.CPDefinitionGroupedEntryPersistenceImpl" id="com.liferay.commerce.product.type.grouped.service.persistence.CPDefinitionGroupedEntryPersistence" />
 </beans>

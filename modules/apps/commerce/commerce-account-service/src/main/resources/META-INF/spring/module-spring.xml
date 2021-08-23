@@ -13,6 +13,7 @@
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupService" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelService" />
+	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupCommerceAccountRelModelArgumentsResolver" id="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupCommerceAccountRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupCommerceAccountRelPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupRelLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupRelServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupRelService" />

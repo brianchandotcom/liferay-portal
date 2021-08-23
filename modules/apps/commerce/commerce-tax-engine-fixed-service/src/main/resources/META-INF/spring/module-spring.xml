@@ -9,9 +9,11 @@
 >
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateLocalServiceImpl" id="com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateServiceImpl" id="com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService" />
+	<bean class="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateModelArgumentsResolver" id="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRatePersistenceImpl" id="com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRatePersistence" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelLocalServiceImpl" id="com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelServiceImpl" id="com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService" />
+	<bean class="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateAddressRelModelArgumentsResolver" id="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateAddressRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateAddressRelPersistenceImpl" id="com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence" />
 	<bean class="com.liferay.commerce.tax.engine.fixed.service.persistence.impl.CommerceTaxFixedRateAddressRelFinderImpl" id="com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder" />
 </beans>

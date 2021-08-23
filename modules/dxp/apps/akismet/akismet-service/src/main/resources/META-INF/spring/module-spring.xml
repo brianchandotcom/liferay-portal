@@ -8,5 +8,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.akismet.service.impl.AkismetEntryLocalServiceImpl" id="com.liferay.akismet.service.AkismetEntryLocalService" />
+	<bean class="com.liferay.akismet.service.persistence.impl.AkismetEntryModelArgumentsResolver" id="com.liferay.akismet.service.persistence.impl.AkismetEntryModelArgumentsResolver" />
 	<bean class="com.liferay.akismet.service.persistence.impl.AkismetEntryPersistenceImpl" id="com.liferay.akismet.service.persistence.AkismetEntryPersistence" />
 </beans>

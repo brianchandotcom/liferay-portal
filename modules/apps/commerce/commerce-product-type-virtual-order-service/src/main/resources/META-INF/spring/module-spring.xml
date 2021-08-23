@@ -9,6 +9,7 @@
 >
 	<bean class="com.liferay.commerce.product.type.virtual.order.service.impl.CommerceVirtualOrderItemLocalServiceImpl" id="com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService" />
 	<bean class="com.liferay.commerce.product.type.virtual.order.service.impl.CommerceVirtualOrderItemServiceImpl" id="com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService" />
+	<bean class="com.liferay.commerce.product.type.virtual.order.service.persistence.impl.CommerceVirtualOrderItemModelArgumentsResolver" id="com.liferay.commerce.product.type.virtual.order.service.persistence.impl.CommerceVirtualOrderItemModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.type.virtual.order.service.persistence.impl.CommerceVirtualOrderItemPersistenceImpl" id="com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemPersistence" />
 	<bean class="com.liferay.commerce.product.type.virtual.order.service.persistence.impl.CommerceVirtualOrderItemFinderImpl" id="com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemFinder" />
 </beans>

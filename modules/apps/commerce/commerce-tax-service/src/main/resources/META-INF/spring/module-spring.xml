@@ -9,5 +9,6 @@
 >
 	<bean class="com.liferay.commerce.tax.service.impl.CommerceTaxMethodLocalServiceImpl" id="com.liferay.commerce.tax.service.CommerceTaxMethodLocalService" />
 	<bean class="com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl" id="com.liferay.commerce.tax.service.CommerceTaxMethodService" />
+	<bean class="com.liferay.commerce.tax.service.persistence.impl.CommerceTaxMethodModelArgumentsResolver" id="com.liferay.commerce.tax.service.persistence.impl.CommerceTaxMethodModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.tax.service.persistence.impl.CommerceTaxMethodPersistenceImpl" id="com.liferay.commerce.tax.service.persistence.CommerceTaxMethodPersistence" />
 </beans>

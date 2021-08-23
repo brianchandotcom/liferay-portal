@@ -9,9 +9,11 @@
 >
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionModelArgumentsResolver" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelModelArgumentsResolver" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelFinderImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder" />
 </beans>

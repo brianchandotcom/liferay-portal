@@ -9,65 +9,85 @@
 >
 	<bean class="com.liferay.commerce.product.service.impl.CommerceCatalogLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceCatalogLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl" id="com.liferay.commerce.product.service.CommerceCatalogService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceCatalogModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CommerceCatalogModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceCatalogPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceCatalogPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CommerceChannelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceChannelPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelRelLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceChannelRelServiceImpl" id="com.liferay.commerce.product.service.CommerceChannelRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelRelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CommerceChannelRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceChannelRelFinderImpl" id="com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder" />
 	<bean class="com.liferay.commerce.product.service.impl.CPAttachmentFileEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPAttachmentFileEntryServiceImpl" id="com.liferay.commerce.product.service.CPAttachmentFileEntryService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPAttachmentFileEntryModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPAttachmentFileEntryModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPAttachmentFileEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPAttachmentFileEntryFinderImpl" id="com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionPersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionFinderImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLinkLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLinkLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLinkService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionRelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionValueRelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionValueRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionValueRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionSpecificationOptionValueLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionSpecificationOptionValueServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionSpecificationOptionValueModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionSpecificationOptionValueModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionSpecificationOptionValuePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionSpecificationOptionValuePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl" id="com.liferay.commerce.product.service.CPDisplayLayoutLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl" id="com.liferay.commerce.product.service.CPDisplayLayoutService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDisplayLayoutModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDisplayLayoutModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDisplayLayoutPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstanceModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPInstanceModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstanceFinderImpl" id="com.liferay.commerce.product.service.persistence.CPInstanceFinder" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceOptionValueRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceOptionValueRelServiceImpl" id="com.liferay.commerce.product.service.CPInstanceOptionValueRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstanceOptionValueRelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPInstanceOptionValueRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstanceOptionValueRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstanceOptionValueRelFinderImpl" id="com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelFinder" />
 	<bean class="com.liferay.commerce.product.service.impl.CPMeasurementUnitLocalServiceImpl" id="com.liferay.commerce.product.service.CPMeasurementUnitLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPMeasurementUnitServiceImpl" id="com.liferay.commerce.product.service.CPMeasurementUnitService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPMeasurementUnitModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPMeasurementUnitModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPMeasurementUnitPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionServiceImpl" id="com.liferay.commerce.product.service.CPOptionService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPOptionModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionCategoryLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionCategoryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionCategoryServiceImpl" id="com.liferay.commerce.product.service.CPOptionCategoryService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionCategoryModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPOptionCategoryModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionCategoryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionValueModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPOptionValueModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionValuePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionValuePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CProductLocalServiceImpl" id="com.liferay.commerce.product.service.CProductLocalService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CProductModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CProductModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CProductPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CProductPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPSpecificationOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPSpecificationOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPSpecificationOptionServiceImpl" id="com.liferay.commerce.product.service.CPSpecificationOptionService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPSpecificationOptionModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPSpecificationOptionModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPSpecificationOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPTaxCategoryLocalServiceImpl" id="com.liferay.commerce.product.service.CPTaxCategoryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl" id="com.liferay.commerce.product.service.CPTaxCategoryService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryFinderImpl" id="com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder" />
 </beans>

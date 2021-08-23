@@ -9,8 +9,10 @@
 >
 	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListLocalServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListLocalService" />
 	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListService" />
+	<bean class="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListModelArgumentsResolver" id="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListPersistenceImpl" id="com.liferay.commerce.wish.list.service.persistence.CommerceWishListPersistence" />
 	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListItemLocalServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService" />
 	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListItemServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListItemService" />
+	<bean class="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListItemModelArgumentsResolver" id="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListItemModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListItemPersistenceImpl" id="com.liferay.commerce.wish.list.service.persistence.CommerceWishListItemPersistence" />
 </beans>

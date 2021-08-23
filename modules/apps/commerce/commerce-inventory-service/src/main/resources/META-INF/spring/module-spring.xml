@@ -9,19 +9,24 @@
 >
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryAuditLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryAuditServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryAuditService" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryAuditModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryAuditModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryAuditPersistenceImpl" id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditPersistence" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryBookedQuantityLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryBookedQuantityServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityService" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryBookedQuantityModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryBookedQuantityModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryBookedQuantityPersistenceImpl" id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryReplenishmentItemLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryReplenishmentItemServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryReplenishmentItemModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryReplenishmentItemModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryReplenishmentItemPersistenceImpl" id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemPersistence" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehousePersistenceImpl" id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehousePersistence" />
 	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseFinderImpl" id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseFinder" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemLocalServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService" />
 	<bean class="com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemServiceImpl" id="com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService" />
+	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseItemModelArgumentsResolver" id="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseItemModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseItemPersistenceImpl" id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemPersistence" />
 	<bean class="com.liferay.commerce.inventory.service.persistence.impl.CommerceInventoryWarehouseItemFinderImpl" id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemFinder" />
 </beans>

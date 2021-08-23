@@ -25,6 +25,10 @@ definition {
 
 		PageAudit.setAPIViaSystemSettings(apiKey = " ");
 
+		JSONUser.tearDownNonAdminUsers();
+
+		Role.tearDownCP();
+
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 		if ("${testPortalInstance}" == "true") {
@@ -586,16 +590,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "BlogsEditorRole",
-				roleTitle = "BlogsEditorRole");
+				roleKey = "BlogsEditorRole Name",
+				roleTitle = "BlogsEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.blogs.model.BlogsEntry",
-				roleTitle = "BlogsEditorRole");
+				roleTitle = "BlogsEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsEditorRole",
+				roleTitle = "BlogsEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -634,7 +638,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole");
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -656,16 +660,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "DocumentEditorRole",
-				roleTitle = "DocumentEditorRole");
+				roleKey = "DocumentEditorRole Name",
+				roleTitle = "DocumentEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-				roleTitle = "DocumentEditorRole");
+				roleTitle = "DocumentEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentEditorRole",
+				roleTitle = "DocumentEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -704,7 +708,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole");
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -726,16 +730,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "PagesEditorRole",
-				roleTitle = "PagesEditorRole");
+				roleKey = "PagesEditorRole Name",
+				roleTitle = "PagesEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "PagesEditorRole");
+				roleTitle = "PagesEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "PagesEditorRole",
+				roleTitle = "PagesEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -774,7 +778,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole");
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -796,16 +800,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole",
-				roleTitle = "WebContentEditorRole");
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole");
+				roleTitle = "WebContentEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole",
+				roleTitle = "WebContentEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -844,7 +848,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole");
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -866,11 +870,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "BlogsRole",
-				roleTitle = "BlogsRole");
+				roleKey = "BlogsRole Name",
+				roleTitle = "BlogsRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsRole",
+				roleTitle = "BlogsRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -909,7 +913,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "BlogsRole");
+			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -931,11 +935,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "DocumentRole",
-				roleTitle = "DocumentRole");
+				roleKey = "DocumentRole Name",
+				roleTitle = "DocumentRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentRole",
+				roleTitle = "DocumentRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -974,7 +978,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "DocumentRole");
+			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
@@ -996,11 +1000,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "PagesRole",
-				roleTitle = "PagesRole");
+				roleKey = "PagesRole Name",
+				roleTitle = "PagesRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "PagesRole",
+				roleTitle = "PagesRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1039,7 +1043,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "PagesRole");
+			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -1061,11 +1065,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "WebContentRole",
-				roleTitle = "WebContentRole");
+				roleKey = "WebContentRole Name",
+				roleTitle = "WebContentRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentRole",
+				roleTitle = "WebContentRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1104,7 +1108,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "WebContentRole");
+			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -1126,18 +1130,18 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "BlogsEditorRole",
-				roleTitle = "BlogsEditorRole");
+				roleKey = "BlogsEditorRole Name",
+				roleTitle = "BlogsEditorRole Name");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "${resourceActionIndex}",
 					resourceName = "com.liferay.blogs.model.BlogsEntry",
-					roleTitle = "BlogsEditorRole");
+					roleTitle = "BlogsEditorRole Name");
 			}
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsEditorRole",
+				roleTitle = "BlogsEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1213,7 +1217,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole");
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -1235,18 +1239,18 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "DocumentEditorRole",
-				roleTitle = "DocumentEditorRole");
+				roleKey = "DocumentEditorRole Name",
+				roleTitle = "DocumentEditorRole Name");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "${resourceActionIndex}",
 					resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-					roleTitle = "DocumentEditorRole");
+					roleTitle = "DocumentEditorRole Name");
 			}
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentEditorRole",
+				roleTitle = "DocumentEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1323,7 +1327,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole");
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -1345,16 +1349,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "PagesEditorRole",
-				roleTitle = "PagesEditorRole");
+				roleKey = "PagesEditorRole Name",
+				roleTitle = "PagesEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "PagesEditorRole");
+				roleTitle = "PagesEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "PagesEditorRole",
+				roleTitle = "PagesEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1430,7 +1434,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole");
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -1452,16 +1456,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole",
-				roleTitle = "WebContentEditorRole");
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole");
+				roleTitle = "WebContentEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole",
+				roleTitle = "WebContentEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1538,7 +1542,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole");
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -1560,11 +1564,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "BlogsRole",
-				roleTitle = "BlogsRole");
+				roleKey = "BlogsRole Name",
+				roleTitle = "BlogsRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsRole",
+				roleTitle = "BlogsRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1640,7 +1644,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "BlogsRole");
+			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -1662,16 +1666,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "DocumentRole",
-				roleTitle = "DocumentRole");
+				roleKey = "DocumentRole Name",
+				roleTitle = "DocumentRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-				roleTitle = "DocumentRole");
+				roleTitle = "DocumentRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentRole",
+				roleTitle = "DocumentRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1748,7 +1752,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "DocumentRole");
+			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
@@ -1770,11 +1774,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "PagesRole",
-				roleTitle = "PagesRole");
+				roleKey = "PagesRole Name",
+				roleTitle = "PagesRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "PagesRole",
+				roleTitle = "PagesRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1850,7 +1854,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "PagesRole");
+			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -1872,11 +1876,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "WebContentRole",
-				roleTitle = "WebContentRole");
+				roleKey = "WebContentRole Name",
+				roleTitle = "WebContentRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentRole",
+				roleTitle = "WebContentRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1953,7 +1957,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "WebContentRole");
+			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -1975,16 +1979,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "BlogsEditorRole",
-				roleTitle = "BlogsEditorRole");
+				roleKey = "BlogsEditorRole Name",
+				roleTitle = "BlogsEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.blogs.model.BlogsEntry",
-				roleTitle = "BlogsEditorRole");
+				roleTitle = "BlogsEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsEditorRole",
+				roleTitle = "BlogsEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2036,7 +2040,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole");
+			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -2058,16 +2062,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "DocumentEditorRole",
-				roleTitle = "DocumentEditorRole");
+				roleKey = "DocumentEditorRole Name",
+				roleTitle = "DocumentEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-				roleTitle = "DocumentEditorRole");
+				roleTitle = "DocumentEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentEditorRole",
+				roleTitle = "DocumentEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2119,7 +2123,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole");
+			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -2141,16 +2145,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "PagesEditorRole",
-				roleTitle = "PagesEditorRole");
+				roleKey = "PagesEditorRole Name",
+				roleTitle = "PagesEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "PagesEditorRole");
+				roleTitle = "PagesEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "PagesEditorRole",
+				roleTitle = "PagesEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2202,7 +2206,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole");
+			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -2224,16 +2228,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole",
-				roleTitle = "WebContentEditorRole");
+				roleKey = "WebContentEditorRole Name",
+				roleTitle = "WebContentEditorRole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole");
+				roleTitle = "WebContentEditorRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole",
+				roleTitle = "WebContentEditorRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2285,7 +2289,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole");
+			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -2307,11 +2311,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "BlogsRole",
-				roleTitle = "BlogsRole");
+				roleKey = "BlogsRole Name",
+				roleTitle = "BlogsRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsRole",
+				roleTitle = "BlogsRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2363,7 +2367,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "BlogsRole");
+			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
@@ -2385,11 +2389,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "DocumentRole",
-				roleTitle = "DocumentRole");
+				roleKey = "DocumentRole Name",
+				roleTitle = "DocumentRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentRole",
+				roleTitle = "DocumentRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2441,7 +2445,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "DocumentRole");
+			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
@@ -2463,11 +2467,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "PagesRole",
-				roleTitle = "PagesRole");
+				roleKey = "PagesRole Name",
+				roleTitle = "PagesRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "PagesRole",
+				roleTitle = "PagesRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2517,7 +2521,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "PagesRole");
+			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
@@ -2539,11 +2543,11 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "WebContentRole",
-				roleTitle = "WebContentRole");
+				roleKey = "WebContentRole Name",
+				roleTitle = "WebContentRole Name");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentRole",
+				roleTitle = "WebContentRole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2595,7 +2599,7 @@ definition {
 		task ("Remove user and role created") {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONRole.deleteRole(roleTitle = "WebContentRole");
+			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 

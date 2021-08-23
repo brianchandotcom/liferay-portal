@@ -383,7 +383,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8690 | Test Summary: Check fieldFocused is triggered when navigating the form hitting the tab key"
 	@priority = "5"
-	test CheckFieldFocusedWhenNavigatingForm {
+	test CheckFieldFocusedWhenNavigatingToFieldViaTabKey {
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

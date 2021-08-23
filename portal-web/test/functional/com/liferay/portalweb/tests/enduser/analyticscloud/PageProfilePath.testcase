@@ -78,12 +78,36 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8357 | Test Summary: Last Year time period filter in Path Analysis"
-	@ignore = "true"
 	@priority = "3"
 	test CanTimeFilterUseLastYearPathAnalysis {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8357 CanTimeFilterUseLastYearPathAnalysis pending implementation
+		// AC Refactor: Need past data
+		// AC Refactor ticket: LRAC-8875
 
+		task ("Switch to new property in AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Pages tab in Sites") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		// Can't assert that the filter is working correctly without past data
+
+		task ("Assert 'Last Year' time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLastYear();
+
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last Year");
+		}
 	}
 
 }

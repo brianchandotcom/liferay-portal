@@ -478,18 +478,6 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro setVocabularySessionPropertyDropdown {
-		Click(locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_PROPERTY");
-
-		Click(locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_PROPERTY_OPTION");
-
-		Click(locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY");
-
-		Click(locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION");
-
-		Button.click(button = "Save");
-	}
-
 	macro stageFirstVocabularyConfiguration {
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
 

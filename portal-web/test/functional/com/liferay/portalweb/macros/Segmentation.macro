@@ -303,6 +303,18 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro setVocabularySessionPropertyDropdown {
+		Select(
+			locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_PROPERTY",
+			value1 = "${propertyName}");
+		
+		Select(
+			locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY",
+			value1 = "${vocabularyName}");
+
+		Button.click(button = "Save");
+	}
+
 	macro tearDown {
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation._deleteAllSegments();

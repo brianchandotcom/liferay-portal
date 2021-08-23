@@ -25,9 +25,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			ProductMenu.gotoPortlet(
-				category = "People",
-				portlet = "Segments");
+			Category.openCategoriesAdmin(siteURLKey = "guest");
 
 			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 				Segmentation.tearDown();
@@ -2078,7 +2076,7 @@ definition {
 	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
 	@priority = "4"
 	test KeepInfomationOfDeleteVocabularyInSegment {
-		property test.name.skip.portal.instance = "ContentDashboardAuditGraph#KeepInfomationOfDeleteVocabularyInSegment";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#KeepInfomationOfDeleteVocabularyInSegment";
 
 		task ("Set Session Property Vocabulary") {
 			ApplicationsMenu.gotoPortlet(
@@ -2093,34 +2091,42 @@ definition {
 
 			Button.click(button = "Add");
 
-			ContentDashboard.setVocabularySessionPropertyDropdown(
+			Segmentation.setVocabularySessionPropertyDropdown(
 				propertyName = "Browser",
 				vocabularyName = "Audience");
 		}
 
-		task ("Create Segment with Vocabulary") {
+		task ("Create categories for Audience Vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience Category 1",
+				vocabularyName = "Audience");
+		}
+
+		task ("Create Segment with Vocabulary") {			
 			JSONSegmentsentry.addSegment(
 				fieldName = "Browser",
-				groupName = "Test Site Name",
+				groupName = "Guest",
 				operator = "equals",
 				segmentName = "KeepInfomationOfDeleteVocabularyInSegment Test",
-				text = "Audience 1");
+				text = "Audience Category 1");
 		}
 
 		task ("Delete category of vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "global");
-
-			Category.deleteCategoriesCP(vocabularyName = "Audience");
+			JSONCategory.deleteCategory(
+				categoryName = "Audience Category 1",
+				groupName = "Global",
+				vocabularyName = "Audience");
 		}
 
 		task ("Assert if segment kept category") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			Segmentation.editSegment(entry = "KeepInfomationOfDeleteVocabularyInSegment Test");
 
 			AssertValue(
 				locator1 = "Segmentation#PROPERTY_FIELD",
-				value1 = "Audience 1");
+				value1 = "Audience Category 1");
 		}
 	}
 
@@ -2591,17 +2597,13 @@ definition {
 	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
 	@priority = "4"
 	test VocabulariesListedInSystemSettingsSegments {
-		property test.name.skip.portal.instance = "ContentDashboardAuditGraph#VocabulariesListedInSystemSettingsSegments";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#VocabulariesListedInSystemSettingsSegments";
 
 		task ("Add two vocabularies to global site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
-
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				portlet = "Categories");
-
 			for (var n : list "1,2") {
-				Vocabulary.addCP(vocabularyName = "Vocabulary Name ${n}");
+				JSONCategory.addVocabulary(
+					groupName = "Global",
+					title = "Vocabulary Name ${n}");
 			}
 		}
 
@@ -2620,14 +2622,14 @@ definition {
 		}
 
 		task ("Check if Vocabularies Created are being displayed") {
-			Click(locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY");
+			Click(locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY");
 
 			AssertElementPresent(
-				locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
+				locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
 				vocabularyName = "Vocabulary Name 1");
 
 			AssertElementPresent(
-				locator1 = "ContentDashboard#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
+				locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION",
 				vocabularyName = "Vocabulary Name 2");
 		}
 	}

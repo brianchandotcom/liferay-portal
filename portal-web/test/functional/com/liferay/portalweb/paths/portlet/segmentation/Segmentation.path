@@ -156,6 +156,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY</td>
+	<td>//div[contains(@class, 'form-group-inline')] //label[contains(text(), 'Session Property Name')]/../select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY_OPTION</td>
+	<td>//label[contains(text(), 'Session Property Name')]/..//option[contains(text(), '${propertyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY</td>
+	<td>//div[contains(@class, 'form-group-inline')] //label[contains(text(), 'Vocabulary Name')]/../select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION</td>
+	<td>//label[contains(text(), 'Vocabulary Name')]/..//option[contains(text(), '${vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAG_OPTION</td>
 	<td>//*[contains(@class,'selector-button')]</td>
 	<td></td>

@@ -47,7 +47,7 @@
 
 		<column method-name="HTMLElementName" name="htmlElementName" type="String" />
 		<column name="name" type="String" />
-		<column method-name="URL" name="url" type="String" />
+		<column method-name="URLs" name="urls" type="String" />
 
 		<!-- Finder methods -->
 

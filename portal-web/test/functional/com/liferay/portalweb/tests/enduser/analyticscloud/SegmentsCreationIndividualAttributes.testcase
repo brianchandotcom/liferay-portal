@@ -171,6 +171,12 @@ definition {
 				siteName = "Site Name");
 		}
 
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -227,6 +233,12 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -299,6 +311,12 @@ definition {
 				siteName = "Site Name");
 		}
 
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -368,6 +386,12 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -448,6 +472,12 @@ definition {
 				siteName = "Site Name");
 		}
 
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -516,6 +546,12 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
 		}
 
 		task ("Switch to new property in AC") {

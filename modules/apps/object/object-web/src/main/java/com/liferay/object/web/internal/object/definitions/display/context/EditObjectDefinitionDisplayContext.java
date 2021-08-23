@@ -54,7 +54,7 @@ public class EditObjectDefinitionDisplayContext {
 			ObjectWebKeys.OBJECT_DEFINITION);
 	}
 
-	public List<ObjectScopeProvider> getObjectScopeProvider() {
+	public List<ObjectScopeProvider> getObjectScopeProviders() {
 		return _objectScopeProviderRegistry.getObjectScopeProviders();
 	}
 

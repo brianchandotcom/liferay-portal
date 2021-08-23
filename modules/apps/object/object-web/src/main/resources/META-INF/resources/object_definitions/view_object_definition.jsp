@@ -87,7 +87,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						<aui:select disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
 
 							<%
-							for (ObjectScopeProvider objectScopeProvider : editObjectDefinitionDisplayContext.getObjectScopeProvider()) {
+							for (ObjectScopeProvider objectScopeProvider : editObjectDefinitionDisplayContext.getObjectScopeProviders()) {
 								String scope = editObjectDefinitionDisplayContext.getScope();
 							%>
 

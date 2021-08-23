@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collection;
@@ -40,11 +41,23 @@ public class ExportTranslationUtil {
 		return jsonArray;
 	}
 
+	private static String _getDisplayName(Locale currentLocale, Locale locale) {
+		String key = "language." + locale.getLanguage();
+
+		String displayName = LanguageUtil.get(currentLocale, key);
+
+		if (displayName.equals(key)) {
+			return locale.getDisplayName(currentLocale);
+		}
+
+		return displayName;
+	}
+
 	private static JSONObject _getLocaleJSONObject(
 		Locale currentLocale, Locale locale) {
 
 		return JSONUtil.put(
-			"displayName", locale.getDisplayName(currentLocale)
+			"displayName", _getDisplayName(currentLocale, locale)
 		).put(
 			"languageId", LocaleUtil.toLanguageId(locale)
 		);

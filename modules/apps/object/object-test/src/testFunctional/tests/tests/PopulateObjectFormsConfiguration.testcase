@@ -52,13 +52,40 @@ definition {
 		PopulateObjectFormsConfiguration.viewUnmappedFormField(fieldName = "There are no compatible object fields to map.");
 	}
 
-	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type in a Field Group"
-	@ignore = "Test Stub"
+   @description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type in a Field Group"
 	@priority = "4"
 	test CannotMapWithDifferentFieldTypesForFieldGroup {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-137355 CannotMapWithDifferentFieldTypesForFieldGroup pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "date",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Numeric",
+			key_fieldName = "Text");
+
+		PopulateObjectFormsConfiguration.viewUnmappedFormField(fieldName = "There are no compatible object fields to map.");
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to publish the Form when a required Object field is not mapped to a Form field"

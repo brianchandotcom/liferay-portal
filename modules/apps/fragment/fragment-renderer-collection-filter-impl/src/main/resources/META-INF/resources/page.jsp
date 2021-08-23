@@ -23,11 +23,6 @@ FragmentRendererContext fragmentRendererContext = (FragmentRendererContext)reque
 
 <c:choose>
 	<c:when test="<%= fragmentCollectionFilter != null %>">
-
-		<%
-		fragmentCollectionFilter.render(fragmentRendererContext, request, response);
-		%>
-
 		<liferay-frontend:component
 			context='<%=
 				HashMapBuilder.<String, Object>put(
@@ -37,6 +32,11 @@ FragmentRendererContext fragmentRendererContext = (FragmentRendererContext)reque
 			module="js/CollectionFilterRegister"
 			servletContext="<%= application %>"
 		/>
+
+		<%
+		fragmentCollectionFilter.render(fragmentRendererContext, request, response);
+		%>
+
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

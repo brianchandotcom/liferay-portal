@@ -14,73 +14,59 @@
 
 package com.liferay.object.internal.scope;
 
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.scope.ObjectScopeProvider;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(
 	immediate = true,
-	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_DEPOT,
+	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_COMPANY,
 	service = ObjectScopeProvider.class
 )
-public class DepotObjectScopeProvider implements ObjectScopeProvider {
+public class CompanyInstanceObjectScopeProviderImpl
+	implements ObjectScopeProvider {
 
 	@Override
-	public long getGroupId(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		return _portal.getScopeGroupId(httpServletRequest);
+	public long getGroupId(HttpServletRequest httpServletRequest) {
+		return 0;
 	}
 
 	@Override
 	public String getKey() {
-		return ObjectDefinitionConstants.SCOPE_DEPOT;
+		return ObjectDefinitionConstants.SCOPE_COMPANY;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "depot");
+		return LanguageUtil.get(locale, "company");
 	}
 
 	@Override
 	public String[] getRootPanelCategoryKeys() {
-		return new String[0];
+		return new String[] {
+			PanelCategoryKeys.CONTROL_PANEL, PanelCategoryKeys.COMMERCE,
+			PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS
+		};
 	}
 
 	@Override
 	public boolean isGroupAware() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isValidGroupId(long groupId) {
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if ((group != null) && group.isDepot()) {
-			return true;
-		}
-
 		return false;
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

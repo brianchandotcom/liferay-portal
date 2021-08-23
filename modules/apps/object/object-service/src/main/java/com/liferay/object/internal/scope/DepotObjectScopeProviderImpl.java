@@ -14,7 +14,6 @@
 
 package com.liferay.object.internal.scope;
 
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,10 +34,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_SITE,
+	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_DEPOT,
 	service = ObjectScopeProvider.class
 )
-public class SiteObjectScopeProvider implements ObjectScopeProvider {
+public class DepotObjectScopeProviderImpl implements ObjectScopeProvider {
 
 	@Override
 	public long getGroupId(HttpServletRequest httpServletRequest)
@@ -49,17 +48,17 @@ public class SiteObjectScopeProvider implements ObjectScopeProvider {
 
 	@Override
 	public String getKey() {
-		return ObjectDefinitionConstants.SCOPE_SITE;
+		return ObjectDefinitionConstants.SCOPE_DEPOT;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "site");
+		return LanguageUtil.get(locale, "depot");
 	}
 
 	@Override
 	public String[] getRootPanelCategoryKeys() {
-		return new String[] {PanelCategoryKeys.SITE_ADMINISTRATION};
+		return new String[0];
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public class SiteObjectScopeProvider implements ObjectScopeProvider {
 	public boolean isValidGroupId(long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		if ((group != null) && group.isSite()) {
+		if ((group != null) && group.isDepot()) {
 			return true;
 		}
 

@@ -17,55 +17,71 @@ package com.liferay.object.internal.scope;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(
 	immediate = true,
-	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_COMPANY,
+	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_SITE,
 	service = ObjectScopeProvider.class
 )
-public class CompanyInstanceObjectScopeProvider implements ObjectScopeProvider {
+public class SiteObjectScopeProviderImpl implements ObjectScopeProvider {
 
 	@Override
-	public long getGroupId(HttpServletRequest httpServletRequest) {
-		return 0;
+	public long getGroupId(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		return _portal.getScopeGroupId(httpServletRequest);
 	}
 
 	@Override
 	public String getKey() {
-		return ObjectDefinitionConstants.SCOPE_COMPANY;
+		return ObjectDefinitionConstants.SCOPE_SITE;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "company");
+		return LanguageUtil.get(locale, "site");
 	}
 
 	@Override
 	public String[] getRootPanelCategoryKeys() {
-		return new String[] {
-			PanelCategoryKeys.CONTROL_PANEL, PanelCategoryKeys.COMMERCE,
-			PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS
-		};
+		return new String[] {PanelCategoryKeys.SITE_ADMINISTRATION};
 	}
 
 	@Override
 	public boolean isGroupAware() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isValidGroupId(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if ((group != null) && group.isSite()) {
+			return true;
+		}
+
 		return false;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

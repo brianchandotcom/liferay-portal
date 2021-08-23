@@ -618,40 +618,4 @@ definition {
 			locator1 = "ProcessBuilderListView#PROCESS_BUILDER_HEADER_TITLE");
 	}
 
-	@description = "Verify that, in the error message when you try to unpublish a workflow in use, there is a link to the configuration tab"
-	@priority = "3"
-	test UserIsDirectedToConfigurationTab {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Click(
-			key_workflowDefinitionTitle = "Single Approver",
-			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Unpublish");
-
-		Click(locator1 = "MyWorkflowTasks#UNPUBLISH_ALERT_ERROR_MESSAGE_LINK");
-
-		AssertElementPresent(
-			key_navItem = "Configuration",
-			locator1 = "NavBar#NAV_ITEM_LINK");
-	}
-
 }

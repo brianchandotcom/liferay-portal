@@ -69,12 +69,40 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8358 | Test Summary: Custom Range time period filter in Path Analysis"
-	@ignore = "true"
 	@priority = "5"
 	test CanTimeFilterUseCustomRangeInPathAnalysis {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8358 CanTimeFilterUseCustomRangeInPathAnalysis pending implementation
+		// AC Refactor: Need past data
+		// AC Refactor ticket: LRAC-8878
 
+		task ("Switch to new property in AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Pages tab in Sites") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		// Can't assert that the custom filter is working correctly without past data
+
+		task ("Assert custom time filter") {
+			ACTimeFilter.setCustomRange(
+				endDay = "13",
+				endMonth = "July",
+				endYear = "2020",
+				startDay = "1",
+				startMonth = "July",
+				startYear = "2020");
+
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8357 | Test Summary: Last Year time period filter in Path Analysis"

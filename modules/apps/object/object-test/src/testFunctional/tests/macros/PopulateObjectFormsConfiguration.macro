@@ -57,4 +57,16 @@ definition {
 			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_PANEL_BODY");
 	}
 
+	macro gotoBuilderFormFields (){
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUILDER_FORM_FIELDS");
+	}
+
+	macro mapFormField (){
+		Click(locator1 ="PopulateObjectFormsConfiguration#ADVANCED_TAB");
+
+		Click(locator1 ="PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
+
+		Click(key_fieldName = "${fieldName}", locator1 ="PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+	}
+
 }

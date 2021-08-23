@@ -65,7 +65,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8713 | Test Summary: Check Identity triggers upon logging in and check its properties (see reference document in comments)"
 	@priority = "5"
-	test CheckIdentityUponLoginInAndCheckProperties {
+	test CheckIdentityUponLogin {
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

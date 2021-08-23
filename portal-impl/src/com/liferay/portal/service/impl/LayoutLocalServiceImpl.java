@@ -896,37 +896,40 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!includeSystem) {
-			deleteLayouts(groupId, privateLayout, serviceContext);
-		}
-		else {
+		// Layouts
 
-			// Layouts
+		List<Layout> layouts = null;
 
-			List<Layout> layouts = layoutPersistence.findByG_P_P_S(
+		if (includeSystem) {
+			layouts = layoutPersistence.findByG_P_P_S(
 				groupId, privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new LayoutPriorityComparator(false));
+		}
+		else {
+			layouts = layoutPersistence.findByG_P_P(
+				groupId, privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new LayoutPriorityComparator(false));
+		}
 
-			for (Layout layout : layouts) {
-				try {
-					layoutLocalService.deleteLayout(layout, serviceContext);
-				}
-				catch (NoSuchLayoutException noSuchLayoutException) {
+		for (Layout layout : layouts) {
+			try {
+				layoutLocalService.deleteLayout(layout, serviceContext);
+			}
+			catch (NoSuchLayoutException noSuchLayoutException) {
 
-					// LPS-52675
+				// LPS-52675
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							noSuchLayoutException, noSuchLayoutException);
-					}
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchLayoutException, noSuchLayoutException);
 				}
 			}
-
-			// Counter
-
-			counterLocalService.reset(getCounterName(groupId, privateLayout));
 		}
+
+		// Counter
+
+		counterLocalService.reset(getCounterName(groupId, privateLayout));
 	}
 
 	/**
@@ -946,30 +949,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Layouts
-
-		List<Layout> layouts = layoutPersistence.findByG_P_P(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new LayoutPriorityComparator(false));
-
-		for (Layout layout : layouts) {
-			try {
-				layoutLocalService.deleteLayout(layout, serviceContext);
-			}
-			catch (NoSuchLayoutException noSuchLayoutException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchLayoutException, noSuchLayoutException);
-				}
-			}
-		}
-
-		// Counter
-
-		counterLocalService.reset(getCounterName(groupId, privateLayout));
+		deleteLayouts(groupId, privateLayout, false, serviceContext);
 	}
 
 	@Override

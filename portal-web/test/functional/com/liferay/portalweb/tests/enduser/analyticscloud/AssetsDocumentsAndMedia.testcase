@@ -249,8 +249,8 @@ definition {
 				startDay = "1",
 				startMonth = "July",
 				startYear = "2020");
-				
-		// Can't assert that the custom time filter is working correctly without past data
+
+			// Can't assert that the custom time filter is working correctly without past data
 
 			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
 		}

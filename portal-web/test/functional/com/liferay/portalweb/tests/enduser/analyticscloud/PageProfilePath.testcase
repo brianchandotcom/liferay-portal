@@ -42,7 +42,6 @@ definition {
 		// AC Refactor ticket: LRAC-8874
 
 		task ("Switch to new property in AC") {
-
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 			ACUtils.launchAC();
@@ -57,7 +56,6 @@ definition {
 		}
 
 		// Can't assert that the filter is working correctly without past data
-
 
 		task ("Assert 'Last 180 days' time filter") {
 			ACTimeFilter.clickTimeFilterButton();

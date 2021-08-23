@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -51,7 +52,6 @@ import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -134,15 +134,17 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
 
-				PortletURL portletURL =
-					_translationURLProvider.getImportTranslationURL(
-						ParamUtil.getLong(actionRequest, "groupId"),
-						ParamUtil.getLong(actionRequest, "classNameId"),
-						ParamUtil.getLong(actionRequest, "classPK"),
-						RequestBackedPortletURLFactoryUtil.create(
-							actionRequest));
-
-				actionResponse.sendRedirect(portletURL.toString());
+				actionResponse.sendRedirect(
+					PortletURLBuilder.create(
+						_translationURLProvider.getImportTranslationURL(
+							ParamUtil.getLong(actionRequest, "groupId"),
+							ParamUtil.getLong(actionRequest, "classNameId"),
+							ParamUtil.getLong(actionRequest, "classPK"),
+							RequestBackedPortletURLFactoryUtil.create(
+								actionRequest))
+					).setRedirect(
+						ParamUtil.getString(actionRequest, "redirect")
+					).buildString());
 
 				if (exception instanceof XLIFFFileException) {
 					hideDefaultErrorMessage(actionRequest);

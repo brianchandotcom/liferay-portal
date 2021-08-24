@@ -216,7 +216,7 @@
 
 				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
 
-				<sql classpath="${app.server.shielded-container-lib.portal.dir}/${jdbc.mysql.driver}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
+				<sql classpath="${app.server.shielded-container-lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
 					<![CDATA[
 						ALTER TABLE JournalArticle DROP type_;
 					]]>

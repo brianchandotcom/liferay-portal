@@ -85,8 +85,12 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		DoubleClick(
+			key_image = "Commerce_Black",
+			locator1 = "CommerceEntry#VERIFY_IMAGE");
+
 		AssertElementPresent(
-			key_image = "Commerce_Black.jpg",
+			key_image = "Commerce_Black",
 			locator1 = "CommerceEntry#VERIFY_IMAGE");
 
 		AssertElementNotPresent(

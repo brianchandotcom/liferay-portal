@@ -548,7 +548,6 @@ definition {
 
 	@description = "LPS-134760: Given the Page Audit panel in a private page
 	Then the reload button won't be visible."
-	
 	@priority = "3"
 	test CheckNotVisibleReloadbButtonInPrivatePage {
 		task ("Create a Private Page") {
@@ -2456,31 +2455,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-	}
-
-	@description = "Given the Page Audit panel in a private page
-	Then the reload button won't be visible."
-	@priority = "3"
-	test CheckNotVisibleReloadbButtonInPrivatePage {
-		task ("Create a Private Page") {
-			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
-				layoutName = "Private Page Name");
-		}
-
-		task ("Go to Private Page") {
-			Navigator.gotoPrivateSitePage(
-				pageName = "Private Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Open Page Audit tab and Assert reload button id not present") {
-			PageAudit.openPanelBeforeConfiguration();
-
-			IsElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
-
-			IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
 		}
 	}
 

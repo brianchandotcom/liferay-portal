@@ -38,7 +38,7 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 
 					<span class="label label-lg label-secondary">
 						<span class="label-item label-item-expand">
-							<%= appliedFilter.get("filterValue") %>
+							<%= appliedFilter.get("filterLabel") %>
 						</span>
 						<span class="label-item label-item-after">
 							<button aria-label="<liferay-ui:message key="remove-filter" />" class="close remove-filter-button" data-filter-fragment-entry-link-id="<%= appliedFilter.get("filterFragmentEntryLinkId") %>" data-filter-type="<%= appliedFilter.get("filterType") %>" data-filter-value="<%= appliedFilter.get("filterValue") %>" type="button">

@@ -14,6 +14,8 @@
 
 package com.liferay.fragment.renderer.collection.filter.internal.display.context;
 
+import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
 import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,16 +47,19 @@ import javax.servlet.http.HttpServletRequest;
 public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 	public CollectionAppliedFiltersFragmentRendererDisplayContext(
+		FragmentCollectionFilterTracker fragmentCollectionFilterTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
+		_fragmentCollectionFilterTracker = fragmentCollectionFilterTracker;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_httpServletRequest = httpServletRequest;
 
 		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
+		_locale = fragmentRendererContext.getLocale();
 	}
 
 	public List<Map<String, String>> getAppliedFilters() {
@@ -103,10 +109,22 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 				continue;
 			}
 
+			FragmentCollectionFilter fragmentCollectionFilter =
+				_fragmentCollectionFilterTracker.getFragmentCollectionFilter(
+					parameterData.get(1));
+
+			if (fragmentCollectionFilter == null) {
+				continue;
+			}
+
 			for (String filterValue : entry.getValue()) {
 				appliedFilters.add(
 					HashMapBuilder.put(
 						"filterFragmentEntryLinkId", parameterData.get(2)
+					).put(
+						"filterLabel",
+						fragmentCollectionFilter.getFilterValueLabel(
+							filterValue, _locale)
 					).put(
 						"filterType", parameterData.get(1)
 					).put(
@@ -162,11 +180,14 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	}
 
 	private Map<String, Object> _collectionAppliedFiltersProps;
+	private final FragmentCollectionFilterTracker
+		_fragmentCollectionFilterTracker;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private final Locale _locale;
 	private Set<String> _targetCollections;
 
 }

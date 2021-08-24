@@ -211,7 +211,7 @@ public class CommerceMediaServlet extends HttpServlet {
 		try {
 			FileEntry fileEntry =
 				_commerceMediaHttpHelper.getDefaultImageFileEntry(
-					groupId, httpServletRequest);
+					_portal.getCompanyId(httpServletRequest), groupId);
 
 			ServletResponseUtil.sendFile(
 				httpServletRequest, httpServletResponse,

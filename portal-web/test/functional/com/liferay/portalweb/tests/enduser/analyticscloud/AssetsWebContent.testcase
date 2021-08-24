@@ -546,9 +546,64 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanUseCustomRangeTimeFilterInWebContentOverview {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8443 CanUseCustomRangeTimeFilterInWebContentOverview
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8865
 
+		task ("Connect DXP to Analytics Cloud and get the property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		// Use a macro that create the page in the custom range time.
+
+		task ("Navigate to AC property") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Web Content tab in Assets") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Web Content");
+		}
+
+		task ("Navigate to Web Content entry's Overview tab") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			// Switch to the Custom Range Time
+
+			ACNavigation.openItem(itemName = "Web Content AC Title");
+
+			ACIndividualsDashboard.goToOverviewTab();
+
+			ACNavigation.viewActiveSwitchTab(tabName = "Overview");
+		}
+
+		task ("Set time filter use Custom Range") {
+			ACTimeFilter.setCustomRange(
+				endDay = "13",
+				endMonth = "July",
+				endYear = "2020",
+				startDay = "1",
+				startMonth = "July",
+				startYear = "2020");
+		}
+
+		task ("Assert result returns") {
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
+
+			// It is not possible to perform the assert because this test needs data from the past.
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Views",
+				metricValue = "0");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"

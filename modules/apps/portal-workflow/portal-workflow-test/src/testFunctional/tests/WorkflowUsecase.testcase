@@ -381,7 +381,7 @@ definition {
 		DDLNavigator.gotoListRecords();
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean",
@@ -406,7 +406,7 @@ definition {
 		DDLNavigator.gotoListRecords();
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean",
@@ -430,7 +430,7 @@ definition {
 		DDLNavigator.gotoListRecords();
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean",
@@ -455,7 +455,7 @@ definition {
 		DDLNavigator.gotoListRecords(ddlListName = "${ddlListName}");
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean");

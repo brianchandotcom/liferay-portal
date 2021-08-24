@@ -74,27 +74,23 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
 
-		Form.gotoAddField(fieldType = "Text");
-
-		PopulateObjectFormsConfiguration.gotoBuilderFormFields();
-
 		Form.gotoAddField(fieldType = "Date");
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldName = "date");
 
 		PopulateObjectFormsConfiguration.publishFormObject();
 
-		PopulateObjectFormsConfiguration.viewUnmappedError(
-			fieldLabel = "Text",
-			fieldType = "Text");
+		PopulateObjectFormsConfiguration.viewUnmappedObjectRequiredFieldsError(
+			fieldName = "text",
+			fieldType = "String");
 
 		PopulateObjectFormsConfiguration.closeUnmappedError();
 
 		PopulateObjectFormsConfiguration.saveFormObject();
 
-		PopulateObjectFormsConfiguration.viewUnmappedError(
-			fieldLabel = "Text",
-			fieldType = "Text");
+		PopulateObjectFormsConfiguration.viewUnmappedObjectRequiredFieldsError(
+			fieldName = "text",
+			fieldType = "String");
 	}
 
 	@description = "LPS-133365 - Verify if is not possible to publish the Form when required Object field is not mapped to a Form Field in a Field Group"
@@ -131,7 +127,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.publishFormObject();
 
-		PopulateObjectFormsConfiguration.viewUnmappedError(
+		PopulateObjectFormsConfiguration.viewUnmappedFormFieldsError(
 			fieldLabel = "Text",
 			fieldType = "Text");
 
@@ -139,7 +135,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.saveFormObject();
 
-		PopulateObjectFormsConfiguration.viewUnmappedError(
+		PopulateObjectFormsConfiguration.viewUnmappedFormFieldsError(
 			fieldLabel = "Text",
 			fieldType = "Text");
 	}

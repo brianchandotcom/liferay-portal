@@ -46,23 +46,43 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>UNMAPPED_ERROR_MODAL_TITLE</td>
+		<td>UNMAPPED_FORM_FIELDS_ERROR_MODAL_TITLE</td>
 		<td>//div[@class='modal-title' and contains(text(),'Unmapped Object Required Fields')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>UNMAPPED_ERROR_MODAL_BODY</td>
+		<td>UNMAPPED_FORM_FIELDS_ERROR_MODAL_BODY</td>
 		<td>//div[@class='modal-body']//p[contains(text(),'All fields in this form must be mapped to a field in the object.')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>UNMAPPED_ERROR_PANEL_TITLE</td>
+		<td>UNMAPPED_FORM_FIELDS_ERROR_PANEL_TITLE</td>
 		<td>//span[@class='panel-title' and contains(text(),'Unmapped Form Fields')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>UNMAPPED_ERROR_PANEL_BODY</td>
+		<td>UNMAPPED_FORM_FIELDS_ERROR_PANEL_BODY</td>
 		<td>//strong[@class='text-capitalize' and contains(text(),'${key_fieldType}')]/following-sibling::ol//li[contains(text(),'${key_fieldLabel}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_TITLE</td>
+		<td>//div[@class='modal-title' and contains(text(),'Unmapped Object Required Fields')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_BODY</td>
+		<td>//div[@class='modal-body']//p[contains(text(),'To save this form, all required fields of the selected object need to be mapped.')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_TITLE</td>
+		<td>//span[@class='panel-title' and contains(text(),'Unmapped Object Required Fields')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY</td>
+		<td>//strong[@class='text-capitalize' and contains(text(),'${key_fieldType}')]/following-sibling::ol//li[contains(text(),'${key_fieldName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

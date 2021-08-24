@@ -45,7 +45,7 @@ CSDiagramCPTypeDisplayContext csDiagramCPTypeDisplayContext = (CSDiagramCPTypeDi
 		).put(
 			"isAdmin", false
 		).put(
-			"pinsEndpoint", "/o/headless-commerce-admin-catalog/v1.0/products/"
+			"pinsEndpoint", "/o/headless-commerce-admin-catalog/v1.0/"
 		).put(
 			"productId", cpCatalogEntry.getCProductId()
 		).put(

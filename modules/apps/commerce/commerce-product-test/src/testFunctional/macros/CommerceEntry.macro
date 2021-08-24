@@ -1316,4 +1316,10 @@ definition {
 		}
 	}
 
+	macro changePinColor {
+		Type(
+			locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION",
+			value1 = "${color}");
+	}
+
 }

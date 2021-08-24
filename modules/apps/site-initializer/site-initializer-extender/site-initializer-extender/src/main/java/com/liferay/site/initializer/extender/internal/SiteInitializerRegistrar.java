@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -21,6 +22,8 @@ import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -46,12 +49,17 @@ public class SiteInitializerRegistrar {
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter,
+		JournalArticleLocalService journalArticleLocalService,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal, StyleBookEntryZipProcessor styleBookEntryZipProcessor,
+		Portal portal,
+		StructuredContentFolderResource.Factory
+			structuredContentFolderResourceFactory,
+		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
@@ -60,13 +68,17 @@ public class SiteInitializerRegistrar {
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
+		_journalArticleLocalService = journalArticleLocalService;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
+		_structuredContentFolderResourceFactory =
+			structuredContentFolderResourceFactory;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
@@ -81,10 +93,12 @@ public class SiteInitializerRegistrar {
 			SiteInitializer.class,
 			new BundleSiteInitializer(
 				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _documentFolderResourceFactory,
+				_defaultDDMStructureHelper, _dlURLHelper, _documentFolderResourceFactory,
 				_documentResourceFactory, _fragmentsImporter,
-				_groupLocalService, _jsonFactory,
+				_groupLocalService,
+				_journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
+				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
 				_userLocalService),
 			MapUtil.singletonDictionary(
@@ -100,16 +114,20 @@ public class SiteInitializerRegistrar {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
+	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
+	private final StructuredContentFolderResource.Factory
+		_structuredContentFolderResourceFactory;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;

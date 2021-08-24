@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -21,6 +22,8 @@ import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -47,12 +50,18 @@ public class SiteInitializerExtension {
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter,
-		GroupLocalService groupLocalService, JSONFactory jsonFactory,
+		GroupLocalService groupLocalService,
+		JournalArticleLocalService journalArticleLocalService,
+		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal, StyleBookEntryZipProcessor styleBookEntryZipProcessor,
+		Portal portal,
+		StructuredContentFolderResource.Factory
+			structuredContentFolderResourceFactory,
+		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
@@ -63,10 +72,11 @@ public class SiteInitializerExtension {
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
 				bundle, bundleContext, ddmStructureLocalService,
-				ddmTemplateLocalService, defaultDDMStructureHelper,
+				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
-				fragmentsImporter, groupLocalService, jsonFactory,
+				fragmentsImporter, groupLocalService, journalArticleLocalService, jsonFactory,
 				objectDefinitionResourceFactory, portal,
+				structuredContentFolderResourceFactory,
 				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,
 				userLocalService));
 

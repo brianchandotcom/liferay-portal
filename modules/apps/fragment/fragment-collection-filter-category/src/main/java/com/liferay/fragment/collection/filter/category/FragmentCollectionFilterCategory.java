@@ -84,7 +84,7 @@ public class FragmentCollectionFilterCategory
 			httpServletRequest.setAttribute(
 				FragmentCollectionFilterCategoryDisplayContext.class.getName(),
 				new FragmentCollectionFilterCategoryDisplayContext(
-					_fragmentEntryConfigurationParser,
+					getConfiguration(), _fragmentEntryConfigurationParser,
 					fragmentRendererContext));
 
 			RequestDispatcher requestDispatcher =

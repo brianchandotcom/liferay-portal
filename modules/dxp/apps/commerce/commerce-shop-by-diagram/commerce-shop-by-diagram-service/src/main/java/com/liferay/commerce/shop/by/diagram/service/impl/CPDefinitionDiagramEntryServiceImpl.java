@@ -46,7 +46,7 @@ public class CPDefinitionDiagramEntryServiceImpl
 	@Override
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
 			long cpDefinitionId, String cpInstanceUuid, long cProductId,
-			boolean diagram, int number, String sku, String sequence,
+			boolean diagram, int number, String sequence, String sku,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -55,7 +55,7 @@ public class CPDefinitionDiagramEntryServiceImpl
 
 		return cpDefinitionDiagramEntryLocalService.addCPDefinitionDiagramEntry(
 			getUserId(), cpDefinitionId, cpInstanceUuid, cProductId, diagram,
-			number, sku, sequence, serviceContext);
+			number, sequence, sku,  serviceContext);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class CPDefinitionDiagramEntryServiceImpl
 		return cpDefinitionDiagramEntryLocalService.
 			updateCPDefinitionDiagramEntry(
 				cpDefinitionDiagramEntryId, cpInstanceUuid, cProductId, diagram,
-				number, sku, sequence, serviceContext);
+				number, sequence, sku,  serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CPDefinition>

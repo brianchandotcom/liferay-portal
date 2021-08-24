@@ -30,9 +30,12 @@ String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDi
 	<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#pre" />
 
 	<div class="card d-flex flex-column product-card">
-		<div class="aspect-ratio aspect-ratio-4-to-3 card-item-first">
+		<div class="card-item-first position-relative">
 			<a href="<%= productDetailURL %>">
-				<div class="aspect-ratio-bg-cover aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon h-100 w-100" style="background-image: url('<%= cpCatalogEntry.getDefaultImageFileUrl() %>');"></div>
+				<liferay-adaptive-media:img
+					class="img-fluid"
+					fileVersion="<%= cpContentHelper.getDefaultImageFileEntryFileVersion(cpCatalogEntry.getCPDefinitionId(), request) %>"
+				/>
 
 				<div class="aspect-ratio-item-bottom-left">
 					<commerce-ui:availability-label

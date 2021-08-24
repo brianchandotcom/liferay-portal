@@ -24,7 +24,8 @@ definition {
 			"objectFields": [],
 			"pluralLabel": {
 				"en_US": "${pluralLabelName}"
-			}
+			},
+			"scope": "company"
 			}'
 		''';
 

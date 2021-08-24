@@ -194,8 +194,10 @@ definition {
 		// This test relies on the test LRAC-7890
 		// AC Refactor ticket: LRAC-8774
 
+		var userNames = "ac,ac2,ac3";
+
 		task ("Create new users and connect the DXP to AC") {
-			for (var name : list "ac,ac2,ac3") {
+			for (var name : list "${userNames}") {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
 					userFirstName = "${name}",
@@ -206,7 +208,7 @@ definition {
 		}
 
 		task ("Logout and login the AC") {
-			for (var name : list "ac,ac2,ac3") {
+			for (var name : list "${userNames}") {
 				User.logoutAndLoginPG(
 					userLoginEmailAddress = "${name}@liferay.com",
 					userLoginFullName = "${name} ${name}");

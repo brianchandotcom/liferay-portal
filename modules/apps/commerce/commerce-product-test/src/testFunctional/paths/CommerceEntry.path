@@ -568,6 +568,26 @@
 	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='image' and contains (@href,'${key_image}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DEFAULT_DIAMETER_CUSTOM_RADIUS</td>
+	<td>//label[contains (.,'Custom Radius')]//..//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERIFY_PIN_RADIUS</td>
+	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle' and @r='${key_radius}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERIFY_PIN_COLOR_STROKE</td>
+	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle' and @stroke='${key_strokeColor}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION</td>
+	<td>//label[contains(.,'Custom Color')]//..//input[contains(@aria-label,'Color selection')]</td>
+	<td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>ADD_RELATION_FIELD</td>

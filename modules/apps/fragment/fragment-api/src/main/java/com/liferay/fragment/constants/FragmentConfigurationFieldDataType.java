@@ -19,6 +19,6 @@ package com.liferay.fragment.constants;
  */
 public enum FragmentConfigurationFieldDataType {
 
-	BOOLEAN, DOUBLE, INTEGER, OBJECT, STRING
+	ARRAY, BOOLEAN, DOUBLE, INTEGER, OBJECT, STRING
 
 }

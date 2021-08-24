@@ -39,6 +39,7 @@
 		<!-- Other fields -->
 
 		<column name="listTypeDefinitionId" type="long" />
+		<column name="key" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="type" type="String" />
 
@@ -47,5 +48,13 @@
 		<finder name="ListTypeDefinitionId" return-type="Collection">
 			<finder-column name="listTypeDefinitionId" />
 		</finder>
+		<finder name="LTDI_K" return-type="ListTypeEntry">
+			<finder-column name="listTypeDefinitionId" />
+			<finder-column name="key" />
+		</finder>
 	</entity>
+	<exceptions>
+		<exception>DuplicateListTypeEntry</exception>
+		<exception>ListTypeEntryKey</exception>
+	</exceptions>
 </service-builder>

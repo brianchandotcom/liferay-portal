@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yurena Cabrera
  */
 @Component(service = AnalyticsReportsInfoItemObjectProvider.class)
-public class DocumentAnalyticsReportsInfoItemObjectProvider
+public class FileEntryAnalyticsReportsInfoItemObjectProvider
 	implements AnalyticsReportsInfoItemObjectProvider<FileEntry> {
 
 	@Override
@@ -63,7 +63,7 @@ public class DocumentAnalyticsReportsInfoItemObjectProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentAnalyticsReportsInfoItemObjectProvider.class);
+		FileEntryAnalyticsReportsInfoItemObjectProvider.class);
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

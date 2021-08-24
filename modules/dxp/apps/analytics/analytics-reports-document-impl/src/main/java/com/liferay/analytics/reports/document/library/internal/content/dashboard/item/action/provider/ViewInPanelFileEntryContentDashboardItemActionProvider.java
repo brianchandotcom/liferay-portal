@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yurena Cabrera
  */
 @Component(service = ContentDashboardItemActionProvider.class)
-public class ViewInPanelDocumentContentDashboardItemActionProvider
+public class ViewInPanelFileEntryContentDashboardItemActionProvider
 	implements ContentDashboardItemActionProvider<FileEntry> {
 
 	@Override
@@ -81,7 +81,7 @@ public class ViewInPanelDocumentContentDashboardItemActionProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewInPanelDocumentContentDashboardItemActionProvider.class);
+		ViewInPanelFileEntryContentDashboardItemActionProvider.class);
 
 	@Reference
 	private AnalyticsReportsContentDashboardItemActionProvider

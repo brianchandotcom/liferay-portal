@@ -245,7 +245,8 @@ public interface ListTypeEntryLocalService
 	public List<ListTypeEntry> getListTypeEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ListTypeEntry> getListTypeEntries(long listTypeDefinitionId);
+	public List<ListTypeEntry> getListTypeEntries(
+		long listTypeDefinitionId, int start, int end);
 
 	/**
 	 * Returns the number of list type entries.

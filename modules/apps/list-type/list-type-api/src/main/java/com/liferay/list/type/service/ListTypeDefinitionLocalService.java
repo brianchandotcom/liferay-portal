@@ -309,4 +309,8 @@ public interface ListTypeDefinitionLocalService
 	public ListTypeDefinition updateListTypeDefinition(
 		ListTypeDefinition listTypeDefinition);
 
+	public ListTypeDefinition updateListTypeDefinition(
+			long listTypeDefinitionId, Map<Locale, String> nameMap)
+		throws PortalException;
+
 }

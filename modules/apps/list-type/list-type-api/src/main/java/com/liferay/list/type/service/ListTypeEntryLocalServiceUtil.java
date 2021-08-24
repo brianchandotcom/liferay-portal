@@ -272,9 +272,10 @@ public class ListTypeEntryLocalServiceUtil {
 	}
 
 	public static List<ListTypeEntry> getListTypeEntries(
-		long listTypeDefinitionId) {
+		long listTypeDefinitionId, int start, int end) {
 
-		return getService().getListTypeEntries(listTypeDefinitionId);
+		return getService().getListTypeEntries(
+			listTypeDefinitionId, start, end);
 	}
 
 	/**

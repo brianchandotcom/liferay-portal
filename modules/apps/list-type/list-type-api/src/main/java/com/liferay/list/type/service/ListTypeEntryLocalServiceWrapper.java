@@ -300,10 +300,10 @@ public class ListTypeEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.list.type.model.ListTypeEntry>
-		getListTypeEntries(long listTypeDefinitionId) {
+		getListTypeEntries(long listTypeDefinitionId, int start, int end) {
 
 		return _listTypeEntryLocalService.getListTypeEntries(
-			listTypeDefinitionId);
+			listTypeDefinitionId, start, end);
 	}
 
 	/**

@@ -40,7 +40,7 @@ public class CommerceDiagramMappedProductClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addClayTableSchemaField("number", "pos");
+		clayTableSchemaBuilder.addClayTableSchemaField("sequence", "pos");
 		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku-or-diagram");
 		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "qty");
 

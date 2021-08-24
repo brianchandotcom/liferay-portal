@@ -43,6 +43,15 @@ definition {
 		AssertElementPresent(locator1 = "ACSettings#ITEM_ON_LIST");
 	}
 
+	macro assertEventPresent {
+		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
+		var actual = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${eventId}");
+	}
+
 	macro assertEventPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");

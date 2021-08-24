@@ -88,7 +88,10 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 						'" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
 					searchContainer.addRow(
-						[selectedItem.name, ddmStructureLink],
+						[
+							Liferay.Util.escapeHTML(selectedItem.name),
+							ddmStructureLink,
+						],
 						selectedItem.ddmstructureid
 					);
 

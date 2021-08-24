@@ -675,7 +675,7 @@ public class JournalManagementToolbarDisplayContext
 
 	private boolean _isTrashEnabled() {
 		try {
-			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId());
+			return _trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId());
 		}
 		catch (PortalException portalException) {
 

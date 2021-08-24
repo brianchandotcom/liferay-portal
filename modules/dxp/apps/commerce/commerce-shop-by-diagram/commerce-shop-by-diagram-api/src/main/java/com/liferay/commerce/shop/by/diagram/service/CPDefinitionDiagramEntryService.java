@@ -54,7 +54,7 @@ public interface CPDefinitionDiagramEntryService extends BaseService {
 	 */
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
 			long cpDefinitionId, String cpInstanceUuid, long cProductId,
-			boolean diagram, int number, String sku, String sequence,
+			boolean diagram, int number, String sequence, String sku,
 			ServiceContext serviceContext)
 		throws PortalException;
 

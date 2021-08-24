@@ -12,7 +12,7 @@
  * details.
  */
 
-package test.session.replication;
+package com.liferay.portal.cluster.multiple.sample.internal;
 
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,9 +22,9 @@ import java.io.Serializable;
 /**
  * @author Jorge Díaz
  */
-public class MyData implements Serializable {
+public class ClusterSampleData implements Serializable {
 
-	public MyData() {
+	public ClusterSampleData() {
 		_computerName = PortalUtil.getComputerName();
 		_data = StringUtil.randomString(20);
 		_liferayHome = System.getProperty("liferay.home");

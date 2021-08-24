@@ -16,12 +16,12 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ page import="test.session.replication.MyData" %>
+<%@ page import="com.liferay.portal.cluster.multiple.sample.internal.ClusterSampleData" %>
 
 <portlet:defineObjects />
 
 <%
-MyData localData = new MyData();
+ClusterSampleData localData = new ClusterSampleData();
 %>
 
 <h4>Server Data:</h4>
@@ -43,7 +43,7 @@ MyData localData = new MyData();
 <h4>Session Data:</h4>
 
 <%
-MyData sessionData = (MyData)portletSession.getAttribute("data");
+ClusterSampleData sessionData = (ClusterSampleData)portletSession.getAttribute("data");
 
 if (sessionData != null) {
 %>

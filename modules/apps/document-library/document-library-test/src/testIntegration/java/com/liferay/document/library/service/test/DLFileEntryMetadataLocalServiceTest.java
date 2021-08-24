@@ -39,7 +39,6 @@ import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -117,6 +116,65 @@ public class DLFileEntryMetadataLocalServiceTest {
 			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
 			TestDataConstants.TEST_BYTE_ARRAY.length, null, null,
 			serviceContext);
+	}
+
+	@Test
+	public void testDeleteGroup() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext = _getServiceContext(group, user);
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.addFileEntryType(
+				user.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
+				serviceContext);
+
+		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
+			ddmStructures = dlFileEntryType.getDDMStructures();
+
+		com.liferay.dynamic.data.mapping.kernel.DDMStructure
+			kernelDDMStructure = ddmStructures.get(0);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			kernelDDMStructure.getStructureId());
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			null, null, dlFileEntryType.getFileEntryTypeId(),
+			setUpDDMFormValuesMap(
+				ddmStructure.getStructureKey(), user.getLocale()),
+			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			TestDataConstants.TEST_BYTE_ARRAY.length, null, null,
+			serviceContext);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+				ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertNotNull(dlFileEntryMetadata);
+
+		_groupLocalService.deleteGroup(group);
+
+		Assert.assertNull(
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				dlFileEntryType.getFileEntryTypeId()));
+
+		Assert.assertNull(
+			_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+				ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId()));
+
+		Assert.assertNull(
+			_ddmStructureLocalService.fetchDDMStructure(
+				ddmStructure.getStructureId()));
 	}
 
 	@Test

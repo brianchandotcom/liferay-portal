@@ -9,6 +9,8 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-display-page-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationCompile project(":apps:data-engine:data-engine-rest-api")
+	testIntegrationCompile project(":apps:data-engine:data-engine-rest-test-util")
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:document-library:document-library-content-api")
 	testIntegrationCompile project(":apps:document-library:document-library-sync-api")

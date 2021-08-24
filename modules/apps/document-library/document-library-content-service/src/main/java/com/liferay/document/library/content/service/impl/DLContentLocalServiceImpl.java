@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.ByteArrayInputStream;
@@ -202,7 +203,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
 			companyId, repositoryId, path, 0, 1, orderByComparator);
 
-		if ((dlContents == null) || dlContents.isEmpty()) {
+		if (ListUtil.isEmpty(dlContents)) {
 			throw new NoSuchContentException(path);
 		}
 
@@ -221,7 +222,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
 				companyId, repositoryId, path, 0, 1, orderByComparator);
 
-			if ((dlContents == null) || dlContents.isEmpty()) {
+			if (ListUtil.isEmpty(dlContents)) {
 				throw new NoSuchContentException(path);
 			}
 

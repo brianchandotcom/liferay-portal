@@ -34,15 +34,19 @@ const DEFAULT_CONFIG_VALUES = {};
 export default function CollectionFilterConfigurationModal({
 	collectionConfiguration,
 	handleConfigurationChanged,
-	item,
+	itemConfig: initialItemConfig,
 	observer,
 	onClose,
 }) {
 	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector(selectPageContents);
-	const [itemConfig, setItemConfig] = useState(item.config);
+	const [itemConfig, setItemConfig] = useState(initialItemConfig);
 
-	const {classNameId, classPK, key: collectionKey} = item.config?.collection;
+	const {
+		classNameId,
+		classPK,
+		key: collectionKey,
+	} = initialItemConfig?.collection;
 
 	const collection = pageContents.find((content) =>
 		collectionKey
@@ -84,10 +88,10 @@ export default function CollectionFilterConfigurationModal({
 	};
 
 	useEffect(() => {
-		if (item.config) {
-			setItemConfig(item.config);
+		if (initialItemConfig) {
+			setItemConfig(initialItemConfig);
 		}
-	}, [item.config]);
+	}, [initialItemConfig]);
 
 	return (
 		<ClayModal

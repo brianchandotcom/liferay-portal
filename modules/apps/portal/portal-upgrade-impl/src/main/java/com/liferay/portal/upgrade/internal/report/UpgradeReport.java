@@ -47,11 +47,17 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Dictionary;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -94,7 +100,7 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringBundler.concat(
 					_getPortalVersions(), _getDialectInfo(), _getProperties(),
-					_getDocLibSize()));
+					_getDocLibSize(), _getErrors()));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -234,6 +240,57 @@ public class UpgradeReport {
 
 		return "Please check the size of the Liferay Document Library in " +
 			"your cloud storage";
+	}
+
+	private String _getErrors() {
+		StringBundler sb = new StringBundler();
+
+		sb.append("Errors thrown during upgrade process");
+		sb.append(StringPool.NEW_LINE);
+
+		Set<Map.Entry<String, ArrayList<String>>> entrySet =
+			_errorMessages.entrySet();
+
+		Stream<Map.Entry<String, ArrayList<String>>> entrySetStream =
+			entrySet.stream();
+
+		Map<String, List<String>> sortedErrors = entrySetStream.sorted(
+			Collections.reverseOrder(
+				Map.Entry.comparingByValue(
+					new Comparator<List>() {
+
+						@Override
+						public int compare(List o1, List o2) {
+							return Integer.compare(o1.size(), o2.size());
+						}
+
+					}))
+		).collect(
+			Collectors.toMap(
+				Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+				LinkedHashMap::new)
+		);
+
+		for (Map.Entry<String, List<String>> entry : sortedErrors.entrySet()) {
+			sb.append("ClassName: ");
+			sb.append(entry.getKey());
+			sb.append(StringPool.NEW_LINE);
+
+			List<String> valueList = entry.getValue();
+
+			for (String value : valueList) {
+				sb.append(StringPool.TAB);
+				sb.append("Error message: ");
+				sb.append(value);
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.append(StringPool.NEW_LINE);
+
+		return sb.toString();
 	}
 
 	private String _getPortalVersions() {

@@ -1258,21 +1258,23 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					return map;
 				}
 
-				if ((databaseInMaxParameters > 0) && (primaryKeys.size() > databaseInMaxParameters)) {
-					Iterator<Serializable> iterator = primaryKeys.iterator();
+				<#if serviceBuilder.isVersionGTE_7_1_0()>
+					if ((databaseInMaxParameters > 0) && (primaryKeys.size() > databaseInMaxParameters)) {
+						Iterator<Serializable> iterator = primaryKeys.iterator();
 
-					while (iterator.hasNext()) {
-						Set<Serializable> page = new HashSet<>();
+						while (iterator.hasNext()) {
+							Set<Serializable> page = new HashSet<>();
 
-						for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-							page.add(iterator.next());
+							for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
+								page.add(iterator.next());
+							}
+
+							map.putAll(fetchByPrimaryKeys(page));
 						}
 
-						map.putAll(fetchByPrimaryKeys(page));
+						return map;
 					}
-
-					return map;
-				}
+				</#if>
 
 				Set<Serializable> uncachedPrimaryKeys = null;
 

@@ -29,6 +29,9 @@ create unique index IX_CC15AA9A on CommercePriceListDiscountRel (commerceDiscoun
 create index IX_36D76E5 on CommercePriceListDiscountRel (commercePriceListId);
 create index IX_96A5B566 on CommercePriceListDiscountRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create unique index IX_F4BEBD84 on CommercePriceListOrderTypeRel (commercePriceListId, commerceOrderTypeId);
+create index IX_5A9B3277 on CommercePriceListOrderTypeRel (uuid_[$COLUMN_LENGTH:75$], companyId);
+
 create unique index IX_A622C8AE on CommerceTierPriceEntry (commercePriceEntryId, minQuantity);
 create index IX_95D59361 on CommerceTierPriceEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_8A8963DA on CommerceTierPriceEntry (displayDate, status);

@@ -35,6 +35,10 @@
 	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListDiscountRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListDiscountRelService" />
 	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListDiscountRelModelArgumentsResolver" id="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListDiscountRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListDiscountRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListDiscountRelPersistence" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListOrderTypeRelLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListOrderTypeRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListOrderTypeRelModelArgumentsResolver" id="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListOrderTypeRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListOrderTypeRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListOrderTypeRelPersistence" />
 	<bean class="com.liferay.commerce.price.list.service.impl.CommerceTierPriceEntryLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService" />
 	<bean class="com.liferay.commerce.price.list.service.impl.CommerceTierPriceEntryServiceImpl" id="com.liferay.commerce.price.list.service.CommerceTierPriceEntryService" />
 	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommerceTierPriceEntryModelArgumentsResolver" id="com.liferay.commerce.price.list.service.persistence.impl.CommerceTierPriceEntryModelArgumentsResolver" />

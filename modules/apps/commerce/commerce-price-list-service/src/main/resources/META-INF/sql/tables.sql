@@ -110,6 +110,20 @@ create table CommercePriceListDiscountRel (
 	lastPublishDate DATE null
 );
 
+create table CommercePriceListOrderTypeRel (
+	uuid_ VARCHAR(75) null,
+	CPriceListOrderTypeRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commercePriceListId LONG,
+	commerceOrderTypeId LONG,
+	priority INTEGER,
+	lastPublishDate DATE null
+);
+
 create table CommerceTierPriceEntry (
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,

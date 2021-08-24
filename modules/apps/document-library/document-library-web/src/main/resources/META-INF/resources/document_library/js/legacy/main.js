@@ -145,12 +145,12 @@ AUI.add(
 					submitForm(formNode, actionUrl, false);
 				},
 
-				_moveToFolder(obj) {
+				_moveToFolder(object) {
 					var instance = this;
 
-					var dropTarget = obj.targetItem;
+					var dropTarget = object.targetItem;
 
-					var selectedItems = obj.selectedItems;
+					var selectedItems = object.selectedItems;
 
 					var folderId = dropTarget.attr('data-folder-id');
 

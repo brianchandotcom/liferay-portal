@@ -254,7 +254,7 @@ const SidebarPanelInfoView = ({
 							)
 					)}
 
-				{!!viewURLs.length && (
+				{!!viewURLs.length && !documentIsAFile && (
 					<ItemLanguages urls={viewURLs} />
 				)}
 			</Sidebar.Body>

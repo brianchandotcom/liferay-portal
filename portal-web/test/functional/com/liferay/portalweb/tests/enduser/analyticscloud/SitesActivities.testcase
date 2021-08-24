@@ -587,12 +587,50 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8271 | Test Summary: Site Activity Card: Total site visitors and % change is shown"
-	@ignore = "true"
 	@priority = "5"
 	test ShownTotalSiteVisitorsAndPercentageChangeShown {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8271 ShownTotalSiteVisitorsAndPercentageChangeShown
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-8932
 
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to page and get data") {
+			// This test needs a data from a past time frame to generate a % diference
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close all sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Go to AC and assert value and percentage of Site Visitors") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACSites.assertActivityCardValue(
+				cardName = "Unique Visitors",
+				totalValue = "1");
+
+			// Assert the correct variation(%) shown in this field
+
+			ACSites.viewActivitiesPercentage(
+				entryName = "Unique Visitors",
+				valueNumber = "0%");
+		}
 	}
 
 }

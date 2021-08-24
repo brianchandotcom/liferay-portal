@@ -32,9 +32,7 @@ definition {
 		property custom.properties = "portlet.session.replicate.enabled=true";
 		property test.name.skip.portal.instance = "ClusteringCache#CanModuleBeShutdownDuringReplicateSession";
 
-		Clustering.deployModuleOnServer(
-			moduleBaseDir = "modules/apps/portal/portal-cluster-sample-session",
-			nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -44,13 +42,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
-		Portlet.addPG(portletName = "TestSessionReplication");
+		Portlet.addPG(portletName = "ClusterSampleSessionReplication");
 
 		Clustering.viewSessionData(sessionContent = "No session data exists, generating a new one with random string:");
 
-		Clustering.deployModuleOnServer(
-			moduleBaseDir = "modules/apps/portal/portal-cluster-sample-session",
-			nodePort = "9080");
+		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
@@ -65,14 +61,14 @@ definition {
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		GogoShell.executeCommand(commandName = "lb | grep test-session-replication");
+		GogoShell.executeCommand(commandName = "lb | grep 'Portal Cluster Multiple Sample'");
 
-		var moduleID = GogoShell.getModuleID(moduleName = "test-session-replication");
+		var moduleID = GogoShell.getModuleID(moduleName = "'Portal Cluster Multiple Sample'");
 
 		GogoShell.stopModule(moduleID = "${moduleID}");
 
 		GogoShell.viewModuleStatus(
-			moduleName = "test-session-replication",
+			moduleName = "'Portal Cluster Multiple Sample'",
 			moduleStatus = "Resolved");
 
 		User.loginPG(
@@ -111,9 +107,7 @@ definition {
 				nodePort = "${serverPort}");
 		}
 
-		Clustering.deployModuleOnServer(
-			moduleBaseDir = "modules/apps/portal/portal-cluster-sample-session",
-			nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = "8080");
 
 		Navigator.openNodePort(nodePort = "8080");
 
@@ -125,13 +119,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
-		Portlet.addPG(portletName = "TestSessionReplication");
+		Portlet.addPG(portletName = "ClusterSampleSessionReplication");
 
 		Clustering.viewSessionData(sessionContent = "No session data exists, generating a new one with random string:");
 
-		Clustering.deployModuleOnServer(
-			moduleBaseDir = "modules/apps/portal/portal-cluster-sample-session",
-			nodePort = "9080");
+		Clustering.deployClusteringModule(nodePort = "9080");
 
 		Navigator.openNodePort(nodePort = "8080");
 

@@ -34,6 +34,8 @@ public interface WorkflowInstance extends WorkflowModel {
 
 	public List<WorkflowInstance> getChildrenWorkflowInstances();
 
+	public List<String> getCurrentNodeNames();
+
 	public Date getEndDate();
 
 	public WorkflowInstance getParentWorkflowInstance();

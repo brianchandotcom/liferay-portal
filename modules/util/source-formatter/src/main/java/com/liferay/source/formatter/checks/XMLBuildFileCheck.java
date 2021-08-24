@@ -248,7 +248,9 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		File file = new File(buildFileName);
 
 		if (!file.exists()) {
-			if (!importFile) {
+			if (!importFile &&
+				!buildFileName.endsWith("build-working-dir.xml")) {
+
 				addMessage(
 					fileName,
 					"Ant element points to nonexistent build file '" +

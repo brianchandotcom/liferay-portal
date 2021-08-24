@@ -130,7 +130,7 @@ const Diagram = ({
 						cx: item.positionX,
 						cy: item.positionY,
 						id: item.id,
-						label: item.number,
+						label: item.sequence,
 					}));
 
 					setCpins(loadedPins);

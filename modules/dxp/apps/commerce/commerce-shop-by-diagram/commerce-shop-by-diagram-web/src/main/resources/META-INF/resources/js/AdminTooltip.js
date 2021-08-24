@@ -13,9 +13,9 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import ClayButton from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayForm, { ClayInput, ClayRadio, ClayRadioGroup } from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 const AdminTooltip = ({
 	deletePin,
@@ -150,7 +150,6 @@ const AdminTooltip = ({
 						onClick={() => {
 							deletePin({
 								id: showTooltip.details.id,
-								number: parseInt(pinPositionLabel, 10),
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
 								sequence: pinPositionLabel,
@@ -205,10 +204,9 @@ const AdminTooltip = ({
 						onClick={() => {
 							updatePin({
 								id: showTooltip.details.id,
-								number: parseInt(pinPositionLabel, 10),
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
-								sequence: parseInt(pinPositionLabel, 10),
+								sequence: pinPositionLabel,
 							});
 							setShowTooltip({
 								details: {

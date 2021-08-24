@@ -1,0 +1,227 @@
+components:
+    schemas:
+        ListTypeDefinition:
+            properties:
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                listTypeEntries:
+                    items:
+                        $ref: "#/components/schemas/ListTypeEntry"
+                    readOnly: true
+                    type: array
+                name:
+                    additionalProperties:
+                        type: string
+                    type: object
+            type: object
+        ListTypeEntry:
+            properties:
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                key:
+                    type: string
+                name:
+                    additionalProperties:
+                        type: string
+                    type: object
+                type:
+                    type: string
+info:
+    description:
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'om.liferay.headless.admin.list.type.client', and version '1.0.0'.. A Java client JAR is available for use with
+        the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.list.type.client', and version '1.0.0'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "List Type"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/list-type-definitions":
+        get:
+            operationId: getListTypeDefinitionsPage
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ListTypeDefinition"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ListTypeDefinition"
+                                type: array
+            tags: ["ListTypeDefinition"]
+        post:
+            operationId: postListTypeDefinition
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+            tags: ["ListTypeDefinition"]
+    "/list-type-definitions/{listTypeDefinitionId}":
+        delete:
+            operationId: deleteListTypeDefinition
+            parameters:
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ListTypeDefinition"]
+        get:
+            operationId: getListTypeDefinition
+            parameters:
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+            tags: ["ListTypeDefinition"]
+        put:
+            operationId: putListTypeDefinition
+            parameters:
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+            tags: ["ListTypeDefinition"]
+    "/list-type-definitions/{listTypeDefinitionId}/list-type-entries":
+        get:
+            operationId: getListTypeDefinitionListTypeEntriesPage
+            parameters:
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ListTypeEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ListTypeEntry"
+                                type: array
+            tags: ["ListTypeEntry"]
+        post:
+            operationId: postListTypeDefinitionListTypeEntry
+            parameters:
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+            tags: ["ListTypeEntry"]

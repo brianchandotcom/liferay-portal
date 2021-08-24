@@ -157,6 +157,12 @@ public class DDMExpressionFunctionMetadataHelper {
 				"belongs-to", LanguageUtil.get(resourceBundle, "belongs-to"),
 				_TYPE_BOOLEAN, new String[] {_TYPE_USER, _TYPE_LIST}));
 
+		addDDMExpressionFunctionMetadata(
+			ddmExpressionFunctionMetadatasMap,
+			new DDMExpressionFunctionMetadata(
+				"equals-to", LanguageUtil.get(resourceBundle, "is-equal-to"),
+				_TYPE_BOOLEAN, new String[] {_TYPE_BOOLEAN, _TYPE_BOOLEAN}));
+
 		for (Map.Entry<String, String> entry : _binaryFunctions.entrySet()) {
 			addDDMExpressionFunctionMetadata(
 				ddmExpressionFunctionMetadatasMap,

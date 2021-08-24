@@ -44,7 +44,9 @@ public class EqualsFunction
 	}
 
 	private Object _getValue(Object object) {
-		if (object instanceof BigDecimal || object instanceof JSONObject) {
+		if (object instanceof BigDecimal || object instanceof Boolean ||
+			object instanceof JSONObject) {
+
 			return object.toString();
 		}
 		else if (object instanceof JSONArray) {

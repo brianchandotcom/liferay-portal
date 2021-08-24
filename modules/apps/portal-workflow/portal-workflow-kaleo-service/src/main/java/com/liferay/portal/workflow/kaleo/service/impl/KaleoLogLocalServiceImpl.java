@@ -460,7 +460,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		long kaleoInstanceId, List<Integer> logTypes, int start, int end,
 		OrderByComparator<KaleoLog> orderByComparator) {
 
-		if ((logTypes == null) || logTypes.isEmpty()) {
+		if (ListUtil.isEmpty(logTypes)) {
 			return kaleoLogPersistence.findByKaleoInstanceId(
 				kaleoInstanceId, start, end, orderByComparator);
 		}
@@ -495,7 +495,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 	public int getKaleoInstanceKaleoLogsCount(
 		long kaleoInstanceId, List<Integer> logTypes) {
 
-		if ((logTypes == null) || logTypes.isEmpty()) {
+		if (ListUtil.isEmpty(logTypes)) {
 			return kaleoLogPersistence.countByKaleoInstanceId(kaleoInstanceId);
 		}
 
@@ -529,7 +529,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		long kaleoTaskInstanceTokenId, List<Integer> logTypes, int start,
 		int end, OrderByComparator<KaleoLog> orderByComparator) {
 
-		if ((logTypes == null) || logTypes.isEmpty()) {
+		if (ListUtil.isEmpty(logTypes)) {
 			return kaleoLogPersistence.findByKaleoTaskInstanceTokenId(
 				kaleoTaskInstanceTokenId, start, end, orderByComparator);
 		}
@@ -565,7 +565,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 	public int getKaleoTaskInstanceTokenKaleoLogsCount(
 		long kaleoTaskInstanceTokenId, List<Integer> logTypes) {
 
-		if ((logTypes == null) || logTypes.isEmpty()) {
+		if (ListUtil.isEmpty(logTypes)) {
 			return kaleoLogPersistence.countByKaleoTaskInstanceTokenId(
 				kaleoTaskInstanceTokenId);
 		}

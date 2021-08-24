@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -546,7 +547,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		List<Long> roleIds = kaleoTaskInstanceTokenQuery.getRoleIds();
 
-		if ((roleIds == null) || roleIds.isEmpty()) {
+		if (ListUtil.isEmpty(roleIds)) {
 			return StringPool.BLANK;
 		}
 

@@ -17,10 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.custom.elements.model.CustomElementsPortletDescriptor" %><%@
+page import="com.liferay.custom.elements.model.CustomElementsSource" %><%@
 page import="com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames" %><%@
 page import="com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys" %><%@
 page import="com.liferay.custom.elements.web.internal.display.context.CustomElementsPortletDescriptorDisplayContext" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
+
+<%
+CustomElementsPortletDescriptorDisplayContext customElementsPortletDescriptorDisplayContext = (CustomElementsPortletDescriptorDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR_DISPLAY_CONTEXT);
+%>

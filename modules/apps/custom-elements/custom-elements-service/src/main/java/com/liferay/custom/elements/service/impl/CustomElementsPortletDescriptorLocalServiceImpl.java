@@ -14,9 +14,11 @@
 
 package com.liferay.custom.elements.service.impl;
 
+import com.liferay.custom.elements.exception.NoSuchSourceException;
 import com.liferay.custom.elements.internal.portlet.CustomElementsPortlet;
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.model.CustomElementsSource;
+import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
 import com.liferay.custom.elements.service.base.CustomElementsPortletDescriptorLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -54,6 +56,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -157,6 +160,10 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 				).put(
 					"com.liferay.portlet.header-portal-css",
 					cssURLs.split(StringPool.NEW_LINE)
+				).put(
+					"com.liferay.portlet.header-portal-javascript",
+					_getCustomElementsSourceURLs(
+						customElementsPortletDescriptor)
 				).put(
 					"com.liferay.portlet.instanceable",
 					customElementsPortletDescriptor.isInstanceable()
@@ -350,7 +357,28 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 		return customElementsPortletDescriptors;
 	}
 
+	private String[] _getCustomElementsSourceURLs(
+		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
+
+		try {
+			CustomElementsSource customElementsSource =
+				_customElementsSourceLocalService.getCustomElementsSource(
+					customElementsPortletDescriptor.getHTMLElementName());
+
+			String urls = customElementsSource.getURLs();
+
+			return urls.split(StringPool.NEW_LINE);
+		}
+		catch (NoSuchSourceException noSuchSourceException) {
+			return StringPool.EMPTY_ARRAY;
+		}
+	}
+
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CustomElementsSourceLocalService _customElementsSourceLocalService;
+
 	private final Map<Long, ServiceRegistration<Portlet>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
 

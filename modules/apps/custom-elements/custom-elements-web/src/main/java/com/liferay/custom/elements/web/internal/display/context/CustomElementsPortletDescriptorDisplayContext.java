@@ -14,12 +14,18 @@
 
 package com.liferay.custom.elements.web.internal.display.context;
 
+import com.liferay.custom.elements.model.CustomElementsSource;
+import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -33,10 +39,12 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomElementsPortletDescriptorDisplayContext {
 
 	public CustomElementsPortletDescriptorDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		CustomElementsSourceLocalService customElementsSourceLocalService) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_customElementsSourceLocalService = customElementsSourceLocalService;
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -62,6 +70,14 @@ public class CustomElementsPortletDescriptorDisplayContext {
 		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
 	}
 
+	public List<CustomElementsSource> getCustomElementSources() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _customElementsSourceLocalService.getCustomElementsSources(
+			themeDisplay.getCompanyId());
+	}
+
 	private HttpServletRequest _getHttpServletRequest() {
 		return PortalUtil.getHttpServletRequest(_renderRequest);
 	}
@@ -74,6 +90,8 @@ public class CustomElementsPortletDescriptorDisplayContext {
 		return PortalUtil.getCurrentURL(_getHttpServletRequest());
 	}
 
+	private final CustomElementsSourceLocalService
+		_customElementsSourceLocalService;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

@@ -16,10 +16,6 @@
 
 <%@ include file="/custom_elements_portlet_descriptor/init.jsp" %>
 
-<%
-CustomElementsPortletDescriptorDisplayContext customElementsPortletDescriptorDisplayContext = (CustomElementsPortletDescriptorDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR_DISPLAY_CONTEXT);
-%>
-
 <clay:data-set-display
 	actionParameterName="customElementsPortletDescriptorEntryId"
 	creationMenu="<%= customElementsPortletDescriptorDisplayContext.getCreationMenu() %>"

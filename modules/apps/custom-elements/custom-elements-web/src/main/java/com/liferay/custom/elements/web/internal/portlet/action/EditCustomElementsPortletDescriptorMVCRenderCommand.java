@@ -15,6 +15,7 @@
 package com.liferay.custom.elements.web.internal.portlet.action;
 
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalService;
+import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
 import com.liferay.custom.elements.web.internal.display.context.CustomElementsPortletDescriptorDisplayContext;
@@ -52,7 +53,8 @@ public class EditCustomElementsPortletDescriptorMVCRenderCommand
 				CustomElementsWebKeys.
 					CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR_DISPLAY_CONTEXT,
 				new CustomElementsPortletDescriptorDisplayContext(
-					renderRequest, renderResponse));
+					renderRequest, renderResponse,
+					_customElementsSourceLocalService));
 
 			long customElementsPortletDescriptorId = ParamUtil.getLong(
 				renderRequest, "customElementsPortletDescriptorId");
@@ -76,5 +78,8 @@ public class EditCustomElementsPortletDescriptorMVCRenderCommand
 	@Reference
 	private CustomElementsPortletDescriptorLocalService
 		_customElementsPortletDescriptorLocalService;
+
+	@Reference
+	private CustomElementsSourceLocalService _customElementsSourceLocalService;
 
 }

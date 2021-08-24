@@ -22,6 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 CustomElementsPortletDescriptor customElementsPortletDescriptor = (CustomElementsPortletDescriptor)request.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR);
 
 long customElementsPortletDescriptorId = BeanParamUtil.getLong(customElementsPortletDescriptor, request, "customElementsPortletDescriptorId");
+String htmlElementName = BeanParamUtil.getString(customElementsPortletDescriptor, request, "htmlElementName");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -43,7 +44,19 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 			<aui:fieldset>
 				<aui:input name="name" />
 
-				<aui:input name="HTMLElementName" />
+				<aui:select name="HTMLElementName" showEmptyOption="<%= false %>">
+
+					<%
+					for (CustomElementsSource customElementsSource : customElementsPortletDescriptorDisplayContext.getCustomElementSources()) {
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(customElementsSource.getName()) %>" selected="<%= htmlElementName.equals(customElementsSource.getHTMLElementName()) %>" value="<%= customElementsSource.getHTMLElementName() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
 
 				<aui:input name="instanceable" />
 

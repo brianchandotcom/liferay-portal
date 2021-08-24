@@ -25,8 +25,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,17 +62,12 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 		Map<String, String[]> parameters =
 			_httpServletRequest.getParameterMap();
 
-		JSONArray targetCollectionsJSONArray =
-			(JSONArray)
-				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
-					_fragmentEntryLink.getEditableValues(), "targetCollections",
-					FragmentConfigurationFieldDataType.ARRAY);
-
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String parameterName = entry.getKey();
 
 			if (!parameterName.startsWith(
-					FragmentCollectionFilterConstants.FILTER_PREFIX)) {
+					FragmentCollectionFilterConstants.FILTER_PREFIX) ||
+				ArrayUtil.isEmpty(entry.getValue())) {
 
 				continue;
 			}
@@ -83,32 +79,26 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 				continue;
 			}
 
-			String filterFragmentEntryLinkId = parameterData.get(2);
-
-			FragmentEntryLink filterFragmentEntryLink =
+			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					GetterUtil.getLong(filterFragmentEntryLinkId));
+					GetterUtil.getLong(parameterData.get(2)));
 
-			JSONArray filterTargetCollectionsJSONArray = null;
-
-			if (filterFragmentEntryLink != null) {
-				filterTargetCollectionsJSONArray =
-					(JSONArray)
-						_fragmentEntryConfigurationParser.
-							getConfigurationFieldValue(
-								filterFragmentEntryLink.getEditableValues(),
-								"targetCollections",
-								FragmentConfigurationFieldDataType.ARRAY);
+			if (fragmentEntryLink == null) {
+				continue;
 			}
 
-			if (filterTargetCollectionsJSONArray == null) {
-				filterTargetCollectionsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-			}
+			JSONArray targetCollectionsJSONArray =
+				(JSONArray)
+					_fragmentEntryConfigurationParser.
+						getConfigurationFieldValue(
+							fragmentEntryLink.getEditableValues(),
+							"targetCollections",
+							FragmentConfigurationFieldDataType.ARRAY);
 
-			if (Collections.disjoint(
-					JSONUtil.toStringSet(filterTargetCollectionsJSONArray),
-					JSONUtil.toStringSet(targetCollectionsJSONArray))) {
+			if ((targetCollectionsJSONArray == null) ||
+				Collections.disjoint(
+					JSONUtil.toStringSet(targetCollectionsJSONArray),
+					_getTargetCollections())) {
 
 				continue;
 			}
@@ -116,7 +106,7 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 			for (String filterValue : entry.getValue()) {
 				appliedFilters.add(
 					HashMapBuilder.put(
-						"filterFragmentEntryLinkId", filterFragmentEntryLinkId
+						"filterFragmentEntryLinkId", parameterData.get(2)
 					).put(
 						"filterType", parameterData.get(1)
 					).put(
@@ -155,11 +145,28 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 				FragmentConfigurationFieldDataType.BOOLEAN);
 	}
 
+	private Set<String> _getTargetCollections() {
+		if (_targetCollections != null) {
+			return _targetCollections;
+		}
+
+		JSONArray targetCollectionsJSONArray =
+			(JSONArray)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					_fragmentEntryLink.getEditableValues(), "targetCollections",
+					FragmentConfigurationFieldDataType.ARRAY);
+
+		_targetCollections = JSONUtil.toStringSet(targetCollectionsJSONArray);
+
+		return _targetCollections;
+	}
+
 	private Map<String, Object> _collectionAppliedFiltersProps;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private Set<String> _targetCollections;
 
 }

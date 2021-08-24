@@ -59,16 +59,26 @@ definition {
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
-	macro viewUnmappedError {
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_MODAL_TITLE");
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_MODAL_BODY");
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_PANEL_TITLE");
+	macro viewUnmappedFormFieldsError {
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_TITLE");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_BODY");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_PANEL_TITLE");
 
 		var fieldType = StringUtil.toLowerCase("${fieldType}");
 		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
 			key_fieldType = "${fieldType}",
-			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_ERROR_PANEL_BODY");
+			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_PANEL_BODY");
+	}
+
+	macro viewUnmappedObjectRequiredFieldsError {
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_TITLE");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_BODY");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_TITLE");
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_fieldType = "${fieldType}",
+			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY");
 	}
 
 }

@@ -20,7 +20,6 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
@@ -139,51 +138,20 @@ public class JUnitTestResult extends BaseTestResult {
 
 		Build build = getBuild();
 
-		Map<String, String> propertiesMap = null;
+		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
-		try {
-			propertiesMap = build.getStartPropertiesTempMap();
-		}
-		catch (RuntimeException runtimeException) {
-			String message = runtimeException.getMessage();
+		if (topLevelBuild != null) {
+			String topLevelStartDateString =
+				JenkinsResultsParserUtil.toDateString(
+					new Date(topLevelBuild.getStartTime()), "yyyy-MM",
+					"America/Los_Angeles");
 
-			if (!message.contains(
-					"Unable to find properties for start.properties")) {
-
-				throw runtimeException;
-			}
-
-			try {
-				propertiesMap = build.getInjectedEnvironmentVariablesMap();
-			}
-			catch (IOException ioException) {
-				System.out.println("Unable to generate Testray log URL");
-			}
-		}
-
-		if (propertiesMap != null) {
-			String topLevelStartDateString = null;
-
-			String topLevelStartTimeString = propertiesMap.get(
-				"TOP_LEVEL_START_TIME");
-
-			if ((topLevelStartTimeString != null) &&
-				topLevelStartTimeString.matches("\\d+")) {
-
-				long topLevelStartTime = Long.parseLong(
-					propertiesMap.get("TOP_LEVEL_START_TIME"));
-
-				Date topLevelStartDate = new Date(topLevelStartTime);
-
-				topLevelStartDateString = JenkinsResultsParserUtil.toDateString(
-					topLevelStartDate, "yyyy-MM", "America/Los_Angeles");
-			}
+			JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
 
 			return JenkinsResultsParserUtil.combine(
 				logBaseURL, "/", topLevelStartDateString, "/",
-				propertiesMap.get("TOP_LEVEL_MASTER_HOSTNAME"), "/",
-				propertiesMap.get("TOP_LEVEL_JOB_NAME"), "/",
-				propertiesMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
+				jenkinsMaster.getName(), "/", topLevelBuild.getJobName(), "/",
+				String.valueOf(topLevelBuild.getBuildNumber()), "/",
 				build.getJobVariant(), "/", getAxisNumber());
 		}
 

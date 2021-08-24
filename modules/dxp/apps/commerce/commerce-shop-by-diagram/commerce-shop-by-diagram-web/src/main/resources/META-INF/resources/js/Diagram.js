@@ -11,10 +11,10 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {fetch} from 'frontend-js-web';
+import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {UPDATE_DATASET_DISPLAY} from "frontend-taglib-clay/data_set_display/utils/eventsDefinitions";
 import AdminTooltip from './AdminTooltip';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
@@ -80,7 +80,7 @@ const Diagram = ({
 	const loadPins = useCallback(
 		() =>
 			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-				headers:HEADERS,
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {
@@ -98,7 +98,7 @@ const Diagram = ({
 
 	const deletePin = (node) => {
 		fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
-			headers:HEADERS,
+			headers: HEADERS,
 			method: 'DELETE',
 		});
 	};
@@ -106,20 +106,18 @@ const Diagram = ({
 	const updatePin = (node) => {
 		if (node.id) {
 			fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
-				headers:HEADERS,
 				body: JSON.stringify(node),
+				headers: HEADERS,
 				method: 'PATCH',
 			});
 		}
 		else {
 			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-				headers:HEADERS,
 				body: JSON.stringify(node),
+				headers: HEADERS,
 				method: 'POST',
-			}).then((response) => {
-				response.json();
-			}).then((jsonResponse) => {
-				if(datasetDisplayId?.length > 0){
+			}).then(() => {
+				if (datasetDisplayId?.length > 0) {
 					Liferay.fire(UPDATE_DATASET_DISPLAY, {
 						id: datasetDisplayId,
 					});
@@ -137,7 +135,7 @@ const Diagram = ({
 			}
 
 			return fetch(`${pinsEndpoint}skus/${queryParam}`, {
-				headers:HEADERS,
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {
@@ -152,7 +150,7 @@ const Diagram = ({
 			}
 
 			return fetch(`${pinsEndpoint}products/${queryParam}`, {
-				headers:HEADERS,
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {

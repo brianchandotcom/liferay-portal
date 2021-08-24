@@ -99,7 +99,10 @@ public class FragmentConfigurationField {
 	public FragmentConfigurationFieldDataType
 		getFragmentConfigurationFieldDataType() {
 
-		if (StringUtil.equalsIgnoreCase(getDataType(), "bool")) {
+		if (StringUtil.equalsIgnoreCase(getDataType(), "array")) {
+			return FragmentConfigurationFieldDataType.ARRAY;
+		}
+		else if (StringUtil.equalsIgnoreCase(getDataType(), "bool")) {
 			return FragmentConfigurationFieldDataType.BOOLEAN;
 		}
 		else if (StringUtil.equalsIgnoreCase(getDataType(), "double")) {

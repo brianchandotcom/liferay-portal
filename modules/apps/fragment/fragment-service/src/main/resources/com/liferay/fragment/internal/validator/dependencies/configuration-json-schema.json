@@ -94,6 +94,7 @@
 			"properties": {
 				"dataType": {
 					"enum": [
+						"array",
 						"double",
 						"int",
 						"object",
@@ -105,6 +106,7 @@
 				"defaultValue": {
 					"title": "The DefaultValue Schema",
 					"type": [
+						"array",
 						"boolean",
 						"object",
 						"string"

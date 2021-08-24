@@ -520,7 +520,21 @@ public class FragmentEntryConfigurationParserImpl
 		String value) {
 
 		if (fragmentConfigurationFieldDataType ==
-				FragmentConfigurationFieldDataType.BOOLEAN) {
+				FragmentConfigurationFieldDataType.ARRAY) {
+
+			try {
+				return JSONFactoryUtil.createJSONArray(value);
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse configuration JSON: " + value,
+						jsonException);
+				}
+			}
+		}
+		else if (fragmentConfigurationFieldDataType ==
+					FragmentConfigurationFieldDataType.BOOLEAN) {
 
 			return GetterUtil.getBoolean(value);
 		}

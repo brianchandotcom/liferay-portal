@@ -34,6 +34,15 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Automation ID: LRAC-8890 | Test Summary: Able to change retention period"
+	@ignore = "true"
+	@priority = "4"
+	test CanChangeRetentionPeriod {
+
+		// TODO LRAC-8890 CanChangeRetentionPeriod
+
+	}
+
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
 	@priority = "5"
 	test CanCreateAccessRequest {
@@ -92,6 +101,24 @@ definition {
 	test CanCreateSuppressRequest {
 
 		// TODO LRAC-8109 CanCreateSuppressRequest
+
+	}
+
+	@description = "Automation ID: LRAC-8893 | Test Summary: Able to unsuppress user"
+	@ignore = "true"
+	@priority = "3"
+	test CanUnsuppressUser {
+
+		// TODO LRAC-8893 CanUnsuppressUser
+
+	}
+
+	@description = "Automation ID: LRAC-8892 | Test Summary: Suppressed user appears in Suppressed User List"
+	@ignore = "true"
+	@priority = "5"
+	test SuppressedUserAppearsInSuppressedUserList {
+
+		// TODO LRAC-8892 SuppressedUserAppearsInSuppressedUserList
 
 	}
 

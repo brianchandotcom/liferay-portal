@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -655,9 +656,16 @@ public abstract class BaseWikiNodeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<WikiNode, Exception> wikiNodeConsumer = wikiNode -> {
+		};
+
+		if (parameters.containsKey("siteId")) {
+			wikiNodeConsumer = wikiNode -> postSiteWikiNode(
+				(Long)parameters.get("siteId"), wikiNode);
+		}
+
 		for (WikiNode wikiNode : wikiNodes) {
-			postSiteWikiNode(
-				Long.parseLong((String)parameters.get("siteId")), wikiNode);
+			wikiNodeConsumer.accept(wikiNode);
 		}
 	}
 
@@ -693,9 +701,14 @@ public abstract class BaseWikiNodeResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteWikiNodesPage(
-			Long.parseLong((String)parameters.get("siteId")), search, null,
-			filter, pagination, sorts);
+		if (parameters.containsKey("siteId")) {
+			return getSiteWikiNodesPage(
+				(Long)parameters.get("siteId"), search, null, filter,
+				pagination, sorts);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

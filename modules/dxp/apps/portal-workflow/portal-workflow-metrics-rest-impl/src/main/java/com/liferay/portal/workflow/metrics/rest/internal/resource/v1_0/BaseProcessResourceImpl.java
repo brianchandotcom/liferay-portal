@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -284,8 +285,11 @@ public abstract class BaseProcessResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<Process, Exception> processConsumer =
+			process -> postProcess(process);
+
 		for (Process process : processes) {
-			postProcess(process);
+			processConsumer.accept(process);
 		}
 	}
 

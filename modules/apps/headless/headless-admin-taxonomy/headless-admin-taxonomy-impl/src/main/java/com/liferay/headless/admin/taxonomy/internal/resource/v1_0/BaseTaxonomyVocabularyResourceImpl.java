@@ -16,6 +16,7 @@ package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -829,10 +830,23 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<TaxonomyVocabulary, Exception>
+			taxonomyVocabularyConsumer = taxonomyVocabulary -> {
+			};
+
+		if (parameters.containsKey("assetLibraryId")) {
+			taxonomyVocabularyConsumer =
+				taxonomyVocabulary -> postAssetLibraryTaxonomyVocabulary(
+					(Long)parameters.get("assetLibraryId"), taxonomyVocabulary);
+		}
+		else if (parameters.containsKey("siteId")) {
+			taxonomyVocabularyConsumer =
+				taxonomyVocabulary -> postSiteTaxonomyVocabulary(
+					(Long)parameters.get("siteId"), taxonomyVocabulary);
+		}
+
 		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
-			postSiteTaxonomyVocabulary(
-				Long.parseLong((String)parameters.get("siteId")),
-				taxonomyVocabulary);
+			taxonomyVocabularyConsumer.accept(taxonomyVocabulary);
 		}
 	}
 

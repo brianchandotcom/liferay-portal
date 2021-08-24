@@ -16,6 +16,7 @@ package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -630,10 +631,13 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
-			postTaxonomyVocabularyTaxonomyCategory(
+		UnsafeConsumer<TaxonomyCategory, Exception> taxonomyCategoryConsumer =
+			taxonomyCategory -> postTaxonomyVocabularyTaxonomyCategory(
 				Long.parseLong((String)parameters.get("taxonomyVocabularyId")),
 				taxonomyCategory);
+
+		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
+			taxonomyCategoryConsumer.accept(taxonomyCategory);
 		}
 	}
 

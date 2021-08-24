@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -314,9 +315,11 @@ public abstract class BaseSLAResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<SLA, Exception> slaConsumer = sla -> postProcessSLA(
+			Long.parseLong((String)parameters.get("processId")), sla);
+
 		for (SLA sla : slas) {
-			postProcessSLA(
-				Long.parseLong((String)parameters.get("processId")), sla);
+			slaConsumer.accept(sla);
 		}
 	}
 

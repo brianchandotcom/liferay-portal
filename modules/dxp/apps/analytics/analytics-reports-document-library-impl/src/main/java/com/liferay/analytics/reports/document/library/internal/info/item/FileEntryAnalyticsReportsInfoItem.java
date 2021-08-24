@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yurena Cabrera
  */
 @Component(service = AnalyticsReportsInfoItem.class)
-public class DocumentAnalyticsReportsInfoItem
+public class FileEntryAnalyticsReportsInfoItem
 	implements AnalyticsReportsInfoItem<FileEntry> {
 
 	public List<Action> getActions() {

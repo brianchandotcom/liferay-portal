@@ -46,13 +46,12 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 			}}
 			onInstanceReady={(event) => {
 				const editor = event.editor;
+
 				const editable = editor.editable();
 
-				// Workaround to make the "CKEDITOR.ui.richCombo"
-				// plugin work with the CKEditor (React) component
-				// the "id" needs to be "cke_" + "editor.name"
+				// `floatPanel` plugin requires `id` to be `cke_${editor.name}`
 
-				editor.element.setAttribute('id', `cke_${editor.name}`);
+				editable.setAttribute('id', `cke_${editor.name}`);
 
 				editable.attachClass('liferay-editable');
 

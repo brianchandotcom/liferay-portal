@@ -39,8 +39,8 @@ export default ({
 	const [createNewTopic] = useMutation(createTopicQuery);
 
 	const isValidTopic = (topic) => {
-		const hyphens = /-+/g;
-		if (hyphens.test(topic)) {
+		const invalidCharacters = /.*[-|&|'|@|\\\\|\]|}|:|,|=|>|/|<|\n|[|{|||+|#|`|?|\\"|\r|;|/|*|~|%]/g;
+		if (invalidCharacters.test(topic)) {
 			const error = {
 				message: lang.sub(
 					Liferay.Language.get(
@@ -48,7 +48,7 @@ export default ({
 					),
 					[
 						Liferay.Language.get('topic-name'),
-						' - & \' @ \\\\ ] } : , = > / < \\n [ {  | + # ` ? \\" \\r ; / * ~',
+						' - & \' @ \\\\ ] } : , = > / < \\n [ {  | + # ` ? \\" \\r ; / * ~ %',
 					]
 				),
 			};

@@ -27,7 +27,7 @@ public class CPAttachmentFileEntryCDNUpgradeProcess
 	public void doUpgrade() throws Exception {
 		addColumn(
 			CPAttachmentFileEntryTable.class,
-			CPAttachmentFileEntryTable.TABLE_NAME, "cdn", "BOOLEAN");
+			CPAttachmentFileEntryTable.TABLE_NAME, "cdnEnabled", "BOOLEAN");
 		addColumn(
 			CPAttachmentFileEntryTable.class,
 			CPAttachmentFileEntryTable.TABLE_NAME, "cdnURL", "VARCHAR(255)");

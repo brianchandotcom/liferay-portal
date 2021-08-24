@@ -26,4 +26,37 @@ definition {
 			User.logoutPG();
 		}
 	}
+
+	@description = "This is a test for COMMERCE-7019. AddDiagramProduct"
+	@priority = "3"
+	test AddDiagramProduct {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Diagram T-Shirt",
+			productType = "Diagram");
+
+		CommerceEntry.viewProductsEntry(
+			productFullDescription = "Diagram T-Shirt Full Description",
+			productName = "Diagram T-Shirt",
+			productShortDescription = "Diagram T-Shirt Short Description");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.searchEntry(entryName = "Diagram T-Shirt");
+
+		AssertElementPresent(
+			key_entryName = "Diagram T-Shirt",
+			locator1 = "CommerceNavigation#ENTRY_NAME",
+			value1 = "Diagram T-Shirt");
+
+		CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
+	}
 }

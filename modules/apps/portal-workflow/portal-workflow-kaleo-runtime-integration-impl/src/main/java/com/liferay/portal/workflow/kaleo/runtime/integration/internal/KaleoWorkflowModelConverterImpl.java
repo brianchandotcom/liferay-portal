@@ -160,11 +160,11 @@ public class KaleoWorkflowModelConverterImpl
 						if (Objects.equals(
 								workflowNodeType, WorkflowNode.Type.STATE)) {
 
-							if (kaleoNode.getInitial()) {
+							if (kaleoNode.isInitial()) {
 								workflowNodeType =
 									WorkflowNode.Type.INITIAL_STATE;
 							}
-							else if (kaleoNode.getTerminal()) {
+							else if (kaleoNode.isTerminal()) {
 								workflowNodeType =
 									WorkflowNode.Type.TERMINAL_STATE;
 							}

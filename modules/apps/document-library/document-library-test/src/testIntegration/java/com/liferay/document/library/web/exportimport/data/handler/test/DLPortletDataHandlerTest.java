@@ -15,6 +15,8 @@
 package com.liferay.document.library.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -35,6 +37,7 @@ import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -51,6 +54,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -65,6 +69,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -211,6 +216,32 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Assert.assertEquals(0, foldersCount);
+	}
+
+	@Test
+	public void testDeleteGroup() throws Exception {
+		Class<?> clazz = getClass();
+
+		String json = StringUtil.read(
+			clazz.getResourceAsStream(
+				"dependencies/valid_data_definition.json"));
+
+		Group group = GroupTestUtil.addGroup();
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"document-library", group.getGroupId(), json,
+				TestPropsValues.getUser());
+
+		Assert.assertNotNull(
+			_ddmStructureLocalService.fetchDDMStructure(
+				dataDefinition.getId()));
+
+		_groupLocalService.deleteGroup(group);
+
+		Assert.assertNull(
+			_ddmStructureLocalService.fetchDDMStructure(
+				dataDefinition.getId()));
 	}
 
 	@Test
@@ -647,6 +678,12 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				DLExportableRepositoryPublisher.class,
 				dlExportableRepositoryPublisher, null));
 	}
+
+	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
 
 	@Inject
 	private DLAppHelperLocalService _dlAppHelperLocalService;

@@ -319,7 +319,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		uriVariables.putSingle("page", cur - 1);
 		uriVariables.putSingle("size", delta);
 
-		if ((orderByFields == null) || orderByFields.isEmpty()) {
+		if (ListUtil.isEmpty(orderByFields)) {
 			return uriVariables;
 		}
 

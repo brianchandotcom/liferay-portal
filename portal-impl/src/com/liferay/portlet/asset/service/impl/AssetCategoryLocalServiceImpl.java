@@ -723,6 +723,10 @@ public class AssetCategoryLocalServiceImpl
 		AssetCategory category, long vocabularyId) {
 
 		for (AssetCategory childCategory : getDescendantCategories(category)) {
+			if (childCategory.getCategoryId() == category.getCategoryId()) {
+				continue;
+			}
+
 			childCategory.setVocabularyId(vocabularyId);
 
 			assetCategoryPersistence.update(childCategory);
@@ -771,6 +775,10 @@ public class AssetCategoryLocalServiceImpl
 			category);
 
 		for (AssetCategory childCategory : childrenCategories) {
+			if (childCategory.getCategoryId() == category.getCategoryId()) {
+				continue;
+			}
+
 			String childTreePath = childCategory.getTreePath();
 
 			childCategory.setTreePath(

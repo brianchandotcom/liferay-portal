@@ -61,6 +61,30 @@ definition {
 		Refresh();
 	}
 
+	macro addDiagramImages {
+		for (var imageTitle : list "${imageTitles}") {
+			echo("imageTitle is equal to ${imageTitle}");
+
+			var image = StringUtil.extractFirst("${imageTitle}", ":");
+
+			var number = StringUtil.extractLast("${imageTitle}", ":");
+
+			var count = "0";
+
+			if ("${image}" == "") {
+				image = "${imageTitle}";
+			}
+
+			var uploadFileName = "Commerce_${image}.jpg";
+
+			Refresh();
+
+			CommerceEntry.uploadCatalogEntrySingleImage(
+				productType = "${productType}",
+				uploadFileName = "${uploadFileName}");
+		}
+	}
+
 	macro addProductImages {
 		for (var imageTitle : list "${imageTitles}") {
 			echo("imageTitle is equal to ${imageTitle}");

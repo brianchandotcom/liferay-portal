@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.lang.reflect.Method;
 
@@ -166,7 +167,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 		List<BeanPortletMethod> beanPortletMethods = _beanMethods.get(
 			BeanPortletMethodType.EVENT);
 
-		if ((beanPortletMethods == null) || beanPortletMethods.isEmpty()) {
+		if (ListUtil.isEmpty(beanPortletMethods)) {
 			return;
 		}
 
@@ -223,7 +224,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 			List<BeanPortletMethod> beanPortletMethods, Object... arguments)
 		throws PortletException {
 
-		if ((beanPortletMethods == null) || beanPortletMethods.isEmpty()) {
+		if (ListUtil.isEmpty(beanPortletMethods)) {
 			return;
 		}
 
@@ -248,7 +249,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortletException {
 
-		if ((beanPortletMethods == null) || beanPortletMethods.isEmpty()) {
+		if (ListUtil.isEmpty(beanPortletMethods)) {
 			return;
 		}
 

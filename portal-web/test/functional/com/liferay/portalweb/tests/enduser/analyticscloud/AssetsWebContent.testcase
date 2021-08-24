@@ -111,7 +111,7 @@ definition {
 			ACUtils.closeAllSessions();
 
 			Pause(locator1 = "30000");
-			
+
 			ACUtils.launchAC();
 		}
 
@@ -123,7 +123,7 @@ definition {
 			ACNavigation.switchTab(tabName = "Web Content");
 		}
 
-		task ("Set time filter to 24hs and Assert WC presence"){
+		task ("Set time filter to 24hs and Assert WC presence") {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
@@ -136,14 +136,13 @@ definition {
 
 			ACTimeFilter.setLast180Days();
 		}
-		
-		//task ("Assert not present the Web Content when time filter use 180 Days")
+
+		// Task ("Assert not present the Web Content when time filter use 180 Days")
 		// It is not possible to perform the assert because this test needs data from the past
 
 		task ("Assert result returns") {
 			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8448 | Test Summary: Web content audience card shows expected amount of known and anonymous individuals"
@@ -327,7 +326,7 @@ definition {
 			ACNavigation.switchTab(tabName = "Web Content");
 		}
 
-		task ("Set time filter to 24hs and Assert WC presence"){
+		task ("Set time filter to 24hs and Assert WC presence") {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
@@ -350,6 +349,7 @@ definition {
 		}
 
 		task ("Assert result returns the Custom Range") {
+
 			// Use a macro to assert time filter return the right data
 			// Create a locator that can be used later
 
@@ -743,35 +743,47 @@ definition {
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		for (var n : list "1,2,3,4") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+		task ("Connect DXP to Analytics Cloud and get the property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		ACUtils.closeAllSessions();
+		task ("Visit page 4 times on DXP") {
+			for (var n : list "1,2,3,4") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
 
-		Pause(locator1 = "30000");
+			ACUtils.closeAllSessions();
 
-		ACUtils.launchAC();
+			Pause(locator1 = "30000");
+		}
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		task ("Navigate to AC property") {
+			ACUtils.launchAC();
 
-		ACNavigation.goToAssets();
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
-		ACNavigation.switchTab(tabName = "Web Content");
+		task ("Navigate to Web Content tab in Assets") {
+			ACNavigation.goToAssets();
 
-		ACTimeFilter.clickTimeFilterButton();
+			ACNavigation.switchTab(tabName = "Web Content");
+		}
 
-		ACTimeFilter.setLast24Hours();
+		task ("Navigate into Web Content entry") {
+			ACTimeFilter.clickTimeFilterButton();
 
-		ACNavigation.openItem(itemName = "Web Content AC Title");
+			ACTimeFilter.setLast24Hours();
 
-		ACAssets.viewVisitorsBehaviorMetric(
-			metricTitle = "Views",
-			metricValue = "4");
+			ACNavigation.openItem(itemName = "Web Content AC Title");
+		}
+
+		task ("Confirm the Views number is correct") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Views",
+				metricValue = "4");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8451 | Test Summary: Web content submissions by location card shows expected views by location"

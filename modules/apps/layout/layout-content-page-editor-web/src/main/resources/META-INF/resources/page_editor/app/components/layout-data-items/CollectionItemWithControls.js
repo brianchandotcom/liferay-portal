@@ -39,19 +39,14 @@ const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 						})}
 						ref={ref}
 					>
-						{title ? (
-							<div className="page-editor__collection-item__border">
-								<p className="page-editor__collection-item__title">
-									{title}
-								</p>
-							</div>
-						) : (
-							<div className="alert alert-info">
-								{Liferay.Language.get(
-									'the-items-in-the-collection-will-be-displayed-here'
-								)}
-							</div>
-						)}
+						<div className="page-editor__collection-item__border">
+							<p className="page-editor__collection-item__title">
+								{title ||
+									Liferay.Language.get(
+										'sample-collection-item'
+									)}
+							</p>
+						</div>
 					</div>
 				) : (
 					<div ref={ref}>{children}</div>

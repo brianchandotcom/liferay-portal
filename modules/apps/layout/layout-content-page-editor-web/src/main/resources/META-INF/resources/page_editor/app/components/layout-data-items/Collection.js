@@ -76,6 +76,14 @@ const EmptyCollectionMessage = () => (
 	</div>
 );
 
+const EmptyCollectionGridMessage = () => (
+	<div className="alert alert-info">
+		{Liferay.Language.get(
+			'the-collection-is-empty-to-display-your-items-add-them-to-the-collection-or-choose-a-different-collection'
+		)}
+	</div>
+);
+
 const Grid = ({
 	child,
 	collection,
@@ -306,16 +314,21 @@ const Collection = React.forwardRef(
 				) : collection.content ? (
 					<UnsafeHTML markup={collection.content} />
 				) : (
-					<Grid
-						child={child}
-						collection={collection.items}
-						collectionConfig={collectionConfig}
-						collectionId={item.itemId}
-						collectionLength={collection.items.length}
-						customCollectionSelectorURL={
-							collection.customCollectionSelectorURL
-						}
-					/>
+					<>
+						{collection.fakeCollection && (
+							<EmptyCollectionGridMessage />
+						)}
+						<Grid
+							child={child}
+							collection={collection.items}
+							collectionConfig={collectionConfig}
+							collectionId={item.itemId}
+							collectionLength={collection.items.length}
+							customCollectionSelectorURL={
+								collection.customCollectionSelectorURL
+							}
+						/>
+					</>
 				)}
 
 				{collectionConfig.paginationType && (

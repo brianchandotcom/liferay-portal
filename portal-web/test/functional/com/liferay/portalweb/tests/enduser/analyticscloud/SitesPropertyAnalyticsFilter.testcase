@@ -58,7 +58,7 @@ definition {
 
 			ACSettings.goToProperties();
 
-			AssertElementPresent(locator1 = "ACDXPSettings#NO_PROPERTIES_FOUND");
+			AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
 		}
 
 		task ("Asset that there are no more properties on the sites page") {
@@ -192,7 +192,7 @@ definition {
 		}
 
 		task ("Asset that no longer properties exists") {
-			AssertElementPresent(locator1 = "ACDXPSettings#NO_PROPERTIES_FOUND");
+			AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
 		}
 
 		task ("Asset that there are no more properties on the sites page") {

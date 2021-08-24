@@ -591,12 +591,61 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8288 | Test Summary: Unique Visitors label is shown on the tabs of Sites dashboards"
-	@ignore = "true"
 	@priority = "3"
 	test CanUniqueVisitorsLabelShowSitesDashboards {
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
 
-		// TODO LRAC-8288 CanUniqueVisitorsLabelShowSitesDashboards
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Login with new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("Go to site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC and go to Sites") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSites();
+		}
+
+		task ("Go to Sites overview") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert the unique visitors label is shown") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Unique Visitors",
+				metricValue = "1");
+
+			AssertElementPresent(
+				key_visitorsLabel = "Unique Visitors",
+				locator1 = "ACSites#VISITORS_GRAPH_LABEL");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8274 | Test Summary: Site Activity Card: Bounce rate and % change is shown"

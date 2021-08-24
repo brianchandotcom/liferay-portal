@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
@@ -1068,7 +1069,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			List<LabelItem> filterLabelItems = getFilterLabelItems();
 
-			if ((filterLabelItems == null) || filterLabelItems.isEmpty()) {
+			if (ListUtil.isEmpty(filterLabelItems)) {
 				jspWriter.write(" tbar-item-expand");
 			}
 

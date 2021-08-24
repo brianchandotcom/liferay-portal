@@ -71,10 +71,6 @@ public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 		return "date";
 	}
 
-	public String getFilterValueLabel(String filterValue, Locale locale) {
-		return filterValue;
-	}
-
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "date");

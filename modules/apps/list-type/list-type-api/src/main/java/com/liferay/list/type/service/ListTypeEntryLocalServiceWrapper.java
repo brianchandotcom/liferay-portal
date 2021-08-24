@@ -52,12 +52,12 @@ public class ListTypeEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.list.type.model.ListTypeEntry addListTypeEntry(
-			long userId, long listTypeDefinitionId,
+			long userId, long listTypeDefinitionId, String key,
 			java.util.Map<java.util.Locale, String> nameMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _listTypeEntryLocalService.addListTypeEntry(
-			userId, listTypeDefinitionId, nameMap);
+			userId, listTypeDefinitionId, key, nameMap);
 	}
 
 	/**

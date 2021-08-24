@@ -223,6 +223,21 @@ public interface ListTypeEntryModel
 	public void setListTypeDefinitionId(long listTypeDefinitionId);
 
 	/**
+	 * Returns the key of this list type entry.
+	 *
+	 * @return the key of this list type entry
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this list type entry.
+	 *
+	 * @param key the key of this list type entry
+	 */
+	public void setKey(String key);
+
+	/**
 	 * Returns the name of this list type entry.
 	 *
 	 * @return the name of this list type entry

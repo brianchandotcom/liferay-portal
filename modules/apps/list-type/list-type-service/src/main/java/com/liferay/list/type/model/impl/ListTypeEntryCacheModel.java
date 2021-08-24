@@ -77,7 +77,7 @@ public class ListTypeEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,6 +97,8 @@ public class ListTypeEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", listTypeDefinitionId=");
 		sb.append(listTypeDefinitionId);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", type=");
@@ -146,6 +148,13 @@ public class ListTypeEntryCacheModel
 
 		listTypeEntryImpl.setListTypeDefinitionId(listTypeDefinitionId);
 
+		if (key == null) {
+			listTypeEntryImpl.setKey("");
+		}
+		else {
+			listTypeEntryImpl.setKey(key);
+		}
+
 		if (name == null) {
 			listTypeEntryImpl.setName("");
 		}
@@ -180,6 +189,7 @@ public class ListTypeEntryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		listTypeDefinitionId = objectInput.readLong();
+		key = objectInput.readUTF();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
 	}
@@ -213,6 +223,13 @@ public class ListTypeEntryCacheModel
 
 		objectOutput.writeLong(listTypeDefinitionId);
 
+		if (key == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -237,6 +254,7 @@ public class ListTypeEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long listTypeDefinitionId;
+	public String key;
 	public String name;
 	public String type;
 

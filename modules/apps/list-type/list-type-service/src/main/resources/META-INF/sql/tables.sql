@@ -20,6 +20,7 @@ create table ListTypeEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	listTypeDefinitionId LONG,
+	key_ VARCHAR(75) null,
 	name STRING null,
 	type_ VARCHAR(75) null
 );

@@ -484,6 +484,56 @@ public interface ListTypeEntryPersistence
 	public int countByListTypeDefinitionId(long listTypeDefinitionId);
 
 	/**
+	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	public ListTypeEntry findByLTDI_K(long listTypeDefinitionId, String key)
+		throws NoSuchListTypeEntryException;
+
+	/**
+	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public ListTypeEntry fetchByLTDI_K(long listTypeDefinitionId, String key);
+
+	/**
+	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public ListTypeEntry fetchByLTDI_K(
+		long listTypeDefinitionId, String key, boolean useFinderCache);
+
+	/**
+	 * Removes the list type entry where listTypeDefinitionId = &#63; and key = &#63; from the database.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the list type entry that was removed
+	 */
+	public ListTypeEntry removeByLTDI_K(long listTypeDefinitionId, String key)
+		throws NoSuchListTypeEntryException;
+
+	/**
+	 * Returns the number of list type entries where listTypeDefinitionId = &#63; and key = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the number of matching list type entries
+	 */
+	public int countByLTDI_K(long listTypeDefinitionId, String key);
+
+	/**
 	 * Caches the list type entry in the entity cache if it is enabled.
 	 *
 	 * @param listTypeEntry the list type entry

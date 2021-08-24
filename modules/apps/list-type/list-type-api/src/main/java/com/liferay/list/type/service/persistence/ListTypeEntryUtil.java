@@ -653,6 +653,74 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
+	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry findByLTDI_K(
+			long listTypeDefinitionId, String key)
+		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
+
+		return getPersistence().findByLTDI_K(listTypeDefinitionId, key);
+	}
+
+	/**
+	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByLTDI_K(
+		long listTypeDefinitionId, String key) {
+
+		return getPersistence().fetchByLTDI_K(listTypeDefinitionId, key);
+	}
+
+	/**
+	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByLTDI_K(
+		long listTypeDefinitionId, String key, boolean useFinderCache) {
+
+		return getPersistence().fetchByLTDI_K(
+			listTypeDefinitionId, key, useFinderCache);
+	}
+
+	/**
+	 * Removes the list type entry where listTypeDefinitionId = &#63; and key = &#63; from the database.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the list type entry that was removed
+	 */
+	public static ListTypeEntry removeByLTDI_K(
+			long listTypeDefinitionId, String key)
+		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
+
+		return getPersistence().removeByLTDI_K(listTypeDefinitionId, key);
+	}
+
+	/**
+	 * Returns the number of list type entries where listTypeDefinitionId = &#63; and key = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the number of matching list type entries
+	 */
+	public static int countByLTDI_K(long listTypeDefinitionId, String key) {
+		return getPersistence().countByLTDI_K(listTypeDefinitionId, key);
+	}
+
+	/**
 	 * Caches the list type entry in the entity cache if it is enabled.
 	 *
 	 * @param listTypeEntry the list type entry

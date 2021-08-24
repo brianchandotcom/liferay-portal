@@ -53,6 +53,8 @@ public class ListTypeEntryTable extends BaseTable<ListTypeEntryTable> {
 		createColumn(
 			"listTypeDefinitionId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<ListTypeEntryTable, String> key = createColumn(
+		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ListTypeEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ListTypeEntryTable, String> type = createColumn(

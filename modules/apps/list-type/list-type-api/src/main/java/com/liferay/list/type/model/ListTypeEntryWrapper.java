@@ -52,6 +52,7 @@ public class ListTypeEntryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("listTypeDefinitionId", getListTypeDefinitionId());
+		attributes.put("key", getKey());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 
@@ -115,6 +116,12 @@ public class ListTypeEntryWrapper
 			setListTypeDefinitionId(listTypeDefinitionId);
 		}
 
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -156,6 +163,16 @@ public class ListTypeEntryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the key of this list type entry.
+	 *
+	 * @return the key of this list type entry
+	 */
+	@Override
+	public String getKey() {
+		return model.getKey();
 	}
 
 	/**
@@ -372,6 +389,16 @@ public class ListTypeEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the key of this list type entry.
+	 *
+	 * @param key the key of this list type entry
+	 */
+	@Override
+	public void setKey(String key) {
+		model.setKey(key);
 	}
 
 	/**

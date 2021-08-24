@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -138,6 +140,8 @@ public class ListTypeEntryPersistenceTest {
 
 		newListTypeEntry.setListTypeDefinitionId(RandomTestUtil.nextLong());
 
+		newListTypeEntry.setKey(RandomTestUtil.randomString());
+
 		newListTypeEntry.setName(RandomTestUtil.randomString());
 
 		newListTypeEntry.setType(RandomTestUtil.randomString());
@@ -173,6 +177,8 @@ public class ListTypeEntryPersistenceTest {
 			existingListTypeEntry.getListTypeDefinitionId(),
 			newListTypeEntry.getListTypeDefinitionId());
 		Assert.assertEquals(
+			existingListTypeEntry.getKey(), newListTypeEntry.getKey());
+		Assert.assertEquals(
 			existingListTypeEntry.getName(), newListTypeEntry.getName());
 		Assert.assertEquals(
 			existingListTypeEntry.getType(), newListTypeEntry.getType());
@@ -204,6 +210,15 @@ public class ListTypeEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLTDI_K() throws Exception {
+		_persistence.countByLTDI_K(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByLTDI_K(0L, "null");
+
+		_persistence.countByLTDI_K(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ListTypeEntry newListTypeEntry = addListTypeEntry();
 
@@ -231,7 +246,8 @@ public class ListTypeEntryPersistenceTest {
 			"ListTypeEntry", "mvccVersion", true, "uuid", true,
 			"listTypeEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"listTypeDefinitionId", true, "name", true, "type", true);
+			"listTypeDefinitionId", true, "key", true, "name", true, "type",
+			true);
 	}
 
 	@Test
@@ -447,6 +463,69 @@ public class ListTypeEntryPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		ListTypeEntry newListTypeEntry = addListTypeEntry();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newListTypeEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ListTypeEntry newListTypeEntry = addListTypeEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ListTypeEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"listTypeEntryId", newListTypeEntry.getListTypeEntryId()));
+
+		List<ListTypeEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ListTypeEntry listTypeEntry) {
+		Assert.assertEquals(
+			Long.valueOf(listTypeEntry.getListTypeDefinitionId()),
+			ReflectionTestUtil.<Long>invoke(
+				listTypeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "listTypeDefinitionId"));
+		Assert.assertEquals(
+			listTypeEntry.getKey(),
+			ReflectionTestUtil.invoke(
+				listTypeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "key_"));
+	}
+
 	protected ListTypeEntry addListTypeEntry() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -467,6 +546,8 @@ public class ListTypeEntryPersistenceTest {
 		listTypeEntry.setModifiedDate(RandomTestUtil.nextDate());
 
 		listTypeEntry.setListTypeDefinitionId(RandomTestUtil.nextLong());
+
+		listTypeEntry.setKey(RandomTestUtil.randomString());
 
 		listTypeEntry.setName(RandomTestUtil.randomString());
 

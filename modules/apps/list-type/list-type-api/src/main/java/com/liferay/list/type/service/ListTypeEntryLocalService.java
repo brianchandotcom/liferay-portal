@@ -80,7 +80,8 @@ public interface ListTypeEntryLocalService
 	public ListTypeEntry addListTypeEntry(ListTypeEntry listTypeEntry);
 
 	public ListTypeEntry addListTypeEntry(
-			long userId, long listTypeDefinitionId, Map<Locale, String> nameMap)
+			long userId, long listTypeDefinitionId, String key,
+			Map<Locale, String> nameMap)
 		throws PortalException;
 
 	/**

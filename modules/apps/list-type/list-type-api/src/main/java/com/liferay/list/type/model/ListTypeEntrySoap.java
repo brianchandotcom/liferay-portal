@@ -42,6 +42,7 @@ public class ListTypeEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setListTypeDefinitionId(model.getListTypeDefinitionId());
+		soapModel.setKey(model.getKey());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
 
@@ -169,6 +170,14 @@ public class ListTypeEntrySoap implements Serializable {
 		_listTypeDefinitionId = listTypeDefinitionId;
 	}
 
+	public String getKey() {
+		return _key;
+	}
+
+	public void setKey(String key) {
+		_key = key;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -194,6 +203,7 @@ public class ListTypeEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _listTypeDefinitionId;
+	private String _key;
 	private String _name;
 	private String _type;
 

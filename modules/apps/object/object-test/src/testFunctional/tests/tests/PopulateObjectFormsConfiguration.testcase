@@ -97,6 +97,7 @@ definition {
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -150,7 +151,6 @@ definition {
 		Form.addFieldOutsideOfFieldsGroup(
 			fieldName = "Text",
 			index = "2");
-
 
 		PopulateObjectFormsConfiguration.publishFormObject();
 

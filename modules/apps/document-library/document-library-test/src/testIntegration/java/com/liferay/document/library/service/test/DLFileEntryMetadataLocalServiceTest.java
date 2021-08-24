@@ -20,9 +20,9 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -33,13 +33,15 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -86,31 +88,11 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		byte[] testFileBytes = FileUtil.getBytes(
-			getClass(), "dependencies/ddmstructure.xml");
-
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				new String(testFileBytes));
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
-
-		serviceContext.setAttribute(
-			"ddmForm",
-			DDMBeanTranslatorUtil.translate(
-				ddmFormDeserializerDeserializeResponse.getDDMForm()));
-
 		User user = TestPropsValues.getUser();
 
-		serviceContext.setLanguageId(LocaleUtil.toLanguageId(user.getLocale()));
+		ServiceContext serviceContext = _getServiceContext(_group, user);
 
-		_dlFileEntryType = DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+		_dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
 			serviceContext);
@@ -121,22 +103,20 @@ public class DLFileEntryMetadataLocalServiceTest {
 		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
 			ddmStructures.get(0);
 
-		_ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+		_ddmStructure = _ddmStructureLocalService.getStructure(
 			ddmStructure.getStructureId());
 
 		Map<String, DDMFormValues> ddmFormValuesMap = setUpDDMFormValuesMap(
 			_ddmStructure.getStructureKey(), user.getLocale());
 
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-			TestDataConstants.TEST_BYTE_ARRAY);
-
-		_dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+		_dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			null, null, _dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap,
-			null, byteArrayInputStream, byteArrayInputStream.available(), null,
-			null, serviceContext);
+			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			TestDataConstants.TEST_BYTE_ARRAY.length, null, null,
+			serviceContext);
 	}
 
 	@Test
@@ -147,17 +127,17 @@ public class DLFileEntryMetadataLocalServiceTest {
 			DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
 
 			DLFileEntryMetadata dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
 					_ddmStructure.getStructureId(),
 					dlFileVersion.getFileVersionId());
 
 			_ddmStructure.setCompanyId(_company.getCompanyId());
 
-			_ddmStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
+			_ddmStructure = _ddmStructureLocalService.updateDDMStructure(
 				_ddmStructure);
 
 			List<DLFileEntryMetadata> dlFileEntryMetadatas =
-				DLFileEntryMetadataLocalServiceUtil.
+				_dlFileEntryMetadataLocalService.
 					getMismatchedCompanyIdFileEntryMetadatas();
 
 			Assert.assertEquals(
@@ -170,7 +150,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			if (_ddmStructure != null) {
 				_ddmStructure.setCompanyId(_dlFileEntry.getCompanyId());
 
-				_ddmStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
+				_ddmStructure = _ddmStructureLocalService.updateDDMStructure(
 					_ddmStructure);
 			}
 		}
@@ -182,14 +162,14 @@ public class DLFileEntryMetadataLocalServiceTest {
 			DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
 
 			DLFileEntryMetadata dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
 					_ddmStructure.getStructureId(),
 					dlFileVersion.getFileVersionId());
 
-			DDMStructureLocalServiceUtil.deleteDDMStructure(_ddmStructure);
+			_ddmStructureLocalService.deleteDDMStructure(_ddmStructure);
 
 			List<DLFileEntryMetadata> dlFileEntryMetadatas =
-				DLFileEntryMetadataLocalServiceUtil.
+				_dlFileEntryMetadataLocalService.
 					getNoStructuresFileEntryMetadatas();
 
 			Assert.assertEquals(
@@ -200,7 +180,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 		}
 		finally {
 			if (_ddmStructure != null) {
-				DDMStructureLocalServiceUtil.addDDMStructure(_ddmStructure);
+				_ddmStructureLocalService.addDDMStructure(_ddmStructure);
 			}
 		}
 	}
@@ -242,6 +222,50 @@ public class DLFileEntryMetadataLocalServiceTest {
 			}
 		).build();
 	}
+
+	private ServiceContext _getServiceContext(Group group, User user)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		byte[] testFileBytes = FileUtil.getBytes(
+			getClass(), "dependencies/ddmstructure.xml");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				new String(testFileBytes));
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
+		serviceContext.setAttribute(
+			"ddmForm",
+			DDMBeanTranslatorUtil.translate(
+				ddmFormDeserializerDeserializeResponse.getDDMForm()));
+
+		serviceContext.setLanguageId(LocaleUtil.toLanguageId(user.getLocale()));
+
+		return serviceContext;
+	}
+
+	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private static DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private static DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
+
+	@Inject
+	private static DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
 	private Company _company;

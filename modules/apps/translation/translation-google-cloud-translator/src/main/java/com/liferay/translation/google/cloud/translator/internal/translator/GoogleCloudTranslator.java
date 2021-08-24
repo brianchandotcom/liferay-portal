@@ -25,8 +25,11 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration;
@@ -59,13 +62,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GoogleCloudTranslator implements Translator {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isEnabled(long)}
+	 */
+	@Deprecated
 	public boolean isEnabled() {
-		if (_googleCloudTranslatorConfiguration.enabled() &&
-			!Validator.isBlank(
-				_googleCloudTranslatorConfiguration.
-					serviceAccountPrivateKey())) {
-
-			return true;
+		try {
+			return isEnabled(CompanyThreadLocal.getCompanyId());
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException, configurationException);
+			}
 		}
 
 		return false;
@@ -79,7 +87,7 @@ public class GoogleCloudTranslator implements Translator {
 
 		if (googleCloudTranslatorCompanyConfiguration.enabled() &&
 			!Validator.isBlank(
-				_googleCloudTranslatorConfiguration.
+				googleCloudTranslatorCompanyConfiguration.
 					serviceAccountPrivateKey())) {
 
 			return true;
@@ -92,7 +100,7 @@ public class GoogleCloudTranslator implements Translator {
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException {
 
-		if (!isEnabled()) {
+		if (!isEnabled(CompanyThreadLocal.getCompanyId())) {
 			return translatorPacket;
 		}
 
@@ -151,8 +159,14 @@ public class GoogleCloudTranslator implements Translator {
 			ConfigurableUtil.createConfigurable(
 				GoogleCloudTranslatorConfiguration.class, properties);
 
-		if (!isEnabled()) {
-			return;
+		try {
+			if (!isEnabled(CompanyThreadLocal.getCompanyId())) {
+				return;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			throw new SystemException(
+				"Unable to Check translation enabled", configurationException);
 		}
 
 		ServiceAccountCredentials serviceAccountCredentials = null;
@@ -196,6 +210,9 @@ public class GoogleCloudTranslator implements Translator {
 
 		return list.get(0);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GoogleCloudTranslator.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

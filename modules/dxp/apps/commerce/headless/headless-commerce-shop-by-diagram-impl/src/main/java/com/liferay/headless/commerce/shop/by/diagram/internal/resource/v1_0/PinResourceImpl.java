@@ -173,8 +173,8 @@ public class PinResourceImpl extends BasePinResourceImpl {
 			GetterUtil.getLong(diagramEntry.getProductId()),
 			GetterUtil.getBoolean(diagramEntry.getDiagram()),
 			GetterUtil.getInteger(diagramEntry.getQuantity()),
-			GetterUtil.getString(diagramEntry.getSku()),
 			GetterUtil.getString(pin.getSequence()),
+			GetterUtil.getString(diagramEntry.getSku()),
 			new ServiceContext());
 
 		return _toPin(cpDefinitionDiagramPin.getCPDefinitionDiagramPinId());

@@ -32,7 +32,7 @@
 	type="toggle-switch"
 />
 
-<aui:field-wrapper cssClass="custom-title lfr-input-text-container">
+<aui:field-wrapper cssClass="custom-title form-group lfr-input-text-container">
 	<liferay-ui:input-localized
 		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
 		disabled="<%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>"

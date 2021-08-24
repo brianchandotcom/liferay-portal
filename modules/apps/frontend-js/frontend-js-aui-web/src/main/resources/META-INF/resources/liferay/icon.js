@@ -88,7 +88,7 @@ AUI.add(
 						destroyOnHide: true,
 					},
 					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer',
+						bodyCssClass: 'cadmin dialog-with-footer',
 					},
 				});
 			},

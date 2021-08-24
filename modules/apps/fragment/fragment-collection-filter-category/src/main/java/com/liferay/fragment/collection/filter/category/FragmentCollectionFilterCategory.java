@@ -68,10 +68,12 @@ public class FragmentCollectionFilterCategory
 		}
 	}
 
+	@Override
 	public String getFilterKey() {
 		return "category";
 	}
 
+	@Override
 	public String getFilterValueLabel(String filterValue, Locale locale) {
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.fetchAssetCategory(

@@ -403,7 +403,7 @@ public class DDMImpl implements DDM {
 			List<Serializable> fieldValues = getFieldValues(
 				ddmStructure, fieldName, fieldNamespace, serviceContext);
 
-			if ((fieldValues == null) || fieldValues.isEmpty()) {
+			if (ListUtil.isEmpty(fieldValues)) {
 				continue;
 			}
 

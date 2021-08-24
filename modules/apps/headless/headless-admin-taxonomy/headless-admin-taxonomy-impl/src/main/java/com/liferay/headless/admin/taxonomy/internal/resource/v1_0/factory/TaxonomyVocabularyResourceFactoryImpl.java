@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -160,6 +161,8 @@ public class TaxonomyVocabularyResourceFactoryImpl
 		taxonomyVocabularyResource.setContextHttpServletRequest(
 			httpServletRequest);
 		taxonomyVocabularyResource.setContextUser(user);
+		taxonomyVocabularyResource.setGroupLocalService(_groupLocalService);
+
 
 		try {
 			return method.invoke(taxonomyVocabularyResource, arguments);
@@ -185,6 +188,9 @@ public class TaxonomyVocabularyResourceFactoryImpl
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
+	
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(permission.checker.type=liberal)")
 	private PermissionCheckerFactory _liberalPermissionCheckerFactory;

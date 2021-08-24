@@ -51,7 +51,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8715 | Test Summary: Check identity is triggered when logging in after a unintended session close"
 	@priority = "3"
-	test CheckIdentityTriggeredWhenLoggingAfterASessionClose {
+	test CheckIdentityTriggeredWhenLoginAfterASessionClose {
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

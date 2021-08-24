@@ -38,7 +38,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -451,29 +450,22 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				continue;
 			}
 
-			String targetCollections =
-				(String)
+			JSONArray targetCollectionsJSONArray =
+				(JSONArray)
 					fragmentEntryConfigurationParser.getConfigurationFieldValue(
 						fragmentEntryLink.getEditableValues(),
 						"targetCollections",
-						FragmentConfigurationFieldDataType.STRING);
+						FragmentConfigurationFieldDataType.ARRAY);
 
-			try {
-				JSONArray targetCollectionsJSONArray =
-					JSONFactoryUtil.createJSONArray(targetCollections);
+			if (ArrayUtil.contains(
+					JSONUtil.toStringArray(targetCollectionsJSONArray),
+					_collectionStyledLayoutStructureItem.getItemId())) {
 
-				if (ArrayUtil.contains(
-						JSONUtil.toStringArray(targetCollectionsJSONArray),
-						_collectionStyledLayoutStructureItem.getItemId())) {
-
-					filterValues.put(
-						filterParameterName.replaceFirst(
-							FragmentCollectionFilterConstants.FILTER_PREFIX,
-							StringPool.BLANK),
-						entry.getValue());
-				}
-			}
-			catch (Exception exception) {
+				filterValues.put(
+					filterParameterName.replaceFirst(
+						FragmentCollectionFilterConstants.FILTER_PREFIX,
+						StringPool.BLANK),
+					entry.getValue());
 			}
 		}
 

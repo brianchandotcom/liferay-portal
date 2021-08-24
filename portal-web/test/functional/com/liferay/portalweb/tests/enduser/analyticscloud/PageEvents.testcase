@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8805 | Test Summary: Check pageDepthReached triggers ([depth] = 25) and check its properties (see reference document in comments)"
-	@priority = "4"
+	@priority = "5"
 	test CheckPageDepthReachedTo25 {
 		property proxy.server.enabled = "true";
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8806 | Test Summary: Check pageDepthReached trigggers ([depth] = 50) and check its properties (see reference document in comments)"
-	@priority = "4"
+	@priority = "5"
 	test CheckPageDepthReachedTo50 {
 		property proxy.server.enabled = "true";
 
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8807 | Test Summary: Check pageDepthReached trigggers ([depth] = 75) and check its properties (see reference document in comments)"
-	@priority = "4"
+	@priority = "5"
 	test CheckPageDepthReachedTo75 {
 		property proxy.server.enabled = "true";
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8808 | Test Summary: Check pageDepthReached trigggers ([depth] = 100) and check its properties (see reference document in comments)"
-	@priority = "4"
+	@priority = "5"
 	test CheckPageDepthReachedTo100 {
 		property proxy.server.enabled = "true";
 

@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"editor.config.key=coverImageCaptionEditor",
+		"editor.name=ballooneditor",
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
 	},
@@ -55,13 +56,23 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 		String removePlugins = jsonObject.getString("removePlugins");
 
 		if (Validator.isNotNull(removePlugins)) {
-			removePlugins = removePlugins + ",magicline";
+			removePlugins = removePlugins + ",magicline,stylescombo,videoembed";
 		}
 		else {
 			removePlugins = "magicline";
 		}
 
-		jsonObject.put("removePlugins", removePlugins);
+		jsonObject.put(
+			"removePlugins", removePlugins
+		).put(
+			"toolbarImage", ""
+		).put(
+			"toolbarTable", ""
+		).put(
+			"toolbarText", "TextLink"
+		).put(
+			"toolbarVideo", ""
+		);
 	}
 
 }

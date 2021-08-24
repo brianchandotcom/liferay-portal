@@ -315,9 +315,9 @@ export default class Blogs {
 			captionNode.classList.add(CSS_INVISIBLE);
 		}
 
-		window[`${this._config.namespace}coverImageCaptionEditor`].setHTML(
-			STR_BLANK
-		);
+		CKEDITOR.instances[
+			`${this._config.namespace}coverImageCaptionEditor`
+		].setData(STR_BLANK);
 	}
 
 	_saveEntry(draft, ajax) {
@@ -327,9 +327,10 @@ export default class Blogs {
 
 		const content = window[`${namespace}contentEditor`].getHTML();
 
-		const coverImageCaption = window[
+		const coverImageCaption = CKEDITOR.instances[
 			`${namespace}coverImageCaptionEditor`
-		].getHTML();
+		].getData();
+
 		const subtitle = this._getElementById('subtitle').value;
 		const title = this._getElementById('title').value;
 

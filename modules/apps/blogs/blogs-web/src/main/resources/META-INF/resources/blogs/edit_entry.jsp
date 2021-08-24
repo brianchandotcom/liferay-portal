@@ -139,10 +139,9 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 							<small>
 								<liferay-editor:editor
 									contents="<%= coverImageCaption %>"
-									editorName="alloyeditor"
+									editorName="ballooneditor"
 									name="coverImageCaptionEditor"
 									placeholder="caption"
-									showSource="<%= false %>"
 								/>
 							</small>
 						</div>

@@ -457,8 +457,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 						"targetCollections",
 						FragmentConfigurationFieldDataType.ARRAY);
 
-			if (ArrayUtil.contains(
-					JSONUtil.toStringArray(targetCollectionsJSONArray),
+			if (JSONUtil.hasValue(
+					targetCollectionsJSONArray,
 					_collectionStyledLayoutStructureItem.getItemId())) {
 
 				filterValues.put(

@@ -7,11 +7,6 @@
 	text-transform: uppercase;
 }
 
-.bootcamp-button .btn-nm {
-	font-size: 11px;
-	padding: var(--spacer) var(--spacer-4);
-}
-
 .bootcamp-button .btn-lg {
 	font-size: 13px;
 	padding: var(--spacer) var(--spacer-4);
@@ -23,6 +18,11 @@
 
 .bootcamp-button .btn-link a {
 	color: inherit;
+}
+
+.bootcamp-button .btn-nm {
+	font-size: 11px;
+	padding: var(--spacer) var(--spacer-4);
 }
 
 .bootcamp-button .link-arrow {

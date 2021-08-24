@@ -17,6 +17,7 @@ package com.liferay.wiki.engine.creole.internal.parser.visitor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ASTNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BoldTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.CollectionNode;
@@ -408,7 +409,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	protected void traverse(List<ASTNode> astNodes, String open, String close) {
-		if ((astNodes == null) || astNodes.isEmpty()) {
+		if (ListUtil.isEmpty(astNodes)) {
 			return;
 		}
 

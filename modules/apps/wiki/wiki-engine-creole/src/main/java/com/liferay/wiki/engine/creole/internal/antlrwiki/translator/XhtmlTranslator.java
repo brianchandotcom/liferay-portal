@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeNode;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -220,7 +221,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		List<TreeNode<HeadingNode>> treeNodes = tableOfContents.getChildNodes();
 
-		if ((treeNodes == null) || treeNodes.isEmpty()) {
+		if (ListUtil.isEmpty(treeNodes)) {
 			return;
 		}
 

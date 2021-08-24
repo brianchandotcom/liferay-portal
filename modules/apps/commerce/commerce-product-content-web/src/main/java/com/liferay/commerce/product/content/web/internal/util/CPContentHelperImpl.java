@@ -303,6 +303,31 @@ public class CPContentHelperImpl implements CPContentHelper {
 		return _cpContentRendererRegistry.getCPContentRenderers(cpType);
 	}
 
+	public FileVersion getCPDefinitionImageFileVersion(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpDefinitionService.getDefaultImage(cpDefinitionId);
+
+		if (cpAttachmentFileEntry != null) {
+			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+			if (fileEntry != null) {
+				return fileEntry.getFileVersion();
+			}
+		}
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		FileEntry fileEntry = _commerceMediaHttpHelper.getDefaultImageFileEntry(
+			_portal.getCompanyId(httpServletRequest),
+			cpDefinition.getGroupId());
+
+		return fileEntry.getFileVersion();
+	}
+
 	@Override
 	public List<CPDefinitionSpecificationOptionValue>
 			getCPDefinitionSpecificationOptionValues(long cpDefinitionId)
@@ -352,30 +377,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		return _cpInstanceHelper.getDefaultCPSku(cpCatalogEntry);
-	}
-
-	public FileVersion getDefaultImageFileEntryFileVersion(
-			long cpDefinitionId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpDefinitionService.getDefaultImage(cpDefinitionId);
-
-		if (cpAttachmentFileEntry != null) {
-			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
-
-			if (fileEntry != null) {
-				return fileEntry.getFileVersion();
-			}
-		}
-
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpDefinitionId);
-
-		FileEntry fileEntry = _commerceMediaHttpHelper.getDefaultImageFileEntry(
-			cpDefinition.getGroupId(), httpServletRequest);
-
-		return fileEntry.getFileVersion();
 	}
 
 	@Override

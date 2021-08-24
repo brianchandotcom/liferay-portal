@@ -87,6 +87,10 @@ public interface CPContentHelper {
 
 	public List<CPContentRenderer> getCPContentRenderers(String cpType);
 
+	public FileVersion getCPDefinitionImageFileVersion(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception;
+
 	public List<CPDefinitionSpecificationOptionValue>
 			getCPDefinitionSpecificationOptionValues(long cpDefinitionId)
 		throws PortalException;
@@ -103,10 +107,6 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
-		throws Exception;
-
-	public FileVersion getDefaultImageFileEntryFileVersion(
-			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public String getDownloadFileEntryURL(

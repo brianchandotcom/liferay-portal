@@ -18,14 +18,20 @@ import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilter
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,10 +44,12 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 	public CollectionAppliedFiltersFragmentRendererDisplayContext(
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_httpServletRequest = httpServletRequest;
 
 		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
@@ -52,6 +60,12 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 		Map<String, String[]> parameters =
 			_httpServletRequest.getParameterMap();
+
+		JSONArray targetCollectionsJSONArray =
+			(JSONArray)
+				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
+					_fragmentEntryLink.getEditableValues(), "targetCollections",
+					FragmentConfigurationFieldDataType.ARRAY);
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String parameterName = entry.getKey();
@@ -69,10 +83,40 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 				continue;
 			}
 
+			String filterFragmentEntryLinkId = parameterData.get(2);
+
+			FragmentEntryLink filterFragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					GetterUtil.getLong(filterFragmentEntryLinkId));
+
+			JSONArray filterTargetCollectionsJSONArray = null;
+
+			if (filterFragmentEntryLink != null) {
+				filterTargetCollectionsJSONArray =
+					(JSONArray)
+						_fragmentEntryConfigurationParser.
+							getConfigurationFieldValue(
+								filterFragmentEntryLink.getEditableValues(),
+								"targetCollections",
+								FragmentConfigurationFieldDataType.ARRAY);
+			}
+
+			if (filterTargetCollectionsJSONArray == null) {
+				filterTargetCollectionsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+			}
+
+			if (Collections.disjoint(
+					JSONUtil.toStringSet(filterTargetCollectionsJSONArray),
+					JSONUtil.toStringSet(targetCollectionsJSONArray))) {
+
+				continue;
+			}
+
 			for (String filterValue : entry.getValue()) {
 				appliedFilters.add(
 					HashMapBuilder.put(
-						"filterFragmentEntryLinkId", parameterData.get(2)
+						"filterFragmentEntryLinkId", filterFragmentEntryLinkId
 					).put(
 						"filterType", parameterData.get(1)
 					).put(
@@ -115,6 +159,7 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;
+	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final HttpServletRequest _httpServletRequest;
 
 }

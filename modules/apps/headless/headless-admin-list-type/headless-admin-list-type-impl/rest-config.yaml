@@ -1,0 +1,9 @@
+apiDir: "../headless-admin-list-type-api/src/main/java"
+apiPackagePath: "com.liferay.headless.admin.list.type"
+application:
+    baseURI: "/headless-admin-list-type"
+    className: "HeadlessAdminListTypeApplication"
+    name: "Liferay.Headless.Admin.List.Type"
+author: "Gabriel Albuquerque"
+clientDir: "../headless-admin-list-type-client/src/main/java"
+testDir: "../headless-admin-list-type-test/src/testIntegration/java"

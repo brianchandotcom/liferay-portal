@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -181,6 +183,18 @@ public class LayoutInfoItemFieldValuesUpdater
 			_getFieldMap(
 				LayoutInfoItemFields.nameInfoField.getName(),
 				infoItemFieldValues, layout.getNameMap()));
+
+		if (layout.isDraftLayout()) {
+			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			UnicodeProperties unicodeProperties =
+				layout.getTypeSettingsProperties();
+
+			unicodeProperties.setProperty(
+				"published", Boolean.FALSE.toString());
+
+			layout.setTypeSettingsProperties(unicodeProperties);
+		}
 
 		return _layoutLocalService.updateLayout(layout);
 	}

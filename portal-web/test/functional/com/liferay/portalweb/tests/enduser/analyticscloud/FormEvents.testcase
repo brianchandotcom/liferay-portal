@@ -649,9 +649,9 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8692 | Test Summary: Check pageViewed IS NOT triggered without formViewed"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8692 | Test Summary: Check pageViewed is triggered with formViewed"
 	@priority = "4"
-	test CheckPageViewedIsNotTriggeredWithoutFormViewed {
+	test CheckPageViewedIsTriggeredWithFormViewed {
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

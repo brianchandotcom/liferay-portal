@@ -850,7 +850,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasEagerBlobColumn() {
-		if ((_blobEntityColumns == null) || _blobEntityColumns.isEmpty()) {
+		if (ListUtil.isEmpty(_blobEntityColumns)) {
 			return false;
 		}
 
@@ -897,7 +897,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasLazyBlobEntityColumn() {
-		if ((_blobEntityColumns == null) || _blobEntityColumns.isEmpty()) {
+		if (ListUtil.isEmpty(_blobEntityColumns)) {
 			return false;
 		}
 

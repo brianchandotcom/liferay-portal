@@ -17,6 +17,16 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a test for LPS-131694. The user can import a default site with an Asset Publisher into a new site after Upgrade."
+	@priority = "4"
+	test CanImportDefaultSiteWithAnAssetPublisherIntoNewSiteAfterUpgrade706 {
+		property data.archive.type = "data-archive-import-site";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.6";
+
+		Upgrade.addDefaultSiteIntoNewSite();
+	}
+
 	@description = "This is a test for LPS-102711."
 	@priority = "4"
 	test ViewCustomSiteSettingAfterUpgrade735 {

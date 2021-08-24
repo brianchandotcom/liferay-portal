@@ -49,7 +49,7 @@ public class CPDefinitionDiagramEntryKeywordQueryContributor
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "number", false);
+			booleanQuery, searchContext, "sequence", false);
 	}
 
 	@Reference

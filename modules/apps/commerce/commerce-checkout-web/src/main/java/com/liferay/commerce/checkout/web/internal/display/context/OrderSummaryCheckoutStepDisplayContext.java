@@ -44,6 +44,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
@@ -193,8 +194,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 				commerceOrderItem.getCPDefinitionId(),
 				commerceOrderItem.getJson());
 
-		if (((cpDefinitionCommerceOptionValues == null) ||
-			 cpDefinitionCommerceOptionValues.isEmpty()) &&
+		if (ListUtil.isEmpty(cpDefinitionCommerceOptionValues) &&
 			!Objects.equals(commerceOrderItem.getJson(), "[]")) {
 
 			List<CommerceOptionValue> commerceOptionValues =

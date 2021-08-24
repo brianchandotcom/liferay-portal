@@ -31,13 +31,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELDS_GROUP_EXPANDED</td>
-	<td>//button[contains(@class,'collapse-icon')]//following-sibling::div[contains(@class,'collapse show')]</td>
+	<td>FIELDS_GROUP_COLLAPSED_FIELD</td>
+	<td>//button[@aria-expanded='false']//..//label[contains(text(),'${key_fieldLabel}')]/..//input[@type!="hidden"]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELDS_GROUP_FIELD_COLLAPSIBLE_IS_VISIBLE</td>
-	<td>//div[contains(concat(' ',normalize-space(@class),' '),'show')]//label[contains(text(),'${key_fieldLabel}')]/..//input[@type!="hidden"]</td>
+	<td>FIELDS_GROUP_EXPANDED</td>
+	<td>//button[contains(@class,'collapse-icon')]//following-sibling::div[contains(@class,'collapse show')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -916,15 +916,15 @@ definition {
 	}
 
 	macro viewFieldsGroupCollapsedField {
-		AssertElementNotPresent(
+		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
-			locator1 = "Form#FIELDS_GROUP_FIELD_COLLAPSIBLE_IS_VISIBLE");
+			locator1 = "Form#FIELDS_GROUP_COLLAPSED_FIELD");
 	}
 
 	macro viewFieldsGroupNotCollapsedField {
-		AssertElementPresent(
+		AssertElementNotPresent(
 			key_fieldLabel = "${fieldLabel}",
-			locator1 = "Form#FIELDS_GROUP_FIELD_COLLAPSIBLE_IS_VISIBLE");
+			locator1 = "Form#FIELDS_GROUP_COLLAPSED_FIELD");
 	}
 
 	macro viewFormDescription {

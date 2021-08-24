@@ -213,8 +213,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectDefinition"
-                    description:
-                        ""
             tags: ["ObjectDefinition"]
         put:
             operationId: putObjectDefinition

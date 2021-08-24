@@ -47,6 +47,7 @@ public class CommerceOrderAssetRendererFactory
 		setCategorizable(false);
 		setClassName(CommerceOrder.class.getName());
 		setPortletId(CommercePortletKeys.COMMERCE_ORDER);
+		setSelectable(false);
 	}
 
 	@Override

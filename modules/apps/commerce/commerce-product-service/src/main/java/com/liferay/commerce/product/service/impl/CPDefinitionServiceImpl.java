@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
@@ -330,6 +331,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		_checkCommerceCatalog(groupId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
+	}
+
+	@Override
+	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+		throws PortalException {
+
+		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLocalService.getDefaultImage(cpDefinitionId);
 	}
 
 	/**

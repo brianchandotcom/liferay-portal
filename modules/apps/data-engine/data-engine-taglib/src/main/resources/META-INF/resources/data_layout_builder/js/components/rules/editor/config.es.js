@@ -13,6 +13,7 @@
  */
 
 export const OPERATOR_OPTIONS_TYPES = {
+	boolean: 'boolean',
 	double: 'number',
 	integer: 'number',
 	text: 'text',

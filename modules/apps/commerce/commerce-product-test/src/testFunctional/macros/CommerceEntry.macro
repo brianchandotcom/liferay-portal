@@ -1297,4 +1297,23 @@ definition {
 		}
 	}
 
+	macro verifyCostumRadiusWithDefaultValue {
+		for (var value : list "Small:10,Medium:20,Large:30") {
+
+			var dimension = StringUtil.extractFirst("${value}", ":");
+
+			var number = StringUtil.extractLast("${value}", ":");
+
+			Click( 
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION", 
+				key_optionValue = "${dimension}");
+
+			AssertElementPresent(
+				locator1 = "CommerceEntry#VERIFY_PIN_RADIUS",
+				key_radius = "${number}");
+
+			echo("Dimension: ${dimension} Radius: ${number} are present");
+		}
+	}
+
 }

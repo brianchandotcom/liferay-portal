@@ -48,10 +48,6 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-
-
-				
-
 			ACUtils.closeAllSessions();
 		}
 

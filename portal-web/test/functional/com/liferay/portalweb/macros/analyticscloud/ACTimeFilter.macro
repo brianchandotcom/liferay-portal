@@ -53,7 +53,7 @@ definition {
 
 			ACTimeFilter.clickTimeFilterButton(cardName = "${cardTitle}");
 		}
-		
+
 		else {
 			ACTimeFilter.clickTimeFilterButton();
 		}

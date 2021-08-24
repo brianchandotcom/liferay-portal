@@ -19,7 +19,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
-import com.liferay.commerce.media.CommerceMediaResolver;
+import com.liferay.commerce.media.CommerceMediaHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPMedia;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -44,6 +44,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -350,6 +352,30 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		return _cpInstanceHelper.getDefaultCPSku(cpCatalogEntry);
+	}
+
+	public FileVersion getDefaultImageFileEntryFileVersion(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpDefinitionService.getDefaultImage(cpDefinitionId);
+
+		if (cpAttachmentFileEntry != null) {
+			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+			if (fileEntry != null) {
+				return fileEntry.getFileVersion();
+			}
+		}
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		FileEntry fileEntry = _commerceMediaHttpHelper.getDefaultImageFileEntry(
+			cpDefinition.getGroupId(), httpServletRequest);
+
+		return fileEntry.getFileVersion();
 	}
 
 	@Override
@@ -690,7 +716,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		_commerceInventoryChecker;
 
 	@Reference
-	private CommerceMediaResolver _commerceMediaResolver;
+	private CommerceMediaHttpHelper _commerceMediaHttpHelper;
 
 	@Reference
 	private CommerceWishListItemService _commerceWishListItemService;
@@ -725,6 +751,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

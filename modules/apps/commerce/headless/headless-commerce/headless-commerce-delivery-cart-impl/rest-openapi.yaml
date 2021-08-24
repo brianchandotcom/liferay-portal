@@ -139,7 +139,6 @@ components:
                     type: string
                 customFields:
                     additionalProperties: true
-                    readOnly: true
                     type: object
                 errorMessages:
                     items:

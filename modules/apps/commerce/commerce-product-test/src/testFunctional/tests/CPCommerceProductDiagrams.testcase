@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
-definition { 
-    property portal.release = "true";
+definition {
+
+	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
 
@@ -10,7 +11,7 @@ definition {
 		User.firstLoginPG();
 	}
 
-    tearDown {
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {

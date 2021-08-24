@@ -532,7 +532,6 @@ export const CollectionGeneralPanel = ({item}) => {
 					item={item}
 					observer={filterConfigurationObserver}
 					onClose={onFilterConfigurationClose}
-					visible={filterConfigurationVisible}
 				/>
 			) : null}
 		</>

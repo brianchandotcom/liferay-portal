@@ -37,7 +37,6 @@ export default function CollectionFilterConfigurationModal({
 	item,
 	observer,
 	onClose,
-	visible,
 }) {
 	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector(selectPageContents);
@@ -85,10 +84,10 @@ export default function CollectionFilterConfigurationModal({
 	};
 
 	useEffect(() => {
-		if (visible && item.config) {
+		if (item.config) {
 			setItemConfig(item.config);
 		}
-	}, [item.config, visible]);
+	}, [item.config]);
 
 	return (
 		<ClayModal

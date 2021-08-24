@@ -28,19 +28,21 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistrar;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Michael C. Han
@@ -59,11 +61,6 @@ public abstract class BaseMessagingConfigurator
 
 	@Override
 	public void connect() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_messageListenerServiceRegistrar = registry.getServiceRegistrar(
-			MessageListener.class);
-
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -85,8 +82,8 @@ public abstract class BaseMessagingConfigurator
 
 				serviceLatch.openOn(
 					bundleContext -> {
-						Map<String, Object> properties =
-							HashMapBuilder.<String, Object>put(
+						Dictionary<String, Object> properties =
+							HashMapDictionaryBuilder.<String, Object>put(
 								"destination.name", destinationName
 							).put(
 								"message.listener.operating.class.loader",
@@ -96,9 +93,10 @@ public abstract class BaseMessagingConfigurator
 						for (MessageListener messageListener :
 								messageListeners.getValue()) {
 
-							_messageListenerServiceRegistrar.registerService(
-								MessageListener.class, messageListener,
-								properties);
+							_serviceRegistrations.add(
+								bundleContext.registerService(
+									MessageListener.class, messageListener,
+									properties));
 						}
 					});
 			}
@@ -110,21 +108,13 @@ public abstract class BaseMessagingConfigurator
 
 	@Override
 	public void destroy() {
-		if (_messageListenerServiceRegistrar != null) {
-			_messageListenerServiceRegistrar.destroy();
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
 		}
 
-		if (_destinationEventListenerServiceRegistrar != null) {
-			_destinationEventListenerServiceRegistrar.destroy();
-		}
-
-		if (_destinationServiceRegistrar != null) {
-			_destinationServiceRegistrar.destroy();
-		}
-
-		if (_messageBusEventListenerServiceRegistrar != null) {
-			_messageBusEventListenerServiceRegistrar.destroy();
-		}
+		_serviceRegistrations.clear();
 
 		_destinationConfigurations.clear();
 		_destinationEventListeners.clear();
@@ -280,11 +270,6 @@ public abstract class BaseMessagingConfigurator
 			return;
 		}
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		_destinationEventListenerServiceRegistrar =
-			registry.getServiceRegistrar(DestinationEventListener.class);
-
 		for (final Map.Entry<String, List<DestinationEventListener>> entry :
 				_destinationEventListeners.entrySet()) {
 
@@ -298,19 +283,18 @@ public abstract class BaseMessagingConfigurator
 					Destination.class.getName(), "))"));
 
 			serviceLatch.openOn(
-				() -> {
-					Map<String, Object> properties =
-						HashMapBuilder.<String, Object>put(
-							"destination.name", destinationName
-						).build();
+				bundleContext -> {
+					Dictionary<String, Object> properties =
+						MapUtil.singletonDictionary(
+							"destination.name", destinationName);
 
 					for (DestinationEventListener destinationEventListener :
 							entry.getValue()) {
 
-						_destinationEventListenerServiceRegistrar.
-							registerService(
+						_serviceRegistrations.add(
+							bundleContext.registerService(
 								DestinationEventListener.class,
-								destinationEventListener, properties);
+								destinationEventListener, properties));
 					}
 				});
 		}
@@ -329,17 +313,14 @@ public abstract class BaseMessagingConfigurator
 			return;
 		}
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		_destinationServiceRegistrar = registry.getServiceRegistrar(
-			Destination.class);
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		for (Destination destination : _destinations) {
-			_destinationServiceRegistrar.registerService(
-				Destination.class, destination,
-				HashMapBuilder.<String, Object>put(
-					"destination.name", destination.getName()
-				).build());
+			_serviceRegistrations.add(
+				bundleContext.registerService(
+					Destination.class, destination,
+					MapUtil.singletonDictionary(
+						"destination.name", destination.getName())));
 		}
 	}
 
@@ -348,16 +329,15 @@ public abstract class BaseMessagingConfigurator
 			return;
 		}
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		_messageBusEventListenerServiceRegistrar = registry.getServiceRegistrar(
-			MessageBusEventListener.class);
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		for (MessageBusEventListener messageBusEventListener :
 				_messageBusEventListeners) {
 
-			_messageBusEventListenerServiceRegistrar.registerService(
-				MessageBusEventListener.class, messageBusEventListener);
+			_serviceRegistrations.add(
+				bundleContext.registerService(
+					MessageBusEventListener.class, messageBusEventListener,
+					null));
 		}
 	}
 
@@ -368,18 +348,14 @@ public abstract class BaseMessagingConfigurator
 		new HashSet<>();
 	private final Map<String, List<DestinationEventListener>>
 		_destinationEventListeners = new HashMap<>();
-	private ServiceRegistrar<DestinationEventListener>
-		_destinationEventListenerServiceRegistrar;
 	private final List<Destination> _destinations = new ArrayList<>();
-	private ServiceRegistrar<Destination> _destinationServiceRegistrar;
 	private volatile MessageBus _messageBus;
 	private final List<MessageBusEventListener> _messageBusEventListeners =
 		new ArrayList<>();
-	private ServiceRegistrar<MessageBusEventListener>
-		_messageBusEventListenerServiceRegistrar;
 	private final Map<String, List<MessageListener>> _messageListeners =
 		new HashMap<>();
-	private ServiceRegistrar<MessageListener> _messageListenerServiceRegistrar;
 	private boolean _portalMessagingConfigurator;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

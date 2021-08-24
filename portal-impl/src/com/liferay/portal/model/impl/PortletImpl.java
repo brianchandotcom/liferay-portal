@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.poller.PollerProcessor;
@@ -64,7 +65,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -74,9 +75,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistrar;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
@@ -95,6 +93,9 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -3827,10 +3828,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setReady(boolean ready) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Readiness readiness = new Readiness(
-			ready, registry.getServiceRegistrar(Portlet.class));
+		Readiness readiness = new Readiness(ready);
 
 		String rootPortletId = getRootPortletId();
 
@@ -3848,25 +3846,18 @@ public class PortletImpl extends PortletBaseImpl {
 
 			readiness._ready = ready;
 
-			ServiceRegistrar<Portlet> serviceRegistrar =
-				readiness._serviceRegistrar;
-
 			if (ready && !_undeployedPortlet) {
-				if (serviceRegistrar.isDestroyed()) {
-					serviceRegistrar = registry.getServiceRegistrar(
-						Portlet.class);
+				BundleContext bundleContext =
+					SystemBundleUtil.getBundleContext();
 
-					readiness._serviceRegistrar = serviceRegistrar;
-				}
-
-				serviceRegistrar.registerService(
-					Portlet.class, this,
-					HashMapBuilder.<String, Object>put(
-						"javax.portlet.name", getPortletName()
-					).build());
+				readiness.setServiceRegistration(
+					bundleContext.registerService(
+						Portlet.class, this,
+						MapUtil.singletonDictionary(
+							"javax.portlet.name", getPortletName())));
 			}
 			else {
-				serviceRegistrar.destroy();
+				readiness.setServiceRegistration(null);
 			}
 		}
 	}
@@ -4293,10 +4284,7 @@ public class PortletImpl extends PortletBaseImpl {
 
 		if (readiness != null) {
 			synchronized (readiness) {
-				ServiceRegistrar<Portlet> serviceRegistrar =
-					readiness._serviceRegistrar;
-
-				serviceRegistrar.destroy();
+				readiness.setServiceRegistration(null);
 			}
 		}
 	}
@@ -4949,15 +4937,22 @@ public class PortletImpl extends PortletBaseImpl {
 
 	private static class Readiness {
 
-		private Readiness(
-			boolean ready, ServiceRegistrar<Portlet> serviceRegistrar) {
+		public void setServiceRegistration(
+			ServiceRegistration<Portlet> serviceRegistration) {
 
+			if (_serviceRegistration != null) {
+				_serviceRegistration.unregister();
+			}
+
+			_serviceRegistration = serviceRegistration;
+		}
+
+		private Readiness(boolean ready) {
 			_ready = ready;
-			_serviceRegistrar = serviceRegistrar;
 		}
 
 		private volatile boolean _ready;
-		private ServiceRegistrar<Portlet> _serviceRegistrar;
+		private ServiceRegistration<Portlet> _serviceRegistration;
 
 	}
 

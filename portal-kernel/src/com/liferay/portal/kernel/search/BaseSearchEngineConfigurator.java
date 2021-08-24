@@ -24,18 +24,16 @@ import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchWriterMessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistrar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +42,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Michael C. Han
@@ -75,13 +76,15 @@ public abstract class BaseSearchEngineConfigurator
 			_originalSearchEngineId = null;
 		}
 
-		for (ServiceRegistrar<Destination> destinationServiceRegistrar :
-				_destinationServiceRegistrars.values()) {
+		for (List<ServiceRegistration<Destination>>
+				destinationServiceRegistrations :
+					_destinationServiceRegistrations.values()) {
 
-			destinationServiceRegistrar.destroy();
+			destinationServiceRegistrations.forEach(
+				ServiceRegistration::unregister);
 		}
 
-		_destinationServiceRegistrars.clear();
+		_destinationServiceRegistrations.clear();
 	}
 
 	public void setDestinationFactory(DestinationFactory destinationFactory) {
@@ -185,12 +188,14 @@ public abstract class BaseSearchEngineConfigurator
 			searchEngineRegistration.getSearchEngineId());
 
 		if (!searchEngineRegistration.isOverride()) {
-			ServiceRegistrar<Destination> destinationServiceRegistrar =
-				_destinationServiceRegistrars.remove(
-					searchEngineRegistration.getSearchEngineId());
+			List<ServiceRegistration<Destination>>
+				destinationServiceRegistrations =
+					_destinationServiceRegistrations.remove(
+						searchEngineRegistration.getSearchEngineId());
 
-			if (destinationServiceRegistrar != null) {
-				destinationServiceRegistrar.destroy();
+			if (destinationServiceRegistrations != null) {
+				destinationServiceRegistrations.forEach(
+					ServiceRegistration::unregister);
 			}
 
 			return;
@@ -428,25 +433,17 @@ public abstract class BaseSearchEngineConfigurator
 	private void _registerSearchEngineDestination(
 		String searchEngineId, Destination destination) {
 
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"destination.name", destination.getName()
-		).build();
+		List<ServiceRegistration<Destination>> destinationServiceRegistrations =
+			_destinationServiceRegistrations.computeIfAbsent(
+				searchEngineId, key -> new ArrayList<>());
 
-		ServiceRegistrar<Destination> destinationServiceRegistrar =
-			_destinationServiceRegistrars.get(searchEngineId);
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		if (destinationServiceRegistrar == null) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			destinationServiceRegistrar = registry.getServiceRegistrar(
-				Destination.class);
-
-			_destinationServiceRegistrars.put(
-				searchEngineId, destinationServiceRegistrar);
-		}
-
-		destinationServiceRegistrar.registerService(
-			Destination.class, destination, properties);
+		destinationServiceRegistrations.add(
+			bundleContext.registerService(
+				Destination.class, destination,
+				MapUtil.singletonDictionary(
+					"destination.name", destination.getName())));
 	}
 
 	private static final int _INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE =
@@ -457,8 +454,8 @@ public abstract class BaseSearchEngineConfigurator
 		BaseSearchEngineConfigurator.class);
 
 	private DestinationFactory _destinationFactory;
-	private final Map<String, ServiceRegistrar<Destination>>
-		_destinationServiceRegistrars = new ConcurrentHashMap<>();
+	private final Map<String, List<ServiceRegistration<Destination>>>
+		_destinationServiceRegistrations = new ConcurrentHashMap<>();
 	private MessageBus _messageBus;
 	private String _originalSearchEngineId;
 	private final List<SearchEngineRegistration> _searchEngineRegistrations =

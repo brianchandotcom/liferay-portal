@@ -50,16 +50,16 @@ public class CurrentAccountEntryManagerImpl
 	public AccountEntry getCurrentAccountEntry(long groupId, long userId)
 		throws PortalException {
 
-		AccountEntry accountEntry = _retrieveFromSession(groupId);
+		AccountEntry accountEntry = _getAccountEntryFromHttpSession(groupId);
 
 		if (_isValid(accountEntry)) {
 			return accountEntry;
 		}
 
-		accountEntry = _retrieveFromPreferences(groupId, userId);
+		accountEntry = _getAccountEntryFromPortalPreferences(groupId, userId);
 
 		if (_isValid(accountEntry)) {
-			_storeInSession(accountEntry.getAccountEntryId(), groupId);
+			_saveInHttpSession(accountEntry.getAccountEntryId(), groupId);
 
 			return accountEntry;
 		}
@@ -81,9 +81,39 @@ public class CurrentAccountEntryManagerImpl
 	public void setCurrentAccountEntry(
 		long accountEntryId, long groupId, long userId) {
 
-		_storeInSession(accountEntryId, groupId);
+		_saveInHttpSession(accountEntryId, groupId);
 
-		_storeInPreferences(accountEntryId, groupId, userId);
+		_saveInPortalPreferences(accountEntryId, groupId, userId);
+	}
+
+	private AccountEntry _getAccountEntryFromHttpSession(long groupId) {
+		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+		if (httpSession == null) {
+			return null;
+		}
+
+		long currentAccountEntryId = GetterUtil.getLong(
+			httpSession.getAttribute(_getKey(groupId)));
+
+		return _accountEntryLocalService.fetchAccountEntry(
+			currentAccountEntryId);
+	}
+
+	private AccountEntry _getAccountEntryFromPortalPreferences(
+		long groupId, long userId) {
+
+		PortalPreferences portalPreferences = _getPortalPreferences(userId);
+
+		long accountEntryId = GetterUtil.getLong(
+			portalPreferences.getValue(
+				AccountEntry.class.getName(), _getKey(groupId)));
+
+		if (accountEntryId > 0) {
+			return _accountEntryLocalService.fetchAccountEntry(accountEntryId);
+		}
+
+		return null;
 	}
 
 	private AccountEntry _getDefaultAccountEntry(long userId)
@@ -132,35 +162,17 @@ public class CurrentAccountEntryManagerImpl
 		return false;
 	}
 
-	private AccountEntry _retrieveFromPreferences(long groupId, long userId) {
-		PortalPreferences portalPreferences = _getPortalPreferences(userId);
-
-		long accountEntryId = GetterUtil.getLong(
-			portalPreferences.getValue(
-				AccountEntry.class.getName(), _getKey(groupId)));
-
-		if (accountEntryId > 0) {
-			return _accountEntryLocalService.fetchAccountEntry(accountEntryId);
-		}
-
-		return null;
-	}
-
-	private AccountEntry _retrieveFromSession(long groupId) {
+	private void _saveInHttpSession(long accountEntryId, long groupId) {
 		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
 
 		if (httpSession == null) {
-			return null;
+			return;
 		}
 
-		long currentAccountEntryId = GetterUtil.getLong(
-			httpSession.getAttribute(_getKey(groupId)));
-
-		return _accountEntryLocalService.fetchAccountEntry(
-			currentAccountEntryId);
+		httpSession.setAttribute(_getKey(groupId), accountEntryId);
 	}
 
-	private void _storeInPreferences(
+	private void _saveInPortalPreferences(
 		long accountEntryId, long groupId, long userId) {
 
 		PortalPreferences portalPreferences = _getPortalPreferences(userId);
@@ -171,16 +183,6 @@ public class CurrentAccountEntryManagerImpl
 
 		_portalPreferencesLocalService.updatePreferences(
 			userId, PortletKeys.PREFS_OWNER_TYPE_USER, portalPreferences);
-	}
-
-	private void _storeInSession(long accountEntryId, long groupId) {
-		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
-
-		if (httpSession == null) {
-			return;
-		}
-
-		httpSession.setAttribute(_getKey(groupId), accountEntryId);
 	}
 
 	@Reference

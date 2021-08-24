@@ -192,6 +192,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// This test relies on the test LRAC-7890
+		// AC Refactor ticket: LRAC-8774
 
 		task ("Create new users and connect the DXP to AC") {
 			for (var name : list "ac,ac2,ac3") {

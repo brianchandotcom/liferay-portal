@@ -23,7 +23,6 @@ import {fromControlsId} from '../../../../../app/components/layout-data-items/Co
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
-import {config} from '../../../../../app/config/index';
 import {
 	useActivationOrigin,
 	useActiveItemId,
@@ -317,16 +316,15 @@ function StructureTreeNodeContent({
 			/>
 
 			<div>
-				{(node.removable || node.hidden) &&
-					config.fragmentsHidingEnabled && (
-						<VisibilityButton
-							dispatch={dispatch}
-							node={node}
-							segmentsExperienceId={segmentsExperienceId}
-							selectedViewportSize={selectedViewportSize}
-							visible={node.hidden || isHovered || isSelected}
-						/>
-					)}
+				{(node.removable || node.hidden) && (
+					<VisibilityButton
+						dispatch={dispatch}
+						node={node}
+						segmentsExperienceId={segmentsExperienceId}
+						selectedViewportSize={selectedViewportSize}
+						visible={node.hidden || isHovered || isSelected}
+					/>
+				)}
 
 				{node.removable && canUpdatePageStructure && (
 					<RemoveButton

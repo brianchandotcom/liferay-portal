@@ -36,10 +36,8 @@ export const CommonStyles = ({commonStylesValues, item}) => {
 	let styles = commonStyles;
 
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-		styles = styles.filter(
-			(fieldSet) =>
-				config.fragmentsHidingEnabled &&
-				fieldSet.styles.find((field) => field.name === 'display')
+		styles = styles.filter((fieldSet) =>
+			fieldSet.styles.find((field) => field.name === 'display')
 		);
 	}
 

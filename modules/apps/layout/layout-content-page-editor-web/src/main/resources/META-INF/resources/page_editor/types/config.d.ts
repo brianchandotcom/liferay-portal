@@ -98,7 +98,6 @@ export interface Config {
 	editFragmentEntryLinkCommentURL: string;
 	editFragmentEntryLinkURL: string;
 	editSegmentsEntryURL: string;
-	fragmentsHidingEnabled: boolean;
 	frontendTokens: {
 		[key: string]: {
 			cssVariable: string;

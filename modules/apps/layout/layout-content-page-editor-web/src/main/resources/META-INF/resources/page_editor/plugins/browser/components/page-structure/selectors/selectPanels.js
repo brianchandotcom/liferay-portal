@@ -17,7 +17,6 @@ import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../app/config/constants/
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
-import {config} from '../../../../../app/config/index';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item-configuration-panels/CollectionAppliedFiltersGeneralPanel';
@@ -178,8 +177,7 @@ export const selectPanels = (
 			[PANEL_IDS.collectionGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemConfiguration,
-			[PANEL_IDS.collectionStyles]:
-				canUpdateItemConfiguration && config.fragmentsHidingEnabled,
+			[PANEL_IDS.collectionStyles]: canUpdateItemConfiguration,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {

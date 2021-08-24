@@ -20,7 +20,6 @@ import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../../../app/components/fr
 import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
-import {config} from '../../../../../../app/config/index';
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import isNullOrUndefined from '../../../../../../app/utils/isNullOrUndefined';
@@ -48,19 +47,13 @@ export const FieldSet = ({
 
 	const {selectedViewportSize} = store;
 
-	let availableFields =
+	const availableFields =
 		selectedViewportSize === VIEWPORT_SIZES.desktop
 			? fields
 			: fields.filter(
 					(field) =>
 						field.responsive || field.name === 'backgroundImage'
 			  );
-
-	if (!config.fragmentsHidingEnabled) {
-		availableFields = availableFields.filter(
-			(field) => field.name !== 'display'
-		);
-	}
 
 	return (
 		availableFields.length > 0 && (

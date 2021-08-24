@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.analytics.reports.document.internal.info.item.provider;
+package com.liferay.analytics.reports.document.library.internal.info.item.provider;
 
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.info.exception.NoSuchInfoItemException;

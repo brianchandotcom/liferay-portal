@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.analytics.reports.document.internal.info.item;
+package com.liferay.analytics.reports.document.library.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.layout.display.page.info.item.LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem;

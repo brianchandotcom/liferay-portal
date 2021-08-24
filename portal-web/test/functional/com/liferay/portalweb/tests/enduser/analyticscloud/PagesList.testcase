@@ -145,7 +145,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: The data on Pages doesn't appear
-		// AC Refactor ticket: LRAC-8777
+		// AC Refactor ticket: LRAC-8883
 
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {

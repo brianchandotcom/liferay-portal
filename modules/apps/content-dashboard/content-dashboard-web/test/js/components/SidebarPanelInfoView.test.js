@@ -132,7 +132,6 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('Mocked description')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();
 		expect(getByText('size')).toBeInTheDocument();
-		expect(getByText('file-name')).toBeInTheDocument();
 		expect(getByText('url')).toBeInTheDocument();
 	});
 

@@ -215,11 +215,6 @@ const SidebarPanelInfoView = ({
 				{documentIsAFile && (
 					<div className="sidebar-section">
 						<h5 className="font-weight-semi-bold mb-1">
-							{Liferay.Language.get('file-name')}
-						</h5>
-						<p className="text-secondary">{fileName}</p>
-
-						<h5 className="font-weight-semi-bold mb-1">
 							{Liferay.Language.get('url')}
 						</h5>
 						<p className="text-secondary">{previewURL}</p>

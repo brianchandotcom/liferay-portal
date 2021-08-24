@@ -44,7 +44,7 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 							<button aria-label="<liferay-ui:message key="remove-filter" />" class="close remove-filter-button" data-filter-fragment-entry-link-id="<%= appliedFilter.get("filterFragmentEntryLinkId") %>" data-filter-type="<%= appliedFilter.get("filterType") %>" data-filter-value="<%= appliedFilter.get("filterValue") %>" type="button">
 								<span class="c-inner">
 									<clay:icon
-										symbol="times"
+										symbol="times-small"
 									/>
 								</span>
 							</button>

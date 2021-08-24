@@ -366,15 +366,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			Set<String> resourcePathsSpecific =
-				_servletContext.getResourcePaths(resourcePath);
+			Set<String> resourcePathsScope = _servletContext.getResourcePaths(
+				resourcePath);
 
-			if (SetUtil.isEmpty(resourcePathsSpecific)) {
+			if (SetUtil.isEmpty(resourcePathsScope)) {
 				return;
 			}
 
-			for (String resourcePathSpecific : resourcePathsSpecific) {
-				String json = _read(resourcePathSpecific);
+			for (String resourcePathScope : resourcePathsScope) {
+				String json = _read(resourcePathScope);
 
 				TaxonomyVocabulary taxonomyVocabulary =
 					TaxonomyVocabulary.toDTO(json);
@@ -387,14 +387,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 					continue;
 				}
 
-				if (resourcePathSpecific.contains("company")) {
+				if (resourcePathScope.contains("company")) {
 					Group group = _groupLocalService.getCompanyGroup(
 						serviceContext.getCompanyId());
 
 					taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
 						group.getGroupId(), taxonomyVocabulary);
 				}
-				else if (resourcePathSpecific.contains("group")) {
+				else if (resourcePathScope.contains("group")) {
 					taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
 						serviceContext.getScopeGroupId(), taxonomyVocabulary);
 				}

@@ -109,11 +109,18 @@ public class DDMExpressionFunctionMetadataHelperTest {
 				ddmExpressionFunctionMetadatasMap, _resourceBundle);
 
 		Assert.assertEquals(
-			ddmExpressionFunctionMetadatasMap.toString(), 3,
+			ddmExpressionFunctionMetadatasMap.toString(), 4,
 			ddmExpressionFunctionMetadatasMap.size());
 
 		List<DDMExpressionFunctionMetadata> ddmExpressionFunctionMetadatas =
-			ddmExpressionFunctionMetadatasMap.get("number");
+			ddmExpressionFunctionMetadatasMap.get("boolean");
+
+		Assert.assertEquals(
+			ddmExpressionFunctionMetadatas.toString(), 1,
+			ddmExpressionFunctionMetadatas.size());
+
+		ddmExpressionFunctionMetadatas = ddmExpressionFunctionMetadatasMap.get(
+			"number");
 
 		Assert.assertEquals(
 			ddmExpressionFunctionMetadatas.toString(), 8,

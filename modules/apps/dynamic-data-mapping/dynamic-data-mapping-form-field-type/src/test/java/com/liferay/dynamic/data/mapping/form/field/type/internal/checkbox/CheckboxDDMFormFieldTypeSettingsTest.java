@@ -120,11 +120,12 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 
 		List<String> actions = ddmFormRule.getActions();
 
-		Assert.assertEquals(actions.toString(), 1, actions.size());
+		Assert.assertEquals(actions.toString(), 2, actions.size());
 
+		Assert.assertEquals("setVisible('dataType', FALSE)", actions.get(0));
 		Assert.assertEquals(
 			"setVisible('requiredErrorMessage', getValue('required'))",
-			actions.get(0));
+			actions.get(1));
 	}
 
 	@Test

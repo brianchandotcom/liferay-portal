@@ -20,6 +20,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
 
@@ -179,7 +180,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			urls = extraPackageMap.get(StringUtil.replace(path, '/', '.'));
 		}
 
-		if ((urls == null) || urls.isEmpty()) {
+		if (ListUtil.isEmpty(urls)) {
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			try {
@@ -204,7 +205,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			}
 		}
 
-		if ((urls == null) || urls.isEmpty()) {
+		if (ListUtil.isEmpty(urls)) {
 			_javaFileObjects.put(path, Collections.<JavaFileObject>emptyList());
 
 			return Collections.emptyList();

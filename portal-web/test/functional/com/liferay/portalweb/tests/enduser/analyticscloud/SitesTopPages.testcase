@@ -25,6 +25,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -131,12 +134,81 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8297 | Test Summary: Show Top 5 Exit Pages"
-	@ignore = "true"
 	@priority = "5"
 	test ShowTop5ExitPages {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8297 ShowTop5ExitPages pending implementation
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8898
 
+		task ("Site and blogs creation and connection with AC") {
+			ACUtils.addSiteAndPage();
+
+			var pages = "AC Page,AC Page 2,AC Page 3,AC Page 4,AC Page 5";
+
+			for (var n : list "${pages}") {
+				if ("${n}" != "AC Page") {
+					JSONLayout.addPublicLayout(
+						groupName = "Site Name",
+						layoutName = "${n}");
+				}
+				ACUtils.addWidgetToPage(
+					layoutName = "${n}",
+					widgetName = "Blogs");
+			}
+
+			ACUtils.createBlogsAndAddToPage();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with pages") {
+			for (var n : list "${pages}") {
+				Navigator.gotoSitePage(
+					pageName = "${n}",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "test@liferay.com",
+					userLoginFullName = "test test");
+			}
+
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Setting filter") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.switchTabInCard(tabName = "Exit Pages");
+		}
+
+		task ("Asset top 5 exit pages") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			var pagesList = "AC Page-2,AC Page 2-3,AC Page 3-4,AC Page 4-5,AC Page 5-1";
+
+			for (var current : list "${pagesList}") {
+				var name = StringUtil.extractFirst("${current}","-");
+				var n = StringUtil.extractLast("${current}","-");
+
+				ACCards.viewTopSitesByIndexes(
+					key_entry = "${name}",
+					key_index = "${n}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8294 | Test Summary: Show Top 5 Visited Pages"

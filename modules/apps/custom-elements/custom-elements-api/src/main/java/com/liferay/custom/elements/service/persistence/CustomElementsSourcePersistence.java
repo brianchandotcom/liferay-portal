@@ -483,6 +483,51 @@ public interface CustomElementsSourcePersistence
 	public int countByCompanyId(long companyId);
 
 	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or throws a <code>NoSuchSourceException</code> if it could not be found.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source
+	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 */
+	public CustomElementsSource findByHtmlElementName(String htmlElementName)
+		throws NoSuchSourceException;
+
+	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	public CustomElementsSource fetchByHtmlElementName(String htmlElementName);
+
+	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param htmlElementName the html element name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	public CustomElementsSource fetchByHtmlElementName(
+		String htmlElementName, boolean useFinderCache);
+
+	/**
+	 * Removes the custom elements source where htmlElementName = &#63; from the database.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the custom elements source that was removed
+	 */
+	public CustomElementsSource removeByHtmlElementName(String htmlElementName)
+		throws NoSuchSourceException;
+
+	/**
+	 * Returns the number of custom elements sources where htmlElementName = &#63;.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the number of matching custom elements sources
+	 */
+	public int countByHtmlElementName(String htmlElementName);
+
+	/**
 	 * Caches the custom elements source in the entity cache if it is enabled.
 	 *
 	 * @param customElementsSource the custom elements source

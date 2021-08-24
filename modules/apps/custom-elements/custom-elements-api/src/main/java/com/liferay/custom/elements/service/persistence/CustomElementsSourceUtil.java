@@ -654,6 +654,69 @@ public class CustomElementsSourceUtil {
 	}
 
 	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or throws a <code>NoSuchSourceException</code> if it could not be found.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source
+	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 */
+	public static CustomElementsSource findByHtmlElementName(
+			String htmlElementName)
+		throws com.liferay.custom.elements.exception.NoSuchSourceException {
+
+		return getPersistence().findByHtmlElementName(htmlElementName);
+	}
+
+	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	public static CustomElementsSource fetchByHtmlElementName(
+		String htmlElementName) {
+
+		return getPersistence().fetchByHtmlElementName(htmlElementName);
+	}
+
+	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param htmlElementName the html element name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	public static CustomElementsSource fetchByHtmlElementName(
+		String htmlElementName, boolean useFinderCache) {
+
+		return getPersistence().fetchByHtmlElementName(
+			htmlElementName, useFinderCache);
+	}
+
+	/**
+	 * Removes the custom elements source where htmlElementName = &#63; from the database.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the custom elements source that was removed
+	 */
+	public static CustomElementsSource removeByHtmlElementName(
+			String htmlElementName)
+		throws com.liferay.custom.elements.exception.NoSuchSourceException {
+
+		return getPersistence().removeByHtmlElementName(htmlElementName);
+	}
+
+	/**
+	 * Returns the number of custom elements sources where htmlElementName = &#63;.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the number of matching custom elements sources
+	 */
+	public static int countByHtmlElementName(String htmlElementName) {
+		return getPersistence().countByHtmlElementName(htmlElementName);
+	}
+
+	/**
 	 * Caches the custom elements source in the entity cache if it is enabled.
 	 *
 	 * @param customElementsSource the custom elements source

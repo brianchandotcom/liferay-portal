@@ -1729,6 +1729,242 @@ public class CustomElementsSourcePersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"customElementsSource.companyId = ?";
 
+	private FinderPath _finderPathFetchByHtmlElementName;
+	private FinderPath _finderPathCountByHtmlElementName;
+
+	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or throws a <code>NoSuchSourceException</code> if it could not be found.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source
+	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 */
+	@Override
+	public CustomElementsSource findByHtmlElementName(String htmlElementName)
+		throws NoSuchSourceException {
+
+		CustomElementsSource customElementsSource = fetchByHtmlElementName(
+			htmlElementName);
+
+		if (customElementsSource == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("htmlElementName=");
+			sb.append(htmlElementName);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchSourceException(sb.toString());
+		}
+
+		return customElementsSource;
+	}
+
+	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	@Override
+	public CustomElementsSource fetchByHtmlElementName(String htmlElementName) {
+		return fetchByHtmlElementName(htmlElementName, true);
+	}
+
+	/**
+	 * Returns the custom elements source where htmlElementName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param htmlElementName the html element name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	@Override
+	public CustomElementsSource fetchByHtmlElementName(
+		String htmlElementName, boolean useFinderCache) {
+
+		htmlElementName = Objects.toString(htmlElementName, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {htmlElementName};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByHtmlElementName, finderArgs);
+		}
+
+		if (result instanceof CustomElementsSource) {
+			CustomElementsSource customElementsSource =
+				(CustomElementsSource)result;
+
+			if (!Objects.equals(
+					htmlElementName,
+					customElementsSource.getHTMLElementName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_SELECT_CUSTOMELEMENTSSOURCE_WHERE);
+
+			boolean bindHTMLElementName = false;
+
+			if (htmlElementName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_HTMLELEMENTNAME_HTMLELEMENTNAME_3);
+			}
+			else {
+				bindHTMLElementName = true;
+
+				sb.append(_FINDER_COLUMN_HTMLELEMENTNAME_HTMLELEMENTNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindHTMLElementName) {
+					queryPos.add(htmlElementName);
+				}
+
+				List<CustomElementsSource> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByHtmlElementName, finderArgs,
+							list);
+					}
+				}
+				else {
+					CustomElementsSource customElementsSource = list.get(0);
+
+					result = customElementsSource;
+
+					cacheResult(customElementsSource);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CustomElementsSource)result;
+		}
+	}
+
+	/**
+	 * Removes the custom elements source where htmlElementName = &#63; from the database.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the custom elements source that was removed
+	 */
+	@Override
+	public CustomElementsSource removeByHtmlElementName(String htmlElementName)
+		throws NoSuchSourceException {
+
+		CustomElementsSource customElementsSource = findByHtmlElementName(
+			htmlElementName);
+
+		return remove(customElementsSource);
+	}
+
+	/**
+	 * Returns the number of custom elements sources where htmlElementName = &#63;.
+	 *
+	 * @param htmlElementName the html element name
+	 * @return the number of matching custom elements sources
+	 */
+	@Override
+	public int countByHtmlElementName(String htmlElementName) {
+		htmlElementName = Objects.toString(htmlElementName, "");
+
+		FinderPath finderPath = _finderPathCountByHtmlElementName;
+
+		Object[] finderArgs = new Object[] {htmlElementName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_CUSTOMELEMENTSSOURCE_WHERE);
+
+			boolean bindHTMLElementName = false;
+
+			if (htmlElementName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_HTMLELEMENTNAME_HTMLELEMENTNAME_3);
+			}
+			else {
+				bindHTMLElementName = true;
+
+				sb.append(_FINDER_COLUMN_HTMLELEMENTNAME_HTMLELEMENTNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindHTMLElementName) {
+					queryPos.add(htmlElementName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_HTMLELEMENTNAME_HTMLELEMENTNAME_2 =
+			"customElementsSource.htmlElementName = ?";
+
+	private static final String
+		_FINDER_COLUMN_HTMLELEMENTNAME_HTMLELEMENTNAME_3 =
+			"(customElementsSource.htmlElementName IS NULL OR customElementsSource.htmlElementName = '')";
+
 	public CustomElementsSourcePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1754,6 +1990,11 @@ public class CustomElementsSourcePersistenceImpl
 		entityCache.putResult(
 			CustomElementsSourceImpl.class,
 			customElementsSource.getPrimaryKey(), customElementsSource);
+
+		finderCache.putResult(
+			_finderPathFetchByHtmlElementName,
+			new Object[] {customElementsSource.getHTMLElementName()},
+			customElementsSource);
 	}
 
 	/**
@@ -1820,6 +2061,20 @@ public class CustomElementsSourcePersistenceImpl
 			entityCache.removeResult(
 				CustomElementsSourceImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		CustomElementsSourceModelImpl customElementsSourceModelImpl) {
+
+		Object[] args = new Object[] {
+			customElementsSourceModelImpl.getHTMLElementName()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByHtmlElementName, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByHtmlElementName, args,
+			customElementsSourceModelImpl);
 	}
 
 	/**
@@ -2014,6 +2269,8 @@ public class CustomElementsSourcePersistenceImpl
 		entityCache.putResult(
 			CustomElementsSourceImpl.class, customElementsSourceModelImpl,
 			false, true);
+
+		cacheUniqueFindersCache(customElementsSourceModelImpl);
 
 		if (isNew) {
 			customElementsSource.setNew(false);
@@ -2353,6 +2610,16 @@ public class CustomElementsSourcePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_finderPathFetchByHtmlElementName = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByHtmlElementName",
+			new String[] {String.class.getName()},
+			new String[] {"htmlElementName"}, true);
+
+		_finderPathCountByHtmlElementName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHtmlElementName",
+			new String[] {String.class.getName()},
+			new String[] {"htmlElementName"}, false);
 	}
 
 	@Deactivate

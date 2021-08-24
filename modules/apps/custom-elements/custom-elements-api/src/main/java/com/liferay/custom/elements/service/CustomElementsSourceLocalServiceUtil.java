@@ -262,6 +262,13 @@ public class CustomElementsSourceLocalServiceUtil {
 		return getService().getCustomElementsSource(customElementsSourceId);
 	}
 
+	public static CustomElementsSource getCustomElementsSource(
+			String htmlElementName)
+		throws com.liferay.custom.elements.exception.NoSuchSourceException {
+
+		return getService().getCustomElementsSource(htmlElementName);
+	}
+
 	/**
 	 * Returns the custom elements source with the matching UUID and company.
 	 *

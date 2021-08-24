@@ -14,6 +14,7 @@
 
 package com.liferay.custom.elements.service;
 
+import com.liferay.custom.elements.exception.NoSuchSourceException;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -240,6 +241,10 @@ public interface CustomElementsSourceLocalService
 	public CustomElementsSource getCustomElementsSource(
 			long customElementsSourceId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CustomElementsSource getCustomElementsSource(String htmlElementName)
+		throws NoSuchSourceException;
 
 	/**
 	 * Returns the custom elements source with the matching UUID and company.

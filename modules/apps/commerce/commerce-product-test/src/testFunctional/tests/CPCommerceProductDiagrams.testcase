@@ -60,4 +60,5 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 	}
+
 }

@@ -430,21 +430,25 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			ServletContextUtil.getFragmentEntryConfigurationParser();
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String filterParameterName = entry.getKey();
+			String parameterName = entry.getKey();
 
-			if (!filterParameterName.startsWith(
+			if (!parameterName.startsWith(
 					FragmentCollectionFilterConstants.FILTER_PREFIX) ||
 				ArrayUtil.isEmpty(entry.getValue())) {
 
 				continue;
 			}
 
-			List<String> filterParameterNames = StringUtil.split(
-				filterParameterName, CharPool.UNDERLINE);
+			List<String> parameterData = StringUtil.split(
+				parameterName, CharPool.UNDERLINE);
+
+			if (parameterData.size() != 3) {
+				continue;
+			}
 
 			FragmentEntryLink fragmentEntryLink =
 				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-					GetterUtil.getLong(filterParameterNames.get(2)));
+					GetterUtil.getLong(parameterData.get(2)));
 
 			if (fragmentEntryLink == null) {
 				continue;
@@ -457,12 +461,13 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 						"targetCollections",
 						FragmentConfigurationFieldDataType.ARRAY);
 
-			if (JSONUtil.hasValue(
+			if ((targetCollectionsJSONArray != null) &&
+				JSONUtil.hasValue(
 					targetCollectionsJSONArray,
 					_collectionStyledLayoutStructureItem.getItemId())) {
 
 				filterValues.put(
-					filterParameterName.replaceFirst(
+					parameterName.replaceFirst(
 						FragmentCollectionFilterConstants.FILTER_PREFIX,
 						StringPool.BLANK),
 					entry.getValue());

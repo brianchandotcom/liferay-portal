@@ -57,6 +57,7 @@ definition {
 			"label": {
 				"en_US": "${fieldLabelName}"
 			},
+			"listTypeDefinitionId": 0,
 			"name": "${fieldName}",
 			"required": ${isRequired},
 			"type": "${fieldType}"

@@ -128,8 +128,7 @@ public class JournalManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteEntries");
 
-							boolean trashEnabled = _trashHelper.isTrashEnabled(
-								_themeDisplay.getScopeGroupId());
+							boolean trashEnabled = _isTrashEnabled();
 
 							dropdownItem.setIcon(
 								trashEnabled ? "trash" : "times-circle");

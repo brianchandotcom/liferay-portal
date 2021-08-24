@@ -79,6 +79,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 				indexedAsKeyword: type !== 'Blob',
 				indexedLanguageId: null,
 				label,
+				listTypeDefinitionId: 0,
 				name,
 				required,
 				type,

@@ -174,6 +174,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					indexedAsKeyword,
 					indexedLanguageId,
 					label,
+					listTypeDefinitionId: 0,
 					name,
 					required,
 					type,

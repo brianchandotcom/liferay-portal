@@ -44,9 +44,13 @@ export default withRouter(
 								deleteCache();
 								historyPushParser(
 									`/questions/${
-										context.useTopicNamesInURL
-											? question.messageBoardSection.title
-											: question.messageBoardSection.id
+										question.messageBoardSection
+											? context.useTopicNamesInURL
+												? question.messageBoardSection
+														.title
+												: question.messageBoardSection
+														.id
+											: context.rootTopicId
 									}`
 								);
 							});

@@ -353,7 +353,7 @@ public class DLAdminManagementToolbarDisplayContext
 				String label = String.format(
 					"%s: %s",
 					LanguageUtil.get(_httpServletRequest, "document-type"),
-					fileEntryTypeName);
+					HtmlUtil.escape(fileEntryTypeName));
 
 				labelItem.setLabel(label);
 			}

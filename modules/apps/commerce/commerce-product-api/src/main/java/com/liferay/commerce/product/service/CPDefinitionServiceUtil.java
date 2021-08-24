@@ -287,6 +287,13 @@ public class CPDefinitionServiceUtil {
 		return getService().getCPDefinitionsCount(groupId, status);
 	}
 
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
+			getDefaultImage(long cpDefinitionId)
+		throws PortalException {
+
+		return getService().getDefaultImage(cpDefinitionId);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

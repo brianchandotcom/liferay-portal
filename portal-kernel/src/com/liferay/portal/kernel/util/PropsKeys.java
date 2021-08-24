@@ -1272,6 +1272,9 @@ public interface PropsKeys {
 	public static final String FINALIZE_MANAGER_THREAD_ENABLED =
 		"finalize.manager.thread.enabled";
 
+	public static final String FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY =
+		"freemarker.template.transaction.strictreadonly";
+
 	public static final String FULL_PAGE_DISPLAYABLE = "full.page.displayable";
 
 	public static final String GLOBAL_SHUTDOWN_EVENTS =

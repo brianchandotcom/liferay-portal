@@ -1120,6 +1120,11 @@ public class PropsValues {
 					PropsKeys.
 						FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS));
 
+	public static final boolean FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY));
+
 	public static final String[] GLOBAL_SHUTDOWN_EVENTS = PropsUtil.getArray(
 		PropsKeys.GLOBAL_SHUTDOWN_EVENTS);
 

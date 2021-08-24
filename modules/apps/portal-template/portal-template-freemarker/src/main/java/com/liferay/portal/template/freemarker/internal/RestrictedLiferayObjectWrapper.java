@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PropsValues;
 
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.StringModel;
@@ -320,7 +321,8 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.REQUIRES_NEW);
-		builder.setStrictReadOnly(true);
+		builder.setStrictReadOnly(
+			PropsValues.FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY);
 		builder.setRollbackForClasses(Exception.class);
 
 		_transactionConfig = builder.build();

@@ -16,15 +16,12 @@ package com.liferay.commerce.media;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Alec Sloan
  */
 public interface CommerceMediaHttpHelper {
 
-	public FileEntry getDefaultImageFileEntry(
-			long gropuId, HttpServletRequest httpServletRequest)
+	public FileEntry getDefaultImageFileEntry(long companyId, long groupId)
 		throws Exception;
 
 }

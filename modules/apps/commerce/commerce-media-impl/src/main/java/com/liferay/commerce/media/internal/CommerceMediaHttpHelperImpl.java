@@ -24,11 +24,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, service = CommerceMediaHttpHelper.class)
 public class CommerceMediaHttpHelperImpl implements CommerceMediaHttpHelper {
 
-	public FileEntry getDefaultImageFileEntry(
-			long groupId, HttpServletRequest httpServletRequest)
+	@Override
+	public FileEntry getDefaultImageFileEntry(long companyId, long groupId)
 		throws Exception {
 
 		CommerceMediaDefaultImageConfiguration
@@ -57,9 +55,11 @@ public class CommerceMediaHttpHelperImpl implements CommerceMediaHttpHelper {
 				commerceMediaDefaultImageConfiguration.defaultFileEntryId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
 
-			Company company = _portal.getCompany(httpServletRequest);
+			Company company = _companyLocalService.getCompany(companyId);
 
 			fileEntry =
 				_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
@@ -73,9 +73,9 @@ public class CommerceMediaHttpHelperImpl implements CommerceMediaHttpHelper {
 		CommerceMediaHttpHelperImpl.class);
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private Portal _portal;
+	private DLAppLocalService _dlAppLocalService;
 
 }

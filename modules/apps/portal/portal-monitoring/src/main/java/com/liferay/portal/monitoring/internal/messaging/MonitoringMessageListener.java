@@ -83,7 +83,7 @@ public class MonitoringMessageListener
 		List<DataSampleProcessor<DataSample>> dataSampleProcessors =
 			_dataSampleProcessors.get(namespace);
 
-		if ((dataSampleProcessors == null) || dataSampleProcessors.isEmpty()) {
+		if (ListUtil.isEmpty(dataSampleProcessors)) {
 			return;
 		}
 

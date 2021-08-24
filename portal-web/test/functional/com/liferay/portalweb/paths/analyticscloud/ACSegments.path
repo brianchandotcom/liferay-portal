@@ -314,7 +314,7 @@
 </tr>
 <tr>
 	<td>ACTIVITIES_CRITERION</td>
-	<td>xpath=(//select[contains(@class,'criterion-input')])[${key_indexField}]</td>
+	<td>xpath=(//div[contains(@class,'criteria-statement')]//select[contains(@class,'form-control')])[${key_indexField}]</td>
 	<td></td>
 </tr>
 <tr>

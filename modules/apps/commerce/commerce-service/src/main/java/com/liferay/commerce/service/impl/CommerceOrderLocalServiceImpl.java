@@ -466,7 +466,7 @@ public class CommerceOrderLocalServiceImpl
 		// Workflow
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+			commerceOrder.getCompanyId(), commerceOrder.getScopeGroupId(),
 			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId());
 
 		return commerceOrder;

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -137,8 +138,10 @@ public class TranslateDisplayContext {
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
 			infoField.getLabelInfoLocalizedValue();
 
-		return labelInfoLocalizedValue.getValue(
+		String infoFieldLabel = labelInfoLocalizedValue.getValue(
 			PortalUtil.getLocale(_httpServletRequest));
+
+		return HtmlUtil.escape(infoFieldLabel);
 	}
 
 	public List<InfoField> getInfoFields(InfoFieldSetEntry infoFieldSetEntry) {

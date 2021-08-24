@@ -30,12 +30,64 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8319 | Test Summary: Custom Range time period filter in Sites"
-	@ignore = "true"
 	@priority = "5"
 	test CustomRangeTimePeriodFilterSites {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8319
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8744
 
+		task ("Site and page creation and connection with AC") {
+			ACUtils.addSiteAndPage(layoutName = "AC Page");
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+
+
+				
+
+			ACUtils.closeAllSessions();
+		}
+
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset Custom Range time period filter") {
+
+			// It is not possible to perform the assert because this test needs data from the past
+
+			var displayDateDay = DateUtil.getCurrentDate();
+			var displayMonth = DateUtil.getCurrentMonth();
+			var displayDateMonth = DateUtil.getCurrentMonthName();
+			var displayDateYear = DateUtil.getCurrentYear();
+			var previousDay = DateUtil.getFormattedDate("-1", "d");
+			var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
+			var previousYear = DateUtil.getFormattedDate("-1", "yyyy");
+
+			ACNavigation.switchTab(tabName = "Overview");
+
+			var key_cardTitle = "${propertyName} Activities,Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology";
+
+			for (var key_cardTitle : list "${key_cardTitle}") {
+				ACTimeFilter.setCustomRange(
+					cardTitle = "${key_cardTitle}",
+					endDay = "${displayDateDay}",
+					endMonth = "${displayDateMonth}",
+					endYear = "${displayDateYear}",
+					startDay = "${previousDay}",
+					startMonth = "${previousMonth}",
+					startYear = "${previousYear}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8321 | Test Summary: 1st user access and no property was selected yet"

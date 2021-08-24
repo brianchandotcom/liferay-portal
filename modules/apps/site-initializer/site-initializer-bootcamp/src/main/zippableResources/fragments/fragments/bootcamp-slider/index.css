@@ -1,0 +1,21 @@
+.splide__pagination {
+	bottom: calc(var(--spacer-5) * -1);
+}
+
+.splide__pagination__page {
+	background-color: #FFF;
+	border: 1px solid var(--dark);
+	height: 16px;
+	margin: 0 7px;
+	width: 16px;
+}
+
+.splide__pagination__page.is-active {
+	background-color: var(--dark);
+	transform: scale(1);
+}
+
+.has-edit-mode-menu .splide__list {
+	flex-wrap: wrap;
+	width: 100%;
+}

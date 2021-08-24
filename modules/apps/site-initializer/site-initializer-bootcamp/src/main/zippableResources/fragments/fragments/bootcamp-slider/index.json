@@ -1,0 +1,77 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "slide",
+					"label": "Slide type ",
+					"name": "slideType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "slide"
+							},
+							{
+								"value": "loop"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "Show arrows",
+					"name": "showArrows",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "left",
+					"label": "Focus direction ",
+					"name": "focusDirection",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "left"
+							},
+							{
+								"value": "right"
+							},
+							{
+								"value": "center"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "4",
+					"description": "number-of-slides",
+					"label": "Number Of Slides",
+					"name": "numberOfSlides",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"defaultValue": "450px",
+					"label": "Slide width",
+					"name": "slideWidth",
+					"type": "text"
+				},
+				{
+					"defaultValue": "100%",
+					"label": "Slide width sm",
+					"name": "slideWidthSm",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

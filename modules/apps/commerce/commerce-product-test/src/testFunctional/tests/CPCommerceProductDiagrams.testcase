@@ -61,4 +61,43 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 	}
 
+	@description = "This is a test for COMMERCE-7020. UploadANotMappedNewImage"
+	@priority = "3"
+	test UploadANotMappedNewImage {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Diagram T-Shirt",
+			productType = "Diagram");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+		CommerceProductImages.addDiagramImages(
+			imageTitles = "Black",
+			productType = "Diagram");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_image = "Commerce_Black.jpg",
+			locator1 = "CommerceEntry#VERIFY_IMAGE");
+
+		AssertElementNotPresent(
+			key_color = "#ffffff",
+			locator1 = "CommerceEntry#VERIFY_PIN");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_image = "Commerce_Black.jpg",
+			locator1 = "CommerceEntry#VERIFY_IMAGE");
+	}
+
 }

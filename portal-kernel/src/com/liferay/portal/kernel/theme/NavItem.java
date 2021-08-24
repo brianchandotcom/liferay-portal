@@ -426,7 +426,7 @@ public class NavItem implements Serializable {
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 		List<Layout> layouts, Map<String, Object> contextObjects) {
 
-		if ((layouts == null) || layouts.isEmpty()) {
+		if (ListUtil.isEmpty(layouts)) {
 			return Collections.emptyList();
 		}
 

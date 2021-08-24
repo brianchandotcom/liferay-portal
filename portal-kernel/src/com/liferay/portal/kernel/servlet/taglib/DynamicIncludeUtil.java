@@ -41,9 +41,7 @@ public class DynamicIncludeUtil {
 	}
 
 	public static boolean hasDynamicInclude(String key) {
-		List<DynamicInclude> dynamicIncludes = getDynamicIncludes(key);
-
-		if ((dynamicIncludes == null) || dynamicIncludes.isEmpty()) {
+		if (ListUtil.isEmpty(getDynamicIncludes(key))) {
 			return false;
 		}
 
@@ -57,7 +55,7 @@ public class DynamicIncludeUtil {
 
 		List<DynamicInclude> dynamicIncludes = getDynamicIncludes(key);
 
-		if ((dynamicIncludes == null) || dynamicIncludes.isEmpty()) {
+		if (ListUtil.isEmpty(dynamicIncludes)) {
 			return;
 		}
 

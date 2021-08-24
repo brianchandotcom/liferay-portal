@@ -51,7 +51,7 @@ public class TagDynamicIncludeUtil {
 		List<TagDynamicInclude> tagDynamicIncludes = getTagDynamicIncludes(
 			tagClassName, tagDynamicId, tagPoint);
 
-		if ((tagDynamicIncludes == null) || tagDynamicIncludes.isEmpty()) {
+		if (ListUtil.isEmpty(tagDynamicIncludes)) {
 			return false;
 		}
 
@@ -66,7 +66,7 @@ public class TagDynamicIncludeUtil {
 		List<TagDynamicInclude> tagDynamicIncludes = getTagDynamicIncludes(
 			tagClassName, tagDynamicId, tagPoint);
 
-		if ((tagDynamicIncludes == null) || tagDynamicIncludes.isEmpty()) {
+		if (ListUtil.isEmpty(tagDynamicIncludes)) {
 			return;
 		}
 

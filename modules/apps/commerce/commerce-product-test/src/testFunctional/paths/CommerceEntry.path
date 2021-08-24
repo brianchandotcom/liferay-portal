@@ -552,6 +552,17 @@
 	<td>//p[@title='${key_productName}']//following-sibling::p[@class='card-text']//span[@class='price-value']</td>
 	<td></td>
 </tr>
+<!--DIAGRAM-->
+<tr>
+	<td>VERIFY_PIN</td>
+	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle' and @fill='${key_color}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERIFY_IMAGE</td>
+	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='image' and contains (@href,'${key_image}')]</td>
+	<td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>ADD_RELATION_FIELD</td>

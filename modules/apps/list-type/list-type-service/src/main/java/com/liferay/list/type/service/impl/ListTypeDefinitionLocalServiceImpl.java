@@ -57,6 +57,20 @@ public class ListTypeDefinitionLocalServiceImpl
 		return listTypeDefinitionPersistence.update(listTypeDefinition);
 	}
 
+	@Override
+	public ListTypeDefinition updateListTypeDefinition(
+			long listTypeDefinitionId, Map<Locale, String> nameMap)
+		throws PortalException {
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionPersistence.findByPrimaryKey(
+				listTypeDefinitionId);
+
+		listTypeDefinition.setNameMap(nameMap);
+
+		return listTypeDefinitionPersistence.update(listTypeDefinition);
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

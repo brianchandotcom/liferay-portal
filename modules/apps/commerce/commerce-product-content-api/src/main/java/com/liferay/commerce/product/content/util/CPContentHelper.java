@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
@@ -102,6 +103,10 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
+		throws Exception;
+
+	public FileVersion getDefaultImageFileEntryFileVersion(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public String getDownloadFileEntryURL(

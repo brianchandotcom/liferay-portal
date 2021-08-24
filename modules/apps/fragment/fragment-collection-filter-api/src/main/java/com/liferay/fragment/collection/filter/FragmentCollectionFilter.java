@@ -36,6 +36,8 @@ public interface FragmentCollectionFilter {
 
 	public String getFilterKey();
 
+	public String getFilterValueLabel(String filterValue, Locale locale);
+
 	public String getLabel(Locale locale);
 
 	public void render(

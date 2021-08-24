@@ -14,6 +14,8 @@
 
 package com.liferay.fragment.collection.filter.category;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.category.display.context.FragmentCollectionFilterCategoryDisplayContext;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -69,6 +72,18 @@ public class FragmentCollectionFilterCategory
 		return "category";
 	}
 
+	public String getFilterValueLabel(String filterValue, Locale locale) {
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.fetchAssetCategory(
+				GetterUtil.getLong(filterValue));
+
+		if (_assetCategoryLocalService == null) {
+			return filterValue;
+		}
+
+		return assetCategory.getTitle(locale);
+	}
+
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "category");
@@ -100,6 +115,9 @@ public class FragmentCollectionFilterCategory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionFilterCategory.class);
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

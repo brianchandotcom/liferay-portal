@@ -19,10 +19,13 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
 import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.view.table.ObjectEntriesTableClayDataSetDisplayView;
 import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortlet;
+import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -69,7 +72,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				Portlet.class,
 				new ObjectEntriesPortlet(
-					_portal, objectDefinition.getRESTContextPath()),
+					objectDefinition.getObjectDefinitionId(),
+					_objectDefinitionLocalService, _portal,
+					objectDefinition.getRESTContextPath()),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.display-category", "category.hidden"
 				).put(
@@ -80,6 +85,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"/object_entries/view_object_entries.jsp"
 				).put(
 					"javax.portlet.name", objectDefinition.getPortletId()
+				).build()),
 			_bundleContext.registerService(
 				MVCRenderCommand.class, new EditObjectEntryMVCRenderCommand(),
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -98,6 +104,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

@@ -14,6 +14,9 @@
 
 package com.liferay.object.web.internal.object.entries.portlet;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -31,7 +34,13 @@ import javax.portlet.RenderResponse;
  */
 public class ObjectEntriesPortlet extends MVCPortlet {
 
-	public ObjectEntriesPortlet(Portal portal, String restContextPath) {
+	public ObjectEntriesPortlet(
+		long objectDefinitionId,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		Portal portal, String restContextPath) {
+
+		_objectDefinitionId = objectDefinitionId;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_portal = portal;
 		_restContextPath = restContextPath;
 	}
@@ -40,6 +49,13 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_objectDefinitionId);
+
+		renderRequest.setAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION, objectDefinition);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -50,6 +66,8 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	private final long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final Portal _portal;
 	private final String _restContextPath;
 

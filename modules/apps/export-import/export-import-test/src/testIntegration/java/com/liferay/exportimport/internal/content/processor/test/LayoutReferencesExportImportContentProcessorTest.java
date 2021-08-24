@@ -598,6 +598,11 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			exportGroup.getCompanyId(),
 			PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
+		if (defaultGroup != null) {
+			defaultGroup = _groupLocalService.fetchGroup(
+				defaultGroup.getGroupId());
+		}
+
 		String exportGroupKey = exportGroup.getGroupKey();
 
 		String importGroupKey = importGroup.getGroupKey();

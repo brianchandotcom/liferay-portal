@@ -28,24 +28,6 @@ definition {
 			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=modules/apps/portal/portal-cluster-multiple-sample -DliferayHome=${liferayHome}");
 	}
 
-	macro deployModuleOnServer {
-		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-
-		var bundleIndex = ${leadingPortNumber} - 8;
-
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-		if ("${bundleIndex}" != "0") {
-			var liferayHome = "${liferayHome}-${bundleIndex}";
-		}
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=${moduleBaseDir} -DliferayHome=${liferayHome}");
-
-		Pause(locator1 = "10000");
-	}
-
 	macro enableDebugging {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 

@@ -14,8 +14,8 @@
 
 package com.liferay.object.model.impl;
 
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
@@ -61,7 +61,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return ObjectPortletKeys.OBJECT_ENTRIES + "#" + getObjectDefinitionId();
+		return PortalUtil.getJsSafePortletId(getRESTContextPath());
 	}
 
 	@Override

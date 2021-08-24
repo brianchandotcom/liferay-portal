@@ -108,12 +108,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getCompanyHostPortalURL(exportGroup) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, true);
+			_getCompanyHostPortalURL(exportGroup) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, true, true);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -130,12 +128,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getCompanyHostPortalURL(exportGroup) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, false);
+			_getCompanyHostPortalURL(exportGroup) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, true, false);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -157,12 +153,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getCompanyHostPortalURL(exportGroup) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, false);
+			_getCompanyHostPortalURL(exportGroup) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, true, false);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -181,12 +175,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, true);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, true, true);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -206,12 +198,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, true);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, true, true);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -230,12 +220,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, false);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, true, false);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -257,12 +245,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, false);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, true, false);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -279,10 +265,9 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport = exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, true);
+			exportLayout.getFriendlyURL(), exportGroup, importGroup, true,
+			true);
 
 		Assert.assertEquals(exportLayout.getFriendlyURL(), actualImportedURL);
 	}
@@ -296,10 +281,9 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport = exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, false);
+			exportLayout.getFriendlyURL(), exportGroup, importGroup, true,
+			false);
 
 		Assert.assertEquals(
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
@@ -319,10 +303,9 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport = exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, true, false);
+			exportLayout.getFriendlyURL(), exportGroup, importGroup, true,
+			false);
 
 		Assert.assertEquals(exportLayout.getFriendlyURL(), actualImportedURL);
 	}
@@ -338,12 +321,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, true) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, false, true);
+			_getGroupVirtualHostPortalURL(exportGroup, true) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, false, true);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -364,12 +345,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, false, true);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, false, true);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -389,12 +368,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, false, true);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup, false, true);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -413,10 +390,9 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport = exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup, false, true);
+			exportLayout.getFriendlyURL(), exportGroup, importGroup, false,
+			true);
 
 		Assert.assertEquals(exportLayout.getFriendlyURL(), actualImportedURL);
 	}
@@ -446,12 +422,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, true) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup);
+			_getGroupVirtualHostPortalURL(exportGroup, true) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -473,12 +447,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, true) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup);
+			_getGroupVirtualHostPortalURL(exportGroup, true) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, true) +
@@ -497,12 +469,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup);
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -524,12 +494,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport =
-			_getGroupVirtualHostPortalURL(exportGroup, false) +
-				exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup);
+			_getGroupVirtualHostPortalURL(exportGroup, false) +
+				exportLayout.getFriendlyURL(),
+			exportGroup, importGroup);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -548,10 +516,8 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport = exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup);
+			exportLayout.getFriendlyURL(), exportGroup, importGroup);
 
 		Assert.assertEquals(
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
@@ -571,10 +537,8 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
-		String urlToExport = exportLayout.getFriendlyURL();
-
 		String actualImportedURL = _exportAndImportLayoutURL(
-			urlToExport, exportGroup, importGroup);
+			exportLayout.getFriendlyURL(), exportGroup, importGroup);
 
 		Assert.assertEquals(exportLayout.getFriendlyURL(), actualImportedURL);
 	}

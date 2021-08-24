@@ -661,7 +661,7 @@ public class ServicePreAction extends Action {
 			List<Layout> layouts, boolean ignoreHiddenLayouts)
 		throws Exception {
 
-		if ((layouts == null) || layouts.isEmpty()) {
+		if (ListUtil.isEmpty(layouts)) {
 			return new LayoutComposite(layout, layouts);
 		}
 

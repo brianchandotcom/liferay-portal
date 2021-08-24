@@ -5576,9 +5576,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setTwitterSn(twitterSn);
 		contact.setJobTitle(jobTitle);
 
-		contact = contactPersistence.update(contact, serviceContext);
-
-		user.setContact(contact);
+		user.setContact(contactPersistence.update(contact, serviceContext));
 
 		// Group
 

@@ -177,6 +177,12 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
+	macro closeAllSessionsAndWait {
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+	}
+
 	macro closeModal {
 		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
 	}

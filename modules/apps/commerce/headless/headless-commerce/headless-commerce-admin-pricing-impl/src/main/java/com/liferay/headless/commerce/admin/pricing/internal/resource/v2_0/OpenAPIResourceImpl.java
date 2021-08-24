@@ -107,6 +107,8 @@ public class OpenAPIResourceImpl {
 
 			add(DiscountSkuResourceImpl.class);
 
+			add(OrderTypeResourceImpl.class);
+
 			add(PriceEntryResourceImpl.class);
 
 			add(PriceListResourceImpl.class);
@@ -118,6 +120,8 @@ public class OpenAPIResourceImpl {
 			add(PriceListChannelResourceImpl.class);
 
 			add(PriceListDiscountResourceImpl.class);
+
+			add(PriceListOrderTypeResourceImpl.class);
 
 			add(PriceModifierResourceImpl.class);
 

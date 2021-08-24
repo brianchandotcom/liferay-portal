@@ -133,4 +133,58 @@ definition {
 
 	}
 
+	@description = "Automation ID: LRAC-8820 | Test Summary: There is a list of connected data sources including a table of properties/status"
+	@ignore = "true"
+	@priority = "5"
+	test ListOfConnectedDataSourcesIncludingTablePropertiesStatus {
+
+		// TODO LRAC-8820 ListOfConnectedDataSourcesIncludingTablePropertiesStatus
+
+	}
+
+	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"
+	@ignore = "true"
+	@priority = "5"
+	test DataSourceListIsSearchable {
+
+		// TODO LRAC-8821 DataSourceListIsSearchable
+
+	}
+
+	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
+	@ignore = "true"
+	@priority = "4"
+	test SyncDataSourceContactsByGroups {
+
+		// TODO LRAC-8822 SyncDataSourceContactsByGroups
+
+	}
+
+	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"
+	@ignore = "true"
+	@priority = "4"
+	test SyncDataSourceContactsByOrganizations {
+
+		// TODO LRAC-8823 SyncDataSourceContactsByOrganizations
+
+	}
+
+	@description = "Automation ID: LRAC-8824 | Test Summary: Preview the number of User Group contacts to sync"
+	@ignore = "true"
+	@priority = "4"
+	test UserGroupContactSyncPreview {
+
+		// TODO LRAC-8824 UserGroupContactSyncPreview
+
+	}
+
+	@description = "Automation ID: LRAC-8825 | Test Summary: Validate Invalid Token"
+	@ignore = "true"
+	@priority = "4"
+	test InvalidToken {
+
+		// TODO LRAC-8825 InvalidToken
+
+	}
+
 }

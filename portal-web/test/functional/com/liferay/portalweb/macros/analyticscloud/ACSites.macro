@@ -1,5 +1,26 @@
 definition {
 
+	macro assertActivityCardValue {
+		key_metricTitle = "${cardName}";
+		key_totalValue = "${totalValue}";
+
+		Click(
+			key_metricTitle = "${cardName}",
+			locator1 = "ACAssets#METRIC_VALUE");
+
+		AssertElementPresent(
+			key_cardName = "${cardName}",
+			key_totalValue = "${totalValue}",
+			locator1 = "ACSites#SITE_ACTIVITY_VALUE_CARD");
+	}
+
+	macro viewActivitiesPercentage {
+		AssertElementPresent(
+			key_entry = "${entryName}",
+			key_number = "${valueNumber}",
+			locator1 = "ACSites#ACTIVITIES_CARD_ATRIBUTE_AND_VALUE");
+	}
+
 	macro viewGeomapAnalyticsLocationNames {
 		for (var locationName : list "${locationList}") {
 			AssertElementPresent(
@@ -26,26 +47,6 @@ definition {
 		AssertElementPresent(locator1 = "ACSites#SESSION_TECHNOLOGY_CARD");
 
 		AssertElementPresent(locator1 = "ACSites#COHORT_ANALYSIS_CARD");
-	}
-
-	macro assertActivityCardValueAndPercentage {
-		key_cardName = "${cardName}";
-		key_totalValue = "${totalValue}";
-		key_percentValue = "${percentValue}";
-
-		Click(
-			locator1 = "ACSites#ACTIVITIES_CARD_GENERAL",
-			key_cardName = "${cardName}");
-
-		AssertElementPresent(
-			locator1 = "ACSites#SITE_ACTIVITY_VALUE_CARD",
-			key_cardName = "${cardName}",
-			key_totalValue = "${totalValue}");
-
-		AssertElementPresent(
-			locator1 = "ACSites#SITE_ACTIVITY_PERCENTAGE_CARD",
-			key_cardName = "${cardName}",
-			key_percentValue = "${percentValue}");
 	}
 
 }

@@ -91,6 +91,21 @@
 	<td>//tr[@class='analytics-tooltip-chart-row']//div[text()='${key_visitors}']/ancestor::tr//div[text()='${key_value}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SITE_ACTIVITY_VALUE_CARD</td>
+	<td>//li[contains(@class,'card-tab active') and contains(.,'${key_cardName}')]//div[contains(@class,'metric-value') and contains(.,'${key_totalValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ACTIVITY_PERCENTAGE_CARD</td>
+	<td>//li[contains(@class,'card-tab active') and contains(.,'${key_cardName}')]//*[contains(@class,'analytics-trend-percent') and contains(.,'${key_percentValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_CARD_GENERAL</td>
+	<td>//li[contains(@class,'card-tab')]//span[contains(text(),'${key_cardName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

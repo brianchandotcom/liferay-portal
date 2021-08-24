@@ -18,6 +18,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Page.tearDownCP();
+		}
 	}
 
 	@priority = "5"
@@ -71,9 +74,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
-		Portlet.addPG(portletName = "IFrame");
+		Portlet.addPG(portletName = "Clay Sample");
 
-		Portlet.gotoPortletOptions(portletName = "IFrame");
+		Portlet.gotoPortletOptions(portletName = "Clay Sample");
 
 		Theme.viewMaxPortletOption();
 
@@ -81,13 +84,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
-			value1 = "IFrame");
+			value1 = "Clay Sample");
 
 		AssertTextNotPresent(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "IFrame");
+			value1 = "Clay Sample");
 
-		Portlet.gotoPortletOptions(portletName = "IFrame");
+		Portlet.gotoPortletOptions(portletName = "Clay Sample");
 
 		Theme.viewRestorePortlet();
 	}

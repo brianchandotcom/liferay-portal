@@ -52,6 +52,9 @@ definition {
 		else if ("${widgetName}" == "Categories Navigation") {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
 		}
+		else if ("${widgetName}" == "Clay Sample") {
+			var portletId = "com_liferay_clay_sample_web_portlet_ClaySamplePortlet";
+		}
 		else if ("${widgetName}" == "Contacts Center") {
 			var portletId = "com_liferay_contacts_web_portlet_ContactsCenterPortlet";
 		}

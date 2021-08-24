@@ -144,7 +144,7 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "Please configure this portlet to make it visible to all users.");
+			value1 = "Embedded alerts are thought to be used inside context as forms");
 
 		// Refresh step is a workaround for LPS-91762
 

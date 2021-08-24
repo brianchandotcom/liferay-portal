@@ -62,13 +62,9 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(
-			pageName = "Test Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
 
 		SitePages.configurePage(
 			columnName = "3 Columns",
@@ -76,24 +72,32 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.gotoPage(pageName = "Test Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			layoutTemplate = "3 Columns");
 
-		Portlet.addPG(portletName = "Message Boards");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Message Boards");
 
-		Navigator.gotoPage(pageName = "Test Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Clay Sample");
 
-		Portlet.addPG(portletName = "IFrame");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",
-			portletName = "IFrame");
+			portletName = "Clay Sample");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -111,10 +115,10 @@ definition {
 		takeScreenshot();
 
 		MouseOver(
-			key_portletTitleName = "IFrame",
+			key_portletTitleName = "Clay Sample",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE");
 
-		Portlet.assertPortletHeader(portletName = "IFramePortlet");
+		Portlet.assertPortletHeader(portletName = "ClaySamplePortlet");
 
 		takeScreenshot();
 
@@ -134,21 +138,23 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
 
-		SitePages.addPublicPage(pageName = "Test Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Clay Sample");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		Portlet.addPG(portletName = "IFrame");
-
-		task ("Assert the 'Configuration' iframe of the IFrame portlet") {
+		task ("Assert the 'Configuration' iframe of the portlet") {
 			Portlet.gotoPortletOptions(
-				portletName = "IFrame",
+				portletName = "Clay Sample",
 				portletOption = "Configuration");
 
 			IFrame.selectConfigurationFrame();
@@ -163,9 +169,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		task ("Assert the 'Look and Feel' iframe of the IFrame portlet") {
+		task ("Assert the 'Look and Feel' iframe of the Clay Sample portlet") {
 			Portlet.gotoPortletOptions(
-				portletName = "IFrame",
+				portletName = "Clay Sample",
 				portletOption = "Look and Feel Configuration");
 
 			IFrame.selectConfigurationFrame();
@@ -183,20 +189,20 @@ definition {
 			Portlet.dragAndDropPortletToColumnPG(
 				columnNumberFrom = "1",
 				columnNumberTo = "2",
-				portletName = "IFrame");
+				portletName = "Clay Sample");
 
 			Portlet.dragAndDropPortletToColumnPG(
 				columnNumberFrom = "2",
 				columnNumberTo = "1",
-				portletName = "IFrame");
+				portletName = "Clay Sample");
 		}
 
-		task ("Removes IFrame Portlet on Test Page") {
+		task ("Removes Clay Sample Portlet on Test Page") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			Portlet.deletePG(portletName = "IFrame");
+			Portlet.deletePG(portletName = "Clay Sample");
 
-			Portlet.viewNoSpecificPG(portletName = "IFrame");
+			Portlet.viewNoSpecificPG(portletName = "Clay Sample");
 		}
 	}
 

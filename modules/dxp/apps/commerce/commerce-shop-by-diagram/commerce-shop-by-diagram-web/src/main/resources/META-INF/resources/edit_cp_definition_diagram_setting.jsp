@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants.CSDiagramDataSetConstants" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -109,7 +110,7 @@ PortletURL portletURL = cpDefinitionDiagramSettingDisplayContext.getPortletURL()
 				title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
 			>
 				<clay:headless-data-set-display
-					apiURL="<%= cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramEntriesApiURL() %>"
+					apiURL="<%= cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramEntriesAPIURL() %>"
 					formId="fm"
 					id="<%= CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY %>"
 					itemsPerPage="<%= 10 %>"

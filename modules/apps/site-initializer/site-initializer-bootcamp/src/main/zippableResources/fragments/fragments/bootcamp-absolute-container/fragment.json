@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Bootcamp Container",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

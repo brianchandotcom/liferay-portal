@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Bootcamp Navbar",
+	"thumbnailPath": "thumbnail.png",
 	"type": "section"
 }

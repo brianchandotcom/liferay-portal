@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Bootcamp Subscribe Form",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

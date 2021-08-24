@@ -3,6 +3,7 @@
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Bootcamp Hero 1",
+	"name": "Bootcamp Hero",
+	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

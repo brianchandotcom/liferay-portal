@@ -73,6 +73,11 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		return _startDate;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #getCurrentNodeNames()}
+	 */
+	@Deprecated
 	@Override
 	public String getState() {
 		return _state;
@@ -132,6 +137,11 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		_startDate = startDate;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #setCurrentNodeNames(List)}
+	 */
+	@Deprecated
 	public void setState(String state) {
 		_state = state;
 	}

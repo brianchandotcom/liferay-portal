@@ -579,4 +579,67 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8869 | Test Summary: Check tabFocused fires once the tab is active and check its properties (see reference document in comments)"
+	@priority = "5"
+	test CheckTabFocusedOnceTabIsActive {
+		property proxy.server.enabled = "true";
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Get the Property ID in AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+		}
+
+		task ("Get the DXP Instance ID in AC") {
+			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("Navigate to the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Open the BBC home page in a new tab") {
+			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
+		}
+
+		task ("Switch to the new tab") {
+			SelectWindow(locator1 = "title=BBC - Homepage");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("tabFocused");
+		}
+
+		task ("Switch to the previous tab") {
+			SelectWindow(locator1 = "title=AC Page - Site Name - Liferay DXP");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("View the tabFocused event triggered") {
+			ACUtils.assertEventPresent(
+				applicationId = "Page",
+				eventId = "tabFocused");
+		}
+
+		task ("View the request common properties value") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
+		}
+	}
+
 }

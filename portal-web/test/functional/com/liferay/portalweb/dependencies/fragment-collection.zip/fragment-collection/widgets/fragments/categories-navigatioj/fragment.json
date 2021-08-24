@@ -1,8 +1,1 @@
-{
-	"cssPath": "index.css",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Categories Navigation",
-	"thumbnailPath": "thumbnail.png",
-	"type": "section"
-}
+{"configurationPath":"index.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","name":"Categories Navigation","thumbnailPath":"thumbnail.png","type":"section"}

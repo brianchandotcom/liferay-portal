@@ -1,8 +1,1 @@
-{
-	"cssPath": "index.css",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Taglib",
-	"thumbnailPath": "thumbnail.png",
-	"type": "component"
-}
+{"configurationPath":"index.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","name":"Taglib","thumbnailPath":"thumbnail.png","type":"component"}

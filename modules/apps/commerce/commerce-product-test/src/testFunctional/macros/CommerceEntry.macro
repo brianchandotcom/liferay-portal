@@ -920,7 +920,9 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		if ("${productType}" != "Diagram") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
 
 		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
 	}

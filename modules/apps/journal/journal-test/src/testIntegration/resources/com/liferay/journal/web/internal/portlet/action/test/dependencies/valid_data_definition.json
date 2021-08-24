@@ -13,7 +13,9 @@
 					"en_US": ""
 				},
 				"dataType": "string",
-				"direction": "[vertical]",
+				"direction": [
+					"vertical"
+				],
 				"displayStyle": "singleline",
 				"fieldNamespace": "",
 				"fieldReference": "Text32861154",

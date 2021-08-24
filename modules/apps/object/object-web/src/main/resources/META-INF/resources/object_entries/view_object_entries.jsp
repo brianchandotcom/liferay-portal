@@ -23,6 +23,7 @@ ViewObjectEntriesDisplayContext viewObjectEntriesDisplayContext = (ViewObjectEnt
 <clay:headless-data-set-display
 	apiURL="<%= viewObjectEntriesDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= viewObjectEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"
+	creationMenu="<%= viewObjectEntriesDisplayContext.getCreationMenu() %>"
 	formId="fm"
 	id="<%= viewObjectEntriesDisplayContext.getClayHeadlessDataSetDisplayId() %>"
 	itemsPerPage="<%= 20 %>"

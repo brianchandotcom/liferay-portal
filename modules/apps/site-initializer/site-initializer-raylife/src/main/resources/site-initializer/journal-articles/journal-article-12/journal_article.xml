@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="fxnkompu" name="PolicyName" type="text">
+		<dynamic-element index-type="keyword" instance-id="wapuvymq" name="ReferenceNumber" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[A1774476306]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="cyyknxqg" name="PolicyType" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Auto]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content language-id="en_US"><![CDATA[Volkswagen Golf 1.6]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="aqscskom" name="PolicyImage" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$JSON_golf.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="sqxksuyw" name="Status" type="text">
+		<dynamic-element index-type="text" instance-id="nbwpqugv" name="StatusImage" type="image">
+			<dynamic-content language-id="en_US">
+				<![CDATA[[$JSON_warn.svg$]]]>
+			</dynamic-content>
+		</dynamic-element>
+		<dynamic-content language-id="en_US"><![CDATA[Pending]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="viretmub" name="YearlyFee" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[650€]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ivhhkvql" name="PurchaseDate" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[16/01/2015]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="zalinyym" name="PayMethod" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Bank Account]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="rhzcoxts" name="Manufacturer" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Volskwagen]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ospqquqm" name="Model" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Golf Sportsvan]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="penqycoo" name="Version" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Advance 1.6 TDI]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="zqejdqsw" name="CarPlate" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[21356KLM]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="wgyczisw" name="PolicyOwner" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[David Aragonés]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="vtzvhqld" name="MainDriver900a" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[David Aragonés]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="cufpaxet" name="SecondaryDriver" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Jürgen Kappler]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="iesijpqx" name="Coverages" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Driver body injures</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Classic travel assistance</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Broken windows</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Legal defense and claim for damages</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Obligatory subscription civil liabbility</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Vehicle damage</label></div></li><li><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked" readonly="readonly" /> <label class="custom-control-label" for="customCheck1">Fire</label></div></li></ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="ppdemrsl" name="PolicyContract" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="[$URL_policy_document.svg$]" />Particular Conditions</li><li><img alt="" src="[$URL_policy_document.svg$]" />Renewal Declaration</li></ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="qrgkwifb" name="LatestReceipts" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<ul class="list-unstyled icon-list"><li><img alt="" src="[$URL_download.svg$]" />26/02/2020 - 480€</li><li><img alt="" src="[$URL_download.svg$]" />26/02/2019 - 470€</li><li><img alt="" src="[$URL_download.svg$]" />26/02/2018 - 460€</li></ul><p><a href="#">View all</a></p>]]></dynamic-content>
+	</dynamic-element>
+</root>

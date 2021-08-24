@@ -14,6 +14,7 @@
 
 package com.liferay.custom.elements.service.impl;
 
+import com.liferay.custom.elements.exception.NoSuchSourceException;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.base.CustomElementsSourceLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -76,6 +77,14 @@ public class CustomElementsSourceLocalServiceImpl
 		customElementsSource.setURLs(urls);
 
 		return customElementsSourcePersistence.update(customElementsSource);
+	}
+
+	@Override
+	public CustomElementsSource getCustomElementsSource(String htmlElementName)
+		throws NoSuchSourceException {
+
+		return customElementsSourcePersistence.findByHtmlElementName(
+			htmlElementName);
 	}
 
 	@Override

@@ -54,6 +54,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="HtmlElementName" return-type="CustomElementsSource" unique="true">
+			<finder-column name="htmlElementName" />
+		</finder>
 
 		<!-- References -->
 

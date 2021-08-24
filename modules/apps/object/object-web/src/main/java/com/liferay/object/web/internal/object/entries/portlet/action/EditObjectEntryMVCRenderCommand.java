@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.definitions.constants;
+package com.liferay.object.web.internal.object.entries.portlet.action;
+
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Marco Leo
- * @author Gabriel Albuquerque
  */
-public class ObjectDefinitionsScreenNavigationEntryConstants {
+public class EditObjectEntryMVCRenderCommand implements MVCRenderCommand {
 
-	public static final String CATEGORY_KEY_DETAILS = "details";
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-	public static final String CATEGORY_KEY_FIELDS = "fields";
-
-	public static final String ENTRY_KEY_DETAILS = "details";
-
-	public static final String ENTRY_KEY_FIELDS = "fields";
-
-	public static final String SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION =
-		"edit.object.definition.form";
-
-	public static final String SCREEN_NAVIGATION_KEY_OBJECT_ENTRY =
-		"edit.object.entry.form";
+		return "/object_entries/edit_object_entry.jsp";
+	}
 
 }

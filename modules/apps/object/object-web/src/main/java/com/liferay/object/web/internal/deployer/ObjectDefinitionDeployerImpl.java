@@ -80,6 +80,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"/object_entries/view_object_entries.jsp"
 				).put(
 					"javax.portlet.name", objectDefinition.getPortletId()
+			_bundleContext.registerService(
+				MVCRenderCommand.class, new EditObjectEntryMVCRenderCommand(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"mvc.command.name", "/object_entries/edit_object_entry"
+				).put(
+					"javax.portlet.name", objectDefinition.getPortletId()
 				).build()));
 	}
 

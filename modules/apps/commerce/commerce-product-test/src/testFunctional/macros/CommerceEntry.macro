@@ -1288,4 +1288,13 @@ definition {
 		}
 	}
 
+	macro verifyCostumRadiusWithCostumValue {
+		for (var number : list "${key_list}") {
+
+			KeyPress(
+				locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_RADIUS",
+				value1 = "\RIGHT");
+		}
+	}
+
 }

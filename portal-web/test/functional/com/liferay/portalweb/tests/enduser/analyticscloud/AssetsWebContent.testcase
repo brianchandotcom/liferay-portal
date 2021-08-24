@@ -497,9 +497,49 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanUse180DaysTimeFilterInWebContentOverview {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8445 CanUse180DaysTimeFilterInWebContentOverview
+		// AC Refactor: the test needs data from a past date
+		// AC Refactor ticket: LRAC-8861
 
+		task ("Connect DXP to Analytics Cloud and get the property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		// Use a macro that create the page in the last 180 days.
+
+		task ("Navigate to AC property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Web Content tab in Assets") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Web Content");
+		}
+
+		task ("Navigate to Web Content entry's Overview tab") {
+
+			// It is not possible to perform the assert because this test needs data from the past
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast180Days();
+
+			ACNavigation.openItem(itemName = "Web Content AC Title");
+
+			ACIndividualsDashboard.goToOverviewTab();
+
+			ACNavigation.viewActiveSwitchTab(tabName = "Overview");
+		}
+
+		task ("Set time filter use 180Days") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Visitors Behavior",
+				timeFilterRange = "Last 180 days");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8443 | Test Summary: Assert Custom Range time filter in assets"

@@ -30,7 +30,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = "setVisible('requiredErrorMessage', getValue('required'))",
+			actions = {
+				"setVisible('dataType', FALSE)",
+				"setVisible('requiredErrorMessage', getValue('required'))"
+			},
 			condition = "TRUE"
 		)
 	}
@@ -78,6 +81,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 )
 public interface CheckboxDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(predefinedValue = "boolean")
+	@Override
+	public String dataType();
 
 	@DDMFormField(
 		label = "%predefined-value", optionLabels = {"%false", "%true"},

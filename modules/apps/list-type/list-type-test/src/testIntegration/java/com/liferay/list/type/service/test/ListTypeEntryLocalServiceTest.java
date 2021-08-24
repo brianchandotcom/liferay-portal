@@ -15,6 +15,8 @@
 package com.liferay.list.type.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.exception.DuplicateListTypeEntryException;
+import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -47,11 +49,13 @@ public class ListTypeEntryLocalServiceTest {
 
 	@Test
 	public void testAddListTypeEntry() throws Exception {
+
+		// No ListTypeDefinition exists with the primary key
+
 		try {
-			ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				TestPropsValues.getUserId(), 0,
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+			_testAddListTypeEntry(0, "test");
+
+			Assert.fail();
 		}
 		catch (NoSuchListTypeDefinitionException
 					noSuchListTypeDefinitionException) {
@@ -67,17 +71,93 @@ public class ListTypeEntryLocalServiceTest {
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
+		// Key is null
+
+		try {
+			_testAddListTypeEntry(
+				listTypeDefinition.getListTypeDefinitionId(), null);
+
+			Assert.fail();
+		}
+		catch (ListTypeEntryKeyException listTypeEntryKeyException) {
+			Assert.assertEquals(
+				"Key is null", listTypeEntryKeyException.getMessage());
+		}
+
+		// Key must only contain letters and digits
+
+		try {
+			_testAddListTypeEntry(
+				listTypeDefinition.getListTypeDefinitionId(), " test ");
+
+			Assert.fail();
+		}
+		catch (ListTypeEntryKeyException listTypeEntryKeyException) {
+			Assert.assertEquals(
+				"Key must only contain letters and digits",
+				listTypeEntryKeyException.getMessage());
+		}
+
+		// Keys must be less than 41 characters
+
+		_testAddListTypeEntry(
+			listTypeDefinition.getListTypeDefinitionId(),
+			"A123456789a123456789a123456789a1234567891");
+
+		try {
+			_testAddListTypeEntry(
+				listTypeDefinition.getListTypeDefinitionId(),
+				"A123456789a123456789a123456789a12345678912");
+			Assert.fail();
+		}
+		catch (ListTypeEntryKeyException listTypeEntryKeyException) {
+			Assert.assertEquals(
+				"Keys must be less than 41 characters",
+				listTypeEntryKeyException.getMessage());
+		}
+
+		// Duplicate key for the same ListTypeDefinition
+
 		ListTypeEntry listTypeEntry =
 			ListTypeEntryLocalServiceUtil.addListTypeEntry(
 				TestPropsValues.getUserId(),
-				listTypeDefinition.getListTypeDefinitionId(),
+				listTypeDefinition.getListTypeDefinitionId(), "test",
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
-		Assert.assertEquals(
-			listTypeEntry,
-			ListTypeEntryLocalServiceUtil.fetchListTypeEntry(
-				listTypeEntry.getListTypeEntryId()));
+		try {
+			_testAddListTypeEntry(
+				listTypeDefinition.getListTypeDefinitionId(), "test");
+		}
+		catch (DuplicateListTypeEntryException
+					duplicateListTypeEntryException) {
+
+			Assert.assertEquals(
+				"Duplicate key test for the same ListTypeDefinitionId " +
+					listTypeDefinition.getListTypeDefinitionId(),
+				duplicateListTypeEntryException.getMessage());
+		}
+
+		ListTypeEntryLocalServiceUtil.deleteListTypeEntry(listTypeEntry);
+	}
+
+	private void _testAddListTypeEntry(long listTypeDefinitionId, String key)
+		throws Exception {
+
+		ListTypeEntry listTypeEntry = null;
+
+		try {
+			listTypeEntry = ListTypeEntryLocalServiceUtil.addListTypeEntry(
+				TestPropsValues.getUserId(), listTypeDefinitionId, key,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+		}
+		finally {
+			if (listTypeEntry != null) {
+				ListTypeEntryLocalServiceUtil.deleteListTypeEntry(
+					listTypeEntry);
+			}
+		}
 	}
 
 }

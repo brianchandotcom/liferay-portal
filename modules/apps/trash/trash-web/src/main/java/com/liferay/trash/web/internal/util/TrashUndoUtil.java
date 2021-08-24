@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +41,7 @@ public class TrashUndoUtil {
 			List<ObjectValuePair<String, Long>> entries)
 		throws Exception {
 
-		if ((entries == null) || entries.isEmpty()) {
+		if (ListUtil.isEmpty(entries)) {
 			return;
 		}
 

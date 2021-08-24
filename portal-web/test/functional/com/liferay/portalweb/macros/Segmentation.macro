@@ -307,7 +307,7 @@ definition {
 		Select(
 			locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_PROPERTY",
 			value1 = "${propertyName}");
-		
+
 		Select(
 			locator1 = "Segmentation#SESSION_PROPERTY_SESSION_LINK_VOCABULARY",
 			value1 = "${vocabularyName}");

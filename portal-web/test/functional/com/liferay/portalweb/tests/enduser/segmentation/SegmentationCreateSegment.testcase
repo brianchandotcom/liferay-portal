@@ -2103,7 +2103,7 @@ definition {
 				vocabularyName = "Audience");
 		}
 
-		task ("Create Segment with Vocabulary") {			
+		task ("Create Segment with Vocabulary") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Browser",
 				groupName = "Guest",

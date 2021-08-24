@@ -100,7 +100,7 @@ public class InfoFieldUtil {
 	}
 
 	private static boolean _isHtml(String type) {
-		if (type.equals("rich-text")) {
+		if (type.equals("html") || type.equals("rich-text")) {
 			return true;
 		}
 
@@ -108,8 +108,8 @@ public class InfoFieldUtil {
 	}
 
 	private static boolean _isTextFieldType(String type) {
-		if (type.equals("link") || type.equals("rich-text") ||
-			type.equals("text")) {
+		if (type.equals("html") || type.equals("link") ||
+			type.equals("rich-text") || type.equals("text")) {
 
 			return true;
 		}

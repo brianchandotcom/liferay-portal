@@ -300,6 +300,14 @@ public class CPDefinitionServiceWrapper
 		return _cpDefinitionService.getCPDefinitionsCount(groupId, status);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry
+			getDefaultImage(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionService.getDefaultImage(cpDefinitionId);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

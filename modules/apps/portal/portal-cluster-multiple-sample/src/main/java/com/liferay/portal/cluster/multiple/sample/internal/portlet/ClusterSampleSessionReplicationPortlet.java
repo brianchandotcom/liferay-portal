@@ -12,7 +12,7 @@
  * details.
  */
 
-package test.session.replication.portlet;
+package com.liferay.portal.cluster.multiple.sample.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -29,14 +29,14 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=TestSessionReplication",
+		"javax.portlet.display-name=ClusterSampleSessionReplication",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=test_session_replication_TestSessionReplicationPortlet",
+		"javax.portlet.name=cluster_sample_session_replication_ClusterSampleSessionReplicationPortlet",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class TestSessionReplicationPortlet extends MVCPortlet {
+public class ClusterSampleSessionReplicationPortlet extends MVCPortlet {
 }

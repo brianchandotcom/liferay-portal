@@ -621,6 +621,13 @@ public class ResourcePermissionLocalServiceWrapper
 			companyId, name, scope, primKey);
 	}
 
+	@Override
+	public java.util.List<ResourcePermission> getResourcePermissions(
+		String name) {
+
+		return _resourcePermissionLocalService.getResourcePermissions(name);
+	}
+
 	/**
 	 * Returns the number of resource permissions.
 	 *

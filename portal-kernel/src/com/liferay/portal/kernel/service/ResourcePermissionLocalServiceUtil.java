@@ -571,6 +571,10 @@ public class ResourcePermissionLocalServiceUtil {
 			companyId, name, scope, primKey);
 	}
 
+	public static List<ResourcePermission> getResourcePermissions(String name) {
+		return getService().getResourcePermissions(name);
+	}
+
 	/**
 	 * Returns the number of resource permissions.
 	 *

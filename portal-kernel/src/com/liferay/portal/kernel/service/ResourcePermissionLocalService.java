@@ -508,6 +508,9 @@ public interface ResourcePermissionLocalService
 	public List<ResourcePermission> getResourcePermissions(
 		long companyId, String name, int scope, String primKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ResourcePermission> getResourcePermissions(String name);
+
 	/**
 	 * Returns the number of resource permissions.
 	 *

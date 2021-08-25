@@ -19,7 +19,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -83,6 +85,7 @@ public class BundleSiteInitializerTest {
 		_assertDocuments(group);
 		_assertObjectDefinitions(group);
 		_assertDDMStructure(group);
+		_assertDDMTemplate(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
@@ -97,6 +100,16 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(ddmStructure);
 		Assert.assertTrue(ddmStructure.hasField("aField"));
+	}
+
+	private void _assertDDMTemplate(Group group) {
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			group.getGroupId(),
+			_portal.getClassNameId(DDMStructure.class.getName()),
+			"TEST-TEMPLATE-KEY");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
 
 	private void _assertDocuments(Group group) throws Exception {
@@ -137,6 +150,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

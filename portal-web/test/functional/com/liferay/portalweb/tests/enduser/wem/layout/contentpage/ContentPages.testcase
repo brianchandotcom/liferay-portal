@@ -514,6 +514,14 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137978. Fragments can be hidden and shown."
+	@priority = "5"
+	@uitest
+	test FragmentsCanBeHiddenAndShown {
+
+	}
+
+
 	@description = "This is a test for LPS-109169. Topper only visible when the element is selected but not hover."
 	@priority = "5"
 	@uitest

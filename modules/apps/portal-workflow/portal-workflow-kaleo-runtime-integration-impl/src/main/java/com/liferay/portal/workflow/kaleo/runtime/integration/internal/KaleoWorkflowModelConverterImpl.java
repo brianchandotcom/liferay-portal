@@ -312,8 +312,7 @@ public class KaleoWorkflowModelConverterImpl
 
 			for (KaleoInstanceToken currentKaleoInstanceToken :
 					_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
-						kaleoInstanceToken.getKaleoInstanceTokenId(),
-						serviceContext)) {
+						kaleoInstance.getKaleoInstanceId())) {
 
 				KaleoNode kaleoNode =
 					currentKaleoInstanceToken.getCurrentKaleoNode();

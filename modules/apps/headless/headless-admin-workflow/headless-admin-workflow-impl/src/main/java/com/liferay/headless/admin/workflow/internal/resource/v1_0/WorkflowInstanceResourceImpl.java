@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
@@ -34,6 +33,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -166,17 +166,19 @@ public class WorkflowInstanceResourceImpl
 		return new WorkflowInstance() {
 			{
 				completed = workflowInstance.isComplete();
+				currentNodeNames = Stream.of(
+					workflowInstance.getCurrentNodeNames()
+				).flatMap(
+					List::stream
+				).toArray(
+					String[]::new
+				);
 				dateCompletion = workflowInstance.getEndDate();
 				dateCreated = workflowInstance.getStartDate();
 				id = workflowInstance.getWorkflowInstanceId();
 				objectReviewed = ObjectReviewedUtil.toObjectReviewed(
 					contextAcceptLanguage.getPreferredLocale(),
 					workflowInstance.getWorkflowContext());
-				state = _language.get(
-					ResourceBundleUtil.getModuleAndPortalResourceBundle(
-						contextAcceptLanguage.getPreferredLocale(),
-						WorkflowInstanceResourceImpl.class),
-					workflowInstance.getState());
 				workflowDefinitionName =
 					workflowInstance.getWorkflowDefinitionName();
 				workflowDefinitionVersion = String.valueOf(

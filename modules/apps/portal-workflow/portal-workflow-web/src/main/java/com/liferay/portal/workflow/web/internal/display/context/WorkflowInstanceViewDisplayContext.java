@@ -367,9 +367,11 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public String getStatus(WorkflowInstance workflowInstance) {
+		List<String> currentNodeNames = workflowInstance.getCurrentNodeNames();
+
 		return LanguageUtil.get(
 			workflowInstanceRequestHelper.getRequest(),
-			HtmlUtil.escape(workflowInstance.getState()));
+			HtmlUtil.escape(currentNodeNames.get(0)));
 	}
 
 	public int getTotalItems() throws PortalException {

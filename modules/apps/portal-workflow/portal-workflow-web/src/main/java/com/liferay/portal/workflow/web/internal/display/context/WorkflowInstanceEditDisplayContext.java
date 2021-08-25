@@ -263,9 +263,11 @@ public class WorkflowInstanceEditDisplayContext
 	public String getWorkflowInstanceState() {
 		WorkflowInstance workflowInstance = _getWorkflowInstance();
 
+		List<String> currentNodeNames = workflowInstance.getCurrentNodeNames();
+
 		return LanguageUtil.get(
 			workflowInstanceRequestHelper.getRequest(),
-			workflowInstance.getState());
+			currentNodeNames.get(0));
 	}
 
 	public String getWorkflowLogComment(WorkflowLog workflowLog) {

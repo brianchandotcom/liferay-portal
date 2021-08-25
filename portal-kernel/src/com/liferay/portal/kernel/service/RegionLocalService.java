@@ -96,7 +96,7 @@ public interface RegionLocalService
 	@Transactional(enabled = false)
 	public Region createRegion(long regionId);
 
-	public void deleteCountryRegions(long countryId);
+	public void deleteCountryRegions(long countryId) throws PortalException;
 
 	/**
 	 * @throws PortalException

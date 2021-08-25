@@ -61,6 +61,16 @@ public interface ObjectEntryResource {
 	public Response postObjectEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntry putByExternalReferenceCode(
+			String externalReferenceCode, ObjectEntry objectEntry)
+		throws Exception;
+
 	public void deleteSiteObjectEntryByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception;

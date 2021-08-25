@@ -82,7 +82,13 @@ public class DDMFormFieldOptionsFactoryImpl
 				"options");
 
 		if (ListUtil.isEmpty(options)) {
-			if (dataSourceType.equals("from-autofill")) {
+			Map<String, Object> changedProperties =
+				(Map<String, Object>)ddmFormFieldRenderingContext.getProperty(
+					"changedProperties");
+
+			if (dataSourceType.equals("from-autofill") ||
+				changedProperties.containsKey("options")) {
+
 				return ddmFormFieldOptions;
 			}
 

@@ -1,0 +1,65 @@
+// Links
+
+.text-link {
+	font-weight: var(--text-link-font-weight);
+}
+
+.text-link-lg {
+	@extend .text-link;
+
+	font-size: var(--text-link-lg-font-size);
+	line-height: var(--text-link-lg-line-height);
+}
+
+.text-link-md {
+	@extend .text-link;
+
+	font-size: var(--text-link-md-font-size);
+	line-height: var(--text-link-md-line-height);
+}
+
+.text-link-sm {
+	@extend .text-link;
+
+	font-size: var(--text-link-sm-font-size);
+	line-height: var(--text-link-sm-line-height);
+}
+
+// Paragraphs
+
+.text-paragraph-light {
+	font-weight: var(--text-paragraph-light-font-weight, 300);
+}
+
+.text-paragraph-regular {
+	font-weight: var(--text-paragraph-light-font-weight, 500);
+}
+
+.text-paragraph-heavy {
+	font-weight: var(--text-paragraph-light-font-weight, 800);
+}
+
+.text-paragraph-lg {
+	font-size: 1.25rem; // 20px
+	line-height: 1.75rem; // 28px
+}
+
+.text-paragraph {
+	font-size: 1rem; // 916px
+	line-height: 1.5rem; // 24px
+}
+
+.text-paragraph-sm {
+	font-size: 0.8125rem; // 13px
+	line-height: 1.25rem; // 20px
+}
+
+.text-paragraph-xs {
+	font-size: 0.6875rem; // 11px
+	line-height: 1.25rem; // 20px
+}
+
+.text-paragraph-xxs {
+	font-size: 0.5625rem; // 9px
+	line-height: 0.75rem; // 12px
+}

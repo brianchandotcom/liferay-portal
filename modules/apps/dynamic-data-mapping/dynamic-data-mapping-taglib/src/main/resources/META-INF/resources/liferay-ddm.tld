@@ -203,6 +203,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
+		<description><![CDATA[Deprecated as of Cavanaugh (7.4.x), replaced by .]]></description>
 		<name>template-selector</name>
 		<tag-class>com.liferay.dynamic.data.mapping.taglib.servlet.taglib.TemplateSelectorTag</tag-class>
 		<body-content>JSP</body-content>

@@ -49,7 +49,7 @@ public class BatchPlannerPlanServiceImpl
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
 			boolean export, String externalType, String externalURL,
-			String internalClassName, String name)
+			String internalClassName, String name, boolean template)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -60,7 +60,7 @@ public class BatchPlannerPlanServiceImpl
 
 		return batchPlannerPlanLocalService.addBatchPlannerPlan(
 			permissionChecker.getUserId(), export, externalType, externalURL,
-			internalClassName, name);
+			internalClassName, name, template);
 	}
 
 	@Override
@@ -103,6 +103,15 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean export, boolean template, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		return batchPlannerPlanPersistence.filterFindByC_E_T(
+			companyId, export, template, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
 		long companyId, boolean export, int start, int end,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
@@ -135,6 +144,14 @@ public class BatchPlannerPlanServiceImpl
 	@Override
 	public int getBatchPlannerPlansCount(long companyId, boolean export) {
 		return batchPlannerPlanPersistence.filterCountByC_E(companyId, export);
+	}
+
+	@Override
+	public int getBatchPlannerPlansCount(
+		long companyId, boolean export, boolean template) {
+
+		return batchPlannerPlanPersistence.filterCountByC_E_T(
+			companyId, export, template);
 	}
 
 	@Override

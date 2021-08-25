@@ -52,11 +52,14 @@ public class UpgradeReportLogAppender implements Appender {
 				logEvent.getLoggerName(), message.getFormattedMessage());
 		}
 		else if (logEvent.getLevel() == Level.INFO) {
+			String formattedMessage = message.getFormattedMessage();
+
 			if (Objects.equals(
-					logEvent.getLoggerName(), UpgradeProcess.class.getName())) {
+					logEvent.getLoggerName(), UpgradeProcess.class.getName()) &&
+				formattedMessage.startsWith("Completed upgrade process ")) {
 
 				_upgradeReport.addEventMessage(
-					logEvent.getLoggerName(), message.getFormattedMessage());
+					logEvent.getLoggerName(), formattedMessage);
 			}
 		}
 		else if (logEvent.getLevel() == Level.WARN) {

@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,6 +52,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,8 +111,8 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringBundler.concat(
 					_getPortalVersions(), _getDialectInfo(), _getProperties(),
-					_getDocLibSize(), _getLogEvents("errors"),
-					_getLogEvents("warnings")));
+					_getDocLibSize(), _getUpgradeTimes(),
+					_getLogEvents("errors"), _getLogEvents("warnings")));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -296,29 +299,7 @@ public class UpgradeReport {
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);
 
-			Map<String, Integer> submap = entry.getValue();
-
-			Set<Map.Entry<String, Integer>> submapEntrySet = submap.entrySet();
-
-			Stream<Map.Entry<String, Integer>> submapEntrySetStream =
-				submapEntrySet.stream();
-
-			Map<String, Integer> submapSorted = submapEntrySetStream.sorted(
-				Collections.reverseOrder(
-					Map.Entry.comparingByValue(
-						new Comparator<Integer>() {
-
-							@Override
-							public int compare(Integer o1, Integer o2) {
-								return Integer.compare(o1, o2);
-							}
-
-						}))
-			).collect(
-				Collectors.toMap(
-					Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
-					LinkedHashMap::new)
-			);
+			Map<String, Integer> submapSorted = _sortmap(entry.getValue());
 
 			for (Map.Entry<String, Integer> valueEntry :
 					submapSorted.entrySet()) {
@@ -498,6 +479,73 @@ public class UpgradeReport {
 		}
 
 		return null;
+	}
+
+	private String _getUpgradeTimes() {
+		List<String> upgradeTimes = _eventMessages.get(
+			UpgradeProcess.class.getName());
+
+		if (upgradeTimes != null) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("Duration of upgrade processes:\n");
+
+			Map<String, Integer> upgradeProcessMap = new HashMap<>();
+
+			for (String entry : upgradeTimes) {
+				int startIndex = entry.indexOf("com");
+
+				int endIndex = entry.indexOf(StringPool.SPACE, startIndex);
+
+				String className = entry.substring(startIndex, endIndex);
+
+				startIndex = entry.indexOf(StringPool.SPACE, endIndex + 1);
+
+				endIndex = entry.indexOf(StringPool.SPACE, startIndex + 1);
+
+				int upgradeTime = GetterUtil.getInteger(
+					entry.substring(startIndex, endIndex));
+
+				upgradeProcessMap.put(className, upgradeTime);
+			}
+
+			upgradeProcessMap = _sortmap(upgradeProcessMap);
+
+			for (Map.Entry<String, Integer> entry : upgradeProcessMap.entrySet()) {
+				sb.append(entry.getKey());
+				sb.append(" took ");
+				sb.append(entry.getValue());
+				sb.append(" ms to complete\n");
+			}
+
+			return sb.toString();
+		}
+		else {
+			return StringPool.BLANK;
+		}
+	}
+
+	private Map<String, Integer> _sortmap(Map<String, Integer> map) {
+		Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+
+		Stream<Map.Entry<String, Integer>> entrySetStream = entrySet.stream();
+
+		return entrySetStream.sorted(
+			Collections.reverseOrder(
+				Map.Entry.comparingByValue(
+					new Comparator<Integer>() {
+
+						@Override
+						public int compare(Integer o1, Integer o2) {
+							return Integer.compare(o1, o2);
+						}
+
+					}))
+		).collect(
+			Collectors.toMap(
+				Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+				LinkedHashMap::new)
+		);
 	}
 
 	private static final String _CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE =

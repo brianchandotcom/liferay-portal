@@ -61,14 +61,14 @@ definition {
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Portal Cluster Multiple Sample'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Portal Cluster Multiple Sample Web'");
 
-		var moduleID = GogoShell.getModuleID(moduleName = "'Portal Cluster Multiple Sample'");
+		var moduleID = GogoShell.getModuleID(moduleName = "'Portal Cluster Multiple Sample Web'");
 
 		GogoShell.stopModule(moduleID = "${moduleID}");
 
 		GogoShell.viewModuleStatus(
-			moduleName = "'Portal Cluster Multiple Sample'",
+			moduleName = "'Portal Cluster Multiple Sample Web'",
 			moduleStatus = "Resolved");
 
 		User.loginPG(

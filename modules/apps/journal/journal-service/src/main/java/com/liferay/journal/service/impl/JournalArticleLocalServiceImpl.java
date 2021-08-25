@@ -7962,6 +7962,9 @@ public class JournalArticleLocalServiceImpl
 
 		long liveGroupId = group.getLiveGroupId();
 
+		subscriptionSender.addAssetEntryPersistedSubscribers(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
 		if (liveGroupId > 0) {
 			subscriptionSender.addPersistedSubscribers(
 				JournalFolder.class.getName(), liveGroupId, false);

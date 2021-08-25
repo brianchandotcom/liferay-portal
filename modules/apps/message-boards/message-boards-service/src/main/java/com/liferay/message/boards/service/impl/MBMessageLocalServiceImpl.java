@@ -16,7 +16,6 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
 import com.liferay.comment.constants.CommentConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -2334,13 +2333,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			fromName, fromAddress, replyToAddress, emailAddress, fullName,
 			subjectLocalizedValuesMap, bodyLocalizedValuesMap, serviceContext);
 
-		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+		subscriptionSender.addAssetEntryPersistedSubscribers(
 			MBMessage.class.getName(), message.getMessageId());
-
-		for (AssetTag assetTag : assetEntry.getTags()) {
-			subscriptionSender.addPersistedSubscribers(
-				AssetTag.class.getName(), assetTag.getTagId());
-		}
 
 		subscriptionSender.addPersistedSubscribers(
 			MBCategory.class.getName(), message.getGroupId());

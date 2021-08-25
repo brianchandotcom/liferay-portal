@@ -67,17 +67,36 @@
 
 			const editor = instance.editor;
 
-			const unlinkButton = editor.ui.create('Unlink');
+			toolbarItems['LinkRemove'] = new CKEDITOR.ui.balloonToolbarButton({
+				click: () => {
+					const selection = editor.getSelection();
 
-			const onClickUnlinkButton = unlinkButton.click;
+					const bookmarks = selection.createBookmarks();
+					const ranges = selection.getRanges();
 
-			unlinkButton.click = () => {
-				onClickUnlinkButton(editor);
+					for (let i = 0; i < ranges.length; i++) {
+						const rangeRoot = ranges[i].getCommonAncestor(true);
 
-				instance._toolbar.hide();
-			};
+						const element = rangeRoot.getAscendant('a', true);
 
-			toolbarItems['LinkRemove'] = unlinkButton;
+						if (!element) {
+							continue;
+						}
+
+						ranges[i].selectNodeContents(element);
+					}
+
+					selection.selectRanges(ranges);
+
+					editor.document.$.execCommand('unlink', false, null);
+
+					selection.selectBookmarks(bookmarks);
+
+					instance._toolbar.hide();
+				},
+				icon: 'unlink',
+				title: editor.lang.link.unlink,
+			});
 
 			toolbarItems['LinkTarget'] = new CKEDITOR.ui.balloonToolbarSelect({
 				items: [

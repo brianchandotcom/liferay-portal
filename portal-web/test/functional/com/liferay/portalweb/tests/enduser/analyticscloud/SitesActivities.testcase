@@ -542,12 +542,66 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8290 | Test Summary: Unique Visitors label is shown on the tabs of Pages dashboards"
-	@ignore = "true"
 	@priority = "3"
 	test CanUniqueVisitorsLabelShowPagesDashboards {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8290 CanUniqueVisitorsLabelShowPagesDashboards
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8827
 
+		task ("Site and blogs creation and connection with AC") {
+			ACUtils.createBlogsAndAddToPage();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with pages") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Pause(locator1 = "5000");
+
+			ACUtils.closeAllSessions();
+		}
+
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Sites Pages") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			ACNavigation.switchTab(tabName = "Pages");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+		}
+
+
+
+
+		task ("Assert the unique visitors label is shown") {
+
+			ACNavigation.openItem(itemName = "Blogs AC Title");
+
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Unique Visitors",
+				metricValue = "1");
+
+			AssertElementPresent(
+				key_visitorsLabel = "Unique Visitors",
+				locator1 = "ACSites#VISITORS_GRAPH_LABEL");
+
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8288 | Test Summary: Unique Visitors label is shown on the tabs of Sites dashboards"

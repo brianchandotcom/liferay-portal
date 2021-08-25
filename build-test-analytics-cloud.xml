@@ -205,9 +205,26 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 				docker volume prune -f
 			</echo>
 
-			<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash">
-				<arg value="${analytics.cloud.start.sh}" />
-			</exec>
+			<retry retrycount="3" retrydelay="30000">
+				<sequential>
+					<local name="analytics.cloud.start.result" />
+
+					<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash" resultproperty="analytics.cloud.start.result" timeout="${analytics.cloud.start.timeout}">
+						<arg value="${analytics.cloud.start.sh}" />
+					</exec>
+
+					<if>
+						<not>
+							<equals arg1="${analytics.cloud.start.result}" arg2="0" />
+						</not>
+						<then>
+							<fail message="Failed to start analytics cloud with error code ${analytics.cloud.start.result}" />
+
+							<stop-analytics-cloud />
+						</then>
+					</if>
+				</sequential>
+			</retry>
 
 			<delete file="${analytics.cloud.start.sh}" />
 		</sequential>

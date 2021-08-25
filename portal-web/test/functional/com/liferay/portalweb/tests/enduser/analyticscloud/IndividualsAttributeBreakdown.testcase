@@ -120,12 +120,61 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8658 | Test Summary: Delete a new breakdown"
-	@ignore = "true"
 	@priority = "5"
 	test DeleteNewBreakdown {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8658 DeleteNewBreakdown pending implementation
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
 
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Country",
+				sourceFileName = "contacts_country.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Navigate to the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+		}
+
+		task ("Add a new breakdown") {
+			ACIndividualsDashboard.addBreakdown(
+				attribute = "country",
+				breakdownName = "Breakdown by Country");
+		}
+
+		task ("Remove the new breakdown") {
+			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Country");
+		}
+
+		task ("View the breakdown is deleted") {
+			ACIndividualsDashboard.viewBreakdownNotPresent(breakdownName = "Breakdown by Country");
+		}
 	}
 
 }

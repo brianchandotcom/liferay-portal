@@ -79,7 +79,7 @@ definition {
 	macro markDisplayPageAsDefault {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "${displayPageName}",
-			item = "Mark As Default");
+			item = "Mark as Default");
 
 		LexiconCard.viewCardSticker(
 			card = "${displayPageName}",

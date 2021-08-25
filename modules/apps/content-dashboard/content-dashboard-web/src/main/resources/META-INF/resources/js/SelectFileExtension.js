@@ -16,41 +16,27 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import TreeFilter from './components/TreeFilter';
-
-/**
- * Map the node array prop in an understandable format for the Treeview component
- * @param {array} nodeArray - Array of nodes.
- * @return {array} A new array of nodes.
- */
-const nodeTreeArrayMapper = (nodeArray) => {
-	return nodeArray.map((node, index) => {
-		const hasChildren = !!node.fileExtensions?.length;
-
-		const _getNodeId = ({index, node}) =>
-			hasChildren ? `_${index}` : `${node.fileExtension}`;
-
-		return {
-			...node,
-			children: hasChildren
-				? nodeTreeArrayMapper(node.fileExtensions)
-				: null,
-			expanded: !!(!index && hasChildren) || false,
-			id: _getNodeId({index, node}),
-			name: hasChildren ? node.label : node.fileExtension,
-		};
-	});
-};
+import {nodeTreeArrayMapper} from './utils/tree-utils';
 
 const SelectFileExtension = ({
 	fileExtensionGroups,
 	itemSelectorSaveEvent,
 	portletNamespace,
 }) => {
+	const nodes = nodeTreeArrayMapper({
+		childrenPropertyKey: 'fileExtensions',
+		namePropertyKey: 'fileExtension',
+		nodeArray: fileExtensionGroups,
+	});
+
 	return (
 		<TreeFilter
+			childrenPropertyKey="fileExtensions"
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
 			mandatoryFieldsForFiltering={['id']}
-			nodes={nodeTreeArrayMapper(fileExtensionGroups)}
+			namePropertyKey="fileExtension"
+			nodeIdProp="id"
+			nodes={nodes}
 			portletNamespace={portletNamespace}
 		/>
 	);

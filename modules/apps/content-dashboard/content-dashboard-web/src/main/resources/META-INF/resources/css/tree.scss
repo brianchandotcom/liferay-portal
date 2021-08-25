@@ -1,7 +1,6 @@
 @import 'atlas-variables';
 
-.select-file-extension,
-.select-type-and-subtype {
+.tree-filter {
 	&-clear {
 		cursor: pointer;
 	}
@@ -18,7 +17,7 @@
 		}
 	}
 
-	&-filter {
+	&-search {
 		.container-fluid {
 			height: 40px;
 		}
@@ -29,11 +28,7 @@
 		transform: translateY(-50%);
 	}
 
-	&-tree {
+	&-type-tree {
 		margin-top: 24px;
 	}
-}
-
-.tree-filter-search {
-	border-bottom: 1px solid $gray-300;
 }

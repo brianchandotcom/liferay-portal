@@ -25,7 +25,7 @@ ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSu
 </liferay-util:html-top>
 
 <section class="h-100">
-	<span aria-hidden="true" class="loading-animation mt-0 select-type-and-subtype-loader"></span>
+	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader"></span>
 
 	<react:component
 		module="js/SelectTypeAndSubtype"

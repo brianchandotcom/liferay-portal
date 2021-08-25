@@ -14,46 +14,72 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 
-const visit = (nodes, callback) => {
-	nodes.forEach((node) => {
-		callback(node);
+import {
+	filterNodes,
+	restoreChildrenForEmptiedParent,
+	visit,
+} from '../utils/tree-utils';
 
-		if (node.children) {
-			visit(node.children, callback);
-		}
-	});
-};
-
-const getFilter = (filterQuery) => {
-	if (!filterQuery) {
-		return null;
+/**
+ * Filter parent nodes with no children inside currentSelection
+ * @param {object} object
+ * @param {Map} object.currentSelection The data selected returned by the Tree component
+ * @param {array} object.parentNodes Array of parent items included in currentSelection
+ * @return {array} Parent selected nodes with no children
+ */
+const getParentsWithNoChildren = ({
+	currentSelection,
+	mandatoryFieldsForFiltering,
+	nodeIdProp,
+	parentNodes = [],
+}) => {
+	if (!parentNodes.length) {
+		return [];
 	}
 
-	const filterQueryLowerCase = filterQuery.toLowerCase();
+	const currentIdentifiers =
+		mandatoryFieldsForFiltering.length === 1
+			? currentSelection
+			: currentSelection.map((node) => node[nodeIdProp]);
 
-	return (node) =>
-		node.name.toLowerCase().indexOf(filterQueryLowerCase) !== -1;
+	return parentNodes.filter((node) =>
+		node.children.every(
+			(child) => !currentIdentifiers.includes(child[nodeIdProp])
+		)
+	);
 };
 
 const TreeFilter = ({
+	childrenPropertyKey,
 	itemSelectorSaveEvent,
 	mandatoryFieldsForFiltering,
+	namePropertyKey,
+	nodeIdProp,
 	nodes,
 	portletNamespace,
 }) => {
 	const [filterQuery, setFilterQuery] = useState('');
+	const [selectedMessage, setSelectedMessage] = useState({
+		count: 0,
+		show: false,
+	});
 
 	const selectedNodesRef = useRef(null);
+	const refItemsCount = selectedNodesRef.current?.length || 0;
 
 	const initialSelectedNodeIds = useMemo(() => {
 		const selectedNodes = [];
 
 		visit(nodes, (node) => {
-			if (node.selected) {
+			if (
+				node.selected ||
+				node.children?.every((childNode) => childNode.selected)
+			) {
 				selectedNodes.push(node.id);
 			}
 		});
@@ -61,49 +87,124 @@ const TreeFilter = ({
 		return selectedNodes;
 	}, [nodes]);
 
-	const handleSelectionChange = (selectedNodes) => {
-		const data = [];
-
-		// Mark newly selected nodes as selected.
-
-		visit(nodes, (node) => {
-			const isChildNode = !node.children;
-
-			if (selectedNodes.has(node.id) && isChildNode) {
-				let newSelectedNode = {};
-
-				if (mandatoryFieldsForFiltering.length === 1) {
-					newSelectedNode = node[mandatoryFieldsForFiltering[0]];
-				}
-				else {
-					mandatoryFieldsForFiltering.forEach((key) => {
-						newSelectedNode[key] = node[key];
-					});
-				}
-				data.push(newSelectedNode);
-			}
-		});
-
-		// Mark unselected nodes as unchecked.
-
-		if (selectedNodesRef.current) {
-			Object.entries(selectedNodesRef.current).forEach(([id, node]) => {
-				const nodeIndex = data.findIndex((node) => node.id === id);
-
-				if (!selectedNodes.has(id) && nodeIndex > -1) {
-					data[nodeIndex] = {
-						...node,
-						unchecked: true,
-					};
-				}
-			});
+	const computedNodes = () => {
+		if (!filterQuery) {
+			return nodes;
 		}
 
-		selectedNodesRef.current = data;
+		const filterQueryLowerCase = filterQuery.toLowerCase();
+		const clonedNodes = JSON.parse(JSON.stringify(nodes));
 
-		const openerWindow = Liferay.Util.getOpener();
+		const filteredNodes = filterNodes({
+			childrenPropertyKey,
+			namePropertyKey,
+			nodes: clonedNodes,
+			query: filterQueryLowerCase,
+		});
 
-		openerWindow.Liferay.fire(itemSelectorSaveEvent, {data});
+		return restoreChildrenForEmptiedParent({
+			childrenPropertyKey,
+			filteredNodes,
+			namePropertyKey,
+		});
+	};
+
+	const handleSelectionChange = useCallback(
+		(selectedNodes) => {
+			const data = [];
+			const parentsCandidates = [];
+
+			// Mark newly selected nodes as selected.
+
+			visit(nodes, (node) => {
+				const isChildNode = !node.children;
+				const isParentNode =
+					Array.isArray(node.children) && node.children.length > 0;
+
+				if (selectedNodes.has(node.id) && isChildNode) {
+					let newSelectedNode = {};
+
+					if (mandatoryFieldsForFiltering.length === 1) {
+						newSelectedNode = node[mandatoryFieldsForFiltering[0]];
+					}
+					else {
+						mandatoryFieldsForFiltering.forEach((key) => {
+							newSelectedNode[key] = node[key];
+						});
+					}
+					data.push(newSelectedNode);
+				}
+				else if (selectedNodes.has(node.id) && isParentNode) {
+					parentsCandidates.push(node);
+				}
+			});
+
+			const parentsSelectedWithNoChildren =
+				getParentsWithNoChildren({
+					currentSelection: data,
+					mandatoryFieldsForFiltering,
+					nodeIdProp,
+					parentNodes: parentsCandidates,
+				}) || [];
+
+			if (parentsSelectedWithNoChildren.length) {
+				parentsSelectedWithNoChildren.forEach((node) => {
+					node.children.forEach((child) => {
+						let newSelectedNode = {};
+
+						if (mandatoryFieldsForFiltering.length === 1) {
+							newSelectedNode =
+								child[mandatoryFieldsForFiltering[0]];
+						}
+						else {
+							mandatoryFieldsForFiltering.forEach((key) => {
+								newSelectedNode[key] = child[key];
+							});
+						}
+						data.push(newSelectedNode);
+					});
+				});
+			}
+
+			// Mark unselected nodes as unchecked.
+
+			if (selectedNodesRef.current) {
+				Object.entries(selectedNodesRef.current).forEach(
+					([id, node]) => {
+						const nodeIndex = data.findIndex(
+							(node) => node.id === id
+						);
+
+						if (!selectedNodes.has(id) && nodeIndex > -1) {
+							data[nodeIndex] = {
+								...node,
+								unchecked: true,
+							};
+						}
+					}
+				);
+			}
+
+			selectedNodesRef.current = data;
+
+			const openerWindow = Liferay.Util.getOpener();
+
+			openerWindow.Liferay.fire(itemSelectorSaveEvent, {data});
+
+			setSelectedMessage({
+				count: data.length,
+				show: true,
+			});
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[refItemsCount]
+	);
+
+	const showSelectionFeedback =
+		selectedMessage.show && !!selectedMessage.count;
+
+	const handleInputClear = () => {
+		setFilterQuery('');
 	};
 
 	return (
@@ -123,30 +224,52 @@ const TreeFilter = ({
 								}
 								placeholder={Liferay.Language.get('search')}
 								type="text"
+								value={filterQuery}
 							/>
 
 							<div className="input-group-inset-item input-group-inset-item-after pr-3">
-								<ClayIcon symbol="search" />
+								<ClayIcon
+									className={classNames({
+										'select-type-and-subtype-clear': filterQuery,
+									})}
+									onClick={
+										filterQuery ? handleInputClear : null
+									}
+									symbol={filterQuery ? 'times' : 'search'}
+								/>
 							</div>
 						</div>
 					</div>
 				</ClayLayout.ContainerFluid>
 			</form>
 
+			{showSelectionFeedback && (
+				<ClayLayout.Container
+					className="tree-filter-count-feedback"
+					containerElement="section"
+					fluid
+				>
+					<div className="container p-0">
+						<p className="m-0">
+							{selectedMessage.count} Subtypes Selected
+						</p>
+					</div>
+				</ClayLayout.Container>
+			)}
+
 			<form name={`${portletNamespace}selectFilterFm`}>
 				<ClayLayout.ContainerFluid containerElement="fieldset">
 					<div
-						className="type-tree"
+						className="tree-filter-type-tree"
 						id={`${portletNamespace}typeContainer`}
 					>
-						{nodes.length > 0 ? (
+						{computedNodes().length > 0 ? (
 							<Treeview
 								NodeComponent={Treeview.Card}
-								filter={getFilter(filterQuery)}
-								inheritSelection={true}
+								inheritSelection
 								initialSelectedNodeIds={initialSelectedNodeIds}
-								multiSelection={true}
-								nodes={nodes}
+								multiSelection
+								nodes={computedNodes()}
 								onSelectedNodesChange={handleSelectionChange}
 							/>
 						) : (
@@ -167,8 +290,11 @@ const TreeFilter = ({
 };
 
 TreeFilter.propTypes = {
+	childrenPropertyKey: PropTypes.string.isRequired,
 	itemSelectorSaveEvent: PropTypes.string.isRequired,
 	mandatoryFieldsForFiltering: PropTypes.array.isRequired,
+	namePropertyKey: PropTypes.string.isRequired,
+	nodeIdProp: PropTypes.string.isRequired,
 	nodes: PropTypes.array.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };

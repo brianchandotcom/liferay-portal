@@ -25,7 +25,7 @@ ContentDashboardFileExtensionItemSelectorViewDisplayContext contentDashboardFile
 </liferay-util:html-top>
 
 <section class="h-100">
-	<span aria-hidden="true" class="loading-animation mt-0 select-file-extension-loader"></span>
+	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader"></span>
 
 	<react:component
 		module="js/SelectFileExtension"

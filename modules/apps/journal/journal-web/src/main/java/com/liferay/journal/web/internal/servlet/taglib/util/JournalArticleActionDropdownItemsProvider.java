@@ -428,6 +428,8 @@ public class JournalArticleActionDropdownItemsProvider {
 					_liferayPortletResponse
 				).setActionName(
 					"/journal/delete_article_translations"
+				).setRedirect(
+					_getRedirect()
 				).setParameter(
 					"id", _article.getId()
 				).buildString());

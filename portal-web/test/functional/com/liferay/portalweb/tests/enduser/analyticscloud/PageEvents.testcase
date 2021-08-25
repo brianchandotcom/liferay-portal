@@ -116,7 +116,7 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("View the page of pageDepthReached event") {
+		task ("View the depth of pageDepthReached event is 25") {
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageDepthReached",
@@ -198,7 +198,7 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		task ("View the page of pageDepthReached event") {
+		task ("View the depth of pageDepthReached event is 50") {
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageDepthReached",
@@ -259,7 +259,7 @@ definition {
 			Pause(locator1 = "10000");
 		}
 
-		task ("View the page of pageDepthReached event") {
+		task ("View the depth of pageDepthReached event is 75") {
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageDepthReached",
@@ -320,7 +320,7 @@ definition {
 			Pause(locator1 = "10000");
 		}
 
-		task ("View the page of pageDepthReached event") {
+		task ("View the depth of pageDepthReached event is 100") {
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Page",
 				eventId = "pageDepthReached",

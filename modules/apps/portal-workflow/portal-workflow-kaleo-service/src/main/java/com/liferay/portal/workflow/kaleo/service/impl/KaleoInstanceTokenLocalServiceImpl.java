@@ -187,6 +187,14 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 	@Override
 	public List<KaleoInstanceToken> getKaleoInstanceTokens(
+		long kaleoInstanceId) {
+
+		return kaleoInstanceTokenPersistence.findByKaleoInstanceId(
+			kaleoInstanceId);
+	}
+
+	@Override
+	public List<KaleoInstanceToken> getKaleoInstanceTokens(
 		long parentKaleoInstanceTokenId, Date completionDate,
 		ServiceContext serviceContext) {
 

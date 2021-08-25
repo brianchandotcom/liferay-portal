@@ -78,7 +78,8 @@ public interface BatchPlannerPlanLocalService
 
 	public BatchPlannerPlan addBatchPlannerPlan(
 			long userId, boolean export, String externalType,
-			String externalURL, String internalClassName, String name)
+			String externalURL, String internalClassName, String name,
+			boolean template)
 		throws PortalException;
 
 	/**

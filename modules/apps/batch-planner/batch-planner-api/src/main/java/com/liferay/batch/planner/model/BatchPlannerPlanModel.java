@@ -288,4 +288,25 @@ public interface BatchPlannerPlanModel
 	 */
 	public void setName(String name);
 
+	/**
+	 * Returns the template of this batch planner plan.
+	 *
+	 * @return the template of this batch planner plan
+	 */
+	public boolean getTemplate();
+
+	/**
+	 * Returns <code>true</code> if this batch planner plan is template.
+	 *
+	 * @return <code>true</code> if this batch planner plan is template; <code>false</code> otherwise
+	 */
+	public boolean isTemplate();
+
+	/**
+	 * Sets whether this batch planner plan is template.
+	 *
+	 * @param template the template of this batch planner plan
+	 */
+	public void setTemplate(boolean template);
+
 }

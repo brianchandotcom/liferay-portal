@@ -46,6 +46,7 @@ public class BatchPlannerPlanSoap implements Serializable {
 		soapModel.setExternalURL(model.getExternalURL());
 		soapModel.setInternalClassName(model.getInternalClassName());
 		soapModel.setName(model.getName());
+		soapModel.setTemplate(model.isTemplate());
 
 		return soapModel;
 	}
@@ -219,6 +220,18 @@ public class BatchPlannerPlanSoap implements Serializable {
 		_name = name;
 	}
 
+	public boolean getTemplate() {
+		return _template;
+	}
+
+	public boolean isTemplate() {
+		return _template;
+	}
+
+	public void setTemplate(boolean template) {
+		_template = template;
+	}
+
 	private long _mvccVersion;
 	private long _batchPlannerPlanId;
 	private long _companyId;
@@ -232,5 +245,6 @@ public class BatchPlannerPlanSoap implements Serializable {
 	private String _externalURL;
 	private String _internalClassName;
 	private String _name;
+	private boolean _template;
 
 }

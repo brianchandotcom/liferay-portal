@@ -66,13 +66,14 @@ public class BatchPlannerPlanServiceSoap {
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
 			addBatchPlannerPlan(
 				boolean export, String externalType, String externalURL,
-				String internalClassName, String name)
+				String internalClassName, String name, boolean template)
 		throws RemoteException {
 
 		try {
 			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
 				BatchPlannerPlanServiceUtil.addBatchPlannerPlan(
-					export, externalType, externalURL, internalClassName, name);
+					export, externalType, externalURL, internalClassName, name,
+					template);
 
 			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
 				toSoapModel(returnValue);
@@ -142,6 +143,53 @@ public class BatchPlannerPlanServiceSoap {
 	}
 
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap[]
+			getBatchPlannerPlans(
+				long companyId, boolean export, boolean template, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.batch.planner.model.BatchPlannerPlan>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
+				returnValue = BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+					companyId, export, template, start, end, orderByComparator);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap[]
+			getBatchPlannerPlans(
+				long companyId, boolean export, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.batch.planner.model.BatchPlannerPlan>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
+				returnValue = BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+					companyId, export, start, end, orderByComparator);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap[]
 			getBatchPlannerPlans(long companyId, int start, int end)
 		throws RemoteException {
 
@@ -160,6 +208,29 @@ public class BatchPlannerPlanServiceSoap {
 		}
 	}
 
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap[]
+			getBatchPlannerPlans(
+				long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.batch.planner.model.BatchPlannerPlan>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
+				returnValue = BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+					companyId, start, end, orderByComparator);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getBatchPlannerPlansCount(long companyId)
 		throws RemoteException {
 
@@ -167,6 +238,41 @@ public class BatchPlannerPlanServiceSoap {
 			int returnValue =
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
 					companyId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getBatchPlannerPlansCount(long companyId, boolean export)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
+					companyId, export);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getBatchPlannerPlansCount(
+			long companyId, boolean export, boolean template)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
+					companyId, export, template);
 
 			return returnValue;
 		}

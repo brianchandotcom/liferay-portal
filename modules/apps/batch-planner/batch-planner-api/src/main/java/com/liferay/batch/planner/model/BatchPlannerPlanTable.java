@@ -66,6 +66,8 @@ public class BatchPlannerPlanTable extends BaseTable<BatchPlannerPlanTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerPlanTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerPlanTable, Boolean> template = createColumn(
+		"template", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private BatchPlannerPlanTable() {
 		super("BatchPlannerPlan", BatchPlannerPlanTable::new);

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public interface BatchPlannerPlanService extends BaseService {
 	 */
 	public BatchPlannerPlan addBatchPlannerPlan(
 			boolean export, String externalType, String externalURL,
-			String internalClassName, String name)
+			String internalClassName, String name, boolean template)
 		throws PortalException;
 
 	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)
@@ -69,10 +70,32 @@ public interface BatchPlannerPlanService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean export, boolean template, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean export, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
 		long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBatchPlannerPlansCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBatchPlannerPlansCount(long companyId, boolean export);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBatchPlannerPlansCount(
+		long companyId, boolean export, boolean template);
 
 	/**
 	 * Returns the OSGi service identifier.

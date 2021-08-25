@@ -130,6 +130,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 		</finder>
+		<finder name="C_E" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="export" />
+		</finder>
 		<finder name="C_N" return-type="BatchPlannerPlan" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

@@ -1,0 +1,44 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Most Viewed Assets,Upgrades WEM";
+	property testray.main.component.name = "Upgrades WEM";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@description = "This is a test for LPS-125952. View displayed assets on Most Viewed Assets widget."
+	@priority = "4"
+	test ViewDisplayedAssetsOnMostViewedAssetsAfterUpgrade706 {
+		property data.archive.type = "data-archive-most-viewed-assets";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.6";
+
+		Upgrade.viewOrderOfAssetsOnMostedViewedAssets();
+	}
+
+	@description = "This is a test for LPS-125952. View displayed assets on Most Viewed Assets widget."
+	@priority = "4"
+	test ViewDisplayedAssetsOnMostViewedAssetsAfterUpgrade701016 {
+		property data.archive.type = "data-archive-most-viewed-assets";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.10.16";
+
+		Upgrade.viewOrderOfAssetsOnMostedViewedAssets();
+	}
+
+}

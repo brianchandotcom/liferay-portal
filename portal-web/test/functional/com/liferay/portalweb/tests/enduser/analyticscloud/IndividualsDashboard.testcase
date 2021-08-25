@@ -99,4 +99,62 @@ definition {
 		ACIndividualsDashboard.viewTotalIndividualsCount(individualCount = "1");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8902 | Test Summary: As an Business User, I should be able to assert the cards on the Overview tab of an Individual's page"
+	@priority = "4"
+	test ViewCardsInTheOverviewTabOfIndividualsPage {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Navigate to the individuals page of new user") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACNavigation.openItem(itemName = "userfn userln");
+		}
+
+		task ("Navigate to the Overview tab") {
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the cards in the Overview tab") {
+			for (var cardTitle : list "Individual Activities,Current Interests,Associated Segments") {
+				ACCards.viewCards(cardTitle = "${cardTitle}");
+			}
+		}
+
+		task ("View the individual details card") {
+			ACIndividualsDashboard.viewIndividualDetailsCard(
+				fullName = "userfn userln",
+				userEmailAddress = "userea@liferay.com");
+		}
+	}
+
 }

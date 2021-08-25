@@ -32,6 +32,10 @@ public class CustomElementsPortletDescriptorClayDataSetEntry {
 			getCustomElementsPortletDescriptorId();
 	}
 
+	public String getFriendlyURLMapping() {
+		return _customElementsPortletDescriptor.getFriendlyURLMapping();
+	}
+
 	public String getHtmlElementName() {
 		return _customElementsPortletDescriptor.getHTMLElementName();
 	}

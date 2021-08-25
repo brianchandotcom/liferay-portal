@@ -49,6 +49,9 @@ public class CustomElementsPortletDescriptorTableClayDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"htmlElementName", "html-element-name");
 
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"friendlyURLMapping", "friendly-url-mapping");
+
 		return clayTableSchemaBuilder.build();
 	}
 

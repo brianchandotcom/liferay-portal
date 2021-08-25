@@ -70,6 +70,7 @@ public class AutoTranslateServlet extends HttpServlet {
 
 			TranslatorPacket translatedTranslatorPacket = _translator.translate(
 				new JSONTranslatorPacket(
+					_portal.getCompanyId(httpServletRequest),
 					JSONFactoryUtil.createJSONObject(content)));
 
 			_writeJSON(

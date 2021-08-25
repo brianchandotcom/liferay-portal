@@ -34,7 +34,9 @@ definition {
 	}
 
 	macro deleteBreakdown {
-		Click(locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
+		Click(
+			breakdownName = "${breakdownName}",
+			locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
 	}
 
 	macro goToDistributionTab {

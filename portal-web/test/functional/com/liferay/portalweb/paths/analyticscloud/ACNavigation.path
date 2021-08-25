@@ -28,6 +28,11 @@
 </tr>
 <!-- TABS/OPTIONS AVAILABLE IN DIFFERENT PLACES E.G: ASSETS, SEGMENTS, SITES -->
 <tr>
+	<td>ACTIVE_CARD_TAB_NAME</td>
+	<td>//li[contains(@class,'card-tab')][contains(@class,'active')]//span[text()='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_TAB_NAME</td>
 	<td>//ul[contains(@class,'card-tabs-root')]//span[text()='${key_tabName}']</td>
 	<td></td>

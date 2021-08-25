@@ -90,4 +90,11 @@ definition {
 			value1 = "${tabName}");
 	}
 
+	macro viewActiveSwitchTabInCard {
+		AssertTextEquals(
+			key_tabName = "${tabName}",
+			locator1 = "ACNavigation#ACTIVE_CARD_TAB_NAME",
+			value1 = "${tabName}");
+	}
+
 }

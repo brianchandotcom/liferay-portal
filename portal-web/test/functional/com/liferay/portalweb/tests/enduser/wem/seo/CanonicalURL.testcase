@@ -95,8 +95,9 @@ definition {
 			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
 			value1 = "http://localhost:8080/web/guest/canonical-url-test-page");
 
-		AssertTextEquals(
-			locator1 = "Message#INFO",
+		AssertVisible(
+			key_infoMessage = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.",
+			locator1 = "Message#INFO_SPECIFIC",
 			value1 = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.");
 
 		Type(

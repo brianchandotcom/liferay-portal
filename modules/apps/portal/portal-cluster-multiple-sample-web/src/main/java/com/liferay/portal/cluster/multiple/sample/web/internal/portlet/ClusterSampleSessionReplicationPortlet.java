@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster.multiple.sample.internal.portlet;
+package com.liferay.portal.cluster.multiple.sample.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

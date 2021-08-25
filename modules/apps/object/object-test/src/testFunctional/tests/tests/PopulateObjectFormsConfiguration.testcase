@@ -22,6 +22,88 @@ definition {
 		}
 	}
 
+	@description = "LPS-133365 - Verify if it's possible to map an Object field and view its entries in a Field Group"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewEntriesForFieldGroup {
+
+		// TODO LPS-138054 CanMapAndViewEntriesForFieldGroup pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of BigDecimal type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapBigDecimalTypeAndViewEntries {
+
+		// TODO LPS-138050 CanMapBigDecimalTypeAndViewEntries pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of Blob type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapBlobTypeAndViewEntries {
+
+		// TODO LPS-138053 CanMapBlobTypeAndViewEntries pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of Boolean type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapBooleanTypeAndViewEntries {
+
+		// TODO LPS-138047 CanMapBooleanTypeAndViewEntries pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of Date type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapDateTypeAndViewEntries {
+
+		// TODO LPS-138052 CanMapDateTypeAndViewEntries pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of Double type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapDoubleTypeAndViewEntries {
+
+		// TODO LPS-138049 CanMapDoubleTypeAndViewEntries pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of Integer type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapIntegerTypeAndViewEntries {
+
+		// TODO LPS-138048 CanMapIntegerTypeAndViewEntries pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of Long type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapLongTypeAndViewEntries {
+
+		// TODO LPS-138051 CanMapLongTypeAndViewEntries pending implementation
+
+	}
+
+	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanMapStringTypeAndViewEntries {
+		property portal.acceptance = "true";
+
+		// TODO LPS-138046 CanMapStringTypeAndViewEntries pending implementation
+
+	}
+
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"
 	@ignore = "Test Stub"
 	@priority = "4"

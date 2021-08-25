@@ -79,7 +79,7 @@ public class FragmentCollectionFilterCategory
 			_assetCategoryLocalService.fetchAssetCategory(
 				GetterUtil.getLong(filterValue));
 
-		if (_assetCategoryLocalService == null) {
+		if (assetCategory == null) {
 			return filterValue;
 		}
 

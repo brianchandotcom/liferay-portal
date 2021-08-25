@@ -34,7 +34,9 @@ definition {
 
 		Upgrade.validateCollections();
 
-		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title Sharing");
+		Upgrade.viewSharedDocument(
+			depot = "true",
+			dmDocumentTitle = "DM Document Title Sharing");
 
 		Upgrade.addAutoTaggedDM(
 			depotName = "Test Depot Name",

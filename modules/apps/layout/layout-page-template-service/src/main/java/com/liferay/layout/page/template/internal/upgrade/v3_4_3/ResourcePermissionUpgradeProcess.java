@@ -64,7 +64,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 				String primKeyId = resultSet.getString("primKeyId");
 
 				if (!primKey.equals(LayoutPrototype.class.getName())) {
-					preparedStatement1.setLong(1, Long.valueOf(primKey));
+					preparedStatement1.setLong(1, Long.parseLong(primKey));
 
 					try (ResultSet resultSet2 =
 							preparedStatement1.executeQuery()) {

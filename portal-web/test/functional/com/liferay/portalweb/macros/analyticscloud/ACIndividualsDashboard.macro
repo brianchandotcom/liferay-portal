@@ -2,6 +2,12 @@ definition {
 
 	macro addBreakdown {
 		Click(locator1 = "ACIndividualsDashboard#ADD_BREAKDOWN_BUTTON");
+
+		ACIndividualsDashboard.nameBreakdown(breakdownName = "${breakdownName}");
+
+		ACIndividualsDashboard.selectAttribute(attribute = "${attribute}");
+
+		ACIndividualsDashboard.saveBreakdown();
 	}
 
 	macro assertCustomRangeNotApplied {

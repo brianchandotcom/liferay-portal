@@ -17,11 +17,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HEADER_TITLE</td>
-	<td>//header//h1</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACTIVITIES_NUMBER</td>
 	<td>//div[@class='details']//b</td>
 	<td></td>

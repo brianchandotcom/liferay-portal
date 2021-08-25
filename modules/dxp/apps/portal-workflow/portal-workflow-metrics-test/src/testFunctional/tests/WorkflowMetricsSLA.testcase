@@ -938,6 +938,7 @@ definition {
 	}
 
 	@description = "LPS-94760 - Verify that when there is an alert message on the page, the update date should be displayed bellow it"
+	@ignore = "true"
 	@priority = "3"
 	test SLAProcessingDateIsDisplayedUnderAlertMessage {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAProcessingDateIsDisplayedUnderAlertMessage";

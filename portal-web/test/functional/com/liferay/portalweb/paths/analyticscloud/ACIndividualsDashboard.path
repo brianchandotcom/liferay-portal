@@ -112,6 +112,11 @@
 	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'avatar')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INDIVIDUAL_DETAILS_CARD_FULL_NAME</td>
+	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'card-body')]//h4[normalize-space(text())='${fullName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

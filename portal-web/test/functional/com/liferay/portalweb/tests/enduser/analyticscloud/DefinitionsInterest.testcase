@@ -43,9 +43,25 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AddKeywordCurrentlyNone {
+		task ("Go to AC Settings > definitions > Interests") {
+			ACNavigation.goToSettings();
 
-		// TODO LRAC-8786 AddKeywordCurrentlyNone pending implementation
+			ACSettings.goToDefinitions();
 
+			ACDefinitions.goToDefinitionType(definitionType = "Interests");
+		}
+
+		task ("Check no result") {
+			ACUtils.viewNoResultsMessage(noResultMessage = "You have not added keywords to the blocklist yet.");
+		}
+
+		task ("Add keywords and assert result") {
+			ACSettings.addKeywords(
+				keyword = "test");
+
+			ACSettings.assertKeywords(
+				keyword = "test");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8787 | Test Summary: Add multiple keywords"

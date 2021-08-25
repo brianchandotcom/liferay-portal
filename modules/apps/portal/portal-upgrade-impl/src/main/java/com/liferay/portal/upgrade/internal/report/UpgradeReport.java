@@ -108,7 +108,7 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringBundler.concat(
 					_getPortalVersions(), _getDialectInfo(), _getProperties(),
-					_getDocLibSize(), _getErrors()));
+					_getDocLibSize(), _getLogEvents("errors")));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -250,14 +250,21 @@ public class UpgradeReport {
 			"your cloud storage";
 	}
 
-	private String _getErrors() {
+	private String _getLogEvents(String type) {
 		StringBundler sb = new StringBundler();
 
-		sb.append("Errors thrown during upgrade process");
+		sb.append(StringUtil.upperCaseFirstLetter(type));
+		sb.append(" thrown during upgrade process");
 		sb.append(StringPool.NEW_LINE);
 
-		Set<Map.Entry<String, Map<String, Integer>>> entrySet =
-			_errorMessages.entrySet();
+		Set<Map.Entry<String, Map<String, Integer>>> entrySet;
+
+		if (type.equals("errors")) {
+			entrySet = _errorMessages.entrySet();
+		}
+		else {
+			entrySet = _warningMessages.entrySet();
+		}
 
 		Stream<Map.Entry<String, Map<String, Integer>>> entrySetStream =
 			entrySet.stream();
@@ -288,38 +295,38 @@ public class UpgradeReport {
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);
 
-			Map<String, Integer> valueMap = entry.getValue();
+			Map<String, Integer> submap = entry.getValue();
 
-			Set<Map.Entry<String, Integer>> valueMapEntrySet =
-				valueMap.entrySet();
+			Set<Map.Entry<String, Integer>> submapEntrySet = submap.entrySet();
 
-			Stream<Map.Entry<String, Integer>> valueMapEntrySetStream =
-				valueMapEntrySet.stream();
+			Stream<Map.Entry<String, Integer>> submapEntrySetStream =
+				submapEntrySet.stream();
 
-			Map<String, Integer> valueMapSortedErrors =
-				valueMapEntrySetStream.sorted(
-					Collections.reverseOrder(
-						Map.Entry.comparingByValue(
-							new Comparator<Integer>() {
+			Map<String, Integer> submapSorted = submapEntrySetStream.sorted(
+				Collections.reverseOrder(
+					Map.Entry.comparingByValue(
+						new Comparator<Integer>() {
 
-								@Override
-								public int compare(Integer o1, Integer o2) {
-									return Integer.compare(o1, o2);
-								}
+							@Override
+							public int compare(Integer o1, Integer o2) {
+								return Integer.compare(o1, o2);
+							}
 
-							}))
-				).collect(
-					Collectors.toMap(
-						Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
-						LinkedHashMap::new)
-				);
+						}))
+			).collect(
+				Collectors.toMap(
+					Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+					LinkedHashMap::new)
+			);
 
 			for (Map.Entry<String, Integer> valueEntry :
-					valueMapSortedErrors.entrySet()) {
+					submapSorted.entrySet()) {
 
 				sb.append(StringPool.TAB);
 				sb.append(valueEntry.getValue());
-				sb.append(" occurrences of the following error: ");
+				sb.append(" occurrences of the following ");
+				sb.append(type);
+				sb.append(": ");
 				sb.append(valueEntry.getKey());
 				sb.append(StringPool.NEW_LINE);
 			}

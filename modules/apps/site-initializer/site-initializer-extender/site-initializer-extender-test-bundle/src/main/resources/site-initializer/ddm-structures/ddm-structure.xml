@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Test Structure Name</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"name": "aField",
+							"type": "text"
+						}
+					]
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

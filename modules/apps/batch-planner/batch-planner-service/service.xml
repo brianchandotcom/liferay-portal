@@ -114,6 +114,7 @@
 		<column name="externalURL" type="String" />
 		<column name="internalClassName" type="String" />
 		<column name="name" type="String" />
+		<column name="template" type="boolean" />
 
 		<!-- Order -->
 
@@ -137,6 +138,11 @@
 		<finder name="C_N" return-type="BatchPlannerPlan" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
+		</finder>
+		<finder name="C_E_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="export" />
+			<finder-column name="template" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="BatchPlannerPolicy" remote-service="true">

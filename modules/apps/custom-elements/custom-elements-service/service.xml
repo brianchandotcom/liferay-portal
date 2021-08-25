@@ -20,6 +20,7 @@
 		<!-- Other fields -->
 
 		<column method-name="CSSURLs" name="cssURLs" type="String" />
+		<column name="friendlyURLMapping" type="String" />
 		<column method-name="HTMLElementName" name="htmlElementName" type="String" />
 		<column name="instanceable" type="boolean" />
 		<column name="name" type="String" />

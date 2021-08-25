@@ -70,9 +70,9 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CustomElementsPortletDescriptor addCustomElementsPortletDescriptor(
-			long userId, String cssURLs, String htmlElementName,
-			boolean instanceable, String name, String properties,
-			ServiceContext serviceContext)
+			long userId, String cssURLs, String friendlyURLMapping, 
+			String htmlElementName, boolean instanceable, String name, 
+			String properties, ServiceContext serviceContext)
 		throws PortalException {
 
 		long customElementsPortletDescriptorId =
@@ -91,6 +91,8 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 		customElementsPortletDescriptor.setUserName(user.getFullName());
 
 		customElementsPortletDescriptor.setCSSURLs(cssURLs);
+		customElementsPortletDescriptor.setFriendlyURLMapping(
+			friendlyURLMapping);
 		customElementsPortletDescriptor.setHTMLElementName(htmlElementName);
 		customElementsPortletDescriptor.setInstanceable(instanceable);
 		customElementsPortletDescriptor.setName(name);
@@ -261,8 +263,9 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	public CustomElementsPortletDescriptor
 			updateCustomElementsPortletDescriptor(
 				long customElementsSourceId, String cssURLs,
-				String htmlElementName, boolean instanceable, String name,
-				String properties)
+				String friendlyURLMapping, String htmlElementName,
+				boolean instanceable, String name, String properties,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		CustomElementsPortletDescriptor customElementsPortletDescriptor =
@@ -270,6 +273,8 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 				customElementsSourceId);
 
 		customElementsPortletDescriptor.setCSSURLs(cssURLs);
+		customElementsPortletDescriptor.setFriendlyURLMapping(
+			friendlyURLMapping);
 		customElementsPortletDescriptor.setHTMLElementName(htmlElementName);
 		customElementsPortletDescriptor.setInstanceable(instanceable);
 		customElementsPortletDescriptor.setName(name);

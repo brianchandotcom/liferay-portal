@@ -127,6 +127,9 @@ export default withRouter(
 			setError(error);
 		};
 
+		const processResponse = (error) =>
+			error ? processError(error.graphQLErrors[0]) : debounceCallback();
+
 		const createQuestion = () => {
 			deleteCache();
 			if (
@@ -142,7 +145,7 @@ export default withRouter(
 						siteKey: context.siteKey,
 					},
 				})
-					.then(debounceCallback)
+					.then(({error}) => processResponse(error))
 					.catch(processError);
 			}
 			else {
@@ -155,7 +158,7 @@ export default withRouter(
 						messageBoardSectionId: sectionId,
 					},
 				})
-					.then(debounceCallback)
+					.then(({error}) => processResponse(error))
 					.catch(processError);
 			}
 		};

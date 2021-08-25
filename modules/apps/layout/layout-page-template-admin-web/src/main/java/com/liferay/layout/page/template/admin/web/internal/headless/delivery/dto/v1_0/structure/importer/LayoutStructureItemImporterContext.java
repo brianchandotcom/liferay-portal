@@ -22,15 +22,21 @@ import com.liferay.portal.kernel.model.Layout;
 public class LayoutStructureItemImporterContext {
 
 	public LayoutStructureItemImporterContext(
-		Layout layout, String parentItemId, int position) {
+		Layout layout, double pageDefinitionVersion, String parentItemId,
+		int position) {
 
 		_layout = layout;
+		_pageDefinitionVersion = pageDefinitionVersion;
 		_parentItemId = parentItemId;
 		_position = position;
 	}
 
 	public Layout getLayout() {
 		return _layout;
+	}
+
+	public double getPageDefinitionVersion() {
+		return _pageDefinitionVersion;
 	}
 
 	public String getParentItemId() {
@@ -42,6 +48,7 @@ public class LayoutStructureItemImporterContext {
 	}
 
 	private final Layout _layout;
+	private final double _pageDefinitionVersion;
 	private final String _parentItemId;
 	private final int _position;
 

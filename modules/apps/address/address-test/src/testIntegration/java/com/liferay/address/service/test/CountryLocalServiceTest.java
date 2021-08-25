@@ -20,12 +20,13 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -122,6 +123,14 @@ public class CountryLocalServiceTest {
 					null, null, country.getCountryId(), null, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS)));
 
+		// Region
+
+		Region region = _addRegion(country.getCountryId());
+
+		_regionLocalService.updateRegionLocalization(
+			region, RandomTestUtil.randomString(2),
+			RandomTestUtil.randomString());
+
 		_countryLocalService.deleteCountry(country);
 
 		Assert.assertNull(
@@ -146,6 +155,18 @@ public class CountryLocalServiceTest {
 					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
 					null, null, country.getCountryId(), null, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS)));
+
+		// Assert region is deleted
+
+		Assert.assertNull(
+			_regionLocalService.fetchRegion(region.getRegionId()));
+
+		// Assert region localization is deleted
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_regionLocalService.getRegionLocalizations(
+					region.getRegionId())));
 	}
 
 	@Test
@@ -273,6 +294,14 @@ public class CountryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	private Region _addRegion(long countryId) throws Exception {
+		return _regionLocalService.addRegion(
+			countryId, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private void _assertSearchCountriesPaginationSort(
 			List<Country> expectedCountries, String keywords,
 			OrderByComparator<Country> orderByComparator,
@@ -308,6 +337,6 @@ public class CountryLocalServiceTest {
 	private static OrganizationLocalService _organizationLocalService;
 
 	@Inject
-	private static RegionService _regionService;
+	private static RegionLocalService _regionLocalService;
 
 }

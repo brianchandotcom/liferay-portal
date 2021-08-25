@@ -1,0 +1,1680 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"autocomplete": false,
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataSourceType": "",
+				"dataType": "string",
+				"ddmDataProviderInstanceId": [
+				],
+				"ddmDataProviderInstanceOutput": [
+				],
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "singleline",
+				"fieldNamespace": "",
+				"fieldReference": "Text73461908",
+				"hideField": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"localizable": true,
+			"name": "Text73461908",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"autocomplete": false,
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataSourceType": "",
+				"dataType": "string",
+				"ddmDataProviderInstanceId": [
+				],
+				"ddmDataProviderInstanceOutput": [
+				],
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "singleline",
+				"fieldNamespace": "",
+				"fieldReference": "Text44718234",
+				"hideField": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Short Description"
+			},
+			"localizable": true,
+			"name": "Text44718234",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"autocomplete": false,
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataSourceType": "",
+				"dataType": "string",
+				"ddmDataProviderInstanceId": [
+				],
+				"ddmDataProviderInstanceOutput": [
+				],
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "multiline",
+				"fieldNamespace": "",
+				"fieldReference": "Text76179772",
+				"hideField": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Program Description"
+			},
+			"localizable": true,
+			"name": "Text76179772",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"dataType": "image",
+				"fieldNamespace": "",
+				"fieldReference": "Image75608705",
+				"objectFieldName": "",
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": {
+				}
+			},
+			"fieldType": "image",
+			"indexType": "text",
+			"indexable": true,
+			"label": {
+				"en_US": "Video Thumbnail"
+			},
+			"localizable": true,
+			"name": "Image75608705",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"dataType": "string",
+				"fieldNamespace": "",
+				"fieldReference": "RichText36550007",
+				"objectFieldName": "",
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"indexable": true,
+			"label": {
+				"en_US": "Video"
+			},
+			"localizable": true,
+			"name": "RichText36550007",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "FieldsGroup45468457",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Text47029218"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field65899727"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field68352088"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field33557778"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field51440250"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Features"
+			},
+			"localizable": false,
+			"name": "FieldsGroup45468457",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field33557778",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Number of Lessons"
+					},
+					"localizable": true,
+					"name": "Field33557778",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field51440250",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Quizzes"
+					},
+					"localizable": true,
+					"name": "Field51440250",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Text47029218",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Duration"
+					},
+					"localizable": true,
+					"name": "Text47029218",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field65899727",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Max Retakes"
+					},
+					"localizable": true,
+					"name": "Field65899727",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field68352088",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Pass Percentage"
+					},
+					"localizable": true,
+					"name": "Field68352088",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "FieldsGroup16558715",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Text29632561"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field43511888"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field05153901"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field88925261"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Module 1"
+			},
+			"localizable": false,
+			"name": "FieldsGroup16558715",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "multiline",
+						"fieldNamespace": "",
+						"fieldReference": "Field88925261",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 1 Description"
+					},
+					"localizable": true,
+					"name": "Field88925261",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Text29632561",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 1 Name"
+					},
+					"localizable": true,
+					"name": "Text29632561",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field05153901",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 1 Duration"
+					},
+					"localizable": true,
+					"name": "Field05153901",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field43511888",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 1 Number of Lessons"
+					},
+					"localizable": true,
+					"name": "Field43511888",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "Field27503369",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field86717695"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field79406755"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field63797205"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field91902244"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Module 2"
+			},
+			"localizable": false,
+			"name": "Field27503369",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "multiline",
+						"fieldNamespace": "",
+						"fieldReference": "Field91902244",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 2 Description"
+					},
+					"localizable": true,
+					"name": "Field91902244",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field86717695",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 2 Name"
+					},
+					"localizable": true,
+					"name": "Field86717695",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field63797205",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 2 Duration"
+					},
+					"localizable": true,
+					"name": "Field63797205",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field79406755",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 2 Number of Lessons"
+					},
+					"localizable": true,
+					"name": "Field79406755",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "Field53728661",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field51930701"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field53132702"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field12540013"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Field07978175"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Module 3"
+			},
+			"localizable": false,
+			"name": "Field53728661",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "multiline",
+						"fieldNamespace": "",
+						"fieldReference": "Field07978175",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 3 Description"
+					},
+					"localizable": true,
+					"name": "Field07978175",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field51930701",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 3 Name"
+					},
+					"localizable": true,
+					"name": "Field51930701",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field12540013",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 3 Duration"
+					},
+					"localizable": true,
+					"name": "Field12540013",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"confirmationErrorMessage": {
+							"en_US": ""
+						},
+						"confirmationLabel": {
+							"en_US": ""
+						},
+						"dataSourceType": "",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": [
+						],
+						"ddmDataProviderInstanceOutput": [
+						],
+						"direction": [
+							"vertical"
+						],
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"fieldReference": "Field53132702",
+						"hideField": false,
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"options": {
+						},
+						"placeholder": {
+							"en_US": ""
+						},
+						"requireConfirmation": false,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Module 3 Number of Lessons"
+					},
+					"localizable": true,
+					"name": "Field53132702",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text73461908"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text44718234"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text76179772"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Image75608705"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"RichText36550007"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"FieldsGroup45468457"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"FieldsGroup16558715"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Field27503369"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Field53728661"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Course"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Course"
+	},
+	"storageType": "default"
+}

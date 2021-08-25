@@ -1,0 +1,222 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"autocomplete": false,
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataSourceType": "",
+				"dataType": "string",
+				"ddmDataProviderInstanceId": [
+				],
+				"ddmDataProviderInstanceOutput": [
+				],
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "singleline",
+				"fieldNamespace": "",
+				"fieldReference": "Text49735229",
+				"hideField": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"localizable": true,
+			"name": "Text49735229",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"dataType": "image",
+				"fieldNamespace": "",
+				"fieldReference": "Image21875542",
+				"objectFieldName": "",
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": {
+				}
+			},
+			"fieldType": "image",
+			"indexType": "text",
+			"indexable": true,
+			"label": {
+				"en_US": "Image"
+			},
+			"localizable": true,
+			"name": "Image21875542",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"autocomplete": false,
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataSourceType": "",
+				"dataType": "string",
+				"ddmDataProviderInstanceId": [
+				],
+				"ddmDataProviderInstanceOutput": [
+				],
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "multiline",
+				"fieldNamespace": "",
+				"fieldReference": "Text86654236",
+				"hideField": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Info"
+			},
+			"localizable": true,
+			"name": "Text86654236",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text49735229"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Image21875542"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text86654236"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Teacher"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Teacher"
+	},
+	"storageType": "default"
+}

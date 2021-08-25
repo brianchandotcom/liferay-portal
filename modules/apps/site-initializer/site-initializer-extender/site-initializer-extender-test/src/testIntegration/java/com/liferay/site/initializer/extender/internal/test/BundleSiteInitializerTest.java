@@ -18,6 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.io.StreamUtil;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -78,10 +82,21 @@ public class BundleSiteInitializerTest {
 
 		_assertDocuments(group);
 		_assertObjectDefinitions(group);
+		_assertDDMStructure(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		bundle.uninstall();
+	}
+
+	private void _assertDDMStructure(Group group) {
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			group.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			"TEST STRUCTURE NAME");
+
+		Assert.assertNotNull(ddmStructure);
+		Assert.assertTrue(ddmStructure.hasField("aField"));
 	}
 
 	private void _assertDocuments(Group group) throws Exception {
@@ -121,10 +136,16 @@ public class BundleSiteInitializerTest {
 	}
 
 	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;

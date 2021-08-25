@@ -68,6 +68,16 @@ definition {
 		Click(locator1 = "ACIndividualsDashboard#SAVE_BREAKDOWN_BUTTON");
 	}
 
+	macro selectAttribute {
+		Click(
+			key_text = "Attribute",
+			locator1 = "TextInput#ANY");
+
+		Click(
+			locator1 = "ACIndividualsDashboard#DROPDOWN_MENU_ITEM",
+			menuItem = "${attribute}");
+	}
+
 	macro viewActivitiesNumberInPeriod {
 		AssertTextEquals(
 			locator1 = "ACIndividualsDashboard#ACTIVITIES_NUMBER",

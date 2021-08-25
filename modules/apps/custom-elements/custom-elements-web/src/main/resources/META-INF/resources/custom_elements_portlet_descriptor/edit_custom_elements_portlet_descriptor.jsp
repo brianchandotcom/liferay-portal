@@ -61,6 +61,8 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 
 				<aui:input name="instanceable" />
 
+				<aui:input helpMessage="friendly-url-mapping-help" name="friendlyURLMapping" />
+
 				<aui:input helpMessage="properties-help" name="properties" type="textarea" />
 
 				<aui:input fieldParam="cssURLs" helpMessage="css-urls-help" label="css-urls" name="CSSURLs" type="textarea" />

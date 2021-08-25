@@ -53,6 +53,8 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String cssURLs = ParamUtil.getString(actionRequest, "cssURLs");
+		String friendlyURLMapping = ParamUtil.getString(
+			actionRequest, "friendlyURLMapping");
 		String htmlElementName = ParamUtil.getString(
 			actionRequest, "htmlElementName");
 		boolean instanceable = ParamUtil.getBoolean(
@@ -60,21 +62,23 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String properties = ParamUtil.getString(actionRequest, "properties");
 
-		if (cmd.equals(Constants.ADD)) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CustomElementsPortletDescriptor.class.getName(), actionRequest);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CustomElementsPortletDescriptor.class.getName(), actionRequest);
 
+		if (cmd.equals(Constants.ADD)) {
 			_customElementsPortletDescriptorLocalService.
 				addCustomElementsPortletDescriptor(
-					serviceContext.getUserId(), cssURLs, htmlElementName,
-					instanceable, name, properties, serviceContext);
+					serviceContext.getUserId(), cssURLs, friendlyURLMapping, 
+					htmlElementName, instanceable, name, properties, 
+					serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			_customElementsPortletDescriptorLocalService.
 				updateCustomElementsPortletDescriptor(
 					ParamUtil.getLong(
 						actionRequest, "customElementsPortletDescriptorId"),
-					cssURLs, htmlElementName, instanceable, name, properties);
+					cssURLs, friendlyURLMapping, htmlElementName, instanceable,
+					name, properties, serviceContext);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

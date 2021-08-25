@@ -360,18 +360,6 @@ definition {
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.sharing.internal.configuration.SharingSystemConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro openToDMEntry {
-		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
-
-		var fileEntryId = JSONDocument.getFileEntryId(
-			site = "false",
-			dmDocumentTitle = "${dmDocumentTitle}",
-			folderId = "${folderId}",
-			groupName = "${depotName}",
-			portalURL = "${baseURL}");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_file_entry&_com_liferay_document_library_web_portlet_DLAdminPortlet_fileEntryId=${fileEntryId}");
-
 	macro openToDMEntryInDepot {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 

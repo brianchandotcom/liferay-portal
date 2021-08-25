@@ -53,7 +53,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DepotNavigator.openToDMEntry(
+		DepotNavigator.openToDMEntryInDepot(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document Title");
 
@@ -79,7 +79,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		DepotNavigator.openToDMEntry(
+		DepotNavigator.openToDMEntryInDepot(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "Commerce_Black");
 

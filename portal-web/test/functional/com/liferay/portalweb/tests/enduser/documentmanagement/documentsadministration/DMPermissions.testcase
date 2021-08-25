@@ -1603,7 +1603,9 @@ definition {
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Document Title");
+		var dmFileEntryID = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
 		User.logoutPG();
 

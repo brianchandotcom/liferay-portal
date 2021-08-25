@@ -106,6 +106,12 @@
 	<td>//span[contains(text(),'${key_visitorLegend}')]</td>
 	<td></td>
 </tr>
+<!--INDIVIDUAL_DETAILS_CARD-->
+<tr>
+	<td>INDIVIDUAL_DETAILS_CARD_AVATAR</td>
+	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'avatar')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

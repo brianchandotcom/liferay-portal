@@ -1,0 +1,35 @@
+.current-step {
+	align-items: center;
+	background: #fff;
+	border-radius: 4px;
+	bottom: 10px;
+	display: flex;
+	height: 32px;
+	left: 50px;
+	min-width: 246px;
+	padding: 0.5rem;
+	position: absolute;
+	z-index: 4;
+
+	.current-icon {
+		color: #6b6c7e;
+		height: 16px;
+		margin-right: 0.5rem;
+		width: 16px;
+	}
+
+	.current-step-link {
+		&:not(:first-child) {
+			margin-left: 0.5rem;
+		}
+	}
+
+	.current-step-text {
+		color: #6b6c7e;
+		margin-right: 0.5rem;
+	}
+
+	.more-link {
+		margin-left: 0.5rem;
+	}
+}

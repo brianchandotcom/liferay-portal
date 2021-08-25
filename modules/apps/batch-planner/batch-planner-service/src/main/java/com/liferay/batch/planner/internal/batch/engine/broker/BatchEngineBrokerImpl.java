@@ -24,8 +24,11 @@ import com.liferay.batch.planner.service.BatchPlannerLogLocalService;
 import com.liferay.batch.planner.service.BatchPlannerMappingLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyLocalService;
+import com.liferay.headless.batch.engine.dto.v1_0.ExportTask;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -70,7 +74,19 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 	public void submit(long batchPlannerPlanId) {
 		try {
-			_submit(batchPlannerPlanId);
+			BatchPlannerPlan batchPlannerPlan =
+				_batchPlannerPlanLocalService.getBatchPlannerPlan(
+					batchPlannerPlanId);
+
+			if (batchPlannerPlan.isExport()) {
+				_submitExportTask(batchPlannerPlan);
+			}
+			else {
+				_submitImportTask(batchPlannerPlan);
+			}
+
+			_batchPlannerPlanLocalService.updateActive(
+				batchPlannerPlanId, true);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -92,37 +108,44 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private String[] _getHeaderNames(
-		List<BatchPlannerMapping> batchPlannerMappings) {
-
-		return TransformUtil.transformToArray(
-			batchPlannerMappings,
-			batchPlannerMapping -> batchPlannerMapping.getExternalFieldName(),
-			String.class);
-	}
-
-	private String[] _getHeaderNames(
 		List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
 		String headerNamesString) {
 
 		if (Validator.isNull(headerNamesString)) {
-			return _getHeaderNames(batchPlannerMappings);
+			return _getHeaderNames(
+				batchPlannerMappings,
+				batchPlannerMapping ->
+					batchPlannerMapping.getExternalFieldName());
 		}
 
 		String[] headerNames = headerNamesString.split(delimiter);
 
 		if (batchPlannerMappings.size() != headerNames.length) {
-			return _getHeaderNames(batchPlannerMappings);
+			return _getHeaderNames(
+				batchPlannerMappings,
+				batchPlannerMapping ->
+					batchPlannerMapping.getExternalFieldName());
 		}
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			if (!ArrayUtil.contains(
 					headerNames, batchPlannerMapping.getExternalFieldName())) {
 
-				return _getHeaderNames(batchPlannerMappings);
+				return _getHeaderNames(
+					batchPlannerMappings,
+					mapping -> mapping.getExternalFieldName());
 			}
 		}
 
 		return headerNames;
+	}
+
+	private String[] _getHeaderNames(
+		List<BatchPlannerMapping> batchPlannerMappings,
+		UnsafeFunction<BatchPlannerMapping, String, Exception> unsafeFunction) {
+
+		return TransformUtil.transformToArray(
+			batchPlannerMappings, unsafeFunction, String.class);
 	}
 
 	private File _getJSONLFile(long batchPlannerPlanId) throws Exception {
@@ -186,10 +209,36 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		}
 	}
 
-	private void _submit(long batchPlannerPlanId) throws Exception {
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.getBatchPlannerPlan(
-				batchPlannerPlanId);
+	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)
+		throws Exception {
+
+		_exportTaskResource.setContextCompany(
+			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
+
+		_exportTaskResource.setContextUriInfo(new EmptyUriInfo());
+		_exportTaskResource.setContextUser(
+			_userLocalService.getUser(batchPlannerPlan.getUserId()));
+
+		List<BatchPlannerMapping> batchPlannerMappings =
+			_batchPlannerMappingLocalService.getBatchPlannerMappings(
+				batchPlannerPlan.getBatchPlannerPlanId());
+
+		String[] headerNames = _getHeaderNames(
+			batchPlannerMappings,
+			batchPlannerMapping -> batchPlannerMapping.getInternalFieldName());
+
+		ExportTask exportTask = _exportTaskResource.postExportTask(
+			batchPlannerPlan.getInternalClassName(), null, null,
+			StringUtil.merge(headerNames, StringPool.COMMA), null);
+
+		_batchPlannerLogLocalService.addBatchPlannerLog(
+			batchPlannerPlan.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(),
+			String.valueOf(exportTask.getId()), null, null, 0, 1);
+	}
+
+	private void _submitImportTask(BatchPlannerPlan batchPlannerPlan)
+		throws Exception {
 
 		_importTaskResource.setContextCompany(
 			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
@@ -197,6 +246,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_importTaskResource.setContextUriInfo(new EmptyUriInfo());
 		_importTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
+
+		long batchPlannerPlanId = batchPlannerPlan.getBatchPlannerPlanId();
 
 		File file = _getJSONLFile(batchPlannerPlanId);
 
@@ -214,8 +265,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_batchPlannerLogLocalService.addBatchPlannerLog(
 			batchPlannerPlan.getUserId(), batchPlannerPlanId, null,
 			String.valueOf(importTask.getId()), null, (int)file.length(), 1);
-
-		_batchPlannerPlanLocalService.updateActive(batchPlannerPlanId, true);
 	}
 
 	private Map<Integer, BatchPlannerMapping> _toBatchPlannerMappingsMap(
@@ -305,6 +354,9 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ExportTaskResource _exportTaskResource;
 
 	@Reference
 	private ImportTaskResource _importTaskResource;

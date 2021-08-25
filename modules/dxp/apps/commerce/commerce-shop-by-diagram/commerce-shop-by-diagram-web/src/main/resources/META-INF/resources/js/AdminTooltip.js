@@ -15,36 +15,67 @@ import ClayCard from '@clayui/card';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+
+import {searchDiagrams, searchSkus} from './utilities/utilities';
 
 const AdminTooltip = ({
 	deletePin,
 	namespace,
-	searchSkus,
 	setRemovePinHandler,
 	setShowTooltip,
 	showTooltip,
-	skus,
 	updatePin,
 }) => {
+	const [active, setActive] = useState(false);
+	const [products, setProducts] = useState(null);
 	const [pinPositionLabel, setPinPositionLabel] = useState(
 		showTooltip.details.label
 	);
-	const [linkedValue, setLinkedValue] = useState(
-		showTooltip.details.linked_to_sku
-	);
-	const [sku, setSku] = useState(showTooltip.details.sku);
+	const node = useRef();
+	const dropdownNode = useRef();
+	const [query, setQuery] = useState('');
+	const [linkedValue, setLinkedValue] = useState('sku');
+	const [selectedProduct, setSelectedProduct] = useState(showTooltip.details);
 	const [quantity, setQuantity] = useState(showTooltip.details.quantity);
 
 	useEffect(() => {
-		if (!sku) {
-			searchSkus(sku, linkedValue);
+		const getProducts = linkedValue === 'sku' ? searchSkus : searchDiagrams;
+
+		if (query?.length) {
+			getProducts(query, linkedValue).then((jsonResponse) =>
+				setProducts(jsonResponse.items)
+			);
 		}
-	}, [sku, searchSkus, linkedValue]);
+		else {
+			setSelectedProduct(showTooltip.details);
+		}
+	}, [query, linkedValue, showTooltip]);
+
+	useEffect(() => {
+		function handleClick(event) {
+			if (
+				node.current.contains(event.target) ||
+				(dropdownNode.current &&
+					dropdownNode.current.contains(event.target))
+			) {
+				return;
+			}
+
+			setActive(false);
+		}
+		if (active) {
+			document.addEventListener('mousedown', handleClick);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClick);
+		};
+	}, [active]);
 
 	return (
 		<ClayCard
-			className="admin-tooltip p-1"
+			className="admin-tooltip"
 			style={{
 				left: showTooltip.details.cx,
 				top: showTooltip.details.cy,
@@ -73,7 +104,7 @@ const AdminTooltip = ({
 					<ClayRadioGroup
 						className="d-flex justify-content-start mt-4"
 						inline
-						onSelectedValueChange={(val) => setLinkedValue(val)}
+						onSelectedValueChange={setLinkedValue}
 						selectedValue={linkedValue}
 					>
 						<ClayRadio
@@ -92,36 +123,49 @@ const AdminTooltip = ({
 					<label htmlFor={`${namespace}pin-sku`}>
 						{Liferay.Language.get('select-sku')}
 					</label>
-					<ClayAutocomplete>
+
+					<ClayAutocomplete ref={node}>
 						<ClayAutocomplete.Input
-							onChange={(event) => setSku(event.target.value)}
-							value={sku}
-						/>
-						<ClayAutocomplete.DropDown
-							active={skus}
-							onSetActive={(event) => {
-								setSku(
-									event.target.innerText.match(/^[\S]*/g)[0]
-								);
+							onChange={(event) => {
+								setSelectedProduct(null);
+
+								setQuery(event.target.value);
 							}}
-						>
-							<ClayDropDown.ItemList>
-								{skus?.length && (
-									<ClayDropDown.Item disabled>
-										{Liferay.Language.get(
-											'no-results-found'
-										)}
-									</ClayDropDown.Item>
-								)}
-								{skus?.length &&
-									skus.map((item) => (
-										<ClayAutocomplete.Item
-											key={item.id}
-											match={sku}
-											value={`${item.sku} - ${item.productName.en_US}`}
-										/>
-									))}
-							</ClayDropDown.ItemList>
+							onFocus={(_e) => {
+								setActive(true);
+							}}
+							onKeyUp={(event) => {
+								setActive(event.keyCode !== 27);
+							}}
+							value={selectedProduct?.sku || query}
+						/>
+
+						<ClayAutocomplete.DropDown active={active && products}>
+							<div ref={dropdownNode}>
+								<ClayDropDown.ItemList>
+									{products?.length && (
+										<ClayDropDown.Item disabled>
+											{Liferay.Language.get(
+												'no-results-found'
+											)}
+										</ClayDropDown.Item>
+									)}
+
+									{products?.length &&
+										products.map((product) => (
+											<ClayAutocomplete.Item
+												key={product.id}
+												match={selectedProduct?.sku}
+												onClick={() => {
+													setSelectedProduct(product);
+
+													setActive(false);
+												}}
+												value={`${product.sku} - ${product.productName.en_US}`}
+											/>
+										))}
+								</ClayDropDown.ItemList>
+							</div>
 						</ClayAutocomplete.DropDown>
 					</ClayAutocomplete>
 				</ClayForm.Group>
@@ -199,10 +243,19 @@ const AdminTooltip = ({
 					>
 						{Liferay.Language.get('close')}
 					</ClayButton>
+
 					<ClayButton
 						displayType="primary"
 						onClick={() => {
 							updatePin({
+								diagramEntry: {
+									diagram: linkedValue === 'sku',
+									productId: selectedProduct.productId,
+									quantity,
+									sequence: pinPositionLabel,
+									sku: selectedProduct.sku,
+									skuUuid: selectedProduct.id,
+								},
 								id: showTooltip.details.id,
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
@@ -216,7 +269,7 @@ const AdminTooltip = ({
 									label: pinPositionLabel,
 									linked_to_sku: linkedValue,
 									quantity,
-									sku,
+									sku: selectedProduct.sku,
 								},
 								tooltip: false,
 							});

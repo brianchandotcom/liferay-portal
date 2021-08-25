@@ -66,6 +66,17 @@ definition {
 		Click(locator1 = "ACIndividualsDashboard#INDIVIDUALS_TAB");
 	}
 
+	macro goToVisitedPageOverviewViaIndividualActivity {
+		Click(
+			itemName = "${itemName}",
+			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM");
+
+		Click(
+			itemName = "${itemName}",
+			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM_NESTED",
+			pageName = "${pageName}");
+	}
+
 	macro nameBreakdown {
 		Type(
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_NAME_FIELD",

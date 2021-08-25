@@ -102,6 +102,22 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public ObjectEntry fetchObjectEntry(long objectEntryId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.fetchObjectEntry(
+			objectEntryId);
+
+		if (objectEntry != null) {
+			_checkModelResourcePermission(
+				objectEntry.getObjectDefinitionId(),
+				objectEntry.getObjectEntryId(), ActionKeys.VIEW);
+		}
+
+		return objectEntry;
+	}
+
+	@Override
 	public ObjectEntry getObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -113,6 +129,23 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ActionKeys.VIEW);
 
 		return objectEntry;
+	}
+
+	@Override
+	public ObjectEntry updateObjectEntry(
+			long objectEntryId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
+			objectEntryId);
+
+		_checkModelResourcePermission(
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.UPDATE);
+
+		return objectEntryLocalService.updateObjectEntry(
+			getUserId(), objectEntryId, values, serviceContext);
 	}
 
 	@Reference(

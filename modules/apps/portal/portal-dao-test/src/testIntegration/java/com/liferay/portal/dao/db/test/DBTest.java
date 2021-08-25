@@ -223,9 +223,8 @@ public class DBTest {
 			new IndexMetadata(_INDEX_NAME, _TABLE_NAME, false, columnNames));
 
 		ReflectionTestUtil.invoke(
-			_db, "addIndexes",
-			new Class<?>[] {Connection.class, String.class, List.class},
-			_connection, _TABLE_NAME, indexMetadatas);
+			_db, "addIndexes", new Class<?>[] {Connection.class, List.class},
+			_connection, indexMetadatas);
 	}
 
 	private void _validateIndex(String[] columnNames) {

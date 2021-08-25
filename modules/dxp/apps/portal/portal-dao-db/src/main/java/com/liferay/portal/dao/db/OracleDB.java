@@ -110,7 +110,7 @@ public class OracleDB extends BaseDB {
 
 			alterColumnName(connection, tableName, tempColumnName, columnName);
 
-			addIndexes(connection, tableName, indexMetadatas);
+			addIndexes(connection, indexMetadatas);
 
 			if (primaryKey) {
 				addPrimaryKey(connection, tableName, primaryKeyColumnNames);

@@ -42,6 +42,10 @@ public interface DB {
 	public static final int SQL_VARCHAR_MAX_SIZE_THRESHOLD = 9999999;
 
 	public void addIndexes(
+			Connection connection, List<IndexMetadata> indexMetadatas)
+		throws IOException, SQLException;
+
+	public void addIndexes(
 			Connection connection, String indexesSQL,
 			Set<String> validIndexNames)
 		throws IOException;

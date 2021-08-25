@@ -46,6 +46,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import java.util.List;
+
 import javax.naming.NamingException;
 
 /**
@@ -173,6 +175,15 @@ public abstract class BaseDBProcess implements DBProcess {
 		throws IOException, NamingException, SQLException {
 
 		runSQLTemplateString(template, failOnError);
+	}
+
+	protected void addIndexes(
+			Connection connection, List<IndexMetadata> indexMetadatas)
+		throws IOException, SQLException {
+
+		DB db = DBManagerUtil.getDB();
+
+		db.addIndexes(connection, indexMetadatas);
 	}
 
 	protected void alterColumnName(

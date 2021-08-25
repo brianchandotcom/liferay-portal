@@ -72,6 +72,62 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public void addIndexes(
+			Connection connection, List<IndexMetadata> indexMetadatas)
+		throws IOException, SQLException {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		Map<String, Map<String, Integer>> columnTableSizes = new HashMap<>();
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			String normalizedTabledName = dbInspector.normalizeName(
+				indexMetadata.getTableName(), databaseMetaData);
+
+			if (columnTableSizes.get(normalizedTabledName) == null) {
+				try (ResultSet resultSet = databaseMetaData.getColumns(
+						dbInspector.getCatalog(), dbInspector.getSchema(),
+						normalizedTabledName, null)) {
+
+					Integer varcharSQLType = getSQLType("VARCHAR");
+
+					Map<String, Integer> columnSizes = new HashMap<>();
+
+					while (resultSet.next()) {
+						int columnType = resultSet.getInt("DATA_TYPE");
+
+						if (!varcharSQLType.equals(columnType)) {
+							continue;
+						}
+
+						columnSizes.put(
+							dbInspector.normalizeName(
+								resultSet.getString("COLUMN_NAME"),
+								databaseMetaData),
+							resultSet.getInt("COLUMN_SIZE"));
+					}
+
+					columnTableSizes.put(normalizedTabledName, columnSizes);
+				}
+			}
+
+			String[] columnNames = indexMetadata.getColumnNames();
+
+			int[] columnSizes = new int[columnNames.length];
+
+			for (int i = 0; i < columnNames.length; i++) {
+				columnSizes[i] = MapUtil.getInteger(
+					columnTableSizes.get(normalizedTabledName), columnNames[i],
+					0);
+			}
+
+			runSQL(indexMetadata.getCreateSQL(columnSizes));
+		}
+	}
+
+	@Override
+	public void addIndexes(
 			Connection connection, String indexesSQL,
 			Set<String> validIndexNames)
 		throws IOException {
@@ -635,51 +691,6 @@ public abstract class BaseDB implements DB {
 			_sqlVarcharSizes.put(
 				StringUtil.trim(sqlTypeStringAndText[i]),
 				getSQLVarcharSizes()[i]);
-		}
-	}
-
-	protected void addIndexes(
-			Connection connection, String tableName,
-			List<IndexMetadata> indexMetadatas)
-		throws IOException, SQLException {
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		Map<String, Integer> columnTableSizes = new HashMap<>();
-
-		try (ResultSet resultSet = databaseMetaData.getColumns(
-				dbInspector.getCatalog(), dbInspector.getSchema(),
-				dbInspector.normalizeName(tableName, databaseMetaData), null)) {
-
-			Integer varcharSQLType = getSQLType("VARCHAR");
-
-			while (resultSet.next()) {
-				int columnType = resultSet.getInt("DATA_TYPE");
-
-				if (!varcharSQLType.equals(columnType)) {
-					continue;
-				}
-
-				columnTableSizes.put(
-					dbInspector.normalizeName(
-						resultSet.getString("COLUMN_NAME"), databaseMetaData),
-					resultSet.getInt("COLUMN_SIZE"));
-			}
-		}
-
-		for (IndexMetadata indexMetadata : indexMetadatas) {
-			String[] columnNames = indexMetadata.getColumnNames();
-
-			int[] columnSizes = new int[columnNames.length];
-
-			for (int i = 0; i < columnNames.length; i++) {
-				columnSizes[i] = MapUtil.getInteger(
-					columnTableSizes, columnNames[i], 0);
-			}
-
-			runSQL(indexMetadata.getCreateSQL(columnSizes));
 		}
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
@@ -331,6 +332,29 @@ public abstract class UpgradeProcess
 
 	}
 
+	protected SafeCloseable addTempIndex(
+			String tableName, boolean unique, String... columnNames)
+		throws Exception {
+
+		IndexMetadata indexMetadata = new IndexMetadata(
+			"IX_TEMP", tableName, unique, columnNames);
+
+		addIndexes(connection, new ArrayList<>(Arrays.asList(indexMetadata)));
+
+		return () -> {
+			try {
+				runSQL("drop index IX_TEMP on " + tableName);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to drop temporary index IX_TEMP on " +
+							tableName);
+				}
+			}
+		};
+	}
+
 	/**
 	 *   @deprecated As of Cavanaugh (7.4.x), replaced by alter* methods
 	 */
@@ -617,6 +641,11 @@ public abstract class UpgradeProcess
 		return db.isSupportsUpdateWithInnerJoin();
 	}
 
+	/**
+	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #addTempIndex(String, boolean, String...)} ()}
+	 */
+	@Deprecated
 	protected void updateIndexes(Class<?> tableClass) throws Exception {
 		DB db = DBManagerUtil.getDB();
 

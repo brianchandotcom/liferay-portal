@@ -90,7 +90,7 @@ public class DB2DB extends BaseDB {
 				indexMetadata.getColumnNames(), oldColumnName, newColumnName);
 		}
 
-		addIndexes(connection, tableName, indexMetadatas);
+		addIndexes(connection, indexMetadatas);
 	}
 
 	@Override

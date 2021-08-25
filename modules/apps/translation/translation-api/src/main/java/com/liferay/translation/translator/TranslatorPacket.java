@@ -21,6 +21,8 @@ import java.util.Map;
  */
 public interface TranslatorPacket {
 
+	public long getCompanyId();
+
 	public Map<String, String> getFieldsMap();
 
 	public String getSourceLanguageId();

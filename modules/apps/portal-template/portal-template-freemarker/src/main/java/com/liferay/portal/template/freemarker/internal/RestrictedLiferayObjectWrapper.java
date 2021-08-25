@@ -322,7 +322,7 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 
 		builder.setPropagation(Propagation.REQUIRES_NEW);
 		builder.setStrictReadOnly(
-			PropsValues.FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY);
+			PropsValues.TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY);
 		builder.setRollbackForClasses(Exception.class);
 
 		_transactionConfig = builder.build();

@@ -1120,11 +1120,6 @@ public class PropsValues {
 					PropsKeys.
 						FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS));
 
-	public static final boolean FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY =
-		GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY));
-
 	public static final String[] GLOBAL_SHUTDOWN_EVENTS = PropsUtil.getArray(
 		PropsKeys.GLOBAL_SHUTDOWN_EVENTS);
 
@@ -2870,6 +2865,13 @@ public class PropsValues {
 
 	public static String[] STRIP_MIME_TYPES = PropsUtil.getArray(
 		PropsKeys.STRIP_MIME_TYPES);
+
+	public static final boolean
+		TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY =
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY));
 
 	public static final boolean TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
 		GetterUtil.getBoolean(

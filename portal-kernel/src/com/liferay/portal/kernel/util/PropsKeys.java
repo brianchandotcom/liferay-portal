@@ -1272,9 +1272,6 @@ public interface PropsKeys {
 	public static final String FINALIZE_MANAGER_THREAD_ENABLED =
 		"finalize.manager.thread.enabled";
 
-	public static final String FREEMARKER_TEMPLATE_TRANSACTION_STRICTREADONLY =
-		"freemarker.template.transaction.strictreadonly";
-
 	public static final String FULL_PAGE_DISPLAYABLE = "full.page.displayable";
 
 	public static final String GLOBAL_SHUTDOWN_EVENTS =
@@ -3253,6 +3250,10 @@ public interface PropsKeys {
 
 	public static final String TABLE_MAPPER_CACHELESS_MAPPING_TABLE_NAMES =
 		"table.mapper.cacheless.mapping.table.names";
+
+	public static final String
+		TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY =
+			"template.engine.freemarker.transaction.read.only";
 
 	public static final String TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
 		"template.engine.service.locator.restrict";

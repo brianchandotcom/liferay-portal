@@ -116,7 +116,7 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders sidebar panel with proper info for an image document', () => {
-		const {container, getByText} = render(
+		const {container, getByText, queryByText} = render(
 			_getSidebarComponent({
 				...mockedProps,
 				...mockedImageDocumentProps,
@@ -133,6 +133,10 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('download')).toBeInTheDocument();
 		expect(getByText('size')).toBeInTheDocument();
 		expect(getByText('url')).toBeInTheDocument();
+
+		expect(
+			queryByText('languages-translated-into')
+		).not.toBeInTheDocument();
 	});
 
 	it('renders sidebar panel with proper info for a video shortcut document', () => {
@@ -155,10 +159,13 @@ describe('SidebarPanelInfoView', () => {
 		expect(queryByText('size')).not.toBeInTheDocument();
 		expect(queryByText('filename')).not.toBeInTheDocument();
 		expect(queryByText('url')).not.toBeInTheDocument();
+		expect(
+			queryByText('languages-translated-into')
+		).not.toBeInTheDocument();
 	});
 
 	it('renders sidebar panel with proper info for a file', () => {
-		const {container, getByText} = render(
+		const {container, getByText, queryByText} = render(
 			_getSidebarComponent({
 				...mockedProps,
 				...mockedFileDocumentProps,
@@ -170,6 +177,10 @@ describe('SidebarPanelInfoView', () => {
 
 		expect(getByText('Basic Document')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();
+
+		expect(
+			queryByText('languages-translated-into')
+		).not.toBeInTheDocument();
 	});
 
 	it('renders sidebar panel with proper info if author has avatar', () => {

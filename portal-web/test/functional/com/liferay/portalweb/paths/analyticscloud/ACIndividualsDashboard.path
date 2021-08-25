@@ -117,6 +117,12 @@
 	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'card-body')]//h4[normalize-space(text())='${fullName}']</td>
 	<td></td>
 </tr>
+<!--INDIVIDUALS_ACTIVITIES_CHART-->
+<tr>
+	<td>BASE_RESULTS_TIMELINE_ITEM</td>
+	<td>//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')]//span[contains(@class,'title')][normalize-space(text())='Visited ${itemName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

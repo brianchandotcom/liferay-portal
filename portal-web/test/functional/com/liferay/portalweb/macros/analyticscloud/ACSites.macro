@@ -1,5 +1,37 @@
 definition {
 
+	macro viewActivitiesDuration {
+		var valueNumber = "";
+		var timeUnit = "";
+		var flag = "1";
+
+		for (var current : list "${date}") {
+			valueNumber = StringUtil.extractFirst("${current}","-");
+			timeUnit = StringUtil.extractLast("${current}","-");
+
+			if ("${flag}" == "1") {
+				AssertElementPresent(
+					key_number = "${valueNumber}",
+					key_unit = "${timeUnit}",
+					locator1 = "ACSites#ACTIVITIES_CARD_SESSION_DURATION_FIRST_VALUE");
+					flag = MathUtil.difference("${flag}","1");
+			}
+			else {
+				AssertElementPresent(
+					key_number = "${valueNumber}",
+					key_unit = "${timeUnit}",
+					locator1 = "ACSites#ACTIVITIES_CARD_SESSION_DURATION_FOLLOWING_VALUE");
+			}
+		}
+	}
+
+	macro viewActivitiesPercentage {
+		AssertElementPresent(
+			key_entry = "${entryName}",
+			key_number = "${valueNumber}",
+			locator1 = "ACSites#ACTIVITIES_CARD_ATRIBUTE_AND_VALUE");
+	}
+
 	macro viewGeomapAnalyticsLocationNames {
 		for (var locationName : list "${locationList}") {
 			AssertElementPresent(

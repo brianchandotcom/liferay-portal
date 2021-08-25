@@ -273,37 +273,27 @@
 
 			instance._initToolbarItems();
 
-			const eventListeners = [];
+			editor.on('selectionChange', () => {
+				const selection = editor.getSelection();
 
-			editor.on('contentDom', () => {
-				const editable = editor.editable();
+				const selectedElement = selection.getSelectedElement();
 
-				const showLinkToolbar = (event) => {
-					const imageWidget = editor.widgets.selected[0];
+				const startElement = selection.getStartElement();
 
-					const target = event.data.getTarget();
+				if (selectedElement || selection.getSelectedText()) {
+					instance._toolbar?.hide();
 
-					if (imageWidget?.name === 'image') {
-						instance._toolbar?.hide();
-					}
-					else if (target.$.closest('a')) {
-						editor.fire('showToolbar', {
-							toolbarCommand: 'linkToolbar',
-						});
-					}
-					else {
-						instance._toolbar?.hide();
-					}
-				};
+					return;
+				}
 
-				eventListeners.push(editable.on('mouseup', showLinkToolbar));
-				eventListeners.push(editable.on('keyup', showLinkToolbar));
-			});
-
-			editor.on('destroy', () => {
-				eventListeners.forEach((listener) => {
-					listener.removeListener();
-				});
+				if (startElement.getName() === 'a') {
+					editor.fire('showToolbar', {
+						toolbarCommand: 'linkToolbar',
+					});
+				}
+				else {
+					instance._toolbar?.hide();
+				}
 			});
 
 			editor.addCommand('linkToolbar', {

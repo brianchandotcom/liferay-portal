@@ -55,9 +55,7 @@ definition {
 		}
 
 		task ("Assert there is message There are no Segments found.") {
-			AssertTextPresent(
-				locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
-				value1 = "There are no Segments found.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Segments found.");			
 		}
 	}
 

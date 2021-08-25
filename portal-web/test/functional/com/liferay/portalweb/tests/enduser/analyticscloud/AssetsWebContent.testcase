@@ -844,9 +844,7 @@ definition {
 		}
 
 		task ("View the views by location info shown in geomap") {
-			AssertElementNotPresent(
-				key_noResultMessage = "There are no views on any location on the selected period.",
-				locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE");
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no views on any location on the selected period.");
 
 			ACCards.viewGeomapContainer(cardTitle = "Views by Location");
 

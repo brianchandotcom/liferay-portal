@@ -427,10 +427,7 @@ definition {
 
 		ACUtils.searchBar(searchItem = "Should not be here");
 
-		AssertTextEquals(
-			key_noResultMessage = "There are no Blogs found.",
-			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
-			value1 = "There are no Blogs found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no Blogs found.");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"

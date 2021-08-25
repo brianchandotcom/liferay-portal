@@ -393,10 +393,7 @@ definition {
 
 			ACUtils.searchBar(searchItem = "Should not be here");
 
-			AssertTextEquals(
-				key_noResultMessage = "There are no Documents and Media found.",
-				locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
-				value1 = "There are no Documents and Media found.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Documents and Media found.");
 		}
 	}
 

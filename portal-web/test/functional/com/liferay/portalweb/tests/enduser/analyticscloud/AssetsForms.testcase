@@ -309,10 +309,7 @@ definition {
 
 		ACUtils.searchBar(searchItem = "Should not be here");
 
-		AssertTextEquals(
-			key_noResultMessage = "There are no Forms found.",
-			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
-			value1 = "There are no Forms found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no Forms found.");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8121 | Test Summary: Assert clicking a form in the forms list navigates to the form overview page"

@@ -16,7 +16,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ page import="com.liferay.portal.cluster.multiple.sample.internal.ClusterSampleData" %>
+<%@ page import="com.liferay.portal.cluster.multiple.sample.web.internal.ClusterSampleData" %>
 
 <portlet:defineObjects />
 

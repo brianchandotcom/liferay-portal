@@ -32,6 +32,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 						<liferay-ui:message key="basic-info" />
 					</h2>
 
+					<aui:model-context bean="<%= objectField %>" model="<%= ObjectField.class %>" />
+
 					<aui:input name="label" required="<%= true %>" value="<%= objectField.getLabel(themeDisplay.getLocale()) %>" />
 
 					<aui:input disabled="<%= objectDefinition.isApproved() %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
@@ -166,6 +168,21 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		const required = inputRequired.checked;
 		const type = inputType.value;
 
+		const localizedInputs = document.querySelectorAll(
+			"input[id^='<portlet:namespace />'][type='hidden']"
+		);
+		const localizedLabels = Array(...localizedInputs).reduce(
+			(prev, cur, index) => {
+				if (cur.value) {
+					prev[cur.id.replace('<portlet:namespace />label_', '')] =
+						cur.value;
+				}
+
+				return prev;
+			},
+			{}
+		);
+
 		Liferay.Util.fetch(
 			'/o/object-admin/v1.0/object-fields/<%= objectField.getObjectFieldId() %>',
 			{
@@ -173,7 +190,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					indexed,
 					indexedAsKeyword,
 					indexedLanguageId,
-					label,
+					label: localizedLabels,
 					listTypeDefinitionId: 0,
 					name,
 					required,

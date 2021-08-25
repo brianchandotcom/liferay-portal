@@ -15,6 +15,63 @@
 	<td>//h5[contains(.,'Interests')]/../..//span[contains(@class,'title') and contains(.,'${key_interestName}')]</td>
 	<td></td>
 </tr>
+<!-- Interest -->
+<tr>
+	<td>INTEREST_TOPIC</td>
+	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='name-cell-root']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTEREST_SEGMENT_MEMBERS_BAR</td>
+	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='table-cell-expand relative-metric-bar-root']//div[@class='bar bar-lg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTEREST_SEGMENT_MEMBERS_COUNT</td>
+	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='table-cell-expand relative-metric-bar-root']//span[@class='count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTEREST_ACTIVE_MEMBERS_PERCENTAGE</td>
+	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='table-column-text-end']/h4</td>
+	<td></td>
+</tr>
+<!-- Interest Details -->
+<tr>
+	<td>TAB_NAME</td>
+	<td>//ul[contains(@class,'nav-root')]//h4[text()='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//tr[contains(.,'${key_userName}')]/td[1]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_EMAIL_ADDRESS</td>
+	<td>//tr[contains(.,'${key_userName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_ACCOUNT</td>
+	<td>//tr[contains(.,'${key_userName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_NAME</td>
+	<td>//tr[contains(.,'${key_pageName}')]/td[1]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_URL</td>
+	<td>//tr[contains(.,'${key_pageName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_VIEWS</td>
+	<td>//tr[contains(.,'${key_pageName}')]/td[3]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

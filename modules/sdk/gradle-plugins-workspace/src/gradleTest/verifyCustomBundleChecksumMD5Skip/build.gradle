@@ -5,9 +5,9 @@ String skipMessage = ""
 gradle.taskGraph.afterTask {
 	Task task, TaskState taskState ->
 
-		if (task.name.equals("verifyBundle")) {
-			skipMessage = taskState.skipMessage
-		}
+	if (task.name.equals("verifyBundle")) {
+		skipMessage = taskState.skipMessage
+	}
 }
 
 runGradleTest {

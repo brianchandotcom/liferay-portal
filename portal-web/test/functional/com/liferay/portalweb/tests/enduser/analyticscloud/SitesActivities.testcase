@@ -582,16 +582,10 @@ definition {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
-
 		}
 
-
-
-
 		task ("Assert the unique visitors label is shown") {
-
 			ACNavigation.openItem(itemName = "Blogs AC Title");
-
 
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Unique Visitors",
@@ -600,7 +594,6 @@ definition {
 			AssertElementPresent(
 				key_visitorsLabel = "Unique Visitors",
 				locator1 = "ACSites#VISITORS_GRAPH_LABEL");
-
 		}
 	}
 

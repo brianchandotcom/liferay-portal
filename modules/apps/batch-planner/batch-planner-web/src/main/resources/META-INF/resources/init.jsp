@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.batch.planner.model.BatchPlannerPlan" %><%@
 page import="com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil" %><%@
 page import="com.liferay.batch.planner.service.BatchPlannerPolicyServiceUtil" %><%@
-page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

@@ -26,9 +26,11 @@ import java.util.stream.Stream;
 /**
  * @author Igor Beslic
  */
-public class BatchPlannerDisplayContext {
+public class EditBatchPlannerPlanDisplayContext {
 
-	public BatchPlannerDisplayContext(Map<String, String> headlessEndpoints) {
+	public EditBatchPlannerPlanDisplayContext(
+		Map<String, String> headlessEndpoints) {
+
 		_headlessEndpoints = Collections.unmodifiableMap(headlessEndpoints);
 	}
 

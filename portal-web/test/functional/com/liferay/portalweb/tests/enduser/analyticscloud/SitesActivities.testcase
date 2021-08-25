@@ -569,12 +569,58 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8273 | Test Summary: Site Activity Card: Session duration and % change is shown"
-	@ignore = "true"
 	@priority = "5"
 	test ShownSessionDurationAndPercentageChangeShown {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8273 ShownSessionDurationAndPercentageChangeShown
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-8816
 
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
+		task ("Visits the site with known user") {
+
+			// This test needs a data from a past time frame to generate a % diference
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC and go to Sites") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSites();
+		}
+
+		task ("Go to Sites overview") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert Session duration and percentage") {
+
+			// Assert the correct variation(%) shown in this field
+
+			ACSites.viewActivitiesPercentage(
+				entryName = "Session Duration",
+				valueNumber = "${n}");
+
+			ACSites.viewActivitiesDuration(date = "05-s");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8272 | Test Summary: Site Activity Card: Total Sessions/Visitor and % change is shown"

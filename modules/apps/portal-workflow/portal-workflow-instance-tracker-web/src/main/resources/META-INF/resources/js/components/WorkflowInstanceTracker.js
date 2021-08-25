@@ -24,6 +24,7 @@ import {
 	isVisited,
 	nodeTypes,
 } from '../util/util';
+import CurrentStep from './CurrentStep';
 
 export default function WorkflowInstanceTracker({workflowInstanceId}) {
 	const [currentSteps, setCurrentSteps] = useState([]);
@@ -126,6 +127,8 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 					/>
 
 					<Controls showInteractive={false} />
+
+					<CurrentStep steps={[currentSteps]} />
 				</ReactFlowProvider>
 			)}
 		</div>

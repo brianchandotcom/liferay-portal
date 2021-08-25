@@ -10054,7 +10054,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<get-testcase-property property.name="liferay.data.guard.enabled" />
 
 		<if>
-			<isset property="liferay.data.guard.enabled" />
+			<istrue value="${liferay.data.guard.enabled}" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					liferay.data.guard.enabled=${liferay.data.guard.enabled}
@@ -13720,7 +13720,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<get-testcase-property property.name="liferay.data.guard.enabled" />
 
 		<if>
-			<isset property="liferay.data.guard.enabled" />
+			<istrue value="${liferay.data.guard.enabled}" />
 			<then>
 				<antcall target="deploy-data-guard" />
 			</then>

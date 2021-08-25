@@ -10,12 +10,6 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
-		ACSettings.takeTokenFromAnalyticsCloud();
-
-		TestCase.setUpPortalInstance();
-
-		ACUtils.launchDXP();
 	}
 
 	tearDown {
@@ -40,7 +34,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8786 | Test Summary: Add keyword when there are none"
-	@ignore = "true"
 	@priority = "3"
 	test AddKeywordCurrentlyNone {
 		task ("Go to AC Settings > definitions > Interests") {
@@ -56,11 +49,9 @@ definition {
 		}
 
 		task ("Add keywords and assert result") {
-			ACSettings.addKeywords(
-				keyword = "test");
+			ACSettings.addKeywords(keyword = "test");
 
-			ACSettings.assertKeywords(
-				keyword = "test");
+			ACSettings.assertKeywords(keyword = "test");
 		}
 	}
 

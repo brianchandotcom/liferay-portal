@@ -453,6 +453,14 @@ definition {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
 
+	macro viewNoResultsMessage {
+		var key_noResultMessage = "${noResultMessage}";
+
+		AssertTextEquals(
+			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
+			value1 = "${noResultMessage}");
+	}
+
 	macro viewPaginationItemsPerPage {
 		AssertTextEquals(
 			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
@@ -473,11 +481,4 @@ definition {
 			value1 = "${key_pageNumber}");
 	}
 
-	macro viewNoResultsMessage {
-        var key_noResultMessage = "${noResultMessage}";
-
-        AssertTextEquals(
-            locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
-            value1 = "${noResultMessage}");
-	}
 }

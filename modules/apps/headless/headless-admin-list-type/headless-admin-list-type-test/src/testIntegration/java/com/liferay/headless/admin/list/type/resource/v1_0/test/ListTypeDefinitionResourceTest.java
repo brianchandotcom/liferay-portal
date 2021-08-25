@@ -15,15 +15,130 @@
 package com.liferay.headless.admin.list.type.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
+import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
+import com.liferay.headless.admin.list.type.client.pagination.Page;
+import com.liferay.headless.admin.list.type.client.pagination.Pagination;
+import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
+import java.util.Collections;
+
+import org.junit.Assert;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Gabriel Albuquerque
  */
-@Ignore
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class ListTypeDefinitionResourceTest
 	extends BaseListTypeDefinitionResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetListTypeDefinitionsPage() throws Exception {
+		Page<ListTypeDefinition> listTypeDefinitionsPage =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(
+				Pagination.of(1, 10));
+
+		long totalCount = listTypeDefinitionsPage.getTotalCount();
+
+		_addListTypeDefinition(randomListTypeDefinition());
+
+		listTypeDefinitionsPage =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(
+				Pagination.of(1, 10));
+
+		Assert.assertEquals(
+			totalCount + 1, listTypeDefinitionsPage.getTotalCount());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeDefinition() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeDefinitionNotFound() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeDefinitionsPage() throws Exception {
+	}
+
+	@Override
+	protected ListTypeDefinition randomListTypeDefinition() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			super.randomListTypeDefinition();
+
+		listTypeDefinition.setName(Collections.singletonMap("en_US", "test"));
+
+		ListTypeEntry listTypeEntry = new ListTypeEntry();
+
+		listTypeEntry.setName(Collections.singletonMap("en_US", "test"));
+		listTypeEntry.setKey(RandomTestUtil.randomString());
+
+		listTypeDefinition.setListTypeEntries(
+			new ListTypeEntry[] {listTypeEntry});
+
+		return listTypeDefinition;
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testDeleteListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testGetListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testGraphQLListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testPostListTypeDefinition_addListTypeDefinition(
+				ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		return _addListTypeDefinition(listTypeDefinition);
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testPutListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	private ListTypeDefinition _addListTypeDefinition(
+			ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		return listTypeDefinitionResource.postListTypeDefinition(
+			listTypeDefinition);
+	}
+
 }

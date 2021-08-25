@@ -25,7 +25,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=modules/apps/portal/portal-cluster-multiple-sample -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=modules/apps/portal/portal-cluster-multiple-sample-web -DliferayHome=${liferayHome}");
 	}
 
 	macro enableDebugging {

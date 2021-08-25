@@ -31,6 +31,7 @@ import com.liferay.headless.delivery.dto.v1_0.StyleBook;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.exception.DropzoneLayoutStructureItemException;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporterTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
@@ -1101,8 +1102,10 @@ public class LayoutPageTemplatesImporterImpl
 		if (layoutStructureItemImporter != null) {
 			layoutStructureItem =
 				layoutStructureItemImporter.addLayoutStructureItem(
-					layout, layoutStructure, pageElement, parentItemId,
-					position, warningMessages);
+					layoutStructure,
+					new LayoutStructureItemImporterContext(
+						layout, parentItemId, position),
+					pageElement, warningMessages);
 		}
 		else if (pageElement.getType() == PageElement.Type.ROOT) {
 			layoutStructureItem = layoutStructure.getMainLayoutStructureItem();

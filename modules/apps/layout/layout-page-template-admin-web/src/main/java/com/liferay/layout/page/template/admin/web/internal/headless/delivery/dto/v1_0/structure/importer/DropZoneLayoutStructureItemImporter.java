@@ -50,9 +50,10 @@ public class DropZoneLayoutStructureItemImporter
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position,
-			Set<String> warningMessages)
+			LayoutStructure layoutStructure,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
+			PageElement pageElement, Set<String> warningMessages)
 		throws Exception {
 
 		LayoutStructureItem existingLayoutStructureItem =
@@ -65,7 +66,8 @@ public class DropZoneLayoutStructureItemImporter
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
 			(DropZoneLayoutStructureItem)
 				layoutStructure.addDropZoneLayoutStructureItem(
-					parentItemId, position);
+					layoutStructureItemImporterContext.getParentItemId(),
+					layoutStructureItemImporterContext.getPosition());
 
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());
@@ -112,6 +114,8 @@ public class DropZoneLayoutStructureItemImporter
 				(List<Map<String, String>>)fragmentSettingsMap.get(
 					_KEY_UNALLOWED_FRAGMENTS));
 		}
+
+		Layout layout = layoutStructureItemImporterContext.getLayout();
 
 		for (Map<String, String> allowedFragmentMap : allowedFragments) {
 			fragmentEntryKeys.add(allowedFragmentMap.get(_KEY_KEY));

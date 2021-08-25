@@ -86,13 +86,15 @@ public class FragmentLayoutStructureItemImporter
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position,
-			Set<String> warningMessages)
+			LayoutStructure layoutStructure,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
+			PageElement pageElement, Set<String> warningMessages)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			layout, pageElement, position, warningMessages);
+			layoutStructureItemImporterContext.getLayout(), pageElement,
+			layoutStructureItemImporterContext.getPosition(), warningMessages);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -100,8 +102,9 @@ public class FragmentLayoutStructureItemImporter
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
-				position);
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				layoutStructureItemImporterContext.getParentItemId(),
+				layoutStructureItemImporterContext.getPosition());
 
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());

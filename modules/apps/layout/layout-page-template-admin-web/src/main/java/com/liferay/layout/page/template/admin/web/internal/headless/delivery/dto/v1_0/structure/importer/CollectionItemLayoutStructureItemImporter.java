@@ -18,7 +18,6 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.model.Layout;
 
 import java.util.Objects;
 import java.util.Set;
@@ -34,13 +33,15 @@ public class CollectionItemLayoutStructureItemImporter
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position,
-			Set<String> warningMessages)
+			LayoutStructure layoutStructure,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
+			PageElement pageElement, Set<String> warningMessages)
 		throws Exception {
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(parentItemId);
+			layoutStructure.getLayoutStructureItem(
+				layoutStructureItemImporterContext.getParentItemId());
 
 		for (String childItemId : layoutStructureItem.getChildrenItemIds()) {
 			LayoutStructureItem childLayoutStructureItem =
@@ -55,7 +56,8 @@ public class CollectionItemLayoutStructureItemImporter
 		}
 
 		return layoutStructure.addCollectionItemLayoutStructureItem(
-			parentItemId, position);
+			layoutStructureItemImporterContext.getParentItemId(),
+			layoutStructureItemImporterContext.getPosition());
 	}
 
 	@Override

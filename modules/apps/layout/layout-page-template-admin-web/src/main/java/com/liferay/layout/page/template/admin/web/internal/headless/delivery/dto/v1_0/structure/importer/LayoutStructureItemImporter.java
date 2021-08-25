@@ -17,7 +17,6 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.model.Layout;
 
 import java.util.Set;
 
@@ -27,9 +26,10 @@ import java.util.Set;
 public interface LayoutStructureItemImporter {
 
 	public LayoutStructureItem addLayoutStructureItem(
-			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position,
-			Set<String> warningMessages)
+			LayoutStructure layoutStructure,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
+			PageElement pageElement, Set<String> warningMessages)
 		throws Exception;
 
 	public PageElement.Type getPageElementType();

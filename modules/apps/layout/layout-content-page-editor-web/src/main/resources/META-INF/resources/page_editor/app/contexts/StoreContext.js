@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useThunk} from '@liferay/frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {
 	useCallback,
 	useContext,
@@ -107,6 +107,10 @@ export const StoreContextProvider = ({children, initialState, reducer}) => {
  */
 export const useDispatch = () => useContext(StoreDispatchContext);
 
+export const useGetState = () => {
+	return useContext(StoreGetStateContext);
+};
+
 export const useSelectorCallback = (
 	selector,
 	dependencies,
@@ -155,3 +159,32 @@ export const useSelectorCallback = (
  */
 export const useSelector = (selector, compareEqual = DEFAULT_COMPARE_EQUAL) =>
 	useSelectorCallback(selector, [], compareEqual);
+
+function useThunk([state, dispatch]) {
+	const isMounted = useIsMounted();
+	const stateRef = useRef(state);
+
+	stateRef.current = state;
+
+	const thunkDispatch = useRef((action) => {
+		if (isMounted()) {
+			if (typeof action === 'function') {
+				return action(
+					(payload) => {
+						if (isMounted()) {
+							dispatch(payload);
+						}
+					},
+					() => {
+						return stateRef.current;
+					}
+				);
+			}
+			else {
+				dispatch(action);
+			}
+		}
+	});
+
+	return [state, thunkDispatch.current];
+}

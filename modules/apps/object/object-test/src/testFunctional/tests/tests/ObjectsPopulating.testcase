@@ -23,11 +23,68 @@ definition {
 	}
 
 	@description = "LPS-136451 - Verify if it's possible to see the entries of a field with capitalized letters in the name"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FieldWithCapitalizedLetters {
+		property portal.acceptance = "true";
 
-		// TODO LPS-137100 FieldWithCapitalizedLetters pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "dueDate",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Date");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "dueDate");
+		
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2001");
+
+		Click(
+			key_text = "Submit",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Date",
+			key_entryName = "01/01/2001",
+			key_entryNumber = "1 entry");
 
 	}
 

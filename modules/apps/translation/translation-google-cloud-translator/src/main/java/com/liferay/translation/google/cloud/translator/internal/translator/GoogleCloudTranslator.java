@@ -22,7 +22,6 @@ import com.google.cloud.translate.Translation;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -49,7 +48,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -100,7 +98,7 @@ public class GoogleCloudTranslator implements Translator {
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException {
 
-		if (!isEnabled(CompanyThreadLocal.getCompanyId())) {
+		if (!isEnabled(translatorPacket.getCompanyId())) {
 			return translatorPacket;
 		}
 
@@ -109,8 +107,13 @@ public class GoogleCloudTranslator implements Translator {
 		String targetLanguageCode = _getLanguageCode(
 			translatorPacket.getTargetLanguageId());
 
-		if (!_supportedLanguageCodes.contains(sourceLanguageCode) ||
-			!_supportedLanguageCodes.contains(targetLanguageCode)) {
+		Translate translate = _getTranslate(translatorPacket.getCompanyId());
+
+		Set<String> supportedLanguageCodes = _getSupportedLanguageCodes(
+			translate.listSupportedLanguages());
+
+		if (!supportedLanguageCodes.contains(sourceLanguageCode) ||
+			!supportedLanguageCodes.contains(targetLanguageCode)) {
 
 			throw new TranslatorException(
 				"Translation between the selected languages is not supported");
@@ -118,7 +121,7 @@ public class GoogleCloudTranslator implements Translator {
 
 		Map<String, String> fieldsMap = translatorPacket.getFieldsMap();
 
-		List<Translation> translations = _translate.translate(
+		List<Translation> translations = translate.translate(
 			new ArrayList<>(fieldsMap.values()),
 			Translate.TranslateOption.sourceLanguage(sourceLanguageCode),
 			Translate.TranslateOption.targetLanguage(targetLanguageCode));
@@ -134,6 +137,11 @@ public class GoogleCloudTranslator implements Translator {
 		}
 
 		return new TranslatorPacket() {
+
+			@Override
+			public long getCompanyId() {
+				return translatorPacket.getCompanyId();
+			}
 
 			@Override
 			public Map<String, String> getFieldsMap() {
@@ -153,26 +161,37 @@ public class GoogleCloudTranslator implements Translator {
 		};
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_googleCloudTranslatorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				GoogleCloudTranslatorConfiguration.class, properties);
+	private String _getLanguageCode(String languageId) {
+		List<String> list = StringUtil.split(languageId, CharPool.UNDERLINE);
 
-		try {
-			if (!isEnabled(CompanyThreadLocal.getCompanyId())) {
-				return;
-			}
-		}
-		catch (ConfigurationException configurationException) {
-			throw new SystemException(
-				"Unable to Check translation enabled", configurationException);
-		}
+		return list.get(0);
+	}
 
-		ServiceAccountCredentials serviceAccountCredentials = null;
+	private Set<String> _getSupportedLanguageCodes(
+		List<Language> supportedLanguages) {
+
+		Stream<Language> stream = supportedLanguages.stream();
+
+		return stream.map(
+			Language::getCode
+		).collect(
+			Collectors.toSet()
+		);
+	}
+
+	private Translate _getTranslate(long companyId)
+		throws ConfigurationException {
+
+		GoogleCloudTranslatorConfiguration
+			googleCloudTranslatorCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					GoogleCloudTranslatorConfiguration.class, companyId);
 
 		String serviceAccountPrivateKey =
-			_googleCloudTranslatorConfiguration.serviceAccountPrivateKey();
+			googleCloudTranslatorCompanyConfiguration.
+				serviceAccountPrivateKey();
+
+		ServiceAccountCredentials serviceAccountCredentials = null;
 
 		try (InputStream inputStream = new ByteArrayInputStream(
 				serviceAccountPrivateKey.getBytes())) {
@@ -188,27 +207,11 @@ public class GoogleCloudTranslator implements Translator {
 		TranslateOptions.DefaultTranslateFactory defaultTranslateFactory =
 			new TranslateOptions.DefaultTranslateFactory();
 
-		_translate = defaultTranslateFactory.create(
+		return defaultTranslateFactory.create(
 			TranslateOptions.newBuilder(
 			).setCredentials(
 				serviceAccountCredentials
 			).build());
-
-		List<Language> supportedLanguages = _translate.listSupportedLanguages();
-
-		Stream<Language> stream = supportedLanguages.stream();
-
-		_supportedLanguageCodes = stream.map(
-			Language::getCode
-		).collect(
-			Collectors.toSet()
-		);
-	}
-
-	private String _getLanguageCode(String languageId) {
-		List<String> list = StringUtil.split(languageId, CharPool.UNDERLINE);
-
-		return list.get(0);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -216,10 +219,5 @@ public class GoogleCloudTranslator implements Translator {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	private GoogleCloudTranslatorConfiguration
-		_googleCloudTranslatorConfiguration;
-	private Set<String> _supportedLanguageCodes;
-	private Translate _translate;
 
 }

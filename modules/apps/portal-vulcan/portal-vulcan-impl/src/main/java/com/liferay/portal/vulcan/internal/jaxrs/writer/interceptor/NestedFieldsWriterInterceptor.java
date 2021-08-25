@@ -54,11 +54,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
+import org.apache.cxf.jaxrs.impl.UriInfoImpl;
 import org.apache.cxf.jaxrs.provider.ProviderFactory;
 import org.apache.cxf.message.Message;
 
@@ -235,6 +237,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		}
 
 		private <T> Object _getContext(Class<T> contextClass, Message message) {
+			if (contextClass.equals(UriInfo.class)) {
+				return new UriInfoImpl(message);
+			}
+
 			ContextProvider<?> contextProvider = _getContextProvider(
 				contextClass, message);
 

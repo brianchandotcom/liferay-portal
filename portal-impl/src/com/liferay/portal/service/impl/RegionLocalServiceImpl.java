@@ -69,7 +69,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteCountryRegions(long countryId) {
+	public void deleteCountryRegions(long countryId) throws PortalException {
 		for (Region region :
 				getRegions(
 					countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {

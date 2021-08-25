@@ -73,8 +73,6 @@ definition {
 		}
 
 		task ("Interation with pages") {
-			
-
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -82,9 +80,6 @@ definition {
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
 			Pause(locator1 = "6000");
-
-			
-			
 
 			ACUtils.closeAllSessions();
 
@@ -96,14 +91,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-
-
-
-
 		task ("Asset last 180 days time period filter ") {
-
-			
-
 			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
 
 			ACTimeFilter.setLast180Days();
@@ -121,10 +109,6 @@ definition {
 
 			ACCards.viewTopSitesCardByIndexes(key_index = "1");
 		}
-
-		
-
-	
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8296 | Test Summary: Show Top 5 Entrance Pages"

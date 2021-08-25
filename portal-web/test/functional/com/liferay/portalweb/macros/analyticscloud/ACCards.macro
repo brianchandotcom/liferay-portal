@@ -12,6 +12,12 @@ definition {
 		Click(locator1 = "ACCards#CARD_FILTER_BY_WEEK");
 	}
 
+	macro noViewTopSitesCardByIndexes {
+		AssertElementNotPresent(
+			key_indexNumber = "${key_index}",
+			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
+	}
+
 	macro viewCards {
 		var key_cardTitle = "${cardTitle}";
 
@@ -83,12 +89,6 @@ definition {
 
 	macro viewTopSitesCardByIndexes {
 		AssertElementPresent(
-			key_indexNumber = "${key_index}",
-			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
-	}
-
-	macro noViewTopSitesCardByIndexes {
-		AssertElementNotPresent(
 			key_indexNumber = "${key_index}",
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}

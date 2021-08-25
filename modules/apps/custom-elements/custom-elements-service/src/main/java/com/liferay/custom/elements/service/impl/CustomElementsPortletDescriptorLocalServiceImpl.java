@@ -15,6 +15,7 @@
 package com.liferay.custom.elements.service.impl;
 
 import com.liferay.custom.elements.internal.portlet.CustomElementsPortlet;
+import com.liferay.custom.elements.internal.route.CustomElementsPortletFriendlyURLMapper;
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -149,7 +152,13 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 
 		String cssURLs = customElementsPortletDescriptor.getCSSURLs();
 
-		_serviceRegistrations.put(
+		String portletName = StringBundler.concat(
+			"com_liferay_custom_elements_web_internal_portlet_",
+			"CustomElementsPortlet_",
+			customElementsPortletDescriptor.
+				getCustomElementsPortletDescriptorId());
+
+		_portletServiceRegistrations.put(
 			customElementsPortletDescriptor.
 				getCustomElementsPortletDescriptorId(),
 			_bundleContext.registerService(
@@ -174,15 +183,25 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 					"javax.portlet.display-name",
 					customElementsPortletDescriptor.getName()
 				).put(
-					"javax.portlet.name",
-					StringBundler.concat(
-						"com_liferay_custom_elements_web_internal_portlet_",
-						"CustomElementsPortlet_",
-						customElementsPortletDescriptor.
-							getCustomElementsPortletDescriptorId())
+					"javax.portlet.name", portletName
 				).put(
 					"javax.portlet.security-role-ref", "power-user,user"
 				).build()));
+
+		if (Validator.isNotNull(
+				customElementsPortletDescriptor.getFriendlyURLMapping())) {
+
+			_friendlyURLMapperServiceRegistrations.put(
+				customElementsPortletDescriptor.
+					getCustomElementsPortletDescriptorId(),
+				_bundleContext.registerService(
+					FriendlyURLMapper.class,
+					new CustomElementsPortletFriendlyURLMapper(
+						customElementsPortletDescriptor),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"javax.portlet.name", portletName
+					).build()));
+		}
 	}
 
 	@Override
@@ -248,13 +267,25 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	public void undeployCustomElementsPortletDescriptor(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
-		ServiceRegistration<Portlet> serviceRegistration =
-			_serviceRegistrations.remove(
-				customElementsPortletDescriptor.
-					getCustomElementsPortletDescriptorId());
+		long customElementsPortletDescriptorId =
+			customElementsPortletDescriptor.
+				getCustomElementsPortletDescriptorId();
 
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
+		ServiceRegistration<FriendlyURLMapper>
+			friendlyURLMapperServiceRegistration =
+				_friendlyURLMapperServiceRegistrations.remove(
+					customElementsPortletDescriptorId);
+
+		if (friendlyURLMapperServiceRegistration != null) {
+			friendlyURLMapperServiceRegistration.unregister();
+		}
+
+		ServiceRegistration<Portlet> portletServiceRegistration =
+			_portletServiceRegistrations.remove(
+				customElementsPortletDescriptorId);
+
+		if (portletServiceRegistration != null) {
+			portletServiceRegistration.unregister();
 		}
 	}
 
@@ -385,7 +416,9 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	@Reference
 	private CustomElementsSourceLocalService _customElementsSourceLocalService;
 
+	private final Map<Long, ServiceRegistration<FriendlyURLMapper>>
+		_friendlyURLMapperServiceRegistrations = new ConcurrentHashMap<>();
 	private final Map<Long, ServiceRegistration<Portlet>>
-		_serviceRegistrations = new ConcurrentHashMap<>();
+		_portletServiceRegistrations = new ConcurrentHashMap<>();
 
 }

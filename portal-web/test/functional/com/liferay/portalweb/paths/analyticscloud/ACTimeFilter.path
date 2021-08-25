@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>CARD_TIME_FILTER_DROPDOWN</td>
-	<td>//h5[contains(@class,'card-title')and text()='${key_cardName}']/..//div[contains(@class,'dropdown dropdown-range-key-root')]/button</td>
+	<td>//div[contains(@class,'card')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardName}']]//div[contains(@class,'dropdown-range')]//button</td>
 	<td></td>
 </tr>
 <tr>

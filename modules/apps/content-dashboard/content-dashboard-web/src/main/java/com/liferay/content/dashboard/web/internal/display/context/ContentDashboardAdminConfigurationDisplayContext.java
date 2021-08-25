@@ -17,17 +17,25 @@ package com.liferay.content.dashboard.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -124,6 +132,28 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		return _assetVocabularies;
 	}
 
+	private String _getAssetVocabularyLabel(AssetVocabulary assetVocabulary) {
+		String assetVocabularyTitle = assetVocabulary.getTitle(
+			_themeDisplay.getLanguageId());
+
+		Group group = _groupLocalService.fetchGroup(
+			assetVocabulary.getGroupId());
+
+		if (group == null) {
+			return assetVocabularyTitle;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		return LanguageUtil.format(
+			resourceBundle, "x-group-x",
+			new String[] {
+				assetVocabularyTitle,
+				_getGroupName(group, resourceBundle.getLocale())
+			});
+	}
+
 	private List<AssetVocabulary> _getAvailableAssetVocabularies() {
 		if (_availableAssetVocabularies == null) {
 			_availableAssetVocabularies = _getAssetVocabularies();
@@ -142,12 +172,25 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		).toArray();
 	}
 
+	private String _getGroupName(Group group, Locale locale) {
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return group.getName(locale);
+		}
+	}
+
 	private KeyValuePair _toKeyValuePair(AssetVocabulary assetVocabulary) {
 		return new KeyValuePair(
 			assetVocabulary.getName(),
-			HtmlUtil.escape(
-				assetVocabulary.getTitle(_themeDisplay.getLanguageId())));
+			HtmlUtil.escape(_getAssetVocabularyLabel(assetVocabulary)));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentDashboardAdminConfigurationDisplayContext.class);
 
 	private List<AssetVocabulary> _assetVocabularies;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;

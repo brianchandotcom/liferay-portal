@@ -108,7 +108,8 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringBundler.concat(
 					_getPortalVersions(), _getDialectInfo(), _getProperties(),
-					_getDocLibSize(), _getLogEvents("errors")));
+					_getDocLibSize(), _getLogEvents("errors"),
+					_getLogEvents("warnings")));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");

@@ -255,12 +255,6 @@ public class UpgradeReport {
 	}
 
 	private String _getLogEvents(String type) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringUtil.upperCaseFirstLetter(type));
-		sb.append(" thrown during upgrade process");
-		sb.append(StringPool.NEW_LINE);
-
 		Set<Map.Entry<String, Map<String, Integer>>> entrySet;
 
 		if (type.equals("errors")) {
@@ -269,6 +263,16 @@ public class UpgradeReport {
 		else {
 			entrySet = _warningMessages.entrySet();
 		}
+
+		if (entrySet.isEmpty()) {
+			return StringBundler.concat("No ", type, " thrown during upgrade.");
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringUtil.upperCaseFirstLetter(type));
+		sb.append(" thrown during upgrade process");
+		sb.append(StringPool.NEW_LINE);
 
 		Stream<Map.Entry<String, Map<String, Integer>>> entrySetStream =
 			entrySet.stream();
@@ -310,7 +314,6 @@ public class UpgradeReport {
 				sb.append(type);
 				sb.append(": ");
 				sb.append(valueEntry.getKey());
-				sb.append(StringPool.NEW_LINE);
 			}
 
 			sb.append(StringPool.NEW_LINE);
@@ -485,44 +488,54 @@ public class UpgradeReport {
 		List<String> upgradeTimes = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
-		if (upgradeTimes != null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append("Duration of upgrade processes:\n");
-
-			Map<String, Integer> upgradeProcessMap = new HashMap<>();
-
-			for (String entry : upgradeTimes) {
-				int startIndex = entry.indexOf("com");
-
-				int endIndex = entry.indexOf(StringPool.SPACE, startIndex);
-
-				String className = entry.substring(startIndex, endIndex);
-
-				startIndex = entry.indexOf(StringPool.SPACE, endIndex + 1);
-
-				endIndex = entry.indexOf(StringPool.SPACE, startIndex + 1);
-
-				int upgradeTime = GetterUtil.getInteger(
-					entry.substring(startIndex, endIndex));
-
-				upgradeProcessMap.put(className, upgradeTime);
-			}
-
-			upgradeProcessMap = _sortmap(upgradeProcessMap);
-
-			for (Map.Entry<String, Integer> entry : upgradeProcessMap.entrySet()) {
-				sb.append(entry.getKey());
-				sb.append(" took ");
-				sb.append(entry.getValue());
-				sb.append(" ms to complete\n");
-			}
-
-			return sb.toString();
+		if (_eventMessages.size() == 0) {
+			return "Unable to get upgrade process times\n\n";
 		}
-		else {
-			return StringPool.BLANK;
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("20 longest running upgrade processes:\n");
+
+		Map<String, Integer> upgradeProcessMap = new HashMap<>();
+
+		for (String entry : upgradeTimes) {
+			int startIndex = entry.indexOf("com");
+
+			int endIndex = entry.indexOf(StringPool.SPACE, startIndex);
+
+			String className = entry.substring(startIndex, endIndex);
+
+			startIndex = entry.indexOf(StringPool.SPACE, endIndex + 1);
+
+			endIndex = entry.indexOf(StringPool.SPACE, startIndex + 1);
+
+			int upgradeTime = GetterUtil.getInteger(
+				entry.substring(startIndex, endIndex));
+
+			upgradeProcessMap.put(className, upgradeTime);
 		}
+
+		upgradeProcessMap = _sortmap(upgradeProcessMap);
+
+		int upgradeProcessesPrinted = 0;
+
+		for (Map.Entry<String, Integer> entry : upgradeProcessMap.entrySet()) {
+			sb.append(StringPool.TAB);
+			sb.append(entry.getKey());
+			sb.append(" took ");
+			sb.append(entry.getValue());
+			sb.append(" ms to complete\n");
+
+			upgradeProcessesPrinted++;
+
+			if (upgradeProcessesPrinted >= 20) {
+				break;
+			}
+		}
+
+		sb.append(StringPool.NEW_LINE);
+
+		return sb.toString();
 	}
 
 	private Map<String, Integer> _sortmap(Map<String, Integer> map) {

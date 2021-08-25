@@ -54,7 +54,7 @@ definition {
 		Form.gotoAddField(fieldType = "Date");
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldName = "dueDate");
-		
+
 		Form.save();
 
 		Form.publishForm();
@@ -85,7 +85,6 @@ definition {
 			key_card = "Date",
 			key_entryName = "01/01/2001",
 			key_entryNumber = "1 entry");
-
 	}
 
 }

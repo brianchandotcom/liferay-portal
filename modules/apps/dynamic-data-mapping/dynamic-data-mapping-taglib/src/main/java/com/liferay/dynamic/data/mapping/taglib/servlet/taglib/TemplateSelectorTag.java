@@ -32,7 +32,10 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Juan Fernández
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.template.taglib.servlet.taglib.TemplateSelectorTag}
  */
+@Deprecated
 public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 
 	@Override

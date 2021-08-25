@@ -370,9 +370,7 @@ const Main = ({
 		DISPLAY_STYLE[
 			autocomplete || autocompleteEnabled
 				? 'autocomplete'
-				: displayStyle
-				? displayStyle
-				: `singleline`
+				: displayStyle ?? `singleline`
 		];
 
 	const fieldDetailsId = id ? id + '_fieldDetails' : name + '_fieldDetails';

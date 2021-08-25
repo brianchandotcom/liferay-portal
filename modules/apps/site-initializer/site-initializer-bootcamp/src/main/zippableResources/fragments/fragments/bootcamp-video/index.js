@@ -1,7 +1,7 @@
 let content = null;
-let videoContainer = null;
 let errorMessage = null;
 let loadingIndicator = null;
+let videoContainer = null;
 let videoMask = null;
 
 const height = configuration.videoHeight
@@ -171,9 +171,9 @@ function main() {
 		return requestAnimationFrame(main);
 	}
 
-	videoContainer = content.querySelector('.video-container');
 	errorMessage = content.querySelector('.error-message');
 	loadingIndicator = content.querySelector('.loading-animation');
+	videoContainer = content.querySelector('.video-container');
 	videoMask = content.querySelector('.video-mask');
 
 	window.removeEventListener('resize', resize);

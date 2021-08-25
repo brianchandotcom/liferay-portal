@@ -1,10 +1,10 @@
-const courses = fragmentElement.querySelector('.courses-video');
-const play = fragmentElement.querySelector('.play');
 const btnPlay = fragmentElement.querySelectorAll('.btn-play');
-const fullscreen = fragmentElement.querySelector('.fullscreen');
-const colToHide = fragmentElement.querySelector('.col-to-hide');
-
 const btnPlayFirst = fragmentElement.querySelector('.btn-play');
+const colToHide = fragmentElement.querySelector('.col-to-hide');
+const courses = fragmentElement.querySelector('.courses-video');
+const fullscreen = fragmentElement.querySelector('.fullscreen');
+const play = fragmentElement.querySelector('.play');
+
 btnPlayFirst.classList.add('active');
 courses.setAttribute('src', btnPlayFirst.getAttribute('href'));
 

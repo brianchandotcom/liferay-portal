@@ -92,6 +92,12 @@ definition {
 			value1 = "${activitiesNumber}");
 	}
 
+	macro viewBreakdownNotPresent {
+		AssertElementNotPresent(
+			breakdownName = "${breakdownName}",
+			locator1 = "ACIndividualsDashboard#BREAKDOWN_TAB");
+	}
+
 	macro viewBreakdownRecharts {
 		if (!(isSet(index))) {
 			var index = "1";

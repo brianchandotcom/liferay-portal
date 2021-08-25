@@ -36,8 +36,8 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		return super.doStartTag();
 	}
 
-	public List<String> getActiveLocales() {
-		return _activeLocales;
+	public List<String> getActiveLocaleIds() {
+		return _activeLocaleIds;
 	}
 
 	public boolean getAutoFocus() {
@@ -252,8 +252,8 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		return _adminMode;
 	}
 
-	public void setActiveLocales(List<String> activeLocales) {
-		_activeLocales = activeLocales;
+	public void setActiveLocaleIds(List<String> activeLocaleIds) {
+		_activeLocaleIds = activeLocaleIds;
 	}
 
 	public void setAdminMode(boolean adminMode) {
@@ -472,7 +472,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_activeLocales = new ArrayList<>();
+		_activeLocaleIds = new ArrayList<>();
 		_adminMode = false;
 		_autoFocus = false;
 		_autoSize = false;
@@ -535,7 +535,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "activeLocales", _activeLocales);
+		setNamespacedAttribute(request, "activeLocaleIds", _activeLocaleIds);
 		setNamespacedAttribute(request, "adminMode", _adminMode);
 		setNamespacedAttribute(request, "autoFocus", _autoFocus);
 		setNamespacedAttribute(request, "autoSize", _autoSize);
@@ -596,7 +596,7 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private static final String _PAGE =
 		"/html/taglib/aui/input/page.jsp";
 
-	private List<String> _activeLocales = new ArrayList<>();
+	private List<String> _activeLocaleIds = new ArrayList<>();
 	private boolean _adminMode = false;
 	private boolean _autoFocus = false;
 	private boolean _autoSize = false;

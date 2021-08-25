@@ -45,7 +45,7 @@ AUI.add(
 			_instances: {},
 
 			ATTRS: {
-				activeLocales: {
+				activeLocaleIds: {
 					validator: Lang.isArray,
 				},
 
@@ -169,7 +169,7 @@ AUI.add(
 			prototype: {
 				_State: null,
 
-				_activeLocalesAtom: null,
+				_activeLocaleIdsAtom: null,
 
 				_animate(input, shouldFocus) {
 					var instance = this;
@@ -308,12 +308,12 @@ AUI.add(
 					}
 				},
 
-				_onActiveLocalesChange(activeLocales) {
+				_onActiveLocaleIdsChange(activeLocaleIds) {
 					var instance = this;
 
-					instance.set('activeLocales', activeLocales);
+					instance.set('activeLocaleIds', activeLocaleIds);
 
-					instance._renderActiveLocales();
+					instance._renderActiveLocaleIds();
 				},
 
 				_onDefaultLocaleChanged(event) {
@@ -421,13 +421,13 @@ AUI.add(
 						}, {});
 
 					var props = {
-						activeLocales: instance.get('activeLocales'),
+						activeLocaleIds: instance.get('activeLocaleIds'),
 						availableLocales,
 						defaultLocaleId: instance.get('defaultLanguageId'),
-						onClose(newActiveLocales) {
+						onClose(newActiveLocaleIds) {
 							instance._State.writeAtom(
-								instance._activeLocalesAtom,
-								newActiveLocales
+								instance._activeLocaleIdsAtom,
+								newActiveLocaleIds
 							);
 						},
 						translations,
@@ -465,10 +465,10 @@ AUI.add(
 					}
 				},
 
-				_renderActiveLocales() {
+				_renderActiveLocaleIds() {
 					var instance = this;
 
-					var activeLocales = instance.get('activeLocales');
+					var activeLocaleIds = instance.get('activeLocaleIds');
 
 					var defaultLanguageId = instance.get('defaultLanguageId');
 
@@ -494,7 +494,7 @@ AUI.add(
 								'[data-languageid="' + key + '"]'
 							)?.parentElement;
 
-							if (!activeLocales.includes(key)) {
+							if (!activeLocaleIds.includes(key)) {
 								if (localeNode) {
 									newFlagsNode.removeChild(localeNode);
 								}
@@ -751,12 +751,12 @@ AUI.add(
 					);
 					instance._flags = boundingBox.one('.palette-container');
 
-					var activeLocales = instance.get('activeLocales');
+					var activeLocaleIds = instance.get('activeLocaleIds');
 
-					if (activeLocales) {
-						instance._activeLocalesAtom = instance.get(
+					if (activeLocaleIds) {
+						instance._activeLocaleIdsAtom = instance.get(
 							'frontendJsComponentsWebModule'
-						).activeLocalesAtom;
+						).activeLocaleIdsAtom;
 
 						instance._State = instance.get(
 							'frontendJsStateWebModule'
@@ -766,18 +766,21 @@ AUI.add(
 							true
 						);
 
-						instance._renderActiveLocales();
+						instance._renderActiveLocaleIds();
 
 						var State = instance._State;
-						var activeLocalesAtom = instance._activeLocalesAtom;
+						var activeLocaleIdsAtom = instance._activeLocaleIdsAtom;
 
 						if (instance.get('adminMode')) {
-							State.writeAtom(activeLocalesAtom, activeLocales);
+							State.writeAtom(
+								activeLocaleIdsAtom,
+								activeLocaleIds
+							);
 						}
 
 						instance._availableLanguagesSubscription = State.subscribe(
-							activeLocalesAtom,
-							A.bind('_onActiveLocalesChange', instance)
+							activeLocaleIdsAtom,
+							A.bind('_onActiveLocaleIdsChange', instance)
 						);
 					}
 				},

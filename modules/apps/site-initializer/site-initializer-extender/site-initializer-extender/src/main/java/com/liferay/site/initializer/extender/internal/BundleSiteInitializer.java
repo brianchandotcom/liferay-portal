@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -28,6 +30,7 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,8 +58,6 @@ import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.InputStream;
 
 import java.net.URL;
@@ -65,7 +66,6 @@ import java.net.URLConnection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -230,8 +230,48 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDocuments(ServiceContext serviceContext) throws Exception {
-		_addDocuments(null, "/site-initializer/documents", serviceContext);
+	private Long _addDocumentFolder(
+			Long documentFolderId, String resourcePath,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DocumentFolderResource.Builder documentFolderResourceBuilder =
+			_documentFolderResourceFactory.create();
+
+		DocumentFolderResource documentFolderResource =
+			documentFolderResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		resourcePath = StringUtil.replaceLast(
+			resourcePath, CharPool.FORWARD_SLASH, StringPool.BLANK);
+
+		String json = _read(resourcePath + "._si.json");
+
+		DocumentFolder documentFolder = null;
+
+		if (json != null) {
+			documentFolder = DocumentFolder.toDTO(json);
+		}
+		else {
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+			jsonObject.put("name", FileUtil.getShortFileName(resourcePath));
+
+			documentFolder = DocumentFolder.toDTO(jsonObject.toString());
+		}
+
+		if (documentFolderId != null) {
+			documentFolder =
+				documentFolderResource.postDocumentFolderDocumentFolder(
+					documentFolderId, documentFolder);
+		}
+		else {
+			documentFolder = documentFolderResource.postSiteDocumentFolder(
+				serviceContext.getScopeGroupId(), documentFolder);
+		}
+
+		return documentFolder.getId();
 	}
 
 	private void _addDocuments(
@@ -253,9 +293,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				long documentInternalFolderId = _addDocumentFolder(documentFolderId, resourcePath, serviceContext);
+				long documentInternalFolderId = _addDocumentFolder(
+					documentFolderId, resourcePath, serviceContext);
 
-				_addDocuments(documentInternalFolderId, resourcePath, serviceContext);
+				_addDocuments(
+					documentInternalFolderId, resourcePath, serviceContext);
 
 				continue;
 			}
@@ -287,56 +329,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 						Collections.singletonMap(
 							"file",
 							new BinaryFile(
-								MimeTypesUtil.getContentType(fileName), fileName,
-								urlConnection.getInputStream(),
+								MimeTypesUtil.getContentType(fileName),
+								fileName, urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
 						__ -> objectMapper, values));
-			} else {
+			}
+			else {
 				documentResource.postSiteDocument(
 					serviceContext.getScopeGroupId(),
 					MultipartBody.of(
 						Collections.singletonMap(
 							"file",
 							new BinaryFile(
-								MimeTypesUtil.getContentType(fileName), fileName,
-								urlConnection.getInputStream(),
+								MimeTypesUtil.getContentType(fileName),
+								fileName, urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
 						__ -> objectMapper, values));
 			}
 		}
 	}
 
-	private Long _addDocumentFolder(Long documentFolderId, String resourcePath, ServiceContext serviceContext) throws Exception {
-		DocumentFolderResource.Builder documentFolderResourceBuilder =
-			_documentFolderResourceFactory.create();
-
-		DocumentFolderResource documentFolderResource = documentFolderResourceBuilder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		resourcePath = StringUtil.replaceLast(resourcePath, StringPool.FORWARD_SLASH, StringPool.BLANK);
-
-		String json = _read(resourcePath + "._si.json");
-
-		DocumentFolder documentFolder = null;
-
-		if (json != null) {
-			documentFolder = DocumentFolder.toDTO(json);
-		} else {
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-			jsonObject.put("name", FileUtil.getShortFileName(resourcePath));
-
-			documentFolder = DocumentFolder.toDTO(jsonObject.toString());
-		}
-
-		if (documentFolderId != null) {
-			documentFolder = documentFolderResource.postDocumentFolderDocumentFolder(documentFolderId, documentFolder);
-		} else {
-			documentFolder = documentFolderResource.postSiteDocumentFolder(serviceContext.getScopeGroupId(), documentFolder);
-		}
-
-		return documentFolder.getId();
+	private void _addDocuments(ServiceContext serviceContext) throws Exception {
+		_addDocuments(null, "/site-initializer/documents", serviceContext);
 	}
 
 	private void _addFragmentEntries(ServiceContext serviceContext)

@@ -82,7 +82,8 @@ public class SiteInitializerRegistrar {
 			new BundleSiteInitializer(
 				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _documentFolderResourceFactory,
-				_documentResourceFactory, _fragmentsImporter, _groupLocalService, _jsonFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
 				_userLocalService),

@@ -64,7 +64,7 @@ public class SiteInitializerExtension {
 			new SiteInitializerRegistrar(
 				bundle, bundleContext, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper,
-				documentFolderResourceFactory, documentResourceFactory, 
+				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService, jsonFactory,
 				objectDefinitionResourceFactory, portal,
 				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,

@@ -67,7 +67,7 @@ public class SiteInitializerExtender
 			new SiteInitializerExtension(
 				bundle, _bundleContext, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_documentFolderResourceFactory, _documentResourceFactory, 
+				_documentFolderResourceFactory, _documentResourceFactory,
 				_fragmentsImporter, _groupLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,

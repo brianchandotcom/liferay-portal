@@ -157,6 +157,33 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
+	@description = "This is a test for LRQA-69555. Verify that the user can save as Draft a Wiki Page with assigned Workflow. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSaveAsDraftPage {
+
+		// TODO LRQA-69555 CanSaveAsDraftPage pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Publication a Wiki Page with assigned Workflow. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSubmitWikiPage {
+
+		// TODO LRQA-69554 CanSubmitWikiPage pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69570. Verify that a new page with the same name can't be created while the page is on Review. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CantCreatePageWithSameNameOnReview {
+
+		// TODO LRQA-69570 CantCreatePageWithSameNameOnReview pending implementation
+
+	}
+
 	@priority = "4"
 	test RejectFrontPageUserEdit {
 		ApplicationsMenu.gotoPortlet(
@@ -296,6 +323,78 @@ definition {
 			wikiPageStatus = "Pending",
 			wikiPageTitle = "Wiki Page Title",
 			wikiPageUsername = "Test Test");
+	}
+
+	@description = "This is a test for LRQA-69553. Verify that the user can assign a Workflow to Wiki Page. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test UserCanAssignWorkflowToWikiPage {
+
+		// TODO LRQA-69553 UserCanAssignWorkflowToWikiPage pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69561. Verify that the Child Page status are displayed correctly on approval. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WikiChildPageStatusOnApprove {
+
+		// TODO LRQA-69561 WikiChildPageStatusOnApprove pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69567. Verify that the Child Page status are displayed correctly on reject. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WikiChildPageStatusOnReject {
+
+		// TODO LRQA-69474 WikiChildPageStatusOnReject pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-68568. Verify that the Front Page content doesn't change on reject. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WikiFrontPageContentDoesntChangeOnReject {
+
+		// TODO LRQA-68568 WikiFrontPageContentDoesntChangeOnReject pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69560. Verify that the Front Page status changes after edit. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WikiFrontPageStatusChangesOnEdit {
+
+		// TODO LRQA-69560 WikiFrontPageStatusChangesOnEdit pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69557. Verify that the Front Page status are displayed correctly on approve. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WikiPageApprovedStatus {
+
+		// TODO LRQA-69557 WikiPageApprovedStatus pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69569. Verify that a page isn't added to the Wiki on Reject. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WikiPageNotAddedOnReject {
+
+		// TODO LRQA-69569 WikiPageNotAddedOnReject pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69558. Verify that the Front Page status are displayed correctly on reject process. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WikiPageRejectStatus {
+
+		// TODO LRQA-69558 WikiPageRejectStatus pending implementation
+
 	}
 
 }

@@ -518,6 +518,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test FragmentsCanBeHiddenAndShown {
+		property portal.acceptance = "true";
+
 		task ("Add a widgets to the page") {
 			ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name",

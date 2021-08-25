@@ -101,13 +101,13 @@ definition {
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";
-		
-			ObjectAdmin.addObjectViaAPI(
+
+		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-			ObjectAdmin.addObjectFieldViaAPI(
+		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Not Required Field",
 			fieldName = "date",
 			fieldType = "Date",

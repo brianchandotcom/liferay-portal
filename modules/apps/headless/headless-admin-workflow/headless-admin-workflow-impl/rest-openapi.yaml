@@ -247,6 +247,14 @@ components:
                         A flag that indicates whether the instance is complete.
                     readOnly: true
                     type: boolean
+                currentNodeNames:
+                    # @review
+                    description:
+                        The instance's current node names.
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
                 dateCompletion:
                     description:
                         The instance's completion date.
@@ -271,12 +279,6 @@ components:
                     description:
                         The object/asset that the instance's workflow is managing.
                     readOnly: true
-                state:
-                    # @review
-                    description:
-                        The instance's current state.
-                    readOnly: true
-                    type: string
                 workflowDefinitionName:
                     description:
                         The name of the instance's workflow definition.

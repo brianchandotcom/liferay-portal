@@ -81,4 +81,16 @@ definition {
 			locator1 = "ACSites#TOP_PAGES_INDEXES");
 	}
 
+	macro viewTopSitesCardByIndexes {
+		AssertElementPresent(
+			key_indexNumber = "${key_index}",
+			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
+	}
+
+	macro noViewTopSitesCardByIndexes {
+		AssertElementNotPresent(
+			key_indexNumber = "${key_index}",
+			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
+	}
+
 }

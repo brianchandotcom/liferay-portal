@@ -103,11 +103,11 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean execute, int start, int end,
+		long companyId, boolean export, int start, int end,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
 		return batchPlannerPlanPersistence.filterFindByC_E(
-			companyId, execute, start, end, orderByComparator);
+			companyId, export, start, end, orderByComparator);
 	}
 
 	@Override

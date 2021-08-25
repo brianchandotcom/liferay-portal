@@ -23,13 +23,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,19 +70,18 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 
 		Arrays.sort(assetVocabularyNames);
 
-		Set<String> availableAssetVocabularyNamesSet = SetUtil.fromArray(
-			_getAvailableAssetVocabularyNames());
+		List<AssetVocabulary> availableAssetVocabularies =
+			_getAvailableAssetVocabularies();
 
-		Stream<String> stream = availableAssetVocabularyNamesSet.stream();
+		Stream<AssetVocabulary> stream = availableAssetVocabularies.stream();
 
 		return stream.filter(
-			assetVocabularyName ->
-				Arrays.binarySearch(assetVocabularyNames, assetVocabularyName) <
-					0
-		).map(
-			assetVocabularyName ->
-				_assetVocabularyLocalService.fetchGroupVocabulary(
-					_themeDisplay.getCompanyGroupId(), assetVocabularyName)
+			assetVocabulary -> {
+				int pos = Arrays.binarySearch(
+					assetVocabularyNames, assetVocabulary.getName());
+
+				return pos < 0;
+			}
 		).filter(
 			Objects::nonNull
 		).map(
@@ -127,22 +124,12 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		return _assetVocabularies;
 	}
 
-	private String[] _getAvailableAssetVocabularyNames() {
-		if (_availableAssetVocabularyNames != null) {
-			return _availableAssetVocabularyNames;
+	private List<AssetVocabulary> _getAvailableAssetVocabularies() {
+		if (_availableAssetVocabularies == null) {
+			_availableAssetVocabularies = _getAssetVocabularies();
 		}
 
-		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies();
-
-		_availableAssetVocabularyNames = new String[assetVocabularies.size()];
-
-		for (int i = 0; i < assetVocabularies.size(); i++) {
-			AssetVocabulary assetVocabulary = assetVocabularies.get(i);
-
-			_availableAssetVocabularyNames[i] = assetVocabulary.getName();
-		}
-
-		return _availableAssetVocabularyNames;
+		return _availableAssetVocabularies;
 	}
 
 	private long[] _getGroupIds(long companyId) {
@@ -165,7 +152,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	private List<AssetVocabulary> _assetVocabularies;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final String[] _assetVocabularyNames;
-	private String[] _availableAssetVocabularyNames;
+	private List<AssetVocabulary> _availableAssetVocabularies;
 	private final GroupLocalService _groupLocalService;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

@@ -11,7 +11,7 @@
 }
 
 .sign-in {
-	background-image: url([resources:home-2.jpg]);
+	background-image: url([resources:sign_in.jpg]);
 	background-position: right;
 	background-repeat: no-repeat;
 	background-size: cover;

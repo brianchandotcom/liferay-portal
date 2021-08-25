@@ -28,11 +28,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,14 +52,22 @@ public class DBTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
 
 		_dbInspector = new DBInspector(_connection);
 
 		_db = DBManagerUtil.getDB();
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_db.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME, " (id LONG not null primary ",
@@ -70,8 +81,6 @@ public class DBTest {
 	@After
 	public void tearDown() throws Exception {
 		_db.runSQL("drop table " + _TABLE_NAME);
-
-		DataAccess.cleanUp(_connection);
 	}
 
 	@Test
@@ -110,7 +119,7 @@ public class DBTest {
 			_connection, _TABLE_NAME, "typeString", "TEXT null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "testColumn", "TEXT null"));
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeString", "TEXT null"));
 	}
 
 	@Test
@@ -135,36 +144,30 @@ public class DBTest {
 
 	@Test
 	public void testAlterIndexedColumnName() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create index ", _INDEX_NAME, " on ", _TABLE_NAME, " ",
-				"(typeString, typeBoolean)"));
+		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
 		_db.alterColumnName(
-			_connection, _TABLE_NAME, "typeString",
-			"typeStringTest STRING null");
+			_connection, _TABLE_NAME, "typeVarchar",
+			"typeVarcharTest VARCHAR(75) null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumn(_TABLE_NAME, "typeStringTest"));
+			_dbInspector.hasColumn(_TABLE_NAME, "typeVarcharTest"));
 
-		_validateIndex(new String[] {"typeStringTest", "typeBoolean"});
+		_validateIndex(new String[] {"typeVarcharTest", "typeBoolean"});
 	}
 
 	@Test
 	public void testAlterIndexedColumnType() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create index ", _INDEX_NAME, " on ", _TABLE_NAME, " ",
-				"(typeString, typeBoolean)"));
+		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
 		_db.alterColumnType(
-			_connection, _TABLE_NAME, "typeString", "VARCHAR(75) null");
+			_connection, _TABLE_NAME, "typeVarchar", "VARCHAR(50) null");
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeString", "VARCHAR(75) null"));
+				_TABLE_NAME, "typeVarchar", "VARCHAR(50) null"));
 
-		_validateIndex(new String[] {"typeString", "typeBoolean"});
+		_validateIndex(new String[] {"typeVarchar", "typeBoolean"});
 	}
 
 	@Test
@@ -200,22 +203,29 @@ public class DBTest {
 
 	@Test
 	public void testAlterTableDropIndexedColumn() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create index ", _INDEX_NAME, " on ", _TABLE_NAME, " ",
-				"(typeString, typeBoolean)"));
+		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
-		_db.alterTableDropColumn(_connection, _TABLE_NAME, "typeString");
+		_db.alterTableDropColumn(_connection, _TABLE_NAME, "typeVarchar");
 
-		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "typeString"));
+		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "typeVarchar"));
 
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
 			_db, "getIndexes",
 			new Class<?>[] {Connection.class, String.class, String.class},
-			_connection, _TABLE_NAME, "typeString");
+			_connection, _TABLE_NAME, "typeVarchar");
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 0, indexMetadatas.size());
+	}
+
+	private void _addIndex(String[] columnNames) {
+		List<IndexMetadata> indexMetadatas = Arrays.asList(
+			new IndexMetadata(_INDEX_NAME, _TABLE_NAME, false, columnNames));
+
+		ReflectionTestUtil.invoke(
+			_db, "addIndexes",
+			new Class<?>[] {Connection.class, String.class, List.class},
+			_connection, _TABLE_NAME, indexMetadatas);
 	}
 
 	private void _validateIndex(String[] columnNames) {
@@ -240,8 +250,8 @@ public class DBTest {
 
 	private static final String _TABLE_NAME = "DBTest";
 
-	private Connection _connection;
-	private DB _db;
-	private DBInspector _dbInspector;
+	private static Connection _connection;
+	private static DB _db;
+	private static DBInspector _dbInspector;
 
 }

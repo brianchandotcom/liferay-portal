@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -645,7 +646,8 @@ public abstract class BaseDB implements DB {
 			int[] columnSizes = new int[columnNames.length];
 
 			for (int i = 0; i < columnNames.length; i++) {
-				columnSizes[i] = columnTableSizes.get(columnNames[i]);
+				columnSizes[i] = MapUtil.getInteger(
+					columnTableSizes, columnNames[i], 0);
 			}
 
 			runSQL(indexMetadata.getCreateSQL(columnSizes));
@@ -852,9 +854,12 @@ public abstract class BaseDB implements DB {
 				try (ResultSet indexResultSet = databaseMetaData.getIndexInfo(
 						catalog, schema, normalizedTableName, false, false)) {
 
-					boolean nextIndex = true;
+					boolean unique = false;
 
-					while (nextIndex && indexResultSet.next()) {
+					String[] columnNames = new String[0];
+					String previousIndexName = null;
+
+					while (indexResultSet.next()) {
 						String indexName = indexResultSet.getString(
 							"INDEX_NAME");
 
@@ -871,41 +876,41 @@ public abstract class BaseDB implements DB {
 							continue;
 						}
 
-						String[] columnNames = new String[0];
-						String currentIndexName = null;
+						if ((previousIndexName != null) &&
+							!previousIndexName.equals(indexName)) {
 
-						while (indexResultSet.next()) {
-							currentIndexName = indexResultSet.getString(
-								"INDEX_NAME");
+							if ((normalizedColumnName == null) ||
+								ArrayUtil.contains(
+									columnNames, normalizedColumnName)) {
 
-							if (!indexName.equals(currentIndexName)) {
-								break;
+								indexMetadatas.add(
+									new IndexMetadata(
+										indexName, normalizedTableName, unique,
+										columnNames));
 							}
 
-							ArrayUtil.append(
-								columnNames,
-								dbInspector.normalizeName(
-									indexResultSet.getString("COLUMN_NAME"),
-									databaseMetaData));
+							columnNames = new String[0];
 						}
 
-						if (currentIndexName == null) {
-							nextIndex = false;
-						}
+						previousIndexName = indexName;
 
-						if ((normalizedColumnName != null) &&
-							!ArrayUtil.contains(
-								columnNames, normalizedColumnName)) {
+						unique = !indexResultSet.getBoolean("NON_UNIQUE");
 
-							continue;
-						}
+						columnNames = ArrayUtil.append(
+							columnNames,
+							dbInspector.normalizeName(
+								indexResultSet.getString("COLUMN_NAME"),
+								databaseMetaData));
+					}
 
-						boolean unique = !indexResultSet.getBoolean(
-							"NON_UNIQUE");
+					if ((previousIndexName != null) &&
+						((normalizedColumnName == null) ||
+						 ArrayUtil.contains(
+							 columnNames, normalizedColumnName))) {
 
 						indexMetadatas.add(
 							new IndexMetadata(
-								indexName, normalizedTableName, unique,
+								previousIndexName, normalizedTableName, unique,
 								columnNames));
 					}
 				}
@@ -933,7 +938,7 @@ public abstract class BaseDB implements DB {
 				normalizedTableName)) {
 
 			if (resultSet.next()) {
-				ArrayUtil.append(
+				columnNames = ArrayUtil.append(
 					columnNames,
 					dbInspector.normalizeName(
 						resultSet.getString("COLUMN_NAME"), databaseMetaData));

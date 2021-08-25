@@ -87,9 +87,58 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertBlogsPageTImeFilter180Days {
+		property portal.acceptance = "quarantine";
 
-		// TODO LRAC-8384 AssertBlogsPageTImeFilter180Days
+		// AC Refactor: It is not possible to perform the assert because this test needs data from the past.
+		// AC Refactor ticket: LRAC-8930
 
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View the blog") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Close DXP, launch AC and switch the propety") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Blogs assets") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Blogs");
+		}
+
+		task ("Assert blog on the Last 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACAssets.viewAssets(assetName = "Blogs AC Title");
+		}
+
+		task ("Assert 'Last 180 days' time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast180Days();
+
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "No visitor data received from your assets");
+
+			// Is not possible to assert the blog because this test needs data from the past.
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"

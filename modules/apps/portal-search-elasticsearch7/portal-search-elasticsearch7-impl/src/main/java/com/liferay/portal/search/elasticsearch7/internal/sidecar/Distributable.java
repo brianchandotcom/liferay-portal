@@ -19,8 +19,6 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
  */
 public interface Distributable {
 
-	public String getChecksum();
-
 	public String getDownloadURLString();
 
 }

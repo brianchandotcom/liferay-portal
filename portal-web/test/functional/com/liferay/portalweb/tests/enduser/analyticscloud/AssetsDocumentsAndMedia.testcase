@@ -58,9 +58,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to DM tab") {
@@ -154,9 +152,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to Documents and Media tab") {
@@ -316,9 +312,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to DM tab") {
@@ -378,9 +372,7 @@ definition {
 			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -434,9 +426,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to DM tab") {
@@ -488,9 +478,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to DM tab") {
@@ -567,9 +555,7 @@ definition {
 
 		DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -623,10 +609,7 @@ definition {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${documentTitle}");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
+		ACUtils.closeAllSessionsAndWait();
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -657,9 +640,7 @@ definition {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

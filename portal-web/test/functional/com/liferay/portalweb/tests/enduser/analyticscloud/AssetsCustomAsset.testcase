@@ -88,9 +88,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch the property in AC") {
@@ -135,9 +133,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch the property in AC") {
@@ -193,9 +189,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Change property") {
@@ -251,9 +245,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch the property in AC") {
@@ -316,9 +308,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch the property in AC") {
@@ -393,9 +383,7 @@ definition {
 				siteName = "Site Name");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

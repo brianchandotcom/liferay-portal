@@ -67,9 +67,7 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

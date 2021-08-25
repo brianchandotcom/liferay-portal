@@ -90,9 +90,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -167,9 +165,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -246,9 +242,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -319,9 +313,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {

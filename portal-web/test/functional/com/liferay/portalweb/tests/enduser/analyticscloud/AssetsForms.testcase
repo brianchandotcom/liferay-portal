@@ -61,9 +61,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to forms tab") {
@@ -137,9 +135,7 @@ definition {
 		}
 
 		task ("Close all sessions and go to AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 		}
@@ -245,9 +241,7 @@ definition {
 		}
 
 		task ("Close all sessions and go to AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 		}
@@ -292,9 +286,7 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -361,9 +353,7 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -419,10 +409,6 @@ definition {
 		}
 
 		FormPortlet.clickSubmit();
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
 
 		ACUtils.launchAC();
 
@@ -485,8 +471,7 @@ definition {
 		}
 
 		task ("Close all sessions") {
-			ACUtils.closeAllSessions();
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Enter in form assets page in AC") {
@@ -539,9 +524,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Enter in forms asset page") {
@@ -599,9 +582,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to forms tab") {
@@ -672,9 +653,7 @@ definition {
 			Pause(locator1 = "10000");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -740,9 +719,7 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -776,9 +753,7 @@ definition {
 			Pause(locator1 = "100");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

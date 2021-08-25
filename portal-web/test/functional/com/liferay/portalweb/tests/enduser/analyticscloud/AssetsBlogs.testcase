@@ -50,9 +50,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to Blogs tab") {
@@ -130,9 +128,7 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -190,9 +186,7 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -216,9 +210,7 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -260,9 +252,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to Blogs tab") {
@@ -314,9 +304,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to Blogs tab") {
@@ -365,9 +353,7 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Test 2");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -422,9 +408,7 @@ definition {
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -509,9 +493,7 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -567,9 +549,7 @@ definition {
 			BlogsNavigator.gotoPG(entryTitle = "Test 2");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

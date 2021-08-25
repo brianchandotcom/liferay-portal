@@ -129,9 +129,7 @@ definition {
 		}
 
 		task ("Close all sessions and switch to new property in AC and go to Individuals") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 
@@ -177,9 +175,7 @@ definition {
 		}
 
 		task ("Close all sessions and switch to new property in AC and go to Individuals") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 
@@ -387,9 +383,7 @@ definition {
 		}
 
 		task ("Close all sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Launch AC and go to Sites overview") {
@@ -448,9 +442,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to Sites") {

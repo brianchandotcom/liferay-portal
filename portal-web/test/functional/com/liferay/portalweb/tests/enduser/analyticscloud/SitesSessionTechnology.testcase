@@ -71,9 +71,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 
@@ -141,9 +139,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 

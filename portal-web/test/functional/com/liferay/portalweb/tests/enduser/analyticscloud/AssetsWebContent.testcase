@@ -55,9 +55,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC and go to WC tab") {
@@ -178,9 +176,7 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -261,9 +257,7 @@ definition {
 		}
 
 		task ("Close all sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Go to created WC") {
@@ -380,9 +374,7 @@ definition {
 				siteName = "Site Name");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -455,9 +447,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 
@@ -649,9 +639,7 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -719,9 +707,7 @@ definition {
 				siteName = "Site Name");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -754,9 +740,7 @@ definition {
 					siteName = "Site Name");
 			}
 
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Navigate to AC property") {
@@ -827,9 +811,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch the property in AC") {
@@ -897,9 +879,7 @@ definition {
 				siteName = "Site Name");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -955,9 +935,7 @@ definition {
 				siteName = "Site Name");
 		}
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

@@ -185,9 +185,7 @@ definition {
 
 			ACUtils.launchDXP();
 
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Go to AC > Usage again and get the new value of Page Views") {

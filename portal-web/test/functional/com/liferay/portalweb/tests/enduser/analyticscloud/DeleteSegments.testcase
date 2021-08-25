@@ -109,9 +109,7 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -170,9 +168,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 
@@ -225,9 +221,7 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -312,9 +306,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 
@@ -421,9 +413,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
+			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 

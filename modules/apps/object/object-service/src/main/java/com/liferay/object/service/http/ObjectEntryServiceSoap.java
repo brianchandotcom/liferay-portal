@@ -81,13 +81,13 @@ public class ObjectEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.object.model.ObjectEntrySoap getObjectEntry(
+	public static com.liferay.object.model.ObjectEntrySoap fetchObjectEntry(
 			long objectEntryId)
 		throws RemoteException {
 
 		try {
 			com.liferay.object.model.ObjectEntry returnValue =
-				ObjectEntryServiceUtil.getObjectEntry(objectEntryId);
+				ObjectEntryServiceUtil.fetchObjectEntry(objectEntryId);
 
 			return com.liferay.object.model.ObjectEntrySoap.toSoapModel(
 				returnValue);
@@ -99,13 +99,13 @@ public class ObjectEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.object.model.ObjectEntrySoap fetchObjectEntry(
+	public static com.liferay.object.model.ObjectEntrySoap getObjectEntry(
 			long objectEntryId)
 		throws RemoteException {
 
 		try {
 			com.liferay.object.model.ObjectEntry returnValue =
-				ObjectEntryServiceUtil.fetchObjectEntry(objectEntryId);
+				ObjectEntryServiceUtil.getObjectEntry(objectEntryId);
 
 			return com.liferay.object.model.ObjectEntrySoap.toSoapModel(
 				returnValue);

@@ -28,9 +28,9 @@ definition {
 	}
 
 	macro clickBreakdownTab {
-		var key_tabName = "${tabName}";
-
-		Click(locator1 = "ACIndividualsDashboard#BREAKDOWN_TAB");
+		Click(
+			breakdownName = "${breakdownName}",
+			locator1 = "ACIndividualsDashboard#BREAKDOWN_TAB");
 	}
 
 	macro deleteBreakdown {

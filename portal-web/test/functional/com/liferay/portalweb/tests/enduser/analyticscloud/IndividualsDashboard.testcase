@@ -199,4 +199,50 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8904 | Test Summary: As a Business User, I should be able to view individuals name at top of page"
+	@priority = "4"
+	test ViewIndividualNameAtTheTopOfIndividualsPage {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Navigate to the individuals page of new user") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACNavigation.openItem(itemName = "userfn userln");
+		}
+
+		task ("View the individual name at the top of individuals page") {
+			ACNavigation.assertPageHeader(headerTitle = "userfn userln");
+		}
+	}
+
 }

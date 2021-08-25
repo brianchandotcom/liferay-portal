@@ -67,6 +67,12 @@ public class ObjectEntryServiceUtil {
 		return getService().deleteObjectEntry(objectEntryId);
 	}
 
+	public static ObjectEntry fetchObjectEntry(long objectEntryId)
+		throws PortalException {
+
+		return getService().fetchObjectEntry(objectEntryId);
+	}
+
 	public static ObjectEntry getObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -80,6 +86,15 @@ public class ObjectEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectEntry updateObjectEntry(
+			long objectEntryId, Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateObjectEntry(
+			objectEntryId, values, serviceContext);
 	}
 
 	public static ObjectEntryService getService() {

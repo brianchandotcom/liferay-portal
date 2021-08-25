@@ -99,6 +99,24 @@ public class ObjectEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectEntrySoap fetchObjectEntry(
+			long objectEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectEntry returnValue =
+				ObjectEntryServiceUtil.fetchObjectEntry(objectEntryId);
+
+			return com.liferay.object.model.ObjectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectEntryServiceSoap.class);
 

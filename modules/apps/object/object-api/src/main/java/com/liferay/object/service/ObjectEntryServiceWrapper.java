@@ -62,6 +62,14 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry fetchObjectEntry(
+			long objectEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.fetchObjectEntry(objectEntryId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry getObjectEntry(
 			long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -77,6 +85,17 @@ public class ObjectEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry updateObjectEntry(
+			long objectEntryId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.updateObjectEntry(
+			objectEntryId, values, serviceContext);
 	}
 
 	@Override

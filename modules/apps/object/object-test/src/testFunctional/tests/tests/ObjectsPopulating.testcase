@@ -69,8 +69,6 @@ definition {
 			key_text = "Submit",
 			locator1 = "Button#ANY");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

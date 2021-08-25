@@ -15,6 +15,7 @@
 package com.liferay.message.boards.internal.upgrade.v3_1_0;
 
 import com.liferay.message.boards.internal.upgrade.v3_1_0.util.MBMessageTable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -38,13 +39,11 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 				new AlterTableAddColumn("urlSubject", "VARCHAR(255) null"));
 		}
 
-		runSQL(
-			"create index IX_TEMP on MBMessage (subject[$COLUMN_LENGTH:75$]," +
-				"messageId)");
+		try (SafeCloseable safeCloseable = addTempIndex(
+				"MBMessage", false, "subject", "messageId")) {
 
-		_populateUrlSubject();
-
-		runSQL("drop index IX_TEMP on MBMessage");
+			_populateUrlSubject();
+		}
 	}
 
 	private String _getURLSubject(long id, String subject) {

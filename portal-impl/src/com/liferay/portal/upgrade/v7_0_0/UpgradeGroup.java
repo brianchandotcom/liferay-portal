@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -39,9 +40,11 @@ public class UpgradeGroup extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(GroupTable.class, new AlterColumnType("name", "STRING null"));
 
-		updateIndexes(GroupTable.class);
+		try (SafeCloseable safeCloseable = addTempIndex(
+				"Group_", false, "classNameId", "classPK")) {
 
-		updateGlobalGroupName();
+			updateGlobalGroupName();
+		}
 	}
 
 	protected void updateGlobalGroupName() throws Exception {

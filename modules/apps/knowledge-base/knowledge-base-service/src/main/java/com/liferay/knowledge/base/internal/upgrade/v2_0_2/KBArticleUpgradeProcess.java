@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v2_0_2;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -34,11 +35,9 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			"create index IX_TEMP on KBArticle (groupId, kbFolderId, " +
-				"urlTitle[$COLUMN_LENGTH:75$])");
+		try (SafeCloseable safeCloseable = addTempIndex(
+				"KBArticle", false, "groupId", "kbFolderId", "urlTitle")) {
 
-		try {
 			boolean changed = true;
 
 			while (changed) {
@@ -50,9 +49,6 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 			while (changed) {
 				changed = _renameConflictingKBFolderFriendlyURLs();
 			}
-		}
-		finally {
-			runSQL("drop index IX_TEMP on KBArticle");
 		}
 	}
 

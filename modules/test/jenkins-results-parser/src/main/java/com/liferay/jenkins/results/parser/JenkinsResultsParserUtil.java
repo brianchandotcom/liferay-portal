@@ -1457,6 +1457,34 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
+	public static String getDockerImageName(File dockerFile) {
+		if ((dockerFile == null) || !dockerFile.exists()) {
+			return null;
+		}
+
+		String dockerFileContent;
+
+		try {
+			dockerFileContent = read(dockerFile);
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+
+		if (isNullOrEmpty(dockerFileContent)) {
+			return null;
+		}
+
+		Matcher dockerFileMatcher = _dockerFilePattern.matcher(
+			dockerFileContent);
+
+		if (!dockerFileMatcher.find()) {
+			return null;
+		}
+
+		return dockerFileMatcher.group("dockerImageName");
+	}
+
 	public static String getEnvironmentVariable(
 		String environmentVariableName) {
 
@@ -2940,6 +2968,68 @@ public class JenkinsResultsParserUtil {
 		}
 
 		System.out.println(tableStringBuilder.toString());
+	}
+
+	public static void pullDockerImageDependencies(
+		File baseDir, String[] excludedDockerImageNames) {
+
+		String dockerEnabled = System.getenv("DOCKER_ENABLED");
+
+		if (isNullOrEmpty(dockerEnabled) || !dockerEnabled.equals("true")) {
+			return;
+		}
+
+		List<String> pulledDockerImageNames = new ArrayList<>();
+
+		for (File dockerFile : findFiles(baseDir, "Dockerfile")) {
+			String dockerImageName = getDockerImageName(dockerFile);
+
+			if (isNullOrEmpty(dockerImageName) ||
+				pulledDockerImageNames.contains(dockerImageName)) {
+
+				continue;
+			}
+
+			boolean excludeDockerImageName = false;
+
+			if (excludedDockerImageNames != null) {
+				for (String excludedImageName : excludedDockerImageNames) {
+					if (isNullOrEmpty(excludedImageName)) {
+						continue;
+					}
+
+					if (dockerImageName.matches(excludedImageName)) {
+						excludeDockerImageName = true;
+
+						break;
+					}
+				}
+			}
+
+			if (excludeDockerImageName) {
+				continue;
+			}
+
+			try {
+				Process process = executeBashCommands(
+					"docker pull " + dockerImageName);
+
+				if (process.exitValue() != 0) {
+					System.out.println(
+						"Failed to pull docker image " + dockerImageName);
+
+					return;
+				}
+
+				pulledDockerImageNames.add(dockerImageName);
+			}
+			catch (IOException | TimeoutException exception) {
+				System.out.println(
+					"Failed to pull docker image " + dockerImageName);
+
+				exception.printStackTrace();
+			}
+		}
 	}
 
 	public static String read(File file) throws IOException {
@@ -4715,6 +4805,8 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");
 	private static Long _currentTimeMillisDelta;
+	private static final Pattern _dockerFilePattern = Pattern.compile(
+		".*FROM (?<dockerImageName>[^\\s]+)( AS builder)?\\n[\\s\\S]*");
 	private static final DateFormat _gitHubDateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss");
 	private static final Pattern _javaVersionPattern = Pattern.compile(

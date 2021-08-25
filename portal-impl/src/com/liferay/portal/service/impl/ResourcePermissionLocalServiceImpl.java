@@ -855,6 +855,11 @@ public class ResourcePermissionLocalServiceImpl
 			companyId, name, scope, primKey);
 	}
 
+	@Override
+	public List<ResourcePermission> getResourcePermissions(String name) {
+		return resourcePermissionPersistence.findByName(name);
+	}
+
 	/**
 	 * Returns the number of resource permissions at the scope of the type.
 	 *

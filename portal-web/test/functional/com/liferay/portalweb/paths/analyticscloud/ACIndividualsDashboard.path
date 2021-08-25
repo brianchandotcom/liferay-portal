@@ -32,6 +32,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BREAKDOWN_RECHARTS_CARTESIAN_Y_AXIS_TICK</td>
+	<td>xpath=(//div[contains(@class,'distribution-card')]//*[name()='g'][contains(@class,'recharts-yAxis')]//*[name()='g'][contains(@class,'recharts-layer')][contains(@class,'axis-tick')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BREAKDOWN_NAME_FIELD</td>
 	<td>//*[text()='Breakdown Name']/ancestor::label/following-sibling::input[@type='text']</td>
 	<td></td>

@@ -74,10 +74,14 @@ public class UpgradeReport {
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
-		List<String> errorMessages = _errorMessages.computeIfAbsent(
-			loggerName, key -> new ArrayList<>());
+		Map<String, Integer> errorMessages = _errorMessages.computeIfAbsent(
+			loggerName, key -> new ConcurrentHashMap<>());
 
-		errorMessages.add(message);
+		int occurrences = errorMessages.computeIfAbsent(message, key -> 1);
+
+		occurrences++;
+
+		errorMessages.put(message, occurrences);
 	}
 
 	public void addEventMessage(String loggerName, String message) {
@@ -88,10 +92,14 @@ public class UpgradeReport {
 	}
 
 	public void addWarningMessage(String loggerName, String message) {
-		List<String> warningMessages = _warningMessages.computeIfAbsent(
-			loggerName, key -> new ArrayList<>());
+		Map<String, Integer> warningMessages = _warningMessages.computeIfAbsent(
+			loggerName, key -> new ConcurrentHashMap<>());
 
-		warningMessages.add(message);
+		int occurrences = warningMessages.computeIfAbsent(message, key -> 1);
+
+		occurrences++;
+
+		warningMessages.put(message, occurrences);
 	}
 
 	public void generateReport() {
@@ -248,19 +256,21 @@ public class UpgradeReport {
 		sb.append("Errors thrown during upgrade process");
 		sb.append(StringPool.NEW_LINE);
 
-		Set<Map.Entry<String, ArrayList<String>>> entrySet =
+		Set<Map.Entry<String, Map<String, Integer>>> entrySet =
 			_errorMessages.entrySet();
 
-		Stream<Map.Entry<String, ArrayList<String>>> entrySetStream =
+		Stream<Map.Entry<String, Map<String, Integer>>> entrySetStream =
 			entrySet.stream();
 
-		Map<String, List<String>> sortedErrors = entrySetStream.sorted(
+		Map<String, Map<String, Integer>> sortedErrors = entrySetStream.sorted(
 			Collections.reverseOrder(
 				Map.Entry.comparingByValue(
-					new Comparator<List>() {
+					new Comparator<Map<String, Integer>>() {
 
 						@Override
-						public int compare(List o1, List o2) {
+						public int compare(
+							Map<String, Integer> o1, Map<String, Integer> o2) {
+
 							return Integer.compare(o1.size(), o2.size());
 						}
 
@@ -271,17 +281,46 @@ public class UpgradeReport {
 				LinkedHashMap::new)
 		);
 
-		for (Map.Entry<String, List<String>> entry : sortedErrors.entrySet()) {
+		for (Map.Entry<String, Map<String, Integer>> entry :
+				sortedErrors.entrySet()) {
+
 			sb.append("ClassName: ");
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);
 
-			List<String> valueList = entry.getValue();
+			Map<String, Integer> valueMap = entry.getValue();
 
-			for (String value : valueList) {
+			Set<Map.Entry<String, Integer>> valueMapEntrySet =
+				valueMap.entrySet();
+
+			Stream<Map.Entry<String, Integer>> valueMapEntrySetStream =
+				valueMapEntrySet.stream();
+
+			Map<String, Integer> valueMapSortedErrors =
+				valueMapEntrySetStream.sorted(
+					Collections.reverseOrder(
+						Map.Entry.comparingByValue(
+							new Comparator<Integer>() {
+
+								@Override
+								public int compare(Integer o1, Integer o2) {
+									return Integer.compare(o1, o2);
+								}
+
+							}))
+				).collect(
+					Collectors.toMap(
+						Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+						LinkedHashMap::new)
+				);
+
+			for (Map.Entry<String, Integer> valueEntry :
+					valueMapSortedErrors.entrySet()) {
+
 				sb.append(StringPool.TAB);
-				sb.append("Error message: ");
-				sb.append(value);
+				sb.append(valueEntry.getValue());
+				sb.append(" occurrences of the following error: ");
+				sb.append(valueEntry.getKey());
 				sb.append(StringPool.NEW_LINE);
 			}
 
@@ -464,7 +503,7 @@ public class UpgradeReport {
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
 	private String _dlStore;
-	private final Map<String, ArrayList<String>> _errorMessages =
+	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
 		new ConcurrentHashMap<>();
@@ -472,7 +511,7 @@ public class UpgradeReport {
 	private final String _initialSchemaVersion;
 	private final PersistenceManager _persistenceManager;
 	private String _rootDir;
-	private final Map<String, ArrayList<String>> _warningMessages =
+	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 
 }

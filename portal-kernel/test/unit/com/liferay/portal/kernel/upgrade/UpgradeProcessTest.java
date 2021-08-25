@@ -14,18 +14,29 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess.AlterColumnName;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Arrays;
-import java.util.List;
+import java.sql.Connection;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
@@ -33,13 +44,25 @@ import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Mariano Álvaro Sáiz
+ * @author Alberto Chaparro
  */
+@RunWith(Arquillian.class)
 public class UpgradeProcessTest {
 
 	@Before
 	public void setUp() {
 		_mockPropsUtil();
+	}
 
+	public static final String TABLE_NAME = "UpgradeProcessTest";
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_upgradeProcess = new UpgradeProcess() {
 
 			@Override
@@ -47,77 +70,70 @@ public class UpgradeProcessTest {
 			}
 
 		};
+
+		_connection = DataAccess.getConnection();
+
+		_dbInspector = new DBInspector(_connection);
+
+		_db = DBManagerUtil.getDB();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_db.runSQL(
+			StringBundler.concat(
+				"create table ", TABLE_NAME, " (id LONG not null primary key, ",
+				"typeVarchar VARCHAR(75) not null);"));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_db.runSQL("drop table " + TABLE_NAME);
 	}
 
 	@Test
-	public void testGetSQLUsesNewColumn() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, _NEW_COLUMN);
-
-		String sql = alterColumnName.getSQL(_TABLE_NAME);
-
-		Assert.assertTrue(sql, sql.contains(_NEW_COLUMN));
-	}
-
-	@Test
-	public void testShouldAddIndexIsCaseInsensitive() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, StringUtil.toUpperCase(_NEW_COLUMN_NAME));
+	public void testDeprecatedAlterColumnName() throws Exception {
+		_upgradeProcess.alter(
+			getClass(),
+			_upgradeProcess.new AlterColumnName(
+				"typeVarchar", "typeVarcharTest"));
 
 		Assert.assertTrue(
-			alterColumnName.shouldAddIndex(_newIndexColumnsNamesLowerCase));
+			_dbInspector.hasColumn(TABLE_NAME, "typeVarcharTest"));
 	}
 
 	@Test
-	public void testShouldAddIndexIsFalseIfNewColumnNameIsNotInNewIndex() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME_NOT_IN_INDEX);
-
-		Assert.assertFalse(
-			alterColumnName.shouldAddIndex(_newIndexColumnNames));
-	}
-
-	@Test
-	public void testShouldAddIndexIsTrueIfNewColumNameIsInNewIndex() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME);
-
-		Assert.assertTrue(alterColumnName.shouldAddIndex(_newIndexColumnNames));
-	}
-
-	@Test
-	public void testShouldAddIndexIsTrueIfNewColumnIsInNewIndex() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, _NEW_COLUMN);
-
-		Assert.assertTrue(alterColumnName.shouldAddIndex(_newIndexColumnNames));
-	}
-
-	@Test
-	public void testShouldDropIndexIsCaseInsensitive() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			StringUtil.toUpperCase(_OLD_COLUMN_NAME), _NEW_COLUMN_NAME);
+	public void testDeprecatedAlterColumnType() throws Exception {
+		_upgradeProcess.alter(
+			getClass(),
+			_upgradeProcess.new AlterColumnType("typeVarchar", "LONG null"));
 
 		Assert.assertTrue(
-			alterColumnName.shouldDropIndex(_oldIndexColumnsNamesLowercase));
+			_dbInspector.hasColumnType(TABLE_NAME, "typeVarchar", "LONG null"));
 	}
 
 	@Test
-	public void testShouldDropIndexIsFalseIfOldColumnIsNotInOldIndex() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME_NOT_IN_INDEX, _NEW_COLUMN_NAME);
+	public void testDeprecatedAlterTableAddColumn() throws Exception {
+		_upgradeProcess.alter(
+			getClass(),
+			_upgradeProcess.new AlterTableAddColumn(
+				"testColumn", "STRING null"));
 
-		Assert.assertFalse(
-			alterColumnName.shouldDropIndex(_oldIndexColumnNames));
+		Assert.assertTrue(_dbInspector.hasColumn(TABLE_NAME, "testColumn"));
 	}
 
 	@Test
-	public void testShouldDropIndexIsTrueIfOldColumnIsInOldIndex() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME);
+	public void testDeprecatedAlterTableDropColumn() throws Exception {
+		_upgradeProcess.alter(
+			getClass(),
+			_upgradeProcess.new AlterTableDropColumn("typeVarchar"));
 
-		Assert.assertTrue(
-			alterColumnName.shouldDropIndex(_oldIndexColumnNames));
+		Assert.assertFalse(_dbInspector.hasColumn(TABLE_NAME, "typeVarchar"));
 	}
 
 	private void _mockPropsUtil() {
@@ -169,5 +185,10 @@ public class UpgradeProcessTest {
 		Arrays.asList(StringUtil.toLowerCase(_OLD_COLUMN_NAME));
 
 	private UpgradeProcess _upgradeProcess;
+
+	private static Connection _connection;
+	private static DB _db;
+	private static DBInspector _dbInspector;
+	private static UpgradeProcess _upgradeProcess;
 
 }

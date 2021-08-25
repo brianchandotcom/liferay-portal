@@ -23,12 +23,24 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
 ObjectEntriesDetailsDisplayContext objectEntriesDetailsDisplayContext = (ObjectEntriesDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+ObjectDefinition objectDefinition = objectEntriesDetailsDisplayContext.getObjectDefinition();
+
+ObjectEntry objectEntry = objectEntriesDetailsDisplayContext.getObjectEntry();
 %>
 
-<portlet:actionURL name="/object_definitions/edit_object_definition" var="editObjectDefinitionURL" />
+<portlet:actionURL name="/object_entries/edit_object_entry" var="editObjectEntryURL" />
 
-<div class="container-fluid container-fluid-max-xl container-form-lg container-no-gutters form">
-	<clay:sheet>
+<liferay-frontend:edit-form
+	action="<%= editObjectEntryURL %>"
+	name="fm"
+>
+	<liferay-frontend:edit-form-body>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (objectEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="objectDefinitionId" type="hidden" value="<%= objectDefinition.getObjectDefinitionId() %>" />
+		<aui:input name="objectEntryId" type="hidden" value="<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>" />
+		<aui:input name="ddmFormValues" type="hidden" value="" />
+
 		<liferay-frontend:fieldset-group>
 			<clay:sheet-section>
 				<clay:row>
@@ -40,5 +52,38 @@ ObjectEntriesDetailsDisplayContext objectEntriesDetailsDisplayContext = (ObjectE
 				</clay:row>
 			</clay:sheet-section>
 		</liferay-frontend:fieldset-group>
-	</clay:sheet>
-</div>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectEntry();" %>' primary="true" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+		<aui:button href="<%= backURL %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
+
+<aui:script>
+	function <portlet:namespace />submitObjectEntry() {
+		const form = document.getElementById('<portlet:namespace />fm');
+
+		const DDMFormInstance = Liferay.component('editObjectEntry');
+
+		const current = DDMFormInstance.reactComponentRef.current;
+
+		current.validate().then((result) => {
+			if (result) {
+				const fields = current.getFields();
+
+				const values = fields.reduce(
+					(obj, cur) => Object.assign(obj, {[cur.fieldName]: cur.value}),
+					{}
+				);
+				const ddmFormValues = form.querySelector(
+					'#<portlet:namespace />ddmFormValues'
+				);
+
+				ddmFormValues.value = JSON.stringify(values);
+
+				form.submit();
+			}
+		});
+	}
+</aui:script>

@@ -427,7 +427,7 @@ definition {
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
 				dataSourceName = "CSV Gender",
-				sourceFileName = "contacts_gender.csv");
+				sourceFileName = "contacts_doNotCall.csv");
 		}
 
 		task ("Exit Settings") {
@@ -453,7 +453,7 @@ definition {
 		}
 
 		task ("Add a male criteria from Individual Attributes") {
-			ACSegments.addSegmentField(segmentField = "male");
+			ACSegments.addSegmentField(segmentField = "doNotCall");
 
 			ACSegments.editWebBehaviorCriterion(
 				activitiesOption = "False",
@@ -531,10 +531,6 @@ definition {
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
 				dataSourceName = "CSV Country",
-				fieldName = "country",
-				fieldType = "Text",
-				newField = "true",
-				selectAnalyticsCloudField = "true",
 				sourceFileName = "contacts_country.csv");
 		}
 

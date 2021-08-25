@@ -38,12 +38,37 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8493 | Test Summary: Segment Composition shows Active and Known individuals"
-	@ignore = "true"
 	@priority = "3"
 	test SegmentCompositionShowsActiveAndKnownIndividuals {
+		task ("Launch AC and navigate to Segments") {
+			ACUtils.launchAC();
 
-		// TODO LRAC-8493 PENDING IMPLEMENTATION
+			ACNavigation.goToSegments();
+		}
 
+		task ("Create a segment and assert active and known individuals") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Test Segment");
+
+			ACSegments.addStaticMember(tableMember = "Test Test");
+
+			ACSegments.saveSegment();
+
+			ACNavigation.goToSegments();
+
+			ACUtils.searchBar(searchItem = "Test Segment");
+
+			ACSegments.accessSegment(segmentName = "Test Segment");
+
+			ACSegments.viewSegmentComposition(
+				individualsType = "Active",
+				individualsNumber = "0");
+
+			ACSegments.viewSegmentComposition(
+				individualsType = "Known",
+				individualsNumber = "1");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8492 | Test Summary: Segment composition card updates in real time"

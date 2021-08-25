@@ -446,7 +446,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionFieldValue = "Test",
-			conditionOperator = "Does not contain",
+			conditionOperator = "Does Not Contain",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 

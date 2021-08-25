@@ -181,7 +181,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionFieldValue = "Test",
-			conditionOperator = "Does not contain",
+			conditionOperator = "Does Not Contain",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -266,7 +266,7 @@ definition {
 			fieldName = "Numeric");
 	}
 
-	@description = "Verify that a Rule with 'Does not contains' condition can be created"
+	@description = "Verify that a Rule with 'Does Not Contain' condition can be created"
 	@priority = "4"
 	test CanCreateADoesNotContainRule {
 		property forms.functional = "true";
@@ -294,7 +294,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionFieldValue = "Test",
-			conditionOperator = "Does not contain",
+			conditionOperator = "Does Not Contain",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 

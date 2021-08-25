@@ -4039,7 +4039,14 @@ definition {
 			password = "test",
 			userEmailAddress = "user1@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+		if (isSet(depot)) {
+			var notificationCount = "1";
+		}
+		else {
+			var notificationCount = "2";
+		}
+
+		Notifications.viewBadgeCount(notificationCount = "${notificationCount}");
 
 		Notifications.gotoNotifications();
 

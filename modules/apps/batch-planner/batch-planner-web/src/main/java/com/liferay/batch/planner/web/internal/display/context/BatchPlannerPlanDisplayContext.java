@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.batch.planner.web.internal.display.context;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+/**
+ * @author Matija Petanjek
+ */
+public class BatchPlannerPlanDisplayContext {
+
+	public BatchPlannerPlanDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+	}
+
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
+
+}

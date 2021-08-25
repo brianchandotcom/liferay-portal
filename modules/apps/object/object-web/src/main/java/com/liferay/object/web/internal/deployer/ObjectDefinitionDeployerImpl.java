@@ -19,12 +19,16 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
 import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.view.table.ObjectEntriesTableClayDataSetDisplayView;
 import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortlet;
+import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -87,6 +91,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"javax.portlet.name", objectDefinition.getPortletId()
 				).build()),
 			_bundleContext.registerService(
+				MVCActionCommand.class,
+				new EditObjectEntryMVCActionCommand(
+					_objectDefinitionLocalService, _objectEntryService,
+					_objectScopeProviderRegistry, _portal),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"javax.portlet.name", objectDefinition.getPortletId()
+				).put(
+					"mvc.command.name", "/object_entries/edit_object_entry"
+				).build()),
+			_bundleContext.registerService(
 				MVCRenderCommand.class, new EditObjectEntryMVCRenderCommand(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"javax.portlet.name", objectDefinition.getPortletId()
@@ -109,7 +123,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
+	private ObjectEntryService _objectEntryService;
+
+	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private Portal _portal;

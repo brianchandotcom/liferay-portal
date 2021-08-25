@@ -22,7 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 CustomElementsPortletDescriptor customElementsPortletDescriptor = (CustomElementsPortletDescriptor)request.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR);
 
 long customElementsPortletDescriptorId = BeanParamUtil.getLong(customElementsPortletDescriptor, request, "customElementsPortletDescriptorId");
-String htmlElementName = BeanParamUtil.getString(customElementsPortletDescriptor, request, "htmlElementName");
+String htmlElementName = BeanParamUtil.getString(customElementsPortletDescriptor, request, "HTMLElementName");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -50,7 +50,7 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 					for (CustomElementsSource customElementsSource : customElementsPortletDescriptorDisplayContext.getCustomElementSources()) {
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(customElementsSource.getName()) %>" selected="<%= htmlElementName.equals(customElementsSource.getHTMLElementName()) %>" value="<%= customElementsSource.getHTMLElementName() %>" />
+						<aui:option label="<%= HtmlUtil.escape(customElementsSource.getHTMLElementName()) %>" selected="<%= htmlElementName.equals(customElementsSource.getHTMLElementName()) %>" value="<%= customElementsSource.getHTMLElementName() %>" />
 
 					<%
 					}

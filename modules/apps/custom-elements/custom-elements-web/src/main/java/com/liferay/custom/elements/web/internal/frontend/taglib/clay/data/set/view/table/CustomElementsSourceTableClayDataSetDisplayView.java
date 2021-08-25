@@ -48,7 +48,7 @@ public class CustomElementsSourceTableClayDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"htmlElementName", "html-element-name");
-		clayTableSchemaBuilder.addClayTableSchemaField("url", "url");
+		clayTableSchemaBuilder.addClayTableSchemaField("mainURL", "main-url");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -158,7 +158,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
-			_addDocuments(null, "/site-initializer/documents", serviceContext);
+			_addDocuments(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
@@ -230,7 +230,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDocuments(Long documentFolderId, String path, ServiceContext serviceContext) throws Exception {
+	private void _addDocuments(ServiceContext serviceContext) throws Exception {
+		_addDocuments(null, "/site-initializer/documents", serviceContext);
+	}
+
+	private void _addDocuments(
+			Long documentFolderId, String path, ServiceContext serviceContext)
+		throws Exception {
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(path);
 
 		if (SetUtil.isEmpty(resourcePaths)) {

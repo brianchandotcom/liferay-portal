@@ -115,6 +115,18 @@ definition {
 			value1 = "${fillColor}");
 	}
 
+	macro viewIndividualDetailsCard {
+		AssertVisible(locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_AVATAR");
+
+		AssertVisible(
+			fullName = "${fullName}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_FULL_NAME");
+
+		AssertVisible(
+			locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_EMAIL",
+			userEmailAddress = "${userEmailAddress}");
+	}
+
 	macro viewTotalActivities {
 		var key_userName = "${userName}";
 		var key_activitiesNumber = "${activitiesNumber}";

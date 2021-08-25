@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>ADD_BREAKDOWN_BUTTON</td>
-	<td>//div[contains(@class,'tabs-root')]/button</td>
+	<td>//div[contains(@class,'distribution-card')]//button[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>

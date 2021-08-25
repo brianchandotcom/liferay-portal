@@ -87,6 +87,26 @@ networks:
 		</sequential>
 	</macrodef>
 
+	<macrodef name="pull-docker-image-dependencies">
+		<attribute name="analytics.cloud.repository.dir" />
+
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					String excludedImageNames = project.getProperty("analytics.cloud.image.names.excludes");
+
+					if (excludedImageNames == null) {
+						excludedImageNames = "";
+					}
+
+					JenkinsResultsParserUtil.pullDockerImageDependencies(new File("@{analytics.cloud.repository.dir}"), excludedImageNames.split(","));
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-analytics-cloud">
 		<sequential>
 			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
@@ -126,6 +146,8 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
 				<then>
+					<pull-docker-image-dependencies analytics.cloud.repository.dir="${analytics.cloud.asah.dir}" />
+
 					<execute dir="${analytics.cloud.asah.dir}">
 						./gradlew jar -Dliferay.ci=true
 
@@ -139,6 +161,8 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 			<if>
 				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
 				<then>
+					<pull-docker-image-dependencies analytics.cloud.repository.dir="${analytics.cloud.faro.dir}" />
+
 					<local name="portal.gradlew" />
 
 					<property location="${project.dir}/gradlew" name="portal.gradlew" />

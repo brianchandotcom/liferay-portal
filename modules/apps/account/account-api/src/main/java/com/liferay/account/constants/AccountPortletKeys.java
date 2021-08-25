@@ -23,6 +23,10 @@ public class AccountPortletKeys {
 		"com_liferay_account_admin_web_internal_portlet_" +
 			"AccountEntriesAdminPortlet";
 
+	public static final String ACCOUNT_ENTRIES_MANAGEMENT =
+		"com_liferay_account_admin_web_internal_portlet_" +
+			"AccountEntriesManagementPortlet";
+
 	public static final String ACCOUNT_GROUPS_ADMIN =
 		"com_liferay_account_admin_web_internal_portlet_" +
 			"AccountGroupsAdminPortlet";

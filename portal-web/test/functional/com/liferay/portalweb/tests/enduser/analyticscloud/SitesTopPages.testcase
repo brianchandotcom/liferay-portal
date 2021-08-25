@@ -57,12 +57,74 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8305 | Test Summary: Assert Sites Top Pages Change Time Filter"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesChangeTimeFilter {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8305 AssertSitesTopPagesChangeTimeFilter pending implementation
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8815
 
+		task ("Site and blogs creation and connection with AC") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with pages") {
+			
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Pause(locator1 = "6000");
+
+			
+			
+
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+		task ("AC launch") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+
+
+
+
+		task ("Asset last 180 days time period filter ") {
+
+			
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
+
+			ACTimeFilter.setLast180Days();
+
+			ACCards.noViewTopSitesCardByIndexes(key_index = "1");
+		}
+
+		task ("Asset last 24 hours time period filter ") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
+
+			ACTimeFilter.setLast24Hours();
+
+			ACCards.viewTopSitesCardByIndexes(key_index = "1");
+		}
+
+		
+
+	
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8296 | Test Summary: Show Top 5 Entrance Pages"

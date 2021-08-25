@@ -61,49 +61,6 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 	}
 
-	@description = "This is a test for COMMERCE-7020. UploadANotMappedNewImage"
-	@priority = "3"
-	test UploadANotMappedNewImage {
-		property portal.acceptance = "false";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Diagram T-Shirt",
-			productType = "Diagram");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
-
-		CommerceProductImages.addDiagramImages(
-			imageTitles = "Black",
-			productType = "Diagram");
-
-		Button.clickPublish();
-
-		Alert.viewSuccessMessage();
-
-		DoubleClick(
-			key_image = "Commerce_Black",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
-
-		AssertElementPresent(
-			key_image = "Commerce_Black",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
-
-		AssertElementNotPresent(
-			key_color = "#ffffff",
-			locator1 = "CommerceEntry#VERIFY_PIN");
-
-		Refresh();
-
-		AssertElementPresent(
-			key_image = "Commerce_Black.jpg",
-			locator1 = "CommerceEntry#VERIFY_IMAGE");
-	}
-
 	@description = "This is a test for COMMERCE-7023. EditTheDefaultSettingForPinsCreation"
 	@priority = "3"
 	test EditTheDefaultSettingForPinsCreation {
@@ -133,12 +90,12 @@ definition {
 			locator1 = "CommerceEntry#VERIFY_IMAGE");
 
 		Click(
-			locator1 = "Button#ANY", 
-			key_text = "Default Diameter");
+			key_text = "Default Diameter",
+			locator1 = "Button#ANY");
 
 		AssertElementPresent(
-			locator1 = "CommerceEntry#VERIFY_PIN_RADIUS",
-			key_radius = "15");
+			key_radius = "15",
+			locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
 
 		CommerceEntry.verifyCostumRadiusWithCostumValue(key_list = "1,2,3,4,5");
 
@@ -147,10 +104,49 @@ definition {
 		CommerceEntry.changePinColor(color = "#FF0000");
 
 		AssertElementPresent(
-				locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE",
-				key_strokeColor = "#FF0000");
+			key_strokeColor = "#FF0000",
+			locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
+
+		Button.clickPublish();
+	}
+
+	@description = "This is a test for COMMERCE-7020. UploadANotMappedNewImage"
+	@priority = "3"
+	test UploadANotMappedNewImage {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Diagram T-Shirt",
+			productType = "Diagram");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+		CommerceProductImages.addDiagramImages(
+			imageTitles = "Black",
+			productType = "Diagram");
 
 		Button.clickPublish();
 
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_image = "Commerce_Black.jpg",
+			locator1 = "CommerceEntry#VERIFY_IMAGE");
+
+		AssertElementNotPresent(
+			key_color = "#ffffff",
+			locator1 = "CommerceEntry#VERIFY_PIN");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_image = "Commerce_Black.jpg",
+			locator1 = "CommerceEntry#VERIFY_IMAGE");
 	}
+
 }

@@ -537,6 +537,12 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro changePinColor {
+		Type(
+			locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION",
+			value1 = "${color}");
+	}
+
 	macro checkImageName {
 		echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
 
@@ -927,6 +933,32 @@ definition {
 		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
 	}
 
+	macro verifyCostumRadiusWithCostumValue {
+		for (var number : list "${key_list}") {
+			KeyPress(
+				locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_RADIUS",
+				value1 = "\RIGHT");
+		}
+	}
+
+	macro verifyCostumRadiusWithDefaultValue {
+		for (var value : list "Small:10,Medium:20,Large:30") {
+			var dimension = StringUtil.extractFirst("${value}", ":");
+
+			var number = StringUtil.extractLast("${value}", ":");
+
+			Click(
+				key_optionValue = "${dimension}",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+			AssertElementPresent(
+				key_radius = "${number}",
+				locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
+
+			echo("Dimension: ${dimension} Radius: ${number} are present");
+		}
+	}
+
 	macro viewAccountsEntry {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -1286,40 +1318,6 @@ definition {
 				key_rowEntry = "${specificationLabelsEntry}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 		}
-	}
-
-	macro verifyCostumRadiusWithCostumValue {
-		for (var number : list "${key_list}") {
-
-			KeyPress(
-				locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_RADIUS",
-				value1 = "\RIGHT");
-		}
-	}
-
-	macro verifyCostumRadiusWithDefaultValue {
-		for (var value : list "Small:10,Medium:20,Large:30") {
-
-			var dimension = StringUtil.extractFirst("${value}", ":");
-
-			var number = StringUtil.extractLast("${value}", ":");
-
-			Click( 
-				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION", 
-				key_optionValue = "${dimension}");
-
-			AssertElementPresent(
-				locator1 = "CommerceEntry#VERIFY_PIN_RADIUS",
-				key_radius = "${number}");
-
-			echo("Dimension: ${dimension} Radius: ${number} are present");
-		}
-	}
-
-	macro changePinColor {
-		Type(
-			locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION",
-			value1 = "${color}");
 	}
 
 }

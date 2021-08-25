@@ -1070,6 +1070,56 @@ definition {
 		}
 	}
 
+	macro clickHideFragment {
+		var key_fragmentName = "${fragmentName}";
+
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Hide Fragment");
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro clickHideFragmentViaPageStructure {
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+					key_nodeName = "${fragmentName}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
+
+		Click.clickNoWaitForVisible(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_VIEW");
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro clickHideFragmentViaPageStyles {
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+					key_nodeName = "${fragmentName}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
+
+		Navigator.gotoNavTab(navTab = "Styles");
+
+		Check.checkNotVisible(
+				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro clickManagementBar {
 		var elementHeight = selenium.getElementHeight("PageEditor#FRAGMENT_SIDEBAR_BODY");
 		var offSetY = MathUtil.product("25","${elementHeight}");

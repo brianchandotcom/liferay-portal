@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -107,8 +109,8 @@ public class UpgradeReport {
 					new String[] {
 						_getPortalVersions(), _getDialectInfo(),
 						_getProperties(), _getDLStorageSize(),
-						_getUpgradeProcessesContent(), _getLogEvents("errors"),
-						_getLogEvents("warnings")
+						_getDatabaseInfo(), _getUpgradeProcessesContent(),
+						_getLogEvents("errors"), _getLogEvents("warnings")
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 		}
@@ -136,6 +138,90 @@ public class UpgradeReport {
 		}
 
 		return 0;
+	}
+
+	private String _getDatabaseInfo() {
+		try (Connection connection = DataAccess.getConnection()) {
+			DB db = DBManagerUtil.getDB();
+
+			DBType dbType = db.getDBType();
+
+			DatabaseMetaData metadata = connection.getMetaData();
+
+			String catalog = connection.getCatalog();
+			String schema = null;
+
+			if ((catalog == null) && dbType.equals(DBType.ORACLE)) {
+				catalog = metadata.getUserName();
+
+				schema = catalog;
+			}
+
+			List<TableInfo> tableInfos = new ArrayList<>();
+
+			try (ResultSet resultSet1 = metadata.getTables(
+					catalog, schema, "%", null)) {
+
+				while (resultSet1.next()) {
+					String tableType = resultSet1.getString("TABLE_TYPE");
+
+					if (dbType.equals(DBType.MARIADB)) {
+						if (!tableType.equals("BASE TABLE")) {
+							continue;
+						}
+					}
+					else if (!tableType.equals("TABLE")) {
+						continue;
+					}
+
+					String tableName = resultSet1.getString("TABLE_NAME");
+
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(
+								"select count(*) from " + tableName);
+						ResultSet resultSet2 =
+							preparedStatement.executeQuery()) {
+
+						if (resultSet2.next()) {
+							tableInfos.add(
+								new TableInfo(tableName, resultSet2.getInt(1)));
+						}
+					}
+					catch (SQLException sqlException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to retrieve data from " + tableName);
+						}
+					}
+				}
+			}
+
+			StringBundler sb = new StringBundler((2 * tableInfos.size()) + 5);
+
+			sb.append("Tables in database \"");
+			sb.append(catalog);
+			sb.append("\" sorted by number of rows:\n\n");
+			sb.append(String.format("%-30s %10s\n", "Table name", "Rows"));
+			sb.append(
+				String.format(
+					"%-30s %10s\n", "--------------", "--------------"));
+
+			Collections.sort(tableInfos);
+
+			for (TableInfo tableInfo : tableInfos) {
+				sb.append(tableInfo);
+				sb.append("\n");
+			}
+
+			return sb.toString();
+		}
+		catch (SQLException sqlException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get database information");
+			}
+
+			return null;
+		}
 	}
 
 	private String _getDialectInfo() {
@@ -515,5 +601,29 @@ public class UpgradeReport {
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
+
+	private static class TableInfo implements Comparable<TableInfo> {
+
+		public TableInfo(String name, int rows) {
+			_name = name;
+			_rows = rows;
+		}
+
+		public int compareTo(TableInfo other) {
+			if (_rows == other._rows) {
+				return _name.compareTo(other._name);
+			}
+
+			return other._rows - _rows;
+		}
+
+		public String toString() {
+			return String.format("%-30s %10d", _name, _rows);
+		}
+
+		private final String _name;
+		private int _rows;
+
+	}
 
 }

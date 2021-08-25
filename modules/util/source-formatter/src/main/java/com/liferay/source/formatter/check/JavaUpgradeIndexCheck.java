@@ -63,6 +63,6 @@ public class JavaUpgradeIndexCheck extends BaseJavaTermCheck {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(create|drop) (unique )?index IX_(?!TEMP)");
+		"(create|drop) (unique )?index IX_");
 
 }

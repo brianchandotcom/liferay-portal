@@ -24,8 +24,9 @@ import Select from '../Select/Select.es';
 
 const dataTypes = {
 	double: ['double', 'bigdecimal'],
+	image: ['blob'],
 	integer: ['integer', 'long'],
-	string: ['string', 'blob'],
+	string: ['string'],
 };
 
 const normalizeDataType = (type) => {

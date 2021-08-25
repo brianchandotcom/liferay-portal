@@ -40,11 +40,12 @@ const UnmappedRequiredObjectFields = ({fields}) => {
 	];
 
 	const fieldTypeDecimalNumeric = Liferay.Language.get('decimal-number');
+	const fieldTypeImage = Liferay.Language.get('image-field-type-label');
 	const fieldTypeIntegerNumeric = Liferay.Language.get('integer-number');
 
 	const fieldTypes = {
 		bigdecimal: fieldTypeDecimalNumeric,
-		blob: fieldsTypeString,
+		blob: fieldTypeImage,
 		double: fieldTypeDecimalNumeric,
 		integer: fieldTypeIntegerNumeric,
 		long: fieldTypeIntegerNumeric,

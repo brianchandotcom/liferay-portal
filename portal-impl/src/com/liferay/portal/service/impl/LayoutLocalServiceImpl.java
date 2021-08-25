@@ -897,62 +897,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
-	 * @param includeSystem whether or not system layouts should be included
-	 *        with the layouts to be deleted
-	 * @param serviceContext the service context to be applied. The parent
-	 *        layout set's page count will be updated by default, unless an
-	 *        attribute named <code>updatePageCount</code> is set to
-	 *        <code>false</code>.
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void deleteLayouts(
-			long groupId, boolean privateLayout, boolean includeSystem,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		// Layouts
-
-		List<Layout> layouts = null;
-
-		if (includeSystem) {
-			layouts = layoutPersistence.findByG_P_P_S(
-				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new LayoutPriorityComparator(false));
-		}
-		else {
-			layouts = layoutPersistence.findByG_P_P(
-				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new LayoutPriorityComparator(false));
-		}
-
-		for (Layout layout : layouts) {
-			try {
-				layoutLocalService.deleteLayout(layout, serviceContext);
-			}
-			catch (NoSuchLayoutException noSuchLayoutException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchLayoutException, noSuchLayoutException);
-				}
-			}
-		}
-
-		// Counter
-
-		counterLocalService.reset(getCounterName(groupId, privateLayout));
-	}
-
-	/**
-	 * Deletes the group's private or non-private layouts, also deleting the
-	 * layouts' child layouts, and associated resources.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
 	 * @param serviceContext the service context to be applied. The parent
 	 *        layout set's page count will be updated by default, unless an
 	 *        attribute named <code>updatePageCount</code> is set to
@@ -964,7 +908,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException {
 
-		deleteLayouts(groupId, privateLayout, false, serviceContext);
+		// Layouts
+
+		_deleteLayouts(groupId, privateLayout, false, serviceContext);
+		_deleteLayouts(groupId, privateLayout, true, serviceContext);
+
+		// Counter
+
+		counterLocalService.reset(getCounterName(groupId, privateLayout));
 	}
 
 	@Override
@@ -3578,6 +3529,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
+	}
+
+	private void _deleteLayouts(
+			long groupId, boolean privateLayout, boolean system,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<Layout> layouts = layoutPersistence.findByG_P_P_S(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			system, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new LayoutPriorityComparator(false));
+
+		for (Layout layout : layouts) {
+			try {
+				layoutLocalService.deleteLayout(layout, serviceContext);
+			}
+			catch (NoSuchLayoutException noSuchLayoutException) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchLayoutException, noSuchLayoutException);
+				}
+			}
+		}
 	}
 
 	private String _generateFriendlyURLUUID() {

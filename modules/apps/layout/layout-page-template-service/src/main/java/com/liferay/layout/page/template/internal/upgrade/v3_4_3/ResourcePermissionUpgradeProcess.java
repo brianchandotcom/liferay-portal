@@ -37,34 +37,27 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _insertResourcePermissions() {
-		StringBundler sb1 = new StringBundler(5);
-
-		sb1.append("select mvccVersion, resourcePermissionId, companyId, ");
-		sb1.append("scope, primKey, primKeyId, roleId, ownerId, actionIds, ");
-		sb1.append("viewActionId from ResourcePermission where name = '");
-		sb1.append(LayoutPrototype.class.getName());
-		sb1.append("'");
-
-		StringBundler sb2 = new StringBundler(3);
-
-		sb2.append("select layoutPageTemplateEntryId from ");
-		sb2.append("LayoutPageTemplateEntry where layoutPrototypeId = ? ");
-		sb2.append("order by name asc limit 1");
-
-		StringBundler sb3 = new StringBundler(4);
-
-		sb3.append("insert into ResourcePermission (mvccVersion, ");
-		sb3.append("resourcePermissionId, companyId, name, scope, primKey, ");
-		sb3.append("primKeyId, roleId, ownerId, actionIds, viewActionId) ");
-		sb3.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
 		try (Statement s = connection.createStatement();
-			ResultSet resultSet = s.executeQuery(sb1.toString());
+			ResultSet resultSet = s.executeQuery(
+				StringBundler.concat(
+					"select mvccVersion, resourcePermissionId, companyId, ",
+					"scope, primKey, primKeyId, roleId, ownerId, actionIds, ",
+					"viewActionId from ResourcePermission where name = '",
+					LayoutPrototype.class.getName(), "'"));
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				sb2.toString());
+				StringBundler.concat(
+					"select layoutPageTemplateEntryId from ",
+					"LayoutPageTemplateEntry where layoutPrototypeId = ? ",
+					"order by name asc limit 1"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(sb3.toString()))) {
+					connection.prepareStatement(
+						StringBundler.concat(
+							"insert into ResourcePermission (mvccVersion, ",
+							"resourcePermissionId, companyId, name, scope, ",
+							"primKey, primKeyId, roleId, ownerId, actionIds, ",
+							"viewActionId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+							"?, ?)")))) {
 
 			while (resultSet.next()) {
 				String primKey = resultSet.getString("primKey");
@@ -90,26 +83,19 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 					primKey = LayoutPageTemplateEntry.class.getName();
 				}
 
-				long mvccVersion = resultSet.getLong("mvccVersion");
-				long companyId = resultSet.getLong("companyId");
-				long scope = resultSet.getLong("scope");
-				long roleId = resultSet.getLong("roleId");
-				long ownerId = resultSet.getLong("ownerId");
-				long actionIds = resultSet.getLong("actionIds");
-				long viewActionId = resultSet.getLong("viewActionId");
-
-				preparedStatement2.setLong(1, mvccVersion);
+				preparedStatement2.setLong(1, resultSet.getLong("mvccVersion"));
 				preparedStatement2.setLong(2, increment());
-				preparedStatement2.setLong(3, companyId);
+				preparedStatement2.setLong(3, resultSet.getLong("companyId"));
 				preparedStatement2.setString(
 					4, LayoutPageTemplateEntry.class.getName());
-				preparedStatement2.setLong(5, scope);
+				preparedStatement2.setLong(5, resultSet.getLong("scope"));
 				preparedStatement2.setString(6, primKey);
 				preparedStatement2.setString(7, primKeyId);
-				preparedStatement2.setLong(8, roleId);
-				preparedStatement2.setLong(9, ownerId);
-				preparedStatement2.setLong(10, actionIds);
-				preparedStatement2.setLong(11, viewActionId);
+				preparedStatement2.setLong(8, resultSet.getLong("roleId"));
+				preparedStatement2.setLong(9, resultSet.getLong("ownerId"));
+				preparedStatement2.setLong(10, resultSet.getLong("actionIds"));
+				preparedStatement2.setLong(
+					11, resultSet.getLong("viewActionId"));
 
 				preparedStatement2.addBatch();
 			}

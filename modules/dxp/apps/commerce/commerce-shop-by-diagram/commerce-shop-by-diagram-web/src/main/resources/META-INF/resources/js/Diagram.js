@@ -19,15 +19,12 @@ import AdminTooltip from './AdminTooltip';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
 import ImagePins from './ImagePins';
+import {HEADERS} from './utilities/utilities';
 
 import '../css/diagram.scss';
+
 const PRODUCTS = 'products';
 const PINS = 'pins';
-
-const HEADERS = new Headers({
-	Accept: 'application/json',
-	'Content-Type': 'application/json',
-});
 
 const Diagram = ({
 	datasetDisplayId,
@@ -69,12 +66,13 @@ const Diagram = ({
 			cy: 0,
 			id: null,
 			label: '',
-			linked_to_sku: 'sku',
+			linkedToSku: 'sku',
 			quantity: null,
 			sku: '',
 		},
 		tooltip: null,
 	});
+
 	const [addNewPinState, setAddNewPinState] = useState({
 		fill: newPinSettings.colorPicker.selectedColor,
 		radius: newPinSettings.defaultRadius,
@@ -159,50 +157,12 @@ const Diagram = ({
 				headers: HEADERS,
 				method: 'POST',
 			}).then(() => {
-				if (datasetDisplayId?.length > 0) {
+				if (datasetDisplayId) {
 					Liferay.fire(UPDATE_DATASET_DISPLAY, {
 						id: datasetDisplayId,
 					});
 				}
 			});
-		}
-	};
-
-	const searchSkus = (query, linkedValue) => {
-		if (linkedValue === 'sku') {
-			let queryParam = '';
-
-			if (query) {
-				queryParam = `?search=${query}`;
-			}
-
-			return fetch(
-				queryParam
-					? `${pinsEndpoint}skus/${queryParam}`
-					: `${pinsEndpoint}skus`,
-				{
-					headers: HEADERS,
-				}
-			)
-				.then((response) => response.json())
-				.then((jsonResponse) => {
-					setSkus(jsonResponse.items);
-				});
-		}
-		else if (linkedValue === 'diagram') {
-			let queryParam = '';
-
-			if (query) {
-				queryParam = `?filter=productType eq ${linkedValue}`;
-			}
-
-			return fetch(`${pinsEndpoint}skus/${queryParam}`, {
-				headers: HEADERS,
-			})
-				.then((response) => response.json())
-				.then((jsonResponse) => {
-					setSkus(jsonResponse.items);
-				});
 		}
 	};
 
@@ -213,7 +173,7 @@ const Diagram = ({
 				cy: updatedPin.cy,
 				id: updatedPin.id,
 				label: updatedPin.label || '',
-				linked_to_sku: updatedPin.linked_to_sku || '',
+				linkedToSku: updatedPin.linkedToSku || '',
 				quantity: updatedPin.quantity || 1,
 				sku: updatedPin.sku,
 			},
@@ -261,7 +221,6 @@ const Diagram = ({
 					removePinHandler={removePinHandler}
 					resetZoom={resetZoom}
 					scale={scale}
-					searchSkus={searchSkus}
 					selectedOption={selectedOption}
 					setAddPinHandler={setAddPinHandler}
 					setChangedScale={setChangedScale}
@@ -285,7 +244,6 @@ const Diagram = ({
 							namespace={namespace}
 							pinsEndpoint={pinsEndpoint}
 							removePinHandler={removePinHandler}
-							searchSkus={searchSkus}
 							setRemovePinHandler={setRemovePinHandler}
 							setShowTooltip={setShowTooltip}
 							setSkus={setSkus}
@@ -370,7 +328,7 @@ Diagram.defaultProps = {
 			cy: null,
 			id: null,
 			label: null,
-			linked_to_sku: 'sku',
+			linkedToSku: 'sku',
 			quantity: 1,
 			sku: '',
 		},
@@ -397,7 +355,7 @@ Diagram.propTypes = {
 			fill: PropTypes.string,
 			id: PropTypes.number,
 			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
+			linkedToSku: PropTypes.oneOf(['sku', 'diagram']),
 			quantity: PropTypes.number,
 			r: PropTypes.number,
 			sku: PropTypes.string,
@@ -433,7 +391,6 @@ Diagram.propTypes = {
 	}),
 	pinClickAction: PropTypes.func,
 	productId: PropTypes.number,
-	searchSkus: PropTypes.func,
 	setPins: PropTypes.func,
 	showTooltip: PropTypes.shape({
 		details: PropTypes.shape({
@@ -441,7 +398,7 @@ Diagram.propTypes = {
 			cy: PropTypes.double,
 			id: PropTypes.number,
 			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
+			linkedToSku: PropTypes.oneOf(['sku', 'diagram']),
 			quantity: PropTypes.number,
 			sku: PropTypes.string,
 		}),

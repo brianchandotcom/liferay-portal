@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VISITORS_GRAPH_LABEL</td>
+	<td>//*[@class='recharts-text']//*[text()='${key_visitorsLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLTIP_UNIQUE_VISITORS</td>
 	<td>//tr[@class='analytics-tooltip-chart-row']//div[text()='${key_visitors}']/ancestor::tr//div[text()='${key_value}']</td>
 	<td></td>

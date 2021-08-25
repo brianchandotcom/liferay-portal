@@ -59,8 +59,17 @@ public class RegionLocalServiceTest {
 
 		Region region = _addRegion(country.getCountryId());
 
+		String languageId = RandomTestUtil.randomString(2);
+
+		_regionLocalService.updateRegionLocalization(
+			region, languageId, RandomTestUtil.randomString());
+
 		Assert.assertNotNull(
 			_regionLocalService.fetchRegion(region.getRegionId()));
+
+		Assert.assertNotNull(
+			_regionLocalService.getRegionLocalization(
+				region.getRegionId(), languageId));
 	}
 
 	@Test
@@ -68,6 +77,10 @@ public class RegionLocalServiceTest {
 		Country country = _addCountry();
 
 		Region region = _addRegion(country.getCountryId());
+
+		_regionLocalService.updateRegionLocalization(
+			region, RandomTestUtil.randomString(2),
+			RandomTestUtil.randomString());
 
 		// Address
 
@@ -106,6 +119,13 @@ public class RegionLocalServiceTest {
 
 		Assert.assertNull(
 			_regionLocalService.fetchRegion(region.getRegionId()));
+
+		// Assert region localization is deleted
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_regionLocalService.getRegionLocalizations(
+					region.getRegionId())));
 
 		// Assert address is deleted
 

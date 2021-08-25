@@ -77,6 +77,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public void deleteByExternalReferenceCode(String externalReferenceCode)
+		throws Exception {
+
+		_objectEntryManager.deleteObjectEntry(
+			externalReferenceCode, contextCompany.getCompanyId(), 0L);
+	}
+
+	@Override
 	public void deleteObjectEntry(Long objectEntryId) throws Exception {
 		_objectEntryManager.deleteObjectEntry(objectEntryId);
 	}
@@ -88,6 +96,15 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		_objectEntryManager.deleteObjectEntry(
 			externalReferenceCode, contextCompany.getCompanyId(), siteId);
+	}
+
+	@Override
+	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
+		throws Exception {
+
+		return _objectEntryManager.getObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			contextCompany.getCompanyId(), 0L);
 	}
 
 	@Override
@@ -135,6 +152,17 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _objectEntryManager.addObjectEntry(
 			_getDTOConverterContext(null), contextUser.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), objectEntry);
+	}
+
+	@Override
+	public ObjectEntry putByExternalReferenceCode(
+			String externalReferenceCode, ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectEntryManager.addOrUpdateObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			contextUser.getUserId(), 0L,
 			_objectDefinition.getObjectDefinitionId(), objectEntry);
 	}
 

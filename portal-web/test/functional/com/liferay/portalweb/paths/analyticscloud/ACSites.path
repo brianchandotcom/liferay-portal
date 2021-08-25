@@ -27,6 +27,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOP_PAGES_CARD_INDEXES</td>
+	<td>//div[contains(@class,'card card-root table-tabs-root')]//tbody[contains(@class,'flex-grow-1 table-hover')]//tr[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOP_PAGES_ENTRANCES_BUTTON</td>
 	<td>//span[text()='Entrances']</td>
 	<td></td>

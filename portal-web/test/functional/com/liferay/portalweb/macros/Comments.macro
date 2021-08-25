@@ -154,6 +154,15 @@ definition {
 		}
 	}
 
+	macro getCommentId {
+		var currentURL = selenium.getCurrentUrl();
+		var commentId = StringUtil.extractLast("${currentURL}", "message_");
+
+		echo("commentId: ${commentId}");
+
+		return "${commentId}";
+	}
+
 	macro subscribePG {
 		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

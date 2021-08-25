@@ -39,8 +39,11 @@ FragmentRendererContext fragmentRendererContext = (FragmentRendererContext)reque
 
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="display-a-collection-on-the-page-so-that-you-can-use-the-collection-filter-fragment" />
-		</div>
+		<clay:button
+			cssClass="bg-light dropdown-toggle font-weight-bold form-control-select form-control-sm text-left w-100"
+			displayType="secondary"
+			label="<%= StringPool.DASH %>"
+			small="<%= true %>"
+		/>
 	</c:otherwise>
 </c:choose>

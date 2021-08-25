@@ -20,17 +20,27 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -42,9 +52,11 @@ public class ObjectEntriesDetailsDisplayContext {
 
 	public ObjectEntriesDetailsDisplayContext(
 		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
+		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		_ddmFormRenderer = ddmFormRenderer;
+		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
@@ -58,6 +70,19 @@ public class ObjectEntriesDetailsDisplayContext {
 			ObjectWebKeys.OBJECT_DEFINITION);
 	}
 
+	public ObjectEntry getObjectEntry() throws PortalException {
+		if (_objectEntry != null) {
+			return _objectEntry;
+		}
+
+		long objectEntryId = ParamUtil.getLong(
+			_objectRequestHelper.getRequest(), "objectEntryId");
+
+		_objectEntry = _objectEntryService.fetchObjectEntry(objectEntryId);
+
+		return _objectEntry;
+	}
+
 	public String renderDDMForm(PageContext pageContext)
 		throws PortalException {
 
@@ -66,7 +91,7 @@ public class ObjectEntriesDetailsDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setContainerId("edit_object_entry");
+		ddmFormRenderingContext.setContainerId("editObjectEntry");
 		ddmFormRenderingContext.setHttpServletRequest(
 			_objectRequestHelper.getRequest());
 		ddmFormRenderingContext.setHttpServletResponse(
@@ -81,6 +106,17 @@ public class ObjectEntriesDetailsDisplayContext {
 			liferayPortletResponse.getNamespace());
 
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
+
+		ObjectEntry objectEntry = getObjectEntry();
+
+		if (objectEntry != null) {
+			DDMFormValues ddmFormValues = _getDDMFormValues(
+				ddmForm, objectEntry, _objectRequestHelper.getLocale());
+
+			if (ddmFormValues != null) {
+				ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+			}
+		}
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
@@ -111,7 +147,7 @@ public class ObjectEntriesDetailsDisplayContext {
 		ObjectField objectField, Locale locale) {
 
 		DDMFormField ddmFormField = new DDMFormField(
-			objectField.getDBColumnName(), DDMFormFieldTypeConstants.TEXT);
+			objectField.getName(), DDMFormFieldTypeConstants.TEXT);
 
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			locale);
@@ -126,7 +162,45 @@ public class ObjectEntriesDetailsDisplayContext {
 		return ddmFormField;
 	}
 
+	private DDMFormValues _getDDMFormValues(
+			DDMForm ddmForm, ObjectEntry objectEntry, Locale locale)
+		throws PortalException {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(locale);
+		ddmFormValues.setDefaultLocale(locale);
+
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+			ddmFormFieldValue.setName(entry.getKey());
+			ddmFormFieldValue.setValue(
+				new UnlocalizedValue(String.valueOf(entry.getValue())));
+
+			if ((ddmFormFieldValue != null) &&
+				(ddmFormFieldValue.getValue() != null)) {
+
+				ddmFormFieldValues.add(ddmFormFieldValue);
+			}
+		}
+
+		if (ddmFormFieldValues.isEmpty()) {
+			return null;
+		}
+
+		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
+
+		return ddmFormValues;
+	}
+
 	private final DDMFormRenderer _ddmFormRenderer;
+	private ObjectEntry _objectEntry;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
 

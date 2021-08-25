@@ -1,19 +1,5 @@
 definition {
 
-	macro assertActivityCardValue {
-		key_metricTitle = "${cardName}";
-		key_totalValue = "${totalValue}";
-
-		Click(
-			key_metricTitle = "${cardName}",
-			locator1 = "ACAssets#METRIC_VALUE");
-
-		AssertElementPresent(
-			key_cardName = "${cardName}",
-			key_totalValue = "${totalValue}",
-			locator1 = "ACSites#SITE_ACTIVITY_VALUE_CARD");
-	}
-
 	macro viewActivitiesPercentage {
 		AssertElementPresent(
 			key_entry = "${entryName}",

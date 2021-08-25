@@ -599,6 +599,7 @@ definition {
 		}
 
 		task ("Go to page and get data") {
+
 			// This test needs a data from a past time frame to generate a % diference
 
 			Navigator.gotoSitePage(
@@ -621,9 +622,9 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACSites.assertActivityCardValue(
-				cardName = "Unique Visitors",
-				totalValue = "1");
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Unique Visitors",
+				metricValue = "1");
 
 			// Assert the correct variation(%) shown in this field
 

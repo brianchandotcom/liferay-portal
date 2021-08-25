@@ -92,6 +92,34 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
+	@Schema(description = "The instance's current node names.")
+	public String[] getCurrentNodeNames() {
+		return currentNodeNames;
+	}
+
+	public void setCurrentNodeNames(String[] currentNodeNames) {
+		this.currentNodeNames = currentNodeNames;
+	}
+
+	@JsonIgnore
+	public void setCurrentNodeNames(
+		UnsafeSupplier<String[], Exception> currentNodeNamesUnsafeSupplier) {
+
+		try {
+			currentNodeNames = currentNodeNamesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The instance's current node names.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String[] currentNodeNames;
+
 	@Schema(description = "The instance's completion date.")
 	public Date getDateCompletion() {
 		return dateCompletion;
@@ -208,34 +236,6 @@ public class WorkflowInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 
-	@Schema(description = "The instance's current state.")
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	@JsonIgnore
-	public void setState(
-		UnsafeSupplier<String, Exception> stateUnsafeSupplier) {
-
-		try {
-			state = stateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The instance's current state.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String state;
-
 	@Schema(description = "The name of the instance's workflow definition.")
 	public String getWorkflowDefinitionName() {
 		return workflowDefinitionName;
@@ -337,6 +337,30 @@ public class WorkflowInstance implements Serializable {
 			sb.append(completed);
 		}
 
+		if (currentNodeNames != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currentNodeNames\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < currentNodeNames.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(currentNodeNames[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < currentNodeNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (dateCompletion != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -383,20 +407,6 @@ public class WorkflowInstance implements Serializable {
 			sb.append("\"objectReviewed\": ");
 
 			sb.append(String.valueOf(objectReviewed));
-		}
-
-		if (state != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"state\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(state));
-
-			sb.append("\"");
 		}
 
 		if (workflowDefinitionName != null) {

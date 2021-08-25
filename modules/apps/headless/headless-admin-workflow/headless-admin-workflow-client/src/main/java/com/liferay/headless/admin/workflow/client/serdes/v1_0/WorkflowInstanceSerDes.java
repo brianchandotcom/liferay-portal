@@ -71,6 +71,32 @@ public class WorkflowInstanceSerDes {
 			sb.append(workflowInstance.getCompleted());
 		}
 
+		if (workflowInstance.getCurrentNodeNames() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currentNodeNames\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < workflowInstance.getCurrentNodeNames().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(_escape(workflowInstance.getCurrentNodeNames()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < workflowInstance.getCurrentNodeNames().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (workflowInstance.getDateCompletion() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -121,20 +147,6 @@ public class WorkflowInstanceSerDes {
 			sb.append("\"objectReviewed\": ");
 
 			sb.append(String.valueOf(workflowInstance.getObjectReviewed()));
-		}
-
-		if (workflowInstance.getState() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"state\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(workflowInstance.getState()));
-
-			sb.append("\"");
 		}
 
 		if (workflowInstance.getWorkflowDefinitionName() != null) {
@@ -195,6 +207,15 @@ public class WorkflowInstanceSerDes {
 				"completed", String.valueOf(workflowInstance.getCompleted()));
 		}
 
+		if (workflowInstance.getCurrentNodeNames() == null) {
+			map.put("currentNodeNames", null);
+		}
+		else {
+			map.put(
+				"currentNodeNames",
+				String.valueOf(workflowInstance.getCurrentNodeNames()));
+		}
+
 		if (workflowInstance.getDateCompletion() == null) {
 			map.put("dateCompletion", null);
 		}
@@ -229,13 +250,6 @@ public class WorkflowInstanceSerDes {
 			map.put(
 				"objectReviewed",
 				String.valueOf(workflowInstance.getObjectReviewed()));
-		}
-
-		if (workflowInstance.getState() == null) {
-			map.put("state", null);
-		}
-		else {
-			map.put("state", String.valueOf(workflowInstance.getState()));
 		}
 
 		if (workflowInstance.getWorkflowDefinitionName() == null) {
@@ -284,6 +298,12 @@ public class WorkflowInstanceSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "currentNodeNames")) {
+				if (jsonParserFieldValue != null) {
+					workflowInstance.setCurrentNodeNames(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {
 				if (jsonParserFieldValue != null) {
 					workflowInstance.setDateCompletion(
@@ -307,11 +327,6 @@ public class WorkflowInstanceSerDes {
 					workflowInstance.setObjectReviewed(
 						ObjectReviewedSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "state")) {
-				if (jsonParserFieldValue != null) {
-					workflowInstance.setState((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

@@ -354,6 +354,15 @@ public class KaleoInstanceTokenLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken>
+			getKaleoInstanceTokens(long kaleoInstanceId) {
+
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
+			kaleoInstanceId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken>
 			getKaleoInstanceTokens(
 				long parentKaleoInstanceTokenId, java.util.Date completionDate,
 				com.liferay.portal.kernel.service.ServiceContext

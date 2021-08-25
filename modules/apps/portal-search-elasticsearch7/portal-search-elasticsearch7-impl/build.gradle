@@ -6,24 +6,24 @@ task deploySidecar(type: Copy)
 
 String elasticsearchClientVersion = "7.14.0"
 String luceneVersion = "8.9.0"
-String sidecarElasticsearchVersion = file('src/main/resources/META-INF/sidecar.version').text
+String sidecarElasticsearchServerVersion = file('src/main/resources/META-INF/sidecar.version').text
 
-String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${sidecarElasticsearchVersion}-no-jdk-linux-x86_64.tar.gz"
+String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${sidecarElasticsearchServerVersion}-no-jdk-linux-x86_64.tar.gz"
 
 File elasticsearchDistributionFile = file("${buildDir}/${elasticsearchDownloadURL.drop(elasticsearchDownloadURL.lastIndexOf('/') + 1)}")
 
-File sidecarDeployDir = file("${project.'liferay.home'}/elasticsearch-sidecar/" + sidecarElasticsearchVersion)
+File sidecarDeployDir = file("${project.'liferay.home'}/elasticsearch-sidecar/" + sidecarElasticsearchServerVersion)
 
 List<String> sidecarPluginURLs = [
-	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${sidecarElasticsearchVersion}.zip",
-	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-${sidecarElasticsearchVersion}.zip",
-	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${sidecarElasticsearchVersion}.zip",
-	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${sidecarElasticsearchVersion}.zip"
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${sidecarElasticsearchServerVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-${sidecarElasticsearchServerVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${sidecarElasticsearchServerVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${sidecarElasticsearchServerVersion}.zip"
 ]
 
 cleanSidecar {
 	doLast {
-		delete file("${buildDir}/elasticsearch-" + sidecarElasticsearchVersion)
+		delete file("${buildDir}/elasticsearch-" + sidecarElasticsearchServerVersion)
 	}
 }
 
@@ -138,7 +138,7 @@ deploySidecar {
 	}
 
 	from {
-		file("${buildDir}/elasticsearch-" + sidecarElasticsearchVersion)
+		file("${buildDir}/elasticsearch-" + sidecarElasticsearchServerVersion)
 	}
 
 	doFirst {
@@ -148,9 +148,9 @@ deploySidecar {
 			fileMode = 0777
 			includeEmptyDirs = false
 
-			exclude "elasticsearch-${sidecarElasticsearchVersion}/modules/ingest-geoip/**"
-			include "elasticsearch-${sidecarElasticsearchVersion}/lib/**"
-			include "elasticsearch-${sidecarElasticsearchVersion}/modules/**"
+			exclude "elasticsearch-${sidecarElasticsearchServerVersion}/modules/ingest-geoip/**"
+			include "elasticsearch-${sidecarElasticsearchServerVersion}/lib/**"
+			include "elasticsearch-${sidecarElasticsearchServerVersion}/modules/**"
 
 			into buildDir
 			from tarTree(elasticsearchDistributionFile)
@@ -194,9 +194,9 @@ test {
 	}
 }
 
-_createPluginTasks(sidecarElasticsearchVersion, sidecarPluginURLs)
+_createPluginTasks(sidecarElasticsearchServerVersion, sidecarPluginURLs)
 
-private void _createPluginTasks(String sidecarElasticsearchVersion, List<String> sidecarPluginURLs) {
+private void _createPluginTasks(String sidecarElasticsearchServerVersion, List<String> sidecarPluginURLs) {
 	sidecarPluginURLs.each {
 		String url ->
 
@@ -210,13 +210,13 @@ private void _createPluginTasks(String sidecarElasticsearchVersion, List<String>
 			doLast {
 				FileUtil.get(project, url, new File(project.buildDir, fileName), false, true)
 
-				String dirName = fileName.take(fileName.lastIndexOf("-" + sidecarElasticsearchVersion))
+				String dirName = fileName.take(fileName.lastIndexOf("-" + sidecarElasticsearchServerVersion))
 
 				project.copy {
 					fileMode = 0777
 					includeEmptyDirs = false
 
-					into new File(buildDir, "elasticsearch-${sidecarElasticsearchVersion}/plugins/${dirName}")
+					into new File(buildDir, "elasticsearch-${sidecarElasticsearchServerVersion}/plugins/${dirName}")
 					from zipTree(new File(project.buildDir, fileName))
 				}
 			}

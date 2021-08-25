@@ -110,32 +110,45 @@ public class FragmentLayoutStructureItemImporter
 			pageElement.getDefinition());
 
 		if (definitionMap != null) {
-			Map<String, Object> fragmentConfigMap =
-				(Map<String, Object>)definitionMap.get("fragmentConfig");
 			Map<String, Object> fragmentStyleMap =
 				(Map<String, Object>)definitionMap.get("fragmentStyle");
 
-			if (MapUtil.isNotEmpty(fragmentConfigMap) ||
-				MapUtil.isNotEmpty(fragmentStyleMap)) {
+			int oldVersionComparison = Double.compare(
+				layoutStructureItemImporterContext.getPageDefinitionVersion(),
+				1.1);
 
-				JSONObject commonStylesJSONObject = toStylesJSONObject(
-					fragmentStyleMap);
-				JSONObject configStylesJSONObject = toStylesJSONObject(
-					fragmentConfigMap);
+			if (oldVersionComparison < 0) {
+				Map<String, Object> fragmentConfigMap =
+					(Map<String, Object>)definitionMap.get("fragmentConfig");
 
-				for (String key : commonStylesJSONObject.keySet()) {
-					if (Validator.isNull(
-							configStylesJSONObject.getString(key))) {
+				if (MapUtil.isNotEmpty(fragmentConfigMap) ||
+					MapUtil.isNotEmpty(fragmentStyleMap)) {
 
-						configStylesJSONObject.put(
-							key, commonStylesJSONObject.get(key));
+					JSONObject commonStylesJSONObject = toStylesJSONObject(
+						fragmentStyleMap);
+					JSONObject configStylesJSONObject = toStylesJSONObject(
+						fragmentConfigMap);
+
+					for (String key : commonStylesJSONObject.keySet()) {
+						if (Validator.isNull(
+								configStylesJSONObject.getString(key))) {
+
+							configStylesJSONObject.put(
+								key, commonStylesJSONObject.get(key));
+						}
 					}
-				}
 
+					JSONObject jsonObject = JSONUtil.put(
+						"styles",
+						JSONUtil.merge(
+							commonStylesJSONObject, configStylesJSONObject));
+
+					layoutStructureItem.updateItemConfig(jsonObject);
+				}
+			}
+			else if (fragmentStyleMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles",
-					JSONUtil.merge(
-						commonStylesJSONObject, configStylesJSONObject));
+					"styles", toStylesJSONObject(fragmentStyleMap));
 
 				layoutStructureItem.updateItemConfig(jsonObject);
 			}

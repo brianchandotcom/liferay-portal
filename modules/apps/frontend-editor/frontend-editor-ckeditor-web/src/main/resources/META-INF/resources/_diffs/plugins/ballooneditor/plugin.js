@@ -277,111 +277,31 @@
 				);
 			};
 
+			const originalContextManagerCheck =
+				CKEDITOR.plugins.balloontoolbar.contextManager.prototype.check;
+
 			CKEDITOR.plugins.balloontoolbar.contextManager.prototype.check = function (
 				selection
 			) {
-				if (!selection) {
-					selection = this.editor.getSelection();
+				const editor = this.editor;
 
-					CKEDITOR.tools.array.forEach(
-						selection.getRanges(),
-						(range) => {
-							range.shrink(CKEDITOR.SHRINK_ELEMENT, true);
-						}
-					);
+				if (!selection) {
+					selection = editor.getSelection();
 				}
 
 				if (!selection) {
 					return;
 				}
 
-				const path = selection.getRanges()[0]?.startPath();
+				const selectedElement = selection.getSelectedElement();
 
-				let contextMatched;
+				if (!selectedElement && !selection.getSelectedText()) {
+					editor.balloonToolbars.hide();
 
-				function matchEachContext(
-					contexts,
-					matchingFunction,
-					matchingArg1
-				) {
-					CKEDITOR.tools.array.forEach(contexts, (curContext) => {
-						if (
-							!contextMatched ||
-							contextMatched.options.priority >
-								curContext.options.priority
-						) {
-							const result = matchingFunction(
-								curContext,
-								matchingArg1
-							);
-
-							if (result instanceof CKEDITOR.dom.element) {
-								contextMatched = curContext;
-							}
-						}
-					});
+					return;
 				}
 
-				function elementsMatcher(curContext, curElement) {
-					return curContext._matchElement(curElement);
-				}
-
-				matchEachContext(this._contexts, (curContext) => {
-					return curContext._matchRefresh(path, selection);
-				});
-
-				matchEachContext(this._contexts, (curContext) => {
-					return curContext._matchWidget();
-				});
-
-				if (path) {
-					const selectedElem = selection.getSelectedElement();
-
-					if (selectedElem && !selectedElem.isReadOnly()) {
-						matchEachContext(
-							this._contexts,
-							elementsMatcher,
-							selectedElem
-						);
-					}
-
-					for (let i = 0; i < path.elements.length; i++) {
-						const curElement = path.elements[i];
-
-						if (!curElement.isReadOnly()) {
-							matchEachContext(
-								this._contexts,
-								elementsMatcher,
-								curElement
-							);
-						}
-					}
-				}
-
-				this.hide();
-
-				if (contextMatched) {
-					CKEDITOR.tools.array.forEach(
-						selection.getRanges(),
-						(range) => {
-							range.shrink(CKEDITOR.SHRINK_ELEMENT, true);
-						}
-					);
-
-					const selectedElement = selection.getSelectedElement();
-
-					const startElement = selection.getStartElement();
-
-					if (
-						!selectedElement &&
-						(!selection.getSelectedText() ||
-							startElement.getName() === 'a')
-					) {
-						return;
-					}
-
-					contextMatched.show(selection);
-				}
+				originalContextManagerCheck.call(this, selection);
 			};
 		},
 

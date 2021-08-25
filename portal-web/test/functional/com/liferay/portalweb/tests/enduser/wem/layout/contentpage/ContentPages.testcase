@@ -518,6 +518,29 @@ definition {
 	@priority = "5"
 	@uitest
 	test FragmentsCanBeHiddenAndShown {
+		task ("Add a widgets to the page") {
+			for (var portletName : list "Blogs,Language Selector") {
+				JSONLayout.addWidgetToPublicLayout(
+						groupName = "Test Site Name",
+						layoutName = "Test Content Page Name",
+						widgetName = "${portletName}");
+			}
+		}
+		task ("Add a fragments to page") {
+			ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Button");
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "HTML");
+		}
+
+
 
 	}
 

@@ -145,11 +145,11 @@ definition {
 
 	@ignore = "true"
 	@priority = "4"
+	@refactorneeded
 	test DirectUpgradeFromArchive6012 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "false";
 		property portal.version = "6.0.12";
-		property skip.start-app-server = "true";
 		property test.assert.warning.exceptions = "true";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -164,11 +164,11 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test DirectUpgradeFromArchive6130 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "false";
 		property portal.version = "6.1.30";
-		property skip.start-app-server = "true";
 		property test.assert.warning.exceptions = "true";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

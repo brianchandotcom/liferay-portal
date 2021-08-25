@@ -62,7 +62,6 @@ definition {
 	@refactorneeded
 	test CanBeAppliedToPageWhenClassicThemeNotAvailable {
 		property portal.upstream = "true";
-		property skip.start-app-server = "true";
 		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPageWhenClassicThemeNotAvailable";
 
 		AntCommand(

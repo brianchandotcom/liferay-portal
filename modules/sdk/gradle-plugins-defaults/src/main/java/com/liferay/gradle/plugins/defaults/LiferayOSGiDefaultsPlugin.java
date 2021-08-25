@@ -2929,8 +2929,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
-		if (logger.isLifecycleEnabled()) {
-			logger.lifecycle("Using local portal tool: {}", dir);
+		if (logger.isInfoEnabled()) {
+			logger.info("Using local portal tool: {}", dir);
 		}
 
 		Configuration configuration = GradleUtil.getConfiguration(

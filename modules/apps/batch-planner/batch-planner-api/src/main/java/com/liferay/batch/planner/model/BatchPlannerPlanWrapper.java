@@ -55,6 +55,7 @@ public class BatchPlannerPlanWrapper
 		attributes.put("externalURL", getExternalURL());
 		attributes.put("internalClassName", getInternalClassName());
 		attributes.put("name", getName());
+		attributes.put("template", isTemplate());
 
 		return attributes;
 	}
@@ -137,6 +138,12 @@ public class BatchPlannerPlanWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean template = (Boolean)attributes.get("template");
+
+		if (template != null) {
+			setTemplate(template);
 		}
 	}
 
@@ -261,6 +268,16 @@ public class BatchPlannerPlanWrapper
 	}
 
 	/**
+	 * Returns the template of this batch planner plan.
+	 *
+	 * @return the template of this batch planner plan
+	 */
+	@Override
+	public boolean getTemplate() {
+		return model.getTemplate();
+	}
+
+	/**
 	 * Returns the user ID of this batch planner plan.
 	 *
 	 * @return the user ID of this batch planner plan
@@ -308,6 +325,16 @@ public class BatchPlannerPlanWrapper
 	@Override
 	public boolean isExport() {
 		return model.isExport();
+	}
+
+	/**
+	 * Returns <code>true</code> if this batch planner plan is template.
+	 *
+	 * @return <code>true</code> if this batch planner plan is template; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isTemplate() {
+		return model.isTemplate();
 	}
 
 	@Override
@@ -433,6 +460,16 @@ public class BatchPlannerPlanWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this batch planner plan is template.
+	 *
+	 * @param template the template of this batch planner plan
+	 */
+	@Override
+	public void setTemplate(boolean template) {
+		model.setTemplate(template);
 	}
 
 	/**

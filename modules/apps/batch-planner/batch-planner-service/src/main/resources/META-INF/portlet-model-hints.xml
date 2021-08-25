@@ -65,6 +65,7 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field name="template" type="boolean" />
 	</model>
 	<model name="com.liferay.batch.planner.model.BatchPlannerPolicy">
 		<field name="mvccVersion" type="long" />

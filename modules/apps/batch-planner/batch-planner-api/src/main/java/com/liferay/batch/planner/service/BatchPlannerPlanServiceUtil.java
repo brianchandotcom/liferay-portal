@@ -16,6 +16,7 @@ package com.liferay.batch.planner.service;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -40,11 +41,12 @@ public class BatchPlannerPlanServiceUtil {
 	 */
 	public static BatchPlannerPlan addBatchPlannerPlan(
 			boolean export, String externalType, String externalURL,
-			String internalClassName, String name)
+			String internalClassName, String name, boolean template)
 		throws PortalException {
 
 		return getService().addBatchPlannerPlan(
-			export, externalType, externalURL, internalClassName, name);
+			export, externalType, externalURL, internalClassName, name,
+			template);
 	}
 
 	public static BatchPlannerPlan deleteBatchPlannerPlan(
@@ -68,13 +70,50 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean export, boolean template, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		return getService().getBatchPlannerPlans(
+			companyId, export, template, start, end, orderByComparator);
+	}
+
+	public static List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean export, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		return getService().getBatchPlannerPlans(
+			companyId, export, start, end, orderByComparator);
+	}
+
+	public static List<BatchPlannerPlan> getBatchPlannerPlans(
 		long companyId, int start, int end) {
 
 		return getService().getBatchPlannerPlans(companyId, start, end);
 	}
 
+	public static List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		return getService().getBatchPlannerPlans(
+			companyId, start, end, orderByComparator);
+	}
+
 	public static int getBatchPlannerPlansCount(long companyId) {
 		return getService().getBatchPlannerPlansCount(companyId);
+	}
+
+	public static int getBatchPlannerPlansCount(
+		long companyId, boolean export) {
+
+		return getService().getBatchPlannerPlansCount(companyId, export);
+	}
+
+	public static int getBatchPlannerPlansCount(
+		long companyId, boolean export, boolean template) {
+
+		return getService().getBatchPlannerPlansCount(
+			companyId, export, template);
 	}
 
 	/**

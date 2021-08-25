@@ -78,7 +78,7 @@ public class BatchPlannerPlanCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,6 +106,8 @@ public class BatchPlannerPlanCacheModel
 		sb.append(internalClassName);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", template=");
+		sb.append(template);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,6 +174,8 @@ public class BatchPlannerPlanCacheModel
 			batchPlannerPlanImpl.setName(name);
 		}
 
+		batchPlannerPlanImpl.setTemplate(template);
+
 		batchPlannerPlanImpl.resetOriginalValues();
 
 		return batchPlannerPlanImpl;
@@ -197,6 +201,8 @@ public class BatchPlannerPlanCacheModel
 		externalURL = objectInput.readUTF();
 		internalClassName = objectInput.readUTF();
 		name = objectInput.readUTF();
+
+		template = objectInput.readBoolean();
 	}
 
 	@Override
@@ -250,6 +256,8 @@ public class BatchPlannerPlanCacheModel
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeBoolean(template);
 	}
 
 	public long mvccVersion;
@@ -265,5 +273,6 @@ public class BatchPlannerPlanCacheModel
 	public String externalURL;
 	public String internalClassName;
 	public String name;
+	public boolean template;
 
 }

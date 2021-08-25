@@ -44,7 +44,8 @@ create table BatchPlannerPlan (
 	externalType VARCHAR(75) null,
 	externalURL STRING null,
 	internalClassName VARCHAR(75) null,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	template BOOLEAN
 );
 
 create table BatchPlannerPolicy (

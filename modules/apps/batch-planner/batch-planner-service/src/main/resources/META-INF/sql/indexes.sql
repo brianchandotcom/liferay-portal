@@ -4,6 +4,7 @@ create unique index IX_8806EF8E on BatchPlannerLog (batchPlannerPlanId, dispatch
 
 create unique index IX_E025DC1A on BatchPlannerMapping (batchPlannerPlanId, externalFieldName[$COLUMN_LENGTH:75$], internalFieldName[$COLUMN_LENGTH:75$]);
 
+create index IX_18CD7477 on BatchPlannerPlan (companyId, export, template);
 create unique index IX_221A54A0 on BatchPlannerPlan (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_874FA8DB on BatchPlannerPlan (companyId, userId);
 

@@ -16,100 +16,110 @@ package com.liferay.layout.page.template.internal.upgrade.v3_4_3;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import java.util.List;
+
 /**
  * @author Balázs Sáfrány-Kovalik
  */
 public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
+
+	public ResourcePermissionUpgradeProcess(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		_insertResourcePermissions();
 	}
 
-	private void _insertResourcePermissions() {
+	private long _getLayoutPageTemplateEntryId(long layoutPrototypeId) {
 		try (Statement s = connection.createStatement();
-			ResultSet resultSet = s.executeQuery(
-				StringBundler.concat(
-					"select mvccVersion, resourcePermissionId, companyId, ",
-					"scope, primKey, primKeyId, roleId, ownerId, actionIds, ",
-					"viewActionId from ResourcePermission where name = '",
-					LayoutPrototype.class.getName(), "'"));
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select layoutPageTemplateEntryId from ",
 					"LayoutPageTemplateEntry where layoutPrototypeId = ? ",
-					"order by name asc limit 1"));
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into ResourcePermission (mvccVersion, ",
-							"resourcePermissionId, companyId, name, scope, ",
-							"primKey, primKeyId, roleId, ownerId, actionIds, ",
-							"viewActionId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-							"?, ?)")))) {
+					"order by name asc limit 1"))) {
 
-			while (resultSet.next()) {
-				String primKey = resultSet.getString("primKey");
-				String primKeyId = resultSet.getString("primKeyId");
+			preparedStatement1.setLong(1, layoutPrototypeId);
 
-				if (!primKey.equals(LayoutPrototype.class.getName())) {
-					preparedStatement1.setLong(1, Long.parseLong(primKey));
-
-					try (ResultSet resultSet2 =
-							preparedStatement1.executeQuery()) {
-
-						if (!resultSet2.next()) {
-							continue;
-						}
-
-						primKey = String.valueOf(
-							resultSet2.getLong("layoutPageTemplateEntryId"));
-
-						primKeyId = primKey;
-					}
-				}
-				else {
-					primKey = LayoutPageTemplateEntry.class.getName();
+			try (ResultSet resultSet2 = preparedStatement1.executeQuery()) {
+				if (!resultSet2.next()) {
+					return 0;
 				}
 
-				preparedStatement2.setLong(1, resultSet.getLong("mvccVersion"));
-				preparedStatement2.setLong(2, increment());
-				preparedStatement2.setLong(3, resultSet.getLong("companyId"));
-				preparedStatement2.setString(
-					4, LayoutPageTemplateEntry.class.getName());
-				preparedStatement2.setLong(5, resultSet.getLong("scope"));
-				preparedStatement2.setString(6, primKey);
-				preparedStatement2.setString(7, primKeyId);
-				preparedStatement2.setLong(8, resultSet.getLong("roleId"));
-				preparedStatement2.setLong(9, resultSet.getLong("ownerId"));
-				preparedStatement2.setLong(10, resultSet.getLong("actionIds"));
-				preparedStatement2.setLong(
-					11, resultSet.getLong("viewActionId"));
-
-				preparedStatement2.addBatch();
+				return resultSet2.getLong("layoutPageTemplateEntryId");
 			}
-
-			preparedStatement2.executeBatch();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
 			}
 		}
+
+		return 0;
+	}
+
+	private void _insertResourcePermissions() {
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				LayoutPrototype.class.getName());
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			String primKey = resourcePermission.getPrimKey();
+			long primKeyId = resourcePermission.getPrimKeyId();
+
+			if (!primKey.equals(LayoutPrototype.class.getName())) {
+				long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(
+					primKeyId);
+
+				primKey = String.valueOf(layoutPageTemplateEntryId);
+
+				primKeyId = layoutPageTemplateEntryId;
+			}
+			else {
+				primKey = LayoutPageTemplateEntry.class.getName();
+			}
+
+			ResourcePermission newResourcePermission =
+				_resourcePermissionLocalService.createResourcePermission(
+					increment());
+
+			newResourcePermission.setCompanyId(
+				resourcePermission.getCompanyId());
+			newResourcePermission.setName(
+				LayoutPageTemplateEntry.class.getName());
+			newResourcePermission.setScope(resourcePermission.getScope());
+			newResourcePermission.setPrimKey(primKey);
+			newResourcePermission.setPrimKeyId(primKeyId);
+			newResourcePermission.setRoleId(resourcePermission.getRoleId());
+			newResourcePermission.setOwnerId(resourcePermission.getOwnerId());
+			newResourcePermission.setActionIds(
+				resourcePermission.getActionIds());
+			newResourcePermission.setViewActionId(
+				resourcePermission.getViewActionId());
+
+			_resourcePermissionLocalService.addResourcePermission(
+				newResourcePermission);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourcePermissionUpgradeProcess.class);
+
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 
 }

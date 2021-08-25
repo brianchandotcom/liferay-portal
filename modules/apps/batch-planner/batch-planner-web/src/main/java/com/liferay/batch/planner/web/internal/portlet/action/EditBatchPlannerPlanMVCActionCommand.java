@@ -24,6 +24,7 @@ import com.liferay.batch.planner.service.persistence.BatchPlannerMappingUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,6 +55,22 @@ public class EditBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		if (cmd.equals(Constants.ADD)) {
+			_addBatchPlannerPlan(actionRequest);
+		}
+		else if (cmd.equals(Constants.DELETE)) {
+			_deleteBatchPlannerPlan(actionRequest);
+		}
+		else if (cmd.equals(Constants.UPDATE)) {
+			_updateBatchPlannerPlan(actionRequest);
+		}
+	}
+
+	private void _addBatchPlannerPlan(ActionRequest actionRequest)
 		throws Exception {
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -89,6 +106,15 @@ public class EditBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 				batchPlannerMapping.getInternalFieldName(), "String",
 				StringPool.BLANK);
 		}
+	}
+
+	private void _deleteBatchPlannerPlan(ActionRequest actionRequest)
+		throws Exception {
+
+		long batchPlannerPlanId = ParamUtil.getLong(
+			actionRequest, "batchPlannerPlanId");
+
+		_batchPlannerPlanService.deleteBatchPlannerPlan(batchPlannerPlanId);
 	}
 
 	private List<BatchPlannerMapping> _getBatchPlannerMappings(
@@ -131,6 +157,37 @@ public class EditBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return batchPlannerMappings;
+	}
+
+	private void _updateBatchPlannerPlan(ActionRequest actionRequest)
+		throws Exception {
+
+		long batchPlannerPlanId = ParamUtil.getLong(
+			actionRequest, "batchPlannerPlanId");
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		_batchPlannerPlanService.updateBatchPlannerPlan(
+			batchPlannerPlanId, name);
+
+		if (Validator.isNotNull(
+				ParamUtil.getString(actionRequest, "policyName")) &&
+			Validator.isNotNull(
+				ParamUtil.getString(actionRequest, "policyValue"))) {
+
+			_batchPlannerPolicyService.updateBatchPlannerPolicy(
+				batchPlannerPlanId,
+				ParamUtil.getString(actionRequest, "policyName"),
+				ParamUtil.getString(actionRequest, "policyValue"));
+		}
+
+		List<BatchPlannerMapping> batchPlannerMappings =
+			_getBatchPlannerMappings(actionRequest);
+
+		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
+			_batchPlannerMappingService.updateBatchPlannerMapping(
+				batchPlannerPlanId, batchPlannerMapping.getExternalFieldName(),
+				"String", StringPool.BLANK);
+		}
 	}
 
 	@Reference

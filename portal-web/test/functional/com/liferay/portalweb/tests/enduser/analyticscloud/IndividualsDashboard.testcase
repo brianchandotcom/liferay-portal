@@ -99,6 +99,76 @@ definition {
 		ACIndividualsDashboard.viewTotalIndividualsCount(individualCount = "1");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8907 | Test Summary: Clicking an activity navigates to page in Individuals overview"
+	@priority = "3"
+	test NavigateToVisitedPageOverviewViaIndividualActivity {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Navigate to the individuals page of new user") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACNavigation.openItem(itemName = "userfn userln");
+		}
+
+		task ("Select Last 24 hours time period in Individuals Activities chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Activities");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to the visited page overview via individual activity") {
+			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+
+			ACIndividualsDashboard.goToVisitedPageOverviewViaIndividualActivity(
+				itemName = "${portalURL}",
+				pageName = "AC Page - Site Name - Liferay DXP");
+		}
+
+		task ("View access to the visited page overview") {
+			ACNavigation.assertPageHeader(headerTitle = "AC Page - Site Name - Liferay DXP");
+
+			ACNavigation.viewActiveSwitchTab(tabName = "Overview");
+		}
+
+		task ("View the cards in the Overview tab") {
+			for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology,Displayed Assets") {
+				ACCards.viewCards(cardTitle = "${cardTitle}");
+			}
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8903 | Test Summary: As an Business User, I should be able to assert the cards on the Overview tab of the Individual's Dashboard page"
 	@priority = "4"
 	test ViewCardsInTheOverviewTabOfIndividualsDashBoard {

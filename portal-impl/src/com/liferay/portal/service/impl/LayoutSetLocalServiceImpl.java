@@ -102,7 +102,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		serviceContext.setAttribute("updatePageCount", Boolean.FALSE);
 
 		layoutLocalService.deleteLayouts(
-			groupId, privateLayout, true, serviceContext);
+			groupId, privateLayout, serviceContext);
 
 		// Logo
 

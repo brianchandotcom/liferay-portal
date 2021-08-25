@@ -14,7 +14,7 @@ definition {
 					key_number = "${valueNumber}",
 					key_unit = "${timeUnit}",
 					locator1 = "ACSites#ACTIVITIES_CARD_SESSION_DURATION_FIRST_VALUE");
-					flag = MathUtil.difference("${flag}","1");
+				flag = MathUtil.difference("${flag}","1");
 			}
 			else {
 				AssertElementPresent(

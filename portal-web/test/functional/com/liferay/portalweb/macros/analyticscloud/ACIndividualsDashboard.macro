@@ -90,6 +90,23 @@ definition {
 			value1 = "${activitiesNumber}");
 	}
 
+	macro viewBreakdownRecharts {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals.assertPartialText(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#BREAKDOWN_RECHARTS_CARTESIAN_Y_AXIS_TICK",
+			value1 = "${tick}");
+
+		AssertAttributeValue(
+			attribute1 = "fill",
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#BREAKDOWN_RECHARTS_BAR_FILL_COLOR",
+			value1 = "${fillColor}");
+	}
+
 	macro viewTotalActivities {
 		var key_userName = "${userName}";
 		var key_activitiesNumber = "${activitiesNumber}";

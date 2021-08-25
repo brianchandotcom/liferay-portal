@@ -1,4 +1,4 @@
-email,first_name,last_name,jobTitle,male
+email,givenName,familyName,jobTitle,doNotCall
 user1@liferay.com,user1,user1,Laywer,true
 user2@liferay.com,user2,user2,Doctor,false
 user3@liferay.com,user3,user3,Product Manager,false

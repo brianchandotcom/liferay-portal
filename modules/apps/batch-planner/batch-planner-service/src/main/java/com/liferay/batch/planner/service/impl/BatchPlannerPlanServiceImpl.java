@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -102,6 +103,15 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean execute, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		return batchPlannerPlanPersistence.filterFindByC_E(
+			companyId, execute, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
 		long companyId, int start, int end) {
 
 		return batchPlannerPlanPersistence.filterFindByCompanyId(
@@ -109,8 +119,22 @@ public class BatchPlannerPlanServiceImpl
 	}
 
 	@Override
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		return batchPlannerPlanPersistence.filterFindByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getBatchPlannerPlansCount(long companyId) {
 		return batchPlannerPlanPersistence.filterCountByCompanyId(companyId);
+	}
+
+	@Override
+	public int getBatchPlannerPlansCount(long companyId, boolean export) {
+		return batchPlannerPlanPersistence.filterCountByC_E(companyId, export);
 	}
 
 	@Override

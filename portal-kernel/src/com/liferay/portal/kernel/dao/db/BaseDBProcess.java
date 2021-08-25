@@ -217,6 +217,15 @@ public abstract class BaseDBProcess implements DBProcess {
 		return dbInspector.hasTable(tableName, true);
 	}
 
+	protected String[] getPrimaryKeyColumnNames(
+			Connection connection, String tableName)
+		throws SQLException {
+
+		DB db = DBManagerUtil.getDB();
+
+		return db.getPrimaryKeyColumnNames(connection, tableName);
+	}
+
 	protected boolean hasColumn(String tableName, String columnName)
 		throws Exception {
 

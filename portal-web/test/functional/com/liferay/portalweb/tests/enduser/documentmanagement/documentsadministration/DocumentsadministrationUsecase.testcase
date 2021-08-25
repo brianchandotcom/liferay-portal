@@ -131,7 +131,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
+		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

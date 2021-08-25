@@ -100,7 +100,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
+		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2");
 

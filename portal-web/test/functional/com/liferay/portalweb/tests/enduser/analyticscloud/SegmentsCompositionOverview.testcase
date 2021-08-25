@@ -62,12 +62,12 @@ definition {
 			ACSegments.accessSegment(segmentName = "Test Segment");
 
 			ACSegments.viewSegmentComposition(
-				individualsType = "Active",
-				individualsNumber = "0");
+				individualsNumber = "0",
+				individualsType = "Active");
 
 			ACSegments.viewSegmentComposition(
-				individualsType = "Known",
-				individualsNumber = "1");
+				individualsNumber = "1",
+				individualsType = "Known");
 		}
 	}
 

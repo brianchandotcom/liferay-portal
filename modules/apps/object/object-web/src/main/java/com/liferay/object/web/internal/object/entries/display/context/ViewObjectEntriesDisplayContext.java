@@ -20,14 +20,19 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,13 +53,30 @@ public class ViewObjectEntriesDisplayContext {
 	}
 
 	public List<ClayDataSetActionDropdownItem>
-		getClayDataSetActionDropdownItems() {
+			getClayDataSetActionDropdownItems()
+		throws Exception {
 
-		return Collections.singletonList(
+		return Arrays.asList(
+			new ClayDataSetActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/object_entries/edit_object_entry"
+				).setParameter(
+					"objectEntryId", "{id}"
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				"get", null, null),
 			new ClayDataSetActionDropdownItem(
 				_apiURL + "/{id}", "trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
+				"delete", "delete", "async"),
+			new ClayDataSetActionDropdownItem(
+				_getPermissionsURL(), null, "permissions",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(), "permissions"),
+				"get", "permissions", "modal-permissions"));
 	}
 
 	public String getClayHeadlessDataSetDisplayId() {
@@ -100,6 +122,38 @@ public class ViewObjectEntriesDisplayContext {
 				_objectRequestHelper.getLiferayPortletRequest(),
 				_objectRequestHelper.getLiferayPortletResponse()),
 			_objectRequestHelper.getLiferayPortletResponse());
+	}
+
+	private String _getPermissionsURL() throws Exception {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_objectRequestHelper.getRequest(),
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			_objectRequestHelper.getCurrentURL()
+		).setParameter(
+			"modelResource", objectDefinition.getClassName()
+		).setParameter(
+			"modelResourceDescription",
+			objectDefinition.getLabel(_objectRequestHelper.getLocale())
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).buildPortletURL();
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
+
+		return portletURL.toString();
 	}
 
 	private final String _apiURL;

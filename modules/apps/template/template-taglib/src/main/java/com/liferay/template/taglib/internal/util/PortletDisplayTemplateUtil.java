@@ -17,18 +17,12 @@ package com.liferay.template.taglib.internal.util;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Lance Ji
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = {})
 public class PortletDisplayTemplateUtil {
@@ -47,17 +41,6 @@ public class PortletDisplayTemplateUtil {
 
 		return _portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 			groupId, classNameId, displayStyle, useDefault);
-	}
-
-	public static String renderDDMTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long ddmTemplateId,
-			List<?> entries, Map<String, Object> contextObjects)
-		throws Exception {
-
-		return _portletDisplayTemplate.renderDDMTemplate(
-			httpServletRequest, httpServletResponse, ddmTemplateId, entries,
-			contextObjects);
 	}
 
 	@Deactivate

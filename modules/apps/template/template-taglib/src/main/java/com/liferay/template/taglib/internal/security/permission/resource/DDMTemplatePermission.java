@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Rafael Praxedes
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = {})
 public class DDMTemplatePermission {

@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = {})
 public class ServletContextUtil {
@@ -30,7 +30,7 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.taglib)",
+		target = "(osgi.web.symbolicname=com.liferay.template.taglib)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

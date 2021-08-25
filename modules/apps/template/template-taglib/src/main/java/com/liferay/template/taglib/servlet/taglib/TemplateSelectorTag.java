@@ -15,27 +15,41 @@
 package com.liferay.template.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.IncludeTag;
 import com.liferay.template.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.template.taglib.internal.util.PortletDisplayTemplateUtil;
-import com.liferay.template.taglib.servlet.taglib.base.BaseTemplateSelectorTag;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Juan Fernández
+ * @author Eudaldo Alonso
  */
-public class TemplateSelectorTag extends BaseTemplateSelectorTag {
+public class TemplateSelectorTag extends IncludeTag {
 
 	@Override
+	public int doStartTag() throws JspException {
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		return super.doStartTag();
+	}
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public String getDefaultDisplayStyle() {
+		return _defaultDisplayStyle;
+	}
+
 	public String getDisplayStyle() {
 		DDMTemplate portletDisplayDDMTemplate = getPortletDisplayDDMTemplate();
 
@@ -44,19 +58,16 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 				portletDisplayDDMTemplate.getTemplateKey());
 		}
 
-		if (Validator.isNull(super.getDisplayStyle())) {
-			return super.getDefaultDisplayStyle();
+		if (Validator.isNull(_displayStyle)) {
+			return getDefaultDisplayStyle();
 		}
 
-		return super.getDisplayStyle();
+		return _displayStyle;
 	}
 
-	@Override
 	public long getDisplayStyleGroupId() {
-		long displayStyleGroupId = super.getDisplayStyleGroupId();
-
-		if (displayStyleGroupId > 0) {
-			return displayStyleGroupId;
+		if (_displayStyleGroupId > 0) {
+			return _displayStyleGroupId;
 		}
 
 		HttpServletRequest httpServletRequest = getRequest();
@@ -68,6 +79,38 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
+	public List<String> getDisplayStyles() {
+		return _displayStyles;
+	}
+
+	public String getRefreshURL() {
+		return _refreshURL;
+	}
+
+	public boolean isShowEmptyOption() {
+		return _showEmptyOption;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
+	}
+
+	public void setDefaultDisplayStyle(String defaultDisplayStyle) {
+		_defaultDisplayStyle = defaultDisplayStyle;
+	}
+
+	public void setDisplayStyle(String displayStyle) {
+		_displayStyle = displayStyle;
+	}
+
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
+	}
+
+	public void setDisplayStyles(List<String> displayStyles) {
+		_displayStyles = displayStyles;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -75,11 +118,37 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setRefreshURL(String refreshURL) {
+		_refreshURL = refreshURL;
+	}
+
+	public void setShowEmptyOption(boolean showEmptyOption) {
+		_showEmptyOption = showEmptyOption;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_className = null;
+		_defaultDisplayStyle = StringPool.BLANK;
+		_displayStyle = null;
+		_displayStyleGroupId = 0;
+		_displayStyles = null;
+		_refreshURL = null;
+		_showEmptyOption = false;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
 	protected DDMTemplate getPortletDisplayDDMTemplate() {
-		String displayStyle = super.getDisplayStyle();
+		String displayStyle = _displayStyle;
 
 		if (Validator.isNull(displayStyle)) {
-			displayStyle = super.getDefaultDisplayStyle();
+			displayStyle = _defaultDisplayStyle;
 		}
 
 		return PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
@@ -87,27 +156,42 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 			displayStyle, true);
 	}
 
-	protected ResourceBundle getResourceBundle() {
-		Locale locale = PortalUtil.getLocale(getRequest());
-
-		Class<?> clazz = getClass();
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
-	}
-
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		super.setAttributes(httpServletRequest);
-
 		setNamespacedAttribute(
 			httpServletRequest, "classNameId",
 			String.valueOf(PortalUtil.getClassNameId(getClassName())));
+		setNamespacedAttribute(httpServletRequest, "className", getClassName());
+		setNamespacedAttribute(
+			httpServletRequest, "defaultDisplayStyle",
+			getDefaultDisplayStyle());
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyle", getDisplayStyle());
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyleGroupId",
+			getDisplayStyleGroupId());
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyles", getDisplayStyles());
+		setNamespacedAttribute(
+			httpServletRequest, "refreshURL", getRefreshURL());
 		setNamespacedAttribute(
 			httpServletRequest, "portletDisplayDDMTemplate",
 			getPortletDisplayDDMTemplate());
 		setNamespacedAttribute(
-			httpServletRequest, "resourceBundle", getResourceBundle());
+			httpServletRequest, "showEmptyOption", isShowEmptyOption());
 	}
+
+	private static final String _ATTRIBUTE_NAMESPACE =
+		"liferay-template:template-selector:";
+
+	private static final String _PAGE = "/template_selector/page.jsp";
+
+	private String _className;
+	private String _defaultDisplayStyle = StringPool.BLANK;
+	private String _displayStyle;
+	private long _displayStyleGroupId;
+	private List<String> _displayStyles;
+	private String _refreshURL;
+	private boolean _showEmptyOption;
 
 }

@@ -816,14 +816,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
-  version "7.12.5"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
-  integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
-"@babel/runtime@^7.12.1", "@babel/runtime@^7.13.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.13.7", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.15.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.3.tgz#2e1c2880ca118e5b2f9988322bd8a7656a32502b"
   integrity sha512-OvwMLqNXkCXSz1kSm58sEsNuhqOx/fKpnUnKnFB5v8uDda5bLNEHNgKPvhDN6IU0LDcnHQ90LlJ0Q6jnyBSIBA==
@@ -958,10 +951,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.2"
 
-"@clayui/css@3.33.1":
-  version "3.33.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.33.1.tgz#5224c1bd916be6fdd0b919d31d33a9c2ff308a3c"
-  integrity sha512-MHHa1ckYy5ZB9xX4RPwRuE79fg/PhHhAQe4WT3JjPCZsr/w2ZR06yAFBODUsVb48zNu6MSYygcojDiuIOgXfOw==
+"@clayui/css@3.34.0":
+  version "3.34.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.34.0.tgz#1b3bac51217c6fe33dee87c202a2443da5db39c4"
+  integrity sha512-KmGGeDXIKbeFe1IixRt6PZ3pv2D6HyBNfAp4ZbT84004pNojUxDK8NZR0zhzrI4BowYvVxTOksdb4fl+Rv7VJA==
 
 "@clayui/data-provider@3.32.0":
   version "3.32.0"
@@ -1093,10 +1086,10 @@
     "@clayui/layout" "^3.32.0"
     classnames "^2.2.6"
 
-"@clayui/modal@3.32.0", "@clayui/modal@^3.32.0":
-  version "3.32.0"
-  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.32.0.tgz#8a56e15c3df6cc8dbc8817d84aeecbbd1bdb241d"
-  integrity sha512-4wWxRQpcwEttyvskgTCAaqx6H1p/wH8ZajsdzDw/Nmgn4puH01wV+3+anyVRICFU5sEg5qsNYCe7rx51ZJbSkA==
+"@clayui/modal@3.34.0", "@clayui/modal@^3.34.0":
+  version "3.34.0"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.34.0.tgz#1e28915178698962622668e67dc68a7883ec360d"
+  integrity sha512-FgcT7l802SisJQZaQA3QY6VmQI65qRvKyaHbmClW6nrImUXO2AoUGfqnyOhxHz63uiLxJcBYMowx5M1mpSqN4w==
   dependencies:
     "@clayui/button" "^3.32.0"
     "@clayui/icon" "^3.32.0"
@@ -1206,13 +1199,13 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/provider@3.32.0":
-  version "3.32.0"
-  resolved "https://registry.yarnpkg.com/@clayui/provider/-/provider-3.32.0.tgz#e0cba2969ff89008c9a8b8eefaebc0d7cfc61804"
-  integrity sha512-L9qim5eXSjiQoacfOpa/pQkcMo9JoYZdlhRc74/YRmcPJQQdx919085ttqEK2Rba47M7Ef2Ee5z6Nq/pQexUsQ==
+"@clayui/provider@3.34.0":
+  version "3.34.0"
+  resolved "https://registry.yarnpkg.com/@clayui/provider/-/provider-3.34.0.tgz#7c0b3aadabc6f33577fb87284f9d186616d1149c"
+  integrity sha512-2GL02HgVZYSwYjdId3H/g9/699k9or9mVwn9NSuHiFeW0t7ZDnWhI3kYc5UYifVvu1TgAzIYvD+YEpEZSoVJ4A==
   dependencies:
     "@clayui/icon" "^3.32.0"
-    "@clayui/modal" "^3.32.0"
+    "@clayui/modal" "^3.34.0"
 
 "@clayui/shared@3.32.0", "@clayui/shared@^3.32.0":
   version "3.32.0"
@@ -7787,14 +7780,7 @@ history@^4.9.0:
     tiny-warning "^1.0.0"
     value-equal "^0.4.0"
 
-hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
-  integrity sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
-  dependencies:
-    react-is "^16.7.0"
-
-hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -12751,12 +12737,7 @@ react-inspector@^2.3.0:
     is-dom "^1.0.9"
     prop-types "^15.6.1"
 
-react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
-  version "16.12.0"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
-  integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
-
-react-is@^16.13.1:
+react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -13134,20 +13115,12 @@ redux@=3.7.2:
     loose-envify "^1.1.0"
     symbol-observable "^1.0.3"
 
-redux@^4.0.0, redux@^4.0.5:
+redux@^4.0.0, redux@^4.0.4, redux@^4.0.5:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.1.tgz#76f1c439bb42043f985fbd9bf21990e60bd67f47"
   integrity sha512-hZQZdDEM25UY2P493kPYuKqviVwZ58lEmGQNeQ+gXa+U0gYPUBf7NKYazbe3m+bs/DzM/ahN12DbF+NG8i0CWw==
   dependencies:
     "@babel/runtime" "^7.9.2"
-
-redux@^4.0.4:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
-  integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
-  dependencies:
-    loose-envify "^1.4.0"
-    symbol-observable "^1.2.0"
 
 refractor@^3.2.0:
   version "3.2.0"

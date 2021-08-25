@@ -7,7 +7,7 @@
 		"@clayui/icon": "3.32.0",
 		"@clayui/label": "3.32.0",
 		"@clayui/layout": "3.32.0",
-		"@clayui/modal": "3.32.0",
+		"@clayui/modal": "3.34.0",
 		"@clayui/table": "3.32.0",
 		"frontend-js-web": "*",
 		"metal-state": "2.16.8",

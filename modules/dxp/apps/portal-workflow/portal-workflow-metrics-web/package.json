@@ -10,7 +10,7 @@
 		"@clayui/layout": "3.32.0",
 		"@clayui/list": "3.32.0",
 		"@clayui/management-toolbar": "3.32.0",
-		"@clayui/modal": "3.32.0",
+		"@clayui/modal": "3.34.0",
 		"@clayui/navigation-bar": "3.32.0",
 		"@clayui/panel": "3.32.0",
 		"@clayui/progress-bar": "3.32.0",

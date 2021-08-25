@@ -2,11 +2,11 @@
 	"dependencies": {
 		"@clayui/alert": "3.32.0",
 		"@clayui/button": "3.32.0",
-		"@clayui/css": "3.33.1",
+		"@clayui/css": "3.34.0",
 		"@clayui/form": "3.32.0",
 		"@clayui/icon": "3.32.0",
 		"@clayui/loading-indicator": "3.32.0",
-		"@clayui/modal": "3.32.0",
+		"@clayui/modal": "3.34.0",
 		"@clayui/toolbar": "3.32.0",
 		"@liferay/frontend-js-react-web": "*",
 		"asset-taglib": "*",

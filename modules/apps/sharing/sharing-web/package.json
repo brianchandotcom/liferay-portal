@@ -8,7 +8,7 @@
 		"@clayui/form": "3.32.0",
 		"@clayui/icon": "3.32.0",
 		"@clayui/layout": "3.32.0",
-		"@clayui/modal": "3.32.0",
+		"@clayui/modal": "3.34.0",
 		"@clayui/multi-select": "3.32.0",
 		"@clayui/sticker": "3.32.0",
 		"@liferay/frontend-js-react-web": "*",

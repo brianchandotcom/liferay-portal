@@ -7,7 +7,7 @@
 		"@clayui/form": "3.32.0",
 		"@clayui/icon": "3.32.0",
 		"@clayui/list": "3.32.0",
-		"@clayui/modal": "3.32.0",
+		"@clayui/modal": "3.34.0",
 		"@clayui/tabs": "3.32.0",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",

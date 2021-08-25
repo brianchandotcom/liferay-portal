@@ -1140,6 +1140,38 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro clickUnhideFragmentViaPageStructure {
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		Click.clickNoWaitForVisible(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDDEN");
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro clickUnhideFragmentViaPageStyles {
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+					key_nodeName = "${fragmentName}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
+
+		Navigator.gotoNavTab(navTab = "Styles");
+
+		Check.checkNotVisible(
+				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro closeSidebar {
 		var key_tabName = "${tabName}";
 

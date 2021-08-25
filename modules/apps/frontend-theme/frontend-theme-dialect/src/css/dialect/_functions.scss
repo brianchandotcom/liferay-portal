@@ -1,3 +1,0 @@
-@function get-half-height($line-height, $font-size, $padding-y) {
-	@return calc(((#{$line-height} * #{$font-size}) + (#{$padding-y} * 2)) / 2);
-}

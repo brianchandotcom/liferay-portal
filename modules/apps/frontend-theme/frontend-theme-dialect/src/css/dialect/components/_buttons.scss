@@ -336,30 +336,7 @@
 // Rounded
 
 .btn-rounded {
-	&.btn-sm {
-		border-radius: get-half-height(
-			$btn-line-height-sm,
-			$btn-font-size-sm,
-			$btn-padding-y-sm
-		);
-	}
-
-	&.btn-nm,
-	&:not(.btn-sm):not(.btn-lg) {
-		border-radius: get-half-height(
-			$btn-line-height,
-			$btn-font-size,
-			$btn-padding-y
-		);
-	}
-
-	&.btn-lg {
-		border-radius: get-half-height(
-			$btn-line-height-lg,
-			$btn-font-size-lg,
-			$btn-padding-y-lg
-		);
-	}
+	border-radius: $rounded-pill;
 
 	&.btn-primary {
 		box-shadow: $elevation-tight-4 $action-primary-disabled;

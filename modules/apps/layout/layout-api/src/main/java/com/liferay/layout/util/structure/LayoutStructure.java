@@ -545,7 +545,7 @@ public class LayoutStructure {
 				"main", _mainItemId
 			)
 		).put(
-			"version", 1
+			"version", LayoutStructureConstants.LATEST_PAGE_DEFINITION_VERSION
 		);
 	}
 

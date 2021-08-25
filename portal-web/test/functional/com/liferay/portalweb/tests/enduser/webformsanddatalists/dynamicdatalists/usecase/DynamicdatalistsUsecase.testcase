@@ -2316,6 +2316,18 @@ definition {
 	test RolesPermissionsDynamicDataLists {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
 		JSONRole.addSiteRole(
 			roleKey = "Data Recorder Name",
 			roleTitle = "Data Recorder Name");
@@ -2327,7 +2339,7 @@ definition {
 			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "View",
+			resourceAction = "VIEW",
 			resourceName = "com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			roleTitle = "Data Recorder Name",
 			roleType = "site");
@@ -2431,11 +2443,9 @@ definition {
 
 		PortletEntry.publish();
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
 
@@ -2445,11 +2455,9 @@ definition {
 
 		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea2@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
 
@@ -2457,11 +2465,9 @@ definition {
 
 		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 	}
 
 	@description = "This is a use case for LPS-69667."

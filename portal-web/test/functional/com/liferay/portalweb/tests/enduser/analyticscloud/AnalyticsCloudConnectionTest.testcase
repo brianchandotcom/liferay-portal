@@ -178,11 +178,9 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8837 | Test Summary: Invalid OAuth Credentials"
-	@ignore = "true"
 	@priority = "2"
 	test InvalidOAuthKey {
 
-		// TODO LRAC-8837 InvalidOAuthKey
 
 	}
 

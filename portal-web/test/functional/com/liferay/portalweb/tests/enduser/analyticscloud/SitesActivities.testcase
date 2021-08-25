@@ -475,15 +475,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8281 | Test Summary: Anon and known visitors popover shows breakdown"
-	@ignore = "true"
-	@priority = "5"
-	test CanShownAnonAndKnownVisitorsPopoverBreakdown {
-
-		// TODO LRAC-8281 CanShownAnonAndKnownVisitorsPopoverBreakdown
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8295 | Test Summary: Assert Sites Activity time filter able to use Custom Range"
 	@priority = "5"
 	test CanSitesActivityTimeFilterUseCustomRange {

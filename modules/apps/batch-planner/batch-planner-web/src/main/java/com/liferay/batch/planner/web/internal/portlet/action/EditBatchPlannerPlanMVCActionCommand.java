@@ -83,7 +83,8 @@ public class EditBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				export, externalType, externalURL, internalClassName, name);
+				export, externalType, externalURL, internalClassName, name,
+				false);
 
 		if (Validator.isNotNull(
 				ParamUtil.getString(actionRequest, "policyName")) &&

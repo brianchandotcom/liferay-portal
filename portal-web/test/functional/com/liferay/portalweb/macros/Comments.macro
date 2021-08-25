@@ -163,6 +163,28 @@ definition {
 		return "${commentId}";
 	}
 
+	macro replyToComment {
+		AssertClick(
+			key_entryComment = "Reply",
+			key_text = "Reply",
+			locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
+			value1 = "Reply");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${commentReply}");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClick(
+			locator1 = "Button#REPLY_LAST",
+			value1 = "Reply");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro subscribePG {
 		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

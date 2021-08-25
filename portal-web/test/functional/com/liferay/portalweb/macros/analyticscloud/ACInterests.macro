@@ -6,12 +6,86 @@ definition {
 			locator1 = "ACCards#NO_RESULTS_TITLE");
 	}
 
+	macro clickInterest {
+		var key_interestTopic = "${interestTopic}";
+
+		Click(locator1 = "ACInterests#INTEREST_TOPIC");
+	}
+
+	macro switchTab {
+		var key_tabName = "${tabName}";
+
+		Click(locator1 = "ACInterests#TAB_NAME");
+	}
+
+	macro viewInterest {
+		var key_interestTopic = "${interestTopic}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#INTEREST_TOPIC",
+			value1 = "${interestTopic}");
+
+		AssertElementPresent(locator1 = "ACInterests#INTEREST_SEGMENT_MEMBERS_BAR");
+
+		if (isSet(membersCount)) {
+			AssertTextEquals(
+				locator1 = "ACInterests#INTEREST_SEGMENT_MEMBERS_COUNT",
+				value1 = "${membersCount}");
+		}
+
+		if (isSet(membersPercentage)) {
+			AssertTextEquals(
+				locator1 = "ACInterests#INTEREST_ACTIVE_MEMBERS_PERCENTAGE",
+				value1 = "${membersPercentage}");
+		}
+	}
+
+	macro viewInterestPage {
+		var key_pageName = "${pageName}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#PAGE_NAME",
+			value1 = "${pageName}");
+
+		if (isSet(pageUrl)) {
+			AssertTextEquals(
+				locator1 = "ACInterests#PAGE_URL",
+				value1 = "${pageUrl}");
+		}
+
+		if (isSet(pageViews)) {
+			AssertTextEquals(
+				locator1 = "ACInterests#PAGE_VIEWS",
+				value1 = "${pageViews}");
+		}
+	}
+
 	macro viewInterests {
 		var key_interestName = "${interestName}";
 
 		AssertTextEquals(
 			locator1 = "ACInterests#INTERESTS_TABLE",
 			value1 = "${interestName}");
+	}
+
+	macro viewInterestUser {
+		var key_userName = "${userName}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#USER_NAME",
+			value1 = "${userName}");
+
+		if (isSet(userEmailAddress)) {
+			AssertTextEquals(
+				locator1 = "ACInterests#USER_EMAIL_ADDRESS",
+				value1 = "${userEmailAddress}");
+		}
+
+		if (isSet(userAccount)) {
+			AssertTextEquals(
+				locator1 = "ACInterests#USER_ACCOUNT",
+				value1 = "${userAccount}");
+		}
 	}
 
 }

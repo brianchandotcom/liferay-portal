@@ -5,8 +5,8 @@
 				{
 					"dataType": "string",
 					"defaultValue": "solid",
-					"label": "style",
-					"name": "buttonStyle",
+					"label": "type",
+					"name": "type",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
@@ -32,8 +32,8 @@
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "type",
-					"name": "buttonType",
+					"label": "variant",
+					"name": "variant",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [

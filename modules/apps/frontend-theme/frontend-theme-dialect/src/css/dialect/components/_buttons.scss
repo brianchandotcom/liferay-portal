@@ -55,10 +55,9 @@
 
 // Solid & Rounded
 
-.btn,
 .btn-rounded,
 .btn-solid {
-	&.btn-primary {
+	&.btn-variant-primary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-primary-active};
 			--btn-active-border-color: #{$action-primary-active};
@@ -81,7 +80,7 @@
 		}
 	}
 
-	&.btn-secondary {
+	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-secondary-active};
 			--btn-active-border-color: #{$action-secondary-active};
@@ -104,7 +103,7 @@
 		}
 	}
 
-	&.btn-neutral {
+	&.btn-variant-neutral {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-neutral-active};
 			--btn-active-border-color: #{$action-neutral-active};
@@ -156,15 +155,15 @@
 // Ghost
 
 .btn-ghost {
-	&.btn-primary,
-	&.btn-secondary,
-	&.btn-neutral {
+	&.btn-variant-primary,
+	&.btn-variant-secondary,
+	&.btn-variant-neutral {
 		&.btn-inverted {
 			--btn-default-background-color: transparent;
 		}
 	}
 
-	&.btn-primary {
+	&.btn-variant-primary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-primary-inverted};
 			--btn-active-border-color: #{$action-primary-active};
@@ -192,7 +191,7 @@
 		}
 	}
 
-	&.btn-secondary {
+	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-secondary-inverted};
 			--btn-active-border-color: #{$action-secondary-active};
@@ -220,7 +219,7 @@
 		}
 	}
 
-	&.btn-neutral {
+	&.btn-variant-neutral {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-neutral-inverted};
 			--btn-active-border-color: #{$action-neutral-active};
@@ -252,21 +251,19 @@
 // Borderless
 
 .btn-borderless {
-	&:not(.alert-btn):not(.dropdown-item) {
-		--btn-active-background-color: transparent;
-		--btn-default-background-color: transparent;
-		--btn-default-border-color: transparent;
-		--btn-disabled-background-color: transparent;
-		--btn-disabled-border-color: transparent;
-		--btn-focus-background-color: transparent;
-		--btn-focus-border-color: transparent;
+	--btn-active-background-color: transparent;
+	--btn-default-background-color: transparent;
+	--btn-default-border-color: transparent;
+	--btn-disabled-background-color: transparent;
+	--btn-disabled-border-color: transparent;
+	--btn-focus-background-color: transparent;
+	--btn-focus-border-color: transparent;
 
-		&:not(.btn-inverted) {
-			--btn-hover-background-color: transparent;
-		}
+	&:not(.btn-inverted) {
+		--btn-hover-background-color: transparent;
 	}
 
-	&.btn-primary {
+	&.btn-variant-primary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-primary-inverted};
 			--btn-active-border-color: #{$action-primary-active};
@@ -288,7 +285,7 @@
 		}
 	}
 
-	&.btn-secondary {
+	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-secondary-inverted};
 			--btn-active-border-color: #{$action-secondary-active};
@@ -310,7 +307,7 @@
 		}
 	}
 
-	&.btn-neutral {
+	&.btn-variant-neutral {
 		&:not(.btn-inverted) {
 			--btn-active-background-color: #{$action-neutral-inverted};
 			--btn-active-border-color: #{$action-neutral-active};
@@ -338,15 +335,15 @@
 .btn-rounded {
 	border-radius: $rounded-pill;
 
-	&.btn-primary {
+	&.btn-variant-primary {
 		box-shadow: $elevation-tight-4 $action-primary-disabled;
 	}
 
-	&.btn-secondary {
+	&.btn-variant-secondary {
 		box-shadow: $elevation-tight-4 $action-secondary-disabled;
 	}
 
-	&.btn-neutral {
+	&.btn-variant-neutral {
 		box-shadow: $elevation-tight-4 $action-neutral-disabled;
 	}
 }
@@ -357,4 +354,18 @@
 	align-items: center;
 	display: flex;
 	justify-content: center;
+}
+
+// Defaults
+
+.btn-primary {
+	@extend .btn-solid, .btn-variant-primary, :not(.btn-inverted);
+}
+
+.btn-secondary {
+	@extend .btn-ghost, .btn-variant-neutral, :not(.btn-inverted);
+}
+
+.btn-tertiary {
+	@extend .btn-borderless, .btn-variant-neutral, :not(.btn-inverted);
 }

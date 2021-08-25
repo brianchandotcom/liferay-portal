@@ -27,10 +27,6 @@ definition {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
 	}
 
 	tearDown {

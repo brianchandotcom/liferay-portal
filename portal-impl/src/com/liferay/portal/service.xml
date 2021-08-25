@@ -765,11 +765,6 @@
 			<finder-column name="privateLayout" />
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="parentLayoutId" />
 		</finder>
-		<finder name="G_P_P_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="parentLayoutId" />
-		</finder>
 		<finder name="G_P_T" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
@@ -795,6 +790,12 @@
 			<finder-column name="privateLayout" />
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="parentLayoutId" />
 			<finder-column name="hidden" />
+		</finder>
+		<finder name="G_P_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="parentLayoutId" />
+			<finder-column name="system" />
 		</finder>
 		<finder name="G_P_P_LteP" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />

@@ -546,13 +546,13 @@ definition {
 
 		}
 
-		task ("Hide blogs from topper options") {
+		task ("Hide Blogs from topper options") {
 			PageEditor.clickHideFragment(fragmentName = "Blogs");
 		}
-		task ("Hide button fragment from fragment options") {
+		task ("Hide Button fragment from fragment options") {
 			PageEditor.clickHideFragmentViaPageStyles(fragmentName = "Button");
 		}
-		task ("Hide language fragment from the sidebar fragment tree") {
+		task ("Hide Heading fragment from the sidebar fragment tree") {
 			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "Heading");
 		}
 

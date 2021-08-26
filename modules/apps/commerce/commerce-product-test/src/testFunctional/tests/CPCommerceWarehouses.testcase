@@ -611,16 +611,10 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (!(IsElementPresent(
-					key_specifiedCollapse = "Geolocation",
-					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
 			Click(
-				key_contentType = "Geolocation",
-				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
-
-			WaitForElementPresent(
-				key_specifiedCollapse = "Geolocation",
-				locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN");
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
+				key_accordionTitle = "geolocation");
 		}
 
 		Type(
@@ -637,16 +631,10 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
 
-		if (!(IsElementPresent(
-					key_specifiedCollapse = "Address",
-					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
 			Click(
-				key_contentType = "Address",
-				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
-
-			WaitForElementPresent(
-				key_specifiedCollapse = "Address",
-				locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN");
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
+				key_accordionTitle = "address");
 		}
 
 		Type(
@@ -702,16 +690,10 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if (!(IsElementPresent(
-					key_specifiedCollapse = "Address",
-					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
 			Click(
-				key_contentType = "Address",
-				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
-
-			WaitForElementPresent(
-				key_specifiedCollapse = "Address",
-				locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN");
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
+				key_accordionTitle = "address");
 		}
 
 		AssertTextEquals(
@@ -885,13 +867,10 @@ definition {
 			key_metadataSetName = "Italy",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		if (!(IsElementPresent(
-					key_specifiedCollapse = "Channels",
-					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
 			Click(
-				key_contentType = "Channels",
-				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
-			Pause(locator1 = "1000");
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
+				key_accordionTitle = "channels");
 		}
 
 		Uncheck.uncheckToggleSwitch(
@@ -904,13 +883,10 @@ definition {
 			key_metadataSetName = "United States - Northeast",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		if (!(IsElementPresent(
-					key_specifiedCollapse = "Channels",
-					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
 			Click(
-				key_contentType = "Channels",
-				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
-			Pause(locator1 = "1000");
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
+				key_accordionTitle = "channels");
 		}
 
 		Uncheck.uncheckToggleSwitch(
@@ -1098,13 +1074,10 @@ definition {
 			key_itemName = "Italy",
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
-		if (!(IsElementPresent( specifiedCollapse = "Channels",
-					locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
 			Click(
-				key_contentType = "Channels",
-				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
-
-			Pause(locator1 = "1000");
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
+				key_accordionTitle = "channels");
 		}
 
 		Button.clickSave();
@@ -1191,7 +1164,11 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		Click(locator1 = "CommerceEntry#WAREHOUSE_GEOLOCATION");
+		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
+			Click(
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
+				key_accordionTitle = "geolocation");
+		}
 
 		Type(
 			key_fieldLabel = "Latitude",

@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>PENDING_ORDERS_ORDER_ID</td>
-	<td>//dt[contains(text(),'Order ID')]/..//dd</td>
+	<td>//dt[contains(text(),'Order Id')]/..//dd</td>
 	<td></td>
 </tr>
 <tr>

@@ -18,6 +18,21 @@ definition {
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}
 
+	macro selectInterval {
+		if (isSet(cardName)) {
+			Click(
+				interval = "${interval}",
+				key_cardTitle = "${cardName}",
+				locator1 = "ACCards#INTERVAL_OPTION_IN_SPECIFIC_CARD");
+		}
+
+		else {
+			Click(
+				interval = "${interval}",
+				locator1 = "ACCards#INTERVAL_OPTION");
+		}
+	}
+
 	macro viewCards {
 		var key_cardTitle = "${cardTitle}";
 

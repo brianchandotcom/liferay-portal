@@ -29,6 +29,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -60,6 +62,23 @@ public class WorkflowInstanceResourceTest
 
 			_assertNoSuchInstanceLoggingEvents(logCapture, 2);
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetWorkflowInstance() throws Exception {
+		WorkflowInstance postWorkflowInstance =
+			testGetWorkflowInstance_addWorkflowInstance();
+
+		WorkflowInstance getWorkflowInstance =
+			workflowInstanceResource.getWorkflowInstance(
+				postWorkflowInstance.getId());
+
+		assertEquals(postWorkflowInstance, getWorkflowInstance);
+		assertValid(getWorkflowInstance);
+		Assert.assertThat(
+			new String[] {"review"},
+			CoreMatchers.is(getWorkflowInstance.getCurrentNodeNames()));
 	}
 
 	@Override

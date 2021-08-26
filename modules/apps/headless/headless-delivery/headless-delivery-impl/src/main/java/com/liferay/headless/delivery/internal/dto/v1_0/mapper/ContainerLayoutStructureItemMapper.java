@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappe
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValueUtil;
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
+import com.liferay.layout.page.template.util.ContentDisplayConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
 import com.liferay.layout.page.template.util.PaddingConverter;
@@ -200,7 +201,8 @@ public class ContainerLayoutStructureItemMapper
 						}
 
 						return ContentDisplay.create(
-							StringUtil.upperCaseFirstLetter(contentDisplay));
+							ContentDisplayConverter.convertToExternalValue(
+								contentDisplay));
 					});
 				setMarginBottom(
 					() -> {

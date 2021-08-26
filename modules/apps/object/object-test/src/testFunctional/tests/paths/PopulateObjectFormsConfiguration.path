@@ -110,6 +110,11 @@
 		<td>//button[@label='${key_fieldName}']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>GO_TO_FORM_FIELD</td>
+		<td>//label[contains(.,'${key_formFieldName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

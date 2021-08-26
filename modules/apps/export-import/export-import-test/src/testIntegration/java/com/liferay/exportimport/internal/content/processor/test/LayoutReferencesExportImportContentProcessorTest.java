@@ -101,9 +101,11 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
 		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
@@ -122,9 +124,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -143,11 +146,11 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Group exportGroup = GroupTestUtil.addGroup();
 
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
 		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
-
-		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -163,11 +166,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -183,12 +187,14 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
-		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -204,11 +210,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -226,12 +233,14 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
-		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -247,9 +256,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			exportLayout.getFriendlyURL(),
@@ -263,9 +273,10 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
@@ -281,11 +292,11 @@ public class LayoutReferencesExportImportContentProcessorTest {
 
 		Group exportGroup = GroupTestUtil.addGroup();
 
+		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
 		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
-
-		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
 
 		Assert.assertEquals(
 			exportLayout.getFriendlyURL(),
@@ -299,11 +310,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, true);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -321,11 +333,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -341,12 +354,14 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
-		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -391,11 +406,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, true);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -413,12 +429,14 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, true);
-		GroupTestUtil.addLayoutSetVirtualHost(importGroup, true);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, true);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, true) +
@@ -434,11 +452,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			_getCompanyHostPortalURL(importGroup) +
@@ -456,12 +475,14 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
-		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Assert.assertEquals(
 			_getGroupVirtualHostPortalURL(importGroup, false) +
@@ -477,11 +498,12 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
 
 		Assert.assertEquals(
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
@@ -495,12 +517,14 @@ public class LayoutReferencesExportImportContentProcessorTest {
 		throws Exception {
 
 		Group exportGroup = GroupTestUtil.addGroup();
-		Group importGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
-		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
 
 		Assert.assertEquals(
 			exportLayout.getFriendlyURL(),

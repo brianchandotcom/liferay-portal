@@ -17,7 +17,10 @@ package com.liferay.layout.internal.search.spi.model.index.contributor;
 import com.liferay.layout.internal.search.util.LayoutCrawler;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -84,8 +87,22 @@ public class LayoutModelDocumentContributor
 			layout.getGroupId());
 
 		for (Locale locale : locales) {
-			String content = _html.stripHtml(
-				_getWrapper(_layoutCrawler.getLayoutContent(layout, locale)));
+			String content = StringPool.BLANK;
+
+			try {
+				content = _layoutCrawler.getLayoutContent(layout, locale);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to get layout content", exception);
+				}
+			}
+
+			if (Validator.isNull(content)) {
+				continue;
+			}
+
+			content = _html.stripHtml(_getWrapper(content));
 
 			if (Validator.isNull(content)) {
 				continue;
@@ -129,6 +146,9 @@ public class LayoutModelDocumentContributor
 	}
 
 	private static final String _WRAPPER_ELEMENT = "id=\"wrapper\">";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutModelDocumentContributor.class);
 
 	@Reference
 	private Html _html;

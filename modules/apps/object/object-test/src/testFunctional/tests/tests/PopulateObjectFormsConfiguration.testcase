@@ -61,8 +61,6 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Date type and view its entries"
 	@priority = "4"
 	test CanMapDateTypeAndViewEntries {
-		property portal.acceptance = "true";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

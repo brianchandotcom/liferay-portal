@@ -520,6 +520,11 @@ AUI.add(
 					value: 0,
 				},
 
+				hasMenuItems: {
+					setter: A.DataType.Boolean.parse,
+					value: true,
+				},
+
 				manageable: {
 					setter: A.DataType.Boolean.parse,
 					value: true,

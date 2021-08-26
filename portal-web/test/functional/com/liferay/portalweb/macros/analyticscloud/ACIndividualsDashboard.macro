@@ -67,11 +67,21 @@ definition {
 	}
 
 	macro goToVisitedPageOverviewViaIndividualActivity {
+		if (!(isSet(itemIndex))) {
+			var itemIndex = "1";
+		}
+
 		Click(
+			index = "${itemIndex}",
 			itemName = "${itemName}",
 			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM");
 
+		if (!(isSet(pageIndex))) {
+			var pageIndex = "1";
+		}
+
 		Click(
+			index = "${pageIndex}",
 			itemName = "${itemName}",
 			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM_NESTED",
 			pageName = "${pageName}");

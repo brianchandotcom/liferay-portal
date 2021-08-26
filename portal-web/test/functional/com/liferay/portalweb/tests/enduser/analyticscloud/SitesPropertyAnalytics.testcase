@@ -167,4 +167,32 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8332 | Test Summary: Assert Site Metrics select Visitors card tab"
+	@priority = "3"
+	test AssertSiteMetricsSelectUniqueVisitorsCardTab {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview tab on Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Overview");
+		}
+
+		task ("Navigate to the Unique Visitors tab") {
+			ACNavigation.switchTabInCard(tabName = "Unique Visitors");
+		}
+
+		task ("View the Unique Visitors tab is active") {
+			ACNavigation.viewActiveSwitchTabInCard(tabName = "Unique Visitors");
+		}
+	}
+
 }

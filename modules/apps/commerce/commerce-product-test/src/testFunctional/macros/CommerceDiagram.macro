@@ -16,4 +16,12 @@ definition {
 
 		CommerceDiagram.useMinusButton(key_list = "${key_list}");
     }
+
+    macro usePreDefinedZoom {
+        //Use Pre-defined zoom values
+
+        CommerceDiagram.useResetZoom();
+
+        CommerceDiagram.usePreDefinedZoomValues(key_list = "${key_list}");
+    }
 }

@@ -458,6 +458,14 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"4.3.4", "4.3.5", new DDMTemplateVersionUpgradeProcess());
+
+		registry.register(
+			"4.3.5", "5.0.0",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_0_0.
+				PollsMigrationToFormsUpgradeProcess(
+					ddmFormLayoutSerializer, ddmFormSerializer,
+					ddmFormValuesSerializer, _resourceActionLocalService,
+					_resourcePermissionLocalService));
 	}
 
 	@Activate

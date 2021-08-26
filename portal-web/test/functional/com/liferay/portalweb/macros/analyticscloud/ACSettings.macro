@@ -77,6 +77,37 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
+	macro addSalesforceAndCancel {
+		var key_salesforceName = "${salesforceName}";
+		var key_consumerKey = "${consumerKey}";
+		var key_consumerSecret = "${consumerSecret}";
+
+		ACSettings.clickGenericAddOrConfirmationButton();
+
+		Click(
+			key_sourceType = "Salesforce",
+			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
+
+		Type(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${key_salesforceName}");
+
+		Type(
+			key_text = "Consumer Key/Client ID",
+			locator1 = "TextInput#ANY",
+			value1 = "${key_consumerKey}");
+
+		Type(
+			key_text = "Consumer Secret/Client Secret",
+			locator1 = "TextInput#ANY",
+			value1 = "${key_consumerSecret}");
+
+		ACNavigation.clickCancelButton();
+
+		Button.click(button = "Leave Page");
+	}
+
 	macro addUser {
 		Click(locator1 = "ACSettings#INVITE_USERS_BUTTON");
 

@@ -33,14 +33,6 @@ definition {
 			consumerSecret = "AC Test",
 			salesforceName = "AC Test");
 
-
-
-
-
-
-
-			
-
 		AssertElementNotPresent(
 			itemName = "AC Test",
 			locator1 = "ACSettings#ITEM_ON_LIST");

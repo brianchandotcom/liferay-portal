@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.portlet.PortletRequest;
 
@@ -104,39 +105,36 @@ public class SessionMessages {
 	}
 
 	public static void add(HttpSession session, String key) {
-		Map<String, Object> map = _getMap(session, _CLASS_NAME, true);
+		_updateMap(
+			session, _CLASS_NAME, true,
+			map -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Adding key " + key);
+				}
 
-		if (map == null) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Adding key " + key);
-		}
-
-		map.put(key, key);
+				map.put(key, key);
+			});
 	}
 
 	public static void add(HttpSession session, String key, Object value) {
-		Map<String, Object> map = _getMap(session, _CLASS_NAME, true);
+		_updateMap(
+			session, _CLASS_NAME, true,
+			map -> {
+				if (_log.isDebugEnabled()) {
+					Exception exception = null;
 
-		if (map == null) {
-			return;
-		}
+					if (value instanceof Exception) {
+						exception = (Exception)value;
+					}
 
-		if (_log.isDebugEnabled()) {
-			Exception exception = null;
+					_log.debug(
+						StringBundler.concat(
+							"Adding key ", key, " with value ", value),
+						exception);
+				}
 
-			if (value instanceof Exception) {
-				exception = (Exception)value;
-			}
-
-			_log.debug(
-				StringBundler.concat("Adding key ", key, " with value ", value),
-				exception);
-		}
-
-		map.put(key, value);
+				map.put(key, value);
+			});
 	}
 
 	public static void add(PortletRequest portletRequest, Class<?> clazz) {
@@ -150,46 +148,43 @@ public class SessionMessages {
 	}
 
 	public static void add(PortletRequest portletRequest, String key) {
-		Map<String, Object> map = _getMap(portletRequest, true);
+		_updateMap(
+			portletRequest, true,
+			map -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Adding key ", key, " to portlet ",
+							portletRequest.getWindowID()));
+				}
 
-		if (map == null) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Adding key ", key, " to portlet ",
-					portletRequest.getWindowID()));
-		}
-
-		map.put(key, key);
+				map.put(key, key);
+			});
 	}
 
 	public static void add(
 		PortletRequest portletRequest, String key, Object value) {
 
-		Map<String, Object> map = _getMap(portletRequest, true);
+		_updateMap(
+			portletRequest, true,
+			map -> {
+				if (_log.isDebugEnabled()) {
+					Exception exception = null;
 
-		if (map == null) {
-			return;
-		}
+					if (value instanceof Exception) {
+						exception = (Exception)value;
+					}
 
-		if (_log.isDebugEnabled()) {
-			Exception exception = null;
+					_log.debug(
+						StringBundler.concat(
+							"Adding key ", key, " to portlet ",
+							portletRequest.getWindowID(), " with value ",
+							value),
+						exception);
+				}
 
-			if (value instanceof Exception) {
-				exception = (Exception)value;
-			}
-
-			_log.debug(
-				StringBundler.concat(
-					"Adding key ", key, " to portlet ",
-					portletRequest.getWindowID(), " with value ", value),
-				exception);
-		}
-
-		map.put(key, value);
+				map.put(key, value);
+			});
 	}
 
 	public static void clear(HttpServletRequest httpServletRequest) {
@@ -197,19 +192,11 @@ public class SessionMessages {
 	}
 
 	public static void clear(HttpSession session) {
-		Map<String, Object> map = _getMap(session, _CLASS_NAME, false);
-
-		if (map != null) {
-			map.clear();
-		}
+		_updateMap(session, _CLASS_NAME, false, Map::clear);
 	}
 
 	public static void clear(PortletRequest portletRequest) {
-		Map<String, Object> map = _getMap(portletRequest, false);
-
-		if (map != null) {
-			map.clear();
-		}
+		_updateMap(portletRequest, false, Map::clear);
 	}
 
 	public static boolean contains(
@@ -427,14 +414,9 @@ public class SessionMessages {
 	public static void remove(
 		HttpServletRequest httpServletRequest, Class<?> clazz) {
 
-		Map<String, Object> map = _getMap(
-			_getPortalSession(httpServletRequest), _CLASS_NAME, true);
-
-		if (map == null) {
-			return;
-		}
-
-		map.remove(clazz.getName());
+		_updateMap(
+			_getPortalSession(httpServletRequest), _CLASS_NAME, true,
+			map -> map.remove(clazz.getName()));
 	}
 
 	public static int size(HttpServletRequest httpServletRequest) {
@@ -529,6 +511,46 @@ public class SessionMessages {
 
 		return _getPortalSession(
 			PortalUtil.getHttpServletRequest(portletRequest));
+	}
+
+	private static void _updateMap(
+		HttpSession session, String key, boolean createIfAbsent,
+		Consumer<Map<String, Object>> consumer) {
+
+		if (session == null) {
+			return;
+		}
+
+		try {
+			Map<String, Object> map = (Map<String, Object>)session.getAttribute(
+				key);
+
+			if (map == null) {
+				if (!createIfAbsent) {
+					return;
+				}
+
+				map = new SessionMessagesMap();
+			}
+
+			consumer.accept(map);
+
+			session.setAttribute(key, map);
+		}
+		catch (IllegalStateException illegalStateException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalStateException, illegalStateException);
+			}
+		}
+	}
+
+	private static void _updateMap(
+		PortletRequest portletRequest, boolean createIfAbsent,
+		Consumer<Map<String, Object>> consumer) {
+
+		_updateMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest),
+			createIfAbsent, consumer);
 	}
 
 	private static final String _CLASS_NAME = SessionMessages.class.getName();

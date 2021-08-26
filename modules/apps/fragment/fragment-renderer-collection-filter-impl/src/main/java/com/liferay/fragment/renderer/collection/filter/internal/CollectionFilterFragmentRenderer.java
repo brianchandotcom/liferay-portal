@@ -25,6 +25,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -106,10 +107,10 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		return (String)
+		return GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
 				fragmentEntryLink.getEditableValues(), "filterKey",
-				FragmentConfigurationFieldDataType.STRING);
+				FragmentConfigurationFieldDataType.STRING));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

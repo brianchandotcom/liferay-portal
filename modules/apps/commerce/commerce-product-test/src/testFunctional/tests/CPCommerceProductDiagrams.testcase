@@ -202,4 +202,42 @@ definition {
 			locator1 = "CommerceEntry#VERIFY_IMAGE");
 	}
 
+	@description = "This is a test for COMMERCE-7035. UseZoomAndDragBackground"
+	@priority = "3"
+	test UseZoomAndDragBackground { 
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Diagram T-Shirt",
+			productType = "Diagram");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+		CommerceProductImages.addDiagramImages(
+			imageTitles = "Black",
+			productType = "Diagram");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		CommerceDiagram.usePlusZoom(key_list = "1,2,3");
+
+		CommerceDiagram.useMinusZoom(key_list = "1,2,3,4");
+
+		CommerceDiagram.usePreDefinedZoom(key_list = "50%,75%,100%,125%,150%,175%,200%");
+
+		CommerceDiagram.useDragOnBackground(
+			image_name = "Commerce_Black",
+			position = "300,0");
+
+		CommerceDiagram.useDragOnBackgroundByDirectionController(
+            key_list = "1,2,3,4,5",
+            direction = "left");
+	}
+
 }

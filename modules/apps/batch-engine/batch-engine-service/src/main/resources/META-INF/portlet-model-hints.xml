@@ -19,7 +19,9 @@
 		<field name="errorMessage" type="String">
 			<hint name="max-length">1000</hint>
 		</field>
-		<field name="fieldNames" type="String" />
+		<field name="fieldNames" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
 		<field name="executeStatus" type="String" />
 		<field name="parameters" type="Map" />
 		<field name="startTime" type="Date" />

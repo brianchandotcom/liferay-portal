@@ -406,13 +406,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCORDION_COLLAPSED</td>
+	<td>//fieldset[@id='${key_accordionTitle}']/a[contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLE_SELECT_BUTTON</td>
 	<td>//div/h3[contains(.,'${key_roleType}')]//..//button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACCORDION_TITLE</td>
-	<td>//fieldset//div/a[contains(.,'${key_accordionTitle}')]</td>
+	<td>//fieldset[@id='${key_accordionTitle}']/a</td>
 	<td></td>
 </tr>
 <tr>

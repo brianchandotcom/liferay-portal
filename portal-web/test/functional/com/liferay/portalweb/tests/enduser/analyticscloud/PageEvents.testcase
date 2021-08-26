@@ -395,7 +395,7 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8802 | Test Summary: Check all page events can be sent again if the page is refreshed/hard refreshed"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8802 | Test Summary: Check all page events are triggered over again after a page refresh"
 	@priority = "4"
 	test CheckPageEventsTriggeredAgainAfterRefresh {
 		property proxy.server.enabled = "true";

@@ -16,7 +16,10 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
+import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.page.template.util.ShadowConverter;
@@ -105,6 +108,14 @@ public class ContainerLayoutStructureItemImporter
 				(Map<String, Object>)definitionMap.get("layout");
 
 			if (containerLayout != null) {
+				String align = String.valueOf(
+					containerLayout.getOrDefault("align", StringPool.BLANK));
+
+				if (Validator.isNotNull(align)) {
+					containerStyledLayoutStructureItem.setAlign(
+						AlignConverter.convertToInternalValue(align));
+				}
+
 				stylesJSONObject.put(
 					"borderColor", (String)containerLayout.get("borderColor")
 				).put(
@@ -119,6 +130,24 @@ public class ContainerLayoutStructureItemImporter
 
 				if (Validator.isNotNull(borderWidth)) {
 					stylesJSONObject.put("borderWidth", borderWidth);
+				}
+
+				String contentDisplay = String.valueOf(
+					containerLayout.getOrDefault(
+						"contentDisplay", StringPool.BLANK));
+
+				if (Validator.isNotNull(contentDisplay)) {
+					containerStyledLayoutStructureItem.setContentDisplay(
+						ContentDisplayConverter.convertToInternalValue(
+							contentDisplay));
+				}
+
+				String justify = String.valueOf(
+					containerLayout.getOrDefault("justify", StringPool.BLANK));
+
+				if (Validator.isNotNull(justify)) {
+					containerStyledLayoutStructureItem.setJustify(
+						JustifyConverter.convertToInternalValue(justify));
 				}
 
 				String marginBottom = MarginConverter.convertToInternalValue(

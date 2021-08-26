@@ -239,6 +239,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8905 | Test Summary: As a Business User, I should be able to see the last 5 activity entries of an individual when set pagination to 5"
 	@priority = "3"
 	test ShowLast5ActivitiesOnIndividualsActivitiesChartWhenSetPaginationTo5 {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-8951
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

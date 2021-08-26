@@ -24,8 +24,6 @@ definition {
 		}
 	}
 
-	@description = "Ignore until LPS-135570 is fixed."
-	@ignore = "true"
 	@priority = "4"
 	test CanModuleBeShutdownDuringReplicateSession {
 		property cluster.session.replicated = "true";
@@ -86,8 +84,6 @@ definition {
 		}
 	}
 
-	@description = "Ignore until LPS-135570 is fixed."
-	@ignore = "true"
 	@priority = "4"
 	test CanSessionReplicateBetweenNodes {
 		property cluster.session.replicated = "true";

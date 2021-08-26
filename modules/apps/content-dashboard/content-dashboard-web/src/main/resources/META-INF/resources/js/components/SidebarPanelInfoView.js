@@ -93,13 +93,15 @@ const SidebarPanelInfoView = ({
 	];
 
 	const documentIsAFile =
-		subType === 'Basic Document' &&
+		subType.toLowerCase() === 'basic document' &&
 		!!downloadURL &&
 		!!extension &&
 		parseInt(size?.split(' ')[0], 10) > 0;
 
 	const documentIsAShortcut =
-		subType.includes('Shortcut') && !!downloadURL && !!previewImageURL;
+		subType.toLowerCase().includes('shortcut') &&
+		!!downloadURL &&
+		!!previewImageURL;
 
 	const isADocument = documentIsAFile || documentIsAShortcut;
 

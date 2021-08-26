@@ -18,6 +18,7 @@ import com.liferay.custom.elements.exception.CustomElementsSourceHTMLElementName
 import com.liferay.custom.elements.exception.DuplicateCustomElementsSourceException;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.base.CustomElementsSourceLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -64,9 +64,6 @@ public class CustomElementsSourceLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
-
-		htmlElementName = StringUtil.toLowerCase(
-			StringUtil.trim(htmlElementName));
 
 		_validate(0, user.getCompanyId(), htmlElementName);
 
@@ -149,9 +146,6 @@ public class CustomElementsSourceLocalServiceImpl
 			customElementsSourcePersistence.findByPrimaryKey(
 				customElementsSourceId);
 
-		htmlElementName = StringUtil.toLowerCase(
-			StringUtil.trim(htmlElementName));
-
 		_validate(
 			customElementsSourceId, customElementsSource.getCompanyId(),
 			htmlElementName);
@@ -228,6 +222,16 @@ public class CustomElementsSourceLocalServiceImpl
 		return customElementsSources;
 	}
 
+	private boolean _isValidHTMLElementNameChar(char c) {
+		if ((Validator.isChar(c) && Character.isLowerCase(c)) ||
+			(c == CharPool.DASH)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _validate(
 			long customElementsSourceId, long companyId, String htmlElementName)
 		throws PortalException {
@@ -239,11 +243,30 @@ public class CustomElementsSourceLocalServiceImpl
 
 		char[] htmlElementNameCharArray = htmlElementName.toCharArray();
 
+		if (!Validator.isChar(htmlElementNameCharArray[0]) ||
+			!Character.isLowerCase(htmlElementNameCharArray[0])) {
+
+			throw new CustomElementsSourceHTMLElementNameException(
+				"HTML element name must start with a lowercase letter");
+		}
+
+		boolean dashFound = false;
+
 		for (char c : htmlElementNameCharArray) {
-			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
-				throw new CustomElementsSourceHTMLElementNameException(
-					"HTML element name must only contain letters and digits");
+			if (c == CharPool.DASH) {
+				dashFound = true;
 			}
+
+			if (!_isValidHTMLElementNameChar(c)) {
+				throw new CustomElementsSourceHTMLElementNameException(
+					"HTML element name must only contain lowercase letters " +
+						"or hyphens");
+			}
+		}
+
+		if (!dashFound) {
+			throw new CustomElementsSourceHTMLElementNameException(
+				"HTML element name must contain at least one hyphen");
 		}
 
 		CustomElementsSource customElementsSource =

@@ -37,7 +37,7 @@ renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(reques
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="customElementsSourceId" type="hidden" value="<%= customElementsSourceId %>" />
 
-		<liferay-ui:error exception="<%= CustomElementsSourceHTMLElementNameException.class %>" />
+		<liferay-ui:error exception="<%= CustomElementsSourceHTMLElementNameException.class %>" message="please-specify-a-valid-custom-element-name-as-html-element-name" />
 		<liferay-ui:error exception="<%= DuplicateCustomElementsSourceException.class %>" />
 
 		<aui:model-context bean="<%= customElementsSource %>" model="<%= CustomElementsSource.class %>" />
@@ -46,7 +46,7 @@ renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(reques
 			<aui:fieldset>
 				<aui:input name="name" />
 
-				<aui:input fieldParam="htmlElementName" name="HTMLElementName" />
+				<aui:input fieldParam="htmlElementName" helpMessage="html-element-name-help" name="HTMLElementName" />
 
 				<aui:input fieldParam="urls" helpMessage="urls-help" label="urls" name="URLs" type="textarea" />
 			</aui:fieldset>

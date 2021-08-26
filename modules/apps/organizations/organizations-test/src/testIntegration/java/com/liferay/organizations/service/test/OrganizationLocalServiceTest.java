@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -323,12 +324,36 @@ public class OrganizationLocalServiceTest {
 			_organizationLocalService.hasUserOrganization(
 				user.getUserId(), organization.getOrganizationId()));
 
+		BaseModelSearchResult<User> baseModelSearchResult =
+			_userLocalService.searchUsers(
+				user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+				LinkedHashMapBuilder.<String, Object>put(
+					"usersOrgs", Long.valueOf(organization.getOrganizationId())
+				).build(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new Sort("userId", false));
+
+		Assert.assertEquals(1, baseModelSearchResult.getLength());
+
+		List<User> users = baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(user, users.get(0));
+
 		_organizationLocalService.deleteUserOrganizationByEmailAddress(
 			user.getEmailAddress(), organization.getOrganizationId());
 
 		Assert.assertFalse(
 			_organizationLocalService.hasUserOrganization(
 				user.getUserId(), organization.getOrganizationId()));
+
+		baseModelSearchResult = _userLocalService.searchUsers(
+			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			LinkedHashMapBuilder.<String, Object>put(
+				"usersOrgs", Long.valueOf(organization.getOrganizationId())
+			).build(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new Sort("userId", false));
+
+		Assert.assertEquals(0, baseModelSearchResult.getLength());
 	}
 
 	@Test

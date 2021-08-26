@@ -95,12 +95,15 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _activePage;
 		}
 
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
 		_activePage = Math.max(
 			1,
 			Math.min(
 				getNumberOfPages(),
 				ParamUtil.getInteger(
-					_httpServletRequest,
+					originalHttpServletRequest,
 					PAGE_NUMBER_PARAM_PREFIX +
 						_collectionStyledLayoutStructureItem.getItemId(),
 					1)));
@@ -129,18 +132,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		if (Objects.equals(paginationType, PAGINATION_TYPE_NUMERIC) ||
 			Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE)) {
 
-			HttpServletRequest originalHttpServletRequest =
-				PortalUtil.getOriginalServletRequest(_httpServletRequest);
-
-			int currentPage = ParamUtil.getInteger(
-				originalHttpServletRequest,
-				PAGE_NUMBER_PARAM_PREFIX +
-					_collectionStyledLayoutStructureItem.getItemId());
-
-			if (currentPage < 1) {
-				currentPage = 1;
-			}
-
 			int numberOfItems =
 				_collectionStyledLayoutStructureItem.getNumberOfItems();
 
@@ -154,11 +145,13 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
 			}
 
+			int activePage = getActivePage();
+
 			end = Math.min(
-				Math.min(currentPage * numberOfItemsPerPage, numberOfItems),
+				Math.min(activePage * numberOfItemsPerPage, numberOfItems),
 				getCollectionCount());
 
-			start = (currentPage - 1) * numberOfItemsPerPage;
+			start = (activePage - 1) * numberOfItemsPerPage;
 		}
 
 		defaultLayoutListRetrieverContext.setPagination(

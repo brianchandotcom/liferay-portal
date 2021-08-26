@@ -168,6 +168,23 @@ definition {
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 	}
 
+	macro viewTimelineItem {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertVisible(
+			index = "${index}",
+			itemName = "${itemName}",
+			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM");
+
+		AssertVisible(
+			index = "${index}",
+			itemName = "${itemName}",
+			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM_SUBTITLE",
+			subtitle = "${visits}");
+	}
+
 	macro viewTotalActivities {
 		var key_userName = "${userName}";
 		var key_activitiesNumber = "${activitiesNumber}";

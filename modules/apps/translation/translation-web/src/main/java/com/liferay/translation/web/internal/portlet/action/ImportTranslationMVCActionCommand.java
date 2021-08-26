@@ -15,20 +15,20 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,7 +42,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exception.XLIFFFileException;
-import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
+import com.liferay.translation.service.TranslationEntryService;
+import com.liferay.translation.snapshot.TranslationSnapshot;
+import com.liferay.translation.snapshot.TranslationSnapshotProvider;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.io.IOException;
@@ -105,18 +107,18 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
 
-				InfoItemFieldValuesUpdater<Object> infoItemFieldValuesUpdater =
-					_infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemFieldValuesUpdater.class, className);
+				TranslationSnapshot translationSnapshot =
+					_translationSnapshotProvider.getTranslationSnapshot(
+						groupId, new InfoItemReference(className, classPK),
+						inputStream);
 
-				InfoItemFieldValues infoItemFieldValues =
-					_translationInfoItemFieldValuesImporter.
-						importInfoItemFieldValues(
-							groupId, new InfoItemReference(className, classPK),
-							inputStream);
-
-				infoItemFieldValuesUpdater.updateFromInfoItemFieldValues(
-					object, infoItemFieldValues);
+				_translationEntryService.addOrUpdateTranslationEntry(
+					groupId,
+					_language.getLanguageId(
+						translationSnapshot.getTargetLocale()),
+					new InfoItemReference(className, classPK),
+					translationSnapshot.getInfoItemFieldValues(),
+					ServiceContextFactory.getInstance(actionRequest));
 			}
 
 			String portletResource = ParamUtil.getString(
@@ -214,11 +216,16 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
-	private TranslationInfoItemFieldValuesImporter
-		_translationInfoItemFieldValuesImporter;
+	private TranslationEntryService _translationEntryService;
+
+	@Reference
+	private TranslationSnapshotProvider _translationSnapshotProvider;
 
 	@Reference
 	private TranslationURLProvider _translationURLProvider;

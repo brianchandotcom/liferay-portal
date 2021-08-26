@@ -351,7 +351,7 @@ definition {
 
 		Type(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_REDIRECT_URL",
-			value1 = "http://localhost:8080/c/portal/facebook_connect_oauth");
+			value1 = "https://localhost:8443/c/portal/facebook_connect_oauth");
 
 		PortletEntry.save();
 	}

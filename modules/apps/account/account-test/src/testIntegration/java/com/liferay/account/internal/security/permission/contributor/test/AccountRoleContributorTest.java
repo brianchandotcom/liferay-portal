@@ -85,6 +85,19 @@ public class AccountRoleContributorTest {
 	}
 
 	@Test
+	public void testNoRolesAssigned() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			user);
+
+		long[] roleIds = permissionChecker.getRoleIds(
+			user.getUserId(), TestPropsValues.getGroupId());
+
+		Assert.assertNotSame(PermissionChecker.DEFAULT_ROLE_IDS, roleIds);
+	}
+
+	@Test
 	public void testSelectedAccountPermission() throws Exception {
 		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);

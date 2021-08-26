@@ -113,10 +113,10 @@ public class CommercePriceListOrderTypeRelLocalServiceImpl
 
 	@Override
 	public CommercePriceListOrderTypeRel fetchCommercePriceListOrderTypeRel(
-		long commerceOrderTypeId, long commercePriceListId) {
+		long commercePriceListId, long commerceOrderTypeId) {
 
-		return commercePriceListOrderTypeRelPersistence.fetchByC_C(
-			commerceOrderTypeId, commercePriceListId);
+		return commercePriceListOrderTypeRelPersistence.fetchByCPI_COTI(
+			commercePriceListId, commerceOrderTypeId);
 	}
 
 	@Override

@@ -1343,6 +1343,39 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
 	}
 
+	@description = "This test searches for an address in the addresses tab of an account."
+	@priority = "3"
+	test CanSearchForAddressInAddressesTab {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Search Address",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Search Address");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		for (var searchTerm : list "Dalian,China,Liaoning,Liferay,116023") {
+			Search.searchCP(searchTerm = "${searchTerm}");
+
+			LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
+		}
+	}
+
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {

@@ -682,12 +682,12 @@ public class CommercePriceListOrderTypeRelUtil {
 	 * @return the matching commerce price list order type rel
 	 * @throws NoSuchPriceListOrderTypeRelException if a matching commerce price list order type rel could not be found
 	 */
-	public static CommercePriceListOrderTypeRel findByC_C(
+	public static CommercePriceListOrderTypeRel findByCPI_COTI(
 			long commercePriceListId, long commerceOrderTypeId)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListOrderTypeRelException {
 
-		return getPersistence().findByC_C(
+		return getPersistence().findByCPI_COTI(
 			commercePriceListId, commerceOrderTypeId);
 	}
 
@@ -698,10 +698,10 @@ public class CommercePriceListOrderTypeRelUtil {
 	 * @param commerceOrderTypeId the commerce order type ID
 	 * @return the matching commerce price list order type rel, or <code>null</code> if a matching commerce price list order type rel could not be found
 	 */
-	public static CommercePriceListOrderTypeRel fetchByC_C(
+	public static CommercePriceListOrderTypeRel fetchByCPI_COTI(
 		long commercePriceListId, long commerceOrderTypeId) {
 
-		return getPersistence().fetchByC_C(
+		return getPersistence().fetchByCPI_COTI(
 			commercePriceListId, commerceOrderTypeId);
 	}
 
@@ -713,11 +713,11 @@ public class CommercePriceListOrderTypeRelUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price list order type rel, or <code>null</code> if a matching commerce price list order type rel could not be found
 	 */
-	public static CommercePriceListOrderTypeRel fetchByC_C(
+	public static CommercePriceListOrderTypeRel fetchByCPI_COTI(
 		long commercePriceListId, long commerceOrderTypeId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_C(
+		return getPersistence().fetchByCPI_COTI(
 			commercePriceListId, commerceOrderTypeId, useFinderCache);
 	}
 
@@ -728,12 +728,12 @@ public class CommercePriceListOrderTypeRelUtil {
 	 * @param commerceOrderTypeId the commerce order type ID
 	 * @return the commerce price list order type rel that was removed
 	 */
-	public static CommercePriceListOrderTypeRel removeByC_C(
+	public static CommercePriceListOrderTypeRel removeByCPI_COTI(
 			long commercePriceListId, long commerceOrderTypeId)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListOrderTypeRelException {
 
-		return getPersistence().removeByC_C(
+		return getPersistence().removeByCPI_COTI(
 			commercePriceListId, commerceOrderTypeId);
 	}
 
@@ -744,10 +744,10 @@ public class CommercePriceListOrderTypeRelUtil {
 	 * @param commerceOrderTypeId the commerce order type ID
 	 * @return the number of matching commerce price list order type rels
 	 */
-	public static int countByC_C(
+	public static int countByCPI_COTI(
 		long commercePriceListId, long commerceOrderTypeId) {
 
-		return getPersistence().countByC_C(
+		return getPersistence().countByCPI_COTI(
 			commercePriceListId, commerceOrderTypeId);
 	}
 

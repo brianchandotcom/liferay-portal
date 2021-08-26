@@ -495,7 +495,7 @@ public interface CommercePriceListOrderTypeRelPersistence
 	 * @return the matching commerce price list order type rel
 	 * @throws NoSuchPriceListOrderTypeRelException if a matching commerce price list order type rel could not be found
 	 */
-	public CommercePriceListOrderTypeRel findByC_C(
+	public CommercePriceListOrderTypeRel findByCPI_COTI(
 			long commercePriceListId, long commerceOrderTypeId)
 		throws NoSuchPriceListOrderTypeRelException;
 
@@ -506,7 +506,7 @@ public interface CommercePriceListOrderTypeRelPersistence
 	 * @param commerceOrderTypeId the commerce order type ID
 	 * @return the matching commerce price list order type rel, or <code>null</code> if a matching commerce price list order type rel could not be found
 	 */
-	public CommercePriceListOrderTypeRel fetchByC_C(
+	public CommercePriceListOrderTypeRel fetchByCPI_COTI(
 		long commercePriceListId, long commerceOrderTypeId);
 
 	/**
@@ -517,7 +517,7 @@ public interface CommercePriceListOrderTypeRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price list order type rel, or <code>null</code> if a matching commerce price list order type rel could not be found
 	 */
-	public CommercePriceListOrderTypeRel fetchByC_C(
+	public CommercePriceListOrderTypeRel fetchByCPI_COTI(
 		long commercePriceListId, long commerceOrderTypeId,
 		boolean useFinderCache);
 
@@ -528,7 +528,7 @@ public interface CommercePriceListOrderTypeRelPersistence
 	 * @param commerceOrderTypeId the commerce order type ID
 	 * @return the commerce price list order type rel that was removed
 	 */
-	public CommercePriceListOrderTypeRel removeByC_C(
+	public CommercePriceListOrderTypeRel removeByCPI_COTI(
 			long commercePriceListId, long commerceOrderTypeId)
 		throws NoSuchPriceListOrderTypeRelException;
 
@@ -539,7 +539,8 @@ public interface CommercePriceListOrderTypeRelPersistence
 	 * @param commerceOrderTypeId the commerce order type ID
 	 * @return the number of matching commerce price list order type rels
 	 */
-	public int countByC_C(long commercePriceListId, long commerceOrderTypeId);
+	public int countByCPI_COTI(
+		long commercePriceListId, long commerceOrderTypeId);
 
 	/**
 	 * Caches the commerce price list order type rel in the entity cache if it is enabled.

@@ -219,7 +219,7 @@ public interface CommercePriceListOrderTypeRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceListOrderTypeRel fetchCommercePriceListOrderTypeRel(
-		long commerceOrderTypeId, long commercePriceListId);
+		long commercePriceListId, long commerceOrderTypeId);
 
 	/**
 	 * Returns the commerce price list order type rel with the matching UUID and company.

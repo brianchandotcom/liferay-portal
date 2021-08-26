@@ -277,11 +277,11 @@ public class CommercePriceListOrderTypeRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel
 		fetchCommercePriceListOrderTypeRel(
-			long commerceOrderTypeId, long commercePriceListId) {
+			long commercePriceListId, long commerceOrderTypeId) {
 
 		return _commercePriceListOrderTypeRelLocalService.
 			fetchCommercePriceListOrderTypeRel(
-				commerceOrderTypeId, commercePriceListId);
+				commercePriceListId, commerceOrderTypeId);
 	}
 
 	/**

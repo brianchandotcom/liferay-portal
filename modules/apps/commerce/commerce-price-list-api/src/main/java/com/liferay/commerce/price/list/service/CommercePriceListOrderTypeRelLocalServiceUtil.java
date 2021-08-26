@@ -249,10 +249,10 @@ public class CommercePriceListOrderTypeRelLocalServiceUtil {
 
 	public static CommercePriceListOrderTypeRel
 		fetchCommercePriceListOrderTypeRel(
-			long commerceOrderTypeId, long commercePriceListId) {
+			long commercePriceListId, long commerceOrderTypeId) {
 
 		return getService().fetchCommercePriceListOrderTypeRel(
-			commerceOrderTypeId, commercePriceListId);
+			commercePriceListId, commerceOrderTypeId);
 	}
 
 	/**

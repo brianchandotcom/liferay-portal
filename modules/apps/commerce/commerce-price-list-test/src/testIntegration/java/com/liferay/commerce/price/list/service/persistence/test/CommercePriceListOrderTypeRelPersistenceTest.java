@@ -233,11 +233,11 @@ public class CommercePriceListOrderTypeRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
+	public void testCountByCPI_COTI() throws Exception {
+		_persistence.countByCPI_COTI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C(0L, 0L);
+		_persistence.countByCPI_COTI(0L, 0L);
 	}
 
 	@Test

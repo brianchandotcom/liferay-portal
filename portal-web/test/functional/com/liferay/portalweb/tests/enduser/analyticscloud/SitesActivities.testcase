@@ -246,7 +246,7 @@ definition {
 
 			ACCards.viewCards(cardTitle = "${propertyName} Activities");
 
-			ACCards.clickFilterByDay();
+			ACCards.selectInterval(interval = "D");
 
 			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
 		}
@@ -292,7 +292,7 @@ definition {
 
 			ACCards.viewCards(cardTitle = "${propertyName} Activities");
 
-			ACCards.clickFilterByMonth();
+			ACCards.selectInterval(interval = "M");
 
 			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
 		}
@@ -338,7 +338,7 @@ definition {
 
 			ACCards.viewCards(cardTitle = "${propertyName} Activities");
 
-			ACCards.clickFilterByWeek();
+			ACCards.selectInterval(interval = "W");
 
 			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
 		}

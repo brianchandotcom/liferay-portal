@@ -190,7 +190,8 @@ const TreeFilter = ({
 				>
 					<div className="container p-0">
 						<p className="m-0">
-							{selectedMessage.count} Subtypes Selected
+							{selectedItemsCount}{' '}
+							{Liferay.Language.get('subtypes-selected')}
 						</p>
 					</div>
 				</ClayLayout.Container>

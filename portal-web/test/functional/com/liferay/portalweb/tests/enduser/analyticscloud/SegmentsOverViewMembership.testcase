@@ -38,51 +38,10 @@ definition {
 	test OrderDynamicSegmentMembershipPreview {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: members are not appearing
+		// AC Refactor: members are not appearing in correct order
 		// AC Refactor ticket: LRAC-8767
 
-		task ("Add 3 new users") {
-			for (var n : list "1,2,3") {
-				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = "user${n}@liferay.com");
-			}
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
-		task ("View the page as different users") {
-			for (var username : list "userea,user1") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
-		}
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -106,6 +65,57 @@ definition {
 			ACSegments.selectOperator(operator = "contains");
 
 			ACSegments.editTextCriterion(textInput = "user");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Add 3 new users in DXP") {
+			ACUtils.launchDXP();
+
+			for (var n : list "1,2,3") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "user1,user2,user3") {
+				var fullName = "${username} ${username}";
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				for (var n : list "1,2") {
+					Navigator.gotoSitePage(
+						pageName = "AC Page",
+						siteName = "Site Name");
+				}
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Open AC and view the segment") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
 		}
 
 		task ("View members in Preview mode and order by name descending") {
@@ -113,10 +123,12 @@ definition {
 
 			ACSegments.filterKnownSegmentMembersList();
 
-			for (var username : list "userfn userln,user1 user1,user2 user2,user3 user3") {
+			Pause(locator1 = "3000");
+
+			for (var username : list "user3 user3,user2 user2,user1 user1") {
 				ACSegments.viewKnownSegmentMembersSpecificOrder(username = "${username}");
 
-				// Fails here due to LRAC-8722, needs refactor after bug is fixed
+				// Fails here - the order of the members is not consistent
 
 			}
 

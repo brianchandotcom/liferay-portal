@@ -1,0 +1,123 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
+
+		ACUtils.createBlogsAndAddToPage();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8923 | Test Summary: Check vote is triggered when voting and check its properties"
+	@priority = "5"
+	test CheckVoteEventWhenVotingAndCheckProperties {
+		property proxy.server.enabled = "true";
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Get the Property ID in AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			Pause(locator1 = "10000");
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+		}
+
+		task ("Get the DXP Instance ID in AC") {
+			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("View the blog entry and rate it") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "This is the blog test for AC",
+				entryTitle = "Blogs AC Title");
+
+			Ratings.rateThumb(
+				blogRating = "true",
+				ratingResult = "Rate this as good");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("blogVOTE");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Get entryId of blog entry") {
+			var entryId = JSONBlog.getBlogEntryId(
+				entryTitle = "Blogs AC Title",
+				groupName = "Site Name");
+		}
+
+		task ("View the properties of blogVOTE event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "className",
+				value = "com.liferay.blogs.model.BlogsEntry");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "classPK",
+				value = "${entryId}");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "ratingType",
+				value = "thumbs");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Ratings",
+				eventId = "VOTE",
+				property = "score",
+				value = "1");
+		}
+
+		task ("View the request common properties value") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
+		}
+	}
+
+}

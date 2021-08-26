@@ -3,6 +3,12 @@ definition {
 	var formDescription = "Created Form Description";
 	var formName = "Created Form Name";
 
+	macro addForm {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
+
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_mvcRenderCommandName=%2Fadmin%2Fedit_form_instance&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_redirect=%2Fgroup%2Fguest%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_groupId=${groupId}");
+	}
+
 	macro deleteForm {
 		FormsAdmin.viewForm(
 			formDescription = "",

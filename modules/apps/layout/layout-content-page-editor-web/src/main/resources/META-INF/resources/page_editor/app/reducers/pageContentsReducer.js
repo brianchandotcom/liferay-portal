@@ -12,7 +12,11 @@
  * details.
  */
 
-import {UPDATE_PAGE_CONTENTS, UPDATE_PREVIEW_IMAGE} from '../actions/types';
+import {
+	UPDATE_COLLECTION_DISPLAY_COLLECTION,
+	UPDATE_PAGE_CONTENTS,
+	UPDATE_PREVIEW_IMAGE,
+} from '../actions/types';
 
 const INITIAL_STATE = [];
 
@@ -21,6 +25,7 @@ export default function pageContentsReducer(
 	action
 ) {
 	switch (action.type) {
+		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
 		case UPDATE_PAGE_CONTENTS:
 			return [...action.pageContents];
 

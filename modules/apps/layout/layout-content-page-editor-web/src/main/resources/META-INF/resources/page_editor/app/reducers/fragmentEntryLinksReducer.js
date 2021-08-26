@@ -21,6 +21,7 @@ import {
 	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
+	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
@@ -232,6 +233,22 @@ export default function fragmentEntryLinksReducer(
 				},
 			};
 		}
+
+		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
+			return {
+				...fragmentEntryLinks,
+				...Object.fromEntries(
+					action.fragmentEntryLinks.map((fragmentEntryLink) => [
+						fragmentEntryLink.fragmentEntryLinkId,
+						{
+							...fragmentEntryLinks[
+								fragmentEntryLink.fragmentEntryLinkId
+							],
+							...fragmentEntryLink,
+						},
+					])
+				),
+			};
 
 		case UPDATE_EDITABLE_VALUES:
 			return {

@@ -937,8 +937,8 @@ public class Layout implements Serializable {
 	@GraphQLName("Align")
 	public static enum Align {
 
-		CENTER("Center"), END("End"), NONE("None"), START("Start"),
-		STRETCH("Stretch");
+		BASELINE("Baseline"), CENTER("Center"), END("End"), NONE("None"),
+		START("Start"), STRETCH("Stretch");
 
 		@JsonCreator
 		public static Align create(String value) {
@@ -1053,7 +1053,7 @@ public class Layout implements Serializable {
 	@GraphQLName("ContentDisplay")
 	public static enum ContentDisplay {
 
-		BLOCK("Block"), FLEX("Flex");
+		BLOCK("Block"), FLEX_COLUMN("FlexColumn"), FLEX_ROW("FlexRow");
 
 		@JsonCreator
 		public static ContentDisplay create(String value) {

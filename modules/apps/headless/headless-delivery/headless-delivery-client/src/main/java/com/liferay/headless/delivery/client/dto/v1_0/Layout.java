@@ -521,8 +521,8 @@ public class Layout implements Cloneable, Serializable {
 
 	public static enum Align {
 
-		CENTER("Center"), END("End"), NONE("None"), START("Start"),
-		STRETCH("Stretch");
+		BASELINE("Baseline"), CENTER("Center"), END("End"), NONE("None"),
+		START("Start"), STRETCH("Stretch");
 
 		public static Align create(String value) {
 			for (Align align : values()) {
@@ -622,7 +622,7 @@ public class Layout implements Cloneable, Serializable {
 
 	public static enum ContentDisplay {
 
-		BLOCK("Block"), FLEX("Flex");
+		BLOCK("Block"), FLEX_COLUMN("FlexColumn"), FLEX_ROW("FlexRow");
 
 		public static ContentDisplay create(String value) {
 			for (ContentDisplay contentDisplay : values()) {

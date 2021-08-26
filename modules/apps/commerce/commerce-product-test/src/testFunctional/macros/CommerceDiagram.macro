@@ -24,4 +24,25 @@ definition {
 
         CommerceDiagram.usePreDefinedZoomValues(key_list = "${key_list}");
     }
+
+    macro useResetZoom {
+
+        var i = "0";
+
+        Click(
+            key_text = "Reset Zoom",
+            locator1 = "Button#ANY");
+
+        Pause(locator1 = "2000");
+    
+        var actual_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+
+        if("${actual_position}" == "translate(0,0) scale(1)" || "${actual_position}" == "translate(0, 0) scale(1,1)"){
+            echo("The reset zoom position is correct");
+        }
+        else {
+            fail("The reset zoom position is not correct: ${actual_position} expected position: translate(0,0) scale(1) OR translate(0, 0) scale(1,1))");
+        }
+    }
+
 }

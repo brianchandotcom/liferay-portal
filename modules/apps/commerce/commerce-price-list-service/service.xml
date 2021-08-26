@@ -355,7 +355,7 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
-		<finder name="C_C" return-type="CommercePriceListOrderTypeRel" unique="true">
+		<finder name="CPI_COTI" return-type="CommercePriceListOrderTypeRel" unique="true">
 			<finder-column name="commercePriceListId" />
 			<finder-column name="commerceOrderTypeId" />
 		</finder>

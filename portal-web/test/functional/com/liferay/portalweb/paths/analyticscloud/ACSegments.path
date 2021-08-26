@@ -359,6 +359,21 @@
 	<td>//div[contains(@class,'dropdown-item')]//label/input//following-sibling::span/span[text()='${key_filterName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEGMENT_POSITION_1</td>
+	<td>xpath=(//div[contains(@class,'table-responsive')]/table/tbody/tr/td[contains(@class,'name-cell-root')]//a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_POSITION_2</td>
+	<td>xpath=(//div[contains(@class,'table-responsive')]/table/tbody/tr/td[contains(@class,'name-cell-root')]//a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_POSITION_3</td>
+	<td>xpath=(//div[contains(@class,'table-responsive')]/table/tbody/tr/td[contains(@class,'name-cell-root')]//a)[3]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

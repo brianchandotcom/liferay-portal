@@ -1327,8 +1327,6 @@ public class PortletTracker
 
 		List<Company> companies = _companyLocalService.getCompanies(false);
 
-		_portletLocalService.clearCache();
-
 		for (Company company : companies) {
 			futures.add(
 				_executorService.submit(
@@ -1354,6 +1352,8 @@ public class PortletTracker
 				throw new PortalException(exception);
 			}
 		}
+
+		_portletLocalService.clearCache();
 	}
 
 	protected Object get(

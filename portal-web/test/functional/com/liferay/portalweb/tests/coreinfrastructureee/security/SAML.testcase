@@ -2580,8 +2580,6 @@ definition {
 		AssertConsoleTextPresent(value1 = "Resolving user with user field expression: emailAddress");
 
 		JSONUser.updateUser(
-			creatorEmailAddress = "test@liferay.com",
-			creatorPassword = "test",
 			screenNameUpdate = "user1_changed",
 			userEmailAddress = "user1@liferay.com",
 			userEmailAddressUpdate = "user1@liferay.com",
@@ -2678,8 +2676,6 @@ definition {
 		AssertConsoleTextPresent(value1 = "Resolving user with user field expression: screenName");
 
 		JSONUser.updateUser(
-			creatorEmailAddress = "test@liferay.com",
-			creatorPassword = "test",
 			screenNameUpdate = "user1",
 			userEmailAddress = "user1@liferay.com",
 			userEmailAddressUpdate = "user1changed@liferay.com",
@@ -2898,8 +2894,6 @@ definition {
 		AssertConsoleTextPresent(value1 = "Resolving user with user field expression: uuid");
 
 		JSONUser.updateUser(
-			creatorEmailAddress = "test@liferay.com",
-			creatorPassword = "test",
 			screenNameUpdate = "user1_changed",
 			userEmailAddress = "user1@liferay.com",
 			userEmailAddressUpdate = "user1changed@liferay.com",
@@ -3041,8 +3035,6 @@ definition {
 		User.viewLoggedOutPG();
 
 		JSONUser.updateUser(
-			creatorEmailAddress = "test@liferay.com",
-			creatorPassword = "test",
 			screenNameUpdate = "user1_changed",
 			userEmailAddress = "user1@liferay.com",
 			userEmailAddressUpdate = "user1_changed@liferay.com",

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletConfig;
@@ -71,15 +72,15 @@ public class CommerceCartContentMiniConfigurationAction
 			CommerceCartContentMiniDisplayContext
 				commerceCartContentDisplayContext =
 					new CommerceCartContentMiniDisplayContext(
-						httpServletRequest, _commerceChannelLocalService,
-						_commerceOrderHttpHelper, _commerceOrderItemService,
+						_commerceChannelLocalService, _commerceOrderHttpHelper,
+						_commerceOrderItemService,
 						_commerceOrderPriceCalculation,
 						_commerceOrderValidatorRegistry,
 						_commerceProductPriceCalculation, _cpDefinitionHelper,
 						_cpInstanceHelper,
 						_commerceOrderModelResourcePermission,
 						_commerceProductPortletResourcePermission,
-						_percentageFormatter);
+						_percentageFormatter, httpServletRequest, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -141,5 +142,8 @@ public class CommerceCartContentMiniConfigurationAction
 
 	@Reference
 	private PercentageFormatter _percentageFormatter;
+
+	@Reference
+	private Portal _portal;
 
 }

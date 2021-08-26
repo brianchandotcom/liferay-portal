@@ -120,7 +120,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -163,9 +162,8 @@ public class DDMFormAdminDisplayContext {
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		DDMStructureLocalService ddmStructureLocalService,
-		DDMStructureService ddmStructureService,
-		boolean ffSearchLocationDDMFormFieldTypeEnabled,
-		JSONFactory jsonFactory, NPMResolver npmResolver, Portal portal) {
+		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
+		NPMResolver npmResolver, Portal portal) {
 
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener =
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -188,8 +186,6 @@ public class DDMFormAdminDisplayContext {
 		_ddmStorageAdapterTracker = ddmStorageAdapterTracker;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureService = ddmStructureService;
-		_ffSearchLocationDDMFormFieldTypeEnabled =
-			ffSearchLocationDDMFormFieldTypeEnabled;
 		_npmResolver = npmResolver;
 		_portal = portal;
 
@@ -1668,17 +1664,8 @@ public class DDMFormAdminDisplayContext {
 		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
 
 		return stream.filter(
-			ddmFormFieldType -> {
-				if (Objects.equals(
-						ddmFormFieldType.getName(),
-						DDMFormFieldTypeConstants.SEARCH_LOCATION)) {
-
-					return _ffSearchLocationDDMFormFieldTypeEnabled;
-				}
-
-				return !ddmFormFieldTypesOutOfScope.contains(
-					ddmFormFieldType.getName());
-			}
+			ddmFormFieldType -> !ddmFormFieldTypesOutOfScope.contains(
+				ddmFormFieldType.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -1718,7 +1705,6 @@ public class DDMFormAdminDisplayContext {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private String _displayStyle;
-	private final boolean _ffSearchLocationDDMFormFieldTypeEnabled;
 	private final FormInstancePermissionCheckerHelper
 		_formInstancePermissionCheckerHelper;
 	private final Map<Long, String> _invalidDDMFormFieldTypes = new HashMap<>();

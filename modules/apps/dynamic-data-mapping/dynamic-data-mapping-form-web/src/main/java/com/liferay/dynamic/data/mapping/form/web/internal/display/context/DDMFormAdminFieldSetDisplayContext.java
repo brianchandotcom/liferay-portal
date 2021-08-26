@@ -111,9 +111,8 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		DDMStructureLocalService ddmStructureLocalService,
-		DDMStructureService ddmStructureService,
-		boolean ffSearchLocationDDMFormFieldTypeEnabled,
-		JSONFactory jsonFactory, NPMResolver npmResolver, Portal portal) {
+		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
+		NPMResolver npmResolver, Portal portal) {
 
 		super(
 			renderRequest, renderResponse,
@@ -127,8 +126,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			ddmFormTemplateContextFactory, ddmFormValuesFactory,
 			ddmFormValuesMerger, ddmFormWebConfiguration,
 			ddmStorageAdapterTracker, ddmStructureLocalService,
-			ddmStructureService, ffSearchLocationDDMFormFieldTypeEnabled,
-			jsonFactory, npmResolver, portal);
+			ddmStructureService, jsonFactory, npmResolver, portal);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
 			ddmFormAdminRequestHelper);

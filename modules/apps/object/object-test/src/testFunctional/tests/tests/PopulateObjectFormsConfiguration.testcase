@@ -59,11 +59,65 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Date type and view its entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapDateTypeAndViewEntries {
 
-		// TODO LPS-138052 CanMapDateTypeAndViewEntries pending implementation
+	property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "date",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Date");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "date");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2001");
+
+		FormPortlet.submitSuccessfully();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Date",
+			key_entryName = "01/01/2001",
+			key_entryNumber = "1 entry");
 
 	}
 
@@ -123,6 +177,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.openForm();
 
+		FormsAdminNavigator.gotoAddForm();
+
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
@@ -152,6 +208,8 @@ definition {
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm(); 
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
@@ -197,6 +255,8 @@ definition {
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
@@ -247,6 +307,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.openForm();
 
+		FormsAdminNavigator.gotoAddForm();
+
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
@@ -290,6 +352,8 @@ definition {
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
@@ -335,6 +399,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.openForm();
 
+		FormsAdminNavigator.gotoAddForm();
+		
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "Object");

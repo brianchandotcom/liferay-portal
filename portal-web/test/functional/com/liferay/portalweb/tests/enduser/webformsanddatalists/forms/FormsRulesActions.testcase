@@ -40,11 +40,7 @@ definition {
 	test BackspaceCanDeleteAllEntriesInCalculator {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -128,11 +124,7 @@ definition {
 	test CanBeDeleted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -207,11 +199,7 @@ definition {
 	test CanBeEdited {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -290,13 +278,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsRulesActions#CanCreateACalculateRule";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -378,11 +360,7 @@ definition {
 	test CanCreateAJumpToPageRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -454,11 +432,7 @@ definition {
 	test CanCreateAnEnableRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -522,13 +496,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsRulesActions#CanCreateARequireRule";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -592,11 +560,7 @@ definition {
 	test CanCreateARuleWithMoreThanOneAction {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -677,11 +641,7 @@ definition {
 	test CanCreateAShowRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -743,11 +703,7 @@ definition {
 	test CanIncludeDecimalPointInCalculations {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -818,11 +774,7 @@ definition {
 	test CanIncludeNumericFieldsInCalculations {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -896,11 +848,7 @@ definition {
 	test CanIncludeOperatorsInCalculations {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -984,11 +932,7 @@ definition {
 	test CanIncludeParenthesisInCalculations {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1096,13 +1040,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -1191,13 +1129,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsRulesActions#ShowDoesNotTriggerWhenTypingIntoUnrelatedField";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Test Form");
 

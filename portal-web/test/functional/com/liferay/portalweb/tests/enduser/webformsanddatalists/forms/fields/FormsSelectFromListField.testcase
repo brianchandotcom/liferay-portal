@@ -38,13 +38,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#CanAllowMultipleSelections";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -115,11 +109,7 @@ definition {
 	test CanBeCreated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -150,11 +140,7 @@ definition {
 	test CanBeDeleted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -191,11 +177,7 @@ definition {
 	test CanBeDuplicated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -231,11 +213,7 @@ definition {
 	test CanBeEdited {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -281,11 +259,7 @@ definition {
 	test CanBeRequired {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -325,11 +299,7 @@ definition {
 	test CanBeSetAsRepeatable {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -380,11 +350,7 @@ definition {
 	test CanBeSubmitted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -454,9 +420,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -549,13 +513,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -620,11 +578,7 @@ definition {
 	test FieldReferenceOfOptionsCanBeEdited {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -656,11 +610,7 @@ definition {
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -688,11 +638,7 @@ definition {
 	test LabelCanBeEdited {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -720,11 +666,7 @@ definition {
 	test LabelCanBeHidden {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -756,11 +698,7 @@ definition {
 	test OptionsCanBeAdded {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -803,13 +741,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#OptionsCanBeDeleted";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -864,11 +796,7 @@ definition {
 	test OptionsCanBeRearranged {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -909,12 +837,7 @@ definition {
 	test OptionsCanBeSortedAlphabetically {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
+		FormsAdmin.addForm();
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
@@ -966,11 +889,7 @@ definition {
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1009,11 +928,7 @@ definition {
 	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1061,11 +976,7 @@ definition {
 	test ReferenceCanBeEdited {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

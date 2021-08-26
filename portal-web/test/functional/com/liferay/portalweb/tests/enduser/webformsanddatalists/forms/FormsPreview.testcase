@@ -65,9 +65,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -129,11 +127,7 @@ definition {
 	test CalculateRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -193,11 +187,7 @@ definition {
 	test CanNavigateToDifferentPages {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -243,11 +233,7 @@ definition {
 	test CannotBeSubmitted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -265,11 +251,7 @@ definition {
 	test CannotNavigateToANewPageWithoutCompletingARequiredField {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -319,11 +301,7 @@ definition {
 	test ColorFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -359,11 +337,7 @@ definition {
 	test ContainsRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -415,11 +389,7 @@ definition {
 	test DateFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -456,11 +426,7 @@ definition {
 	test DoesNotContainRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -512,11 +478,7 @@ definition {
 	test EnableRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -596,11 +558,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -626,11 +584,7 @@ definition {
 	test FieldsGroupsCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -658,11 +612,7 @@ definition {
 	test GridFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -742,11 +692,7 @@ definition {
 	test ImageFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -783,11 +729,7 @@ definition {
 	test InvalidFormCannotBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -801,11 +743,7 @@ definition {
 	test IsEmptyRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -853,11 +791,7 @@ definition {
 	test IsEqualToRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -911,11 +845,7 @@ definition {
 	test IsNotEmptyRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -963,11 +893,7 @@ definition {
 	test IsNotEqualToRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1021,11 +947,7 @@ definition {
 	test JumpToPageRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1091,11 +1013,7 @@ definition {
 	test MultipleSelectionFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1143,11 +1061,7 @@ definition {
 	test NumericFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1189,11 +1103,7 @@ definition {
 	test ParagraphFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1213,11 +1123,7 @@ definition {
 	test RequireRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1261,11 +1167,7 @@ definition {
 	test RichTextFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1301,11 +1203,7 @@ definition {
 	test SelectFromListFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1360,11 +1258,7 @@ definition {
 	test SeparatorFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1390,11 +1284,7 @@ definition {
 	test ShowRuleCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1444,11 +1334,7 @@ definition {
 	test SingleSelectionFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1504,11 +1390,7 @@ definition {
 	test TextFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1548,11 +1430,7 @@ definition {
 	test TranslationsCanBePreviewed {
 		property forms.functional = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1588,11 +1466,7 @@ definition {
 	test UploadFieldCanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

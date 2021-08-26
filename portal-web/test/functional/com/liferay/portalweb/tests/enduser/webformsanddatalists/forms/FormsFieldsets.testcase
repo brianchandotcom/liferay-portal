@@ -58,11 +58,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -108,11 +104,7 @@ definition {
 
 		Form.save();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -160,11 +152,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -220,11 +208,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -276,11 +260,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -342,11 +322,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -418,11 +394,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -484,11 +456,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -560,11 +528,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -618,11 +582,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -676,11 +636,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -736,11 +692,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -796,11 +748,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -856,11 +804,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -925,11 +869,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -977,11 +917,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1085,11 +1021,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1280,11 +1212,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1363,11 +1291,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1434,11 +1358,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1500,11 +1420,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1575,11 +1491,7 @@ definition {
 
 		Form.save();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -1647,11 +1559,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1721,11 +1629,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1783,11 +1687,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1846,11 +1746,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1920,11 +1816,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1994,11 +1886,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

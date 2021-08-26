@@ -42,13 +42,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRulesConditions#AreDisabledUntilAConditionFieldIsSelected";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -76,11 +70,7 @@ definition {
 	test CanBeDeleted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -157,11 +147,7 @@ definition {
 	test CanBeEdited {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -220,11 +206,7 @@ definition {
 	test CanCreateAContainsRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -289,11 +271,7 @@ definition {
 	test CanCreateADoesNotContainRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -362,11 +340,7 @@ definition {
 	test CanCreateAnIsEmptyRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -426,11 +400,7 @@ definition {
 	test CanCreateAnIsEqualToRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -497,11 +467,7 @@ definition {
 	test CanCreateAnIsGreaterThanOrEqualToRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -576,11 +542,7 @@ definition {
 	test CanCreateAnIsGreaterThanRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -649,11 +611,7 @@ definition {
 	test CanCreateAnIsLessThanOrEqualToRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -736,11 +694,7 @@ definition {
 	test CanCreateAnIsLessThanRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -823,13 +777,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRulesConditions#CanCreateAnIsNotEmptyRule";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -923,11 +871,7 @@ definition {
 	test CanCreateAnIsNotEqualToRule {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -991,14 +935,7 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms",
-			site = "Guest");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -1157,13 +1094,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -1262,11 +1193,7 @@ definition {
 	test CanCreateMultipleConditionsUsingOR {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1369,11 +1296,7 @@ definition {
 	test OrOperatorisDisabledByDefault {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

@@ -36,11 +36,7 @@ definition {
 	test CanBeCreated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -72,11 +68,7 @@ definition {
 	test CanBeCreatedInMultipleLanguages {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -134,11 +126,7 @@ definition {
 	test CanBeCreatedOnlyOncePerLanguage {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -183,13 +171,7 @@ definition {
 
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Type(
 			locator1 = "Form#NAME_FIELD",
@@ -255,11 +237,7 @@ definition {
 	test CanBeDeleted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -289,11 +267,7 @@ definition {
 	test CanBeEdited {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -337,11 +311,7 @@ definition {
 	test CanBePreviewed {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -379,11 +349,7 @@ definition {
 	test CanBePublished {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -427,11 +393,7 @@ definition {
 	test CanBeSubmitted {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -487,11 +449,7 @@ definition {
 	test ColorFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -537,11 +495,7 @@ definition {
 	test DateFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -659,13 +613,7 @@ definition {
 
 		Form.saveElementSet();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -865,11 +813,7 @@ definition {
 	test EntriesDisplayTheCorrectLanguageFlag {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -923,11 +867,7 @@ definition {
 	test FieldsAddedToTranslationAreAddedToDefaultLanguage {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -955,11 +895,7 @@ definition {
 	test FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -989,11 +925,7 @@ definition {
 	test GridFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1079,11 +1011,7 @@ definition {
 	test ImageFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1129,11 +1057,7 @@ definition {
 	test MaintainPropertiesFromDefaultLanguage {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1168,11 +1092,7 @@ definition {
 	test MultipleSelectionFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1257,11 +1177,7 @@ definition {
 	test NumericFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1315,11 +1231,7 @@ definition {
 	test ParagraphFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1366,11 +1278,7 @@ definition {
 		property forms.functional = "false";
 		property portal.upstream = "quarantine";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1444,11 +1352,7 @@ definition {
 	test SelectFromListFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1532,11 +1436,7 @@ definition {
 	test SeparatorFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1582,11 +1482,7 @@ definition {
 	test SingleSelectionFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1667,13 +1563,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName();
 
@@ -1739,11 +1629,7 @@ definition {
 	test TextFieldAutocompleteOptionsCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -1797,11 +1683,7 @@ definition {
 	test TextFieldBasicPropertiesCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
@@ -1855,11 +1737,7 @@ definition {
 	test TextFieldPredefinedValueCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -1891,11 +1769,7 @@ definition {
 	test UploadFieldCanBeTranslated {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

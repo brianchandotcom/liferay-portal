@@ -42,13 +42,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsInterface#CanNavigateToCorrectForm";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Text");
 
@@ -68,11 +62,7 @@ definition {
 
 		Form.viewFormName(formName = "Text");
 
-		FormsAdminNavigator.gotoBack();
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Refresh();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Checkbox");
 
@@ -151,11 +141,7 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
-
-		Navigator.gotoNavItem(navItem = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -187,11 +173,7 @@ definition {
 	test FieldsCanBeMovedBetweenPages {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -225,11 +207,7 @@ definition {
 	test FieldsCanBeReorderedViaDND {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -272,11 +250,7 @@ definition {
 	test FieldsCanBeResized {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -304,11 +278,7 @@ definition {
 	test FieldsDoNotLoseFunctionalityAfterResizing {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -360,11 +330,7 @@ definition {
 	test FieldsDoNotLosePropertiesAfterResizing {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -418,11 +384,7 @@ definition {
 	test FieldsGroupsCanBeReorderedViaDND {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -468,11 +430,7 @@ definition {
 	test FieldsGroupsCanBeResized {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -518,11 +476,7 @@ definition {
 	test MultipleFieldsCanBeAddedToARow {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -566,11 +520,7 @@ definition {
 	test MultipleFieldsGroupsCanBeAddedToARow {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -626,11 +576,7 @@ definition {
 	test MultipleFieldsGroupsInARowCanBeResized {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -702,11 +648,7 @@ definition {
 	test MultipleFieldsInARowCanBeResized {
 		property forms.functional = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

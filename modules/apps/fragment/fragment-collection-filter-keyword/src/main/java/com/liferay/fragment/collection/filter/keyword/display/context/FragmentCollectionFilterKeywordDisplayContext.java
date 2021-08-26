@@ -64,9 +64,9 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 	}
 
 	public boolean isDisabled() {
-		return !Objects.equals(
+		return Objects.equals(
 			_fragmentRendererContext.getMode(),
-			FragmentEntryLinkConstants.VIEW);
+			FragmentEntryLinkConstants.EDIT);
 	}
 
 	public boolean isShowLabel() {

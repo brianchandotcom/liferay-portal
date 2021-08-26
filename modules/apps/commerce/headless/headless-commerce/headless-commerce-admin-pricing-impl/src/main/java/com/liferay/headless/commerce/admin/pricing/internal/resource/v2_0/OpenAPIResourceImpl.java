@@ -99,6 +99,8 @@ public class OpenAPIResourceImpl {
 
 			add(DiscountChannelResourceImpl.class);
 
+			add(DiscountOrderTypeResourceImpl.class);
+
 			add(DiscountProductResourceImpl.class);
 
 			add(DiscountProductGroupResourceImpl.class);

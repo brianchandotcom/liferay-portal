@@ -17,12 +17,15 @@ package com.liferay.headless.admin.list.type.internal.dto.v1_0.util;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Locale;
+
 /**
  * @author Gabriel Albuquerque
  */
 public class ListTypeEntryUtil {
 
 	public static ListTypeEntry toListTypeEntry(
+		Locale locale,
 		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry) {
 
 		return new ListTypeEntry() {
@@ -31,7 +34,8 @@ public class ListTypeEntryUtil {
 				dateModified = serviceBuilderListTypeEntry.getModifiedDate();
 				id = serviceBuilderListTypeEntry.getListTypeEntryId();
 				key = serviceBuilderListTypeEntry.getKey();
-				name = LocalizedMapUtil.getI18nMap(
+				name = serviceBuilderListTypeEntry.getName(locale);
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderListTypeEntry.getNameMap());
 				type = serviceBuilderListTypeEntry.getType();
 			}

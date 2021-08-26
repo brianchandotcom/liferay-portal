@@ -58,6 +58,20 @@ create table CommerceDiscountAccountRel (
 	lastPublishDate DATE null
 );
 
+create table CommerceDiscountOrderTypeRel (
+	uuid_ VARCHAR(75) null,
+	commerceDiscountOrderTypeRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceDiscountId LONG,
+	commerceOrderTypeId LONG,
+	priority INTEGER,
+	lastPublishDate DATE null
+);
+
 create table CommerceDiscountRel (
 	commerceDiscountRelId LONG not null primary key,
 	companyId LONG,

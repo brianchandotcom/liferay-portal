@@ -1,0 +1,512 @@
+[
+	{
+		"externalReferenceCode": "RAYCAT0001",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"subcategories": [
+			{
+				"description": "Provide accounting services",
+				"externalReferenceCode": "RAYCAT0002",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "541211"
+					},
+					{
+						"key": "Segment",
+						"value": "Office"
+					}
+				],
+				"title": "Accounting Services"
+			},
+			{
+				"description": "Own an apartment that has between 13 to 30 residential units",
+				"externalReferenceCode": "RAYCAT0003",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Apartments - Residential - 13 to 30 Units"
+			},
+			{
+				"description": "Manage residential buildings, such as apartments and condominiums",
+				"externalReferenceCode": "RAYCAT0004",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "531311"
+					},
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Residential Property Manager"
+			},
+			{
+				"description": "Own an apartment that has over 32 residential units",
+				"externalReferenceCode": "RAYCAT0005",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Apartments - Residential - 31+ Units"
+			},
+			{
+				"description": "Manage nonresidential real estate for others, such as commercial buildings",
+				"externalReferenceCode": "RAYCAT0006",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "531110"
+					},
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Nonresidential Property Manager"
+			},
+			{
+				"description": "Own an apartment that has up to 12 residential units",
+				"externalReferenceCode": "RAYCAT0007",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Apartments - Residential - Up to 12 Units"
+			},
+			{
+				"description": "Lessors of residential buildings and dwellings, such as homes, apartmetns, town homes",
+				"externalReferenceCode": "RAYCAT0008",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "531110"
+					},
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Apartment Building Rental or Leasing"
+			},
+			{
+				"description": "Manufacture and distribute coffee and/or tea",
+				"externalReferenceCode": "RAYCAT0009",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "311920"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Coffee and Tea - Distribution and Manufacturing"
+			},
+			{
+				"description": "Own an establishment that primarily serves coffee and/or tea",
+				"externalReferenceCode": "RAYCAT0010",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "722513"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Coffee and Tea Shop"
+			},
+			{
+				"description": "Primarily sell flowers, plants, and gardening supplies",
+				"externalReferenceCode": "RAYCAT0011",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "424930"
+					},
+					{
+						"key": "Segment",
+						"value": "Wholesale"
+					}
+				],
+				"title": "Flower, Nursery Stock and Florist Supplies - Wholesale"
+			},
+			{
+				"description": "Primarily sell a general range of food and household products",
+				"externalReferenceCode": "RAYCAT0012",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "445110"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Grocery / Convenience Food Stores"
+			},
+			{
+				"description": "Provide dental services",
+				"externalReferenceCode": "RAYCAT0013",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "621210"
+					},
+					{
+						"key": "Segment",
+						"value": "Office"
+					}
+				],
+				"title": "Medical Offices - Dentists"
+			},
+			{
+				"description": "Primarily sell animals and a general range of animal supplies and pet acessories",
+				"externalReferenceCode": "RAYCAT0014",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "453910"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Pet Stores"
+			},
+			{
+				"description": "Provide photography services",
+				"externalReferenceCode": "RAYCAT0015",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "541922"
+					},
+					{
+						"key": "Segment",
+						"value": "Service"
+					}
+				],
+				"title": "Photographers"
+			},
+			{
+				"description": "Sell commercial and residential properties",
+				"externalReferenceCode": "RAYCAT0016",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "531210"
+					},
+					{
+						"key": "Segment",
+						"value": "Service"
+					}
+				],
+				"title": "Real Estate Agents"
+			},
+			{
+				"description": "Own an establishment with a liquor license to cook and serve meals on the premises",
+				"externalReferenceCode": "RAYCAT0017",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "722511"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Restaurants with Liquor Sales"
+			},
+			{
+				"description": "Own an establishment without a liquor license to cook and serve meals on the premises",
+				"externalReferenceCode": "RAYCAT0018",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "722513"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Restaurants without Liquor Sales"
+			},
+			{
+				"description": "Provide hospital services to animals",
+				"externalReferenceCode": "RAYCAT0019",
+				"permissions": [
+					{
+						"actionIds": [
+							"VIEW"
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
+				"properties": [
+					{
+						"key": "NAICS",
+						"value": "541940"
+					},
+					{
+						"key": "Segment",
+						"value": "Office"
+					}
+				],
+				"title": "Veterinarian or Veterinary Hospitals"
+			}
+		],
+		"title": "Business Owners Policy"
+	},
+	{
+		"externalReferenceCode": "RAYCAT0020",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"subcategories": [
+		],
+		"title": "Commercial Auto"
+	},
+	{
+		"externalReferenceCode": "RAYCAT0021",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"subcategories": [
+		],
+		"title": "Cyber Insurance"
+	},
+	{
+		"externalReferenceCode": "RAYCAT0022",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"subcategories": [
+		],
+		"title": "General Liability"
+	},
+	{
+		"externalReferenceCode": "RAYCAT0023",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"subcategories": [
+		],
+		"title": "Professional Liability"
+	},
+	{
+		"externalReferenceCode": "RAYCAT0024",
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"subcategories": [
+		],
+		"title": "Workers Compensation"
+	}
+]

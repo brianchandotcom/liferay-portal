@@ -14,12 +14,45 @@
 
 package com.liferay.headless.commerce.core.util;
 
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * @author Igor Beslic
  */
 public class DateConfig {
+
+	public static DateConfig toDisplayDateConfig(Date date, TimeZone timeZone) {
+		if (date == null) {
+			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
+		}
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
+
+		return new DateConfig(calendar);
+	}
+
+	public static DateConfig toExpirationDateConfig(
+		Date date, TimeZone timeZone) {
+
+		if (date == null) {
+			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+				timeZone);
+
+			expirationCalendar.add(Calendar.MONTH, 1);
+
+			return new DateConfig(expirationCalendar);
+		}
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
+
+		return new DateConfig(calendar);
+	}
 
 	public DateConfig(Calendar calendar) {
 		_month = calendar.get(Calendar.MONTH);

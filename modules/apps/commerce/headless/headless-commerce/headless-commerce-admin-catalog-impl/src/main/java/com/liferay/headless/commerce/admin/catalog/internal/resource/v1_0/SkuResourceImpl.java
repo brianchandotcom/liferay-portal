@@ -86,7 +86,7 @@ public class SkuResourceImpl
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"Unable to find Sku with externalReferenceCode: " +
+				"Unable to find sku with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -114,7 +114,7 @@ public class SkuResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with externalReferenceCode: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -159,7 +159,7 @@ public class SkuResourceImpl
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"Unable to find Sku with externalReferenceCode: " +
+				"Unable to find sku with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -196,7 +196,7 @@ public class SkuResourceImpl
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"Unable to find Sku with externalReferenceCode: " +
+				"Unable to find sku with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -219,7 +219,7 @@ public class SkuResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with externalReferenceCode: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 

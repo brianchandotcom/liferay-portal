@@ -60,7 +60,7 @@ public class PriceListChannelUtil {
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(
-					"Unable to find Channel with externalReferenceCode: " +
+					"Unable to find channel with external reference code " +
 						priceListChannel.getChannelExternalReferenceCode());
 			}
 		}

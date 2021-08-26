@@ -65,7 +65,7 @@ public class ProductGroupProductResourceImpl
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
-				"Unable to find Product Group with externalReferenceCode: " +
+				"Unable to find product group with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -121,7 +121,7 @@ public class ProductGroupProductResourceImpl
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
-				"Unable to find Product Group with externalReferenceCode: " +
+				"Unable to find product group with external reference code " +
 					externalReferenceCode);
 		}
 

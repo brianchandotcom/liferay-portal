@@ -78,7 +78,7 @@ public class WarehouseItemResourceImpl
 
 		if (commerceInventoryWarehouseItem == null) {
 			throw new NoSuchInventoryWarehouseItemException(
-				"Unable to find WarehouseItem with externalReferenceCode: " +
+				"Unable to find warehouse item with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -104,7 +104,7 @@ public class WarehouseItemResourceImpl
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
-				"Unable to find Warehouse with externalReferenceCode: " +
+				"Unable to find warehouse with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -146,7 +146,7 @@ public class WarehouseItemResourceImpl
 
 		if (commerceInventoryWarehouseItem == null) {
 			throw new NoSuchInventoryWarehouseItemException(
-				"Unable to find WarehouseItem with externalReferenceCode: " +
+				"Unable to find warehouse item with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -243,7 +243,7 @@ public class WarehouseItemResourceImpl
 
 		if (commerceInventoryWarehouseItem == null) {
 			throw new NoSuchInventoryWarehouseItemException(
-				"Unable to find WarehouseItem with externalReferenceCode: " +
+				"Unable to find warehouse item with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -270,7 +270,7 @@ public class WarehouseItemResourceImpl
 
 		if (commerceInventoryWarehouse == null) {
 			throw new NoSuchInventoryWarehouseException(
-				"Unable to find Warehouse with externalReferenceCode: " +
+				"Unable to find warehouse with external reference code " +
 					externalReferenceCode);
 		}
 

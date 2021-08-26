@@ -59,7 +59,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		if (commerceOrderNote == null) {
 			throw new NoSuchOrderNoteException(
-				"Unable to find OrderNote with externalReferenceCode: " +
+				"Unable to find order note with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -79,7 +79,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
-				"Unable to find Order with externalReferenceCode: " +
+				"Unable to find order with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -130,7 +130,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		if (commerceOrderNote == null) {
 			throw new NoSuchOrderNoteException(
-				"Unable to find OrderNote with externalReferenceCode: " +
+				"Unable to find order note with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -163,7 +163,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		if (commerceOrderNote == null) {
 			throw new NoSuchOrderNoteException(
-				"Unable to find OrderNote with externalReferenceCode: " +
+				"Unable to find order note with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -185,7 +185,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
-				"Unable to find Order with externalReferenceCode: " +
+				"Unable to find order with external reference code " +
 					externalReferenceCode);
 		}
 

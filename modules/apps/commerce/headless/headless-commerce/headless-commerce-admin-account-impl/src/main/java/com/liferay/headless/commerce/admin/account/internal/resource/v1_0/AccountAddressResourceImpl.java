@@ -79,7 +79,7 @@ public class AccountAddressResourceImpl
 
 		if (commerceAddress == null) {
 			throw new NoSuchAddressException(
-				"Unable to find AccountAddress with externalReferenceCode: " +
+				"Unable to find account address with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -108,7 +108,7 @@ public class AccountAddressResourceImpl
 
 		if (commerceAddress == null) {
 			throw new NoSuchAddressException(
-				"Unable to find AccountAddress with externalReferenceCode: " +
+				"Unable to find account address with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -127,7 +127,7 @@ public class AccountAddressResourceImpl
 
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException(
-				"Unable to find Account with externalReferenceCode: " +
+				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -191,7 +191,7 @@ public class AccountAddressResourceImpl
 
 		if (commerceAddress == null) {
 			throw new NoSuchAddressException(
-				"Unable to find AccountAddress with externalReferenceCode: " +
+				"Unable to find account address with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -236,7 +236,7 @@ public class AccountAddressResourceImpl
 
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException(
-				"Unable to find Account with externalReferenceCode: " +
+				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 

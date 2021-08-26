@@ -87,7 +87,7 @@ public class CatalogResourceImpl
 
 		if (commerceCatalog == null) {
 			throw new NoSuchCatalogException(
-				"Unable to find Catalog with externalReferenceCode: " +
+				"Unable to find catalog with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -120,7 +120,7 @@ public class CatalogResourceImpl
 
 		if (commerceCatalog == null) {
 			throw new NoSuchCatalogException(
-				"Unable to find Catalog with externalReferenceCode: " +
+				"Unable to find catalog with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -172,7 +172,7 @@ public class CatalogResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with externalReferenceCode: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -226,7 +226,7 @@ public class CatalogResourceImpl
 
 		if (commerceCatalog == null) {
 			throw new NoSuchCatalogException(
-				"Unable to find Catalog with externalReferenceCode: " +
+				"Unable to find catalog with external reference code " +
 					externalReferenceCode);
 		}
 

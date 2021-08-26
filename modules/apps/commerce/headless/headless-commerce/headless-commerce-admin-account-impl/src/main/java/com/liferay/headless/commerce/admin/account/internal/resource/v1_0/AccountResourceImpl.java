@@ -116,7 +116,7 @@ public class AccountResourceImpl
 
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException(
-				"Unable to find Account with externalReferenceCode: " +
+				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -139,7 +139,7 @@ public class AccountResourceImpl
 
 		if (commerceAccountGroup == null) {
 			throw new NoSuchAccountGroupException(
-				"Unable to find AccountGroup with externalReferenceCode: " +
+				"Unable to find account group with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -189,7 +189,7 @@ public class AccountResourceImpl
 
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException(
-				"Unable to find Account with externalReferenceCode: " +
+				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -252,7 +252,7 @@ public class AccountResourceImpl
 
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException(
-				"Unable to find Account with externalReferenceCode: " +
+				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -322,7 +322,7 @@ public class AccountResourceImpl
 
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException(
-				"Unable to find Account with externalReferenceCode: " +
+				"Unable to find account with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -344,7 +344,7 @@ public class AccountResourceImpl
 
 		if (commerceAccountGroup == null) {
 			throw new NoSuchAccountGroupException(
-				"Unable to find AccountGroup with externalReferenceCode: " +
+				"Unable to find account group with external reference code " +
 					externalReferenceCode);
 		}
 

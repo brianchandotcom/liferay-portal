@@ -98,7 +98,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
-				"Unable to find Discount with externalReferenceCode: " +
+				"Unable to find discount with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -126,7 +126,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
-				"Unable to find Discount with externalReferenceCode: " +
+				"Unable to find discount with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -171,7 +171,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
-				"Unable to find Discount with externalReferenceCode: " +
+				"Unable to find discount with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -413,7 +413,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 				if (cProduct == null) {
 					throw new NoSuchCProductException(
-						"Unable to find Product with externalReferenceCode: " +
+						"Unable to find product with external reference code " +
 							discountProduct.getProductExternalReferenceCode());
 				}
 

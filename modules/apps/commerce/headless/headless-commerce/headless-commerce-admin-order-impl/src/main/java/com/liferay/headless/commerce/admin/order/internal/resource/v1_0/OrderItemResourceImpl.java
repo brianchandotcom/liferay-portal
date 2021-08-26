@@ -95,7 +95,7 @@ public class OrderItemResourceImpl
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
-				"Unable to find OrderItem with externalReferenceCode: " +
+				"Unable to find order item with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -125,7 +125,7 @@ public class OrderItemResourceImpl
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
-				"Unable to find Order with externalReferenceCode: " +
+				"Unable to find order with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -169,7 +169,7 @@ public class OrderItemResourceImpl
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
-				"Unable to find OrderItem with externalReferenceCode: " +
+				"Unable to find order item with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -199,7 +199,7 @@ public class OrderItemResourceImpl
 
 		if (commerceOrderItem == null) {
 			throw new NoSuchOrderItemException(
-				"Unable to find OrderItem with externalReferenceCode: " +
+				"Unable to find order item with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -221,7 +221,7 @@ public class OrderItemResourceImpl
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
-				"Unable to find Order with externalReferenceCode: " +
+				"Unable to find order with external reference code " +
 					externalReferenceCode);
 		}
 

@@ -88,7 +88,7 @@ public class OptionValueResourceImpl
 
 		if (cpOptionValue == null) {
 			throw new NoSuchCPOptionValueException(
-				"Unable to find Option Value with externalReferenceCode: " +
+				"Unable to find option value with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -111,7 +111,7 @@ public class OptionValueResourceImpl
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(
-				"Unable to find Option with externalReferenceCode: " +
+				"Unable to find option with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -169,7 +169,7 @@ public class OptionValueResourceImpl
 
 		if (cpOptionValue == null) {
 			throw new NoSuchCPOptionValueException(
-				"Unable to find Option Value with externalReferenceCode: " +
+				"Unable to find option value with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -201,7 +201,7 @@ public class OptionValueResourceImpl
 
 		if (cpOptionValue == null) {
 			throw new NoSuchCPOptionValueException(
-				"Unable to find Option Value with externalReferenceCode: " +
+				"Unable to find option value with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -222,7 +222,7 @@ public class OptionValueResourceImpl
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(
-				"Unable to find Option with externalReferenceCode: " +
+				"Unable to find option with external reference code " +
 					externalReferenceCode);
 		}
 

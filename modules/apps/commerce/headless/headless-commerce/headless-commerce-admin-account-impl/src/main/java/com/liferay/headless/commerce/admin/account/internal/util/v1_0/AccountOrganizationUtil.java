@@ -46,8 +46,8 @@ public class AccountOrganizationUtil {
 					accountOrganization.getOrganizationExternalReferenceCode();
 
 				throw new NoSuchOrganizationException(
-					"Unable to find Organization with externalReferenceCode: " +
-						organizationExternalReferenceCode);
+					"Unable to find organization with external reference " +
+						"code " + organizationExternalReferenceCode);
 			}
 		}
 		else {

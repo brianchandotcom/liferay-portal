@@ -57,7 +57,7 @@ public class DiscountChannelUtil {
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(
-					"Unable to find Channel with externalReferenceCode: " +
+					"Unable to find channel with external reference code " +
 						discountChannel.getChannelExternalReferenceCode());
 			}
 		}

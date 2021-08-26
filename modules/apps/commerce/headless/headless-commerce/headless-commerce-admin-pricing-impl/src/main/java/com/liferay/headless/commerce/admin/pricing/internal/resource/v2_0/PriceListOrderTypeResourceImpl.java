@@ -126,7 +126,7 @@ public class PriceListOrderTypeResourceImpl
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
-				"Unable to find price list with externalReferenceCode: " +
+				"Unable to find price list with external reference code " +
 					externalReferenceCode);
 		}
 

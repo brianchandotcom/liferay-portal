@@ -59,7 +59,7 @@ public class ProductGroupProductUtil {
 
 			if (cProduct == null) {
 				throw new NoSuchCProductException(
-					"Unable to find Product with externalReferenceCode: " +
+					"Unable to find product with external reference code " +
 						productGroupProduct.getProductExternalReferenceCode());
 			}
 		}

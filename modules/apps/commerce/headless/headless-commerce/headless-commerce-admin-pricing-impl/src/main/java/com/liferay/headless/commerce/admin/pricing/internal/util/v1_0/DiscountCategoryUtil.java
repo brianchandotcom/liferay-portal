@@ -53,7 +53,7 @@ public class DiscountCategoryUtil {
 
 			if (assetCategory == null) {
 				throw new NoSuchCategoryException(
-					"Unable to find Category with externalReferenceCode: " +
+					"Unable to find category with external reference code " +
 						discountCategory.getCategoryExternalReferenceCode());
 			}
 		}

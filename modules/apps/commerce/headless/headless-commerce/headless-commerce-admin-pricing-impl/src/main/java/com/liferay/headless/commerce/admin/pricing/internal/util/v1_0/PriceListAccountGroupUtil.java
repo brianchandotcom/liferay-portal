@@ -63,8 +63,8 @@ public class PriceListAccountGroupUtil {
 						getAccountGroupExternalReferenceCode();
 
 				throw new NoSuchAccountGroupException(
-					"Unable to find AccountGroup with externalReferenceCode: " +
-						accountGroupExternalReferenceCode);
+					"Unable to find account group with external reference " +
+						"code " + accountGroupExternalReferenceCode);
 			}
 		}
 

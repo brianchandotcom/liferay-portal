@@ -62,8 +62,8 @@ public class DiscountProductGroupUtil {
 					discountProductGroup.getProductGroupExternalReferenceCode();
 
 				throw new NoSuchPricingClassException(
-					"Unable to find ProductGroup with externalReferenceCode: " +
-						productGroupExternalReferenceCode);
+					"Unable to find product group with external reference " +
+						"code " + productGroupExternalReferenceCode);
 			}
 		}
 

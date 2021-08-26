@@ -53,7 +53,7 @@ public class DiscountProductUtil {
 
 			if (cProduct == null) {
 				throw new NoSuchCProductException(
-					"Unable to find Product with externalReferenceCode: " +
+					"Unable to find product with external reference code " +
 						discountProduct.getProductExternalReferenceCode());
 			}
 		}

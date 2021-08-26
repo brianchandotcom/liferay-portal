@@ -77,7 +77,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
-				"Unable to find Price Modifier with externalReferenceCode: " +
+				"Unable to find price modifier with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -97,7 +97,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
-				"Unable to find Price List with externalReferenceCode: " +
+				"Unable to find price list with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -153,7 +153,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
-				"Unable to find Price Modifier with externalReferenceCode: " +
+				"Unable to find price modifier with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -185,7 +185,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
-				"Unable to find Price Modifier with externalReferenceCode: " +
+				"Unable to find price modifier with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -207,7 +207,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
-				"Unable to find Price List with externalReferenceCode: " +
+				"Unable to find price list with external reference code " +
 					externalReferenceCode);
 		}
 

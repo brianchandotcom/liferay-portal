@@ -58,7 +58,7 @@ public class PriceModifierProductUtil {
 
 			if (cProduct == null) {
 				throw new NoSuchPricingClassException(
-					"Unable to find Product with externalReferenceCode: " +
+					"Unable to find product with external reference code " +
 						priceModifierProduct.getProductExternalReferenceCode());
 			}
 		}

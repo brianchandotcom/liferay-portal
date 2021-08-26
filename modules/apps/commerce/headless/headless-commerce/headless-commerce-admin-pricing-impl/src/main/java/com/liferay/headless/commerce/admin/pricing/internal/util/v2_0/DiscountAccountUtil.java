@@ -57,7 +57,7 @@ public class DiscountAccountUtil {
 
 			if (commerceAccount == null) {
 				throw new NoSuchAccountException(
-					"Unable to find Account with externalReferenceCode: " +
+					"Unable to find account with external reference code " +
 						discountAccount.getAccountExternalReferenceCode());
 			}
 		}

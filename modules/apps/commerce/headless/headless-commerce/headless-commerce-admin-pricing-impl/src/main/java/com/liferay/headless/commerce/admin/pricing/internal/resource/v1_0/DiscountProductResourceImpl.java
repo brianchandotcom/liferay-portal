@@ -71,7 +71,7 @@ public class DiscountProductResourceImpl
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
-				"Unable to find Discount with externalReferenceCode: " +
+				"Unable to find discount with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -119,7 +119,7 @@ public class DiscountProductResourceImpl
 
 		if (commerceDiscount == null) {
 			throw new NoSuchDiscountException(
-				"Unable to find Discount with externalReferenceCode: " +
+				"Unable to find discount with external reference code " +
 					externalReferenceCode);
 		}
 

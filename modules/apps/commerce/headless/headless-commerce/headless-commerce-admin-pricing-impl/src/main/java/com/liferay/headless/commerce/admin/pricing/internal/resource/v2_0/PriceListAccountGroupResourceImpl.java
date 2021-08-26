@@ -76,7 +76,7 @@ public class PriceListAccountGroupResourceImpl
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
-				"Unable to find Price List with externalReferenceCode: " +
+				"Unable to find price list with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -146,7 +146,7 @@ public class PriceListAccountGroupResourceImpl
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
-				"Unable to find Price List with externalReferenceCode: " +
+				"Unable to find price list with external reference code " +
 					externalReferenceCode);
 		}
 

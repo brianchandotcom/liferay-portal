@@ -73,7 +73,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 
 		if (commerceTierPriceEntry == null) {
 			throw new NoSuchTierPriceEntryException(
-				"Unable to find Tier Price with externalReferenceCode: " +
+				"Unable to find tier price with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -92,7 +92,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
-				"Unable to find Price Entry with externalReferenceCode: " +
+				"Unable to find price entry with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -149,7 +149,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 
 		if (commerceTierPriceEntry == null) {
 			throw new NoSuchTierPriceEntryException(
-				"Unable to find Tier Price with externalReferenceCode: " +
+				"Unable to find tier price with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -181,7 +181,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 
 		if (commerceTierPriceEntry == null) {
 			throw new NoSuchTierPriceEntryException(
-				"Unable to find Tier Price with externalReferenceCode: " +
+				"Unable to find tier price with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -203,7 +203,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
-				"Unable to find Price Entry with externalReferenceCode: " +
+				"Unable to find price entry with external reference code " +
 					externalReferenceCode);
 		}
 

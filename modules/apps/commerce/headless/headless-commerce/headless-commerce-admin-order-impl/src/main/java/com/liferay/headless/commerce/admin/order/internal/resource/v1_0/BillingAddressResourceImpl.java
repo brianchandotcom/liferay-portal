@@ -58,7 +58,7 @@ public class BillingAddressResourceImpl
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
-				"Unable to find Order with externalReferenceCode: " +
+				"Unable to find order with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -103,7 +103,7 @@ public class BillingAddressResourceImpl
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
-				"Unable to find Order with externalReferenceCode: " +
+				"Unable to find order with external reference code " +
 					externalReferenceCode);
 		}
 

@@ -80,7 +80,7 @@ public class ProductGroupResourceImpl
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
-				"Unable to find Product Group with externalReferenceCode: " +
+				"Unable to find product group with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -111,7 +111,7 @@ public class ProductGroupResourceImpl
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
-				"Unable to find Product Group with externalReferenceCode: " +
+				"Unable to find product group with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -167,7 +167,7 @@ public class ProductGroupResourceImpl
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
-				"Unable to find Product Group with externalReferenceCode: " +
+				"Unable to find product group with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -244,7 +244,7 @@ public class ProductGroupResourceImpl
 						productGroupProduct.getProductExternalReferenceCode();
 
 					throw new NoSuchCProductException(
-						"Unable to find Product with externalReferenceCode: " +
+						"Unable to find product with external reference code " +
 							productExternalReferenceCode);
 				}
 

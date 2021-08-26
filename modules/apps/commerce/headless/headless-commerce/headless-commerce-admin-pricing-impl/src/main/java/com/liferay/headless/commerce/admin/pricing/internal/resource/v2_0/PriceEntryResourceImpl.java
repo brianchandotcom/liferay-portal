@@ -88,7 +88,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
-				"Unable to find Price Entry with externalReferenceCode: " +
+				"Unable to find price entry with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -122,7 +122,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
-				"Unable to find Price Entry with externalReferenceCode: " +
+				"Unable to find price entry with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -140,7 +140,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
-				"Unable to find Price List with externalReferenceCode: " +
+				"Unable to find price list with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -214,7 +214,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		if (commercePriceEntry == null) {
 			throw new NoSuchPriceEntryException(
-				"Unable to find Price Entry with externalReferenceCode: " +
+				"Unable to find price entry with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -232,7 +232,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
-				"Unable to find Price List with externalReferenceCode: " +
+				"Unable to find price list with external reference code " +
 					externalReferenceCode);
 		}
 

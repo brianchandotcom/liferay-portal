@@ -85,7 +85,7 @@ public class OptionResourceImpl
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(
-				"Unable to find Option with externalReferenceCode: " +
+				"Unable to find option with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -162,7 +162,7 @@ public class OptionResourceImpl
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(
-				"Unable to find Option with externalReferenceCode: " +
+				"Unable to find option with external reference code " +
 					externalReferenceCode);
 		}
 

@@ -60,7 +60,7 @@ public class PriceListAccountUtil {
 
 			if (commerceAccount == null) {
 				throw new NoSuchAccountException(
-					"Unable to find Account with externalReferenceCode: " +
+					"Unable to find account with external reference code " +
 						priceListAccount.getAccountExternalReferenceCode());
 			}
 		}

@@ -170,7 +170,7 @@ public class ProductResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with externalReferenceCode: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -212,7 +212,7 @@ public class ProductResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with externalReferenceCode: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -266,7 +266,7 @@ public class ProductResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with externalReferenceCode: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 

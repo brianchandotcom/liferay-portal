@@ -95,15 +95,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _activePage;
 		}
 
-		HttpServletRequest originalHttpServletRequest =
-			PortalUtil.getOriginalServletRequest(_httpServletRequest);
-
 		_activePage = Math.max(
 			1,
 			Math.min(
 				getNumberOfPages(),
 				ParamUtil.getInteger(
-					originalHttpServletRequest,
+					PortalUtil.getOriginalServletRequest(_httpServletRequest),
 					PAGE_NUMBER_PARAM_PREFIX +
 						_collectionStyledLayoutStructureItem.getItemId(),
 					1)));
@@ -145,13 +142,11 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
 			}
 
-			int activePage = getActivePage();
-
 			end = Math.min(
-				Math.min(activePage * numberOfItemsPerPage, numberOfItems),
+				Math.min(getActivePage() * numberOfItemsPerPage, numberOfItems),
 				getCollectionCount());
 
-			start = (activePage - 1) * numberOfItemsPerPage;
+			start = (getActivePage() - 1) * numberOfItemsPerPage;
 		}
 
 		defaultLayoutListRetrieverContext.setPagination(

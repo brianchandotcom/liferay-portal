@@ -9,12 +9,6 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
-		ACSettings.takeTokenFromAnalyticsCloud();
-
-		TestCase.setUpPortalInstance();
-
-		ACUtils.launchDXP();
 	}
 
 	tearDown {
@@ -30,12 +24,26 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8856 | Test Summary: Cancel Creating a Salesforce Data Source"
-	@ignore = "true"
 	@priority = "2"
 	test CancelCreatingSalesforceDataSource {
+		ACNavigation.goToSettings();
 
-		// TODO LRAC-8856 CancelCreatingSalesforceDataSource pending implementation
+		ACSettings.addSalesforceAndCancel(
+			consumerKey = "AC Test",
+			consumerSecret = "AC Test",
+			salesforceName = "AC Test");
 
+
+
+
+
+
+
+			
+
+		AssertElementNotPresent(
+			itemName = "AC Test",
+			locator1 = "ACSettings#ITEM_ON_LIST");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8855 | Test Summary: Delete a Salesforce data source"

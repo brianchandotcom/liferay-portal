@@ -274,7 +274,7 @@ const Numeric: React.FC<IProps> = ({
 			name={name}
 			readOnly={readOnly}
 		>
-			{append ? (
+			{inputMask && append && dataType === 'double' ? (
 				<ClayInput.Group>
 					{appendType === 'prefix' && (
 						<ClayInput.GroupItem prepend shrink>

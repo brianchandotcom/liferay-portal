@@ -120,12 +120,12 @@
 <!--INDIVIDUALS_ACTIVITIES_CHART-->
 <tr>
 	<td>BASE_RESULTS_TIMELINE_ITEM</td>
-	<td>//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')]//span[contains(@class,'title')][normalize-space(text())='Visited ${itemName}']</td>
+	<td>xpath=(//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')]//span[contains(@class,'title')][normalize-space(text())='Visited ${itemName}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASE_RESULTS_TIMELINE_ITEM_NESTED</td>
-	<td>//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')][.//span[contains(@class,'title')][normalize-space(text())='Visited ${itemName}']]//ul[contains(@class,'timeline-nested')]//a[contains(@class,'title')][normalize-space()='Visited ${pageName}']</td>
+	<td>xpath=(//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')][.//span[contains(@class,'title')][normalize-space(text())='Visited ${itemName}']]//ul[contains(@class,'timeline-nested')]//a[contains(@class,'title')][normalize-space()='Visited ${pageName}'])[${index}]</td>
 	<td></td>
 </tr>
 </tbody>

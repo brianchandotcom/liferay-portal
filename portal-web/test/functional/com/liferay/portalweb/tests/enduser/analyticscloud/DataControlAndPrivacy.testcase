@@ -8,15 +8,21 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 
-		ACUtils.addSiteAndPage();
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 	}
 
 	tearDown {
@@ -87,12 +93,36 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8109 | Test Summary: Create Suppress Request"
-	@ignore = "true"
 	@priority = "5"
 	test CanCreateSuppressRequest {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+		}
 
-		// TODO LRAC-8109 CanCreateSuppressRequest
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+		task ("Go to settings and create a suppress request") {
+			ACNavigation.goToSettings();
+
+			ACSettings.createRequestLogByEmail(
+				emailAdresses = "test@liferay.com",
+				jobTypes = "Suppress");
+		}
+
+		task ("Assert that the suppress request was created") {
+			ACSettings.goToProperties();
+
+			ACSettings.goToDataControlAndPrivacy();
+
+			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
+
+			ACSettings.assertRequestLog(
+				emailAdresses = "test@liferay.com",
+				jobType = "Suppress");
+		}
 	}
 
 }

@@ -1331,7 +1331,8 @@
 						"contentDisplay": {
 							"enum": [
 								"Block",
-								"Flex"
+								"FlexColumn",
+								"FlexRow"
 							],
 							"title": "The contentDisplay Schema",
 							"type": "string"

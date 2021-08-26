@@ -39,6 +39,16 @@ definition {
 			locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
 	}
 
+	macro getChartPopoverDate {
+		Click(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+
+		SelectFrame.selectFrame(locator1 = "ACIndividualsDashboard#CHART_POPOVER");
+
+		var formattedDate = selenium.getText("ACIndividualsDashboard#CHART_POPOVER_ACTIVITIES_DATE");
+
+		return "${formattedDate}";
+	}
+
 	macro goToDistributionTab {
 		ACNavigation.switchTab(tabName = "Distribution");
 	}

@@ -43,6 +43,34 @@ definition {
 		AssertElementPresent(locator1 = "ACSettings#ITEM_ON_LIST");
 	}
 
+	macro assertDatePattern {
+		if ("${format}" == "MMM d") {
+			var pattern = "[A-Z][a-z][a-z]\s\d+";
+		}
+
+		if ("${format}" == "MMM") {
+			var pattern = "[A-Z][a-z][a-z]";
+		}
+
+		if ("${format}" == "MMM d - d") {
+			var pattern = "[A-Z][a-z][a-z]\s\d+\s-\s\d+";
+		}
+
+		if ("${format}" == "yyyy MMM dd") {
+			var pattern = "\d\d\d\d\s[A-Z][a-z][a-z]\s\d+";
+		}
+
+		var match = StringUtil.regexReplaceFirst("${date}", "${pattern}", "true");
+
+		if ("${match}" == "true") {
+			echo("PASSED");
+		}
+
+		else {
+			fail("The ${date} doesn't follow the expected format ${format}");
+		}
+	}
+
 	macro assertEventNotPresent {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");

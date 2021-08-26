@@ -82,13 +82,38 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8790 | Test Summary: Delete a keyword block"
-	@ignore = "true"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8789 | Test Summary: Delete a keyword block"
 	@priority = "3"
 	test DeleteKeywordBlock {
+		task ("Open AC") {
+			ACUtils.launchAC();
+		}
 
-		// TODO LRAC-8790 DeleteKeywordBlock pending implementation
+		task ("Go to settings, definitions and definitions type") {
+			ACNavigation.goToSettings();
 
+			ACSettings.goToDefinitions();
+
+			ACDefinitions.goToDefinitionType(definitionType = "Interests");
+		}
+
+		task ("Add two new keywords") {
+			var words = "ac keyword 1,ac keyword 2";
+
+			for (var word : list "${words}") {
+				ACSettings.addKeywords(keyword = "${word}");
+
+				ACSettings.assertKeywords(keyword = "${word}");
+			}
+		}
+
+		task ("Select all the keywords and delete them") {
+			ACSettings.deleteAllKeywords();
+		}
+
+		task ("Assert that all keywords were deleted") {
+			ACUtils.viewNoResultsMessage(noResultMessage = "You have not added keywords to the blocklist yet.");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete keyword using the check box"

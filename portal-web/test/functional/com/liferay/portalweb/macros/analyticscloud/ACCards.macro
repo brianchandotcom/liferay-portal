@@ -71,6 +71,21 @@ definition {
 			value1 = "${metricValue}");
 	}
 
+	macro viewSelectedInterval {
+		if (isSet(cardName)) {
+			AssertElementPresent(
+				interval = "${interval}",
+				key_cardTitle = "${cardName}",
+				locator1 = "ACCards#INTERVAL_OPTION_ACTIVE_IN_SPECIFIC_CARD");
+		}
+
+		else {
+			AssertElementPresent(
+				interval = "${interval}",
+				locator1 = "ACCards#INTERVAL_OPTION_ACTIVE");
+		}
+	}
+
 	macro viewTableEntryInfo {
 		AssertVisible(
 			column = "${column}",

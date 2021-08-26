@@ -514,7 +514,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-137978. Fragments can be hidden and shown."
+	@description = "This is a test for LPS-134844. Fragments can be hidden and shown."
 	@priority = "5"
 	@uitest
 	test FragmentsCanBeHiddenAndShown {

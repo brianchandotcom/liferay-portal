@@ -593,7 +593,7 @@ public class JenkinsResultsParserUtil {
 
 				int responseCode = httpURLConnection.getResponseCode();
 
-				if ((responseCode == 401) &&
+				if ((responseCode >= 400) &&
 					!jenkinsAdminUserName.endsWith("@liferay.com")) {
 
 					jenkinsAdminUserName += "@liferay.com";

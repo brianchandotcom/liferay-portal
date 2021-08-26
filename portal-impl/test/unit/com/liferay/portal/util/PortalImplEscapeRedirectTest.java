@@ -209,6 +209,18 @@ public class PortalImplEscapeRedirectTest {
 	}
 
 	@Test
+	public void testEscapeRedirectWithRelativeURL() throws Exception {
+		Assert.assertEquals(
+			"user/test/~/control_panel/manage/-/select/image,url/",
+			_portalImpl.escapeRedirect(
+				"user/test/~/control_panel/manage/-/select/image,url/"));
+		Assert.assertEquals(
+			"user/test/~/control_panel/manage/-/select/image%2Clurl/",
+			_portalImpl.escapeRedirect(
+				"user/test/~/control_panel/manage/-/select/image%2Clurl/"));
+	}
+
+	@Test
 	public void testEscapeRedirectWithSubdomains() throws Exception {
 		_redirectURLSettingsImpl.allowedDomains = new String[] {
 			"*.test.liferay.com", "google.com"

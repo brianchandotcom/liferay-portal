@@ -163,7 +163,7 @@ public class CommercePriceListLowestDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_commerceAccount.getCommerceAccountId(),
-				_commerceChannel.getCommerceChannelId(),
+				_commerceChannel.getCommerceChannelId(), 0,
 				cpInstance.getCPInstanceUuid(), _TYPE);
 
 		Assert.assertEquals(
@@ -189,7 +189,7 @@ public class CommercePriceListLowestDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_commerceAccount.getCommerceAccountId(),
-				_commerceChannel.getCommerceChannelId(),
+				_commerceChannel.getCommerceChannelId(), 0,
 				cpInstance.getCPInstanceUuid(), _TYPE);
 
 		Assert.assertEquals(
@@ -218,7 +218,7 @@ public class CommercePriceListLowestDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_commerceAccount.getCommerceAccountId(),
-				_commerceChannel.getCommerceChannelId(),
+				_commerceChannel.getCommerceChannelId(), 0,
 				cpInstance.getCPInstanceUuid(), _TYPE);
 
 		Assert.assertEquals(
@@ -244,7 +244,7 @@ public class CommercePriceListLowestDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_commerceAccount.getCommerceAccountId(),
-				_commerceChannel.getCommerceChannelId(),
+				_commerceChannel.getCommerceChannelId(), 0,
 				cpInstance.getCPInstanceUuid(), _TYPE);
 
 		Assert.assertEquals(
@@ -270,7 +270,7 @@ public class CommercePriceListLowestDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_commerceAccount.getCommerceAccountId(),
-				_commerceChannel.getCommerceChannelId(),
+				_commerceChannel.getCommerceChannelId(), 0,
 				cpInstance.getCPInstanceUuid(), _TYPE);
 
 		Assert.assertEquals(
@@ -296,7 +296,7 @@ public class CommercePriceListLowestDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_commerceAccount.getCommerceAccountId(),
-				_commerceChannel.getCommerceChannelId(),
+				_commerceChannel.getCommerceChannelId(), 0,
 				cpInstance.getCPInstanceUuid(), _TYPE);
 
 		Assert.assertEquals(

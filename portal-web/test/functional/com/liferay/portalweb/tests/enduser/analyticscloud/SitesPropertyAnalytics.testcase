@@ -67,28 +67,6 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("Sign out and sign in as Test Test") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("Navigate to the site page") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 

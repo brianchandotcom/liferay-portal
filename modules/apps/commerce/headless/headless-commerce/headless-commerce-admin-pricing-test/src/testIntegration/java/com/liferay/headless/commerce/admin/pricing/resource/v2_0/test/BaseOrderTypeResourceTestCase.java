@@ -190,6 +190,71 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountOrderTypeOrderType() throws Exception {
+		OrderType postOrderType =
+			testGetDiscountOrderTypeOrderType_addOrderType();
+
+		OrderType getOrderType =
+			orderTypeResource.getDiscountOrderTypeOrderType(null);
+
+		assertEquals(postOrderType, getOrderType);
+		assertValid(getOrderType);
+	}
+
+	protected OrderType testGetDiscountOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDiscountOrderTypeOrderType() throws Exception {
+		OrderType orderType = testGraphQLOrderType_addOrderType();
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"discountOrderTypeOrderType",
+								new HashMap<String, Object>() {
+									{
+										put("discountOrderTypeId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/discountOrderTypeOrderType"))));
+	}
+
+	@Test
+	public void testGraphQLGetDiscountOrderTypeOrderTypeNotFound()
+		throws Exception {
+
+		Long irrelevantDiscountOrderTypeId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"discountOrderTypeOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"discountOrderTypeId",
+									irrelevantDiscountOrderTypeId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetPriceListOrderTypeOrderType() throws Exception {
 		OrderType postOrderType =
 			testGetPriceListOrderTypeOrderType_addOrderType();

@@ -19,6 +19,7 @@ import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccountGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountCategory;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountChannel;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountOrderType;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProduct;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProductGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountRule;
@@ -39,6 +40,7 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountAccount
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountAccountResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountCategoryResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountChannelResource;
+import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountOrderTypeResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountProductGroupResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountProductResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountResource;
@@ -122,6 +124,14 @@ public class Mutation {
 
 		_discountChannelResourceComponentServiceObjects =
 			discountChannelResourceComponentServiceObjects;
+	}
+
+	public static void setDiscountOrderTypeResourceComponentServiceObjects(
+		ComponentServiceObjects<DiscountOrderTypeResource>
+			discountOrderTypeResourceComponentServiceObjects) {
+
+		_discountOrderTypeResourceComponentServiceObjects =
+			discountOrderTypeResourceComponentServiceObjects;
 	}
 
 	public static void setDiscountProductResourceComponentServiceObjects(
@@ -638,6 +648,83 @@ public class Mutation {
 			this::_populateResourceContext,
 			discountChannelResource ->
 				discountChannelResource.postDiscountIdDiscountChannelBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteDiscountOrderType(
+			@GraphQLName("discountOrderTypeId") Long discountOrderTypeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_discountOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			discountOrderTypeResource ->
+				discountOrderTypeResource.deleteDiscountOrderType(
+					discountOrderTypeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDiscountOrderTypeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_discountOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			discountOrderTypeResource ->
+				discountOrderTypeResource.deleteDiscountOrderTypeBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public DiscountOrderType
+			createDiscountByExternalReferenceCodeDiscountOrderType(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("discountOrderType") DiscountOrderType
+					discountOrderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_discountOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			discountOrderTypeResource ->
+				discountOrderTypeResource.
+					postDiscountByExternalReferenceCodeDiscountOrderType(
+						externalReferenceCode, discountOrderType));
+	}
+
+	@GraphQLField
+	public DiscountOrderType createDiscountIdDiscountOrderType(
+			@GraphQLName("id") Long id,
+			@GraphQLName("discountOrderType") DiscountOrderType
+				discountOrderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_discountOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			discountOrderTypeResource ->
+				discountOrderTypeResource.postDiscountIdDiscountOrderType(
+					id, discountOrderType));
+	}
+
+	@GraphQLField
+	public Response createDiscountIdDiscountOrderTypeBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_discountOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			discountOrderTypeResource ->
+				discountOrderTypeResource.postDiscountIdDiscountOrderTypeBatch(
 					id, callbackURL, object));
 	}
 
@@ -2121,6 +2208,22 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DiscountOrderTypeResource discountOrderTypeResource)
+		throws Exception {
+
+		discountOrderTypeResource.setContextAcceptLanguage(_acceptLanguage);
+		discountOrderTypeResource.setContextCompany(_company);
+		discountOrderTypeResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		discountOrderTypeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		discountOrderTypeResource.setContextUriInfo(_uriInfo);
+		discountOrderTypeResource.setContextUser(_user);
+		discountOrderTypeResource.setGroupLocalService(_groupLocalService);
+		discountOrderTypeResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			DiscountProductResource discountProductResource)
 		throws Exception {
 
@@ -2376,6 +2479,8 @@ public class Mutation {
 		_discountCategoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DiscountChannelResource>
 		_discountChannelResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DiscountOrderTypeResource>
+		_discountOrderTypeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DiscountProductResource>
 		_discountProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DiscountProductGroupResource>

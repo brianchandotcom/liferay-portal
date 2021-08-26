@@ -18,9 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
 import com.liferay.portal.kernel.patcher.Patcher;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -168,11 +165,6 @@ public class PatcherImpl implements Patcher {
 	}
 
 	@Override
-	public boolean hasInconsistentPatchLevels() {
-		return _inconsistentPatchLevels;
-	}
-
-	@Override
 	public boolean isConfigured() {
 		getPatchDirectory();
 
@@ -182,64 +174,6 @@ public class PatcherImpl implements Patcher {
 	@Override
 	public boolean isSeparated() {
 		return _separated;
-	}
-
-	@Override
-	public void verifyPatchLevels() throws PatchInconsistencyException {
-		Properties portalKernelJARProperties = _getProperties(
-			PATCHER_SERVICE_PROPERTIES);
-
-		String[] kernelJARPatches = _getInstalledPatches(
-			portalKernelJARProperties);
-
-		Arrays.sort(kernelJARPatches);
-
-		Properties portalImplJARProperties = _getProperties(PATCHER_PROPERTIES);
-
-		String[] portalImplJARPatches = _getInstalledPatches(
-			portalImplJARProperties);
-
-		Arrays.sort(portalImplJARPatches);
-
-		if (Arrays.equals(portalImplJARPatches, kernelJARPatches)) {
-			return;
-		}
-
-		_log.error("Inconsistent patch level detected");
-
-		if (_log.isWarnEnabled()) {
-			if (ArrayUtil.isEmpty(portalImplJARPatches)) {
-				_log.warn("There are no patches installed on portal-impl.jar");
-			}
-			else {
-				_log.warn(
-					"Patch level on portal-impl.jar: " +
-						Arrays.toString(portalImplJARPatches));
-			}
-
-			if (ArrayUtil.isEmpty(kernelJARPatches)) {
-				_log.warn(
-					"There are no patches installed on portal-kernel.jar");
-			}
-			else {
-				_log.warn(
-					"Patch level on portal-kernel.jar: " +
-						Arrays.toString(kernelJARPatches));
-			}
-		}
-
-		_inconsistentPatchLevels = true;
-
-		throw new PatchInconsistencyException();
-	}
-
-	private String[] _getInstalledPatches(Properties properties) {
-		if (properties == null) {
-			properties = getProperties();
-		}
-
-		return StringUtil.split(
-			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
 	}
 
 	private Properties _getProperties(String fileName) {
@@ -282,7 +216,6 @@ public class PatcherImpl implements Patcher {
 
 	private boolean _configured;
 	private final String[] _fixedIssueKeys;
-	private boolean _inconsistentPatchLevels;
 	private final String[] _installedPatchNames;
 	private final int _patchingToolVersion;
 	private final String _patchingToolVersionDisplayName;

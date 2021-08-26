@@ -69,12 +69,8 @@ public interface Patcher {
 
 	public String getSeparationId();
 
-	public boolean hasInconsistentPatchLevels();
-
 	public boolean isConfigured();
 
 	public boolean isSeparated();
-
-	public void verifyPatchLevels() throws PatchInconsistencyException;
 
 }

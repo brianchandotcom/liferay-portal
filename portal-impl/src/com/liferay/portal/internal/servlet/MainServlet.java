@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
@@ -226,30 +224,6 @@ public class MainServlet extends HttpServlet {
 
 		_portalRequestProcessor = new PortalRequestProcessor(
 			servletContext, _init());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Verify patch levels");
-		}
-
-		try {
-			PatcherUtil.verifyPatchLevels();
-		}
-		catch (PatchInconsistencyException patchInconsistencyException) {
-			if (!PropsValues.VERIFY_PATCH_LEVELS_DISABLED) {
-				_log.error(
-					"Stopping the server due to the inconsistent patch levels");
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Set the property \"verify.patch.levels.disabled\" " +
-							"to override stopping the server due to the " +
-								"inconsistent patch levels",
-						patchInconsistencyException);
-				}
-
-				System.exit(0);
-			}
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Verify JVM configuration");

@@ -91,7 +91,7 @@ public class StartupHelperUtil {
 	}
 
 	public static void printPatchLevel() {
-		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
+		if (_log.isInfoEnabled()) {
 			String installedPatches = StringUtil.merge(
 				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
 

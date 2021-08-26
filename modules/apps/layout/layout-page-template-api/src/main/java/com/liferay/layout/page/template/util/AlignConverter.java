@@ -27,6 +27,8 @@ public class AlignConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
+			"Baseline", "align-items-baseline"
+		).put(
 			"Center", "align-items-center"
 		).put(
 			"End", "align-items-end"

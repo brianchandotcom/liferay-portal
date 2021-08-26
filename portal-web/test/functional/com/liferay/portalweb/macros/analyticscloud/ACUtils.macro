@@ -377,6 +377,38 @@ definition {
 		}
 	}
 
+	macro orderArrow {
+		var type = "${type}";
+
+		if ("${type}" == "descending") {
+			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC")) {
+				Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC");
+			}
+		}
+
+		if ("${type}" == "ascending") {
+			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES")) {
+				Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES");
+			}
+		}
+	}
+
+	macro orderTableTitleArrow {
+		var type = "${type}";
+
+		if ("${type}" == "down") {
+			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_UP")) {
+				Click(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_UP");
+			}
+		}
+
+		if ("${type}" == "up") {
+			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_DOWN")) {
+				Click(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_DOWN");
+			}
+		}
+	}
+
 	macro searchBar {
 		Type(
 			locator1 = "ACSettings#SEARCH_BAR",

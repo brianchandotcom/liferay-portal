@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -72,6 +73,12 @@ public class LayoutModelDocumentContributor
 			document.addText(
 				Field.getLocalizedName(locale, Field.TITLE),
 				layout.getName(locale));
+		}
+
+		Group group = layout.getGroup();
+
+		if (group.isStagingGroup()) {
+			return;
 		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =

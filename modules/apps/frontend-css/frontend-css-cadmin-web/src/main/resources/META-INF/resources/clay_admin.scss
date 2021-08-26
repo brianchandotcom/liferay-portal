@@ -1,6 +1,7 @@
 @import 'cadmin';
 @import 'sidebar';
 
+$table-responsive-margin-left-md: 375px !default;
 $user-icon-color-0: $cadmin-secondary !default;
 $user-icon-color-1: $cadmin-blue !default;
 $user-icon-color-2: $cadmin-orange !default;
@@ -21,6 +22,15 @@ html#{$cadmin-selector} {
 			p {
 				margin-bottom: 0;
 			}
+		}
+
+		.lfr-ddm-field-group {
+			margin-bottom: 20px;
+		}
+
+		.overlay-content .open > .dropdown-menu {
+			display: block;
+			position: static;
 		}
 
 		&.modal.show,
@@ -130,6 +140,640 @@ html#{$cadmin-selector} {
 
 		.user-icon-color-9 {
 			color: $user-icon-color-9;
+		}
+
+		// Taglib Move Boxes
+
+		.taglib-move-boxes {
+			margin-bottom: 1em;
+
+			label {
+				border-bottom: 1px solid transparent;
+				display: block;
+				margin-bottom: 5px;
+				padding: 5px;
+			}
+
+			.toolbar {
+				text-align: center;
+			}
+
+			.arrow-button img {
+				border-width: 0;
+				height: 16px;
+				width: 16px;
+			}
+
+			.choice-selector {
+				width: 100%;
+
+				label {
+					background: #ebf1f9;
+					border-bottom-color: #8db2f3;
+				}
+			}
+
+			.field-content {
+				margin-bottom: 0;
+			}
+
+			.move-arrow-buttons {
+				margin-top: 5em;
+
+				.arrow-button {
+					display: block;
+				}
+			}
+
+			.sortable-container {
+				margin-top: 10px;
+
+				.btn.edit-selection {
+					margin-bottom: 10px;
+				}
+
+				.move-option {
+					background-color: transparent;
+					border-top: 1px solid #ddd;
+					display: none;
+					margin: 2px 0;
+					padding: 2px;
+					position: relative;
+
+					&.selected {
+						display: block;
+					}
+
+					&.move-option-dragging {
+						background-color: #fafafa;
+					}
+
+					.checkbox,
+					.handle {
+						position: absolute;
+					}
+
+					.checkbox {
+						display: none;
+						margin: 7px 0 0 5px;
+					}
+
+					.handle {
+						color: #999;
+						cursor: pointer;
+						font-size: 1.5em;
+						padding: 6px;
+					}
+
+					.title {
+						font-size: 1.2em;
+						margin: 1px 0 1px 30px;
+					}
+				}
+
+				&.edit-list-active .move-option {
+					display: block;
+
+					.checkbox {
+						display: inline-block;
+					}
+
+					.handle {
+						display: none;
+					}
+				}
+			}
+		}
+
+		&.mobile .taglib-move-boxes .selector-container {
+			display: none;
+		}
+
+		// Taglib Portlet Preview
+
+		.taglib-portlet-preview {
+			&.show-borders {
+				border: 1px solid #828f95;
+				margin-bottom: 1em;
+				padding: 3px 3px 1em;
+
+				.title {
+					background-color: #d3dadd;
+					font-size: 1.4em;
+					font-weight: bold;
+					padding: 0.5em;
+				}
+			}
+
+			.preview {
+				margin: 1em;
+				min-height: 90px;
+			}
+		}
+
+		// Asset Categories Selector Web
+
+		.select-category-filter {
+			background: $cadmin-white;
+			border-bottom: 1px solid $cadmin-gray-300;
+			margin-bottom: 24px;
+			padding: 12px;
+		}
+
+		// Lfr Upload Container
+
+		.upload-drop-intent .lfr-upload-container .upload-target {
+			z-index: 100;
+		}
+
+		.upload-drop-active .lfr-upload-container .upload-target {
+			background-color: #ddedde;
+			border-color: #7d7;
+			border-style: dashed;
+		}
+
+		&.mobile .lfr-upload-container .upload-target .drop-file-text {
+			display: none;
+		}
+
+		.lfr-upload-container {
+			margin-bottom: 1em;
+
+			input[type='file'] {
+				line-height: 0;
+			}
+
+			.upload-target {
+				border: 3px dashed $cadmin-gray-300;
+				margin-bottom: 1em;
+				min-height: 30px;
+				padding: 30px 0;
+				position: relative;
+				text-align: center;
+
+				h4 span {
+					display: block;
+					margin: 5px 0;
+					text-transform: lowercase;
+				}
+
+				.or-text {
+					font-size: 0.8em;
+				}
+
+				.drop-file-text {
+					font-weight: normal;
+				}
+			}
+
+			.manage-upload-target {
+				padding: 5px 0 0;
+				position: relative;
+
+				.select-files {
+					margin: 0 10px 10px;
+				}
+			}
+
+			.browse-button-container {
+				padding-top: 5px;
+			}
+
+			a {
+				&.browse-button {
+					background-repeat: no-repeat;
+					color: white;
+					font-size: 1.2em;
+					font-weight: bold;
+					text-decoration: none;
+				}
+
+				&.clear-uploads {
+					background-repeat: no-repeat;
+					float: right;
+					padding-left: 16px;
+				}
+
+				&.cancel-uploads {
+					background-repeat: no-repeat;
+					float: right;
+					margin-right: 0;
+				}
+			}
+
+			.upload-file {
+				&.upload-complete.file-saved {
+					padding-left: 25px;
+				}
+
+				.file-title {
+					display: inline-block;
+					max-width: 95%;
+					overflow: hidden;
+					padding-right: 16px;
+					text-overflow: ellipsis;
+					vertical-align: middle;
+					white-space: nowrap;
+				}
+
+				.icon-file {
+					font-size: 40px;
+				}
+			}
+
+			.upload-list-info {
+				margin: 1em 0 0.5em;
+
+				h4 {
+					font-size: 1.3em;
+				}
+			}
+
+			.cancel-button {
+				color: $cadmin-secondary;
+				margin-top: 1px;
+				position: absolute;
+				right: 5px;
+				top: 50%;
+				white-space: nowrap;
+
+				.cancel-button-text {
+					display: none;
+					margin-left: 5px;
+				}
+
+				&:hover .cancel-button-text {
+					display: inline;
+				}
+
+				.lexicon-icon {
+					height: 12px;
+				}
+			}
+
+			.delete-button {
+				color: $cadmin-secondary;
+			}
+
+			.delete-button-col {
+				padding-right: 10px;
+			}
+
+			.file-added .success-message {
+				float: right;
+				font-weight: normal;
+			}
+
+			.upload-error {
+				opacity: 1;
+				padding-left: 25px;
+			}
+
+			.upload-complete .cancel-button,
+			.delete-button,
+			.upload-complete.file-saved .delete-button,
+			.upload-complete.upload-error .delete-button {
+				display: none;
+			}
+
+			.multiple-files .upload-error {
+				background-color: #fdd;
+				background-repeat: no-repeat;
+				background-size: 5px 5px;
+				border-color: $cadmin-danger-d2;
+				color: $cadmin-danger-d2;
+				font-weight: normal;
+				margin-bottom: 16px;
+				padding: 8px 8px 8px 24px;
+
+				.error-message {
+					display: block;
+				}
+			}
+
+			.single-file .upload-error {
+				list-style: none;
+				margin-top: 1em;
+
+				.upload-error-message {
+					margin-bottom: 0.5em;
+				}
+			}
+
+			.upload-complete {
+				padding-left: 5px;
+
+				.error-message,
+				.success-message {
+					font-weight: bold;
+					margin-left: 1em;
+				}
+
+				.delete-button {
+					display: inline-block;
+				}
+
+				.select-file:disabled + .custom-control-label {
+					display: none;
+				}
+			}
+
+			.progress {
+				display: none;
+				margin-top: 0.5rem;
+			}
+
+			.file-uploading {
+				background-color: #ffc;
+
+				.progress {
+					display: flex;
+				}
+			}
+		}
+
+		.select-files {
+			float: left;
+			line-height: 0;
+			margin-right: 2px;
+			padding: 0 0 0 5px;
+		}
+
+		.lfr-search-container-wrapper {
+			&.lfr-search-container-fixed-first-column {
+				position: relative;
+
+				.table-responsive {
+					@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+						margin-left: $table-responsive-margin-left-md;
+						width: auto;
+					}
+
+					.table {
+						position: static;
+
+						.lfr-search-iterator-fixed-header {
+							left: 12px;
+							position: fixed;
+							right: 12px;
+							top: -1px;
+							z-index: $cadmin-zindex-sticky;
+
+							> th {
+								display: block;
+								padding: 0;
+
+								.lfr-search-iterator-fixed-header-inner-wrapper {
+									overflow-x: hidden;
+
+									@include media-breakpoint-up(
+										sm,
+										$cadmin-grid-breakpoints
+									) {
+										margin-left: $table-responsive-margin-left-md;
+									}
+
+									table {
+										border-collapse: collapse;
+										width: 100%;
+
+										th {
+											border-radius: 0;
+										}
+									}
+								}
+							}
+						}
+
+						td,
+						th {
+							width: auto;
+
+							&:first-child {
+								@include media-breakpoint-up(
+									sm,
+									$cadmin-grid-breakpoints
+								) {
+									left: 0;
+									position: absolute;
+									right: 15px;
+								}
+							}
+						}
+
+						th {
+							height: auto;
+						}
+					}
+				}
+
+				.lfr-description-column,
+				.lfr-role-column {
+					max-width: $table-responsive-margin-left-md;
+					min-width: $table-responsive-margin-left-md;
+				}
+			}
+		}
+	}
+
+	.portal-popup,
+	.cadmin.portal-popup {
+		background-color: $cadmin-white;
+
+		.columns-max > .portlet-layout.row {
+			margin-left: 0;
+			margin-right: 0;
+
+			> .portlet-column {
+				padding-left: 0;
+				padding-right: 0;
+			}
+		}
+
+		.portlet-export-import .portlet-body > .cadmin {
+			height: inherit;
+		}
+
+		.sheet {
+			> .lfr-nav {
+				margin-top: -24px;
+			}
+		}
+
+		.contacts-portlet .portlet-configuration-container .form {
+			position: static;
+		}
+
+		.lfr-form-content {
+			padding: 24px 12px;
+		}
+
+		.portlet-body,
+		.portlet-boundary,
+		.portlet-column,
+		.portlet-layout {
+			height: 100%;
+		}
+
+		.portlet-column {
+			position: static;
+		}
+
+		.dialog-body,
+		.export-dialog-tree,
+		.lfr-dynamic-uploader,
+		.lfr-form-content,
+		.portlet-configuration-body-content,
+		.process-list,
+		.roles-selector-body {
+			> .container-fluid-max-xl,
+			.container-view {
+				padding-top: 20px;
+
+				.nav-tabs-underline {
+					margin-left: -$cadmin-grid-gutter-width / 2;
+					margin-right: -$cadmin-grid-gutter-width / 2;
+					margin-top: -20px;
+				}
+			}
+
+			> .lfr-nav + .container-fluid-max-xl {
+				padding-top: 0;
+			}
+		}
+
+		.login-container {
+			padding: $cadmin-modal-inner-padding;
+		}
+
+		.management-bar-default {
+			border-left-width: 0;
+			border-radius: 0;
+			border-right-width: 0;
+			border-top-width: 0;
+			margin-bottom: 0;
+		}
+
+		.navbar ~ .portlet-configuration-setup,
+		.portlet-export-import-container {
+			height: calc(100% - 48px);
+			position: relative;
+		}
+
+		.panel-group .panel {
+			border-left-width: 0;
+			border-radius: 0;
+			border-right-width: 0;
+		}
+
+		.panel-group .panel + .panel {
+			border-top-width: 0;
+			margin-top: 0;
+		}
+
+		.panel-heading {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		.portlet-configuration-setup {
+			.lfr-nav {
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 1280px;
+				padding-left: 3px;
+				padding-right: 3px;
+
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					padding-left: 8px;
+					padding-right: 8px;
+				}
+			}
+		}
+
+		.lfr-dynamic-uploader,
+		.process-list {
+			bottom: 0;
+			display: block;
+			left: 0;
+			overflow: auto;
+			position: absolute;
+			right: 0;
+			top: 48px;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.portlet-export-import-publish-processes {
+			top: 0;
+		}
+
+		.dialog-footer {
+			background-color: $cadmin-white;
+			border-top: $cadmin-modal-footer-border-width solid
+				$cadmin-modal-footer-border-color;
+			bottom: 0;
+			box-shadow: $cadmin-modal-footer-box-shadow;
+			display: flex;
+			flex-direction: row-reverse;
+			left: 0;
+			margin: 0;
+			padding: 10px 24px;
+			width: 100%;
+			z-index: $cadmin-zindex-sticky;
+
+			@include media-breakpoint-up(md) {
+				position: fixed;
+			}
+
+			.btn {
+				margin-left: 16px;
+				margin-right: 0;
+			}
+		}
+
+		.dialog-body,
+		.lfr-dynamic-uploader,
+		.lfr-form-content,
+		.portlet-configuration-body-content,
+		.roles-selector-body {
+			@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+				&:not(:last-child) {
+					padding-bottom: 60px;
+				}
+			}
+		}
+
+		.lfr-dynamic-uploader {
+			display: table;
+			table-layout: fixed;
+			width: 100%;
+
+			&.hide-dialog-footer {
+				bottom: 0;
+
+				+ .dialog-footer {
+					display: none;
+				}
+			}
+		}
+
+		.portlet-configuration-edit-permissions {
+			.portlet-configuration-body-content {
+				display: flex;
+				flex-direction: column;
+				overflow: visible;
+
+				> form {
+					flex-grow: 1;
+					max-width: none;
+					overflow: auto;
+				}
+			}
+		}
+
+		.portlet-configuration-edit-templates
+			.portlet-configuration-body-content {
+			bottom: 0;
 		}
 	}
 }

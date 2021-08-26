@@ -86,7 +86,7 @@ public class OpenIdConnectSessionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OpenIdConnectSession (mvccVersion LONG default 0 not null,openIdConnectSessionId LONG not null primary key,companyId LONG,modifiedDate DATE null,accessToken VARCHAR(2048) null,idToken VARCHAR(2048) null,providerName VARCHAR(75) null,refreshToken VARCHAR(512) null)";
+		"create table OpenIdConnectSession (mvccVersion LONG default 0 not null,openIdConnectSessionId LONG not null primary key,companyId LONG,modifiedDate DATE null,accessToken VARCHAR(3000) null,idToken VARCHAR(3999) null,providerName VARCHAR(75) null,refreshToken VARCHAR(2000) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OpenIdConnectSession";

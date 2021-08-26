@@ -7,14 +7,14 @@
 		<field name="companyId" type="long" />
 		<field name="modifiedDate" type="Date" />
 		<field name="accessToken" type="String">
-			<hint name="max-length">2048</hint>
+			<hint name="max-length">3000</hint>
 		</field>
 		<field name="idToken" type="String">
-			<hint name="max-length">2048</hint>
+			<hint name="max-length">3999</hint>
 		</field>
 		<field name="providerName" type="String" />
 		<field name="refreshToken" type="String">
-			<hint name="max-length">512</hint>
+			<hint name="max-length">2000</hint>
 		</field>
 	</model>
 </model-hints>

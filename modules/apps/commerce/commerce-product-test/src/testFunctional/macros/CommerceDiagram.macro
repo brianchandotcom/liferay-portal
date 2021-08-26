@@ -103,4 +103,27 @@ definition {
 		}
     }
 
+    macro useDragOnBackground {
+        //Verify the postion after mouse drag
+
+        CommerceDiagram.useResetZoom();
+
+        first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+
+        DragAndDrop.dragAndDropReorganizeObjects(
+			key_image = "${image_name}",
+			position = "${position}",
+			locator1 = "CommerceEntry#VERIFY_IMAGE",
+			locator2 = "CommerceEntry#VERIFY_IMAGE");
+
+		second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+
+		if("${first_position}" != "${second_position}") {
+			echo("The position after the drag is correct");
+		}
+		else {
+			fail("The position after the drag is not correct: ${second_position}, the expected position it must be different from ${first_position}");
+		}
+    }
+
 }

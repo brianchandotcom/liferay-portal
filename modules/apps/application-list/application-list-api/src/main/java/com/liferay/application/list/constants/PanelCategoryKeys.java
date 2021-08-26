@@ -26,6 +26,9 @@ public interface PanelCategoryKeys {
 	public static final String APPLICATIONS_MENU_APPLICATIONS =
 		"applications_menu.applications";
 
+	public static final String APPLICATIONS_MENU_APPLICATIONS_BATCH_PLANNER =
+		"applications_menu.applications.batch_planner";
+
 	public static final String APPLICATIONS_MENU_APPLICATIONS_COMMERCE =
 		"applications_menu.applications.commerce";
 

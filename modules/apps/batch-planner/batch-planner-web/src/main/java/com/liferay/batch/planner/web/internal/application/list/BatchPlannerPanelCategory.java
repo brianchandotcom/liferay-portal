@@ -14,40 +14,41 @@
 
 package com.liferay.batch.planner.web.internal.application.list;
 
-import com.liferay.application.list.BasePanelApp;
-import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.BasePanelCategory;
+import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
-import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Igor Beslic
+ * @author Matija Petanjek
  */
 @Component(
 	immediate = true,
 	property = {
-		"panel.app.order:Integer=1000",
-		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS_BATCH_PLANNER
+		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS,
+		"panel.category.order:Integer=900"
 	},
-	service = PanelApp.class
+	service = PanelCategory.class
 )
-public class BatchPlannerPanelApp extends BasePanelApp {
+public class BatchPlannerPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getPortletId() {
-		return BatchPlannerPortletKeys.BATCH_PLANNER;
+	public String getKey() {
+		return PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS_BATCH_PLANNER;
 	}
 
 	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "import-export");
 	}
 
 }

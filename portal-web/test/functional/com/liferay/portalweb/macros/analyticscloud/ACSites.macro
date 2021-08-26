@@ -60,4 +60,13 @@ definition {
 		AssertElementPresent(locator1 = "ACSites#COHORT_ANALYSIS_CARD");
 	}
 
+	macro viewVisitedTopPages {
+		var key_index = StringUtil.extractFirst("${current}","-");
+		var value = StringUtil.extractLast("${current}","-");
+
+		AssertTextEquals(
+			locator1 = "ACSites#VISITED_TOP_PAGES_CARD",
+			value1 = "${value}");
+	}
+
 }

@@ -505,31 +505,19 @@ public class SessionMessages {
 		HttpSession session, String key, boolean createIfAbsent,
 		Consumer<Map<String, Object>> consumer) {
 
-		if (session == null) {
-			return;
-		}
+		Map<String, Object> map = _getMap(session, key);
 
-		try {
-			Map<String, Object> map = (Map<String, Object>)session.getAttribute(
-				key);
-
-			if (map == null) {
-				if (!createIfAbsent) {
-					return;
-				}
-
-				map = new SessionMessagesMap();
+		if (map == null) {
+			if (!createIfAbsent) {
+				return;
 			}
 
-			consumer.accept(map);
+			map = new SessionMessagesMap();
+		}
 
-			session.setAttribute(key, map);
-		}
-		catch (IllegalStateException illegalStateException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
-			}
-		}
+		consumer.accept(map);
+
+		session.setAttribute(key, map);
 	}
 
 	private static void _updateMap(

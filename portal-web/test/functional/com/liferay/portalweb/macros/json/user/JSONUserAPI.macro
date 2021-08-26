@@ -384,8 +384,6 @@ definition {
 				-d reminderQueryAnswer= \
 		  		-d screenName=${screenNameUpdate} \
 		  		-d emailAddress=${userEmailAddressUpdate} \
-				-d facebookId=0 \
-				-d openId=0 \
 				-d hasPortrait=false \
 				-d portraitBytes= \
 				-d languageId=0 \

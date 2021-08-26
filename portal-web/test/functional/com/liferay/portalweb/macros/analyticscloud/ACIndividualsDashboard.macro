@@ -138,6 +138,16 @@ definition {
 			userEmailAddress = "${userEmailAddress}");
 	}
 
+	macro viewRechartsBarOnIndividualsActivitiesChart {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertVisible(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
+	}
+
 	macro viewTotalActivities {
 		var key_userName = "${userName}";
 		var key_activitiesNumber = "${activitiesNumber}";

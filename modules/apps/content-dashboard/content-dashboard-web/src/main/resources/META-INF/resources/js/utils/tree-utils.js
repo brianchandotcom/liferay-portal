@@ -90,7 +90,12 @@ export const handleNodeName = ({childrenPropertyKey, node}) => {
  * @param {string} object.query - string used in search input.
  * @return {array} A new array of nodes.
  */
-export const filterNodes = ({childrenPropertyKey, nodes, query}) => {
+export const filterNodes = ({
+	childrenPropertyKey,
+	namePropertyKey,
+	nodes,
+	query,
+}) => {
 	const nodeHasChildren = (node) => Array.isArray(node) && node.length > 0;
 
 	return nodes.filter((node) => {
@@ -117,6 +122,20 @@ export const filterNodes = ({childrenPropertyKey, nodes, query}) => {
 			.trim();
 
 		const nodeMatchesInQuery = cleanNodeName.includes(query);
+
+		if (
+			nodeMatchesInQuery &&
+			!nodeHasChildren(node.children) &&
+			node[childrenPropertyKey]?.length
+		) {
+			node.children = [
+				...nodeTreeArrayMapper({
+					childrenPropertyKey,
+					namePropertyKey,
+					nodeArray: node[childrenPropertyKey],
+				}),
+			];
+		}
 
 		return (
 			nodeMatchesInQuery ||
@@ -164,27 +183,4 @@ export const selectedDataOutputTransfomer = ({
 	}
 
 	return data.map((node) => node[mandatoryFieldsForFiltering[0]]);
-};
-
-export const restoreChildrenForEmptiedParent = ({
-	childrenPropertyKey,
-	filteredNodes,
-	namePropertyKey,
-	treeRerenderKey,
-}) => {
-	visit(filteredNodes, (node) => {
-		if (!node.children?.length && node[childrenPropertyKey]?.length) {
-			node.children = [
-				...nodeTreeArrayMapper({
-					childrenPropertyKey,
-					namePropertyKey,
-					nodeArray: node[childrenPropertyKey],
-				}),
-			];
-			node.expanded = false;
-			treeRerenderKey.value++;
-		}
-	});
-
-	return filteredNodes;
 };

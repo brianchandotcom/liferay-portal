@@ -22,7 +22,6 @@ import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {
 	filterNodes,
 	getSelectedNodeObject,
-	restoreChildrenForEmptiedParent,
 	selectedDataOutputTransfomer,
 	visit,
 } from '../utils/tree-utils';
@@ -36,12 +35,7 @@ const TreeFilter = ({
 	portletNamespace,
 }) => {
 	const [filterQuery, setFilterQuery] = useState('');
-	const [selectedMessage, setSelectedMessage] = useState({
-		count: 0,
-	});
-	const treeRerenderKey = {
-		value: 0,
-	};
+	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
 	const selectedNodesRef = useRef(null);
 	const refItemsCount = selectedNodesRef.current?.length || 0;
@@ -61,7 +55,7 @@ const TreeFilter = ({
 		return selectedNodes;
 	}, [nodes]);
 
-	const computedNodes = useMemo(() => {
+	const computedNodes = () => {
 		if (!filterQuery) {
 			return nodes;
 		}
@@ -69,21 +63,13 @@ const TreeFilter = ({
 		const filterQueryLowerCase = filterQuery.toLowerCase();
 		const clonedNodes = JSON.parse(JSON.stringify(nodes));
 
-		const filteredNodes = filterNodes({
+		return filterNodes({
 			childrenPropertyKey,
 			namePropertyKey,
 			nodes: clonedNodes,
 			query: filterQueryLowerCase,
 		});
-
-		return restoreChildrenForEmptiedParent({
-			childrenPropertyKey,
-			filteredNodes,
-			namePropertyKey,
-			treeRerenderKey,
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filterQuery, nodes]);
+	};
 
 	const handleSelectionChange = useCallback(
 		(selectedNodes) => {
@@ -134,9 +120,7 @@ const TreeFilter = ({
 				}),
 			});
 
-			setSelectedMessage({
-				count: data.length,
-			});
+			setSelectedItemsCount(data.length);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[refItemsCount]
@@ -169,7 +153,7 @@ const TreeFilter = ({
 							<div className="input-group-inset-item input-group-inset-item-after pr-3">
 								<ClayIcon
 									className={classNames({
-										'select-type-and-subtype-clear': filterQuery,
+										'tree-filter-clear': filterQuery,
 									})}
 									onClick={
 										filterQuery ? handleInputClear : null
@@ -182,7 +166,7 @@ const TreeFilter = ({
 				</ClayLayout.ContainerFluid>
 			</form>
 
-			{!!selectedMessage.count && (
+			{!!selectedItemsCount && (
 				<ClayLayout.Container
 					className="tree-filter-count-feedback"
 					containerElement="section"
@@ -203,17 +187,16 @@ const TreeFilter = ({
 						className="tree-filter-type-tree"
 						id={`${portletNamespace}typeContainer`}
 					>
-						{computedNodes.length > 0 ? (
-							<Treeview
-								NodeComponent={Treeview.Card}
-								inheritSelection
-								initialSelectedNodeIds={initialSelectedNodeIds}
-								key={treeRerenderKey.value}
-								multiSelection
-								nodes={computedNodes}
-								onSelectedNodesChange={handleSelectionChange}
-							/>
-						) : (
+						<Treeview
+							NodeComponent={Treeview.Card}
+							inheritSelection
+							initialSelectedNodeIds={initialSelectedNodeIds}
+							multiSelection
+							nodes={computedNodes()}
+							onSelectedNodesChange={handleSelectionChange}
+						/>
+
+						{!computedNodes().length && (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">
 								<div className="taglib-empty-result-message-header"></div>
 								<div className="sheet-text text-center">

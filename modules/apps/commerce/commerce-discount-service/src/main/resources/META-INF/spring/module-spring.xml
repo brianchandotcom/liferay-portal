@@ -22,6 +22,10 @@
 	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelPersistence" />
 	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountCommerceAccountGroupRelFinderImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountOrderTypeRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalService" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountOrderTypeRelServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountOrderTypeRelModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountOrderTypeRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountOrderTypeRelPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountOrderTypeRelPersistence" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRelLocalService" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRelServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRelService" />
 	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRelModelArgumentsResolver" id="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRelModelArgumentsResolver" />

@@ -46,8 +46,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_STRUCTURE_TREE_NODE_INDEX</td>
+	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]/div[@role='button'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_ACTIVE</td>
 	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')][contains(@class,'active')]/div[@role='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_STRUCTURE_TREE_NODE_ACTIVE_INDEX</td>
+	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')][contains(@class,'active')]/div[@role='button'])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,8 +86,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_STRUCTURE_TREE_NODE_VIEW</td>
-	<td>//div[contains(@class,'page-structure') and contains(.,'${key_nodeName}')]//button[contains(@class,'tree-node')][*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
+	<td>PAGE_STRUCTURE_TREE_NODE_VIEW_INDEX</td>
+	<td>xpath=(//div[contains(@class,'page-structure') and contains(.,'${key_nodeName}')]//button[contains(@class,'tree-node')][*[name()='svg'][contains(@class,'lexicon-icon-view')]])[${key_index}]</td>
 	<td></td>
 </tr>
 </tbody>

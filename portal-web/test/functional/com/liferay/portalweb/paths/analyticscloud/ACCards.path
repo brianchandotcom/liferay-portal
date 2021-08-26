@@ -72,6 +72,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECHARTS_CARTESIAN_X_AXIS_TICK</td>
+	<td>xpath=(//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//div[contains(@class,'recharts')]//*[name()='g'][contains(@class,'xAxis')]//*[name()='tspan'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_INFO</td>
 	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//tbody//td[contains(@class,'name')][normalize-space()='${entryName}']//following-sibling::td[contains(@class,'table-${column}')][normalize-space()='${entryInfo}']</td>
 	<td></td>

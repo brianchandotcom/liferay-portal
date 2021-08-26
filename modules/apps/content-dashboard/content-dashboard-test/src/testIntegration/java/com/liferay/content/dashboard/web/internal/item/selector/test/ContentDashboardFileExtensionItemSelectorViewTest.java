@@ -80,6 +80,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 	public void testGetData() throws Exception {
 		_addFileEntry("java");
 		_addFileEntry("jpg");
+		_addFileEntry("liferay");
 		_addFileEntry("mp3");
 		_addFileEntry("mp4");
 		_addFileEntry("pdf");
@@ -93,7 +94,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 		JSONArray fileExtensionGroupsJSONArray = (JSONArray)data.get(
 			"fileExtensionGroups");
 
-		Assert.assertEquals(9, fileExtensionGroupsJSONArray.length());
+		Assert.assertEquals(10, fileExtensionGroupsJSONArray.length());
 
 		_assertExtensionGroupJSONObject(
 			"mp3", "document-multimedia", "Audio",
@@ -122,6 +123,9 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 		_assertExtensionGroupJSONObject(
 			"mp4", "document-multimedia", "Video",
 			fileExtensionGroupsJSONArray.getJSONObject(8));
+		_assertExtensionGroupJSONObject(
+			"liferay", "document-default", "Other",
+			fileExtensionGroupsJSONArray.getJSONObject(9));
 
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 	}

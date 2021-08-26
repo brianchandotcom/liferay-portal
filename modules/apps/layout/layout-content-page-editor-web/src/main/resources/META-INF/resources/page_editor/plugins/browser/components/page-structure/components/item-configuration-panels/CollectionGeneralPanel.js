@@ -37,6 +37,7 @@ import {
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../../app/services/CollectionService';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
+import updateCollectionDisplayCollection from '../../../../../../app/thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {useId} from '../../../../../../app/utils/useId';
 import CollectionSelector from '../../../../../../common/components/CollectionSelector';
@@ -178,12 +179,13 @@ export const CollectionGeneralPanel = ({item}) => {
 		});
 
 	const handleCollectionSelect = (collection = {}) => {
-		handleConfigurationChanged({
-			collection: Object.keys(collection).length ? collection : null,
-			listItemStyle: null,
-			listStyle: LIST_STYLE_GRID,
-			templateKey: null,
-		});
+		dispatch(
+			updateCollectionDisplayCollection({
+				collection: Object.keys(collection).length ? collection : null,
+				itemId: item.itemId,
+				listStyle: LIST_STYLE_GRID,
+			})
+		);
 	};
 
 	const shouldPreventCollectionSelect = () => {

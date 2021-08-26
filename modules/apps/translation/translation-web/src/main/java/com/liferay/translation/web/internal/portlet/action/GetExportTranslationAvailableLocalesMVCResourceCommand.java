@@ -20,6 +20,7 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -34,6 +35,8 @@ import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.web.internal.util.ExportTranslationUtil;
 
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -80,24 +83,47 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, className);
 
-		Stream<String> stream = Arrays.stream(
-			infoItemLanguagesProvider.getAvailableLanguageIds(object));
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"availableLocales",
 				ExportTranslationUtil.getLocalesJSONArray(
 					themeDisplay.getLocale(),
-					stream.map(
-						LocaleUtil::fromLanguageId
-					).collect(
-						Collectors.toList()
-					))
+					_getAvailableLocales(
+						ParamUtil.getLong(resourceRequest, "groupId"),
+						infoItemLanguagesProvider, object))
 			).put(
 				"defaultLanguageId",
 				infoItemLanguagesProvider.getDefaultLanguageId(object)
 			));
+	}
+
+	private Set<Locale> _getAvailableLocales(
+			long groupId,
+			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider,
+			Object object)
+		throws Exception {
+
+		if (infoItemLanguagesProvider == null) {
+			return _language.getAvailableLocales(groupId);
+		}
+
+		Stream<String> stream = Arrays.stream(
+			infoItemLanguagesProvider.getAvailableLanguageIds(object));
+
+		Set<Locale> availableLocales = stream.map(
+			LocaleUtil::fromLanguageId
+		).collect(
+			Collectors.toSet()
+		);
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+
+		if (!availableLocales.contains(siteDefaultLocale)) {
+			availableLocales.add(siteDefaultLocale);
+		}
+
+		return availableLocales;
 	}
 
 	private InfoItemIdentifier _getInfoItemIdentifier(
@@ -116,6 +142,9 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

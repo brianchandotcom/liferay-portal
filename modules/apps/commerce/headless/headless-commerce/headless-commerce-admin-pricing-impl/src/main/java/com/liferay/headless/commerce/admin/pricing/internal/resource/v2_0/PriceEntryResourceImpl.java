@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,11 +53,8 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -289,9 +285,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 			cpInstanceUuid = cpInstance.getCPInstanceUuid();
 		}
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			priceEntry.getDisplayDate(), serviceContext.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			priceEntry.getExpirationDate(), serviceContext.getTimeZone());
 
 		CommercePriceEntry commercePriceEntry =
@@ -339,33 +335,6 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				"UPDATE", commercePriceEntry.getCommercePriceEntryId(),
 				"patchPriceEntry", _commercePriceEntryModelResourcePermission)
 		).build();
-	}
-
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
 	}
 
 	private List<PriceEntry> _toPriceEntries(
@@ -428,10 +397,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			priceEntry.getDisplayDate(), serviceContext.getTimeZone());
-
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			priceEntry.getExpirationDate(), serviceContext.getTimeZone());
 
 		commercePriceEntry =

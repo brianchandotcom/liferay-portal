@@ -25,16 +25,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Before;
@@ -172,9 +168,9 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	}
 
 	private OrderType _addOrderType(OrderType orderType) throws Exception {
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			orderType.getDisplayDate(), _user.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			orderType.getExpirationDate(), _user.getTimeZone());
 
 		CommerceOrderType commerceOrderType =
@@ -196,33 +192,6 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		_commerceOrderTypes.add(commerceOrderType);
 
 		return _toOrderType(commerceOrderType);
-	}
-
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
 	}
 
 	private OrderType _toOrderType(CommerceOrderType commerceOrderType) {

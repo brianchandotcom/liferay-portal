@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -43,10 +42,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
-import java.util.TimeZone;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -184,9 +180,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			orderType.getDisplayDate(), serviceContext.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			orderType.getExpirationDate(), serviceContext.getTimeZone());
 
 		return _commerceOrderTypeService.addCommerceOrderType(
@@ -232,33 +228,6 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		).build();
 	}
 
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
 	private OrderType _toOrderType(CommerceOrderType commerceOrderType)
 		throws Exception {
 
@@ -284,9 +253,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			orderType.getDisplayDate(), serviceContext.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			orderType.getExpirationDate(), serviceContext.getTimeZone());
 
 		commerceOrderType = _commerceOrderTypeService.updateCommerceOrderType(

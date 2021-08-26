@@ -28,7 +28,6 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -39,11 +38,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import javax.ws.rs.core.Response;
 
@@ -258,33 +254,6 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		).build();
 	}
 
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
 	private TierPrice _toTierPrice(Long commerceTierPriceEntryId)
 		throws Exception {
 
@@ -328,9 +297,9 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			tierPrice.getDisplayDate(), serviceContext.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			tierPrice.getExpirationDate(), serviceContext.getTimeZone());
 
 		return _commerceTierPriceEntryService.updateCommerceTierPriceEntry(

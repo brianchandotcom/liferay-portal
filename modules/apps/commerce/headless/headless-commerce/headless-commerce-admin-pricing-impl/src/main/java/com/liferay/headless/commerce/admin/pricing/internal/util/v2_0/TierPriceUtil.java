@@ -22,14 +22,9 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.math.BigDecimal;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * @author Riccardo Alberti
@@ -45,9 +40,9 @@ public class TierPriceUtil {
 		ServiceContext serviceContext =
 			serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			tierPrice.getDisplayDate(), serviceContext.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			tierPrice.getExpirationDate(), serviceContext.getTimeZone());
 
 		return commerceTierPriceEntryService.addOrUpdateCommerceTierPriceEntry(
@@ -66,37 +61,6 @@ public class TierPriceUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.getBoolean(tierPrice.getNeverExpire(), true),
 			tierPrice.getPriceEntryExternalReferenceCode(), serviceContext);
-	}
-
-	private static DateConfig _toDisplayDateConfig(
-		Date date, TimeZone timeZone) {
-
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private static DateConfig _toExpirationDateConfig(
-		Date date, TimeZone timeZone) {
-
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
 	}
 
 }

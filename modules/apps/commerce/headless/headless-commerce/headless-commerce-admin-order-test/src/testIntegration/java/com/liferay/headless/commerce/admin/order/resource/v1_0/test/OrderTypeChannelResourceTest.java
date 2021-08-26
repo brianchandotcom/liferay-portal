@@ -29,15 +29,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
-import java.util.TimeZone;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,9 +57,9 @@ public class OrderTypeChannelResourceTest
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			RandomTestUtil.nextDate(), _user.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			RandomTestUtil.nextDate(), _user.getTimeZone());
 
 		_commerceOrderType =
@@ -172,33 +168,6 @@ public class OrderTypeChannelResourceTest
 				_user.getUserId(), CommerceChannel.class.getName(),
 				orderTypeChannel.getChannelId(),
 				orderTypeChannel.getOrderTypeId(), _serviceContext));
-	}
-
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
 	}
 
 	private OrderTypeChannel _toOrderTypeChannel(

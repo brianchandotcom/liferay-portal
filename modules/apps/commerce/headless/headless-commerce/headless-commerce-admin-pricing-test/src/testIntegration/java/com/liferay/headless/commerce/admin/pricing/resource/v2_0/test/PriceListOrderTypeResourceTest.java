@@ -40,8 +40,6 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
-import java.util.TimeZone;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -105,9 +103,9 @@ public class PriceListOrderTypeResourceTest
 
 	@Override
 	protected PriceListOrderType randomPriceListOrderType() throws Exception {
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			RandomTestUtil.nextDate(), _user.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			RandomTestUtil.nextDate(), _user.getTimeZone());
 
 		CommerceOrderType commerceOrderType =
@@ -198,33 +196,6 @@ public class PriceListOrderTypeResourceTest
 					_commercePriceList.getCommercePriceListId(),
 					priceListOrderType.getOrderTypeId(),
 					priceListOrderType.getPriority(), _serviceContext));
-	}
-
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
 	}
 
 	private PriceListOrderType _toPriceListOrderType(

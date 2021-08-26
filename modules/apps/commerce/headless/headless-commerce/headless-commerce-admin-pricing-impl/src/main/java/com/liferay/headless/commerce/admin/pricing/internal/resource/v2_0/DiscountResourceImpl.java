@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -77,10 +76,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.math.BigDecimal;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
-import java.util.TimeZone;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -219,9 +215,9 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			discount.getDisplayDate(), serviceContext.getTimeZone());
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			discount.getExpirationDate(), serviceContext.getTimeZone());
 
 		CommerceDiscount commerceDiscount =
@@ -320,33 +316,6 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 				contextUriInfo, contextUser));
 	}
 
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
 	private CommerceDiscount _updateDiscount(
 			CommerceDiscount commerceDiscount, Discount discount)
 		throws Exception {
@@ -354,10 +323,9 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _toDisplayDateConfig(
+		DateConfig displayDateConfig = DateConfig.toDisplayDateConfig(
 			discount.getDisplayDate(), serviceContext.getTimeZone());
-
-		DateConfig expirationDateConfig = _toExpirationDateConfig(
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			discount.getExpirationDate(), serviceContext.getTimeZone());
 
 		commerceDiscount = _commerceDiscountService.updateCommerceDiscount(

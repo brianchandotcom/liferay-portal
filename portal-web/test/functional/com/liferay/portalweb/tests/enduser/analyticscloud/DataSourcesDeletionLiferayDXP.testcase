@@ -80,7 +80,9 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+		AssertElementNotPresent(
+			index = "1",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 
 		ACNavigation.goToAssets();
 

@@ -156,7 +156,8 @@ public class ContentDashboardFileExtensionItemSelectorView
 				_dlConfiguration.vectorialFileMimeTypes()),
 			new FileExtensionGroup(
 				"document-multimedia", "video",
-				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES));
+				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES),
+			new FileExtensionGroup("document-default", "other", new String[0]));
 
 		_fileExtensionFileExtensionGroupKeys = new HashMap<>();
 
@@ -194,7 +195,7 @@ public class ContentDashboardFileExtensionItemSelectorView
 				Collectors.groupingBy(
 					fileExtension ->
 						_fileExtensionFileExtensionGroupKeys.getOrDefault(
-							fileExtension, "none"))
+							fileExtension, "other"))
 			);
 
 		Stream<FileExtensionGroup> fileExtensionGroupStream =

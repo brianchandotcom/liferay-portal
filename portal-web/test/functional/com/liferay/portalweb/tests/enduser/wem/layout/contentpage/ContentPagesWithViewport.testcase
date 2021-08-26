@@ -205,6 +205,14 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134844. Hidden property is propagated to smaller viewpoints."
+	@priority = "5"
+	@uitest
+	test HiddenPropertyIsPropagatedToSmallerViewpoints
+	{
+		property portal.acceptance = "true";
+	}
+
 	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
 	@priority = "4"
 	@uitest

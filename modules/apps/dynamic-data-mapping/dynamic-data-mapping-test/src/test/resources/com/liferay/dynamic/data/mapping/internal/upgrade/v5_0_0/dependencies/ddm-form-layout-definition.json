@@ -1,0 +1,25 @@
+{
+	"defaultLanguageId": "en_US",
+	"fields": [
+	],
+	"pages": [
+		{
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"SingleSelection"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": ""
+			}
+		}
+	],
+	"paginationMode": "multi-pages"
+}

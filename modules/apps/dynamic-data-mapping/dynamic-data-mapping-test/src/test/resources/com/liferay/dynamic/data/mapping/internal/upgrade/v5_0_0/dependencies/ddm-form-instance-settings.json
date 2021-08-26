@@ -1,0 +1,74 @@
+{
+	"fieldValues": [
+		{
+			"fieldReference": "autosaveEnabled",
+			"name": "autosaveEnabled",
+			"value": "true"
+		},
+		{
+			"fieldReference": "emailFromAddress",
+			"name": "emailFromAddress",
+			"value": ""
+		},
+		{
+			"fieldReference": "emailFromName",
+			"name": "emailFromName",
+			"value": ""
+		},
+		{
+			"fieldReference": "emailSubject",
+			"name": "emailSubject",
+			"value": ""
+		},
+		{
+			"fieldReference": "emailToAddress",
+			"name": "emailToAddress",
+			"value": ""
+		},
+		{
+			"fieldReference": "objectDefinitionId",
+			"name": "objectDefinitionId",
+			"value": ""
+		},
+		{
+			"fieldReference": "published",
+			"name": "published",
+			"value": "false"
+		},
+		{
+			"fieldReference": "redirectURL",
+			"name": "redirectURL",
+			"value": ""
+		},
+		{
+			"fieldReference": "requireAuthentication",
+			"name": "requireAuthentication",
+			"value": "false"
+		},
+		{
+			"fieldReference": "requireCaptcha",
+			"name": "requireCaptcha",
+			"value": "false"
+		},
+		{
+			"fieldReference": "sendEmailNotification",
+			"name": "sendEmailNotification",
+			"value": "false"
+		},
+		{
+			"fieldReference": "storageType",
+			"name": "storageType",
+			"value": "[\"default\"]"
+		},
+		{
+			"fieldReference": "submitLabel",
+			"name": "submitLabel",
+			"value": ""
+		},
+		{
+			"fieldReference": "workflowDefinition",
+			"name": "workflowDefinition",
+			"value": "[\"no-workflow\"]"
+		}
+	]
+}

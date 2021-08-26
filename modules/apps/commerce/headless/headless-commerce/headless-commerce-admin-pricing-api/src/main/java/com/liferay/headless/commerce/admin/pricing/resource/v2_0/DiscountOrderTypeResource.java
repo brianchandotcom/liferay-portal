@@ -14,12 +14,16 @@
 
 package com.liferay.headless.commerce.admin.pricing.resource.v2_0;
 
-import com.liferay.headless.commerce.admin.pricing.dto.v2_0.OrderType;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountOrderType;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
 
@@ -28,6 +32,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,16 +47,41 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface OrderTypeResource {
+public interface DiscountOrderTypeResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public OrderType getDiscountOrderTypeOrderType(Long discountOrderTypeId)
+	public void deleteDiscountOrderType(Long discountOrderTypeId)
 		throws Exception;
 
-	public OrderType getPriceListOrderTypeOrderType(Long priceListOrderTypeId)
+	public Response deleteDiscountOrderTypeBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public Page<DiscountOrderType>
+			getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public DiscountOrderType
+			postDiscountByExternalReferenceCodeDiscountOrderType(
+				String externalReferenceCode,
+				DiscountOrderType discountOrderType)
+		throws Exception;
+
+	public Page<DiscountOrderType> getDiscountIdDiscountOrderTypesPage(
+			Long id, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
+	public DiscountOrderType postDiscountIdDiscountOrderType(
+			Long id, DiscountOrderType discountOrderType)
+		throws Exception;
+
+	public Response postDiscountIdDiscountOrderTypeBatch(
+			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -94,7 +124,7 @@ public interface OrderTypeResource {
 	@ProviderType
 	public interface Builder {
 
-		public OrderTypeResource build();
+		public DiscountOrderTypeResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

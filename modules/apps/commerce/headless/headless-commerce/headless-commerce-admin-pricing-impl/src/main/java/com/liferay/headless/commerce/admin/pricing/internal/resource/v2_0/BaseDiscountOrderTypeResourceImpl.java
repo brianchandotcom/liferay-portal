@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
-import com.liferay.headless.commerce.admin.pricing.dto.v2_0.OrderType;
-import com.liferay.headless.commerce.admin.pricing.resource.v2_0.OrderTypeResource;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountOrderType;
+import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountOrderTypeResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -44,6 +44,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -55,12 +56,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -69,70 +76,233 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v2.0")
-public abstract class BaseOrderTypeResourceImpl
-	implements EntityModelResource, OrderTypeResource,
-			   VulcanBatchEngineTaskItemDelegate<OrderType> {
+public abstract class BaseDiscountOrderTypeResourceImpl
+	implements DiscountOrderTypeResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<DiscountOrderType> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-order-types/{discountOrderTypeId}/order-type'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-order-types/{discountOrderTypeId}'  -u 'test@liferay.com:test'
 	 */
-	@GET
+	@DELETE
 	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "discountOrderTypeId")
 		}
 	)
-	@Path("/discount-order-types/{discountOrderTypeId}/order-type")
+	@Path("/discount-order-types/{discountOrderTypeId}")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "OrderType")})
-	public OrderType getDiscountOrderTypeOrderType(
+	@Tags(value = {@Tag(name = "DiscountOrderType")})
+	public void deleteDiscountOrderType(
 			@NotNull @Parameter(hidden = true) @PathParam("discountOrderTypeId")
 				Long discountOrderTypeId)
 		throws Exception {
-
-		return new OrderType();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-order-types/{priceListOrderTypeId}/order-type'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-order-types/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/discount-order-types/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DiscountOrderType")})
+	public Response deleteDiscountOrderTypeBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				DiscountOrderType.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "priceListOrderTypeId")
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/price-list-order-types/{priceListOrderTypeId}/order-type")
+	@Path(
+		"/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types"
+	)
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "OrderType")})
-	public OrderType getPriceListOrderTypeOrderType(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("priceListOrderTypeId")
-			Long priceListOrderTypeId)
+	@Tags(value = {@Tag(name = "DiscountOrderType")})
+	public Page<DiscountOrderType>
+			getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				@Context Pagination pagination)
 		throws Exception {
 
-		return new OrderType();
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types' -d $'{"discountExternalReferenceCode": ___, "discountId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "priority": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types"
+	)
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DiscountOrderType")})
+	public DiscountOrderType
+			postDiscountByExternalReferenceCodeDiscountOrderType(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				DiscountOrderType discountOrderType)
+		throws Exception {
+
+		return new DiscountOrderType();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-order-types'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/discounts/{id}/discount-order-types")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DiscountOrderType")})
+	public Page<DiscountOrderType> getDiscountIdDiscountOrderTypesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-order-types' -d $'{"discountExternalReferenceCode": ___, "discountId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "priority": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/discounts/{id}/discount-order-types")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DiscountOrderType")})
+	public DiscountOrderType postDiscountIdDiscountOrderType(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			DiscountOrderType discountOrderType)
+		throws Exception {
+
+		return new DiscountOrderType();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/discount-order-types/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/discounts/discount-order-types/batch")
+	@POST
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DiscountOrderType")})
+	public Response postDiscountIdDiscountOrderTypeBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				DiscountOrderType.class.getName(), callbackURL, null, object)
+		).build();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<DiscountOrderType> discountOrderTypes,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<DiscountOrderType> discountOrderTypes,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (DiscountOrderType discountOrderType : discountOrderTypes) {
+			deleteDiscountOrderType(discountOrderType.getDiscountOrderTypeId());
+		}
 	}
 
 	@Override
@@ -151,7 +321,7 @@ public abstract class BaseOrderTypeResourceImpl
 	}
 
 	@Override
-	public Page<OrderType> read(
+	public Page<DiscountOrderType> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -183,7 +353,7 @@ public abstract class BaseOrderTypeResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<OrderType> orderTypes,
+			java.util.Collection<DiscountOrderType> discountOrderTypes,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}

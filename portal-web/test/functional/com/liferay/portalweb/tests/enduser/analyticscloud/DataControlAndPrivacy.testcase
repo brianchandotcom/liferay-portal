@@ -43,13 +43,23 @@ definition {
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
 	@priority = "5"
 	test CanCreateAccessRequest {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
 		task ("Create Access Request") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = "Alton.Jacobi@gmail.com",
+				emailAdresses = "test@liferay.com",
 				jobTypes = "Access");
 		}
 
@@ -61,7 +71,7 @@ definition {
 			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
-				emailAdresses = "Alton.Jacobi@gmail.com",
+				emailAdresses = "test@liferay.com",
 				jobType = "Access");
 		}
 	}

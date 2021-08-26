@@ -564,8 +564,22 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERIFY_PIN_WITHOUT_COLOR</td>
+	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERIFY_IMAGE</td>
 	<td>//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='image' and contains (@href,'${key_image}')]</td>
+	<td></td>
+</tr>
+	<td>DIAGRAM_ZOOM_SELECT</td>
+	<td>//select[contains(@aria-label,'Select Label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_MOVE_CONTROLLER</td>
+	<td>//div[contains(@class,'move-controller')]/a[contains(@class,'${key_direction}')]</td>
 	<td></td>
 </tr>
 <!--OPTION-->

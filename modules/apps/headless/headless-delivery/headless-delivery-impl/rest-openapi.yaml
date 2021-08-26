@@ -3435,7 +3435,7 @@ components:
                             type: string
                         contentDisplay:
                             deprecated: true
-                            enum: [Block, Flex]
+                            enum: [Block, FlexColumn, FlexRow]
                             type: string
                         justify:
                             deprecated: true

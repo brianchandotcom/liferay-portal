@@ -12,6 +12,8 @@
  * details.
  */
 
+import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
+import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../app/config/constants/collectionFilterFragmentEntryKey';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../app/config/constants/fragmentConfigurationRoles';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
@@ -32,12 +34,6 @@ import ImageSourcePanel from '../components/item-configuration-panels/ImageSourc
 import {MappingPanel} from '../components/item-configuration-panels/MappingPanel';
 import {RowGeneralPanel} from '../components/item-configuration-panels/RowGeneralPanel';
 import {RowStylesPanel} from '../components/item-configuration-panels/RowStylesPanel';
-
-const COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY =
-	'com.liferay.fragment.renderer.collection.filter.internal.CollectionAppliedFiltersFragmentRenderer';
-
-const COLLECTION_FILTER_FRAGMENT_ENTRY_KEY =
-	'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer';
 
 export const PANEL_IDS = {
 	collectionAppliedFiltersGeneral: 'collectionAppliedFiltersGeneral',

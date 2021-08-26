@@ -3415,7 +3415,7 @@ components:
                     properties:
                         align:
                             deprecated: true
-                            enum: [Center, End, None, Start, Stretch]
+                            enum: [Baseline, Center, End, None, Start, Stretch]
                             type: string
                         borderColor:
                             deprecated: true

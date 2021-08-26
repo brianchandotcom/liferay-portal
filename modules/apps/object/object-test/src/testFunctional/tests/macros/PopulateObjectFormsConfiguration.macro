@@ -59,6 +59,16 @@ definition {
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
+	macro viewUnmappedFormField () {
+		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
+
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+	}
+
 	macro viewUnmappedFormFieldsError {
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_TITLE");
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_BODY");
@@ -79,16 +89,6 @@ definition {
 			key_fieldName = "${fieldName}",
 			key_fieldType = "${fieldType}",
 			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY");
-	}
-
-	macro viewUnmappedFormField () {
-		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
-
-		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
-
-		AssertElementPresent(
-			key_fieldName = "${fieldName}",
-			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
 	}
 
 }

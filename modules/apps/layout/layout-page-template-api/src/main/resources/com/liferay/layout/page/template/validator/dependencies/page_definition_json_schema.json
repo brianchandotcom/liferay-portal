@@ -1291,6 +1291,7 @@
 					"properties": {
 						"align": {
 							"enum": [
+								"Baseline",
 								"Center",
 								"End",
 								"None",

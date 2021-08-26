@@ -170,6 +170,72 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8906 | Test Summary: As a Business User, I should be able to select a point on individual overview activities graph"
+	@priority = "3"
+	test SelectDataOnIndividualsActivitiesChart {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Navigate to the individuals page of new user") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACNavigation.openItem(itemName = "userfn userln");
+		}
+
+		task ("Select Last 24 hours time period in Individuals Activities chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Activities");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Select the data on Individuals Activities chart") {
+			ACIndividualsDashboard.selectDataOnIndividualsActivitiesChart();
+		}
+
+		task ("View the Clear Data Selection button shown") {
+			Button.viewPresent(button = "Clear Date Selection");
+		}
+
+		task ("View the details of timeline item") {
+			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+
+			ACIndividualsDashboard.viewTimelineItem(
+				itemName = "${portalURL}",
+				visits = "1 Visit");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8903 | Test Summary: As an Business User, I should be able to assert the cards on the Overview tab of the Individual's Dashboard page"
 	@priority = "4"
 	test ViewCardsInTheOverviewTabOfIndividualsDashBoard {

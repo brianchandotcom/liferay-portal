@@ -83,14 +83,14 @@ public class CSDiagramCPContentListEntryRenderer
 	}
 
 	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
 	private CPDefinitionDiagramSettingService
 		_cpDefinitionDiagramSettingService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shop.by.diagram.web)"

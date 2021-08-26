@@ -101,6 +101,8 @@ const SidebarPanelInfoView = ({
 	const documentIsAShortcut =
 		subType.includes('Shortcut') && !!downloadURL && !!previewImageURL;
 
+	const isADocument = documentIsAFile || documentIsAShortcut;
+
 	const documentUsesPreview = !!previewImageURL || documentIsAFile;
 
 	const showTaxonomies = !!categories?.length || !!tags?.length;
@@ -252,10 +254,9 @@ const SidebarPanelInfoView = ({
 							)
 					)}
 
-				{!!viewURLs.length &&
-					!(documentIsAFile || documentIsAShortcut) && (
-						<ItemLanguages urls={viewURLs} />
-					)}
+				{!!viewURLs.length && !isADocument && (
+					<ItemLanguages urls={viewURLs} />
+				)}
 			</Sidebar.Body>
 		</>
 	);

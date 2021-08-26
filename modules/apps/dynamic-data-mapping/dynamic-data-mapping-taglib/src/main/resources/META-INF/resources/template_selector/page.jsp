@@ -104,6 +104,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 			const openerWindow = Liferay.Util.getOpener();
 
 			openerWindow.Liferay.Util.openModal({
+				iframeBodyCssClass: '',
 				onClose: () => {
 					const form = document.getElementById('<portlet:namespace />fm');
 

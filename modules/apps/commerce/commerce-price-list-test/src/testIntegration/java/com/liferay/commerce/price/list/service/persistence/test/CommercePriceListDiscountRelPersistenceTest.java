@@ -232,11 +232,11 @@ public class CommercePriceListDiscountRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
+	public void testCountByCDI_CPI() throws Exception {
+		_persistence.countByCDI_CPI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C(0L, 0L);
+		_persistence.countByCDI_CPI(0L, 0L);
 	}
 
 	@Test

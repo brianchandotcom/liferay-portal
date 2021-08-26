@@ -1834,8 +1834,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		_FINDER_COLUMN_COMMERCEPRICELISTID_COMMERCEPRICELISTID_2 =
 			"commercePriceListCommerceAccountGroupRel.commercePriceListId = ?";
 
-	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
+	private FinderPath _finderPathFetchByCAGI_CPI;
+	private FinderPath _finderPathCountByCAGI_CPI;
 
 	/**
 	 * Returns the commerce price list commerce account group rel where commercePriceListId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchPriceListCommerceAccountGroupRelException</code> if it could not be found.
@@ -1846,12 +1846,12 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	 * @throws NoSuchPriceListCommerceAccountGroupRelException if a matching commerce price list commerce account group rel could not be found
 	 */
 	@Override
-	public CommercePriceListCommerceAccountGroupRel findByC_C(
+	public CommercePriceListCommerceAccountGroupRel findByCAGI_CPI(
 			long commercePriceListId, long commerceAccountGroupId)
 		throws NoSuchPriceListCommerceAccountGroupRelException {
 
 		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel = fetchByC_C(
+			commercePriceListCommerceAccountGroupRel = fetchByCAGI_CPI(
 				commercePriceListId, commerceAccountGroupId);
 
 		if (commercePriceListCommerceAccountGroupRel == null) {
@@ -1886,10 +1886,11 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	 * @return the matching commerce price list commerce account group rel, or <code>null</code> if a matching commerce price list commerce account group rel could not be found
 	 */
 	@Override
-	public CommercePriceListCommerceAccountGroupRel fetchByC_C(
+	public CommercePriceListCommerceAccountGroupRel fetchByCAGI_CPI(
 		long commercePriceListId, long commerceAccountGroupId) {
 
-		return fetchByC_C(commercePriceListId, commerceAccountGroupId, true);
+		return fetchByCAGI_CPI(
+			commercePriceListId, commerceAccountGroupId, true);
 	}
 
 	/**
@@ -1901,7 +1902,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	 * @return the matching commerce price list commerce account group rel, or <code>null</code> if a matching commerce price list commerce account group rel could not be found
 	 */
 	@Override
-	public CommercePriceListCommerceAccountGroupRel fetchByC_C(
+	public CommercePriceListCommerceAccountGroupRel fetchByCAGI_CPI(
 		long commercePriceListId, long commerceAccountGroupId,
 		boolean useFinderCache) {
 
@@ -1916,7 +1917,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByCAGI_CPI, finderArgs);
 		}
 
 		if (result instanceof CommercePriceListCommerceAccountGroupRel) {
@@ -1941,9 +1943,9 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			sb.append(
 				_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
+			sb.append(_FINDER_COLUMN_CAGI_CPI_COMMERCEPRICELISTID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2);
+			sb.append(_FINDER_COLUMN_CAGI_CPI_COMMERCEACCOUNTGROUPID_2);
 
 			String sql = sb.toString();
 
@@ -1966,7 +1968,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_C, finderArgs, list);
+							_finderPathFetchByCAGI_CPI, finderArgs, list);
 					}
 				}
 				else {
@@ -2002,12 +2004,12 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	 * @return the commerce price list commerce account group rel that was removed
 	 */
 	@Override
-	public CommercePriceListCommerceAccountGroupRel removeByC_C(
+	public CommercePriceListCommerceAccountGroupRel removeByCAGI_CPI(
 			long commercePriceListId, long commerceAccountGroupId)
 		throws NoSuchPriceListCommerceAccountGroupRelException {
 
 		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel = findByC_C(
+			commercePriceListCommerceAccountGroupRel = findByCAGI_CPI(
 				commercePriceListId, commerceAccountGroupId);
 
 		return remove(commercePriceListCommerceAccountGroupRel);
@@ -2021,10 +2023,10 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	 * @return the number of matching commerce price list commerce account group rels
 	 */
 	@Override
-	public int countByC_C(
+	public int countByCAGI_CPI(
 		long commercePriceListId, long commerceAccountGroupId) {
 
-		FinderPath finderPath = _finderPathCountByC_C;
+		FinderPath finderPath = _finderPathCountByCAGI_CPI;
 
 		Object[] finderArgs = new Object[] {
 			commercePriceListId, commerceAccountGroupId
@@ -2038,9 +2040,9 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			sb.append(
 				_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
+			sb.append(_FINDER_COLUMN_CAGI_CPI_COMMERCEPRICELISTID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2);
+			sb.append(_FINDER_COLUMN_CAGI_CPI_COMMERCEACCOUNTGROUPID_2);
 
 			String sql = sb.toString();
 
@@ -2072,11 +2074,12 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2 =
+	private static final String _FINDER_COLUMN_CAGI_CPI_COMMERCEPRICELISTID_2 =
 		"commercePriceListCommerceAccountGroupRel.commercePriceListId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2 =
-		"commercePriceListCommerceAccountGroupRel.commerceAccountGroupId = ?";
+	private static final String
+		_FINDER_COLUMN_CAGI_CPI_COMMERCEACCOUNTGROUPID_2 =
+			"commercePriceListCommerceAccountGroupRel.commerceAccountGroupId = ?";
 
 	public CommercePriceListCommerceAccountGroupRelPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2113,7 +2116,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			commercePriceListCommerceAccountGroupRel);
 
 		finderCache.putResult(
-			_finderPathFetchByC_C,
+			_finderPathFetchByCAGI_CPI,
 			new Object[] {
 				commercePriceListCommerceAccountGroupRel.
 					getCommercePriceListId(),
@@ -2217,9 +2220,10 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				getCommerceAccountGroupId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_C, args,
+			_finderPathCountByCAGI_CPI, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByCAGI_CPI, args,
 			commercePriceListCommerceAccountGroupRelModelImpl);
 	}
 
@@ -2804,14 +2808,14 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			"countByCommercePriceListId", new String[] {Long.class.getName()},
 			new String[] {"commercePriceListId"}, false);
 
-		_finderPathFetchByC_C = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+		_finderPathFetchByCAGI_CPI = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByCAGI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceListId", "commerceAccountGroupId"},
 			true);
 
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+		_finderPathCountByCAGI_CPI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCAGI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceListId", "commerceAccountGroupId"},
 			false);

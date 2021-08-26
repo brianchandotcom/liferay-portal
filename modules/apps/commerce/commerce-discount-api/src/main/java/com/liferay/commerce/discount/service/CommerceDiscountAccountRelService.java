@@ -76,7 +76,7 @@ public interface CommerceDiscountAccountRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceDiscountAccountRel fetchCommerceDiscountAccountRel(
-			long commerceDiscountId, long commerceAccountId)
+			long commerceAccountId, long commerceDiscountId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

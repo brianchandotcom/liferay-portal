@@ -63,12 +63,12 @@ public class CommerceDiscountAccountRelLocalServiceUtil {
 	}
 
 	public static CommerceDiscountAccountRel addCommerceDiscountAccountRel(
-			long commerceDiscountId, long commerceAccountId,
+			long userId, long commerceDiscountId, long commerceAccountId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceDiscountAccountRel(
-			commerceDiscountId, commerceAccountId, serviceContext);
+			userId, commerceDiscountId, commerceAccountId, serviceContext);
 	}
 
 	/**
@@ -254,10 +254,10 @@ public class CommerceDiscountAccountRelLocalServiceUtil {
 	}
 
 	public static CommerceDiscountAccountRel fetchCommerceDiscountAccountRel(
-		long commerceDiscountId, long commerceAccountId) {
+		long commerceAccountId, long commerceDiscountId) {
 
 		return getService().fetchCommerceDiscountAccountRel(
-			commerceDiscountId, commerceAccountId);
+			commerceAccountId, commerceDiscountId);
 	}
 
 	/**

@@ -65,11 +65,11 @@ public class CommerceDiscountAccountRelServiceUtil {
 	}
 
 	public static CommerceDiscountAccountRel fetchCommerceDiscountAccountRel(
-			long commerceDiscountId, long commerceAccountId)
+			long commerceAccountId, long commerceDiscountId)
 		throws PortalException {
 
 		return getService().fetchCommerceDiscountAccountRel(
-			commerceDiscountId, commerceAccountId);
+			commerceAccountId, commerceDiscountId);
 	}
 
 	public static CommerceDiscountAccountRel getCommerceDiscountAccountRel(

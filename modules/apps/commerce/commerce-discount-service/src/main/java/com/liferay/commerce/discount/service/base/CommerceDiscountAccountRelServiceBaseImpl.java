@@ -22,12 +22,14 @@ import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccount
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountOrderTypeRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRuleFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountUsageEntryPersistence;
+import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -347,6 +349,83 @@ public abstract class CommerceDiscountAccountRelServiceBaseImpl
 
 		this.commerceDiscountCommerceAccountGroupRelFinder =
 			commerceDiscountCommerceAccountGroupRelFinder;
+	}
+
+	/**
+	 * Returns the commerce discount order type rel local service.
+	 *
+	 * @return the commerce discount order type rel local service
+	 */
+	public com.liferay.commerce.discount.service.
+		CommerceDiscountOrderTypeRelLocalService
+			getCommerceDiscountOrderTypeRelLocalService() {
+
+		return commerceDiscountOrderTypeRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce discount order type rel local service.
+	 *
+	 * @param commerceDiscountOrderTypeRelLocalService the commerce discount order type rel local service
+	 */
+	public void setCommerceDiscountOrderTypeRelLocalService(
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelLocalService
+				commerceDiscountOrderTypeRelLocalService) {
+
+		this.commerceDiscountOrderTypeRelLocalService =
+			commerceDiscountOrderTypeRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce discount order type rel remote service.
+	 *
+	 * @return the commerce discount order type rel remote service
+	 */
+	public
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelService
+				getCommerceDiscountOrderTypeRelService() {
+
+		return commerceDiscountOrderTypeRelService;
+	}
+
+	/**
+	 * Sets the commerce discount order type rel remote service.
+	 *
+	 * @param commerceDiscountOrderTypeRelService the commerce discount order type rel remote service
+	 */
+	public void setCommerceDiscountOrderTypeRelService(
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelService
+				commerceDiscountOrderTypeRelService) {
+
+		this.commerceDiscountOrderTypeRelService =
+			commerceDiscountOrderTypeRelService;
+	}
+
+	/**
+	 * Returns the commerce discount order type rel persistence.
+	 *
+	 * @return the commerce discount order type rel persistence
+	 */
+	public CommerceDiscountOrderTypeRelPersistence
+		getCommerceDiscountOrderTypeRelPersistence() {
+
+		return commerceDiscountOrderTypeRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce discount order type rel persistence.
+	 *
+	 * @param commerceDiscountOrderTypeRelPersistence the commerce discount order type rel persistence
+	 */
+	public void setCommerceDiscountOrderTypeRelPersistence(
+		CommerceDiscountOrderTypeRelPersistence
+			commerceDiscountOrderTypeRelPersistence) {
+
+		this.commerceDiscountOrderTypeRelPersistence =
+			commerceDiscountOrderTypeRelPersistence;
 	}
 
 	/**
@@ -747,6 +826,49 @@ public abstract class CommerceDiscountAccountRelServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the expando row local service.
+	 *
+	 * @return the expando row local service
+	 */
+	public com.liferay.expando.kernel.service.ExpandoRowLocalService
+		getExpandoRowLocalService() {
+
+		return expandoRowLocalService;
+	}
+
+	/**
+	 * Sets the expando row local service.
+	 *
+	 * @param expandoRowLocalService the expando row local service
+	 */
+	public void setExpandoRowLocalService(
+		com.liferay.expando.kernel.service.ExpandoRowLocalService
+			expandoRowLocalService) {
+
+		this.expandoRowLocalService = expandoRowLocalService;
+	}
+
+	/**
+	 * Returns the expando row persistence.
+	 *
+	 * @return the expando row persistence
+	 */
+	public ExpandoRowPersistence getExpandoRowPersistence() {
+		return expandoRowPersistence;
+	}
+
+	/**
+	 * Sets the expando row persistence.
+	 *
+	 * @param expandoRowPersistence the expando row persistence
+	 */
+	public void setExpandoRowPersistence(
+		ExpandoRowPersistence expandoRowPersistence) {
+
+		this.expandoRowPersistence = expandoRowPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		_setServiceUtilService(commerceDiscountAccountRelService);
 	}
@@ -877,6 +999,25 @@ public abstract class CommerceDiscountAccountRelServiceBaseImpl
 		commerceDiscountCommerceAccountGroupRelFinder;
 
 	@BeanReference(
+		type = com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalService.class
+	)
+	protected com.liferay.commerce.discount.service.
+		CommerceDiscountOrderTypeRelLocalService
+			commerceDiscountOrderTypeRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService.class
+	)
+	protected
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelService
+				commerceDiscountOrderTypeRelService;
+
+	@BeanReference(type = CommerceDiscountOrderTypeRelPersistence.class)
+	protected CommerceDiscountOrderTypeRelPersistence
+		commerceDiscountOrderTypeRelPersistence;
+
+	@BeanReference(
 		type = com.liferay.commerce.discount.service.CommerceDiscountRelLocalService.class
 	)
 	protected
@@ -966,5 +1107,14 @@ public abstract class CommerceDiscountAccountRelServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
+	@ServiceReference(
+		type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class
+	)
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
+		expandoRowLocalService;
+
+	@ServiceReference(type = ExpandoRowPersistence.class)
+	protected ExpandoRowPersistence expandoRowPersistence;
 
 }

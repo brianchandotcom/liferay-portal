@@ -635,7 +635,7 @@ public interface CommerceDiscountAccountRelPersistence
 	 * @return the matching commerce discount account rel
 	 * @throws NoSuchDiscountAccountRelException if a matching commerce discount account rel could not be found
 	 */
-	public CommerceDiscountAccountRel findByC_C(
+	public CommerceDiscountAccountRel findByCAI_CDI(
 			long commerceAccountId, long commerceDiscountId)
 		throws NoSuchDiscountAccountRelException;
 
@@ -646,7 +646,7 @@ public interface CommerceDiscountAccountRelPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the matching commerce discount account rel, or <code>null</code> if a matching commerce discount account rel could not be found
 	 */
-	public CommerceDiscountAccountRel fetchByC_C(
+	public CommerceDiscountAccountRel fetchByCAI_CDI(
 		long commerceAccountId, long commerceDiscountId);
 
 	/**
@@ -657,7 +657,7 @@ public interface CommerceDiscountAccountRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce discount account rel, or <code>null</code> if a matching commerce discount account rel could not be found
 	 */
-	public CommerceDiscountAccountRel fetchByC_C(
+	public CommerceDiscountAccountRel fetchByCAI_CDI(
 		long commerceAccountId, long commerceDiscountId,
 		boolean useFinderCache);
 
@@ -668,7 +668,7 @@ public interface CommerceDiscountAccountRelPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the commerce discount account rel that was removed
 	 */
-	public CommerceDiscountAccountRel removeByC_C(
+	public CommerceDiscountAccountRel removeByCAI_CDI(
 			long commerceAccountId, long commerceDiscountId)
 		throws NoSuchDiscountAccountRelException;
 
@@ -679,7 +679,7 @@ public interface CommerceDiscountAccountRelPersistence
 	 * @param commerceDiscountId the commerce discount ID
 	 * @return the number of matching commerce discount account rels
 	 */
-	public int countByC_C(long commerceAccountId, long commerceDiscountId);
+	public int countByCAI_CDI(long commerceAccountId, long commerceDiscountId);
 
 	/**
 	 * Caches the commerce discount account rel in the entity cache if it is enabled.

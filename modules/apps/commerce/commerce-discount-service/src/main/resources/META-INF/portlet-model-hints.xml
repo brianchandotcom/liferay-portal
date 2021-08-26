@@ -60,6 +60,19 @@
 		<field name="commerceDiscountId" type="long" />
 		<field name="commerceAccountGroupId" type="long" />
 	</model>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRel">
+		<field name="uuid" type="String" />
+		<field name="commerceDiscountOrderTypeRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="commerceOrderTypeId" type="long" />
+		<field name="priority" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.discount.model.CommerceDiscountRel">
 		<field name="commerceDiscountRelId" type="long" />
 		<field name="companyId" type="long" />

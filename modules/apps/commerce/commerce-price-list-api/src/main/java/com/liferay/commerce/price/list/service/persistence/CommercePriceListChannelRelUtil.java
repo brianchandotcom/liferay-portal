@@ -679,12 +679,12 @@ public class CommercePriceListChannelRelUtil {
 	 * @return the matching commerce price list channel rel
 	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
 	 */
-	public static CommercePriceListChannelRel findByC_C(
+	public static CommercePriceListChannelRel findByCCI_CPI(
 			long commerceChannelId, long commercePriceListId)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListChannelRelException {
 
-		return getPersistence().findByC_C(
+		return getPersistence().findByCCI_CPI(
 			commerceChannelId, commercePriceListId);
 	}
 
@@ -695,10 +695,10 @@ public class CommercePriceListChannelRelUtil {
 	 * @param commercePriceListId the commerce price list ID
 	 * @return the matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
 	 */
-	public static CommercePriceListChannelRel fetchByC_C(
+	public static CommercePriceListChannelRel fetchByCCI_CPI(
 		long commerceChannelId, long commercePriceListId) {
 
-		return getPersistence().fetchByC_C(
+		return getPersistence().fetchByCCI_CPI(
 			commerceChannelId, commercePriceListId);
 	}
 
@@ -710,11 +710,11 @@ public class CommercePriceListChannelRelUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
 	 */
-	public static CommercePriceListChannelRel fetchByC_C(
+	public static CommercePriceListChannelRel fetchByCCI_CPI(
 		long commerceChannelId, long commercePriceListId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_C(
+		return getPersistence().fetchByCCI_CPI(
 			commerceChannelId, commercePriceListId, useFinderCache);
 	}
 
@@ -725,12 +725,12 @@ public class CommercePriceListChannelRelUtil {
 	 * @param commercePriceListId the commerce price list ID
 	 * @return the commerce price list channel rel that was removed
 	 */
-	public static CommercePriceListChannelRel removeByC_C(
+	public static CommercePriceListChannelRel removeByCCI_CPI(
 			long commerceChannelId, long commercePriceListId)
 		throws com.liferay.commerce.price.list.exception.
 			NoSuchPriceListChannelRelException {
 
-		return getPersistence().removeByC_C(
+		return getPersistence().removeByCCI_CPI(
 			commerceChannelId, commercePriceListId);
 	}
 
@@ -741,10 +741,10 @@ public class CommercePriceListChannelRelUtil {
 	 * @param commercePriceListId the commerce price list ID
 	 * @return the number of matching commerce price list channel rels
 	 */
-	public static int countByC_C(
+	public static int countByCCI_CPI(
 		long commerceChannelId, long commercePriceListId) {
 
-		return getPersistence().countByC_C(
+		return getPersistence().countByCCI_CPI(
 			commerceChannelId, commercePriceListId);
 	}
 

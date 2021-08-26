@@ -354,7 +354,7 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 * @return the matching commerce discount commerce account group rel
 	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a matching commerce discount commerce account group rel could not be found
 	 */
-	public CommerceDiscountCommerceAccountGroupRel findByC_C(
+	public CommerceDiscountCommerceAccountGroupRel findByCDI_CAGI(
 			long commerceDiscountId, long commerceAccountGroupId)
 		throws NoSuchDiscountCommerceAccountGroupRelException;
 
@@ -365,7 +365,7 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
 	 */
-	public CommerceDiscountCommerceAccountGroupRel fetchByC_C(
+	public CommerceDiscountCommerceAccountGroupRel fetchByCDI_CAGI(
 		long commerceDiscountId, long commerceAccountGroupId);
 
 	/**
@@ -376,7 +376,7 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
 	 */
-	public CommerceDiscountCommerceAccountGroupRel fetchByC_C(
+	public CommerceDiscountCommerceAccountGroupRel fetchByCDI_CAGI(
 		long commerceDiscountId, long commerceAccountGroupId,
 		boolean useFinderCache);
 
@@ -387,7 +387,7 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the commerce discount commerce account group rel that was removed
 	 */
-	public CommerceDiscountCommerceAccountGroupRel removeByC_C(
+	public CommerceDiscountCommerceAccountGroupRel removeByCDI_CAGI(
 			long commerceDiscountId, long commerceAccountGroupId)
 		throws NoSuchDiscountCommerceAccountGroupRelException;
 
@@ -398,7 +398,8 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the number of matching commerce discount commerce account group rels
 	 */
-	public int countByC_C(long commerceDiscountId, long commerceAccountGroupId);
+	public int countByCDI_CAGI(
+		long commerceDiscountId, long commerceAccountGroupId);
 
 	/**
 	 * Caches the commerce discount commerce account group rel in the entity cache if it is enabled.

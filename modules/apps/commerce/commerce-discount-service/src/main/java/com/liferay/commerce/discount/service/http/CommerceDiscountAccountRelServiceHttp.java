@@ -173,8 +173,8 @@ public class CommerceDiscountAccountRelServiceHttp {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountAccountRel
 			fetchCommerceDiscountAccountRel(
-				HttpPrincipal httpPrincipal, long commerceDiscountId,
-				long commerceAccountId)
+				HttpPrincipal httpPrincipal, long commerceAccountId,
+				long commerceDiscountId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -184,7 +184,7 @@ public class CommerceDiscountAccountRelServiceHttp {
 				_fetchCommerceDiscountAccountRelParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceDiscountId, commerceAccountId);
+				methodKey, commerceAccountId, commerceDiscountId);
 
 			Object returnObj = null;
 

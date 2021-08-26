@@ -22,6 +22,7 @@ import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccount
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountOrderTypeRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
@@ -349,6 +350,83 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 
 		this.commerceDiscountCommerceAccountGroupRelFinder =
 			commerceDiscountCommerceAccountGroupRelFinder;
+	}
+
+	/**
+	 * Returns the commerce discount order type rel local service.
+	 *
+	 * @return the commerce discount order type rel local service
+	 */
+	public com.liferay.commerce.discount.service.
+		CommerceDiscountOrderTypeRelLocalService
+			getCommerceDiscountOrderTypeRelLocalService() {
+
+		return commerceDiscountOrderTypeRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce discount order type rel local service.
+	 *
+	 * @param commerceDiscountOrderTypeRelLocalService the commerce discount order type rel local service
+	 */
+	public void setCommerceDiscountOrderTypeRelLocalService(
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelLocalService
+				commerceDiscountOrderTypeRelLocalService) {
+
+		this.commerceDiscountOrderTypeRelLocalService =
+			commerceDiscountOrderTypeRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce discount order type rel remote service.
+	 *
+	 * @return the commerce discount order type rel remote service
+	 */
+	public
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelService
+				getCommerceDiscountOrderTypeRelService() {
+
+		return commerceDiscountOrderTypeRelService;
+	}
+
+	/**
+	 * Sets the commerce discount order type rel remote service.
+	 *
+	 * @param commerceDiscountOrderTypeRelService the commerce discount order type rel remote service
+	 */
+	public void setCommerceDiscountOrderTypeRelService(
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelService
+				commerceDiscountOrderTypeRelService) {
+
+		this.commerceDiscountOrderTypeRelService =
+			commerceDiscountOrderTypeRelService;
+	}
+
+	/**
+	 * Returns the commerce discount order type rel persistence.
+	 *
+	 * @return the commerce discount order type rel persistence
+	 */
+	public CommerceDiscountOrderTypeRelPersistence
+		getCommerceDiscountOrderTypeRelPersistence() {
+
+		return commerceDiscountOrderTypeRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce discount order type rel persistence.
+	 *
+	 * @param commerceDiscountOrderTypeRelPersistence the commerce discount order type rel persistence
+	 */
+	public void setCommerceDiscountOrderTypeRelPersistence(
+		CommerceDiscountOrderTypeRelPersistence
+			commerceDiscountOrderTypeRelPersistence) {
+
+		this.commerceDiscountOrderTypeRelPersistence =
+			commerceDiscountOrderTypeRelPersistence;
 	}
 
 	/**
@@ -877,6 +955,25 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 	@BeanReference(type = CommerceDiscountCommerceAccountGroupRelFinder.class)
 	protected CommerceDiscountCommerceAccountGroupRelFinder
 		commerceDiscountCommerceAccountGroupRelFinder;
+
+	@BeanReference(
+		type = com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalService.class
+	)
+	protected com.liferay.commerce.discount.service.
+		CommerceDiscountOrderTypeRelLocalService
+			commerceDiscountOrderTypeRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService.class
+	)
+	protected
+		com.liferay.commerce.discount.service.
+			CommerceDiscountOrderTypeRelService
+				commerceDiscountOrderTypeRelService;
+
+	@BeanReference(type = CommerceDiscountOrderTypeRelPersistence.class)
+	protected CommerceDiscountOrderTypeRelPersistence
+		commerceDiscountOrderTypeRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.discount.service.CommerceDiscountRelLocalService.class

@@ -66,13 +66,14 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceUtil {
 
 	public static CommercePriceListCommerceAccountGroupRel
 			addCommercePriceListCommerceAccountGroupRel(
-				long commercePriceListId, long commerceAccountGroupId,
-				int order,
+				long userId, long commercePriceListId,
+				long commerceAccountGroupId, int order,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommercePriceListCommerceAccountGroupRel(
-			commercePriceListId, commerceAccountGroupId, order, serviceContext);
+			userId, commercePriceListId, commerceAccountGroupId, order,
+			serviceContext);
 	}
 
 	/**

@@ -18,9 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
 import com.liferay.portal.kernel.patcher.Patcher;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -177,15 +174,6 @@ public class PatcherImpl implements Patcher {
 	@Override
 	public boolean isSeparated() {
 		return _separated;
-	}
-
-	private String[] _getInstalledPatches(Properties properties) {
-		if (properties == null) {
-			properties = getProperties();
-		}
-
-		return StringUtil.split(
-			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
 	}
 
 	private Properties _getProperties(String fileName) {

@@ -123,9 +123,95 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8301 AssertSitesTopPagesCardVisitedPagesHighestViews pending implementation
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8961
 
+		var num = "1,2";
+
+		task ("Add Site and Page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Add two new users") {
+			for (var name : list "ac,liferay") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+		}
+
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Blogs creation") {
+			for (var n : list "${num}") {
+				ACUtils.createBlogsAndAddToPage(entryTitle = "Test Blog ${n}");
+			}
+		}
+
+		task ("Access the page as a Test user") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Interation with ac user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var n : list "${num}") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${n}");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		task ("Interation with liferay user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "liferay@liferay.com",
+				userLoginFullName = "liferay liferay");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Test Blog 2");
+		}
+
+		task ("AC launch") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset highest views pages Top Pages") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
+
+			ACTimeFilter.setLast24Hours();
+
+			for (var current : list "1-AC Page,2-Test Blog 2,3-Test Blog 1") {
+				ACSites.viewVisitedTopPages(current = "${current}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8305 | Test Summary: Assert Sites Top Pages Change Time Filter"

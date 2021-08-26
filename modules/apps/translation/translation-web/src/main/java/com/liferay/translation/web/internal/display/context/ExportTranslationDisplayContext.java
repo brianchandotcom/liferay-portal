@@ -334,7 +334,9 @@ public class ExportTranslationDisplayContext {
 		locales.forEach(
 			locale -> jsonArray.put(
 				JSONUtil.put(
-					"displayName", getDisplayName(currentLocale, locale)
+					"displayName",
+					LocaleUtil.getLocaleDisplayName(
+						locale, currentLocale)
 				).put(
 					"languageId", LocaleUtil.toLanguageId(locale)
 				)));

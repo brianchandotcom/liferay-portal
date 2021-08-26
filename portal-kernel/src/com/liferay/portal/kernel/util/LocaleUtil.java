@@ -128,6 +128,12 @@ public class LocaleUtil {
 		return _localeUtil._getISOLanguages(locale);
 	}
 
+	public static String getLocaleDisplayName(
+		Locale displayLocale, Locale locale) {
+
+		return _localeUtil._getLocaleDisplayName(displayLocale, locale);
+	}
+
 	public static String getLongDisplayName(
 		Locale locale, Set<String> duplicateLanguages) {
 
@@ -354,6 +360,19 @@ public class LocaleUtil {
 		}
 
 		return isoLanguages;
+	}
+
+	private String _getLocaleDisplayName(Locale displayLocale, Locale locale) {
+		String key = "language." + displayLocale.getLanguage();
+
+		String displayName = LanguageUtil.get(locale, key);
+
+		if (displayName.equals(key)) {
+			return displayLocale.getDisplayName(locale);
+		}
+
+		return StringBundler.concat(
+			displayName, " (", displayLocale.getDisplayCountry(locale), ")");
 	}
 
 	private String _getLongDisplayName(

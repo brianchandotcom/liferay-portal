@@ -84,7 +84,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -159,7 +159,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -335,7 +335,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that a Rule with 'Is empty' condition can be created"
+	@description = "Verify that a Rule with 'Is Empty' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsEmptyRule {
 		property forms.functional = "true";
@@ -358,7 +358,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(

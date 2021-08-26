@@ -32,36 +32,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CARD_FILTER_BY_DAY_ACTIVE</td>
-	<td>//button[contains(@class,'interval-option') and contains(@class,'active') and text()='D']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_FILTER_BY_DAY</td>
-	<td>//button[contains(@class,'interval-option') and text()='D']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_FILTER_BY_WEEK_ACTIVE</td>
-	<td>//button[contains(@class,'interval-option') and contains(@class,'active') and text()='W']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_FILTER_BY_WEEK</td>
-	<td>//button[contains(@class,'interval-option') and text()='W']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_FILTER_BY_MONTH_ACTIVE</td>
-	<td>//button[contains(@class,'interval-option') and contains(@class,'active') and text()='M']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_FILTER_BY_MONTH</td>
-	<td>//button[contains(@class,'interval-option') and text()='M']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CARD_TITLE</td>
 	<td>//h5[@class='card-title'and text()='${key_cardTitle}']</td>
 	<td></td>

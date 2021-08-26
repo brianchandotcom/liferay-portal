@@ -1113,9 +1113,13 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Styles");
 
+		WaitForElementPresent(
+				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX_UNCHECKED");
+
 		Check.checkNotVisible(
 				checkboxName = "Hide Fragment",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+				locator1 = "Checkbox#ANY_CHECKBOX_UNCHECKED");
 
 		PageEditor.waitForAutoSave();
 	}
@@ -1165,8 +1169,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Styles");
 
-		Check.checkNotVisible(
+		WaitForElementPresent(
 				checkboxName = "Hide Fragment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click.clickNoWaitForVisible(checkboxName = "Hide Fragment",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 		PageEditor.waitForAutoSave();

@@ -525,14 +525,14 @@ definition {
 					pageName = "Test Content Page Name",
 					siteName = "Test Site Name");
 
-			PageEditor.addWidget(portletName = "Navigation Menu");
+			PageEditor.addWidget(portletName = "Blogs");
 
 		}
 		task ("Add fragments to page") {
 			PageEditor.addFragment(
 					collectionName = "Basic Components",
 					fragmentName = "Button",
-					targetFragmentName = "Navigation Menu");
+					targetFragmentName = "Blogs");
 
 			PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -547,7 +547,7 @@ definition {
 		}
 
 		task ("Hide blogs from topper options") {
-			PageEditor.clickHideFragment(fragmentName = "Navigation Menu");
+			PageEditor.clickHideFragment(fragmentName = "Blogs");
 		}
 		task ("Hide button fragment from fragment options") {
 			PageEditor.clickHideFragmentViaPageStyles(fragmentName = "Button");
@@ -562,6 +562,20 @@ definition {
 		}
 
 		task ("Assert only html fragment is shown") {
+			AssertTextNotPresent(
+					locator1 = "Message#EMPTY_INFO",
+					value1 = "No entries were found.");
+
+			AssertTextNotPresent(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Heading Example");
+
+			AssertTextNotPresent(
+					key_fragmentName = "button",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Go Somewhere");
+
 			AssertTextEquals.assertPartialText(
 					key_fragmentName = "html",
 					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
@@ -581,6 +595,20 @@ definition {
 		}
 
 		task ("Assert only html fragment is shown") {
+			AssertTextNotPresent(
+					locator1 = "Message#EMPTY_INFO",
+					value1 = "No entries were found.");
+
+			AssertTextNotPresent(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Heading Example");
+
+			AssertTextNotPresent(
+					key_fragmentName = "button",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Go Somewhere");
+
 			AssertTextEquals.assertPartialText(
 					key_fragmentName = "html",
 					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
@@ -593,13 +621,13 @@ definition {
 					siteName = "Test Site Name");
 
 		}
-		task ("Unhide fragment blogs from the sidebar fragment tree") {
-			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Navigation Menu");
+		task ("Unhide Blogs from the sidebar fragment tree") {
+			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Blogs");
 		}
-		task ("Unhide fragment language from fragment options") {
+		task ("Unhide Heading from fragment options") {
 			PageEditor.clickUnhideFragmentViaPageStyles(fragmentName = "Heading");
 		}
-		task ("Unhide button from topper options") {
+		task ("Unhide Button from sidebar fragment tree") {
 			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Button");
 		}
 
@@ -615,18 +643,20 @@ definition {
 					siteName = "Test Site Name");
 		}
 
-		task ("Assert the four fragments are shown\n") {
-			AssertVisible(
-					key_portletName = "Navigation Menu",
-					locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
+		task ("Assert the four fragments are shown") {
+			AssertTextEquals(
+					locator1 = "Message#EMPTY_INFO",
+					value1 = "No entries were found.");
 
-			AssertVisible(
-					key_fragmentName = "Heading",
-					locator1 = "Fragment#FRAGMENT_HEADER");
+			AssertTextEquals.assertPartialText(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Heading Example");
 
-			AssertVisible(
-					key_fragmentName = "Button",
-					locator1 = "Fragment#FRAGMENT_HEADER");
+			AssertTextEquals.assertPartialText(
+					key_fragmentName = "button",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Go Somewhere");
 
 			AssertTextEquals.assertPartialText(
 					key_fragmentName = "html",

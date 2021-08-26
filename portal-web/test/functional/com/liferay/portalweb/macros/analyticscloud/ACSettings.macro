@@ -243,6 +243,9 @@ definition {
 		Click(locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD");
 
 		for (var emailAdress : list "${emailAdresses}") {
+			Type(
+				locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD",
+				value1 = "${emailAdress}");
 			Click(
 				key_emailAdress = "${emailAdress}",
 				locator1 = "ACDataControlAndPrivacy#FIND_EMAIL_FIELD");

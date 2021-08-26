@@ -205,6 +205,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134844. Fragment view options can be reset to parent one."
+	@priority = "4"
+	@uitest
+	test FragmentViewOptionsCanBeResetToParentOne
+	{
+		task ("Add thee headings to page") {
+			ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Heading Example 1");
+
+			for (var n : list "3,2") {
+				PageEditor.addFragment(
+						collectionName = "Basic Components",
+						fragmentName = "Heading",
+						targetFragmentName = "Heading");
+
+				PageEditor.editFragmentText(
+						fragmentName = "Heading",
+						id = "element-text",
+						index = "2",
+						text = "Heading Example ${n}");
+			}
+		}
+
+		task ("Hide Heading Example 3 for desktop view") {
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "3");
+		}
+
+
+		task ("Change to landscape phone viewport, hide 1 and 2, unhide 3") {
+			Click(
+					key_deviceType = "Landscape Phone",
+					locator1 = "PageEditor#DEVICE_TYPE");
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "1");
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "2");
+			PageEditor.clickUnhideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "3");
+		}
+
+		task ("Change to Portrait phone viewport, hide 3, unhide 2") {
+			Click(
+					key_deviceType = "Portrait Phone",
+					locator1 = "PageEditor#DEVICE_TYPE");
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "3");
+			PageEditor.clickUnhideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "2");
+		}
+
+
+		task ("Click restore default for Heading Example 1 and assert is NOT shown") {
+			PageEditor.clickRestoreDefaultHidePropertyForFragment(
+					fragmentName = "Heading",
+					index = "1");
+
+			AssertTextNotPresent(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Heading Example 1");
+		}
+		task ("Click restore default for Heading Example 2 and assert  is NOT shown") {
+			PageEditor.clickRestoreDefaultHidePropertyForFragment(
+					fragmentName = "Heading",
+					index = "2");
+
+			AssertTextNotPresent(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Heading Example 2");
+
+		}
+		task ("Click restore default for Heading Example 3 and assert  is shown") {
+			PageEditor.clickRestoreDefaultHidePropertyForFragment(
+					fragmentName = "Heading",
+					index = "3");
+
+			AssertTextEquals.assertPartialText(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Heading Example 13");
+
+		}
+
+	}
+
+
 	@description = "This is a test for LPS-134844. Hidden property is propagated to smaller viewpoints."
 	@priority = "5"
 	@uitest

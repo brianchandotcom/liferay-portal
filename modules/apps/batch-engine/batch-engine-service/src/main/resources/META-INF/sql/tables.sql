@@ -12,7 +12,7 @@ create table BatchEngineExportTask (
 	contentType VARCHAR(75) null,
 	endTime DATE null,
 	errorMessage VARCHAR(1000) null,
-	fieldNames VARCHAR(75) null,
+	fieldNames VARCHAR(1000) null,
 	executeStatus VARCHAR(75) null,
 	parameters TEXT null,
 	startTime DATE null,

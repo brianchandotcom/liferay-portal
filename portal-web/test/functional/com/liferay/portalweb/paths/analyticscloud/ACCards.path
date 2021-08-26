@@ -22,6 +22,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INTERVAL_OPTION_ACTIVE_IN_SPECIFIC_CARD</td>
+	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//button[contains(@class,'interval-option')][contains(@class,'active')][normalize-space(text())='${interval}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INTERVAL_OPTION_IN_SPECIFIC_CARD</td>
 	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//button[contains(@class,'interval-option')][normalize-space(text())='${interval}']</td>
 	<td></td>

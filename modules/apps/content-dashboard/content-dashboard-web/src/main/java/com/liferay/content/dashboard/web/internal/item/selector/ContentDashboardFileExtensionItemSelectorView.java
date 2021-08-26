@@ -218,7 +218,8 @@ public class ContentDashboardFileExtensionItemSelectorView
 					return JSONUtil.put(
 						"fileExtensions",
 						JSONUtil.putAll(
-							fileExtensionsStream.map(
+							fileExtensionsStream.sorted(
+							).map(
 								fileExtension -> JSONUtil.put(
 									"fileExtension", fileExtension
 								).put(

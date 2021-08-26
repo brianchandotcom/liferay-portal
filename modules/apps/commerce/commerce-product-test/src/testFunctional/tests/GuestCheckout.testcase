@@ -548,8 +548,8 @@ definition {
 		User.loginPG();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
+			category = "Accounts",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Guest Account 1");
@@ -637,8 +637,8 @@ definition {
 		User.firstLoginPG();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
+			category = "Accounts",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Address Name");
@@ -789,8 +789,8 @@ definition {
 		User.loginPG();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
+			category = "Accounts",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Buyer User");
@@ -1318,8 +1318,8 @@ definition {
 		User.loginPG();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
+			category = "Accounts",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Guest Account");

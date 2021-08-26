@@ -99,8 +99,8 @@ definition {
 		// TODO Review
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
+			category = "Accounts",
+			panel = "Applications",
 			portlet = "Account Groups");
 
 		Click(locator1 = "Button#PLUS");

@@ -119,8 +119,8 @@ definition {
 			adminEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
+			category = "Accounts",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Test Test");

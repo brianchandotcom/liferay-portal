@@ -133,6 +133,16 @@
 	<td>xpath=(//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')][.//span[contains(@class,'title')][normalize-space(text())='Visited ${itemName}']]//ul[contains(@class,'timeline-nested')]//a[contains(@class,'title')][normalize-space()='Visited ${pageName}'])[${index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHART_POPOVER</td>
+	<td>//div[contains(@class,'recharts-tooltip-wrapper')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHART_POPOVER_ACTIVITIES_DATE</td>
+	<td>xpath=(//tr[contains(@class,'analytics-tooltip-chart-row')])[1]//td[2]//div[contains(@class,'analytics-tooltip-chart-content')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

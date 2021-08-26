@@ -296,9 +296,6 @@ public class KaleoWorkflowModelConverterImpl
 		DefaultWorkflowInstance defaultWorkflowInstance =
 			new DefaultWorkflowInstance();
 
-		defaultWorkflowInstance.setEndDate(kaleoInstance.getCompletionDate());
-		defaultWorkflowInstance.setStartDate(kaleoInstance.getCreateDate());
-
 		defaultWorkflowInstance.setCurrentNodeNames(
 			Stream.of(
 				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
@@ -319,6 +316,9 @@ public class KaleoWorkflowModelConverterImpl
 			).collect(
 				Collectors.toList()
 			));
+
+		defaultWorkflowInstance.setEndDate(kaleoInstance.getCompletionDate());
+		defaultWorkflowInstance.setStartDate(kaleoInstance.getCreateDate());
 
 		if (workflowContext != null) {
 			defaultWorkflowInstance.setWorkflowContext(workflowContext);

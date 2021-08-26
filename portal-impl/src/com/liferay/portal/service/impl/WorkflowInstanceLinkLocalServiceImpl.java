@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -153,11 +154,11 @@ public class WorkflowInstanceLinkLocalServiceImpl
 
 		List<String> currentNodeNames = workflowInstance.getCurrentNodeNames();
 
-		if (!ListUtil.isEmpty(currentNodeNames)) {
+		if (ListUtil.isNotEmpty(currentNodeNames)) {
 			return currentNodeNames.get(0);
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	@Override

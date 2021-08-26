@@ -77,8 +77,8 @@ public class WorkflowInstanceResourceTest
 		assertEquals(postWorkflowInstance, getWorkflowInstance);
 		assertValid(getWorkflowInstance);
 		Assert.assertThat(
-			new String[] {"review"},
-			CoreMatchers.is(getWorkflowInstance.getCurrentNodeNames()));
+			getWorkflowInstance.getCurrentNodeNames(),
+			CoreMatchers.is(new String[] {"review"}));
 	}
 
 	@Override

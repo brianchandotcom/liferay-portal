@@ -25,17 +25,13 @@ import java.util.Map;
  */
 public class JSONTranslatorPacket implements TranslatorPacket {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #JSONTranslatorPacket(long, JSONObject)}
+	 */
+	@Deprecated
 	public JSONTranslatorPacket(JSONObject jsonObject) {
-		_companyId = CompanyThreadLocal.getCompanyId();
-
-		_sourceLanguageId = jsonObject.getString("sourceLanguageId");
-		_targetLanguageId = jsonObject.getString("targetLanguageId");
-
-		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
-
-		for (String key : fieldsJSONObject.keySet()) {
-			_fieldsMap.put(key, fieldsJSONObject.getString(key));
-		}
+		this(CompanyThreadLocal.getCompanyId(), jsonObject);
 	}
 
 	public JSONTranslatorPacket(long companyId, JSONObject jsonObject) {

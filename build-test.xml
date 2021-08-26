@@ -14000,8 +14000,6 @@ url=${short.hostname}:8080</echo>
 			</then>
 		</if>
 
-		<print-search-indices />
-
 		<trycatch property="shutdown.error">
 			<try>
 				<antcall target="clean-up-logs" />

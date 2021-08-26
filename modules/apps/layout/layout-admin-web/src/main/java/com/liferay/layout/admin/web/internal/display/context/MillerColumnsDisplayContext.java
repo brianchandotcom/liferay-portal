@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -413,7 +414,8 @@ public class MillerColumnsDisplayContext {
 			return locale.getDisplayName(currentLocale);
 		}
 
-		return displayName;
+		return StringBundler.concat(
+			displayName, " (", locale.getDisplayCountry(currentLocale), ")");
 	}
 
 	private JSONObject _getExportFileFormatJSONObject(

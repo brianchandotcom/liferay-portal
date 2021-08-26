@@ -1429,7 +1429,8 @@ public class JournalDisplayContext {
 			return locale.getDisplayName(currentLocale);
 		}
 
-		return displayName;
+		return StringBundler.concat(
+			displayName, " (", locale.getDisplayCountry(currentLocale), ")");
 	}
 
 	private EntriesChecker _getEntriesChecker() {

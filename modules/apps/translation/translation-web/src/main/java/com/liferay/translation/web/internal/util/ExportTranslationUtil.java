@@ -14,6 +14,7 @@
 
 package com.liferay.translation.web.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,7 +51,8 @@ public class ExportTranslationUtil {
 			return locale.getDisplayName(currentLocale);
 		}
 
-		return displayName;
+		return StringBundler.concat(
+			displayName, " (", locale.getDisplayCountry(currentLocale), ")");
 	}
 
 	private static JSONObject _getLocaleJSONObject(

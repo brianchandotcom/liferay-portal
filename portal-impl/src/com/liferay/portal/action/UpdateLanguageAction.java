@@ -96,8 +96,15 @@ public class UpdateLanguageAction implements Action {
 
 		// Send redirect
 
-		httpServletResponse.sendRedirect(
-			getRedirect(httpServletRequest, themeDisplay, locale));
+		try {
+			httpServletResponse.sendRedirect(
+				getRedirect(httpServletRequest, themeDisplay, locale));
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			httpServletResponse.sendError(
+				HttpServletResponse.SC_BAD_REQUEST,
+				httpServletRequest.getRequestURI());
+		}
 
 		return null;
 	}
@@ -109,6 +116,10 @@ public class UpdateLanguageAction implements Action {
 
 		String redirect = PortalUtil.escapeRedirect(
 			ParamUtil.getString(httpServletRequest, "redirect"));
+
+		if (Validator.isNull(redirect)) {
+			throw new IllegalArgumentException();
+		}
 
 		String layoutURL = redirect;
 

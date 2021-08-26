@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.problem.Problem;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.Inject;
 
 import java.io.File;
 
@@ -43,6 +46,8 @@ public class BlogPostingImageResourceTest
 	@Override
 	@Test
 	public void testPostSiteBlogPostingImage() throws Exception {
+		super.testPostSiteBlogPostingImage();
+
 		_testPostSiteBlogPostingImageRollback();
 	}
 
@@ -98,6 +103,8 @@ public class BlogPostingImageResourceTest
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId());
 
+		DLAppServiceUtil.deleteFolder(folder.getFolderId());
+
 		Assert.assertNull(folder);
 
 		BlogPostingImage blogPostingImage = randomBlogPostingImage();
@@ -129,5 +136,8 @@ public class BlogPostingImageResourceTest
 
 		Assert.assertNull(folder);
 	}
+
+	@Inject
+	private DLAppService _dlAppService;
 
 }

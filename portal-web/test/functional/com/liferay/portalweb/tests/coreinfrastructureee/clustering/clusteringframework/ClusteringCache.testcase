@@ -71,11 +71,6 @@ definition {
 			moduleName = "'Portal Cluster Multiple Sample Web'",
 			moduleStatus = "Resolved");
 
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
 		Navigator.gotoSpecificURLPage(
 			pageName = "Session Replication Test",
 			url = "http://localhost:9080");
@@ -134,15 +129,6 @@ definition {
 		var sessionData = selenium.getText("Portlet#SPECIFIC_TEXT");
 
 		echo("${sessionData}");
-
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Session Replication Test",

@@ -29,7 +29,7 @@ const mockProps = {
 						'com.liferay.dynamic.data.mapping.model.DDMStructure',
 					classPK: '40873',
 					label: 'Basic Web Content',
-					selected: true,
+					selected: false,
 				},
 			],
 			label: 'Web Content Article',
@@ -42,18 +42,21 @@ const mockProps = {
 						'com.liferay.document.library.kernel.model.DLFileEntryType',
 					classPK: '0',
 					label: 'Basic Document',
+					selected: true,
 				},
 				{
 					className:
 						'com.liferay.document.library.kernel.model.DLFileEntryType',
 					classPK: '40709',
 					label: 'External Video Shortcut',
+					selected: true,
 				},
 				{
 					className:
 						'com.liferay.document.library.kernel.model.DLFileEntryType',
 					classPK: '40761',
 					label: 'Google Drive Shortcut',
+					selected: false,
 				},
 			],
 
@@ -85,8 +88,10 @@ describe('SelectTypeAndSubtype', () => {
 		const {className} = getByRole('tree');
 		expect(className).toContain('lfr-treeview-node-list');
 
-		expect(getByText('Web Content Article')).toBeInTheDocument();
-		expect(getByText('Document')).toBeInTheDocument();
+		expect(
+			getByText('Web Content Article', {exact: false})
+		).toBeInTheDocument();
+		expect(getByText('Document (3 items)')).toBeInTheDocument();
 		expect(getByText('Basic Web Content')).toBeInTheDocument();
 	});
 
@@ -98,12 +103,14 @@ describe('SelectTypeAndSubtype', () => {
 		const input = getByPlaceholderText('search');
 		fireEvent.change(input, {target: {value: 'external'}});
 		expect(getByText('External Video Shortcut')).toBeInTheDocument();
-		expect(queryByText('Web Content Article')).not.toBeInTheDocument();
+		expect(
+			queryByText('Web Content Article', {exact: false})
+		).not.toBeInTheDocument();
 	});
 
 	it('renders a Treeview with a selected nodes if selected is true', () => {
 		const {container} = render(<SelectTypeAndSubtype {...mockProps} />);
 
-		expect(container.getElementsByClassName('selected').length).toBe(1);
+		expect(container.getElementsByClassName('selected').length).toBe(2);
 	});
 });

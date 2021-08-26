@@ -95,8 +95,8 @@ describe('SelectFileExtension', () => {
 		const {className} = getByRole('tree');
 		expect(className).toContain('lfr-treeview-node-list');
 
-		expect(getByText('Audio')).toBeInTheDocument();
-		expect(getByText('Image')).toBeInTheDocument();
+		expect(getByText('Audio', {exact: false})).toBeInTheDocument();
+		expect(getByText('Image', {exact: false})).toBeInTheDocument();
 		expect(getByText('mp3')).toBeInTheDocument();
 		expect(queryByText('gif')).not.toBeInTheDocument();
 	});

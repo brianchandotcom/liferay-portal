@@ -611,10 +611,10 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
+		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
 			Click(
-				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
-				key_accordionTitle = "geolocation");
+				key_accordionTitle = "geolocation",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
 		Type(
@@ -631,10 +631,10 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
 
-		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
+		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
 			Click(
-				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
-				key_accordionTitle = "address");
+				key_accordionTitle = "address",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
 		Type(
@@ -690,10 +690,10 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
+		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "address")) {
 			Click(
-				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
-				key_accordionTitle = "address");
+				key_accordionTitle = "address",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
 		AssertTextEquals(
@@ -867,10 +867,10 @@ definition {
 			key_metadataSetName = "Italy",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
+		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
 			Click(
-				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
-				key_accordionTitle = "channels");
+				key_accordionTitle = "channels",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
 		Uncheck.uncheckToggleSwitch(
@@ -883,10 +883,10 @@ definition {
 			key_metadataSetName = "United States - Northeast",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 
-		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
+		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
 			Click(
-				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
-				key_accordionTitle = "channels");
+				key_accordionTitle = "channels",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
 		Uncheck.uncheckToggleSwitch(
@@ -1074,10 +1074,10 @@ definition {
 			key_itemName = "Italy",
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
-		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
+		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "channels")) {
 			Click(
-				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
-				key_accordionTitle = "channels");
+				key_accordionTitle = "channels",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
 		Button.clickSave();
@@ -1164,10 +1164,10 @@ definition {
 			key_toggleSwitchLabel = "Active",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		if(IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
+		if (IsElementPresent(locator1 = "CommerceEntry#ACCORDION_COLLAPSED", key_accordionTitle = "geolocation")) {
 			Click(
-				locator1 = "CommerceEntry#ACCORDION_COLLAPSED",
-				key_accordionTitle = "geolocation");
+				key_accordionTitle = "geolocation",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
 		Type(

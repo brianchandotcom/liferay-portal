@@ -44,7 +44,7 @@ definition {
 		PopulateObjectFormsConfiguration.openForm();
 
 		FormsAdminNavigator.gotoAddForm();
-		
+
 		Form.editName(formName = "Form 1");
 
 		PopulateObjectFormsConfiguration.openFormSettings();

@@ -203,6 +203,19 @@ public class UpdateLanguageActionTest {
 				mockHttpServletRequest, themeDisplay, _targetLocale));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetRedirectWithInvalidRedirectParameter() throws Exception {
+		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("redirect", "INVALID VALUE");
+
+		updateLanguageAction.getRedirect(
+			mockHttpServletRequest, new ThemeDisplay(), _targetLocale);
+	}
+
 	private void _assertRedirect(
 			ThemeDisplay themeDisplay, String expectedRedirect, String url)
 		throws Exception {

@@ -9,4 +9,11 @@ definition {
 
 	}
 
+    macro useMinusZoom {
+        //Use "-" button
+
+        CommerceDiagram.useResetZoom();
+
+		CommerceDiagram.useMinusButton(key_list = "${key_list}");
+    }
 }

@@ -20,6 +20,8 @@ components:
                     readOnly: true
                     type: array
                 name:
+                    type: string
+                name_i18n:
                     additionalProperties:
                         type: string
                     type: object
@@ -41,6 +43,8 @@ components:
                 key:
                     type: string
                 name:
+                    type: string
+                name_i18n:
                     additionalProperties:
                         type: string
                     type: object

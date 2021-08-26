@@ -80,6 +80,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 	public void testGetData() throws Exception {
 		_addFileEntry("java");
 		_addFileEntry("jpg");
+		_addFileEntry("liferay");
 		_addFileEntry("mp3");
 		_addFileEntry("mp4");
 		_addFileEntry("pdf");
@@ -87,7 +88,6 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 		_addFileEntry("txt");
 		_addFileEntry("xls");
 		_addFileEntry("zip");
-		_addFileEntry("liferay");
 
 		Map<String, Object> data = _getData();
 

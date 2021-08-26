@@ -126,4 +126,27 @@ definition {
 		}
     }
 
+    macro useDragOnBackgroundByDirectionController {
+        //Verify the postion after mouse drag using the direction controller
+
+        CommerceDiagram.useResetZoom();
+
+        first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+
+        for (var value : list "${key_list}") {
+			Click(
+				key_direction = "${direction}",
+				locator1 = "CommerceEntry#DIAGRAM_MOVE_CONTROLLER");
+		}
+
+		second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+
+		if("${first_position}" != "${second_position}") {
+			echo("The position after the using the direction controller is different from the previous one");
+		}
+		else {
+			fail("The position after the drag by using the direction controller is not correct: ${second_position}, the expected position it must be different from ${first_position}");
+		}
+    }
+
 }

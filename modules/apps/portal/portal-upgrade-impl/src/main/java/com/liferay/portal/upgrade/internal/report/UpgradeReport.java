@@ -169,8 +169,6 @@ public class UpgradeReport {
 				String.format(
 					"%-30s %10s\n", "--------------", "--------------"));
 
-			Collections.sort(tableInfos);
-
 			for (TableInfo tableInfo : tableInfos) {
 				sb.append(tableInfo);
 				sb.append("\n");
@@ -511,6 +509,8 @@ public class UpgradeReport {
 				}
 			}
 		}
+
+		Collections.sort(tableInfos);
 
 		return tableInfos;
 	}

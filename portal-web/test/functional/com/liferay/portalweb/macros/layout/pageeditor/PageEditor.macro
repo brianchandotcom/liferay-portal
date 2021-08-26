@@ -1100,7 +1100,7 @@ definition {
 
 		Click.clickNoWaitForVisible(
 				key_nodeName = "${fragmentName}",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_VIEW_INDEX");
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
 		PageEditor.waitForAutoSave();
 	}
@@ -1150,13 +1150,18 @@ definition {
 	}
 
 	macro clickUnhideFragmentViaPageStructure {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+		var key_index = "${index}";
+
 		PageEditor.gotoTab(tabName = "Browser");
 
 		Navigator.gotoNavTab(navTab = "Page Elements");
 
 		Click.clickNoWaitForVisible(
 				key_nodeName = "${fragmentName}",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDDEN");
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
 		PageEditor.waitForAutoSave();
 	}

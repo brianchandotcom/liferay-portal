@@ -35,8 +35,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputLocalizedTag extends IncludeTag {
 
-	public List<String> getActiveLocales() {
-		return _activeLocales;
+	public List<String> getActiveLanguageIds() {
+		return _activeLanguageIds;
 	}
 
 	public Set<Locale> getAvailableLocales() {
@@ -135,8 +135,8 @@ public class InputLocalizedTag extends IncludeTag {
 		return _ignoreRequestValue;
 	}
 
-	public void setActiveLocales(List<String> activeLocales) {
-		_activeLocales = activeLocales;
+	public void setActiveLanguageIds(List<String> activeLanguageIds) {
+		_activeLanguageIds = activeLanguageIds;
 	}
 
 	public void setAdminMode(boolean adminMode) {
@@ -239,7 +239,7 @@ public class InputLocalizedTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_activeLocales = new ArrayList<>();
+		_activeLanguageIds = new ArrayList<>();
 		_adminMode = false;
 		_autoFocus = false;
 		_autoSize = false;
@@ -297,7 +297,7 @@ public class InputLocalizedTag extends IncludeTag {
 		}
 
 		httpServletRequest.setAttribute(
-			"liferay-ui:input-localized:activeLocales", _activeLocales);
+			"liferay-ui:input-localized:activeLanguageIds", _activeLanguageIds);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-localized:adminMode", String.valueOf(_adminMode));
 		httpServletRequest.setAttribute(
@@ -358,7 +358,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_localized/page.jsp";
 
-	private List<String> _activeLocales = new ArrayList<>();
+	private List<String> _activeLanguageIds = new ArrayList<>();
 	private boolean _adminMode;
 	private boolean _autoFocus;
 	private boolean _autoSize;

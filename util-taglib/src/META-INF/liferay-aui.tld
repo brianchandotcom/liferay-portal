@@ -632,7 +632,7 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<description><![CDATA[Whether to pass the active translations.]]></description>
-			<name>activeLocales</name>
+			<name>activeLanguageIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

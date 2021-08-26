@@ -14,4 +14,4 @@
 
 import {State} from '@liferay/frontend-js-state-web';
 
-export const activeLocalesAtom = State.atom('activeLocales', []);
+export const activeLanguageIdsAtom = State.atom('activeLocaleIds', []);

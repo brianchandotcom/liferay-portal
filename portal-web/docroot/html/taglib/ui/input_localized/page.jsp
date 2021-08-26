@@ -217,7 +217,7 @@
 						}
 						%>
 
-						<c:if test="<%= Validator.isNotNull(activeLocales) && !activeLocales.isEmpty() && adminMode %>">
+						<c:if test="<%= Validator.isNotNull(activeLanguageIds) && !activeLanguageIds.isEmpty() && adminMode %>">
 							<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 							<li>
 								<button class="dropdown-item" id="manage-translations">
@@ -329,7 +329,7 @@
 			};
 
 			<c:choose>
-				<c:when test="<%= Validator.isNotNull(activeLocales) && !activeLocales.isEmpty() %>">
+				<c:when test="<%= Validator.isNotNull(activeLanguageIds) && !activeLanguageIds.isEmpty() %>">
 					Liferay.Loader.require(
 					[
 						A.config.groups.components.mainModule,
@@ -341,7 +341,7 @@
 						Liferay.InputLocalized.register(
 							'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
 							{
-								activeLocales: <%= JSONFactoryUtil.createJSONArray(activeLocales) %>,
+								activeLanguageIds: <%= JSONFactoryUtil.createJSONArray(activeLanguageIds) %>,
 								frontendJsComponentsWebModule,
 								frontendJsReactWebModule,
 								frontendJsStateWebModule,

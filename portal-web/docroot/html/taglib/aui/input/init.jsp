@@ -19,7 +19,7 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
-List<String> activeLocales = (List<String>)request.getAttribute("aui:input:activeLocales");
+List<String> activeLanguageIds = (List<String>)request.getAttribute("aui:input:activeLanguageIds");
 boolean adminMode = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:adminMode")));
 boolean autoFocus = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:autoFocus")));
 boolean autoSize = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:autoSize")));

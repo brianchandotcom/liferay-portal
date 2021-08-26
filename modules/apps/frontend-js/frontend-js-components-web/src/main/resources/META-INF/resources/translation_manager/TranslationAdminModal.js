@@ -22,7 +22,7 @@ const emptyArray = [];
 const noop = () => {};
 
 const TranslationAdminModal = ({
-	activeLocales: initialActiveLocales = emptyArray,
+	activeLanguageIds: initialActiveLanguageIds = emptyArray,
 	ariaLabels = {
 		default: Liferay.Language.get('default'),
 		manageTranslations: Liferay.Language.get('manage-translations'),
@@ -35,19 +35,21 @@ const TranslationAdminModal = ({
 	translations,
 	visible: initialVisible,
 }) => {
-	const [activeLocales, setActiveLocales] = useState(initialActiveLocales);
+	const [activeLanguageIds, setActiveLanguageIds] = useState(
+		initialActiveLanguageIds
+	);
 	const [lastDeletedLocaleId, setLastDeletedLocaleId] = useState(null);
 	const [visible, setVisible] = useState(initialVisible);
 
 	const {observer} = useModal({
 		onClose: () => {
 			setVisible(false);
-			onClose([...activeLocales]);
+			onClose([...activeLanguageIds]);
 		},
 	});
 
 	const handleAddLocale = (localeId) => {
-		setActiveLocales([...activeLocales, localeId]);
+		setActiveLanguageIds([...activeLanguageIds, localeId]);
 		setLastDeletedLocaleId(null);
 	};
 
@@ -56,9 +58,9 @@ const TranslationAdminModal = ({
 	};
 
 	const handleRemoveLocale = (localeId) => {
-		const newActiveLocales = [...activeLocales];
-		newActiveLocales.splice(activeLocales.indexOf(localeId), 1);
-		setActiveLocales(newActiveLocales);
+		const newActiveLanguageIds = [...activeLanguageIds];
+		newActiveLanguageIds.splice(activeLanguageIds.indexOf(localeId), 1);
+		setActiveLanguageIds(newActiveLanguageIds);
 		setLastDeletedLocaleId(localeId);
 	};
 
@@ -68,8 +70,8 @@ const TranslationAdminModal = ({
 	};
 
 	useEffect(() => {
-		setActiveLocales(initialActiveLocales);
-	}, [initialActiveLocales]);
+		setActiveLanguageIds(initialActiveLanguageIds);
+	}, [initialActiveLanguageIds]);
 
 	useEffect(() => {
 		setVisible(initialVisible);
@@ -80,7 +82,7 @@ const TranslationAdminModal = ({
 			{visible && (
 				<ClayModal observer={observer}>
 					<TranslationAdminContent
-						activeLocales={activeLocales}
+						activeLanguageIds={activeLanguageIds}
 						ariaLabels={ariaLabels}
 						availableLocales={availableLocales}
 						defaultLocaleId={defaultLocaleId}
@@ -98,7 +100,7 @@ const TranslationAdminModal = ({
 };
 
 TranslationAdminModal.propTypes = {
-	activeLocales: PropTypes.arrayOf(PropTypes.string),
+	activeLanguageIds: PropTypes.arrayOf(PropTypes.string),
 	arialLabels: PropTypes.shape({
 		default: PropTypes.string,
 		manageTranslations: PropTypes.string,
@@ -108,7 +110,7 @@ TranslationAdminModal.propTypes = {
 	}),
 	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
-	onActiveLocalesChange: PropTypes.func,
+	onActiveLanguageIdsChange: PropTypes.func,
 	translations: PropTypes.object,
 	visible: PropTypes.bool,
 };

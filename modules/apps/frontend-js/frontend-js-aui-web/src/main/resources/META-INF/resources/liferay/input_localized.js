@@ -45,7 +45,7 @@ AUI.add(
 			_instances: {},
 
 			ATTRS: {
-				activeLocales: {
+				activeLanguageIds: {
 					validator: Lang.isArray,
 				},
 
@@ -169,7 +169,7 @@ AUI.add(
 			prototype: {
 				_State: null,
 
-				_activeLocalesAtom: null,
+				_activeLanguageIdsAtom: null,
 
 				_animate(input, shouldFocus) {
 					var instance = this;
@@ -308,12 +308,12 @@ AUI.add(
 					}
 				},
 
-				_onActiveLocalesChange(activeLocales) {
+				_onActiveLanguageIdsChange(activeLanguageIds) {
 					var instance = this;
 
-					instance.set('activeLocales', activeLocales);
+					instance.set('activeLanguageIds', activeLanguageIds);
 
-					instance._renderActiveLocales();
+					instance._renderActiveLanguageIds();
 				},
 
 				_onDefaultLocaleChanged(event) {
@@ -421,13 +421,13 @@ AUI.add(
 						}, {});
 
 					var props = {
-						activeLocales: instance.get('activeLocales'),
+						activeLanguageIds: instance.get('activeLanguageIds'),
 						availableLocales,
 						defaultLocaleId: instance.get('defaultLanguageId'),
-						onClose(newActiveLocales) {
+						onClose(newActiveLanguageIds) {
 							instance._State.writeAtom(
-								instance._activeLocalesAtom,
-								newActiveLocales
+								instance._activeLanguageIdsAtom,
+								newActiveLanguageIds
 							);
 						},
 						translations,
@@ -465,10 +465,10 @@ AUI.add(
 					}
 				},
 
-				_renderActiveLocales() {
+				_renderActiveLanguageIds() {
 					var instance = this;
 
-					var activeLocales = instance.get('activeLocales');
+					var activeLanguageIds = instance.get('activeLanguageIds');
 
 					var defaultLanguageId = instance.get('defaultLanguageId');
 
@@ -494,7 +494,7 @@ AUI.add(
 								'[data-languageid="' + key + '"]'
 							)?.parentElement;
 
-							if (!activeLocales.includes(key)) {
+							if (!activeLanguageIds.includes(key)) {
 								if (localeNode) {
 									newFlagsNode.removeChild(localeNode);
 								}
@@ -751,12 +751,12 @@ AUI.add(
 					);
 					instance._flags = boundingBox.one('.palette-container');
 
-					var activeLocales = instance.get('activeLocales');
+					var activeLanguageIds = instance.get('activeLanguageIds');
 
-					if (activeLocales) {
-						instance._activeLocalesAtom = instance.get(
+					if (activeLanguageIds) {
+						instance._activeLanguageIdsAtom = instance.get(
 							'frontendJsComponentsWebModule'
-						).activeLocalesAtom;
+						).activeLanguageIdsAtom;
 
 						instance._State = instance.get(
 							'frontendJsStateWebModule'
@@ -766,18 +766,22 @@ AUI.add(
 							true
 						);
 
-						instance._renderActiveLocales();
+						instance._renderActiveLanguageIds();
 
 						var State = instance._State;
-						var activeLocalesAtom = instance._activeLocalesAtom;
+						var activeLanguageIdsAtom =
+							instance._activeLanguageIdsAtom;
 
 						if (instance.get('adminMode')) {
-							State.writeAtom(activeLocalesAtom, activeLocales);
+							State.writeAtom(
+								activeLanguageIdsAtom,
+								activeLanguageIds
+							);
 						}
 
 						instance._availableLanguagesSubscription = State.subscribe(
-							activeLocalesAtom,
-							A.bind('_onActiveLocalesChange', instance)
+							activeLanguageIdsAtom,
+							A.bind('_onActiveLanguageIdsChange', instance)
 						);
 					}
 				},

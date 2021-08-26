@@ -36,7 +36,7 @@ const TranslationAdminContent = ({
 		translated: Liferay.Language.get('translated'),
 		untranslated: Liferay.Language.get('untranslated'),
 	},
-	activeLocales: initialActiveLocales = emptyArray,
+	activeLanguageIds: initialActiveLanguageIds = emptyArray,
 	availableLocales: initialAvailableLocales = emptyArray,
 	defaultLocaleId,
 	lastDeletedLocaleId,
@@ -49,24 +49,24 @@ const TranslationAdminContent = ({
 	const [creationMenuActive, setCreationMenuActive] = useState(false);
 	const [searchValue, setSearchValue] = useState('');
 
-	const activeLocales = useMemo(() => {
+	const activeLanguageIds = useMemo(() => {
 		return initialAvailableLocales.filter((availableLocale) => {
 			const regExp = new RegExp(searchValue, 'i');
 
 			return (
-				initialActiveLocales.includes(availableLocale.id) &&
+				initialActiveLanguageIds.includes(availableLocale.id) &&
 				(availableLocale.label.match(regExp) ||
 					availableLocale.displayName.match(regExp))
 			);
 		});
-	}, [initialAvailableLocales, initialActiveLocales, searchValue]);
+	}, [initialAvailableLocales, initialActiveLanguageIds, searchValue]);
 
 	const availableLocales = useMemo(() => {
 		return initialAvailableLocales.filter(
 			(availableLocale) =>
-				!initialActiveLocales.includes(availableLocale.id)
+				!initialActiveLanguageIds.includes(availableLocale.id)
 		);
-	}, [initialAvailableLocales, initialActiveLocales]);
+	}, [initialAvailableLocales, initialActiveLanguageIds]);
 
 	return (
 		<>
@@ -184,7 +184,7 @@ const TranslationAdminContent = ({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{activeLocales.map((activeLocale) => {
+						{activeLanguageIds.map((activeLocale) => {
 							const label = activeLocale.label;
 
 							const isDefaultLocale =
@@ -249,7 +249,7 @@ const TranslationAdminContent = ({
 };
 
 TranslationAdminContent.propTypes = {
-	activeLocales: PropTypes.arrayOf(PropTypes.string),
+	activeLanguageIds: PropTypes.arrayOf(PropTypes.string),
 	ariaLabels: PropTypes.shape({
 		default: PropTypes.string,
 		manageTranslations: PropTypes.string,

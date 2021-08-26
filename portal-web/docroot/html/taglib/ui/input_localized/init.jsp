@@ -22,7 +22,7 @@ page import="com.liferay.taglib.ui.InputEditorTag" %>
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_localized") + StringPool.UNDERLINE;
 
-List<String> activeLocales = (List<String>)request.getAttribute("liferay-ui:input-localized:activeLocales");
+List<String> activeLanguageIds = (List<String>)request.getAttribute("liferay-ui:input-localized:activeLanguageIds");
 boolean adminMode = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:adminMode"));
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:autoFocus"));
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:autoSize"));

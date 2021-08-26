@@ -204,6 +204,19 @@
 					}
 				},
 				{
+					"template_et": {
+						"mapping": {
+							"analyzer": "estonian",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "text"
+						},
+						"match": "\\w+_et\\b|\\w+_et_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				},
+				{
 					"template_eu": {
 						"mapping": {
 							"analyzer": "basque",
@@ -212,6 +225,19 @@
 							"type": "text"
 						},
 						"match": "\\w+_eu\\b|\\w+_eu_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				},
+				{
+					"template_fa": {
+						"mapping": {
+							"analyzer": "persian",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "text"
+						},
+						"match": "\\w+_fa\\b|\\w+_fa_[A-Z]{2}\\b",
 						"match_mapping_type": "string",
 						"match_pattern": "regex"
 					}
@@ -238,6 +264,19 @@
 							"type": "text"
 						},
 						"match": "\\w+_fr\\b|\\w+_fr_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				},
+				{
+					"template_gl": {
+						"mapping": {
+							"analyzer": "galician",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "text"
+						},
+						"match": "\\w+_gl\\b|\\w+_gl_[A-Z]{2}\\b",
 						"match_mapping_type": "string",
 						"match_pattern": "regex"
 					}
@@ -282,14 +321,14 @@
 					}
 				},
 				{
-					"template_id": {
+					"template_in": {
 						"mapping": {
 							"analyzer": "indonesian",
 							"store": true,
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_id\\b|\\w+_id_[A-Z]{2}\\b",
+						"match": "\\w+_in\\b|\\w+_in_[A-Z]{2}\\b",
 						"match_mapping_type": "string",
 						"match_pattern": "regex"
 					}
@@ -329,6 +368,19 @@
 							"type": "text"
 						},
 						"match": "\\w+_ko\\b|\\w+_ko_[A-Z]{2}\\b",
+						"match_mapping_type": "string",
+						"match_pattern": "regex"
+					}
+				},
+				{
+					"template_lt": {
+						"mapping": {
+							"analyzer": "lithuanian",
+							"store": true,
+							"term_vector": "with_positions_offsets",
+							"type": "text"
+						},
+						"match": "\\w+_lt\\b|\\w+_lt_[A-Z]{2}\\b",
 						"match_mapping_type": "string",
 						"match_pattern": "regex"
 					}

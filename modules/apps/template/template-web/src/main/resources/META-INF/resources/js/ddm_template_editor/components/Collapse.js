@@ -45,6 +45,7 @@ const Collapse = ({children, label}) => {
 					}
 				)}
 				onClick={handleClick}
+				type="button"
 			>
 				<span className="c-inner" tabIndex="-1">
 					{label}

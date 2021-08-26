@@ -28,20 +28,23 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import CollectionService from '../../../../../../app/services/CollectionService';
+import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
+import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
 import {FieldSet} from './FieldSet';
 
 export const CollectionFilterGeneralPanel = ({item}) => {
 	const dispatch = useDispatch();
+
 	const fragmentEntryLink = useSelectorCallback(
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 		[item.config.fragmentEntryLinkId]
 	);
-	const hasConfiguredCollections = useSelectorCallback(
-		(state) => selectConfiguredCollectionDisplays(state).length > 0,
-		[]
+	const hasConfiguredCollections = useSelector(
+		(state) => !isEmptyArray(selectConfiguredCollectionDisplays(state))
 	);
+
 	const languageId = useSelector(selectLanguageId);
 
 	const configurationValues =
@@ -50,8 +53,9 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 
 	const [collectionFilters, setCollectionFilters] = useState(null);
 
-	const selectedFilter =
-		collectionFilters?.[configurationValues['filterKey']];
+	const selectedFilter = collectionFilters?.[configurationValues.filterKey];
+
+	const targetCollections = configurationValues.targetCollections || [];
 
 	useEffect(() => {
 		if (hasConfiguredCollections && !collectionFilters) {
@@ -90,31 +94,54 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 	return (
 		<>
 			<TargetCollectionsField
-				onValueSelect={onValueSelect}
-				value={configurationValues.targetCollections}
+				onValueSelect={(name, value) => {
+					if (!isEmptyArray(value)) {
+						onValueSelect(name, value);
+					}
+					else {
+						const nextConfigurationValues = {
+							filterKey: '',
+							[name]: value,
+						};
+
+						dispatch(
+							updateFragmentConfiguration({
+								configurationValues: nextConfigurationValues,
+								fragmentEntryLink,
+								languageId,
+							})
+						);
+					}
+				}}
+				value={targetCollections}
 			/>
 
-			{collectionFilters && Object.keys(collectionFilters).length > 0 && (
-				<SelectField
-					field={{
-						label: Liferay.Language.get('filter'),
-						name: 'filterKey',
-						typeOptions: {
-							validValues: [
-								{
-									label: Liferay.Language.get('none'),
-									value: '',
-								},
-								...Object.values(
-									collectionFilters
-								).map(({key, label}) => ({label, value: key})),
-							],
-						},
-					}}
-					onValueSelect={onValueSelect}
-					value={configurationValues['filterKey']}
-				/>
-			)}
+			{!isEmptyArray(targetCollections) &&
+				collectionFilters &&
+				Object.keys(collectionFilters).length > 0 && (
+					<SelectField
+						field={{
+							label: Liferay.Language.get('filter'),
+							name: 'filterKey',
+							typeOptions: {
+								validValues: [
+									{
+										label: Liferay.Language.get('none'),
+										value: '',
+									},
+									...Object.values(collectionFilters).map(
+										({key, label}) => ({
+											label,
+											value: key,
+										})
+									),
+								],
+							},
+						}}
+						onValueSelect={onValueSelect}
+						value={configurationValues.filterKey}
+					/>
+				)}
 
 			{selectedFilter?.configuration &&
 				selectedFilter.configuration.fieldSets

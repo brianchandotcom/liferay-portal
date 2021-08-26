@@ -4,6 +4,19 @@ html#{$cadmin-selector} {
 			&__popover {
 				width: 256px;
 			}
+
+			&--default::before {
+				background-color: $cadmin-secondary;
+				border-radius: 50%;
+				content: '';
+				display: block;
+				height: 2px;
+				left: 50%;
+				position: absolute;
+				top: 15%;
+				transform: translateX(-50%);
+				width: 2px;
+			}
 		}
 	}
 }

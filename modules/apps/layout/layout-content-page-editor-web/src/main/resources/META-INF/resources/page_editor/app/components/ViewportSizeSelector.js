@@ -16,6 +16,7 @@ import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
+import classNames from 'classnames';
 import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef, useState} from 'react';
@@ -59,6 +60,10 @@ const SelectorButton = ({icon, label, onSelect, selectedSize, sizeId}) => {
 			<ClayButtonWithIcon
 				aria-label={label}
 				aria-pressed={selectedSize === sizeId}
+				className={classNames({
+					'page-editor__viewport-size-selector--default':
+						sizeId === VIEWPORT_SIZES.desktop,
+				})}
 				displayType="secondary"
 				key={sizeId}
 				onClick={() => onSelect(sizeId)}

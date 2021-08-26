@@ -46,9 +46,77 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardExitPagesHighestExits {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8302 AssertSitesTopPagesCardExitPagesHighestExits pending implementation
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8964
 
+		task ("Add Site and Page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Blogs creation") {
+			for (var n : list "1,2") {
+				ACUtils.createBlogsAndAddToPage(entryTitle = "Test Blog ${n}");
+			}
+		}
+
+		task ("Interation with Test Blogs") {
+			for (var n : list "2,2,2,1,1") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "test@liferay.com",
+					userLoginFullName = "test test");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Test Blog ${n}");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		task ("Interation with Page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("AC launch") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset highest views pages Top Pages") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.switchTabInCard(tabName = "Exit Pages");
+
+			for (var current : list "1-Test Blog 2,2-Test Blog 1,3-AC Page") {
+				ACSites.viewVisitedTopPages(current = "${current}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"

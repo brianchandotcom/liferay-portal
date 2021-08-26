@@ -60,14 +60,14 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand table-title"
+					cssClass="table-cell-expand-small table-title"
 					href="<%= rowURL %>"
 					name="name"
 					value="<%= HtmlUtil.escape(accountEntryDisplay.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
+					cssClass="table-cell-expand-smallest"
 					href="<%= rowURL %>"
 					name="id"
 					property="accountEntryId"
@@ -81,7 +81,7 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
+					cssClass="table-cell-expand-smallest"
 					href="<%= rowURL %>"
 					name="type"
 					property="type"
@@ -89,7 +89,7 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
+					cssClass="table-cell-expand-smallest"
 					name="status"
 				>
 					<clay:label
@@ -100,7 +100,7 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 
 				<c:if test="<%= portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) %>">
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
+						cssClass="table-column-text-center"
 						name="selected"
 					>
 						<c:if test="<%= accountEntryDisplay.isSelectedAccountEntry(themeDisplay.getScopeGroupId(), user.getUserId()) %>">

@@ -1,5 +1,12 @@
 definition {
 
+    macro usePlusZoom {
+        //Use "+" button
 
+        CommerceDiagram.useResetZoom();
+
+        CommerceDiagram.usePlusButton(key_list = "${key_list}");
+
+	}
 
 }

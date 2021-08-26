@@ -78,7 +78,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		AssertElementPresent(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+		ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
 	}
 
 }

@@ -146,37 +146,6 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		task ("Add a new user in DXP") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Sign in as new user and view the site page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -201,10 +170,51 @@ definition {
 			ACSegments.saveSegment();
 		}
 
+		task ("Add a new user in DXP") {
+			ACUtils.launchDXP();
+
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in as new user and view the site page") {
+			for (var n : list "1,2") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "user1@liferay.com",
+					userLoginFullName = "user1 user1");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Open AC and view the segment") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		}
+
 		task ("Assert Membership card exists") {
-			AssertTextPresent(
-				locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CARD",
-				value1 = "Segment Membership");
+			ACCards.viewCards(cardTitle = "Segment Membership");
 		}
 
 		task ("Show members added") {

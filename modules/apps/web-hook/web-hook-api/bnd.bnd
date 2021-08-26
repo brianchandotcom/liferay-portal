@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Web Hook API
+Bundle-SymbolicName: com.liferay.web.hook.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.web.hook.exception,\
+	com.liferay.web.hook.model,\
+	com.liferay.web.hook.service,\
+	com.liferay.web.hook.service.persistence

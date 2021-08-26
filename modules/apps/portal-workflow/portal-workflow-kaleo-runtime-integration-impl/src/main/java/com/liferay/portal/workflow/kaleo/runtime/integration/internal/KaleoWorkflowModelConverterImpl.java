@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowDefinition;
@@ -60,7 +59,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -301,34 +299,26 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowInstance.setEndDate(kaleoInstance.getCompletionDate());
 		defaultWorkflowInstance.setStartDate(kaleoInstance.getCreateDate());
 
-		KaleoNode currentKaleoNode = kaleoInstanceToken.getCurrentKaleoNode();
-
-		List<String> currentKaleoNodeNames = new ArrayList<>();
-
-		if (Objects.equals(currentKaleoNode.getType(), NodeType.FORK.name())) {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(kaleoInstanceToken.getCompanyId());
-
-			for (KaleoInstanceToken currentKaleoInstanceToken :
-					_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
-						kaleoInstance.getKaleoInstanceId())) {
-
-				KaleoNode kaleoNode =
-					currentKaleoInstanceToken.getCurrentKaleoNode();
-
-				if (!Objects.equals(
-						kaleoNode.getType(), NodeType.FORK.name())) {
-
-					currentKaleoNodeNames.add(kaleoNode.getName());
-				}
-			}
-		}
-		else {
-			currentKaleoNodeNames.add(currentKaleoNode.getName());
-		}
-
-		defaultWorkflowInstance.setCurrentNodeNames(currentKaleoNodeNames);
+		defaultWorkflowInstance.setCurrentNodeNames(
+			Stream.of(
+				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
+					kaleoInstance.getKaleoInstanceId())
+			).flatMap(
+				List::stream
+			).map(
+				KaleoInstanceToken::getCurrentKaleoNodeId
+			).map(
+				_kaleoNodeLocalService::fetchKaleoNode
+			).filter(
+				Objects::nonNull
+			).filter(
+				kaleoNode -> !Objects.equals(
+					kaleoNode.getType(), NodeType.FORK.name())
+			).map(
+				KaleoNode::getName
+			).collect(
+				Collectors.toList()
+			));
 
 		if (workflowContext != null) {
 			defaultWorkflowInstance.setWorkflowContext(workflowContext);

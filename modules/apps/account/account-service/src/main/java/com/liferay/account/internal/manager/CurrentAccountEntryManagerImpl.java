@@ -177,9 +177,17 @@ public class CurrentAccountEntryManagerImpl
 
 		PortalPreferences portalPreferences = _getPortalPreferences(userId);
 
+		String key = _getKey(groupId);
+
+		long currentAccountEntryId = GetterUtil.getLong(
+			portalPreferences.getValue(AccountEntry.class.getName(), key));
+
+		if (currentAccountEntryId == accountEntryId) {
+			return;
+		}
+
 		portalPreferences.setValue(
-			AccountEntry.class.getName(), _getKey(groupId),
-			String.valueOf(accountEntryId));
+			AccountEntry.class.getName(), key, String.valueOf(accountEntryId));
 
 		_portalPreferencesLocalService.updatePreferences(
 			userId, PortletKeys.PREFS_OWNER_TYPE_USER, portalPreferences);

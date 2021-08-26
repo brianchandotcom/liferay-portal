@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
-	@priority = "5"
+	@priority = "3"
 	test AssertChartTicksSiteMetricsStandardized {
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8331 | Test Summary: Assert Site Metrics select Sessions/Visitor card tab"
-	@priority = "5"
+	@priority = "3"
 	test AssertSiteMetricsSelectSessionsPerVisitorCardTab {
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");

@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -83,7 +82,7 @@ public class TemporaryFileEntriesCapabilityTest {
 
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 			_group.getGroupId(), TempFileEntryUtil.class.getName(),
-			StringPool.BLANK);
+			TempFileEntryUtil.class.getName());
 
 		LocalRepository localRepository =
 			RepositoryProviderUtil.getLocalRepository(

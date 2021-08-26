@@ -193,7 +193,8 @@ public class TempFileEntryUtil {
 		throws PortalException {
 
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
-			groupId, TempFileEntryUtil.class.getName(), StringPool.BLANK);
+			groupId, TempFileEntryUtil.class.getName(),
+			TempFileEntryUtil.class.getName());
 
 		if (repository != null) {
 			return RepositoryProviderUtil.getLocalRepository(
@@ -220,8 +221,8 @@ public class TempFileEntryUtil {
 				user.getUserId(), groupId, classNameId,
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				TempFileEntryUtil.class.getName(), StringPool.BLANK,
-				StringPool.BLANK, typeSettingsUnicodeProperties, true,
-				serviceContext);
+				TempFileEntryUtil.class.getName(),
+				typeSettingsUnicodeProperties, true, serviceContext);
 
 			return RepositoryProviderUtil.getLocalRepository(
 				repository.getRepositoryId());

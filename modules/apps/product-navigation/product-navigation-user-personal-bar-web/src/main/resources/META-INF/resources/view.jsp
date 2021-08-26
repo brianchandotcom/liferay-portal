@@ -141,6 +141,9 @@
 
 					Liferay.Util.openModal({
 						bodyHTML: html ? html : '<span class="loading-animation">',
+						containerProps: {
+							className: '',
+						},
 						height: '400px',
 						onClose: function () {
 							loading = false;

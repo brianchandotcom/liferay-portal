@@ -19,6 +19,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -33,6 +34,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -92,6 +95,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				 Objects.equals(objectField.getType(), "Long")) {
 
 			return NumberInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(objectField.getType(), "Blob")) {
+			return ImageInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(objectField.getType(), "Date")) {
 			return DateInfoFieldType.INSTANCE;
@@ -156,7 +162,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 							InfoLocalizedValue.localize(
 								getClass(), objectField.getName())
 						).build(),
-						values.get(objectField.getName()))));
+						_getValue(objectField, values))));
 
 			return objectEntryFieldValues;
 		}
@@ -202,6 +208,24 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		}
 
 		return null;
+	}
+
+	private Object _getValue(
+		ObjectField objectField, Map<String, Serializable> values) {
+
+		if (Objects.equals(
+				_getInfoFieldType(objectField), ImageInfoFieldType.INSTANCE)) {
+
+			try {
+				return JSONFactoryUtil.createJSONObject(
+					new String((byte[])values.get(objectField.getName())));
+			}
+			catch (JSONException jsonException) {
+				return null;
+			}
+		}
+
+		return values.get(objectField.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

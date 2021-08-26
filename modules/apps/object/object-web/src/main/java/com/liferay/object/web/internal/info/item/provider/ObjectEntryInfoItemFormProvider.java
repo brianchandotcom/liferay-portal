@@ -17,6 +17,8 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.Constants;
@@ -122,6 +125,14 @@ public class ObjectEntryInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldType _getInfoFieldType(ObjectField objectField) {
+		if (Objects.equals(objectField.getType(), "Blob")) {
+			return ImageInfoFieldType.INSTANCE;
+		}
+
+		return TextInfoFieldType.INSTANCE;
+	}
+
 	private InfoForm _getInfoForm(long objectDefinitionId)
 		throws NoSuchFormVariationException {
 
@@ -191,7 +202,7 @@ public class ObjectEntryInfoItemFormProvider
 					consumer.accept(
 						InfoField.builder(
 						).infoFieldType(
-							TextInfoFieldType.INSTANCE
+							_getInfoFieldType(objectField)
 						).name(
 							objectField.getName()
 						).labelInfoLocalizedValue(

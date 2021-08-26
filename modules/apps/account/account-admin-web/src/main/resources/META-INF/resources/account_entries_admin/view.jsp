@@ -98,6 +98,19 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 					/>
 				</liferay-ui:search-container-column-text>
 
+				<c:if test="<%= portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) %>">
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="selected"
+					>
+						<c:if test="<%= accountEntryDisplay.isSelectedAccountEntry(themeDisplay.getScopeGroupId(), user.getUserId()) %>">
+							<clay:icon
+								symbol="check"
+							/>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+				</c:if>
+
 				<liferay-ui:search-container-column-jsp
 					path="/account_entries_admin/account_entry_action.jsp"
 				/>

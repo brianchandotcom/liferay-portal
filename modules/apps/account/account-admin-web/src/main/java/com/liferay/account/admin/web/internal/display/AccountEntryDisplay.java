@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.admin.web.internal.util.CurrentAccountEntryManagerUtil;
 import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
@@ -26,6 +27,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -175,6 +177,20 @@ public class AccountEntryDisplay {
 			if (_log.isDebugEnabled()) {
 				_log.debug(configurationException, configurationException);
 			}
+		}
+
+		return false;
+	}
+
+	public boolean isSelectedAccountEntry(long groupId, long userId)
+		throws PortalException {
+
+		long currentAccountEntryId =
+			CurrentAccountEntryManagerUtil.getCurrentAccountEntryId(
+				groupId, userId);
+
+		if (currentAccountEntryId == getAccountEntryId()) {
+			return true;
 		}
 
 		return false;

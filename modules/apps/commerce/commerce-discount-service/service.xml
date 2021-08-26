@@ -114,7 +114,7 @@
 		<finder name="CommerceDiscountId" return-type="Collection">
 			<finder-column name="commerceDiscountId" />
 		</finder>
-		<finder name="C_C" return-type="CommercePriceListAccountRel" unique="true">
+		<finder name="C_C" return-type="CommerceDiscountAccountRel" unique="true">
 			<finder-column name="commerceAccountId" />
 			<finder-column name="commerceDiscountId" />
 		</finder>
@@ -155,6 +155,46 @@
 		<finder name="C_C" return-type="CommerceDiscountCommerceAccountGroupRel" unique="true">
 			<finder-column name="commerceDiscountId" />
 			<finder-column name="commerceAccountGroupId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceDiscountOrderTypeRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountOrderTypeRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceDiscountId" type="long" />
+		<column name="commerceOrderTypeId" type="long" />
+		<column name="priority" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="CommerceOrderTypeId" return-type="Collection">
+			<finder-column name="commerceOrderTypeId" />
+		</finder>
+		<finder name="CDI_COTI" return-type="CommerceDiscountOrderTypeRel" unique="true">
+			<finder-column name="commerceDiscountId" />
+			<finder-column name="commerceOrderTypeId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceDiscountRel" remote-service="true">

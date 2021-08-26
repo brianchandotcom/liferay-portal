@@ -188,6 +188,7 @@ definition {
 
 	@priority = "4"
 	test FacebookSSOSmoke {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "Login#FacebookSSOSmoke";
 
 		var facebookApplicationID = PropsUtil.get("facebook.application.id");
@@ -200,7 +201,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PortalSettings.gotoConfiguration(
-			baseURL = "http://localhost:8080",
+			baseURL = "https://localhost:8443",
 			configurationCategory = "SSO",
 			configurationName = "Facebook Connect",
 			configurationScope = "Virtual Instance Scope");

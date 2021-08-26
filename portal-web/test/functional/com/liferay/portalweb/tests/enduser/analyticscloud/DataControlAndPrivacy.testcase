@@ -69,13 +69,23 @@ definition {
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"
 	@priority = "5"
 	test CanCreateDeleteRequest {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
 		task ("Create Delete Request") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = "Adelina.Kohler@hotmail.com",
+				emailAdresses = "test@liferay.com",
 				jobTypes = "Delete");
 		}
 
@@ -87,7 +97,7 @@ definition {
 			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
-				emailAdresses = "Adelina.Kohler@hotmail.com",
+				emailAdresses = "test@liferay.com",
 				jobType = "Delete");
 		}
 	}

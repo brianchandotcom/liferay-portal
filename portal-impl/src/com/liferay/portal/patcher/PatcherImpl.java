@@ -168,11 +168,6 @@ public class PatcherImpl implements Patcher {
 	}
 
 	@Override
-	public boolean hasInconsistentPatchLevels() {
-		return _inconsistentPatchLevels;
-	}
-
-	@Override
 	public boolean isConfigured() {
 		getPatchDirectory();
 
@@ -182,55 +177,6 @@ public class PatcherImpl implements Patcher {
 	@Override
 	public boolean isSeparated() {
 		return _separated;
-	}
-
-	@Override
-	public void verifyPatchLevels() throws PatchInconsistencyException {
-		Properties portalKernelJARProperties = _getProperties(
-			PATCHER_SERVICE_PROPERTIES);
-
-		String[] kernelJARPatches = _getInstalledPatches(
-			portalKernelJARProperties);
-
-		Arrays.sort(kernelJARPatches);
-
-		Properties portalImplJARProperties = _getProperties(PATCHER_PROPERTIES);
-
-		String[] portalImplJARPatches = _getInstalledPatches(
-			portalImplJARProperties);
-
-		Arrays.sort(portalImplJARPatches);
-
-		if (Arrays.equals(portalImplJARPatches, kernelJARPatches)) {
-			return;
-		}
-
-		_log.error("Inconsistent patch level detected");
-
-		if (_log.isWarnEnabled()) {
-			if (ArrayUtil.isEmpty(portalImplJARPatches)) {
-				_log.warn("There are no patches installed on portal-impl.jar");
-			}
-			else {
-				_log.warn(
-					"Patch level on portal-impl.jar: " +
-						Arrays.toString(portalImplJARPatches));
-			}
-
-			if (ArrayUtil.isEmpty(kernelJARPatches)) {
-				_log.warn(
-					"There are no patches installed on portal-kernel.jar");
-			}
-			else {
-				_log.warn(
-					"Patch level on portal-kernel.jar: " +
-						Arrays.toString(kernelJARPatches));
-			}
-		}
-
-		_inconsistentPatchLevels = true;
-
-		throw new PatchInconsistencyException();
 	}
 
 	private String[] _getInstalledPatches(Properties properties) {
@@ -282,7 +228,6 @@ public class PatcherImpl implements Patcher {
 
 	private boolean _configured;
 	private final String[] _fixedIssueKeys;
-	private boolean _inconsistentPatchLevels;
 	private final String[] _installedPatchNames;
 	private final int _patchingToolVersion;
 	private final String _patchingToolVersionDisplayName;

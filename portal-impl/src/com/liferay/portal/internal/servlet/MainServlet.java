@@ -228,30 +228,6 @@ public class MainServlet extends HttpServlet {
 			servletContext, _init());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Verify patch levels");
-		}
-
-		try {
-			PatcherUtil.verifyPatchLevels();
-		}
-		catch (PatchInconsistencyException patchInconsistencyException) {
-			if (!PropsValues.VERIFY_PATCH_LEVELS_DISABLED) {
-				_log.error(
-					"Stopping the server due to the inconsistent patch levels");
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Set the property \"verify.patch.levels.disabled\" " +
-							"to override stopping the server due to the " +
-								"inconsistent patch levels",
-						patchInconsistencyException);
-				}
-
-				System.exit(0);
-			}
-		}
-
-		if (_log.isDebugEnabled()) {
 			_log.debug("Verify JVM configuration");
 		}
 

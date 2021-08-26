@@ -97,6 +97,16 @@ definition {
 			menuItem = "${attribute}");
 	}
 
+	macro selectDataOnIndividualsActivitiesChart {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
+	}
+
 	macro viewActivitiesNumberInPeriod {
 		AssertTextEquals(
 			locator1 = "ACIndividualsDashboard#ACTIVITIES_NUMBER",

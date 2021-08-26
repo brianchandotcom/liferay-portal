@@ -236,6 +236,89 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8905 | Test Summary: As a Business User, I should be able to see the last 5 activity entries of an individual when set pagination to 5"
+	@priority = "3"
+	test ShowLast5ActivitiesOnIndividualsActivitiesChartWhenSetPaginationTo5 {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Repeatly view the site page as new user 6 times") {
+			var n = "0";
+
+			while ("${n}" != "6") {
+				var n = ${n} + 1;
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "userea@liferay.com",
+					userLoginFullName = "userfn userln");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				UserBar.signOut();
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Known Individuals on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Navigate to the individuals page of new user") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACNavigation.openItem(itemName = "userfn userln");
+		}
+
+		task ("Select Last 24 hours time period in Individuals Activities chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Activities");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Select the 5 items in pagination of Individuals Activities chart") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("View only the last 5 activities shown in page 1") {
+			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+
+			var n = "0";
+
+			while ("${n}" != "5") {
+				ACIndividualsDashboard.viewTimelineItem(
+					index = "${n}",
+					itemName = "${portalURL}",
+					visits = "1 Visit");
+			}
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View the activity shown in page 2") {
+			ACIndividualsDashboard.viewTimelineItem(
+				itemName = "${portalURL}",
+				visits = "1 Visit");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8903 | Test Summary: As an Business User, I should be able to assert the cards on the Overview tab of the Individual's Dashboard page"
 	@priority = "4"
 	test ViewCardsInTheOverviewTabOfIndividualsDashBoard {

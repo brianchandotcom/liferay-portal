@@ -35,7 +35,6 @@ const SelectTypeAndSubtype = ({
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
 			mandatoryFieldsForFiltering={['className', 'classPK']}
 			namePropertyKey="label"
-			nodeIdProp="classPK"
 			nodes={nodes}
 			portletNamespace={portletNamespace}
 		/>

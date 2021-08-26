@@ -35,7 +35,6 @@ const SelectFileExtension = ({
 			itemSelectorSaveEvent={itemSelectorSaveEvent}
 			mandatoryFieldsForFiltering={['id']}
 			namePropertyKey="fileExtension"
-			nodeIdProp="id"
 			nodes={nodes}
 			portletNamespace={portletNamespace}
 		/>

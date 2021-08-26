@@ -103,7 +103,7 @@ export const filterNodes = ({childrenPropertyKey, nodes, query}) => {
 				}),
 			];
 
-			node.expanded = true; // TODO: Expand only if children match in the query
+			node.expanded = !!node.children.length;
 
 			node.name = handleNodeName({
 				childrenPropertyKey,
@@ -111,7 +111,12 @@ export const filterNodes = ({childrenPropertyKey, nodes, query}) => {
 			});
 		}
 
-		const nodeMatchesInQuery = node.name.toLowerCase().includes(query);
+		const cleanNodeName = node.name
+			.toLowerCase()
+			.replace(/\(\d+ [a-z]+\)$/i, '')
+			.trim();
+
+		const nodeMatchesInQuery = cleanNodeName.includes(query);
 
 		return (
 			nodeMatchesInQuery ||
@@ -120,10 +125,52 @@ export const filterNodes = ({childrenPropertyKey, nodes, query}) => {
 	});
 };
 
+/**
+ * Returns the selected object
+ * Object properties are received via props using mandatoryFieldsForFiltering
+ * @param {object} object
+ * @param {array} object.mandatoryFieldsForFiltering - Array of strings referencing properties.
+ * @param {object} object.node - the selected node from the tree
+ * @return {object} A object with the proper keys from mandatoryFieldsForFiltering
+ */
+export const getSelectedNodeObject = ({mandatoryFieldsForFiltering, node}) => {
+	const nodeObject = {};
+
+	mandatoryFieldsForFiltering.forEach((key) => {
+		nodeObject[key] = node[key];
+	});
+
+	return nodeObject;
+};
+
+/**
+ * Processes and returns the data in an understandable format for the backend
+ * An exception occurs when mandatoryFieldsForFiltering contains only one key
+ * @param {object} object
+ * @param {array} object.data - array of objects coming from the selections made in the tree
+ * @param {array} object.mandatoryFieldsForFiltering - Array of strings referencing properties.
+ * @return {object, array} The data object when mandatoryFieldsForFiltering length is > 1, an array of strings otherwise
+ */
+export const selectedDataOutputTransfomer = ({
+	data,
+	mandatoryFieldsForFiltering,
+}) => {
+	if (!data.length) {
+		return;
+	}
+
+	if (mandatoryFieldsForFiltering.length > 1) {
+		return data;
+	}
+
+	return data.map((node) => node[mandatoryFieldsForFiltering[0]]);
+};
+
 export const restoreChildrenForEmptiedParent = ({
 	childrenPropertyKey,
 	filteredNodes,
 	namePropertyKey,
+	treeRerenderKey,
 }) => {
 	visit(filteredNodes, (node) => {
 		if (!node.children?.length && node[childrenPropertyKey]?.length) {
@@ -135,8 +182,9 @@ export const restoreChildrenForEmptiedParent = ({
 				}),
 			];
 			node.expanded = false;
+			treeRerenderKey.value++;
 		}
 	});
 
-	return [...filteredNodes];
+	return filteredNodes;
 };

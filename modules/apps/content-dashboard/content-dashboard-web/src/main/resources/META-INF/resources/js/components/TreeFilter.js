@@ -21,53 +21,27 @@ import React, {useCallback, useMemo, useRef, useState} from 'react';
 
 import {
 	filterNodes,
+	getSelectedNodeObject,
 	restoreChildrenForEmptiedParent,
+	selectedDataOutputTransfomer,
 	visit,
 } from '../utils/tree-utils';
-
-/**
- * Filter parent nodes with no children inside currentSelection
- * @param {object} object
- * @param {Map} object.currentSelection The data selected returned by the Tree component
- * @param {array} object.parentNodes Array of parent items included in currentSelection
- * @return {array} Parent selected nodes with no children
- */
-const getParentsWithNoChildren = ({
-	currentSelection,
-	mandatoryFieldsForFiltering,
-	nodeIdProp,
-	parentNodes = [],
-}) => {
-	if (!parentNodes.length) {
-		return [];
-	}
-
-	const currentIdentifiers =
-		mandatoryFieldsForFiltering.length === 1
-			? currentSelection
-			: currentSelection.map((node) => node[nodeIdProp]);
-
-	return parentNodes.filter((node) =>
-		node.children.every(
-			(child) => !currentIdentifiers.includes(child[nodeIdProp])
-		)
-	);
-};
 
 const TreeFilter = ({
 	childrenPropertyKey,
 	itemSelectorSaveEvent,
 	mandatoryFieldsForFiltering,
 	namePropertyKey,
-	nodeIdProp,
 	nodes,
 	portletNamespace,
 }) => {
 	const [filterQuery, setFilterQuery] = useState('');
 	const [selectedMessage, setSelectedMessage] = useState({
 		count: 0,
-		show: false,
 	});
+	const treeRerenderKey = {
+		value: 0,
+	};
 
 	const selectedNodesRef = useRef(null);
 	const refItemsCount = selectedNodesRef.current?.length || 0;
@@ -87,7 +61,7 @@ const TreeFilter = ({
 		return selectedNodes;
 	}, [nodes]);
 
-	const computedNodes = () => {
+	const computedNodes = useMemo(() => {
 		if (!filterQuery) {
 			return nodes;
 		}
@@ -106,65 +80,29 @@ const TreeFilter = ({
 			childrenPropertyKey,
 			filteredNodes,
 			namePropertyKey,
+			treeRerenderKey,
 		});
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [filterQuery, nodes]);
 
 	const handleSelectionChange = useCallback(
 		(selectedNodes) => {
 			const data = [];
-			const parentsCandidates = [];
 
 			// Mark newly selected nodes as selected.
 
 			visit(nodes, (node) => {
 				const isChildNode = !node.children;
-				const isParentNode =
-					Array.isArray(node.children) && node.children.length > 0;
 
 				if (selectedNodes.has(node.id) && isChildNode) {
-					let newSelectedNode = {};
-
-					if (mandatoryFieldsForFiltering.length === 1) {
-						newSelectedNode = node[mandatoryFieldsForFiltering[0]];
-					}
-					else {
-						mandatoryFieldsForFiltering.forEach((key) => {
-							newSelectedNode[key] = node[key];
-						});
-					}
-					data.push(newSelectedNode);
-				}
-				else if (selectedNodes.has(node.id) && isParentNode) {
-					parentsCandidates.push(node);
+					data.push(
+						getSelectedNodeObject({
+							mandatoryFieldsForFiltering,
+							node,
+						})
+					);
 				}
 			});
-
-			const parentsSelectedWithNoChildren =
-				getParentsWithNoChildren({
-					currentSelection: data,
-					mandatoryFieldsForFiltering,
-					nodeIdProp,
-					parentNodes: parentsCandidates,
-				}) || [];
-
-			if (parentsSelectedWithNoChildren.length) {
-				parentsSelectedWithNoChildren.forEach((node) => {
-					node.children.forEach((child) => {
-						let newSelectedNode = {};
-
-						if (mandatoryFieldsForFiltering.length === 1) {
-							newSelectedNode =
-								child[mandatoryFieldsForFiltering[0]];
-						}
-						else {
-							mandatoryFieldsForFiltering.forEach((key) => {
-								newSelectedNode[key] = child[key];
-							});
-						}
-						data.push(newSelectedNode);
-					});
-				});
-			}
 
 			// Mark unselected nodes as unchecked.
 
@@ -189,19 +127,20 @@ const TreeFilter = ({
 
 			const openerWindow = Liferay.Util.getOpener();
 
-			openerWindow.Liferay.fire(itemSelectorSaveEvent, {data});
+			openerWindow.Liferay.fire(itemSelectorSaveEvent, {
+				data: selectedDataOutputTransfomer({
+					data,
+					mandatoryFieldsForFiltering,
+				}),
+			});
 
 			setSelectedMessage({
 				count: data.length,
-				show: true,
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[refItemsCount]
 	);
-
-	const showSelectionFeedback =
-		selectedMessage.show && !!selectedMessage.count;
 
 	const handleInputClear = () => {
 		setFilterQuery('');
@@ -210,7 +149,7 @@ const TreeFilter = ({
 	return (
 		<div className="tree-filter">
 			<form
-				className="mb-4 pb-3 pt-3 tree-filter-search"
+				className="pb-3 pt-3 tree-filter-search"
 				onSubmit={(event) => event.preventDefault()}
 				role="search"
 			>
@@ -243,7 +182,7 @@ const TreeFilter = ({
 				</ClayLayout.ContainerFluid>
 			</form>
 
-			{showSelectionFeedback && (
+			{!!selectedMessage.count && (
 				<ClayLayout.Container
 					className="tree-filter-count-feedback"
 					containerElement="section"
@@ -263,13 +202,14 @@ const TreeFilter = ({
 						className="tree-filter-type-tree"
 						id={`${portletNamespace}typeContainer`}
 					>
-						{computedNodes().length > 0 ? (
+						{computedNodes.length > 0 ? (
 							<Treeview
 								NodeComponent={Treeview.Card}
 								inheritSelection
 								initialSelectedNodeIds={initialSelectedNodeIds}
+								key={treeRerenderKey.value}
 								multiSelection
-								nodes={computedNodes()}
+								nodes={computedNodes}
 								onSelectedNodesChange={handleSelectionChange}
 							/>
 						) : (
@@ -294,7 +234,6 @@ TreeFilter.propTypes = {
 	itemSelectorSaveEvent: PropTypes.string.isRequired,
 	mandatoryFieldsForFiltering: PropTypes.array.isRequired,
 	namePropertyKey: PropTypes.string.isRequired,
-	nodeIdProp: PropTypes.string.isRequired,
 	nodes: PropTypes.array.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };

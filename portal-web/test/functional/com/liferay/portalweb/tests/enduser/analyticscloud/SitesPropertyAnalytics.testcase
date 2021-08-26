@@ -52,12 +52,91 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
-	@ignore = "true"
 	@priority = "5"
 	test AssertChartTicksSiteMetricsStandardized {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8329 AssertChartTicksSiteMetricsStandardized
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview tab on Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Overview");
+		}
+
+		task ("View the time period is Last 30 days in site metrics chart") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "${propertyName} Activities",
+				timeFilterRange = "Last 30 days");
+		}
+
+		task ("View the interval is D in site metrics chart") {
+			ACCards.viewSelectedInterval(
+				cardName = "${propertyName} Activities",
+				interval = "D");
+		}
+
+		task ("View the format of recharts xAxis ticks is MMM d") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "${propertyName} Activities");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM d");
+		}
+
+		task ("Select the W in interval selector") {
+			ACCards.selectInterval(
+				cardName = "${propertyName} Activities",
+				interval = "W");
+		}
+
+		task ("View the format of recharts xAxis ticks is MMM d - d") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "${propertyName} Activities");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM d - d");
+		}
+
+		task ("Select the M in interval selector") {
+			ACCards.selectInterval(
+				cardName = "${propertyName} Activities",
+				interval = "M");
+		}
+
+		task ("View the format of recharts xAxis ticks is MMM") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "${propertyName} Activities");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM");
+		}
+
+		task ("Select the Last 24 hours time period in site metrics chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "${propertyName} Activities");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("View the interval option buttons are disabled") {
+			for (var interval : list "D,W,M") {
+				AssertVisible(
+					key_text = "${interval}",
+					locator1 = "Button#ANY_DISABLED");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8331 | Test Summary: Assert Site Metrics select Sessions/Visitor card tab"

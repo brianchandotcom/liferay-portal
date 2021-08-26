@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.math.BigDecimal;
 
@@ -47,7 +48,6 @@ public class CommerceCartContentMiniDisplayContext
 	extends CommerceCartContentDisplayContext {
 
 	public CommerceCartContentMiniDisplayContext(
-			HttpServletRequest httpServletRequest,
 			CommerceChannelLocalService commerceChannelLocalService,
 			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
@@ -59,16 +59,17 @@ public class CommerceCartContentMiniDisplayContext
 			ModelResourcePermission<CommerceOrder>
 				commerceOrderModelResourcePermission,
 			PortletResourcePermission commerceProductPortletResourcePermission,
-			PercentageFormatter percentageFormatter)
+			PercentageFormatter percentageFormatter,
+			HttpServletRequest httpServletRequest, Portal portal)
 		throws PortalException {
 
 		super(
-			httpServletRequest, commerceChannelLocalService,
-			commerceOrderItemService, commerceOrderPriceCalculation,
-			commerceOrderValidatorRegistry, commerceProductPriceCalculation,
-			cpDefinitionHelper, cpInstanceHelper,
-			commerceOrderModelResourcePermission,
-			commerceProductPortletResourcePermission);
+			commerceChannelLocalService, commerceOrderItemService,
+			commerceOrderPriceCalculation, commerceOrderValidatorRegistry,
+			commerceProductPriceCalculation, cpDefinitionHelper,
+			cpInstanceHelper, commerceOrderModelResourcePermission,
+			commerceProductPortletResourcePermission, httpServletRequest,
+			portal);
 
 		PortletDisplay portletDisplay =
 			commerceCartContentRequestHelper.getPortletDisplay();

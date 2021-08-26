@@ -43,7 +43,6 @@ public class CommerceCartContentTotalDisplayContext
 	extends CommerceCartContentDisplayContext {
 
 	public CommerceCartContentTotalDisplayContext(
-			HttpServletRequest httpServletRequest,
 			CommerceChannelLocalService commerceChannelLocalService,
 			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
@@ -55,16 +54,16 @@ public class CommerceCartContentTotalDisplayContext
 			ModelResourcePermission<CommerceOrder>
 				commerceOrderModelResourcePermission,
 			PortletResourcePermission commerceProductPortletResourcePermission,
-			Portal portal)
+			HttpServletRequest httpServletRequest, Portal portal)
 		throws PortalException {
 
 		super(
-			httpServletRequest, commerceChannelLocalService,
-			commerceOrderItemService, commerceOrderPriceCalculation,
-			commerceOrderValidatorRegistry, commerceProductPriceCalculation,
-			cpDefinitionHelper, cpInstanceHelper,
-			commerceOrderModelResourcePermission,
-			commerceProductPortletResourcePermission);
+			commerceChannelLocalService, commerceOrderItemService,
+			commerceOrderPriceCalculation, commerceOrderValidatorRegistry,
+			commerceProductPriceCalculation, cpDefinitionHelper,
+			cpInstanceHelper, commerceOrderModelResourcePermission,
+			commerceProductPortletResourcePermission, httpServletRequest,
+			portal);
 
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_portal = portal;

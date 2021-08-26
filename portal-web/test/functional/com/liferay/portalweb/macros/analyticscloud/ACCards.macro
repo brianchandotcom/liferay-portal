@@ -12,6 +12,30 @@ definition {
 		Click(locator1 = "ACCards#CARD_FILTER_BY_WEEK");
 	}
 
+	macro getAxisTick {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if ("${axis}" == "xAxis") {
+			WaitForVisible(
+				index = "${index}",
+				key_cardTitle = "${cardName}",
+				locator1 = "ACCards#RECHARTS_CARTESIAN_X_AXIS_TICK");
+		}
+
+		else if ("${axis}" == "yAxis") {
+			WaitForVisible(
+				index = "${index}",
+				key_cardTitle = "${cardName}",
+				locator1 = "ACCards#RECHARTS_CARTESIAN_Y_AXIS_TICK");
+		}
+
+		var tick = selenium.getText("xpath=(//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${cardName}']]//div[contains(@class,'recharts')]//*[name()='g'][contains(@class,'${axis}')]//*[name()='tspan'])[${index}]");
+
+		return "${tick}";
+	}
+
 	macro noViewTopSitesCardByIndexes {
 		AssertElementNotPresent(
 			key_indexNumber = "${key_index}",

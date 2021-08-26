@@ -87,8 +87,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INDIVIDUAL_ACTIVITIES_CHART</td>
-	<td>//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[contains(@radius,'0')]</td>
+	<td>INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR</td>
+	<td>xpath=(//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[name()='path'][contains(@class,'recharts-rectangle')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

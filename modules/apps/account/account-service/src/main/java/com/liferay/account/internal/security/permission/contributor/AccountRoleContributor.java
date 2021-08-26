@@ -62,7 +62,9 @@ public class AccountRoleContributor implements RoleContributor {
 					_currentAccountEntryManager.getCurrentAccountEntry(
 						roleCollection.getGroupId(), user.getUserId());
 
-				if (currentAccountEntry.getAccountEntryId() > 0) {
+				if ((currentAccountEntry != null) &&
+					(currentAccountEntry.getAccountEntryId() > 0)) {
+
 					List<AccountRole> accountRoles =
 						_accountRoleLocalService.getAccountRoles(
 							currentAccountEntry.getAccountEntryId(),

@@ -83,4 +83,24 @@ definition {
 		}
     }
 
+    macro usePreDefinedZoomValues {
+		for (var zoom : list "${key_list}") {
+
+            first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+
+			Select(
+				locator1 = "CommerceEntry#DIAGRAM_ZOOM_SELECT",
+				value1 = "${zoom}");
+
+			second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+			
+			if("${first_position}" != "${second_position}") {
+				echo("The position is correct for ${zoom}");
+			}
+			else {
+				fail("The position for the zoom: ${zoom} is not correct: ${second_position}, the expected position it must be different from ${first_position}");
+			}
+		}
+    }
+
 }

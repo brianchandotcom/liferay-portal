@@ -82,7 +82,7 @@ public class CustomElementsPortletDescriptorCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class CustomElementsPortletDescriptorCacheModel
 		sb.append(modifiedDate);
 		sb.append(", cssURLs=");
 		sb.append(cssURLs);
+		sb.append(", friendlyURLMapping=");
+		sb.append(friendlyURLMapping);
 		sb.append(", htmlElementName=");
 		sb.append(htmlElementName);
 		sb.append(", instanceable=");
@@ -166,6 +168,14 @@ public class CustomElementsPortletDescriptorCacheModel
 			customElementsPortletDescriptorImpl.setCSSURLs(cssURLs);
 		}
 
+		if (friendlyURLMapping == null) {
+			customElementsPortletDescriptorImpl.setFriendlyURLMapping("");
+		}
+		else {
+			customElementsPortletDescriptorImpl.setFriendlyURLMapping(
+				friendlyURLMapping);
+		}
+
 		if (htmlElementName == null) {
 			customElementsPortletDescriptorImpl.setHTMLElementName("");
 		}
@@ -211,6 +221,7 @@ public class CustomElementsPortletDescriptorCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		cssURLs = (String)objectInput.readObject();
+		friendlyURLMapping = objectInput.readUTF();
 		htmlElementName = objectInput.readUTF();
 
 		instanceable = objectInput.readBoolean();
@@ -252,6 +263,13 @@ public class CustomElementsPortletDescriptorCacheModel
 			objectOutput.writeObject(cssURLs);
 		}
 
+		if (friendlyURLMapping == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(friendlyURLMapping);
+		}
+
 		if (htmlElementName == null) {
 			objectOutput.writeUTF("");
 		}
@@ -285,6 +303,7 @@ public class CustomElementsPortletDescriptorCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String cssURLs;
+	public String friendlyURLMapping;
 	public String htmlElementName;
 	public boolean instanceable;
 	public String name;

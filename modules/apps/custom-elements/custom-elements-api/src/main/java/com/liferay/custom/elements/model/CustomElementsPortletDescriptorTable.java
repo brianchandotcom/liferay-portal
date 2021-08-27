@@ -61,6 +61,10 @@ public class CustomElementsPortletDescriptorTable
 	public final Column<CustomElementsPortletDescriptorTable, Clob> cssURLs =
 		createColumn("cssURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CustomElementsPortletDescriptorTable, String>
+		friendlyURLMapping = createColumn(
+			"friendlyURLMapping", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CustomElementsPortletDescriptorTable, String>
 		htmlElementName = createColumn(
 			"htmlElementName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);

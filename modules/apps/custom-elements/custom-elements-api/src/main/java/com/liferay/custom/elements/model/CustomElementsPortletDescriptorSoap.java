@@ -46,6 +46,7 @@ public class CustomElementsPortletDescriptorSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCSSURLs(model.getCSSURLs());
+		soapModel.setFriendlyURLMapping(model.getFriendlyURLMapping());
 		soapModel.setHTMLElementName(model.getHTMLElementName());
 		soapModel.setInstanceable(model.isInstanceable());
 		soapModel.setName(model.getName());
@@ -186,6 +187,14 @@ public class CustomElementsPortletDescriptorSoap implements Serializable {
 		_cssURLs = cssURLs;
 	}
 
+	public String getFriendlyURLMapping() {
+		return _friendlyURLMapping;
+	}
+
+	public void setFriendlyURLMapping(String friendlyURLMapping) {
+		_friendlyURLMapping = friendlyURLMapping;
+	}
+
 	public String getHTMLElementName() {
 		return _htmlElementName;
 	}
@@ -231,6 +240,7 @@ public class CustomElementsPortletDescriptorSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _cssURLs;
+	private String _friendlyURLMapping;
 	private String _htmlElementName;
 	private boolean _instanceable;
 	private String _name;

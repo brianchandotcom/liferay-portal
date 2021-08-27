@@ -57,6 +57,7 @@ public class CustomElementsPortletDescriptorWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("cssURLs", getCSSURLs());
+		attributes.put("friendlyURLMapping", getFriendlyURLMapping());
 		attributes.put("htmlElementName", getHTMLElementName());
 		attributes.put("instanceable", isInstanceable());
 		attributes.put("name", getName());
@@ -123,6 +124,13 @@ public class CustomElementsPortletDescriptorWrapper
 			setCSSURLs(cssURLs);
 		}
 
+		String friendlyURLMapping = (String)attributes.get(
+			"friendlyURLMapping");
+
+		if (friendlyURLMapping != null) {
+			setFriendlyURLMapping(friendlyURLMapping);
+		}
+
 		String htmlElementName = (String)attributes.get("htmlElementName");
 
 		if (htmlElementName != null) {
@@ -186,6 +194,16 @@ public class CustomElementsPortletDescriptorWrapper
 	@Override
 	public long getCustomElementsPortletDescriptorId() {
 		return model.getCustomElementsPortletDescriptorId();
+	}
+
+	/**
+	 * Returns the friendly url mapping of this custom elements portlet descriptor.
+	 *
+	 * @return the friendly url mapping of this custom elements portlet descriptor
+	 */
+	@Override
+	public String getFriendlyURLMapping() {
+		return model.getFriendlyURLMapping();
 	}
 
 	/**
@@ -354,6 +372,16 @@ public class CustomElementsPortletDescriptorWrapper
 
 		model.setCustomElementsPortletDescriptorId(
 			customElementsPortletDescriptorId);
+	}
+
+	/**
+	 * Sets the friendly url mapping of this custom elements portlet descriptor.
+	 *
+	 * @param friendlyURLMapping the friendly url mapping of this custom elements portlet descriptor
+	 */
+	@Override
+	public void setFriendlyURLMapping(String friendlyURLMapping) {
+		model.setFriendlyURLMapping(friendlyURLMapping);
 	}
 
 	/**

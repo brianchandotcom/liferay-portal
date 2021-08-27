@@ -152,6 +152,9 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 		newCustomElementsPortletDescriptor.setCSSURLs(
 			RandomTestUtil.randomString());
 
+		newCustomElementsPortletDescriptor.setFriendlyURLMapping(
+			RandomTestUtil.randomString());
+
 		newCustomElementsPortletDescriptor.setHTMLElementName(
 			RandomTestUtil.randomString());
 
@@ -205,6 +208,9 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 		Assert.assertEquals(
 			existingCustomElementsPortletDescriptor.getCSSURLs(),
 			newCustomElementsPortletDescriptor.getCSSURLs());
+		Assert.assertEquals(
+			existingCustomElementsPortletDescriptor.getFriendlyURLMapping(),
+			newCustomElementsPortletDescriptor.getFriendlyURLMapping());
 		Assert.assertEquals(
 			existingCustomElementsPortletDescriptor.getHTMLElementName(),
 			newCustomElementsPortletDescriptor.getHTMLElementName());
@@ -272,8 +278,8 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 			"CustomElementsPortletDesc", "mvccVersion", true, "uuid", true,
 			"customElementsPortletDescriptorId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "htmlElementName", true, "instanceable", true,
-			"name", true);
+			"modifiedDate", true, "friendlyURLMapping", true, "htmlElementName",
+			true, "instanceable", true, "name", true);
 	}
 
 	@Test
@@ -557,6 +563,9 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 			RandomTestUtil.nextDate());
 
 		customElementsPortletDescriptor.setCSSURLs(
+			RandomTestUtil.randomString());
+
+		customElementsPortletDescriptor.setFriendlyURLMapping(
 			RandomTestUtil.randomString());
 
 		customElementsPortletDescriptor.setHTMLElementName(

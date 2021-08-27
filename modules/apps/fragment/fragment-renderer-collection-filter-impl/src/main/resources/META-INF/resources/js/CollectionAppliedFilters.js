@@ -138,7 +138,7 @@ export default function CollectionAppliedFilters({
 
 	return {
 		dispose() {
-			removeAllFiltersButton.removeEventListener(
+			removeAllFiltersButton?.removeEventListener(
 				'click',
 				handleRemoveAllFiltersClick
 			);

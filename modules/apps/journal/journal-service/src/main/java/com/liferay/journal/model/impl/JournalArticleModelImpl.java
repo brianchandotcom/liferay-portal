@@ -2207,6 +2207,8 @@ public class JournalArticleModelImpl
 			journalArticleCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		setDocument(null);
+
 		journalArticleCacheModel._document = getDocument();
 
 		return journalArticleCacheModel;

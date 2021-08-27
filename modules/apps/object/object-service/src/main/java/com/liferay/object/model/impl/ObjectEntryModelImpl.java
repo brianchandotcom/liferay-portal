@@ -1162,6 +1162,8 @@ public class ObjectEntryModelImpl
 			objectEntryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		setValues(null);
+
 		objectEntryCacheModel._values = getValues();
 
 		return objectEntryCacheModel;

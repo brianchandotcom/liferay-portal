@@ -1263,7 +1263,11 @@ public class CompanyModelImpl
 			companyCacheModel.size = null;
 		}
 
+		setCompanySecurityBag(null);
+
 		companyCacheModel._companySecurityBag = getCompanySecurityBag();
+
+		setVirtualHostname(null);
 
 		companyCacheModel._virtualHostname = getVirtualHostname();
 

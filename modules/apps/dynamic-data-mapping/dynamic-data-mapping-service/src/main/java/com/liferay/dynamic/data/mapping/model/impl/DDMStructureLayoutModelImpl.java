@@ -1414,6 +1414,8 @@ public class DDMStructureLayoutModelImpl
 			ddmStructureLayoutCacheModel.definition = null;
 		}
 
+		setDDMFormLayout(null);
+
 		ddmStructureLayoutCacheModel._ddmFormLayout = getDDMFormLayout();
 
 		return ddmStructureLayoutCacheModel;

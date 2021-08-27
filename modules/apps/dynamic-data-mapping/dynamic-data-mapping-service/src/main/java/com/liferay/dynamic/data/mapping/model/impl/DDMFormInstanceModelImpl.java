@@ -1413,6 +1413,8 @@ public class DDMFormInstanceModelImpl
 			ddmFormInstanceCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		setDDMFormValues(null);
+
 		ddmFormInstanceCacheModel._ddmFormValues = getDDMFormValues();
 
 		return ddmFormInstanceCacheModel;

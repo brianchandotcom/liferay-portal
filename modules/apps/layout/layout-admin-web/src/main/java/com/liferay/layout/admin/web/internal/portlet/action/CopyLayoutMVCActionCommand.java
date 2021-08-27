@@ -121,14 +121,15 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				new HashMap<>(), sourceLayout.getMasterLayoutPlid(),
 				serviceContext);
 
+			targetLayout = _layoutCopyHelper.copyLayout(
+				sourceLayout, targetLayout);
+
 			Layout draftLayout = targetLayout.fetchDraftLayout();
 
 			if (draftLayout != null) {
-				targetLayout = draftLayout;
+				targetLayout = _layoutCopyHelper.copyLayout(
+					sourceLayout, draftLayout);
 			}
-
-			targetLayout = _layoutCopyHelper.copyLayout(
-				sourceLayout, targetLayout);
 
 			targetLayout.setNameMap(nameMap);
 

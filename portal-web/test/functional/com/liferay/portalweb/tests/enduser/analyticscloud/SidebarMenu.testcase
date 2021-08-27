@@ -9,13 +9,21 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 	}
 
 	tearDown {
@@ -33,7 +41,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8158 | Test Summary: Switch the property which was selected by default"
 	@priority = "5"
 	test CanSwitchPropertyWhichWasSelectedByDefault {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
 		ACUtils.launchAC();
 

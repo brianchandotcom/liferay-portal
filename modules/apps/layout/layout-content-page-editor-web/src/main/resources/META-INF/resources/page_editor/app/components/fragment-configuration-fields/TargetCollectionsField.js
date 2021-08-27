@@ -15,11 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useHoverItem} from '../../contexts/ControlsContext';
 import {useSelectorCallback} from '../../contexts/StoreContext';
+import isEmptyArray from '../../utils/isEmptyArray';
 import {isLayoutDataItemDeleted} from '../../utils/isLayoutDataItemDeleted';
 import {useId} from '../../utils/useId';
 
@@ -32,7 +34,11 @@ export const selectConfiguredCollectionDisplays = (state) =>
 			!isLayoutDataItemDeleted(state.layoutData, item.itemId)
 	);
 
-export function TargetCollectionsField({onValueSelect, value}) {
+export function TargetCollectionsField({
+	filterableCollections,
+	onValueSelect,
+	value,
+}) {
 	const [active, setActive] = useState(false);
 	const inputId = useId();
 	const [nextValue, setNextValue] = useState(value || []);
@@ -73,17 +79,24 @@ export function TargetCollectionsField({onValueSelect, value}) {
 		}
 	};
 
-	const items = useSelectorCallback(
-		(state) =>
-			selectConfiguredCollectionDisplays(state).map((item) => ({
-				checked: nextValue.includes(item.itemId),
-				label: item.config.collection.title,
-				onChange: (checked) => handleChange(item.itemId, checked),
-				type: 'checkbox',
-				value: item.itemId,
-			})),
-		[nextValue]
-	);
+	const items = Object.values(filterableCollections).map((item) => {
+		const isSelected = nextValue.includes(item.itemId);
+
+		return {
+			checked: isSelected,
+			disabled:
+				!isSelected &&
+				isItemDisabled({
+					filterableCollections,
+					itemId: item.itemId,
+					targetCollections: nextValue,
+				}),
+			label: item.config.collection.title,
+			onChange: (checked) => handleChange(item.itemId, checked),
+			type: 'checkbox',
+			value: item.itemId,
+		};
+	});
 
 	return (
 		<ClayForm.Group className="mt-1">
@@ -123,13 +136,16 @@ export function TargetCollectionsField({onValueSelect, value}) {
 				</ClayDropDown.Help>
 				{items.map((item) => (
 					<label
-						className="d-flex dropdown-item"
+						className={classNames('d-flex dropdown-item', {
+							disabled: item.disabled,
+						})}
 						key={item.value}
 						onMouseLeave={() => hoverItem(null)}
 						onMouseOver={() => hoverItem(item.value)}
 					>
 						<ClayCheckbox
 							checked={item.checked}
+							disabled={item.disabled}
 							onChange={item.onChange}
 						/>
 						<span className="font-weight-normal ml-2">
@@ -139,5 +155,26 @@ export function TargetCollectionsField({onValueSelect, value}) {
 				))}
 			</ClayDropDown>
 		</ClayForm.Group>
+	);
+}
+
+function isItemDisabled({filterableCollections, itemId, targetCollections}) {
+	if (isEmptyArray(targetCollections)) {
+		return false;
+	}
+
+	const itemSupportedFilters =
+		filterableCollections[itemId]?.supportedFilters || [];
+
+	const targetCollectionsSupportedFilters = targetCollections.map(
+		(targetCollection) =>
+			filterableCollections[targetCollection].supportedFilters
+	);
+
+	return !itemSupportedFilters.some((supportedFilter) =>
+		targetCollectionsSupportedFilters.every(
+			(targetCollectionsSupportedFilter) =>
+				targetCollectionsSupportedFilter.includes(supportedFilter)
+		)
 	);
 }

@@ -12,8 +12,9 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {CheckboxField} from '../../../../../../app/components/fragment-configuration-fields/CheckboxField';
 import {
@@ -27,6 +28,10 @@ import {
 	useSelectorCallback,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import CollectionService from '../../../../../../app/services/CollectionService';
+import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
+import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
+import isEmptyObject from '../../../../../../app/utils/isEmptyObject';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
 
@@ -36,10 +41,48 @@ export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 		[item.config.fragmentEntryLinkId]
 	);
-	const hasConfiguredCollections = useSelectorCallback(
-		(state) => selectConfiguredCollectionDisplays(state).length > 0,
-		[]
+
+	const collections = useSelectorCallback(
+		selectConfiguredCollectionDisplays,
+		[],
+		deepEqual
 	);
+
+	const [filterableCollections, setFilterableCollections] = useState(null);
+
+	useEffect(() => {
+		if (!filterableCollections) {
+			if (isEmptyArray(collections)) {
+				setFilterableCollections({});
+
+				return;
+			}
+
+			CollectionService.getCollectionSupportedFilters(
+				collections.map((item) => ({
+					collectionId: item.itemId,
+					layoutObjectReference: item.config?.collection,
+				}))
+			).then((response) => {
+				const nextFilterableCollections = {};
+
+				collections
+					.filter(
+						(collection) =>
+							!isEmptyArray(response[collection.itemId])
+					)
+					.forEach((collection) => {
+						nextFilterableCollections[collection.itemId] = {
+							...collection,
+							supportedFilters: response[collection.itemId],
+						};
+					});
+
+				setFilterableCollections(nextFilterableCollections);
+			});
+		}
+	}, [filterableCollections, collections]);
+
 	const languageId = useSelector(selectLanguageId);
 
 	const configurationValues =
@@ -59,11 +102,15 @@ export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
 		[dispatch, fragmentEntryLink, languageId]
 	);
 
-	if (!hasConfiguredCollections) {
+	if (!filterableCollections) {
+		return <ClayLoadingIndicator className="my-0" small />;
+	}
+
+	if (isEmptyObject(filterableCollections)) {
 		return (
 			<p className="alert alert-info text-center" role="alert">
 				{Liferay.Language.get(
-					'display-a-collection-on-the-page-so-that-you-can-use-the-applied-filters-fragment'
+					'display-a-collection-on-the-page-so-that-you-can-use-the-collection-filter-fragment'
 				)}
 			</p>
 		);
@@ -78,6 +125,7 @@ export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
 			</p>
 
 			<TargetCollectionsField
+				filterableCollections={filterableCollections}
 				onValueSelect={onValueSelect}
 				value={configurationValues.targetCollections}
 			/>

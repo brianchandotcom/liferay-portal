@@ -98,7 +98,7 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 			((Object[])redirectButtonDDMFormField.getProperty(
 				"mvcRenderCommandName"))[0]);
 		Assert.assertEquals(
-			"configurationScreenKey=third-party-applications-places",
+			"configurationScreenKey=google-places-site-settings",
 			((Object[])redirectButtonDDMFormField.getProperty("parameters"))
 				[0]);
 		Assert.assertEquals(

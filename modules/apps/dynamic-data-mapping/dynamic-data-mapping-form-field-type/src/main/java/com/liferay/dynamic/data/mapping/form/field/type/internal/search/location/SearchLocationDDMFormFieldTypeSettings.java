@@ -131,7 +131,7 @@ public interface SearchLocationDDMFormFieldTypeSettings
 			),
 			@DDMFormFieldProperty(
 				name = "parameters",
-				value = "configurationScreenKey=third-party-applications-places"
+				value = "configurationScreenKey=google-places-site-settings"
 			),
 			@DDMFormFieldProperty(
 				name = "portletId",

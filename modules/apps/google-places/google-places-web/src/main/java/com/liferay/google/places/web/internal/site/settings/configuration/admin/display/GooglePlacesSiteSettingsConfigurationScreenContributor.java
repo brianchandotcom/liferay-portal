@@ -52,7 +52,7 @@ public class GooglePlacesSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getKey() {
-		return "third-party-applications-places";
+		return "google-places-site-settings";
 	}
 
 	@Override

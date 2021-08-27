@@ -50,7 +50,7 @@ public class GooglePlacesPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getKey() {
-		return "third-party-places";
+		return "google-places-portal-settings";
 	}
 
 	@Override

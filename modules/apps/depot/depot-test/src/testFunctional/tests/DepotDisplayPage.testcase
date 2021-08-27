@@ -587,9 +587,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapDMWithOpenGraph {
-		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -711,9 +708,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapDMWithSEO {
-		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentType();
@@ -777,9 +771,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapWCWithOpenGraph {
-		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
@@ -918,9 +909,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapWCWithSEO {
-		property osgi.module.configuration.file.names = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		NavItem.gotoStructures();

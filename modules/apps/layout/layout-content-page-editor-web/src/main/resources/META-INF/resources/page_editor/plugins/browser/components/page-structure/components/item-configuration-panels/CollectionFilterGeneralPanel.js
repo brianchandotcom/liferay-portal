@@ -187,12 +187,16 @@ export const CollectionFilterGeneralPanelContent = ({
 										label: Liferay.Language.get('none'),
 										value: '',
 									},
-									...Object.values(collectionFilters).map(
-										({key, label}) => ({
-											label,
-											value: key,
-										})
-									),
+									...filterSupportedFilters({
+										collectionFilters: Object.values(
+											collectionFilters
+										),
+										filterableCollections,
+										targetCollections,
+									}).map(({key, label}) => ({
+										label,
+										value: key,
+									})),
 								],
 							},
 						}}
@@ -227,3 +231,25 @@ CollectionFilterGeneralPanel.propTypes = {
 		}).isRequired,
 	}),
 };
+
+function filterSupportedFilters({
+	collectionFilters,
+	targetCollections = [],
+	filterableCollections,
+}) {
+	if (isEmptyArray(targetCollections)) {
+		return {};
+	}
+
+	const targetCollectionsSupportedFilters = targetCollections.map(
+		(targetCollection) =>
+			filterableCollections[targetCollection]?.supportedFilters || []
+	);
+
+	return collectionFilters.filter(({key}) =>
+		targetCollectionsSupportedFilters.every(
+			(targetCollectionSupportedFilters) =>
+				targetCollectionSupportedFilters.includes(key)
+		)
+	);
+}

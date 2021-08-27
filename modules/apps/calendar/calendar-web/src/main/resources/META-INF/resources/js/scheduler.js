@@ -961,9 +961,15 @@ AUI.add(
 							if (startDate.getHours() >= 12) {
 								startDateMask += 'pm';
 							}
+							else {
+								startDateMask += 'am';
+							}
 
 							if (endDate.getHours() >= 12) {
 								endDateMask += 'pm';
+							}
+							else {
+								endDateMask += 'am';
 							}
 						}
 

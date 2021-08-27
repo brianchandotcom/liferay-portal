@@ -309,7 +309,7 @@ public class TranslateDisplayContext {
 		if (infoFieldSetEntry instanceof InfoFieldSet) {
 			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-			return infoFieldSet.getLabel(locale);
+			return HtmlUtil.escape(infoFieldSet.getLabel(locale));
 		}
 
 		return null;

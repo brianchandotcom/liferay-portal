@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.media.CommerceMediaHttpHelper;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -35,6 +36,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -50,6 +52,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
@@ -360,6 +364,63 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
+	public FileVersion getCPInstanceImageFileVersion(
+			long companyId, long cpInstanceId)
+		throws Exception {
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
+
+		if (cpInstance == null) {
+			return null;
+		}
+
+		Map<String, List<String>>
+			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys =
+				_cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+						cpInstanceId);
+
+		JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
+			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+				cpInstance.getCPDefinitionId(), keyValuesJSONArray.toString(),
+				CPAttachmentFileEntryConstants.TYPE_IMAGE, 0, 1);
+
+		if (cpAttachmentFileEntries.isEmpty()) {
+			CPAttachmentFileEntry cpAttachmentFileEntry =
+				_cpDefinitionService.getDefaultImage(
+					cpInstance.getCPDefinitionId());
+
+			if (cpAttachmentFileEntry != null) {
+				FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+				if (fileEntry != null) {
+					return fileEntry.getFileVersion();
+				}
+			}
+
+			CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+				cpInstance.getCPDefinitionId());
+
+			FileEntry fileEntry =
+				_commerceMediaHttpHelper.getDefaultImageFileEntry(
+					companyId, cpDefinition.getGroupId());
+
+			return fileEntry.getFileVersion();
+		}
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntries.get(0);
+
+		FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+		return fileEntry.getFileVersion();
+	}
+
+	@Override
 	public String getCPInstanceThumbnailSrc(long cpInstanceId)
 		throws Exception {
 
@@ -627,6 +688,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceMediaHttpHelper _commerceMediaHttpHelper;
+
+	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
 
 	@Reference
@@ -646,6 +710,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

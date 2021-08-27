@@ -175,8 +175,10 @@ definition {
 			ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
 		}
 
-		task ("Assert the Individual Activity Chart displays") {
-			Click(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+		task ("Click Individual Activity Chart") {
+			Click(
+				index = "1",
+				locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 		}
 
 		task ("Get current Date") {

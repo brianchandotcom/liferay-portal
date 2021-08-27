@@ -88,6 +88,40 @@ definition {
 		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
 	}
 
+	macro takeInvalidTokenFromAnalyticsCloud {
+		
+
+
+
+
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_ADD_DATA_SOURCE_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECT_WITH_TOKEN_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
+
+		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
+
+		ACUtils.launchDXP();
+
+		ACDXPSettings.goToInstanceSettingsAC();
+
+		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
+
+		Type(
+			locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+			value1 = "TEST123");
+
+		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+
+		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+	}
+
 	macro teardownAnalyticsCloud {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

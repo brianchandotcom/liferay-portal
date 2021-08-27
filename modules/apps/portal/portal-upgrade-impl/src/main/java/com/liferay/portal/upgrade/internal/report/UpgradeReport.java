@@ -147,31 +147,29 @@ public class UpgradeReport {
 	}
 
 	private String _getDatabaseInfo() {
-		try {
-			List<TableInfo> tableInfos = _getTableInfos();
+		List<TableInfo> tableInfos = _getTableInfos();
 
-			StringBundler sb = new StringBundler((2 * tableInfos.size()) + 3);
-
-			sb.append("Tables in database sorted by number of rows:\n\n");
-			sb.append(String.format("%-30s %10s\n", "Table name", "Rows"));
-			sb.append(
-				String.format(
-					"%-30s %10s\n", "--------------", "--------------"));
-
-			for (TableInfo tableInfo : tableInfos) {
-				sb.append(tableInfo);
-				sb.append("\n");
-			}
-
-			return sb.toString();
-		}
-		catch (SQLException sqlException) {
+		if (tableInfos == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to get database information");
 			}
 
 			return null;
 		}
+
+		StringBundler sb = new StringBundler((2 * tableInfos.size()) + 3);
+
+		sb.append("Tables in database sorted by number of rows:\n\n");
+		sb.append(String.format("%-30s %10s\n", "Table name", "Rows"));
+		sb.append(
+			String.format("%-30s %10s\n", "--------------", "--------------"));
+
+		for (TableInfo tableInfo : tableInfos) {
+			sb.append(tableInfo);
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	private DBType _getDBType() {
@@ -455,9 +453,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private List<TableInfo> _getTableInfos() throws SQLException {
-		List<TableInfo> tableInfos = new ArrayList<>();
-
+	private List<TableInfo> _getTableInfos() {
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -466,6 +462,8 @@ public class UpgradeReport {
 			try (ResultSet resultSet1 = databaseMetaData.getTables(
 					dbInspector.getCatalog(), dbInspector.getSchema(), "%",
 					null)) {
+
+				List<TableInfo> tableInfos = new ArrayList<>();
 
 				while (resultSet1.next()) {
 					String tableType = resultSet1.getString("TABLE_TYPE");
@@ -499,12 +497,15 @@ public class UpgradeReport {
 						}
 					}
 				}
+
+				ListUtil.sort(tableInfos);
+
+				return tableInfos;
 			}
-
-			ListUtil.sort(tableInfos);
 		}
-
-		return tableInfos;
+		catch (SQLException sqlException) {
+			return null;
+		}
 	}
 
 	private String _getUpgradeProcessesContent() {

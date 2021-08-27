@@ -76,6 +76,7 @@ public class CustomElementsPortletDescriptorModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"cssURLs", Types.CLOB},
+		{"friendlyURLMapping", Types.VARCHAR},
 		{"htmlElementName", Types.VARCHAR}, {"instanceable", Types.BOOLEAN},
 		{"name", Types.VARCHAR}, {"properties", Types.CLOB}
 	};
@@ -93,6 +94,7 @@ public class CustomElementsPortletDescriptorModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("cssURLs", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("friendlyURLMapping", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("htmlElementName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("instanceable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -100,7 +102,7 @@ public class CustomElementsPortletDescriptorModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CustomElementsPortletDesc (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,customElementsPortletDescId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,cssURLs TEXT null,htmlElementName VARCHAR(75) null,instanceable BOOLEAN,name VARCHAR(75) null,properties TEXT null)";
+		"create table CustomElementsPortletDesc (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,customElementsPortletDescId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,cssURLs TEXT null,friendlyURLMapping VARCHAR(75) null,htmlElementName VARCHAR(75) null,instanceable BOOLEAN,name VARCHAR(75) null,properties TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CustomElementsPortletDesc";
@@ -343,6 +345,13 @@ public class CustomElementsPortletDescriptorModelImpl
 			(BiConsumer<CustomElementsPortletDescriptor, String>)
 				CustomElementsPortletDescriptor::setCSSURLs);
 		attributeGetterFunctions.put(
+			"friendlyURLMapping",
+			CustomElementsPortletDescriptor::getFriendlyURLMapping);
+		attributeSetterBiConsumers.put(
+			"friendlyURLMapping",
+			(BiConsumer<CustomElementsPortletDescriptor, String>)
+				CustomElementsPortletDescriptor::setFriendlyURLMapping);
+		attributeGetterFunctions.put(
 			"htmlElementName",
 			CustomElementsPortletDescriptor::getHTMLElementName);
 		attributeSetterBiConsumers.put(
@@ -559,6 +568,25 @@ public class CustomElementsPortletDescriptorModelImpl
 	}
 
 	@Override
+	public String getFriendlyURLMapping() {
+		if (_friendlyURLMapping == null) {
+			return "";
+		}
+		else {
+			return _friendlyURLMapping;
+		}
+	}
+
+	@Override
+	public void setFriendlyURLMapping(String friendlyURLMapping) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_friendlyURLMapping = friendlyURLMapping;
+	}
+
+	@Override
 	public String getHTMLElementName() {
 		if (_htmlElementName == null) {
 			return "";
@@ -711,6 +739,8 @@ public class CustomElementsPortletDescriptorModelImpl
 		customElementsPortletDescriptorImpl.setCreateDate(getCreateDate());
 		customElementsPortletDescriptorImpl.setModifiedDate(getModifiedDate());
 		customElementsPortletDescriptorImpl.setCSSURLs(getCSSURLs());
+		customElementsPortletDescriptorImpl.setFriendlyURLMapping(
+			getFriendlyURLMapping());
 		customElementsPortletDescriptorImpl.setHTMLElementName(
 			getHTMLElementName());
 		customElementsPortletDescriptorImpl.setInstanceable(isInstanceable());
@@ -857,6 +887,18 @@ public class CustomElementsPortletDescriptorModelImpl
 			customElementsPortletDescriptorCacheModel.cssURLs = null;
 		}
 
+		customElementsPortletDescriptorCacheModel.friendlyURLMapping =
+			getFriendlyURLMapping();
+
+		String friendlyURLMapping =
+			customElementsPortletDescriptorCacheModel.friendlyURLMapping;
+
+		if ((friendlyURLMapping != null) &&
+			(friendlyURLMapping.length() == 0)) {
+
+			customElementsPortletDescriptorCacheModel.friendlyURLMapping = null;
+		}
+
 		customElementsPortletDescriptorCacheModel.htmlElementName =
 			getHTMLElementName();
 
@@ -978,6 +1020,7 @@ public class CustomElementsPortletDescriptorModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _cssURLs;
+	private String _friendlyURLMapping;
 	private String _htmlElementName;
 	private boolean _instanceable;
 	private String _name;
@@ -1022,6 +1065,7 @@ public class CustomElementsPortletDescriptorModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("cssURLs", _cssURLs);
+		_columnOriginalValues.put("friendlyURLMapping", _friendlyURLMapping);
 		_columnOriginalValues.put("htmlElementName", _htmlElementName);
 		_columnOriginalValues.put("instanceable", _instanceable);
 		_columnOriginalValues.put("name", _name);
@@ -1069,13 +1113,15 @@ public class CustomElementsPortletDescriptorModelImpl
 
 		columnBitmasks.put("cssURLs", 256L);
 
-		columnBitmasks.put("htmlElementName", 512L);
+		columnBitmasks.put("friendlyURLMapping", 512L);
 
-		columnBitmasks.put("instanceable", 1024L);
+		columnBitmasks.put("htmlElementName", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("instanceable", 2048L);
 
-		columnBitmasks.put("properties", 4096L);
+		columnBitmasks.put("name", 4096L);
+
+		columnBitmasks.put("properties", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

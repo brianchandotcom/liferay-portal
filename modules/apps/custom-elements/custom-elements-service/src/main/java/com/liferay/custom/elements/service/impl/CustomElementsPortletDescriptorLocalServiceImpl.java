@@ -73,8 +73,8 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CustomElementsPortletDescriptor addCustomElementsPortletDescriptor(
-			long userId, String cssURLs, String friendlyURLMapping, 
-			String htmlElementName, boolean instanceable, String name, 
+			long userId, String cssURLs, String friendlyURLMapping,
+			String htmlElementName, boolean instanceable, String name,
 			String properties, ServiceContext serviceContext)
 		throws PortalException {
 

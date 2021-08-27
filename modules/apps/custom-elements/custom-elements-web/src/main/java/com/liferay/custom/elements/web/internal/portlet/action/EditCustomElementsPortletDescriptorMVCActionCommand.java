@@ -68,8 +68,8 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 		if (cmd.equals(Constants.ADD)) {
 			_customElementsPortletDescriptorLocalService.
 				addCustomElementsPortletDescriptor(
-					serviceContext.getUserId(), cssURLs, friendlyURLMapping, 
-					htmlElementName, instanceable, name, properties, 
+					serviceContext.getUserId(), cssURLs, friendlyURLMapping,
+					htmlElementName, instanceable, name, properties,
 					serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {

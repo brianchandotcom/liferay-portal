@@ -221,6 +221,21 @@ public interface CustomElementsPortletDescriptorModel
 	public void setCSSURLs(String cssURLs);
 
 	/**
+	 * Returns the friendly url mapping of this custom elements portlet descriptor.
+	 *
+	 * @return the friendly url mapping of this custom elements portlet descriptor
+	 */
+	@AutoEscape
+	public String getFriendlyURLMapping();
+
+	/**
+	 * Sets the friendly url mapping of this custom elements portlet descriptor.
+	 *
+	 * @param friendlyURLMapping the friendly url mapping of this custom elements portlet descriptor
+	 */
+	public void setFriendlyURLMapping(String friendlyURLMapping);
+
+	/**
 	 * Returns the html element name of this custom elements portlet descriptor.
 	 *
 	 * @return the html element name of this custom elements portlet descriptor

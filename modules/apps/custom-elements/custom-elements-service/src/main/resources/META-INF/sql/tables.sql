@@ -8,6 +8,7 @@ create table CustomElementsPortletDesc (
 	createDate DATE null,
 	modifiedDate DATE null,
 	cssURLs TEXT null,
+	friendlyURLMapping VARCHAR(75) null,
 	htmlElementName VARCHAR(75) null,
 	instanceable BOOLEAN,
 	name VARCHAR(75) null,

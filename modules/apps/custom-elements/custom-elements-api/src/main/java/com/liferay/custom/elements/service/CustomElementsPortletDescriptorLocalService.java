@@ -84,9 +84,9 @@ public interface CustomElementsPortletDescriptorLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsPortletDescriptor addCustomElementsPortletDescriptor(
-			long userId, String cssURLs, String htmlElementName,
-			boolean instanceable, String name, String properties,
-			ServiceContext serviceContext)
+			long userId, String cssURLs, String friendlyURLMapping,
+			String htmlElementName, boolean instanceable, String name,
+			String properties, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -345,8 +345,9 @@ public interface CustomElementsPortletDescriptorLocalService
 	public CustomElementsPortletDescriptor
 			updateCustomElementsPortletDescriptor(
 				long customElementsSourceId, String cssURLs,
-				String htmlElementName, boolean instanceable, String name,
-				String properties)
+				String friendlyURLMapping, String htmlElementName,
+				boolean instanceable, String name, String properties,
+				ServiceContext serviceContext)
 		throws PortalException;
 
 }

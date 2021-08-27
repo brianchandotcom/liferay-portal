@@ -65,14 +65,15 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 
 	public static CustomElementsPortletDescriptor
 			addCustomElementsPortletDescriptor(
-				long userId, String cssURLs, String htmlElementName,
-				boolean instanceable, String name, String properties,
+				long userId, String cssURLs, String friendlyURLMapping,
+				String htmlElementName, boolean instanceable, String name,
+				String properties,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCustomElementsPortletDescriptor(
-			userId, cssURLs, htmlElementName, instanceable, name, properties,
-			serviceContext);
+			userId, cssURLs, friendlyURLMapping, htmlElementName, instanceable,
+			name, properties, serviceContext);
 	}
 
 	/**
@@ -406,13 +407,14 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 	public static CustomElementsPortletDescriptor
 			updateCustomElementsPortletDescriptor(
 				long customElementsSourceId, String cssURLs,
-				String htmlElementName, boolean instanceable, String name,
-				String properties)
+				String friendlyURLMapping, String htmlElementName,
+				boolean instanceable, String name, String properties,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCustomElementsPortletDescriptor(
-			customElementsSourceId, cssURLs, htmlElementName, instanceable,
-			name, properties);
+			customElementsSourceId, cssURLs, friendlyURLMapping,
+			htmlElementName, instanceable, name, properties, serviceContext);
 	}
 
 	public static CustomElementsPortletDescriptorLocalService getService() {

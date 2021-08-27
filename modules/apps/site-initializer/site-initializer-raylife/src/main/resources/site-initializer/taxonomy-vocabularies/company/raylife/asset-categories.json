@@ -3,7 +3,9 @@
 		"externalReferenceCode": "RAYCAT0001",
 		"permissions": [
 			{
-				"actionIds": ["VIEW"],
+				"actionIds": [
+					"VIEW"
+				],
 				"roleName": "Guest",
 				"scope": 4
 			}
@@ -14,16 +16,14 @@
 				"externalReferenceCode": "RAYCAT0002",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1160"
-					},
 					{
 						"key": "NAICS",
 						"value": "541211"
@@ -40,16 +40,14 @@
 				"externalReferenceCode": "RAYCAT0003",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1395"
-					},
 					{
 						"key": "Segment",
 						"value": "Habitational"
@@ -62,7 +60,9 @@
 				"externalReferenceCode": "RAYCAT0004",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
@@ -84,16 +84,14 @@
 				"externalReferenceCode": "RAYCAT0005",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1396"
-					},
 					{
 						"key": "Segment",
 						"value": "Habitational"
@@ -106,7 +104,9 @@
 				"externalReferenceCode": "RAYCAT0006",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
@@ -128,16 +128,14 @@
 				"externalReferenceCode": "RAYCAT0007",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1394"
-					},
 					{
 						"key": "Segment",
 						"value": "Habitational"
@@ -150,7 +148,9 @@
 				"externalReferenceCode": "RAYCAT0008",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
@@ -172,16 +172,14 @@
 				"externalReferenceCode": "RAYCAT0009",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1345"
-					},
 					{
 						"key": "NAICS",
 						"value": "311920"
@@ -198,16 +196,14 @@
 				"externalReferenceCode": "RAYCAT0010",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1280"
-					},
 					{
 						"key": "NAICS",
 						"value": "722513"
@@ -224,16 +220,14 @@
 				"externalReferenceCode": "RAYCAT0011",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1349"
-					},
 					{
 						"key": "NAICS",
 						"value": "424930"
@@ -250,16 +244,14 @@
 				"externalReferenceCode": "RAYCAT0012",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1283"
-					},
 					{
 						"key": "NAICS",
 						"value": "445110"
@@ -276,16 +268,14 @@
 				"externalReferenceCode": "RAYCAT0013",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1246"
-					},
 					{
 						"key": "NAICS",
 						"value": "621210"
@@ -302,16 +292,14 @@
 				"externalReferenceCode": "RAYCAT0014",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "750"
-					},
 					{
 						"key": "NAICS",
 						"value": "453910"
@@ -328,16 +316,14 @@
 				"externalReferenceCode": "RAYCAT0015",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "753"
-					},
 					{
 						"key": "NAICS",
 						"value": "541922"
@@ -354,16 +340,14 @@
 				"externalReferenceCode": "RAYCAT0016",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "815"
-					},
 					{
 						"key": "NAICS",
 						"value": "531210"
@@ -380,16 +364,14 @@
 				"externalReferenceCode": "RAYCAT0017",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1391"
-					},
 					{
 						"key": "NAICS",
 						"value": "722511"
@@ -406,16 +388,14 @@
 				"externalReferenceCode": "RAYCAT0018",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1389"
-					},
 					{
 						"key": "NAICS",
 						"value": "722513"
@@ -432,16 +412,14 @@
 				"externalReferenceCode": "RAYCAT0019",
 				"permissions": [
 					{
-						"actionIds": ["VIEW"],
+						"actionIds": [
+							"VIEW"
+						],
 						"roleName": "Guest",
 						"scope": 4
 					}
 				],
 				"properties": [
-					{
-						"key": "BCC",
-						"value": "1040"
-					},
 					{
 						"key": "NAICS",
 						"value": "541940"
@@ -460,60 +438,75 @@
 		"externalReferenceCode": "RAYCAT0020",
 		"permissions": [
 			{
-				"actionIds": ["VIEW"],
+				"actionIds": [
+					"VIEW"
+				],
 				"roleName": "Guest",
 				"scope": 4
 			}
 		],
-		"subcategories": [],
+		"subcategories": [
+		],
 		"title": "Commercial Auto"
 	},
 	{
 		"externalReferenceCode": "RAYCAT0021",
 		"permissions": [
 			{
-				"actionIds": ["VIEW"],
+				"actionIds": [
+					"VIEW"
+				],
 				"roleName": "Guest",
 				"scope": 4
 			}
 		],
-		"subcategories": [],
+		"subcategories": [
+		],
 		"title": "Cyber Insurance"
 	},
 	{
 		"externalReferenceCode": "RAYCAT0022",
 		"permissions": [
 			{
-				"actionIds": ["VIEW"],
+				"actionIds": [
+					"VIEW"
+				],
 				"roleName": "Guest",
 				"scope": 4
 			}
 		],
-		"subcategories": [],
+		"subcategories": [
+		],
 		"title": "General Liability"
 	},
 	{
 		"externalReferenceCode": "RAYCAT0023",
 		"permissions": [
 			{
-				"actionIds": ["VIEW"],
+				"actionIds": [
+					"VIEW"
+				],
 				"roleName": "Guest",
 				"scope": 4
 			}
 		],
-		"subcategories": [],
+		"subcategories": [
+		],
 		"title": "Professional Liability"
 	},
 	{
 		"externalReferenceCode": "RAYCAT0024",
 		"permissions": [
 			{
-				"actionIds": ["VIEW"],
+				"actionIds": [
+					"VIEW"
+				],
 				"roleName": "Guest",
 				"scope": 4
 			}
 		],
-		"subcategories": [],
+		"subcategories": [
+		],
 		"title": "Workers Compensation"
 	}
 ]

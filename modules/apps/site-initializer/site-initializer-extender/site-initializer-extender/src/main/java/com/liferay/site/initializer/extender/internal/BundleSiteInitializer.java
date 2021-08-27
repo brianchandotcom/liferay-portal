@@ -18,7 +18,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -65,7 +67,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
@@ -94,7 +95,8 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		AssetCategoryLocalService assetCategoryLocalService, Bundle bundle,
+		AssetCategoryLocalService assetCategoryLocalService,
+		AssetVocabularyLocalService assetVocabularyLocalService, Bundle bundle,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -112,6 +114,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserLocalService userLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_bundle = bundle;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
@@ -228,8 +231,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				serviceContext, titleCategory);
 
-			// Permissions
-
 			if (categoryJSONObject == null) {
 				continue;
 			}
@@ -287,8 +288,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 						assetCategory.getCategoryId(), serviceContext,
 						titleSubcategory);
 
-					// Permissions
-
 					JSONArray subcategorypermissionsJSONArray =
 						subcategoryJSONObject.getJSONArray("permissions");
 
@@ -312,22 +311,33 @@ public class BundleSiteInitializer implements SiteInitializer {
 			long parentCategoryId, ServiceContext serviceContext, String title)
 		throws Exception {
 
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(), title);
+
+		Map<Locale, String> descriptionMap = null;
+
+		if (Validator.isNotNull(description)) {
+			descriptionMap = Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), description);
+		}
+
 		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
 			groupId, parentCategoryId, title, assetVocabularyId);
 
 		if (assetCategory == null) {
-			Map<Locale, String> titleMap = Collections.singletonMap(
-				LocaleUtil.getSiteDefault(), title);
+			assetCategory = _assetCategoryLocalService.addCategory(
+				serviceContext.getUserId(), groupId, parentCategoryId, titleMap,
+				descriptionMap, assetVocabularyId, categoryProperties,
+				serviceContext);
 
-			Map<Locale, String> descriptionMap = null;
+			assetCategory.setExternalReferenceCode(externalReferenceCode);
 
-			if (Validator.isNotNull(description)) {
-				descriptionMap = Collections.singletonMap(
-					LocaleUtil.getSiteDefault(), description);
-			}
-
-			assetCategory = _erAssetCategoryLocalService.addOrUpdateCategory(
-				externalReferenceCode, serviceContext.getUserId(), groupId,
+			assetCategory = _assetCategoryLocalService.updateAssetCategory(
+				assetCategory);
+		}
+		else {
+			assetCategory = _assetCategoryLocalService.updateCategory(
+				serviceContext.getUserId(), assetCategory.getCategoryId(),
 				parentCategoryId, titleMap, descriptionMap, assetVocabularyId,
 				categoryProperties, serviceContext);
 		}
@@ -620,18 +630,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			//TODO filter by name
-			Page<TaxonomyVocabulary> page =
-				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					groupId, taxonomyVocabulary.getName(), null, null, null);
+			String vocabularyName = taxonomyVocabulary.getName();
 
-			if (page.getTotalCount() > 0) {
-				TaxonomyVocabulary existingTaxonomyVocabulary = page.getItems(
-				).iterator(
-				).next();
+			if (vocabularyName != null) {
+				vocabularyName = vocabularyName.trim();
 
-				taxonomyVocabularyResource.patchTaxonomyVocabulary(
-					existingTaxonomyVocabulary.getId(), taxonomyVocabulary);
+				vocabularyName = StringUtil.toLowerCase(vocabularyName);
+			}
+
+			AssetVocabulary existingVocabulary =
+				_assetVocabularyLocalService.fetchGroupVocabulary(
+					groupId, vocabularyName);
+
+			if (existingVocabulary != null) {
+				taxonomyVocabulary =
+					taxonomyVocabularyResource.patchTaxonomyVocabulary(
+						existingVocabulary.getVocabularyId(),
+						taxonomyVocabulary);
 			}
 			else {
 				taxonomyVocabulary =
@@ -715,6 +730,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
 	private final DDMStructureLocalService _ddmStructureLocalService;

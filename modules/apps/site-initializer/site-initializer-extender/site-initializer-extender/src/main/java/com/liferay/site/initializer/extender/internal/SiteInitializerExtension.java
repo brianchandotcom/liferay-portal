@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -47,7 +48,8 @@ import org.osgi.framework.BundleContext;
 public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
-		AssetCategoryLocalService assetCategoryLocalService, Bundle bundle,
+		AssetCategoryLocalService assetCategoryLocalService,
+		AssetVocabularyLocalService assetVocabularyLocalService, Bundle bundle,
 		BundleContext bundleContext,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
@@ -71,14 +73,16 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
-				assetCategoryLocalService, bundle, bundleContext,
-				ddmStructureLocalService, ddmTemplateLocalService,
-				defaultDDMStructureHelper, documentFolderResourceFactory,
-				documentResourceFactory, fragmentsImporter, groupLocalService,
-				jsonFactory, objectDefinitionResourceFactory, portal,
-				erAssetCategoryLocalService, resourcePermissionLocalService,
-				roleLocalService, styleBookEntryZipProcessor,
-				taxonomyVocabularyResourceFactory, userLocalService));
+				assetCategoryLocalService, assetVocabularyLocalService, bundle,
+				bundleContext, ddmStructureLocalService,
+				ddmTemplateLocalService, defaultDDMStructureHelper,
+				documentFolderResourceFactory,
+				documentResourceFactory, erAssetCategoryLocalService,
+				fragmentsImporter, groupLocalService, jsonFactory,
+				objectDefinitionResourceFactory, portal,
+				resourcePermissionLocalService, roleLocalService,
+				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,
+				userLocalService));
 
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();

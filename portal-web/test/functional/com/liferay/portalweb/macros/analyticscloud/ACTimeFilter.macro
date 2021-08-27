@@ -49,8 +49,6 @@ definition {
 		var key_dropdownOption = "Custom Range";
 
 		if (isSet(cardName)) {
-			ACCards.viewCards(cardTitle = "${cardName}");
-
 			ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
 		}
 

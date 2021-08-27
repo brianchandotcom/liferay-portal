@@ -16,7 +16,15 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
+import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -30,6 +38,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -569,46 +578,25 @@ public class DLFileEntryFinderImpl
 		List<Long> folderIds, String[] mimeTypes,
 		QueryDefinition<DLFileEntry> queryDefinition, boolean inlineSQLHelper) {
 
+		FromStep fromStep = DSLQueryFactoryUtil.select(
+			DSLFunctionFactoryUtil.count(
+				DLFileEntryTable.INSTANCE.fileEntryId
+			).as(
+				COUNT_COLUMN_NAME
+			));
+
+		JoinStep joinStep = _getJoinStep(
+			fromStep, folderIds, groupId, inlineSQLHelper, mimeTypes,
+			queryDefinition, repositoryIds, userId);
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String id = null;
-
-			if (userId <= 0) {
-				id = COUNT_BY_G_F;
-			}
-			else {
-				id = COUNT_BY_G_U_F;
-			}
-
-			String sql = getFileEntriesSQL(
-				id, groupId, repositoryIds, folderIds, mimeTypes,
-				queryDefinition, inlineSQLHelper);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(joinStep);
 
 			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			if (userId > 0) {
-				queryPos.add(userId);
-				queryPos.add(userId);
-			}
-
-			queryPos.add(queryDefinition.getStatus());
-
-			for (Long repositoryId : repositoryIds) {
-				queryPos.add(repositoryId);
-			}
-
-			if (mimeTypes != null) {
-				queryPos.add(mimeTypes);
-			}
 
 			Iterator<Long> iterator = sqlQuery.iterate();
 
@@ -635,50 +623,34 @@ public class DLFileEntryFinderImpl
 		List<Long> folderIds, String[] mimeTypes,
 		QueryDefinition<DLFileEntry> queryDefinition, boolean inlineSQLHelper) {
 
+		JoinStep joinStep = _getJoinStep(
+			DSLQueryFactoryUtil.select(DLFileEntryTable.INSTANCE), folderIds,
+			groupId, inlineSQLHelper, mimeTypes, queryDefinition, repositoryIds,
+			userId);
+
+		DSLQuery dslQuery = null;
+
+		OrderByComparator<DLFileEntry> orderByComparator =
+			queryDefinition.getOrderByComparator();
+
+		if (orderByComparator == null) {
+			dslQuery = joinStep.orderBy(
+				DLFileEntryTable.INSTANCE.fileEntryId.ascending());
+		}
+		else {
+			dslQuery = joinStep.orderBy(
+				DLFileEntryTable.INSTANCE, orderByComparator);
+		}
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String id = null;
-
-			if (userId <= 0) {
-				id = FIND_BY_G_F;
-			}
-			else {
-				id = FIND_BY_G_U_F;
-			}
-
-			String sql = getFileEntriesSQL(
-				id, groupId, repositoryIds, folderIds, mimeTypes,
-				queryDefinition, inlineSQLHelper);
-
-			sql = CustomSQLUtil.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator());
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(dslQuery);
 
 			sqlQuery.addEntity(
 				DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			if (userId > 0) {
-				queryPos.add(userId);
-				queryPos.add(userId);
-			}
-
-			queryPos.add(queryDefinition.getStatus());
-
-			for (Long repositoryId : repositoryIds) {
-				queryPos.add(repositoryId);
-			}
-
-			if (mimeTypes != null) {
-				queryPos.add(mimeTypes);
-			}
 
 			return (List<DLFileEntry>)QueryUtil.list(
 				sqlQuery, getDialect(), queryDefinition.getStart(),
@@ -843,6 +815,130 @@ public class DLFileEntryFinderImpl
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
+	}
+
+	private JoinStep _getJoinStep(
+		FromStep fromStep, List<Long> folderIds, long groupId,
+		boolean inlineSQLHelper, String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition, List<Long> repositoryIds,
+		long userId) {
+
+		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
+			DLFileEntryTable.INSTANCE.fileEntryId
+		).from(
+			DLFileEntryTable.INSTANCE
+		);
+
+		if ((userId > 0) ||
+			(queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY)) {
+
+			joinStep = joinStep.innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.fileEntryId.eq(
+					DLFileVersionTable.INSTANCE.fileEntryId));
+		}
+
+		Predicate wherePredicate = DLFileEntryTable.INSTANCE.groupId.eq(
+			groupId);
+
+		if (userId > 0) {
+			wherePredicate = wherePredicate.and(
+				Predicate.withParentheses(
+					DLFileEntryTable.INSTANCE.userId.eq(
+						userId
+					).or(
+						DLFileVersionTable.INSTANCE.userId.eq(userId)
+					)));
+		}
+
+		if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+			if (queryDefinition.isExcludeStatus()) {
+				wherePredicate = wherePredicate.and(
+					DLFileVersionTable.INSTANCE.status.neq(
+						queryDefinition.getStatus()));
+			}
+			else {
+				wherePredicate = wherePredicate.and(
+					DLFileVersionTable.INSTANCE.status.eq(
+						queryDefinition.getStatus()));
+			}
+		}
+
+		if (ListUtil.isNotEmpty(repositoryIds)) {
+			Predicate repositoriesPredicate =
+				DLFileEntryTable.INSTANCE.repositoryId.eq(repositoryIds.get(0));
+
+			for (int i = 1; i < repositoryIds.size(); i++) {
+				repositoriesPredicate = repositoriesPredicate.or(
+					DLFileEntryTable.INSTANCE.repositoryId.eq(
+						repositoryIds.get(i)));
+			}
+
+			wherePredicate = wherePredicate.and(
+				Predicate.withParentheses(repositoriesPredicate));
+		}
+
+		if (ListUtil.isNotEmpty(folderIds)) {
+			Predicate foldersPredicate = DLFileEntryTable.INSTANCE.folderId.eq(
+				folderIds.get(0));
+
+			for (int i = 1; i < folderIds.size(); i++) {
+				foldersPredicate = foldersPredicate.or(
+					DLFileEntryTable.INSTANCE.folderId.eq(folderIds.get(i)));
+			}
+
+			wherePredicate = wherePredicate.and(
+				Predicate.withParentheses(foldersPredicate));
+		}
+
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
+			Predicate mimeTypesPredicate =
+				DLFileEntryTable.INSTANCE.mimeType.eq(mimeTypes[0]);
+
+			for (int i = 1; i < mimeTypes.length; i++) {
+				mimeTypesPredicate = mimeTypesPredicate.or(
+					DLFileEntryTable.INSTANCE.mimeType.eq(mimeTypes[i]));
+			}
+
+			wherePredicate = wherePredicate.and(
+				Predicate.withParentheses(mimeTypesPredicate));
+		}
+
+		return fromStep.from(
+			joinStep.where(
+				wherePredicate.and(
+					() -> {
+						if (inlineSQLHelper) {
+							if (queryDefinition.getStatus() ==
+									WorkflowConstants.STATUS_ANY) {
+
+								return InlineSQLHelperUtil.
+									getPermissionWherePredicate(
+										DLFileEntry.class,
+										DLFileEntryTable.INSTANCE.fileEntryId,
+										groupId);
+							}
+
+							return InlineSQLHelperUtil.
+								getPermissionWherePredicate(
+									DLFileEntry.class,
+									DLFileVersionTable.INSTANCE.fileEntryId,
+									groupId);
+						}
+
+						return null;
+					})
+			).as(
+				"tempDLFileEntryTable"
+			)
+		).innerJoinON(
+			DLFileEntryTable.INSTANCE,
+			DLFileEntryTable.INSTANCE.as(
+				"tempDLFileEntryTable"
+			).fileEntryId.eq(
+				DLFileEntryTable.INSTANCE.fileEntryId
+			)
+		);
 	}
 
 }

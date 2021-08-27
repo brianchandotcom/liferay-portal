@@ -34,7 +34,6 @@ export default function ItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
-	const state = useSelector((state) => state);
 	const widgets = useWidgets();
 
 	const {
@@ -42,7 +41,7 @@ export default function ItemActions({item}) {
 		layoutData,
 		segmentsExperienceId,
 		selectedViewportSize,
-	} = state;
+	} = useSelector((state) => state);
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
@@ -104,7 +103,6 @@ export default function ItemActions({item}) {
 						deleteItem({
 							itemId: item.itemId,
 							selectItem,
-							store: state,
 						})
 					),
 				icon: 'times-circle',
@@ -121,7 +119,6 @@ export default function ItemActions({item}) {
 		segmentsExperienceId,
 		selectedViewportSize,
 		selectItem,
-		state,
 		widgets,
 	]);
 

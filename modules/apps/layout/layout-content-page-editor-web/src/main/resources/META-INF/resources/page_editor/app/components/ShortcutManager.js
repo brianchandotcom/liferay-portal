@@ -89,7 +89,6 @@ export default function ShortcutManager() {
 			deleteItem({
 				itemId: activeItemId,
 				selectItem,
-				store: state,
 			})
 		);
 	};

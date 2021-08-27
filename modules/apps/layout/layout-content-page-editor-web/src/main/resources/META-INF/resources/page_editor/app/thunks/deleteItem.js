@@ -19,9 +19,13 @@ import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
 
-export default function deleteItem({itemId, selectItem = () => {}, store}) {
-	return (dispatch) => {
-		const {fragmentEntryLinks, layoutData, segmentsExperienceId} = store;
+export default function deleteItem({itemId, selectItem = () => {}}) {
+	return (dispatch, getState) => {
+		const {
+			fragmentEntryLinks,
+			layoutData,
+			segmentsExperienceId,
+		} = getState();
 
 		return markItemForDeletion({
 			fragmentEntryLinks,

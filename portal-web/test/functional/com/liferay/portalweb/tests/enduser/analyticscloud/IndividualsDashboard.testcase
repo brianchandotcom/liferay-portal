@@ -115,6 +115,54 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8909 | Test Summary: As a Business User, I should be able to change individual time filter to 180 days"
+	@priority = "3"
+	test CanUseLast180DaysTimeFilterOnActiveIndividualsChart {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("Select the Last 180 days time period in Active Individuals chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Active Individuals");
+
+			ACTimeFilter.setLast180Days();
+		}
+
+		task ("View the time period in Active Individuals chart is Last 180 days") {
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
+		}
+
+		task ("View only 6 xAxis ticks shown in Active Individuals chart") {
+			var n = "0";
+
+			while ("${n}" != "6") {
+				var n = ${n} + 1;
+
+				AssertVisible(
+					index = "${n}",
+					key_cardTitle = "Active Individuals",
+					locator1 = "ACCards#RECHARTS_CARTESIAN_X_AXIS_TICK");
+			}
+
+			AssertElementNotPresent(
+				index = "7",
+				key_cardTitle = "Active Individuals",
+				locator1 = "ACCards#RECHARTS_CARTESIAN_X_AXIS_TICK");
+		}
+	}
+
 	@description = "Total Individuals increase by one when a new individual is added via event"
 	@priority = "5"
 	test CanViewTotalIndividualsIncreaseByOne {

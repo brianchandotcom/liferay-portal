@@ -54,7 +54,6 @@ definition {
 	test AccountUserCanApproveTask {
 		property test.name.skip.portal.instance = "MyWorkflowTasks#AccountUserCanApproveTask";
 
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
@@ -461,7 +460,7 @@ definition {
 	@priority = "4"
 	test CanAssignTaskToUserWithAccountRole {
 		property test.name.skip.portal.instance = "MyWorkflowTasks#CanAssignTaskToUserWithAccountRole";
-		
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(

@@ -64,12 +64,13 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 		commerceDiscountOrderTypeRel.setPriority(priority);
 		commerceDiscountOrderTypeRel.setExpandoBridgeAttributes(serviceContext);
 
-		// Commerce discount
+		commerceDiscountOrderTypeRel =
+			commerceDiscountOrderTypeRelPersistence.update(
+				commerceDiscountOrderTypeRel);
 
 		reindexCommerceDiscount(commerceDiscountId);
 
-		return commerceDiscountOrderTypeRelPersistence.update(
-			commerceDiscountOrderTypeRel);
+		return commerceDiscountOrderTypeRel;
 	}
 
 	@Override
@@ -79,8 +80,6 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 
 		commerceDiscountOrderTypeRelPersistence.remove(
 			commerceDiscountOrderTypeRel);
-
-		// Commerce discount
 
 		reindexCommerceDiscount(
 			commerceDiscountOrderTypeRel.getCommerceDiscountId());

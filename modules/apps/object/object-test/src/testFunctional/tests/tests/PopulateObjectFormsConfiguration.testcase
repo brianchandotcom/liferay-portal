@@ -32,11 +32,65 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of BigDecimal type and view its entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapBigDecimalTypeAndViewEntries {
 
-		// TODO LPS-138050 CanMapBigDecimalTypeAndViewEntries pending implementation
+			ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "bigDecimal",
+			fieldType = "BigDecimal",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "bigDecimal");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric",
+			fieldValue = "123.123456");
+
+		FormPortlet.submitSuccessfully();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Numeric",
+			key_entryName = "123.123456",
+			key_entryNumber = "1 entry");
 
 	}
 

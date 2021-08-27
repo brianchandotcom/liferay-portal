@@ -33,6 +33,7 @@ dependencies {
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:journal:journal-article-dynamic-data-mapping-form-field-type-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
+	testIntegrationCompile project(":apps:polls:polls-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

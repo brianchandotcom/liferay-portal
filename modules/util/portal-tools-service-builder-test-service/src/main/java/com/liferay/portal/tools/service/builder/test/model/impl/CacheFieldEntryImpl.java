@@ -35,7 +35,7 @@ public class CacheFieldEntryImpl extends CacheFieldEntryBaseImpl {
 		_nickname = nickname;
 	}
 
-	@CacheField
+	@CacheField(propagateToInterface = true)
 	private String _nickname;
 
 }

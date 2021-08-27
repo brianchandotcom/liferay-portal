@@ -36,6 +36,13 @@ public interface TaskWorkflowMetricsIndexer {
 		String name, long nodeId, long processId, String processVersion,
 		long taskId, long userId);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addTask(Map,
+	 *             Map, List, String, long, long, boolean, Date, Long, Date,
+	 *             boolean, Date, long, Date, String, long, long, String,
+	 *             long, long)}}
+	 */
+	@Deprecated
 	public Document addTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		Long[] assigneeIds, String assigneeType, String className, long classPK,
@@ -56,6 +63,11 @@ public interface TaskWorkflowMetricsIndexer {
 		List<Assignment> assignments, long companyId, Date modifiedDate,
 		long taskId, long userId);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateTask(Map,
+	 *             Map, List, long, Date, long, long)}}
+	 */
+	@Deprecated
 	public Document updateTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		Long[] assigneeIds, String assigneeType, long companyId,

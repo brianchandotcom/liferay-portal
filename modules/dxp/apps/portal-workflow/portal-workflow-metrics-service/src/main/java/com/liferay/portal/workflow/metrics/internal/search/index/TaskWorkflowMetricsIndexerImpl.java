@@ -191,6 +191,13 @@ public class TaskWorkflowMetricsIndexerImpl
 		return document;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addTask(Map,
+	 *             Map, List, String, long, long, boolean, Date, Long, Date,
+	 *             boolean, Date, long, Date, String, long, long, String,
+	 *             long, long)}}
+	 */
+	@Deprecated
 	@Override
 	public Document addTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
@@ -393,6 +400,11 @@ public class TaskWorkflowMetricsIndexerImpl
 		return document;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #updateTask(Map,
+	 *             Map, List, long, Date, long, long)}}
+	 */
+	@Deprecated
 	@Override
 	public Document updateTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,

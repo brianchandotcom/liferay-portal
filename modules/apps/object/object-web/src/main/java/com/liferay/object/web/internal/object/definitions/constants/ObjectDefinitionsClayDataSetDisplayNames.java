@@ -19,6 +19,11 @@ package com.liferay.object.web.internal.object.definitions.constants;
  */
 public class ObjectDefinitionsClayDataSetDisplayNames {
 
+	public static final String LIST_TYPE_DEFINITION_ITEMS =
+		"listTypeDefinitionItems";
+
+	public static final String LIST_TYPE_DEFINITIONS = "listTypeDefinitions";
+
 	public static final String OBJECT_DEFINITIONS = "objectDefinitions";
 
 	public static final String OBJECT_FIELDS = "objectFields";

@@ -19,6 +19,8 @@ package com.liferay.object.web.internal.constants;
  */
 public class ObjectWebKeys {
 
+	public static final String LIST_TYPE_DEFINITION = "LIST_TYPE_DEFINITION";
+
 	public static final String OBJECT_DEFINITION = "OBJECT_DEFINITION";
 
 	public static final String OBJECT_ENTRY = "OBJECT_ENTRY";

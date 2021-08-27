@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.external.reference.service.ERAssetCategoryLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
@@ -56,7 +55,6 @@ public class SiteInitializerExtension {
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
-		ERAssetCategoryLocalService erAssetCategoryLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -76,8 +74,7 @@ public class SiteInitializerExtension {
 				assetCategoryLocalService, assetVocabularyLocalService, bundle,
 				bundleContext, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper,
-				documentFolderResourceFactory,
-				documentResourceFactory, erAssetCategoryLocalService,
+				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService, jsonFactory,
 				objectDefinitionResourceFactory, portal,
 				resourcePermissionLocalService, roleLocalService,

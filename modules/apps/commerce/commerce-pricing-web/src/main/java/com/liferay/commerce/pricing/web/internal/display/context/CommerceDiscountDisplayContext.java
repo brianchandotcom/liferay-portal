@@ -66,8 +66,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
-import javax.portlet.RenderURL;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -470,13 +468,12 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 	public List<HeaderActionModel> getHeaderActionModels() throws Exception {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
-		RenderResponse renderResponse =
-			commercePricingRequestHelper.getRenderResponse();
-
-		RenderURL cancelURL = renderResponse.createRenderURL();
-
 		HeaderActionModel cancelHeaderActionModel = new HeaderActionModel(
-			null, cancelURL.toString(), null, "cancel");
+			null,
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).buildString(),
+			null, "cancel");
 
 		headerActionModels.add(cancelHeaderActionModel);
 
@@ -491,11 +488,11 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			saveButtonLabel = "save-as-draft";
 		}
 
-		ActionURL actionURL = renderResponse.createActionURL();
-
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/commerce_discount/edit_commerce_discount");
+		ActionURL actionURL = PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/commerce_discount/edit_commerce_discount"
+		).buildActionURL();
 
 		HeaderActionModel saveAsDraftHeaderActionModel = new HeaderActionModel(
 			null, liferayPortletResponse.getNamespace() + "fm",

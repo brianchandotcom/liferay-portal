@@ -63,11 +63,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -350,16 +348,15 @@ public class CPDefinitionsDisplayContext
 
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
-		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
-
-		CPDefinition cpDefinition = getCPDefinition();
-
-		ActionURL actionURL = renderResponse.createActionURL();
-
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/cp_definitions/edit_cp_definition");
+		ActionURL actionURL = PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/cp_definitions/edit_cp_definition"
+		).buildActionURL();
 
 		String saveButtonLabel = "save";
+
+		CPDefinition cpDefinition = getCPDefinition();
 
 		if ((cpDefinition == null) || cpDefinition.isDraft() ||
 			cpDefinition.isApproved() || cpDefinition.isExpired() ||
@@ -369,8 +366,8 @@ public class CPDefinitionsDisplayContext
 		}
 
 		HeaderActionModel saveAsDraftHeaderActionModel = new HeaderActionModel(
-			null, renderResponse.getNamespace() + "fm", actionURL.toString(),
-			null, saveButtonLabel);
+			null, liferayPortletResponse.getNamespace() + "fm",
+			actionURL.toString(), null, saveButtonLabel);
 
 		headerActionModels.add(saveAsDraftHeaderActionModel);
 
@@ -391,9 +388,9 @@ public class CPDefinitionsDisplayContext
 		}
 
 		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
-			additionalClasses, renderResponse.getNamespace() + "fm",
+			additionalClasses, liferayPortletResponse.getNamespace() + "fm",
 			actionURL.toString(),
-			renderResponse.getNamespace() + "publishButton",
+			liferayPortletResponse.getNamespace() + "publishButton",
 			publishButtonLabel);
 
 		headerActionModels.add(publishHeaderActionModel);

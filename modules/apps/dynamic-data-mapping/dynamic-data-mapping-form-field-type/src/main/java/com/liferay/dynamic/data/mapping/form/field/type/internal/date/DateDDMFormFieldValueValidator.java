@@ -74,12 +74,6 @@ public class DateDDMFormFieldValueValidator
 						ddmFormField.getName()));
 			}
 		}
-		else if (ddmFormField.isRequired()) {
-			throw new DDMFormFieldValueValidationException(
-				String.format(
-					"Date input cannot be null \"%s\"",
-					ddmFormField.getName()));
-		}
 	}
 
 	@Reference

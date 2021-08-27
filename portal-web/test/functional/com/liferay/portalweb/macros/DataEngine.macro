@@ -58,6 +58,14 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
+		if (isSet(textNumber)) {
+			var textNumber = selenium.getAttribute("//div[contains(@data-field-name,'fieldReference')]//label[normalize-space(text())='Field Reference']//following-sibling::input[@type='text']@value");
+
+			return "${textNumber}";
+
+			echo("## * textNumber: ${textNumber}");
+		}
+
 		Type(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",

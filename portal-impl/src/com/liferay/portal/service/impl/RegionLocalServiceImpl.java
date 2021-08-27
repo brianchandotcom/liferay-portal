@@ -101,7 +101,24 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		// Organizations
 
-		_updateOrganizations(region.getRegionId());
+		ActionableDynamicQuery actionableDynamicQuery =
+			organizationLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property regionIdProperty = PropertyFactoryUtil.forName(
+					"regionId");
+
+				dynamicQuery.add(regionIdProperty.eq(region.getRegionId()));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(Organization organization) -> {
+				organization.setRegionId(0);
+
+				organizationLocalService.updateOrganization(organization);
+			});
+
+		actionableDynamicQuery.performActions();
 
 		return region;
 	}
@@ -201,27 +218,6 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		if (Validator.isNull(name)) {
 			throw new RegionNameException();
 		}
-	}
-
-	private void _updateOrganizations(long regionId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			organizationLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property regionIdProperty = PropertyFactoryUtil.forName(
-					"regionId");
-
-				dynamicQuery.add(regionIdProperty.eq(regionId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(Organization organization) -> {
-				organization.setRegionId(0);
-
-				organizationLocalService.updateOrganization(organization);
-			});
-
-		actionableDynamicQuery.performActions();
 	}
 
 }

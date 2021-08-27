@@ -405,19 +405,7 @@ public class StringUtil {
 	}
 
 	public static boolean matches(String s, String pattern) {
-		String[] array = pattern.split("\\*");
-
-		for (String element : array) {
-			int pos = s.indexOf(element);
-
-			if (pos == -1) {
-				return false;
-			}
-
-			s = s.substring(pos + element.length());
-		}
-
-		return true;
+		return s.matches(pattern);
 	}
 
 	public static List<String> partition(String s, String[] delimiters) {

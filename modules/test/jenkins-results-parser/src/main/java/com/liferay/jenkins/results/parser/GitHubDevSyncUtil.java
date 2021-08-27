@@ -1494,11 +1494,8 @@ public class GitHubDevSyncUtil {
 					JenkinsResultsParserUtil.getCurrentTimeMillis())),
 			upstreamBranchSHA);
 
-		RemoteGitBranch cacheRemoteGitBranch =
-			gitWorkingDirectory.getRemoteGitBranch(
-				cacheBranchName,
-				getRandomGitRemote(
-					getGitHubDevGitRemotes(gitWorkingDirectory)));
+		RemoteGitBranch cacheRemoteGitBranch = fetchCacheBranchFromGitHubDev(
+			gitWorkingDirectory, cacheBranchName);
 
 		return gitWorkingDirectory.fetch(
 			cacheLocalGitBranch, cacheRemoteGitBranch);

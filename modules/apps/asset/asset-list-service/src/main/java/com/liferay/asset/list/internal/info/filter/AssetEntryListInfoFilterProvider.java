@@ -51,7 +51,7 @@ public class AssetEntryListInfoFilterProvider
 		Set<long[]> assetCategoryIdsSet = new HashSet<>();
 
 		for (Map.Entry<String, String[]> entry : values.entrySet()) {
-			if (!StringUtil.startsWith(entry.getKey(), "categoryId_")) {
+			if (!StringUtil.startsWith(entry.getKey(), "category_")) {
 				continue;
 			}
 

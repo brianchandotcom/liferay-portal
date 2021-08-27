@@ -14,15 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -101,24 +100,21 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		// Organizations
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			organizationLocalService.getActionableDynamicQuery();
+		for (Organization organization :
+				organizationPersistence.<List<Organization>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						OrganizationTable.INSTANCE
+					).from(
+						OrganizationTable.INSTANCE
+					).where(
+						OrganizationTable.INSTANCE.regionId.eq(
+							region.getRegionId())
+					))) {
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property regionIdProperty = PropertyFactoryUtil.forName(
-					"regionId");
+			organization.setRegionId(0);
 
-				dynamicQuery.add(regionIdProperty.eq(region.getRegionId()));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(Organization organization) -> {
-				organization.setRegionId(0);
-
-				organizationLocalService.updateOrganization(organization);
-			});
-
-		actionableDynamicQuery.performActions();
+			organizationLocalService.updateOrganization(organization);
+		}
 
 		return region;
 	}

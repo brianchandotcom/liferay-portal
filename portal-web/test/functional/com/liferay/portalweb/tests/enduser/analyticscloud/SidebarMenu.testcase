@@ -21,6 +21,10 @@ definition {
 			ACUtils.launchDXP();
 		}
 
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -35,7 +39,47 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
 		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8973 | Test Summary: Assert the Property Menu after editing a Property"
+	@priority = "3"
+	test AssertPropertyMenuAfterEditProperty {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Properties admin in Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Access to the new property configuration") {
+			ACUtils.searchBar(searchItem = "${propertyName}");
+
+			ACNavigation.openItem(itemName = "${propertyName}");
+		}
+
+		task ("Edit the property name") {
+			ACProperties.editPropertyName(propertyName = "AC Test Property");
+		}
+
+		task ("View the edited property name shown in property menu") {
+			ACNavigation.exitSettings();
+
+			ACProperties.assertCurrentActiveProperty(propertyName = "AC Test Property");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8158 | Test Summary: Switch the property which was selected by default"

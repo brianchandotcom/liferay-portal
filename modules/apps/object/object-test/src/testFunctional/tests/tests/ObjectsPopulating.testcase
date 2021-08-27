@@ -67,9 +67,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/2001");
 
-		Click(
-			key_text = "Submit",
-			locator1 = "Button#ANY");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 

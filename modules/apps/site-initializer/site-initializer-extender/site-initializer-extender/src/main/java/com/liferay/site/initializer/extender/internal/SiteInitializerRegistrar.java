@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.external.reference.service.ERAssetCategoryLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
@@ -55,7 +54,6 @@ public class SiteInitializerRegistrar {
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
-		ERAssetCategoryLocalService erAssetCategoryLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -75,7 +73,6 @@ public class SiteInitializerRegistrar {
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
-		_erAssetCategoryLocalService = erAssetCategoryLocalService;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
@@ -99,8 +96,7 @@ public class SiteInitializerRegistrar {
 				_assetCategoryLocalService, _assetVocabularyLocalService,
 				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _documentFolderResourceFactory,
-				_documentResourceFactory,
-				_erAssetCategoryLocalService, _fragmentsImporter,
+				_documentResourceFactory, _fragmentsImporter,
 				_groupLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
 				_resourcePermissionLocalService, _roleLocalService,
@@ -123,7 +119,6 @@ public class SiteInitializerRegistrar {
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
-	private final ERAssetCategoryLocalService _erAssetCategoryLocalService;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;

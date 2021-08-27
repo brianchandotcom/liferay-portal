@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.external.reference.service.ERAssetCategoryLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
@@ -102,7 +101,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
-		ERAssetCategoryLocalService erAssetCategoryLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -121,7 +119,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
-		_erAssetCategoryLocalService = erAssetCategoryLocalService;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
@@ -630,17 +627,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String vocabularyName = taxonomyVocabulary.getName();
-
-			if (vocabularyName != null) {
-				vocabularyName = vocabularyName.trim();
-
-				vocabularyName = StringUtil.toLowerCase(vocabularyName);
-			}
-
 			AssetVocabulary existingVocabulary =
 				_assetVocabularyLocalService.fetchGroupVocabulary(
-					groupId, vocabularyName);
+					groupId, taxonomyVocabulary.getName());
 
 			if (existingVocabulary != null) {
 				taxonomyVocabulary =
@@ -738,7 +727,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
-	private final ERAssetCategoryLocalService _erAssetCategoryLocalService;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;

@@ -79,9 +79,7 @@ public class RegionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCountryRegions(long countryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public void deleteCountryRegions(long countryId) {
 		_regionLocalService.deleteCountryRegions(countryId);
 	}
 
@@ -123,12 +121,10 @@ public class RegionLocalServiceWrapper
 	 *
 	 * @param region the region
 	 * @return the region that was removed
-	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Region deleteRegion(
-			com.liferay.portal.kernel.model.Region region)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.model.Region region) {
 
 		return _regionLocalService.deleteRegion(region);
 	}

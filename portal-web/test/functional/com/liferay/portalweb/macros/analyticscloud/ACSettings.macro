@@ -274,6 +274,13 @@ definition {
 		}
 	}
 
+	@summary = "Disconnect selected data source"
+	macro disconnectDataSource {
+		Click(locator1 = "ACSettings#DISCONNECT_DATA_SOURCE_BUTTON");
+
+		Click(locator1 = "ACSettings#DISCONNECT_CONFIRMATION_BUTTON");
+	}
+
 	@summary = "Deletes all properties \
 	@param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {

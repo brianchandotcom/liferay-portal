@@ -274,6 +274,16 @@ definition {
 		}
 	}
 
+	macro deleteAllKeywords {
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
+
+		Click(locator1 = "ACSettings#CONTINUE_BUTTON");
+	}
+
 	@summary = "Deletes all properties \
 	@param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {

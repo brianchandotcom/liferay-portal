@@ -68,8 +68,8 @@ public class DateDDMFormFieldValueValidatorTest extends PowerMockito {
 			ddmFormField, ddmFormFieldValue.getValue());
 	}
 
-	@Test(expected = DDMFormFieldValueValidationException.class)
-	public void testValidationWithEmptyRequiredDateShouldThrowException()
+	@Test
+	public void testValidationWithEmptyRequiredDateShouldNotThrowException()
 		throws Exception {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();

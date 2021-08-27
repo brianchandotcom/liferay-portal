@@ -52,7 +52,16 @@ public class DLStorageQuotaLocalServiceImpl
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	@Override
 	public void incrementStorageSize(long companyId, long increment) {
-		DLStorageQuota dlStorageQuota = _getDLStorageQuota(companyId);
+		DLStorageQuota dlStorageQuota =
+			dlStorageQuotaPersistence.fetchByCompanyId(companyId);
+
+		if (dlStorageQuota == null) {
+			if (increment <= 0) {
+				return;
+			}
+
+			dlStorageQuota = _getDLStorageQuota(companyId);
+		}
 
 		dlStorageQuota.setStorageSize(
 			dlStorageQuota.getStorageSize() + increment);

@@ -129,7 +129,6 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Integer type and view its entries"
 	@priority = "4"
 	test CanMapIntegerTypeAndViewEntries {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -182,7 +181,6 @@ definition {
 			key_card = "Numeric",
 			key_entryName = "123456789",
 			key_entryNumber = "1 entry");
-
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Long type and view its entries"

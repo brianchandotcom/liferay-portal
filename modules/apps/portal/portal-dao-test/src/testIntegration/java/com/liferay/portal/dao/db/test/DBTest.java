@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.Arrays;
 import java.util.List;
@@ -140,6 +142,28 @@ public class DBTest {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "nilColumn", "VARCHAR(75) null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeWithData() throws Exception {
+		_db.runSQL(
+			"insert into " + _TABLE_NAME +
+				" (id, notNilColumn, typeString) values (1, '1', 'testValue')");
+
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "typeString", "TEXT null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeString", "TEXT null"));
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select typeString from " + _TABLE_NAME);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			resultSet.next();
+
+			Assert.assertEquals("testValue", resultSet.getString(1));
+		}
 	}
 
 	@Test

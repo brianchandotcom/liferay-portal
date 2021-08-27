@@ -196,11 +196,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8825 | Test Summary: Validate Invalid Token"
-	@ignore = "true"
 	@priority = "4"
 	test InvalidToken {
 
-		// TODO LRAC-8825 InvalidToken
+		ACUtils.launchAC();
+
+		AnalyticsCloud.takeInvalidTokenFromAnalyticsCloud();
 
 	}
 

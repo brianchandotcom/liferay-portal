@@ -84,7 +84,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Region deleteRegion(Region region) throws PortalException {
+	public Region deleteRegion(Region region) {
 
 		// Region Localizations
 

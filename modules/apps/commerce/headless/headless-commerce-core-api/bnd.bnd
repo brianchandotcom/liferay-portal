@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Commerce Core API
 Bundle-SymbolicName: com.liferay.headless.commerce.core.api
-Bundle-Version: 4.0.4
+Bundle-Version: 4.1.0
 Export-Package:\
 	com.liferay.headless.commerce.core.dto.v1_0.converter,\
 	com.liferay.headless.commerce.core.exception.mapper,\

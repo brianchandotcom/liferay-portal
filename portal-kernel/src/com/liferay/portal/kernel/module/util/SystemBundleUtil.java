@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.module.util;
 
 import com.liferay.petra.function.UnsafeFunction;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ServiceLoader;
 
 import org.osgi.framework.Bundle;
@@ -97,12 +100,18 @@ public class SystemBundleUtil {
 
 		Iterator<SystemBundleProvider> iterator = serviceLoader.iterator();
 
-		if (!iterator.hasNext()) {
+		List<SystemBundleProvider> systemBundleProviders = new ArrayList<>();
+
+		iterator.forEachRemaining(systemBundleProviders::add);
+
+		if (systemBundleProviders.isEmpty()) {
 			throw new ExceptionInInitializerError(
 				"Unable to locate module framework implementation");
 		}
 
-		_systemBundleProvider = iterator.next();
+		systemBundleProviders.sort(Comparator.reverseOrder());
+
+		_systemBundleProvider = systemBundleProviders.get(0);
 	}
 
 }

@@ -12,24 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.module.util;
+package com.liferay.portal.test.osgi;
+
+import com.liferay.portal.kernel.module.util.SystemBundleProvider;
+
+import org.apache.sling.testing.mock.osgi.MockOsgi;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Shuyang Zhou
  */
-public interface SystemBundleProvider extends Comparable<SystemBundleProvider> {
+public class TestSystemBundleProvider implements SystemBundleProvider {
 
 	@Override
-	public default int compareTo(SystemBundleProvider systemBundleProvider) {
-		return Integer.compare(order(), systemBundleProvider.order());
+	public Bundle getSystemBundle() {
+		return _bundleContext.getBundle();
 	}
 
-	public Bundle getSystemBundle();
-
-	public default int order() {
-		return 0;
+	@Override
+	public int order() {
+		return 1;
 	}
+
+	private static final BundleContext _bundleContext =
+		MockOsgi.newBundleContext();
 
 }

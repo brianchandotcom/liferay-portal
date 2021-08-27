@@ -51,6 +51,9 @@
 /development/ojdbc6.jar
 /development/osgi-annotation-versioning.jar
 /development/osgi-core.jar
+/development/osgi-service-cm.jar
+/development/osgi-service-component.jar
+/development/osgi-service-log.jar
 /development/p6spy.jar
 /development/portletmvc4spring-test.jar
 /development/postgresql.jar
@@ -61,10 +64,13 @@
 /development/powermock-module-junit4-common.jar
 /development/powermock-reflect.jar
 /development/qdox.jar
+/development/reflections.jar
 /development/saxpath.jar
 /development/sdk-addon-api-0.2.jar
 /development/servlet-api.jar
 /development/slf4j-simple.jar
+/development/sling-commons-osgi.jar
+/development/sling-testing-osgi-mock-core.jar
 /development/smtp.jar
 /development/spring-instrument.jar
 /development/spring-instrument-tomcat.jar

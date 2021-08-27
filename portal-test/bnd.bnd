@@ -36,7 +36,14 @@ Include-Resource:\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/development/hamcrest-core.jar,\
 	@${project.dir}/../lib/development/junit.jar,\
+	@${project.dir}/../lib/development/osgi-service-cm.jar,\
+	@${project.dir}/../lib/development/osgi-service-component.jar,\
+	@${project.dir}/../lib/development/osgi-service-log.jar,\
 	@${project.dir}/../lib/development/portletmvc4spring-test.jar,\
+	@${project.dir}/../lib/development/reflections.jar,\
+	@${project.dir}/../lib/development/sling-commons-osgi.jar,\
+	@${project.dir}/../lib/development/sling-testing-osgi-mock-core.jar,\
 	@${project.dir}/../lib/development/spring-test.jar,\
 	@${project.dir}/../lib/portal/aspectj-rt.jar
 -include ../common.bnd
+-removeheaders: Service-Component

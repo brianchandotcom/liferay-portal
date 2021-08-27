@@ -111,6 +111,12 @@
 	<td>xpath=(//button | //a)[contains(@class,'btn')][normalize-space(text())='Delete Data Source']</td>
 	<td></td>
 </tr>
+<!-- DATA SOURCE INFORMATION -->
+<tr>
+	<td>DATA_SOURCE_STATUS</td>
+	<td>//div[contains(@class,'data-source-status-root')]//span[text()='${key_dataSourceStatus}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DISCONNECT_DATA_SOURCE_BUTTON</td>
 	<td>//button[contains(@class,'button-root') and text()='Disconnect']</td>
@@ -121,6 +127,7 @@
 	<td>//button[contains(@class,'btn-warning') and text()='Disconnect']</td>
 	<td></td>
 </tr>
+
 <!-- PROPERTIES -->
 <tr>
 	<td>SEARCH_BAR</td>

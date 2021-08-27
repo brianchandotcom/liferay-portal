@@ -87,7 +87,8 @@ getQuoteForm.onsubmit = function (event) {
 		if (!formProps.product) {
 			productContainer.classList.add('has-error');
 		}
-	} else {
+	}
+	else {
 		document.cookie = 'raylife-zip=' + formProps.zip;
 		document.cookie = 'raylife-product=' + formProps.product;
 		window.location.href = '/web/raylife/get-a-quote';

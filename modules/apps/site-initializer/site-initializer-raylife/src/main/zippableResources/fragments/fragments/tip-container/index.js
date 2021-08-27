@@ -87,13 +87,15 @@ function raylifeFragmentInteractiveListener(templateId, structuredContents) {
 				templateId,
 				data.templateData
 			);
-		} else {
+		}
+		else {
 			console.warn(`Structure ${data.templateName} not found`);
 		}
 	});
 }
 
 async function workflow() {
+
 	/**
 	 * Get all Folders from Web Content and get his ID;
 	 */
@@ -103,9 +105,7 @@ async function workflow() {
 	);
 
 	const {id: raylifeFolderId} =
-		structuredContentFolders.items.find(
-			({name}) => name === 'Tip'
-		) || {};
+		structuredContentFolders.items.find(({name}) => name === 'Tip') || {};
 
 	if (!raylifeFolderId) {
 		return console.warn('Raylife TIP Folder not found');

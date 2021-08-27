@@ -51,6 +51,7 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 				);
 			}
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [settings.namespace]);
 
 	return (

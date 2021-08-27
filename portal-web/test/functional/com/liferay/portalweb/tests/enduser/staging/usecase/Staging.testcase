@@ -273,11 +273,7 @@ definition {
 	@priority = "3"
 	@uitest
 	test CreateWidgetTemplateWhenNotStagedADT {
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Design",
-			portlet = "Widget Templates");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
 		AssertVisible(locator1 = "Button#PLUS");
 
@@ -285,15 +281,13 @@ definition {
 
 		Staging.activateStagingCP(
 			siteName = "Site Name",
-			uncheckContent = "Widget Templates");
+			uncheckContent = "Templates");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Design",
-			portlet = "Widget Templates");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name-staging");
 
 		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
 			fieldName = "Asset Entry",
@@ -303,11 +297,7 @@ definition {
 			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
 			value1 = "Asset Publisher Test ADT");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Design",
-			portlet = "Widget Templates");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
 		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
 			fieldName = "Blog Entries",

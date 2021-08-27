@@ -933,11 +933,7 @@ definition {
 
 	@priority = "3"
 	test ExportImportPortletWithADT {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Design",
-			portlet = "Widget Templates");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
 		ApplicationDisplayTemplates.addCP(
 			adtFile = "adt_blogs_basic.ftl",

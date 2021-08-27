@@ -110,7 +110,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -125,7 +125,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -140,7 +140,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -155,7 +155,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -169,7 +169,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -183,7 +183,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -197,7 +197,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -211,7 +211,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Segments,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}
@@ -225,7 +225,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
-		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Dynamic Data Lists,Message Boards,Widget Templates,Wiki");
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Dynamic Data Lists,Message Boards,Templates,Wiki");
 
 		Upgrade.viewStagingConfiguration();
 	}

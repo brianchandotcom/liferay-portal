@@ -42,9 +42,11 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
@@ -70,10 +72,10 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 		CommercePaymentEngine commercePaymentEngine,
 		CommerceProductPriceCalculation commerceProductPriceCalculation,
-		CPInstanceHelper cpInstanceHelper,
 		CommerceOptionValueHelper commerceOptionValueHelper,
-		PercentageFormatter percentageFormatter,
-		HttpServletRequest httpServletRequest) {
+		CPInstanceHelper cpInstanceHelper,
+		HttpServletRequest httpServletRequest,
+		PercentageFormatter percentageFormatter, Portal portal) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
@@ -81,10 +83,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePaymentEngine = commercePaymentEngine;
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
-		_cpInstanceHelper = cpInstanceHelper;
 		_commerceOptionValueHelper = commerceOptionValueHelper;
-		_percentageFormatter = percentageFormatter;
+		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
+		_percentageFormatter = percentageFormatter;
+		_portal = portal;
 
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
@@ -154,6 +157,15 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		}
 
 		return _getCommerceProductPrice(commerceOrderItem, _commerceContext);
+	}
+
+	public FileVersion getCPInstanceImageFileVersion(
+			CommerceOrderItem commerceOrderItem)
+		throws Exception {
+
+		return _cpInstanceHelper.getCPInstanceImageFileVersion(
+			_portal.getCompanyId(_httpServletRequest),
+			commerceOrderItem.getCPInstanceId());
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(
@@ -369,5 +381,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final PercentageFormatter _percentageFormatter;
+	private final Portal _portal;
 
 }

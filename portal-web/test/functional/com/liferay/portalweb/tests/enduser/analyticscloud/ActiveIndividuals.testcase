@@ -92,7 +92,6 @@ definition {
 
 		task ("Choose Custom Range") {
 			var displayDateDay = DateUtil.getCurrentDate();
-			var displayMonth = DateUtil.getCurrentMonth();
 			var displayDateMonth = DateUtil.getCurrentMonthName();
 			var displayDateYear = DateUtil.getCurrentYear();
 			var previousDay = DateUtil.getFormattedDate("-1", "d");
@@ -114,6 +113,94 @@ definition {
 			ACUtils.assertDatePattern(
 				date = "${formattedDate}",
 				format = "yyyy MMM dd");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8916 | Test Summary: Selected individual activity point can clear date selection"
+	@priority = "3"
+	test AssertIndividualActivitiesOverviewClearDate {
+		task ("Add DM to AC Page") {
+			ACUtils.createDMAndAddToPage();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Individual Activity Overview") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+		}
+
+		task ("Set time filter use last 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert the Individual Activity Chart displays") {
+			AssertElementPresent(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+		}
+
+		task ("Assert the Individual Activity Chart displays") {
+			Click(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+		}
+
+		task ("Get current Date") {
+			var displayDateDay = DateUtil.getCurrentDate();
+			var displayDateMonth = DateUtil.getCurrentMonthName();
+			var displayDateYear = DateUtil.getCurrentYear();
+			var displayDate = "${displayDateMonth} ${displayDateDay}, ${displayDateYear}";
+		}
+
+		task ("Assert ") {
+			ACIndividualsDashboard.assertIndividualsActivitiesTimeRange(timeRange = "${displayDate}");
+		}
+
+		task ("Assert the display time range") {
+			Click(locator1 = "ACIndividualsDashboard#CLEAR_DATE_SELECTION_BUTTON");
+		}
+
+		task ("Get the last 24 hours Date") {
+			var previousDay = DateUtil.getFormattedDate("-1", "d");
+			var previousDate = "${displayDateMonth} ${previousDay}, ${displayDateYear}";
+		}
+
+		task ("Assert the display time range") {
+			ACIndividualsDashboard.assertIndividualsActivitiesTimeRange(timeRange = "${previousDate} - ${displayDate}");
 		}
 	}
 

@@ -40,7 +40,7 @@ public class GooglePlacesPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getCategoryKey() {
-		return "third-party";
+		return "google-places";
 	}
 
 	@Override

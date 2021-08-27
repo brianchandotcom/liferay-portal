@@ -105,8 +105,6 @@ definition {
 
 		PopulateObjectFormsConfiguration.openForm();
 
-		FormsAdminNavigator.gotoAddForm();
-
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormsAdminNavigator.gotoEntries();
@@ -145,12 +143,61 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanMapStringTypeAndViewEntries {
-		property portal.acceptance = "true";
 
-		// TODO LPS-138046 CanMapStringTypeAndViewEntries pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "text",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test");
+
+		FormPortlet.submitSuccessfully();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Text",
+			key_entryName = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test",
+			key_entryNumber = "1 entry");
 
 	}
 

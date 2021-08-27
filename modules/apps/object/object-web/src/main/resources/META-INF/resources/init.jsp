@@ -38,6 +38,7 @@ page import="com.liferay.object.web.internal.object.definitions.constants.Object
 page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext" %><%@
+page import="com.liferay.object.web.internal.object.definitions.display.context.ViewListTypeDefinitionsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.entries.display.context.ObjectEntriesDetailsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext" %><%@

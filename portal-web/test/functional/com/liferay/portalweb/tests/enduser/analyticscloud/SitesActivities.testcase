@@ -621,9 +621,51 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ShownTotalSessionsVisitorAndPercentageChangeShown {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8272 ShownTotalSessionsVisitorAndPercentageChangeShown
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor: It is not possible to perform the assert because this test needs data from the past
+		// AC Refactor ticket: LRAC-8976
 
+		task ("Connect DXP to AC") {
+			ACUtils.createBlogsAndAddToPage();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to page and get data") {
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close all sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Go to AC and assert value and percentage of Site Visitors") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Sessions/Visitor",
+				metricValue = "1");
+
+			// Assert the correct variation(%) shown in this field
+
+			// This test needs a data from a past time frame to generate a % diference, this % is a exemple.
+
+			ACSites.viewActivitiesPercentage(
+				entryName = "Sessions/Visitor",
+				valueNumber = "50%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8271 | Test Summary: Site Activity Card: Total site visitors and % change is shown"

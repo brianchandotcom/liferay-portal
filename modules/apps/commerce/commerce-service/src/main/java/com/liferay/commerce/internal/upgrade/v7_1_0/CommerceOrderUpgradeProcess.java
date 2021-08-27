@@ -29,6 +29,10 @@ public class CommerceOrderUpgradeProcess
 		addColumn(
 			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
 			"commerceOrderTypeId", "LONG");
+
+		runSQL(
+			"update CommerceOrder set commerceOrderTypeId = 0 where " +
+				"commerceOrderTypeId is NULL");
 	}
 
 }

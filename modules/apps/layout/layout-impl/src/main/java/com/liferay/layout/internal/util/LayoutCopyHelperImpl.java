@@ -810,12 +810,13 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				}
 			}
 			else {
-				_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+				_layoutSEOEntryLocalService.copyLayoutSEOEntry(
 					_targetLayout.getUserId(), _targetLayout.getGroupId(),
 					_targetLayout.isPrivateLayout(),
 					_targetLayout.getLayoutId(),
 					layoutSEOEntry.isCanonicalURLEnabled(),
 					layoutSEOEntry.getCanonicalURLMap(),
+					layoutSEOEntry.getDDMStorageId(),
 					layoutSEOEntry.isOpenGraphDescriptionEnabled(),
 					layoutSEOEntry.getOpenGraphDescriptionMap(),
 					layoutSEOEntry.getOpenGraphImageAltMap(),

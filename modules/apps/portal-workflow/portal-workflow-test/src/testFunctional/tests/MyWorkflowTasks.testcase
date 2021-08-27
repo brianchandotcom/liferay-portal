@@ -37,6 +37,8 @@ definition {
 
 			BlogsEntry.tearDownCP();
 
+			CommerceConfiguration.commerceInitializersTearDown();
+
 			Workflow.tearDownPortalWorkflow();
 
 			Workflow.tearDownSiteWorkflow();
@@ -50,6 +52,9 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
 	@priority = "5"
 	test AccountUserCanApproveTask {
+		property test.name.skip.portal.instance = "MyWorkflowTasks#AccountUserCanApproveTask";
+
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
@@ -391,17 +396,6 @@ definition {
 	@description = "Verify that the user can assign a task to current user in the Assigned to My Roles tab"
 	@priority = "5"
 	test CanAssignTaskToCurrentUser {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -431,17 +425,6 @@ definition {
 	@description = "Verify that the user can assign a task to another user in the Assigned to My Roles tab"
 	@priority = "5"
 	test CanAssignTaskToOtherUser {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -477,6 +460,8 @@ definition {
 	@description = "LPS-135888 - Verify that the task is assigned to the user with Account role type"
 	@priority = "4"
 	test CanAssignTaskToUserWithAccountRole {
+		property test.name.skip.portal.instance = "MyWorkflowTasks#CanAssignTaskToUserWithAccountRole";
+		
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
@@ -601,17 +586,6 @@ definition {
 	@description = "Verify that the user can view the Assigned to My Roles page in List View"
 	@priority = "2"
 	test CanChangeToListView {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -670,17 +644,6 @@ definition {
 	@description = "Verify that the user can filter the results inside Assigned to Me by status"
 	@priority = "3"
 	test CanFilterAssignedtoMeTasksByAssetStatus {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
@@ -721,29 +684,9 @@ definition {
 			workflowTask = "Review");
 	}
 
-	@description = "Verify that the user can filter the results inside Assigned to My Roles by status"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanFilterAssignedToMyRolesTaskByAssetStatus {
-
-		// TODO LRQA-68838 CanFilterAssignedToMyRolesTaskByAssetStatus pending implementation
-
-	}
-
 	@description = "Verify that the user can open the task details by the table"
 	@priority = "4"
 	test CanOpenTaskDetailsByTable {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry");
@@ -764,17 +707,6 @@ definition {
 	@description = "Verify that the user can order the results inside Assigned to Me by Due Date"
 	@priority = "3"
 	test CanOrderAssignedtoMeTasksByDueDate {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry 1");
@@ -823,19 +755,6 @@ definition {
 	@description = "Verify that the user can order the results inside Assigned to Me by Last Activity Date"
 	@priority = "3"
 	test CanOrderAssignedtoMeTasksByLastActivityDate {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		Navigator.openURL();
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry 1");
@@ -874,17 +793,6 @@ definition {
 	@description = "Verify that the user can order the results inside Assigned to My Roles by Due Date"
 	@priority = "2"
 	test CanOrderAssignedtoMyRolesTasksByDueDate {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry 1");
@@ -923,19 +831,6 @@ definition {
 	@description = "Verify that the user can order the results inside Assigned to My Roles by Last Activity Date"
 	@priority = "3"
 	test CanOrderAssignedtoMyRolesTasksByLastActivityDate {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		Navigator.openURL();
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry 1");
@@ -994,6 +889,8 @@ definition {
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Title"
 	@priority = "5"
 	test CanSearchForAssetTitleOnAssignedToMyRolesTab {
+		property test.name.skip.portal.instance = "MyWorkflowTasks#CanSearchForAssetTitleOnAssignedToMyRolesTab";
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1012,17 +909,6 @@ definition {
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Type"
 	@priority = "3"
 	test CanSearchForAssetTypeOnAssignedToMyRolesTab {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry");
@@ -1119,17 +1005,6 @@ definition {
 	@description = "Verify that, in the Assigned to Me table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"
 	@priority = "3"
 	test CanViewActivityTimeByHoveringAssignedToMeTable {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1156,17 +1031,6 @@ definition {
 	@description = "Verify that, in the Assigned to My Roles table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"
 	@priority = "3"
 	test CanViewActivityTimeByHoveringAssignedToMyRolesTable {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1196,7 +1060,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		MyWorkflowTasks.updateDueDateAtMyWorkflowTastks(
+		MyWorkflowTasks.updateDueDateAtMyWorkflowTasks(
 			dueDate = "  ",
 			dueDateTime = "05:30 PM",
 			workflowAssetTitle = "Blogs Entry Title 1",
@@ -1208,24 +1072,17 @@ definition {
 	@description = "Verify that in Update Due Date modal, the user can not insert a past date"
 	@priority = "3"
 	test DueDateMustBeInFuture {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		MyWorkflowTasks.updateDueDateAtMyWorkflowTastks(dueDate = "01/01/2010");
+		MyWorkflowTasks.updateDueDateAtMyWorkflowTasks(
+			dueDate = "01/01/2010",
+			dueDateTime = "05:30 PM",
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowTask = "Review");
 
 		MyWorkflowTasks.viewErrorRequestFailed();
 
@@ -1235,17 +1092,6 @@ definition {
 	@description = "Verify that the pagination button indicates the selected page, even when there is only 1 page"
 	@priority = "2"
 	test PaginationButtonIndicatesSelectedPage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1278,17 +1124,6 @@ definition {
 	@description = "Verify that pagination follows in asc/desc sequence in the Assigned to Me tab"
 	@priority = "2"
 	test PaginationFollowsAscDescSequence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
@@ -1373,17 +1208,6 @@ definition {
 	@description = "Verify that the pagination component is displayed when the table has 5 items or more"
 	@priority = "2"
 	test PaginationIsDisplayedWhenTableHas5Items {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1461,6 +1285,7 @@ definition {
 	@priority = "5"
 	test ResubmitTaskByDetails {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "MyWorkflowTasks#ResubmitTaskByDetails";
 
 		Navigator.openURL();
 
@@ -1731,7 +1556,7 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
-			dueDateValue = "Within 1 Day",
+			dueDateValue = "Within 23 Hours",
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Blogs Entry");
 
@@ -1755,7 +1580,7 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
-			dueDateValue = "Within 1 Year",
+			dueDateValue = "Within 12 Months",
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Blogs Entry");
 	}
@@ -1799,7 +1624,7 @@ definition {
 	test ViewMessageNoTasksAssignedToYouWithSearchCriteria {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Workflow.searchMyWorkflowTasks(searchTerm = "54321");
+		MyWorkflowTasks.searchMyWorkflowTasks(searchTerm = "54321");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

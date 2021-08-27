@@ -826,14 +826,6 @@ definition {
 		Pause(locator1 = "1000");
 	}
 
-	macro searchMyWorkflowTasks {
-		Type(
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
-			value1 = "${searchTerm}");
-
-		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
-	}
-
 	macro tearDownPortalWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1037,10 +1029,6 @@ definition {
 			workflowAssetTitle = "${workflowAssetTitle}",
 			workflowAssetType = "${workflowAssetType}",
 			workflowTask = "${workflowTask}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE",
-			value1 = "Within");
 	}
 
 	macro uploadDefinition {

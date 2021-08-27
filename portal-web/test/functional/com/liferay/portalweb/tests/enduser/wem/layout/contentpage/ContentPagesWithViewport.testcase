@@ -244,7 +244,6 @@ definition {
 					index = "3");
 		}
 
-
 		task ("Change to landscape phone viewport, hide 1 and 2, unhide 3") {
 			Click(
 					key_deviceType = "Landscape Phone",
@@ -272,37 +271,48 @@ definition {
 					index = "2");
 		}
 
-
 		task ("Click restore default for Heading Example 1 and assert is NOT shown") {
 			PageEditor.clickRestoreDefaultHidePropertyForFragment(
 					fragmentName = "Heading",
 					index = "1");
 
-			AssertTextNotPresent(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Heading Example 1");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			AssertNotVisible(
+					id = "element-text",
+					index = "1",
+					key_fragmentName = "Heading",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY");
+
+			SelectFrame(value1 = "relative=top");
 		}
+
 		task ("Click restore default for Heading Example 2 and assert  is NOT shown") {
 			PageEditor.clickRestoreDefaultHidePropertyForFragment(
 					fragmentName = "Heading",
 					index = "2");
 
-			AssertTextNotPresent(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Heading Example 2");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewNoFragment(fragmentName = "Heading");
+
+			SelectFrame(value1 = "relative=top");
 
 		}
+
 		task ("Click restore default for Heading Example 3 and assert  is shown") {
 			PageEditor.clickRestoreDefaultHidePropertyForFragment(
 					fragmentName = "Heading",
 					index = "3");
 
-			AssertTextEquals.assertPartialText(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Heading Example 13");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			AssertTextEquals(
+					id = "element-text",
+					index = "3",
+					key_fragmentName = "Heading",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY",
+					value1 = "Heading Example 3");
 
 		}
 

@@ -672,7 +672,7 @@
 </tr>
 <tr>
 	<td>RESTORE_DEFAULT</td>
-	<td>//button[@title='Restore Default']/*[contains(@class,'lexicon-icon-restore')]</td>
+	<td>//button[@*='Restore Default']/*[contains(@class,'lexicon-icon-restore')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1159,15 +1159,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Page Elements");
 
-		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE_INDEX")) {
-			Click(
-					key_nodeName = "${fragmentName}",
-					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX");
-		}
+		Click(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX");
 
 		Navigator.gotoNavTab(navTab = "Styles");
-
-		WaitForElementPresent(locator1 = "Button#RESTORE_DEFAULT");
 
 		Click(locator1 = "Button#RESTORE_DEFAULT");
 

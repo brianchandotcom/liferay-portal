@@ -62,6 +62,59 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8901 | Test Summary: As a Business User, I should be able to change individual overview time filter to Custom Range"
+	@priority = "5"
+	test CanUseCustomRangeTimeFilterOnActiveIndividualsChart {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("Select a Custom Range time period in Active Individuals chart") {
+			ACTimeFilter.setCustomRange(
+				cardName = "Active Individuals",
+				endDay = "13",
+				endMonth = "July",
+				endYear = "2020",
+				startDay = "1",
+				startMonth = "July",
+				startYear = "2020");
+		}
+
+		task ("View the time period in Active Individuals chart is Jul 1, 2020 - Jul 13, 2020") {
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
+		}
+
+		task ("View the xAxis ticks start with Jul 1 and end with Jul 13") {
+			ACCards.assertAxisTick(
+				axis = "xAxis",
+				cardName = "Active Individuals",
+				tick = "Jul 1");
+
+			ACCards.assertAxisTick(
+				axis = "xAxis",
+				cardName = "Active Individuals",
+				index = "7",
+				tick = "Jul 13");
+
+			AssertElementNotPresent(
+				index = "8",
+				key_cardTitle = "Active Individuals",
+				locator1 = "ACCards#RECHARTS_CARTESIAN_X_AXIS_TICK");
+		}
+	}
+
 	@description = "Total Individuals increase by one when a new individual is added via event"
 	@priority = "5"
 	test CanViewTotalIndividualsIncreaseByOne {

@@ -511,6 +511,10 @@
 			},
 			"tasks": {
 				"properties": {
+					"assigneeGroupIds": {
+						"store": true,
+						"type": "long"
+					},
 					"assigneeIds": {
 						"store": true,
 						"type": "long"

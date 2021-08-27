@@ -169,4 +169,30 @@ definition {
 			value1 = "${propertyName}");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8974 | Test Summary: Assert the last selected Property is selected after re-logging"
+	@priority = "3"
+	test ViewLastSelectPropertyAfterRelogin {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Sign out AC") {
+			ACWorkspace.signOut();
+		}
+
+		task ("Sign in AC then go to workspace") {
+			ACUtils.launchAC();
+		}
+
+		task ("View the last selected property name shown in property menu") {
+			ACProperties.assertCurrentActiveProperty(propertyName = "${propertyName}");
+		}
+	}
+
 }

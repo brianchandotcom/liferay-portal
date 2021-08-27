@@ -40,7 +40,13 @@ definition {
 	}
 
 	macro getChartPopoverDate {
-		Click(locator1 = "ACIndividualsDashboard#INDIVIDUAL_ACTIVITIES_CHART");
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 
 		SelectFrame.selectFrame(locator1 = "ACIndividualsDashboard#CHART_POPOVER");
 

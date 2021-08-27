@@ -23,7 +23,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.object.exception.DuplicateObjectDefinitionException" %><%@
+<%@ page import="com.liferay.list.type.model.ListTypeDefinition" %><%@
+page import="com.liferay.object.exception.DuplicateObjectDefinitionException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionLabelException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionNameException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionPluralLabelException" %><%@
@@ -39,6 +40,7 @@ page import="com.liferay.object.web.internal.object.definitions.constants.Object
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ViewListTypeDefinitionsDisplayContext" %><%@
+page import="com.liferay.object.web.internal.object.definitions.display.context.ViewListTypeEntriesDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.entries.display.context.ObjectEntriesDetailsDisplayContext" %><%@
 page import="com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext" %><%@

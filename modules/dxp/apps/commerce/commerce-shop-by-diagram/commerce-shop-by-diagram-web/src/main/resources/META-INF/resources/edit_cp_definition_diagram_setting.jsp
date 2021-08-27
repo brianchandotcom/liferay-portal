@@ -103,6 +103,7 @@ PortletURL portletURL = cpDefinitionDiagramSettingDisplayContext.getPortletURL()
 					</div>
 				</div>
 			</commerce-ui:panel>
+
 			<commerce-ui:panel
 				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
@@ -110,7 +111,7 @@ PortletURL portletURL = cpDefinitionDiagramSettingDisplayContext.getPortletURL()
 				<clay:headless-data-set-display
 					apiURL="<%= cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramEntriesApiURL() %>"
 					formId="fm"
-					id="<%= CommerceDiagramDataSetConstants.COMMERCE_DATA_SET_KEY_DIAGRAM_MAPPED_PRODUCTS %>"
+					id="<%= CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY %>"
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib;
 
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.constants.CommerceDiagramDataSetConstants;
+import com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.constants.CSDiagramDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceDiagramDataSetConstants.COMMERCE_DATA_SET_KEY_DIAGRAM_MAPPED_PRODUCTS,
+	property = "clay.data.set.display.name=" + CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceDiagramMappedProductClayTableDataSetDisplayView

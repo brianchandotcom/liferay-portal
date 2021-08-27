@@ -55,7 +55,7 @@ public class CPDefinitionDiagramEntryServiceImpl
 
 		return cpDefinitionDiagramEntryLocalService.addCPDefinitionDiagramEntry(
 			getUserId(), cpDefinitionId, cpInstanceUuid, cProductId, diagram,
-			number, sequence, sku,  serviceContext);
+			number, sequence, sku, serviceContext);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class CPDefinitionDiagramEntryServiceImpl
 		return cpDefinitionDiagramEntryLocalService.
 			updateCPDefinitionDiagramEntry(
 				cpDefinitionDiagramEntryId, cpInstanceUuid, cProductId, diagram,
-				number, sequence, sku,  serviceContext);
+				number, sequence, sku, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CPDefinition>

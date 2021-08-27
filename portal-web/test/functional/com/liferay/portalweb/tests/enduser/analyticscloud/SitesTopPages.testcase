@@ -43,7 +43,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8302 | Test Summary: Assert Sites Top Pages Card Exit Pages Highest Exits"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardExitPagesHighestExits {
 		property portal.upstream = "quarantine";
@@ -120,7 +119,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
 		property portal.upstream = "quarantine";

@@ -102,4 +102,14 @@ export default {
 			onNetworkStatus
 		);
 	},
+
+	getCollectionSupportedFilters(collections) {
+		const next = {};
+
+		collections.forEach((collection) => {
+			next[collection.collectionId] = ['category', 'keywords'];
+		});
+
+		return Promise.resolve(next);
+	},
 };

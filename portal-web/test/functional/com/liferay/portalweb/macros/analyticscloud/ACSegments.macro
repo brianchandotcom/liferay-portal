@@ -45,6 +45,18 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro addStaticMultiMember {
+		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+		for (var tableMember : list "${tableMember}") {
+			var key_TableMember = "${tableMember}";
+
+			Click(locator1 = "ACSegments#TABLE_CHECKBOX");
+		}
+
+		Click(locator1 = "ACSegments#ADD_BUTTON");
+	}
+
 	macro assertSegmentAttributeNotPresent {
 		var key_SegmentField = "${segmentField}";
 

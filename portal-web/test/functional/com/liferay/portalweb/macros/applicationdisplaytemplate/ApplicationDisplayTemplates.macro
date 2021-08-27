@@ -7,7 +7,7 @@ definition {
 
 		MenuItem.click(menuItem = "${portletName} Template");
 
-		SiteAdmin.viewPortletTitle(portletTitle = "New ${portletName} Template");
+		SiteAdmin.viewPortletTitle(portletTitle = "Add ${portletName} Template");
 
 		PortletEntry.inputName(name = "${portletName} Test ADT");
 
@@ -40,7 +40,7 @@ definition {
 			MenuItem.click(menuItem = "${adtType} Template");
 		}
 
-		SiteAdmin.viewPortletTitle(portletTitle = "New ${adtType} Template");
+		SiteAdmin.viewPortletTitle(portletTitle = "Add ${adtType} Template");
 
 		PortletEntry.inputName(name = "${adtType} Test ADT");
 
@@ -204,7 +204,7 @@ definition {
 	}
 
 	macro openWidgetTemplatesAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_template_web_internal_portlet_TemplatePortlet");
 	}
 
 	macro searchGlobalADT {

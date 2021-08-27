@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>SCRIPT_FIELD</td>
-	<td>//*[contains(@class,'palette-section') and contains(@id,'fields')]//ul/li/span[contains(@class,'palette-item') and contains(.,'${key_fieldName}')]</td>
+	<td>//*[contains(@class,'palette-section') and contains(@id,'fields')]//ul/li/span[contains(@class,'palette-item') and contains(.,'${key_fieldName}')] | //div[contains(@class,'ddm_template_editor')]//button[contains(@class,'App-sidebar-button') and contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

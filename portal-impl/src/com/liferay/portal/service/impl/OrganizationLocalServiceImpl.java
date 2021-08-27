@@ -415,7 +415,7 @@ public class OrganizationLocalServiceImpl
 		User user = userPersistence.findByC_EA(
 			organization.getCompanyId(), emailAddress);
 
-		addUserOrganization(user.getUserId(), organizationId);
+		userLocalService.addOrganizationUser(organizationId, user);
 	}
 
 	/**
@@ -548,7 +548,8 @@ public class OrganizationLocalServiceImpl
 		User user = userPersistence.findByC_EA(
 			organization.getCompanyId(), emailAddress);
 
-		deleteUserOrganization(user.getUserId(), organizationId);
+		userLocalService.unsetOrganizationUsers(
+			organizationId, new long[] {user.getUserId()});
 	}
 
 	/**

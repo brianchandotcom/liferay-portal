@@ -194,6 +194,60 @@ public class LayoutSEOEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.layout.seo.model.LayoutSEOEntry
+			updateLayoutSEOEntry(
+				HttpPrincipal httpPrincipal, long groupId,
+				boolean privateLayout, long layoutId, long parentDDMStructureId,
+				boolean canonicalURLEnabled,
+				java.util.Map<java.util.Locale, String> canonicalURLMap,
+				boolean openGraphDescriptionEnabled,
+				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
+				java.util.Map<java.util.Locale, String> openGraphImageAltMap,
+				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+				java.util.Map<java.util.Locale, String> openGraphTitleMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutSEOEntryServiceUtil.class, "updateLayoutSEOEntry",
+				_updateLayoutSEOEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, privateLayout, layoutId,
+				parentDDMStructureId, canonicalURLEnabled, canonicalURLMap,
+				openGraphDescriptionEnabled, openGraphDescriptionMap,
+				openGraphImageAltMap, openGraphImageFileEntryId,
+				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.seo.model.LayoutSEOEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutSEOEntryServiceHttp.class);
 
@@ -213,6 +267,13 @@ public class LayoutSEOEntryServiceHttp {
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
 			java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes3 =
+		new Class[] {
+			long.class, boolean.class, long.class, long.class, boolean.class,
+			java.util.Map.class, boolean.class, java.util.Map.class,
+			java.util.Map.class, long.class, boolean.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

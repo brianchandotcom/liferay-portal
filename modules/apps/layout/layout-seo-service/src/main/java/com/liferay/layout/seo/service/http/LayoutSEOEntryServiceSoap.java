@@ -168,6 +168,57 @@ public class LayoutSEOEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.layout.seo.model.LayoutSEOEntrySoap
+			updateLayoutSEOEntry(
+				long groupId, boolean privateLayout, long layoutId,
+				long parentDDMStructureId, boolean canonicalURLEnabled,
+				String[] canonicalURLMapLanguageIds,
+				String[] canonicalURLMapValues,
+				boolean openGraphDescriptionEnabled,
+				String[] openGraphDescriptionMapLanguageIds,
+				String[] openGraphDescriptionMapValues,
+				String[] openGraphImageAltMapLanguageIds,
+				String[] openGraphImageAltMapValues,
+				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+				String[] openGraphTitleMapLanguageIds,
+				String[] openGraphTitleMapValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> canonicalURLMap =
+				LocalizationUtil.getLocalizationMap(
+					canonicalURLMapLanguageIds, canonicalURLMapValues);
+			Map<Locale, String> openGraphDescriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					openGraphDescriptionMapLanguageIds,
+					openGraphDescriptionMapValues);
+			Map<Locale, String> openGraphImageAltMap =
+				LocalizationUtil.getLocalizationMap(
+					openGraphImageAltMapLanguageIds,
+					openGraphImageAltMapValues);
+			Map<Locale, String> openGraphTitleMap =
+				LocalizationUtil.getLocalizationMap(
+					openGraphTitleMapLanguageIds, openGraphTitleMapValues);
+
+			com.liferay.layout.seo.model.LayoutSEOEntry returnValue =
+				LayoutSEOEntryServiceUtil.updateLayoutSEOEntry(
+					groupId, privateLayout, layoutId, parentDDMStructureId,
+					canonicalURLEnabled, canonicalURLMap,
+					openGraphDescriptionEnabled, openGraphDescriptionMap,
+					openGraphImageAltMap, openGraphImageFileEntryId,
+					openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+
+			return com.liferay.layout.seo.model.LayoutSEOEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutSEOEntryServiceSoap.class);
 

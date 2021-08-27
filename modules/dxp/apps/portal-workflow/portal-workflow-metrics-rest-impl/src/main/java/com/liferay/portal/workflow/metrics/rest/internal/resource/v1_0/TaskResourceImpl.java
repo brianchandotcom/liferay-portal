@@ -49,6 +49,8 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TaskBulkSelection;
@@ -60,6 +62,7 @@ import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndex
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -140,21 +143,22 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		getProcessTask(processId, taskId);
 
-		Long[] assigneeIds = null;
-		String assigneeType = null;
-
 		Assignee assignee = task.getAssignee();
 
+		List<Assignment> assignments = new ArrayList<>();
+
 		if ((assignee != null) && (assignee.getId() != null)) {
-			assigneeIds = new Long[] {assignee.getId()};
-			assigneeType = User.class.getName();
+			User user = _userLocalService.fetchUser(assignee.getId());
+
+			assignments.add(
+				new UserAssignment(assignee.getId(), user.getFullName()));
 		}
 
 		_taskWorkflowMetricsIndexer.updateTask(
 			LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n()),
 			LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n()),
-			assigneeIds, assigneeType, contextCompany.getCompanyId(),
-			task.getDateModified(), task.getId(), contextUser.getUserId());
+			assignments, contextCompany.getCompanyId(), task.getDateModified(),
+			task.getId(), contextUser.getUserId());
 	}
 
 	@Override
@@ -173,21 +177,22 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	public Task postProcessTask(Long processId, Task task) throws Exception {
 		Assignee assignee = task.getAssignee();
 
-		Long[] assigneeIds = null;
-		String assigneeType = null;
+		List<Assignment> assignments = new ArrayList<>();
 
 		if ((assignee != null) && (assignee.getId() != null)) {
-			assigneeIds = new Long[] {assignee.getId()};
-			assigneeType = User.class.getName();
+			User user = _userLocalService.fetchUser(assignee.getId());
+
+			assignments.add(
+				new UserAssignment(assignee.getId(), user.getFullName()));
 		}
 
 		return TaskUtil.toTask(
 			_taskWorkflowMetricsIndexer.addTask(
 				LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n()),
 				LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n()),
-				assigneeIds, assigneeType, task.getClassName(),
-				task.getClassPK(), contextCompany.getCompanyId(), false, null,
-				null, task.getDateCreated(), false, null, task.getInstanceId(),
+				assignments, task.getClassName(), task.getClassPK(),
+				contextCompany.getCompanyId(), false, null, null,
+				task.getDateCreated(), false, null, task.getInstanceId(),
 				task.getDateModified(), task.getName(), task.getNodeId(),
 				processId, task.getProcessVersion(), task.getId(),
 				contextUser.getUserId()),

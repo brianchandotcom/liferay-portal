@@ -1772,6 +1772,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#list cacheFields as cacheField>
 			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
 
+			set${methodName}(null);
+
 			${entity.variableName}CacheModel.${cacheField.name} = get${methodName}();
 		</#list>
 

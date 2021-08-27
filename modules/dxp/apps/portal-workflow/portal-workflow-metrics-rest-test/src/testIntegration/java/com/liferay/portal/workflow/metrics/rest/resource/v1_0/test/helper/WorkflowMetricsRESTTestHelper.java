@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -44,6 +45,9 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.RoleAssignment;
+import com.liferay.portal.workflow.metrics.model.UserAssignment;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
@@ -63,7 +67,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -276,9 +282,17 @@ public class WorkflowMetricsRESTTestHelper {
 				overdueInstanceCount--;
 			}
 
+			List<Assignment> assignments = new ArrayList<>();
+
+			for (long roleId : user.getRoleIds()) {
+				assignments.add(
+					new RoleAssignment(roleId, Collections.emptyList()));
+			}
+
 			addTask(
-				assignee, companyId, nodeMetric.getDurationAvg(), instance,
-				node.getName(), node.getId(), processId, taskId, user, version);
+				assignee, assignments, companyId, nodeMetric.getDurationAvg(),
+				instance, node.getName(), node.getId(), processId, version,
+				taskId);
 
 			if (instance.getCompleted()) {
 				completeInstance(companyId, instance);
@@ -476,19 +490,20 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public Task addTask(
-			Assignee assignee, long companyId, Instance instance, User user)
+			Assignee assignee, List<Assignment> assignments, long companyId,
+			Instance instance)
 		throws Exception {
 
 		return addTask(
-			assignee, companyId, 0L, instance, RandomTestUtil.randomString(),
-			RandomTestUtil.randomLong(), instance.getProcessId(),
-			RandomTestUtil.randomLong(), user, "1.0");
+			assignee, assignments, companyId, 0L, instance,
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			instance.getProcessId(), "1.0", RandomTestUtil.randomLong());
 	}
 
 	public Task addTask(
-			Assignee assignee, long companyId, long durationAvg,
-			Instance instance, String name, long nodeId, long processId,
-			long taskId, User user, String processVersion)
+			Assignee assignee, List<Assignment> assignments, long companyId,
+			long durationAvg, Instance instance, String name, long nodeId,
+			long processId, String processVersion, long taskId)
 		throws Exception {
 
 		Task task = new Task();
@@ -509,30 +524,54 @@ public class WorkflowMetricsRESTTestHelper {
 		task.setProcessId(processId);
 		task.setProcessVersion(processVersion);
 
-		return addTask(companyId, instance, task, user);
+		return addTask(assignments, companyId, instance, task);
 	}
 
-	public Task addTask(long companyId, Instance instance, Task task, User user)
+	public Task addTask(
+			Assignee assignee, long companyId, Instance instance, User user)
 		throws Exception {
 
-		Long[] assigneeIds = ArrayUtil.toArray(user.getRoleIds());
-		String assigneeType = Role.class.getName();
+		List<Assignment> assignments = new ArrayList<>();
 
+		for (long roleId : user.getRoleIds()) {
+			assignments.add(
+				new RoleAssignment(roleId, Collections.emptyList()));
+		}
+
+		return addTask(
+			assignee, assignments, companyId, 0L, instance,
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			instance.getProcessId(), "1.0", RandomTestUtil.randomLong());
+	}
+
+	public Task addTask(
+			List<Assignment> assignments, long companyId, Instance instance,
+			Task task)
+		throws Exception {
+
+		String assigneeType = Role.class.getName();
 		Assignee assignee = task.getAssignee();
 
-		if ((assignee != null) && (assignee.getId() != null)) {
-			assigneeIds = new Long[] {assignee.getId()};
+		if ((assignee != null) && (assignee.getId() != null) &&
+			(assignee.getId() != -1L)) {
+
 			assigneeType = User.class.getName();
+
+			assignments = new ArrayList<>();
+
+			User user = _userLocalService.fetchUser(assignee.getId());
+
+			assignments.add(
+				new UserAssignment(assignee.getId(), user.getFullName()));
 		}
 
 		_taskWorkflowMetricsIndexer.addTask(
 			_createLocalizationMap(task.getAssetTitle()),
-			_createLocalizationMap(task.getAssetType()), assigneeIds,
-			assigneeType, task.getClassName(), task.getClassPK(), companyId,
-			false, null, null, task.getDateCreated(), false, null,
-			instance.getId(), task.getDateModified(), task.getName(),
-			task.getNodeId(), task.getProcessId(), task.getProcessVersion(),
-			task.getId(), 0);
+			_createLocalizationMap(task.getAssetType()), assignments,
+			task.getClassName(), task.getClassPK(), companyId, false, null,
+			null, task.getDateCreated(), false, null, instance.getId(),
+			task.getDateModified(), task.getName(), task.getNodeId(),
+			task.getProcessId(), task.getProcessVersion(), task.getId(), 0);
 
 		_assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
@@ -557,19 +596,106 @@ public class WorkflowMetricsRESTTestHelper {
 				return null;
 			});
 
-		if (assigneeIds != null) {
+		if (!assignments.isEmpty()) {
 			_taskWorkflowMetricsIndexer.updateTask(
 				_createLocalizationMap(task.getAssetTitle()),
-				_createLocalizationMap(task.getAssetType()), assigneeIds,
-				assigneeType, companyId, new Date(), task.getId(), 0);
+				_createLocalizationMap(task.getAssetType()), assignments,
+				companyId, new Date(), task.getId(), 0);
+
+			Assignment assignment = assignments.get(0);
 
 			_assertCount(
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
-				"assigneeIds", assigneeIds[0], "assigneeType", assigneeType,
-				"companyId", companyId, "deleted", false, "instanceId",
-				instance.getId(), "processId", task.getProcessId(), "nodeId",
-				task.getNodeId(), "name", task.getName(), "taskId",
-				task.getId());
+				"assigneeIds", assignment.getAssignmentId(), "assigneeType",
+				assigneeType, "companyId", companyId, "deleted", false,
+				"instanceId", instance.getId(), "processId",
+				task.getProcessId(), "nodeId", task.getNodeId(), "name",
+				task.getName(), "taskId", task.getId());
+		}
+
+		if (task.getCompleted()) {
+			_taskWorkflowMetricsIndexer.completeTask(
+				companyId, task.getDateCompletion(), task.getCompletionUserId(),
+				task.getDuration(), task.getDateModified(), task.getId(), 0);
+
+			_assertCount(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
+				"companyId", companyId, "completed", true, "completionUserId",
+				task.getCompletionUserId(), "deleted", false, "duration",
+				task.getDuration(), "instanceId", instance.getId(), "processId",
+				task.getProcessId(), "nodeId", task.getNodeId(), "name",
+				task.getName(), "taskId", task.getId());
+		}
+
+		return task;
+	}
+
+	public Task addTask(long companyId, Instance instance, Task task, User user)
+		throws Exception {
+
+		List<Assignment> assignments = new ArrayList<>();
+		String assigneeType = Role.class.getName();
+
+		Assignee assignee = task.getAssignee();
+
+		if ((assignee != null) && (assignee.getId() != null)) {
+			assigneeType = User.class.getName();
+			assignments.add(
+				new UserAssignment(assignee.getId(), user.getFullName()));
+		}
+		else {
+			for (Long roleId : user.getRoleIds()) {
+				assignments.add(
+					new RoleAssignment(roleId, Collections.emptyList()));
+			}
+		}
+
+		_taskWorkflowMetricsIndexer.addTask(
+			_createLocalizationMap(task.getAssetTitle()),
+			_createLocalizationMap(task.getAssetType()), assignments,
+			task.getClassName(), task.getClassPK(), companyId, false, null,
+			null, task.getDateCreated(), false, null, instance.getId(),
+			task.getDateModified(), task.getName(), task.getNodeId(),
+			task.getProcessId(), task.getProcessVersion(), task.getId(), 0);
+
+		_assertCount(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
+			"companyId", companyId, "deleted", false, "instanceId",
+			instance.getId(), "processId", task.getProcessId(), "nodeId",
+			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				_assertCount(
+					booleanQuery -> booleanQuery.addMustQueryClauses(
+						_queries.nested(
+							"tasks",
+							_queries.term("tasks.taskId", task.getId()))),
+					1,
+					_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+						companyId),
+					"companyId", companyId, "deleted", false, "instanceId",
+					instance.getId(), "processId", task.getProcessId());
+
+				return null;
+			});
+
+		if (!assignments.isEmpty()) {
+			_taskWorkflowMetricsIndexer.updateTask(
+				_createLocalizationMap(task.getAssetTitle()),
+				_createLocalizationMap(task.getAssetType()), assignments,
+				companyId, new Date(), task.getId(), 0);
+
+			Assignment assignment = assignments.get(0);
+
+			_assertCount(
+				_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
+				"assigneeIds", assignment.getAssignmentId(), "assigneeType",
+				assigneeType, "companyId", companyId, "deleted", false,
+				"instanceId", instance.getId(), "processId",
+				task.getProcessId(), "nodeId", task.getNodeId(), "name",
+				task.getName(), "taskId", task.getId());
 		}
 
 		if (task.getCompleted()) {
@@ -1199,5 +1325,8 @@ public class WorkflowMetricsRESTTestHelper {
 	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndexNameBuilder
 		_taskWorkflowMetricsIndexNameBuilder;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

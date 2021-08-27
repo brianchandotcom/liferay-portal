@@ -116,17 +116,15 @@ public class ListTypeEntry implements Cloneable, Serializable {
 
 	protected String key;
 
-	public Map<String, String> getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(Map<String, String> name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setName(
-		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 		}
@@ -135,7 +133,29 @@ public class ListTypeEntry implements Cloneable, Serializable {
 		}
 	}
 
-	protected Map<String, String> name;
+	protected String name;
+
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> name_i18n;
 
 	public String getType() {
 		return type;

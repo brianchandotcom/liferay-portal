@@ -170,19 +170,16 @@ public class ListTypeDefinition implements Serializable {
 	protected ListTypeEntry[] listTypeEntries;
 
 	@Schema
-	@Valid
-	public Map<String, String> getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(Map<String, String> name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(
-		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
 			name = nameUnsafeSupplier.get();
 		}
@@ -196,7 +193,37 @@ public class ListTypeDefinition implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> name;
+	protected String name;
+
+	@Schema
+	@Valid
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	@JsonIgnore
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> name_i18n;
 
 	@Override
 	public boolean equals(Object object) {
@@ -293,7 +320,21 @@ public class ListTypeDefinition implements Serializable {
 
 			sb.append("\"name\": ");
 
-			sb.append(_toJSON(name));
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		if (name_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(name_i18n));
 		}
 
 		sb.append("}");

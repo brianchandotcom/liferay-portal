@@ -181,6 +181,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		ListTypeEntry listTypeEntry = randomListTypeEntry();
 
 		listTypeEntry.setKey(regex);
+		listTypeEntry.setName(regex);
 		listTypeEntry.setType(regex);
 
 		String json = ListTypeEntrySerDes.toJSON(listTypeEntry);
@@ -190,6 +191,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		listTypeEntry = ListTypeEntrySerDes.toDTO(json);
 
 		Assert.assertEquals(regex, listTypeEntry.getKey());
+		Assert.assertEquals(regex, listTypeEntry.getName());
 		Assert.assertEquals(regex, listTypeEntry.getType());
 	}
 
@@ -436,6 +438,14 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (listTypeEntry.getName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (listTypeEntry.getType() == null) {
 					valid = false;
@@ -579,9 +589,19 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						listTypeEntry1.getName(), listTypeEntry2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)listTypeEntry1.getName(),
-						(Map)listTypeEntry2.getName())) {
+						(Map)listTypeEntry1.getName_i18n(),
+						(Map)listTypeEntry2.getName_i18n())) {
 
 					return false;
 				}
@@ -774,6 +794,14 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
+			sb.append("'");
+			sb.append(String.valueOf(listTypeEntry.getName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("name_i18n")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -834,6 +862,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

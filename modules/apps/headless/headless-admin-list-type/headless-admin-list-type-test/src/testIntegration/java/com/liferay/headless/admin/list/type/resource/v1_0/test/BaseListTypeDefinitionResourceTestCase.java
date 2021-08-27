@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -181,11 +182,15 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		ListTypeDefinition listTypeDefinition = randomListTypeDefinition();
 
+		listTypeDefinition.setName(regex);
+
 		String json = ListTypeDefinitionSerDes.toJSON(listTypeDefinition);
 
 		Assert.assertFalse(json.contains(regex));
 
 		listTypeDefinition = ListTypeDefinitionSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, listTypeDefinition.getName());
 	}
 
 	@Test
@@ -521,6 +526,14 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (listTypeDefinition.getName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -660,9 +673,20 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						listTypeDefinition1.getName(),
+						listTypeDefinition2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)listTypeDefinition1.getName(),
-						(Map)listTypeDefinition2.getName())) {
+						(Map)listTypeDefinition1.getName_i18n(),
+						(Map)listTypeDefinition2.getName_i18n())) {
 
 					return false;
 				}
@@ -845,6 +869,14 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
+			sb.append("'");
+			sb.append(String.valueOf(listTypeDefinition.getName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("name_i18n")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -896,6 +928,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

@@ -123,7 +123,21 @@ public class ListTypeEntrySerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append(_toJSON(listTypeEntry.getName()));
+			sb.append("\"");
+
+			sb.append(_escape(listTypeEntry.getName()));
+
+			sb.append("\"");
+		}
+
+		if (listTypeEntry.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(listTypeEntry.getName_i18n()));
 		}
 
 		if (listTypeEntry.getType() != null) {
@@ -202,6 +216,13 @@ public class ListTypeEntrySerDes {
 			map.put("name", String.valueOf(listTypeEntry.getName()));
 		}
 
+		if (listTypeEntry.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put("name_i18n", String.valueOf(listTypeEntry.getName_i18n()));
+		}
+
 		if (listTypeEntry.getType() == null) {
 			map.put("type", null);
 		}
@@ -255,7 +276,12 @@ public class ListTypeEntrySerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					listTypeEntry.setName(
+					listTypeEntry.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					listTypeEntry.setName_i18n(
 						(Map)ListTypeEntrySerDes.toMap(
 							(String)jsonParserFieldValue));
 				}

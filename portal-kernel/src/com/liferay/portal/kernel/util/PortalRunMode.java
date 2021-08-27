@@ -22,11 +22,19 @@ public class PortalRunMode {
 	public static boolean isTestMode() {
 		String liferayMode = SystemProperties.get("liferay.mode");
 
-		if (Validator.isNotNull(liferayMode) && liferayMode.equals("test")) {
+		if (_testMode ||
+			(Validator.isNotNull(liferayMode) && liferayMode.equals("test"))) {
+
 			return true;
 		}
 
 		return false;
 	}
+
+	public static void setTestMode(boolean testMode) {
+		_testMode = testMode;
+	}
+
+	private static boolean _testMode;
 
 }

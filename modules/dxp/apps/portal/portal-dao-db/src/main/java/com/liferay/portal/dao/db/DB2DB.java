@@ -37,6 +37,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,8 +66,13 @@ public class DB2DB extends BaseDB {
 		String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
 			connection, tableName);
 
+		DBInspector dbInspector = new DBInspector(connection);
+
+		String normalizedOldColumnName = dbInspector.normalizeName(
+			oldColumnName);
+
 		boolean primaryKey = ArrayUtil.contains(
-			primaryKeyColumnNames, oldColumnName);
+			primaryKeyColumnNames, normalizedOldColumnName);
 
 		if (primaryKey) {
 			removePrimaryKey(connection, tableName);
@@ -75,22 +81,34 @@ public class DB2DB extends BaseDB {
 		super.alterColumnName(
 			connection, tableName, oldColumnName, newColumnDefinition);
 
-		String newColumnName = StringUtil.extractFirst(
-			newColumnDefinition, StringPool.SPACE);
+		String normalizedNewColumnName = dbInspector.normalizeName(
+			StringUtil.extractFirst(newColumnDefinition, StringPool.SPACE));
 
 		if (primaryKey) {
 			ArrayUtil.replace(
-				primaryKeyColumnNames, oldColumnName, newColumnName);
+				primaryKeyColumnNames, normalizedOldColumnName,
+				normalizedNewColumnName);
 
 			addPrimaryKey(connection, tableName, primaryKeyColumnNames);
 		}
 
+		List<IndexMetadata> newIndexMetadatas = new ArrayList<>();
+
 		for (IndexMetadata indexMetadata : indexMetadatas) {
+			String[] columnNames = indexMetadata.getColumnNames();
+
 			ArrayUtil.replace(
-				indexMetadata.getColumnNames(), oldColumnName, newColumnName);
+				columnNames, normalizedOldColumnName, normalizedNewColumnName);
+
+			newIndexMetadatas.add(
+				new IndexMetadata(
+					indexMetadata.getIndexName(), indexMetadata.getTableName(),
+					indexMetadata.isUnique(), columnNames));
 		}
 
-		addIndexes(connection, indexMetadatas);
+		if (!newIndexMetadatas.isEmpty()) {
+			addIndexes(connection, newIndexMetadatas);
+		}
 	}
 
 	@Override
@@ -122,8 +140,21 @@ public class DB2DB extends BaseDB {
 
 			String tempColumnName = "temp" + columnName;
 
-			alterTableAddColumn(
-				connection, tableName, tempColumnName, newColumnType);
+			if (newColumnType.endsWith("not null")) {
+				runSQL(
+					StringBundler.concat(
+						"alter table ", tableName, " add ", tempColumnName,
+						StringPool.SPACE, newColumnType, " default 0"));
+
+				runSQL(
+					StringBundler.concat(
+						"alter table ", tableName, " alter column ",
+						tempColumnName, " drop default"));
+			}
+			else {
+				alterTableAddColumn(
+					connection, tableName, tempColumnName, newColumnType);
+			}
 
 			runSQL(
 				StringBundler.concat(
@@ -144,11 +175,16 @@ public class DB2DB extends BaseDB {
 			}
 
 			alterColumnName(
-				connection, tableName, columnName, tempColumnName + "2");
+				connection, tableName, columnName,
+				tempColumnName + "2 " + newColumnType);
 
-			alterColumnName(connection, tableName, tempColumnName, columnName);
+			alterColumnName(
+				connection, tableName, tempColumnName,
+				columnName + StringPool.SPACE + newColumnType);
 
-			addIndexes(connection, tableName, indexMetadatas);
+			if (!indexMetadatas.isEmpty()) {
+				addIndexes(connection, indexMetadatas);
+			}
 
 			if (primaryKey) {
 				addPrimaryKey(connection, tableName, primaryKeyColumnNames);

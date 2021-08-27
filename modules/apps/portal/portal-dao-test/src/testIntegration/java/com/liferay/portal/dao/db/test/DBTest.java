@@ -177,7 +177,11 @@ public class DBTest {
 		Assert.assertTrue(
 			_dbInspector.hasColumn(_TABLE_NAME, "typeVarcharTest"));
 
-		_validateIndex(new String[] {"typeVarcharTest", "typeBoolean"});
+		_validateIndex(
+			new String[] {
+				_dbInspector.normalizeName("typeVarcharTest"),
+				_dbInspector.normalizeName("typeBoolean")
+			});
 	}
 
 	@Test
@@ -191,7 +195,11 @@ public class DBTest {
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "typeVarchar", "VARCHAR(50) null"));
 
-		_validateIndex(new String[] {"typeVarchar", "typeBoolean"});
+		_validateIndex(
+			new String[] {
+				_dbInspector.normalizeName("typeVarchar"),
+				_dbInspector.normalizeName("typeBoolean")
+			});
 	}
 
 	@Test
@@ -204,7 +212,9 @@ public class DBTest {
 			new Class<?>[] {Connection.class, String.class}, _connection,
 			_TABLE_NAME);
 
-		Assert.assertTrue(ArrayUtil.contains(primaryKeyColumnNames, "idTest"));
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				primaryKeyColumnNames, _dbInspector.normalizeName("idTest")));
 	}
 
 	@Test
@@ -251,7 +261,7 @@ public class DBTest {
 			_connection, indexMetadatas);
 	}
 
-	private void _validateIndex(String[] columnNames) {
+	private void _validateIndex(String[] columnNames) throws Exception {
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
 			_db, "getIndexes",
 			new Class<?>[] {Connection.class, String.class, String.class},
@@ -262,11 +272,13 @@ public class DBTest {
 
 		IndexMetadata indexMetadata = indexMetadatas.get(0);
 
-		Assert.assertEquals(indexMetadata.getIndexName(), _INDEX_NAME);
+		Assert.assertEquals(
+			_dbInspector.normalizeName(_INDEX_NAME),
+			indexMetadata.getIndexName());
 
 		Assert.assertArrayEquals(
-			ArrayUtil.sortedUnique(indexMetadata.getColumnNames()),
-			ArrayUtil.sortedUnique(columnNames));
+			ArrayUtil.sortedUnique(columnNames),
+			ArrayUtil.sortedUnique(indexMetadata.getColumnNames()));
 	}
 
 	private static final String _INDEX_NAME = "IX_TEMP";

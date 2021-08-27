@@ -61,6 +61,7 @@ page import="com.liferay.account.admin.web.internal.display.context.ViewAccountR
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission" %><%@
+page import="com.liferay.account.admin.web.internal.util.CurrentAccountEntryManagerUtil" %><%@
 page import="com.liferay.account.constants.AccountActionKeys" %><%@
 page import="com.liferay.account.constants.AccountConstants" %><%@
 page import="com.liferay.account.constants.AccountListTypeConstants" %><%@

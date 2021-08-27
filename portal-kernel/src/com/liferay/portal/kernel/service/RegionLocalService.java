@@ -128,10 +128,9 @@ public interface RegionLocalService
 	 *
 	 * @param region the region
 	 * @return the region that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public Region deleteRegion(Region region) throws PortalException;
+	public Region deleteRegion(Region region);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);

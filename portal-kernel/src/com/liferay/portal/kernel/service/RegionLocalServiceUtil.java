@@ -126,9 +126,8 @@ public class RegionLocalServiceUtil {
 	 *
 	 * @param region the region
 	 * @return the region that was removed
-	 * @throws PortalException
 	 */
-	public static Region deleteRegion(Region region) throws PortalException {
+	public static Region deleteRegion(Region region) {
 		return getService().deleteRegion(region);
 	}
 

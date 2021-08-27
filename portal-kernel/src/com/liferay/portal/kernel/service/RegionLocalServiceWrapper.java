@@ -121,12 +121,10 @@ public class RegionLocalServiceWrapper
 	 *
 	 * @param region the region
 	 * @return the region that was removed
-	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Region deleteRegion(
-			com.liferay.portal.kernel.model.Region region)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.model.Region region) {
 
 		return _regionLocalService.deleteRegion(region);
 	}

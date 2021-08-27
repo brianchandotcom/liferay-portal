@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.discount.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -27,7 +28,9 @@ public class NoSuchDiscountOrderTypeRelException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchDiscountOrderTypeRelException(String msg, Throwable throwable) {
+	public NoSuchDiscountOrderTypeRelException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

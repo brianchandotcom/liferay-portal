@@ -50,6 +50,35 @@ public class CacheFieldEntryPersistenceImplTest {
 				"com.liferay.portal.tools.service.builder.test.service"));
 
 	@Test
+	public void testCacheFieldEntry() {
+		CacheFieldEntry cacheFieldEntry = _cacheFieldEntryPersistence.create(
+			RandomTestUtil.nextLong());
+
+		cacheFieldEntry.setName("test.name");
+
+		_cacheFieldEntry = _cacheFieldEntryPersistence.update(cacheFieldEntry);
+
+		CacheFieldEntry existingCacheFieldEntry =
+			_cacheFieldEntryPersistence.fetchByPrimaryKey(
+				_cacheFieldEntry.getPrimaryKey());
+
+		Assert.assertEquals(
+			_cacheFieldEntry.getNickname(),
+			existingCacheFieldEntry.getNickname());
+
+		cacheFieldEntry.setName("test.name.update");
+
+		_cacheFieldEntry = _cacheFieldEntryPersistence.update(cacheFieldEntry);
+
+		existingCacheFieldEntry = _cacheFieldEntryPersistence.fetchByPrimaryKey(
+			_cacheFieldEntry.getPrimaryKey());
+
+		Assert.assertEquals(
+			_cacheFieldEntry.getNickname(),
+			existingCacheFieldEntry.getNickname());
+	}
+
+	@Test
 	public void testCacheFieldEntryWithCollectionResult() {
 		long groupId = RandomTestUtil.nextLong();
 

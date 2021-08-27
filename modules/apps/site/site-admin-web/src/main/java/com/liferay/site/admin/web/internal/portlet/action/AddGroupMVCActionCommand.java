@@ -462,9 +462,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			creationType.equals(
 				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
 
-			ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, liveGroup);
-
-			ActionUtil.updateWorkflowDefinitionLinks(actionRequest, liveGroup);
+			_updateGroupFromSiteTemplate(actionRequest, liveGroup);
 		}
 		else if (creationType.equals(
 					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
@@ -488,6 +486,15 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		themeDisplay.setSiteGroupId(liveGroup.getGroupId());
 
 		return liveGroup;
+	}
+
+	private void _updateGroupFromSiteTemplate(
+			ActionRequest actionRequest, Group group)
+		throws Exception {
+
+		ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, group);
+
+		ActionUtil.updateWorkflowDefinitionLinks(actionRequest, group);
 	}
 
 	private static final TransactionConfig _transactionConfig =

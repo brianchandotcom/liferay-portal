@@ -383,10 +383,14 @@ public abstract class BaseWorkspaceGitRepository
 				remoteGitRef.getRepositoryName(), "/tree/",
 				remoteGitRef.getName()));
 
-		_setBranchHeadSHA(remoteGitRef.getSHA());
-		_setBranchName(remoteGitRef.getName());
+		LocalGitBranch localGitBranch =
+			GitHubDevSyncUtil.createCacheLocalGitBranch(
+				this, remoteGitRef, JenkinsResultsParserUtil.isCINode());
 
-		setBranchSHA(remoteGitRef.getSHA());
+		_setBranchHeadSHA(localGitBranch.getSHA());
+		_setBranchName(localGitBranch.getName());
+
+		setBranchSHA(localGitBranch.getSHA());
 
 		_setType();
 

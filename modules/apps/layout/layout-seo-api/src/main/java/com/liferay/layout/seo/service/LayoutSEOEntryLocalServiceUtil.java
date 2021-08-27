@@ -62,6 +62,26 @@ public class LayoutSEOEntryLocalServiceUtil {
 		return getService().addLayoutSEOEntry(layoutSEOEntry);
 	}
 
+	public static LayoutSEOEntry copyLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean canonicalURLEnabled,
+			Map<java.util.Locale, String> canonicalURLMap,
+			long copyDDMStorageId, boolean openGraphDescriptionEnabled,
+			Map<java.util.Locale, String> openGraphDescriptionMap,
+			Map<java.util.Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<java.util.Locale, String> openGraphTitleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyLayoutSEOEntry(
+			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
+			canonicalURLMap, copyDDMStorageId, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new layout seo entry with the primary key. Does not add the layout seo entry to the database.
 	 *

@@ -207,6 +207,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8914 | Test Summary: Assert Individual Activities time filter 180 Days"
 	@priority = "3"
 	test AssertIndividualActivitiesTimeFilter180Days {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-8970
+
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
 		}

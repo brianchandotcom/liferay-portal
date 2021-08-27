@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -94,7 +95,9 @@ public class DispatchTriggerLocalServiceImpl
 			DispatchTrigger dispatchTrigger)
 		throws PortalException {
 
-		if (dispatchTrigger.isSystem() && !PortalRunMode.isTestMode()) {
+		if (dispatchTrigger.isSystem() && !PortalRunMode.isTestMode() &&
+			!CompanyThreadLocal.isDeleteInProcess()) {
+
 			return dispatchTrigger;
 		}
 

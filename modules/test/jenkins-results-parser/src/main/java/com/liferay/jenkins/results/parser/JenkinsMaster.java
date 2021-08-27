@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,7 +39,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	public static final Integer SLAVES_PER_HOST_DEFAULT = 2;
 
 	public static synchronized JenkinsMaster getInstance(String masterName) {
-		if (!_jenkinsMasters.containsKey(masterName)) {
+		if (!_jenkinsMasters.containsKey(masterName) && isAlive(masterName)) {
 			_jenkinsMasters.put(masterName, new JenkinsMaster(masterName));
 		}
 
@@ -425,6 +427,20 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		_queuedBuildURLs.clear();
 
 		_queuedBuildURLs.putAll(queuedBuildURLs);
+	}
+
+	protected static boolean isAlive(String masterName) {
+		try {
+			JenkinsResultsParserUtil.toString(
+				"http://" + masterName, false, 0, 0, 0);
+		}
+		catch (IOException ioException) {
+			System.out.println(masterName + " is unreachable.");
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected static long maxRecentBatchAge = 120 * 1000;

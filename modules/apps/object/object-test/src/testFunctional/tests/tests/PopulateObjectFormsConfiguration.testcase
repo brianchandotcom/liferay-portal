@@ -118,11 +118,65 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Double type and view its entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapDoubleTypeAndViewEntries {
 
-		// TODO LPS-138049 CanMapDoubleTypeAndViewEntries pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "double",
+			fieldType = "Double",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "double");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric",
+			fieldValue = "1.54");
+
+		FormPortlet.submitSuccessfully();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Numeric",
+			key_entryName = "1.54",
+			key_entryNumber = "1 entry");
 
 	}
 

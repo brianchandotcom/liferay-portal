@@ -327,18 +327,17 @@ public class ExportTranslationDisplayContext {
 	}
 
 	private JSONArray _getLocalesJSONArray(
-		Locale currentLocale, Collection<Locale> locales) {
+		Locale locale, Collection<Locale> locales) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		locales.forEach(
-			locale -> jsonArray.put(
+			currentLocale -> jsonArray.put(
 				JSONUtil.put(
 					"displayName",
-					LocaleUtil.getLocaleDisplayName(
-						locale, currentLocale)
+					LocaleUtil.getLocaleDisplayName(currentLocale, locale)
 				).put(
-					"languageId", LocaleUtil.toLanguageId(locale)
+					"languageId", LocaleUtil.toLanguageId(currentLocale)
 				)));
 
 		return jsonArray;

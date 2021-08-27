@@ -29,12 +29,12 @@ import java.util.Locale;
 public class ExportTranslationUtil {
 
 	public static JSONArray getLocalesJSONArray(
-		Locale currentLocale, Collection<Locale> locales) {
+		Locale locale, Collection<Locale> locales) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		locales.forEach(
-			locale -> jsonArray.put(
+			currentLocale -> jsonArray.put(
 				_getLocaleJSONObject(currentLocale, locale)));
 
 		return jsonArray;
@@ -45,9 +45,9 @@ public class ExportTranslationUtil {
 
 		return JSONUtil.put(
 			"displayName",
-			LocaleUtil.getLocaleDisplayName(locale, currentLocale)
+			LocaleUtil.getLocaleDisplayName(currentLocale, locale)
 		).put(
-			"languageId", LocaleUtil.toLanguageId(locale)
+			"languageId", LocaleUtil.toLanguageId(currentLocale)
 		);
 	}
 

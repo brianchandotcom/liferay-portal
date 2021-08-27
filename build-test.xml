@@ -6705,7 +6705,8 @@ go</echo>
 			<replacetoken><![CDATA[<Context>]]></replacetoken>
 			<replacevalue><![CDATA[<Context>
 
-		<Manager className="org.apache.catalina.ha.session.DeltaManager"
+		<Manager
+			className="org.apache.catalina.ha.session.DeltaManager"
 			expireSessionsOnShutdown="false"
 			notifyListenersOnReplication="true"/>]]></replacevalue>
 		</replace>

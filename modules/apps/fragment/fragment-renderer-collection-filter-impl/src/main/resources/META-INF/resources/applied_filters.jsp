@@ -60,7 +60,7 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 	</div>
 
 	<div class="d-flex flex-grow-1 flex-shrink-0 flex-sm-column-reverse flex-sm-grow-0 justify-content-between justify-content-sm-start ml-sm-2 mt-2 mt-sm-0">
-		<button class="btn btn-link btn-sm d-none flex-shrink-0 p-0 text-secondary" data-show-less-label="<liferay-ui:message key="show-less" />" data-show-more-label="<liferay-ui:message key="show-more" />" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_toggleExpand" type="button">
+		<button class="btn btn-link btn-sm d-none flex-shrink-0 mt-0 mt-sm-2 p-0 text-right text-secondary" data-show-less-label="<liferay-ui:message key="show-less" />" data-show-more-label="<liferay-ui:message key="show-more" />" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_toggleExpand" style="line-height: 1.3125;" type="button">
 			<span class="inline-item-expand">
 				<liferay-ui:message key="show-more" />
 			</span>
@@ -77,7 +77,7 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 		</button>
 
 		<c:if test="<%= (!appliedFilters.isEmpty() || collectionAppliedFiltersFragmentRendererDisplayContext.isEditMode()) && collectionAppliedFiltersFragmentRendererDisplayContext.showClearFiltersButton() %>">
-			<button class="btn btn-link btn-sm flex-shrink-0 ml-2 p-0 text-secondary" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_removeAllFilters" type="button">
+			<button class="btn btn-link btn-sm flex-shrink-0 ml-2 mt-0 mt-sm-1 p-0 text-right text-secondary" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_removeAllFilters" type="button">
 				<liferay-ui:message key="clear-filters" />
 			</button>
 		</c:if>

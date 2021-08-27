@@ -25,7 +25,7 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 <div class="align-items-sm-start align-items-stretch d-flex flex-column flex-sm-row py-1" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>">
 	<div class="flex-grow-1 overflow-hidden" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_filterList" style="max-height: 4em;">
 		<c:choose>
-			<c:when test="<%= appliedFilters.isEmpty() %>">
+			<c:when test="<%= appliedFilters.isEmpty() && collectionAppliedFiltersFragmentRendererDisplayContext.isEditMode() %>">
 				<span class="text-secondary">
 					<liferay-ui:message key="no-active-filters" />
 				</span>
@@ -76,7 +76,7 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 			</span>
 		</button>
 
-		<c:if test="<%= !appliedFilters.isEmpty() && collectionAppliedFiltersFragmentRendererDisplayContext.showClearFiltersButton() %>">
+		<c:if test="<%= (!appliedFilters.isEmpty() || collectionAppliedFiltersFragmentRendererDisplayContext.isEditMode()) && collectionAppliedFiltersFragmentRendererDisplayContext.showClearFiltersButton() %>">
 			<button class="btn btn-link btn-sm flex-shrink-0 ml-2 p-0 text-secondary" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_removeAllFilters" type="button">
 				<liferay-ui:message key="clear-filters" />
 			</button>

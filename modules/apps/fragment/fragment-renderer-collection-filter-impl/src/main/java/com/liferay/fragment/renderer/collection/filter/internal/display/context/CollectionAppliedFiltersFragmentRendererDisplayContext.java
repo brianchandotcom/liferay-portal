@@ -18,6 +18,7 @@ import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
 import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -37,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +60,8 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_httpServletRequest = httpServletRequest;
 
+		_editMode = Objects.equals(
+			fragmentRendererContext.getMode(), FragmentEntryLinkConstants.EDIT);
 		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
 		_locale = fragmentRendererContext.getLocale();
 	}
@@ -156,6 +160,10 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 			StringPool.UNDERLINE, _fragmentEntryLink.getNamespace());
 	}
 
+	public boolean isEditMode() {
+		return _editMode;
+	}
+
 	public boolean showClearFiltersButton() {
 		return (boolean)
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
@@ -180,6 +188,7 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	}
 
 	private Map<String, Object> _collectionAppliedFiltersProps;
+	private final boolean _editMode;
 	private final FragmentCollectionFilterTracker
 		_fragmentCollectionFilterTracker;
 	private final FragmentEntryConfigurationParser

@@ -34,8 +34,7 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of BigDecimal type and view its entries"
 	@priority = "4"
 	test CanMapBigDecimalTypeAndViewEntries {
-
-			ObjectAdmin.addObjectViaAPI(
+		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
@@ -91,7 +90,6 @@ definition {
 			key_card = "Numeric",
 			key_entryName = "123.123456",
 			key_entryNumber = "1 entry");
-
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Blob type and view its entries"

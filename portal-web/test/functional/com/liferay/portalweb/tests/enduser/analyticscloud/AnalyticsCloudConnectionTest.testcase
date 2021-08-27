@@ -198,11 +198,9 @@ definition {
 	@description = "Automation ID: LRAC-8825 | Test Summary: Validate Invalid Token"
 	@priority = "4"
 	test InvalidToken {
-
 		ACUtils.launchAC();
 
 		AnalyticsCloud.takeInvalidTokenFromAnalyticsCloud();
-
 	}
 
 	@description = "Automation ID: LRAC-8820 | Test Summary: There is a list of connected data sources including a table of properties/status"

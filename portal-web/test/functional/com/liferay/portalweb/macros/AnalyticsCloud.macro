@@ -66,35 +66,7 @@ definition {
 
 	}
 
-	macro takeTokenFromAnalyticsCloud {
-		Click(locator1 = "AnalyticsCloudConnection#FARO_WORKSPACE_BUTTON");
-
-		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON")) {
-			Click(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON");
-
-			Click(locator1 = "AnalyticsCloudConnection#SKIP_FOR_NOW_BUTTON");
-		}
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_ADD_DATA_SOURCE_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECT_WITH_TOKEN_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
-
-		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
-	}
-
 	macro takeInvalidTokenFromAnalyticsCloud {
-		
-
-
-
-
-
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_ADD_DATA_SOURCE_BUTTON");
@@ -120,6 +92,28 @@ definition {
 		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+	}
+
+	macro takeTokenFromAnalyticsCloud {
+		Click(locator1 = "AnalyticsCloudConnection#FARO_WORKSPACE_BUTTON");
+
+		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON")) {
+			Click(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON");
+
+			Click(locator1 = "AnalyticsCloudConnection#SKIP_FOR_NOW_BUTTON");
+		}
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_ADD_DATA_SOURCE_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECT_WITH_TOKEN_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
+
+		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
 	}
 
 	macro teardownAnalyticsCloud {

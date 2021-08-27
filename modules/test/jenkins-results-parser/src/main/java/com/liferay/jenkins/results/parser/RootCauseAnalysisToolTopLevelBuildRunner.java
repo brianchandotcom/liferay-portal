@@ -269,9 +269,18 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			WorkspaceGitRepository workspaceGitRepository =
 				_getWorkspaceGitRepository();
 
-			List<LocalGitCommit> rangeLocalGitCommits =
-				workspaceGitRepository.getRangeLocalGitCommits(
-					matcher.group("earliestSHA"), matcher.group("latestSHA"));
+			List<LocalGitCommit> rangeLocalGitCommits = new ArrayList<>();
+
+			try {
+				rangeLocalGitCommits =
+					workspaceGitRepository.getRangeLocalGitCommits(
+						matcher.group("earliestSHA"),
+						matcher.group("latestSHA"));
+			}
+			catch (Exception exception) {
+				failBuildRunner(
+					"Failed to store the commit history", exception);
+			}
 
 			List<List<LocalGitCommit>> localGitCommitsLists =
 				workspaceGitRepository.partitionLocalGitCommits(

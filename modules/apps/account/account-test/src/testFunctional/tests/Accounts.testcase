@@ -866,6 +866,83 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Liferay Dalian Software Co., Ltd.");
 	}
 
+	@description = "This test deletes multiple addresses via management toolbar"
+	@priority = "4"
+	test CanDeleteAddressesInBulk {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			addressType = "Billing",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning Sheng",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			addressType = "Shipping",
+			phoneNumber = "+86 (0)411 88120855");
+
+		Accounts.addAddress(
+			addressCity = "Shibuya-ku",
+			addressCountry = "Japan",
+			addressName = "Liferay Japan K. K.",
+			addressPostalCode = "150-0021",
+			addressRegion = "Tokyo",
+			addressStreet1 = "1F Faveur Ebisu,",
+			addressStreet2 = "1-26-7 Ebisu Nishi",
+			addressType = "Shipping",
+			phoneNumber = "+81 3-5456-5796");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		for (var addressName : list "Liferay Dalian Software Co., Ltd.,Liferay Japan K. K.") {
+			LexiconEntry.selectEntry(rowEntry = "${addressName}");
+		}
+
+		ClickNoError(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		for (var addressName : list "Liferay Dalian Software Co., Ltd.,Liferay Japan K. K.") {
+			LexiconEntry.viewNoEntry(rowEntry = "${addressName}");
+		}
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay, Inc.");
+	}
+
 	@description = "This is a use case for LPS-101315. Deleting an inactive account will navigate you back to inactive filter."
 	@priority = "3"
 	test CanDeleteAnInactiveAccount {

@@ -5629,7 +5629,7 @@
 											"fieldName": "showAsSwitcher",
 											"fieldReference": "showAsSwitcher",
 											"instanceId": "qyKxuS8E",
-											"label": "Show as a Switcher",
+											"label": "Show as a Switch",
 											"locale": "en_US",
 											"localizable": false,
 											"name": "_com_liferay_journal_web_portlet_JournalPortlet_ddm$$showAsSwitcher$qyKxuS8E$0$$en_US",

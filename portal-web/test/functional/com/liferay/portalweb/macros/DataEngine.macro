@@ -1402,14 +1402,14 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Basic");
 
-		if (IsChecked(checkboxName = "Show as a Switcher", locator1 = "Checkbox#ANY_CHECKBOX")) {
+		if (IsChecked(checkboxName = "Show as a Switch", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Show as a Switcher",
+				checkboxName = "Show as a Switch",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else {
 			Check.checkToggleSwitch(
-				checkboxName = "Show as a Switcher",
+				checkboxName = "Show as a Switch",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 

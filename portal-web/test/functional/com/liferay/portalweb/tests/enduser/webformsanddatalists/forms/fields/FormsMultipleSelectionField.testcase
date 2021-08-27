@@ -497,7 +497,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
 
-		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
+		FormFields.enableSwitcher(fieldName = "Show as a Switch");
 
 		FormFields.editOptionsRow(
 			optionName = "Switcher1",
@@ -634,7 +634,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
 
-		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
+		FormFields.enableSwitcher(fieldName = "Show as a Switch");
 
 		FormFields.editOptionsRow(
 			optionName = "Switcher1",

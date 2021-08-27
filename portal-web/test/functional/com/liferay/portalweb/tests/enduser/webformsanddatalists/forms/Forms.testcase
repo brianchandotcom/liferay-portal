@@ -2430,7 +2430,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
+		FormFields.enableSwitcher(fieldName = "Show as a Switch");
 
 		FormFields.editOptionsRow(
 			optionName = "Switcher1",

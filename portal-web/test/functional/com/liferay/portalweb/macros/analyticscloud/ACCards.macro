@@ -1,5 +1,27 @@
 definition {
 
+	macro assertAxisTick {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if ("${axis}" == "xAxis") {
+			AssertTextEquals(
+				index = "${index}",
+				key_cardTitle = "${cardName}",
+				locator1 = "ACCards#RECHARTS_CARTESIAN_X_AXIS_TICK",
+				value1 = "${tick}");
+		}
+
+		else if ("${axis}" == "yAxis") {
+			AssertTextEquals(
+				index = "${index}",
+				key_cardTitle = "${cardName}",
+				locator1 = "ACCards#RECHARTS_CARTESIAN_Y_AXIS_TICK",
+				value1 = "${tick}");
+		}
+	}
+
 	macro getAxisTick {
 		if (!(isSet(index))) {
 			var index = "1";

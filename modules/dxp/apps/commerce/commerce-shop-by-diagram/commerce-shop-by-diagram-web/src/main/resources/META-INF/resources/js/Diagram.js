@@ -11,10 +11,10 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {fetch} from 'frontend-js-web';
+import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {UPDATE_DATASET_DISPLAY} from "frontend-taglib-clay/data_set_display/utils/eventsDefinitions";
 import AdminTooltip from './AdminTooltip';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
@@ -158,10 +158,8 @@ const Diagram = ({
 				body: JSON.stringify(node),
 				headers: HEADERS,
 				method: 'POST',
-			}).then((response) => {
-				response.json();
-			}).then((jsonResponse) => {
-				if(datasetDisplayId?.length > 0){
+			}).then(() => {
+				if (datasetDisplayId?.length > 0) {
 					Liferay.fire(UPDATE_DATASET_DISPLAY, {
 						id: datasetDisplayId,
 					});

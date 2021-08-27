@@ -17,9 +17,9 @@ package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.constan
 /**
  * @author Andrea Sbarra
  */
-public class CommerceDiagramDataSetConstants {
+public class CSDiagramDataSetConstants {
 
-	public static final String COMMERCE_DATA_SET_KEY_DIAGRAM_MAPPED_PRODUCTS =
-		"commerceDiagramMappedProducts";
+	public static final String CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY =
+		"csDiagramMappedProducts";
 
 }

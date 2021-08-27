@@ -72,11 +72,11 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Overview");
 
-			var key_cardTitle = "${propertyName} Activities,Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology";
+			var cardNameList = "${propertyName} Activities,Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology";
 
-			for (var key_cardTitle : list "${key_cardTitle}") {
+			for (var cardName : list "${cardNameList}") {
 				ACTimeFilter.setCustomRange(
-					cardTitle = "${key_cardTitle}",
+					cardName = "${cardName}",
 					endDay = "${displayDateDay}",
 					endMonth = "${displayDateMonth}",
 					endYear = "${displayDateYear}",

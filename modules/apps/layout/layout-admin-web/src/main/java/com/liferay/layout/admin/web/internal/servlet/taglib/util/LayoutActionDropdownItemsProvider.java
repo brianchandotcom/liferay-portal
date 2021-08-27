@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -47,13 +46,11 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutActionDropdownItemsProvider {
 
 	public LayoutActionDropdownItemsProvider(
-		FFLayoutTranslationConfiguration ffLayoutTranslationConfiguration,
 		HttpServletRequest httpServletRequest,
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
 		TranslationPermission translationPermission,
 		TranslationURLProvider translationURLProvider) {
 
-		_ffLayoutTranslationConfiguration = ffLayoutTranslationConfiguration;
 		_httpServletRequest = httpServletRequest;
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_translationPermission = translationPermission;
@@ -401,10 +398,7 @@ public class LayoutActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowExportTranslationAction(Layout layout) {
-		if (layout.isTypeContent() &&
-			_ffLayoutTranslationConfiguration.enabled() &&
-			!_isSingleLanguageSite()) {
-
+		if (layout.isTypeContent() && !_isSingleLanguageSite()) {
 			return true;
 		}
 
@@ -413,9 +407,7 @@ public class LayoutActionDropdownItemsProvider {
 
 	private boolean _isShowImportTranslationAction(Layout layout) {
 		try {
-			if (layout.isTypeContent() &&
-				_ffLayoutTranslationConfiguration.enabled() &&
-				!_isSingleLanguageSite() &&
+			if (layout.isTypeContent() && !_isSingleLanguageSite() &&
 				LayoutPermissionUtil.contains(
 					_themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)) {
@@ -431,9 +423,8 @@ public class LayoutActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowTranslateAction(Layout layout) {
-		if (layout.isTypeContent() &&
-			_ffLayoutTranslationConfiguration.enabled() &&
-			_hasTranslatePermission() && !_isSingleLanguageSite()) {
+		if (layout.isTypeContent() && _hasTranslatePermission() &&
+			!_isSingleLanguageSite()) {
 
 			return true;
 		}
@@ -452,8 +443,6 @@ public class LayoutActionDropdownItemsProvider {
 		return false;
 	}
 
-	private final FFLayoutTranslationConfiguration
-		_ffLayoutTranslationConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;

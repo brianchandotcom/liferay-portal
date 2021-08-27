@@ -15,13 +15,11 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,21 +34,16 @@ import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTr
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
@@ -59,13 +52,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffLayoutTranslationConfiguration = ConfigurableUtil.createConfigurable(
-			FFLayoutTranslationConfiguration.class, properties);
-	}
 
 	@Override
 	protected void doProcessAction(
@@ -86,7 +72,6 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 		MillerColumnsDisplayContext millerColumnsDisplayContext =
 			new MillerColumnsDisplayContext(
 				new LayoutActionDropdownItemsProvider(
-					_ffLayoutTranslationConfiguration,
 					_portal.getHttpServletRequest(actionRequest),
 					layoutsAdminDisplayContext, _translationPermission,
 					_translationURLProvider),
@@ -101,9 +86,6 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, JSONUtil.put("children", jsonArray));
 	}
-
-	private volatile FFLayoutTranslationConfiguration
-		_ffLayoutTranslationConfiguration;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

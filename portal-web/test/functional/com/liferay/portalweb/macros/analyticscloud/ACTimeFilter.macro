@@ -48,10 +48,10 @@ definition {
 	macro setCustomRange {
 		var key_dropdownOption = "Custom Range";
 
-		if (isSet(cardTitle)) {
-			ACCards.viewCards(cardTitle = "${cardTitle}");
+		if (isSet(cardName)) {
+			ACCards.viewCards(cardTitle = "${cardName}");
 
-			ACTimeFilter.clickTimeFilterButton(cardName = "${cardTitle}");
+			ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
 		}
 
 		else {

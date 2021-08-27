@@ -98,7 +98,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		_commerceDiscountRuleTypeRegistry = commerceDiscountRuleTypeRegistry;
 		_commerceDiscountTargetRegistry = commerceDiscountTargetRegistry;
 		_percentageFormatter = percentageFormatter;
-		_portal = portal;
+		this.portal = portal;
 	}
 
 	public String getAddCommerceDiscountRenderURL() throws Exception {
@@ -441,7 +441,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		}
 
 		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+			portal.getControlPanelPortletURL(
 				commercePricingRequestHelper.getRequest(),
 				CommercePricingPortletKeys.COMMERCE_DISCOUNT,
 				PortletRequest.ACTION_PHASE)
@@ -458,7 +458,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 
 	public PortletURL getEditCommerceDiscountRenderURL() {
 		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+			portal.getControlPanelPortletURL(
 				commercePricingRequestHelper.getRequest(),
 				CommercePricingPortletKeys.COMMERCE_DISCOUNT,
 				PortletRequest.RENDER_PHASE)
@@ -664,6 +664,8 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		return clayDataSetActionDropdownItems;
 	}
 
+	protected final Portal portal;
+
 	private String _getCommerceDiscountAmount(
 		BigDecimal commerceDiscountAmount) {
 
@@ -676,7 +678,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 
 	private String _getManageDiscountPermissionsURL() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+			portal.getControlPanelPortletURL(
 				httpServletRequest,
 				"com_liferay_portlet_configuration_web_portlet_" +
 					"PortletConfigurationPortlet",
@@ -718,6 +720,5 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 	private final CommerceDiscountTargetRegistry
 		_commerceDiscountTargetRegistry;
 	private final PercentageFormatter _percentageFormatter;
-	private final Portal _portal;
 
 }

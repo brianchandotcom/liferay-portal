@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.pricing.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
@@ -30,8 +30,11 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,7 +52,7 @@ public class CommercePriceListQualifiersDisplayContext
 			commercePriceListCommerceAccountGroupRelService,
 		ModelResourcePermission<CommercePriceList>
 			commercePriceListModelResourcePermission,
-		CommercePriceListService commercePriceListService,
+		CommercePriceListService commercePriceListService, Portal portal,
 		HttpServletRequest httpServletRequest) {
 
 		super(
@@ -60,9 +63,12 @@ public class CommercePriceListQualifiersDisplayContext
 			commercePriceListAccountRelService;
 		_commercePriceListChannelRelService =
 			commercePriceListChannelRelService;
-		_commercePriceListCommerceAccountGroupRelService =
-			commercePriceListCommerceAccountGroupRelService;
+		_commercePriceListCommerceAccountGroupRelService =			commercePriceListCommerceAccountGroupRelService;
+
+		_portal = portal;
 	}
+
+	private Portal _portal;
 
 	public String getActiveAccountEligibility() throws PortalException {
 		long commercePriceListId = getCommercePriceListId();
@@ -105,15 +111,16 @@ public class CommercePriceListQualifiersDisplayContext
 
 		return getClayDataSetActionDropdownItems(
 			PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					httpServletRequest, CommerceAccount.class.getName(),
-					PortletProvider.Action.EDIT)
+				_portal.getControlPanelPortletURL(
+					httpServletRequest,
+					AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
-				"/commerce_account_admin/edit_commerce_account"
+				"/account_admin/edit_account_entry"
 			).setRedirect(
 				commercePricingRequestHelper.getCurrentURL()
 			).setParameter(
-				"commerceAccountId", "{account.id}"
+				"accountEntryId", "{account.id}"
 			).buildString(),
 			false);
 	}

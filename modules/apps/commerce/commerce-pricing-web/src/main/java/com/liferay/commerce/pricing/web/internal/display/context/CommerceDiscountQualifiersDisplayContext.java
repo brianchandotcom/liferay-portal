@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.pricing.web.internal.display.context;
 
-import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,15 +82,16 @@ public class CommerceDiscountQualifiersDisplayContext
 
 		return getClayHeadlessDataSetActionTemplates(
 			PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					httpServletRequest, CommerceAccount.class.getName(),
-					PortletProvider.Action.EDIT)
+				portal.getControlPanelPortletURL(
+					httpServletRequest,
+					AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
-				"/commerce_account_admin/edit_commerce_account"
+				"/account_admin/edit_account_entry"
 			).setRedirect(
 				commercePricingRequestHelper.getCurrentURL()
 			).setParameter(
-				"commerceAccountId", "{account.id}"
+				"accountEntryId", "{account.id}"
 			).buildString(),
 			false);
 	}

@@ -131,6 +131,14 @@ definition {
 			locator1 = "Header#H3_TITLE");
 	}
 
+	@summary = "Assert data source status"
+	macro assertDataSourceStatus {
+		AssertTextEquals(
+			key_dataSourceStatus = "${status}",
+			locator1 = "ACSettings#DATA_SOURCE_STATUS",
+			value1 = "${status}");
+	}
+
 	@summary = "Asserts the individuals usage value \
 	@param individualUsageValue"
 	macro assertIndividualsUsage() {
@@ -274,21 +282,6 @@ definition {
 		}
 	}
 
-	@summary = "Disconnect selected data source"
-	macro disconnectDataSource {
-		Click(locator1 = "ACSettings#DISCONNECT_DATA_SOURCE_BUTTON");
-
-		Click(locator1 = "ACSettings#DISCONNECT_CONFIRMATION_BUTTON");
-	}
-
-	@summary = "Assert data source status"
-	macro assertDataSourceStatus {
-		AssertTextEquals(
-				key_dataSourceStatus = "${status}",
-				locator1 = "ACSettings#DATA_SOURCE_STATUS",
-				value1 = "${status}");
-	}
-
 	@summary = "Deletes all properties \
 	@param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {
@@ -405,6 +398,13 @@ definition {
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 		}
+	}
+
+	@summary = "Disconnect selected data source"
+	macro disconnectDataSource {
+		Click(locator1 = "ACSettings#DISCONNECT_DATA_SOURCE_BUTTON");
+
+		Click(locator1 = "ACSettings#DISCONNECT_CONFIRMATION_BUTTON");
 	}
 
 	macro getDXPInstanceId {

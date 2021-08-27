@@ -83,12 +83,35 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8834 | Test Summary: Assert the Liferay DXP Data Source Status"
-	@ignore = "true"
 	@priority = "3"
 	test AssertLiferayDataSourceStatus {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8834 AssertLiferayDataSourceStatus
+			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+		}
 
+		task ("Launch AC, go to settings and data source and click in the data source searched") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			ACUtils.searchBar(searchItem = "${dataSource}");
+
+			ACNavigation.openItem(itemName = "${dataSource}");
+		}
+
+		task ("Assert the data source status") {
+			ACSettings.assertDataSourceStatus(status = "Active");
+		}
+
+		task ("Disconnect data source and assert the data source status") {
+			ACSettings.disconnectDataSource();
+
+			ACSettings.assertDataSourceStatus(status = "Disconnected");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8836 | Test Summary: Cancel Creating a DXP Data Source"

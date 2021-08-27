@@ -243,6 +243,28 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetPredefinedValue() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty(
+			"predefinedValue",
+			DDMFormValuesTestUtil.createLocalizedValue("42", _locale));
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setLocale(_locale);
+		ddmFormFieldRenderingContext.setViewMode(true);
+
+		Map<String, Object> parameters =
+			_numericDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		Assert.assertEquals(
+			"42", String.valueOf(parameters.get("predefinedValue")));
+	}
+
+	@Test
 	public void testGetSymbols() {
 		Map<String, String> symbolsMap =
 			_numericDDMFormFieldTemplateContextContributor.getSymbolsMap(

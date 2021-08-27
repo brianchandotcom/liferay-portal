@@ -15,8 +15,10 @@
 package com.liferay.portal.workflow.metrics.search.index;
 
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.workflow.metrics.model.Assignment;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -24,6 +26,15 @@ import java.util.Map;
  * @author Rafael Praxedes
  */
 public interface TaskWorkflowMetricsIndexer {
+
+	public Document addTask(
+		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
+		List<Assignment> assignments, String className, long classPK,
+		long companyId, boolean completed, Date completionDate,
+		Long completionUserId, Date createDate, boolean instanceCompleted,
+		Date instanceCompletionDate, long instanceId, Date modifiedDate,
+		String name, long nodeId, long processId, String processVersion,
+		long taskId, long userId);
 
 	public Document addTask(
 		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,

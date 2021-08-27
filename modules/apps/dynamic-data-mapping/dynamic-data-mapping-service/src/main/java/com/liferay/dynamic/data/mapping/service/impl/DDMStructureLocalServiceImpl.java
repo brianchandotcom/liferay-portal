@@ -541,8 +541,6 @@ public class DDMStructureLocalServiceImpl
 						noSuchStructureLayoutException,
 						noSuchStructureLayoutException);
 				}
-
-				continue;
 			}
 
 			ddmStructureVersionPersistence.remove(structureVersion);

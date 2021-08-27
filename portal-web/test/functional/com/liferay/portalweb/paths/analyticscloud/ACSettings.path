@@ -129,7 +129,7 @@
 </tr>
 <tr>
 	<td>GENERIC_DELETE_BUTTON</td>
-	<td>//button[contains(@class,'btn-outline-secondary') and contains(text(),'Delete')]</td>
+	<td>//button[contains(@class,'btn')][contains(@class,'secondary')][normalize-space(text())='Delete']</td>
 	<td></td>
 </tr>
 <tr>

@@ -420,7 +420,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		when(
 			themeDisplay.getURLCurrent()
 		).thenReturn(
-			"http://localhost:8080/web/forms/shared/-/form/123"
+			"http://localhost:8080/web/forms/shared?form=123"
 		);
 
 		Mockito.doReturn(

@@ -82,6 +82,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -863,6 +864,63 @@ public class InstanceResourceImpl
 		);
 	}
 
+	private boolean _isReviewer(Map<String, Object> task) {
+		if (task.get("assigneeIds") == null) {
+			return false;
+		}
+
+		List<Long> assigneeIds = ListUtil.toList(
+			(List<?>)task.get("assigneeIds"), GetterUtil::getLong);
+
+		for (long assigneeId : assigneeIds) {
+			if (ArrayUtil.contains(
+					contextUser.getRoleIds(), GetterUtil.getLong(assigneeId))) {
+
+				return true;
+			}
+		}
+
+		if (task.get("assigneeGroupIds") == null) {
+			return false;
+		}
+
+		List<Long> assigneeGroupIds = ListUtil.toList(
+			(List<?>)task.get("assigneeGroupIds"), GetterUtil::getLong);
+
+		Map<Long, List<Long>> mapGroupRoleIds = new HashMap<>();
+
+		for (long groupId : assigneeGroupIds) {
+			mapGroupRoleIds.put(
+				groupId,
+				Stream.of(
+					roleLocalService.getUserGroupRoles(
+						contextUser.getUserId(), groupId),
+					roleLocalService.getUserGroupGroupRoles(
+						contextUser.getUserId(), groupId)
+				).flatMap(
+					List::stream
+				).map(
+					Role::getRoleId
+				).collect(
+					Collectors.toList()
+				));
+		}
+
+		if (mapGroupRoleIds.isEmpty()) {
+			return false;
+		}
+
+		for (int i = 0; i < assigneeGroupIds.size(); i++) {
+			List<Long> roleIds = mapGroupRoleIds.get(assigneeGroupIds.get(i));
+
+			if (roleIds.contains(assigneeIds.get(i))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private Date _parseDate(String dateString) {
 		try {
 			return DateUtil.parseDate(
@@ -908,20 +966,7 @@ public class InstanceResourceImpl
 			else if (Objects.equals(
 						task.get("assigneeType"), Role.class.getName())) {
 
-				boolean reviewer = false;
-
-				for (Object assigneeId : (List<?>)task.get("assigneeIds")) {
-					if (ArrayUtil.contains(
-							contextUser.getRoleIds(),
-							GetterUtil.getLong(assigneeId))) {
-
-						reviewer = true;
-
-						break;
-					}
-				}
-
-				assignees.add(_createAssignee(reviewer));
+				assignees.add(_createAssignee(_isReviewer(task)));
 			}
 
 			taskNames.add(

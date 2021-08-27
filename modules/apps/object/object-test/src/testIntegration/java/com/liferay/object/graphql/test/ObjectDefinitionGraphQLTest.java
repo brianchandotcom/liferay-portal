@@ -71,7 +71,6 @@ public class ObjectDefinitionGraphQLTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinitionLabel = "A" + RandomTestUtil.randomString();
-		_objectDefinitionName = "A" + RandomTestUtil.randomString();
 		_objectDefinitionPluralLabel = RandomTestUtil.randomString() + "s";
 		_objectFieldLabel = "A" + RandomTestUtil.randomString();
 		_objectFieldName = "a" + RandomTestUtil.randomString();
@@ -80,7 +79,7 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(_objectDefinitionLabel),
-				_objectDefinitionName, null, null,
+				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(_objectDefinitionPluralLabel),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.singletonList(
@@ -92,6 +91,9 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinitionName = StringUtil.toLowerCase(
+			_objectDefinition.getName());
 
 		_objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,

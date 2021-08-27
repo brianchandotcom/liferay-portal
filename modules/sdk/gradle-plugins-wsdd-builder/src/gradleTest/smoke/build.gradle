@@ -28,7 +28,7 @@ project(":sample-api") {
 	dependencies {
 		compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 		compile group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
-		compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+		compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.81.2"
 		compile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	}
 }
@@ -43,6 +43,7 @@ project(":sample-service") {
 	}
 
 	dependencies {
+		compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.1"
 		compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 		compile project(":sample-api")
 	}

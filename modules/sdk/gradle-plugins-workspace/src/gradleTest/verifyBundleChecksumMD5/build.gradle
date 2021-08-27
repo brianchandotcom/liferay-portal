@@ -1,6 +1,7 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
+	product = "portal-7.1-ga3"
 	bundleChecksumMD5 = "ef4fcaac5910613955ea1104613dbfe6"
 }
 

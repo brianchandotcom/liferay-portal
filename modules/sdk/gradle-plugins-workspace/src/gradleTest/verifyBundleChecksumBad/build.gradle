@@ -3,6 +3,7 @@ task runGradleTest
 String errorMessage = ""
 
 gradle.liferayWorkspace {
+	product = "portal-7.1-ga3"
 	bundleChecksumMD5 = "bad_md5sum"
 }
 

@@ -145,7 +145,6 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"
 	@priority = "5"
 	test CanMapStringTypeAndViewEntries {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -198,7 +197,6 @@ definition {
 			key_card = "Text",
 			key_entryName = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test",
 			key_entryNumber = "1 entry");
-
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"

@@ -14,15 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
-import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -35,7 +31,6 @@ import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,7 +65,7 @@ public class DefaultKaleoSignaler
 
 		executionContext.setTransitionName(transitionName);
 
-		_signal(
+		_graphWalkerPortalExecutor.execute(
 			new PathElement(
 				null, kaleoInstanceToken.getCurrentKaleoNode(),
 				executionContext),
@@ -106,7 +101,8 @@ public class DefaultKaleoSignaler
 		_executionContextHelper.checkKaleoInstanceComplete(executionContext);
 
 		for (PathElement remainingPathElement : remainingPathElements) {
-			_signal(remainingPathElement, waitForCompletion);
+			_graphWalkerPortalExecutor.execute(
+				remainingPathElement, waitForCompletion);
 		}
 	}
 
@@ -129,32 +125,12 @@ public class DefaultKaleoSignaler
 
 		executionContext.setTransitionName(transitionName);
 
-		_signal(
+		_graphWalkerPortalExecutor.execute(
 			new PathElement(
 				kaleoInstanceToken.getCurrentKaleoNode(), null,
 				executionContext),
 			waitForCompletion);
 	}
-
-	private void _signal(PathElement pathElement, boolean waitForCompletion) {
-		NoticeableFuture<?> noticeableFuture =
-			_graphWalkerPortalExecutor.execute(pathElement);
-
-		if (waitForCompletion || PortalRunMode.isTestMode()) {
-			try {
-				noticeableFuture.get();
-			}
-			catch (ExecutionException executionException) {
-				_log.error(executionException, executionException);
-			}
-			catch (InterruptedException interruptedException) {
-				_log.error(interruptedException, interruptedException);
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultKaleoSignaler.class);
 
 	@Reference
 	private ExecutionContextHelper _executionContextHelper;

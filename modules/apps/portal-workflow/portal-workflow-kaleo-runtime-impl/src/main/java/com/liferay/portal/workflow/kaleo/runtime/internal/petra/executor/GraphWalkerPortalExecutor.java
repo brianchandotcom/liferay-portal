@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.petra.executor;
 
 import com.liferay.petra.concurrent.NoticeableExecutorService;
-import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 
@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -48,8 +50,30 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = GraphWalkerPortalExecutor.class)
 public class GraphWalkerPortalExecutor {
 
-	public NoticeableFuture<?> execute(PathElement pathElement) {
-		return _noticeableExecutorService.submit(() -> _walk(pathElement));
+	public void execute(PathElement pathElement, boolean waitForCompletion) {
+		if (PortalRunMode.isTestMode()) {
+			_walk(pathElement);
+
+			return;
+		}
+
+		Optional.of(
+			_noticeableExecutorService.submit(() -> _walk(pathElement))
+		).ifPresent(
+			noticeableFuture -> {
+				if (waitForCompletion) {
+					try {
+						noticeableFuture.get();
+					}
+					catch (ExecutionException executionException) {
+						_log.error(executionException, executionException);
+					}
+					catch (InterruptedException interruptedException) {
+						_log.error(interruptedException, interruptedException);
+					}
+				}
+			}
+		);
 	}
 
 	@Activate

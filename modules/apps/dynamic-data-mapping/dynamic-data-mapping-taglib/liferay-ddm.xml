@@ -195,7 +195,7 @@
 		</attributes>
 	</component>
 	<component bodyContent="false" name="TemplateSelector" writeJSP="true">
-		<description>Deprecated as of Cavanaugh (7.4.x), replaced by <code>liferay-template:template_selector</code>.</description>
+		<description>Deprecated as of Cavanaugh (7.4.x), replaced by liferay-template:template-selector.</description>
 		<attributes>
 			<attribute>
 				<name>className</name>

@@ -121,11 +121,6 @@
 	<td>//li[contains(@class,'card-tab active') and contains(.,'${key_cardName}')]//div[contains(@class,'metric-value') and contains(.,'${key_totalValue}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ACTIVITIES_CARD_ATRIBUTE_AND_VALUE</td>
-	<td>//span[contains(text(),'${key_entry}')]/../../button//*[contains(text(),'${key_number}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

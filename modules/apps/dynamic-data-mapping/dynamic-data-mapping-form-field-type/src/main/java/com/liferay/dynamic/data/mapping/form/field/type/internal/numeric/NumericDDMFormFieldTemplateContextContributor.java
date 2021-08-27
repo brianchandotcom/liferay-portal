@@ -120,8 +120,9 @@ public class NumericDDMFormFieldTemplateContextContributor
 			"predefinedValue",
 			getFormattedValue(
 				ddmFormFieldRenderingContext, locale,
-				DDMFormFieldTypeUtil.getPredefinedValue(
-					ddmFormField, ddmFormFieldRenderingContext))
+				DDMFormFieldTypeUtil.getPropertyValue(
+					ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+					"predefinedValue"))
 		).put(
 			"requireConfirmation",
 			GetterUtil.getBoolean(

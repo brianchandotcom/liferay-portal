@@ -68,8 +68,7 @@ public class DiscountOrderTypeDTOConverter
 						getCommerceDiscountOrderTypeRelId();
 				orderTypeExternalReferenceCode =
 					commerceOrderType.getExternalReferenceCode();
-				orderTypeId =
-					commerceOrderType.getCommerceOrderTypeId();
+				orderTypeId = commerceOrderType.getCommerceOrderTypeId();
 				priority = commerceDiscountOrderTypeRel.getPriority();
 			}
 		};

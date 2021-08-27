@@ -58,4 +58,8 @@ public interface CacheFieldEntry extends CacheFieldEntryModel, PersistedModel {
 
 		};
 
+	public String getNickname();
+
+	public void setNickname(String nickname);
+
 }

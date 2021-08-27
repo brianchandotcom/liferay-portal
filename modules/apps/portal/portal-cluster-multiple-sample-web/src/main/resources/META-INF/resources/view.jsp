@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ page import="com.liferay.portal.cluster.multiple.sample.web.internal.ClusterSampleData" %>
@@ -44,40 +46,38 @@ ClusterSampleData localData = new ClusterSampleData();
 
 <%
 ClusterSampleData sessionData = (ClusterSampleData)portletSession.getAttribute("data");
-
-if (sessionData != null) {
 %>
 
-	<p>Following data is stored in the portlet session:</p>
+<c:choose>
+	<c:when test="<%= sessionData != null %>">
+		<p>Following data is stored in the portlet session:</p>
 
-	<ul>
-		<li>
-			<b>Stored data:</b> <%= sessionData.getData() %>
-		</li>
-		<li>
-			<b>Stored timestamp:</b> <%= sessionData.getTimestamp() %>
-		</li>
-	</ul>
+		<ul>
+			<li>
+				<b>Stored data:</b> <%= sessionData.getData() %>
+			</li>
+			<li>
+				<b>Stored timestamp:</b> <%= sessionData.getTimestamp() %>
+			</li>
+		</ul>
 
-	<p>The data was stored by:</p>
+		<p>The data was stored by:</p>
 
-	<ul>
-		<li>
-			<b>Computer Name:</b> <%= sessionData.getComputerName() %>
-		</li>
-		<li>
-			<b>Liferay Home:</b> <%= sessionData.getLiferayHome() %>
-		</li>
-	</ul>
+		<ul>
+			<li>
+				<b>Computer Name:</b> <%= sessionData.getComputerName() %>
+			</li>
+			<li>
+				<b>Liferay Home:</b> <%= sessionData.getLiferayHome() %>
+			</li>
+		</ul>
+	</c:when>
+	<c:otherwise>
 
-<%
-}
-else {
-	portletSession.setAttribute("data", localData);
-%>
+		<%
+		portletSession.setAttribute("data", localData);
+		%>
 
-	<p>No session data exists, generating a new one with random string: <i><%= localData.getData() %></i></p>
-
-<%
-}
-%>
+		<p>No session data exists, generating a new one with random string: <i><%= localData.getData() %></i></p>
+	</c:otherwise>
+</c:choose>

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -29,20 +30,86 @@ import {
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import CollectionService from '../../../../../../app/services/CollectionService';
 import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
+import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
+import isEmptyObject from '../../../../../../app/utils/isEmptyObject';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
 import {FieldSet} from './FieldSet';
 
 export const CollectionFilterGeneralPanel = ({item}) => {
+	const collections = useSelectorCallback(
+		selectConfiguredCollectionDisplays,
+		[],
+		deepEqual
+	);
+
+	const [filterableCollections, setFilterableCollections] = useState(null);
+
+	useEffect(() => {
+		if (!filterableCollections) {
+			if (isEmptyArray(collections)) {
+				setFilterableCollections({});
+
+				return;
+			}
+
+			CollectionService.getCollectionSupportedFilters(
+				collections.map((item) => ({
+					collectionId: item.itemId,
+					layoutObjectReference: item.config?.collection,
+				}))
+			).then((response) => {
+				const nextFilterableCollections = {};
+
+				collections
+					.filter(
+						(collection) =>
+							!isEmptyArray(response[collection.itemId])
+					)
+					.forEach((collection) => {
+						nextFilterableCollections[collection.itemId] = {
+							...collection,
+							supportedFilters: response[collection.itemId],
+						};
+					});
+
+				setFilterableCollections(nextFilterableCollections);
+			});
+		}
+	}, [filterableCollections, collections]);
+
+	if (!filterableCollections) {
+		return <ClayLoadingIndicator className="my-0" small />;
+	}
+
+	if (isEmptyObject(filterableCollections)) {
+		return (
+			<p className="alert alert-info text-center" role="alert">
+				{Liferay.Language.get(
+					'display-a-collection-on-the-page-so-that-you-can-use-the-collection-filter-fragment'
+				)}
+			</p>
+		);
+	}
+
+	return (
+		<CollectionFilterGeneralPanelContent
+			filterableCollections={filterableCollections}
+			item={item}
+		/>
+	);
+};
+
+export const CollectionFilterGeneralPanelContent = ({
+	filterableCollections,
+	item,
+}) => {
 	const dispatch = useDispatch();
 
 	const fragmentEntryLink = useSelectorCallback(
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 		[item.config.fragmentEntryLinkId]
-	);
-	const hasConfiguredCollections = useSelector(
-		(state) => !isEmptyArray(selectConfiguredCollectionDisplays(state))
 	);
 
 	const languageId = useSelector(selectLanguageId);
@@ -58,14 +125,14 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 	const targetCollections = configurationValues.targetCollections || [];
 
 	useEffect(() => {
-		if (hasConfiguredCollections && !collectionFilters) {
+		if (!collectionFilters) {
 			CollectionService.getCollectionFilters().then(
 				(collectionFilters) => {
 					setCollectionFilters(collectionFilters);
 				}
 			);
 		}
-	}, [hasConfiguredCollections, collectionFilters]);
+	}, [collectionFilters]);
 
 	const onValueSelect = useCallback(
 		(name, value) => {
@@ -81,19 +148,10 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 		[dispatch, selectedFilter, fragmentEntryLink, languageId]
 	);
 
-	if (!hasConfiguredCollections) {
-		return (
-			<p className="alert alert-info text-center" role="alert">
-				{Liferay.Language.get(
-					'display-a-collection-on-the-page-so-that-you-can-use-the-collection-filter-fragment'
-				)}
-			</p>
-		);
-	}
-
 	return (
 		<>
 			<TargetCollectionsField
+				filterableCollections={filterableCollections}
 				onValueSelect={(name, value) => {
 					if (!isEmptyArray(value)) {
 						onValueSelect(name, value);
@@ -117,8 +175,7 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 			/>
 
 			{!isEmptyArray(targetCollections) &&
-				collectionFilters &&
-				Object.keys(collectionFilters).length > 0 && (
+				!isEmptyObject(collectionFilters) && (
 					<SelectField
 						field={{
 							label: Liferay.Language.get('filter'),

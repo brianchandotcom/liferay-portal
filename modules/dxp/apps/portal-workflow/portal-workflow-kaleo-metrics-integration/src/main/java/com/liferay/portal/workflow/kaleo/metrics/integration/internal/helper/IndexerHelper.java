@@ -23,15 +23,27 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.metrics.model.Assignment;
+import com.liferay.portal.workflow.metrics.model.RoleAssignment;
+import com.liferay.portal.workflow.metrics.model.UserAssignment;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,6 +107,50 @@ public class IndexerHelper {
 		return localizationMap;
 	}
 
+	public List<Assignment> toAssignments(
+		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances) {
+
+		List<Assignment> assignments = new ArrayList<>();
+
+		if (ListUtil.isEmpty(kaleoTaskAssignmentInstances)) {
+			return assignments;
+		}
+
+		KaleoTaskAssignmentInstance firstKaleoTaskAssignmentInstance =
+			kaleoTaskAssignmentInstances.get(0);
+
+		if (Objects.equals(
+				firstKaleoTaskAssignmentInstance.getAssigneeClassName(),
+				User.class.getName())) {
+
+			User user = _userLocalService.fetchUser(
+				firstKaleoTaskAssignmentInstance.getAssigneeClassPK());
+
+			assignments.add(
+				new UserAssignment(
+					firstKaleoTaskAssignmentInstance.getAssigneeClassPK(),
+					user.getFullName()));
+		}
+		else {
+			Stream.of(
+				kaleoTaskAssignmentInstances
+			).flatMap(
+				List::stream
+			).collect(
+				Collectors.groupingBy(
+					KaleoTaskAssignmentInstance::getAssigneeClassPK,
+					Collectors.mapping(
+						KaleoTaskAssignmentInstance::getGroupId,
+						Collectors.toList()))
+			).forEach(
+				(assignmentId, assignmentGroupIds) -> assignments.add(
+					new RoleAssignment(assignmentId, assignmentGroupIds))
+			);
+		}
+
+		return assignments;
+	}
+
 	private AssetRenderer<?> _getAssetRenderer(String className, long classPK) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -118,5 +174,8 @@ public class IndexerHelper {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

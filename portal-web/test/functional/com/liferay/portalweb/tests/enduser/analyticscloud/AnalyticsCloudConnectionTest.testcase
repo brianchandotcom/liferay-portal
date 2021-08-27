@@ -177,22 +177,6 @@ definition {
 
 	}
 
-	@description = "Automation ID: LRAC-8837 | Test Summary: Invalid OAuth Credentials"
-	@priority = "2"
-	test InvalidOAuthKey {
-
-
-	}
-
-	@description = "Automation ID: LRAC-8838 | Test Summary: Invalid OAuth2 Secret"
-	@ignore = "true"
-	@priority = "2"
-	test InvalidOAuthSecret {
-
-		// TODO LRAC-8838 InvalidOAuthSecret
-
-	}
-
 	@description = "Automation ID: LRAC-8825 | Test Summary: Validate Invalid Token"
 	@ignore = "true"
 	@priority = "4"

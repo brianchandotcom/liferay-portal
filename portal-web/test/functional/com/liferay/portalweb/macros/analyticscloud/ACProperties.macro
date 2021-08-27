@@ -90,6 +90,22 @@ definition {
 		Click(locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
 	}
 
+	macro editPropertyName {
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		Type(
+			locator1 = "ACSettings#PROPERTY_INPUT",
+			value1 = "${propertyName}");
+
+		Click(
+			key_title = "Settings",
+			locator1 = "Header#H2_TITLE");
+
+		AssertVisible(
+			locator1 = "ACSettings#HEADER_TITLE",
+			title = "${propertyName}");
+	}
+
 	@summary = "Switchs to a specific property"
 	macro switchProperty {
 		ACProperties.clickPropertyMenuButton();

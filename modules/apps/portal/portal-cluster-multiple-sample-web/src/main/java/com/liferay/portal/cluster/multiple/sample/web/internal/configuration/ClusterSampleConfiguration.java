@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster.multiple.sample.web.configuration;
+package com.liferay.portal.cluster.multiple.sample.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.cluster.multiple.sample.web.configuration.ClusterSampleConfiguration"
+	id = "com.liferay.portal.cluster.multiple.sample.web.internal.configuration.ClusterSampleConfiguration"
 )
 public abstract interface ClusterSampleConfiguration {
 

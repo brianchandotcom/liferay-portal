@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cluster.multiple.sample.web.internal;
 
-import com.liferay.portal.cluster.multiple.sample.web.configuration.ClusterSampleConfiguration;
+import com.liferay.portal.cluster.multiple.sample.web.internal.configuration.ClusterSampleConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  */
 @Component(
-	configurationPid = "com.liferay.portal.cluster.multiple.sample.web.configuration.ClusterSampleConfiguration",
+	configurationPid = "com.liferay.portal.cluster.multiple.sample.web.internal.configuration.ClusterSampleConfiguration",
 	immediate = true, service = {}
 )
 public class ClusterSampleDispatcher {

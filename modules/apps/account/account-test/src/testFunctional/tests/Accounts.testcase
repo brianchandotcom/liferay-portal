@@ -323,6 +323,82 @@ definition {
 		}
 	}
 
+	@description = "This test adds a new shipping address and billing address via Set Default Address. It asserts that these addresses are set by default after adding."
+	@priority = "3"
+	test CanAddNewAddressViaSetDefaultAddress {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		AssertClick(
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_SHIPPING",
+			value1 = "Set Default Address");
+
+		SelectFrame(
+			key_title = "Set Default Shipping Address",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Accounts.addAddressViaSetDefaultAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		AssertClick(
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_BILLING",
+			value1 = "Set Default Address");
+
+		SelectFrame(
+			key_title = "Set Default Billing Address",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Accounts.addAddressViaSetDefaultAddress(
+			addressCity = "Shibuya-ku",
+			addressCountry = "Japan",
+			addressName = "Liferay Japan K. K.",
+			addressPostalCode = "150-0021",
+			addressRegion = "Tokyo",
+			addressStreet1 = "1F Faveur Ebisu,",
+			addressStreet2 = "1-26-7 Ebisu Nishi",
+			phoneNumber = "+81 3-5456-5796");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.viewDefaultShippingAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			addressType = "Billing",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.viewDefaultBillingAddress(
+			addressCity = "Shibuya-ku",
+			addressCountry = "Japan",
+			addressName = "Liferay Japan K. K.",
+			addressPostalCode = "150-0021",
+			addressRegion = "Tokyo",
+			addressStreet1 = "1F Faveur Ebisu,",
+			addressStreet2 = "1-26-7 Ebisu Nishi",
+			addressType = "Shipping",
+			phoneNumber = "+81 3-5456-5796");
+	}
+
 	@description = "This test assigns an existing user to account through the Users tab"
 	@priority = "4"
 	test CanAssignExistingUserToAccount {

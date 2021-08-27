@@ -35,6 +35,7 @@ export const selectConfiguredCollectionDisplays = (state) =>
 	);
 
 export function TargetCollectionsField({
+	enableCompatibleCollections = false,
 	filterableCollections,
 	onValueSelect,
 	value,
@@ -85,6 +86,7 @@ export function TargetCollectionsField({
 		return {
 			checked: isSelected,
 			disabled:
+				enableCompatibleCollections &&
 				!isSelected &&
 				isItemDisabled({
 					filterableCollections,
@@ -129,13 +131,14 @@ export function TargetCollectionsField({
 					</ClayButton>
 				}
 			>
-				{Object.keys(filterableCollections).length > 1 && (
-					<ClayDropDown.Help className="pt-3 px-3">
-						{Liferay.Language.get(
-							'multiple-selection-must-have-at-least-one-filter-in-common'
-						)}
-					</ClayDropDown.Help>
-				)}
+				{enableCompatibleCollections &&
+					Object.keys(filterableCollections).length > 1 && (
+						<ClayDropDown.Help className="pt-3 px-3">
+							{Liferay.Language.get(
+								'multiple-selection-must-have-at-least-one-filter-in-common'
+							)}
+						</ClayDropDown.Help>
+					)}
 				{items.map((item) => (
 					<label
 						className={classNames('d-flex dropdown-item', {

@@ -405,6 +405,11 @@ public class ContentPageEditorDisplayContext {
 				getResourceURL(
 					"/layout_content_page_editor/get_collection_mapping_fields")
 			).put(
+				"getCollectionSupportedFiltersURL",
+				getResourceURL(
+					"/layout_content_page_editor" +
+						"/get_collection_supported_filters")
+			).put(
 				"getExperienceUsedPortletsURL",
 				getResourceURL(
 					"/layout_content_page_editor/get_experience_used_portlets")

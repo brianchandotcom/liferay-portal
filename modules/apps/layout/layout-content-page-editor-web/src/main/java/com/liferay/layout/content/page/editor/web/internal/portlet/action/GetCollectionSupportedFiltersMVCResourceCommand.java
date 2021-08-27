@@ -95,7 +95,7 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 			jsonObject.put(
 				collectionJSONObject.getString("collectionId"),
 				JSONUtil.toJSONArray(
-					supportedInfoFilters, InfoFilter::getFilterType));
+					supportedInfoFilters, InfoFilter::getFilterTypeName));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

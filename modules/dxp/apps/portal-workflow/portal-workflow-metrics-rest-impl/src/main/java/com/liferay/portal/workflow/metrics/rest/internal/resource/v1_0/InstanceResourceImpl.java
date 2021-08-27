@@ -950,17 +950,14 @@ public class InstanceResourceImpl
 					task.get("assigneeType"), User.class.getName())) {
 
 				for (Object assigneeId : (List<?>)task.get("assigneeIds")) {
-					Assignee assignee = AssigneeUtil.toAssignee(
-						_language, _portal,
-						ResourceBundleUtil.getModuleAndPortalResourceBundle(
-							contextAcceptLanguage.getPreferredLocale(),
-							InstanceResourceImpl.class),
-						GetterUtil.getLong(assigneeId),
-						_userLocalService::fetchUser);
-
-					if (assignee != null) {
-						assignees.add(assignee);
-					}
+					assignees.add(
+						AssigneeUtil.toAssignee(
+							_language, _portal,
+							ResourceBundleUtil.getModuleAndPortalResourceBundle(
+								contextAcceptLanguage.getPreferredLocale(),
+								InstanceResourceImpl.class),
+							GetterUtil.getLong(assigneeId),
+							_userLocalService::fetchUser));
 				}
 			}
 			else if (Objects.equals(

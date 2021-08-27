@@ -114,7 +114,7 @@ public interface CheckboxDDMFormFieldTypeSettings
 	public boolean required();
 
 	@DDMFormField(
-		dataType = "boolean", label = "%show-as-a-switcher",
+		dataType = "boolean", label = "%show-as-a-switch",
 		properties = "showAsSwitcher=true", type = "checkbox"
 	)
 	public boolean showAsSwitcher();

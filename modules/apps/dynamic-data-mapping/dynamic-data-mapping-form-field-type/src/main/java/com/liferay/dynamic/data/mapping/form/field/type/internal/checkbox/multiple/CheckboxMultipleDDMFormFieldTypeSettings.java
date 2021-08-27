@@ -110,7 +110,7 @@ public interface CheckboxMultipleDDMFormFieldTypeSettings
 	public LocalizedValue predefinedValue();
 
 	@DDMFormField(
-		dataType = "boolean", label = "%show-as-a-switcher",
+		dataType = "boolean", label = "%show-as-a-switch",
 		properties = {"showAsSwitcher=true", "visualProperty=true"},
 		type = "checkbox"
 	)

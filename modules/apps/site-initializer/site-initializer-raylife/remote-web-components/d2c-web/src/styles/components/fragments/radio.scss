@@ -1,6 +1,6 @@
 .radio-card {
-	border-radius: 0.5rem;
 	border: 1px solid rgba($color: #000, $alpha: 0.1);
+	border-radius: 0.5rem;
 	cursor: pointer !important;
 	display: flex;
 	gap: 0.75rem;
@@ -60,8 +60,8 @@
 	width: fit-content;
 
 	&::before {
-		border-radius: 1rem;
 		border: 1px solid $primary-default-light;
+		border-radius: 1rem;
 		content: '';
 		cursor: pointer;
 		display: block;

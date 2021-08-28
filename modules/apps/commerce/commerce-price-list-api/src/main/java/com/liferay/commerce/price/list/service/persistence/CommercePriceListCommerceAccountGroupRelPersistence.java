@@ -506,7 +506,7 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @return the matching commerce price list commerce account group rel
 	 * @throws NoSuchPriceListCommerceAccountGroupRelException if a matching commerce price list commerce account group rel could not be found
 	 */
-	public CommercePriceListCommerceAccountGroupRel findByC_C(
+	public CommercePriceListCommerceAccountGroupRel findByCAGI_CPI(
 			long commercePriceListId, long commerceAccountGroupId)
 		throws NoSuchPriceListCommerceAccountGroupRelException;
 
@@ -517,7 +517,7 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the matching commerce price list commerce account group rel, or <code>null</code> if a matching commerce price list commerce account group rel could not be found
 	 */
-	public CommercePriceListCommerceAccountGroupRel fetchByC_C(
+	public CommercePriceListCommerceAccountGroupRel fetchByCAGI_CPI(
 		long commercePriceListId, long commerceAccountGroupId);
 
 	/**
@@ -528,7 +528,7 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price list commerce account group rel, or <code>null</code> if a matching commerce price list commerce account group rel could not be found
 	 */
-	public CommercePriceListCommerceAccountGroupRel fetchByC_C(
+	public CommercePriceListCommerceAccountGroupRel fetchByCAGI_CPI(
 		long commercePriceListId, long commerceAccountGroupId,
 		boolean useFinderCache);
 
@@ -539,7 +539,7 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the commerce price list commerce account group rel that was removed
 	 */
-	public CommercePriceListCommerceAccountGroupRel removeByC_C(
+	public CommercePriceListCommerceAccountGroupRel removeByCAGI_CPI(
 			long commercePriceListId, long commerceAccountGroupId)
 		throws NoSuchPriceListCommerceAccountGroupRelException;
 
@@ -550,7 +550,7 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the number of matching commerce price list commerce account group rels
 	 */
-	public int countByC_C(
+	public int countByCAGI_CPI(
 		long commercePriceListId, long commerceAccountGroupId);
 
 	/**

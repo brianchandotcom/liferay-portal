@@ -1742,8 +1742,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 		_FINDER_COLUMN_COMMERCEPRICELISTID_COMMERCEPRICELISTID_2 =
 			"commercePriceListChannelRel.commercePriceListId = ?";
 
-	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
+	private FinderPath _finderPathFetchByCCI_CPI;
+	private FinderPath _finderPathCountByCCI_CPI;
 
 	/**
 	 * Returns the commerce price list channel rel where commerceChannelId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListChannelRelException</code> if it could not be found.
@@ -1754,12 +1754,12 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 * @throws NoSuchPriceListChannelRelException if a matching commerce price list channel rel could not be found
 	 */
 	@Override
-	public CommercePriceListChannelRel findByC_C(
+	public CommercePriceListChannelRel findByCCI_CPI(
 			long commerceChannelId, long commercePriceListId)
 		throws NoSuchPriceListChannelRelException {
 
-		CommercePriceListChannelRel commercePriceListChannelRel = fetchByC_C(
-			commerceChannelId, commercePriceListId);
+		CommercePriceListChannelRel commercePriceListChannelRel =
+			fetchByCCI_CPI(commerceChannelId, commercePriceListId);
 
 		if (commercePriceListChannelRel == null) {
 			StringBundler sb = new StringBundler(6);
@@ -1792,10 +1792,10 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 * @return the matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
 	 */
 	@Override
-	public CommercePriceListChannelRel fetchByC_C(
+	public CommercePriceListChannelRel fetchByCCI_CPI(
 		long commerceChannelId, long commercePriceListId) {
 
-		return fetchByC_C(commerceChannelId, commercePriceListId, true);
+		return fetchByCCI_CPI(commerceChannelId, commercePriceListId, true);
 	}
 
 	/**
@@ -1807,7 +1807,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 * @return the matching commerce price list channel rel, or <code>null</code> if a matching commerce price list channel rel could not be found
 	 */
 	@Override
-	public CommercePriceListChannelRel fetchByC_C(
+	public CommercePriceListChannelRel fetchByCCI_CPI(
 		long commerceChannelId, long commercePriceListId,
 		boolean useFinderCache) {
 
@@ -1820,7 +1820,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByCCI_CPI, finderArgs);
 		}
 
 		if (result instanceof CommercePriceListChannelRel) {
@@ -1841,9 +1842,9 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCECHANNELID_2);
+			sb.append(_FINDER_COLUMN_CCI_CPI_COMMERCECHANNELID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
+			sb.append(_FINDER_COLUMN_CCI_CPI_COMMERCEPRICELISTID_2);
 
 			String sql = sb.toString();
 
@@ -1865,7 +1866,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_C, finderArgs, list);
+							_finderPathFetchByCCI_CPI, finderArgs, list);
 					}
 				}
 				else {
@@ -1901,11 +1902,11 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 * @return the commerce price list channel rel that was removed
 	 */
 	@Override
-	public CommercePriceListChannelRel removeByC_C(
+	public CommercePriceListChannelRel removeByCCI_CPI(
 			long commerceChannelId, long commercePriceListId)
 		throws NoSuchPriceListChannelRelException {
 
-		CommercePriceListChannelRel commercePriceListChannelRel = findByC_C(
+		CommercePriceListChannelRel commercePriceListChannelRel = findByCCI_CPI(
 			commerceChannelId, commercePriceListId);
 
 		return remove(commercePriceListChannelRel);
@@ -1919,8 +1920,10 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 * @return the number of matching commerce price list channel rels
 	 */
 	@Override
-	public int countByC_C(long commerceChannelId, long commercePriceListId) {
-		FinderPath finderPath = _finderPathCountByC_C;
+	public int countByCCI_CPI(
+		long commerceChannelId, long commercePriceListId) {
+
+		FinderPath finderPath = _finderPathCountByCCI_CPI;
 
 		Object[] finderArgs = new Object[] {
 			commerceChannelId, commercePriceListId
@@ -1933,9 +1936,9 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCECHANNELID_2);
+			sb.append(_FINDER_COLUMN_CCI_CPI_COMMERCECHANNELID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
+			sb.append(_FINDER_COLUMN_CCI_CPI_COMMERCEPRICELISTID_2);
 
 			String sql = sb.toString();
 
@@ -1967,10 +1970,10 @@ public class CommercePriceListChannelRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_COMMERCECHANNELID_2 =
+	private static final String _FINDER_COLUMN_CCI_CPI_COMMERCECHANNELID_2 =
 		"commercePriceListChannelRel.commerceChannelId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2 =
+	private static final String _FINDER_COLUMN_CCI_CPI_COMMERCEPRICELISTID_2 =
 		"commercePriceListChannelRel.commercePriceListId = ?";
 
 	public CommercePriceListChannelRelPersistenceImpl() {
@@ -2004,7 +2007,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 			commercePriceListChannelRel);
 
 		finderCache.putResult(
-			_finderPathFetchByC_C,
+			_finderPathFetchByCCI_CPI,
 			new Object[] {
 				commercePriceListChannelRel.getCommerceChannelId(),
 				commercePriceListChannelRel.getCommercePriceListId()
@@ -2094,9 +2097,10 @@ public class CommercePriceListChannelRelPersistenceImpl
 			commercePriceListChannelRelModelImpl.getCommercePriceListId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_C, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByCCI_CPI, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_C, args, commercePriceListChannelRelModelImpl);
+			_finderPathFetchByCCI_CPI, args,
+			commercePriceListChannelRelModelImpl);
 	}
 
 	/**
@@ -2651,13 +2655,13 @@ public class CommercePriceListChannelRelPersistenceImpl
 			"countByCommercePriceListId", new String[] {Long.class.getName()},
 			new String[] {"commercePriceListId"}, false);
 
-		_finderPathFetchByC_C = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+		_finderPathFetchByCCI_CPI = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByCCI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceChannelId", "commercePriceListId"}, true);
 
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+		_finderPathCountByCCI_CPI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceChannelId", "commercePriceListId"}, false);
 	}

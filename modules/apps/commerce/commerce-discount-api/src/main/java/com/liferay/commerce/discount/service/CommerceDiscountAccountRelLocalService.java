@@ -80,7 +80,7 @@ public interface CommerceDiscountAccountRelLocalService
 		CommerceDiscountAccountRel commerceDiscountAccountRel);
 
 	public CommerceDiscountAccountRel addCommerceDiscountAccountRel(
-			long commerceDiscountId, long commerceAccountId,
+			long userId, long commerceDiscountId, long commerceAccountId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -228,7 +228,7 @@ public interface CommerceDiscountAccountRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceDiscountAccountRel fetchCommerceDiscountAccountRel(
-		long commerceDiscountId, long commerceAccountId);
+		long commerceAccountId, long commerceDiscountId);
 
 	/**
 	 * Returns the commerce discount account rel with the matching UUID and company.

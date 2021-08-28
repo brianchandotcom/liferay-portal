@@ -80,8 +80,8 @@ public interface CommercePriceListDiscountRelLocalService
 		CommercePriceListDiscountRel commercePriceListDiscountRel);
 
 	public CommercePriceListDiscountRel addCommercePriceListDiscountRel(
-			long commercePriceListId, long commerceDiscountId, int order,
-			ServiceContext serviceContext)
+			long userId, long commercePriceListId, long commerceDiscountId,
+			int order, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

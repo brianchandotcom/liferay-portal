@@ -493,7 +493,7 @@ public interface CommercePriceListDiscountRelPersistence
 	 * @return the matching commerce price list discount rel
 	 * @throws NoSuchPriceListDiscountRelException if a matching commerce price list discount rel could not be found
 	 */
-	public CommercePriceListDiscountRel findByC_C(
+	public CommercePriceListDiscountRel findByCDI_CPI(
 			long commerceDiscountId, long commercePriceListId)
 		throws NoSuchPriceListDiscountRelException;
 
@@ -504,7 +504,7 @@ public interface CommercePriceListDiscountRelPersistence
 	 * @param commercePriceListId the commerce price list ID
 	 * @return the matching commerce price list discount rel, or <code>null</code> if a matching commerce price list discount rel could not be found
 	 */
-	public CommercePriceListDiscountRel fetchByC_C(
+	public CommercePriceListDiscountRel fetchByCDI_CPI(
 		long commerceDiscountId, long commercePriceListId);
 
 	/**
@@ -515,7 +515,7 @@ public interface CommercePriceListDiscountRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price list discount rel, or <code>null</code> if a matching commerce price list discount rel could not be found
 	 */
-	public CommercePriceListDiscountRel fetchByC_C(
+	public CommercePriceListDiscountRel fetchByCDI_CPI(
 		long commerceDiscountId, long commercePriceListId,
 		boolean useFinderCache);
 
@@ -526,7 +526,7 @@ public interface CommercePriceListDiscountRelPersistence
 	 * @param commercePriceListId the commerce price list ID
 	 * @return the commerce price list discount rel that was removed
 	 */
-	public CommercePriceListDiscountRel removeByC_C(
+	public CommercePriceListDiscountRel removeByCDI_CPI(
 			long commerceDiscountId, long commercePriceListId)
 		throws NoSuchPriceListDiscountRelException;
 
@@ -537,7 +537,8 @@ public interface CommercePriceListDiscountRelPersistence
 	 * @param commercePriceListId the commerce price list ID
 	 * @return the number of matching commerce price list discount rels
 	 */
-	public int countByC_C(long commerceDiscountId, long commercePriceListId);
+	public int countByCDI_CPI(
+		long commerceDiscountId, long commercePriceListId);
 
 	/**
 	 * Caches the commerce price list discount rel in the entity cache if it is enabled.

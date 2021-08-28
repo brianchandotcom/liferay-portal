@@ -58,14 +58,14 @@ public class CommercePriceListOrderTypeRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel
 			addCommercePriceListOrderTypeRel(
-				long commercePriceListId, long commerceOrderTypeId,
+				long userId, long commercePriceListId, long commerceOrderTypeId,
 				int priority,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListOrderTypeRelLocalService.
 			addCommercePriceListOrderTypeRel(
-				commercePriceListId, commerceOrderTypeId, priority,
+				userId, commercePriceListId, commerceOrderTypeId, priority,
 				serviceContext);
 	}
 

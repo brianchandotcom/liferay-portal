@@ -98,6 +98,10 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 		reindexPriceList(
 			commercePriceListCommerceAccountGroupRel.getCommercePriceListId());
 
+		expandoRowLocalService.deleteRows(
+			commercePriceListCommerceAccountGroupRel.
+				getCommercePriceListCommerceAccountGroupRelId());
+
 		commercePriceListLocalService.cleanPriceListCache(
 			commercePriceListCommerceAccountGroupRel.getCompanyId());
 

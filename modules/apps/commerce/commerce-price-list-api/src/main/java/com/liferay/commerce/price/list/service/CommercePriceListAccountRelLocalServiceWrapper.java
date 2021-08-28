@@ -58,13 +58,15 @@ public class CommercePriceListAccountRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListAccountRel
 			addCommercePriceListAccountRel(
-				long commercePriceListId, long commerceAccountId, int order,
+				long userId, long commercePriceListId, long commerceAccountId,
+				int order,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListAccountRelLocalService.
 			addCommercePriceListAccountRel(
-				commercePriceListId, commerceAccountId, order, serviceContext);
+				userId, commercePriceListId, commerceAccountId, order,
+				serviceContext);
 	}
 
 	/**

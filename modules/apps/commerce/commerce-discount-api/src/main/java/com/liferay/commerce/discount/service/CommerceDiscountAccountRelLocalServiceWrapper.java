@@ -58,13 +58,13 @@ public class CommerceDiscountAccountRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscountAccountRel
 			addCommerceDiscountAccountRel(
-				long commerceDiscountId, long commerceAccountId,
+				long userId, long commerceDiscountId, long commerceAccountId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountAccountRelLocalService.
 			addCommerceDiscountAccountRel(
-				commerceDiscountId, commerceAccountId, serviceContext);
+				userId, commerceDiscountId, commerceAccountId, serviceContext);
 	}
 
 	/**
@@ -286,11 +286,11 @@ public class CommerceDiscountAccountRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscountAccountRel
 		fetchCommerceDiscountAccountRel(
-			long commerceDiscountId, long commerceAccountId) {
+			long commerceAccountId, long commerceDiscountId) {
 
 		return _commerceDiscountAccountRelLocalService.
 			fetchCommerceDiscountAccountRel(
-				commerceDiscountId, commerceAccountId);
+				commerceAccountId, commerceDiscountId);
 	}
 
 	/**

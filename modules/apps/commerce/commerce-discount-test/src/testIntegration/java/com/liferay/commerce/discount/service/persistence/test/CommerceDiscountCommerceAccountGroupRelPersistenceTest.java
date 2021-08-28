@@ -215,11 +215,11 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(
+	public void testCountByCDI_CAGI() throws Exception {
+		_persistence.countByCDI_CAGI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C(0L, 0L);
+		_persistence.countByCDI_CAGI(0L, 0L);
 	}
 
 	@Test

@@ -123,7 +123,7 @@ public class CommerceDiscountAccountRelServiceSoap {
 	public static
 		com.liferay.commerce.discount.model.CommerceDiscountAccountRelSoap
 				fetchCommerceDiscountAccountRel(
-					long commerceDiscountId, long commerceAccountId)
+					long commerceAccountId, long commerceDiscountId)
 			throws RemoteException {
 
 		try {
@@ -131,7 +131,7 @@ public class CommerceDiscountAccountRelServiceSoap {
 				returnValue =
 					CommerceDiscountAccountRelServiceUtil.
 						fetchCommerceDiscountAccountRel(
-							commerceDiscountId, commerceAccountId);
+							commerceAccountId, commerceDiscountId);
 
 			return com.liferay.commerce.discount.model.
 				CommerceDiscountAccountRelSoap.toSoapModel(returnValue);

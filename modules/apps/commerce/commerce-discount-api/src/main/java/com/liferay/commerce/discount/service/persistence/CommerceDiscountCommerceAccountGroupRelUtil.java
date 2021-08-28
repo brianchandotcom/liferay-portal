@@ -540,12 +540,12 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	 * @return the matching commerce discount commerce account group rel
 	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a matching commerce discount commerce account group rel could not be found
 	 */
-	public static CommerceDiscountCommerceAccountGroupRel findByC_C(
+	public static CommerceDiscountCommerceAccountGroupRel findByCDI_CAGI(
 			long commerceDiscountId, long commerceAccountGroupId)
 		throws com.liferay.commerce.discount.exception.
 			NoSuchDiscountCommerceAccountGroupRelException {
 
-		return getPersistence().findByC_C(
+		return getPersistence().findByCDI_CAGI(
 			commerceDiscountId, commerceAccountGroupId);
 	}
 
@@ -556,10 +556,10 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
 	 */
-	public static CommerceDiscountCommerceAccountGroupRel fetchByC_C(
+	public static CommerceDiscountCommerceAccountGroupRel fetchByCDI_CAGI(
 		long commerceDiscountId, long commerceAccountGroupId) {
 
-		return getPersistence().fetchByC_C(
+		return getPersistence().fetchByCDI_CAGI(
 			commerceDiscountId, commerceAccountGroupId);
 	}
 
@@ -571,11 +571,11 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
 	 */
-	public static CommerceDiscountCommerceAccountGroupRel fetchByC_C(
+	public static CommerceDiscountCommerceAccountGroupRel fetchByCDI_CAGI(
 		long commerceDiscountId, long commerceAccountGroupId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_C(
+		return getPersistence().fetchByCDI_CAGI(
 			commerceDiscountId, commerceAccountGroupId, useFinderCache);
 	}
 
@@ -586,12 +586,12 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the commerce discount commerce account group rel that was removed
 	 */
-	public static CommerceDiscountCommerceAccountGroupRel removeByC_C(
+	public static CommerceDiscountCommerceAccountGroupRel removeByCDI_CAGI(
 			long commerceDiscountId, long commerceAccountGroupId)
 		throws com.liferay.commerce.discount.exception.
 			NoSuchDiscountCommerceAccountGroupRelException {
 
-		return getPersistence().removeByC_C(
+		return getPersistence().removeByCDI_CAGI(
 			commerceDiscountId, commerceAccountGroupId);
 	}
 
@@ -602,10 +602,10 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	 * @param commerceAccountGroupId the commerce account group ID
 	 * @return the number of matching commerce discount commerce account group rels
 	 */
-	public static int countByC_C(
+	public static int countByCDI_CAGI(
 		long commerceDiscountId, long commerceAccountGroupId) {
 
-		return getPersistence().countByC_C(
+		return getPersistence().countByCDI_CAGI(
 			commerceDiscountId, commerceAccountGroupId);
 	}
 

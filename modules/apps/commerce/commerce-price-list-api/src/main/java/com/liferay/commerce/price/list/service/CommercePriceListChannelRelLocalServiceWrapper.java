@@ -58,13 +58,15 @@ public class CommercePriceListChannelRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListChannelRel
 			addCommercePriceListChannelRel(
-				long commercePriceListId, long commerceChannelId, int order,
+				long userId, long commercePriceListId, long commerceChannelId,
+				int order,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListChannelRelLocalService.
 			addCommercePriceListChannelRel(
-				commercePriceListId, commerceChannelId, order, serviceContext);
+				userId, commercePriceListId, commerceChannelId, order,
+				serviceContext);
 	}
 
 	/**

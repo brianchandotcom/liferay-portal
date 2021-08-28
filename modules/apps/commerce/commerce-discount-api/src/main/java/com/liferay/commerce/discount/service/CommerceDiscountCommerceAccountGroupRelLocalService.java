@@ -81,8 +81,8 @@ public interface CommerceDiscountCommerceAccountGroupRelLocalService
 
 	public CommerceDiscountCommerceAccountGroupRel
 			addCommerceDiscountCommerceAccountGroupRel(
-				long commerceDiscountId, long commerceAccountGroupId,
-				ServiceContext serviceContext)
+				long userId, long commerceDiscountId,
+				long commerceAccountGroupId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

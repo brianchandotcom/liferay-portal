@@ -1,0 +1,28 @@
+* {
+	margin: 0;
+	padding: 0;
+	outline: 0;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	p {
+		margin: 0 !important;
+	}
+}
+
+:root {
+	background-color: $background;
+	font-family: $font-family;
+	color: $neutral-default;
+}
+
+fieldset {
+	border: none;
+	outline: none;
+}
+
+svg {
+	width: 0.8rem !important;
+	height: 0.8rem !important;
+}

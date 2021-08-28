@@ -84,8 +84,8 @@ export const BusinessTypeSearch = ({form}) => {
 			return (
 				<>
 					<WarningBadge>
-						There are no results for “{form?.basics?.businessSearch}
-						”. Please try a different search.
+						There are no results for "{form?.basics?.businessSearch}
+						". Please try a different search.
 					</WarningBadge>
 					{infoPanelButton()}
 				</>

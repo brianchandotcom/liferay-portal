@@ -138,8 +138,8 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 		fetchCommerceDiscountCommerceAccountGroupRel(
 			long commerceDiscountId, long commerceAccountGroupId) {
 
-		return commerceDiscountCommerceAccountGroupRelPersistence.fetchByC_C(
-			commerceDiscountId, commerceAccountGroupId);
+		return commerceDiscountCommerceAccountGroupRelPersistence.
+			fetchByCDI_CAGI(commerceDiscountId, commerceAccountGroupId);
 	}
 
 	@Override

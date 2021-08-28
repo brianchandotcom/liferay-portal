@@ -120,9 +120,9 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 
 	@Override
 	public CommerceDiscountAccountRel fetchCommerceDiscountAccountRel(
-		long commerceDiscountId, long commerceAccountId) {
+		long commerceAccountId, long commerceDiscountId) {
 
-		return commerceDiscountAccountRelPersistence.fetchByC_C(
+		return commerceDiscountAccountRelPersistence.fetchByCAI_CDI(
 			commerceAccountId, commerceDiscountId);
 	}
 

@@ -150,8 +150,8 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 		fetchCommercePriceListCommerceAccountGroupRel(
 			long commercePriceListId, long commerceAccountGroupId) {
 
-		return commercePriceListCommerceAccountGroupRelPersistence.fetchByC_C(
-			commercePriceListId, commerceAccountGroupId);
+		return commercePriceListCommerceAccountGroupRelPersistence.
+			fetchByCAGI_CPI(commercePriceListId, commerceAccountGroupId);
 	}
 
 	@Override

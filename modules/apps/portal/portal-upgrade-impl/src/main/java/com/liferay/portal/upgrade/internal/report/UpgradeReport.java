@@ -172,12 +172,6 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private DBType _getDBType() {
-		DB db = DBManagerUtil.getDB();
-
-		return db.getDBType();
-	}
-
 	private String _getDialectInfo() {
 		DB db = DBManagerUtil.getDB();
 

@@ -1,7 +1,7 @@
 .btn {
-	display: flex;
 	border: none;
 	cursor: pointer;
+	display: flex;
 	outline: none;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -10,21 +10,21 @@
 	-ms-user-select: none;
 	user-select: none;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-	font-weight: bold;
+	align-items: center;
+	border-radius: 0.25rem;
 	font-size: 1rem;
-	transition: 200ms all ease-out;
-	text-transform: uppercase;
+	font-weight: bold;
+	gap: 0.5rem;
 	height: 3.5rem;
+	justify-content: center;
 	padding-left: 2rem;
 	padding-right: 2rem;
-	border-radius: 0.25rem;
-	gap: 0.5rem;
-	align-items: center;
-	justify-content: center;
+	text-transform: uppercase;
+	transition: 200ms all ease-out;
 
 	&:disabled {
-		opacity: 0.5;
 		cursor: not-allowed;
+		opacity: 0.5;
 	}
 }
 
@@ -61,18 +61,18 @@
 
 .btn.btn-outline {
 	background: $background;
+	border: 1px solid $neutral-default;
 	color: $neutral-default;
 	fill: $neutral-default;
-	border: 1px solid $neutral-default;
 	padding: 1rem 1.125rem;
 }
 
 .btn.badge {
-	padding-left: 0.5rem;
-	padding-right: 0.5rem;
+	gap: 0.5rem;
 	height: 1.5rem;
 	min-width: 4.4rem;
-	gap: 0.5rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 
 	font-size: 0.813rem;
 	text-transform: none;
@@ -91,6 +91,6 @@
 }
 
 .btn.badge.bottom-list {
-	width: fit-content;
 	margin-top: -1rem;
+	width: fit-content;
 }

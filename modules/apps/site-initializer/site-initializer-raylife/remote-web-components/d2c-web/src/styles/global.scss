@@ -1,8 +1,8 @@
 * {
-	margin: 0;
-	padding: 0;
-	outline: 0;
 	box-sizing: border-box;
+	margin: 0;
+	outline: 0;
+	padding: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
@@ -13,8 +13,8 @@
 
 :root {
 	background-color: $background;
-	font-family: $font-family;
 	color: $neutral-default;
+	font-family: $font-family;
 }
 
 fieldset {
@@ -23,6 +23,6 @@ fieldset {
 }
 
 svg {
-	width: 0.8rem !important;
 	height: 0.8rem !important;
+	width: 0.8rem !important;
 }

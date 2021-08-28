@@ -29,8 +29,8 @@ label {
 	margin-right: -5px;
 
 	& .required::after {
-		content: '*';
 		color: $error-default;
+		content: '*';
 		font-size: 0.813rem;
 		position: relative;
 		top: -5px;
@@ -73,10 +73,10 @@ input.hidden {
 }
 
 input.search {
-	padding: 0 1.5rem;
 	font-size: 1.313rem;
 	font-weight: 700;
 	min-height: 3.5rem;
+	padding: 0 1.5rem;
 }
 
 select {
@@ -86,11 +86,11 @@ select {
 }
 
 .select-icon {
-	position: absolute;
-	pointer-events: none;
 	bottom: 10px;
-	right: 12px;
 	fill: $neutral-default;
-	width: 24px !important;
 	height: 24px !important;
+	pointer-events: none;
+	position: absolute;
+	right: 12px;
+	width: 24px !important;
 }

@@ -5,31 +5,22 @@
 		]
 	},
 	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
 			"last 1 safari version"
+		],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
 		]
 	},
-	"description": "D2C Web",
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
-	},
-	"name": "d2c-web",
-	"private": true,
 	"dependencies": {
 		"@babel/core": "7.12.3",
 		"@clayui/core": "^3.32.0",
-		"@clayui/css": "^3.33.1",
-		"@clayui/icon": "^3.32.0",
+		"@clayui/css": "3.33.1",
+		"@clayui/icon": "3.32.0",
 		"@googlemaps/js-api-loader": "^1.12.2",
 		"@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
 		"@testing-library/jest-dom": "^5.11.4",
@@ -83,7 +74,7 @@
 		"react": "^17.0.2",
 		"react-app-polyfill": "^2.0.0",
 		"react-dev-utils": "^11.0.3",
-		"react-dom": "^17.0.2",
+		"react-dom": "17.0.2",
 		"react-hook-form": "^7.8.8",
 		"react-number-format": "^4.6.3",
 		"react-refresh": "^0.8.3",
@@ -101,17 +92,26 @@
 		"webpack-manifest-plugin": "2.2.0",
 		"workbox-webpack-plugin": "5.1.4"
 	},
+	"description": "D2C Web",
 	"devDependencies": {
 		"json-server": "^0.16.3",
 		"sass-to-string": "^1.5.1"
 	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"name": "d2c-web",
+	"private": true,
 	"scripts": {
-		"start": "node scripts/start.js",
 		"build": "node scripts/build.js",
 		"build:liferay": "yarn build && ./setup-liferay.sh",
-		"serve:liferay": "npx serve ./build",
+		"mock": "json-server -p 3333 -d 200 ./mock/db.json --routes ./mock/routes.json",
 		"run:liferay": "yarn build:liferay && npx serve ./build",
-		"mock": "json-server -p 3333 -d 200 ./mock/db.json --routes ./mock/routes.json"
+		"serve:liferay": "npx serve ./build",
+		"start": "node scripts/start.js"
 	},
 	"version": "1.0.0"
 }

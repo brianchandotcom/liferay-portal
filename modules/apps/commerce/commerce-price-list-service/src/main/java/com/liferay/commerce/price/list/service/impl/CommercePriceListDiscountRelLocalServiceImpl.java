@@ -14,10 +14,13 @@
 
 package com.liferay.commerce.price.list.service.impl;
 
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListDiscountRel;
 import com.liferay.commerce.price.list.service.base.CommercePriceListDiscountRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -32,11 +35,11 @@ public class CommercePriceListDiscountRelLocalServiceImpl
 
 	@Override
 	public CommercePriceListDiscountRel addCommercePriceListDiscountRel(
-			long commercePriceListId, long commerceDiscountId, int order,
-			ServiceContext serviceContext)
+			long userId, long commercePriceListId, long commerceDiscountId,
+			int order, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
 		CommercePriceListDiscountRel commercePriceListDiscountRel =
 			commercePriceListDiscountRelPersistence.create(
@@ -50,8 +53,6 @@ public class CommercePriceListDiscountRelLocalServiceImpl
 			commercePriceListId);
 		commercePriceListDiscountRel.setOrder(order);
 		commercePriceListDiscountRel.setExpandoBridgeAttributes(serviceContext);
-
-		// Cache
 
 		commercePriceListLocalService.cleanPriceListCache(
 			serviceContext.getCompanyId());
@@ -68,7 +69,7 @@ public class CommercePriceListDiscountRelLocalServiceImpl
 		commercePriceListDiscountRelPersistence.remove(
 			commercePriceListDiscountRel);
 
-		// Cache
+		reindexPriceList(commercePriceListDiscountRel.getCommercePriceListId());
 
 		commercePriceListLocalService.cleanPriceListCache(
 			commercePriceListDiscountRel.getCompanyId());
@@ -125,6 +126,15 @@ public class CommercePriceListDiscountRelLocalServiceImpl
 	public int getCommercePriceListDiscountRelsCount(long commercePriceListId) {
 		return commercePriceListDiscountRelPersistence.
 			countByCommercePriceListId(commercePriceListId);
+	}
+
+	protected void reindexPriceList(long commercePriceListId)
+		throws PortalException {
+
+		Indexer<CommercePriceList> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
+
+		indexer.reindex(CommercePriceList.class.getName(), commercePriceListId);
 	}
 
 }

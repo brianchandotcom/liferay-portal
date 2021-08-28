@@ -35,11 +35,12 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 	@Override
 	public CommercePriceListCommerceAccountGroupRel
 			addCommercePriceListCommerceAccountGroupRel(
-				long commercePriceListId, long commerceAccountGroupId,
-				int order, ServiceContext serviceContext)
+				long userId, long commercePriceListId,
+				long commerceAccountGroupId, int order,
+				ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
 		long commercePriceListCommerceAccountGroupRelId =
 			counterLocalService.increment();
@@ -64,17 +65,16 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 		commercePriceListCommerceAccountGroupRel.setExpandoBridgeAttributes(
 			serviceContext);
 
-		// Commerce price list
+		commercePriceListCommerceAccountGroupRel =
+			commercePriceListCommerceAccountGroupRelPersistence.update(
+				commercePriceListCommerceAccountGroupRel);
 
 		reindexPriceList(commercePriceListId);
-
-		// Cache
 
 		commercePriceListLocalService.cleanPriceListCache(
 			serviceContext.getCompanyId());
 
-		return commercePriceListCommerceAccountGroupRelPersistence.update(
-			commercePriceListCommerceAccountGroupRel);
+		return commercePriceListCommerceAccountGroupRel;
 	}
 
 	@Override
@@ -95,18 +95,12 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 		commercePriceListCommerceAccountGroupRelPersistence.remove(
 			commercePriceListCommerceAccountGroupRel);
 
-		// Commerce price list
-
 		reindexPriceList(
 			commercePriceListCommerceAccountGroupRel.getCommercePriceListId());
-
-		// Expando
 
 		expandoRowLocalService.deleteRows(
 			commercePriceListCommerceAccountGroupRel.
 				getCommercePriceListCommerceAccountGroupRelId());
-
-		// Cache
 
 		commercePriceListLocalService.cleanPriceListCache(
 			commercePriceListCommerceAccountGroupRel.getCompanyId());

@@ -45,8 +45,8 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 
 	@Override
 	public CommerceDiscountOrderTypeRel addCommerceDiscountOrderTypeRel(
-			long userId, long commerceDiscountId, long commerceOrderTypeId, int priority,
-			ServiceContext serviceContext)
+			long userId, long commerceDiscountId, long commerceOrderTypeId,
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);

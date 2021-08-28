@@ -732,7 +732,6 @@
 			<property name="allowedMethodNames" value="readObject,writeObject" />
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds private methods that are not used." />
-			<property name="enabled" value="false" />
 			<message key="method.unused" value="Method ''{0}'' is unused" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">

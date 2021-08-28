@@ -1159,7 +1159,7 @@ public class CommerceDiscountTargetGrossV2Test {
 				commerceCatalog.getGroupId(), 0.0);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -1294,7 +1294,7 @@ public class CommerceDiscountTargetGrossV2Test {
 				commerceCatalog.getGroupId(), 0.0);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -1397,7 +1397,7 @@ public class CommerceDiscountTargetGrossV2Test {
 				commerceCatalog.getGroupId(), 0.0);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

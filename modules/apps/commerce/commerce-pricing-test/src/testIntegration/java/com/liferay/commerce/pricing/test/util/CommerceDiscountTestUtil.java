@@ -41,14 +41,14 @@ public class CommerceDiscountTestUtil {
 
 	public static CommerceDiscountCommerceAccountGroupRel
 			addAccountGroupToDiscount(
-				CommerceDiscount commerceDiscount, long userId)
+				long userId, CommerceDiscount commerceDiscount)
 		throws Exception {
 
 		CommerceAccountGroup commerceAccountGroup = null;
 
 		return CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 			addCommerceDiscountCommerceAccountGroupRel(
-				commerceDiscount.getCommerceDiscountId(),
+				userId, commerceDiscount.getCommerceDiscountId(),
 				commerceAccountGroup.getCommerceAccountGroupId(),
 				ServiceContextTestUtil.getServiceContext());
 	}
@@ -77,11 +77,15 @@ public class CommerceDiscountTestUtil {
 				CommerceAccountGroup commerceAccountGroup)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
 		return CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 			addCommerceDiscountCommerceAccountGroupRel(
+				serviceContext.getUserId(),
 				commerceDiscount.getCommerceDiscountId(),
 				commerceAccountGroup.getCommerceAccountGroupId(),
-				ServiceContextTestUtil.getServiceContext());
+				serviceContext);
 	}
 
 	public static CommerceDiscount addFixedCommerceDiscount(

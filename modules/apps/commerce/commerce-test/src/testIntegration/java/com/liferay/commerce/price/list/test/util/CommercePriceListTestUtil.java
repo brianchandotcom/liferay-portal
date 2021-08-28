@@ -43,10 +43,14 @@ public class CommercePriceListTestUtil {
 		CommercePriceList commercePriceList = addCommercePriceList(
 			groupId, false, type, 1.0);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommercePriceListAccountRelLocalServiceUtil.
 			addCommercePriceListAccountRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceAccountId,
-				0, ServiceContextTestUtil.getServiceContext(groupId));
+				0, serviceContext);
 
 		return commercePriceList;
 	}

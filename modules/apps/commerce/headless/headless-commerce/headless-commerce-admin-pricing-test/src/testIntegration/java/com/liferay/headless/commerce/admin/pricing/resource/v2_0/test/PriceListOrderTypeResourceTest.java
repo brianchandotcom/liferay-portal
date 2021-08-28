@@ -193,6 +193,7 @@ public class PriceListOrderTypeResourceTest
 		return _toPriceListOrderType(
 			_commercePriceListOrderTypeRelLocalService.
 				addCommercePriceListOrderTypeRel(
+					_serviceContext.getUserId(),
 					_commercePriceList.getCommercePriceListId(),
 					priceListOrderType.getOrderTypeId(),
 					priceListOrderType.getPriority(), _serviceContext));

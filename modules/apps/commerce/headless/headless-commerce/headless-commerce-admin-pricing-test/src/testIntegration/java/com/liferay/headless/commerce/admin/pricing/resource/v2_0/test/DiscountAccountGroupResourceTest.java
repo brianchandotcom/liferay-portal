@@ -282,6 +282,7 @@ public class DiscountAccountGroupResourceTest
 			commerceDiscountCommerceAccountGroupRel =
 				CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 					addCommerceDiscountCommerceAccountGroupRel(
+						_serviceContext.getUserId(),
 						commerceDiscount.getCommerceDiscountId(),
 						discountAccountGroup.getAccountGroupId(),
 						_serviceContext);
@@ -406,6 +407,7 @@ public class DiscountAccountGroupResourceTest
 			commerceDiscountCommerceAccountGroupRel =
 				CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 					addCommerceDiscountCommerceAccountGroupRel(
+						_serviceContext.getUserId(),
 						discountAccountGroup.getDiscountId(),
 						discountAccountGroup.getAccountGroupId(),
 						_serviceContext);

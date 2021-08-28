@@ -35,11 +35,11 @@ public class CommercePriceListAccountRelLocalServiceImpl
 
 	@Override
 	public CommercePriceListAccountRel addCommercePriceListAccountRel(
-			long commercePriceListId, long commerceAccountId, int order,
-			ServiceContext serviceContext)
+			long userId, long commercePriceListId, long commerceAccountId,
+			int order, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
 		CommercePriceListAccountRel commercePriceListAccountRel =
 			commercePriceListAccountRelPersistence.create(
@@ -53,11 +53,7 @@ public class CommercePriceListAccountRelLocalServiceImpl
 		commercePriceListAccountRel.setOrder(order);
 		commercePriceListAccountRel.setExpandoBridgeAttributes(serviceContext);
 
-		// Commerce price list
-
 		reindexCommercePriceList(commercePriceListId);
-
-		// Cache
 
 		commercePriceListLocalService.cleanPriceListCache(
 			serviceContext.getCompanyId());
@@ -74,17 +70,11 @@ public class CommercePriceListAccountRelLocalServiceImpl
 		commercePriceListAccountRelPersistence.remove(
 			commercePriceListAccountRel);
 
-		// Expando
-
 		expandoRowLocalService.deleteRows(
 			commercePriceListAccountRel.getCommercePriceListAccountRelId());
 
-		// Commerce price list
-
 		reindexCommercePriceList(
 			commercePriceListAccountRel.getCommercePriceListId());
-
-		// Cache
 
 		commercePriceListLocalService.cleanPriceListCache(
 			commercePriceListAccountRel.getCompanyId());

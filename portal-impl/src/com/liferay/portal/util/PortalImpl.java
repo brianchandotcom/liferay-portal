@@ -8513,13 +8513,12 @@ public class PortalImpl implements Portal {
 
 						String serverName = themeDisplay.getServerName();
 
-						if (Validator.isNotNull(serverName)) {
+						if (Validator.isNotNull(serverName) &&
+							!serverName.equals(_LOCALHOST)) {
+
 							virtualHostnames.put(serverName, StringPool.BLANK);
 						}
-
-						if (virtualHostnames.isEmpty() ||
-							virtualHostnames.containsKey(_LOCALHOST)) {
-
+						else {
 							LayoutSet curLayoutSet =
 								LayoutSetLocalServiceUtil.getLayoutSet(
 									themeDisplay.getSiteGroupId(),

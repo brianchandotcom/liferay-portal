@@ -199,7 +199,7 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
-		<finder name="C_C" return-type="CommercePriceListAccountRel" unique="true">
+		<finder name="CAI_CPI" return-type="CommercePriceListAccountRel" unique="true">
 			<finder-column name="commerceAccountId" />
 			<finder-column name="commercePriceListId" />
 		</finder>
@@ -240,10 +240,14 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
-		<finder name="C_C" return-type="CommercePriceListAccountRel" unique="true">
+		<finder name="CCI_CPI" return-type="CommercePriceListChannelRel" unique="true">
 			<finder-column name="commerceChannelId" />
 			<finder-column name="commercePriceListId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommercePriceListCommerceAccountGroupRel" remote-service="true" table="CPLCommerceGroupAccountRel" uuid="true">
 
@@ -277,7 +281,7 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
-		<finder name="C_C" return-type="CommercePriceListCommerceAccountGroupRel" unique="true">
+		<finder name="CAGI_CPI" return-type="CommercePriceListCommerceAccountGroupRel" unique="true">
 			<finder-column name="commercePriceListId" />
 			<finder-column name="commerceAccountGroupId" />
 		</finder>
@@ -318,10 +322,14 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
-		<finder name="C_C" return-type="CommercePriceListDiscountRel" unique="true">
+		<finder name="CDI_CPI" return-type="CommercePriceListDiscountRel" unique="true">
 			<finder-column name="commerceDiscountId" />
 			<finder-column name="commercePriceListId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommercePriceListOrderTypeRel" remote-service="true" uuid="true">
 
@@ -359,6 +367,10 @@
 			<finder-column name="commercePriceListId" />
 			<finder-column name="commerceOrderTypeId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity external-reference-code="true" local-service="true" name="CommerceTierPriceEntry" remote-service="true" uuid="true">
 

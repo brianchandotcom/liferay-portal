@@ -114,10 +114,14 @@
 		<finder name="CommerceDiscountId" return-type="Collection">
 			<finder-column name="commerceDiscountId" />
 		</finder>
-		<finder name="C_C" return-type="CommerceDiscountAccountRel" unique="true">
+		<finder name="CAI_CDI" return-type="CommerceDiscountAccountRel" unique="true">
 			<finder-column name="commerceAccountId" />
 			<finder-column name="commerceDiscountId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommerceDiscountCommerceAccountGroupRel" remote-service="true" table="CDiscountCAccountGroupRel">
 
@@ -152,10 +156,14 @@
 		<finder name="CommerceAccountGroupId" return-type="Collection">
 			<finder-column name="commerceAccountGroupId" />
 		</finder>
-		<finder name="C_C" return-type="CommerceDiscountCommerceAccountGroupRel" unique="true">
+		<finder name="CDI_CAGI" return-type="CommerceDiscountCommerceAccountGroupRel" unique="true">
 			<finder-column name="commerceDiscountId" />
 			<finder-column name="commerceAccountGroupId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommerceDiscountOrderTypeRel" remote-service="true" uuid="true">
 
@@ -196,6 +204,10 @@
 			<finder-column name="commerceDiscountId" />
 			<finder-column name="commerceOrderTypeId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommerceDiscountRel" remote-service="true">
 

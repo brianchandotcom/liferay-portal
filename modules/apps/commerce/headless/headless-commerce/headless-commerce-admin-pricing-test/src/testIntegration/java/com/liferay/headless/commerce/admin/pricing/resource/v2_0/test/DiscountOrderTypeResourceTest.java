@@ -190,6 +190,7 @@ public class DiscountOrderTypeResourceTest
 		return _toDiscountOrderType(
 			_commerceDiscountOrderTypeRelLocalService.
 				addCommerceDiscountOrderTypeRel(
+					_serviceContext.getUserId(),
 					_commerceDiscount.getCommerceDiscountId(),
 					discountOrderType.getOrderTypeId(),
 					discountOrderType.getPriority(), _serviceContext));

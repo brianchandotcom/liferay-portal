@@ -334,7 +334,7 @@ public class CommerceGrossPricingTest {
 			commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -716,7 +716,7 @@ public class CommerceGrossPricingTest {
 			commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -851,7 +851,7 @@ public class CommerceGrossPricingTest {
 			commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -1368,7 +1368,7 @@ public class CommerceGrossPricingTest {
 			commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -1463,7 +1463,7 @@ public class CommerceGrossPricingTest {
 			commercePromotion);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePromotion.getCommercePriceListId(),
+			_user.getUserId(), commercePromotion.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -1532,7 +1532,7 @@ public class CommerceGrossPricingTest {
 			commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePriceList1.getCommercePriceListId(),
+			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -1627,7 +1627,7 @@ public class CommerceGrossPricingTest {
 			commercePromotion);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
-			commercePromotion.getCommercePriceListId(),
+			_user.getUserId(), commercePromotion.getCommercePriceListId(),
 			_commerceAccount.getCommerceAccountId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 

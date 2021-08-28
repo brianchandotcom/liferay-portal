@@ -55,6 +55,7 @@ public class CommerceDiscountTestUtil {
 
 		CommerceDiscountAccountRelLocalServiceUtil.
 			addCommerceDiscountAccountRel(
+				serviceContext.getUserId(),
 				commerceDiscount.getCommerceDiscountId(), commerceAccountId,
 				serviceContext);
 
@@ -79,6 +80,7 @@ public class CommerceDiscountTestUtil {
 
 		CommerceDiscountAccountRelLocalServiceUtil.
 			addCommerceDiscountAccountRel(
+				serviceContext.getUserId(),
 				commerceDiscount.getCommerceDiscountId(), commerceAccountId,
 				serviceContext);
 
@@ -99,10 +101,14 @@ public class CommerceDiscountTestUtil {
 			groupId, BigDecimal.valueOf(RandomTestUtil.randomDouble()), level,
 			CommerceDiscountConstants.TARGET_PRODUCTS, cpDefinitionId);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommerceDiscountAccountRelLocalServiceUtil.
 			addCommerceDiscountAccountRel(
+				serviceContext.getUserId(),
 				commerceDiscount.getCommerceDiscountId(), commerceAccountId,
-				ServiceContextTestUtil.getServiceContext(groupId));
+				serviceContext);
 
 		return commerceDiscount;
 	}
@@ -122,6 +128,7 @@ public class CommerceDiscountTestUtil {
 		for (long commerceAccountGroupId : commerceAccountGroupIds) {
 			CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 				addCommerceDiscountCommerceAccountGroupRel(
+					serviceContext.getUserId(),
 					commerceDiscount.getCommerceDiscountId(),
 					commerceAccountGroupId, serviceContext);
 		}
@@ -148,6 +155,7 @@ public class CommerceDiscountTestUtil {
 		for (long commerceAccountGroupId : commerceAccountGroupIds) {
 			CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 				addCommerceDiscountCommerceAccountGroupRel(
+					serviceContext.getUserId(),
 					commerceDiscount.getCommerceDiscountId(),
 					commerceAccountGroupId, serviceContext);
 		}
@@ -175,6 +183,7 @@ public class CommerceDiscountTestUtil {
 		for (long commerceAccountGroupId : commerceAccountGroupIds) {
 			CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 				addCommerceDiscountCommerceAccountGroupRel(
+					serviceContext.getUserId(),
 					commerceDiscount.getCommerceDiscountId(),
 					commerceAccountGroupId, serviceContext);
 		}
@@ -195,6 +204,7 @@ public class CommerceDiscountTestUtil {
 		for (long commerceAccountGroupId : commerceAccountGroupIds) {
 			CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 				addCommerceDiscountCommerceAccountGroupRel(
+					serviceContext.getUserId(),
 					commerceDiscount.getCommerceDiscountId(),
 					commerceAccountGroupId, serviceContext);
 		}
@@ -204,14 +214,14 @@ public class CommerceDiscountTestUtil {
 
 	public static CommerceDiscountCommerceAccountGroupRel
 			addAccountGroupToDiscount(
-				CommerceDiscount commerceDiscount, long userId)
+				long userId, CommerceDiscount commerceDiscount)
 		throws Exception {
 
 		CommerceAccountGroup commerceAccountGroup = null;
 
 		return CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 			addCommerceDiscountCommerceAccountGroupRel(
-				commerceDiscount.getCommerceDiscountId(),
+				userId, commerceDiscount.getCommerceDiscountId(),
 				commerceAccountGroup.getCommerceAccountGroupId(),
 				ServiceContextTestUtil.getServiceContext());
 	}
@@ -223,10 +233,14 @@ public class CommerceDiscountTestUtil {
 		CommerceDiscount commerceDiscount = addFixedCommerceDiscount(
 			groupId, RandomTestUtil.randomDouble(), type, null);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommerceDiscountAccountRelLocalServiceUtil.
 			addCommerceDiscountAccountRel(
+				serviceContext.getUserId(),
 				commerceDiscount.getCommerceDiscountId(), commerceAccountId,
-				ServiceContextTestUtil.getServiceContext(groupId));
+				serviceContext);
 
 		return commerceDiscount;
 	}
@@ -314,11 +328,15 @@ public class CommerceDiscountTestUtil {
 				CommerceAccountGroup commerceAccountGroup)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
 		return CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
 			addCommerceDiscountCommerceAccountGroupRel(
+				serviceContext.getUserId(),
 				commerceDiscount.getCommerceDiscountId(),
 				commerceAccountGroup.getCommerceAccountGroupId(),
-				ServiceContextTestUtil.getServiceContext());
+				serviceContext);
 	}
 
 	public static CommerceDiscount addFixedCommerceDiscount(

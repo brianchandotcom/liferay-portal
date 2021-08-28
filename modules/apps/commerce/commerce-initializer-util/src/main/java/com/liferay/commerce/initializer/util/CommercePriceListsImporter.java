@@ -202,6 +202,7 @@ public class CommercePriceListsImporter {
 					if (commercePriceListCommerceAccountGroupRel == null) {
 						_commercePriceListCommerceAccountGroupRelLocalService.
 							addCommercePriceListCommerceAccountGroupRel(
+								serviceContext.getUserId(),
 								commercePriceList.getCommercePriceListId(),
 								commerceAccountGroup.
 									getCommerceAccountGroupId(),

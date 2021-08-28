@@ -58,11 +58,13 @@ public class CommercePriceListTestUtil {
 
 		CommercePriceListAccountRelLocalServiceUtil.
 			addCommercePriceListAccountRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceAccountId,
 				0, serviceContext);
 
 		CommercePriceListChannelRelLocalServiceUtil.
 			addCommercePriceListChannelRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceChannelId,
 				0, serviceContext);
 
@@ -83,12 +85,14 @@ public class CommercePriceListTestUtil {
 		for (long commerceAccountGroupId : commerceAccountGroupIds) {
 			CommercePriceListCommerceAccountGroupRelLocalServiceUtil.
 				addCommercePriceListCommerceAccountGroupRel(
+					serviceContext.getUserId(),
 					commercePriceList.getCommercePriceListId(),
 					commerceAccountGroupId, 0, serviceContext);
 		}
 
 		CommercePriceListChannelRelLocalServiceUtil.
 			addCommercePriceListChannelRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceChannelId,
 				0, serviceContext);
 
@@ -108,6 +112,7 @@ public class CommercePriceListTestUtil {
 		for (long commerceAccountGroupId : commerceAccountGroupIds) {
 			CommercePriceListCommerceAccountGroupRelLocalServiceUtil.
 				addCommercePriceListCommerceAccountGroupRel(
+					serviceContext.getUserId(),
 					commercePriceList.getCommercePriceListId(),
 					commerceAccountGroupId, 0, serviceContext);
 		}
@@ -130,6 +135,7 @@ public class CommercePriceListTestUtil {
 		for (long commerceAccountGroupId : commerceAccountGroupIds) {
 			CommercePriceListCommerceAccountGroupRelLocalServiceUtil.
 				addCommercePriceListCommerceAccountGroupRel(
+					serviceContext.getUserId(),
 					commercePriceList.getCommercePriceListId(),
 					commerceAccountGroupId, 0, serviceContext);
 		}
@@ -144,10 +150,14 @@ public class CommercePriceListTestUtil {
 		CommercePriceList commercePriceList = addCommercePriceList(
 			groupId, false, type, 1.0);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommercePriceListAccountRelLocalServiceUtil.
 			addCommercePriceListAccountRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceAccountId,
-				0, ServiceContextTestUtil.getServiceContext(groupId));
+				0, serviceContext);
 
 		return commercePriceList;
 	}
@@ -160,10 +170,14 @@ public class CommercePriceListTestUtil {
 			CommercePriceListLocalServiceUtil.getCommercePriceList(
 				commercePriceListId);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommercePriceListAccountRelLocalServiceUtil.
 			addCommercePriceListAccountRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceAccountId,
-				0, ServiceContextTestUtil.getServiceContext(groupId));
+				0, serviceContext);
 
 		return commercePriceList;
 	}
@@ -175,10 +189,14 @@ public class CommercePriceListTestUtil {
 		CommercePriceList commercePriceList = addCommercePriceList(
 			groupId, false, type, 1.0);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommercePriceListChannelRelLocalServiceUtil.
 			addCommercePriceListChannelRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceChannelId,
-				0, ServiceContextTestUtil.getServiceContext(groupId));
+				0, serviceContext);
 
 		return commercePriceList;
 	}
@@ -191,10 +209,14 @@ public class CommercePriceListTestUtil {
 			CommercePriceListLocalServiceUtil.getCommercePriceList(
 				commercePriceListId);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
 		CommercePriceListChannelRelLocalServiceUtil.
 			addCommercePriceListChannelRel(
+				serviceContext.getUserId(),
 				commercePriceList.getCommercePriceListId(), commerceChannelId,
-				0, ServiceContextTestUtil.getServiceContext(groupId));
+				0, serviceContext);
 
 		return commercePriceList;
 	}

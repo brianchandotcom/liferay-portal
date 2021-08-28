@@ -256,6 +256,7 @@ public class CommerceAccountsImporter {
 					if (commercePriceList != null) {
 						_commercePriceListAccountRelLocalService.
 							addCommercePriceListAccountRel(
+								serviceContext.getUserId(),
 								commercePriceList.getCommercePriceListId(),
 								commerceAccount.getCommerceAccountId(), 0,
 								serviceContext);

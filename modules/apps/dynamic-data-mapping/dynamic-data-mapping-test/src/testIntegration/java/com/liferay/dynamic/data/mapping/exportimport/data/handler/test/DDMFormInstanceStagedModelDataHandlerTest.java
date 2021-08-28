@@ -34,8 +34,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -54,13 +52,6 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 
 		_settingsDDMFormValues =
 			DDMFormInstanceTestUtil.createSettingsDDMFormValues();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testCleanStagedModelDataHandler() throws Exception {
-		super.testCleanStagedModelDataHandler();
 	}
 
 	@Override

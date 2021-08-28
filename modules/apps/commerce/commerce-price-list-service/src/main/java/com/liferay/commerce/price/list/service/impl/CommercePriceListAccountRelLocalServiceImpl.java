@@ -135,7 +135,7 @@ public class CommercePriceListAccountRelLocalServiceImpl
 	public CommercePriceListAccountRel fetchCommercePriceListAccountRel(
 		long commerceAccountId, long commercePriceListId) {
 
-		return commercePriceListAccountRelPersistence.fetchByC_C(
+		return commercePriceListAccountRelPersistence.fetchByCAI_CPI(
 			commerceAccountId, commercePriceListId);
 	}
 

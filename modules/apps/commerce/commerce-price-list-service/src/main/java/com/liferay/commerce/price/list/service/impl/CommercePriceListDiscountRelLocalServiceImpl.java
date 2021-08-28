@@ -100,7 +100,7 @@ public class CommercePriceListDiscountRelLocalServiceImpl
 	public CommercePriceListDiscountRel fetchCommercePriceListDiscountRel(
 		long commerceDiscountId, long commercePriceListId) {
 
-		return commercePriceListDiscountRelPersistence.fetchByC_C(
+		return commercePriceListDiscountRelPersistence.fetchByCDI_CPI(
 			commerceDiscountId, commercePriceListId);
 	}
 

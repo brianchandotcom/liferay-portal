@@ -115,7 +115,7 @@ public class CommercePriceListChannelRelLocalServiceImpl
 	public CommercePriceListChannelRel fetchCommercePriceListChannelRel(
 		long commerceChannelId, long commercePriceListId) {
 
-		return commercePriceListChannelRelPersistence.fetchByC_C(
+		return commercePriceListChannelRelPersistence.fetchByCCI_CPI(
 			commerceChannelId, commercePriceListId);
 	}
 

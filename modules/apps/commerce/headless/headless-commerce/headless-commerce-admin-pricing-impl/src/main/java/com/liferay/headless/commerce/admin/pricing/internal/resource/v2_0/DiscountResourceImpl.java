@@ -427,8 +427,8 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 				CommerceDiscountAccountRel commerceDiscountAccountRel =
 					_commerceDiscountAccountRelService.
 						fetchCommerceDiscountAccountRel(
-							commerceDiscount.getCommerceDiscountId(),
-							discountAccount.getAccountId());
+							discountAccount.getAccountId(),
+							commerceDiscount.getCommerceDiscountId());
 
 				if (commerceDiscountAccountRel != null) {
 					continue;

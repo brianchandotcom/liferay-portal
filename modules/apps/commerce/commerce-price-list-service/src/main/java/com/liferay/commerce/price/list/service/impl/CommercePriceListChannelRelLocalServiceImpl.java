@@ -53,13 +53,16 @@ public class CommercePriceListChannelRelLocalServiceImpl
 		commercePriceListChannelRel.setOrder(order);
 		commercePriceListChannelRel.setExpandoBridgeAttributes(serviceContext);
 
+		commercePriceListChannelRel =
+			commercePriceListChannelRelPersistence.update(
+				commercePriceListChannelRel);
+
 		reindexCommercePriceList(commercePriceListId);
 
 		commercePriceListLocalService.cleanPriceListCache(
 			serviceContext.getCompanyId());
 
-		return commercePriceListChannelRelPersistence.update(
-			commercePriceListChannelRel);
+		return commercePriceListChannelRel;
 	}
 
 	@Override

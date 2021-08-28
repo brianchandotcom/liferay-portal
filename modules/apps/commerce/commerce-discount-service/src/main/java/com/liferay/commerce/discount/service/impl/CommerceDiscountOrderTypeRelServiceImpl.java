@@ -43,7 +43,7 @@ public class CommerceDiscountOrderTypeRelServiceImpl
 
 		return commerceDiscountOrderTypeRelLocalService.
 			addCommerceDiscountOrderTypeRel(
-				commerceDiscountId, commerceOrderTypeId, priority,
+				getUserId(), commerceDiscountId, commerceOrderTypeId, priority,
 				serviceContext);
 	}
 

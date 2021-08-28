@@ -44,7 +44,8 @@ public class CommercePriceListChannelRelServiceImpl
 
 		return commercePriceListChannelRelLocalService.
 			addCommercePriceListChannelRel(
-				commercePriceListId, commerceChannelId, order, serviceContext);
+				getUserId(), commercePriceListId, commerceChannelId, order,
+				serviceContext);
 	}
 
 	@Override

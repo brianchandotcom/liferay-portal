@@ -44,7 +44,8 @@ public class CommercePriceListAccountRelServiceImpl
 
 		return commercePriceListAccountRelLocalService.
 			addCommercePriceListAccountRel(
-				commercePriceListId, commerceAccountId, order, serviceContext);
+				getUserId(), commercePriceListId, commerceAccountId, order,
+				serviceContext);
 	}
 
 	@Override

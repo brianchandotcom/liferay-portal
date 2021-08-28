@@ -44,7 +44,8 @@ public class CommercePriceListDiscountRelServiceImpl
 
 		return commercePriceListDiscountRelLocalService.
 			addCommercePriceListDiscountRel(
-				commercePriceListId, commerceDiscountId, order, serviceContext);
+				getUserId(), commercePriceListId, commerceDiscountId, order,
+				serviceContext);
 	}
 
 	@Override

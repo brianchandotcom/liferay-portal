@@ -65,13 +65,16 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 		commercePriceListCommerceAccountGroupRel.setExpandoBridgeAttributes(
 			serviceContext);
 
+		commercePriceListCommerceAccountGroupRel =
+			commercePriceListCommerceAccountGroupRelPersistence.update(
+				commercePriceListCommerceAccountGroupRel);
+
 		reindexPriceList(commercePriceListId);
 
 		commercePriceListLocalService.cleanPriceListCache(
 			serviceContext.getCompanyId());
 
-		return commercePriceListCommerceAccountGroupRelPersistence.update(
-			commercePriceListCommerceAccountGroupRel);
+		return commercePriceListCommerceAccountGroupRel;
 	}
 
 	@Override

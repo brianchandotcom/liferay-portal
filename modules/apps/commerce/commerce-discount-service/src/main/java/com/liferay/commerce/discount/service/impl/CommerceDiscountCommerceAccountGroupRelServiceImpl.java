@@ -45,7 +45,8 @@ public class CommerceDiscountCommerceAccountGroupRelServiceImpl
 
 		return commerceDiscountCommerceAccountGroupRelLocalService.
 			addCommerceDiscountCommerceAccountGroupRel(
-				commerceDiscountId, commerceAccountGroupId, serviceContext);
+				getUserId(), commerceDiscountId, commerceAccountGroupId,
+				serviceContext);
 	}
 
 	@Override

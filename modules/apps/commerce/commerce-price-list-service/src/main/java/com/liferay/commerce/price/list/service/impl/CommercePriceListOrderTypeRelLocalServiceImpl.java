@@ -66,13 +66,16 @@ public class CommercePriceListOrderTypeRelLocalServiceImpl
 		commercePriceListOrderTypeRel.setExpandoBridgeAttributes(
 			serviceContext);
 
+		commercePriceListOrderTypeRel =
+			commercePriceListOrderTypeRelPersistence.update(
+				commercePriceListOrderTypeRel);
+
 		reindexCommercePriceList(commercePriceListId);
 
 		commercePriceListLocalService.cleanPriceListCache(
 			serviceContext.getCompanyId());
 
-		return commercePriceListOrderTypeRelPersistence.update(
-			commercePriceListOrderTypeRel);
+		return commercePriceListOrderTypeRel;
 	}
 
 	@Override

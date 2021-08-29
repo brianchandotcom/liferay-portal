@@ -60,7 +60,7 @@ definition {
 			var pattern = "\d\d\d\d\s[A-Z][a-z][a-z]\s\d+";
 		}
 
-		var match = StringUtil.regexReplaceFirst("${date}", "${pattern}", "true");
+		var match = StringUtil.matches("${date}", "${pattern}");
 
 		if ("${match}" == "true") {
 			echo("PASSED");

@@ -10,11 +10,11 @@ definition {
 
 			// Regex will find an unset varable, we cannot use isSet
 
-			var isSet = StringUtil.regexReplaceFirst("${parameter}","\$\{[^\$\{\s]*\}","false");
+			var undefined = StringUtil.matches("${parameter}", "\$\{[^\$\{\s]*\}");
 
 			// Only fail if match found and parameter was not set to false
 
-			if (("${isSet}" == "false") && ("${parameter}" != "false")) {
+			if (("${undefined}" == "true") && ("${parameter}" != "false")) {
 				fail("Please set '${parameter}'");
 			}
 		}

@@ -409,12 +409,59 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8598 | Test Summary: Segment List kebab menu contains Edit and Delete buttons"
-	@ignore = "true"
 	@priority = "3"
 	test SegmentListKebabMenuContainsEditAndDeleteButtons {
+		task ("Create user and sincronize it") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
 
-		// TODO LRAC-8598 SegmentListKebabMenuContainsEditAndDeleteButtons pending implementation
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Login new user and view page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close session, go to AC and segments") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create segment test and save") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			ACSegments.addStaticMember(tableMember = "ac ac");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to segments, click on kebab and assert Delete and Edit buttons") {
+			ACNavigation.goToSegments();
+
+			ACUtils.clickKebab();
+
+			var itensList = "Edit,Delete";
+
+			for (var menuItem : list "${itensList}") {
+				ACUtils.assertDropdownItem(menuItem = "${menuItem}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8586 | Test Summary: Sort the Segment 'Add Members' Modal"

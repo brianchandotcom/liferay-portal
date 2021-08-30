@@ -73,11 +73,10 @@ definition {
 
 	macro assertDropdownItem {
 		var key_dropdownItem = "${menuItem}";
-		
+
 		AssertTextEquals(
 			locator1 = "ACUtils#DROPDOWN_ITEM",
-			value1 = "${menuItem}"
-		);
+			value1 = "${menuItem}");
 	}
 
 	macro assertEventNotPresent {

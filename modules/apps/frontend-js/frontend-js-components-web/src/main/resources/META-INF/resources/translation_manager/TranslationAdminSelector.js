@@ -203,7 +203,7 @@ const TranslationAdminSelector = ({
 TranslationAdminSelector.propTypes = {
 	activeLocales: PropTypes.arrayOf(PropTypes.string),
 	adminMode: PropTypes.bool,
-	arialLabels: PropTypes.shape({
+	ariaLabels: PropTypes.shape({
 		default: PropTypes.string,
 		manageTranslations: PropTypes.string,
 		managementToolbar: PropTypes.string,

@@ -34,14 +34,26 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -67,16 +79,24 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	public InfoPage<ObjectEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Pagination pagination = collectionQuery.getPagination();
+		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
+			_objectDefinition.getClassName());
 
 		try {
+			Hits hits = indexer.search(_buildSearchContext(collectionQuery));
+
+			List<ObjectEntry> objectEntries = TransformUtil.transformToList(
+				hits.getDocs(),
+				doc -> {
+					long classPK = GetterUtil.getLong(
+						doc.get(Field.ENTRY_CLASS_PK));
+
+					return _objectEntryLocalService.fetchObjectEntry(classPK);
+				});
+
 			return InfoPage.of(
-				_objectEntryLocalService.getObjectEntries(
-					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
-					pagination.getStart(), pagination.getEnd()),
-				collectionQuery.getPagination(),
-				_objectEntryLocalService.getObjectEntriesCount(
-					_getGroupId(), _objectDefinition.getObjectDefinitionId()));
+				objectEntries, collectionQuery.getPagination(),
+				hits.getLength());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -139,6 +159,49 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	@Override
 	public String getLabel(Locale locale) {
 		return _objectDefinition.getName();
+	}
+
+	private SearchContext _buildSearchContext(CollectionQuery collectionQuery)
+		throws PortalException {
+
+		Pagination pagination = collectionQuery.getPagination();
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(true);
+
+		searchContext.setAttribute(
+			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		searchContext.setAttribute(
+			"objectDefinitionId", _objectDefinition.getObjectDefinitionId());
+
+		Optional<Map<String, String[]>> configurationOptional =
+			collectionQuery.getConfigurationOptional();
+
+		Map<String, String[]> configuration = configurationOptional.orElse(
+			Collections.emptyMap());
+
+		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
+			searchContext.setAttribute(entry.getKey(), entry.getValue());
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		searchContext.setCompanyId(serviceContext.getCompanyId());
+
+		searchContext.setGroupIds(new long[] {_getGroupId()});
+
+		searchContext.setEnd(pagination.getEnd());
+
+		searchContext.setStart(pagination.getStart());
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
 	}
 
 	private List<SelectInfoFieldType.Option> _getBooleanOptions() {

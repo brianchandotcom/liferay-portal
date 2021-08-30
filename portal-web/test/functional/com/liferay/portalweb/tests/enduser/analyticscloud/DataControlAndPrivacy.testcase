@@ -42,12 +42,40 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8890 | Test Summary: Able to change retention period"
-	@ignore = "true"
 	@priority = "4"
 	test CanChangeRetentionPeriod {
 
-		// TODO LRAC-8890 CanChangeRetentionPeriod
+		task ("Connect AC to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Launch AC, Switch Property and go to Settings") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSettings();
+		}
+
+		task ("Go to Data Control And Privacy") {
+			ACSettings.goToDataControlAndPrivacy();
+		}
+
+		task ("Assert Retetion Period Presence") {
+			AssertElementPresent(
+				key_nameTableChannels = "Retention Period",
+				locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+		}
+
+		task ("Change Retention Period to 7 Months") {
+			ACSettings.changeRetentionPeriodTo7Months();
+		}
+
+		task ("Assert that Retention Period changed") {
+			AssertElementPresent(
+				value1 = "7 Months",
+				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"

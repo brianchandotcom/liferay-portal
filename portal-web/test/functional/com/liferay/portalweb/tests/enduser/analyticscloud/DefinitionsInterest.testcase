@@ -101,14 +101,16 @@ definition {
 			var words = "ac keyword 1,ac keyword 2";
 
 			for (var word : list "${words}") {
-				ACSettings.addKeywords(keyword = "${word}");
+		 		ACSettings.addKeywords(keyword = "${word}");
 
-				ACSettings.assertKeywords(keyword = "${word}");
+		 		ACSettings.assertKeywords(keyword = "${word}");
 			}
 		}
 
-		task ("Select all the keywords and delete them") {
-			ACSettings.deleteAllKeywords();
+		task ("Select the keyword and delete") {
+			for(var n: list "${words}"){
+				ACSettings.deleteKeywordIcon(keyword = "${n}");
+			}	
 		}
 
 		task ("Assert that all keywords were deleted") {

@@ -33,6 +33,17 @@ public class WebHookEntryLocalServiceWrapper
 		_webHookEntryLocalService = webHookEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.web.hook.model.WebHookEntry addWebHookEntry(
+			long userId, java.util.Map<java.util.Locale, String> nameMap,
+			String destination, String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _webHookEntryLocalService.addWebHookEntry(
+			userId, nameMap, destination, url, serviceContext);
+	}
+
 	/**
 	 * Adds the web hook entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -348,6 +359,35 @@ public class WebHookEntryLocalServiceWrapper
 
 		return _webHookEntryLocalService.getWebHookEntryByUuidAndCompanyId(
 			uuid, companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.web.hook.model.WebHookEntry> search(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _webHookEntryLocalService.search(
+			companyId, keywords, start, end, sort);
+	}
+
+	@Override
+	public int searchCount(long companyId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _webHookEntryLocalService.searchCount(companyId, keywords);
+	}
+
+	@Override
+	public com.liferay.web.hook.model.WebHookEntry updateWebHookEntry(
+			long webHookEntryId,
+			java.util.Map<java.util.Locale, String> nameMap, String destination,
+			String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _webHookEntryLocalService.updateWebHookEntry(
+			webHookEntryId, nameMap, destination, url, serviceContext);
 	}
 
 	/**

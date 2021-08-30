@@ -238,7 +238,11 @@ definition {
 			layoutName = "AC Page";
 		}
 
-		if (!(IsElementPresent(locator1 = "ReportsAdmin#EMPTY_TABLE"))) {
+		Navigator.gotoSitePage(
+			pageName = "${layoutName}",
+			siteName = "Site Name");
+
+		if (IsElementNotPresent(key_portletTitleName = "Blogs", locator1 = "Portlet#SPECIFIC_TITLE")) {
 			ACUtils.addWidgetToPage(
 				layoutName = "${layoutName}",
 				widgetName = "Blogs");
@@ -259,7 +263,11 @@ definition {
 			layoutName = "AC Page";
 		}
 
-		if (!(IsElementPresent(locator1 = "ReportsAdmin#EMPTY_TABLE"))) {
+		Navigator.gotoSitePage(
+			pageName = "${layoutName}",
+			siteName = "Site Name");
+
+		if (IsElementNotPresent(key_portletTitleName = "Documents and Media", locator1 = "Portlet#SPECIFIC_TITLE")) {
 			ACUtils.addWidgetToPage(
 				layoutName = "${layoutName}",
 				widgetName = "Documents and Media");

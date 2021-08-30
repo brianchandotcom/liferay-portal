@@ -135,13 +135,36 @@ definition {
 			fieldName = "Rich Text");
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "This is a test for LRQA-69427. This test verifies that data inputted on the Rich Text field persists."
 	@priority = "5"
 	test CanInputData {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69427 Refactor of Renderer Rich Text Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInRichTextField(
+			content = "Rich Text",
+			fieldLabel = "Rich Text");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInRichTextField(
+			content = "Rich Text",
+			fieldLabel = "Rich Text");
 	}
 
 	@description = "This is a stubbed description"
@@ -153,31 +176,116 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "This is a test for LRQA-69427. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69427 Refactor of Renderer Rich Text Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Rich Text");
+
+		DERenderer.inputDataInRichTextField(
+			content = "Rich Text",
+			fieldLabel = "Rich Text",
+			index = "1");
+
+		DERenderer.inputDataInRichTextField(
+			content = "Rich Text",
+			fieldLabel = "Rich Text",
+			index = "2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInRichTextField(
+			content = "Rich Text",
+			fieldLabel = "Rich Text",
+			index = "1");
+
+		DERenderer.assertDataInRichTextField(
+			content = "Rich Text",
+			fieldLabel = "Rich Text",
+			index = "2");
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "This is a test for LRQA-69427. This test verifies that is not possible to publish the Web Content with a required field blank	"
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69427 Refactor of Renderer Rich Text Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Button.clickPublish();
+
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "This is a test for LRQA-69427. This test verifies that is possible to remove a duplicated field (repeatable)"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69427 Refactor of Renderer Rich Text Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Rich Text");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.removeRepeatableField(fieldLabel = "Rich Text");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DEBuilder.assertFieldNotPresent(
+			fieldLabel = "Rich Text",
+			index = "2");
 	}
 
 	@description = "This is a test for LRQA-68646. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"

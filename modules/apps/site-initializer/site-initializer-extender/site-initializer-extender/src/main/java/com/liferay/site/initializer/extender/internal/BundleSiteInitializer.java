@@ -54,14 +54,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParser;
-import com.liferay.portal.odata.filter.FilterParserProvider;
-import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
@@ -95,8 +89,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
-		ExpressionConvert<Filter> expressionConvert,
-		FilterParserProvider filterParserProvider,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -111,8 +103,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
-		_expressionConvert = expressionConvert;
-		_filterParserProvider = filterParserProvider;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
@@ -508,32 +498,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				user
 			).build();
 
-		EntityModelResource entityModelResource =
-			(EntityModelResource)taxonomyVocabularyResource;
-
-		EntityModel entityModel = entityModelResource.getEntityModel(null);
-
-		try {
-			FilterParser filterParser = _filterParserProvider.provide(
-				entityModel);
-
-			com.liferay.portal.odata.filter.Filter oDataFilter =
-				new com.liferay.portal.odata.filter.Filter(
-					filterParser.parse(filterString));
-
-			return _expressionConvert.convert(
-				oDataFilter.getExpression(),
-				LocaleUtil.fromLanguageId(user.getLanguageId()), entityModel);
-		}
-		catch (ExpressionVisitException expressionVisitException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to create filter from " + filterString,
-					expressionVisitException);
-			}
-		}
-
-		return null;
+		return taxonomyVocabularyResource.toFilter(filterString, null);
 	}
 
 	private String _read(String resourcePath) throws Exception {
@@ -568,8 +533,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
-	private final ExpressionConvert<Filter> _expressionConvert;
-	private final FilterParserProvider _filterParserProvider;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;

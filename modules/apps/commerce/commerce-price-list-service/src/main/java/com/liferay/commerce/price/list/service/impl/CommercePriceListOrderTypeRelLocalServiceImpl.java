@@ -86,6 +86,9 @@ public class CommercePriceListOrderTypeRelLocalServiceImpl
 		commercePriceListOrderTypeRelPersistence.remove(
 			commercePriceListOrderTypeRel);
 
+		expandoRowLocalService.deleteRows(
+			commercePriceListOrderTypeRel.getCommercePriceListOrderTypeRelId());
+
 		reindexCommercePriceList(
 			commercePriceListOrderTypeRel.getCommercePriceListId());
 

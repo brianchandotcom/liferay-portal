@@ -73,6 +73,9 @@ public class CommercePriceListChannelRelLocalServiceImpl
 		commercePriceListChannelRelPersistence.remove(
 			commercePriceListChannelRel);
 
+		expandoRowLocalService.deleteRows(
+			commercePriceListChannelRel.getCommercePriceListChannelRelId());
+
 		reindexCommercePriceList(
 			commercePriceListChannelRel.getCommercePriceListId());
 

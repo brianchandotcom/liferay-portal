@@ -69,6 +69,9 @@ public class CommercePriceListDiscountRelLocalServiceImpl
 		commercePriceListDiscountRelPersistence.remove(
 			commercePriceListDiscountRel);
 
+		expandoRowLocalService.deleteRows(
+			commercePriceListDiscountRel.getCommercePriceListDiscountRelId());
+
 		reindexPriceList(commercePriceListDiscountRel.getCommercePriceListId());
 
 		commercePriceListLocalService.cleanPriceListCache(

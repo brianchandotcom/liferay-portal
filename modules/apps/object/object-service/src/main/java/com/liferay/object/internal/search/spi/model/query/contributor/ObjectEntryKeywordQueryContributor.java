@@ -239,9 +239,15 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		if (nestedBooleanQuery.hasClauses()) {
+			BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
+
+			if (searchContext.isAndSearch()) {
+				booleanClauseOccur = BooleanClauseOccur.MUST;
+			}
+
 			booleanQuery.add(
 				new NestedQuery("nestedFieldArray", nestedBooleanQuery),
-				BooleanClauseOccur.SHOULD);
+				booleanClauseOccur);
 			nestedBooleanQuery.add(
 				new TermQueryImpl(
 					"nestedFieldArray.fieldName", objectField.getName()),

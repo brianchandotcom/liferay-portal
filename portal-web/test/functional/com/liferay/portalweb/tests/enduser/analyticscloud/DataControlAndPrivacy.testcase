@@ -156,12 +156,58 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8893 | Test Summary: Able to unsuppress user"
-	@ignore = "true"
 	@priority = "3"
 	test CanUnsuppressUser {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+		}
 
-		// TODO LRAC-8893 CanUnsuppressUser
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to settings and create a suppress request") {
+			ACNavigation.goToSettings();
+
+			ACSettings.createRequestLogByEmail(
+				emailAdresses = "test@liferay.com",
+				jobTypes = "Suppress");
+		}
+
+		task ("Wait for the suppress request be completed") {
+			ACSettings.goToDataControlAndPrivacy();
+
+			Click(locator1 = "ACDataControlAndPrivacy#SUPPRESSED_USERS");
+
+			while (IsElementNotPresent(itemName = "test@liferay.com", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
+				Pause(locator1 = "5000");
+				Refresh();
+			}
+		}
+
+		task ("Unsuppress the user") {
+			Button.click(button = "Unsuppress");
+		}
+
+		task ("Assert that the user was unsuppressed") {
+			ACSettings.createRequestLogByEmail(
+				emailAdresses = "test@liferay.com",
+				jobTypes = "Access");
+
+			ACSettings.goToDataControlAndPrivacy();
+
+			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
+
+			ACSettings.assertRequestLog(
+				emailAdresses = "test@liferay.com",
+				jobType = "Unsuppress");
+
+			ACSettings.assertRequestLog(
+				emailAdresses = "test@liferay.com",
+				jobType = "Access");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8892 | Test Summary: Suppressed user appears in Suppressed User List"

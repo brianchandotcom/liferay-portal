@@ -94,7 +94,7 @@ definition {
 	macro deleteSegment {
 		ACSegments.searchSegment(findSegment = "${searchTerm}");
 
-		Click(locator1 = "ACSegments#SEGMENT_ELLIPSIS");
+		ACUtils.clickKebab();
 
 		Click(locator1 = "ACSegments#DELETE_SEGMENT");
 
@@ -194,7 +194,7 @@ definition {
 		if (!IsTextEqual.isPartialText(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "SEGMENT")) {
 			ACSegments.searchSegment(findSegment = "${searchTerm}");
 
-			Click(locator1 = "ACSegments#SEGMENT_ELLIPSIS");
+			ACUtils.clickKebab();
 		}
 
 		Click(locator1 = "ACSegments#EDIT_SEGMENT");

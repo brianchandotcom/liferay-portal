@@ -207,6 +207,10 @@ definition {
 		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
 
+	macro clickKebab {
+		Click(locator1 = "ACSegments#SEGMENT_ELLIPSIS");
+	}
+
 	macro closeAllSessions {
 		var analyticsCloudAsahCuratorURL = PropsUtil.get("analytics.cloud.asah.curator.url");
 

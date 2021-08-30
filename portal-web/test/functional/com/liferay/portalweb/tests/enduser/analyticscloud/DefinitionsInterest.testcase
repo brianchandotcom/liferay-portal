@@ -101,16 +101,16 @@ definition {
 			var words = "ac keyword 1,ac keyword 2";
 
 			for (var word : list "${words}") {
-		 		ACSettings.addKeywords(keyword = "${word}");
+				ACSettings.addKeywords(keyword = "${word}");
 
-		 		ACSettings.assertKeywords(keyword = "${word}");
+				ACSettings.assertKeywords(keyword = "${word}");
 			}
 		}
 
 		task ("Select the keyword and delete") {
-			for(var n: list "${words}"){
+			for (var n : list "${words}") {
 				ACSettings.deleteKeywordIcon(keyword = "${n}");
-			}	
+			}
 		}
 
 		task ("Assert that all keywords were deleted") {
@@ -127,13 +127,38 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8792 | Test Summary: Delete multiple keywords"
-	@ignore = "true"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete multiple keywords"
 	@priority = "3"
 	test DeleteMultipleKeywords {
+		task ("Open AC") {
+			ACUtils.launchAC();
+		}
 
-		// TODO LRAC-8792 DeleteMultipleKeywords pending implementation
+		task ("Go to settings, definitions and definitions type") {
+			ACNavigation.goToSettings();
 
+			ACSettings.goToDefinitions();
+
+			ACDefinitions.goToDefinitionType(definitionType = "Interests");
+		}
+
+		task ("Add two new keywords") {
+			var words = "ac keyword 1,ac keyword 2";
+
+			for (var word : list "${words}") {
+				ACSettings.addKeywords(keyword = "${word}");
+
+				ACSettings.assertKeywords(keyword = "${word}");
+			}
+		}
+
+		task ("Select all the keywords and delete them") {
+			ACSettings.deleteAllKeywords();
+		}
+
+		task ("Assert that all keywords were deleted") {
+			ACUtils.viewNoResultsMessage(noResultMessage = "You have not added keywords to the blocklist yet.");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8793 | Test Summary: Paginate keyword block list"

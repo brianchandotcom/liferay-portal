@@ -1,0 +1,16 @@
+.container {
+	align-items: center;
+	border: 1px solid gray;
+	display: flex;
+	padding: 10px;
+
+	.content {
+		margin-right: 30px;
+	}
+
+	h1 {
+		color: darkblue;
+		font-family: Arial, Helvetica, sans-serif;
+		font-weight: bold;
+	}
+}

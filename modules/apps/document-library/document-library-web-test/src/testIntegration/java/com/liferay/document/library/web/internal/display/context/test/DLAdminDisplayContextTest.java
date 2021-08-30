@@ -183,6 +183,7 @@ public class DLAdminDisplayContextTest {
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setScopeGroupId(_layout.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 

@@ -111,7 +111,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				InfoCollectionProvider.class,
 				new ObjectEntrySingleFormVariationInfoCollectionProvider(
 					objectDefinition, _objectEntryLocalService,
-					_objectScopeProviderRegistry),
+					_objectFieldLocalService, _objectScopeProviderRegistry),
 				null),
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,

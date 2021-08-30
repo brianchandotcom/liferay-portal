@@ -15,32 +15,32 @@
 package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import org.junit.runner.Description;
 
 /**
  * @author Rafael Praxedes
  */
-public class PortalRunModeClassTestRule extends ClassTestRule<Boolean> {
+public class PortalRunModeClassTestRule extends ClassTestRule<String> {
 
 	public static final PortalRunModeClassTestRule INSTANCE =
 		new PortalRunModeClassTestRule();
 
 	@Override
-	protected void afterClass(Description description, Boolean testMode) {
-		PortalRunMode.setTestMode(testMode);
+	protected void afterClass(Description description, String liferayMode) {
+		SystemProperties.set("liferay.mode", liferayMode);
 	}
 
 	@Override
-	protected Boolean beforeClass(Description description)
+	protected String beforeClass(Description description)
 		throws PortalException {
 
-		Boolean testMode = PortalRunMode.isTestMode();
+		String liferayMode = SystemProperties.get("liferay.mode");
 
-		PortalRunMode.setTestMode(true);
+		SystemProperties.set("liferay.mode", "test");
 
-		return testMode;
+		return liferayMode;
 	}
 
 	private PortalRunModeClassTestRule() {

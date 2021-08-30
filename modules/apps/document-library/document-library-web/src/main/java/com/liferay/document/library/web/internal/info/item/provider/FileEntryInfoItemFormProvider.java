@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.info.item.provider;
 
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -270,7 +269,7 @@ public class FileEntryInfoItemFormProvider
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-					AssetCategory.class.getName())
+					FileEntry.class.getName())
 			).labelInfoLocalizedValue(
 				infoLocalizedValueBuilder.build()
 			).name(

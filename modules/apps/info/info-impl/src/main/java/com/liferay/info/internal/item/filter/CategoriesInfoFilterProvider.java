@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.asset.list.internal.info.filter;
+package com.liferay.info.internal.item.filter;
 
-import com.liferay.asset.list.info.filter.AssetEntryListInfoFilter;
+import com.liferay.info.filter.CategoriesInfoFilter;
 import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -32,26 +31,27 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = InfoFilterProvider.class)
-public class AssetEntryListInfoFilterProvider
-	implements InfoFilterProvider<AssetEntryListInfoFilter> {
+public class CategoriesInfoFilterProvider
+	implements InfoFilterProvider<CategoriesInfoFilter> {
 
 	@Override
-	public AssetEntryListInfoFilter create(Map<String, String[]> values) {
-		AssetEntryListInfoFilter assetEntryListInfoFilter =
-			new AssetEntryListInfoFilter();
+	public CategoriesInfoFilter create(Map<String, String[]> values) {
+		CategoriesInfoFilter categoriesInfoFilter = new CategoriesInfoFilter();
 
-		assetEntryListInfoFilter.setAssetCategoryIds(
-			_getAssetCategoryIds(values));
-		assetEntryListInfoFilter.setKeywords(_getKeywords(values));
+		categoriesInfoFilter.setCategoryIds(_getAssetCategoryIds(values));
 
-		return assetEntryListInfoFilter;
+		return categoriesInfoFilter;
 	}
 
 	private long[][] _getAssetCategoryIds(Map<String, String[]> values) {
 		Set<long[]> assetCategoryIdsSet = new HashSet<>();
 
 		for (Map.Entry<String, String[]> entry : values.entrySet()) {
-			if (!StringUtil.startsWith(entry.getKey(), "category_")) {
+			if (!StringUtil.startsWith(
+					entry.getKey(),
+					CategoriesInfoFilter.FILTER_TYPE_NAME +
+						StringPool.UNDERLINE)) {
+
 				continue;
 			}
 
@@ -63,20 +63,6 @@ public class AssetEntryListInfoFilterProvider
 
 		return assetCategoryIdsSet.toArray(
 			new long[assetCategoryIdsSet.size()][]);
-	}
-
-	private String _getKeywords(Map<String, String[]> values) {
-		Set<String> keywordsSet = new HashSet<>();
-
-		for (Map.Entry<String, String[]> entry : values.entrySet()) {
-			if (!StringUtil.startsWith(entry.getKey(), "keywords_")) {
-				continue;
-			}
-
-			Collections.addAll(keywordsSet, entry.getValue());
-		}
-
-		return StringUtil.merge(keywordsSet, StringPool.SPACE);
 	}
 
 }

@@ -164,13 +164,15 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
 	public void putBuildData(String key, BuildData buildData) {
-		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
+		synchronized (_jsonObject) {
+			JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
-		buildsJSONObject.put(key, buildData.getJSONObject());
+			buildsJSONObject.put(key, buildData.getJSONObject());
 
-		_jsonObject.put("builds", buildsJSONObject);
+			_jsonObject.put("builds", buildsJSONObject);
 
-		_writeJSONObjectFile();
+			_writeJSONObjectFile();
+		}
 	}
 
 	@Override
@@ -181,30 +183,35 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
 	public void putProperties(String key, Properties properties) {
-		JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
-			"properties");
+		synchronized (_jsonObject) {
+			JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
+				"properties");
 
-		propertiesJSONObject.put(key, _toJSONArray(properties));
+			propertiesJSONObject.put(key, _toJSONArray(properties));
 
-		_jsonObject.put("properties", propertiesJSONObject);
+			_jsonObject.put("properties", propertiesJSONObject);
 
-		_writeJSONObjectFile();
+			_writeJSONObjectFile();
+		}
 	}
 
 	@Override
 	public void putWorkspaceGitRepository(
 		String key, WorkspaceGitRepository workspaceGitRepository) {
 
-		JSONObject workspaceGitRepositoriesJSONObject =
-			_jsonObject.getJSONObject("workspace_git_repositories");
+		synchronized (_jsonObject) {
+			JSONObject workspaceGitRepositoriesJSONObject =
+				_jsonObject.getJSONObject("workspace_git_repositories");
 
-		workspaceGitRepositoriesJSONObject.put(
-			key, workspaceGitRepository.getJSONObject());
+			workspaceGitRepositoriesJSONObject.put(
+				key, workspaceGitRepository.getJSONObject());
 
-		_jsonObject.put(
-			"workspace_git_repositories", workspaceGitRepositoriesJSONObject);
+			_jsonObject.put(
+				"workspace_git_repositories",
+				workspaceGitRepositoriesJSONObject);
 
-		_writeJSONObjectFile();
+			_writeJSONObjectFile();
+		}
 	}
 
 	@Override
@@ -314,7 +321,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		return jsonArray;
 	}
 
-	private void _writeJSONObjectFile() {
+	private synchronized void _writeJSONObjectFile() {
 		try {
 			JenkinsResultsParserUtil.write(
 				_jsonObjectFile, _jsonObject.toString());

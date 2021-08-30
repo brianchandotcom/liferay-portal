@@ -253,7 +253,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				ddmDataProviderInstance.get(),
 				DDMRESTDataProviderSettings.class);
 
-		HttpRequest httpRequest = HttpRequest.get(
+		HttpRequest httpRequest = getHttpRequest(
 			buildURL(ddmDataProviderRequest, ddmRESTDataProviderSettings));
 
 		if (StringUtil.startsWith(
@@ -345,6 +345,10 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	protected String getCacheKey(HttpRequest httpRequest) {
 		return httpRequest.url();
+	}
+
+	protected HttpRequest getHttpRequest(String url) {
+		return HttpRequest.get(url);
 	}
 
 	protected Map<String, Object> getParameters(

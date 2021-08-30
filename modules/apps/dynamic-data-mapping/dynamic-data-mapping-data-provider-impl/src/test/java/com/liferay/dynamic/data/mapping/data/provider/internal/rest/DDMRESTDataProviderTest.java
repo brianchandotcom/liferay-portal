@@ -76,7 +76,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Rafael Praxedes
  */
-@PrepareForTest({HttpRequest.class, ResourceBundleUtil.class})
+@PrepareForTest(ResourceBundleUtil.class)
 @RunWith(PowerMockRunner.class)
 public class DDMRESTDataProviderTest extends PowerMockito {
 
@@ -88,7 +88,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		_setUpPortalUtil();
 		_setUpResourceBundleUtil();
 
-		_ddmRESTDataProvider = new DDMRESTDataProvider();
+		_ddmRESTDataProvider = spy(new DDMRESTDataProvider());
 	}
 
 	@Test
@@ -128,16 +128,12 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 			ddmRESTDataProviderSettings
 		);
 
-		mockStatic(HttpRequest.class);
-
-		HttpRequest httpRequest = mock(HttpRequest.class);
-
-		HttpRequest spyHttpRequest = spy(httpRequest);
+		HttpRequest httpRequest = spy(mock(HttpRequest.class));
 
 		when(
-			HttpRequest.get(Matchers.anyString())
+			_ddmRESTDataProvider.getHttpRequest(Matchers.anyString())
 		).thenReturn(
-			spyHttpRequest
+			httpRequest
 		);
 
 		HttpResponse httpResponse = mock(HttpResponse.class);
@@ -145,7 +141,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		HttpResponse spyHttpResponse = spy(httpResponse);
 
 		when(
-			spyHttpRequest.send()
+			httpRequest.send()
 		).thenReturn(
 			spyHttpResponse
 		);
@@ -192,7 +188,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 			String.class);
 
 		Mockito.verify(
-			spyHttpRequest, Mockito.times(1)
+			httpRequest, Mockito.times(1)
 		).basicAuthentication(
 			userNameArgumentCaptor.capture(), passwordArgumentCaptor.capture()
 		);
@@ -206,7 +202,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 			passwordArgumentCaptor.getValue());
 
 		Mockito.verify(
-			spyHttpRequest, Mockito.times(1)
+			httpRequest, Mockito.times(1)
 		).send();
 
 		Mockito.verify(
@@ -354,16 +350,12 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 			ddmRESTDataProviderSettings
 		);
 
-		mockStatic(HttpRequest.class);
-
-		HttpRequest httpRequest = mock(HttpRequest.class);
-
-		HttpRequest spyHttpRequest = spy(httpRequest);
+		HttpRequest httpRequest = spy(mock(HttpRequest.class));
 
 		when(
-			HttpRequest.get(Matchers.anyString())
+			_ddmRESTDataProvider.getHttpRequest(Matchers.anyString())
 		).thenReturn(
-			spyHttpRequest
+			httpRequest
 		);
 
 		HttpResponse httpResponse = mock(HttpResponse.class);
@@ -371,7 +363,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		HttpResponse spyHttpResponse = spy(httpResponse);
 
 		when(
-			spyHttpRequest.send()
+			httpRequest.send()
 		).thenReturn(
 			spyHttpResponse
 		);
@@ -525,14 +517,10 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		_ddmRESTDataProvider.ddmDataProviderInstanceSettings =
 			ddmDataProviderInstanceSettings;
 
-		mockStatic(HttpRequest.class);
-
-		HttpException httpException = new HttpException(new ConnectException());
-
 		when(
-			HttpRequest.get(Matchers.anyString())
+			_ddmRESTDataProvider.getHttpRequest(Matchers.anyString())
 		).thenThrow(
-			httpException
+			new HttpException(new ConnectException())
 		);
 
 		DDMDataProviderResponse ddmDataProviderResponse =
@@ -599,14 +587,10 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		_ddmRESTDataProvider.ddmDataProviderInstanceSettings =
 			ddmDataProviderInstanceSettings;
 
-		mockStatic(HttpRequest.class);
-
-		HttpException httpException = new HttpException(new Exception());
-
 		when(
-			HttpRequest.get(Matchers.anyString())
+			_ddmRESTDataProvider.getHttpRequest(Matchers.anyString())
 		).thenThrow(
-			httpException
+			new HttpException(new Exception())
 		);
 
 		_ddmRESTDataProvider.getData(ddmDataProviderRequest);

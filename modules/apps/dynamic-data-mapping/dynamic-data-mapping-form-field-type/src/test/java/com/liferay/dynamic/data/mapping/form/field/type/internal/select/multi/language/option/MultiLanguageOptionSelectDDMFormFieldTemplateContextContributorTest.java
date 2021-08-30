@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,6 +34,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.api.support.membermodification.MemberMatcher;
@@ -114,9 +114,9 @@ public class
 	}
 
 	private void _mockGetModuleAndPortalResourceBundle(
-		Locale locale, KeyValuePair... keyValuePairs) {
+		Locale locale, Map<String, String> optionLabels) {
 
-		ResourceBundle resourceBundle = _mockResourceBundle(keyValuePairs);
+		ResourceBundle resourceBundle = _mockResourceBundle(optionLabels);
 
 		PowerMockito.when(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
@@ -126,19 +126,25 @@ public class
 		);
 	}
 
-	private ResourceBundle _mockResourceBundle(KeyValuePair... keyValuePairs) {
+	private ResourceBundle _mockResourceBundle(
+		Map<String, String> optionLabels) {
+
 		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
 
-		Stream.of(
-			keyValuePairs
-		).forEach(
-			keyValuePair -> PowerMockito.when(
-				LanguageUtil.get(
-					Matchers.eq(resourceBundle),
-					Matchers.eq(keyValuePair.getKey()))
-			).thenReturn(
-				keyValuePair.getValue()
-			)
+		PowerMockito.when(
+			LanguageUtil.get(Matchers.eq(resourceBundle), Matchers.anyString())
+		).then(
+			new Answer<String>() {
+
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] arguments = invocationOnMock.getArguments();
+
+					return optionLabels.get((String)arguments[1]);
+				}
+
+			}
 		);
 
 		return resourceBundle;
@@ -188,17 +194,31 @@ public class
 		PowerMockito.mockStatic(ResourceBundleUtil.class);
 
 		_mockGetModuleAndPortalResourceBundle(
-			LocaleUtil.BRAZIL, new KeyValuePair("address", "Endereço"),
-			new KeyValuePair("city", "Cidade"),
-			new KeyValuePair("country", "País"),
-			new KeyValuePair("postal-code", "CEP"),
-			new KeyValuePair("state", "Estado"));
+			LocaleUtil.BRAZIL,
+			HashMapBuilder.put(
+				"address", "Endereço"
+			).put(
+				"city", "Cidade"
+			).put(
+				"country", "País"
+			).put(
+				"postal-code", "CEP"
+			).put(
+				"state", "Estado"
+			).build());
 		_mockGetModuleAndPortalResourceBundle(
-			LocaleUtil.US, new KeyValuePair("address", "Address"),
-			new KeyValuePair("city", "City"),
-			new KeyValuePair("country", "Country"),
-			new KeyValuePair("postal-code", "Postal Code"),
-			new KeyValuePair("state", "State"));
+			LocaleUtil.US,
+			HashMapBuilder.put(
+				"address", "Address"
+			).put(
+				"city", "City"
+			).put(
+				"country", "Country"
+			).put(
+				"postal-code", "Postal Code"
+			).put(
+				"state", "State"
+			).build());
 	}
 
 	private final

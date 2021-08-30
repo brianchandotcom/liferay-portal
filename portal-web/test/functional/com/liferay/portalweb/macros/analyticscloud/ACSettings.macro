@@ -429,7 +429,9 @@ definition {
 	}
 
 	macro deleteKeywordIcon {
-		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+		var key_KeywordName = "${keyword}";
+
+		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");

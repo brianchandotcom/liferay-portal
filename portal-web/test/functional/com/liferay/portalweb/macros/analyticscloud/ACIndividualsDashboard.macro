@@ -21,10 +21,22 @@ definition {
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
+	macro assertIndividualAttributeValue {
+		var key_individualAttribute = "${individualAttribute}";
+		AssertTextEquals(
+			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE_VALUE",
+			value1 = "${individualAttributeValue}");
+	}
+
 	macro assertIndividualsActivitiesTimeRange {
 		var key_timeRange = "${timeRange}";
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_TIME_RANGE");
+	}
+
+	macro assertNoIndividualAttribute {
+		var key_individualAttribute = "${individualAttribute}";
+		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
 	macro clickBreakdownTab {
@@ -37,6 +49,19 @@ definition {
 		Click(
 			breakdownName = "${breakdownName}",
 			locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
+	}
+
+	macro filterKnownIndividualList {
+		Click(
+			key_rowName = "${rowName}",
+			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTES_FILTER");
+
+		if (isSet(desc)) {
+			AssertElementPresent(locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_FILTER_ARROW_DESC");
+		}
+		else {
+			AssertElementPresent(locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_FILTER_ARROW_ASC");
+		}
 	}
 
 	macro getChartPopoverDate {
@@ -172,6 +197,19 @@ definition {
 		AssertVisible(
 			locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_EMAIL",
 			userEmailAddress = "${userEmailAddress}");
+	}
+
+	macro viewKnownIndividualSpecificOrder {
+		var resultOrder = "0";
+
+		for (var itemName : list "${itemName}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertVisible(
+				key_itemName = "${itemName}",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_VIEW_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}");
+		}
 	}
 
 	macro viewRechartsBarOnIndividualsActivitiesChart {

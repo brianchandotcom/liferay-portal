@@ -109,6 +109,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.upload.UploadResponseHandler;
 
@@ -374,12 +375,21 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long repositoryId = ParamUtil.getLong(
+			uploadPortletRequest, "repositoryId");
+
+		boolean neverExpireDefaultValue = false;
+
+		if (RepositoryUtil.isExternalRepository(repositoryId)) {
+			neverExpireDefaultValue = true;
+		}
+
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
 		Date expirationDate = _getExpirationDate(
-			uploadPortletRequest, false, user.getTimeZone());
+			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
 		Date reviewDate = _getReviewDate(
-			uploadPortletRequest, false, user.getTimeZone());
+			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
 
 		for (String selectedFileName : selectedFileNames) {
 			_addMultipleFileEntries(
@@ -1197,7 +1207,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			boolean addDynamic = false;
 
-			if (cmd.equals(Constants.ADD_DYNAMIC)) {
+			if (cmd.equals(Constants.ADD_DYNAMIC) ||
+				RepositoryUtil.isExternalRepository(repositoryId)) {
+
 				addDynamic = true;
 			}
 

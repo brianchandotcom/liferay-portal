@@ -160,13 +160,13 @@ public class CommerceDiscountQualifiersDisplayContext
 		return "all";
 	}
 
-	public String getDiscountAccountGroupsApiURL() throws PortalException {
+	public String getDiscountAccountGroupsAPIURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() +
 				"/discount-account-groups?nestedFields=accountGroup";
 	}
 
-	public String getDiscountAccountsApiURL() throws PortalException {
+	public String getDiscountAccountsAPIURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() + "/discount-accounts?nestedFields=account";
 	}
@@ -190,7 +190,7 @@ public class CommerceDiscountQualifiersDisplayContext
 			false);
 	}
 
-	public String getDiscountChannelsApiURL() throws PortalException {
+	public String getDiscountChannelsAPIURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() + "/discount-channels?nestedFields=channel";
 	}
@@ -206,7 +206,7 @@ public class CommerceDiscountQualifiersDisplayContext
 				"delete", "headless"));
 	}
 
-	public String getDiscountOrderTypesApiURL() throws PortalException {
+	public String getDiscountOrderTypesAPIURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() +
 				"/discount-order-types?nestedFields=orderType";

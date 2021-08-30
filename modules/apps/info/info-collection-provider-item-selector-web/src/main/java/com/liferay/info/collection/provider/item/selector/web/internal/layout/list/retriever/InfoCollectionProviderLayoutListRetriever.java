@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -122,13 +123,13 @@ public class InfoCollectionProviderLayoutListRetriever
 		collectionQuery.setPagination(paginationOptional.orElse(null));
 
 		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			FilteredInfoCollectionProvider<Object, InfoFilter>
+			FilteredInfoCollectionProvider<Object>
 				filteredInfoCollectionProvider =
-					(FilteredInfoCollectionProvider<Object, InfoFilter>)
+					(FilteredInfoCollectionProvider<Object>)
 						infoCollectionProvider;
 
-			collectionQuery.setInfoFilter(
-				_getInfoFilter(
+			collectionQuery.setInfoFilters(
+				_getInfoFilters(
 					filteredInfoCollectionProvider,
 					layoutListRetrieverContext));
 		}
@@ -198,13 +199,13 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			FilteredInfoCollectionProvider<Object, InfoFilter>
+			FilteredInfoCollectionProvider<Object>
 				filteredInfoCollectionProvider =
-					(FilteredInfoCollectionProvider<Object, InfoFilter>)
+					(FilteredInfoCollectionProvider<Object>)
 						infoCollectionProvider;
 
-			collectionQuery.setInfoFilter(
-				_getInfoFilter(
+			collectionQuery.setInfoFilters(
+				_getInfoFilters(
 					filteredInfoCollectionProvider,
 					layoutListRetrieverContext));
 		}
@@ -213,6 +214,36 @@ public class InfoCollectionProviderLayoutListRetriever
 			collectionQuery);
 
 		return infoPage.getTotalCount();
+	}
+
+	@Override
+	public List<InfoFilter> getSupportedInfoFilters(
+		KeyListObjectReference keyListObjectReference) {
+
+		InfoCollectionProvider<Object> infoCollectionProvider =
+			_infoItemServiceTracker.getInfoItemService(
+				InfoCollectionProvider.class, keyListObjectReference.getKey());
+
+		if (infoCollectionProvider == null) {
+			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				keyListObjectReference.getKey());
+		}
+
+		if (infoCollectionProvider == null) {
+			return Collections.emptyList();
+		}
+
+		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
+			FilteredInfoCollectionProvider<Object>
+				filteredInfoCollectionProvider =
+					(FilteredInfoCollectionProvider<Object>)
+						infoCollectionProvider;
+
+			return filteredInfoCollectionProvider.getSupportedInfoFilters();
+		}
+
+		return Collections.emptyList();
 	}
 
 	private AssetEntry _getAssetEntryOptional(Object contextObject) {
@@ -258,9 +289,8 @@ public class InfoCollectionProviderLayoutListRetriever
 			className, classPKInfoItemIdentifier.getClassPK());
 	}
 
-	private InfoFilter _getInfoFilter(
-		FilteredInfoCollectionProvider<Object, InfoFilter>
-			filteredInfoCollectionProvider,
+	private Map<String, InfoFilter> _getInfoFilters(
+		FilteredInfoCollectionProvider<Object> filteredInfoCollectionProvider,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
 		Optional<Map<String, String[]>> filterValuesOptional =
@@ -269,19 +299,25 @@ public class InfoCollectionProviderLayoutListRetriever
 		Map<String, String[]> filterValues = filterValuesOptional.orElse(null);
 
 		if (filterValues == null) {
-			return null;
+			return Collections.emptyMap();
 		}
 
-		InfoFilterProvider<?> infoFilterProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoFilterProvider.class,
-				filteredInfoCollectionProvider.getInfoFilterClassName());
+		Map<String, InfoFilter> infoFilters = new HashMap<>();
 
-		if (infoFilterProvider != null) {
-			return null;
+		for (InfoFilter infoFilter :
+				filteredInfoCollectionProvider.getSupportedInfoFilters()) {
+
+			Class<?> clazz = infoFilter.getClass();
+
+			InfoFilterProvider<?> infoFilterProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoFilterProvider.class, clazz.getName());
+
+			infoFilters.put(
+				clazz.getName(), infoFilterProvider.create(filterValues));
 		}
 
-		return infoFilterProvider.create(filterValues);
+		return infoFilters;
 	}
 
 	private String _getModelClassName(Object contextObject) {

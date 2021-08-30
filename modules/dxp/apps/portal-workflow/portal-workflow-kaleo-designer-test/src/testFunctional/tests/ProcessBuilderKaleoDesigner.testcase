@@ -535,6 +535,7 @@ definition {
 	@description = "Verify that newly created transition has default name -connector#-"
 	@priority = "3"
 	test ConnectorHasDefaultName {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ConnectorHasDefaultName";
 
 		ApplicationsMenu.gotoPortlet(

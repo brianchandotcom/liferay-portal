@@ -235,6 +235,8 @@ definition {
 	@description = "This is a use case for LPS-26982."
 	@priority = "4"
 	test AssertFieldValuesNotLostDuringReviewTask {
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
@@ -1595,6 +1597,8 @@ definition {
 
 	@priority = "3"
 	test CompleteProcessAndAssertFieldOrder {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

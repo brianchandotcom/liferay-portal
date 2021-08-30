@@ -178,6 +178,8 @@ definition {
 	@description = "Verify that the user is able to order by Resource"
 	@priority = "3"
 	test CanOrderByResource {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -247,6 +249,8 @@ definition {
 	@description = "Verify that the user is able to reverse sort direction"
 	@priority = "2"
 	test CanReverseSortDirection {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

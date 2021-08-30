@@ -71,6 +71,15 @@ definition {
 		}
 	}
 
+	macro assertDropdownItem {
+		var key_dropdownItem = "${menuItem}";
+		
+		AssertTextEquals(
+			locator1 = "ACUtils#DROPDOWN_ITEM",
+			value1 = "${menuItem}"
+		);
+	}
+
 	macro assertEventNotPresent {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]","$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");

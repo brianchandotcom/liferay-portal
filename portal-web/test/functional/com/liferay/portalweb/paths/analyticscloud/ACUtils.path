@@ -85,6 +85,12 @@
 	<td>xpath=(//*[contains(@class,'recharts-pie-labels')])[${key_index}]//*[contains(text(),'${key_percentage}')]</td>
 	<td></td>
 </tr>
+<!-- CLICKABLE -->
+<tr>
+	<td>DROPDOWN_ITEM</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//*[text()='${key_dropdownItem}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

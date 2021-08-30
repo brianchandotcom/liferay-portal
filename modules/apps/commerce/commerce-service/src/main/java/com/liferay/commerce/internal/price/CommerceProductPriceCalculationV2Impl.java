@@ -462,8 +462,7 @@ public class CommerceProductPriceCalculationV2Impl
 	}
 
 	private BigDecimal _getBasePrice(
-			long cpInstanceId, CommerceCurrency commerceCurrency,
-			String commercePriceListType)
+			long cpInstanceId, CommerceCurrency commerceCurrency, String type)
 		throws PortalException {
 
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
@@ -472,7 +471,7 @@ public class CommerceProductPriceCalculationV2Impl
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.
 				fetchCatalogBaseCommercePriceListByType(
-					cpInstance.getGroupId(), commercePriceListType);
+					cpInstance.getGroupId(), type);
 
 		if (commercePriceList == null) {
 			return BigDecimal.ZERO;
@@ -842,7 +841,7 @@ public class CommerceProductPriceCalculationV2Impl
 	}
 
 	private CommercePriceListDiscovery _getCommercePriceListDiscovery(
-			String commercePriceListType)
+			String type)
 		throws PortalException {
 
 		CommercePricingConfiguration commercePricingConfiguration =
@@ -851,15 +850,11 @@ public class CommerceProductPriceCalculationV2Impl
 
 		String discoveryMethod = CommercePricingConstants.ORDER_BY_HIERARCHY;
 
-		if (commercePriceListType.equals(
-				CommercePriceListConstants.TYPE_PRICE_LIST)) {
-
+		if (type.equals(CommercePriceListConstants.TYPE_PRICE_LIST)) {
 			discoveryMethod =
 				commercePricingConfiguration.commercePriceListDiscovery();
 		}
-		else if (commercePriceListType.equals(
-					CommercePriceListConstants.TYPE_PROMOTION)) {
-
+		else if (type.equals(CommercePriceListConstants.TYPE_PROMOTION)) {
 			discoveryMethod =
 				commercePricingConfiguration.commercePromotionDiscovery();
 		}

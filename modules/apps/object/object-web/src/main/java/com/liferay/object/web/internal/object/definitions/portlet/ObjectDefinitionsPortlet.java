@@ -15,20 +15,11 @@
 package com.liferay.object.web.internal.object.definitions.portlet;
 
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -52,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/object_definitions/view_object_definitions.jsp",
+		"javax.portlet.init-param.view-template=/object_definitions/view.jsp",
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
@@ -60,21 +51,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class ObjectDefinitionsPortlet extends MVCPortlet {
-
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new ViewObjectDefinitionsDisplayContext(
-				_portal.getHttpServletRequest(renderRequest)));
-
-		super.render(renderRequest, renderResponse);
-	}
-
-	@Reference
-	private Portal _portal;
-
 }

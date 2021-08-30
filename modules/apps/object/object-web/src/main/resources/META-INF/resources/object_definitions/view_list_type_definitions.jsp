@@ -17,14 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
 ViewListTypeDefinitionsDisplayContext viewListTypeDefinitionsDisplayContext = (ViewListTypeDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
-
-renderResponse.setTitle(LanguageUtil.get(request, "picklist"));
 %>
 
 <clay:headless-data-set-display

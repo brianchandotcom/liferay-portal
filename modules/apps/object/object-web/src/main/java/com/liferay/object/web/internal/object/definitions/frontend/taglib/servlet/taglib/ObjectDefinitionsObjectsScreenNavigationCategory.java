@@ -16,8 +16,10 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
-import com.liferay.object.web.internal.object.definitions.display.context.ViewListTypeDefinitionsDisplayContext;
+import com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -31,36 +33,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Albuquerque
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=30",
+		"screen.navigation.category.order:Integer=10",
 		"screen.navigation.entry.order:Integer=10"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class ObjectDefinitionPicklistsScreenNavigationCategory
-	extends BaseObjectDefinitionsScreenNavigationEntry
-	implements ScreenNavigationCategory {
+public class ObjectDefinitionsObjectsScreenNavigationCategory
+	implements ScreenNavigationCategory,
+			   ScreenNavigationEntry<ObjectDefinition> {
 
 	@Override
 	public String getCategoryKey() {
 		return ObjectDefinitionsScreenNavigationEntryConstants.
-			CATEGORY_KEY_PICKLISTS;
+			CATEGORY_KEY_OBJECTS;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return ObjectDefinitionsScreenNavigationEntryConstants.
-			ENTRY_KEY_PICKLISTS;
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/object_definitions/object_definition/picklists.jsp";
+			ENTRY_KEY_OBJECTS;
 	}
 
 	@Override
@@ -68,7 +66,13 @@ public class ObjectDefinitionPicklistsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "picklists");
+		return LanguageUtil.get(resourceBundle, "objects");
+	}
+
+	@Override
+	public String getScreenNavigationKey() {
+		return ObjectDefinitionsScreenNavigationEntryConstants.
+			SCREEN_NAVIGATION_KEY_OBJECTS;
 	}
 
 	@Override
@@ -79,9 +83,14 @@ public class ObjectDefinitionPicklistsScreenNavigationCategory
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new ViewListTypeDefinitionsDisplayContext(httpServletRequest));
+			new ViewObjectDefinitionsDisplayContext(httpServletRequest));
 
-		super.render(httpServletRequest, httpServletResponse);
+		_jspRenderer.renderJSP(
+			httpServletRequest, httpServletResponse,
+			"/object_definitions/view_object_definitions.jsp");
 	}
+
+	@Reference
+	private JSPRenderer _jspRenderer;
 
 }

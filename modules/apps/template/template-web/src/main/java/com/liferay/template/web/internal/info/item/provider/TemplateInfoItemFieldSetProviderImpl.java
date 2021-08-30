@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -31,6 +32,8 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,10 +95,22 @@ public class TemplateInfoItemFieldSetProviderImpl
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		try {
-			return _ddmTemplateLocalService.getTemplates(
+			List<DDMTemplate> allVariationTemplates =
+				_ddmTemplateLocalService.getTemplates(
 					themeDisplay.getScopeGroupId(),
 					_portal.getClassNameId(itemClassName),
 					GetterUtil.getLong(itemVariationKey), true);
+
+			Stream<DDMTemplate> allVariationTemplatesStream =
+				allVariationTemplates.stream();
+
+			return allVariationTemplatesStream.filter(
+				ddmTemplate ->
+					ddmTemplate.getResourceClassNameId() ==
+						_getInfoItemFormProviderClassNameId()
+			).collect(
+				Collectors.toList()
+			);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -103,8 +118,21 @@ public class TemplateInfoItemFieldSetProviderImpl
 		}
 	}
 
+	private long _getInfoItemFormProviderClassNameId() {
+		if (_infoItemFormProviderClassNameId != null) {
+			return _infoItemFormProviderClassNameId;
+		}
+
+		_infoItemFormProviderClassNameId = _portal.getClassNameId(
+			InfoItemFormProvider.class.getName());
+
+		return _infoItemFormProviderClassNameId;
+	}
+
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	private Long _infoItemFormProviderClassNameId;
 
 	@Reference
 	private Portal _portal;

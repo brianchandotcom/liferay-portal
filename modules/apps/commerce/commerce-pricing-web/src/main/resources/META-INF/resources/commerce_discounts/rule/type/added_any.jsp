@@ -22,4 +22,4 @@ AddedAnyCommerceDiscountRuleDisplayContext addedAnyCommerceDiscountRuleDisplayCo
 CommerceDiscountRule commerceDiscountRule = addedAnyCommerceDiscountRuleDisplayContext.getCommerceDiscountRule();
 %>
 
-<%@ include file="/discount/rule/type/products.jspf" %>
+<%@ include file="/commerce_discounts/rule/type/products.jspf" %>

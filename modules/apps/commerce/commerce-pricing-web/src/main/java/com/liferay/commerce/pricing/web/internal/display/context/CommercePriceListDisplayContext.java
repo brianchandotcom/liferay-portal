@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -178,12 +177,6 @@ public class CommercePriceListDisplayContext
 
 		headerActionModels.add(cancelHeaderActionModel);
 
-		ActionURL actionURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
-		).setActionName(
-			"/commerce_price_list/edit_commerce_price_list"
-		).buildActionURL();
-
 		String saveButtonLabel = "save";
 
 		CommercePriceList commercePriceList = getCommercePriceList();
@@ -197,7 +190,12 @@ public class CommercePriceListDisplayContext
 
 		HeaderActionModel saveAsDraftHeaderActionModel = new HeaderActionModel(
 			null, liferayPortletResponse.getNamespace() + "fm",
-			actionURL.toString(), null, saveButtonLabel);
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/commerce_price_list/edit_commerce_price_list"
+			).buildString(),
+			null, saveButtonLabel);
 
 		headerActionModels.add(saveAsDraftHeaderActionModel);
 
@@ -222,7 +220,11 @@ public class CommercePriceListDisplayContext
 
 		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
 			additionalClasses, liferayPortletResponse.getNamespace() + "fm",
-			actionURL.toString(),
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/commerce_price_list/edit_commerce_price_list"
+			).buildString(),
 			liferayPortletResponse.getNamespace() + "publishButton",
 			publishButtonLabel);
 

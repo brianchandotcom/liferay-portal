@@ -1,0 +1,24 @@
+{
+	"description": "Manage nonresidential real estate for others, such as commercial buildings",
+	"externalReferenceCode": "RAYCAT0006",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"properties": [
+		{
+			"key": "NAICS",
+			"value": "531110"
+		},
+		{
+			"key": "Segment",
+			"value": "Habitational"
+		}
+	],
+	"title": "Nonresidential Property Manager"
+}

@@ -1,0 +1,13 @@
+{
+	"externalReferenceCode": "RAYCAT0020",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"title": "Commercial Auto"
+}

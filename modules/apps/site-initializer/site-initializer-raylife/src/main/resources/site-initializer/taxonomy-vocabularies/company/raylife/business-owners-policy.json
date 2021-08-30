@@ -1,0 +1,13 @@
+{
+	"externalReferenceCode": "RAYCAT0001",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"title": "Business Owners Policy"
+}

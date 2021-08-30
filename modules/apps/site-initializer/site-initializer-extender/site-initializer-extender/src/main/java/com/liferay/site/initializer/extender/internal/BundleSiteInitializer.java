@@ -195,42 +195,63 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addAssetCategories(
-			long groupId, long vocabularyId, String parentResourcePath,
-			ServiceContext serviceContext)
+			long groupId, long vocabularyId, long parentCategoryId,
+			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			_read(parentResourcePath + "asset-categories.json"));
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			parentResourcePath);
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			String titleCategory = null;
-			String externalReferenceCodeCategory = null;
-			JSONArray subcategoriesJSONArray = null;
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
 
-			JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
-
-			if (categoryJSONObject != null) {
-				titleCategory = categoryJSONObject.getString("title");
-
-				externalReferenceCodeCategory = categoryJSONObject.getString(
-					"externalReferenceCode");
-
-				subcategoriesJSONArray = categoryJSONObject.getJSONArray(
-					"subcategories");
-			}
-			else {
-				titleCategory = jsonArray.getString(i);
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith("/")) {
+				continue;
 			}
 
-			AssetCategory assetCategory = _addAssetCategory(
-				vocabularyId, new String[0], null,
-				externalReferenceCodeCategory, groupId,
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				serviceContext, titleCategory);
+			JSONObject categoryJSONObject = JSONFactoryUtil.createJSONObject(
+				_read(resourcePath));
 
 			if (categoryJSONObject == null) {
 				continue;
 			}
+
+			String descriptionCategory = categoryJSONObject.getString(
+				"description");
+
+			String titleCategory = categoryJSONObject.getString("title");
+
+			String externalReferenceCodeCategory = categoryJSONObject.getString(
+				"externalReferenceCode");
+
+			JSONArray propertiesJSONArray = categoryJSONObject.getJSONArray(
+				"properties");
+
+			String[] properties = new String[0];
+
+			if (propertiesJSONArray != null) {
+				properties = new String[propertiesJSONArray.length()];
+
+				for (int x = 0; x < propertiesJSONArray.length(); x++) {
+					JSONObject propertyJSONObject =
+						propertiesJSONArray.getJSONObject(x);
+
+					String key = propertyJSONObject.getString("key");
+					String value = propertyJSONObject.getString("value");
+
+					properties[x] = StringBundler.concat(
+						key,
+						AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR,
+						value);
+				}
+			}
+
+			AssetCategory assetCategory = _addAssetCategory(
+				vocabularyId, properties, descriptionCategory,
+				externalReferenceCodeCategory, groupId, parentCategoryId,
+				serviceContext, titleCategory);
 
 			JSONArray permissionsJSONArray = categoryJSONObject.getJSONArray(
 				"permissions");
@@ -245,59 +266,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					permissionsJSONArray);
 			}
 
-			if (subcategoriesJSONArray != null) {
-				for (int y = 0; y < subcategoriesJSONArray.length(); y++) {
-					JSONObject subcategoryJSONObject =
-						subcategoriesJSONArray.getJSONObject(y);
+			String resourcePathCategories = StringUtil.replace(
+				resourcePath, ".json", "/");
 
-					String descriptionSubcategory =
-						subcategoryJSONObject.getString("description");
-
-					String titleSubcategory = subcategoryJSONObject.getString(
-						"title");
-
-					String externalReferenceCodeSubcategory =
-						subcategoryJSONObject.getString(
-							"externalReferenceCode");
-
-					JSONArray propertiesJSONArray =
-						subcategoryJSONObject.getJSONArray("properties");
-
-					String[] properties =
-						new String[propertiesJSONArray.length()];
-
-					for (int x = 0; x < propertiesJSONArray.length(); x++) {
-						JSONObject propertyJSONObject =
-							propertiesJSONArray.getJSONObject(x);
-
-						String key = propertyJSONObject.getString("key");
-						String value = propertyJSONObject.getString("value");
-
-						properties[x] = StringBundler.concat(
-							key,
-							AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR,
-							value);
-					}
-
-					AssetCategory subassetcategory = _addAssetCategory(
-						vocabularyId, properties, descriptionSubcategory,
-						externalReferenceCodeSubcategory, groupId,
-						assetCategory.getCategoryId(), serviceContext,
-						titleSubcategory);
-
-					JSONArray subcategorypermissionsJSONArray =
-						subcategoryJSONObject.getJSONArray("permissions");
-
-					if ((subcategorypermissionsJSONArray != null) &&
-						(subcategorypermissionsJSONArray.length() > 0)) {
-
-						_updatePermissions(
-							subassetcategory.getCompanyId(),
-							subassetcategory.getModelClassName(),
-							String.valueOf(subassetcategory.getCategoryId()),
-							subcategorypermissionsJSONArray);
-					}
-				}
+			if (resourcePaths.contains(resourcePathCategories)) {
+				_addAssetCategories(
+					groupId, vocabularyId, assetCategory.getCategoryId(),
+					resourcePathCategories, serviceContext);
 			}
 		}
 	}
@@ -613,8 +588,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			String jsonVocabulary = _read(
-				resourcePath + "taxonomy-vocabulary.json");
+			if (resourcePath.endsWith("/")) {
+				continue;
+			}
+
+			String jsonVocabulary = _read(resourcePath);
 
 			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
 				jsonVocabulary);
@@ -644,8 +622,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			_addAssetCategories(
-				groupId, taxonomyVocabulary.getId(), resourcePath,
-				serviceContext);
+				groupId, taxonomyVocabulary.getId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				StringUtil.replace(resourcePath, ".json", "/"), serviceContext);
 		}
 	}
 

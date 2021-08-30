@@ -1,0 +1,24 @@
+{
+	"description": "Provide photography services",
+	"externalReferenceCode": "RAYCAT0015",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"properties": [
+		{
+			"key": "NAICS",
+			"value": "541922"
+		},
+		{
+			"key": "Segment",
+			"value": "Service"
+		}
+	],
+	"title": "Photographers"
+}

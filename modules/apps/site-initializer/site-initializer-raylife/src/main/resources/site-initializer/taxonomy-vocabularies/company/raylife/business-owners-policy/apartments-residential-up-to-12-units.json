@@ -1,0 +1,20 @@
+{
+	"description": "Own an apartment that has up to 12 residential units",
+	"externalReferenceCode": "RAYCAT0007",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"properties": [
+		{
+			"key": "Segment",
+			"value": "Habitational"
+		}
+	],
+	"title": "Apartments - Residential - Up to 12 Units"
+}

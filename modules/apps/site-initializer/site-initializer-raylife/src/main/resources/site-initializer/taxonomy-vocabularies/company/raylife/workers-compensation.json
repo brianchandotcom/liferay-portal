@@ -1,0 +1,13 @@
+{
+	"externalReferenceCode": "RAYCAT0024",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"title": "Workers Compensation"
+}

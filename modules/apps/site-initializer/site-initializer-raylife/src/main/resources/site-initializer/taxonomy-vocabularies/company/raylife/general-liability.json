@@ -1,0 +1,13 @@
+{
+	"externalReferenceCode": "RAYCAT0022",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"title": "General Liability"
+}

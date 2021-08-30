@@ -1,0 +1,24 @@
+{
+	"description": "Primarily sell flowers, plants, and gardening supplies",
+	"externalReferenceCode": "RAYCAT0011",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"properties": [
+		{
+			"key": "NAICS",
+			"value": "424930"
+		},
+		{
+			"key": "Segment",
+			"value": "Wholesale"
+		}
+	],
+	"title": "Flower, Nursery Stock and Florist Supplies - Wholesale"
+}

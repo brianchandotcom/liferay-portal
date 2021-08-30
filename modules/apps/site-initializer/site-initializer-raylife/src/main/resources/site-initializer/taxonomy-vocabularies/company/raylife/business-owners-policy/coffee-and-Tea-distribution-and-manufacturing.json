@@ -1,0 +1,24 @@
+{
+	"description": "Manufacture and distribute coffee and/or tea",
+	"externalReferenceCode": "RAYCAT0009",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"properties": [
+		{
+			"key": "NAICS",
+			"value": "311920"
+		},
+		{
+			"key": "Segment",
+			"value": "Retail"
+		}
+	],
+	"title": "Coffee and Tea - Distribution and Manufacturing"
+}

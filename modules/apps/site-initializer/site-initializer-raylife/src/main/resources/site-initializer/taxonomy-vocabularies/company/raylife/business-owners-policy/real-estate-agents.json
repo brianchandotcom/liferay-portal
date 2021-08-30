@@ -1,0 +1,24 @@
+{
+	"description": "Sell commercial and residential properties",
+	"externalReferenceCode": "RAYCAT0016",
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"properties": [
+		{
+			"key": "NAICS",
+			"value": "531210"
+		},
+		{
+			"key": "Segment",
+			"value": "Service"
+		}
+	],
+	"title": "Real Estate Agents"
+}

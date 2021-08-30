@@ -8577,87 +8577,34 @@ virtualHostname="localhost"
 	</target>
 
 	<target name="merge-test-results">
-		<local name="dest.dir" />
+		<mkdir dir="test-results" />
 
-		<property location="test-results/src" name="dest.dir" />
+		<path id="junit.reports.paths">
+			<multirootfileset erroronmissingdir="false">
+				<basedir file="modules" />
+				<basedir file="portal-impl/test-results" />
+				<basedir file="portal-kernel/test-results" />
+				<basedir file="portal-web/test-results" />
+				<basedir file="tools/tck/test-results" />
+				<basedir file="util-java/test-results" />
+				<basedir file="util-taglib/test-results" />
+				<basedir file="${blade.samples.dir}/liferay-workspace/tests" />
+				<basedir file="${liferay.jenkins.dir}/commands/custom-scripts/test-results" />
+				<basedir file="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" />
+				<basedir file="${liferay.faces.bridge.impl.dir}/test/integration" />
+				<basedir file="${liferay.faces.portal.dir}/test/integration" />
+				<exclude name="**/node_modules/**/TEST-*.xml" />
+				<include name="**/TEST-*.xml" />
+			</multirootfileset>
+		</path>
 
-		<mkdir dir="${dest.dir}" />
+		<pathtofileset dir="${basedir}" name="junit.reports.fileset" pathrefid="junit.reports.paths" />
 
 		<for param="test.results.file">
 			<path>
 				<fileset
-					dir="modules"
-					erroronmissingdir="false"
-				>
-					<exclude name="**/node_modules/**/TEST-*.xml" />
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="portal-impl/test-results"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="portal-kernel/test-results"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="portal-web/test-results"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="tools/tck/test-results"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="util-java/test-results"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="util-taglib/test-results"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="${blade.samples.dir}/liferay-workspace/tests"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="${liferay.jenkins.dir}/commands/custom-scripts/test-results"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="${liferay.faces.bridge.impl.dir}/test/integration"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
-				<fileset
-					dir="${liferay.faces.portal.dir}/test/integration"
-					erroronmissingdir="false"
-				>
-					<include name="**/TEST-*.xml" />
-				</fileset>
+					refid="junit.reports.fileset"
+				/>
 			</path>
 			<sequential>
 				<beanshell>
@@ -8708,11 +8655,9 @@ virtualHostname="localhost"
 								}
 							}
 
-							File updatedTestResultsFile = new File(project.getProperty("dest.dir"), testResultsFile.getName());
+							JenkinsResultsParserUtil.write(testResultsFile, Dom4JUtil.format(document.getRootElement()));
 
-							JenkinsResultsParserUtil.write(updatedTestResultsFile, Dom4JUtil.format(document.getRootElement()));
-
-							System.out.println("Copying " + testResultsFile + " to " + updatedTestResultsFile);
+							System.out.println("Truncating errors in " + testResultsFile);
 						}
 						catch (Exception exception) {
 							exception.printStackTrace();
@@ -8725,11 +8670,8 @@ virtualHostname="localhost"
 		<parallel timeout="1800000">
 			<junitreport todir="test-results">
 				<fileset
-					dir="${dest.dir}"
-					erroronmissingdir="false"
-				>
-					<include name="TEST-*.xml" />
-				</fileset>
+					refid="junit.reports.fileset"
+				/>
 				<report format="frames" todir="test-results/html" />
 			</junitreport>
 		</parallel>

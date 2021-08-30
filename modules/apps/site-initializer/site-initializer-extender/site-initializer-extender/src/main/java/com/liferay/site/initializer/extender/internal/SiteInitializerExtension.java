@@ -23,12 +23,9 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import javax.servlet.ServletContext;
@@ -52,8 +49,6 @@ public class SiteInitializerExtension {
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
-		ExpressionConvert<Filter> expressionConvert,
-		FilterParserProvider filterParserProvider,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -70,10 +65,10 @@ public class SiteInitializerExtension {
 				bundle, bundleContext, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper,
 				documentFolderResourceFactory, documentResourceFactory,
-				expressionConvert, filterParserProvider, fragmentsImporter,
-				groupLocalService, jsonFactory, objectDefinitionResourceFactory,
-				portal, styleBookEntryZipProcessor,
-				taxonomyVocabularyResourceFactory, userLocalService));
+				fragmentsImporter, groupLocalService, jsonFactory,
+				objectDefinitionResourceFactory, portal,
+				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,
+				userLocalService));
 
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();

@@ -23,13 +23,10 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.util.List;
@@ -71,8 +68,7 @@ public class SiteInitializerExtender
 				bundle, _bundleContext, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
 				_documentFolderResourceFactory, _documentResourceFactory,
-				_expressionConvert, _filterParserProvider, _fragmentsImporter,
-				_groupLocalService, _jsonFactory,
+				_fragmentsImporter, _groupLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
 				_userLocalService);
@@ -128,12 +124,6 @@ public class SiteInitializerExtender
 
 	@Reference
 	private DocumentResource.Factory _documentResourceFactory;
-
-	@Reference
-	private ExpressionConvert<Filter> _expressionConvert;
-
-	@Reference
-	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;

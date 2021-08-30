@@ -11,6 +11,11 @@ definition {
 				locator1 = "ACTimeFilter#CARD_TIME_FILTER_DROPDOWN",
 				value1 = "${timeFilterRange}");
 		}
+		else if (isSet(invalid)) {
+			AssertTextEquals(
+				locator1 = "ACTimeFilter#DATE_PICKER_RANGE_WARNING",
+				value1 = "${timeFilterRangeWarning}");
+		}
 		else {
 			AssertTextEquals(
 				locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN",
@@ -84,9 +89,11 @@ definition {
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 
-		WaitForElementNotPresent(locator1 = "ACTimeFilter#DATE_PICKER");
+		if (!(isSet(invalid))) {
+			WaitForElementNotPresent(locator1 = "ACTimeFilter#DATE_PICKER");
 
-		ACLoading.waitForLoadingComplete();
+			ACLoading.waitForLoadingComplete();
+		}
 	}
 
 	@summary = "Clicks the 'Last 7 days' option in the Time Filter Dropdown"

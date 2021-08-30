@@ -348,7 +348,7 @@ definition {
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "${webContentTitle}");
 
 		Navigator.gotoSitePage(
-			pageName = "AC Page",
+			pageName = "${layoutName}",
 			siteName = "Site Name");
 	}
 

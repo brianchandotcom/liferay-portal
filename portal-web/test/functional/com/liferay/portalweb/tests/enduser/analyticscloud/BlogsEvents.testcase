@@ -556,7 +556,7 @@ definition {
 		}
 
 		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("blogClicked");
+			ProxyUtil.startHarRecording("BlogViewed");
 
 			Pause(locator1 = "5000");
 		}
@@ -615,7 +615,7 @@ definition {
 		}
 
 		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("blogClicked");
+			ProxyUtil.startHarRecording("blogViewed");
 
 			Pause(locator1 = "5000");
 		}

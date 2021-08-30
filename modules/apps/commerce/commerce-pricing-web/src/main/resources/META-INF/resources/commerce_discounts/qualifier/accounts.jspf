@@ -18,7 +18,7 @@
 	<div id="item-finder-root"></div>
 
 	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceDiscountAccountGroupsResource = ServiceProvider.default.AdminPricingAPI(
+		var CommerceDiscountAccountsResource = ServiceProvider.default.AdminPricingAPI(
 			'v2'
 		);
 
@@ -26,22 +26,19 @@
 			'<%= HtmlUtil.escapeJS(commerceDiscount.getExternalReferenceCode()) %>';
 		var id = <%= commerceDiscountId %>;
 
-		function selectItem(accountGroup) {
-			var accountGroupData = {
-				accountGroupExternalReferenceCode: accountGroup.externalReferenceCode,
-				accountGroupId: accountGroup.id,
+		function selectItem(account) {
+			var accountData = {
+				accountExternalReferenceCode: account.externalReferenceCode,
+				accountId: account.id,
 				discountExternalReferenceCode: discountExternalReferenceCode,
 				discountId: id,
 			};
 
-			return CommerceDiscountAccountGroupsResource.addDiscountAccountGroup(
-				id,
-				accountGroupData
-			)
+			return CommerceDiscountAccountsResource.addDiscountAccount(id, accountData)
 				.then(() => {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
+							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>',
 					});
 				})
 				.catch((error) => {
@@ -54,20 +51,18 @@
 		}
 
 		itemFinder.default('itemFinder', 'item-finder-root', {
-			apiUrl: '/o/headless-commerce-admin-account/v1.0/accountGroups/',
+			apiUrl: '/o/headless-commerce-admin-account/v1.0/accounts/',
 			getSelectedItems: getSelectedItems,
-			inputPlaceholder:
-				'<%= LanguageUtil.get(request, "find-an-account-group") %>',
+			inputPlaceholder: '<%= LanguageUtil.get(request, "find-an-account") %>',
 			itemCreation: false,
-			itemSelectedMessage:
-				'<%= LanguageUtil.get(request, "account-group-selected") %>',
+			itemSelectedMessage: '<%= LanguageUtil.get(request, "account-selected") %>',
 			itemsKey: 'id',
 			linkedDatasetsId: [
-				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
+				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>',
 			],
 			onItemSelected: selectItem,
 			pageSize: 10,
-			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-account-groups") %>',
+			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-accounts") %>',
 			portletId: '<%= portletDisplay.getRootPortletId() %>',
 			schema: [
 				{
@@ -75,20 +70,19 @@
 				},
 			],
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			titleLabel:
-				'<%= LanguageUtil.get(request, "add-existing-account-group") %>',
+			titleLabel: '<%= LanguageUtil.get(request, "add-existing-account") %>',
 		});
 	</aui:script>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"
-		title='<%= LanguageUtil.get(request, "account-groups") %>'
+		title='<%= LanguageUtil.get(request, "accounts") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountAccountGroupsApiURL() %>"
-			clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getAccountGroupClayDataSetActionDropdownItems() %>"
+			apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountAccountsAPIURL() %>"
+			clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getAccountClayDataSetActionDropdownItems() %>"
 			formId="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>"
+			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

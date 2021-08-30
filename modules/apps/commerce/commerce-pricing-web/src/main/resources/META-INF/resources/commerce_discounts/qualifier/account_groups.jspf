@@ -15,30 +15,33 @@
 --%>
 
 <c:if test="<%= hasPermission %>">
-	<div id="item-finder-root-channel"></div>
+	<div id="item-finder-root"></div>
 
 	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceDiscountChannelsResource = ServiceProvider.default.AdminPricingAPI(
+		var CommerceDiscountAccountGroupsResource = ServiceProvider.default.AdminPricingAPI(
 			'v2'
 		);
 
-		var id = <%= commerceDiscountId %>;
 		var discountExternalReferenceCode =
 			'<%= HtmlUtil.escapeJS(commerceDiscount.getExternalReferenceCode()) %>';
+		var id = <%= commerceDiscountId %>;
 
-		function selectItem(channel) {
-			var channelData = {
-				channelExternalReferenceCode: channel.externalReferenceCode,
-				channelId: channel.id,
+		function selectItem(accountGroup) {
+			var accountGroupData = {
+				accountGroupExternalReferenceCode: accountGroup.externalReferenceCode,
+				accountGroupId: accountGroup.id,
 				discountExternalReferenceCode: discountExternalReferenceCode,
 				discountId: id,
 			};
 
-			return CommerceDiscountChannelsResource.addDiscountChannel(id, channelData)
+			return CommerceDiscountAccountGroupsResource.addDiscountAccountGroup(
+				id,
+				accountGroupData
+			)
 				.then(() => {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>',
+							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
 					});
 				})
 				.catch((error) => {
@@ -50,19 +53,21 @@
 			return Promise.resolve([]);
 		}
 
-		itemFinder.default('itemFinder', 'item-finder-root-channel', {
-			apiUrl: '/o/headless-commerce-admin-channel/v1.0/channels',
+		itemFinder.default('itemFinder', 'item-finder-root', {
+			apiUrl: '/o/headless-commerce-admin-account/v1.0/accountGroups/',
 			getSelectedItems: getSelectedItems,
-			inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-channel") %>',
-			itemSelectedMessage: '<%= LanguageUtil.get(request, "channel-selected") %>',
-			linkedDatasetsId: [
-				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>',
-			],
+			inputPlaceholder:
+				'<%= LanguageUtil.get(request, "find-an-account-group") %>',
 			itemCreation: false,
+			itemSelectedMessage:
+				'<%= LanguageUtil.get(request, "account-group-selected") %>',
 			itemsKey: 'id',
+			linkedDatasetsId: [
+				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
+			],
 			onItemSelected: selectItem,
 			pageSize: 10,
-			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-channels") %>',
+			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-account-groups") %>',
 			portletId: '<%= portletDisplay.getRootPortletId() %>',
 			schema: [
 				{
@@ -70,19 +75,20 @@
 				},
 			],
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			titleLabel: '<%= LanguageUtil.get(request, "add-existing-channel") %>',
+			titleLabel:
+				'<%= LanguageUtil.get(request, "add-existing-account-group") %>',
 		});
 	</aui:script>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"
-		title='<%= LanguageUtil.get(request, "channels") %>'
+		title='<%= LanguageUtil.get(request, "account-groups") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountChannelsApiURL() %>"
-			clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getDiscountChannelClayDataSetActionDropdownItems() %>"
+			apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountAccountGroupsAPIURL() %>"
+			clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getAccountGroupClayDataSetActionDropdownItems() %>"
 			formId="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>"
+			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

@@ -15,30 +15,30 @@
 --%>
 
 <c:if test="<%= hasPermission %>">
-	<div id="item-finder-root"></div>
+	<div id="item-finder-root-channel"></div>
 
 	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceDiscountAccountsResource = ServiceProvider.default.AdminPricingAPI(
+		var CommerceDiscountChannelsResource = ServiceProvider.default.AdminPricingAPI(
 			'v2'
 		);
 
+		var id = <%= commerceDiscountId %>;
 		var discountExternalReferenceCode =
 			'<%= HtmlUtil.escapeJS(commerceDiscount.getExternalReferenceCode()) %>';
-		var id = <%= commerceDiscountId %>;
 
-		function selectItem(account) {
-			var accountData = {
-				accountExternalReferenceCode: account.externalReferenceCode,
-				accountId: account.id,
+		function selectItem(channel) {
+			var channelData = {
+				channelExternalReferenceCode: channel.externalReferenceCode,
+				channelId: channel.id,
 				discountExternalReferenceCode: discountExternalReferenceCode,
 				discountId: id,
 			};
 
-			return CommerceDiscountAccountsResource.addDiscountAccount(id, accountData)
+			return CommerceDiscountChannelsResource.addDiscountChannel(id, channelData)
 				.then(() => {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>',
+							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>',
 					});
 				})
 				.catch((error) => {
@@ -50,19 +50,19 @@
 			return Promise.resolve([]);
 		}
 
-		itemFinder.default('itemFinder', 'item-finder-root', {
-			apiUrl: '/o/headless-commerce-admin-account/v1.0/accounts/',
+		itemFinder.default('itemFinder', 'item-finder-root-channel', {
+			apiUrl: '/o/headless-commerce-admin-channel/v1.0/channels',
 			getSelectedItems: getSelectedItems,
-			inputPlaceholder: '<%= LanguageUtil.get(request, "find-an-account") %>',
-			itemCreation: false,
-			itemSelectedMessage: '<%= LanguageUtil.get(request, "account-selected") %>',
-			itemsKey: 'id',
+			inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-channel") %>',
+			itemSelectedMessage: '<%= LanguageUtil.get(request, "channel-selected") %>',
 			linkedDatasetsId: [
-				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>',
+				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>',
 			],
+			itemCreation: false,
+			itemsKey: 'id',
 			onItemSelected: selectItem,
 			pageSize: 10,
-			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-accounts") %>',
+			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-channels") %>',
 			portletId: '<%= portletDisplay.getRootPortletId() %>',
 			schema: [
 				{
@@ -70,19 +70,19 @@
 				},
 			],
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			titleLabel: '<%= LanguageUtil.get(request, "add-existing-account") %>',
+			titleLabel: '<%= LanguageUtil.get(request, "add-existing-channel") %>',
 		});
 	</aui:script>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"
-		title='<%= LanguageUtil.get(request, "accounts") %>'
+		title='<%= LanguageUtil.get(request, "channels") %>'
 	>
 		<clay:headless-data-set-display
-			apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountAccountsApiURL() %>"
-			clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getAccountClayDataSetActionDropdownItems() %>"
+			apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountChannelsAPIURL() %>"
+			clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getDiscountChannelClayDataSetActionDropdownItems() %>"
 			formId="fm"
-			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNTS %>"
+			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"

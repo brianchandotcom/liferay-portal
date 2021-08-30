@@ -48,6 +48,7 @@ const SidebarPanelInfoView = ({
 	subType,
 	tags = [],
 	title,
+	type,
 	user,
 	versions = [],
 	viewURLs = [],
@@ -92,18 +93,13 @@ const SidebarPanelInfoView = ({
 		},
 	];
 
+	const isADocument = type.toLowerCase() === 'document';
+
 	const documentIsAFile =
-		subType.toLowerCase() === 'basic document' &&
+		isADocument &&
 		!!downloadURL &&
 		!!extension &&
 		parseInt(size?.split(' ')[0], 10) > 0;
-
-	const documentIsAShortcut =
-		subType.toLowerCase().includes('shortcut') &&
-		!!downloadURL &&
-		!!previewImageURL;
-
-	const isADocument = documentIsAFile || documentIsAShortcut;
 
 	const documentUsesPreview = !!previewImageURL || documentIsAFile;
 

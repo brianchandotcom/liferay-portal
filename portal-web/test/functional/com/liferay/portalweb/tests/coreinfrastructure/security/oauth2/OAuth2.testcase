@@ -242,7 +242,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
-		property minimum.slave.ram = "32";
+		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AssertAuthorizationCodeWorksInCluster";
 

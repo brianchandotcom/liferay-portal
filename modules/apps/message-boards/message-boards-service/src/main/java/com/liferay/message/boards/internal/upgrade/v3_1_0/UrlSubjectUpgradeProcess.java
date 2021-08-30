@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.internal.upgrade.v3_1_0;
 
-import com.liferay.message.boards.internal.upgrade.v3_1_0.util.MBMessageTable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -34,9 +33,7 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("MBMessage", "urlSubject")) {
-			alter(
-				MBMessageTable.class,
-				new AlterTableAddColumn("urlSubject", "VARCHAR(255) null"));
+			alterTableAddColumn("MBMessage", "urlSubject", "VARCHAR(255) null");
 		}
 
 		try (SafeCloseable safeCloseable = addTempIndex(

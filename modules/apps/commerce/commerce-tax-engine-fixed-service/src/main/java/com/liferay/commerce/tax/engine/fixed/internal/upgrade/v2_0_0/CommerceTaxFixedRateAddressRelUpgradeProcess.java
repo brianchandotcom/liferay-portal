@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.tax.engine.fixed.internal.upgrade.v2_0_0;
 
-import com.liferay.commerce.tax.engine.fixed.internal.upgrade.v2_0_0.util.CommerceTaxFixedRateAddressRelTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,10 +24,12 @@ public class CommerceTaxFixedRateAddressRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CommerceTaxFixedRateAddressRelTable.class,
-			new AlterColumnName("commerceCountryId", "countryId LONG"),
-			new AlterColumnName("commerceRegionId", "regionId LONG"));
+		alterColumnName(
+			"CommerceTaxFixedRateAddressRel", "commerceCountryId",
+			"countryId LONG");
+		alterColumnName(
+			"CommerceTaxFixedRateAddressRel", "commerceRegionId",
+			"regionId LONG");
 	}
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.upgrade.v2_8_0;
 
-import com.liferay.fragment.internal.upgrade.v2_8_0.util.FragmentEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,9 +24,7 @@ public class FragmentEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("FragmentEntry", "icon")) {
-			alter(
-				FragmentEntryTable.class,
-				new AlterTableAddColumn("icon", "VARCHAR(75) null"));
+			alterTableAddColumn("FragmentEntry", "icon", "VARCHAR(75) null");
 		}
 	}
 

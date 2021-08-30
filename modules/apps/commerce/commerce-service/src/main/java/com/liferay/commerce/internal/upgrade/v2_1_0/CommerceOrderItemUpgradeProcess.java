@@ -49,9 +49,7 @@ public class CommerceOrderItemUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "CProductId", "LONG");
+		addColumn("CommerceOrderItem", "CProductId", "LONG");
 
 		_addIndexes(CommerceOrderItemModelImpl.TABLE_NAME);
 

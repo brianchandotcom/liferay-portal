@@ -15,7 +15,6 @@
 package com.liferay.asset.list.internal.upgrade.v1_4_0;
 
 import com.liferay.asset.list.constants.AssetListEntryUsageConstants;
-import com.liferay.asset.list.internal.upgrade.v1_4_0.util.AssetListEntryUsageTable;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
@@ -37,13 +36,13 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSchema() throws Exception {
-		alter(
-			AssetListEntryUsageTable.class,
-			new AlterTableAddColumn("containerKey", "VARCHAR(255) null"),
-			new AlterTableAddColumn("containerType", "LONG"),
-			new AlterTableAddColumn("key_", "VARCHAR(255) null"),
-			new AlterTableAddColumn("plid", "LONG"),
-			new AlterTableAddColumn("type_", "INTEGER"));
+		alterTableAddColumn(
+			"AssetListEntryUsage", "containerKey", "VARCHAR(255) null");
+
+		alterTableAddColumn("AssetListEntryUsage", "containerType", "LONG");
+		alterTableAddColumn("AssetListEntryUsage", "key_", "VARCHAR(255) null");
+		alterTableAddColumn("AssetListEntryUsage", "plid", "LONG");
+		alterTableAddColumn("AssetListEntryUsage", "type_", "INTEGER");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(

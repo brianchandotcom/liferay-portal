@@ -15,7 +15,6 @@
 package com.liferay.blogs.internal.upgrade.v1_1_2;
 
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.internal.upgrade.v1_1_1.util.BlogsEntryTable;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringBundler;
@@ -57,10 +56,7 @@ public class BlogsImagesUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumnType("BlogsEntry", "smallImageId", "LONG null")) {
-			alter(
-				BlogsEntryTable.class,
-				new UpgradeProcess.AlterColumnType(
-					"smallImageId", "LONG null"));
+			alterColumnType("BlogsEntry", "smallImageId", "LONG null");
 		}
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(

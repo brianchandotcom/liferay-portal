@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
-import com.liferay.portal.upgrade.v7_4_x.util.PortletPreferencesTable;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.Preference;
 
@@ -71,9 +70,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 			},
 			null);
 
-		alter(
-			PortletPreferencesTable.class,
-			new AlterTableDropColumn("preferences"));
+		alterTableDropColumn("PortletPreferences", "preferences");
 	}
 
 	private void _upgradePortletPreferences(

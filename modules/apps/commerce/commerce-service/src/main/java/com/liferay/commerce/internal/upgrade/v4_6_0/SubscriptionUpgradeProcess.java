@@ -30,9 +30,8 @@ public class SubscriptionUpgradeProcess
 				"deliverySubscriptionLength")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubscriptionLength", "INTEGER");
+				"CommerceSubscriptionEntry", "deliverySubscriptionLength",
+				"INTEGER");
 		}
 
 		if (!hasColumn(
@@ -40,9 +39,8 @@ public class SubscriptionUpgradeProcess
 				"deliverySubscriptionType")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubscriptionType", "VARCHAR(75)");
+				"CommerceSubscriptionEntry", "deliverySubscriptionType",
+				"VARCHAR(75)");
 		}
 
 		if (!hasColumn(
@@ -50,9 +48,7 @@ public class SubscriptionUpgradeProcess
 				"deliverySubTypeSettings")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubTypeSettings", "TEXT");
+				"CommerceSubscriptionEntry", "deliverySubTypeSettings", "TEXT");
 		}
 
 		if (!hasColumn(
@@ -60,9 +56,7 @@ public class SubscriptionUpgradeProcess
 				"deliveryCurrentCycle")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryCurrentCycle", "LONG");
+				"CommerceSubscriptionEntry", "deliveryCurrentCycle", "LONG");
 		}
 
 		if (!hasColumn(
@@ -70,9 +64,8 @@ public class SubscriptionUpgradeProcess
 				"deliveryMaxSubscriptionCycles")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryMaxSubscriptionCycles", "LONG");
+				"CommerceSubscriptionEntry", "deliveryMaxSubscriptionCycles",
+				"LONG");
 		}
 
 		if (!hasColumn(
@@ -80,9 +73,8 @@ public class SubscriptionUpgradeProcess
 				"deliverySubscriptionStatus")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliverySubscriptionStatus", "INTEGER");
+				"CommerceSubscriptionEntry", "deliverySubscriptionStatus",
+				"INTEGER");
 		}
 
 		if (!hasColumn(
@@ -90,9 +82,8 @@ public class SubscriptionUpgradeProcess
 				"deliveryLastIterationDate")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryLastIterationDate", "DATE");
+				"CommerceSubscriptionEntry", "deliveryLastIterationDate",
+				"DATE");
 		}
 
 		if (!hasColumn(
@@ -100,19 +91,15 @@ public class SubscriptionUpgradeProcess
 				"deliveryNextIterationDate")) {
 
 			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME,
-				"deliveryNextIterationDate", "DATE");
+				"CommerceSubscriptionEntry", "deliveryNextIterationDate",
+				"DATE");
 		}
 
 		if (!hasColumn(
 				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryStartDate")) {
 
-			addColumn(
-				CommerceSubscriptionEntryTable.class,
-				CommerceSubscriptionEntryTable.TABLE_NAME, "deliveryStartDate",
-				"DATE");
+			addColumn("CommerceSubscriptionEntry", "deliveryStartDate", "DATE");
 		}
 	}
 

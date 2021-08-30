@@ -36,8 +36,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 	extends UpgradeProcess {
 
 	protected void addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -47,10 +46,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
@@ -115,8 +111,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 	}
 
 	protected void renameColumn(
-			Class<?> tableClass, String tableName, String oldColumnName,
-			String newColumnName)
+			String tableName, String oldColumnName, String newColumnName)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -130,8 +125,7 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 			newColumnName, StringPool.SPACE);
 
 		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alter(
-				tableClass, new AlterColumnName(oldColumnName, newColumnName));
+			alterColumnName(tableName, oldColumnName, newColumnName);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

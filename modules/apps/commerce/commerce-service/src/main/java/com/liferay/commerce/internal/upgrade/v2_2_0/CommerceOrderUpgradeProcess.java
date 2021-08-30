@@ -47,9 +47,7 @@ public class CommerceOrderUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderModelImpl.class, CommerceOrderModelImpl.TABLE_NAME,
-			"commerceAccountId", "LONG");
+		addColumn("CommerceOrder", "commerceAccountId", "LONG");
 
 		if (hasColumn(CommerceOrderModelImpl.TABLE_NAME, "siteGroupId")) {
 			runSQL("update CommerceOrder set groupId = siteGroupId");

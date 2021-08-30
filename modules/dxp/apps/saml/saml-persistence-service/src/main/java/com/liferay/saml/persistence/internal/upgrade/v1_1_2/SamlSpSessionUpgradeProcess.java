@@ -15,7 +15,6 @@
 package com.liferay.saml.persistence.internal.upgrade.v1_1_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.persistence.internal.upgrade.v1_1_2.util.SamlSpSessionTable;
 
 /**
  * @author Mika Koivisto
@@ -25,9 +24,7 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			SamlSpSessionTable.class,
-			new AlterColumnType("jSessionId", "VARCHAR(200) null"));
+		alterColumnType("SamlSpSession", "jSessionId", "VARCHAR(200) null");
 	}
 
 }

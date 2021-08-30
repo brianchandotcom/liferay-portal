@@ -15,7 +15,6 @@
 package com.liferay.wiki.internal.upgrade.v2_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.wiki.internal.upgrade.v2_2_0.util.WikiPageTable;
 
 /**
  * @author Luis Miguel Barcos
@@ -25,11 +24,9 @@ public class WikiPageExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(WikiPageTable.TABLE_NAME, "externalReferenceCode")) {
-			alter(
-				WikiPageTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("WikiPage", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"WikiPage", "externalReferenceCode", "VARCHAR(75)");
 
 			runSQL(
 				"update WikiPage set externalReferenceCode = " +

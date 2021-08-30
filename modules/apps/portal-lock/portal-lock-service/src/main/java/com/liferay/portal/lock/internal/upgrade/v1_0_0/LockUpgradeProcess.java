@@ -15,7 +15,6 @@
 package com.liferay.portal.lock.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.lock.internal.upgrade.v1_0_0.util.LockTable;
 
 /**
  * @author Miguel Pastor
@@ -24,9 +23,7 @@ public class LockUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			LockTable.class,
-			new AlterColumnType("owner", "VARCHAR(1024) null"));
+		alterColumnType("Lock_", "owner", "VARCHAR(1024) null");
 	}
 
 }

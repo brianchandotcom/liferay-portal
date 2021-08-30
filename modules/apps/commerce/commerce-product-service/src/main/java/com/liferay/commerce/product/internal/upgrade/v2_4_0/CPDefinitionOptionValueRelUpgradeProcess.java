@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.upgrade.v2_4_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v2_4_0.util.CPDefinitionOptionValueRelTable;
 
 /**
  * @author Igor Beslic
@@ -25,10 +24,7 @@ public class CPDefinitionOptionValueRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CPDefinitionOptionValueRelTable.class,
-			CPDefinitionOptionValueRelTable.TABLE_NAME, "preselected",
-			"BOOLEAN");
+		addColumn("CPDefinitionOptionValueRel", "preselected", "BOOLEAN");
 	}
 
 }

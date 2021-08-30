@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.style.book.internal.upgrade.v1_2_0.util.StyleBookEntryVersionTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,10 +33,10 @@ public class StyleBookEntryVersionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSchema() throws Exception {
-		alter(
-			StyleBookEntryVersionTable.class,
-			new AlterTableAddColumn("uuid_", "VARCHAR(75) null"),
-			new AlterTableAddColumn("modifiedDate", "DATE null"));
+		alterTableAddColumn(
+			"StyleBookEntryVersion", "modifiedDate", "DATE null");
+		alterTableAddColumn(
+			"StyleBookEntryVersion", "uuid_", "VARCHAR(75) null");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			try (PreparedStatement preparedStatement1 =

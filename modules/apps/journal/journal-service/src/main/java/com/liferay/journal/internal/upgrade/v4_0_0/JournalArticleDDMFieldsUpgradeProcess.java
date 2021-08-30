@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.journal.internal.upgrade.v4_0_0.util.JournalArticleTable;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -82,7 +81,7 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 			},
 			null);
 
-		alter(JournalArticleTable.class, new AlterTableDropColumn("content"));
+		alterTableDropColumn("JournalArticle", "content");
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

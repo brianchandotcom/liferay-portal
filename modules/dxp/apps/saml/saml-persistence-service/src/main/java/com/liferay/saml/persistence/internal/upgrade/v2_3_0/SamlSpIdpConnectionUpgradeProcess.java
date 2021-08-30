@@ -16,7 +16,6 @@ package com.liferay.saml.persistence.internal.upgrade.v2_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.saml.persistence.internal.upgrade.v2_3_0.util.SamlSpIdpConnectionTable;
 
 /**
  * @author Stian Sigvartsen
@@ -26,10 +25,9 @@ public class SamlSpIdpConnectionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			alter(
-				SamlSpIdpConnectionTable.class,
-				new AlterTableAddColumn(
-					"userIdentifierExpression", "VARCHAR(200) null"));
+			alterTableAddColumn(
+				"SamlSpIdpConnection", "userIdentifierExpression",
+				"VARCHAR(200) null");
 		}
 	}
 

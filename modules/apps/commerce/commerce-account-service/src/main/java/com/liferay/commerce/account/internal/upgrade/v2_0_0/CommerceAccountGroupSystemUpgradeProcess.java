@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.account.internal.upgrade.v2_0_0;
 
-import com.liferay.commerce.account.internal.upgrade.v2_0_0.util.CommerceAccountGroupTable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,14 +27,11 @@ public class CommerceAccountGroupSystemUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_renameColumn(
-			CommerceAccountGroupTable.class,
-			CommerceAccountGroupTable.TABLE_NAME, "system", "system_ BOOLEAN");
+		_renameColumn("CommerceAccountGroup", "system", "system_ BOOLEAN");
 	}
 
 	private void _renameColumn(
-			Class<?> tableClass, String tableName, String oldColumnName,
-			String newColumnName)
+			String tableName, String oldColumnName, String newColumnName)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -49,8 +45,7 @@ public class CommerceAccountGroupSystemUpgradeProcess extends UpgradeProcess {
 			newColumnName, StringPool.SPACE);
 
 		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alter(
-				tableClass, new AlterColumnName(oldColumnName, newColumnName));
+			alterColumnName(tableName, oldColumnName, newColumnName);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

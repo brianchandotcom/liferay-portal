@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.AddressTable;
 
 /**
  * @author Pei-Jung Lan
@@ -25,64 +24,44 @@ public class UpgradeAddress extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("Address", "externalReferenceCode")) {
-			alter(
-				AddressTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75) null"));
+			alterTableAddColumn(
+				"Address", "externalReferenceCode", "VARCHAR(75) null");
 		}
 
 		if (!hasColumn("Address", "description")) {
-			alter(
-				AddressTable.class,
-				new AlterTableAddColumn("description", "STRING null"));
+			alterTableAddColumn("Address", "description", "STRING null");
 		}
 
 		if (!hasColumn("Address", "latitude")) {
-			alter(
-				AddressTable.class,
-				new AlterTableAddColumn("latitude", "DOUBLE"));
+			alterTableAddColumn("Address", "latitude", "DOUBLE");
 		}
 
 		if (!hasColumn("Address", "longitude")) {
-			alter(
-				AddressTable.class,
-				new AlterTableAddColumn("longitude", "DOUBLE"));
+			alterTableAddColumn("Address", "longitude", "DOUBLE");
 		}
 
 		if (!hasColumn("Address", "name")) {
-			alter(
-				AddressTable.class,
-				new AlterTableAddColumn("name", "VARCHAR(255) null"));
+			alterTableAddColumn("Address", "name", "VARCHAR(255) null");
 		}
 
 		if (hasColumn("Address", "street1")) {
-			alter(
-				AddressTable.class,
-				new AlterColumnType("street1", "VARCHAR(255) null"));
+			alterColumnType("Address", "street1", "VARCHAR(255) null");
 		}
 
 		if (hasColumn("Address", "street2")) {
-			alter(
-				AddressTable.class,
-				new AlterColumnType("street2", "VARCHAR(255) null"));
+			alterColumnType("Address", "street2", "VARCHAR(255) null");
 		}
 
 		if (hasColumn("Address", "street3")) {
-			alter(
-				AddressTable.class,
-				new AlterColumnType("street3", "VARCHAR(255) null"));
+			alterColumnType("Address", "street3", "VARCHAR(255) null");
 		}
 
 		if (!hasColumn("Address", "validationDate")) {
-			alter(
-				AddressTable.class,
-				new AlterTableAddColumn("validationDate", "DATE null"));
+			alterTableAddColumn("Address", "validationDate", "DATE null");
 		}
 
 		if (!hasColumn("Address", "validationStatus")) {
-			alter(
-				AddressTable.class,
-				new AlterTableAddColumn("validationStatus", "INTEGER"));
+			alterTableAddColumn("Address", "validationStatus", "INTEGER");
 		}
 	}
 

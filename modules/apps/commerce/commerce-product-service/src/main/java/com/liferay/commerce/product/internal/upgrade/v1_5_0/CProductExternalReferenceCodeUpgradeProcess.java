@@ -17,7 +17,6 @@ package com.liferay.commerce.product.internal.upgrade.v1_5_0;
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CProductImpl;
-import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -29,9 +28,7 @@ public class CProductExternalReferenceCodeUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn(CProductImpl.TABLE_NAME, "externalReferenceCode")) {
-			addColumn(
-				CProductImpl.class, CProductModelImpl.TABLE_NAME,
-				"externalReferenceCode", "VARCHAR(75)");
+			addColumn("CProduct", "externalReferenceCode", "VARCHAR(75)");
 		}
 
 		if (hasColumn(CProductImpl.TABLE_NAME, "externalReferenceCode")) {

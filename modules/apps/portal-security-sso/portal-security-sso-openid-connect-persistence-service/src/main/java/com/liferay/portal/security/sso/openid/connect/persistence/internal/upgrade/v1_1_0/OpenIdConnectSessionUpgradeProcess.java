@@ -15,7 +15,6 @@
 package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v1_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v1_1_0.util.OpenIdConnectSessionTable;
 
 /**
  * @author Arthur Chan
@@ -25,16 +24,13 @@ public class OpenIdConnectSessionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("OpenIdConnectSession", "userId")) {
-			alter(
-				OpenIdConnectSessionTable.class,
-				new AlterTableAddColumn("userId", "LONG"));
+			alterTableAddColumn("OpenIdConnectSession", "userId", "LONG");
 		}
 
 		if (!hasColumn("OpenIdConnectSession", "configurationPid")) {
-			alter(
-				OpenIdConnectSessionTable.class,
-				new AlterTableAddColumn(
-					"configurationPid", "VARCHAR(256) null"));
+			alterTableAddColumn(
+				"OpenIdConnectSession", "configurationPid",
+				"VARCHAR(256) null");
 		}
 	}
 

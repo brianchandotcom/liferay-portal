@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.notification.internal.upgrade.v2_2_0;
 
-import com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -27,14 +25,11 @@ public class CommerceNotificationTemplateUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CommerceNotificationTemplateImpl.class,
-			CommerceNotificationTemplateImpl.TABLE_NAME, "to_", "VARCHAR(75)");
+		_addColumn("CommerceNotificationTemplate", "to_", "VARCHAR(75)");
 	}
 
 	private void _addColumn(
-			Class<?> tableClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -44,10 +39,7 @@ public class CommerceNotificationTemplateUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				tableClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

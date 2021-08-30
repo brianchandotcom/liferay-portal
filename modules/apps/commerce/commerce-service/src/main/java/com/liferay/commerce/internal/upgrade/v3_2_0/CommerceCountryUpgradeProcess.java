@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v3_2_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v3_2_0.util.CommerceCountryTable;
 
 /**
  * @author Alessio Antonio Rendina
@@ -26,9 +25,7 @@ public class CommerceCountryUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasColumn("CommerceCountry", "groupId")) {
-			alter(
-				CommerceCountryTable.class,
-				new AlterTableDropColumn("groupId"));
+			alterTableDropColumn("CommerceCountry", "groupId");
 		}
 	}
 

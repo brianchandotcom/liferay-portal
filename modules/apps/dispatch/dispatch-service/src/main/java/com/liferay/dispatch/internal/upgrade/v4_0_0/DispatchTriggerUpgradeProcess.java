@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.internal.upgrade.v4_0_0;
 
-import com.liferay.dispatch.internal.upgrade.v4_0_0.util.DispatchTriggerTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,14 +23,15 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			DispatchTriggerTable.class,
-			new AlterColumnName(
-				"taskClusterMode", "dispatchTaskClusterMode INTEGER null"),
-			new AlterColumnName(
-				"taskExecutorType", "dispatchTaskExecutorType STRING null"),
-			new AlterColumnName(
-				"taskSettings", "dispatchTaskSettings LONGTEXT null"));
+		alterColumnName(
+			"DispatchTrigger", "taskClusterMode",
+			"dispatchTaskClusterMode INTEGER null");
+		alterColumnName(
+			"DispatchTrigger", "taskExecutorType",
+			"dispatchTaskExecutorType STRING null");
+		alterColumnName(
+			"DispatchTrigger", "taskSettings",
+			"dispatchTaskSettings LONGTEXT null");
 	}
 
 }

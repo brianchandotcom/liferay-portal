@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v4_1_0;
 
-import com.liferay.knowledge.base.internal.upgrade.v4_1_0.util.KBFolderTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,11 +24,9 @@ public class KBFolderExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(KBFolderTable.TABLE_NAME, "externalReferenceCode")) {
-			alter(
-				KBFolderTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("KBFolder", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"KBFolder", "externalReferenceCode", "VARCHAR(75)");
 
 			runSQL(
 				"update KBFolder set externalReferenceCode = " +

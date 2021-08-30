@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_0_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
 
 /**
  * @author Luca Pellizzon
@@ -25,9 +24,7 @@ public class CommerceOrderItemUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "bookedQuantityId", "LONG");
+		addColumn("CommerceOrderItem", "bookedQuantityId", "LONG");
 	}
 
 }

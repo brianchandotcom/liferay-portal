@@ -53,7 +53,7 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 				!_alteredTableNameColumnNames.contains(
 					tableName + StringPool.POUND + columnName)) {
 
-				alter(tableClass, new AlterColumnType(columnName, "TEXT null"));
+				alterColumnType(tableName, columnName, "TEXT null");
 
 				_alteredTableNameColumnNames.add(
 					tableName + StringPool.POUND + columnName);

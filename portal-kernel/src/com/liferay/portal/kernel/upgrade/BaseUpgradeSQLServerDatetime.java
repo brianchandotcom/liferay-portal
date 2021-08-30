@@ -121,9 +121,7 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 						continue;
 					}
 
-					alter(
-						tableClass,
-						new AlterColumnType(columnName, newTypeDefinition));
+					alterColumnType(tableName, columnName, newTypeDefinition);
 				}
 			}
 		}

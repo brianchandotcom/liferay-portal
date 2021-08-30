@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v4_2_1;
 
-import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
-import com.liferay.commerce.model.impl.CommerceOrderModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,12 +23,8 @@ public class PrintedNoteUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CommerceOrderModelImpl.class,
-			new AlterColumnType("printedNote", "STRING null"));
-		alter(
-			CommerceOrderItemModelImpl.class,
-			new AlterColumnType("printedNote", "STRING null"));
+		alterColumnType("CommerceOrder", "printedNote", "STRING null");
+		alterColumnType("CommerceOrderItem", "printedNote", "STRING null");
 	}
 
 }

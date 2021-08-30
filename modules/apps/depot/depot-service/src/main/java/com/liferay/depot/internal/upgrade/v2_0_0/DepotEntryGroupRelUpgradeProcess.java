@@ -14,7 +14,6 @@
 
 package com.liferay.depot.internal.upgrade.v2_0_0;
 
-import com.liferay.depot.internal.upgrade.v2_0_0.util.DepotEntryGroupRelTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,11 +23,11 @@ public class DepotEntryGroupRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			DepotEntryGroupRelTable.class,
-			new AlterTableAddColumn("userId", "LONG"),
-			new AlterTableAddColumn("userName", "VARCHAR(75) null"),
-			new AlterTableAddColumn("lastPublishDate", "DATE null"));
+		alterTableAddColumn("DepotEntryGroupRel", "userId", "LONG");
+		alterTableAddColumn(
+			"DepotEntryGroupRel", "userName", "VARCHAR(75) null");
+		alterTableAddColumn(
+			"DepotEntryGroupRel", "lastPublishDate", "DATE null");
 	}
 
 }

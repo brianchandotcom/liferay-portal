@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v5_0_0;
 
-import com.liferay.commerce.internal.upgrade.v5_0_0.util.CommerceAddressRestrictionTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,9 @@ public class CommerceAddressRestrictionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CommerceAddressRestrictionTable.class,
-			new AlterColumnName("commerceCountryId", "countryId LONG"));
+		alterColumnName(
+			"CommerceAddressRestriction", "commerceCountryId",
+			"countryId LONG");
 	}
 
 }

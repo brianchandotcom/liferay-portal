@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_0_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceShipmentItemImpl;
 
 /**
  * @author Alessio Antonio Rendina
@@ -26,8 +25,8 @@ public class CommerceShipmentItemUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		renameColumn(
-			CommerceShipmentItemImpl.class, CommerceShipmentItemImpl.TABLE_NAME,
-			"commerceWarehouseId", "commerceInventoryWarehouseId LONG");
+			"CommerceShipmentItem", "commerceWarehouseId",
+			"commerceInventoryWarehouseId LONG");
 	}
 
 }

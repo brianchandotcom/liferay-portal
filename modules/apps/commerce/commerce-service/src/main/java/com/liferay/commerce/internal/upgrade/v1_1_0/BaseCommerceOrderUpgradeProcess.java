@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v1_1_0;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -25,10 +24,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 public class BaseCommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	public BaseCommerceOrderUpgradeProcess(
-		Class<?> entityClass, String tableName, String columnName,
-		String columnType) {
+		String tableName, String columnName, String columnType) {
 
-		_entityClass = entityClass;
 		_tableName = tableName;
 		_columnName = columnName;
 		_columnType = columnType;
@@ -47,10 +44,7 @@ public class BaseCommerceOrderUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(_tableName, _columnName)) {
-			alter(
-				_entityClass,
-				new AlterTableAddColumn(
-					_columnName + StringPool.SPACE + _columnType));
+			alterTableAddColumn(_tableName, _columnName, _columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
@@ -67,7 +61,6 @@ public class BaseCommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	private final String _columnName;
 	private final String _columnType;
-	private final Class<?> _entityClass;
 	private final String _tableName;
 
 }

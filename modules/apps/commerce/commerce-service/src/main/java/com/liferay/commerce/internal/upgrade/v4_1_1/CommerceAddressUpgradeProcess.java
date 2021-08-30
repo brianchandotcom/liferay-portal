@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v4_1_1;
 
-import com.liferay.commerce.model.impl.CommerceAddressModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,18 +23,10 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CommerceAddressModelImpl.class,
-			new AlterColumnType("name", "VARCHAR(255) null"));
-		alter(
-			CommerceAddressModelImpl.class,
-			new AlterColumnType("street1", "VARCHAR(255) null"));
-		alter(
-			CommerceAddressModelImpl.class,
-			new AlterColumnType("street2", "VARCHAR(255) null"));
-		alter(
-			CommerceAddressModelImpl.class,
-			new AlterColumnType("street3", "VARCHAR(255) null"));
+		alterColumnType("CommerceAddress", "name", "VARCHAR(255) null");
+		alterColumnType("CommerceAddress", "street1", "VARCHAR(255) null");
+		alterColumnType("CommerceAddress", "street2", "VARCHAR(255) null");
+		alterColumnType("CommerceAddress", "street3", "VARCHAR(255) null");
 	}
 
 }

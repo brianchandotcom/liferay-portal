@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_4;
 
-import com.liferay.journal.internal.upgrade.v1_1_4.util.JournalArticleTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,7 @@ public class JournalArticleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			JournalArticleTable.class,
-			new AlterColumnType("urlTitle", "VARCHAR(255) null"));
+		alterColumnType("JournalArticle", "urlTitle", "VARCHAR(255) null");
 	}
 
 }

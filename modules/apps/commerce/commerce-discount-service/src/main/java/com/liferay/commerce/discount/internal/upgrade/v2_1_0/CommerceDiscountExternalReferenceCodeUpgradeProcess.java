@@ -15,7 +15,6 @@
 package com.liferay.commerce.discount.internal.upgrade.v2_1_0;
 
 import com.liferay.commerce.discount.internal.upgrade.base.BaseCommerceDiscountUpgradeProcess;
-import com.liferay.commerce.discount.model.impl.CommerceDiscountImpl;
 
 /**
  * @author Alessio Antonio Rendina
@@ -25,9 +24,7 @@ public class CommerceDiscountExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceDiscountImpl.class, CommerceDiscountImpl.TABLE_NAME,
-			"externalReferenceCode", "VARCHAR(75)");
+		addColumn("CommerceDiscount", "externalReferenceCode", "VARCHAR(75)");
 	}
 
 }

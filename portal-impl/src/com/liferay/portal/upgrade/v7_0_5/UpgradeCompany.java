@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_5;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_5.util.CompanyTable;
 
 /**
  * @author Jose A. Jimenez Campoy
@@ -24,8 +23,7 @@ public class UpgradeCompany extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CompanyTable.class, new AlterColumnType("mx", "VARCHAR(200) null"));
+		alterColumnType("Company", "mx", "VARCHAR(200) null");
 	}
 
 }

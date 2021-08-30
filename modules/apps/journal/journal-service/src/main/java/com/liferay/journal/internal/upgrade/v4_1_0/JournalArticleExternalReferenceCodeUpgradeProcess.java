@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v4_1_0;
 
-import com.liferay.journal.internal.upgrade.v4_1_0.util.JournalArticleTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,13 +24,9 @@ public class JournalArticleExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(
-				JournalArticleTable.TABLE_NAME, "externalReferenceCode")) {
-
-			alter(
-				JournalArticleTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("JournalArticle", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"JournalArticle", "externalReferenceCode", "VARCHAR(75)");
 
 			runSQL(
 				"update JournalArticle set externalReferenceCode = articleId " +

@@ -18,8 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.upgrade.v7_4_x.util.CompanyTable;
-import com.liferay.portal.upgrade.v7_4_x.util.ContactTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,11 +45,11 @@ public class UpgradeAccount extends UpgradeProcess {
 		_addColumnToCompanyTable("size_", "VARCHAR(75) null");
 
 		if (hasColumn("Company", "accountId")) {
-			alter(CompanyTable.class, new AlterTableDropColumn("accountId"));
+			alterTableDropColumn("Company", "accountId");
 		}
 
 		if (hasColumn("Contact", "accountId")) {
-			alter(ContactTable.class, new AlterTableDropColumn("accountId"));
+			alterTableDropColumn("Contact", "accountId");
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -173,9 +171,7 @@ public class UpgradeAccount extends UpgradeProcess {
 		throws Exception {
 
 		if (!hasColumn("Company", columnName)) {
-			alter(
-				CompanyTable.class,
-				new AlterTableAddColumn(columnName, columnType));
+			alterTableAddColumn("Company", columnName, columnType);
 		}
 	}
 

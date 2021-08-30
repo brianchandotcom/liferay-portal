@@ -15,7 +15,6 @@
 package com.liferay.wiki.internal.upgrade.v2_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.wiki.internal.upgrade.v2_2_0.util.WikiNodeTable;
 
 /**
  * @author Luis Miguel Barcos
@@ -25,11 +24,9 @@ public class WikiNodeExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(WikiNodeTable.TABLE_NAME, "externalReferenceCode")) {
-			alter(
-				WikiNodeTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("WikiNode", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"WikiNode", "externalReferenceCode", "VARCHAR(75)");
 
 			runSQL(
 				"update WikiNode set externalReferenceCode = " +

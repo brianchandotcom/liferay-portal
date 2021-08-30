@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_1_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
 
 /**
  * @author Alec Sloan
@@ -25,10 +24,7 @@ public class CommerceOrderItemUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "promoPrice",
-			"DECIMAL(30,16)");
+		addColumn("CommerceOrderItem", "promoPrice", "DECIMAL(30,16)");
 
 		runSQL(
 			"update CommerceOrderItem set promoPrice = finalPrice + " +

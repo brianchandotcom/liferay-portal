@@ -14,7 +14,6 @@
 
 package com.liferay.marketplace.internal.upgrade.v2_0_3;
 
-import com.liferay.marketplace.internal.upgrade.v2_0_3.util.AppTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,15 +24,11 @@ public class AppUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasColumnType("Marketplace_App", "title", "VARCHAR(75) null")) {
-			alter(
-				AppTable.class,
-				new AlterColumnType("title", "VARCHAR(255) null"));
+			alterColumnType("Marketplace_App", "title", "VARCHAR(255) null");
 		}
 
 		if (hasColumnType("Marketplace_App", "category", "VARCHAR(75) null")) {
-			alter(
-				AppTable.class,
-				new AlterColumnType("category", "VARCHAR(255) null"));
+			alterColumnType("Marketplace_App", "category", "VARCHAR(255) null");
 		}
 	}
 

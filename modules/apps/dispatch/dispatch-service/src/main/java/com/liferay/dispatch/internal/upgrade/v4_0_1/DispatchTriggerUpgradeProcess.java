@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.internal.upgrade.v4_0_1;
 
-import com.liferay.dispatch.internal.upgrade.v4_0_1.util.DispatchTriggerTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,10 +23,9 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			DispatchTriggerTable.class,
-			new AlterColumnType("dispatchTaskExecutorType", "VARCHAR(75) null"),
-			new AlterColumnType("dispatchTaskSettings", "TEXT null"));
+		alterColumnType(
+			"DispatchTrigger", "dispatchTaskExecutorType", "VARCHAR(75) null");
+		alterColumnType("DispatchTrigger", "dispatchTaskSettings", "TEXT null");
 	}
 
 }

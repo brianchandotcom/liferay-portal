@@ -16,7 +16,6 @@ package com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1.util.AuditEventTable;
 
 /**
  * @author Peter Petrekanics
@@ -26,9 +25,8 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			alter(
-				AuditEventTable.class,
-				new AlterColumnType("clientIP", "VARCHAR(255) null"));
+			alterColumnType(
+				"Audit_AuditEvent", "clientIP", "VARCHAR(255) null");
 		}
 	}
 

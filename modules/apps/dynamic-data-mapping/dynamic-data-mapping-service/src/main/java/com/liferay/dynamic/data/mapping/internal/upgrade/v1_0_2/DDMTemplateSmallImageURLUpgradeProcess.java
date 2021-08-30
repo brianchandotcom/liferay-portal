@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_2;
 
-import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.util.DDMTemplateTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,7 @@ public class DDMTemplateSmallImageURLUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			DDMTemplateTable.class,
-			new AlterColumnType("smallImageURL", "STRING null"));
+		alterColumnType("DDMTemplate", "smallImageURL", "STRING null");
 	}
 
 }

@@ -15,8 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_4_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
-import com.liferay.commerce.model.impl.CommerceOrderModelImpl;
 
 /**
  * @author Alessio Antonio Rendina
@@ -26,13 +24,8 @@ public class CommerceOrderManuallyAdjustedUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderModelImpl.class, CommerceOrderModelImpl.TABLE_NAME,
-			"manuallyAdjusted", "BOOLEAN");
-		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "manuallyAdjusted",
-			"BOOLEAN");
+		addColumn("CommerceOrder", "manuallyAdjusted", "BOOLEAN");
+		addColumn("CommerceOrderItem", "manuallyAdjusted", "BOOLEAN");
 	}
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.internal.upgrade.v1_0_0;
 
-import com.liferay.calendar.internal.upgrade.v1_0_0.util.CalendarBookingTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,7 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CalendarBookingTable.class,
-			new AlterColumnType("description", "TEXT null"));
+		alterColumnType("CalendarBooking", "description", "TEXT null");
 	}
 
 }

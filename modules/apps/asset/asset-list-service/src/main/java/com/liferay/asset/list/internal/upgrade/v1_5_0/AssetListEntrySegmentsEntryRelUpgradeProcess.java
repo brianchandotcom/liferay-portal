@@ -14,7 +14,6 @@
 
 package com.liferay.asset.list.internal.upgrade.v1_5_0;
 
-import com.liferay.asset.list.internal.upgrade.v1_5_0.util.AssetListEntrySegmentsEntryRelTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,9 +24,9 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			AssetListEntrySegmentsEntryRelTable.class,
-			new AlterTableAddColumn("priority", "INTEGER default 0 not null"));
+		alterTableAddColumn(
+			"AssetListEntrySegmentsEntryRel", "priority",
+			"INTEGER default 0 not null");
 
 		runSQL(
 			"update AssetListEntrySegmentsEntryRel set priority = 1 where " +

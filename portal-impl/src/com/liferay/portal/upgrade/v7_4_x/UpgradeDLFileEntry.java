@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.DLFileEntryTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,25 +28,19 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(DLFileEntryTable.TABLE_NAME, "externalReferenceCode")) {
-			alter(
-				DLFileEntryTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("DLFileEntry", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"DLFileEntry", "externalReferenceCode", "VARCHAR(75)");
 
 			_populateExternalReferenceCode();
 		}
 
-		if (!hasColumn(DLFileEntryTable.TABLE_NAME, "expirationDate")) {
-			alter(
-				DLFileEntryTable.class,
-				new AlterTableAddColumn("expirationDate", "DATE null"));
+		if (!hasColumn("DLFileEntry", "expirationDate")) {
+			alterTableAddColumn("DLFileEntry", "expirationDate", "DATE null");
 		}
 
-		if (!hasColumn(DLFileEntryTable.TABLE_NAME, "reviewDate")) {
-			alter(
-				DLFileEntryTable.class,
-				new AlterTableAddColumn("reviewDate", "DATE null"));
+		if (!hasColumn("DLFileEntry", "reviewDate")) {
+			alterTableAddColumn("DLFileEntry", "reviewDate", "DATE null");
 		}
 	}
 

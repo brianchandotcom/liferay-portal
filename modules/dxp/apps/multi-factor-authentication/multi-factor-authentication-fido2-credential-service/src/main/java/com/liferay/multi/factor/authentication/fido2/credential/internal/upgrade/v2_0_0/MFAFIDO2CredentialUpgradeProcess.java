@@ -14,7 +14,6 @@
 
 package com.liferay.multi.factor.authentication.fido2.credential.internal.upgrade.v2_0_0;
 
-import com.liferay.multi.factor.authentication.fido2.credential.internal.upgrade.v2_0_0.util.MFAFIDO2CredentialEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,15 +29,13 @@ public class MFAFIDO2CredentialUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasColumn("MFAFIDO2CredentialEntry", "credentialKey")) {
-			alter(
-				MFAFIDO2CredentialEntryTable.class,
-				new AlterColumnType("credentialKey", "TEXT null"));
+			alterColumnType(
+				"MFAFIDO2CredentialEntry", "credentialKey", "TEXT null");
 		}
 
 		if (!hasColumn("MFAFIDO2CredentialEntry", "credentialKeyHash")) {
-			alter(
-				MFAFIDO2CredentialEntryTable.class,
-				new AlterTableAddColumn("credentialKeyHash", "LONG"));
+			alterTableAddColumn(
+				"MFAFIDO2CredentialEntry", "credentialKeyHash", "LONG");
 
 			_updateCredentialKeys();
 		}

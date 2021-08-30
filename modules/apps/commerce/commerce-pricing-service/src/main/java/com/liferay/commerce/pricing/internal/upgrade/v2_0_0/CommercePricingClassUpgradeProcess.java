@@ -14,9 +14,7 @@
 
 package com.liferay.commerce.pricing.internal.upgrade.v2_0_0;
 
-import com.liferay.commerce.pricing.internal.upgrade.v1_1_0.util.CommercePricingClassTable;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
-import com.liferay.commerce.pricing.model.impl.CommercePricingClassImpl;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -79,10 +77,8 @@ public class CommercePricingClassUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		if (hasColumn(CommercePricingClassImpl.TABLE_NAME, "groupId")) {
-			alter(
-				CommercePricingClassTable.class,
-				new AlterTableDropColumn("groupId"));
+		if (hasColumn("CommercePricingClass", "groupId")) {
+			alterTableDropColumn("CommercePricingClass", "groupId");
 		}
 	}
 

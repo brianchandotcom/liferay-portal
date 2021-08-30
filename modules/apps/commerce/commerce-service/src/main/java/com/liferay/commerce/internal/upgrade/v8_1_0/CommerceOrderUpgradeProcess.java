@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v8_1_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v8_1_0.util.CommerceOrderTable;
 
 /**
  * @author Luca Pellizzon
@@ -25,24 +24,17 @@ public class CommerceOrderUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		addColumn("CommerceOrder", "deliveryCommerceTermEntryId", "LONG");
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"deliveryCommerceTermEntryId", "LONG");
+			"CommerceOrder", "deliveryCTermEntryDescription", "TEXT null");
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"deliveryCTermEntryDescription", "TEXT null");
+			"CommerceOrder", "deliveryCommerceTermEntryName",
+			"VARCHAR(75) null");
+		addColumn("CommerceOrder", "paymentCommerceTermEntryId", "LONG");
+		addColumn("CommerceOrder", "paymentCTermEntryDescription", "TEXT null");
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"deliveryCommerceTermEntryName", "VARCHAR(75) null");
-		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"paymentCommerceTermEntryId", "LONG");
-		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"paymentCTermEntryDescription", "TEXT null");
-		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"paymentCommerceTermEntryName", "VARCHAR(75) null");
+			"CommerceOrder", "paymentCommerceTermEntryName",
+			"VARCHAR(75) null");
 	}
 
 }

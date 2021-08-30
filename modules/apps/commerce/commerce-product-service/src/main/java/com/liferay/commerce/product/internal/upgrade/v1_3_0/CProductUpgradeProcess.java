@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -39,12 +38,8 @@ public class CProductUpgradeProcess
 			runSQL(CProductModelImpl.TABLE_SQL_CREATE);
 		}
 
-		addColumn(
-			CPDefinitionModelImpl.class, CPDefinitionModelImpl.TABLE_NAME,
-			"CProductId", "LONG");
-		addColumn(
-			CPDefinitionModelImpl.class, CPDefinitionModelImpl.TABLE_NAME,
-			"version", "INTEGER");
+		addColumn("CPDefinition", "CProductId", "LONG");
+		addColumn("CPDefinition", "version", "INTEGER");
 
 		String insertCProductSQL = StringBundler.concat(
 			"insert into CProduct (uuid_, CProductId, groupId, companyId, ",

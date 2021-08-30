@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_9_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v4_9_0.util.CommerceOrderTable;
 
 /**
  * @author Riccardo Alberti
@@ -25,77 +24,64 @@ public class CommerceOrderUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"subtotalWithTaxAmount", "DECIMAL(30,16)");
+		addColumn("CommerceOrder", "subtotalWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"subtotalDiscountWithTaxAmount", "DECIMAL(30,16)");
+			"CommerceOrder", "subtotalDiscountWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"subtotalDiscountPctLev1WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "subtotalDiscountPctLev1WithTax",
+			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"subtotalDiscountPctLev2WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "subtotalDiscountPctLev2WithTax",
+			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"subtotalDiscountPctLev3WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "subtotalDiscountPctLev3WithTax",
+			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"subtotalDiscountPctLev4WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "subtotalDiscountPctLev4WithTax",
+			"DECIMAL(30,16)");
+
+		addColumn("CommerceOrder", "shippingWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"shippingWithTaxAmount", "DECIMAL(30,16)");
+			"CommerceOrder", "shippingDiscountWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"shippingDiscountWithTaxAmount", "DECIMAL(30,16)");
+			"CommerceOrder", "shippingDiscountPctLev1WithTax",
+			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"shippingDiscountPctLev1WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "shippingDiscountPctLev2WithTax",
+			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"shippingDiscountPctLev2WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "shippingDiscountPctLev3WithTax",
+			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"shippingDiscountPctLev3WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "shippingDiscountPctLev4WithTax",
+			"DECIMAL(30,16)");
+
+		addColumn("CommerceOrder", "totalWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"shippingDiscountPctLev4WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "totalDiscountWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"totalWithTaxAmount", "DECIMAL(30,16)");
+			"CommerceOrder", "totalDiscountPctLev1WithTax", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"totalDiscountWithTaxAmount", "DECIMAL(30,16)");
+			"CommerceOrder", "totalDiscountPctLev2WithTax", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"totalDiscountPctLev1WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "totalDiscountPctLev3WithTax", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"totalDiscountPctLev2WithTax", "DECIMAL(30,16)");
-
-		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"totalDiscountPctLev3WithTax", "DECIMAL(30,16)");
-
-		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"totalDiscountPctLev4WithTax", "DECIMAL(30,16)");
+			"CommerceOrder", "totalDiscountPctLev4WithTax", "DECIMAL(30,16)");
 	}
 
 }

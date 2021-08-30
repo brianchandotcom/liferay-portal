@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
-import com.liferay.portal.upgrade.v7_0_0.util.DLFolderTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,9 +113,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFolder
 
-		alter(
-			DLFolderTable.class,
-			new AlterColumnType("name", "VARCHAR(255) null"));
+		alterColumnType("DLFolder", "name", "VARCHAR(255) null");
 
 		updateRepositoryClassNameIds();
 	}

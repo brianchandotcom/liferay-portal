@@ -14,7 +14,6 @@
 
 package com.liferay.asset.category.property.internal.upgrade.v2_2_0;
 
-import com.liferay.asset.category.property.internal.upgrade.v2_2_0.util.AssetCategoryPropertyTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -27,17 +26,15 @@ public class AssetCategoryPropertyUpgradeProcess extends UpgradeProcess {
 		if (hasColumnType(
 				"AssetCategoryProperty", "key_", "VARCHAR(75) null")) {
 
-			alter(
-				AssetCategoryPropertyTable.class,
-				new AlterColumnType("key_", "VARCHAR(255) null"));
+			alterColumnType(
+				"AssetCategoryProperty", "key_", "VARCHAR(255) null");
 		}
 
 		if (hasColumnType(
 				"AssetCategoryProperty", "value", "VARCHAR(75) null")) {
 
-			alter(
-				AssetCategoryPropertyTable.class,
-				new AlterColumnType("value", "VARCHAR(255) null"));
+			alterColumnType(
+				"AssetCategoryProperty", "value", "VARCHAR(255) null");
 		}
 	}
 

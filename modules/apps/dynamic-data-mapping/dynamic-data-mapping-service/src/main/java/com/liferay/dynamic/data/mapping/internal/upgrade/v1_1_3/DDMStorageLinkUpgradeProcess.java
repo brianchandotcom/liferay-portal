@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_3;
 
-import com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_3.util.DDMStorageLinkTable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -30,9 +29,7 @@ public class DDMStorageLinkUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("DDMStorageLink", "structureVersionId")) {
-			alter(
-				DDMStorageLinkTable.class,
-				new AlterTableAddColumn("structureVersionId", "LONG"));
+			alterTableAddColumn("DDMStorageLink", "structureVersionId", "LONG");
 		}
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(

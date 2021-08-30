@@ -14,7 +14,6 @@
 
 package com.liferay.batch.engine.internal.upgrade.v4_3_0;
 
-import com.liferay.batch.engine.internal.upgrade.v4_3_0.util.BatchEngineExportTaskTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,10 +23,9 @@ public class BatchEngineExportTaskUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn(BatchEngineExportTaskTable.TABLE_NAME, "fieldNames")) {
-			alter(
-				BatchEngineExportTaskTable.class,
-				new AlterColumnType("fieldNames", "VARCHAR(1000) null"));
+		if (hasColumn("BatchEngineExportTask", "fieldNames")) {
+			alterColumnType(
+				"BatchEngineExportTask", "fieldNames", "VARCHAR(1000) null");
 		}
 	}
 

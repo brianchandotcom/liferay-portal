@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v1_1_0;
 
-import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
-
 /**
  * @author Marco Leo
  */
@@ -23,10 +21,7 @@ public class CommerceOrderItemUpgradeProcess
 	extends BaseCommerceOrderUpgradeProcess {
 
 	public CommerceOrderItemUpgradeProcess() {
-		super(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "externalReferenceCode",
-			"VARCHAR(75)");
+		super("CommerceOrderItem", "externalReferenceCode", "VARCHAR(75)");
 	}
 
 }

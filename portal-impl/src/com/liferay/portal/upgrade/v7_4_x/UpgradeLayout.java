@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.LayoutTable;
 
 /**
  * @author Marcell Gyopos
@@ -26,8 +25,8 @@ public class UpgradeLayout extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQL("update Layout set classNameId = 0 where classNameId is null");
 
-		if (!hasColumnType(LayoutTable.TABLE_NAME, "title", "TEXT null")) {
-			alter(LayoutTable.class, new AlterColumnType("title", "TEXT null"));
+		if (!hasColumnType("Layout", "title", "TEXT null")) {
+			alterColumnType("Layout", "title", "TEXT null");
 		}
 	}
 

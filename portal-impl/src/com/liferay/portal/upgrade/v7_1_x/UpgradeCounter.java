@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_1_x.util.CounterTable;
 
 /**
  * @author Preston Crary
@@ -24,9 +23,7 @@ public class UpgradeCounter extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CounterTable.class,
-			new AlterColumnType("name", "VARCHAR(150) not null"));
+		alterColumnType("Counter", "name", "VARCHAR(150) not null");
 	}
 
 }

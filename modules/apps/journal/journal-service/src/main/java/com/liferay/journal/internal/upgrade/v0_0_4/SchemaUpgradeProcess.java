@@ -14,8 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v0_0_4;
 
-import com.liferay.journal.internal.upgrade.v0_0_4.util.JournalArticleTable;
-import com.liferay.journal.internal.upgrade.v0_0_4.util.JournalFeedTable;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,21 +33,21 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 		upgrade(new MVCCVersionUpgradeProcess());
 
-		alter(
-			JournalArticleTable.class,
-			new AlterColumnName(
-				"structureId", "DDMStructureKey VARCHAR(75) null"),
-			new AlterColumnName(
-				"templateId", "DDMTemplateKey VARCHAR(75) null"),
-			new AlterColumnType("description", "TEXT null"));
+		alterColumnName(
+			"JournalArticle", "structureId",
+			"DDMStructureKey VARCHAR(75) null");
+		alterColumnName(
+			"JournalArticle", "templateId", "DDMTemplateKey VARCHAR(75) null");
+		alterColumnType("JournalArticle", "description", "TEXT null");
 
-		alter(
-			JournalFeedTable.class,
-			new AlterColumnName("structureId", "DDMStructureKey TEXT null"),
-			new AlterColumnName("templateId", "DDMTemplateKey TEXT null"),
-			new AlterColumnName(
-				"rendererTemplateId", "DDMRendererTemplateKey TEXT null"),
-			new AlterColumnType("targetPortletId", "VARCHAR(200) null"));
+		alterColumnName(
+			"JournalFeed", "structureId", "DDMStructureKey TEXT null");
+		alterColumnName(
+			"JournalFeed", "templateId", "DDMTemplateKey TEXT null");
+		alterColumnName(
+			"JournalFeed", "rendererTemplateId",
+			"DDMRendererTemplateKey TEXT null");
+		alterColumnType("JournalFeed", "targetPortletId", "VARCHAR(200) null");
 	}
 
 }

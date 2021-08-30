@@ -16,7 +16,6 @@ package com.liferay.commerce.product.type.grouped.internal.upgrade.v1_1_0;
 
 import com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -33,10 +32,7 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CPDefinitionGroupedEntryModelImpl.class,
-			CPDefinitionGroupedEntryModelImpl.TABLE_NAME, "entryCProductId",
-			"LONG");
+		_addColumn("CPDefinitionGroupedEntry", "entryCProductId", "LONG");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CPDefinitionGroupedEntry set entryCProductId = ? " +
@@ -64,8 +60,7 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -75,10 +70,7 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

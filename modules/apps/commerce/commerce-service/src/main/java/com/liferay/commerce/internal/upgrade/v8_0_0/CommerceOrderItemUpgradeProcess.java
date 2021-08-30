@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v8_0_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v8_0_0.util.CommerceOrderItemTable;
 
 /**
  * @author Luca Pellizzon
@@ -25,12 +24,9 @@ public class CommerceOrderItemUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		addColumn("CommerceOrderItem", "CPMeasurementUnitId", "LONG");
 		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"CPMeasurementUnitId", "LONG");
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"decimalQuantity", "DECIMAL(30, 16) null");
+			"CommerceOrderItem", "decimalQuantity", "DECIMAL(30, 16) null");
 	}
 
 }

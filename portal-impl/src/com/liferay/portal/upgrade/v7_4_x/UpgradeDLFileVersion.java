@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.DLFileVersionTable;
 
 /**
  * @author Alicia García
@@ -25,15 +24,11 @@ public class UpgradeDLFileVersion extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("DLFileVersion", "expirationDate")) {
-			alter(
-				DLFileVersionTable.class,
-				new AlterTableAddColumn("expirationDate", "DATE null"));
+			alterTableAddColumn("DLFileVersion", "expirationDate", "DATE null");
 		}
 
 		if (!hasColumn("DLFileVersion", "reviewDate")) {
-			alter(
-				DLFileVersionTable.class,
-				new AlterTableAddColumn("reviewDate", "DATE null"));
+			alterTableAddColumn("DLFileVersion", "reviewDate", "DATE null");
 		}
 	}
 

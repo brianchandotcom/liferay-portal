@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.internal.upgrade.v1_0_1;
 
-import com.liferay.change.tracking.internal.upgrade.v1_0_1.util.CTCollectionTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,7 @@ public class CTCollectionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CTCollectionTable.class,
-			new AlterColumnType("description", "VARCHAR(200) null"));
+		alterColumnType("CTCollection", "description", "VARCHAR(200) null");
 	}
 
 }

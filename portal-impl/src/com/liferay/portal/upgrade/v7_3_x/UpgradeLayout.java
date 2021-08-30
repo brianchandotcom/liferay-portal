@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_3_x.util.LayoutTable;
 
 /**
  * @author Preston Crary
@@ -24,55 +23,38 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn(LayoutTable.TABLE_NAME, "headId") ||
-			hasColumn(LayoutTable.TABLE_NAME, "head")) {
-
-			alter(
-				LayoutTable.class, new AlterTableDropColumn("headId"),
-				new AlterTableDropColumn("head"));
+		if (hasColumn("Layout", "headId") || hasColumn("Layout", "head")) {
+			alterTableDropColumn("Layout", "headId");
+			alterTableDropColumn("Layout", "head");
 		}
 
-		if (!hasColumnType(
-				LayoutTable.TABLE_NAME, "description", "TEXT null")) {
-
-			alter(
-				LayoutTable.class,
-				new UpgradeProcess.AlterColumnType("description", "TEXT null"));
+		if (!hasColumnType("Layout", "description", "TEXT null")) {
+			alterColumnType("Layout", "description", "TEXT null");
 		}
 
-		if (!hasColumn(LayoutTable.TABLE_NAME, "masterLayoutPlid")) {
-			alter(
-				LayoutTable.class,
-				new AlterTableAddColumn("masterLayoutPlid", "LONG"));
+		if (!hasColumn("Layout", "masterLayoutPlid")) {
+			alterTableAddColumn("Layout", "masterLayoutPlid", "LONG");
 
 			runSQL("update Layout set masterLayoutPlid = 0");
 		}
 
-		if (!hasColumn(LayoutTable.TABLE_NAME, "status")) {
-			alter(
-				LayoutTable.class,
-				new AlterTableAddColumn("status", "INTEGER"));
+		if (!hasColumn("Layout", "status")) {
+			alterTableAddColumn("Layout", "status", "INTEGER");
 
 			runSQL("update Layout set status = 0");
 		}
 
-		if (!hasColumn(LayoutTable.TABLE_NAME, "statusByUserId")) {
-			alter(
-				LayoutTable.class,
-				new AlterTableAddColumn("statusByUserId", "LONG"));
+		if (!hasColumn("Layout", "statusByUserId")) {
+			alterTableAddColumn("Layout", "statusByUserId", "LONG");
 		}
 
-		if (!hasColumn(LayoutTable.TABLE_NAME, "statusByUserName")) {
-			alter(
-				LayoutTable.class,
-				new AlterTableAddColumn(
-					"statusByUserName", "VARCHAR(75) null"));
+		if (!hasColumn("Layout", "statusByUserName")) {
+			alterTableAddColumn(
+				"Layout", "statusByUserName", "VARCHAR(75) null");
 		}
 
-		if (!hasColumn(LayoutTable.TABLE_NAME, "statusDate")) {
-			alter(
-				LayoutTable.class,
-				new AlterTableAddColumn("statusDate", "DATE null"));
+		if (!hasColumn("Layout", "statusDate")) {
+			alterTableAddColumn("Layout", "statusDate", "DATE null");
 		}
 
 		runSQL("DROP_TABLE_IF_EXISTS(LayoutVersion)");

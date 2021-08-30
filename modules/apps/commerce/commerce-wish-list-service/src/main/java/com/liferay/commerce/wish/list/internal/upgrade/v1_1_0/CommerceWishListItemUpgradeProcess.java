@@ -20,7 +20,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.wish.list.model.impl.CommerceWishListItemModelImpl;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -45,13 +44,8 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CommerceWishListItemModelImpl.class,
-			CommerceWishListItemModelImpl.TABLE_NAME, "CPInstanceUuid",
-			"VARCHAR(75)");
-		_addColumn(
-			CommerceWishListItemModelImpl.class,
-			CommerceWishListItemModelImpl.TABLE_NAME, "CProductId", "LONG");
+		_addColumn("CommerceWishListItem", "CPInstanceUuid", "VARCHAR(75)");
+		_addColumn("CommerceWishListItem", "CProductId", "LONG");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CommerceWishListItem set CProductId = ?," +
@@ -84,8 +78,7 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -95,10 +88,7 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

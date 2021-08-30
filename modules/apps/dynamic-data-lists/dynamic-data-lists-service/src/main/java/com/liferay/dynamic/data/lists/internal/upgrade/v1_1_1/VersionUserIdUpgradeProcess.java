@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.lists.internal.upgrade.v1_1_1;
 
-import com.liferay.dynamic.data.lists.internal.upgrade.v1_1_1.util.DDLRecordSetTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -27,9 +26,7 @@ public class VersionUserIdUpgradeProcess extends UpgradeProcess {
 		if (hasColumnType(
 				"DDLRecordSet", "versionUserId", "VARCHAR(75) null")) {
 
-			alter(
-				DDLRecordSetTable.class,
-				new AlterColumnType("versionUserId", "LONG"));
+			alterColumnType("DDLRecordSet", "versionUserId", "LONG");
 		}
 	}
 

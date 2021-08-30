@@ -15,7 +15,6 @@
 package com.liferay.commerce.discount.internal.upgrade.v2_2_0;
 
 import com.liferay.commerce.discount.internal.upgrade.base.BaseCommerceDiscountUpgradeProcess;
-import com.liferay.commerce.discount.internal.upgrade.v2_2_0.util.CommerceDiscountRuleTable;
 
 /**
  * @author Riccardo Alberti
@@ -25,9 +24,7 @@ public class CommerceDiscountRuleNameUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceDiscountRuleTable.class,
-			CommerceDiscountRuleTable.TABLE_NAME, "name", "VARCHAR(75)");
+		addColumn("CommerceDiscountRule", "name", "VARCHAR(75)");
 
 		runSQL("update CommerceDiscountRule set name = type_");
 	}

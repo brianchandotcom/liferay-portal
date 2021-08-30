@@ -15,7 +15,6 @@
 package com.liferay.commerce.discount.internal.upgrade.v2_3_0;
 
 import com.liferay.commerce.discount.internal.upgrade.base.BaseCommerceDiscountUpgradeProcess;
-import com.liferay.commerce.discount.internal.upgrade.v2_3_0.util.CommerceDiscountTable;
 
 /**
  * @author Riccardo Alberti
@@ -25,9 +24,7 @@ public class CommerceDiscountUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		renameColumn(
-			CommerceDiscountTable.class, CommerceDiscountTable.TABLE_NAME,
-			"level", "levelType VARCHAR(75)");
+		renameColumn("CommerceDiscount", "level", "levelType VARCHAR(75)");
 	}
 
 }

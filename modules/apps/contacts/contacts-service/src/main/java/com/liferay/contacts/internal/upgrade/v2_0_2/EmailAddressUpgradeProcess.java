@@ -14,7 +14,6 @@
 
 package com.liferay.contacts.internal.upgrade.v2_0_2;
 
-import com.liferay.contacts.internal.upgrade.v2_0_2.util.EntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,7 @@ public class EmailAddressUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			EntryTable.class,
-			new AlterColumnType("emailAddress", "VARCHAR(254) null"));
+		alterColumnType("Contacts_Entry", "emailAddress", "VARCHAR(254) null");
 	}
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_3_x.util.AssetCategoryTable;
 
 /**
  * @author Jürgen Kappler
@@ -25,9 +24,7 @@ public class UpgradeAssetCategoryName extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasColumnType("AssetCategory", "name", "VARCHAR(75) null")) {
-			alter(
-				AssetCategoryTable.class,
-				new AlterColumnType("name", "VARCHAR(255) null"));
+			alterColumnType("AssetCategory", "name", "VARCHAR(255) null");
 		}
 	}
 

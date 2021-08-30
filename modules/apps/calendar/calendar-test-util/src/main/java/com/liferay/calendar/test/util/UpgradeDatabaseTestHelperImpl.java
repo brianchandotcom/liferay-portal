@@ -53,9 +53,7 @@ public class UpgradeDatabaseTestHelperImpl
 			// Hack through the OSGi classloading, it is not worth exporting
 			// the generated *Table packages just to support this test
 
-			alter(
-				_CLASS_LOADER.loadClass(tableClassName),
-				new AlterTableDropColumn(columnName));
+			alterTableDropColumn(tableName, columnName);
 		}
 	}
 

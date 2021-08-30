@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_0_0;
 
-import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_0_0.util.CommerceShippingFixedOptionRelTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,10 +24,10 @@ public class CommerceShippingFixedOptionRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CommerceShippingFixedOptionRelTable.class,
-			new AlterColumnName("commerceCountryId", "countryId LONG"),
-			new AlterColumnName("commerceRegionId", "regionId LONG"));
+		alterColumnName(
+			"CShippingFixedOptionRel", "commerceCountryId", "countryId LONG");
+		alterColumnName(
+			"CShippingFixedOptionRel", "commerceRegionId", "regionId LONG");
 	}
 
 }

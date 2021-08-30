@@ -30,17 +30,11 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CPDefinitionVirtualSettingImpl.class,
-			CPDefinitionVirtualSettingImpl.TABLE_NAME, "classNameId", "LONG");
-		_addColumn(
-			CPDefinitionVirtualSettingImpl.class,
-			CPDefinitionVirtualSettingImpl.TABLE_NAME, "override", "BOOLEAN");
+		_addColumn("CPDefinitionVirtualSetting", "classNameId", "LONG");
+		_addColumn("CPDefinitionVirtualSetting", "override", "BOOLEAN");
 
 		_renameColumn(
-			CPDefinitionVirtualSettingImpl.class,
-			CPDefinitionVirtualSettingImpl.TABLE_NAME, "CPDefinitionId",
-			"classPK LONG");
+			"CPDefinitionVirtualSetting", "CPDefinitionId", "classPK LONG");
 
 		if (hasColumn(
 				CPDefinitionVirtualSettingImpl.TABLE_NAME, "classNameId")) {
@@ -61,8 +55,7 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addColumn(
-			Class<?> tableClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -72,10 +65,7 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				tableClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
@@ -88,8 +78,7 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _renameColumn(
-			Class<?> tableClass, String tableName, String oldColumnName,
-			String newColumnName)
+			String tableName, String oldColumnName, String newColumnName)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -103,8 +92,7 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 			newColumnName, StringPool.SPACE);
 
 		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alter(
-				tableClass, new AlterColumnName(oldColumnName, newColumnName));
+			alterColumnName(tableName, oldColumnName, newColumnName);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

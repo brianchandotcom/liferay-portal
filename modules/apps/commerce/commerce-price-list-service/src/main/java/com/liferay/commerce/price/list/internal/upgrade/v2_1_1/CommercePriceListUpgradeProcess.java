@@ -15,7 +15,6 @@
 package com.liferay.commerce.price.list.internal.upgrade.v2_1_1;
 
 import com.liferay.commerce.price.list.internal.upgrade.base.BaseCommercePriceListUpgradeProcess;
-import com.liferay.commerce.price.list.internal.upgrade.v2_1_1.util.CommercePriceListTable;
 
 /**
  * @author Riccardo Alberti
@@ -25,9 +24,7 @@ public class CommercePriceListUpgradeProcess
 
 	@Override
 	public void doUpgrade() throws Exception {
-		addColumn(
-			CommercePriceListTable.class, CommercePriceListTable.TABLE_NAME,
-			"netPrice", "BOOLEAN");
+		addColumn("CommercePriceList", "netPrice", "BOOLEAN");
 
 		runSQL("update CommercePriceList set netPrice = [$TRUE$]");
 	}

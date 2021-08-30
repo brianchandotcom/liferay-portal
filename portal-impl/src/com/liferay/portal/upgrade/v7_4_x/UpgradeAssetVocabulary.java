@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.AssetVocabularyTable;
 
 /**
  * @author Luis Miguel Barcos
@@ -25,21 +24,16 @@ public class UpgradeAssetVocabulary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(
-				AssetVocabularyTable.TABLE_NAME, "externalReferenceCode")) {
-
-			alter(
-				AssetVocabularyTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("AssetVocabulary", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"AssetVocabulary", "externalReferenceCode", "VARCHAR(75)");
 		}
 
 		runSQL(
 			StringBundler.concat(
-				"update ", AssetVocabularyTable.TABLE_NAME,
-				" set externalReferenceCode = CAST_TEXT(vocabularyId)",
-				" where externalReferenceCode is null or ",
-				"externalReferenceCode =''"));
+				"update AssetVocabulary set externalReferenceCode = ",
+				"CAST_TEXT(vocabularyId) where externalReferenceCode is null ",
+				"or externalReferenceCode =''"));
 	}
 
 }

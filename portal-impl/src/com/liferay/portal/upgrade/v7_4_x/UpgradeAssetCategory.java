@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.AssetCategoryTable;
 
 /**
  * @author Vendel Toreki
@@ -26,37 +25,23 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType(
-				getTableName(AssetCategoryTable.class), "title", "TEXT null")) {
-
-			alter(
-				AssetCategoryTable.class,
-				new AlterColumnType("title", "TEXT null"));
+		if (!hasColumnType("AssetCategory", "title", "TEXT null")) {
+			alterColumnType("AssetCategory", "title", "TEXT null");
 		}
 
-		if (!hasColumnType(
-				getTableName(AssetCategoryTable.class), "description",
-				"TEXT null")) {
-
-			alter(
-				AssetCategoryTable.class,
-				new AlterColumnType("description", "TEXT null"));
+		if (!hasColumnType("AssetCategory", "description", "TEXT null")) {
+			alterColumnType("AssetCategory", "description", "TEXT null");
 		}
 
-		if (!hasColumn(
-				AssetCategoryTable.TABLE_NAME, "externalReferenceCode")) {
-
-			alter(
-				AssetCategoryTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("AssetCategory", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"AssetCategory", "externalReferenceCode", "VARCHAR(75)");
 		}
 
 		runSQL(
 			StringBundler.concat(
-				"update ", AssetCategoryTable.TABLE_NAME,
-				" set externalReferenceCode = CAST_TEXT(categoryId)",
-				" where externalReferenceCode is null or ",
+				"update AssetCategory set externalReferenceCode = ",
+				"CAST_TEXT(categoryId) where externalReferenceCode is null or ",
 				"externalReferenceCode =''"));
 	}
 

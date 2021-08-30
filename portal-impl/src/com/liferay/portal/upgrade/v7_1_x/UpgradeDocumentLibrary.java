@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_1_x.util.DLFileEntryTypeTable;
 
 /**
  * @author José María Muñoz
@@ -27,9 +26,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		if (!hasColumnType(
 				"DLFileEntryType", "fileEntryTypeKey", "VARCHAR(75) null")) {
 
-			alter(
-				DLFileEntryTypeTable.class,
-				new AlterColumnType("fileEntryTypeKey", "VARCHAR(75) null"));
+			alterColumnType(
+				"DLFileEntryType", "fileEntryTypeKey", "VARCHAR(75) null");
 		}
 	}
 

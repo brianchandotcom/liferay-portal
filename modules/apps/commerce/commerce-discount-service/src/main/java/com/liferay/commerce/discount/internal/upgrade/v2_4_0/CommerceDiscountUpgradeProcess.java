@@ -15,7 +15,6 @@
 package com.liferay.commerce.discount.internal.upgrade.v2_4_0;
 
 import com.liferay.commerce.discount.internal.upgrade.base.BaseCommerceDiscountUpgradeProcess;
-import com.liferay.commerce.discount.internal.upgrade.v2_4_0.util.CommerceDiscountTable;
 
 /**
  * @author Riccardo Alberti
@@ -25,9 +24,7 @@ public class CommerceDiscountUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceDiscountTable.class, CommerceDiscountTable.TABLE_NAME,
-			"limitationTimesPerAccount", "INTEGER");
+		addColumn("CommerceDiscount", "limitationTimesPerAccount", "INTEGER");
 
 		runSQL("update CommerceDiscount set limitationTimesPerAccount = 0");
 	}

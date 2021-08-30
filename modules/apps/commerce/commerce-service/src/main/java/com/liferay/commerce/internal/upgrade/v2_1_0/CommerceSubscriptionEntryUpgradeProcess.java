@@ -49,14 +49,8 @@ public class CommerceSubscriptionEntryUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceSubscriptionEntryModelImpl.class,
-			CommerceSubscriptionEntryModelImpl.TABLE_NAME, "CPInstanceUUID",
-			"VARCHAR(75)");
-		addColumn(
-			CommerceSubscriptionEntryModelImpl.class,
-			CommerceSubscriptionEntryModelImpl.TABLE_NAME, "CProductId",
-			"LONG");
+		addColumn("CommerceSubscriptionEntry", "CPInstanceUUID", "VARCHAR(75)");
+		addColumn("CommerceSubscriptionEntry", "CProductId", "LONG");
 
 		_addIndexes(CommerceSubscriptionEntryModelImpl.TABLE_NAME);
 

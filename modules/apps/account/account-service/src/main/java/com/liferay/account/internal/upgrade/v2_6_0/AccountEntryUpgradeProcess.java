@@ -14,7 +14,6 @@
 
 package com.liferay.account.internal.upgrade.v2_6_0;
 
-import com.liferay.account.internal.upgrade.v2_6_0.util.AccountEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,15 +24,13 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("AccountEntry", "defaultDeliveryCTermEntryId")) {
-			alter(
-				AccountEntryTable.class,
-				new AlterTableAddColumn("defaultDeliveryCTermEntryId", "LONG"));
+			alterTableAddColumn(
+				"AccountEntry", "defaultDeliveryCTermEntryId", "LONG");
 		}
 
 		if (!hasColumn("AccountEntry", "defaultPaymentCTermEntryId")) {
-			alter(
-				AccountEntryTable.class,
-				new AlterTableAddColumn("defaultPaymentCTermEntryId", "LONG"));
+			alterTableAddColumn(
+				"AccountEntry", "defaultPaymentCTermEntryId", "LONG");
 		}
 	}
 

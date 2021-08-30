@@ -28,17 +28,14 @@ public class CommercePaymentMethodUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn(CommerceOrderImpl.TABLE_NAME, "transactionId")) {
-			addColumn(
-				CommerceOrderImpl.class, CommerceOrderImpl.TABLE_NAME,
-				"transactionId", "VARCHAR(75)");
+			addColumn("CommerceOrder", "transactionId", "VARCHAR(75)");
 		}
 
 		if (hasColumn(
 				CommerceOrderImpl.TABLE_NAME, "commercePaymentMethodId")) {
 
 			addColumn(
-				CommerceOrderImpl.class, CommerceOrderImpl.TABLE_NAME,
-				"commercePaymentMethodKey", "VARCHAR(75)");
+				"CommerceOrder", "commercePaymentMethodKey", "VARCHAR(75)");
 
 			String template = StringUtil.read(
 				CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
@@ -46,9 +43,7 @@ public class CommercePaymentMethodUpgradeProcess
 
 			runSQLTemplateString(template, false, false);
 
-			alter(
-				CommerceOrderImpl.class,
-				new AlterTableDropColumn("commercePaymentMethodId"));
+			alterTableDropColumn("CommerceOrder", "commercePaymentMethodId");
 		}
 
 		if (hasColumn(
@@ -56,8 +51,7 @@ public class CommercePaymentMethodUpgradeProcess
 				"commercePaymentMethodId")) {
 
 			addColumn(
-				CommerceOrderPaymentImpl.class,
-				CommerceOrderPaymentImpl.TABLE_NAME, "commercePaymentMethodKey",
+				"CommerceOrderPayment", "commercePaymentMethodKey",
 				"VARCHAR(75)");
 
 			String template = StringUtil.read(
@@ -66,9 +60,8 @@ public class CommercePaymentMethodUpgradeProcess
 
 			runSQLTemplateString(template, false, false);
 
-			alter(
-				CommerceOrderPaymentImpl.class,
-				new AlterTableDropColumn("commercePaymentMethodId"));
+			alterTableDropColumn(
+				"CommerceOrderPayment", "commercePaymentMethodId");
 		}
 
 		if (hasTable("CommercePaymentMethod")) {

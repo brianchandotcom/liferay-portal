@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_2_0;
 
-import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateCollectionTable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -36,9 +35,8 @@ public class LayoutPageTemplateCollectionUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected void upgradeSchema() throws Exception {
-		alter(
-			LayoutPageTemplateCollectionTable.class,
-			new AlterTableAddColumn("lptCollectionKey", "VARCHAR(75)"));
+		alterTableAddColumn(
+			"LayoutPageTemplateCollection", "lptCollectionKey", "VARCHAR(75)");
 	}
 
 	private String _generateLayoutPageTemplateCollectionKey(String name) {

@@ -26,13 +26,9 @@ public class CommerceOrderUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderModelImpl.class, CommerceOrderModelImpl.TABLE_NAME,
-			"couponCode", "VARCHAR(75)");
+		addColumn("CommerceOrder", "couponCode", "VARCHAR(75)");
 
-		addColumn(
-			CommerceOrderModelImpl.class, CommerceOrderModelImpl.TABLE_NAME,
-			"lastPriceUpdateDate", "DATE");
+		addColumn("CommerceOrder", "lastPriceUpdateDate", "DATE");
 
 		if (hasColumn(
 				CommerceOrderModelImpl.TABLE_NAME, "lastPriceUpdateDate")) {

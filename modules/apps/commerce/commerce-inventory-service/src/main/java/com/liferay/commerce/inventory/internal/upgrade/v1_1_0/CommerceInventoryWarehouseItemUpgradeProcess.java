@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.inventory.internal.upgrade.v1_1_0;
 
-import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,15 +26,11 @@ public class CommerceInventoryWarehouseItemUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CommerceInventoryWarehouseItemModelImpl.class,
-			CommerceInventoryWarehouseItemModelImpl.TABLE_NAME,
-			"externalReferenceCode", "VARCHAR(75)");
+		_addColumn("CIWarehouseItem", "externalReferenceCode", "VARCHAR(75)");
 	}
 
 	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -46,10 +40,7 @@ public class CommerceInventoryWarehouseItemUpgradeProcess
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

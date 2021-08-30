@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v5_0_0;
 
-import com.liferay.commerce.internal.upgrade.v5_0_0.util.CommerceAddressTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,10 +23,9 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CommerceAddressTable.class,
-			new AlterColumnName("commerceCountryId", "countryId LONG"),
-			new AlterColumnName("commerceRegionId", "regionId LONG"));
+		alterColumnName(
+			"CommerceAddress", "commerceCountryId", "countryId LONG");
+		alterColumnName("CommerceAddress", "commerceRegionId", "regionId LONG");
 	}
 
 }

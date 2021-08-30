@@ -15,7 +15,6 @@
 package com.liferay.remote.app.internal.upgrade.v2_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.remote.app.internal.upgrade.v2_3_0.util.RemoteAppEntryTable;
 
 /**
  * @author Javier de Arcos
@@ -24,40 +23,32 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(RemoteAppEntryTable.TABLE_NAME, "description")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("description", "TEXT null"));
+		if (!hasColumn("RemoteAppEntry", "description")) {
+			alterTableAddColumn("RemoteAppEntry", "description", "TEXT null");
 		}
 
-		if (!hasColumn(RemoteAppEntryTable.TABLE_NAME, "sourceCodeURL")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("sourceCodeURL", "STRING null"));
+		if (!hasColumn("RemoteAppEntry", "sourceCodeURL")) {
+			alterTableAddColumn(
+				"RemoteAppEntry", "sourceCodeURL", "STRING null");
 		}
 
-		if (!hasColumn(RemoteAppEntryTable.TABLE_NAME, "status")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("status", "INTEGER"));
+		if (!hasColumn("RemoteAppEntry", "status")) {
+			alterTableAddColumn("RemoteAppEntry", "status", "INTEGER");
 
 			runSQL("update RemoteAppEntry set status = 0 where status is null");
 		}
 
-		if (!hasColumn(RemoteAppEntryTable.TABLE_NAME, "statusByUserId")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("statusByUserId", "LONG"));
+		if (!hasColumn("RemoteAppEntry", "statusByUserId")) {
+			alterTableAddColumn("RemoteAppEntry", "statusByUserId", "LONG");
 
 			runSQL(
 				"update RemoteAppEntry set statusByUserId = userId where " +
 					"statusByUserId is null");
 		}
 
-		if (!hasColumn(RemoteAppEntryTable.TABLE_NAME, "statusByUserName")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("statusByUserName", "VARCHAR(75)"));
+		if (!hasColumn("RemoteAppEntry", "statusByUserName")) {
+			alterTableAddColumn(
+				"RemoteAppEntry", "statusByUserName", "VARCHAR(75)");
 
 			runSQL(
 				"update RemoteAppEntry set statusByUserName = (select " +
@@ -65,10 +56,8 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 						"User_.userId)");
 		}
 
-		if (!hasColumn(RemoteAppEntryTable.TABLE_NAME, "statusDate")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("statusDate", "DATE"));
+		if (!hasColumn("RemoteAppEntry", "statusDate")) {
+			alterTableAddColumn("RemoteAppEntry", "statusDate", "DATE");
 
 			runSQL(
 				"update RemoteAppEntry set statusDate = modifiedDate where " +

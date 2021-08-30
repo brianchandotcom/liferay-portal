@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_5_0;
 
-import com.liferay.layout.page.template.internal.upgrade.v3_5_0.util.LayoutPageTemplateStructureRelTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,49 +24,32 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(
-				LayoutPageTemplateStructureRelTable.TABLE_NAME,
-				"lastPublishDate")) {
-
-			alter(
-				LayoutPageTemplateStructureRelTable.class,
-				new AlterTableAddColumn("lastPublishDate", "DATE"));
+		if (!hasColumn("LayoutPageTemplateStructureRel", "lastPublishDate")) {
+			alterTableAddColumn(
+				"LayoutPageTemplateStructureRel", "lastPublishDate", "DATE");
 		}
 
-		if (!hasColumn(
-				LayoutPageTemplateStructureRelTable.TABLE_NAME, "status")) {
-
-			alter(
-				LayoutPageTemplateStructureRelTable.class,
-				new AlterTableAddColumn("status", "INTEGER"));
+		if (!hasColumn("LayoutPageTemplateStructureRel", "status")) {
+			alterTableAddColumn(
+				"LayoutPageTemplateStructureRel", "status", "INTEGER");
 
 			runSQL("update LayoutPageTemplateStructureRel set status = 0");
 		}
 
-		if (!hasColumn(
-				LayoutPageTemplateStructureRelTable.TABLE_NAME,
-				"statusByUserId")) {
-
-			alter(
-				LayoutPageTemplateStructureRelTable.class,
-				new AlterTableAddColumn("statusByUserId", "LONG"));
+		if (!hasColumn("LayoutPageTemplateStructureRel", "statusByUserId")) {
+			alterTableAddColumn(
+				"LayoutPageTemplateStructureRel", "statusByUserId", "LONG");
 		}
 
-		if (!hasColumn(
-				LayoutPageTemplateStructureRelTable.TABLE_NAME,
-				"statusByUserName")) {
-
-			alter(
-				LayoutPageTemplateStructureRelTable.class,
-				new AlterTableAddColumn("statusByUserName", "VARCHAR(75)"));
+		if (!hasColumn("LayoutPageTemplateStructureRel", "statusByUserName")) {
+			alterTableAddColumn(
+				"LayoutPageTemplateStructureRel", "statusByUserName",
+				"VARCHAR(75)");
 		}
 
-		if (!hasColumn(
-				LayoutPageTemplateStructureRelTable.TABLE_NAME, "statusDate")) {
-
-			alter(
-				LayoutPageTemplateStructureRelTable.class,
-				new AlterTableAddColumn("statusDate", "DATE"));
+		if (!hasColumn("LayoutPageTemplateStructureRel", "statusDate")) {
+			alterTableAddColumn(
+				"LayoutPageTemplateStructureRel", "statusDate", "DATE");
 		}
 	}
 

@@ -16,7 +16,6 @@ package com.liferay.commerce.internal.upgrade.v4_3_0;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.internal.upgrade.v1_1_0.BaseCommerceOrderUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceOrderModelImpl;
 
 /**
  * @author Alec Sloan
@@ -25,9 +24,7 @@ public class CommerceOrderDateUpgradeProcess
 	extends BaseCommerceOrderUpgradeProcess {
 
 	public CommerceOrderDateUpgradeProcess() {
-		super(
-			CommerceOrderModelImpl.class, CommerceOrderModelImpl.TABLE_NAME,
-			"orderDate", "DATE");
+		super("CommerceOrder", "orderDate", "DATE");
 	}
 
 	@Override

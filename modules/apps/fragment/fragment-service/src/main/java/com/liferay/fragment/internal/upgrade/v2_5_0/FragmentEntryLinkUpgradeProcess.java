@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.upgrade.v2_5_0;
 
-import com.liferay.fragment.internal.upgrade.v2_5_0.util.FragmentEntryLinkTable;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -71,9 +70,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	private void _upgratePlid() throws Exception {
 		if (!hasColumn("FragmentEntryLink", "plid")) {
-			alter(
-				FragmentEntryLinkTable.class,
-				new AlterTableAddColumn("plid", "LONG"));
+			alterTableAddColumn("FragmentEntryLink", "plid", "LONG");
 		}
 
 		runSQL(

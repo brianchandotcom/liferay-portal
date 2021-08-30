@@ -33,14 +33,10 @@ public class CPDefinitionLinkUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CPDefinitionLinkModelImpl.class,
-			CPDefinitionLinkModelImpl.TABLE_NAME, "CProductId", "LONG");
+		addColumn("CPDefinitionLink", "CProductId", "LONG");
 
 		_renameColumn(
-			CPDefinitionLinkModelImpl.class,
-			CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId1",
-			"CPDefinitionId LONG");
+			"CPDefinitionLink", "CPDefinitionId1", "CPDefinitionId LONG");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CPDefinitionLink set CProductId = ? where " +
@@ -78,8 +74,7 @@ public class CPDefinitionLinkUpgradeProcess
 	}
 
 	private void _renameColumn(
-			Class<?> tableClass, String tableName, String oldColumnName,
-			String newColumnName)
+			String tableName, String oldColumnName, String newColumnName)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -93,8 +88,7 @@ public class CPDefinitionLinkUpgradeProcess
 			newColumnName, StringPool.SPACE);
 
 		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alter(
-				tableClass, new AlterColumnName(oldColumnName, newColumnName));
+			alterColumnName(tableName, oldColumnName, newColumnName);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

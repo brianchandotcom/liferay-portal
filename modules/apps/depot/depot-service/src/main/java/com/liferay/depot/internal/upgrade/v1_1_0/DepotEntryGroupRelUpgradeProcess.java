@@ -14,7 +14,6 @@
 
 package com.liferay.depot.internal.upgrade.v1_1_0;
 
-import com.liferay.depot.internal.upgrade.v1_1_0.util.DepotEntryGroupRelTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,8 @@ public class DepotEntryGroupRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			DepotEntryGroupRelTable.class,
-			new AlterTableAddColumn("ddmStructuresAvailable", "BOOLEAN"));
+		alterTableAddColumn(
+			"DepotEntryGroupRel", "ddmStructuresAvailable", "BOOLEAN");
 	}
 
 }

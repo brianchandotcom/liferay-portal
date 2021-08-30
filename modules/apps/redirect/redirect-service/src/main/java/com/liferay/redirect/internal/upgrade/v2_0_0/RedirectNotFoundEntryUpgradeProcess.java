@@ -15,7 +15,6 @@
 package com.liferay.redirect.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.redirect.internal.upgrade.v2_0_0.util.RedirectNotFoundEntryTable;
 
 /**
  * @author Alejandro Tardín
@@ -24,10 +23,10 @@ public class RedirectNotFoundEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			RedirectNotFoundEntryTable.class, new AlterTableAddColumn("userId"),
-			new AlterTableAddColumn("userName"),
-			new AlterTableAddColumn("ignored"));
+		alterTableAddColumn("RedirectNotFoundEntry", "ignored", "BOOLEAN");
+		alterTableAddColumn("RedirectNotFoundEntry", "userId", "LONG");
+		alterTableAddColumn(
+			"RedirectNotFoundEntry", "userName", "VARCHAR(75) null");
 	}
 
 }

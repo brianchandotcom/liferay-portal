@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.internal.upgrade.v6_1_0;
 
-import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,13 +23,8 @@ public class MBThreadTableUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType(
-				MBThreadTable.TABLE_NAME, "title", "VARCHAR(75) null")) {
-
-			alter(
-				MBThreadTable.class,
-				new UpgradeProcess.AlterColumnType(
-					"title", "VARCHAR(75) null"));
+		if (!hasColumnType("MBThread", "title", "VARCHAR(75) null")) {
+			alterColumnType("MBThread", "title", "VARCHAR(75) null");
 		}
 	}
 

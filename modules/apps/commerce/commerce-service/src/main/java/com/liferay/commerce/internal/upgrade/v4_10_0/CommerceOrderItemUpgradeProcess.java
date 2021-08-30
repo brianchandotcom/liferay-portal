@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_10_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v4_10_0.util.CommerceOrderItemTable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 
@@ -31,69 +30,40 @@ public class CommerceOrderItemUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"deliveryMaxSubscriptionCycles", "LONG");
+		addColumn("CommerceOrderItem", "deliveryMaxSubscriptionCycles", "LONG");
+
+		addColumn("CommerceOrderItem", "deliverySubscriptionLength", "INTEGER");
 
 		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"deliverySubscriptionLength", "INTEGER");
+			"CommerceOrderItem", "deliverySubscriptionType", "VARCHAR(75)");
 
 		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"deliverySubscriptionType", "VARCHAR(75)");
+			"CommerceOrderItem", "deliverySubTypeSettings", "VARCHAR(75)");
+
+		addColumn("CommerceOrderItem", "depth", "DOUBLE");
+
+		addColumn("CommerceOrderItem", "freeShipping", "BOOLEAN");
+
+		addColumn("CommerceOrderItem", "height", "DOUBLE");
+
+		addColumn("CommerceOrderItem", "maxSubscriptionCycles", "LONG");
+
+		addColumn("CommerceOrderItem", "shipSeparately", "BOOLEAN");
+
+		addColumn("CommerceOrderItem", "shippable", "BOOLEAN");
+
+		addColumn("CommerceOrderItem", "shippingExtraPrice", "DOUBLE");
+
+		addColumn("CommerceOrderItem", "subscriptionLength", "INTEGER");
+
+		addColumn("CommerceOrderItem", "subscriptionType", "VARCHAR(75)");
 
 		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"deliverySubTypeSettings", "VARCHAR(75)");
+			"CommerceOrderItem", "subscriptionTypeSettings", "VARCHAR(75)");
 
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"depth", "DOUBLE");
+		addColumn("CommerceOrderItem", "weight", "DOUBLE");
 
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"freeShipping", "BOOLEAN");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"height", "DOUBLE");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"maxSubscriptionCycles", "LONG");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"shipSeparately", "BOOLEAN");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"shippable", "BOOLEAN");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"shippingExtraPrice", "DOUBLE");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"subscriptionLength", "INTEGER");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"subscriptionType", "VARCHAR(75)");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"subscriptionTypeSettings", "VARCHAR(75)");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"weight", "DOUBLE");
-
-		addColumn(
-			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
-			"width", "DOUBLE");
+		addColumn("CommerceOrderItem", "width", "DOUBLE");
 
 		String updateCommerceOrderItemSQL = StringBundler.concat(
 			"update CommerceOrderItem SET shippable = ?, freeShipping = ?, ",

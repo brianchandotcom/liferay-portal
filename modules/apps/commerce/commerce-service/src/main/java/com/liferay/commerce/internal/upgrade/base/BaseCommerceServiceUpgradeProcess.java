@@ -27,8 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 
 	protected void addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -38,10 +37,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
@@ -54,8 +50,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected void changeColumnType(
-			Class<?> tableClass, String tableName, String columnName,
-			String newColumnType)
+			String tableName, String columnName, String newColumnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -66,7 +61,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (hasColumn(tableName, columnName)) {
-			alter(tableClass, new AlterColumnType(columnName, newColumnType));
+			alterColumnType(tableName, columnName, newColumnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
@@ -106,8 +101,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected void renameColumn(
-			Class<?> tableClass, String tableName, String oldColumnName,
-			String newColumnName)
+			String tableName, String oldColumnName, String newColumnName)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -121,8 +115,7 @@ public abstract class BaseCommerceServiceUpgradeProcess extends UpgradeProcess {
 			newColumnName, StringPool.SPACE);
 
 		if (!hasColumn(tableName, newColumnSimpleName)) {
-			alter(
-				tableClass, new AlterColumnName(oldColumnName, newColumnName));
+			alterColumnName(tableName, oldColumnName, newColumnName);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.internal.upgrade.v3_2_0;
 
-import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -27,29 +25,17 @@ public class CommerceOrderItemUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "deliveryGroup",
-			"VARCHAR(75)");
+		_addColumn("CommerceOrderItem", "deliveryGroup", "VARCHAR(75)");
 
-		_addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "shippingAddressId", "LONG");
+		_addColumn("CommerceOrderItem", "shippingAddressId", "LONG");
 
-		_addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "printedNote",
-			"VARCHAR(75)");
+		_addColumn("CommerceOrderItem", "printedNote", "VARCHAR(75)");
 
-		_addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "requestedDeliveryDate",
-			"DATE");
+		_addColumn("CommerceOrderItem", "requestedDeliveryDate", "DATE");
 	}
 
 	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -59,10 +45,7 @@ public class CommerceOrderItemUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

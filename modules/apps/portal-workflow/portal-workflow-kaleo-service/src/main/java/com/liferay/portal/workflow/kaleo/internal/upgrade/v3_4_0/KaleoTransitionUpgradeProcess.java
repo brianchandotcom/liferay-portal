@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v3_4_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.workflow.kaleo.internal.upgrade.v3_4_0.util.KaleoTransitionTable;
 
 /**
  * @author Feliphe Marinho
@@ -25,9 +24,7 @@ public class KaleoTransitionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("KaleoTransition", "label")) {
-			alter(
-				KaleoTransitionTable.class,
-				new UpgradeProcess.AlterTableAddColumn("label", "STRING null"));
+			alterTableAddColumn("KaleoTransition", "label", "STRING null");
 		}
 	}
 

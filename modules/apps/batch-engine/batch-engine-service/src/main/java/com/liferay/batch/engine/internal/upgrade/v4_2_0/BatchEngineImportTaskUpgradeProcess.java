@@ -14,7 +14,6 @@
 
 package com.liferay.batch.engine.internal.upgrade.v4_2_0;
 
-import com.liferay.batch.engine.internal.upgrade.v4_2_0.util.BatchEngineImportTaskTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,20 +23,14 @@ public class BatchEngineImportTaskUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(
-				BatchEngineImportTaskTable.TABLE_NAME, "processedItemsCount")) {
-
-			alter(
-				BatchEngineImportTaskTable.class,
-				new AlterTableAddColumn("processedItemsCount", "INTEGER"));
+		if (!hasColumn("BatchEngineImportTask", "processedItemsCount")) {
+			alterTableAddColumn(
+				"BatchEngineImportTask", "processedItemsCount", "INTEGER");
 		}
 
-		if (!hasColumn(
-				BatchEngineImportTaskTable.TABLE_NAME, "totalItemsCount")) {
-
-			alter(
-				BatchEngineImportTaskTable.class,
-				new AlterTableAddColumn("totalItemsCount", "INTEGER"));
+		if (!hasColumn("BatchEngineImportTask", "totalItemsCount")) {
+			alterTableAddColumn(
+				"BatchEngineImportTask", "totalItemsCount", "INTEGER");
 		}
 	}
 

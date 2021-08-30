@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.notification.internal.upgrade.v2_1_0;
 
-import com.liferay.commerce.notification.model.impl.CommerceNotificationQueueEntryImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,18 +26,12 @@ public class CommerceNotificationQueueEntryUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CommerceNotificationQueueEntryImpl.class,
-			CommerceNotificationQueueEntryImpl.TABLE_NAME, "classNameId",
-			"LONG");
-		_addColumn(
-			CommerceNotificationQueueEntryImpl.class,
-			CommerceNotificationQueueEntryImpl.TABLE_NAME, "classPK", "LONG");
+		_addColumn("CommerceNotificationQueueEntry", "classNameId", "LONG");
+		_addColumn("CommerceNotificationQueueEntry", "classPK", "LONG");
 	}
 
 	private void _addColumn(
-			Class<?> tableClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -49,10 +41,7 @@ public class CommerceNotificationQueueEntryUpgradeProcess
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				tableClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

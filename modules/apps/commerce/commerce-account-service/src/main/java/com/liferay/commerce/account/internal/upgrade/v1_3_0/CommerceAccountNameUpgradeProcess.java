@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.account.internal.upgrade.v1_3_0;
 
-import com.liferay.commerce.account.model.impl.CommerceAccountModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,9 +23,7 @@ public class CommerceAccountNameUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CommerceAccountModelImpl.class,
-			new AlterColumnType("name", "VARCHAR(255) null"));
+		alterColumnType("CommerceAccount", "name", "VARCHAR(255) null");
 	}
 
 }

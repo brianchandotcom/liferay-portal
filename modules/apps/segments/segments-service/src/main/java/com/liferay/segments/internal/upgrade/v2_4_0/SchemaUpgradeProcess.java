@@ -15,7 +15,6 @@
 package com.liferay.segments.internal.upgrade.v2_4_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.segments.internal.upgrade.v2_4_0.util.SegmentsExperienceTable;
 
 /**
  * @author Cristina González
@@ -24,9 +23,8 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			SegmentsExperienceTable.class,
-			new AlterTableAddColumn("typeSettings", "VARCHAR(75) null"));
+		alterTableAddColumn(
+			"SegmentsExperience", "typeSettings", "VARCHAR(75) null");
 	}
 
 }

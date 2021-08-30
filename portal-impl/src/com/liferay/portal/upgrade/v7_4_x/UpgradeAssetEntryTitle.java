@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.AssetEntryTable;
 
 /**
  * @author Vendel Toreki
@@ -24,12 +23,8 @@ public class UpgradeAssetEntryTitle extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumnType(
-				getTableName(AssetEntryTable.class), "title", "TEXT null")) {
-
-			alter(
-				AssetEntryTable.class,
-				new AlterColumnType("title", "TEXT null"));
+		if (!hasColumnType("AssetEntry", "title", "TEXT null")) {
+			alterColumnType("AssetEntry", "title", "TEXT null");
 		}
 	}
 

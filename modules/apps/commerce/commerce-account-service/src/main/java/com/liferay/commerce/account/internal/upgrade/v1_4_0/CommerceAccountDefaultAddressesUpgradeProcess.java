@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.account.internal.upgrade.v1_4_0;
 
-import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,17 +26,12 @@ public class CommerceAccountDefaultAddressesUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn(
-			CommerceAccountImpl.class, CommerceAccountImpl.TABLE_NAME,
-			"defaultBillingAddressId", "LONG");
-		_addColumn(
-			CommerceAccountImpl.class, CommerceAccountImpl.TABLE_NAME,
-			"defaultShippingAddressId", "LONG");
+		_addColumn("CommerceAccount", "defaultBillingAddressId", "LONG");
+		_addColumn("CommerceAccount", "defaultShippingAddressId", "LONG");
 	}
 
 	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -48,10 +41,7 @@ public class CommerceAccountDefaultAddressesUpgradeProcess
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new UpgradeProcess.AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_1_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v4_1_0.util.CommerceCountryTable;
 
 /**
  * @author Marco Leo
@@ -26,9 +25,8 @@ public class CommerceCountryUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("CommerceCountry", "channelFilterEnabled")) {
-			alter(
-				CommerceCountryTable.class,
-				new AlterTableAddColumn("channelFilterEnabled", "BOOLEAN"));
+			alterTableAddColumn(
+				"CommerceCountry", "channelFilterEnabled", "BOOLEAN");
 
 			runSQL(
 				"update CommerceCountry set channelFilterEnabled = [$FALSE$]");

@@ -15,7 +15,6 @@
 package com.liferay.saml.persistence.internal.upgrade.v1_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.persistence.internal.upgrade.v1_1_0.util.SamlSpMessageTable;
 
 /**
  * @author Mika Koivisto
@@ -25,9 +24,8 @@ public class SamlSpMessageUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			SamlSpMessageTable.class,
-			new AlterColumnType("samlIdpEntityId", "VARCHAR(1024) null"));
+		alterColumnType(
+			"SamlSpMessage", "samlIdpEntityId", "VARCHAR(1024) null");
 	}
 
 }

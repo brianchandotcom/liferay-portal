@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 
 /**
  * @author Ethan Bustad
@@ -26,9 +25,7 @@ public class CPInstanceUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CPInstanceModelImpl.class, CPInstanceModelImpl.TABLE_NAME,
-			"CPInstanceUuid", "VARCHAR(75)");
+		addColumn("CPInstance", "CPInstanceUuid", "VARCHAR(75)");
 
 		runSQL("update CPInstance set CPInstanceUuid = uuid_");
 	}

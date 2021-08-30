@@ -15,7 +15,6 @@
 package com.liferay.saml.persistence.internal.upgrade.v1_1_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.persistence.internal.upgrade.v1_1_3.util.SamlSpIdpConnectionTable;
 
 /**
  * @author Mika Koivisto
@@ -24,9 +23,7 @@ public class SamlSpIdpConnectionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			SamlSpIdpConnectionTable.class,
-			new AlterColumnType("forceAuthn", "BOOLEAN"));
+		alterColumnType("SamlSpIdpConnection", "forceAuthn", "BOOLEAN");
 	}
 
 }

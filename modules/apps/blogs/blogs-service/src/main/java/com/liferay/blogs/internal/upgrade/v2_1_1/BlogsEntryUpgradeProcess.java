@@ -14,7 +14,6 @@
 
 package com.liferay.blogs.internal.upgrade.v2_1_1;
 
-import com.liferay.blogs.internal.upgrade.v2_1_1.util.BlogsEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,13 +23,8 @@ public class BlogsEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumnType(
-				getTableName(BlogsEntryTable.class), "title",
-				"VARCHAR(150) null")) {
-
-			alter(
-				BlogsEntryTable.class,
-				new AlterColumnType("title", "VARCHAR(255) null"));
+		if (hasColumnType("BlogsEntry", "title", "VARCHAR(150) null")) {
+			alterColumnType("BlogsEntry", "title", "VARCHAR(255) null");
 		}
 	}
 

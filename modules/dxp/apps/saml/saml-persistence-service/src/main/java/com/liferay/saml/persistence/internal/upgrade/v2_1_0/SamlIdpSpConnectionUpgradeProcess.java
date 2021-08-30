@@ -15,7 +15,6 @@
 package com.liferay.saml.persistence.internal.upgrade.v2_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.persistence.internal.upgrade.v2_1_0.util.SamlIdpSpConnectionTable;
 
 /**
  * @author Carlos Sierra Andrés
@@ -24,9 +23,8 @@ public class SamlIdpSpConnectionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			SamlIdpSpConnectionTable.class,
-			new AlterTableAddColumn("encryptionForced", "BOOLEAN"));
+		alterTableAddColumn(
+			"SamlIdpSpConnection", "encryptionForced", "BOOLEAN");
 	}
 
 }

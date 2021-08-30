@@ -15,7 +15,6 @@
 package com.liferay.commerce.price.list.internal.upgrade.v2_1_0;
 
 import com.liferay.commerce.price.list.internal.upgrade.base.BaseCommercePriceListUpgradeProcess;
-import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommercePriceEntryTable;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
@@ -26,53 +25,18 @@ public class CommercePriceEntryUpgradeProcess
 
 	@Override
 	public void doUpgrade() throws Exception {
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"discountDiscovery", "BOOLEAN");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"discountLevel1", "DECIMAL(30,16)");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"discountLevel2", "DECIMAL(30,16)");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"discountLevel3", "DECIMAL(30,16)");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"discountLevel4", "DECIMAL(30,16)");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"bulkPricing", "BOOLEAN");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"displayDate", "DATE");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"expirationDate", "DATE");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"status", "INTEGER");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"statusByUserId", "LONG");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"statusByUserName", "VARCHAR(75)");
-
-		addColumn(
-			CommercePriceEntryTable.class, CommercePriceEntryTable.TABLE_NAME,
-			"statusDate", "DATE");
+		addColumn("CommercePriceEntry", "discountDiscovery", "BOOLEAN");
+		addColumn("CommercePriceEntry", "discountLevel1", "DECIMAL(30,16)");
+		addColumn("CommercePriceEntry", "discountLevel2", "DECIMAL(30,16)");
+		addColumn("CommercePriceEntry", "discountLevel3", "DECIMAL(30,16)");
+		addColumn("CommercePriceEntry", "discountLevel4", "DECIMAL(30,16)");
+		addColumn("CommercePriceEntry", "bulkPricing", "BOOLEAN");
+		addColumn("CommercePriceEntry", "displayDate", "DATE");
+		addColumn("CommercePriceEntry", "expirationDate", "DATE");
+		addColumn("CommercePriceEntry", "status", "INTEGER");
+		addColumn("CommercePriceEntry", "statusByUserId", "LONG");
+		addColumn("CommercePriceEntry", "statusByUserName", "VARCHAR(75)");
+		addColumn("CommercePriceEntry", "statusDate", "DATE");
 
 		runSQL("UPDATE CommercePriceEntry SET bulkPricing = [$TRUE$]");
 		runSQL("UPDATE CommercePriceEntry SET displayDate = lastPublishDate");

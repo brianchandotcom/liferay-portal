@@ -17,7 +17,6 @@ package com.liferay.remote.app.internal.upgrade.v2_0_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.remote.app.constants.RemoteAppConstants;
-import com.liferay.remote.app.internal.upgrade.v2_0_0.util.RemoteAppEntryTable;
 
 /**
  * @author Iván Zaera Avellón
@@ -27,40 +26,31 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("RemoteAppEntry", "customElementCSSURLs")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("customElementCSSURLs", "TEXT"));
+			alterTableAddColumn(
+				"RemoteAppEntry", "customElementCSSURLs", "TEXT");
 		}
 
 		if (!hasColumn("RemoteAppEntry", "customElementHTMLElementName")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn(
-					"customElementHTMLElementName", "VARCHAR(255)"));
+			alterTableAddColumn(
+				"RemoteAppEntry", "customElementHTMLElementName",
+				"VARCHAR(255)");
 		}
 
 		if (!hasColumn("RemoteAppEntry", "customElementURLs")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("customElementURLs", "TEXT"));
+			alterTableAddColumn("RemoteAppEntry", "customElementURLs", "TEXT");
 		}
 
-		alter(
-			RemoteAppEntryTable.class,
-			new AlterColumnName("url", "iFrameURL STRING null"));
+		alterColumnName("RemoteAppEntry", "url", "iFrameURL STRING null");
 
 		if (!hasColumn("RemoteAppEntry", "instanceable")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("instanceable", "BOOLEAN"));
+			alterTableAddColumn("RemoteAppEntry", "instanceable", "BOOLEAN");
 
 			runSQL("update RemoteAppEntry set instanceable = [$TRUE$]");
 		}
 
 		if (!hasColumn("RemoteAppEntry", "portletCategoryName")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("portletCategoryName", "VARCHAR(75)"));
+			alterTableAddColumn(
+				"RemoteAppEntry", "portletCategoryName", "VARCHAR(75)");
 
 			runSQL(
 				"update RemoteAppEntry set portletCategoryName = " +
@@ -68,15 +58,11 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn("RemoteAppEntry", "properties")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("properties", "TEXT"));
+			alterTableAddColumn("RemoteAppEntry", "properties", "TEXT");
 		}
 
 		if (!hasColumn("RemoteAppEntry", "type_")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("type_", "VARCHAR(75)"));
+			alterTableAddColumn("RemoteAppEntry", "type_", "VARCHAR(75)");
 
 			runSQL(
 				StringBundler.concat(

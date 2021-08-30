@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.upgrade.v7_0_0.util.GroupTable;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.PreparedStatement;
@@ -38,7 +37,7 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(GroupTable.class, new AlterColumnType("name", "STRING null"));
+		alterColumnType("Group_", "name", "STRING null");
 
 		try (SafeCloseable safeCloseable = addTempIndex(
 				"Group_", false, "classNameId", "classPK")) {

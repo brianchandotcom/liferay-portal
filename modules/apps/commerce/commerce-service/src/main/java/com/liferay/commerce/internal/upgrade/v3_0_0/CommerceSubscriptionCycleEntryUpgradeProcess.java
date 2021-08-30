@@ -25,10 +25,7 @@ public class CommerceSubscriptionCycleEntryUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceSubscriptionEntryModelImpl.class,
-			CommerceSubscriptionEntryModelImpl.TABLE_NAME, "currentCycle",
-			"LONG");
+		addColumn("CommerceSubscriptionEntry", "currentCycle", "LONG");
 
 		if (hasColumn(
 				CommerceSubscriptionEntryModelImpl.TABLE_NAME,

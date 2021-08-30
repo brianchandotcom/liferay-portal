@@ -14,8 +14,6 @@
 
 package com.liferay.batch.engine.internal.upgrade.v4_3_1;
 
-import com.liferay.batch.engine.internal.upgrade.v4_3_1.util.BatchEngineExportTaskTable;
-import com.liferay.batch.engine.internal.upgrade.v4_3_1.util.BatchEngineImportTaskTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,16 +23,14 @@ public class BatchEngineTaskUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn(BatchEngineExportTaskTable.TABLE_NAME, "errorMessage")) {
-			alter(
-				BatchEngineExportTaskTable.class,
-				new AlterColumnType("errorMessage", "TEXT null"));
+		if (hasColumn("BatchEngineExportTask", "errorMessage")) {
+			alterColumnType(
+				"BatchEngineExportTask", "errorMessage", "TEXT null");
 		}
 
-		if (hasColumn(BatchEngineImportTaskTable.TABLE_NAME, "errorMessage")) {
-			alter(
-				BatchEngineImportTaskTable.class,
-				new AlterColumnType("errorMessage", "TEXT null"));
+		if (hasColumn("BatchEngineImportTask", "errorMessage")) {
+			alterColumnType(
+				"BatchEngineImportTask", "errorMessage", "TEXT null");
 		}
 	}
 

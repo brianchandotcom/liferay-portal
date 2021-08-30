@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_2;
 
-import com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_2.util.DDMFormInstanceTable;
-import com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_2.util.DDMFormInstanceVersionTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -31,22 +29,15 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 
 	private void _alterTables() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumnType(
-					DDMFormInstanceTable.TABLE_NAME, "description",
-					"TEXT null")) {
-
-				alter(
-					DDMFormInstanceTable.class,
-					new AlterColumnType("description", "TEXT null"));
+			if (!hasColumnType("DDMFormInstance", "description", "TEXT null")) {
+				alterColumnType("DDMFormInstance", "description", "TEXT null");
 			}
 
 			if (!hasColumnType(
-					DDMFormInstanceVersionTable.TABLE_NAME, "description",
-					"TEXT null")) {
+					"DDMFormInstanceVersion", "description", "TEXT null")) {
 
-				alter(
-					DDMFormInstanceVersionTable.class,
-					new AlterColumnType("description", "TEXT null"));
+				alterColumnType(
+					"DDMFormInstanceVersion", "description", "TEXT null");
 			}
 		}
 	}

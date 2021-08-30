@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v4_5_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceAddressImpl;
 
 /**
  * @author Andrea Sbarra
@@ -25,9 +24,7 @@ public class CommerceAddressUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceAddressImpl.class, CommerceAddressImpl.TABLE_NAME,
-			"externalReferenceCode", "VARCHAR(75)");
+		addColumn("CommerceAddress", "externalReferenceCode", "VARCHAR(75)");
 	}
 
 }

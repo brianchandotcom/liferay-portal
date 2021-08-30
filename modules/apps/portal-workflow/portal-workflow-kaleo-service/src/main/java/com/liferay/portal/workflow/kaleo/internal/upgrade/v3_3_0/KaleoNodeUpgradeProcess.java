@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v3_3_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.workflow.kaleo.internal.upgrade.v3_3_0.util.KaleoNodeTable;
 
 /**
  * @author Feliphe Marinho
@@ -25,9 +24,7 @@ public class KaleoNodeUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("KaleoNode", "label")) {
-			alter(
-				KaleoNodeTable.class,
-				new AlterTableAddColumn("label", "STRING null"));
+			alterTableAddColumn("KaleoNode", "label", "STRING null");
 		}
 	}
 

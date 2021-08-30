@@ -38,11 +38,9 @@ public class CommerceShippingFixedOptionRelUpgradeProcess
 				CommerceShippingFixedOptionRelImpl.TABLE_NAME,
 				"commerceInventoryWarehouseId")) {
 
-			alter(
-				CommerceShippingFixedOptionRelImpl.class,
-				new AlterColumnName(
-					"commerceWarehouseId",
-					"commerceInventoryWarehouseId LONG"));
+			alterColumnName(
+				"CShippingFixedOptionRel", "commerceWarehouseId",
+				"commerceInventoryWarehouseId LONG");
 		}
 		else {
 			if (_log.isInfoEnabled()) {

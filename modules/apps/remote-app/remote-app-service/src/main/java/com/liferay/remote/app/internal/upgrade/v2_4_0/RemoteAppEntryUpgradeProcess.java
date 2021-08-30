@@ -17,7 +17,6 @@ package com.liferay.remote.app.internal.upgrade.v2_4_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.remote.app.internal.upgrade.v2_4_0.util.RemoteAppEntryTable;
 
 /**
  * @author José Abelenda
@@ -32,13 +31,9 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addExternalReferenceCodeColumn() throws Exception {
-		if (!hasColumn(
-				RemoteAppEntryTable.TABLE_NAME, "externalReferenceCode")) {
-
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn(
-					"externalReferenceCode", "VARCHAR(75)"));
+		if (!hasColumn("RemoteAppEntry", "externalReferenceCode")) {
+			alterTableAddColumn(
+				"RemoteAppEntry", "externalReferenceCode", "VARCHAR(75)");
 		}
 	}
 

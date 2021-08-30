@@ -14,7 +14,6 @@
 
 package com.liferay.layout.seo.internal.upgrade.v2_0_0;
 
-import com.liferay.layout.seo.internal.upgrade.v2_0_0.util.LayoutSEOEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,14 +23,17 @@ public class SEOEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			LayoutSEOEntryTable.class,
-			new AlterColumnName("enabled", "canonicalURLEnabled BOOLEAN"),
-			new AlterTableAddColumn("openGraphTitleEnabled", "BOOLEAN"),
-			new AlterTableAddColumn("openGraphTitle", "STRING null"),
-			new AlterTableAddColumn("openGraphDescriptionEnabled", "BOOLEAN"),
-			new AlterTableAddColumn("openGraphDescription", "STRING null"),
-			new AlterTableAddColumn("openGraphImageFileEntryId", "LONG"));
+		alterColumnName(
+			"LayoutSEOEntry", "enabled", "canonicalURLEnabled BOOLEAN");
+		alterTableAddColumn(
+			"LayoutSEOEntry", "openGraphTitleEnabled", "BOOLEAN");
+		alterTableAddColumn("LayoutSEOEntry", "openGraphTitle", "STRING null");
+		alterTableAddColumn(
+			"LayoutSEOEntry", "openGraphDescriptionEnabled", "BOOLEAN");
+		alterTableAddColumn(
+			"LayoutSEOEntry", "openGraphDescription", "STRING null");
+		alterTableAddColumn(
+			"LayoutSEOEntry", "openGraphImageFileEntryId", "LONG");
 	}
 
 }

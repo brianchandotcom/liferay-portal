@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.util.DefinitionTable;
 
 /**
  * @author Eduardo Pérez
@@ -24,9 +23,7 @@ public class ReportDefinitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			DefinitionTable.class,
-			new AlterColumnType("reportParameters", "TEXT null"));
+		alterColumnType("Reports_Definition", "reportParameters", "TEXT null");
 	}
 
 }

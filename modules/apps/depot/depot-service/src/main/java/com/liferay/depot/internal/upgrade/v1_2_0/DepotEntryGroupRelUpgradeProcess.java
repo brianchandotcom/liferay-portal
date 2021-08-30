@@ -14,7 +14,6 @@
 
 package com.liferay.depot.internal.upgrade.v1_2_0;
 
-import com.liferay.depot.internal.upgrade.v1_2_0.util.DepotEntryGroupRelTable;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -30,12 +29,10 @@ public class DepotEntryGroupRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			DepotEntryGroupRelTable.class,
-			new AlterTableAddColumn("uuid_", "VARCHAR(75) null"),
-			new AlterTableAddColumn("groupId", "LONG"),
-			new AlterTableAddColumn("createDate", "DATE null"),
-			new AlterTableAddColumn("modifiedDate", "DATE null"));
+		alterTableAddColumn("DepotEntryGroupRel", "uuid_", "VARCHAR(75) null");
+		alterTableAddColumn("DepotEntryGroupRel", "groupId", "LONG");
+		alterTableAddColumn("DepotEntryGroupRel", "createDate", "DATE null");
+		alterTableAddColumn("DepotEntryGroupRel", "modifiedDate", "DATE null");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			try (PreparedStatement preparedStatement1 =

@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.internal.upgrade.v2_2_1;
 
-import com.liferay.data.engine.internal.upgrade.v2_1_1.util.DEDataDefinitionFieldLinkTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -27,9 +26,8 @@ public class DEDataDefinitionFieldLinkUpgradeProcess extends UpgradeProcess {
 		if (hasColumnType(
 				"DEDataDefinitionFieldLink", "fieldName", "VARCHAR(75)")) {
 
-			alter(
-				DEDataDefinitionFieldLinkTable.class,
-				new AlterColumnType("fieldName", "VARCHAR(255) null"));
+			alterColumnType(
+				"DEDataDefinitionFieldLink", "fieldName", "VARCHAR(255) null");
 		}
 	}
 

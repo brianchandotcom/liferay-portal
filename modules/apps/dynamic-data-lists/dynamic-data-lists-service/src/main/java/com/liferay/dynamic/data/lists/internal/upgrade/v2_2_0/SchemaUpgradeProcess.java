@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.lists.internal.upgrade.v2_2_0;
 
-import com.liferay.dynamic.data.lists.internal.upgrade.v2_2_0.util.DDLRecordTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,15 +24,11 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("DDLRecord", "className")) {
-			alter(
-				DDLRecordTable.class,
-				new AlterTableAddColumn("className", "VARCHAR(300) null"));
+			alterTableAddColumn("DDLRecord", "className", "VARCHAR(300) null");
 		}
 
 		if (!hasColumn("DDLRecord", "classPK")) {
-			alter(
-				DDLRecordTable.class,
-				new AlterTableAddColumn("classPK", "LONG"));
+			alterTableAddColumn("DDLRecord", "classPK", "LONG");
 		}
 	}
 

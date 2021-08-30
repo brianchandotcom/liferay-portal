@@ -14,7 +14,6 @@
 
 package com.liferay.object.internal.upgrade.v1_1_0;
 
-import com.liferay.object.internal.upgrade.v1_1_0.util.ObjectDefinitionTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,10 +23,8 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(ObjectDefinitionTable.TABLE_NAME, "portlet")) {
-			alter(
-				ObjectDefinitionTable.class,
-				new AlterTableAddColumn("portlet", "BOOLEAN"));
+		if (!hasColumn("ObjectDefinition", "portlet")) {
+			alterTableAddColumn("ObjectDefinition", "portlet", "BOOLEAN");
 		}
 	}
 

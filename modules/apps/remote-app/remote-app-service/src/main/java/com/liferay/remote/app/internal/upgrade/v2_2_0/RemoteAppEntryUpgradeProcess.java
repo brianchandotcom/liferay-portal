@@ -15,7 +15,6 @@
 package com.liferay.remote.app.internal.upgrade.v2_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.remote.app.internal.upgrade.v2_2_0.util.RemoteAppEntryTable;
 
 /**
  * @author Iván Zaera Avellón
@@ -25,9 +24,8 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("RemoteAppEntry", "friendlyURLMapping")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("friendlyURLMapping", "VARCHAR(75)"));
+			alterTableAddColumn(
+				"RemoteAppEntry", "friendlyURLMapping", "VARCHAR(75)");
 		}
 	}
 

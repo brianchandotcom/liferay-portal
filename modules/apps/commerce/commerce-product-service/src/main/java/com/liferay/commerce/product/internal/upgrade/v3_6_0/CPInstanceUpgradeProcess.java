@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.upgrade.v3_6_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v3_6_0.util.CPInstanceTable;
 
 /**
  * @author Marco Leo
@@ -25,18 +24,10 @@ public class CPInstanceUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CPInstanceTable.class, CPInstanceTable.TABLE_NAME, "discontinued",
-			"BOOLEAN");
-		addColumn(
-			CPInstanceTable.class, CPInstanceTable.TABLE_NAME,
-			"replacementCPInstanceUuid", "VARCHAR(75)");
-		addColumn(
-			CPInstanceTable.class, CPInstanceTable.TABLE_NAME,
-			"replacementCProductId", "LONG");
-		addColumn(
-			CPInstanceTable.class, CPInstanceTable.TABLE_NAME,
-			"discontinuedDate", "DATE");
+		addColumn("CPInstance", "discontinued", "BOOLEAN");
+		addColumn("CPInstance", "replacementCPInstanceUuid", "VARCHAR(75)");
+		addColumn("CPInstance", "replacementCProductId", "LONG");
+		addColumn("CPInstance", "discontinuedDate", "DATE");
 	}
 
 }

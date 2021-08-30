@@ -14,7 +14,6 @@
 
 package com.liferay.asset.display.page.internal.upgrade.v2_1_0;
 
-import com.liferay.asset.display.page.internal.upgrade.v2_1_0.util.AssetDisplayPageEntryTable;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -124,9 +123,7 @@ public class AssetDisplayLayoutUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSchema() throws Exception {
-		alter(
-			AssetDisplayPageEntryTable.class,
-			new AlterTableAddColumn("plid", "LONG"));
+		alterTableAddColumn("AssetDisplayPageEntry", "plid", "LONG");
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -18,7 +18,6 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.saml.persistence.internal.upgrade.v3_0_0.util.SamlSpSessionTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,12 +32,9 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn(
-					SamlSpSessionTable.TABLE_NAME, "samlPeerBindingId")) {
-
-				alter(
-					SamlSpSessionTable.class,
-					new AlterTableAddColumn("samlPeerBindingId", "LONG null"));
+			if (!hasColumn("SamlSpSession", "samlPeerBindingId")) {
+				alterTableAddColumn(
+					"SamlSpSession", "samlPeerBindingId", "LONG null");
 			}
 
 			runSQL(

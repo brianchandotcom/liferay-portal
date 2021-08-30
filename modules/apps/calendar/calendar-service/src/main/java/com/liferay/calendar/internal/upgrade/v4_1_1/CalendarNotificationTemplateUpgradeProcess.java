@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.internal.upgrade.v4_1_1;
 
-import com.liferay.calendar.internal.upgrade.v4_1_1.util.CalendarNotificationTemplateTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -28,10 +27,9 @@ public class CalendarNotificationTemplateUpgradeProcess extends UpgradeProcess {
 				"CalendarNotificationTemplate", "notificationTypeSettings",
 				"VARCHAR(150) null")) {
 
-			alter(
-				CalendarNotificationTemplateTable.class,
-				new AlterColumnType(
-					"notificationTypeSettings", "VARCHAR(150) null"));
+			alterColumnType(
+				"CalendarNotificationTemplate", "notificationTypeSettings",
+				"VARCHAR(150) null");
 		}
 	}
 

@@ -45,9 +45,7 @@ public class CPDAvailabilityEstimateUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CPDAvailabilityEstimateModelImpl.class,
-			CPDAvailabilityEstimateModelImpl.TABLE_NAME, "CProductId", "LONG");
+		addColumn("CPDAvailabilityEstimate", "CProductId", "LONG");
 
 		_addIndexes(CPDAvailabilityEstimateModelImpl.TABLE_NAME);
 

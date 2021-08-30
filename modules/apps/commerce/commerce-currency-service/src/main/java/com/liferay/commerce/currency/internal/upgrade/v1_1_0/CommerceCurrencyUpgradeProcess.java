@@ -15,7 +15,6 @@
 package com.liferay.commerce.currency.internal.upgrade.v1_1_0;
 
 import com.liferay.commerce.currency.internal.upgrade.base.BaseCommerceCurrencyUpgradeProcess;
-import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
 
 /**
  * @author Alessio Antonio Rendina
@@ -25,7 +24,7 @@ public class CommerceCurrencyUpgradeProcess
 
 	@Override
 	public void doUpgrade() throws Exception {
-		dropColumn(CommerceCurrencyModelImpl.TABLE_NAME, "groupId");
+		dropColumn("CommerceCurrency", "groupId");
 	}
 
 }

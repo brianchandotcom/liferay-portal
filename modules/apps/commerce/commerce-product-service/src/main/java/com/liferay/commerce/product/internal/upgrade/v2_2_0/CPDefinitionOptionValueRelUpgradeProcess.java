@@ -28,26 +28,15 @@ public class CPDefinitionOptionValueRelUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn(
-			CPDefinitionOptionValueRelTable.class,
-			CPDefinitionOptionValueRelTable.TABLE_NAME, "CPInstanceUuid",
-			"VARCHAR(75)");
+			"CPDefinitionOptionValueRel", "CPInstanceUuid", "VARCHAR(75)");
 
-		addColumn(
-			CPDefinitionOptionValueRelTable.class,
-			CPDefinitionOptionValueRelTable.TABLE_NAME, "CProductId", "LONG");
+		addColumn("CPDefinitionOptionValueRel", "CProductId", "LONG");
 
-		addColumn(
-			CPDefinitionOptionValueRelTable.class,
-			CPDefinitionOptionValueRelTable.TABLE_NAME, "quantity", "INTEGER");
+		addColumn("CPDefinitionOptionValueRel", "quantity", "INTEGER");
 
-		addColumn(
-			CPDefinitionOptionValueRelTable.class,
-			CPDefinitionOptionValueRelTable.TABLE_NAME, "price",
-			"DECIMAL(30, 16)");
+		addColumn("CPDefinitionOptionValueRel", "price", "DECIMAL(30, 16)");
 
-		addColumn(
-			CPDefinitionOptionRelTable.class,
-			CPDefinitionOptionRelTable.TABLE_NAME, "priceType", "VARCHAR(75)");
+		addColumn("CPDefinitionOptionRel", "priceType", "VARCHAR(75)");
 
 		runSQL(
 			String.format(

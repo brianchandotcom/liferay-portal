@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.util.DLFileEntryTypeTable;
 
 /**
  * @author Alejandro Tardín
@@ -25,9 +24,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("DLFileEntryType", "scope")) {
-			alter(
-				DLFileEntryTypeTable.class,
-				new AlterTableAddColumn("scope", "INTEGER"));
+			alterTableAddColumn("DLFileEntryType", "scope", "INTEGER");
 		}
 
 		runSQL("update DLFileEntryType set scope = 0");

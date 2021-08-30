@@ -48,9 +48,7 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 					newColumnName, DispatchTriggerTable.TABLE_NAME));
 		}
 
-		alter(
-			DispatchTriggerTable.class,
-			new AlterColumnName(oldColumnName, newColumnName));
+		alterColumnName("DispatchTrigger", oldColumnName, newColumnName);
 	}
 
 	private void _alterTableAddColumn(String columnName, String columnType)
@@ -60,9 +58,7 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		alter(
-			DispatchTriggerTable.class,
-			new AlterTableAddColumn(columnName, columnType));
+		alterTableAddColumn("DispatchTrigger", columnName, columnType);
 	}
 
 }

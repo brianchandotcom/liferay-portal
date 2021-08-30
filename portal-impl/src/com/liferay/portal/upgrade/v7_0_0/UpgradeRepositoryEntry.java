@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_0.util.RepositoryEntryTable;
 
 /**
  * @author Sergio González
@@ -24,9 +23,7 @@ public class UpgradeRepositoryEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			RepositoryEntryTable.class,
-			new AlterColumnType("mappedId", "VARCHAR(255) null"));
+		alterColumnType("RepositoryEntry", "mappedId", "VARCHAR(255) null");
 	}
 
 }

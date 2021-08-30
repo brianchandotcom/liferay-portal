@@ -14,7 +14,6 @@
 
 package com.liferay.multi.factor.authentication.fido2.credential.internal.upgrade.v1_0_0;
 
-import com.liferay.multi.factor.authentication.fido2.credential.internal.upgrade.v1_0_0.util.MFAFIDO2CredentialEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -26,10 +25,9 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			alter(
-				MFAFIDO2CredentialEntryTable.class,
-				new AlterColumnName(
-					"publicKeyCode", "publicKeyCOSE VARCHAR(128) null"));
+			alterColumnName(
+				"MFAFIDO2CredentialEntry", "publicKeyCode",
+				"publicKeyCOSE VARCHAR(128) null");
 		}
 	}
 

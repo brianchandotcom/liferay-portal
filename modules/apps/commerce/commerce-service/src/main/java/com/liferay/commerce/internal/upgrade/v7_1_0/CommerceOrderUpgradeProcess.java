@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v7_1_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v7_1_0.util.CommerceOrderTable;
 
 /**
  * @author Riccardo Alberti
@@ -26,9 +25,7 @@ public class CommerceOrderUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn(
-			CommerceOrderTable.class, CommerceOrderTable.TABLE_NAME,
-			"commerceOrderTypeId", "LONG");
+		addColumn("CommerceOrder", "commerceOrderTypeId", "LONG");
 
 		runSQL(
 			"update CommerceOrder set commerceOrderTypeId = 0 where " +

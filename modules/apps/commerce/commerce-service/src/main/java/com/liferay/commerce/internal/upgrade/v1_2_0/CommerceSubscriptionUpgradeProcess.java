@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.upgrade.v1_2_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceOrderItemImpl;
 import com.liferay.commerce.model.impl.CommerceSubscriptionEntryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -35,9 +34,7 @@ public class CommerceSubscriptionUpgradeProcess
 			runSQLTemplateString(template, false, false);
 		}
 
-		addColumn(
-			CommerceOrderItemImpl.class, CommerceOrderItemImpl.TABLE_NAME,
-			"subscription", "BOOLEAN");
+		addColumn("CommerceOrderItem", "subscription", "BOOLEAN");
 	}
 
 }

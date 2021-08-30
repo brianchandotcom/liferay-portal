@@ -18,7 +18,6 @@ import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInven
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryReplenishmentItemTable;
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryWarehouseItemTable;
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryWarehouseTable;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -32,36 +31,27 @@ public class MVCCUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		if (hasTable(CommerceInventoryBookedQuantityTable.TABLE_NAME)) {
 			_addColumn(
-				CommerceInventoryBookedQuantityTable.class,
-				CommerceInventoryBookedQuantityTable.TABLE_NAME, "mvccVersion",
-				"LONG default 0 not null");
+				"CIBookedQuantity", "mvccVersion", "LONG default 0 not null");
 		}
 
 		if (hasTable(CommerceInventoryReplenishmentItemTable.TABLE_NAME)) {
 			_addColumn(
-				CommerceInventoryReplenishmentItemTable.class,
-				CommerceInventoryReplenishmentItemTable.TABLE_NAME,
-				"mvccVersion", "LONG default 0 not null");
+				"CIReplenishmentItem", "mvccVersion",
+				"LONG default 0 not null");
 		}
 
 		if (hasTable(CommerceInventoryWarehouseTable.TABLE_NAME)) {
-			_addColumn(
-				CommerceInventoryWarehouseTable.class,
-				CommerceInventoryWarehouseTable.TABLE_NAME, "mvccVersion",
-				"LONG default 0 not null");
+			_addColumn("CIWarehouse", "mvccVersion", "LONG default 0 not null");
 		}
 
 		if (hasTable(CommerceInventoryWarehouseItemTable.TABLE_NAME)) {
 			_addColumn(
-				CommerceInventoryWarehouseItemTable.class,
-				CommerceInventoryWarehouseItemTable.TABLE_NAME, "mvccVersion",
-				"LONG default 0 not null");
+				"CIWarehouseItem", "mvccVersion", "LONG default 0 not null");
 		}
 	}
 
 	private void _addColumn(
-			Class<?> entityClass, String tableName, String columnName,
-			String columnType)
+			String tableName, String columnName, String columnType)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -71,10 +61,7 @@ public class MVCCUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (!hasColumn(tableName, columnName)) {
-			alter(
-				entityClass,
-				new AlterTableAddColumn(
-					columnName + StringPool.SPACE + columnType));
+			alterTableAddColumn(tableName, columnName, columnType);
 		}
 		else {
 			if (_log.isInfoEnabled()) {

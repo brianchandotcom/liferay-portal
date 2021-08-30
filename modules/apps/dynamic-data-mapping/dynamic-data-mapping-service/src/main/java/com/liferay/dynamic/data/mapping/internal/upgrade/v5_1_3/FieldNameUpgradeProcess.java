@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_1_3;
 
-import com.liferay.dynamic.data.mapping.internal.upgrade.v5_1_3.util.DDMFieldTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,9 +24,7 @@ public class FieldNameUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumnType("DDMField", "fieldName", "TEXT null")) {
-			alter(
-				DDMFieldTable.class,
-				new AlterColumnType("fieldName", "TEXT null"));
+			alterColumnType("DDMField", "fieldName", "TEXT null");
 		}
 	}
 

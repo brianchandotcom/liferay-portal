@@ -14,7 +14,6 @@
 
 package com.liferay.object.internal.upgrade.v2_0_0;
 
-import com.liferay.object.internal.upgrade.v2_0_0.util.ObjectFieldTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -24,16 +23,13 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(ObjectFieldTable.TABLE_NAME, "businessType")) {
-			alter(
-				ObjectFieldTable.class,
-				new AlterTableAddColumn("businessType", "VARCHAR(75) null"));
+		if (!hasColumn("ObjectField", "businessType")) {
+			alterTableAddColumn(
+				"ObjectField", "businessType", "VARCHAR(75) null");
 		}
 
-		if (!hasColumn(ObjectFieldTable.TABLE_NAME, "dbType")) {
-			alter(
-				ObjectFieldTable.class,
-				new AlterColumnName("type_", "dbType VARCHAR(75) null"));
+		if (!hasColumn("ObjectField", "dbType")) {
+			alterColumnName("ObjectField", "type_", "dbType VARCHAR(75) null");
 		}
 	}
 

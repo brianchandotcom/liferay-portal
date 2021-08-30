@@ -52,8 +52,7 @@ public abstract class BaseBadColumnNamesUpgradeProcess extends UpgradeProcess {
 
 		Map<String, String> columnSQLs = _getTableColumnSQLs(tableClass);
 
-		List<AlterColumnName> alterColumnNames = new ArrayList<>(
-			columnNames.length);
+		List<String[]> alterColumnNames = new ArrayList<>(columnNames.length);
 
 		for (String columnName : columnNames) {
 			String newColumnName = columnName.concat(StringPool.UNDERLINE);
@@ -99,10 +98,12 @@ public abstract class BaseBadColumnNamesUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			alterColumnNames.add(new AlterColumnName(columnName, columnSQL));
+			alterColumnNames.add(new String[] {columnName, columnSQL});
 		}
 
-		alter(tableClass, alterColumnNames.toArray(new AlterColumnName[0]));
+		for (String[] alterColumnName : alterColumnNames) {
+			alterColumnName(tableName, alterColumnName[0], alterColumnName[1]);
+		}
 	}
 
 	private Map<String, String> _getTableColumnSQLs(Class<?> tableClass)

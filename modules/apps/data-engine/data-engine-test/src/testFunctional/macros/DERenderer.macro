@@ -94,6 +94,18 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro assertDataInRichTextField {
+		DERenderer.selectCKEditorByIndex(
+			fieldLabel = "${fieldLabel}",
+			index = "${index}");
+
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "${content}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro assertDataInSelectFromListField {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -388,6 +400,18 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro inputDataInRichTextField {
+		DERenderer.selectCKEditorByIndex(
+			fieldLabel = "${fieldLabel}",
+			index = "${index}");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${content}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro inputDataInSelectFromListField {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -515,6 +539,17 @@ definition {
 			index = "${index}",
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DataEngineRenderer#REPEATABLE_FIELD_DELETE_BUTTON_INDEXED");
+	}
+
+	macro selectCKEditorByIndex {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		SelectFrame.selectFrameNoLoading(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "CKEditor#ANY_BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 	}
 
 }

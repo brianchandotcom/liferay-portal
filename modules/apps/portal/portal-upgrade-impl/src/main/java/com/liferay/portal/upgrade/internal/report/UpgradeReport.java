@@ -77,7 +77,7 @@ public class UpgradeReport {
 
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
-		_initialTableInfos = _getTableInfos();
+		_initialTableCounts = _getTableCounts();
 
 		DB db = DBManagerUtil.getDB();
 
@@ -153,9 +153,9 @@ public class UpgradeReport {
 	}
 
 	private String _getDatabaseInfo() {
-		Map<String, TableInfo> currentTableInfos = _getTableInfos();
+		Map<String, Integer> currentTableCounts = _getTableCounts();
 
-		if (currentTableInfos == null) {
+		if (currentTableCounts == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to get database information");
 			}
@@ -165,10 +165,10 @@ public class UpgradeReport {
 
 		Set<String> tableNames = new HashSet<>();
 
-		tableNames.addAll(_initialTableInfos.keySet());
-		tableNames.addAll(currentTableInfos.keySet());
+		tableNames.addAll(_initialTableCounts.keySet());
+		tableNames.addAll(currentTableCounts.keySet());
 
-		StringBundler sb = new StringBundler(currentTableInfos.size() + 3);
+		StringBundler sb = new StringBundler(currentTableCounts.size() + 3);
 
 		String format = "%-30s %20s %20s\n";
 
@@ -184,41 +184,35 @@ public class UpgradeReport {
 
 		stream.filter(
 			tableName -> {
-				TableInfo initialTableInfo = _initialTableInfos.get(tableName);
-				TableInfo currentTableInfo = currentTableInfos.get(tableName);
+				int initialCount = _initialTableCounts.getOrDefault(
+					tableName, 0);
+				int currentCount = currentTableCounts.getOrDefault(
+					tableName, 0);
 
-				int initialRows =
-					(initialTableInfo != null) ? initialTableInfo.getRows() : 0;
-				int currentRows =
-					(currentTableInfo != null) ? currentTableInfo.getRows() : 0;
-
-				return (initialRows > 0) || (currentRows > 0);
+				return (initialCount > 0) || (currentCount > 0);
 			}
 		).sorted(
 			(a, b) -> {
-				TableInfo tableInfoA = _initialTableInfos.get(a);
-				TableInfo tableInfoB = _initialTableInfos.get(b);
+				int countA = _initialTableCounts.getOrDefault(a, 0);
+				int countB = _initialTableCounts.getOrDefault(b, 0);
 
-				int rowsA = (tableInfoA != null) ? tableInfoA.getRows() : 0;
-				int rowsB = (tableInfoB != null) ? tableInfoB.getRows() : 0;
-
-				if (rowsA == rowsB) {
+				if (countA == countB) {
 					return a.compareTo(b);
 				}
 
-				return rowsB - rowsA;
+				return countB - countA;
 			}
 		).forEach(
 			tableName -> {
-				TableInfo initialTableInfo = _initialTableInfos.get(tableName);
-				TableInfo currentTableInfo = currentTableInfos.get(tableName);
+				int initialCount = _initialTableCounts.getOrDefault(
+					tableName, -1);
+				int currentCount = currentTableCounts.getOrDefault(
+					tableName, -1);
 
 				String initialRows =
-					(initialTableInfo != null) ?
-						"" + initialTableInfo.getRows() : "-";
+					(initialCount >= 0) ? "" + initialCount : "-";
 				String currentRows =
-					(currentTableInfo != null) ?
-						"" + currentTableInfo.getRows() : "-";
+					(currentCount >= 0) ? "" + currentCount : "-";
 
 				sb.append(
 					String.format(format, tableName, initialRows, currentRows));
@@ -515,7 +509,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private Map<String, TableInfo> _getTableInfos() {
+	private Map<String, Integer> _getTableCounts() {
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -525,7 +519,7 @@ public class UpgradeReport {
 					dbInspector.getCatalog(), dbInspector.getSchema(), "%",
 					null)) {
 
-				Map<String, TableInfo> tableInfos = new HashMap<>();
+				Map<String, Integer> tableCounts = new HashMap<>();
 
 				while (resultSet1.next()) {
 					String tableType = resultSet1.getString("TABLE_TYPE");
@@ -548,9 +542,7 @@ public class UpgradeReport {
 							preparedStatement.executeQuery()) {
 
 						if (resultSet2.next()) {
-							tableInfos.put(
-								tableName,
-								new TableInfo(tableName, resultSet2.getInt(1)));
+							tableCounts.put(tableName, resultSet2.getInt(1));
 						}
 					}
 					catch (SQLException sqlException) {
@@ -561,7 +553,7 @@ public class UpgradeReport {
 					}
 				}
 
-				return tableInfos;
+				return tableCounts;
 			}
 		}
 		catch (SQLException sqlException) {
@@ -668,39 +660,10 @@ public class UpgradeReport {
 		new ConcurrentHashMap<>();
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
-	private final Map<String, TableInfo> _initialTableInfos;
+	private final Map<String, Integer> _initialTableCounts;
 	private final PersistenceManager _persistenceManager;
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
-
-	private static class TableInfo implements Comparable<TableInfo> {
-
-		public TableInfo(String name, int rows) {
-			_name = name;
-			_rows = rows;
-		}
-
-		@Override
-		public int compareTo(TableInfo other) {
-			if (_rows == other._rows) {
-				return _name.compareTo(other._name);
-			}
-
-			return other._rows - _rows;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public int getRows() {
-			return _rows;
-		}
-
-		private final String _name;
-		private int _rows;
-
-	}
 
 }

@@ -132,7 +132,6 @@ definition {
 	@description = "This is a use case for LPS-51009."
 	@priority = "4"
 	test ViewReportEmailNewConfiguration {
-		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "ReportsUsecase#ViewReportEmailNewConfiguration";
 

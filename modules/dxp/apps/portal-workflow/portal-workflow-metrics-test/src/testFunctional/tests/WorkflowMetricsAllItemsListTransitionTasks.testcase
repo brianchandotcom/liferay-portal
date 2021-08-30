@@ -472,8 +472,6 @@ definition {
 	@description = "LPS-108138 - Verify that only the tasks selected on -Select Steps to Transition- are being considered to be transitioned in the -Choose Transition Per Step- step"
 	@priority = "4"
 	test OnlySelectedTasksAreConsideredToBeTransitioned {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

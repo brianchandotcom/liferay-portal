@@ -269,7 +269,7 @@ definition {
 
 	@priority = "5"
 	test ViewCalendarTimeZoneDefaults {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CalendarConfiguration#ViewCalendarTimeZoneDefaults";
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
@@ -299,8 +299,6 @@ definition {
 	@description = "This is a use case for LPS-51783."
 	@priority = "4"
 	test ViewEventDetailsAllDayWithModifiedUserTimeZone {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");

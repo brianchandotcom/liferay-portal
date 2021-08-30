@@ -124,7 +124,7 @@ const TranslationAdminSelector = ({
 
 						return (
 							<ClayDropDown.Item
-								key={label}
+								key={activeLocale.id}
 								onClick={() => {
 									setSelectedLocaleId(activeLocale.id);
 								}}

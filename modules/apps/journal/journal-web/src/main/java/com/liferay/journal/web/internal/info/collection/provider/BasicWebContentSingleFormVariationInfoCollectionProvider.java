@@ -220,6 +220,12 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 					com.liferay.portal.kernel.search.Sort.LONG_TYPE,
 					sort.isReverse()));
 		}
+		else {
+			searchContext.setSorts(
+				new com.liferay.portal.kernel.search.Sort(
+					Field.MODIFIED_DATE,
+					com.liferay.portal.kernel.search.Sort.LONG_TYPE, true));
+		}
 
 		searchContext.setStart(pagination.getStart());
 

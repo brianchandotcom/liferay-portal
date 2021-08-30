@@ -42,15 +42,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8710 | Test Summary: Check all events can be triggered when offline"
-	@ignore = "true"
-	@priority = "3"
-	test CheckAllEventsCanBeTriggeredWhenOffline {
-
-		// TODO LRAC-8710 CheckAllEventsCanBeTriggeredWhenOffline pending implementation
-
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8152 | Test Summary: Check all applicable events trigger for unknown users (Page, Blog, Form, Web Content, Documents & Media, Social)"
 	@priority = "5"
 	test CheckGeneralEventsForUnknownUser {

@@ -53,6 +53,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,7 @@ public class UpgradeReport {
 
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
+		_initialTableInfos = _getTableInfos();
 
 		DB db = DBManagerUtil.getDB();
 
@@ -151,9 +153,9 @@ public class UpgradeReport {
 	}
 
 	private String _getDatabaseInfo() {
-		List<TableInfo> tableInfos = _getTableInfos();
+		Map<String, TableInfo> currentTableInfos = _getTableInfos();
 
-		if (tableInfos == null) {
+		if (currentTableInfos == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to get database information");
 			}
@@ -161,17 +163,67 @@ public class UpgradeReport {
 			return null;
 		}
 
-		StringBundler sb = new StringBundler((2 * tableInfos.size()) + 3);
+		Set<String> tableNames = new HashSet<>();
 
-		sb.append("Tables in database sorted by number of rows:\n\n");
-		sb.append(String.format("%-30s %10s\n", "Table name", "Rows"));
+		tableNames.addAll(_initialTableInfos.keySet());
+		tableNames.addAll(currentTableInfos.keySet());
+
+		StringBundler sb = new StringBundler(currentTableInfos.size() + 3);
+
+		String format = "%-30s %20s %20s\n";
+
+		sb.append("Tables in database sorted by initial number of rows:\n\n");
 		sb.append(
-			String.format("%-30s %10s\n", "--------------", "--------------"));
+			String.format(
+				format, "Table name", "Rows (initial)", "Rows (current)"));
+		sb.append(
+			String.format(
+				format, "--------------", "--------------", "--------------"));
 
-		for (TableInfo tableInfo : tableInfos) {
-			sb.append(tableInfo);
-			sb.append("\n");
-		}
+		Stream<String> stream = tableNames.stream();
+
+		stream.filter(
+			tableName -> {
+				TableInfo initialTableInfo = _initialTableInfos.get(tableName);
+				TableInfo currentTableInfo = currentTableInfos.get(tableName);
+
+				int initialRows =
+					(initialTableInfo != null) ? initialTableInfo.getRows() : 0;
+				int currentRows =
+					(currentTableInfo != null) ? currentTableInfo.getRows() : 0;
+
+				return (initialRows > 0) || (currentRows > 0);
+			}
+		).sorted(
+			(a, b) -> {
+				TableInfo tableInfoA = _initialTableInfos.get(a);
+				TableInfo tableInfoB = _initialTableInfos.get(b);
+
+				int rowsA = (tableInfoA != null) ? tableInfoA.getRows() : 0;
+				int rowsB = (tableInfoB != null) ? tableInfoB.getRows() : 0;
+
+				if (rowsA == rowsB) {
+					return a.compareTo(b);
+				}
+
+				return rowsB - rowsA;
+			}
+		).forEach(
+			tableName -> {
+				TableInfo initialTableInfo = _initialTableInfos.get(tableName);
+				TableInfo currentTableInfo = currentTableInfos.get(tableName);
+
+				String initialRows =
+					(initialTableInfo != null) ?
+						"" + initialTableInfo.getRows() : "-";
+				String currentRows =
+					(currentTableInfo != null) ?
+						"" + currentTableInfo.getRows() : "-";
+
+				sb.append(
+					String.format(format, tableName, initialRows, currentRows));
+			}
+		);
 
 		return sb.toString();
 	}
@@ -463,7 +515,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private List<TableInfo> _getTableInfos() {
+	private Map<String, TableInfo> _getTableInfos() {
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -473,7 +525,7 @@ public class UpgradeReport {
 					dbInspector.getCatalog(), dbInspector.getSchema(), "%",
 					null)) {
 
-				List<TableInfo> tableInfos = new ArrayList<>();
+				Map<String, TableInfo> tableInfos = new HashMap<>();
 
 				while (resultSet1.next()) {
 					String tableType = resultSet1.getString("TABLE_TYPE");
@@ -496,7 +548,8 @@ public class UpgradeReport {
 							preparedStatement.executeQuery()) {
 
 						if (resultSet2.next()) {
-							tableInfos.add(
+							tableInfos.put(
+								tableName,
 								new TableInfo(tableName, resultSet2.getInt(1)));
 						}
 					}
@@ -507,8 +560,6 @@ public class UpgradeReport {
 						}
 					}
 				}
-
-				ListUtil.sort(tableInfos);
 
 				return tableInfos;
 			}
@@ -611,12 +662,13 @@ public class UpgradeReport {
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
 	private final DBType _dbType;
-	private final Map<String, ArrayList<String>> _errorMessages =
+	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
 		new ConcurrentHashMap<>();
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
+	private final Map<String, TableInfo> _initialTableInfos;
 	private final PersistenceManager _persistenceManager;
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =
@@ -629,6 +681,7 @@ public class UpgradeReport {
 			_rows = rows;
 		}
 
+		@Override
 		public int compareTo(TableInfo other) {
 			if (_rows == other._rows) {
 				return _name.compareTo(other._name);
@@ -637,8 +690,12 @@ public class UpgradeReport {
 			return other._rows - _rows;
 		}
 
-		public String toString() {
-			return String.format("%-30s %10d", _name, _rows);
+		public String getName() {
+			return _name;
+		}
+
+		public int getRows() {
+			return _rows;
 		}
 
 		private final String _name;

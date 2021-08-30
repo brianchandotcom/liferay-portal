@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -494,10 +495,13 @@ public abstract class BaseDataRecordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataRecord dataRecord : dataRecords) {
-			postDataDefinitionDataRecord(
+		UnsafeConsumer<DataRecord, Exception> dataRecordUnsafeConsumer =
+			dataRecord -> postDataDefinitionDataRecord(
 				Long.parseLong((String)parameters.get("dataDefinitionId")),
 				dataRecord);
+
+		for (DataRecord dataRecord : dataRecords) {
+			dataRecordUnsafeConsumer.accept(dataRecord);
 		}
 	}
 

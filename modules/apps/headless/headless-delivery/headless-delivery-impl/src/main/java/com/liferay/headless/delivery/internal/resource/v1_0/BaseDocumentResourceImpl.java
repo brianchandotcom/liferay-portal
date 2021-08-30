@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -1080,9 +1081,24 @@ public abstract class BaseDocumentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<Document, Exception> documentUnsafeConsumer =
+			document -> postDocumentFolderDocument(
+				Long.parseLong((String)parameters.get("documentFolderId")),
+				(MultipartBody)parameters.get("multipartBody"));
+
+		if (parameters.containsKey("assetLibraryId")) {
+			documentUnsafeConsumer = document -> postAssetLibraryDocument(
+				(Long)parameters.get("assetLibraryId"),
+				(MultipartBody)parameters.get("multipartBody"));
+		}
+		else if (parameters.containsKey("siteId")) {
+			documentUnsafeConsumer = document -> postSiteDocument(
+				(Long)parameters.get("siteId"),
+				(MultipartBody)parameters.get("multipartBody"));
+		}
+
 		for (Document document : documents) {
-			postSiteDocument(
-				Long.parseLong((String)parameters.get("siteId")), null);
+			documentUnsafeConsumer.accept(document);
 		}
 	}
 
@@ -1118,10 +1134,24 @@ public abstract class BaseDocumentResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteDocumentsPage(
-			Long.parseLong((String)parameters.get("siteId")),
-			Boolean.parseBoolean((String)parameters.get("flatten")), search,
-			null, filter, pagination, sorts);
+		if (parameters.containsKey("assetLibraryId")) {
+			return getAssetLibraryDocumentsPage(
+				(Long)parameters.get("assetLibraryId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("siteId")) {
+			return getSiteDocumentsPage(
+				(Long)parameters.get("siteId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else {
+			return getDocumentFolderDocumentsPage(
+				Long.parseLong((String)parameters.get("documentFolderId")),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
 	}
 
 	@Override

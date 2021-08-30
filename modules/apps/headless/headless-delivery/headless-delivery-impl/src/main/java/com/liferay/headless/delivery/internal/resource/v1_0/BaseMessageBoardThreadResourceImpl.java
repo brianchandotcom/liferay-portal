@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -1016,10 +1017,21 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<MessageBoardThread, Exception>
+			messageBoardThreadUnsafeConsumer =
+				messageBoardThread -> postMessageBoardSectionMessageBoardThread(
+					Long.parseLong(
+						(String)parameters.get("messageBoardSectionId")),
+					messageBoardThread);
+
+		if (parameters.containsKey("siteId")) {
+			messageBoardThreadUnsafeConsumer =
+				messageBoardThread -> postSiteMessageBoardThread(
+					(Long)parameters.get("siteId"), messageBoardThread);
+		}
+
 		for (MessageBoardThread messageBoardThread : messageBoardThreads) {
-			postSiteMessageBoardThread(
-				Long.parseLong((String)parameters.get("siteId")),
-				messageBoardThread);
+			messageBoardThreadUnsafeConsumer.accept(messageBoardThread);
 		}
 	}
 
@@ -1055,10 +1067,17 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteMessageBoardThreadsPage(
-			Long.parseLong((String)parameters.get("siteId")),
-			Boolean.parseBoolean((String)parameters.get("flatten")), search,
-			null, filter, pagination, sorts);
+		if (parameters.containsKey("siteId")) {
+			return getSiteMessageBoardThreadsPage(
+				(Long)parameters.get("siteId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else {
+			return getMessageBoardSectionMessageBoardThreadsPage(
+				Long.parseLong((String)parameters.get("messageBoardSectionId")),
+				search, null, filter, pagination, sorts);
+		}
 	}
 
 	@Override

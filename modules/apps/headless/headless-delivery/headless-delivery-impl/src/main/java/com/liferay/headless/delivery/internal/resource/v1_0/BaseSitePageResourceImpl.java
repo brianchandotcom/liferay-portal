@@ -293,9 +293,14 @@ public abstract class BaseSitePageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteSitePagesPage(
-			Long.parseLong((String)parameters.get("siteId")), search, null,
-			filter, pagination, sorts);
+		if (parameters.containsKey("siteId")) {
+			return getSiteSitePagesPage(
+				(Long)parameters.get("siteId"), search, null, filter,
+				pagination, sorts);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

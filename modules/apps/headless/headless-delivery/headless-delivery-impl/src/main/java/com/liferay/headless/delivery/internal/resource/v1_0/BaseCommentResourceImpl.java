@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -592,10 +593,13 @@ public abstract class BaseCommentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Comment comment : comments) {
-			postBlogPostingComment(
+		UnsafeConsumer<Comment, Exception> commentUnsafeConsumer =
+			comment -> postBlogPostingComment(
 				Long.parseLong((String)parameters.get("blogPostingId")),
 				comment);
+
+		for (Comment comment : comments) {
+			commentUnsafeConsumer.accept(comment);
 		}
 	}
 

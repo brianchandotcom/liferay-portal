@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -333,8 +334,11 @@ public abstract class BasePriceListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer =
+			priceList -> postPriceList(priceList);
+
 		for (PriceList priceList : priceLists) {
-			postPriceList(priceList);
+			priceListUnsafeConsumer.accept(priceList);
 		}
 	}
 

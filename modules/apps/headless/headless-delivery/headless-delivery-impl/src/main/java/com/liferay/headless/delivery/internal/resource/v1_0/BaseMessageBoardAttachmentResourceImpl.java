@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -389,12 +390,17 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<MessageBoardAttachment, Exception>
+			messageBoardAttachmentUnsafeConsumer = messageBoardAttachment ->
+				postMessageBoardMessageMessageBoardAttachment(
+					Long.parseLong(
+						(String)parameters.get("messageBoardMessageId")),
+					(MultipartBody)parameters.get("multipartBody"));
+
 		for (MessageBoardAttachment messageBoardAttachment :
 				messageBoardAttachments) {
 
-			postMessageBoardMessageMessageBoardAttachment(
-				Long.parseLong((String)parameters.get("messageBoardMessageId")),
-				null);
+			messageBoardAttachmentUnsafeConsumer.accept(messageBoardAttachment);
 		}
 	}
 

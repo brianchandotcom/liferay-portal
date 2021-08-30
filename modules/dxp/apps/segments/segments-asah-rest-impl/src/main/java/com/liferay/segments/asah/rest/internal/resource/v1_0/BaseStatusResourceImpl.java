@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -148,9 +149,12 @@ public abstract class BaseStatusResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Status status : statuses) {
-			postExperimentStatus(
+		UnsafeConsumer<Status, Exception> statusUnsafeConsumer =
+			status -> postExperimentStatus(
 				Long.parseLong((String)parameters.get("experimentId")), status);
+
+		for (Status status : statuses) {
+			statusUnsafeConsumer.accept(status);
 		}
 	}
 

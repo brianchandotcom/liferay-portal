@@ -202,9 +202,19 @@ public abstract class BaseContentTemplateResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteContentTemplatesPage(
-			Long.parseLong((String)parameters.get("siteId")), search, null,
-			filter, pagination, sorts);
+		if (parameters.containsKey("assetLibraryId")) {
+			return getAssetLibraryContentTemplatesPage(
+				(Long)parameters.get("assetLibraryId"), search, null, filter,
+				pagination, sorts);
+		}
+		else if (parameters.containsKey("siteId")) {
+			return getSiteContentTemplatesPage(
+				(Long)parameters.get("siteId"), search, null, filter,
+				pagination, sorts);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

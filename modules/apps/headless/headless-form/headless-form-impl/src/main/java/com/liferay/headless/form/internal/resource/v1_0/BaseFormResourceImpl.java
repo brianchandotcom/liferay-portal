@@ -208,8 +208,12 @@ public abstract class BaseFormResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteFormsPage(
-			Long.parseLong((String)parameters.get("siteId")), pagination);
+		if (parameters.containsKey("siteId")) {
+			return getSiteFormsPage((Long)parameters.get("siteId"), pagination);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

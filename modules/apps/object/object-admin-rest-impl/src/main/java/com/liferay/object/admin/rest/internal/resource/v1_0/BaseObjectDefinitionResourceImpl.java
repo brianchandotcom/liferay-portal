@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -394,8 +395,12 @@ public abstract class BaseObjectDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<ObjectDefinition, Exception>
+			objectDefinitionUnsafeConsumer =
+				objectDefinition -> postObjectDefinition(objectDefinition);
+
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			postObjectDefinition(objectDefinition);
+			objectDefinitionUnsafeConsumer.accept(objectDefinition);
 		}
 	}
 

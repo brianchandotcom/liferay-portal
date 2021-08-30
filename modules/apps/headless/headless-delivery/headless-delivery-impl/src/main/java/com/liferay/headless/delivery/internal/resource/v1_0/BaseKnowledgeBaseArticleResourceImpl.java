@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -1151,12 +1152,24 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<KnowledgeBaseArticle, Exception>
+			knowledgeBaseArticleUnsafeConsumer =
+				knowledgeBaseArticle ->
+					postKnowledgeBaseFolderKnowledgeBaseArticle(
+						Long.parseLong(
+							(String)parameters.get("knowledgeBaseFolderId")),
+						knowledgeBaseArticle);
+
+		if (parameters.containsKey("siteId")) {
+			knowledgeBaseArticleUnsafeConsumer =
+				knowledgeBaseArticle -> postSiteKnowledgeBaseArticle(
+					(Long)parameters.get("siteId"), knowledgeBaseArticle);
+		}
+
 		for (KnowledgeBaseArticle knowledgeBaseArticle :
 				knowledgeBaseArticles) {
 
-			postSiteKnowledgeBaseArticle(
-				Long.parseLong((String)parameters.get("siteId")),
-				knowledgeBaseArticle);
+			knowledgeBaseArticleUnsafeConsumer.accept(knowledgeBaseArticle);
 		}
 	}
 
@@ -1194,10 +1207,18 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteKnowledgeBaseArticlesPage(
-			Long.parseLong((String)parameters.get("siteId")),
-			Boolean.parseBoolean((String)parameters.get("flatten")), search,
-			null, filter, pagination, sorts);
+		if (parameters.containsKey("siteId")) {
+			return getSiteKnowledgeBaseArticlesPage(
+				(Long)parameters.get("siteId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else {
+			return getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+				Long.parseLong((String)parameters.get("knowledgeBaseFolderId")),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
 	}
 
 	@Override

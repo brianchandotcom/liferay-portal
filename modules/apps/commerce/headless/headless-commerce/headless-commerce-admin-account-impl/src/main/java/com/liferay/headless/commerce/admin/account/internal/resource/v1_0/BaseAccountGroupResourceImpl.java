@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -346,8 +347,11 @@ public abstract class BaseAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
+			accountGroup -> postAccountGroup(accountGroup);
+
 		for (AccountGroup accountGroup : accountGroups) {
-			postAccountGroup(accountGroup);
+			accountGroupUnsafeConsumer.accept(accountGroup);
 		}
 	}
 

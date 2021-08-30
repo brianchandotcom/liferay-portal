@@ -16,6 +16,7 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -309,8 +310,13 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeConsumer =
+				listTypeDefinition -> postListTypeDefinition(
+					listTypeDefinition);
+
 		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			postListTypeDefinition(listTypeDefinition);
+			listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
 		}
 	}
 

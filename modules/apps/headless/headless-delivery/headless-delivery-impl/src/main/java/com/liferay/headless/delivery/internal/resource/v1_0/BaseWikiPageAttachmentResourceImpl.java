@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -265,9 +266,14 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<WikiPageAttachment, Exception>
+			wikiPageAttachmentUnsafeConsumer =
+				wikiPageAttachment -> postWikiPageWikiPageAttachment(
+					Long.parseLong((String)parameters.get("wikiPageId")),
+					(MultipartBody)parameters.get("multipartBody"));
+
 		for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
-			postWikiPageWikiPageAttachment(
-				Long.parseLong((String)parameters.get("wikiPageId")), null);
+			wikiPageAttachmentUnsafeConsumer.accept(wikiPageAttachment);
 		}
 	}
 

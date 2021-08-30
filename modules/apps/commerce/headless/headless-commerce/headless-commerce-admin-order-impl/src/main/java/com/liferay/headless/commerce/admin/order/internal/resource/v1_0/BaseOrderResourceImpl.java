@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -345,8 +346,11 @@ public abstract class BaseOrderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<Order, Exception> orderUnsafeConsumer =
+			order -> postOrder(order);
+
 		for (Order order : orders) {
-			postOrder(order);
+			orderUnsafeConsumer.accept(order);
 		}
 	}
 

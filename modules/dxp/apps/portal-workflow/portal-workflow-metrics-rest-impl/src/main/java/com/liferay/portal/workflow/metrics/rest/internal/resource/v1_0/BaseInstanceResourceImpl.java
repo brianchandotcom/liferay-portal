@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -298,9 +299,12 @@ public abstract class BaseInstanceResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Instance instance : instances) {
-			postProcessInstance(
+		UnsafeConsumer<Instance, Exception> instanceUnsafeConsumer =
+			instance -> postProcessInstance(
 				Long.parseLong((String)parameters.get("processId")), instance);
+
+		for (Instance instance : instances) {
+			instanceUnsafeConsumer.accept(instance);
 		}
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -399,8 +400,11 @@ public abstract class BaseProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<Product, Exception> productUnsafeConsumer =
+			product -> postProduct(product);
+
 		for (Product product : products) {
-			postProduct(product);
+			productUnsafeConsumer.accept(product);
 		}
 	}
 

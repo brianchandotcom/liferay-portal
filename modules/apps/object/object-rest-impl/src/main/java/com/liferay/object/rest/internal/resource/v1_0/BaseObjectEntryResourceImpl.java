@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -437,8 +438,11 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer =
+			objectEntry -> postObjectEntry(objectEntry);
+
 		for (ObjectEntry objectEntry : objectEntries) {
-			postObjectEntry(objectEntry);
+			objectEntryUnsafeConsumer.accept(objectEntry);
 		}
 	}
 

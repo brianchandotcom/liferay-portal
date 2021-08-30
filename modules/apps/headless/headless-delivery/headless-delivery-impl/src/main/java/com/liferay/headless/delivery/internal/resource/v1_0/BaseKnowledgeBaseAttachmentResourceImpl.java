@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -287,13 +288,18 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<KnowledgeBaseAttachment, Exception>
+			knowledgeBaseAttachmentUnsafeConsumer = knowledgeBaseAttachment ->
+				postKnowledgeBaseArticleKnowledgeBaseAttachment(
+					Long.parseLong(
+						(String)parameters.get("knowledgeBaseArticleId")),
+					(MultipartBody)parameters.get("multipartBody"));
+
 		for (KnowledgeBaseAttachment knowledgeBaseAttachment :
 				knowledgeBaseAttachments) {
 
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				Long.parseLong(
-					(String)parameters.get("knowledgeBaseArticleId")),
-				null);
+			knowledgeBaseAttachmentUnsafeConsumer.accept(
+				knowledgeBaseAttachment);
 		}
 	}
 

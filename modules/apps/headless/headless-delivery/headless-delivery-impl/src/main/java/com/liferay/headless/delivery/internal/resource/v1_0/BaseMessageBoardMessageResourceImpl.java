@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -1086,10 +1087,16 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<MessageBoardMessage, Exception>
+			messageBoardMessageUnsafeConsumer =
+				messageBoardMessage ->
+					postMessageBoardThreadMessageBoardMessage(
+						Long.parseLong(
+							(String)parameters.get("messageBoardThreadId")),
+						messageBoardMessage);
+
 		for (MessageBoardMessage messageBoardMessage : messageBoardMessages) {
-			postMessageBoardThreadMessageBoardMessage(
-				Long.parseLong((String)parameters.get("messageBoardThreadId")),
-				messageBoardMessage);
+			messageBoardMessageUnsafeConsumer.accept(messageBoardMessage);
 		}
 	}
 
@@ -1125,10 +1132,17 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteMessageBoardMessagesPage(
-			Long.parseLong((String)parameters.get("siteId")),
-			Boolean.parseBoolean((String)parameters.get("flatten")), search,
-			null, filter, pagination, sorts);
+		if (parameters.containsKey("siteId")) {
+			return getSiteMessageBoardMessagesPage(
+				(Long)parameters.get("siteId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else {
+			return getMessageBoardThreadMessageBoardMessagesPage(
+				Long.parseLong((String)parameters.get("messageBoardThreadId")),
+				search, null, filter, pagination, sorts);
+		}
 	}
 
 	@Override

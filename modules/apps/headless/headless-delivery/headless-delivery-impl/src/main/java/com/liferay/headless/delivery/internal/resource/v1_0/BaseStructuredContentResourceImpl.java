@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -1393,10 +1394,28 @@ public abstract class BaseStructuredContentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<StructuredContent, Exception>
+			structuredContentUnsafeConsumer =
+				structuredContent ->
+					postStructuredContentFolderStructuredContent(
+						Long.parseLong(
+							(String)parameters.get(
+								"structuredContentFolderId")),
+						structuredContent);
+
+		if (parameters.containsKey("assetLibraryId")) {
+			structuredContentUnsafeConsumer =
+				structuredContent -> postAssetLibraryStructuredContent(
+					(Long)parameters.get("assetLibraryId"), structuredContent);
+		}
+		else if (parameters.containsKey("siteId")) {
+			structuredContentUnsafeConsumer =
+				structuredContent -> postSiteStructuredContent(
+					(Long)parameters.get("siteId"), structuredContent);
+		}
+
 		for (StructuredContent structuredContent : structuredContents) {
-			postSiteStructuredContent(
-				Long.parseLong((String)parameters.get("siteId")),
-				structuredContent);
+			structuredContentUnsafeConsumer.accept(structuredContent);
 		}
 	}
 
@@ -1432,10 +1451,23 @@ public abstract class BaseStructuredContentResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteStructuredContentsPage(
-			Long.parseLong((String)parameters.get("siteId")),
-			Boolean.parseBoolean((String)parameters.get("flatten")), search,
-			null, filter, pagination, sorts);
+		if (parameters.containsKey("assetLibraryId")) {
+			return getAssetLibraryStructuredContentsPage(
+				(Long)parameters.get("assetLibraryId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("siteId")) {
+			return getSiteStructuredContentsPage(
+				(Long)parameters.get("siteId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else {
+			return getContentStructureStructuredContentsPage(
+				Long.parseLong((String)parameters.get("contentStructureId")),
+				search, null, filter, pagination, sorts);
+		}
 	}
 
 	@Override

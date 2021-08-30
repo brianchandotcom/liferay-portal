@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.pricing.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.Discount;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -339,8 +340,11 @@ public abstract class BaseDiscountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<Discount, Exception> discountUnsafeConsumer =
+			discount -> postDiscount(discount);
+
 		for (Discount discount : discounts) {
-			postDiscount(discount);
+			discountUnsafeConsumer.accept(discount);
 		}
 	}
 

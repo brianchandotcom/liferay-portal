@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -922,10 +923,23 @@ public abstract class BaseDocumentFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<DocumentFolder, Exception> documentFolderUnsafeConsumer =
+			documentFolder -> {
+			};
+
+		if (parameters.containsKey("assetLibraryId")) {
+			documentFolderUnsafeConsumer =
+				documentFolder -> postAssetLibraryDocumentFolder(
+					(Long)parameters.get("assetLibraryId"), documentFolder);
+		}
+		else if (parameters.containsKey("siteId")) {
+			documentFolderUnsafeConsumer =
+				documentFolder -> postSiteDocumentFolder(
+					(Long)parameters.get("siteId"), documentFolder);
+		}
+
 		for (DocumentFolder documentFolder : documentFolders) {
-			postSiteDocumentFolder(
-				Long.parseLong((String)parameters.get("siteId")),
-				documentFolder);
+			documentFolderUnsafeConsumer.accept(documentFolder);
 		}
 	}
 
@@ -961,10 +975,21 @@ public abstract class BaseDocumentFolderResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteDocumentFoldersPage(
-			Long.parseLong((String)parameters.get("siteId")),
-			Boolean.parseBoolean((String)parameters.get("flatten")), search,
-			null, filter, pagination, sorts);
+		if (parameters.containsKey("assetLibraryId")) {
+			return getAssetLibraryDocumentFoldersPage(
+				(Long)parameters.get("assetLibraryId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("siteId")) {
+			return getSiteDocumentFoldersPage(
+				(Long)parameters.get("siteId"),
+				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				null, filter, pagination, sorts);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

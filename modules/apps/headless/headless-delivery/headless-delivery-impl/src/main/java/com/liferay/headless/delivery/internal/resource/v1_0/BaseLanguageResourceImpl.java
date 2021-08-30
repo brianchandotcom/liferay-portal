@@ -152,8 +152,16 @@ public abstract class BaseLanguageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteLanguagesPage(
-			Long.parseLong((String)parameters.get("siteId")));
+		if (parameters.containsKey("assetLibraryId")) {
+			return getAssetLibraryLanguagesPage(
+				(Long)parameters.get("assetLibraryId"));
+		}
+		else if (parameters.containsKey("siteId")) {
+			return getSiteLanguagesPage((Long)parameters.get("siteId"));
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

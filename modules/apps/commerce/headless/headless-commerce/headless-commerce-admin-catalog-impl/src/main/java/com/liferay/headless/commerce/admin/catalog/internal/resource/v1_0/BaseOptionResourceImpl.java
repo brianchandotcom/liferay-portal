@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -345,8 +346,11 @@ public abstract class BaseOptionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		UnsafeConsumer<Option, Exception> optionUnsafeConsumer =
+			option -> postOption(option);
+
 		for (Option option : options) {
-			postOption(option);
+			optionUnsafeConsumer.accept(option);
 		}
 	}
 

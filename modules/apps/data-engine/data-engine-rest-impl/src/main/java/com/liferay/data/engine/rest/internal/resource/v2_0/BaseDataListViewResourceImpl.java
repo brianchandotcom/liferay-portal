@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -335,10 +336,13 @@ public abstract class BaseDataListViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataListView dataListView : dataListViews) {
-			postDataDefinitionDataListView(
+		UnsafeConsumer<DataListView, Exception> dataListViewUnsafeConsumer =
+			dataListView -> postDataDefinitionDataListView(
 				Long.parseLong((String)parameters.get("dataDefinitionId")),
 				dataListView);
+
+		for (DataListView dataListView : dataListViews) {
+			dataListViewUnsafeConsumer.accept(dataListView);
 		}
 	}
 

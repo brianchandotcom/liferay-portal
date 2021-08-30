@@ -61,6 +61,11 @@
 	<td>//table[@class='calendar-root']//button[contains(@class,'day-root') and text()='${key_day}' and not(@disabled)]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DATE_PICKER_RANGE_WARNING</td>
+	<td>//div[contains(@class,'date-picker-root')]//div[contains(@class,'range-warning')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

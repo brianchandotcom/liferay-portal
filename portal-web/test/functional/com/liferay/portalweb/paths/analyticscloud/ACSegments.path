@@ -97,6 +97,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KNOWN_SEGMENT_MEMBERS_FILTER_ARROW_ASC</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-up')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KNOWN_SEGMENT_MEMBERS_FILTER_ARROW_DESC</td>
 	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-down')]</td>
 	<td></td>

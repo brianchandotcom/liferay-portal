@@ -20,6 +20,38 @@ import React, {useEffect, useState} from 'react';
 
 import RequiredMask from './RequiredMask';
 
+interface IProps extends React.HTMLAttributes<HTMLElement> {
+	apiURL: string;
+	spritemap: string;
+}
+
+type THandleFormStateFn = (
+	key: string,
+	value: boolean | string | TLocalizableLable | number
+) => void;
+
+type TLocalizableLable = {
+	[key: string]: string;
+};
+
+type TPicklist = {
+	id: string;
+	name: {
+		[key: string]: string;
+	};
+};
+
+type TFormState = {
+	label: TLocalizableLable;
+	name: string;
+	picklist: TPicklist[];
+	required: boolean;
+	listTypeDefinitionId: number;
+	type: string;
+};
+
+type TNormalizeLanguage = (language: string) => string;
+
 const objectFieldTypes = [
 	'BigDecimal',
 	'Blob',
@@ -28,31 +60,19 @@ const objectFieldTypes = [
 	'Double',
 	'Integer',
 	'Long',
+	'Picklist',
 	'String',
 ];
 
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-	apiURL: string;
-	spritemap: string;
-}
-
-type THandleFormStateFn = (
-	key: string,
-	value: boolean | string | TLocalizableLable
-) => void;
-
-type TLocalizableLable = {
-	[key: string]: string;
-};
-
-type TFormState = {
-	label: TLocalizableLable;
-	name: string;
-	required: boolean;
-	type: string;
-};
-
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+const headers = new Headers({
+	Accept: 'application/json',
+	'Content-Type': 'application/json',
+});
+
+const normalizeLanguage: TNormalizeLanguage = (language) =>
+	language.replace('_', '-');
 
 const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
@@ -60,7 +80,9 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 		label: {
 			[defaultLanguageId]: '',
 		},
+		listTypeDefinitionId: 0,
 		name: '',
+		picklist: [],
 		required: false,
 		type: '',
 	});
@@ -70,39 +92,62 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 		onClose: () => setVisibleModal(false),
 	});
 
-	const handleSaveObjectField = () => {
-		const {label, name, required, type} = formState;
+	const handleSaveObjectField = async () => {
+		const {label, listTypeDefinitionId, name, required, type} = formState;
 
-		Liferay.Util.fetch(apiURL, {
+		const result = await Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
 				indexed: type !== 'Blob',
 				indexedAsKeyword: type !== 'Blob',
 				indexedLanguageId: null,
 				label,
-				listTypeDefinitionId: 0,
+				listTypeDefinitionId,
 				name,
 				required,
 				type,
 			}),
-			headers: new Headers({
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			}),
+			headers,
 			method: 'POST',
-		})
-			.then((response: any) => {
-				if (response.ok) {
-					onClose();
+		});
 
-					window.location.reload();
+		if (result.ok) {
+			onClose();
+
+			window.location.reload();
+		}
+		else {
+			const {title = ''} = await result.json();
+
+			setError(title);
+		}
+	};
+
+	const handleChangeForm: THandleFormStateFn = async (key, value) => {
+		setError('');
+
+		if (key === 'type' && value === 'Picklist') {
+			const result = await Liferay.Util.fetch(
+				'/o/headless-admin-list-type/v1.0/list-type-definitions',
+				{
+					headers,
+					method: 'GET',
 				}
-				else {
-					return response.json();
-				}
-			})
-			.then(({title}: {title: string}) => {
-				setError(title);
+			);
+
+			const {items = []} = await result.json();
+
+			setFormState({
+				...formState,
+				picklist: items.map(({id, name}: TPicklist) => ({id, name})),
+				type: 'String',
 			});
+		}
+		else {
+			setFormState({
+				...formState,
+				[key]: value,
+			});
+		}
 	};
 
 	const handleOpenObjectFieldModal = () => setVisibleModal(true);
@@ -114,15 +159,6 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 			Liferay.detach('addObjectField', handleOpenObjectFieldModal);
 		};
 	}, []);
-
-	const handleChangeForm: THandleFormStateFn = (key, value) => {
-		setError('');
-
-		setFormState({
-			...formState,
-			[key]: value,
-		});
-	};
 
 	return (
 		<>
@@ -191,10 +227,17 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 									handleChangeForm('type', value)
 								}
 							>
-								{[
-									Liferay.Language.get('choose-an-option'),
-									...objectFieldTypes,
-								].map((type) => (
+								<ClaySelect.Option
+									key={0}
+									label={Liferay.Language.get(
+										'choose-an-option'
+									)}
+									value={Liferay.Language.get(
+										'choose-an-option'
+									)}
+								/>
+
+								{objectFieldTypes.map((type) => (
 									<ClaySelect.Option
 										key={type}
 										label={type}
@@ -203,6 +246,50 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 								))}
 							</ClaySelect>
 						</ClayForm.Group>
+
+						{!!formState.picklist.length && (
+							<ClayForm.Group>
+								<label htmlFor="objectFieldPicklist">
+									{Liferay.Language.get('picklist')}
+
+									<RequiredMask />
+								</label>
+
+								<ClaySelect
+									id="objectFieldPicklist"
+									onChange={({target: {value}}) =>
+										handleChangeForm(
+											'listTypeDefinitionId',
+											Number(value)
+										)
+									}
+								>
+									<ClaySelect.Option
+										key={0}
+										label={Liferay.Language.get(
+											'choose-an-option'
+										)}
+										value={Liferay.Language.get(
+											'choose-an-option'
+										)}
+									/>
+
+									{formState.picklist.map(({id, name}) => (
+										<ClaySelect.Option
+											key={id}
+											label={
+												name[
+													normalizeLanguage(
+														defaultLanguageId
+													)
+												]
+											}
+											value={id}
+										/>
+									))}
+								</ClaySelect>
+							</ClayForm.Group>
+						)}
 
 						<ClayToggle
 							label={Liferay.Language.get('mandatory')}

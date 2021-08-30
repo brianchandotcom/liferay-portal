@@ -45,6 +45,195 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8942 | Test Summary: Assert that a User can't create a Custom Range past 365 days max for Individuals"
+	@priority = "2"
+	test AssertIndividualsTimeFIlterInvalidCustom {
+		task ("Sign in as new user to view the site page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Overview") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+		}
+
+		task ("Select a Custom Range time period in Active Individuals chart") {
+			ACTimeFilter.setCustomRange(
+				endDay = "2",
+				endMonth = "July",
+				endYear = "2020",
+				invalid = "true",
+				startDay = "1",
+				startMonth = "July",
+				startYear = "2019");
+		}
+
+		task ("Assert that a user can't create a Custom Range past 365 days max for Individuals") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				invalid = "true",
+				timeFilterRangeWarning = "This exceeds the maximum range of 365 days.");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LLRAC-8940 | Test Summary: Assert Chart ticks for Individuals Metrics standardized"
+	@priority = "3"
+	test AssertIndividualTicksDateFormat {
+		task ("Sign in as new user to view the site page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Details") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+		}
+
+		task ("View the time period is Last 30 days in individuals metrics chart") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Individual Activities",
+				timeFilterRange = "Last 30 days");
+		}
+
+		task ("View the interval is D in individuals metrics chart") {
+			ACCards.viewSelectedInterval(
+				cardName = "Individual Activities",
+				interval = "D");
+		}
+
+		task ("View the format of recharts xAxis ticks is MMM d") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "Individual Activities");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM d");
+		}
+
+		task ("Select the W in interval selector") {
+			ACCards.selectInterval(
+				cardName = "Individual Activities",
+				interval = "W");
+		}
+
+		task ("View the format of recharts xAxis ticks is MMM d - d") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "Individual Activities");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM d - d");
+		}
+
+		task ("Select the M in interval selector") {
+			ACCards.selectInterval(
+				cardName = "Individual Activities",
+				interval = "M");
+		}
+
+		task ("View the format of recharts xAxis ticks is MMM") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "Individual Activities");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM");
+		}
+
+		task ("Select the Last 24 hours time period in individuals metrics chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Activities");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("View the interval option buttons are disabled") {
+			for (var interval : list "D,W,M") {
+				AssertVisible(
+					key_text = "${interval}",
+					locator1 = "Button#ANY_DISABLED");
+			}
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8941 | Test Summary: Assert Known Individual Chart Popover follows format"
+	@priority = "3"
+	test AssertKnownIndividualChartPopover {
+		task ("Sign in as new user to view the site page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Overview") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+		}
+
+		task ("Assert chart popover date formatted") {
+			var formattedDate = ACIndividualsDashboard.getChartPopoverDate();
+
+			ACUtils.assertDatePattern(
+				date = "${formattedDate}",
+				format = "yyyy MMM dd");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8124 | Test Summary: Individual activities graph shows activities from today when switched to 24 hour view"
 	@priority = "5"
 	test GraphShowsIndividualActivitiesFromTodayWhenSwitchedTo24HourView {

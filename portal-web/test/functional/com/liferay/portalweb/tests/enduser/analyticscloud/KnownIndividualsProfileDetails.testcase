@@ -1,0 +1,243 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				birthdayDay = "10",
+				birthdayMonth = "10",
+				birthdayYear = "2020",
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+		}
+
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: All attributes of the individual appear in a list"
+	@priority = "5"
+	test AllIndividualAttributesAppearInList {
+		task ("Sign in as new user to view the site page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Details") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "user1 user1");
+
+			ACNavigation.switchTab(tabName = "Details");
+		}
+
+		task ("Assert attributes appear in list and assert some attribute values") {
+			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,familyName,givenName,modifiedDate") {
+				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
+			}
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "birthDate",
+				individualAttributeValue = "2020-10-10T00:00:00.000Z");
+
+			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "user1@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "classPK",
+				individualAttributeValue = "${userId}");
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "email",
+				individualAttributeValue = "user1@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "familyName",
+				individualAttributeValue = "user1");
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "givenName",
+				individualAttributeValue = "user1");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8939 | Test Summary: Assert Individuals details search result displays correct number"
+	@priority = "3"
+	test AssertIndividualsSearchDetailsResult {
+		task ("Sign in as new user to view the site page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Details") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "user1 user1");
+
+			ACNavigation.switchTab(tabName = "Details");
+		}
+
+		task ("Assert Individuals details search result displays correct number and items") {
+			ACUtils.searchBar(searchItem = "Name");
+
+			ACUtils.viewSearchResultsInfo(
+				count = "2",
+				searchTerm = '''"Name"''');
+
+			for (var individualAttribute : list "familyName,givenName") {
+				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
+			}
+
+			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,modifiedDate") {
+				ACIndividualsDashboard.assertNoIndividualAttribute(key_individualAttribute = "${individualAttribute}");
+			}
+
+			ACUtils.searchBar(searchItem = "Should not be here");
+
+			ACUtils.viewSearchResultsInfo(
+				count = "0",
+				searchTerm = '''"Should not be here"''');
+
+			AssertTextEquals(
+				key_noResultMessage = "There are no items found.",
+				locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
+				value1 = "There are no items found.");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: Order an Individual's Details"
+	@priority = "3"
+	test OrderIndividualDetails {
+		task ("Sign in as new user to view the site page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Details") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "user1 user1");
+
+			ACNavigation.switchTab(tabName = "Details");
+		}
+
+		task ("Sort the table by the Attribute column header in descending order") {
+			ACIndividualsDashboard.filterKnownIndividualList(
+				desc = "true",
+				rowName = "Attribute");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "modifiedDate,givenName,familyName,email,createDate,contactId,classPK,birthDate");
+		}
+
+		task ("Sort the table by the Attribute column header in ascending order") {
+			ACIndividualsDashboard.filterKnownIndividualList(rowName = "Attribute");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,familyName,givenName,modifiedDate");
+		}
+
+		task ("Sort the table by the Source Name column header in ascending order") {
+			ACIndividualsDashboard.filterKnownIndividualList(rowName = "Source Name");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,givenName,familyName,modifiedDate");
+		}
+
+		task ("Sort the table by the Source Name column header in descending order") {
+			ACIndividualsDashboard.filterKnownIndividualList(
+				desc = "true",
+				rowName = "Source Name");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "modifiedDate,familyName,givenName,email,createDate,contactId,classPK,birthDate");
+		}
+	}
+
+}

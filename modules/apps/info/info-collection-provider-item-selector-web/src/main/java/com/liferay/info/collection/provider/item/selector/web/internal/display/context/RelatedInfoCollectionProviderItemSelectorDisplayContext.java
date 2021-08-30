@@ -98,6 +98,12 @@ public class RelatedInfoCollectionProviderItemSelectorDisplayContext {
 		).toString();
 	}
 
+	public List<RelatedInfoItemCollectionProvider<?, ?>>
+		getRelatedInfoItemCollectionProviders() {
+
+		return _relatedInfoItemCollectionProviders;
+	}
+
 	public String getReturnType() {
 		ItemSelectorReturnType itemSelectorReturnType =
 			new InfoListProviderItemSelectorReturnType();
@@ -131,6 +137,24 @@ public class RelatedInfoCollectionProviderItemSelectorDisplayContext {
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders = new ArrayList<>(
 				_relatedInfoItemCollectionProviders);
+
+		String itemType = ParamUtil.getString(_httpServletRequest, "itemType");
+
+		if (Validator.isNotNull(itemType)) {
+			relatedInfoItemCollectionProviders = ListUtil.filter(
+				relatedInfoItemCollectionProviders,
+				relatedInfoItemCollectionProvider -> {
+					if (Objects.equals(
+							relatedInfoItemCollectionProvider.
+								getCollectionItemClassName(),
+							itemType)) {
+
+						return true;
+					}
+
+					return false;
+				});
+		}
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 

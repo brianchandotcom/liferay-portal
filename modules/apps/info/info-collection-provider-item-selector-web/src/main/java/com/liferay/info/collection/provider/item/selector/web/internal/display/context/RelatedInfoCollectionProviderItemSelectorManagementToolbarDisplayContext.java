@@ -15,11 +15,31 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,11 +54,19 @@ public class
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		RelatedInfoCollectionProviderItemSelectorDisplayContext
+			relatedInfoCollectionProviderItemSelectorDisplayContext,
 		SearchContainer<?> searchContainer) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_relatedInfoCollectionProviderItemSelectorDisplayContext =
+			relatedInfoCollectionProviderItemSelectorDisplayContext;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -47,7 +75,55 @@ public class
 			getPortletURL()
 		).setKeywords(
 			StringPool.BLANK
+		).setParameter(
+			"itemType", (String)null
 		).buildString();
+	}
+
+	@Override
+	public List<DropdownItem> getFilterDropdownItems() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterTypeDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(resourceBundle, "filter-by-item-type"));
+			}
+		).build();
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		String itemType = _getSelectedItemType();
+
+		return LabelItemListBuilder.add(
+			() -> Validator.isNotNull(itemType),
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"itemType", (String)null
+					).buildString());
+
+				labelItem.setCloseable(true);
+
+				String modelResource = ResourceActionsUtil.getModelResource(
+					_themeDisplay.getLocale(), itemType);
+
+				labelItem.setLabel(
+					LanguageUtil.get(resourceBundle, "item-type") + ": " +
+						modelResource);
+			}
+		).build();
 	}
 
 	@Override
@@ -69,5 +145,60 @@ public class
 	protected String[] getDisplayViews() {
 		return new String[] {"descriptive", "icon", "list"};
 	}
+
+	private List<DropdownItem> _getFilterTypeDropdownItems() {
+		List<RelatedInfoItemCollectionProvider<?, ?>>
+			relatedInfoItemCollectionProviders =
+				_relatedInfoCollectionProviderItemSelectorDisplayContext.
+					getRelatedInfoItemCollectionProviders();
+
+		Stream<RelatedInfoItemCollectionProvider<?, ?>> stream =
+			relatedInfoItemCollectionProviders.stream();
+
+		List<String> itemTypes = stream.map(
+			relatedInfoItemCollectionProvider ->
+				relatedInfoItemCollectionProvider.getCollectionItemClassName()
+		).distinct(
+		).collect(
+			Collectors.toList()
+		);
+
+		return new DropdownItemList() {
+			{
+				for (String itemType : itemTypes) {
+					add(
+						dropdownItem -> {
+							if (Objects.equals(
+									itemType, _getSelectedItemType())) {
+
+								dropdownItem.setActive(true);
+							}
+
+							dropdownItem.setHref(
+								getPortletURL(), "itemType", itemType);
+
+							dropdownItem.setLabel(
+								ResourceActionsUtil.getModelResource(
+									_themeDisplay.getLocale(), itemType));
+						});
+				}
+			}
+		};
+	}
+
+	private String _getSelectedItemType() {
+		if (_selectedItemType != null) {
+			return _selectedItemType;
+		}
+
+		_selectedItemType = ParamUtil.getString(httpServletRequest, "itemType");
+
+		return _selectedItemType;
+	}
+
+	private final RelatedInfoCollectionProviderItemSelectorDisplayContext
+		_relatedInfoCollectionProviderItemSelectorDisplayContext;
+	private String _selectedItemType;
+	private final ThemeDisplay _themeDisplay;
 
 }

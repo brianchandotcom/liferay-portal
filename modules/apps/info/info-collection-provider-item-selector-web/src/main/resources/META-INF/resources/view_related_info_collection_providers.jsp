@@ -23,7 +23,7 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new RelatedInfoCollectionProviderItemSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
+	managementToolbarDisplayContext="<%= new RelatedInfoCollectionProviderItemSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, relatedInfoCollectionProvidersDisplayContext, searchContainer) %>"
 />
 
 <clay:container-fluid

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -264,7 +266,17 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public boolean isAvailable() {
-		return _available;
+		try {
+			JenkinsResultsParserUtil.toString(
+				"http://" + getName(), false, 0, 0, 0);
+		}
+		catch (IOException ioException) {
+			System.out.println(getName() + " is unreachable.");
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -282,6 +294,17 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public synchronized void update(boolean minimal) {
+		if (!isAvailable()) {
+			_batchSizes.clear();
+			_buildURLs.clear();
+			_jenkinsSlavesMap.clear();
+			_queueCount = 0;
+			_queuedBuildURLs.clear();
+			_reportedAvailableSlavesCount = 0;
+
+			return;
+		}
+
 		JSONObject computerAPIJSONObject = null;
 		JSONObject queueAPIJSONObject = null;
 
@@ -309,14 +332,17 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				false, 5000);
 		}
 		catch (Exception exception) {
-			System.out.println("Unable to read " + _masterURL);
+			_batchSizes.clear();
+			_buildURLs.clear();
+			_jenkinsSlavesMap.clear();
+			_queueCount = 0;
+			_queuedBuildURLs.clear();
+			_reportedAvailableSlavesCount = 0;
 
-			_available = false;
+			System.out.println("Unable to read " + _masterURL);
 
 			return;
 		}
-
-		_available = true;
 
 		List<String> buildURLs = new ArrayList<>();
 
@@ -507,7 +533,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private static final Map<String, JenkinsMaster> _jenkinsMasters =
 		Collections.synchronizedMap(new HashMap<String, JenkinsMaster>());
 
-	private boolean _available;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
 	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =

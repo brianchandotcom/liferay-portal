@@ -80,7 +80,7 @@ public class UpgradeReport {
 		Map<String, Integer> errorMessages = _errorMessages.computeIfAbsent(
 			loggerName, key -> new ConcurrentHashMap<>());
 
-		int occurrences = errorMessages.computeIfAbsent(message, key -> 1);
+		int occurrences = errorMessages.computeIfAbsent(message, key -> 0);
 
 		occurrences++;
 
@@ -98,7 +98,7 @@ public class UpgradeReport {
 		Map<String, Integer> warningMessages = _warningMessages.computeIfAbsent(
 			loggerName, key -> new ConcurrentHashMap<>());
 
-		int occurrences = warningMessages.computeIfAbsent(message, key -> 1);
+		int occurrences = warningMessages.computeIfAbsent(message, key -> 0);
 
 		occurrences++;
 

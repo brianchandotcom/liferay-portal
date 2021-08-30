@@ -34,8 +34,11 @@ import java.util.Locale;
 public class TemplateInfoItemFieldReader
 	implements LocalizedInfoItemFieldReader {
 
-	public TemplateInfoItemFieldReader(DDMTemplate ddmTemplate) {
+	public TemplateInfoItemFieldReader(
+		DDMTemplate ddmTemplate, InfoItemFieldValues infoItemFieldValues) {
+
 		_ddmTemplate = ddmTemplate;
+		_infoItemFieldValues = infoItemFieldValues;
 	}
 
 	/**
@@ -75,9 +78,7 @@ public class TemplateInfoItemFieldReader
 	public Object getValue(Object model, Locale locale) {
 		TemplateDisplayTemplateTransformer templateDisplayTemplateTransformer =
 			new TemplateDisplayTemplateTransformer(
-				_ddmTemplate,
-				InfoItemFieldValues.builder(
-				).build());
+				_ddmTemplate, _infoItemFieldValues);
 
 		try {
 			return templateDisplayTemplateTransformer.transform(locale);
@@ -93,5 +94,6 @@ public class TemplateInfoItemFieldReader
 		TemplateInfoItemFieldReader.class);
 
 	private final DDMTemplate _ddmTemplate;
+	private final InfoItemFieldValues _infoItemFieldValues;
 
 }

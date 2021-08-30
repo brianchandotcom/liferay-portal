@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -49,7 +50,10 @@ public class TemplateInfoItemFieldSetProviderImpl
 		).infoFieldSetEntry(
 			consumer -> {
 				for (TemplateInfoItemFieldReader templateInfoItemFieldReader :
-						_getTemplateInfoItemFieldReaders(className, classPK)) {
+						_getTemplateInfoItemFieldReaders(
+							className, classPK,
+							InfoItemFieldValues.builder(
+							).build())) {
 
 					consumer.accept(templateInfoItemFieldReader.getInfoField());
 				}
@@ -73,7 +77,10 @@ public class TemplateInfoItemFieldSetProviderImpl
 		}
 
 		TemplateInfoItemFieldReader templateInfoItemFieldReader =
-			new TemplateInfoItemFieldReader(ddmTemplate);
+			new TemplateInfoItemFieldReader(
+				ddmTemplate,
+				InfoItemFieldValues.builder(
+				).build());
 
 		return new InfoFieldValue<>(
 			templateInfoItemFieldReader.getInfoField(),
@@ -81,7 +88,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 	}
 
 	private List<TemplateInfoItemFieldReader> _getTemplateInfoItemFieldReaders(
-		String className, long classPK) {
+		String className, long classPK,
+		InfoItemFieldValues infoItemFieldValues) {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -104,7 +112,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 		Stream<DDMTemplate> templatesStream = templates.stream();
 
 		return templatesStream.map(
-			ddmTemplate -> new TemplateInfoItemFieldReader(ddmTemplate)
+			ddmTemplate -> new TemplateInfoItemFieldReader(
+				ddmTemplate, infoItemFieldValues)
 		).collect(
 			Collectors.toList()
 		);

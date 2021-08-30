@@ -1,8 +1,8 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.32.0",
-		"@clayui/data-provider": "3.32.0",
-		"@clayui/form": "3.32.0",
+		"@clayui/data-provider": "3.35.0",
+		"@clayui/form": "3.35.0",
 		"@clayui/icon": "3.32.0",
 		"@liferay/frontend-js-react-web": "*",
 		"codemirror": "^5.59.0",

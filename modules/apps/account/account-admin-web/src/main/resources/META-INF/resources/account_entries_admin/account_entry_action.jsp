@@ -59,7 +59,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 		/>
 	</c:if>
 
-	<c:if test="<%= portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) && (accountEntryId != CurrentAccountEntryManagerUtil.getCurrentAccountEntryId(themeDisplay.getScopeGroupId(), user.getUserId())) %>">
+	<c:if test="<%= portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) && !accountEntryDisplay.isSelectedAccountEntry(themeDisplay.getScopeGroupId(), user.getUserId()) %>">
 		<portlet:actionURL name="/account_admin/select_account_entry" var="selectAccountURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />

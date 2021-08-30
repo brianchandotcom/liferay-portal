@@ -1,5 +1,11 @@
 definition {
 
+	macro clickBookmarkIcon {
+		Click(
+			key_socialBookmark = StringUtil.toLowerCase("${socialBookmark}"),
+			locator1 = "SocialBookmarks#SOCIAL_BOOKMARK_ICON");
+	}
+
 	macro viewBookmarkIcons {
 		for (var socialBookmark : list "${socialBookmarks}") {
 			AssertElementPresent(

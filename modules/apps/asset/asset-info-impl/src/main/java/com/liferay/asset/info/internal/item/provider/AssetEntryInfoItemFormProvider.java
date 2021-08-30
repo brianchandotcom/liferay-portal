@@ -23,6 +23,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,9 @@ public class AssetEntryInfoItemFormProvider
 		).infoFieldSetEntries(
 			_getAssetEntryFieldSetEntries()
 		).infoFieldSetEntry(
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				AssetEntry.class.getName(), "0")
+		).infoFieldSetEntry(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetEntry.class.getName())
 		).labelInfoLocalizedValue(
@@ -84,5 +88,8 @@ public class AssetEntryInfoItemFormProvider
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

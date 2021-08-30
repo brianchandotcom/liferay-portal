@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-info-api")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:info:info-taglib")
+	compileOnly project(":apps:template:template-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

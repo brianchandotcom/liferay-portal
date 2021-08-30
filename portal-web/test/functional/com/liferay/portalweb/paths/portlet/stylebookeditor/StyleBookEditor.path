@@ -10,6 +10,12 @@
 </thead>
 
 <tbody>
+<!--ENTRY_CARDS-->
+<tr>
+	<td>CARD_TITLE</td>
+	<td>//*[@class='card-title'][contains(.,'${key_styleBookTitle}')]</td>
+	<td></td>
+</tr>
 <!--PAGE_PREVIEW-->
 <tr>
 	<td>CONTRIBUTED_FRAGMENT_INLINE_CONTENT</td>

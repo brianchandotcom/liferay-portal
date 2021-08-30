@@ -74,8 +74,6 @@ public class CommercePriceListQualifiersDisplayContext
 		_portal = portal;
 	}
 
-	private Portal _portal;
-
 	public String getActiveAccountEligibility() throws PortalException {
 		long commercePriceListId = getCommercePriceListId();
 
@@ -217,5 +215,6 @@ public class CommercePriceListQualifiersDisplayContext
 		_commercePriceListCommerceAccountGroupRelService;
 	private final CommercePriceListOrderTypeRelService
 		_commercePriceListOrderTypeRelService;
+	private final Portal _portal;
 
 }

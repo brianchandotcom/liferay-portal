@@ -382,7 +382,7 @@ public class CommerceDiscountCalculationV2Impl
 
 	private CommerceDiscountValue _getCommerceDiscountValue(
 			CommerceOrder commerceOrder, BigDecimal amount,
-			CommerceContext commerceContext, String discountType)
+			CommerceContext commerceContext, String target)
 		throws PortalException {
 
 		if ((amount == null) ||
@@ -396,7 +396,7 @@ public class CommerceDiscountCalculationV2Impl
 				commerceOrder.getCompanyId(),
 				commerceContext.getCommerceAccount(),
 				commerceContext.getCommerceChannelId(),
-				commerceOrder.getCommerceOrderTypeId(), discountType);
+				commerceOrder.getCommerceOrderTypeId(), target);
 
 		if (commerceDiscounts.isEmpty()) {
 			return null;

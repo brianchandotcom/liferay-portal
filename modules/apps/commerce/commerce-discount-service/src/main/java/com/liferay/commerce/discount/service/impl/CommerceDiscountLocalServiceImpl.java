@@ -681,14 +681,14 @@ public class CommerceDiscountLocalServiceImpl
 	public List<CommerceDiscount>
 		getAccountAndChannelAndOrderTypeCommerceDiscounts(
 			long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String commerceDiscountTargetType) {
+			long commerceOrderTypeId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, commerceAccountId, null, commerceChannelId,
-				commerceOrderTypeId, null, null, commerceDiscountTargetType));
+				commerceOrderTypeId, null, null, target));
 	}
 
 	@Override
@@ -706,28 +706,26 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
-		long commerceAccountId, long commerceChannelId,
-		String commerceDiscountTargetType) {
+		long commerceAccountId, long commerceChannelId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, commerceAccountId, null, commerceChannelId, null, null,
-				null, commerceDiscountTargetType));
+				null, target));
 	}
 
 	@Override
 	public List<CommerceDiscount> getAccountAndOrderTypeCommerceDiscounts(
-		long commerceAccountId, long commerceOrderTypeId,
-		String commerceDiscountTargetType) {
+		long commerceAccountId, long commerceOrderTypeId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, commerceAccountId, null, null, commerceOrderTypeId, null,
-				null, commerceDiscountTargetType));
+				null, target));
 	}
 
 	@Override
@@ -757,14 +755,13 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getAccountCommerceDiscounts(
-		long commerceAccountId, String commerceDiscountTargetType) {
+		long commerceAccountId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
-				null, commerceAccountId, null, null, null, null, null,
-				commerceDiscountTargetType));
+				null, commerceAccountId, null, null, null, null, null, target));
 	}
 
 	@Override
@@ -785,14 +782,14 @@ public class CommerceDiscountLocalServiceImpl
 	public List<CommerceDiscount>
 		getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, String commerceDiscountTargetType) {
+			long commerceOrderTypeId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, null, commerceAccountGroupIds, commerceChannelId,
-				commerceOrderTypeId, null, null, commerceDiscountTargetType));
+				commerceOrderTypeId, null, null, target));
 	}
 
 	@Override
@@ -810,15 +807,14 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
-		long[] commerceAccountGroupIds, long commerceChannelId,
-		String commerceDiscountTargetType) {
+		long[] commerceAccountGroupIds, long commerceChannelId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, null, commerceAccountGroupIds, commerceChannelId, null,
-				null, null, commerceDiscountTargetType));
+				null, null, target));
 	}
 
 	@Override
@@ -837,14 +833,14 @@ public class CommerceDiscountLocalServiceImpl
 	@Override
 	public List<CommerceDiscount> getAccountGroupAndOrderTypeCommerceDiscount(
 		long[] commerceAccountGroupIds, long commerceOrderTypeId,
-		String commerceDiscountTargetType) {
+		String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, null, commerceAccountGroupIds, null, commerceOrderTypeId,
-				null, null, commerceDiscountTargetType));
+				null, null, target));
 	}
 
 	@Override
@@ -862,14 +858,14 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
-		long[] commerceAccountGroupIds, String commerceDiscountTargetType) {
+		long[] commerceAccountGroupIds, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, null, commerceAccountGroupIds, null, null, null, null,
-				commerceDiscountTargetType));
+				target));
 	}
 
 	@Override
@@ -904,15 +900,14 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getChannelAndOrderTypeCommerceDiscounts(
-		long commerceChannelId, long commerceOrderTypeId,
-		String commerceDiscountTargetType) {
+		long commerceChannelId, long commerceOrderTypeId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, null, null, commerceChannelId, commerceOrderTypeId, null,
-				null, commerceDiscountTargetType));
+				null, target));
 	}
 
 	@Override
@@ -929,14 +924,13 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getChannelCommerceDiscounts(
-		long commerceChannelId, String commerceDiscountTargetType) {
+		long commerceChannelId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
-				null, null, null, commerceChannelId, null, null, null,
-				commerceDiscountTargetType));
+				null, null, null, commerceChannelId, null, null, null, target));
 	}
 
 	/**
@@ -981,14 +975,14 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getOrderTypeCommerceDiscounts(
-		long commerceOrderTypeId, String commerceDiscountTargetType) {
+		long commerceOrderTypeId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
 				null, null, null, null, commerceOrderTypeId, null, null,
-				commerceDiscountTargetType));
+				target));
 	}
 
 	@Override
@@ -1016,14 +1010,13 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
-		long companyId, String commerceDiscountTargetType) {
+		long companyId, String target) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceDiscountTable.INSTANCE),
-				companyId, null, null, null, null, null, null,
-				commerceDiscountTargetType));
+				companyId, null, null, null, null, null, null, target));
 	}
 
 	@Override
@@ -1670,87 +1663,6 @@ public class CommerceDiscountLocalServiceImpl
 		}
 	}
 
-	private Predicate _buildCommerceDiscountTargetPredicate(
-		long cpDefinitionId, long cpInstanceId) {
-
-		Predicate predicate = CommerceDiscountTable.INSTANCE.target.eq(
-			CommerceDiscountConstants.TARGET_PRODUCTS
-		).and(
-			CommerceDiscountRelTable.INSTANCE.classPK.eq(cpDefinitionId)
-		).and(
-			CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-				classNameLocalService.getClassNameId(
-					CPDefinition.class.getName()))
-		);
-
-		predicate = predicate.or(
-			CommerceDiscountTable.INSTANCE.target.eq(
-				CommerceDiscountConstants.TARGET_SKUS
-			).and(
-				CommerceDiscountRelTable.INSTANCE.classPK.eq(cpInstanceId)
-			).and(
-				CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-					classNameLocalService.getClassNameId(
-						CPInstance.class.getName()))
-			));
-
-		long[] assetCategoryIds = _getAssetCategoryIds(cpDefinitionId);
-
-		if (assetCategoryIds != null) {
-			if (assetCategoryIds.length == 0) {
-				assetCategoryIds = new long[] {0};
-			}
-
-			LongStream assetCategoryIdsLongStream = Arrays.stream(
-				assetCategoryIds);
-
-			predicate = predicate.or(
-				CommerceDiscountTable.INSTANCE.target.eq(
-					CommerceDiscountConstants.TARGET_CATEGORIES
-				).and(
-					CommerceDiscountRelTable.INSTANCE.classPK.in(
-						assetCategoryIdsLongStream.boxed(
-						).toArray(
-							Long[]::new
-						))
-				).and(
-					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-						classNameLocalService.getClassNameId(
-							AssetCategory.class.getName()))
-				));
-		}
-
-		long[] commercePricingClasses =
-			_commercePricingClassLocalService.
-				getCommercePricingClassByCPDefinition(cpDefinitionId);
-
-		if (commercePricingClasses != null) {
-			if (commercePricingClasses.length == 0) {
-				commercePricingClasses = new long[] {0};
-			}
-
-			LongStream commercePricingClassesLongStream = Arrays.stream(
-				commercePricingClasses);
-
-			predicate = predicate.or(
-				CommerceDiscountTable.INSTANCE.target.eq(
-					CommerceDiscountConstants.TARGET_PRODUCT_GROUPS
-				).and(
-					CommerceDiscountRelTable.INSTANCE.classPK.in(
-						commercePricingClassesLongStream.boxed(
-						).toArray(
-							Long[]::new
-						))
-				).and(
-					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-						classNameLocalService.getClassNameId(
-							CommercePricingClass.class.getName()))
-				));
-		}
-
-		return predicate.withParentheses();
-	}
-
 	private long[] _getAssetCategoryIds(long cpDefinitionId) {
 		try {
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
@@ -1781,7 +1693,7 @@ public class CommerceDiscountLocalServiceImpl
 		FromStep fromStep, Long companyId, Long commerceAccountId,
 		long[] commerceAccountGroupIds, Long commerceChannelId,
 		Long commerceOrderTypeId, Long cpDefinitionId, Long cpInstanceId,
-		String commerceDiscountTargetType) {
+		String target) {
 
 		JoinStep joinStep = fromStep.from(CommerceDiscountTable.INSTANCE);
 
@@ -1897,11 +1809,10 @@ public class CommerceDiscountLocalServiceImpl
 					commerceDiscountOrderTypeRelId.isNull());
 		}
 
-		if (!Validator.isBlank(commerceDiscountTargetType)) {
+		if (!Validator.isBlank(target)) {
 			return joinStep.where(
 				predicate.and(
-					CommerceDiscountTable.INSTANCE.target.eq(
-						commerceDiscountTargetType)));
+					CommerceDiscountTable.INSTANCE.target.eq(target)));
 		}
 
 		joinStep = joinStep.innerJoinON(
@@ -1910,9 +1821,88 @@ public class CommerceDiscountLocalServiceImpl
 				CommerceDiscountTable.INSTANCE.commerceDiscountId));
 
 		return joinStep.where(
-			predicate.and(
-				_buildCommerceDiscountTargetPredicate(
-					cpDefinitionId, cpInstanceId)));
+			predicate.and(_toTargetPredicate(cpDefinitionId, cpInstanceId)));
+	}
+
+	private Predicate _toTargetPredicate(
+		long cpDefinitionId, long cpInstanceId) {
+
+		Predicate predicate = CommerceDiscountTable.INSTANCE.target.eq(
+			CommerceDiscountConstants.TARGET_PRODUCTS
+		).and(
+			CommerceDiscountRelTable.INSTANCE.classPK.eq(cpDefinitionId)
+		).and(
+			CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+				classNameLocalService.getClassNameId(
+					CPDefinition.class.getName()))
+		);
+
+		predicate = predicate.or(
+			CommerceDiscountTable.INSTANCE.target.eq(
+				CommerceDiscountConstants.TARGET_SKUS
+			).and(
+				CommerceDiscountRelTable.INSTANCE.classPK.eq(cpInstanceId)
+			).and(
+				CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+					classNameLocalService.getClassNameId(
+						CPInstance.class.getName()))
+			));
+
+		long[] assetCategoryIds = _getAssetCategoryIds(cpDefinitionId);
+
+		if (assetCategoryIds != null) {
+			if (assetCategoryIds.length == 0) {
+				assetCategoryIds = new long[] {0};
+			}
+
+			LongStream assetCategoryIdsLongStream = Arrays.stream(
+				assetCategoryIds);
+
+			predicate = predicate.or(
+				CommerceDiscountTable.INSTANCE.target.eq(
+					CommerceDiscountConstants.TARGET_CATEGORIES
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classPK.in(
+						assetCategoryIdsLongStream.boxed(
+						).toArray(
+							Long[]::new
+						))
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+						classNameLocalService.getClassNameId(
+							AssetCategory.class.getName()))
+				));
+		}
+
+		long[] commercePricingClasses =
+			_commercePricingClassLocalService.
+				getCommercePricingClassByCPDefinition(cpDefinitionId);
+
+		if (commercePricingClasses != null) {
+			if (commercePricingClasses.length == 0) {
+				commercePricingClasses = new long[] {0};
+			}
+
+			LongStream commercePricingClassesLongStream = Arrays.stream(
+				commercePricingClasses);
+
+			predicate = predicate.or(
+				CommerceDiscountTable.INSTANCE.target.eq(
+					CommerceDiscountConstants.TARGET_PRODUCT_GROUPS
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classPK.in(
+						commercePricingClassesLongStream.boxed(
+						).toArray(
+							Long[]::new
+						))
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+						classNameLocalService.getClassNameId(
+							CommercePricingClass.class.getName()))
+				));
+		}
+
+		return predicate.withParentheses();
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

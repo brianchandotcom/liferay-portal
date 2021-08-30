@@ -14,37 +14,26 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal;
 
-import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
+import com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys;
+import com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoCollectionProviderItemSelectorDisplayContext;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.ItemSelectorViewDescriptor;
-import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -92,14 +81,19 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		_itemSelectorViewDescriptorRenderer.renderHTML(
-			servletRequest, servletResponse,
-			relatedInfoItemCollectionProviderItemSelectorCriterion, portletURL,
-			itemSelectedEventName, search,
-			new InfoItemRelatedItemsProviderItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest,
-				relatedInfoItemCollectionProviderItemSelectorCriterion,
-				portletURL));
+		servletRequest.setAttribute(
+			InfoCollectionProviderItemSelectorWebKeys.
+				RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			new RelatedInfoCollectionProviderItemSelectorDisplayContext(
+				(HttpServletRequest)servletRequest, _infoItemServiceTracker,
+				itemSelectedEventName, _language, portletURL,
+				relatedInfoItemCollectionProviderItemSelectorCriterion));
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
+				"/view_related_info_collection_providers.jsp");
+
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -110,154 +104,11 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
-	private ItemSelectorViewDescriptorRenderer
-		<RelatedInfoItemCollectionProviderItemSelectorCriterion>
-			_itemSelectorViewDescriptorRenderer;
-
-	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.info.collection.provider.item.selector.web)"
 	)
 	private ServletContext _servletContext;
-
-	private class InfoItemRelatedItemsProviderItemSelectorViewDescriptor
-		implements ItemSelectorViewDescriptor
-			<RelatedInfoItemCollectionProvider<?, ?>> {
-
-		public InfoItemRelatedItemsProviderItemSelectorViewDescriptor(
-			HttpServletRequest httpServletRequest,
-			RelatedInfoItemCollectionProviderItemSelectorCriterion
-				relatedInfoItemCollectionProviderItemSelectorCriterion,
-			PortletURL portletURL) {
-
-			_httpServletRequest = httpServletRequest;
-			_relatedInfoItemCollectionProviderItemSelectorCriterion =
-				relatedInfoItemCollectionProviderItemSelectorCriterion;
-			_portletURL = portletURL;
-		}
-
-		@Override
-		public ItemDescriptor getItemDescriptor(
-			RelatedInfoItemCollectionProvider<?, ?>
-				relatedInfoItemCollectionProvider) {
-
-			return new ItemDescriptor() {
-
-				@Override
-				public String getIcon() {
-					return "list";
-				}
-
-				@Override
-				public String getImageURL() {
-					return StringPool.BLANK;
-				}
-
-				@Override
-				public String getPayload() {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)_httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					return JSONUtil.put(
-						"itemType",
-						relatedInfoItemCollectionProvider.
-							getCollectionItemClassName()
-					).put(
-						"key", relatedInfoItemCollectionProvider.getKey()
-					).put(
-						"sourceItemType",
-						relatedInfoItemCollectionProvider.
-							getSourceItemClassName()
-					).put(
-						"title",
-						relatedInfoItemCollectionProvider.getLabel(
-							themeDisplay.getLocale())
-					).toString();
-				}
-
-				@Override
-				public String getSubtitle(Locale locale) {
-					return ResourceActionsUtil.getModelResource(
-						locale,
-						relatedInfoItemCollectionProvider.
-							getCollectionItemClassName());
-				}
-
-				@Override
-				public String getTitle(Locale locale) {
-					return relatedInfoItemCollectionProvider.getLabel(locale);
-				}
-
-			};
-		}
-
-		@Override
-		public ItemSelectorReturnType getItemSelectorReturnType() {
-			return new InfoListProviderItemSelectorReturnType();
-		}
-
-		@Override
-		public SearchContainer<RelatedInfoItemCollectionProvider<?, ?>>
-			getSearchContainer() {
-
-			PortletRequest portletRequest =
-				(PortletRequest)_httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
-
-			SearchContainer<RelatedInfoItemCollectionProvider<?, ?>>
-				searchContainer = new SearchContainer<>(
-					portletRequest, _portletURL, null,
-					_language.get(
-						resourceBundle,
-						"there-are-no-related-items-collection-providers"));
-
-			List<RelatedInfoItemCollectionProvider<?, ?>>
-				itemRelatedItemsProviders = new ArrayList<>();
-
-			List<String> itemTypes =
-				_relatedInfoItemCollectionProviderItemSelectorCriterion.
-					getSourceItemTypes();
-
-			for (String itemType : itemTypes) {
-				itemRelatedItemsProviders.addAll(
-					_infoItemServiceTracker.getAllInfoItemServices(
-						(Class<RelatedInfoItemCollectionProvider<?, ?>>)
-							(Class<?>)RelatedInfoItemCollectionProvider.class,
-						itemType));
-			}
-
-			searchContainer.setResults(
-				ListUtil.subList(
-					itemRelatedItemsProviders, searchContainer.getStart(),
-					searchContainer.getEnd()));
-			searchContainer.setTotal(itemRelatedItemsProviders.size());
-
-			return searchContainer;
-		}
-
-		@Override
-		public boolean isShowBreadcrumb() {
-			return false;
-		}
-
-		private final HttpServletRequest _httpServletRequest;
-		private final PortletURL _portletURL;
-		private final RelatedInfoItemCollectionProviderItemSelectorCriterion
-			_relatedInfoItemCollectionProviderItemSelectorCriterion;
-
-	}
 
 }

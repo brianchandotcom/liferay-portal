@@ -88,6 +88,7 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 							<%= relatedInfoItemCollectionProvider.getLabel(locale) %>
 						</a>
 					</liferay-ui:search-container-column-text>
+
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand table-cell-minw-200"
 						name="type"

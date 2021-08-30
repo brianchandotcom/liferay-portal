@@ -133,7 +133,7 @@ definition {
 		property cluster.enabled = "true";
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property database.types = "mysql";
-		property minimum.slave.ram = "32";
+		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompanyWithCluster";
 
 		Clustering.viewClusterStatusInConsole();

@@ -81,6 +81,9 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 		commerceDiscountOrderTypeRelPersistence.remove(
 			commerceDiscountOrderTypeRel);
 
+		expandoRowLocalService.deleteRows(
+			commerceDiscountOrderTypeRel.getCommerceDiscountOrderTypeRelId());
+
 		reindexCommerceDiscount(
 			commerceDiscountOrderTypeRel.getCommerceDiscountId());
 

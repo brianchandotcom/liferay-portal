@@ -70,6 +70,9 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 		commerceDiscountAccountRelPersistence.remove(
 			commerceDiscountAccountRel);
 
+		expandoRowLocalService.deleteRows(
+			commerceDiscountAccountRel.getCommerceDiscountAccountRelId());
+
 		reindexCommerceDiscount(
 			commerceDiscountAccountRel.getCommerceDiscountId());
 

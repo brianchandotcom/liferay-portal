@@ -18,6 +18,16 @@ definition {
 		ACUtils.launchDXP();
 
 		ACUtils.addSiteAndPage();
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
 	}
 
 	tearDown {
@@ -39,16 +49,6 @@ definition {
 	@priority = "5"
 	test GraphShowsIndividualActivitiesFromTodayWhenSwitchedTo24HourView {
 		ACUtils.createDMAndAddToPage();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",

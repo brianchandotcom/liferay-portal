@@ -19,8 +19,8 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.field.reader.LocalizedInfoItemFieldReader;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.template.web.internal.portlet.template.TemplateDisplayTemplateTransformer;
 
 import java.util.Locale;
 
@@ -69,7 +69,10 @@ public class TemplateInfoItemFieldReader
 
 	@Override
 	public Object getValue(Object model, Locale locale) {
-		return StringPool.BLANK;
+		TemplateDisplayTemplateTransformer templateDisplayTemplateTransformer =
+			new TemplateDisplayTemplateTransformer(_ddmTemplate);
+
+		return templateDisplayTemplateTransformer.transform();
 	}
 
 	private final DDMTemplate _ddmTemplate;

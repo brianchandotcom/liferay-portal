@@ -17,6 +17,7 @@ package com.liferay.template.web.internal.info.item.field.reader;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.field.reader.LocalizedInfoItemFieldReader;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
@@ -73,10 +74,13 @@ public class TemplateInfoItemFieldReader
 	@Override
 	public Object getValue(Object model, Locale locale) {
 		TemplateDisplayTemplateTransformer templateDisplayTemplateTransformer =
-			new TemplateDisplayTemplateTransformer(_ddmTemplate);
+			new TemplateDisplayTemplateTransformer(
+				_ddmTemplate,
+				InfoItemFieldValues.builder(
+				).build());
 
 		try {
-			return templateDisplayTemplateTransformer.transform();
+			return templateDisplayTemplateTransformer.transform(locale);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to transform template", exception);

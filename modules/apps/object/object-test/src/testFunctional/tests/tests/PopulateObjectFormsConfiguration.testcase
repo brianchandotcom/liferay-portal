@@ -23,11 +23,89 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field and view its entries in a Field Group"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapAndViewEntriesForFieldGroup {
 
-		// TODO LPS-138054 CanMapAndViewEntriesForFieldGroup pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "integer",
+			fieldType = "Integer",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "text",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Numeric",
+			key_fieldName = "Text");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "text");
+
+		Form.closeSidebar();
+
+		PopulateObjectFormsConfiguration.gotoFormField(formFieldName = "Numeric");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldName = "integer");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric",
+			fieldValue = "1234567");
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Test text");
+
+		FormPortlet.submitSuccessfully();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Numeric",
+			key_entryName = "1234567",
+			key_entryNumber = "1 entry");
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Text",
+			key_entryName = "Test text",
+			key_entryNumber = "1 entry");	
 
 	}
 

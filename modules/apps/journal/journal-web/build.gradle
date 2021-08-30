@@ -61,6 +61,7 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":apps:subscription:subscription-api")
+	compileOnly project(":apps:template:template-api")
 	compileOnly project(":apps:translation:translation-api")
 	compileOnly project(":apps:translation:translation-web")
 	compileOnly project(":apps:trash:trash-api")

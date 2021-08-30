@@ -27,6 +27,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Locale;
 import java.util.Set;
@@ -157,6 +158,9 @@ public class BlogsEntryInfoItemFormProvider
 			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 				BlogsEntry.class.getName())
 		).infoFieldSetEntry(
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName(), "0")
+		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
 		).infoFieldSetEntry(
 			_getConfigurationInfoFieldSet()
@@ -185,5 +189,8 @@ public class BlogsEntryInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

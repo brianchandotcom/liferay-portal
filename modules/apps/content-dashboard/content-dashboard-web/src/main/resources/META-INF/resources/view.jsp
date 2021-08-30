@@ -88,9 +88,14 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 			cssClass="c-mt-5"
 			size="<%= StringPool.BLANK %>"
 		>
-			<h2 class="sheet-title">
+			<h2 class="align-items-center d-flex justify-content-between sheet-title">
 				<span class="component-title">
 					<%= LanguageUtil.format(request, "content-x", contentDashboardAdminDisplayContext.getSearchContainer().getTotal(), false) %>
+				</span>
+				<span>
+					<react:component
+						module="js/components/DownloadCVSButton"
+					/>
 				</span>
 			</h2>
 

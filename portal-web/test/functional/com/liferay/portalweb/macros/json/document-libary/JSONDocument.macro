@@ -280,6 +280,34 @@ definition {
 		echo("## * File Entry ID: ${fileEntryId}");
 	}
 
+	macro getFileEntryUUID {
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(portalURL = "${portalURL}", groupName = "${groupName}", site = "${site}");
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileentry/get-file-entry \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d folderId=${folderId} \
+			  -d title=${dmDocumentTitle}
+		''';
+
+		var fileEntryUUID = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['uuid']");
+
+		return "${fileEntryUUID}";
+	}
+
 	@summary = "This calls the JSON WS API to subscribe to a folder"
 	macro subscribeToFolder {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(

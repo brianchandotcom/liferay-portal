@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.32.0",
-		"@clayui/drop-down": "3.35.0",
+		"@clayui/drop-down": "3.35.2",
 		"@liferay/fragment-renderer-collection-filter-impl": "1.0.7",
 		"react": "16.12.0"
 	},

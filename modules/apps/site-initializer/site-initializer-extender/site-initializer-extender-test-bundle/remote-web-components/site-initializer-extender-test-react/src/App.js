@@ -1,5 +1,3 @@
-import LiferayLogo from './assets/tree.png';
-
 const App = () => {
 	return (
 		<div className="container">
@@ -9,8 +7,6 @@ const App = () => {
 				<p>Liferay Community Edition</p>
 				<span>Today: {new Date().toLocaleDateString()}</span>
 			</div>
-
-			<img alt="logo" draggable={false} height={200} src={LiferayLogo} />
 		</div>
 	);
 };

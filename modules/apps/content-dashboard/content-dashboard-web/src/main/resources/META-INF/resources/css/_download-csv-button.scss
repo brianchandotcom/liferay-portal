@@ -1,0 +1,10 @@
+.download-csv-button {
+	.btn-outline-secondary:disabled {
+		opacity: 1;
+	}
+
+	&__alert {
+		font-weight: 400;
+		line-height: 1.5;
+	}
+}

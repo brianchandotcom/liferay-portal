@@ -26,8 +26,6 @@ CPDefinitionDiagramSetting cpDefinitionDiagramSetting = cpDefinitionDiagramSetti
 String type = BeanParamUtil.getString(cpDefinitionDiagramSetting, renderRequest, "type", DefaultCPDefinitionDiagramType.KEY);
 
 CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramType(type);
-
-PortletURL portletURL = cpDefinitionDiagramSettingDisplayContext.getPortletURL();
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
@@ -115,7 +113,7 @@ PortletURL portletURL = cpDefinitionDiagramSettingDisplayContext.getPortletURL()
 					itemsPerPage="<%= 10 %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					pageNumber="<%= 1 %>"
-					portletURL="<%= portletURL %>"
+					portletURL="<%= cpDefinitionDiagramSettingDisplayContext.getPortletURL() %>"
 					style="stacked"
 				/>
 			</commerce-ui:panel>

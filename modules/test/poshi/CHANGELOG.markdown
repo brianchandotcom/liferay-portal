@@ -1,5 +1,11 @@
 # Poshi Runner Change Log
 
+## 1.0.310
+
+### Other
+
+* [LPS-138138](https://issues.liferay.com/browse/LPS-138138) - Make data guard usable in functional tests
+
 ## 1.0.309
 
 ### PQL

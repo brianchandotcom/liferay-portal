@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUPPRESSED_USERS</td>
+	<td>//h4[contains(.,'Suppressed Users')]/../..//a[contains(@class,'button') and contains(.,'Manage')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CREATE_REQUEST</td>
 	<td>//*[contains(@class, 'nav-btn') and contains(.,'Create Request')]</td>
 	<td></td>

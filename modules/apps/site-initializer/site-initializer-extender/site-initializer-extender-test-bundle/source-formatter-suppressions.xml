@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JSONPackageJSONDependencyVersionCheck" files="remote-web-components/site-initializer-extender-test-react/package\.json" />
+	</source-check>
+</suppressions>

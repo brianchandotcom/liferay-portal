@@ -536,7 +536,9 @@ renderResponse.setTitle(headerTitle);
 							classPK="<%= assetClassPK %>"
 						/>
 					</aui:fieldset>
+				</c:if>
 
+				<c:if test="<%= !RepositoryUtil.isExternalRepository(repositoryId) %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="expiration-date">
 						<liferay-ui:error exception="<%= FileEntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 						<liferay-ui:error exception="<%= FileEntryReviewDateException.class %>" message="please-enter-a-valid-review-date" />
@@ -549,7 +551,9 @@ renderResponse.setTitle(headerTitle);
 
 						<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= dlEditFileEntryDisplayContext.isNeverReview() %>" name="reviewDate" wrapperCssClass="review-date" />
 					</aui:fieldset>
+				</c:if>
 
+				<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 						<liferay-asset:input-asset-links
 							className="<%= DLFileEntry.class.getName() %>"

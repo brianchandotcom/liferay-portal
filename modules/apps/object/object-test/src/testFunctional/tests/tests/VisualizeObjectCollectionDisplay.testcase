@@ -48,11 +48,14 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		VisualizeObjectCollectionDisplay.addDisplayPage(displayPageName = "Blank Display Page", contentType = "Object", subtype = "C_CustomObject");
+		VisualizeObjectCollectionDisplay.addDisplayPage(
+			contentType = "Object",
+			displayPageName = "Blank Display Page",
+			subtype = "C_CustomObject");
 
 		PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
 
 		VisualizeObjectCollectionDisplay.addFieldForCollectionDisplay(fragmentName = "Heading");
 
@@ -65,8 +68,6 @@ definition {
 		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "text");
 
 		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldName = "text");
-		
-
 	}
 
 	@description = "LPS-133865 - Verify if the Object is displayed to be selected as Collection Provider on the Collection Display fragment"

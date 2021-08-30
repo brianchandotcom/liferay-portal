@@ -1,17 +1,9 @@
 definition {
 
-	macro openObjectCollectionProvider {
-		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_redirect=http%3A%2F%2Flocalhost%3A8080%2Fgroup%2Fguest%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_layout_admin_web_portlet_GroupPagesPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_auth%3DDfTnav5r&p_r_p_layoutSetBranchId=0&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcPath=%2Fselect_layout_collections.jsp&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_groupId=20125&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&p_r_p_selPlid=0&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_selectedTab=collection-providers");
-	}
-
-	macro viewObjectCollectionProvider {
-		AssertElementPresent(locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
-	}
-macro addDisplayPage {
-
+	macro addDisplayPage {
 		Navigator.openSpecificURL(url = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_mvcPath=%2Fselect_display_page_master_layout.jsp&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_redirect=%2Fgroup%2Fguest%2F%7E%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1%3Ddisplay-page-templates%26p_p_auth%3DGfp5np5X&p_p_auth=Gfp5np5X");
 
-		Click(locator1 ="VisualizeObjectCollectionDisplay#ADD_BLANK_PAGE");
+		Click(locator1 = "VisualizeObjectCollectionDisplay#ADD_BLANK_PAGE");
 
 		Type(
 			locator1 = "VisualizeObjectCollectionDisplay#NAME_DISPLAY_PAGE",
@@ -28,32 +20,35 @@ macro addDisplayPage {
 		Click(locator1 = "VisualizeObjectCollectionDisplay#SAVE_BUTTON");
 	}
 
-	macro openHeading {
-
-		DoubleClick(locator1 = "VisualizeObjectCollectionDisplay#HEADING_COLLECTION_DISPLAY");
-
+	macro addFieldForCollectionDisplay {
+		DragAndDrop.javaScriptDragAndDropToUp(
+			key_fragment = "${fragmentName}",
+			locator1 = "VisualizeObjectCollectionDisplay#FRAGMENT_SIDEBAR",
+			locator2 = "VisualizeObjectCollectionDisplay#FRAGMENT_COLLECTION");
 	}
 
 	macro mapFragment {
-
 		Select(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
 			value1 = "${fieldName}");
+	}
 
+	macro openHeading {
+		DoubleClick(locator1 = "VisualizeObjectCollectionDisplay#HEADING_COLLECTION_DISPLAY");
+	}
+
+	macro openObjectCollectionProvider {
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_redirect=http%3A%2F%2Flocalhost%3A8080%2Fgroup%2Fguest%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_layout_admin_web_portlet_GroupPagesPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_auth%3DDfTnav5r&p_r_p_layoutSetBranchId=0&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcPath=%2Fselect_layout_collections.jsp&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_groupId=20125&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&p_r_p_selPlid=0&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_selectedTab=collection-providers");
 	}
 
 	macro viewMappedFragment {
-
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
 			value1 = "${fieldName}");
-
 	}
-	macro addFieldForCollectionDisplay{
 
-		DragAndDrop.javaScriptDragAndDropToUp(
-				key_fragment = "${fragmentName}",
-				locator1 = "VisualizeObjectCollectionDisplay#FRAGMENT_SIDEBAR",
-				locator2 = "VisualizeObjectCollectionDisplay#FRAGMENT_COLLECTION");
+	macro viewObjectCollectionProvider {
+		AssertElementPresent(locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
 	}
+
 }

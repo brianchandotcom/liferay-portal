@@ -22,6 +22,7 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-40687."
 	test AddAndEditApplication {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -107,6 +108,7 @@ definition {
 		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
 	}
 
+	@description = "This is a use case for LRQA-48782."
 	test AddAndEditOAuthSAPEntries {
 		property custom.properties = "json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "OAuth2#AddAndEditOAuthSAPEntries";
@@ -467,6 +469,7 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-47381."
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
@@ -627,6 +630,7 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-48777."
 	test EditApplicationScopesAndViewLanguageKeys {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
@@ -1182,6 +1186,7 @@ definition {
 			locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");
 	}
 
+	@description = "This is a use case for LRQA-48773."
 	test UpdateScopeBundlePrefixes {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property test.name.skip.portal.instance = "OAuth2#UpdateScopeBundlePrefixes";
@@ -1243,6 +1248,7 @@ definition {
 			scopeAliasList = "everything,example-scope-1,com.liferay.oauth2.provider.scope.sample.qa_/sample-qa-app_example-scope-2");
 	}
 
+	@description = "This is a use case for LRQA-40999."
 	test UpdateScopeMappings {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
@@ -1278,6 +1284,7 @@ definition {
 		AssertElementNotPresent(locator1 = "xpath=(//a[contains(.,'Sample QA app')]//following-sibling::div//li)[2]");
 	}
 
+	@description = "This is a use case for LRQA-41000."
 	test ViewAndRevokeGrantedAuthorizations {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1354,6 +1361,7 @@ definition {
 		OAuth2.viewGrantedAuthViaUser(noAuthorizations = "true");
 	}
 
+	@description = "This is a use case for OAUTH2-216."
 	test ViewAuthPromptRequestedScopes {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration~default.config";

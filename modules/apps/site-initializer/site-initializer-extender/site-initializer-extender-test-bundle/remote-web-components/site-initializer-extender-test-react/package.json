@@ -1,0 +1,38 @@
+{
+	"browserslist": {
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		]
+	},
+	"dependencies": {
+		"@craco/craco": "^6.2.0",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-scripts": "4.0.3"
+	},
+	"devDependencies": {
+		"sass-to-string": "^1.5.1"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"name": "@liferay/site-initializer-extender-test-react",
+	"private": true,
+	"scripts": {
+		"build": "craco build && ./setup-liferay.sh",
+		"eject": "react-scripts eject",
+		"start": "craco start",
+		"test": "craco test"
+	},
+	"version": "1.0.0"
+}

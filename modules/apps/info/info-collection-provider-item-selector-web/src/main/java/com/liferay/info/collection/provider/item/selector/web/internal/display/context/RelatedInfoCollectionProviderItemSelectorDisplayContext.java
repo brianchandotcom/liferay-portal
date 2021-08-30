@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -140,6 +142,24 @@ public class RelatedInfoCollectionProviderItemSelectorDisplayContext {
 					(Class<RelatedInfoItemCollectionProvider<?, ?>>)
 						(Class<?>)RelatedInfoItemCollectionProvider.class,
 					itemType));
+		}
+
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			itemRelatedItemsProviders = ListUtil.filter(
+				itemRelatedItemsProviders,
+				itemRelatedItemsProvider -> {
+					String label = StringUtil.toLowerCase(
+						itemRelatedItemsProvider.getLabel(
+							themeDisplay.getLocale()));
+
+					if (label.contains(StringUtil.toLowerCase(keywords))) {
+						return true;
+					}
+
+					return false;
+				});
 		}
 
 		searchContainer.setResults(

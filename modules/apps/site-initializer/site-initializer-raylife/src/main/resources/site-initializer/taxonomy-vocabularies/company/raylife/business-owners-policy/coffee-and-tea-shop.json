@@ -1,0 +1,15 @@
+{
+	"description": "Own an establishment that primarily serves coffee and/or tea",
+	"externalReferenceCode": "RAYCAT0010",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "NAICS",
+			"value": "722513"
+		},
+		{
+			"key": "Segment",
+			"value": "Retail"
+		}
+	],
+	"title": "Coffee and Tea Shop"
+}

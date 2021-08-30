@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -83,8 +84,8 @@ public class SiteInitializerExtender
 				_objectDefinitionResourceFactory, _portal,
 				_resourcePermissionLocalService, _roleLocalService,
 				_structuredContentFolderResourceFactory,
-				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
-				_userLocalService);
+				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
+				_taxonomyVocabularyResourceFactory, _userLocalService);
 
 		siteInitializerExtension.start();
 
@@ -179,6 +180,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
+
+	@Reference
+	private TaxonomyCategoryResource.Factory _taxonomyCategoryResourceFactory;
 
 	@Reference
 	private TaxonomyVocabularyResource.Factory

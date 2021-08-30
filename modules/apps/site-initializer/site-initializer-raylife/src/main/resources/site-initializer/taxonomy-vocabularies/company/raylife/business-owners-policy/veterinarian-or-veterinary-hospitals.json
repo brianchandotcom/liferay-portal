@@ -1,0 +1,15 @@
+{
+	"description": "Provide hospital services to animals",
+	"externalReferenceCode": "RAYCAT0019",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "NAICS",
+			"value": "541940"
+		},
+		{
+			"key": "Segment",
+			"value": "Office"
+		}
+	],
+	"title": "Veterinarian or Veterinary Hospitals"
+}

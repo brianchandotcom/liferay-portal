@@ -1,0 +1,15 @@
+{
+	"description": "Primarily sell a general range of food and household products",
+	"externalReferenceCode": "RAYCAT0012",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "NAICS",
+			"value": "445110"
+		},
+		{
+			"key": "Segment",
+			"value": "Retail"
+		}
+	],
+	"title": "Grocery / Convenience Food Stores"
+}

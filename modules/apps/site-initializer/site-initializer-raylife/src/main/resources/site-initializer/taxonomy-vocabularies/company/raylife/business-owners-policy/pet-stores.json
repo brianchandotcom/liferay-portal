@@ -1,0 +1,15 @@
+{
+	"description": "Primarily sell animals and a general range of animal supplies and pet acessories",
+	"externalReferenceCode": "RAYCAT0014",
+	"taxonomyCategoryProperties": [
+		{
+			"key": "NAICS",
+			"value": "453910"
+		},
+		{
+			"key": "Segment",
+			"value": "Retail"
+		}
+	],
+	"title": "Pet Stores"
+}

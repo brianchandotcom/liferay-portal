@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -263,6 +264,9 @@ public class FileEntryInfoItemFormProvider
 				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					DLFileEntryConstants.getClassName())
 			).infoFieldSetEntry(
+				_templateInfoItemFieldSetProvider.getInfoFieldSet(
+					FileEntry.class.getName(), String.valueOf(fileEntryTypeId))
+			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
@@ -364,5 +368,8 @@ public class FileEntryInfoItemFormProvider
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

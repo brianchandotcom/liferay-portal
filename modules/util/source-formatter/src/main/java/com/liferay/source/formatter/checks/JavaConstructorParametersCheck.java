@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
@@ -153,7 +154,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			String nextStatementsBlock = _getNextStatementsBlock(
 				content, matcher.group(1), matcher.start(6));
 
-			if (!nextStatementsBlock.matches(
+			if (Validator.isNotNull(nextStatementsBlock) &&
+				!nextStatementsBlock.matches(
 					StringBundler.concat(
 						"(?s).*\\W(", matcher.group(2), ")?", name2,
 						"\\W.*"))) {

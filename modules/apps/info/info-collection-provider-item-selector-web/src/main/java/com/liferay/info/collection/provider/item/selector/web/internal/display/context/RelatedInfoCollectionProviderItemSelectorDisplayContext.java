@@ -1,0 +1,179 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.info.collection.provider.item.selector.web.internal.display.context;
+
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Jürgen Kappler
+ */
+public class RelatedInfoCollectionProviderItemSelectorDisplayContext {
+
+	public RelatedInfoCollectionProviderItemSelectorDisplayContext(
+		HttpServletRequest httpServletRequest,
+		InfoItemServiceTracker infoItemServiceTracker,
+		String itemSelectedEventName, Language language, PortletURL portletURL,
+		RelatedInfoItemCollectionProviderItemSelectorCriterion
+			relatedInfoItemCollectionProviderItemSelectorCriterion) {
+
+		_httpServletRequest = httpServletRequest;
+		_infoItemServiceTracker = infoItemServiceTracker;
+		_itemSelectedEventName = itemSelectedEventName;
+		_language = language;
+		_portletURL = portletURL;
+		_relatedInfoItemCollectionProviderItemSelectorCriterion =
+			relatedInfoItemCollectionProviderItemSelectorCriterion;
+	}
+
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "icon");
+
+		return _displayStyle;
+	}
+
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
+	}
+
+	public String getPayload(
+		RelatedInfoItemCollectionProvider<?, ?>
+			relatedInfoItemCollectionProvider) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return JSONUtil.put(
+			"itemType",
+			relatedInfoItemCollectionProvider.getCollectionItemClassName()
+		).put(
+			"key", relatedInfoItemCollectionProvider.getKey()
+		).put(
+			"sourceItemType",
+			relatedInfoItemCollectionProvider.getSourceItemClassName()
+		).put(
+			"title",
+			relatedInfoItemCollectionProvider.getLabel(themeDisplay.getLocale())
+		).toString();
+	}
+
+	public String getReturnType() {
+		ItemSelectorReturnType itemSelectorReturnType =
+			new InfoListProviderItemSelectorReturnType();
+
+		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
+			itemSelectorReturnType.getClass();
+
+		return itemSelectorReturnTypeClass.getName();
+	}
+
+	public SearchContainer<RelatedInfoItemCollectionProvider<?, ?>>
+		getSearchContainer() {
+
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
+
+		SearchContainer<RelatedInfoItemCollectionProvider<?, ?>>
+			searchContainer = new SearchContainer<>(
+				portletRequest, _portletURL, null,
+				_language.get(
+					resourceBundle,
+					"there-are-no-related-items-collection-providers"));
+
+		List<RelatedInfoItemCollectionProvider<?, ?>>
+			itemRelatedItemsProviders = new ArrayList<>();
+
+		List<String> itemTypes =
+			_relatedInfoItemCollectionProviderItemSelectorCriterion.
+				getSourceItemTypes();
+
+		for (String itemType : itemTypes) {
+			itemRelatedItemsProviders.addAll(
+				_infoItemServiceTracker.getAllInfoItemServices(
+					(Class<RelatedInfoItemCollectionProvider<?, ?>>)
+						(Class<?>)RelatedInfoItemCollectionProvider.class,
+					itemType));
+		}
+
+		searchContainer.setResults(
+			ListUtil.subList(
+				itemRelatedItemsProviders, searchContainer.getStart(),
+				searchContainer.getEnd()));
+		searchContainer.setTotal(itemRelatedItemsProviders.size());
+
+		return searchContainer;
+	}
+
+	public boolean isDescriptiveDisplayStyle() {
+		if (Objects.equals(getDisplayStyle(), "descriptive")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isIconDisplayStyle() {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final String _itemSelectedEventName;
+	private final Language _language;
+	private final PortletURL _portletURL;
+	private final RelatedInfoItemCollectionProviderItemSelectorCriterion
+		_relatedInfoItemCollectionProviderItemSelectorCriterion;
+
+}

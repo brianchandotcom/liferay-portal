@@ -65,9 +65,9 @@ public class RemoteAppEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		long companyId = user.getCompanyId();
+		url = StringUtil.trim(url);
 
-		validate(companyId, 0, url);
+		validate(0, user.getCompanyId(), url);
 
 		long remoteAppEntryId = counterLocalService.increment();
 
@@ -92,17 +92,34 @@ public class RemoteAppEntryLocalServiceImpl
 		SearchContext searchContext = buildSearchContext(
 			companyId, keywords, start, end, sort);
 
-		return search(searchContext);
+		Indexer<RemoteAppEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(RemoteAppEntry.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<RemoteAppEntry> remoteAppEntries = _getRemoteAppEntries(hits);
+
+			if (remoteAppEntries != null) {
+				return remoteAppEntries;
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	@Override
 	public int searchCount(long companyId, String keywords)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		Indexer<RemoteAppEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(RemoteAppEntry.class);
+
+		SearchContext searchContext = _buildSearchContext(
 			companyId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		return searchCount(searchContext);
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -112,7 +129,9 @@ public class RemoteAppEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(serviceContext.getCompanyId(), remoteAppEntryId, url);
+		url = StringUtil.trim(url);
+
+		validate(remoteAppEntryId, serviceContext.getCompanyId(), url);
 
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
@@ -123,7 +142,20 @@ public class RemoteAppEntryLocalServiceImpl
 		return remoteAppEntryPersistence.update(remoteAppEntry);
 	}
 
-	protected SearchContext buildSearchContext(
+	protected void validate(long remoteAppEntryId, long companyId, String url)
+		throws PortalException {
+
+		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.fetchByC_U(
+			companyId, url);
+
+		if ((remoteAppEntry != null) &&
+			(remoteAppEntry.getRemoteAppEntryId() != remoteAppEntryId)) {
+
+			throw new DuplicateRemoteAppEntryException("Duplicate URL " + url);
+		}
+	}
+
+	private SearchContext _buildSearchContext(
 		long companyId, String keywords, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -152,7 +184,7 @@ public class RemoteAppEntryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected List<RemoteAppEntry> getRemoteAppEntries(Hits hits)
+	private List<RemoteAppEntry> _getRemoteAppEntries(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
@@ -184,48 +216,6 @@ public class RemoteAppEntryLocalServiceImpl
 		}
 
 		return remoteAppEntries;
-	}
-
-	protected List<RemoteAppEntry> search(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<RemoteAppEntry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(RemoteAppEntry.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext);
-
-			List<RemoteAppEntry> remoteAppEntries = getRemoteAppEntries(hits);
-
-			if (remoteAppEntries != null) {
-				return remoteAppEntries;
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
-	protected int searchCount(SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<RemoteAppEntry> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(RemoteAppEntry.class);
-
-		return GetterUtil.getInteger(indexer.searchCount(searchContext));
-	}
-
-	protected void validate(long companyId, long remoteAppEntryId, String url)
-		throws PortalException {
-
-		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.fetchByC_U(
-			companyId, StringUtil.trim(url));
-
-		if ((remoteAppEntry != null) &&
-			(remoteAppEntry.getRemoteAppEntryId() != remoteAppEntryId)) {
-
-			throw new DuplicateRemoteAppEntryException("Duplicate URL " + url);
-		}
 	}
 
 }

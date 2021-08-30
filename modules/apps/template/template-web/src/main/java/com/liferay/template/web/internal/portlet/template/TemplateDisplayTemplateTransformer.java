@@ -16,6 +16,8 @@ package com.liferay.template.web.internal.portlet.template;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.templateparser.Transformer;
 
 /**
  * @author Lourdes Fernández Besada
@@ -31,5 +33,16 @@ public class TemplateDisplayTemplateTransformer {
 	}
 
 	private final DDMTemplate _ddmTemplate;
+
+	private static class TransformerHolder {
+
+		public static Transformer getTransformer() {
+			return _transformer;
+		}
+
+		private static final Transformer _transformer = new Transformer(
+			PropsKeys.PORTLET_DISPLAY_TEMPLATES_ERROR, true);
+
+	}
 
 }

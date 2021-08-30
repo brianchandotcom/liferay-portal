@@ -923,7 +923,7 @@ definition {
 			userPassword = "test");
 	}
 
-	@description = "This is a use case for LPS-98267"
+	@description = "This is a use case for LPS-98267, LRQA-60284."
 	@priority = "5"
 	test LoginWithTOTPEnabledForEndUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

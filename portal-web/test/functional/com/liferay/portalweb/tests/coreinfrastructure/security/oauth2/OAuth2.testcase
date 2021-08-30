@@ -730,6 +730,7 @@ definition {
 			resourcePanels = "Portal Services,Sample QA app");
 	}
 
+	@description = "This is a use case for LRQA-57134."
 	@priority = "4"
 	test RefreshTokenTime {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";

@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.petra.executor;
 
 import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -31,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -57,23 +57,23 @@ public class GraphWalkerPortalExecutor {
 			return;
 		}
 
-		Optional.of(
-			_noticeableExecutorService.submit(() -> _walk(pathElement))
-		).ifPresent(
-			noticeableFuture -> {
-				if (waitForCompletion) {
-					try {
-						noticeableFuture.get();
-					}
-					catch (ExecutionException executionException) {
-						_log.error(executionException, executionException);
-					}
-					catch (InterruptedException interruptedException) {
-						_log.error(interruptedException, interruptedException);
-					}
-				}
+		if (waitForCompletion) {
+			NoticeableFuture<?> noticeableFuture =
+				_noticeableExecutorService.submit(() -> _walk(pathElement));
+
+			try {
+				noticeableFuture.get();
 			}
-		);
+			catch (ExecutionException executionException) {
+				_log.error(executionException, executionException);
+			}
+			catch (InterruptedException interruptedException) {
+				_log.error(interruptedException, interruptedException);
+			}
+		}
+		else {
+			_noticeableExecutorService.submit(() -> _walk(pathElement));
+		}
 	}
 
 	@Activate

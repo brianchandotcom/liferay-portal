@@ -74,12 +74,50 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8835 | Test Summary: Assert Liferay Data Source Contact Count Preview"
-	@ignore = "true"
 	@priority = "4"
 	test AssertLiferayDataSourceContactCountPreview {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		// TODO LRAC-8835 AssertLiferayDataSourceContactCountPreview
+		task ("Go to contact data and get the string with number of contacts") {
+			ACDXPSettings.navToSyncedContactDataMenu();
 
+			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+			var currentContacts = selenium.getText(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER");
+			var numberContacts = StringUtil.extractDigits("${currentContacts}");
+		}
+
+		task ("Add a new user") {
+			Navigator.openURL();
+
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Add 1 into the value of the variable and format the string") {
+			var numberContacts = ${numberContacts} + 1;
+
+			var newContacts = StringUtil.add("Sync All (", "${numberContacts}","");
+
+			var newContacts = StringUtil.add("${newContacts}", " Contacts)","");
+		}
+
+		task ("Go to contact data and assert that the number of contacts updated") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+			AssertTextEquals(
+				locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER",
+				value1 = "${newContacts}");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8834 | Test Summary: Assert the Liferay DXP Data Source Status"

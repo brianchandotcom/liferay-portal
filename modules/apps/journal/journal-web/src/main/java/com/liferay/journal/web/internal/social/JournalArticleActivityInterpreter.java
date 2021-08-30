@@ -24,14 +24,12 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.web.internal.util.JournalResourceBundleLoader;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -61,11 +59,6 @@ public class JournalArticleActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
-	}
-
-	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

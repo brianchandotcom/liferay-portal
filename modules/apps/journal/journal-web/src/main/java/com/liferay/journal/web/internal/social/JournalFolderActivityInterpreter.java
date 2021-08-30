@@ -16,8 +16,6 @@ package com.liferay.journal.web.internal.social;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.web.internal.util.JournalResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
@@ -44,11 +42,6 @@ public class JournalFolderActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
-	}
-
-	@Override
-	protected ResourceBundleLoader acquireResourceBundleLoader() {
-		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

@@ -17,9 +17,12 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -67,6 +70,43 @@ public class UpgradeReportLogAppenderTest {
 
 			reportsDir.delete();
 		}
+	}
+
+	@Test
+	public void testLogEvents() throws Exception {
+		_appender.start();
+
+		Log log = LogFactoryUtil.getLog(UpgradeReportLogAppenderTest.class);
+
+		log.warn("Warning");
+		log.warn("Warning");
+
+		log = LogFactoryUtil.getLog(UpgradeProcess.class);
+
+		log.info(
+			"Completed upgrade process " +
+				"com.liferay.portal.upgrade.PortalUpgradeProcess in 20401 ms");
+
+		_appender.stop();
+
+		_testReport("2 occurrences of the following warnings: Warning");
+
+		_testReport(
+			"com.liferay.portal.upgrade.PortalUpgradeProcess took 20401 ms " +
+				"to complete");
+	}
+
+	@Test
+	public void testNoLogEvents() throws Exception {
+		_appender.start();
+
+		_appender.stop();
+
+		_testReport("Unable to get upgrade process times");
+
+		_testReport("No errors thrown during upgrade.");
+
+		_testReport("No warnings thrown during upgrade.");
 	}
 
 	@Test

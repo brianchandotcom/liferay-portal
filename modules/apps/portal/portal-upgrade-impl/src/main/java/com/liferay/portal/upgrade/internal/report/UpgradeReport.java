@@ -44,8 +44,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -55,6 +58,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -113,7 +117,7 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringUtil.merge(
 					new String[] {
-						_getPortalVersions(), _getDialectInfo(),
+						_getDate(), _getPortalVersions(), _getDialectInfo(),
 						_getProperties(), _getDLStorageSize(),
 						_getDatabaseInfo(), _getUpgradeProcessesContent(),
 						_getLogEvents("errors"), _getLogEvents("warnings")
@@ -170,6 +174,18 @@ public class UpgradeReport {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getDate() {
+		Calendar calendar = Calendar.getInstance();
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"EEE, MMM dd, yyyy hh:mm:ss z");
+
+		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		return String.format(
+			"Date: %s\n", simpleDateFormat.format(calendar.getTime()));
 	}
 
 	private String _getDialectInfo() {

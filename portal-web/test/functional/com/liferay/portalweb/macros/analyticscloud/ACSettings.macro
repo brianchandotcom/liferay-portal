@@ -264,6 +264,20 @@ definition {
 			value1 = "${userEmail}");
 	}
 
+	macro changeRetentionPeriodTo7Months {
+		Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
+
+		KeyPress(
+			locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU",
+			value1 = "\UP");
+
+		KeyPress(
+			locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU",
+			value1 = "\ENTER");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	}
+
 	macro clickGenericAddOrConfirmationButton {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}

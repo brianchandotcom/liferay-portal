@@ -44,7 +44,6 @@ definition {
 	@description = "Automation ID: LRAC-8890 | Test Summary: Able to change retention period"
 	@priority = "4"
 	test CanChangeRetentionPeriod {
-
 		task ("Connect AC to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -73,8 +72,8 @@ definition {
 
 		task ("Assert that Retention Period changed") {
 			AssertElementPresent(
-				value1 = "7 Months",
-				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
+				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU",
+				value1 = "7 Months");
 		}
 	}
 

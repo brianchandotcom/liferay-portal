@@ -425,6 +425,45 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 	}
+	
+	macro addStyleBook {
+
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name 2");
+		}
+
+		task ("Define the Font Family") {
+			var fontFamily = '''"Courier New"''';
+
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Font Family");
+
+			PortletEntry.inputText(
+				fieldLabel = "Font Family Base",
+				text = "${fontFamily}");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Publish the style book") {
+			StyleBooks.clickPublish();
+		}
+
+		task ("Assert the Style Books") {
+			AssertTextEquals(
+					key_styleBookTitle = "Test Style Book Name",
+					locator1 = "StyleBookEditor#CARD_TITLE",
+					value1 = "Test Style Book Name");
+
+			AssertTextEquals(
+					key_styleBookTitle = "Test Style Book Name 2",
+					locator1 = "StyleBookEditor#CARD_TITLE",
+					value1 = "Test Style Book Name 2");
+		}
+	}
 
 	macro addUserAndSuborganization {
 		JSONOrganization.addOrganization(organizationName = "Organization2");

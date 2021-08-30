@@ -36,6 +36,7 @@ import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -217,8 +218,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_getInfoFieldType(objectField), ImageInfoFieldType.INSTANCE)) {
 
 			try {
-				return JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					new String((byte[])values.get(objectField.getName())));
+
+				WebImage webImage = new WebImage(jsonObject.getString("url"));
+
+				webImage.setAlt(jsonObject.getString("alt"));
+
+				return webImage;
 			}
 			catch (JSONException jsonException) {
 				return null;

@@ -25,7 +25,7 @@ import TranslationAdminModal from './TranslationAdminModal';
 const emptyArray = [];
 
 const TranslationAdminSelector = ({
-	activeLocales: initialActiveLocalesIds = emptyArray,
+	activeLanguageIds: initialActiveLanguageIds = emptyArray,
 	adminMode,
 	ariaLabels = {
 		default: Liferay.Language.get('default'),
@@ -40,8 +40,8 @@ const TranslationAdminSelector = ({
 	small = false,
 	translations,
 }) => {
-	const [activeLocalesIds, setActiveLocalesIds] = useState(
-		initialActiveLocalesIds
+	const [activeLanguageIds, setActiveLanguageIds] = useState(
+		initialActiveLanguageIds
 	);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(
 		initialSelectedLocaleId
@@ -51,17 +51,17 @@ const TranslationAdminSelector = ({
 		false
 	);
 
-	const handleCloseTranslationModal = (activeLocalesIds) => {
-		setActiveLocalesIds(activeLocalesIds);
+	const handleCloseTranslationModal = (activeLanguageIds) => {
+		setActiveLanguageIds(activeLanguageIds);
 		setTranslationModalVisible(false);
 	};
 
 	const activeLocales = useMemo(
 		() =>
 			availableLocales.filter((availableLocale) =>
-				activeLocalesIds.includes(availableLocale.id)
+				activeLanguageIds.includes(availableLocale.id)
 			),
-		[availableLocales, activeLocalesIds]
+		[availableLocales, activeLanguageIds]
 	);
 
 	const selectedLocale = useMemo(() => {
@@ -73,8 +73,8 @@ const TranslationAdminSelector = ({
 	}, [availableLocales, defaultLocaleId, selectedLocaleId]);
 
 	useEffect(() => {
-		setActiveLocalesIds(initialActiveLocalesIds);
-	}, [initialActiveLocalesIds]);
+		setActiveLanguageIds(initialActiveLanguageIds);
+	}, [initialActiveLanguageIds]);
 
 	useEffect(() => {
 		setSelectedLocaleId(initialSelectedLocaleId);
@@ -83,7 +83,7 @@ const TranslationAdminSelector = ({
 	return (
 		<>
 			<TranslationAdminModal
-				activeLocales={activeLocalesIds}
+				activeLanguageIds={activeLanguageIds}
 				ariaLabels={ariaLabels}
 				availableLocales={availableLocales}
 				defaultLocaleId={defaultLocaleId}
@@ -201,7 +201,7 @@ const TranslationAdminSelector = ({
 };
 
 TranslationAdminSelector.propTypes = {
-	activeLocales: PropTypes.arrayOf(PropTypes.string),
+	activeLanguageIds: PropTypes.arrayOf(PropTypes.string),
 	adminMode: PropTypes.bool,
 	ariaLabels: PropTypes.shape({
 		default: PropTypes.string,

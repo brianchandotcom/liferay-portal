@@ -17,7 +17,7 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
-    @description = "This is a test for LPS-133395."
+	@description = "This is a test for LPS-133395."
 	@priority = "4"
 	test AddStyleBookAfterUpgrade735 {
 		property data.archive.type = "data-archive-style-books";
@@ -27,7 +27,7 @@ definition {
 		Upgrade.addStyleBook();
 	}
 
-    @description = "This is a test for LPS-133395."
+	@description = "This is a test for LPS-133395."
 	@priority = "4"
 	test AddStyleBookAfterUpgrade73101 {
 		property data.archive.type = "data-archive-style-books";

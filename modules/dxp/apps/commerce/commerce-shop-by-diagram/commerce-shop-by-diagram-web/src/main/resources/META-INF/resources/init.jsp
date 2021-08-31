@@ -32,7 +32,7 @@ page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryE
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CPDefinitionDiagramSettingDisplayContext" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CSDiagramCPTypeDisplayContext" %><%@
-page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.constants.CSDiagramDataSetConstants" %><%@
+page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants.CSDiagramDataSetConstants" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.type.DefaultCPDefinitionDiagramType" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.type.SVGCPDefinitionDiagramType" %><%@
 page import="com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys" %><%@
@@ -49,8 +49,6 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

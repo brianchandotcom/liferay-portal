@@ -24,7 +24,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
@@ -43,14 +42,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 	implements TemplateInfoItemFieldSetProvider {
 
 	@Override
-	public InfoFieldSet getInfoFieldSet(
-		String itemClassName, String itemVariationKey) {
-
+	public InfoFieldSet getInfoFieldSet(String className, long classPK) {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			consumer -> {
 				for (DDMTemplate ddmTemplate :
-						_getDDMTemplates(itemClassName, itemVariationKey)) {
+						_getDDMTemplates(className, classPK)) {
 
 					consumer.accept(
 						InfoField.builder(
@@ -76,9 +73,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 		).build();
 	}
 
-	private List<DDMTemplate> _getDDMTemplates(
-		String itemClassName, String itemVariationKey) {
-
+	private List<DDMTemplate> _getDDMTemplates(String className, long classPK) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -89,8 +84,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 		return _ddmTemplateLocalService.getTemplates(
 			serviceContext.getCompanyId(),
 			_portal.getAncestorSiteGroupIds(serviceContext.getScopeGroupId()),
-			new long[] {_portal.getClassNameId(itemClassName)},
-			new long[] {GetterUtil.getLong(itemVariationKey)},
+			new long[] {_portal.getClassNameId(className)},
+			new long[] {classPK},
 			_portal.getClassNameId(InfoItemFormProvider.class.getName()),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}

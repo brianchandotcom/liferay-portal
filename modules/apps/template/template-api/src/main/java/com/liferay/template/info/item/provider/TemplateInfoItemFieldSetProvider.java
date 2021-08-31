@@ -21,11 +21,10 @@ import com.liferay.info.field.InfoFieldSet;
  */
 public interface TemplateInfoItemFieldSetProvider {
 
-	public default InfoFieldSet getInfoFieldSet(String itemClassName) {
-		return getInfoFieldSet(itemClassName, "0");
+	public default InfoFieldSet getInfoFieldSet(String className) {
+		return getInfoFieldSet(className, 0);
 	}
 
-	public InfoFieldSet getInfoFieldSet(
-		String itemClassName, String itemVariationKey);
+	public InfoFieldSet getInfoFieldSet(String className, long classPK);
 
 }

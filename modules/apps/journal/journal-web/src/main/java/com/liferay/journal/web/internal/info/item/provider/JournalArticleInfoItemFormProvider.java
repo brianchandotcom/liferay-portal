@@ -211,8 +211,7 @@ public class JournalArticleInfoItemFormProvider
 					JournalArticle.class.getName())
 			).infoFieldSetEntry(
 				_templateInfoItemFieldSetProvider.getInfoFieldSet(
-					JournalArticle.class.getName(),
-					String.valueOf(ddmStructureId))
+					JournalArticle.class.getName(), ddmStructureId)
 			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(

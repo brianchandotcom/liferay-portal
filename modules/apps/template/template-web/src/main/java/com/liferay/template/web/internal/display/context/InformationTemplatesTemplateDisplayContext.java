@@ -15,6 +15,7 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
@@ -97,12 +98,13 @@ public class InformationTemplatesTemplateDisplayContext
 	public String getTemplateTypeLabel(long classNameId) {
 		return Optional.ofNullable(
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFormProvider.class,
+				InfoItemDetailsProvider.class,
 				PortalUtil.getClassName(classNameId))
 		).map(
-			InfoItemFormProvider::getInfoForm
+			InfoItemDetailsProvider::getInfoItemClassDetails
 		).map(
-			infoForm -> infoForm.getLabel(themeDisplay.getLocale())
+			infoItemDetails -> infoItemDetails.getLabel(
+				themeDisplay.getLocale())
 		).orElse(
 			ResourceActionsUtil.getModelResource(
 				themeDisplay.getLocale(), PortalUtil.getClassName(classNameId))

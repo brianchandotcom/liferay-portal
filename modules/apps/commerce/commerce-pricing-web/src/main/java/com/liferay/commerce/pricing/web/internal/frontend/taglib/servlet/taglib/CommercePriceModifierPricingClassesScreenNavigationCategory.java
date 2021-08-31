@@ -145,7 +145,7 @@ public class CommercePriceModifierPricingClassesScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/price_lists/price_modifier/pricing_classes.jsp");
+			"/commerce_price_lists/price_modifier/pricing_classes.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -65,7 +65,7 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			commerceTierPriceEntryDisplayContext);
 
-		return "/price_lists/edit_commerce_tier_price_entry.jsp";
+		return "/commerce_price_lists/edit_commerce_tier_price_entry.jsp";
 	}
 
 	@Reference

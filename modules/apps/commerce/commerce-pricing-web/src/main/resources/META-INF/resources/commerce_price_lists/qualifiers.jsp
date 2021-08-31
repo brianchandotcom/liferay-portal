@@ -62,11 +62,11 @@ boolean hasPermission = commercePriceListQualifiersDisplayContext.hasPermission(
 	</div>
 
 	<c:if test='<%= Objects.equals(accountQualifiers, "accounts") %>'>
-		<%@ include file="/price_lists/qualifier/accounts.jspf" %>
+		<%@ include file="/commerce_price_lists/qualifier/accounts.jspf" %>
 	</c:if>
 
 	<c:if test='<%= Objects.equals(accountQualifiers, "accountGroups") %>'>
-		<%@ include file="/price_lists/qualifier/account_groups.jspf" %>
+		<%@ include file="/commerce_price_lists/qualifier/account_groups.jspf" %>
 	</c:if>
 
 	<div class="row">
@@ -88,7 +88,7 @@ boolean hasPermission = commercePriceListQualifiersDisplayContext.hasPermission(
 	</div>
 
 	<c:if test='<%= Objects.equals(channelQualifiers, "channels") %>'>
-		<%@ include file="/price_lists/qualifier/channels.jspf" %>
+		<%@ include file="/commerce_price_lists/qualifier/channels.jspf" %>
 	</c:if>
 
 	<div class="row">
@@ -110,7 +110,7 @@ boolean hasPermission = commercePriceListQualifiersDisplayContext.hasPermission(
 	</div>
 
 	<c:if test='<%= Objects.equals(orderTypeQualifiers, "orderTypes") %>'>
-		<%@ include file="/price_lists/qualifier/order_types.jspf" %>
+		<%@ include file="/commerce_price_lists/qualifier/order_types.jspf" %>
 	</c:if>
 </aui:form>
 

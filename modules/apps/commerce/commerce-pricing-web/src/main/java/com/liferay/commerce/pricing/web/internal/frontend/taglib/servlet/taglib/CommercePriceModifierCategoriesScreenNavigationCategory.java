@@ -139,7 +139,7 @@ public class CommercePriceModifierCategoriesScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/price_lists/price_modifier/categories.jsp");
+			"/commerce_price_lists/price_modifier/categories.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

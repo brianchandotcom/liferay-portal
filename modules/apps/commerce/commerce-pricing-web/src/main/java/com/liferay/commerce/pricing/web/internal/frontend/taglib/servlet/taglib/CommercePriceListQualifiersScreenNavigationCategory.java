@@ -142,7 +142,7 @@ public class CommercePriceListQualifiersScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/price_lists/qualifiers.jsp");
+			"/commerce_price_lists/qualifiers.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -65,7 +65,7 @@ public class EditCommercePriceListExternalReferenceCodeMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceListDisplayContext);
 
-		return "/price_lists/price_list" +
+		return "/commerce_price_lists/price_list" +
 			"/edit_commerce_price_list_external_reference_code.jsp";
 	}
 

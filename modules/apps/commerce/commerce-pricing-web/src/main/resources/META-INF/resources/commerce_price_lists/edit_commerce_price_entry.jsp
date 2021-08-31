@@ -48,9 +48,9 @@ if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != n
 
 		<div class="row">
 			<div class="col-12">
-				<%@ include file="/price_lists/price_entry/details.jspf" %>
+				<%@ include file="/commerce_price_lists/price_entry/details.jspf" %>
 
-				<%@ include file="/price_lists/price_entry/custom_fields.jspf" %>
+				<%@ include file="/commerce_price_lists/price_entry/custom_fields.jspf" %>
 			</div>
 
 			<div class="col-12">

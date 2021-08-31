@@ -126,7 +126,7 @@ public class CommercePriceListEntriesScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/price_lists/price_entries.jsp");
+			"/commerce_price_lists/price_entries.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

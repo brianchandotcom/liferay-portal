@@ -114,7 +114,8 @@ public class CPInstancePriceListsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/price_lists/cp_instance/cp_instance_commerce_price_lists.jsp");
+			"/commerce_price_lists/cp_instance" +
+				"/cp_instance_commerce_price_lists.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

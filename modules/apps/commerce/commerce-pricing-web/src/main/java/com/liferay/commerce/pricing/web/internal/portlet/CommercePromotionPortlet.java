@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Promotions",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/price_lists/view.jsp",
+		"javax.portlet.init-param.view-template=/commerce_price_lists/view.jsp",
 		"javax.portlet.name=" + CommercePricingPortletKeys.COMMERCE_PROMOTION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

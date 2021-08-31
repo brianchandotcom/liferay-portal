@@ -132,7 +132,7 @@ public class CPInstanceTierPriceEntriesScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/price_lists/cp_instance" +
+			"/commerce_price_lists/cp_instance" +
 				"/cp_instance_commerce_tier_price_entries.jsp");
 	}
 

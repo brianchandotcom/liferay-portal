@@ -65,7 +65,7 @@ public class EditCommercePriceModifierMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceListDisplayContext);
 
-		return "/price_lists/edit_commerce_price_modifier.jsp";
+		return "/commerce_price_lists/edit_commerce_price_modifier.jsp";
 	}
 
 	@Reference

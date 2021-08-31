@@ -19,46 +19,29 @@
 <%
 CommerceTierCommercePriceEntryDisplayContext commerceTierPriceEntryDisplayContext = (CommerceTierCommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceTierPriceEntry commerceTierPriceEntry = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntry();
 CommerceCurrency commerceCurrency = commerceTierPriceEntryDisplayContext.getCommercePriceListCurrency();
 long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
 long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
-long commerceTierPriceEntryId = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
+CommerceTierPriceEntry commerceTierPriceEntry = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntry();
 
 BigDecimal price = BigDecimal.ZERO;
-BigDecimal promoPrice = BigDecimal.ZERO;
-
-if (commerceTierPriceEntry != null) {
-	price = commerceTierPriceEntry.getPrice();
-	promoPrice = commerceTierPriceEntry.getPromoPrice();
-}
-
-boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
-
-if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getExpirationDate() != null)) {
-	neverExpire = false;
-}
+boolean neverExpire = true;
 %>
 
 <portlet:actionURL name="/commerce_price_list/edit_commerce_tier_price_entry" var="editCommerceTierPriceEntryActionURL" />
 
-<liferay-frontend:side-panel-content
-	title='<%= LanguageUtil.get(request, "edit-price-tier") %>'
+<commerce-ui:modal-content
+	title='<%= LanguageUtil.get(request, "add-new-price-tier") %>'
 >
-	<aui:form action="<%= editCommerceTierPriceEntryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:form action="<%= editCommerceTierPriceEntryActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commercePriceEntryId" type="hidden" value="<%= commercePriceEntryId %>" />
 		<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
-		<aui:input name="commerceTierPriceEntryId" type="hidden" value="<%= commerceTierPriceEntryId %>" />
 
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
-		<commerce-ui:panel
-			title='<%= LanguageUtil.get(request, "details") %>'
-		>
-			<%@ include file="/price_lists/tier_price_entry/details.jspf" %>
-		</commerce-ui:panel>
+		<%@ include file="/commerce_price_lists/tier_price_entry/details.jspf" %>
 
 		<c:if test="<%= commerceTierPriceEntryDisplayContext.hasCustomAttributes() %>">
 			<commerce-ui:panel
@@ -72,9 +55,5 @@ if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getExpirationDat
 				/>
 			</commerce-ui:panel>
 		</c:if>
-
-		<aui:button-row cssClass="tier-price-entry-button-row">
-			<aui:button cssClass="btn-lg" type="submit" />
-		</aui:button-row>
 	</aui:form>
-</liferay-frontend:side-panel-content>
+</commerce-ui:modal-content>

@@ -65,7 +65,7 @@ public class AddCommerceTierPriceEntryMVCRenderCommand
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			commerceTierPriceEntryDisplayContext);
 
-		return "/price_lists/add_commerce_tier_price_entry.jsp";
+		return "/commerce_price_lists/add_commerce_tier_price_entry.jsp";
 	}
 
 	@Reference

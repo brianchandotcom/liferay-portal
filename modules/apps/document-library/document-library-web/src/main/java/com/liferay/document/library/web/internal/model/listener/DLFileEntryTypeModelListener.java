@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
@@ -36,7 +37,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -124,14 +124,9 @@ public class DLFileEntryTypeModelListener
 		List<Group> companyGroups = _groupLocalService.getCompanyGroups(
 			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Stream<Group> stream = companyGroups.stream();
-
-		long[] groupIds = stream.mapToLong(
-			Group::getGroupId
-		).toArray();
-
 		List<DLFileEntryType> dlFileEntryTypes =
-			_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
+			_dlFileEntryTypeLocalService.getFileEntryTypes(
+				ListUtil.toLongArray(companyGroups, Group::getGroupId));
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			serviceRegistrations.put(

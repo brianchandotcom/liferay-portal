@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
@@ -63,6 +66,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	public ContextContainerRequestFilter(
 		Map<String, Configuration> configurations,
+		ExpressionConvert<Filter> expressionConvert,
+		FilterParserProvider filterParserProvider,
 		GroupLocalService groupLocalService, Language language, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
@@ -71,6 +76,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 			vulcanBatchEngineImportTaskResource) {
 
 		_configurations = configurations;
+		_expressionConvert = expressionConvert;
+		_filterParserProvider = filterParserProvider;
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
@@ -189,6 +196,16 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 				field.set(instance, _portal.getCompany(httpServletRequest));
 			}
+			else if (fieldClass.isAssignableFrom(ExpressionConvert.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _expressionConvert);
+			}
+			else if (fieldClass.isAssignableFrom(FilterParserProvider.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _filterParserProvider);
+			}
 			else if (fieldClass.isAssignableFrom(GroupLocalService.class)) {
 				field.setAccessible(true);
 
@@ -245,6 +262,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	}
 
 	private final Map<String, Configuration> _configurations;
+	private final ExpressionConvert<Filter> _expressionConvert;
+	private final FilterParserProvider _filterParserProvider;
 	private final GroupLocalService _groupLocalService;
 	private final Language _language;
 	private final Portal _portal;

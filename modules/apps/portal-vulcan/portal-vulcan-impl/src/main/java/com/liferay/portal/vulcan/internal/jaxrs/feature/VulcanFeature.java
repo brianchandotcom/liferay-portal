@@ -143,10 +143,10 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new ContextContainerRequestFilter(
 				ConfigurationUtil.getConfigurations(_configurationAdmin),
-				_groupLocalService, _language, _portal,
-				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService, _getScopeChecker(),
-				_vulcanBatchEngineImportTaskResource));
+				_expressionConvert, _filterParserProvider, _groupLocalService,
+				_language, _portal, _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
+				_getScopeChecker(), _vulcanBatchEngineImportTaskResource));
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));

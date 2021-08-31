@@ -231,7 +231,7 @@ definition {
 				itemName = "AC Page",
 				locator1 = "ACSettings#ITEM_ON_LIST");
 		}
-		
+
 		// Can't assert that the filter is working properly without past data
 
 		task ("Assert that the right page is present on Last 180 Days filter") {

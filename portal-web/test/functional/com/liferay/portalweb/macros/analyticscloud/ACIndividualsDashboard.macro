@@ -39,6 +39,12 @@ definition {
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
+	macro assertSegmentInAssociatedSegmentsCard {
+		AssertElementPresent(
+			key_itemName = "${itemName}",
+			locator1 = "ACIndividualsDashboard#ASSOCIATED_SEGMENT_ITEM");
+	}
+
 	macro clickBreakdownTab {
 		Click(
 			breakdownName = "${breakdownName}",

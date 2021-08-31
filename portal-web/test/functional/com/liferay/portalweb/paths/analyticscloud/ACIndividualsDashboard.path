@@ -33,6 +33,11 @@
 </tr>
 <!-- INDIVIDUALS DASHBOARD -->
 <tr>
+	<td>ASSOCIATED_SEGMENT_ITEM</td>
+	<td>//span[contains(@class,'text-truncate')]//a[contains(text(),'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_MENU_ITEM</td>
 	<td>//ul[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[.//span[normalize-space(text())='${menuItem}']]</td>
 	<td></td>

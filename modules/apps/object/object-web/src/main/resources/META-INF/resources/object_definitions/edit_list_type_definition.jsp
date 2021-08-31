@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ListTypeDefinition listTypeDefinition = (ListTypeDefinition)request.getAttribute("LIST_TYPE_DEFINITION");
+ListTypeDefinition listTypeDefinition = (ListTypeDefinition)request.getAttribute(ObjectWebKeys.LIST_TYPE_DEFINITION);
 
 ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListTypeEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

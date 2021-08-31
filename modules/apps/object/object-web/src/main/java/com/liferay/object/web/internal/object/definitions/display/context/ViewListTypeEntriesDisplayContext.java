@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
@@ -58,7 +59,7 @@ public class ViewListTypeEntriesDisplayContext {
 
 		ListTypeDefinition listTypeDefinition =
 			(ListTypeDefinition)httpServletRequest.getAttribute(
-				"LIST_TYPE_DEFINITION");
+				ObjectWebKeys.LIST_TYPE_DEFINITION);
 
 		return listTypeDefinition.getListTypeDefinitionId();
 	}

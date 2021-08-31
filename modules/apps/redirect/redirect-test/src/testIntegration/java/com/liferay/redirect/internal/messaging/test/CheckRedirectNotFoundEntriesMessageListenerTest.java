@@ -33,9 +33,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -138,10 +136,6 @@ public class CheckRedirectNotFoundEntriesMessageListenerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
-	private final Set<RedirectNotFoundEntry> _redirectNotFoundEntries =
-		new HashSet<>();
 
 	@Inject
 	private RedirectNotFoundEntryLocalService

@@ -84,24 +84,6 @@ public class KaleoDefinitionLocalServiceWrapper
 		return _kaleoDefinitionLocalService.addKaleoDefinition(kaleoDefinition);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addKaleoDefinition(String, String, String, String, String,
-	 int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
-			addKaleoDefinition(
-				String name, String title, String description, String content,
-				int version,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.addKaleoDefinition(
-			name, title, description, content, version, serviceContext);
-	}
-
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
 			addKaleoDefinition(

@@ -191,15 +191,6 @@ public class KaleoDefinitionVersionWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public KaleoDefinition fetchKaleoDefinition() {
-		return model.fetchKaleoDefinition();
-	}
-
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
@@ -508,15 +499,6 @@ public class KaleoDefinitionVersionWrapper
 	@Override
 	public String getVersion() {
 		return model.getVersion();
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean hasIncompleteKaleoInstances() {
-		return model.hasIncompleteKaleoInstances();
 	}
 
 	/**

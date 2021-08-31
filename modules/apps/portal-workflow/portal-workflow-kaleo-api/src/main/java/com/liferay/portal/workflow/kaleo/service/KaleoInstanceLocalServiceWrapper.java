@@ -448,27 +448,6 @@ public class KaleoInstanceLocalServiceWrapper
 		return _kaleoInstanceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
-	 String, String, String, String, String, Boolean, int, int,
-	 OrderByComparator, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-		search(
-			Long userId, String assetClassName, String nodeName,
-			String kaleoDefinitionName, Boolean completed, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
-					orderByComparator,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoInstanceLocalService.search(
-			userId, assetClassName, nodeName, kaleoDefinitionName, completed,
-			start, end, orderByComparator, serviceContext);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance>
 		search(
@@ -483,23 +462,6 @@ public class KaleoInstanceLocalServiceWrapper
 		return _kaleoInstanceLocalService.search(
 			userId, assetClassName, assetTitle, assetDescription, nodeName,
 			kaleoDefinitionName, completed, start, end, orderByComparator,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
-	 String, String, String, String, String, Boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public int searchCount(
-		Long userId, String assetClassName, String nodeName,
-		String kaleoDefinitionName, Boolean completed,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _kaleoInstanceLocalService.searchCount(
-			userId, assetClassName, nodeName, kaleoDefinitionName, completed,
 			serviceContext);
 	}
 

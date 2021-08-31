@@ -324,33 +324,6 @@ public class KaleoActionLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getKaleoActions(long, String, long)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction>
-		getKaleoActions(String kaleoClassName, long kaleoClassPK) {
-
-		return _kaleoActionLocalService.getKaleoActions(
-			kaleoClassName, kaleoClassPK);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getKaleoActions(long, String, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction>
-		getKaleoActions(
-			String kaleoClassName, long kaleoClassPK, String executionType) {
-
-		return _kaleoActionLocalService.getKaleoActions(
-			kaleoClassName, kaleoClassPK, executionType);
-	}
-
-	/**
 	 * Returns the number of kaleo actions.
 	 *
 	 * @return the number of kaleo actions

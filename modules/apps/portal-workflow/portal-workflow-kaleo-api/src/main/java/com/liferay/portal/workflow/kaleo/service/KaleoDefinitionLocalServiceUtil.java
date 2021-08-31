@@ -87,22 +87,6 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().addKaleoDefinition(kaleoDefinition);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addKaleoDefinition(String, String, String, String, String,
-	 int, ServiceContext)}
-	 */
-	@Deprecated
-	public static KaleoDefinition addKaleoDefinition(
-			String name, String title, String description, String content,
-			int version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addKaleoDefinition(
-			name, title, description, content, version, serviceContext);
-	}
-
 	public static KaleoDefinition addKaleoDefinition(
 			String name, String title, String description, String content,
 			String scope, int version,

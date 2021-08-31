@@ -88,17 +88,6 @@ public interface KaleoDefinitionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoDefinition addKaleoDefinition(KaleoDefinition kaleoDefinition);
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addKaleoDefinition(String, String, String, String, String,
-	 int, ServiceContext)}
-	 */
-	@Deprecated
-	public KaleoDefinition addKaleoDefinition(
-			String name, String title, String description, String content,
-			int version, ServiceContext serviceContext)
-		throws PortalException;
-
 	public KaleoDefinition addKaleoDefinition(
 			String name, String title, String description, String content,
 			String scope, int version, ServiceContext serviceContext)

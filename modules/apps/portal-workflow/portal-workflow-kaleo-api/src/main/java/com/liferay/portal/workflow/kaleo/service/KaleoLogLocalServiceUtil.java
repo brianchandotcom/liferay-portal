@@ -373,20 +373,6 @@ public class KaleoLogLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getKaleoInstanceKaleoLogs(long, long, List, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	public static List<KaleoLog> getKaleoInstanceKaleoLogs(
-		long kaleoInstanceId, List<Integer> logTypes, int start, int end,
-		OrderByComparator<KaleoLog> orderByComparator) {
-
-		return getService().getKaleoInstanceKaleoLogs(
-			kaleoInstanceId, logTypes, start, end, orderByComparator);
-	}
-
 	public static List<KaleoLog> getKaleoInstanceKaleoLogs(
 		long companyId, long kaleoInstanceId, List<Integer> logTypes, int start,
 		int end, OrderByComparator<KaleoLog> orderByComparator) {
@@ -394,18 +380,6 @@ public class KaleoLogLocalServiceUtil {
 		return getService().getKaleoInstanceKaleoLogs(
 			companyId, kaleoInstanceId, logTypes, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getKaleoInstanceKaleoLogsCount(long, long, List)}
-	 */
-	@Deprecated
-	public static int getKaleoInstanceKaleoLogsCount(
-		long kaleoInstanceId, List<Integer> logTypes) {
-
-		return getService().getKaleoInstanceKaleoLogsCount(
-			kaleoInstanceId, logTypes);
 	}
 
 	public static int getKaleoInstanceKaleoLogsCount(
@@ -450,20 +424,6 @@ public class KaleoLogLocalServiceUtil {
 		return getService().getKaleoLogsCount();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getKaleoTaskInstanceTokenKaleoLogs(long, long, List, int,
-	 int, OrderByComparator)}
-	 */
-	@Deprecated
-	public static List<KaleoLog> getKaleoTaskInstanceTokenKaleoLogs(
-		long kaleoTaskInstanceTokenId, List<Integer> logTypes, int start,
-		int end, OrderByComparator<KaleoLog> orderByComparator) {
-
-		return getService().getKaleoTaskInstanceTokenKaleoLogs(
-			kaleoTaskInstanceTokenId, logTypes, start, end, orderByComparator);
-	}
-
 	public static List<KaleoLog> getKaleoTaskInstanceTokenKaleoLogs(
 		long companyId, long kaleoTaskInstanceTokenId, List<Integer> logTypes,
 		int start, int end, OrderByComparator<KaleoLog> orderByComparator) {
@@ -471,18 +431,6 @@ public class KaleoLogLocalServiceUtil {
 		return getService().getKaleoTaskInstanceTokenKaleoLogs(
 			companyId, kaleoTaskInstanceTokenId, logTypes, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getKaleoTaskInstanceTokenKaleoLogsCount(long, long, List)}
-	 */
-	@Deprecated
-	public static int getKaleoTaskInstanceTokenKaleoLogsCount(
-		long kaleoTaskInstanceTokenId, List<Integer> logTypes) {
-
-		return getService().getKaleoTaskInstanceTokenKaleoLogsCount(
-			kaleoTaskInstanceTokenId, logTypes);
 	}
 
 	public static int getKaleoTaskInstanceTokenKaleoLogsCount(

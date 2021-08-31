@@ -70,9 +70,9 @@ public class SiteInitializerExtender
 			new SiteInitializerExtension(
 				bundle, _bundleContext, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_dlURLHelper,
-				_documentFolderResourceFactory, _documentResourceFactory,
-				_fragmentsImporter, _groupLocalService, _journalArticleLocalService, _jsonFactory,
+				_dlURLHelper, _documentFolderResourceFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,
@@ -125,10 +125,10 @@ public class SiteInitializerExtender
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 
 	@Reference
-	private DocumentFolderResource.Factory _documentFolderResourceFactory;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
-	private DLURLHelper _dlURLHelper;
+	private DocumentFolderResource.Factory _documentFolderResourceFactory;
 
 	@Reference
 	private DocumentResource.Factory _documentResourceFactory;

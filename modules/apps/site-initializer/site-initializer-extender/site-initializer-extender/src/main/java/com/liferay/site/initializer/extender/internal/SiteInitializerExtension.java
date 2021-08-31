@@ -74,9 +74,9 @@ public class SiteInitializerExtension {
 				bundle, bundleContext, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
-				fragmentsImporter, groupLocalService, journalArticleLocalService, jsonFactory,
-				objectDefinitionResourceFactory, portal,
-				structuredContentFolderResourceFactory,
+				fragmentsImporter, journalArticleLocalService,
+				groupLocalService, jsonFactory, objectDefinitionResourceFactory,
+				portal, structuredContentFolderResourceFactory,
 				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,
 				userLocalService));
 

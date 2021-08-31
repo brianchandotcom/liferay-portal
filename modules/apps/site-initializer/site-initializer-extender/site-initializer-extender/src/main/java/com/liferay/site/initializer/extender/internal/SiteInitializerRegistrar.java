@@ -72,8 +72,8 @@ public class SiteInitializerRegistrar {
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
-		_groupLocalService = groupLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
+		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
@@ -93,9 +93,9 @@ public class SiteInitializerRegistrar {
 			SiteInitializer.class,
 			new BundleSiteInitializer(
 				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dlURLHelper, _documentFolderResourceFactory,
-				_documentResourceFactory, _fragmentsImporter,
-				_groupLocalService,
+				_defaultDDMStructureHelper, _dlURLHelper,
+				_documentFolderResourceFactory, _documentResourceFactory,
+				_fragmentsImporter, _groupLocalService,
 				_journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
 				_structuredContentFolderResourceFactory,

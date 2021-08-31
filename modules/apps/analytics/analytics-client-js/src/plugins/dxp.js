@@ -95,7 +95,7 @@ function dxp(analytics) {
 			isPageEditorPortlet(searchParams) ||
 			!isViewMode(searchParams)
 		) {
-			return analytics.disposeInternal();
+			return analytics._disposeInternal();
 		}
 
 		if (window.Liferay.SPA) {

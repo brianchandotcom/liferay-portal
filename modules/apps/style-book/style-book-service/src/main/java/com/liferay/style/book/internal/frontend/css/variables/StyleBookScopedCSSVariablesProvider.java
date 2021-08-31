@@ -101,7 +101,7 @@ public class StyleBookScopedCSSVariablesProvider
 				}
 
 				public String getScope() {
-					return "body";
+					return ":root";
 				}
 
 			});

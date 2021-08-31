@@ -93,9 +93,9 @@ export default function PageDesignOptionsSidebar() {
 	);
 
 	useEffect(() => {
-		if (selectedStyleBook && document.body) {
+		if (selectedStyleBook && document.documentElement) {
 			Object.values(selectedStyleBook.tokenValues).forEach((token) => {
-				document.body.style.setProperty(
+				document.documentElement.style.setProperty(
 					`--${token.cssVariable}`,
 					token.value
 				);

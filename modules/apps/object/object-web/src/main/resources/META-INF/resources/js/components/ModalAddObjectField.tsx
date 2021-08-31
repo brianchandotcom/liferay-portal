@@ -36,9 +36,7 @@ type TLocalizableLable = {
 
 type TPicklist = {
 	id: string;
-	name: {
-		[key: string]: string;
-	};
+	name: string;
 };
 
 type TFormState = {
@@ -49,8 +47,6 @@ type TFormState = {
 	listTypeDefinitionId: number;
 	type: string;
 };
-
-type TNormalizeLanguage = (language: string) => string;
 
 const objectFieldTypes = [
 	'BigDecimal',
@@ -70,9 +66,6 @@ const headers = new Headers({
 	Accept: 'application/json',
 	'Content-Type': 'application/json',
 });
-
-const normalizeLanguage: TNormalizeLanguage = (language) =>
-	language.replace('_', '-');
 
 const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
@@ -277,13 +270,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 									{formState.picklist.map(({id, name}) => (
 										<ClaySelect.Option
 											key={id}
-											label={
-												name[
-													normalizeLanguage(
-														defaultLanguageId
-													)
-												]
-											}
+											label={name}
 											value={id}
 										/>
 									))}

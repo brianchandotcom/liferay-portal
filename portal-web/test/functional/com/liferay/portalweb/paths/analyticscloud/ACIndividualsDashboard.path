@@ -97,11 +97,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOTAL_INDIVIDUALS</td>
-	<td>//h5[text()='Total Individuals']/parent::div/following-sibling::div/div[@class='total']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VISITORS_LEGEND</td>
 	<td>//span[contains(text(),'${key_visitorLegend}')]</td>
 	<td></td>

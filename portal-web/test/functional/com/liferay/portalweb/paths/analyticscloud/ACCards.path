@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOTAL_COUNT</td>
+	<td>//h5[contains(@class,'card-title')][normalize-space()='${key_cardTitle}']/../..//div[contains(@class,'total')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRASH_ICON</td>
 	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//button[*[name()='svg'][contains(@class,'icon-trash')]]</td>
 	<td></td>

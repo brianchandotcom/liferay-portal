@@ -100,10 +100,8 @@ public class
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_themeDisplay.getLocale(), getClass());
 
-		String itemType = _getSelectedItemType();
-
 		return LabelItemListBuilder.add(
-			() -> Validator.isNotNull(itemType),
+			() -> Validator.isNotNull(_getSelectedItemType()),
 			labelItem -> {
 				labelItem.putData(
 					"removeLabelURL",
@@ -117,7 +115,7 @@ public class
 				labelItem.setCloseable(true);
 
 				String modelResource = ResourceActionsUtil.getModelResource(
-					_themeDisplay.getLocale(), itemType);
+					_themeDisplay.getLocale(), _getSelectedItemType());
 
 				labelItem.setLabel(
 					LanguageUtil.get(resourceBundle, "item-type") + ": " +

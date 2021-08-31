@@ -196,7 +196,6 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 			).put(
 				"latest", true
 			).build());
-
 		searchContext.setClassTypeIds(
 			new long[] {_dlFileEntryType.getFileEntryTypeId()});
 

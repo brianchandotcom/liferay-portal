@@ -191,7 +191,6 @@ public class DDMStructureRelatedInfoCollectionProvider
 			).put(
 				"latest", true
 			).build());
-
 		searchContext.setClassTypeIds(
 			new long[] {_ddmStructure.getStructureId()});
 

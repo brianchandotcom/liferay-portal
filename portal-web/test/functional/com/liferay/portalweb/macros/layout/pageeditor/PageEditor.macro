@@ -1583,6 +1583,31 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "General");
 
+		if (isSet(targetCollection)) {
+			Click(
+				key_fieldLabel = "Target Collection",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			Check.checkNotVisible(
+				key_checkboxName = "${targetCollection}",
+				locator1 = "MenuItem#ANY_CHECKBOX");
+		}
+
+		if (isSet(filter)) {
+			Select(
+				key_fieldLabel = "Filter",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${filter}");
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Filter",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${filter}");
+		}
+
 		if (isSet(selectedName)) {
 			AssertElementPresent(
 				key_contentName = "${selectedName}",

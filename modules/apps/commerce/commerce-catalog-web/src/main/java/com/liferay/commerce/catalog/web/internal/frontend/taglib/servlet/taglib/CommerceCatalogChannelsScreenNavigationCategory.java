@@ -86,7 +86,8 @@ public class CommerceCatalogChannelsScreenNavigationCategory
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/catalog/channels.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_catalog/channels.jsp");
 	}
 
 	@Reference

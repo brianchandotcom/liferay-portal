@@ -80,7 +80,8 @@ public class CommerceCatalogDetailsScreenNavigationCategory
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/catalog/details.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_catalog/details.jsp");
 	}
 
 	@Reference

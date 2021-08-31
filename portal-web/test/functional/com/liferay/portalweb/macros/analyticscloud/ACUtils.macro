@@ -174,6 +174,22 @@ definition {
 			expected = "");
 	}
 
+	macro assertTimePattern {
+		if ("${format}" == "h tt") {
+			var pattern = "\d+\s[A-Z][A-Z]";
+		}
+
+		var match = StringUtil.regexReplaceFirst("${time}", "${pattern}", "true");
+
+		if ("${match}" == "true") {
+			echo("PASSED");
+		}
+
+		else {
+			fail("The ${time} doesn't follow the expected format ${format}");
+		}
+	}
+
 	macro assertXAxisTimedGraph {
 		var key_parentName = "${parentName}";
 		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");

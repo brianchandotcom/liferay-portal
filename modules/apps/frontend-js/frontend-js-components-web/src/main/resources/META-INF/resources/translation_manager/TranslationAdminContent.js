@@ -44,7 +44,7 @@ const TranslationAdminContent = ({
 	onClearRestoreLocale = noop,
 	onRemoveLocale = noop,
 	onRestoreLocale = noop,
-	translations,
+	translations = {},
 }) => {
 	const [creationMenuActive, setCreationMenuActive] = useState(false);
 	const [searchValue, setSearchValue] = useState('');

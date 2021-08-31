@@ -40,16 +40,17 @@ const TranslationAdminSelector = ({
 	availableLocales = emptyArray,
 	defaultLocaleId,
 	onActiveLanguageIdsChange = noop,
-	selectedLocaleId: initialSelectedLocaleId,
+	onSelectedLanguageIdChange = noop,
+	selectedLanguageId: initialSelectedLanguageId,
 	showOnlyFlags,
 	small = false,
-	translations,
+	translations = {},
 }) => {
 	const [activeLanguageIds, setActiveLanguageIds] = useState(
 		initialActiveLanguageIds
 	);
-	const [selectedLocaleId, setSelectedLocaleId] = useState(
-		initialSelectedLocaleId
+	const [selectedLanguageId, setSelectedLanguageId] = useState(
+		initialSelectedLanguageId
 	);
 	const [selectorDropdownActive, setSelectorDropdownActive] = useState(false);
 	const [translationModalVisible, setTranslationModalVisible] = useState(
@@ -70,24 +71,28 @@ const TranslationAdminSelector = ({
 	);
 
 	const selectedLocale = useMemo(() => {
-		const id = selectedLocaleId ?? defaultLocaleId;
+		const id = selectedLanguageId ?? defaultLocaleId;
 
 		return availableLocales.find(
 			(availableLocale) => availableLocale.id === id
 		);
-	}, [availableLocales, defaultLocaleId, selectedLocaleId]);
+	}, [availableLocales, defaultLocaleId, selectedLanguageId]);
 
 	useEffect(() => {
 		onActiveLanguageIdsChange(activeLanguageIds);
 	}, [activeLanguageIds, onActiveLanguageIdsChange]);
 
 	useEffect(() => {
+		onSelectedLanguageIdChange(selectedLanguageId);
+	}, [selectedLanguageId, onSelectedLanguageIdChange]);
+
+	useEffect(() => {
 		setActiveLanguageIds(initialActiveLanguageIds);
 	}, [initialActiveLanguageIds]);
 
 	useEffect(() => {
-		setSelectedLocaleId(initialSelectedLocaleId);
-	}, [initialSelectedLocaleId]);
+		setSelectedLanguageId(initialSelectedLanguageId);
+	}, [initialSelectedLanguageId]);
 
 	return (
 		<>
@@ -135,7 +140,7 @@ const TranslationAdminSelector = ({
 							<ClayDropDown.Item
 								key={activeLocale.id}
 								onClick={() => {
-									setSelectedLocaleId(activeLocale.id);
+									setSelectedLanguageId(activeLocale.id);
 								}}
 							>
 								<ClayLayout.ContentRow containerElement="span">

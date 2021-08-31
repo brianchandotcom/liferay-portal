@@ -964,6 +964,49 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeLocalesLayoutTranslatedLanguagesEnableAndDisable()
+		throws Exception {
+
+		_layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					_getHttpServletRequest(), mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				true, true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertAlternateLocalesTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
+
+		mockHttpServletResponse.reset();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					_getHttpServletRequest(), mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				false, true),
+			true);
+
+		document = Jsoup.parse(mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertAlternateLocalesTag(
+			document, _language.getAvailableLocales(_group.getGroupId()));
+	}
+
+	@Test
 	public void testIncludeLocalesLayoutTranslatedLanguagesOpenGraphDisabled()
 		throws Exception {
 
@@ -1017,10 +1060,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Stream<String> stream = Arrays.stream(
 			_layout.getAvailableLanguageIds());
 
-		Stream<Locale> localesStream = stream.map(LocaleUtil::fromLanguageId);
-
 		_assertAlternateLocalesTag(
-			document, localesStream.collect(Collectors.toSet()));
+			document,
+			stream.map(
+				LocaleUtil::fromLanguageId
+			).collect(
+				Collectors.toSet()
+			));
 	}
 
 	@Test

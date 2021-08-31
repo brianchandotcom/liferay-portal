@@ -54,15 +54,6 @@ public class TemplateInfoItemFieldSetProviderImpl
 				for (DDMTemplate ddmTemplate :
 						_getDDMTemplates(itemClassName, itemVariationKey)) {
 
-					InfoLocalizedValue<String> labelInfoLocalizedValue =
-						InfoLocalizedValue.<String>builder(
-						).value(
-							LocaleUtil.getDefault(),
-							ddmTemplate.getName(LocaleUtil.getDefault())
-						).defaultLocale(
-							LocaleUtil.getDefault()
-						).build();
-
 					consumer.accept(
 						InfoField.builder(
 						).infoFieldType(
@@ -70,7 +61,13 @@ public class TemplateInfoItemFieldSetProviderImpl
 						).name(
 							"informationTemplate_" + ddmTemplate.getTemplateId()
 						).labelInfoLocalizedValue(
-							labelInfoLocalizedValue
+							InfoLocalizedValue.<String>builder(
+							).value(
+								LocaleUtil.getDefault(),
+								ddmTemplate.getName(LocaleUtil.getDefault())
+							).defaultLocale(
+								LocaleUtil.getDefault()
+							).build()
 						).build());
 				}
 			}

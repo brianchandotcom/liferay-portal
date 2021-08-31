@@ -36,12 +36,62 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8304 | Test Summary: Assert Sites Top Pages Card Entrance Pages Highest Entrances"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardEntrancePagesHighestEntrances {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8304 AssertSitesTopPagesCardEntrancePagesHighestEntrances pending implementation
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-9010
 
+		var pageCreation = "AC Page 1,AC Page 2";
+		var pageInteraction = "AC Page,AC Page 1,AC Page 1,AC Page 2,AC Page 2,AC Page 2";
+
+		task ("Add Site and Page") {
+			for (var n : list "${pageCreation}") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${n}");
+			}
+		}
+
+		task ("Connect Analytics Cloud to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interation with Pages") {
+			for (var n : list "${pageInteraction}") {
+				Navigator.gotoSitePage(
+					pageName = "${n}",
+					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		task ("AC launch") {
+			ACUtils.closeAllSessionsAndWait();
+
+			Pause(locator1 = "30000");
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Asset highest views pages highest entrances") {
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.switchTabInCard(tabName = "Entrance Pages");
+
+			for (var current : list "3-AC Page,2-AC Page 1,1-AC Page 2") {
+				ACSites.viewVisitedTopPages(current = "${current}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8302 | Test Summary: Assert Sites Top Pages Card Exit Pages Highest Exits"

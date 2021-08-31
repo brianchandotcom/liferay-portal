@@ -246,7 +246,7 @@ public class UpgradeReport {
 				dictionary[index]);
 
 			return StringBundler.concat(
-				"The Document Library is ", size, StringPool.NEW_LINE);
+				"The Document Library size is ", size, StringPool.NEW_LINE);
 		}
 
 		return "Please check the size of the Liferay Document Library in " +

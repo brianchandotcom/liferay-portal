@@ -84,7 +84,7 @@ public class EditCommerceOrderPaymentStatusMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order_payment/payment_status.jsp";
+		return "/commerce_order_payment/payment_status.jsp";
 	}
 
 	@Reference

@@ -84,7 +84,7 @@ public class EditCommerceOrderPaymentMethodMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order_payment/payment_method.jsp";
+		return "/commerce_order_payment/payment_method.jsp";
 	}
 
 	@Reference

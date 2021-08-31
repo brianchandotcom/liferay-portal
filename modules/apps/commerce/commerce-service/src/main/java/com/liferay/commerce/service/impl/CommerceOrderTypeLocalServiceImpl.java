@@ -18,7 +18,14 @@ import com.liferay.commerce.exception.CommerceOrderTypeDisplayDateException;
 import com.liferay.commerce.exception.CommerceOrderTypeExpirationDateException;
 import com.liferay.commerce.exception.CommerceOrderTypeNameException;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.model.CommerceOrderTypeRelTable;
+import com.liferay.commerce.model.CommerceOrderTypeTable;
 import com.liferay.commerce.service.base.CommerceOrderTypeLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -181,6 +188,33 @@ public class CommerceOrderTypeLocalServiceImpl
 
 		return commerceOrderTypePersistence.fetchByC_ERC(
 			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public List<CommerceOrderType> getCommerceOrderTypes(
+			String className, long classPK, boolean active, int start, int end)
+		throws PortalException {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceOrderTypeTable.INSTANCE),
+				className, classPK, active
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws PortalException {
+
+		return dslQueryCount(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId),
+				className, classPK, active));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -366,6 +400,42 @@ public class CommerceOrderTypeLocalServiceImpl
 				WorkflowConstants.STATUS_EXPIRED, serviceContext,
 				new HashMap<String, Serializable>());
 		}
+	}
+
+	private GroupByStep _getGroupByStep(
+			FromStep fromStep, String className, long classPK, boolean active)
+		throws PortalException {
+
+		JoinStep joinStep = fromStep.from(
+			CommerceOrderTypeTable.INSTANCE
+		).leftJoinOn(
+			CommerceOrderTypeRelTable.INSTANCE,
+			CommerceOrderTypeRelTable.INSTANCE.commerceOrderTypeId.eq(
+				CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId)
+		);
+
+		return joinStep.where(
+			() -> {
+				Predicate predicate = CommerceOrderTypeTable.INSTANCE.active.eq(
+					active);
+
+				Predicate commerceOrderTypeRelPredicate =
+					Predicate.withParentheses(
+						CommerceOrderTypeRelTable.INSTANCE.classNameId.eq(
+							classNameLocalService.getClassNameId(className)
+						).and(
+							CommerceOrderTypeRelTable.INSTANCE.classPK.eq(
+								classPK)
+						));
+
+				commerceOrderTypeRelPredicate =
+					commerceOrderTypeRelPredicate.or(
+						CommerceOrderTypeRelTable.INSTANCE.
+							commerceOrderTypeRelId.isNull()
+					).withParentheses();
+
+				return predicate.and(commerceOrderTypeRelPredicate);
+			});
 	}
 
 	private CommerceOrderType _startWorkflowInstance(

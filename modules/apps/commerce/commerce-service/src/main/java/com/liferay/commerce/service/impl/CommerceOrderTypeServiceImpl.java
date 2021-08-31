@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -109,6 +110,40 @@ public class CommerceOrderTypeServiceImpl
 
 		return commerceOrderTypeLocalService.getCommerceOrderType(
 			commerceOrderTypeId);
+	}
+
+	@Override
+	public List<CommerceOrderType> getCommerceOrderTypes(
+			String className, long classPK, boolean active, int start, int end)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceOrderTypeModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceOrderActionKeys.VIEW_COMMERCE_ORDER_TYPES);
+
+		return commerceOrderTypeLocalService.getCommerceOrderTypes(
+			className, classPK, active, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceOrderTypeModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceOrderActionKeys.VIEW_COMMERCE_ORDER_TYPES);
+
+		return commerceOrderTypeLocalService.getCommerceOrderTypesCount(
+			className, classPK, active);
 	}
 
 	@Override

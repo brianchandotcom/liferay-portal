@@ -88,6 +88,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8362 | Test Summary: Page profile views by technology shows which browsers are being used"
 	@priority = "5"
 	test ShowsWhichBrowsersBeingUsed {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-9001
+
 		ACNavigation.switchTabInCard(tabName = "Browsers");
 
 		ACAssets.viewTechnologyBrowsersMetric(

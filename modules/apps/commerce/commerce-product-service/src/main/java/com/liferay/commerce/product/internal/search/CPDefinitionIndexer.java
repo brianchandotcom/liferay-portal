@@ -39,6 +39,7 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -283,11 +284,20 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				accountGroupsBooleanFilter, BooleanClauseOccur.MUST);
 		}
 		else {
-			long[] groupIds = searchContext.getGroupIds();
+			long[] commerceCatalogIds = _getUserCommerceCatalogIds(
+				searchContext);
 
-			if ((groupIds == null) || (groupIds.length == 0)) {
-				contextBooleanFilter.addTerm(
-					Field.GROUP_ID, "-1", BooleanClauseOccur.MUST);
+			if (commerceCatalogIds.length > 0) {
+				_addCommerceCatalogIdFilters(
+					contextBooleanFilter, commerceCatalogIds);
+			}
+			else {
+				long[] groupIds = searchContext.getGroupIds();
+
+				if ((groupIds == null) || (groupIds.length == 0)) {
+					contextBooleanFilter.addTerm(
+						Field.GROUP_ID, "-1", BooleanClauseOccur.MUST);
+				}
 			}
 		}
 	}
@@ -890,6 +900,33 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
+	private void _addCommerceCatalogIdFilters(
+		BooleanFilter contextBooleanFilter, long[] commerceCatalogIds) {
+
+		TermsFilter termsFilter = new TermsFilter("commerceCatalogId");
+
+		termsFilter.addValues(ArrayUtil.toStringArray(commerceCatalogIds));
+
+		contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+	}
+
+	private long[] _getUserCommerceCatalogIds(SearchContext searchContext) {
+		List<CommerceCatalog> commerceCatalogs =
+			_commerceCatalogService.getCommerceCatalogs(
+				searchContext.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		if (commerceCatalogs.isEmpty()) {
+			return new long[0];
+		}
+
+		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
+
+		return stream.mapToLong(
+			commerceCatalog -> commerceCatalog.getCommerceCatalogId()
+		).toArray();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionIndexer.class);
 
@@ -898,6 +935,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	@Reference
 	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+
+	@Reference
+	private CommerceCatalogService _commerceCatalogService;
 
 	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;

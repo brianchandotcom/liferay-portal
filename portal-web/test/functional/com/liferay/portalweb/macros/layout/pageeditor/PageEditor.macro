@@ -1613,7 +1613,8 @@ definition {
 				key_contentName = "${selectedName}",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 		}
-		else {
+
+		else if (isSet(vocabularyName)) {
 			WaitForElementPresent(
 				key_fieldLabel = "Source",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL");

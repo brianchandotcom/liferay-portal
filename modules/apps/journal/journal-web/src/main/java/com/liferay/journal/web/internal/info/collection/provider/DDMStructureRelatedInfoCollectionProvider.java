@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -73,9 +74,20 @@ public class DDMStructureRelatedInfoCollectionProvider
 	public InfoPage<JournalArticle> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
+		Optional<Object> relatedItemOptional =
+			collectionQuery.getRelatedItemObjectOptional();
+
+		Object relatedItem = relatedItemOptional.orElse(null);
+
+		if (!(relatedItem instanceof AssetCategory)) {
+			return InfoPage.of(
+				Collections.emptyList(), collectionQuery.getPagination(), 0);
+		}
+
 		Indexer<?> indexer = JournalSearcher.getInstance();
 
-		SearchContext searchContext = _buildSearchContext(collectionQuery);
+		SearchContext searchContext = _buildSearchContext(
+			(AssetCategory)relatedItem, collectionQuery);
 
 		try {
 			Hits hits = indexer.search(searchContext);
@@ -83,18 +95,14 @@ public class DDMStructureRelatedInfoCollectionProvider
 			List<JournalArticle> articles = new ArrayList<>();
 
 			for (Document document : hits.getDocs()) {
-				String className = document.get(Field.ENTRY_CLASS_NAME);
+				long classPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
 
-				if (className.equals(JournalArticle.class.getName())) {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.ENTRY_CLASS_PK));
+				JournalArticle article =
+					_journalArticleLocalService.fetchLatestArticle(
+						classPK, WorkflowConstants.STATUS_ANY, false);
 
-					JournalArticle article =
-						_journalArticleLocalService.fetchLatestArticle(
-							classPK, WorkflowConstants.STATUS_ANY, false);
-
-					articles.add(article);
-				}
+				articles.add(article);
 			}
 
 			return InfoPage.of(
@@ -165,20 +173,27 @@ public class DDMStructureRelatedInfoCollectionProvider
 		return false;
 	}
 
-	private SearchContext _buildSearchContext(CollectionQuery collectionQuery) {
+	private SearchContext _buildSearchContext(
+		AssetCategory assetCategory, CollectionQuery collectionQuery) {
+
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(true);
+		searchContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
-				"ddmStructureKey", _ddmStructure.getStructureId()
+				"ddmStructureKey", _ddmStructure.getStructureKey()
 			).put(
 				"head", true
 			).put(
 				"latest", true
 			).build());
+
+		searchContext.setClassTypeIds(
+			new long[] {_ddmStructure.getStructureId()});
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -189,6 +204,8 @@ public class DDMStructureRelatedInfoCollectionProvider
 
 		searchContext.setEnd(pagination.getEnd());
 
+		searchContext.setEntryClassNames(
+			new String[] {JournalArticle.class.getName()});
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
 

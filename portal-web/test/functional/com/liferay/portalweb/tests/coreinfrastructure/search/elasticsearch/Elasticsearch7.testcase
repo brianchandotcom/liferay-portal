@@ -636,6 +636,10 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
+
+		AntCommand(
+			locator1 = "build-test-elasticsearch7.xml",
+			value1 = "stop-elasticsearch");
 	}
 
 	@description = "This is a use case for LPS-57894."

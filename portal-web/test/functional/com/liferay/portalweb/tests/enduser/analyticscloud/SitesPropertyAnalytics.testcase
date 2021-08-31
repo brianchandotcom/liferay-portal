@@ -45,6 +45,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8330 | Test Summary: Assert Chart ticks for pages Visitor Behavior standardized"
 	@priority = "5"
 	test AssertChartTicksPagesVisitorBehaviorStandardized {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-8994
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -181,9 +180,6 @@ public class DLFileEntryTypeModelListener
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	private final Map<Long, Map<Long, ServiceRegistration<?>>>
 		_serviceRegistrations = Collections.synchronizedMap(

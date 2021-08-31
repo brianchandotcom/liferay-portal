@@ -8,6 +8,8 @@ definition {
 		ACIndividualsDashboard.selectAttribute(attribute = "${attribute}");
 
 		ACIndividualsDashboard.saveBreakdown();
+
+		ACUtils.waitForLoading();
 	}
 
 	macro assertCustomRangeNotApplied {

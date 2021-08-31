@@ -1,0 +1,101 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8979 | Test Summary: All interests in the workspace appear in a list"
+	@priority = "5"
+	test AllInterestsInWorkspaceAppearInList {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add specific pages and web contents to Site as interest topics") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			for (var layoutName : list "Movies,Music,Science,Sports,Technology") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${layoutName}");
+
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content Title ${layoutName}");
+			}
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Individule Tab") {
+			ACNavigation.goToIndividuals();
+		}
+
+		task ("View All Interests list in workspace") {
+			ACCards.viewCards(cardTitle = "Top Interests as of Today");
+
+			Click(locator1 = "ACInterests#VIEW_ALL_INTERESTS_BUTTON");
+
+			for (var interestTopic : list "liferay dxp,site,Movies,Music,Science,Sports,Technology") {
+				ACInterests.viewInterest(interestTopic = "${interestTopic}");
+			}
+		}
+	}
+
+}

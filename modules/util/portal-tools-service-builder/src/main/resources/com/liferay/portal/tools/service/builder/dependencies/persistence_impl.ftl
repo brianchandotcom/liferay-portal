@@ -179,6 +179,16 @@ import org.osgi.service.component.annotations.Reference;
 	</#if>
 </#list>
 
+<#if entity.localizedEntity??>
+	<#assign
+		referenceEntity = serviceBuilder.getEntity(entity.localizedEntity.name)
+	/>
+
+	<#if referenceEntity.hasPersistence()>
+		import ${referenceEntity.apiPackagePath}.service.persistence.${referenceEntity.name}Persistence;
+	</#if>
+</#if>
+
 /**
  * The persistence implementation for the ${entity.humanName} service.
  *
@@ -688,6 +698,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				${entity.variableName}To${referenceEntity.name}TableMapper.deleteLeftPrimaryKeyTableMappings(${entity.variableName}.getPrimaryKey());
 			</#if>
 		</#list>
+
+		<#if entity.localizedEntity??>
+			<#assign
+				localizedEntity = entity.localizedEntity
+				pkEntityColumn = entity.PKEntityColumns?first
+			/>
+
+			${localizedEntity.variableName}Persistence.removeBy${pkEntityColumn.methodName}(${entity.variableName}.get${pkEntityColumn.methodName}());
+		</#if>
 
 		Session session = null;
 
@@ -2863,6 +2882,24 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			protected TableMapper<${entity.name}, ${referenceEntity.apiPackagePath}.model.${referenceEntity.name}> ${entity.variableName}To${referenceEntity.name}TableMapper;
 		</#if>
 	</#list>
+
+	<#if entity.localizedEntity??>
+		<#assign
+			referenceEntity = serviceBuilder.getEntity(entity.localizedEntity.name)
+		/>
+
+		<#if !dependencyInjectorDS || (referenceEntity.apiPackagePath == apiPackagePath)>
+			<#if dependencyInjectorDS>
+				@Reference
+			<#elseif osgiModule && (referenceEntity.apiPackagePath != apiPackagePath)>
+				@ServiceReference(type = ${referenceEntity.name}Persistence.class)
+			<#else>
+				@BeanReference(type = ${referenceEntity.name}Persistence.class)
+			</#if>
+
+			protected ${referenceEntity.name}Persistence ${referenceEntity.variableName}Persistence;
+		</#if>
+	</#if>
 
 	<#if entity.isHierarchicalTree()>
 		protected NestedSetsTreeManager<${entity.name}> nestedSetsTreeManager = new PersistenceNestedSetsTreeManager<${entity.name}>(this, "${entity.table}", "${entity.name}", ${entity.name}Impl.class, "${pkEntityColumn.DBName}", "${scopeEntityColumn.DBName}", "left${pkEntityColumn.methodName}", "right${pkEntityColumn.methodName}");

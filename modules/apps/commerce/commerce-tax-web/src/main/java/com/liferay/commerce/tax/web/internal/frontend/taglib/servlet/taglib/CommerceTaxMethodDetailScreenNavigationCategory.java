@@ -81,7 +81,7 @@ public class CommerceTaxMethodDetailScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/tax_method/detail.jsp");
+			"/commerce_tax_method/detail.jsp");
 	}
 
 	@Reference

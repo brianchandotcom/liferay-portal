@@ -498,13 +498,26 @@ definition {
 	}
 
 	macro searchBar {
-		Type(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "${searchItem}");
+		if (isSet(cardTitle)) {
+			Type(
+				key_cardTitle = "${cardTitle}",
+				locator1 = "ACSettings#SEARCH_BAR_IN_SPECIFIC_CARD",
+				value1 = "${searchItem}");
 
-		KeyPress(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "\ENTER");
+			KeyPress(
+				key_cardTitle = "${cardTitle}",
+				locator1 = "ACSettings#SEARCH_BAR_IN_SPECIFIC_CARD",
+				value1 = "\ENTER");
+		}
+		else {
+			Type(
+				locator1 = "ACSettings#SEARCH_BAR",
+				value1 = "${searchItem}");
+
+			KeyPress(
+				locator1 = "ACSettings#SEARCH_BAR",
+				value1 = "\ENTER");
+		}
 	}
 
 	macro tearDownAC {

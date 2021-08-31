@@ -327,6 +327,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8983 | Test Summary: Individuals Interest list has pagination"
 	@priority = "3"
 	test PaginateIndividualsInterestsList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-9008
+
 		task ("Add specific pages and web contents to Site as interest topics") {
 			Navigator.openSiteURL(siteName = "Site Name");
 

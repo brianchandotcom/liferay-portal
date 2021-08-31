@@ -311,6 +311,7 @@ public class PoshiContext {
 		poshiPropertyNames.add("ignored");
 		poshiPropertyNames.add("known-issues");
 		poshiPropertyNames.add("priority");
+		poshiPropertyNames.add("property.group");
 		poshiPropertyNames.add("test.class.method.name");
 		poshiPropertyNames.add("test.class.name");
 		poshiPropertyNames.add("test.run.environment");
@@ -713,6 +714,63 @@ public class PoshiContext {
 		throws Exception {
 
 		return _getPoshiURLs(null, includes, baseDirName);
+	}
+
+	private static String _getPropertyGroup(
+			Element rootElement, Element commandElement)
+		throws Exception {
+
+		List<Element> propertyElements = new ArrayList<>();
+
+		propertyElements.addAll(rootElement.elements("property"));
+
+		propertyElements.addAll(commandElement.elements("property"));
+
+		for (Element propertyElement : propertyElements) {
+			String propertyName = propertyElement.attributeValue("name");
+			String propertyValue = propertyElement.attributeValue("value");
+
+			if (propertyName.equals("property.group") &&
+				(propertyValue != null) && !propertyValue.isEmpty()) {
+
+				return propertyValue;
+			}
+		}
+
+		return null;
+	}
+
+	private static Properties _getPropertyGroupProperties(
+			Element rootElement, Element commandElement)
+		throws Exception {
+
+		String propertyGroup = _getPropertyGroup(rootElement, commandElement);
+
+		if ((propertyGroup == null) || propertyGroup.isEmpty()) {
+			return new Properties();
+		}
+
+		Properties propertyGroupProperties = new Properties();
+
+		String propertyGroupRegex =
+			"test.case.property.group\\[" + propertyGroup +
+				"\\]\\[([^\\]]+)\\]";
+
+		Properties systemProperties = System.getProperties();
+
+		for (String systemPropertyName :
+				systemProperties.stringPropertyNames()) {
+
+			if (!systemPropertyName.matches(propertyGroupRegex)) {
+				continue;
+			}
+
+			propertyGroupProperties.setProperty(
+				systemPropertyName.replaceAll(propertyGroupRegex, "$1"),
+				systemProperties.getProperty(systemPropertyName));
+		}
+
+		return propertyGroupProperties;
 	}
 
 	private static void _initComponentCommandNamesMap() {
@@ -1315,8 +1373,25 @@ public class PoshiContext {
 				}
 
 				if (classType.equals("test-case")) {
-					Properties properties = _getClassCommandNameProperties(
+					Properties commandProperties =
+						_getClassCommandNameProperties(
+							rootElement, commandElement);
+
+					String propertyGroup = _getPropertyGroup(
 						rootElement, commandElement);
+
+					Properties propertyGroupProperties =
+						_getPropertyGroupProperties(
+							rootElement, commandElement);
+
+					_validateCommandProperties(
+						commandProperties, propertyGroup,
+						propertyGroupProperties, filePath, classCommandName);
+
+					Properties properties = new Properties();
+
+					properties.putAll(commandProperties);
+					properties.putAll(propertyGroupProperties);
 
 					properties.setProperty(
 						"test.class.method.name", classCommandName);
@@ -1433,15 +1508,44 @@ public class PoshiContext {
 
 				Throwable causeThrowable = exception.getCause();
 
-				sb.append(causeThrowable.getMessage());
-
-				sb.append("\n\n");
+				if (causeThrowable != null) {
+					sb.append(causeThrowable.getMessage());
+					sb.append("\n");
+				}
 			}
 
 			System.out.println(sb.toString());
 
 			throw new Exception();
 		}
+	}
+
+	private static void _validateCommandProperties(
+		Properties commandProperties, String propertyGroup,
+		Properties propertyGroupProperties, String filePath,
+		String classCommandName) {
+
+		List<String> propertyNames = new ArrayList<>();
+
+		for (String propertyName :
+				propertyGroupProperties.stringPropertyNames()) {
+
+			if (commandProperties.containsKey(propertyName)) {
+				propertyNames.add(propertyName);
+			}
+		}
+
+		if (propertyNames.isEmpty()) {
+			return;
+		}
+
+		_exceptions.add(
+			new Exception(
+				StringUtil.combine(
+					filePath, " for '", classCommandName, "' the properties '",
+					StringUtil.join(propertyNames.toArray(new String[0]), ","),
+					"' can not be set as they are set in '", propertyGroup,
+					"'")));
 	}
 
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {

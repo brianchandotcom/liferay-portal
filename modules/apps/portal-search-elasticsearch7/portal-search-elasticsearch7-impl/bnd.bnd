@@ -94,6 +94,7 @@ Import-Package:\
 	!org.eclipse.jetty.npn.*,\
 	\
 	!org.elasticsearch.index.shard.service.*,\
+	!org.elasticsearch.plugins.loader.*,\
 	!org.elasticsearch.secure_sm.*,\
 	\
 	!org.fusesource.*,\

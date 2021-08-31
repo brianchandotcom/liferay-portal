@@ -24,7 +24,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -92,12 +91,10 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return Collections.emptyList();
 		}
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
 		try {
 			List<DDMTemplate> allVariationTemplates =
 				_ddmTemplateLocalService.getTemplates(
-					themeDisplay.getScopeGroupId(),
+					serviceContext.getScopeGroupId(),
 					_portal.getClassNameId(itemClassName),
 					GetterUtil.getLong(itemVariationKey), true);
 

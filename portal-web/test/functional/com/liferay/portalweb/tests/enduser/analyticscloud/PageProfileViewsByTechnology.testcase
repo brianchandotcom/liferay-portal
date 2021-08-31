@@ -86,12 +86,15 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8362 | Test Summary: Page profile views by technology shows which browsers are being used"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsWhichBrowsersBeingUsed {
+		ACNavigation.switchTabInCard(tabName = "Browsers");
 
-		// TODO LRAC-8362 ShowsWhichBrowsersBeingUsed
-
+		ACAssets.viewTechnologyBrowsersMetric(
+			browserMetricValue = "Chrome",
+			cardTitle = "Views by Technology",
+			cssValue = "rgb(75, 155, 255)",
+			percentageMetricValue = "100%");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"

@@ -26,10 +26,10 @@ import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
-import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
-import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -186,10 +186,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
-			List<StructuredContentFolder> structuredContentFolders =
-				_addStructuredContentFolders(serviceContext);
-
-			_addJournalArticles(serviceContext, structuredContentFolders);
+			_addJournalArticles(serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -362,20 +359,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				Document document = documentResource.postSiteDocument(
-				serviceContext.getScopeGroupId(),
-				MultipartBody.of(
-					Collections.singletonMap(
-						"file",
-						new BinaryFile(
-							MimeTypesUtil.getContentType(fileName), fileName,
-							urlConnection.getInputStream(),
-							urlConnection.getContentLength())),
-					null, values));
+					serviceContext.getScopeGroupId(),
+					MultipartBody.of(
+						Collections.singletonMap(
+							"file",
+							new BinaryFile(
+								MimeTypesUtil.getContentType(fileName),
+								fileName, urlConnection.getInputStream(),
+								urlConnection.getContentLength())),
+						null, values));
 
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				document.getId());
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					document.getId());
 
-			_fileEntries.add(fileEntry);
+				_fileEntries.add(fileEntry);
 			}
 		}
 	}
@@ -399,31 +396,37 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addJournalArticles(
-			ServiceContext serviceContext,
-			List<StructuredContentFolder> structuredContentFolders)
+			Long documentFolderId, String parentResourcePath,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/journal-articles");
+			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
 		}
 
-		Map<String, String> fileEntriesMap = _getFileEntriesMap();
-
-		Map<String, Long> structuredContentFolderMap = new HashMap<>();
-
-		for (StructuredContentFolder structuredContentFolder :
-				structuredContentFolders) {
-
-			structuredContentFolderMap.put(
-				structuredContentFolder.getName(),
-				structuredContentFolder.getId());
-		}
-
 		for (String resourcePath : resourcePaths) {
-			String json = _read(resourcePath + "journal_article.json");
+			if (resourcePath.endsWith("/")) {
+				_addJournalArticles(
+					_addStructuredContentFolders(
+						documentFolderId, resourcePath, serviceContext),
+					resourcePath, serviceContext);
+
+				continue;
+			}
+
+			if (resourcePaths.contains(
+					StringUtil.replace(resourcePath, ".json", "/")) ||
+				resourcePath.endsWith(".xml")) {
+
+				continue;
+			}
+
+			Map<String, String> fileEntriesMap = _getFileEntriesMap();
+
+			String json = _read(resourcePath);
 
 			JSONObject journalArticleJSONObject =
 				JSONFactoryUtil.createJSONObject(json);
@@ -455,18 +458,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.setAssetTagNames(
 				assetTagNames.toArray(new String[0]));
 
+			Long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (documentFolderId != null) {
+				folderId = documentFolderId;
+			}
+
 			_journalArticleLocalService.addArticle(
 				null, serviceContext.getUserId(),
-				serviceContext.getScopeGroupId(),
-				structuredContentFolderMap.getOrDefault(
-					journalArticleJSONObject.getString("folder"),
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+				serviceContext.getScopeGroupId(), folderId,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				journalArticleJSONObject.getString("articleId"), false, 1,
 				titleMap, null, titleMap,
 				StringUtil.replace(
-					_read(resourcePath + "journal_article.xml"), "[$", "$]",
-					fileEntriesMap),
+					_read(StringUtil.replace(resourcePath, ".json", ".xml")),
+					"[$", "$]", fileEntriesMap),
 				journalArticleJSONObject.getString("ddmStructureKey"),
 				journalArticleJSONObject.getString("ddmTemplateKey"), null,
 				displayDateMonth, displayDateDay, displayDateYear,
@@ -476,6 +482,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			serviceContext.setAssetTagNames(null);
 		}
+	}
+
+	private void _addJournalArticles(ServiceContext serviceContext)
+		throws Exception {
+
+		_addJournalArticles(
+			null, "/site-initializer/journal-articles", serviceContext);
 	}
 
 	private void _addObjectDefinitions(ServiceContext serviceContext)
@@ -524,19 +537,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private List<StructuredContentFolder> _addStructuredContentFolders(
+	private Long _addStructuredContentFolders(
+			Long documentFolderId, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
-
-		List<StructuredContentFolder> structuredContentFolders =
-			new ArrayList<>();
-
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/journal-folders");
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return structuredContentFolders;
-		}
 
 		StructuredContentFolderResource.Builder
 			structuredContentFolderResourceBuilder =
@@ -547,28 +551,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		for (String resourcePath : resourcePaths) {
-			JSONArray journalFoldersJSONArray = JSONFactoryUtil.createJSONArray(
-				_read(resourcePath));
+		parentResourcePath = parentResourcePath.substring(
+			0, parentResourcePath.length() - 1);
 
-			for (int i = 0; i < journalFoldersJSONArray.length(); i++) {
-				JSONObject jsonObject = journalFoldersJSONArray.getJSONObject(
-					i);
+		String json = _read(parentResourcePath + ".json");
 
-				StructuredContentFolder structuredContentFolder =
-					StructuredContentFolder.toDTO(jsonObject.toString());
+		StructuredContentFolder structuredContentFolder =
+			StructuredContentFolder.toDTO(json);
 
-				structuredContentFolder =
-					structuredContentFolderResource.
-						postSiteStructuredContentFolder(
-							serviceContext.getScopeGroupId(),
-							structuredContentFolder);
-
-				structuredContentFolders.add(structuredContentFolder);
-			}
+		if (documentFolderId != null) {
+			structuredContentFolder =
+				structuredContentFolderResource.
+					postStructuredContentFolderStructuredContentFolder(
+						documentFolderId, structuredContentFolder);
+		}
+		else {
+			structuredContentFolder =
+				structuredContentFolderResource.postSiteStructuredContentFolder(
+					serviceContext.getScopeGroupId(), structuredContentFolder);
 		}
 
-		return structuredContentFolders;
+		return structuredContentFolder.getId();
 	}
 
 	private void _addStyleBookEntries(ServiceContext serviceContext)
@@ -637,7 +640,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addTaxonomyVocabularies(
 			serviceContext.getScopeGroupId(),
 			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
-
 	}
 
 	private Map<String, String> _getFileEntriesMap() throws Exception {

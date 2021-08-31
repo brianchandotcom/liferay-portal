@@ -39,6 +39,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.InputStream;
 
@@ -89,6 +91,7 @@ public class BundleSiteInitializerTest {
 		_assertDDMStructure(group);
 		_assertDDMTemplate(group);
 		_assertFragments(group);
+		_assertStyleBookEntry(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
@@ -154,6 +157,19 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(objectDefinition.isSystem(), false);
 	}
 
+	private void _assertStyleBookEntry(Group group) {
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				group.getGroupId(), "Test");
+
+		Assert.assertNotNull(styleBookEntry);
+
+		String frontendTokensValues = styleBookEntry.getFrontendTokensValues();
+
+		Assert.assertTrue(
+			frontendTokensValues.contains("blockquote-small-color"));
+	}
+
 	private Bundle _installBundle(BundleContext bundleContext, String location)
 		throws Exception {
 
@@ -184,5 +200,8 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

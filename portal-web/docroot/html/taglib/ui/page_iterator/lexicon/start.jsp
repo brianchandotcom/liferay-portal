@@ -349,7 +349,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					namespace: '<%= namespace %>',
 					pages: '<%= pages %>',
 					randomNamespace: '<%= randomNamespace %>',
-					url: '<%= HtmlUtil.escapeJS(HttpUtil.removeParameter(url, curParam)) %>',
+					url: '<%= HtmlUtil.escapeJS(HttpUtil.removeParameter(url, namespace + curParam)) %>',
 					urlAnchor: '<%= urlAnchor %>'
 				}
 			),

@@ -14,11 +14,14 @@
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -48,10 +51,13 @@ public class ObjectEntryModelDocumentContributor
 	implements ModelDocumentContributor<ObjectEntry> {
 
 	public ObjectEntryModelDocumentContributor(
-		String className, ObjectEntryLocalService objectEntryLocalService,
+		String className,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		_className = className;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 	}
@@ -84,6 +90,15 @@ public class ObjectEntryModelDocumentContributor
 		fieldArray.addField(field);
 	}
 
+	private void _appendToContent(
+		StringBundler sb, String objectFieldName, String stringValue) {
+
+		sb.append(objectFieldName);
+		sb.append(": ");
+		sb.append(stringValue);
+		sb.append(StringPool.COMMA_AND_SPACE);
+	}
+
 	private void _contribute(Document document, ObjectEntry objectEntry)
 		throws Exception {
 
@@ -94,6 +109,27 @@ public class ObjectEntryModelDocumentContributor
 
 		document.addKeyword(
 			"objectDefinitionId", objectEntry.getObjectDefinitionId());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		document.addKeyword(
+			"objectDefinitionName", objectDefinition.getShortName());
+
+		//TODO
+		//String titleFieldPrefix = objectDefinition.getTitleFieldPrefix();
+
+		String titleFieldPrefix = "title"; //default to "title" for now as PoC
+
+		if (titleFieldPrefix == null) {
+			//if no title field prefix is defined by the user, we can try to
+			//build a title from rules etc
+
+			String title = "This is a title";
+
+			document.add(new Field("object_entry_title", title));
+		}
 
 		FieldArray fieldArray = (FieldArray)document.getField(
 			"nestedFieldArray");
@@ -111,14 +147,25 @@ public class ObjectEntryModelDocumentContributor
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId());
 
+		StringBundler sb = new StringBundler(objectFields.size() * 4);
+
 		for (ObjectField objectField : objectFields) {
-			_contribute(fieldArray, objectEntry, objectField, values);
+			_contribute(
+				fieldArray, objectEntry, objectField, values, titleFieldPrefix,
+				document, sb);
 		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		document.add(new Field("object_entry_content", sb.toString()));
 	}
 
 	private void _contribute(
 		FieldArray fieldArray, ObjectEntry objectEntry, ObjectField objectField,
-		Map<String, Serializable> values) {
+		Map<String, Serializable> values, String titleFieldPrefix,
+		Document document, StringBundler sb) {
 
 		if (!objectField.isIndexed()) {
 			return;
@@ -138,64 +185,90 @@ public class ObjectEntryModelDocumentContributor
 			return;
 		}
 
+		String objectFieldName = objectField.getName();
+		String stringValue = String.valueOf(value);
+
+		if ((titleFieldPrefix != null) &&
+			objectFieldName.startsWith(titleFieldPrefix)) {
+
+			document.add(new Field("title_field_prefix", titleFieldPrefix));
+
+			if (!Validator.isBlank(objectField.getIndexedLanguageId())) {
+				document.add(
+					new Field(
+						"object_entry_title_" +
+							objectField.getIndexedLanguageId(),
+						stringValue));
+			}
+			else {
+				document.add(new Field("object_entry_title", stringValue));
+			}
+		}
+
 		if (objectField.isIndexedAsKeyword()) {
 			_addField(
-				fieldArray, objectField.getName(), "value_keyword",
-				StringUtil.lowerCase(String.valueOf(value)));
+				fieldArray, objectFieldName, "value_keyword",
+				StringUtil.lowerCase(stringValue));
+
+			_appendToContent(sb, objectFieldName, stringValue);
 		}
 		else if (value instanceof BigDecimal) {
-			_addField(
-				fieldArray, objectField.getName(), "value_double",
-				String.valueOf(value));
+			_addField(fieldArray, objectFieldName, "value_double", stringValue);
+
+			_appendToContent(sb, objectFieldName, stringValue);
 		}
 		else if (value instanceof Boolean) {
 			_addField(
-				fieldArray, objectField.getName(), "value_boolean",
-				String.valueOf(value));
+				fieldArray, objectFieldName, "value_boolean", stringValue);
 			_addField(
-				fieldArray, objectField.getName(), "value_keyword",
+				fieldArray, objectFieldName, "value_keyword",
 				_translate((Boolean)value));
+
+			_appendToContent(sb, objectFieldName, stringValue);
 		}
 		else if (value instanceof Date) {
 			_addField(
-				fieldArray, objectField.getName(), "value_date",
+				fieldArray, objectFieldName, "value_date",
 				_getDateString(value));
+
+			_appendToContent(sb, objectFieldName, _getDateString(value));
 		}
 		else if (value instanceof Double) {
-			_addField(
-				fieldArray, objectField.getName(), "value_double",
-				String.valueOf(value));
+			_addField(fieldArray, objectFieldName, "value_double", stringValue);
+
+			_appendToContent(sb, objectFieldName, stringValue);
 		}
 		else if (value instanceof Integer) {
 			_addField(
-				fieldArray, objectField.getName(), "value_integer",
-				String.valueOf(value));
+				fieldArray, objectFieldName, "value_integer", stringValue);
+
+			_appendToContent(sb, objectFieldName, stringValue);
 		}
 		else if (value instanceof Long) {
-			_addField(
-				fieldArray, objectField.getName(), "value_long",
-				String.valueOf(value));
+			_addField(fieldArray, objectFieldName, "value_long", stringValue);
+
+			_appendToContent(sb, objectFieldName, stringValue);
 		}
 		else if (value instanceof String) {
 			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
 				_addField(
-					fieldArray, objectField.getName(), "value_text",
-					(String)value);
+					fieldArray, objectFieldName, "value_text", stringValue);
 			}
 			else {
 				_addField(
-					fieldArray, objectField.getName(),
-					"value_" + objectField.getIndexedLanguageId(),
-					(String)value);
+					fieldArray, objectFieldName,
+					"value_" + objectField.getIndexedLanguageId(), stringValue);
 			}
 
 			_addField(
-				fieldArray, objectField.getName(), "value_keyword_lowercase",
-				_getSortableValue((String)value));
+				fieldArray, objectFieldName, "value_keyword_lowercase",
+				_getSortableValue(stringValue));
+
+			_appendToContent(sb, objectFieldName, stringValue);
 		}
 		else if (value instanceof byte[]) {
 			_addField(
-				fieldArray, objectField.getName(), "value_binary",
+				fieldArray, objectFieldName, "value_binary",
 				Base64.encode((byte[])value));
 		}
 		else {
@@ -203,7 +276,7 @@ public class ObjectEntryModelDocumentContributor
 				_log.warn(
 					StringBundler.concat(
 						"Object entry ", objectEntry.getObjectEntryId(),
-						" has object field \"", objectField.getName(),
+						" has object field \"", objectFieldName,
 						"\" with unsupported value ", value));
 			}
 		}
@@ -236,6 +309,7 @@ public class ObjectEntryModelDocumentContributor
 		ObjectEntryModelDocumentContributor.class);
 
 	private final String _className;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 

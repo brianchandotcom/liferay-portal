@@ -41,6 +41,12 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
+	public String getModelClassName() {
+		return "com.liferay.object.model.ObjectDefinition#" +
+			getObjectDefinitionId();
+	}
+
+	@Override
 	public Map<String, Serializable> getValues() {
 		if (_values == null) {
 			if (_log.isDebugEnabled()) {

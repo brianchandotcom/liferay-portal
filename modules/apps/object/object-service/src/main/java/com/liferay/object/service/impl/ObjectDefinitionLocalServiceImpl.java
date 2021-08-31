@@ -413,7 +413,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_bundleContext, _destinationFactory,
 				_dynamicQueryBatchIndexingActionableFactory,
 				_listTypeEntryLocalService, _messageBus,
-				_modelSearchRegistrarHelper, _objectEntryLocalService,
+				_modelSearchRegistrarHelper, this, _objectEntryLocalService,
 				_objectFieldLocalService, _objectScopeProviderRegistry,
 				_persistedModelLocalServiceRegistry, _resourceActions,
 				_workflowStatusModelPreFilterContributor));

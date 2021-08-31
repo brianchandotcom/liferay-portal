@@ -26,6 +26,7 @@ import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntr
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelIndexerWriterContributor;
 import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryKeywordQueryContributor;
 import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryModelPreFilterContributor;
+import com.liferay.object.internal.search.spi.model.result.contributor.ObjectEntryModelSummaryContributor;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
@@ -33,6 +34,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -77,6 +79,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		MessageBus messageBus,
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
@@ -91,6 +94,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_messageBus = messageBus;
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
@@ -123,6 +127,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryModelIndexerWriterContributor(
 					_dynamicQueryBatchIndexingActionableFactory,
 					_objectEntryLocalService);
+		ObjectEntryModelSummaryContributor objectEntryModelSummaryContributor =
+			new ObjectEntryModelSummaryContributor();
+
 		PortletResourcePermission portletResourcePermission =
 			PortletResourcePermissionFactory.create(
 				objectDefinition.getResourceName(),
@@ -150,7 +157,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ModelDocumentContributor.class,
 				new ObjectEntryModelDocumentContributor(
-					objectDefinition.getClassName(), _objectEntryLocalService,
+					objectDefinition.getClassName(),
+					_objectDefinitionLocalService, _objectEntryLocalService,
 					_objectFieldLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"indexer.class.name", objectDefinition.getClassName()
@@ -219,9 +227,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_modelSearchRegistrarHelper.register(
 				objectDefinition.getClassName(), _bundleContext,
-				modelSearchDefinition ->
+				modelSearchDefinition -> {
 					modelSearchDefinition.setModelIndexWriteContributor(
-						objectEntryModelIndexerWriterContributor)));
+						objectEntryModelIndexerWriterContributor);
+					modelSearchDefinition.setModelSummaryContributor(
+						objectEntryModelSummaryContributor);
+				}));
 	}
 
 	@Override
@@ -297,6 +308,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final MessageBus _messageBus;
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

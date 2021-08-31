@@ -77,6 +77,15 @@ definition {
 		}
 	}
 
+	macro viewInterestContributingPage {
+		var key_interestTopic = "${interestTopic}";
+		var key_interestContributingPage = "${interestContributingPage}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#INTEREST_CONTRIBUTING_PAGE",
+			value1 = "${interestContributingPage}");
+	}
+
 	macro viewInterestPage {
 		var key_pageName = "${pageName}";
 

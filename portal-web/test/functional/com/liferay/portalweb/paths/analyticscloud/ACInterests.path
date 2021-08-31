@@ -15,7 +15,12 @@
 	<td>//h5[contains(.,'Interests')]/../..//span[contains(@class,'title') and contains(.,'${key_interestName}')]</td>
 	<td></td>
 </tr>
-<!-- Individules Interest -->
+<!-- Individuals Interest -->
+<tr>
+	<td>INTEREST_CONTRIBUTING_PAGE</td>
+	<td>//td[@class='name-cell-root' and contains(.,'${key_interestTopic}')]//following-sibling::td[contains(.,'${key_interestContributingPage}')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>INTEREST_VIEW_SPECIFIC_ORDER</td>
 	<td>//tbody//tr[${resultOrder}]//a[contains(@class,'text-truncate') and text()='${key_interestTopic}']</td>

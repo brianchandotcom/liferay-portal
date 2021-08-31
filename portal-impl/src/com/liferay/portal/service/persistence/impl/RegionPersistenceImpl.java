@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.RegionLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3116,6 +3118,8 @@ public class RegionPersistenceImpl
 
 	@Override
 	protected Region removeImpl(Region region) {
+		regionLocalizationPersistence.removeByRegionId(region.getRegionId());
+
 		Session session = null;
 
 		try {
@@ -3602,6 +3606,9 @@ public class RegionPersistenceImpl
 	public void destroy() {
 		EntityCacheUtil.removeCache(RegionImpl.class.getName());
 	}
+
+	@BeanReference(type = RegionLocalizationPersistence.class)
+	protected RegionLocalizationPersistence regionLocalizationPersistence;
 
 	private static final String _SQL_SELECT_REGION =
 		"SELECT region FROM Region region";

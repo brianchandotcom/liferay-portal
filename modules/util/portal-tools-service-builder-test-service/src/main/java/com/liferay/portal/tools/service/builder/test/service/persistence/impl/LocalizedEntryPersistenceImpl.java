@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,6 +32,7 @@ import com.liferay.portal.tools.service.builder.test.model.LocalizedEntry;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryModelImpl;
+import com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryPersistence;
 
 import java.io.Serializable;
@@ -224,6 +226,9 @@ public class LocalizedEntryPersistenceImpl
 
 	@Override
 	protected LocalizedEntry removeImpl(LocalizedEntry localizedEntry) {
+		localizedEntryLocalizationPersistence.removeByLocalizedEntryId(
+			localizedEntry.getLocalizedEntryId());
+
 		Session session = null;
 
 		try {
@@ -564,6 +569,10 @@ public class LocalizedEntryPersistenceImpl
 
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	@BeanReference(type = LocalizedEntryLocalizationPersistence.class)
+	protected LocalizedEntryLocalizationPersistence
+		localizedEntryLocalizationPersistence;
 
 	private static final String _SQL_SELECT_LOCALIZEDENTRY =
 		"SELECT localizedEntry FROM LocalizedEntry localizedEntry";

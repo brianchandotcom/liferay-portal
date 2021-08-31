@@ -19,8 +19,10 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionTable;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
+import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -5551,6 +5553,9 @@ public class CPDefinitionPersistenceImpl
 
 	@Override
 	protected CPDefinition removeImpl(CPDefinition cpDefinition) {
+		cpDefinitionLocalizationPersistence.removeByCPDefinitionId(
+			cpDefinition.getCPDefinitionId());
+
 		Session session = null;
 
 		try {
@@ -6128,6 +6133,10 @@ public class CPDefinitionPersistenceImpl
 
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	@BeanReference(type = CPDefinitionLocalizationPersistence.class)
+	protected CPDefinitionLocalizationPersistence
+		cpDefinitionLocalizationPersistence;
 
 	private static Long _getTime(Date date) {
 		if (date == null) {

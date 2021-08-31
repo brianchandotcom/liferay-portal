@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.CountryLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -5077,6 +5079,9 @@ public class CountryPersistenceImpl
 
 	@Override
 	protected Country removeImpl(Country country) {
+		countryLocalizationPersistence.removeByCountryId(
+			country.getCountryId());
+
 		Session session = null;
 
 		try {
@@ -5645,6 +5650,9 @@ public class CountryPersistenceImpl
 	public void destroy() {
 		EntityCacheUtil.removeCache(CountryImpl.class.getName());
 	}
+
+	@BeanReference(type = CountryLocalizationPersistence.class)
+	protected CountryLocalizationPersistence countryLocalizationPersistence;
 
 	private static final String _SQL_SELECT_COUNTRY =
 		"SELECT country FROM Country country";

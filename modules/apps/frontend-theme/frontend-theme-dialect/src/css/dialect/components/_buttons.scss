@@ -183,7 +183,9 @@
 			--btn-active-color: var(--action-primary-inverted);
 			--btn-default-border-color: var(--action-primary-inverted);
 			--btn-default-color: var(--action-primary-inverted);
-			--btn-disabled-border-color: var(--action-primary-inverted-disabled);
+			--btn-disabled-border-color: var(
+				--action-primary-inverted-disabled
+			);
 			--btn-disabled-color: var(--action-primary-inverted-disabled);
 			--btn-hover-background-color: var(--action-primary-inverted-hover);
 			--btn-hover-border-color: var(--action-primary-inverted);
@@ -211,9 +213,13 @@
 			--btn-active-color: var(--action-secondary-inverted);
 			--btn-default-border-color: var(--action-secondary-inverted);
 			--btn-default-color: var(--action-secondary-inverted);
-			--btn-disabled-border-color: var(--action-secondary-inverted-disabled);
+			--btn-disabled-border-color: var(
+				--action-secondary-inverted-disabled
+			);
 			--btn-disabled-color: var(--action-secondary-inverted-disabled);
-			--btn-hover-background-color: var(--action-secondary-inverted-hover);
+			--btn-hover-background-color: var(
+				--action-secondary-inverted-hover
+			);
 			--btn-hover-border-color: var(--action-secondary-inverted);
 			--btn-hover-color: var(--action-secondary-inverted);
 		}
@@ -239,7 +245,9 @@
 			--btn-active-color: var(--action-neutral-inverted);
 			--btn-default-border-color: var(--action-neutral-inverted);
 			--btn-default-color: var(--action-neutral-inverted);
-			--btn-disabled-border-color: var(--action-neutral-inverted-disabled);
+			--btn-disabled-border-color: var(
+				--action-neutral-inverted-disabled
+			);
 			--btn-disabled-color: var(--action-neutral-inverted-disabled);
 			--btn-hover-background-color: var(--action-neutral-inverted-hover);
 			--btn-hover-border-color: var(--action-neutral-inverted);
@@ -301,7 +309,9 @@
 			--btn-active-color: var(--action-secondary-inverted);
 			--btn-default-color: var(--action-secondary-inverted);
 			--btn-disabled-color: var(--action-secondary-inverted-disabled);
-			--btn-hover-background-color: var(--action-secondary-inverted-hover);
+			--btn-hover-background-color: var(
+				--action-secondary-inverted-hover
+			);
 			--btn-hover-border-color: var(--action-secondary-inverted);
 			--btn-hover-color: var(--action-secondary-inverted);
 		}

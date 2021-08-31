@@ -117,7 +117,9 @@
 
 	&.nav-horizontal {
 		--nav-flex-direction: row;
-		--nav-link-active-indicator-background-color: var(--action-primary-hover);
+		--nav-link-active-indicator-background-color: var(
+			--action-primary-hover
+		);
 		--nav-link-active-indicator-content: '';
 		--nav-link-active-indicator-height: #{$nav-link-horizontal-active-indicator-thickness};
 		--nav-link-active-indicator-position-right: 50%;
@@ -156,7 +158,9 @@
 		&.nav-tertiary {
 			--nav-link-active-indicator-position-top: 0;
 			--nav-link-active-indicator-width: 100%;
-			--nav-link-hover-active-indicator-background-color: var(--action-primary-hover);
+			--nav-link-hover-active-indicator-background-color: var(
+				--action-primary-hover
+			);
 			--nav-link-padding: calc(
 					#{$nav-link-horizontal-active-indicator-thickness} + 0.375rem
 				)
@@ -164,8 +168,12 @@
 			--nav-link-margin: 0;
 
 			&.nav-inverted {
-				--nav-link-active-indicator-background-color: var(--action-primary-inverted-hover);
-				--nav-link-indicator-background-color: var(--action-primary-inverted-disabled);
+				--nav-link-active-indicator-background-color: var(
+					--action-primary-inverted-hover
+				);
+				--nav-link-indicator-background-color: var(
+					--action-primary-inverted-disabled
+				);
 			}
 		}
 
@@ -177,8 +185,12 @@
 			&.nav-secondary,
 			&.nav-tertiary {
 				--nav-link-active-color: var(--action-primary-inverted);
-				--nav-link-active-indicator-background-color: var(--action-primary-inverted);
-				--nav-link-hover-active-indicator-background-color: var(--action-primary-inverted);
+				--nav-link-active-indicator-background-color: var(
+					--action-primary-inverted
+				);
+				--nav-link-hover-active-indicator-background-color: var(
+					--action-primary-inverted
+				);
 			}
 		}
 	}
@@ -186,7 +198,9 @@
 	&.nav-vertical {
 		--nav-flex-direction: column;
 		--nav-link-active-color: var(--color-neutral-0);
-		--nav-link-active-indicator-background-color: var(--action-primary-hover);
+		--nav-link-active-indicator-background-color: var(
+			--action-primary-hover
+		);
 		--nav-link-active-indicator-height: #{$nav-link-vertical-active-indicator-length};
 		--nav-link-active-indicator-position-bottom: 50%;
 		--nav-link-active-indicator-position-left: 0;

@@ -15,6 +15,8 @@ import {WarningBadge} from '../../../../fragments/Badges/Warning';
 import {SearchInput} from '../../../../fragments/Forms/Input/Search';
 import {BusinessTypeRadioGroup} from './RadioGroup';
 
+const MAX_LENGTH_TO_TRUNCATE = 28;
+
 export const BusinessTypeSearch = ({form}) => {
 	const {
 		formState: {errors},
@@ -44,6 +46,14 @@ export const BusinessTypeSearch = ({form}) => {
 		}, 500),
 		[]
 	);
+
+	const truncateSearch = (text) => {
+		if (!text || text.length <= MAX_LENGTH_TO_TRUNCATE) {
+			return text;
+		}
+
+		return text.slice(0, MAX_LENGTH_TO_TRUNCATE) + '...';
+	};
 
 	const showInfoPanel = () => {
 		updateState(templateName);
@@ -84,7 +94,8 @@ export const BusinessTypeSearch = ({form}) => {
 			return (
 				<>
 					<WarningBadge>
-						There are no results for "{form?.basics?.businessSearch}
+						There are no results for "
+						{truncateSearch(form?.basics?.businessSearch)}
 						". Please try a different search.
 					</WarningBadge>
 					{infoPanelButton()}
@@ -107,15 +118,16 @@ export const BusinessTypeSearch = ({form}) => {
 		<>
 			<div>
 				<SearchInput
+					className="search"
 					defaultValue=""
 					error={errors?.basics?.businessSearch}
 					label="Search for your primary industry and then select it from the list."
+					placeholder="Begin typing to show options..."
 					required
 					{...register('basics.businessSearch', {
 						required:
 							'Please, search for a business type in order to proceed.',
 					})}
-					className="search"
 				>
 					<button
 						className="btn btn-primary search"

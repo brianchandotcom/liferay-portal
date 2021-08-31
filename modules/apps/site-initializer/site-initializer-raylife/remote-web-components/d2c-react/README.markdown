@@ -97,41 +97,34 @@ All the configuration to use sass with web components is already in place. To ad
 
 The implementation is based on [this article](https://dev.to/m4thieulavoie/how-i-managed-to-use-scss-inside-web-components-3lk9), to reproduce this work in a Create React App project do the following steps:
 
-1. Eject your CRA project
+1. Edit the `craco.config.js` file
 
-```bash
-npm run eject
-# or
-yarn eject
+```js
+module.exports = {
+	webpack: {
+		configure: (webpackConfig, {env, paths}) => {
+			webpackConfig.module.rules[1].oneOf.unshift({
+				test: sassRegex,
+				exclude: /node_modules/,
+				use: [
+					'sass-to-string',
+					{
+						loader: 'sass-loader',
+						options: {
+							sassOptions: {
+								outputStyle: 'compressed',
+							},
+						},
+					},
+				],
+			});
+			return webpackConfig;
+		},
+	},
+};
 ```
 
-2. Edit the `config/webpack.config.js` file
-
-```jsonc
-module: {
-  rules: [
-    // ...other rules
-    {
-      test: sassRegex,
-      exclude: /node_modules/,
-      use: [
-        "sass-to-string",
-        {
-          loader: "sass-loader",
-          options: {
-            sassOptions: {
-              outputStyle: "compressed",
-            },
-          },
-        },
-      ],
-    },
-    // ...
-  ]
-}
-```
-
-3. Add the entry to the web component
+2. Add the entry to the web component
 
 ```js
 import StylesProvider from "./styles/provider.scss";

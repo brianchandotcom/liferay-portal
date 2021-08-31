@@ -14,7 +14,6 @@
 
 package com.liferay.account.admin.web.internal.servlet.taglib.util;
 
-import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -71,9 +70,6 @@ public class AccountUserActionDropdownItemsProvider {
 						"/account_entries_admin/select_account_roles.jsp"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
-					).setParameter(
-						AccountWebKeys.ACCOUNT_ENTRY_DISPLAY,
-						_accountEntryDisplay
 					).setParameter(
 						"accountEntryId",
 						_accountEntryDisplay.getAccountEntryId()

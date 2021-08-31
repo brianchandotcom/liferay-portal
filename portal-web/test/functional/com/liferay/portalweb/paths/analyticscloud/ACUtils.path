@@ -10,6 +10,11 @@
 </thead>
 
 <tbody>
+<tr>
+	<td>LOADING_ANIMATION</td>
+	<td>//span[contains(@class,'loading-animation')]</td>
+	<td></td>
+</tr>
 <!-- CLOSE MODAL -->
 <tr>
 	<td>MODAL_CLOSE_BUTTON</td>

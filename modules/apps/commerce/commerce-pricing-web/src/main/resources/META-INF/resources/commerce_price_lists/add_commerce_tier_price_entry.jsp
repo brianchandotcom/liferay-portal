@@ -41,7 +41,7 @@ boolean neverExpire = true;
 
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
-		<%@ include file="/commerce_price_lists/tier_price_entry/details.jspf" %>
+		<%@ include file="/commerce_price_lists/commerce_tier_price_entry/details.jspf" %>
 
 		<c:if test="<%= commerceTierPriceEntryDisplayContext.hasCustomAttributes() %>">
 			<commerce-ui:panel

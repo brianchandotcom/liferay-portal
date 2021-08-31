@@ -57,7 +57,7 @@ if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getExpirationDat
 		<commerce-ui:panel
 			title='<%= LanguageUtil.get(request, "details") %>'
 		>
-			<%@ include file="/commerce_price_lists/tier_price_entry/details.jspf" %>
+			<%@ include file="/commerce_price_lists/commerce_tier_price_entry/details.jspf" %>
 		</commerce-ui:panel>
 
 		<c:if test="<%= commerceTierPriceEntryDisplayContext.hasCustomAttributes() %>">

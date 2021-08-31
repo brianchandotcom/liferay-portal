@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-111807. The user could enable search field in dropdown list of Collection Filter."
 	@priority = "5"
 	test EnableSearchFieldInDropdownList {
+		property portal.acceptance = "true";
+
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Warehouse") {
 				JSONCategory.addVocabulary(
@@ -2363,6 +2365,8 @@ definition {
 	@description = "This is a test for LPS-111807. The user could show the label of selected vocabulary or category in Collection Filter."
 	@priority = "5"
 	test ShowLabelOfSelectedSource {
+		property portal.acceptance = "true";
+
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Color") {
 				JSONCategory.addVocabulary(

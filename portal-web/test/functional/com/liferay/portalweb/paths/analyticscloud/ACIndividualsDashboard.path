@@ -74,7 +74,7 @@
 </tr>
 <tr>
 	<td>BREAKDOWN_TAB</td>
-	<td>//div[contains(@class,'distribution-card')]//div[contains(@class,'tab-title')][normalize-space(text())='${breakdownName}']</td>
+	<td>//div[contains(@class,'distribution-card')]//button[contains(@class,'tab-title')][normalize-space(text())='${breakdownName}']</td>
 	<td></td>
 </tr>
 <tr>

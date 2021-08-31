@@ -98,7 +98,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 
 		FormRules.gotoEdit(ruleNumber = "1");
@@ -116,7 +116,7 @@ definition {
 
 		FormRules.viewConditionNotPresent(
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			conditionRowNumber = "1");
 
 		FormRules.viewConditionPresent(
@@ -138,7 +138,7 @@ definition {
 
 		FormRules.viewConditionSummaryNotPresent(
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 	}
 
@@ -173,7 +173,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 
 		FormRules.gotoEdit(ruleNumber = "1");
@@ -197,7 +197,7 @@ definition {
 			actionTarget = "Text",
 			conditionField = "Text",
 			conditionFieldConstant = "Test",
-			conditionOperator = "Does not contain",
+			conditionOperator = "Does Not Contain",
 			ruleNumber = "1");
 	}
 
@@ -310,7 +310,7 @@ definition {
 			actionTarget = "Numeric",
 			conditionField = "Text",
 			conditionFieldConstant = "Test",
-			conditionOperator = "Does not contain",
+			conditionOperator = "Does Not Contain",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -373,7 +373,7 @@ definition {
 			actionTarget = "Numeric",
 			conditionField = "Text",
 			conditionFieldConstant = "Numeric",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();

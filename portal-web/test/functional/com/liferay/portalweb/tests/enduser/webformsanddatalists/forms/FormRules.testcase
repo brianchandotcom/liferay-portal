@@ -68,7 +68,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -87,7 +87,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text Test",
 			conditionField = "Text Test",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 	}
 
@@ -298,7 +298,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 	}
 
@@ -424,7 +424,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 
 		FormRules.gotoDelete(ruleNumber = "1");
@@ -599,7 +599,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -619,7 +619,7 @@ definition {
 			ruleNumber = "1");
 
 		FormRules.viewConditionOperatorSummary(
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			ruleNumber = "1");
 	}
 

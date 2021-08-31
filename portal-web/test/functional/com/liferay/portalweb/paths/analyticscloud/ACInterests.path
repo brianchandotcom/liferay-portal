@@ -36,6 +36,11 @@
 	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='table-column-text-end']/h4</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_ALL_INTERESTS_BUTTON</td>
+	<td>//a[contains(@class,'button-root') and contains(.,'View All Interests')]</td>
+	<td></td>
+</tr>
 <!-- Interest Details -->
 <tr>
 	<td>TAB_NAME</td>

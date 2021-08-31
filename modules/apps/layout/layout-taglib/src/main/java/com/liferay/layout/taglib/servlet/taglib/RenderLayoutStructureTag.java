@@ -334,9 +334,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 			jspWriter.write("<div class=\"d-flex flex-grow-1 h-100 ");
 			jspWriter.write("justify-content-center py-3\" ");
-			jspWriter.write("id=\"paginationPreviousButton_");
+			jspWriter.write("id=\"paginationButtons_");
 			jspWriter.write(collectionStyledLayoutStructureItem.getItemId());
-			jspWriter.write("\"");
+			jspWriter.write("\">");
 
 			ButtonTag previousButtonTag = new ButtonTag();
 
@@ -374,9 +374,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				).build());
 			nextButtonTag.setDisplayType("unstyled");
 			nextButtonTag.setId(
-				RenderCollectionLayoutStructureItemDisplayContext.
-					PAGE_NUMBER_PARAM_PREFIX +
-						collectionStyledLayoutStructureItem.getItemId());
+				"paginationNextButton_" +
+					collectionStyledLayoutStructureItem.getItemId());
 			nextButtonTag.setLabel(LanguageUtil.get(getRequest(), "next"));
 
 			nextButtonTag.doTag(pageContext);

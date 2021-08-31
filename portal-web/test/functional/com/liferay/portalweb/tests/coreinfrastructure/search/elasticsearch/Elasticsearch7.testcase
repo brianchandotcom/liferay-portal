@@ -677,9 +677,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Pause(locator1 = "10000");
+		WaitForConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
 
-		AssertConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
+		// LRCI-2401
+
+		Pause(locator1 = "30000");
 
 		Navigator.openSpecificURL(url = "http://localhost:9201");
 

@@ -123,7 +123,7 @@
 		--nav-link-active-indicator-position-right: 50%;
 		--nav-link-active-indicator-transform: translateX(50%);
 		--nav-link-active-indicator-width: #{$nav-link-horizontal-active-indicator-length};
-		--nav-link-color: #{$color-neutral-0};
+		--nav-link-color: var(--color-neutral-0);
 		--nav-link-first-child-margin-left: 0;
 		--nav-link-hover-color: var(--action-primary-hover);
 		--nav-link-icon-height: 1rem;
@@ -185,16 +185,16 @@
 
 	&.nav-vertical {
 		--nav-flex-direction: column;
-		--nav-link-active-color: #{$color-neutral-0};
+		--nav-link-active-color: var(--color-neutral-0);
 		--nav-link-active-indicator-background-color: var(--action-primary-hover);
 		--nav-link-active-indicator-height: #{$nav-link-vertical-active-indicator-length};
 		--nav-link-active-indicator-position-bottom: 50%;
 		--nav-link-active-indicator-position-left: 0;
 		--nav-link-active-indicator-transform: translateY(50%);
 		--nav-link-active-indicator-width: #{$nav-link-vertical-active-indicator-thickness};
-		--nav-link-color: #{$color-neutral-4};
+		--nav-link-color: var(--color-neutral-4);
 		--nav-link-first-child-margin-top: 0;
-		--nav-link-hover-color: #{$color-neutral-0};
+		--nav-link-hover-color: var(--color-neutral-0);
 		--nav-link-icon-height: 1.5rem;
 		--nav-link-icon-margin-x: 1rem;
 		--nav-link-icon-width: 1.5rem;

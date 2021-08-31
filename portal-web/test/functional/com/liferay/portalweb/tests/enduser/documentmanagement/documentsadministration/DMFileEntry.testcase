@@ -266,14 +266,18 @@ definition {
 
 		DMDocument.updateCheckInterval(fieldValue = "2");
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_5.txt",
+		DMNavigator.openToAddEntry(
 			groupName = "Guest",
-			increaseMinutes = "2",
-			mimeType = "text/plain",
-			reviewDate = "true",
-			sourceFileName = "Document_5.txt");
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.txt",
+			dmDocumentTitle = "Document_2.txt");
+
+		DMDocument.setReviewDate(
+			enableReviewDate = "true",
+			increaseMinutes = "2");
 
 		Pause(locator1 = "120000");
 
@@ -284,20 +288,20 @@ definition {
 		Notifications.gotoNotifications();
 
 		Notifications.viewReviewContent(
-			contentBody = "Document_5.txt",
+			contentBody = "Document_2.txt",
 			user = "Test Test");
 
-		Notifications.navigateToContent(contentBody = "Document_5.txt");
+		Notifications.navigateToContent(contentBody = "Document_2.txt");
 
-		DMDocument.reviewDocument(dmDocumentTitle = "Document_5.txt");
+		DMDocument.reviewDocument(dmDocumentTitle = "Document_2.txt");
 
 		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "Document_5.txt",
+			dmDocumentTitle = "Document_2.txt",
 			groupName = "Guest",
 			siteURLKey = "guest");
 
 		DMDocument.viewCP(
-			dmDocumentTitle = "Document_5.txt",
+			dmDocumentTitle = "Document_2.txt",
 			reviewDate = "true",
 			user = "Test Test");
 	}

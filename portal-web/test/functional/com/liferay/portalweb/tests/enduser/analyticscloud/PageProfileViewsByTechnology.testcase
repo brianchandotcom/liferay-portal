@@ -98,12 +98,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsWhichDevicesBeingUsed {
-
-		// TODO LRAC-8363 ShowsWhichDevicesBeingUsed
-
+		ACAssets.viewTechnologyDeviceViewsAndPercentage(
+			actionValue = "1 Views",
+			cardTitle = "Views by Technology",
+			deviceName = "Desktop",
+			percentageValue = "100%");
 	}
 
 }

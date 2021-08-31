@@ -249,9 +249,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DepotNavigator.openToEditWCEntry(
-			depotName = "Test Depot Name",
-			webContentTitle = "Web Content Title");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "friendlyUrledit");
 

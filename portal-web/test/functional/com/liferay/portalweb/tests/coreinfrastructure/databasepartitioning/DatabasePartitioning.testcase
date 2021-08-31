@@ -216,4 +216,40 @@ definition {
 			expectedCount = "1");
 	}
 
+	@priority = "5"
+	test RestartPortal {
+		property custom.properties = "database.partition.schema.name.prefix=testPartition";
+		property database.types = "mysql";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "DatabasePartitioning#RestartPortal";
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(keepOSGiState = "true");
+	}
+
 }

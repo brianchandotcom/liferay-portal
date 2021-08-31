@@ -178,4 +178,76 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9000 | Test Summary: As a Business User, I should be able to select different tabs in breakdown"
+	@priority = "3"
+	test SelectDifferentTabsInbreakdown {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Country",
+				sourceFileName = "contacts_country.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Navigate to the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+		}
+
+		task ("Add the first breakdown") {
+			ACIndividualsDashboard.addBreakdown(
+				attribute = "country",
+				breakdownName = "Breakdown by Country");
+		}
+
+		task ("Add the second breakdown") {
+			ACIndividualsDashboard.addBreakdown(
+				attribute = "department",
+				breakdownName = "Breakdown by Department");
+		}
+
+		task ("Switch to the first breakdown") {
+			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Country");
+
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				tick = "china");
+		}
+
+		task ("Switch to the second breakdown") {
+			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Department");
+
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				tick = "finance");
+		}
+	}
+
 }

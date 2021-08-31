@@ -183,6 +183,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8982| Test Summary: Individuals interest details are shown"
 	@priority = "3"
 	test AssertIndividualInterestDetails {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-9007
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

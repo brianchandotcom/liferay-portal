@@ -1376,10 +1376,8 @@ public class PoshiContext {
 					Properties commandProperties =
 						_getClassCommandNameProperties(
 							rootElement, commandElement);
-
 					String propertyGroup = _getPropertyGroup(
 						rootElement, commandElement);
-
 					Properties propertyGroupProperties =
 						_getPropertyGroupProperties(
 							rootElement, commandElement);

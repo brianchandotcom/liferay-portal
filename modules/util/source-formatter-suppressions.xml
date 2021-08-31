@@ -13,7 +13,6 @@
 		<suppress checks="JavaVariableTypeCheck" files="portal-tools-soy-builder/src/main/java/com/liferay/portal/tools/soy/builder/maven/BuildSoyMojo\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-tools-theme-builder/src/main/java/com/liferay/portal/tools/theme/builder/maven/BuildThemeMojo\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-tools-db-support/.*" />
-		<suppress checks="PrimitiveWrapperInstantiationCheck" files="portal-tools-upgrade-table-builder/src/main/java/com/liferay/portal/tools/upgrade/table/builder/UpgradeTableBuilder\.java" />
 		<suppress checks="StringMethodsCheck" files="css-builder/.*" />
 		<suppress checks="StringMethodsCheck" files="portal-tools-data-partitioning-sql-builder-postgresql/.*" />
 		<suppress checks="StringMethodsCheck" files="portal-tools-soy-builder/.*" />

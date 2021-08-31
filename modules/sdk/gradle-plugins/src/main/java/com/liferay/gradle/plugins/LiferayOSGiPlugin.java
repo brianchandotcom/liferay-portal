@@ -37,7 +37,6 @@ import com.liferay.gradle.plugins.internal.RESTBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.ServiceBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.TLDFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.TestIntegrationDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.UpgradeTableBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.WSDDBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
@@ -397,7 +396,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		ServiceBuilderDefaultsPlugin.INSTANCE.apply(project);
 		TLDFormatterDefaultsPlugin.INSTANCE.apply(project);
 		TestIntegrationDefaultsPlugin.INSTANCE.apply(project);
-		UpgradeTableBuilderDefaultsPlugin.INSTANCE.apply(project);
 		WSDDBuilderDefaultsPlugin.INSTANCE.apply(project);
 		WatchOSGiPlugin.INSTANCE.apply(project);
 	}

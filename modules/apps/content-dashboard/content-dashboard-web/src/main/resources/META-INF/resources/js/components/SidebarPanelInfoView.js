@@ -247,7 +247,7 @@ const SidebarPanelInfoView = ({
 										{title}
 									</h5>
 
-									<p>{text}</p>
+									<p className="text-secondary">{text}</p>
 								</div>
 							)
 					)}

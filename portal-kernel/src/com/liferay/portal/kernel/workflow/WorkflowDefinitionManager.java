@@ -46,28 +46,6 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getActiveWorkflowDefinitionsCount(long)}
-	 */
-	@Deprecated
-	public default int getActiveWorkflowDefinitionCount(long companyId)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public default int getActiveWorkflowDefinitionCount(
-			long companyId, String name)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -124,39 +102,6 @@ public interface WorkflowDefinitionManager {
 	public WorkflowDefinition getWorkflowDefinition(
 			long companyId, String name, int version)
 		throws WorkflowException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public default int getWorkflowDefinitionCount(long companyId)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getWorkflowDefinitionsCount(long, String)}
-	 */
-	@Deprecated
-	public default int getWorkflowDefinitionCount(long companyId, String name)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public default List<WorkflowDefinition> getWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
 
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
@@ -222,17 +167,6 @@ public interface WorkflowDefinitionManager {
 			long companyId, long userId, String name, int version,
 			boolean active)
 		throws WorkflowException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement}
-	 */
-	@Deprecated
-	public default WorkflowDefinition updateTitle(
-			long companyId, long userId, String name, int version, String title)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
 
 	public void validateWorkflowDefinition(byte[] bytes)
 		throws WorkflowException;

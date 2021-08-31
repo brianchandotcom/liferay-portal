@@ -113,30 +113,4 @@ public class KaleoActionLocalServiceImpl
 			companyId, kaleoClassName, kaleoClassPK, executionType);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getKaleoActions(long, String, long)}
-	 */
-	@Deprecated
-	@Override
-	public List<KaleoAction> getKaleoActions(
-		String kaleoClassName, long kaleoClassPK) {
-
-		return kaleoActionPersistence.findByKCN_KCPK(
-			kaleoClassName, kaleoClassPK);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getKaleoActions(long, String, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public List<KaleoAction> getKaleoActions(
-		String kaleoClassName, long kaleoClassPK, String executionType) {
-
-		return kaleoActionPersistence.findByKCN_KCPK_ET(
-			kaleoClassName, kaleoClassPK, executionType);
-	}
-
 }

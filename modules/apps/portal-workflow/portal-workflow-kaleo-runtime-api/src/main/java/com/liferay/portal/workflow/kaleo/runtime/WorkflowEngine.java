@@ -44,20 +44,6 @@ public interface WorkflowEngine {
 			long workflowInstanceId, ServiceContext serviceContext)
 		throws WorkflowException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #deployWorkflowDefinition(String, String, String, byte[],
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public default WorkflowDefinition deployWorkflowDefinition(
-			String title, String name, InputStream inputStream,
-			ServiceContext serviceContext)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	public WorkflowDefinition deployWorkflowDefinition(
 			String title, String name, String scope, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -110,20 +96,6 @@ public interface WorkflowEngine {
 			OrderByComparator<WorkflowInstance> orderByComparator,
 			ServiceContext serviceContext)
 		throws WorkflowException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #saveWorkflowDefinition(String, String, String, byte[],
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public default WorkflowDefinition saveWorkflowDefinition(
-			String title, String name, byte[] bytes,
-			ServiceContext serviceContext)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
 
 	public WorkflowDefinition saveWorkflowDefinition(
 			String title, String name, String scope, byte[] bytes,

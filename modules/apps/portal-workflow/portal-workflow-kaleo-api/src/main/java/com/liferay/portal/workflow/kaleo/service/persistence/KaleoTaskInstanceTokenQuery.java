@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
@@ -53,21 +52,6 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		return _assigneeClassName;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getAssigneeClassPKs()}
-	 */
-	@Deprecated
-	public Long getAssigneeClassPK() {
-		Long[] assigneeClassPKs = getAssigneeClassPKs();
-
-		if (ArrayUtil.isEmpty(assigneeClassPKs)) {
-			return null;
-		}
-
-		return assigneeClassPKs[0];
-	}
-
 	public Long[] getAssigneeClassPKs() {
 		return _assigneeClassPKs;
 	}
@@ -92,21 +76,6 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		return _kaleoDefinitionId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getKaleoInstanceIds()}
-	 */
-	@Deprecated
-	public Long getKaleoInstanceId() {
-		Long[] kaleoInstanceIds = getKaleoInstanceIds();
-
-		if (ArrayUtil.isEmpty(kaleoInstanceIds)) {
-			return null;
-		}
-
-		return kaleoInstanceIds[0];
-	}
-
 	public Long[] getKaleoInstanceIds() {
 		return _kaleoInstanceIds;
 	}
@@ -125,20 +94,6 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 
 	public int getStart() {
 		return _start;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getTaskNames()}
-	 */
-	@Deprecated
-	public String getTaskName() {
-		String[] taskNames = getTaskNames();
-
-		if (ArrayUtil.isEmpty(taskNames)) {
-			return null;
-		}
-
-		return taskNames[0];
 	}
 
 	public String[] getTaskNames() {
@@ -181,15 +136,6 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		_assigneeClassName = assigneeClassName;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setAssigneeClassPKs(Long[])}
-	 */
-	@Deprecated
-	public void setAssigneeClassPK(Long assigneeClassPK) {
-		setAssigneeClassPKs(new Long[] {assigneeClassPK});
-	}
-
 	public void setAssigneeClassPKs(Long[] assigneeClassPKs) {
 		_assigneeClassPKs = assigneeClassPKs;
 	}
@@ -218,15 +164,6 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setKaleoInstanceIds(Long[])}
-	 */
-	@Deprecated
-	public void setKaleoInstanceId(Long kaleoInstanceId) {
-		setKaleoInstanceIds(new Long[] {kaleoInstanceId});
-	}
-
 	public void setKaleoInstanceIds(Long[] kaleoInstanceIds) {
 		_kaleoInstanceIds = kaleoInstanceIds;
 	}
@@ -251,15 +188,6 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 
 	public void setStart(int start) {
 		_start = start;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setTaskNames(String[])}
-	 */
-	@Deprecated
-	public void setTaskName(String taskName) {
-		setTaskNames(new String[] {taskName});
 	}
 
 	public void setTaskNames(String[] taskNames) {

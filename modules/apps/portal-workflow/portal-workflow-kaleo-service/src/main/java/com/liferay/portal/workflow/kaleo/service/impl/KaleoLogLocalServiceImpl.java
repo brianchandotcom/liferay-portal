@@ -449,28 +449,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getKaleoInstanceKaleoLogs(long, long, List, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<KaleoLog> getKaleoInstanceKaleoLogs(
-		long kaleoInstanceId, List<Integer> logTypes, int start, int end,
-		OrderByComparator<KaleoLog> orderByComparator) {
-
-		if (ListUtil.isEmpty(logTypes)) {
-			return kaleoLogPersistence.findByKaleoInstanceId(
-				kaleoInstanceId, start, end, orderByComparator);
-		}
-
-		DynamicQuery dynamicQuery = buildKaleoInstanceDynamicQuery(
-			kaleoInstanceId, logTypes);
-
-		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
 	@Override
 	public List<KaleoLog> getKaleoInstanceKaleoLogs(
 		long companyId, long kaleoInstanceId, List<Integer> logTypes, int start,
@@ -486,25 +464,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			start, end, orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getKaleoInstanceKaleoLogsCount(long, long, List)}
-	 */
-	@Deprecated
-	@Override
-	public int getKaleoInstanceKaleoLogsCount(
-		long kaleoInstanceId, List<Integer> logTypes) {
-
-		if (ListUtil.isEmpty(logTypes)) {
-			return kaleoLogPersistence.countByKaleoInstanceId(kaleoInstanceId);
-		}
-
-		DynamicQuery dynamicQuery = buildKaleoInstanceDynamicQuery(
-			kaleoInstanceId, logTypes);
-
-		return (int)dynamicQueryCount(dynamicQuery);
-	}
-
 	@Override
 	public int getKaleoInstanceKaleoLogsCount(
 		long companyId, long kaleoInstanceId, List<Integer> logTypes) {
@@ -516,28 +475,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			).put(
 				"logTypes", _toIntegerArraySupplier(logTypes)
 			).build());
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getKaleoTaskInstanceTokenKaleoLogs(long, long, List, int,
-	 *             int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<KaleoLog> getKaleoTaskInstanceTokenKaleoLogs(
-		long kaleoTaskInstanceTokenId, List<Integer> logTypes, int start,
-		int end, OrderByComparator<KaleoLog> orderByComparator) {
-
-		if (ListUtil.isEmpty(logTypes)) {
-			return kaleoLogPersistence.findByKaleoTaskInstanceTokenId(
-				kaleoTaskInstanceTokenId, start, end, orderByComparator);
-		}
-
-		DynamicQuery dynamicQuery = buildKaleoTaskInstanceTokenDynamicQuery(
-			kaleoTaskInstanceTokenId, logTypes);
-
-		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
 	@Override
@@ -554,26 +491,6 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 				"logTypes", _toIntegerArraySupplier(logTypes)
 			).build(),
 			start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getKaleoTaskInstanceTokenKaleoLogsCount(long, long, List)}
-	 */
-	@Deprecated
-	@Override
-	public int getKaleoTaskInstanceTokenKaleoLogsCount(
-		long kaleoTaskInstanceTokenId, List<Integer> logTypes) {
-
-		if (ListUtil.isEmpty(logTypes)) {
-			return kaleoLogPersistence.countByKaleoTaskInstanceTokenId(
-				kaleoTaskInstanceTokenId);
-		}
-
-		DynamicQuery dynamicQuery = buildKaleoTaskInstanceTokenDynamicQuery(
-			kaleoTaskInstanceTokenId, logTypes);
-
-		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
 	@Override

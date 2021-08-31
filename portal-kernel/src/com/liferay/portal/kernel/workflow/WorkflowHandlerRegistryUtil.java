@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -62,33 +59,6 @@ public class WorkflowHandlerRegistryUtil {
 
 	public static List<WorkflowHandler<?>> getWorkflowHandlers() {
 		return _getWorkflowHandlers(_workflowHandlerServiceTrackerMap);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), in favor of {@link
-	 *             Registry#registerService(String, Object, Map)}
-	 */
-	@Deprecated
-	public static void register(List<WorkflowHandler<?>> workflowHandlers) {
-		for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
-			register(workflowHandler);
-		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), in favor of {@link
-	 *             Registry#registerService(String, Object, Map)}
-	 */
-	@Deprecated
-	public static void register(WorkflowHandler<?> workflowHandler) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<WorkflowHandler<?>> serviceRegistration =
-			registry.registerService(
-				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
-				workflowHandler);
-
-		_serviceRegistrationMap.put(workflowHandler, serviceRegistration);
 	}
 
 	public static <T> void startWorkflowInstance(
@@ -243,31 +213,6 @@ public class WorkflowHandlerRegistryUtil {
 			classPK, model, serviceContext, workflowContext);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             ServiceRegistration#unregister()}
-	 */
-	@Deprecated
-	public static void unregister(List<WorkflowHandler<?>> workflowHandlers) {
-		for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
-			unregister(workflowHandler);
-		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             ServiceRegistration#unregister()}
-	 */
-	@Deprecated
-	public static void unregister(WorkflowHandler<?> workflowHandler) {
-		ServiceRegistration<WorkflowHandler<?>> serviceRegistration =
-			_serviceRegistrationMap.remove(workflowHandler);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	public static <T> T updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
@@ -328,8 +273,6 @@ public class WorkflowHandlerRegistryUtil {
 
 	private static final ServiceTrackerMap<String, WorkflowHandler<?>>
 		_scopeableWorkflowHandlerServiceTrackerMap;
-	private static final ServiceRegistrationMap<WorkflowHandler<?>>
-		_serviceRegistrationMap = new ServiceRegistrationMapImpl<>();
 	private static final ServiceTrackerMap<String, WorkflowHandler<?>>
 		_workflowHandlerServiceTrackerMap;
 

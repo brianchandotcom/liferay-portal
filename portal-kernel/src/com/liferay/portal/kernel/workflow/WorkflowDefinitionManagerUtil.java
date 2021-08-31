@@ -37,30 +37,6 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, title, name, bytes);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getActiveWorkflowDefinitionsCount(long)}
-	 */
-	@Deprecated
-	public static int getActiveWorkflowDefinitionCount(long companyId)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getActiveWorkflowDefinitionCount(
-			companyId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int getActiveWorkflowDefinitionCount(
-			long companyId, String name)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getActiveWorkflowDefinitionCount(
-			companyId, name);
-	}
-
 	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -118,45 +94,6 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name, version);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static int getWorkflowDefinitionCount(long companyId)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getWorkflowDefinitionCount(companyId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getWorkflowDefinitionsCount(long, String)}
-	 */
-	@Deprecated
-	public static int getWorkflowDefinitionCount(long companyId, String name)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getWorkflowDefinitionCount(
-			companyId, name);
-	}
-
-	public static WorkflowDefinitionManager getWorkflowDefinitionManager() {
-		return _workflowDefinitionManager;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<WorkflowDefinition> getWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getWorkflowDefinitions(
-			companyId, start, end, orderByComparator);
-	}
-
 	public static List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -211,18 +148,6 @@ public class WorkflowDefinitionManagerUtil {
 
 		return _workflowDefinitionManager.updateActive(
 			companyId, userId, name, version, active);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement}
-	 */
-	@Deprecated
-	public static WorkflowDefinition updateTitle(
-			long companyId, long userId, String name, int version, String title)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.updateTitle(
-			companyId, userId, name, version, title);
 	}
 
 	public static void validateWorkflowDefinition(byte[] bytes)

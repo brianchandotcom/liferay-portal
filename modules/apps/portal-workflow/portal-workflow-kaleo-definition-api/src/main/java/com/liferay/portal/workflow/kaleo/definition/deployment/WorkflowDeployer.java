@@ -24,36 +24,10 @@ import com.liferay.portal.workflow.kaleo.definition.Definition;
  */
 public interface WorkflowDeployer {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #deploy(String,
-	 *             String, String, Definition, ServiceContext)}
-	 */
-	@Deprecated
-	public default WorkflowDefinition deploy(
-			String title, String name, Definition definition,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	public WorkflowDefinition deploy(
 			String title, String name, String scope, Definition definition,
 			ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #save(String,
-	 *             String, String, Definition, ServiceContext)}
-	 */
-	@Deprecated
-	public default WorkflowDefinition save(
-			String title, String name, Definition definition,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
-	}
 
 	public WorkflowDefinition save(
 			String title, String name, String scope, Definition definition,

@@ -46,12 +46,13 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT,
-			new RemoteAppAdminDisplayContext(
-				renderRequest, renderResponse, _remoteAppEntryLocalService));
-
 		try {
+			renderRequest.setAttribute(
+				RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT,
+				new RemoteAppAdminDisplayContext(
+					renderRequest, renderResponse,
+					_remoteAppEntryLocalService));
+
 			long remoteAppEntryId = ParamUtil.getLong(
 				renderRequest, "remoteAppEntryId");
 
@@ -61,12 +62,12 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 					_remoteAppEntryLocalService.getRemoteAppEntry(
 						remoteAppEntryId));
 			}
+
+			return "/admin/edit_remote_app_entry.jsp";
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-
-		return "/admin/edit_remote_app_entry.jsp";
 	}
 
 	@Reference

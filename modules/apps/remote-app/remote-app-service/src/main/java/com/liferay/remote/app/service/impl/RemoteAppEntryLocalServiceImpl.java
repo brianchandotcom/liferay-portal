@@ -15,6 +15,7 @@
 package com.liferay.remote.app.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -34,16 +35,24 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.remote.app.internal.portlet.RemoteAppPortlet;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
-
+import javax.portlet.Portlet;
 import java.io.Serializable;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.osgi.framework.BundleContext;
+import java.util.concurrent.ConcurrentHashMap;
+import org.osgi.service.component.annotations.Activate;
 
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -64,10 +73,9 @@ public class RemoteAppEntryLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
-
 		url = StringUtil.trim(url);
 
-		validate(0, user.getCompanyId(), url);
+		_validate(0, user.getCompanyId(), url);
 
 		long remoteAppEntryId = counterLocalService.increment();
 
@@ -75,13 +83,72 @@ public class RemoteAppEntryLocalServiceImpl
 			remoteAppEntryId);
 
 		remoteAppEntry.setUuid(serviceContext.getUuid());
-		remoteAppEntry.setCompanyId(companyId);
+		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setUrl(url);
 
-		return remoteAppEntryPersistence.update(remoteAppEntry);
+		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
+
+		return remoteAppEntry;
+	}
+
+	@Override
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
+		throws PortalException {
+
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
+
+		return deleteRemoteAppEntry(remoteAppEntry);
+	}
+
+	@Override
+	public RemoteAppEntry deleteRemoteAppEntry(RemoteAppEntry remoteAppEntry)
+		throws PortalException {
+
+		remoteAppEntryPersistence.remove(remoteAppEntry);
+
+		remoteAppEntryLocalService.undeployRemoteAppEntry(remoteAppEntry);
+
+		return remoteAppEntry;
+	}
+
+	@Clusterable
+	@Override
+	public void deployRemoteAppEntry(RemoteAppEntry remoteAppEntry) {
+		undeployRemoteAppEntry(remoteAppEntry);
+
+		_serviceRegistrations.put(
+			remoteAppEntry.getRemoteAppEntryId(),
+			_bundleContext.registerService(
+				Portlet.class, new RemoteAppPortlet(remoteAppEntry),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.company", remoteAppEntry.getCompanyId()
+				).put(
+					"com.liferay.portlet.css-class-wrapper",
+					"portlet-remote-app"
+				).put(
+					"com.liferay.portlet.display-category", "category.sample"
+				).put(
+					"com.liferay.portlet.header-portlet-css",
+					"/display/css/main.css"
+				).put(
+					"com.liferay.portlet.instanceable", true
+				).put(
+					"javax.portlet.display-name", remoteAppEntry.getName()
+				).put(
+					"javax.portlet.name",
+					StringBundler.concat(
+						"com_liferay_remote_app_admin_web_internal_portlet_",
+						"RemoteAppPortlet_",
+						remoteAppEntry.getRemoteAppEntryId())
+				).put(
+					"javax.portlet.security-role-ref", "power-user,user"
+				).build()));
 	}
 
 	@Override
@@ -89,7 +156,7 @@ public class RemoteAppEntryLocalServiceImpl
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = _buildSearchContext(
 			companyId, keywords, start, end, sort);
 
 		Indexer<RemoteAppEntry> indexer =
@@ -122,37 +189,56 @@ public class RemoteAppEntryLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		super.setAopProxy(aopProxy);
+
+		List<RemoteAppEntry> remoteAppEntries =
+			remoteAppEntryLocalService.getRemoteAppEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (RemoteAppEntry remoteAppEntry : remoteAppEntries) {
+			deployRemoteAppEntry(remoteAppEntry);
+		}
+	}
+
+	@Clusterable
+	@Override
+	public void undeployRemoteAppEntry(RemoteAppEntry remoteAppEntry) {
+		ServiceRegistration<Portlet> serviceRegistration =
+			_serviceRegistrations.remove(remoteAppEntry.getRemoteAppEntryId());
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateRemoteAppEntry(
-			long remoteAppEntryId, Map<Locale, String> nameMap, String url,
-			ServiceContext serviceContext)
+			long remoteAppEntryId, Map<Locale, String> nameMap, String url)
 		throws PortalException {
 
 		url = StringUtil.trim(url);
 
-		validate(remoteAppEntryId, serviceContext.getCompanyId(), url);
-
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
+
+		_validate(remoteAppEntryId, remoteAppEntry.getCompanyId(), url);
 
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setUrl(url);
 
-		return remoteAppEntryPersistence.update(remoteAppEntry);
+		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
+
+		return remoteAppEntry;
 	}
 
-	protected void validate(long remoteAppEntryId, long companyId, String url)
-		throws PortalException {
-
-		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.fetchByC_U(
-			companyId, url);
-
-		if ((remoteAppEntry != null) &&
-			(remoteAppEntry.getRemoteAppEntryId() != remoteAppEntryId)) {
-
-			throw new DuplicateRemoteAppEntryException("Duplicate URL " + url);
-		}
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 	}
 
 	private SearchContext _buildSearchContext(
@@ -217,5 +303,22 @@ public class RemoteAppEntryLocalServiceImpl
 
 		return remoteAppEntries;
 	}
+
+	private void _validate(long remoteAppEntryId, long companyId, String url)
+		throws PortalException {
+
+		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.fetchByC_U(
+			companyId, url);
+
+		if ((remoteAppEntry != null) &&
+			(remoteAppEntry.getRemoteAppEntryId() != remoteAppEntryId)) {
+
+			throw new DuplicateRemoteAppEntryException("Duplicate URL " + url);
+		}
+	}
+
+	private final Map<Long, ServiceRegistration<Portlet>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
+	private BundleContext _bundleContext;
 
 }

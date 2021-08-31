@@ -139,10 +139,13 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 	 *
 	 * @param remoteAppEntry the remote app entry
 	 * @return the remote app entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public RemoteAppEntry deleteRemoteAppEntry(RemoteAppEntry remoteAppEntry) {
+	public RemoteAppEntry deleteRemoteAppEntry(RemoteAppEntry remoteAppEntry)
+		throws PortalException {
+
 		return remoteAppEntryPersistence.remove(remoteAppEntry);
 	}
 

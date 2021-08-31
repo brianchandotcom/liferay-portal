@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.remote.app.admin.web.internal.RemoteAppPortletRegistrar;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
 import com.liferay.remote.app.model.RemoteAppEntry;
@@ -56,38 +55,30 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		String url = ParamUtil.getString(actionRequest, "url");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			RemoteAppEntry.class.getName(), actionRequest);
-
 		try {
-			if (cmd.equals(Constants.ADD)) {
-				RemoteAppEntry remoteAppEntry =
-					_remoteAppEntryLocalService.addRemoteAppEntry(
-						serviceContext.getUserId(), nameMap, url,
-						serviceContext);
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-				_remoteAppPortletRegistrar.registerPortlet(remoteAppEntry);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				actionRequest, "name");
+			String url = ParamUtil.getString(actionRequest, "url");
+
+			if (cmd.equals(Constants.ADD)) {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						RemoteAppEntry.class.getName(), actionRequest);
+
+				_remoteAppEntryLocalService.addRemoteAppEntry(
+					serviceContext.getUserId(), nameMap, url, serviceContext);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				long remoteAppEntryId = ParamUtil.getLong(
 					actionRequest, "remoteAppEntryId");
 
-				RemoteAppEntry remoteAppEntry =
-					_remoteAppEntryLocalService.updateRemoteAppEntry(
-						remoteAppEntryId, nameMap, url, serviceContext);
-
-				_remoteAppPortletRegistrar.unregisterPortlet(remoteAppEntry);
-
-				_remoteAppPortletRegistrar.registerPortlet(remoteAppEntry);
+				_remoteAppEntryLocalService.updateRemoteAppEntry(
+					remoteAppEntryId, nameMap, url);
 			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
 				actionResponse.sendRedirect(redirect);
@@ -105,8 +96,5 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
-
-	@Reference
-	private RemoteAppPortletRegistrar _remoteAppPortletRegistrar;
 
 }

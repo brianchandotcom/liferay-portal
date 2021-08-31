@@ -151,7 +151,6 @@ public class CustomElementsSourceLocalServiceImpl
 			htmlElementName);
 
 		customElementsSource.setHTMLElementName(htmlElementName);
-
 		customElementsSource.setName(name);
 		customElementsSource.setURLs(urls);
 

@@ -126,12 +126,21 @@ public class RemoteAppEntryLocalServiceWrapper
 	 *
 	 * @param remoteAppEntry the remote app entry
 	 * @return the remote app entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry deleteRemoteAppEntry(
-		com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry) {
+			com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.deleteRemoteAppEntry(remoteAppEntry);
+	}
+
+	@Override
+	public void deployRemoteAppEntry(
+		com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry) {
+
+		_remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 	}
 
 	@Override
@@ -383,14 +392,20 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void undeployRemoteAppEntry(
+		com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry) {
+
+		_remoteAppEntryLocalService.undeployRemoteAppEntry(remoteAppEntry);
+	}
+
+	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry updateRemoteAppEntry(
 			long remoteAppEntryId,
-			java.util.Map<java.util.Locale, String> nameMap, String url,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			java.util.Map<java.util.Locale, String> nameMap, String url)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.updateRemoteAppEntry(
-			remoteAppEntryId, nameMap, url, serviceContext);
+			remoteAppEntryId, nameMap, url);
 	}
 
 	/**

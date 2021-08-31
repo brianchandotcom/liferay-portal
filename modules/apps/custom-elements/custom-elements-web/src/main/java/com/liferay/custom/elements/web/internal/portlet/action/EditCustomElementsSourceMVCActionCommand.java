@@ -71,9 +71,11 @@ public class EditCustomElementsSourceMVCActionCommand
 					serviceContext);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
+				long customElementsSourceId = ParamUtil.getLong(
+					actionRequest, "customElementsSourceId");
+
 				_customElementsSourceLocalService.updateCustomElementsSource(
-					ParamUtil.getLong(actionRequest, "customElementsSourceId"),
-					htmlElementName, name, urls);
+					customElementsSourceId, htmlElementName, name, urls);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -88,11 +90,6 @@ public class EditCustomElementsSourceMVCActionCommand
 				exception instanceof DuplicateCustomElementsSourceException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
-
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw exception;

@@ -70,11 +70,13 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 					instanceable, name, properties, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
+			long customElementsPortletDescriptorId = ParamUtil.getLong(
+				actionRequest, "customElementsPortletDescriptorId");
+
 			_customElementsPortletDescriptorLocalService.
 				updateCustomElementsPortletDescriptor(
-					ParamUtil.getLong(
-						actionRequest, "customElementsPortletDescriptorId"),
-					cssURLs, htmlElementName, instanceable, name, properties);
+					customElementsPortletDescriptorId, cssURLs, htmlElementName,
+					instanceable, name, properties);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

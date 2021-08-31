@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.constants;
+package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants;
 
 /**
  * @author Andrea Sbarra

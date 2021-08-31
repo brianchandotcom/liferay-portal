@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib;
+package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.view.table;
 
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.constants.CSDiagramDataSetConstants;
+import com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants.CSDiagramDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;

@@ -35,13 +35,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,10 +51,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
 
 /**
@@ -166,71 +159,21 @@ public class UpgradeReport {
 					"the document library", StringPool.NEW_LINE);
 			}
 
-			final AtomicLong length = new AtomicLong(0);
+			long length = 0;
 
 			String dlPath = PropsValues.LIFERAY_HOME + "/data/document_library";
 
 			if (_rootDir != null) {
-				dlPath = _rootDir + "/data/document_library";
+				docLibPath = _rootDir;
 			}
 
-			try {
-				Files.walkFileTree(
-					Paths.get(dlPath),
-					new SimpleFileVisitor<Path>() {
+			File docLibDir = new File(docLibPath);
 
-						@Override
-						public FileVisitResult postVisitDirectory(
-							Path dir, IOException ioException) {
-
-							if ((ioException != null) &&
-								_log.isDebugEnabled()) {
-
-								_log.debug(
-									StringBundler.concat(
-										"Unable to traverse: ", dir, " (",
-										ioException,
-										StringPool.CLOSE_PARENTHESIS));
-							}
-
-							return FileVisitResult.CONTINUE;
-						}
-
-						@Override
-						public FileVisitResult visitFile(
-							Path file,
-							BasicFileAttributes basicFileAttributes) {
-
-							length.addAndGet(basicFileAttributes.size());
-
-							return FileVisitResult.CONTINUE;
-						}
-
-						@Override
-						public FileVisitResult visitFileFailed(
-							Path file, IOException ioException) {
-
-							if (_log.isDebugEnabled()) {
-								_log.debug(
-									StringBundler.concat(
-										"Unable to visit: ", file, " (",
-										ioException,
-										StringPool.CLOSE_PARENTHESIS));
-							}
-
-							return FileVisitResult.CONTINUE;
-						}
-
-					});
-			}
-			catch (IOException ioException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to determine the size of the document library");
-				}
+			if (docLibDir.exists()) {
+				length = FileUtils.sizeOfDirectory(new File(docLibPath));
 			}
 
-			double bytes = length.get();
+			double bytes = length;
 
 			String[] dictionary = {"bytes", "KB", "MB", "GB", "TB", "PB"};
 

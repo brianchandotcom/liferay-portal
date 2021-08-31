@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -108,10 +109,19 @@ public class ResponsiveLayoutStructureUtil {
 
 		StringBundler sb = new StringBundler();
 
+		Set<String> propertiesWithResponsiveValues = new HashSet<>();
+
 		JSONObject itemConfigJSONObject =
 			styledLayoutStructureItem.getItemConfigJSONObject();
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		ViewportSize[] viewportSizes = ViewportSize.values();
+
+		Comparator<ViewportSize> comparator = Comparator.comparingInt(
+			ViewportSize::getOrder);
+
+		Arrays.sort(viewportSizes, comparator.reversed());
+
+		for (ViewportSize viewportSize : viewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -131,18 +141,19 @@ public class ResponsiveLayoutStructureUtil {
 				continue;
 			}
 
-			Set<String> keys = viewportStylesJSONObject.keySet();
-
-			for (String key : keys) {
-				if (!CommonStylesUtil.isResponsive(key)) {
-					continue;
-				}
-
+			for (String key : CommonStylesUtil.getResponsiveStyleNames()) {
 				String value = viewportStylesJSONObject.getString(key);
 
 				if (Validator.isNull(value)) {
-					continue;
+					if (!propertiesWithResponsiveValues.contains(key)) {
+						continue;
+					}
+
+					value = GetterUtil.getString(
+						CommonStylesUtil.getDefaultStyleValue(key));
 				}
+
+				propertiesWithResponsiveValues.add(key);
 
 				if (styledLayoutStructureItem instanceof
 						ContainerStyledLayoutStructureItem) {

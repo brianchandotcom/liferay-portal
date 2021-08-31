@@ -100,7 +100,7 @@ public class CommerceSubscriptionEntryShipmentsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/subscription_entry/shipments.jsp");
+			"/commerce_subscription_entry/shipments.jsp");
 	}
 
 	@Reference

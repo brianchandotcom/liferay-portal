@@ -100,7 +100,7 @@ public class CommerceSubscriptionEntryGeneralScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/subscription_entry/general.jsp");
+			"/commerce_subscription_entry/general.jsp");
 	}
 
 	@Reference

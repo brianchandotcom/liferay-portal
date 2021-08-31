@@ -100,7 +100,7 @@ public class CommerceSubscriptionEntryPaymentsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/subscription_entry/payments.jsp");
+			"/commerce_subscription_entry/payments.jsp");
 	}
 
 	@Reference

@@ -23,6 +23,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import TranslationAdminModal from './TranslationAdminModal';
 
 const emptyArray = [];
+const noop = () => {};
 
 const TranslationAdminSelector = ({
 	activeLanguageIds: initialActiveLanguageIds = emptyArray,
@@ -35,6 +36,7 @@ const TranslationAdminSelector = ({
 	},
 	availableLocales = emptyArray,
 	defaultLocaleId,
+	onActiveLanguageIdsChange = noop,
 	selectedLocaleId: initialSelectedLocaleId,
 	showOnlyFlags,
 	small = false,
@@ -71,6 +73,10 @@ const TranslationAdminSelector = ({
 			(availableLocale) => availableLocale.id === id
 		);
 	}, [availableLocales, defaultLocaleId, selectedLocaleId]);
+
+	useEffect(() => {
+		onActiveLanguageIdsChange(activeLanguageIds);
+	}, [activeLanguageIds, onActiveLanguageIdsChange]);
 
 	useEffect(() => {
 		setActiveLanguageIds(initialActiveLanguageIds);

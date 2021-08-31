@@ -109,10 +109,13 @@ public class UpgradeReport {
 		try {
 			FileUtil.write(
 				_getReportFile(),
-				StringBundler.concat(
-					_getPortalVersions(), _getDialectInfo(), _getProperties(),
-					_getDLSize(), _getUpgradeTimes(), _getLogEvents("errors"),
-					_getLogEvents("warnings")));
+				StringUtil.merge(
+					new String[] {
+						_getPortalVersions(), _getDialectInfo(),
+						_getProperties(), _getDLSize(), _getUpgradeTimes(),
+						_getLogEvents("errors"), _getLogEvents("warnings")
+					},
+					StringPool.NEW_LINE + StringPool.NEW_LINE));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -145,7 +148,7 @@ public class UpgradeReport {
 
 		return StringBundler.concat(
 			"Using ", db.getDBType(), " version ", db.getMajorVersion(),
-			StringPool.PERIOD, db.getMinorVersion(), StringPool.NEW_LINE);
+			StringPool.PERIOD, db.getMinorVersion());
 	}
 
 	private String _getDLSize() {
@@ -245,8 +248,7 @@ public class UpgradeReport {
 				String.format("%." + 2 + "f", bytes), StringPool.SPACE,
 				dictionary[index]);
 
-			return StringBundler.concat(
-				"The Document Library size is ", size, StringPool.NEW_LINE);
+			return "The Document Library size is " + size;
 		}
 
 		return "Please check the size of the Liferay Document Library in " +
@@ -313,12 +315,11 @@ public class UpgradeReport {
 				sb.append(type);
 				sb.append(": ");
 				sb.append(valueEntry.getKey());
+				sb.append(StringPool.NEW_LINE);
 			}
 
 			sb.append(StringPool.NEW_LINE);
 		}
-
-		sb.append(StringPool.NEW_LINE);
 
 		return sb.toString();
 	}
@@ -335,8 +336,7 @@ public class UpgradeReport {
 			StringPool.NEW_LINE,
 			_getReleaseInfo(
 				ReleaseInfo.getBuildNumber(), latestSchemaVersion.toString(),
-				"expected"),
-			StringPool.NEW_LINE);
+				"expected"));
 	}
 
 	private String _getProperties() {
@@ -383,8 +383,6 @@ public class UpgradeReport {
 		if (_rootDir != null) {
 			sb.append("rootDir=" + _rootDir);
 		}
-
-		sb.append(StringPool.NEW_LINE);
 
 		return sb.toString();
 	}
@@ -488,7 +486,7 @@ public class UpgradeReport {
 			UpgradeProcess.class.getName());
 
 		if (_eventMessages.size() == 0) {
-			return "Unable to get upgrade process times\n\n";
+			return "Unable to get upgrade process times";
 		}
 
 		StringBundler sb = new StringBundler();
@@ -531,8 +529,6 @@ public class UpgradeReport {
 				break;
 			}
 		}
-
-		sb.append(StringPool.NEW_LINE);
 
 		return sb.toString();
 	}

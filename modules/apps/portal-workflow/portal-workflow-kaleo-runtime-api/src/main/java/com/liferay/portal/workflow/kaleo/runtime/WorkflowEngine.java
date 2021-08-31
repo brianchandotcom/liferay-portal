@@ -130,42 +130,11 @@ public interface WorkflowEngine {
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
-	 *             String, String, String, String, String, Boolean, int, int,
-	 *             OrderByComparator, ServiceContext)}
-	 */
-	@Deprecated
-	public default List<WorkflowInstance> search(
-			Long userId, String assetClassName, String nodeName,
-			String kaleoDefinitionName, Boolean completed, int start, int end,
-			OrderByComparator<WorkflowInstance> orderByComparator,
-			ServiceContext serviceContext)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	public default List<WorkflowInstance> search(
 			Long userId, String assetClassName, String assetTitle,
 			String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowInstance> orderByComparator,
-			ServiceContext serviceContext)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
-	 *             String, String, String, String, String, Boolean,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public default int searchCount(
-			Long userId, String assetClassName, String nodeName,
-			String kaleoDefinitionName, Boolean completed,
 			ServiceContext serviceContext)
 		throws WorkflowException {
 

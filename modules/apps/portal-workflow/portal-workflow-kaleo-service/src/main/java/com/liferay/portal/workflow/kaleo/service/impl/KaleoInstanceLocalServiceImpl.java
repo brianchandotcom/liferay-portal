@@ -330,24 +330,6 @@ public class KaleoInstanceLocalServiceImpl
 			completed, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
-	 *             String, String, String, String, String, Boolean, int, int,
-	 *             OrderByComparator, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public List<KaleoInstance> search(
-		Long userId, String assetClassName, String nodeName,
-		String kaleoDefinitionName, Boolean completed, int start, int end,
-		OrderByComparator<KaleoInstance> orderByComparator,
-		ServiceContext serviceContext) {
-
-		return search(
-			userId, assetClassName, null, null, nodeName, kaleoDefinitionName,
-			completed, start, end, orderByComparator, serviceContext);
-	}
-
 	@Override
 	public List<KaleoInstance> search(
 		Long userId, String assetClassName, String assetTitle,
@@ -372,23 +354,6 @@ public class KaleoInstanceLocalServiceImpl
 		}
 
 		return Collections.emptyList();
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
-	 *             String, String, String, String, String, Boolean,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public int searchCount(
-		Long userId, String assetClassName, String nodeName,
-		String kaleoDefinitionName, Boolean completed,
-		ServiceContext serviceContext) {
-
-		return searchCount(
-			userId, assetClassName, null, null, nodeName, kaleoDefinitionName,
-			completed, serviceContext);
 	}
 
 	@Override

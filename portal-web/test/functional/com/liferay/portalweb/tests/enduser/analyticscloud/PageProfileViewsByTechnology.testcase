@@ -105,6 +105,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
 	@priority = "5"
 	test ShowsWhichDevicesBeingUsed {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-9002
+
 		ACAssets.viewTechnologyDeviceViewsAndPercentage(
 			actionValue = "1 Views",
 			cardTitle = "Views by Technology",

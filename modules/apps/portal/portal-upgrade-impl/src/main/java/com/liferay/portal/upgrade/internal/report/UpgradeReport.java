@@ -111,8 +111,8 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringBundler.concat(
 					_getPortalVersions(), _getDialectInfo(), _getProperties(),
-					_getDocLibSize(), _getUpgradeTimes(),
-					_getLogEvents("errors"), _getLogEvents("warnings")));
+					_getDLSize(), _getUpgradeTimes(), _getLogEvents("errors"),
+					_getLogEvents("warnings")));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -148,7 +148,7 @@ public class UpgradeReport {
 			StringPool.PERIOD, db.getMinorVersion(), StringPool.NEW_LINE);
 	}
 
-	private String _getDocLibSize() {
+	private String _getDLSize() {
 		if (_dlStore.equals("com.liferay.portal.store.db.DBStore")) {
 			return StringPool.BLANK;
 		}
@@ -165,16 +165,15 @@ public class UpgradeReport {
 
 			final AtomicLong length = new AtomicLong(0);
 
-			String docLibPath =
-				PropsValues.LIFERAY_HOME + "/data/document_library";
+			String dlPath = PropsValues.LIFERAY_HOME + "/data/document_library";
 
 			if (_rootDir != null) {
-				docLibPath = _rootDir + "/data/document_library";
+				dlPath = _rootDir + "/data/document_library";
 			}
 
 			try {
 				Files.walkFileTree(
-					Paths.get(docLibPath),
+					Paths.get(dlPath),
 					new SimpleFileVisitor<Path>() {
 
 						@Override

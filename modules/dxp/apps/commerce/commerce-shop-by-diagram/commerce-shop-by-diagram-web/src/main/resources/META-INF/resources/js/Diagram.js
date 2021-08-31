@@ -11,6 +11,7 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {fetch} from 'frontend-js-web';
+import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -29,6 +30,7 @@ const HEADERS = new Headers({
 });
 
 const Diagram = ({
+	datasetDisplayId,
 	enablePanZoom,
 	enableResetZoom,
 	imageSettings,
@@ -78,7 +80,7 @@ const Diagram = ({
 	const loadPins = useCallback(
 		() =>
 			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-				HEADERS,
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {
@@ -86,7 +88,7 @@ const Diagram = ({
 						cx: item.positionX,
 						cy: item.positionY,
 						id: item.id,
-						label: item.number,
+						label: item.sequence,
 					}));
 
 					setCpins(loadedPins);
@@ -96,7 +98,7 @@ const Diagram = ({
 
 	const deletePin = (node) => {
 		fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
-			HEADERS,
+			headers: HEADERS,
 			method: 'DELETE',
 		});
 	};
@@ -104,16 +106,22 @@ const Diagram = ({
 	const updatePin = (node) => {
 		if (node.id) {
 			fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
-				HEADERS,
 				body: JSON.stringify(node),
+				headers: HEADERS,
 				method: 'PATCH',
 			});
 		}
 		else {
 			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-				HEADERS,
 				body: JSON.stringify(node),
+				headers: HEADERS,
 				method: 'POST',
+			}).then(() => {
+				if (datasetDisplayId?.length > 0) {
+					Liferay.fire(UPDATE_DATASET_DISPLAY, {
+						id: datasetDisplayId,
+					});
+				}
 			});
 		}
 	};
@@ -127,7 +135,7 @@ const Diagram = ({
 			}
 
 			return fetch(`${pinsEndpoint}skus/${queryParam}`, {
-				HEADERS,
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {
@@ -142,7 +150,7 @@ const Diagram = ({
 			}
 
 			return fetch(`${pinsEndpoint}products/${queryParam}`, {
-				HEADERS,
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {
@@ -342,7 +350,6 @@ Diagram.propTypes = {
 			sku: PropTypes.string,
 		})
 	),
-	deletePin: PropTypes.func,
 	enablePanZoom: PropTypes.bool,
 	enableResetZoom: PropTypes.bool,
 	imageSettings: PropTypes.shape({

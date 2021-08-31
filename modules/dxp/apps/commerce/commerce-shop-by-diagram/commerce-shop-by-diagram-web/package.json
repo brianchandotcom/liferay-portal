@@ -15,6 +15,7 @@
 		"commerce-frontend-js": "*",
 		"d3": "5.9.3",
 		"frontend-js-web": "*",
+		"frontend-taglib-clay": "*",
 		"prop-types": "15.7.2"
 	},
 	"jest": {

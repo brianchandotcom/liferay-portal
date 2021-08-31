@@ -145,9 +145,9 @@ const AdminTooltip = ({
 						onClick={() => {
 							deletePin({
 								id: showTooltip.details.id,
-								number: pinPositionLabel,
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
+								sequence: pinPositionLabel,
 							});
 							setRemovePinHandler({
 								handler: true,
@@ -199,9 +199,9 @@ const AdminTooltip = ({
 						onClick={() => {
 							updatePin({
 								id: showTooltip.details.id,
-								number: parseInt(pinPositionLabel, 10),
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
+								sequence: pinPositionLabel,
 							});
 							setShowTooltip({
 								details: {

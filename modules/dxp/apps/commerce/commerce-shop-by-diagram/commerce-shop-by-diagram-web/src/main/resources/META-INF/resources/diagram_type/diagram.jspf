@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants.CSDiagramDataSetConstants" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -22,6 +23,8 @@
 	module="js/Diagram"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"datasetDisplayId", CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY
+		).put(
 			"enablePanZoom", true
 		).put(
 			"enableResetZoom", true
@@ -37,7 +40,7 @@
 		).put(
 			"isAdmin", true
 		).put(
-			"pinsEndpoint", "/o/headless-commerce-admin-catalog/v1.0/products/"
+			"pinsEndpoint", "/o/headless-commerce-admin-catalog/v1.0/"
 		).put(
 			"productId", cpDefinition.getCProductId()
 		).put(

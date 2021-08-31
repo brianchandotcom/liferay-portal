@@ -168,8 +168,8 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 				GetterUtil.getLong(diagramEntry.getProductId()),
 				GetterUtil.getBoolean(diagramEntry.getDiagram()),
 				GetterUtil.getInteger(diagramEntry.getQuantity()),
-				GetterUtil.getString(diagramEntry.getSku()),
 				GetterUtil.getString(diagramEntry.getSequence()),
+				GetterUtil.getString(diagramEntry.getSku()),
 				new ServiceContext());
 
 		return _toDiagramEntry(

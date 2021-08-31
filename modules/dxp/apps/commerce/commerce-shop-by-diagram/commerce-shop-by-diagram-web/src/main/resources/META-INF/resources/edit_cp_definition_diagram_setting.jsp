@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants.CSDiagramDataSetConstants" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -26,19 +27,21 @@ CPDefinitionDiagramSetting cpDefinitionDiagramSetting = cpDefinitionDiagramSetti
 String type = BeanParamUtil.getString(cpDefinitionDiagramSetting, renderRequest, "type", DefaultCPDefinitionDiagramType.KEY);
 
 CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramType(type);
+
+PortletURL portletURL = cpDefinitionDiagramSettingDisplayContext.getPortletURL();
 %>
 
-<div class="pt-4">
-	<portlet:actionURL name="/cp_definitions/edit_cp_definition_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
+<portlet:actionURL name="/cp_definitions/edit_cp_definition_diagram_setting" var="editProductDefinitionDiagramSettingActionURL" />
 
-	<aui:form action="<%= editProductDefinitionDiagramSettingActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCPDefinitionDiagramSetting" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+<aui:form action="<%= editProductDefinitionDiagramSettingActionURL %>" cssClass="mt-4" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCPDefinitionDiagramSetting" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 
-		<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
-		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
+	<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
+	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
 
+	<div class="row">
 		<div class="col-8">
 			<commerce-ui:panel
 				title='<%= LanguageUtil.get(resourceBundle, "diagram-settings") %>'
@@ -72,7 +75,7 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 
 		<div class="col-4">
 			<commerce-ui:panel
-				elementClasses="flex-fill h-100"
+				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(resourceBundle, "diagram-file") %>'
 			>
 				<div class="row">
@@ -101,9 +104,25 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 					</div>
 				</div>
 			</commerce-ui:panel>
+
+			<commerce-ui:panel
+				elementClasses="flex-fill"
+				title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
+			>
+				<clay:headless-data-set-display
+					apiURL="<%= cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramEntriesAPIURL() %>"
+					formId="fm"
+					id="<%= CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY %>"
+					itemsPerPage="<%= 10 %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
+					pageNumber="<%= 1 %>"
+					portletURL="<%= portletURL %>"
+					style="stacked"
+				/>
+			</commerce-ui:panel>
 		</div>
-	</aui:form>
-</div>
+	</div>
+</aui:form>
 
 <liferay-frontend:component
 	context='<%=

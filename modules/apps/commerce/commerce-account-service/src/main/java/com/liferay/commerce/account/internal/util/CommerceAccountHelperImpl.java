@@ -14,13 +14,14 @@
 
 package com.liferay.commerce.account.internal.util;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountModel;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
@@ -93,25 +94,25 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Override
 	public long[] getCommerceAccountGroupIds(long commerceAccountId) {
-		List<CommerceAccountGroup> commerceAccountGroups =
-			_commerceAccountGroupLocalService.
-				getCommerceAccountGroupsByCommerceAccountId(commerceAccountId);
+		List<AccountGroupRel> accountGroupRels =
+			_accountGroupRelLocalService.getAccountGroupRels(
+				AccountEntry.class.getName(), commerceAccountId);
 
-		if (commerceAccountGroups.isEmpty()) {
+		if (accountGroupRels.isEmpty()) {
 			return new long[0];
 		}
 
-		Stream<CommerceAccountGroup> stream = commerceAccountGroups.stream();
+		Stream<AccountGroupRel> stream = accountGroupRels.stream();
 
-		long[] commerceAccountGroupIds = stream.mapToLong(
-			CommerceAccountGroup::getCommerceAccountGroupId
+		long[] accountGroupIds = stream.mapToLong(
+			AccountGroupRel::getAccountGroupId
 		).toArray();
 
-		commerceAccountGroupIds = ArrayUtil.unique(commerceAccountGroupIds);
+		accountGroupIds = ArrayUtil.unique(accountGroupIds);
 
-		Arrays.sort(commerceAccountGroupIds);
+		Arrays.sort(accountGroupIds);
 
-		return commerceAccountGroupIds;
+		return accountGroupIds;
 	}
 
 	/**
@@ -279,7 +280,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		"LIFERAY_SHARED_CURRENT_COMMERCE_ACCOUNT_ID_";
 
 	@Reference
-	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;

@@ -556,6 +556,17 @@ public class FragmentEntryLinkLocalServiceWrapper
 				groupId, segmentsExperienceId, classNameId, classPK);
 	}
 
+	@Override
+	public java.util.List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long segmentsExperienceId, long plid,
+			String rendererKey) {
+
+		return _fragmentEntryLinkLocalService.
+			getFragmentEntryLinksBySegmentsExperienceId(
+				groupId, segmentsExperienceId, plid, rendererKey);
+	}
+
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.
 	 *

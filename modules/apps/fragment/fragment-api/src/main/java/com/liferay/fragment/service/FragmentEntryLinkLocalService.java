@@ -404,6 +404,10 @@ public interface FragmentEntryLinkLocalService
 		long groupId, long segmentsExperienceId, long classNameId,
 		long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
+		long groupId, long segmentsExperienceId, long plid, String rendererKey);
+
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.
 	 *

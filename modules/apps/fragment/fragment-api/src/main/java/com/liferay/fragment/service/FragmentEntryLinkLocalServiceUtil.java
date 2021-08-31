@@ -497,6 +497,15 @@ public class FragmentEntryLinkLocalServiceUtil {
 			groupId, segmentsExperienceId, classNameId, classPK);
 	}
 
+	public static List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long segmentsExperienceId, long plid,
+			String rendererKey) {
+
+		return getService().getFragmentEntryLinksBySegmentsExperienceId(
+			groupId, segmentsExperienceId, plid, rendererKey);
+	}
+
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.
 	 *

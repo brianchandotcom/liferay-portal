@@ -383,6 +383,17 @@ public class FragmentEntryLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_S_P_R() throws Exception {
+		_persistence.countByG_S_P_R(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_S_P_R(0L, 0L, 0L, "null");
+
+		_persistence.countByG_S_P_R(0L, 0L, 0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FragmentEntryLink newFragmentEntryLink = addFragmentEntryLink();
 

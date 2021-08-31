@@ -40,6 +40,14 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8493 | Test Summary: Segment Composition shows Active and Known individuals"
 	@priority = "3"
 	test SegmentCompositionShowsActiveAndKnownIndividuals {
+		task ("Create a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "testac@liferay.com",
+				userFirstName = "Test",
+				userLastName = "Test",
+				userScreenName = "testac");
+		}
+
 		task ("Launch AC and navigate to Segments") {
 			ACUtils.launchAC();
 

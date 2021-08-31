@@ -111,7 +111,7 @@ public class CPDefinitionDiagramSettingDisplayContext
 		}
 	}
 
-	public String getCPDefinitionDiagramEntriesApiURL() throws PortalException {
+	public String getCPDefinitionDiagramEntriesAPIURL() throws PortalException {
 		CPDefinition cpDefinition = getCPDefinition();
 
 		return "/o/headless-commerce-admin-catalog/v1.0/products/" +

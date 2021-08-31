@@ -80,7 +80,8 @@ public class CommerceOrderItemDetailScreenNavigationCategory
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/order_item/detail.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_order_item/detail.jsp");
 	}
 
 	@Reference

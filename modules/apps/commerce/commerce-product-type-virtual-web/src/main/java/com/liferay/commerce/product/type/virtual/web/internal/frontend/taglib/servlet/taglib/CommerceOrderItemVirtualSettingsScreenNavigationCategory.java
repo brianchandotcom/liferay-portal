@@ -136,7 +136,7 @@ public class CommerceOrderItemVirtualSettingsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/order_item/virtual_settings.jsp");
+			"/commerce_order_item/virtual_settings.jsp");
 	}
 
 	protected CommerceVirtualOrderItem getCommerceVirtualOrderItem(

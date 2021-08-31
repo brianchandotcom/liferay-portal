@@ -59,70 +59,70 @@
 .btn-solid {
 	&.btn-variant-primary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-primary-active};
-			--btn-active-border-color: #{$action-primary-active};
-			--btn-default-background-color: #{$action-primary-default};
-			--btn-default-border-color: #{$action-primary-default};
-			--btn-default-color: #{$action-primary-inverted};
-			--btn-disabled-background-color: #{$action-primary-disabled};
-			--btn-disabled-border-color: #{$action-primary-disabled};
-			--btn-hover-background-color: #{$action-primary-hover};
-			--btn-hover-border-color: #{$action-primary-hover};
+			--btn-active-background-color: var(--action-primary-active);
+			--btn-active-border-color: var(--action-primary-active);
+			--btn-default-background-color: var(--action-primary-default);
+			--btn-default-border-color: var(--action-primary-default);
+			--btn-default-color: var(--action-primary-inverted);
+			--btn-disabled-background-color: var(--action-primary-disabled);
+			--btn-disabled-border-color: var(--action-primary-disabled);
+			--btn-hover-background-color: var(--action-primary-hover);
+			--btn-hover-border-color: var(--action-primary-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-color: #{$action-primary-active};
-			--btn-default-background-color: #{$action-primary-inverted};
-			--btn-default-border-color: #{$action-primary-inverted};
-			--btn-default-color: #{$action-primary-default};
-			--btn-disabled-color: #{$action-primary-disabled};
-			--btn-hover-color: #{$action-primary-hover};
+			--btn-active-color: var(--action-primary-active);
+			--btn-default-background-color: var(--action-primary-inverted);
+			--btn-default-border-color: var(--action-primary-inverted);
+			--btn-default-color: var(--action-primary-default);
+			--btn-disabled-color: var(--action-primary-disabled);
+			--btn-hover-color: var(--action-primary-hover);
 		}
 	}
 
 	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-secondary-active};
-			--btn-active-border-color: #{$action-secondary-active};
-			--btn-default-background-color: #{$action-secondary-default};
-			--btn-default-border-color: #{$action-secondary-default};
-			--btn-default-color: #{$action-secondary-inverted};
-			--btn-disabled-background-color: #{$action-secondary-disabled};
-			--btn-disabled-border-color: #{$action-secondary-disabled};
-			--btn-hover-background-color: #{$action-secondary-hover};
-			--btn-hover-border-color: #{$action-secondary-hover};
+			--btn-active-background-color: var(--action-secondary-active);
+			--btn-active-border-color: var(--action-secondary-active);
+			--btn-default-background-color: var(--action-secondary-default);
+			--btn-default-border-color: var(--action-secondary-default);
+			--btn-default-color: var(--action-secondary-inverted);
+			--btn-disabled-background-color: var(--action-secondary-disabled);
+			--btn-disabled-border-color: var(--action-secondary-disabled);
+			--btn-hover-background-color: var(--action-secondary-hover);
+			--btn-hover-border-color: var(--action-secondary-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-color: #{$action-secondary-active};
-			--btn-default-background-color: #{$action-secondary-inverted};
-			--btn-default-border-color: #{$action-secondary-inverted};
-			--btn-default-color: #{$action-secondary-default};
-			--btn-disabled-color: #{$action-secondary-disabled};
-			--btn-hover-color: #{$action-secondary-hover};
+			--btn-active-color: var(--action-secondary-active);
+			--btn-default-background-color: var(--action-secondary-inverted);
+			--btn-default-border-color: var(--action-secondary-inverted);
+			--btn-default-color: var(--action-secondary-default);
+			--btn-disabled-color: var(--action-secondary-disabled);
+			--btn-hover-color: var(--action-secondary-hover);
 		}
 	}
 
 	&.btn-variant-neutral {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-neutral-active};
-			--btn-active-border-color: #{$action-neutral-active};
-			--btn-default-background-color: #{$action-neutral-default};
-			--btn-default-border-color: #{$action-neutral-default};
-			--btn-default-color: #{$action-neutral-inverted};
-			--btn-disabled-background-color: #{$action-neutral-disabled};
-			--btn-disabled-border-color: #{$action-neutral-disabled};
-			--btn-hover-background-color: #{$action-neutral-hover};
-			--btn-hover-border-color: #{$action-neutral-hover};
+			--btn-active-background-color: var(--action-neutral-active);
+			--btn-active-border-color: var(--action-neutral-active);
+			--btn-default-background-color: var(--action-neutral-default);
+			--btn-default-border-color: var(--action-neutral-default);
+			--btn-default-color: var(--action-neutral-inverted);
+			--btn-disabled-background-color: var(--action-neutral-disabled);
+			--btn-disabled-border-color: var(--action-neutral-disabled);
+			--btn-hover-background-color: var(--action-neutral-hover);
+			--btn-hover-border-color: var(--action-neutral-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-color: #{$action-neutral-active};
-			--btn-default-background-color: #{$action-neutral-inverted};
-			--btn-default-border-color: #{$action-neutral-inverted};
-			--btn-default-color: #{$action-neutral-default};
-			--btn-disabled-color: #{$action-neutral-disabled};
-			--btn-hover-color: #{$action-neutral-hover};
+			--btn-active-color: var(--action-neutral-active);
+			--btn-default-background-color: var(--action-neutral-inverted);
+			--btn-default-border-color: var(--action-neutral-inverted);
+			--btn-default-color: var(--action-neutral-default);
+			--btn-disabled-color: var(--action-neutral-disabled);
+			--btn-hover-color: var(--action-neutral-hover);
 		}
 	}
 }
@@ -165,85 +165,85 @@
 
 	&.btn-variant-primary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-primary-inverted};
-			--btn-active-border-color: #{$action-primary-active};
-			--btn-active-color: #{$action-primary-active};
-			--btn-default-background-color: #{$action-primary-inverted};
-			--btn-default-border-color: #{$action-primary-default};
-			--btn-default-color: #{$action-primary-default};
-			--btn-disabled-background-color: #{$action-primary-inverted};
-			--btn-disabled-border-color: #{$action-primary-disabled};
-			--btn-disabled-color: #{$action-primary-disabled};
-			--btn-hover-background-color: #{$action-primary-inverted};
-			--btn-hover-border-color: #{$action-primary-hover};
-			--btn-hover-color: #{$action-primary-hover};
+			--btn-active-background-color: var(--action-primary-inverted);
+			--btn-active-border-color: var(--action-primary-active);
+			--btn-active-color: var(--action-primary-active);
+			--btn-default-background-color: var(--action-primary-inverted);
+			--btn-default-border-color: var(--action-primary-default);
+			--btn-default-color: var(--action-primary-default);
+			--btn-disabled-background-color: var(--action-primary-inverted);
+			--btn-disabled-border-color: var(--action-primary-disabled);
+			--btn-disabled-color: var(--action-primary-disabled);
+			--btn-hover-background-color: var(--action-primary-inverted);
+			--btn-hover-border-color: var(--action-primary-hover);
+			--btn-hover-color: var(--action-primary-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-color: #{$action-primary-inverted};
-			--btn-default-border-color: #{$action-primary-inverted};
-			--btn-default-color: #{$action-primary-inverted};
-			--btn-disabled-border-color: #{$action-primary-inverted-disabled};
-			--btn-disabled-color: #{$action-primary-inverted-disabled};
-			--btn-hover-background-color: #{$action-primary-inverted-hover};
-			--btn-hover-border-color: #{$action-primary-inverted};
-			--btn-hover-color: #{$action-primary-inverted};
+			--btn-active-color: var(--action-primary-inverted);
+			--btn-default-border-color: var(--action-primary-inverted);
+			--btn-default-color: var(--action-primary-inverted);
+			--btn-disabled-border-color: var(--action-primary-inverted-disabled);
+			--btn-disabled-color: var(--action-primary-inverted-disabled);
+			--btn-hover-background-color: var(--action-primary-inverted-hover);
+			--btn-hover-border-color: var(--action-primary-inverted);
+			--btn-hover-color: var(--action-primary-inverted);
 		}
 	}
 
 	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-secondary-inverted};
-			--btn-active-border-color: #{$action-secondary-active};
-			--btn-active-color: #{$action-secondary-active};
-			--btn-default-background-color: #{$action-secondary-inverted};
-			--btn-default-border-color: #{$action-secondary-default};
-			--btn-default-color: #{$action-secondary-default};
-			--btn-disabled-background-color: #{$action-secondary-inverted};
-			--btn-disabled-border-color: #{$action-secondary-disabled};
-			--btn-disabled-color: #{$action-secondary-disabled};
-			--btn-hover-background-color: #{$action-secondary-inverted};
-			--btn-hover-border-color: #{$action-secondary-hover};
-			--btn-hover-color: #{$action-secondary-hover};
+			--btn-active-background-color: var(--action-secondary-inverted);
+			--btn-active-border-color: var(--action-secondary-active);
+			--btn-active-color: var(--action-secondary-active);
+			--btn-default-background-color: var(--action-secondary-inverted);
+			--btn-default-border-color: var(--action-secondary-default);
+			--btn-default-color: var(--action-secondary-default);
+			--btn-disabled-background-color: var(--action-secondary-inverted);
+			--btn-disabled-border-color: var(--action-secondary-disabled);
+			--btn-disabled-color: var(--action-secondary-disabled);
+			--btn-hover-background-color: var(--action-secondary-inverted);
+			--btn-hover-border-color: var(--action-secondary-hover);
+			--btn-hover-color: var(--action-secondary-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-color: #{$action-secondary-inverted};
-			--btn-default-border-color: #{$action-secondary-inverted};
-			--btn-default-color: #{$action-secondary-inverted};
-			--btn-disabled-border-color: #{$action-secondary-inverted-disabled};
-			--btn-disabled-color: #{$action-secondary-inverted-disabled};
-			--btn-hover-background-color: #{$action-secondary-inverted-hover};
-			--btn-hover-border-color: #{$action-secondary-inverted};
-			--btn-hover-color: #{$action-secondary-inverted};
+			--btn-active-color: var(--action-secondary-inverted);
+			--btn-default-border-color: var(--action-secondary-inverted);
+			--btn-default-color: var(--action-secondary-inverted);
+			--btn-disabled-border-color: var(--action-secondary-inverted-disabled);
+			--btn-disabled-color: var(--action-secondary-inverted-disabled);
+			--btn-hover-background-color: var(--action-secondary-inverted-hover);
+			--btn-hover-border-color: var(--action-secondary-inverted);
+			--btn-hover-color: var(--action-secondary-inverted);
 		}
 	}
 
 	&.btn-variant-neutral {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-neutral-inverted};
-			--btn-active-border-color: #{$action-neutral-active};
-			--btn-active-color: #{$action-neutral-active};
-			--btn-default-background-color: #{$action-neutral-inverted};
-			--btn-default-border-color: #{$action-neutral-default};
-			--btn-default-color: #{$action-neutral-default};
-			--btn-disabled-background-color: #{$action-neutral-inverted};
-			--btn-disabled-border-color: #{$action-neutral-disabled};
-			--btn-disabled-color: #{$action-neutral-disabled};
-			--btn-hover-background-color: #{$action-neutral-inverted};
-			--btn-hover-border-color: #{$action-neutral-hover};
-			--btn-hover-color: #{$action-neutral-hover};
+			--btn-active-background-color: var(--action-neutral-inverted);
+			--btn-active-border-color: var(--action-neutral-active);
+			--btn-active-color: var(--action-neutral-active);
+			--btn-default-background-color: var(--action-neutral-inverted);
+			--btn-default-border-color: var(--action-neutral-default);
+			--btn-default-color: var(--action-neutral-default);
+			--btn-disabled-background-color: var(--action-neutral-inverted);
+			--btn-disabled-border-color: var(--action-neutral-disabled);
+			--btn-disabled-color: var(--action-neutral-disabled);
+			--btn-hover-background-color: var(--action-neutral-inverted);
+			--btn-hover-border-color: var(--action-neutral-hover);
+			--btn-hover-color: var(--action-neutral-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-color: #{$action-neutral-inverted};
-			--btn-default-border-color: #{$action-neutral-inverted};
-			--btn-default-color: #{$action-neutral-inverted};
-			--btn-disabled-border-color: #{$action-neutral-inverted-disabled};
-			--btn-disabled-color: #{$action-neutral-inverted-disabled};
-			--btn-hover-background-color: #{$action-neutral-inverted-hover};
-			--btn-hover-border-color: #{$action-neutral-inverted};
-			--btn-hover-color: #{$action-neutral-inverted};
+			--btn-active-color: var(--action-neutral-inverted);
+			--btn-default-border-color: var(--action-neutral-inverted);
+			--btn-default-color: var(--action-neutral-inverted);
+			--btn-disabled-border-color: var(--action-neutral-inverted-disabled);
+			--btn-disabled-color: var(--action-neutral-inverted-disabled);
+			--btn-hover-background-color: var(--action-neutral-inverted-hover);
+			--btn-hover-border-color: var(--action-neutral-inverted);
+			--btn-hover-color: var(--action-neutral-inverted);
 		}
 	}
 }
@@ -265,67 +265,67 @@
 
 	&.btn-variant-primary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-primary-inverted};
-			--btn-active-border-color: #{$action-primary-active};
-			--btn-active-color: #{$action-primary-active};
-			--btn-default-color: #{$action-primary-default};
-			--btn-disabled-color: #{$action-primary-disabled};
-			--btn-hover-border-color: #{$action-primary-hover};
-			--btn-hover-color: #{$action-primary-hover};
+			--btn-active-background-color: var(--action-primary-inverted);
+			--btn-active-border-color: var(--action-primary-active);
+			--btn-active-color: var(--action-primary-active);
+			--btn-default-color: var(--action-primary-default);
+			--btn-disabled-color: var(--action-primary-disabled);
+			--btn-hover-border-color: var(--action-primary-hover);
+			--btn-hover-color: var(--action-primary-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-border-color: #{$action-primary-inverted};
-			--btn-active-color: #{$action-primary-inverted};
-			--btn-default-color: #{$action-primary-inverted};
-			--btn-disabled-color: #{$action-primary-inverted-disabled};
-			--btn-hover-background-color: #{$action-primary-inverted-hover};
-			--btn-hover-border-color: #{$action-primary-inverted};
-			--btn-hover-color: #{$action-primary-inverted};
+			--btn-active-border-color: var(--action-primary-inverted);
+			--btn-active-color: var(--action-primary-inverted);
+			--btn-default-color: var(--action-primary-inverted);
+			--btn-disabled-color: var(--action-primary-inverted-disabled);
+			--btn-hover-background-color: var(--action-primary-inverted-hover);
+			--btn-hover-border-color: var(--action-primary-inverted);
+			--btn-hover-color: var(--action-primary-inverted);
 		}
 	}
 
 	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-secondary-inverted};
-			--btn-active-border-color: #{$action-secondary-active};
-			--btn-active-color: #{$action-secondary-active};
-			--btn-default-color: #{$action-secondary-default};
-			--btn-disabled-color: #{$action-secondary-disabled};
-			--btn-hover-border-color: #{$action-secondary-hover};
-			--btn-hover-color: #{$action-secondary-hover};
+			--btn-active-background-color: var(--action-secondary-inverted);
+			--btn-active-border-color: var(--action-secondary-active);
+			--btn-active-color: var(--action-secondary-active);
+			--btn-default-color: var(--action-secondary-default);
+			--btn-disabled-color: var(--action-secondary-disabled);
+			--btn-hover-border-color: var(--action-secondary-hover);
+			--btn-hover-color: var(--action-secondary-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-border-color: #{$action-secondary-inverted};
-			--btn-active-color: #{$action-secondary-inverted};
-			--btn-default-color: #{$action-secondary-inverted};
-			--btn-disabled-color: #{$action-secondary-inverted-disabled};
-			--btn-hover-background-color: #{$action-secondary-inverted-hover};
-			--btn-hover-border-color: #{$action-secondary-inverted};
-			--btn-hover-color: #{$action-secondary-inverted};
+			--btn-active-border-color: var(--action-secondary-inverted);
+			--btn-active-color: var(--action-secondary-inverted);
+			--btn-default-color: var(--action-secondary-inverted);
+			--btn-disabled-color: var(--action-secondary-inverted-disabled);
+			--btn-hover-background-color: var(--action-secondary-inverted-hover);
+			--btn-hover-border-color: var(--action-secondary-inverted);
+			--btn-hover-color: var(--action-secondary-inverted);
 		}
 	}
 
 	&.btn-variant-neutral {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: #{$action-neutral-inverted};
-			--btn-active-border-color: #{$action-neutral-active};
-			--btn-active-color: #{$action-neutral-active};
-			--btn-default-color: #{$action-neutral-default};
-			--btn-disabled-color: #{$action-neutral-disabled};
-			--btn-hover-border-color: #{$action-neutral-hover};
-			--btn-hover-color: #{$action-neutral-hover};
+			--btn-active-background-color: var(--action-neutral-inverted);
+			--btn-active-border-color: var(--action-neutral-active);
+			--btn-active-color: var(--action-neutral-active);
+			--btn-default-color: var(--action-neutral-default);
+			--btn-disabled-color: var(--action-neutral-disabled);
+			--btn-hover-border-color: var(--action-neutral-hover);
+			--btn-hover-color: var(--action-neutral-hover);
 		}
 
 		&.btn-inverted {
-			--btn-active-border-color: #{$action-neutral-inverted};
-			--btn-active-color: #{$action-neutral-inverted};
-			--btn-default-color: #{$action-neutral-inverted};
-			--btn-disabled-color: #{$action-neutral-inverted-disabled};
-			--btn-hover-background-color: #{$action-neutral-inverted-hover};
-			--btn-hover-border-color: #{$action-neutral-inverted};
-			--btn-hover-color: #{$action-neutral-inverted};
+			--btn-active-border-color: var(--action-neutral-inverted);
+			--btn-active-color: var(--action-neutral-inverted);
+			--btn-default-color: var(--action-neutral-inverted);
+			--btn-disabled-color: var(--action-neutral-inverted-disabled);
+			--btn-hover-background-color: var(--action-neutral-inverted-hover);
+			--btn-hover-border-color: var(--action-neutral-inverted);
+			--btn-hover-color: var(--action-neutral-inverted);
 		}
 	}
 }
@@ -336,15 +336,15 @@
 	border-radius: $rounded-pill;
 
 	&.btn-variant-primary {
-		box-shadow: var(--elevation-tight-4) $action-primary-disabled;
+		box-shadow: var(--elevation-tight-4) var(--action-primary-disabled);
 	}
 
 	&.btn-variant-secondary {
-		box-shadow: var(--elevation-tight-4) $action-secondary-disabled;
+		box-shadow: var(--elevation-tight-4) var(--action-secondary-disabled);
 	}
 
 	&.btn-variant-neutral {
-		box-shadow: var(--elevation-tight-4) $action-neutral-disabled;
+		box-shadow: var(--elevation-tight-4) var(--action-neutral-disabled);
 	}
 }
 

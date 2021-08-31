@@ -197,6 +197,30 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByActionId">
+		<![CDATA[
+			LEFT JOIN
+				Users_Groups ON
+					Users_Groups.groupId = Group_.groupId
+			LEFT JOIN
+				(SELECT roleId, userId FROM UserGroupRole UNION ALL SELECT roleId, userid FROM Users_Roles) Roles ON
+					Users_Groups.userId = Roles.userId
+			LEFT JOIN
+				ResourcePermission ON
+					ResourcePermission.roleId = Roles.roleId
+			WHERE
+			(
+				(? = true) OR
+				(
+					Roles.userId = ? AND
+					(
+						(Roles.roleId=? OR Roles.roleId= ?) OR
+						(BITAND(CAST_LONG(ResourcePermission.actionIds), ?) != 0)
+					)
+				)
+			)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByActive">
 		<![CDATA[
 			WHERE

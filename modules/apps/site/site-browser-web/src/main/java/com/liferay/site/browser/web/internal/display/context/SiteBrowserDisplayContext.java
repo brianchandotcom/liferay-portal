@@ -461,6 +461,8 @@ public class SiteBrowserDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		User user = themeDisplay.getUser();
+
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
@@ -490,18 +492,23 @@ public class SiteBrowserDisplayContext {
 			_groupParams.put("groupsTree", ListUtil.fromArray(parentGroup));
 		}
 		else if (filterManageableGroups) {
-			User user = themeDisplay.getUser();
 
 			if (Objects.equals(type, "sites-that-i-administer")) {
+				_groupParams.put("userId", user.getUserId());
+
 				_groupParams.put("actionId", ActionKeys.UPDATE);
 			}
 			else {
+				_groupParams.put("userId", user.getUserId());
+
 				_groupParams.put("actionId", ActionKeys.ASSIGN_MEMBERS);
 			}
 
 			_groupParams.put("usersGroups", user.getUserId());
 		}
 		else {
+			_groupParams.put("userId", user.getUserId());
+
 			_groupParams.put("actionId", ActionKeys.ASSIGN_MEMBERS);
 		}
 

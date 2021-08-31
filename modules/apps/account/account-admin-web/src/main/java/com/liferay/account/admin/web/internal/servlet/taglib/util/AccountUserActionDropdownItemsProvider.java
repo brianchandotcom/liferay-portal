@@ -16,7 +16,6 @@ package com.liferay.account.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
-import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -42,13 +41,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AccountUserActionDropdownItemsProvider {
 
 	public AccountUserActionDropdownItemsProvider(
-		AccountEntryDisplay accountEntryDisplay,
-		AccountUserDisplay accountUserDisplay,
+		AccountEntryDisplay accountEntryDisplay, long accountUserId,
 		PermissionChecker permissionChecker, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
 		_accountEntryDisplay = accountEntryDisplay;
-		_accountUserDisplay = accountUserDisplay;
+		_accountUserId = accountUserId;
 		_permissionChecker = permissionChecker;
 		_renderResponse = renderResponse;
 
@@ -80,7 +78,7 @@ public class AccountUserActionDropdownItemsProvider {
 						"accountEntryId",
 						_accountEntryDisplay.getAccountEntryId()
 					).setParameter(
-						"accountUserIds", _accountUserDisplay.getUserId()
+						"accountUserIds", _accountUserId
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
@@ -96,7 +94,7 @@ public class AccountUserActionDropdownItemsProvider {
 						"accountEntryId",
 						_accountEntryDisplay.getAccountEntryId()
 					).setParameter(
-						"accountUserIds", _accountUserDisplay.getUserId()
+						"accountUserIds", _accountUserId
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "assign-roles"));
@@ -119,7 +117,7 @@ public class AccountUserActionDropdownItemsProvider {
 						"accountEntryId",
 						_accountEntryDisplay.getAccountEntryId()
 					).setParameter(
-						"accountUserIds", _accountUserDisplay.getUserId()
+						"accountUserIds", _accountUserId
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "remove"));
@@ -128,7 +126,7 @@ public class AccountUserActionDropdownItemsProvider {
 	}
 
 	private final AccountEntryDisplay _accountEntryDisplay;
-	private final AccountUserDisplay _accountUserDisplay;
+	private final long _accountUserId;
 	private final HttpServletRequest _httpServletRequest;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;

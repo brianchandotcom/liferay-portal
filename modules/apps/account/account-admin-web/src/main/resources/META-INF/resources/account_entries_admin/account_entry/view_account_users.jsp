@@ -93,7 +93,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				/>
 
 				<%
-				AccountUserActionDropdownItemsProvider accountUserActionDropdownItemsProvider = new AccountUserActionDropdownItemsProvider(accountEntryDisplay, accountUser, permissionChecker, renderRequest, renderResponse);
+				AccountUserActionDropdownItemsProvider accountUserActionDropdownItemsProvider = new AccountUserActionDropdownItemsProvider(accountEntryDisplay, accountUser.getUserId(), permissionChecker, renderRequest, renderResponse);
 				%>
 
 				<liferay-ui:search-container-column-text>

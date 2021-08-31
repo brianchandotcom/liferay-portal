@@ -42,11 +42,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class RelatedInfoCollectionProviderItemSelectorDisplayContext {
+public class RelatedInfoItemCollectionProviderItemSelectorDisplayContext {
 
-	public RelatedInfoCollectionProviderItemSelectorDisplayContext(
-		HttpServletRequest httpServletRequest,
-		String itemSelectedEventName, Language language, PortletURL portletURL,
+	public RelatedInfoItemCollectionProviderItemSelectorDisplayContext(
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
+		Language language, PortletURL portletURL,
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders) {
 

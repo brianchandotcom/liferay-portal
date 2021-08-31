@@ -48,23 +48,23 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jürgen Kappler
  */
 public class
-	RelatedInfoCollectionProviderItemSelectorManagementToolbarDisplayContext
+	RelatedInfoItemCollectionProviderItemSelectorManagementToolbarDisplayContext
 		extends SearchContainerManagementToolbarDisplayContext {
 
-	public RelatedInfoCollectionProviderItemSelectorManagementToolbarDisplayContext(
+	public RelatedInfoItemCollectionProviderItemSelectorManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		RelatedInfoCollectionProviderItemSelectorDisplayContext
-			relatedInfoCollectionProviderItemSelectorDisplayContext,
+		RelatedInfoItemCollectionProviderItemSelectorDisplayContext
+			relatedInfoItemCollectionProviderItemSelectorDisplayContext,
 		SearchContainer<?> searchContainer) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
-		_relatedInfoCollectionProviderItemSelectorDisplayContext =
-			relatedInfoCollectionProviderItemSelectorDisplayContext;
+		_relatedInfoItemCollectionProviderItemSelectorDisplayContext =
+			relatedInfoItemCollectionProviderItemSelectorDisplayContext;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -148,7 +148,7 @@ public class
 	private List<DropdownItem> _getFilterTypeDropdownItems() {
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders =
-				_relatedInfoCollectionProviderItemSelectorDisplayContext.
+				_relatedInfoItemCollectionProviderItemSelectorDisplayContext.
 					getRelatedInfoItemCollectionProviders();
 
 		Stream<RelatedInfoItemCollectionProvider<?, ?>> stream =
@@ -193,8 +193,8 @@ public class
 		return _selectedItemType;
 	}
 
-	private final RelatedInfoCollectionProviderItemSelectorDisplayContext
-		_relatedInfoCollectionProviderItemSelectorDisplayContext;
+	private final RelatedInfoItemCollectionProviderItemSelectorDisplayContext
+		_relatedInfoItemCollectionProviderItemSelectorDisplayContext;
 	private String _selectedItemType;
 	private final ThemeDisplay _themeDisplay;
 

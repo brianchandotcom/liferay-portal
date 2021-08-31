@@ -17,7 +17,7 @@ package com.liferay.info.collection.provider.item.selector.web.internal;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys;
-import com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoCollectionProviderItemSelectorDisplayContext;
+import com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoItemCollectionProviderItemSelectorDisplayContext;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -91,7 +91,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 		servletRequest.setAttribute(
 			InfoCollectionProviderItemSelectorWebKeys.
 				RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			new RelatedInfoCollectionProviderItemSelectorDisplayContext(
+			new RelatedInfoItemCollectionProviderItemSelectorDisplayContext(
 				(HttpServletRequest)servletRequest, itemSelectedEventName,
 				_language, portletURL, relatedInfoItemCollectionProviders));
 

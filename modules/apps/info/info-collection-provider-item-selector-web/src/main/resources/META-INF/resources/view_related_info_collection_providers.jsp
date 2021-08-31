@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-RelatedInfoCollectionProviderItemSelectorDisplayContext relatedInfoCollectionProvidersDisplayContext = (RelatedInfoCollectionProviderItemSelectorDisplayContext)request.getAttribute(InfoCollectionProviderItemSelectorWebKeys.RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT);
+RelatedInfoItemCollectionProviderItemSelectorDisplayContext relatedInfoItemCollectionProviderItemSelectorDisplayContext = (RelatedInfoItemCollectionProviderItemSelectorDisplayContext)request.getAttribute(InfoCollectionProviderItemSelectorWebKeys.RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT);
 
-SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relatedInfoCollectionProvidersDisplayContext.getSearchContainer();
+SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relatedInfoItemCollectionProviderItemSelectorDisplayContext.getSearchContainer();
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new RelatedInfoCollectionProviderItemSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, relatedInfoCollectionProvidersDisplayContext, searchContainer) %>"
+	managementToolbarDisplayContext="<%= new RelatedInfoItemCollectionProviderItemSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, relatedInfoItemCollectionProviderItemSelectorDisplayContext, searchContainer) %>"
 />
 
 <clay:container-fluid
@@ -43,12 +43,12 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 			<%
 			row.setData(
 				HashMapBuilder.<String, Object>put(
-					"value", relatedInfoCollectionProvidersDisplayContext.getPayload(relatedInfoItemCollectionProvider)
+					"value", relatedInfoItemCollectionProviderItemSelectorDisplayContext.getPayload(relatedInfoItemCollectionProvider)
 				).build());
 			%>
 
 			<c:choose>
-				<c:when test="<%= relatedInfoCollectionProvidersDisplayContext.isIconDisplayStyle() %>">
+				<c:when test="<%= relatedInfoItemCollectionProviderItemSelectorDisplayContext.isIconDisplayStyle() %>">
 
 					<%
 					row.setCssClass("card-page-item card-page-item-asset entry " + row.getCssClass());
@@ -60,7 +60,7 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test="<%= relatedInfoCollectionProvidersDisplayContext.isDescriptiveDisplayStyle() %>">
+				<c:when test="<%= relatedInfoItemCollectionProviderItemSelectorDisplayContext.isDescriptiveDisplayStyle() %>">
 
 					<%
 					row.setCssClass("item-selector-list-row " + row.getCssClass());
@@ -102,7 +102,7 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= relatedInfoCollectionProvidersDisplayContext.getDisplayStyle() %>"
+			displayStyle="<%= relatedInfoItemCollectionProviderItemSelectorDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			searchContainer="<%= searchContainer %>"
 		/>
@@ -146,11 +146,11 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 			}
 
 			Liferay.Util.getOpener().Liferay.fire(
-				'<%= relatedInfoCollectionProvidersDisplayContext.getItemSelectedEventName() %>',
+				'<%= relatedInfoItemCollectionProviderItemSelectorDisplayContext.getItemSelectedEventName() %>',
 				{
 					data: {
 						returnType:
-							'<%= relatedInfoCollectionProvidersDisplayContext.getReturnType() %>',
+							'<%= relatedInfoItemCollectionProviderItemSelectorDisplayContext.getReturnType() %>',
 						value: itemValue,
 					},
 				}

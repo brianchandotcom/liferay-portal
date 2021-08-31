@@ -26,8 +26,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider" %><%@
 page import="com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys" %><%@
-page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoCollectionProviderItemSelectorDisplayContext" %><%@
-page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoCollectionProviderItemSelectorManagementToolbarDisplayContext" %><%@
+page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoItemCollectionProviderItemSelectorDisplayContext" %><%@
+page import="com.liferay.info.collection.provider.item.selector.web.internal.display.context.RelatedInfoItemCollectionProviderItemSelectorManagementToolbarDisplayContext" %><%@
 page import="com.liferay.info.collection.provider.item.selector.web.internal.servlet.taglib.clay.RelatedInfoItemCollectionProviderVerticalCard" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@

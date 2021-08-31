@@ -1,0 +1,96 @@
+.btn {
+	border: none;
+	cursor: pointer;
+	display: flex;
+	outline: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+	align-items: center;
+	border-radius: 0.25rem;
+	font-size: 1rem;
+	font-weight: bold;
+	gap: 0.5rem;
+	height: 3.5rem;
+	justify-content: center;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	text-transform: uppercase;
+	transition: 200ms all ease-out;
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+}
+
+.btn.btn-primary {
+	background: $primary-default;
+	color: $background;
+	fill: $background;
+
+	&:hover {
+		background: $primary-dark;
+	}
+}
+
+.btn.btn-secondary {
+	background: $secondary-default;
+	color: $background;
+	fill: $background;
+
+	&:hover {
+		background: $secondary-dark;
+	}
+}
+
+.btn.continue {
+	padding: 1rem 3rem;
+}
+
+.btn.btn-flat {
+	background: $background;
+	color: $neutral-default;
+	fill: $neutral-default;
+	padding: 0;
+}
+
+.btn.btn-outline {
+	background: $background;
+	border: 1px solid $neutral-default;
+	color: $neutral-default;
+	fill: $neutral-default;
+	padding: 1rem 1.125rem;
+}
+
+.btn.badge {
+	gap: 0.5rem;
+	height: 1.5rem;
+	min-width: 4.4rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+
+	font-size: 0.813rem;
+	text-transform: none;
+
+	background: $primary-light;
+	color: $primary-default-light;
+	fill: $primary-default-light;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
+.btn.search {
+	padding: 1rem 1.125rem;
+}
+
+.btn.badge.bottom-list {
+	margin-top: -1rem;
+	width: fit-content;
+}

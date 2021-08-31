@@ -176,6 +176,24 @@ public class CommonStylesUtil {
 		return _defaultValues;
 	}
 
+	public static List<String> getResponsiveStyleNames() throws Exception {
+		if (_responsiveStyleNames != null) {
+			return _responsiveStyleNames;
+		}
+
+		List<String> responsiveStyleNames = new ArrayList<>();
+
+		for (String availableStyleName : getAvailableStyleNames()) {
+			if (isResponsive(availableStyleName)) {
+				responsiveStyleNames.add(availableStyleName);
+			}
+		}
+
+		_responsiveStyleNames = responsiveStyleNames;
+
+		return _responsiveStyleNames;
+	}
+
 	public static String getResponsiveTemplate(String propertyKey)
 		throws Exception {
 
@@ -232,6 +250,7 @@ public class CommonStylesUtil {
 	private static List<String> _availableStyleNames;
 	private static final Map<Locale, JSONArray> _commonStyles = new HashMap<>();
 	private static Map<String, Object> _defaultValues;
+	private static List<String> _responsiveStyleNames;
 	private static Map<String, String> _responsiveTemplates;
 
 }

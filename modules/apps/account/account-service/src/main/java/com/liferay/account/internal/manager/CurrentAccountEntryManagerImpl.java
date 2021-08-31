@@ -180,7 +180,9 @@ public class CurrentAccountEntryManagerImpl
 		String key = _getKey(groupId);
 
 		long currentAccountEntryId = GetterUtil.getLong(
-			portalPreferences.getValue(AccountEntry.class.getName(), key));
+			portalPreferences.getValue(
+				AccountEntry.class.getName(), key,
+				String.valueOf(AccountConstants.ACCOUNT_ENTRY_ID_GUEST)));
 
 		if (currentAccountEntryId == accountEntryId) {
 			return;

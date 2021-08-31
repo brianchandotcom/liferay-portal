@@ -220,28 +220,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String descriptionCategory = categoryJSONObject.getString(
 				"description");
-
-			String titleCategory = categoryJSONObject.getString("title");
-
 			String externalReferenceCodeCategory = categoryJSONObject.getString(
 				"externalReferenceCode");
+			String titleCategory = categoryJSONObject.getString("title");
 
 			JSONArray propertiesJSONArray = categoryJSONObject.getJSONArray(
 				"properties");
-
+			
 			String[] properties = new String[0];
 
 			if (propertiesJSONArray != null) {
 				properties = new String[propertiesJSONArray.length()];
 
-				for (int x = 0; x < propertiesJSONArray.length(); x++) {
+				for (int i = 0; i < propertiesJSONArray.length(); i++) {
 					JSONObject propertyJSONObject =
-						propertiesJSONArray.getJSONObject(x);
+						propertiesJSONArray.getJSONObject(i);
 
 					String key = propertyJSONObject.getString("key");
 					String value = propertyJSONObject.getString("value");
 
-					properties[x] = StringBundler.concat(
+					properties[i] = StringBundler.concat(
 						key,
 						AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR,
 						value);

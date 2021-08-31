@@ -114,7 +114,7 @@ public class CommerceCurrencyExchangeRateScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/currency/exchange_rate.jsp");
+			"/commerce_currency/exchange_rate.jsp");
 	}
 
 	@Reference

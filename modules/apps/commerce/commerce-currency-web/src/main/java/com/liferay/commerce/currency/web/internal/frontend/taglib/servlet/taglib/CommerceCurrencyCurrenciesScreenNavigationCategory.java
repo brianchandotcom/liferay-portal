@@ -114,7 +114,7 @@ public class CommerceCurrencyCurrenciesScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/currency/currencies.jsp");
+			"/commerce_currency/currencies.jsp");
 	}
 
 	@Reference

@@ -73,7 +73,7 @@ public class DLFileEntryTypeModelListener
 	}
 
 	@Override
-	public void onAfterRemove(DLFileEntryType dlFileEntryType)
+	public void onBeforeRemove(DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
 
 		Map<Long, ServiceRegistration<?>> serviceRegistrations =

@@ -76,7 +76,7 @@ public class DDMStructureModelListener
 	}
 
 	@Override
-	public void onAfterRemove(DDMStructure ddmStructure)
+	public void onBeforeRemove(DDMStructure ddmStructure)
 		throws ModelListenerException {
 
 		if (ddmStructure.getClassNameId() != _portal.getClassNameId(

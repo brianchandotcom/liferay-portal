@@ -66,7 +66,7 @@ public class EditCommerceShipmentShippingDateMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceShipmentDisplayContext);
 
-		return "/shipment/edit_commerce_shipment_shipping_date.jsp";
+		return "/commerce_shipment/edit_commerce_shipment_shipping_date.jsp";
 	}
 
 	@Reference

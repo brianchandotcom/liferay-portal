@@ -78,7 +78,7 @@ public class CommerceShipmentShippingSummaryScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/shipment/shipping_summary.jsp");
+			"/commerce_shipment/shipping_summary.jsp");
 	}
 
 	@Reference

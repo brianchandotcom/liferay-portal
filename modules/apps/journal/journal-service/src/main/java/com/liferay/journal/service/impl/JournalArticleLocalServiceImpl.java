@@ -595,7 +595,14 @@ public class JournalArticleLocalServiceImpl
 		article.setReviewDate(reviewDate);
 		article.setIndexable(indexable);
 		article.setSmallImage(smallImage);
-		article.setSmallImageId(counterLocalService.increment());
+
+		if (smallImage) {
+			article.setSmallImageId(counterLocalService.increment());
+		}
+		else {
+			article.setSmallImageId(0);
+		}
+
 		article.setSmallImageURL(smallImageURL);
 
 		Date date = new Date();

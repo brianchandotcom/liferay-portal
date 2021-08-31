@@ -140,6 +140,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_BAR_IN_SPECIFIC_CARD</td>
+	<td>//h5[@class='card-title'and text()='${key_cardTitle}']/parent::div/parent::div//input[@type='text' and @placeholder='Search' and not(@disabled)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_ON_LIST</td>
 	<td>//*[contains(@class,'text-truncate') and contains(text(),'${itemName}')]</td>
 	<td></td>

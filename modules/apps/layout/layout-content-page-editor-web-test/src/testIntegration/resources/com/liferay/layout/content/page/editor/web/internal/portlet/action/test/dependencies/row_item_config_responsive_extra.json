@@ -19,7 +19,6 @@
 	},
 	"reverseOrder": false,
 	"styles": {
-		"display": "block"
 	},
 	"tablet": {
 		"modulesPerRow": 2,
@@ -27,5 +26,6 @@
 		"styles": {
 		},
 		"verticalAlignment": "middle"
-	}
+	},
+	"verticalAlignment": "top"
 }

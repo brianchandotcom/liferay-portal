@@ -592,11 +592,13 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "start-elasticsearch");
 
-		AssertConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
+		WaitForConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
 
-		Navigator.openSpecificURL(url = "http://localhost:9201");
+		// LRCI-2401
 
-		AssertTextNotPresent(value1 = "cluster_name");
+		//Navigator.openSpecificURL(url = "http://localhost:9201");
+
+		//AssertTextNotPresent(value1 = "cluster_name");
 
 		Navigator.openURL();
 

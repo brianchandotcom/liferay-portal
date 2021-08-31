@@ -356,7 +356,7 @@
 <!-- Segments List -->
 <tr>
 	<td>FILTER_AND_ORDER_BUTTON</td>
-	<td>//button[contains(@data-testid,'filter-and-order-button')]/span[@class='text-truncate' and text()='Filter and Order']</td>
+	<td>//button[contains(@data-testid,'filter-and-order-button')]/span[@class='text-truncate' and text()='${key_dropdownName}']</td>
 	<td></td>
 </tr>
 <tr>

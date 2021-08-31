@@ -296,6 +296,10 @@ definition {
 	macro filterAndOrderForSegLists {
 		var key_filterName = "${filterName}";
 
+		if (!(isSet(key_dropdownName))) {
+			var key_dropdownName = "Filter and Order";
+		}
+
 		Click(locator1 = "ACSegments#FILTER_AND_ORDER_BUTTON");
 
 		Click(

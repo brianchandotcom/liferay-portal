@@ -13,7 +13,7 @@
 <!--KNOWN_INDIVIDUALS-->
 <tr>
 	<td>KNOWN_INDIVIDUAL_ATTRIBUTES_FILTER</td>
-	<td>//button[contains(@class,'btn')]/span[@class='text-truncate' and text()='${key_rowName}']</td>
+	<td>//*[contains(@class,'btn')]/span[@class='text-truncate' and text()='${key_rowName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -36,12 +36,68 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSegmentOverviewShowsCriteria {
+		task ("Create Blog and Add to Page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
 
-		// TODO LRAC-8588 AssertSegmentOverviewShowsCriteria pending implementation
+		task ("Conect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Navigate to Page and Blog") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Close all sessions and wait") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Launch AC and Switch Property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Segments and Create Dynamic Segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add Segment Field and Edit Web Behavior Criteria") {
+			ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+			ACSegments.editWebBehaviorCriterion(
+				indexField = "1",
+				occurenceNumber = "4",
+				searchTerm = "Blogs AC Title");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Segments and access the Dynamic Segment Test") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Assert the result of Segment Criteria Web Behavior") {
+			ACSegments.viewSegmentCriteriaWebBehavior(
+				activitiesOption = "has",
+				atLeastMost = "at least",
+				occurenceNumber = "4",
+				searchTerm = "'Blogs AC Title'",
+				timeOption = "since",
+				timePeriod = "Last 24 hours");
+		}
 	}
 
 	@description = "Edit a dynamic segment and check the edits are saved"

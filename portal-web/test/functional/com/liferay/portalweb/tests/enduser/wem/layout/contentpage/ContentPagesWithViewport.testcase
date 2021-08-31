@@ -26,6 +26,8 @@ definition {
 
 	tearDown {
 		task ("Go back to Desktop viewport") {
+			SelectFrame(value1 = "relative=top");
+
 			Click(
 				key_deviceType = "Desktop",
 				locator1 = "PageEditor#DEVICE_TYPE");
@@ -200,8 +202,6 @@ definition {
 			TestUtils.isGreaterThan(
 				actual = "${moduleHeight}",
 				expected = "20");
-
-			SelectFrame(value1 = "relative=top");
 		}
 	}
 
@@ -313,9 +313,7 @@ definition {
 					key_fragmentName = "Heading",
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY",
 					value1 = "Heading Example 3");
-
 		}
-
 	}
 
 
@@ -354,7 +352,6 @@ definition {
 			}
 
 		}
-
 
 		task ("Hide Heading Example 5 for desktop view") {
 			PageEditor.clickHideFragmentViaPageStructure(
@@ -521,7 +518,6 @@ definition {
 					paddingRight = "2",
 					paddingTop = "2");
 
-				SelectFrame(value1 = "relative=top");
 			}
 		}
 	}

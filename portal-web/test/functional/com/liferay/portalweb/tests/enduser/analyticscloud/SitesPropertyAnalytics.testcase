@@ -43,12 +43,75 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8330 | Test Summary: Assert Chart ticks for pages Visitor Behavior standardized"
-	@ignore = "true"
 	@priority = "5"
 	test AssertChartTicksPagesVisitorBehaviorStandardized {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8330 AssertChartTicksPagesVisitorBehaviorStandardized
+		task ("View the site page as Test Test") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Pages tab in Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Select the Last 24 hours in time period") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to page report entry") {
+			ACNavigation.openItem(itemName = "AC Page - Site Name - Liferay DXP");
+		}
+
+		task ("View the time period is Last 24 hours in Visitors Behavior chart") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Visitors Behavior",
+				timeFilterRange = "Last 24 hours");
+		}
+
+		task ("View the format of recharts xAxis ticks is h tt") {
+			var time = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "Visitors Behavior");
+
+			ACUtils.assertTimePattern(
+				format = "h tt",
+				time = "${time}");
+		}
+
+		task ("Select the Last 90 days time period in site metrics chart") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Visitors Behavior");
+
+			ACTimeFilter.setLast90Days();
+		}
+
+		task ("View the format of recharts xAxis ticks is h tt") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "Visitors Behavior");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM d");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"

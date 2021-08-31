@@ -41,9 +41,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesSerializeUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -177,7 +176,7 @@ public class PollsMigrationToFormsUpgradeProcess extends UpgradeProcess {
 			_getResourceBundle(), "radio-field-type-label");
 
 		DDMFormField ddmFormField = new DDMFormField(
-			getDDMFormFieldName(ddmFormFieldLabel),
+			DDMFormFieldUtil.getDDMFormFieldName(ddmFormFieldLabel),
 			DDMFormFieldTypeConstants.RADIO);
 
 		ddmFormField.setDataType("string");
@@ -192,15 +191,6 @@ public class PollsMigrationToFormsUpgradeProcess extends UpgradeProcess {
 		ddmFormField.setShowLabel(false);
 
 		return ddmFormField;
-	}
-
-	protected String getDDMFormFieldName(String ddmFormFieldName) {
-		for (int i = 0; i < 8; i++) {
-			ddmFormFieldName = ddmFormFieldName.concat(
-				String.valueOf(RandomUtil.nextInt(10)));
-		}
-
-		return StringUtil.removeChar(ddmFormFieldName, CharPool.SPACE);
 	}
 
 	protected String getDDMFormLayoutDefinition(DDMFormField ddmFormField) {
@@ -743,7 +733,7 @@ public class PollsMigrationToFormsUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String optionValue = getDDMFormFieldName(
+					String optionValue = DDMFormFieldUtil.getDDMFormFieldName(
 						LanguageUtil.get(_getResourceBundle(), "option"));
 
 					ddmFormFieldOptionsValues.put(

@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
@@ -52,7 +53,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -80,19 +80,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		_upgradeDDMStructureVersion();
 
 		_upgradeDDMStructure();
-	}
-
-	private String _generateDDMFormFieldName() {
-		String ddmFormFieldName = "Field";
-
-		Random random = new Random();
-
-		for (int i = 0; i < _DDM_FORM_FIELD_NAME_RANDOM_NUMBERS_LENGTH; i++) {
-			ddmFormFieldName = ddmFormFieldName.concat(
-				String.valueOf(random.nextInt(10)));
-		}
-
-		return ddmFormFieldName;
 	}
 
 	private boolean _hasMoreThanOneDDMFormFieldPerColumn(
@@ -285,7 +272,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 						ddmFormLayoutColumn.getDDMFormFieldNames();
 
 					if (ddmFormFieldNames.size() > 1) {
-						String ddmFormFieldName = _generateDDMFormFieldName();
+						String ddmFormFieldName =
+							DDMFormFieldUtil.getDDMFormFieldName("Field");
 
 						ddmFormFieldTuples.add(
 							new Tuple(
@@ -429,8 +417,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}
-
-	private static final int _DDM_FORM_FIELD_NAME_RANDOM_NUMBERS_LENGTH = 8;
 
 	private static final int _DDM_FORM_FIELD_TUPLE_COLUMN_SIZE = 2;
 

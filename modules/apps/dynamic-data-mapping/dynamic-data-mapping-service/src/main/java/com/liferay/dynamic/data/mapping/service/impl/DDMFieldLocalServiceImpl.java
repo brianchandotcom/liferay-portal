@@ -507,38 +507,42 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			DDMFormField ddmFormField = ddmFormFieldMap.get(
 				ddmFormFieldValue.getName());
 
-			String instanceId = ddmFormFieldValue.getInstanceId();
+			if (ddmFormField != null) {
+				String instanceId = ddmFormFieldValue.getInstanceId();
 
-			while (ddmFieldInfoMap.containsKey(instanceId)) {
-				instanceId =
-					com.liferay.portal.kernel.util.StringUtil.randomString();
-			}
-
-			DDMFieldInfo ddmFieldInfo = new DDMFieldInfo(
-				ddmFormFieldValue.getName(), instanceId,
-				ddmFormField.isLocalizable(), parentInstanceId);
-
-			ddmFieldInfoMap.put(instanceId, ddmFieldInfo);
-
-			Value value = ddmFormFieldValue.getValue();
-
-			if (value != null) {
-				Map<Locale, String> values = value.getValues();
-
-				for (Map.Entry<Locale, String> entry : values.entrySet()) {
-					String languageId = LanguageUtil.getLanguageId(
-						entry.getKey());
-
-					ddmFieldInfo._ddmFieldAttributeInfos.put(
-						languageId,
-						_getDDMFieldAttributeInfos(
-							ddmFieldInfo, languageId, entry.getValue()));
+				while (ddmFieldInfoMap.containsKey(instanceId)) {
+					instanceId =
+						com.liferay.portal.kernel.util.StringUtil.
+							randomString();
 				}
-			}
 
-			_collectDDMFieldInfos(
-				ddmFieldInfoMap, ddmFormFieldMap,
-				ddmFormFieldValue.getNestedDDMFormFieldValues(), instanceId);
+				DDMFieldInfo ddmFieldInfo = new DDMFieldInfo(
+					ddmFormFieldValue.getName(), instanceId,
+					ddmFormField.isLocalizable(), parentInstanceId);
+
+				ddmFieldInfoMap.put(instanceId, ddmFieldInfo);
+
+				Value value = ddmFormFieldValue.getValue();
+
+				if (value != null) {
+					Map<Locale, String> values = value.getValues();
+
+					for (Map.Entry<Locale, String> entry : values.entrySet()) {
+						String languageId = LanguageUtil.getLanguageId(
+							entry.getKey());
+
+						ddmFieldInfo._ddmFieldAttributeInfos.put(
+							languageId,
+							_getDDMFieldAttributeInfos(
+								ddmFieldInfo, languageId, entry.getValue()));
+					}
+				}
+
+				_collectDDMFieldInfos(
+					ddmFieldInfoMap, ddmFormFieldMap,
+					ddmFormFieldValue.getNestedDDMFormFieldValues(),
+					instanceId);
+			}
 		}
 	}
 

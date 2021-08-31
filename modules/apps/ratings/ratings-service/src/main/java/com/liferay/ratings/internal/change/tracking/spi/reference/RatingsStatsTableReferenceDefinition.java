@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class RatingStatsTableReferenceDefinition
+public class RatingsStatsTableReferenceDefinition
 	implements TableReferenceDefinition<RatingsStatsTable> {
 
 	@Override

@@ -46,10 +46,11 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Alejandro Tardín
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
 @Sync
-public class RedirectNotFoundEntriesMessageListenerTest {
+public class CheckRedirectNotFoundEntriesMessageListenerTest {
 
 	@ClassRule
 	@Rule
@@ -83,7 +84,7 @@ public class RedirectNotFoundEntriesMessageListenerTest {
 			redirectNotFoundEntries.toString(), 2,
 			redirectNotFoundEntries.size());
 
-		_redirectNotFoundEntriesMessageListener.receive(new Message());
+		_checkRedirectNotFoundEntriesMessageListener.receive(new Message());
 
 		redirectNotFoundEntries =
 			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
@@ -95,6 +96,26 @@ public class RedirectNotFoundEntriesMessageListenerTest {
 			redirectNotFoundEntries.size());
 		Assert.assertEquals(
 			redirectNotFoundEntry, redirectNotFoundEntries.get(0));
+	}
+
+	@Test
+	public void testDeletesEntriesOverflowing1000Elements() throws Exception {
+		for (int i = 0; i < 1001; i++) {
+			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				_group, "url" + i);
+		}
+
+		Assert.assertEquals(
+			1001,
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntriesCount(
+				_group.getGroupId()));
+
+		_checkRedirectNotFoundEntriesMessageListener.receive(new Message());
+
+		Assert.assertEquals(
+			1000,
+			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntriesCount(
+				_group.getGroupId()));
 	}
 
 	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(
@@ -110,15 +131,17 @@ public class RedirectNotFoundEntriesMessageListenerTest {
 			redirectNotFoundEntry);
 	}
 
+	@Inject(
+		filter = "component.name=*.CheckRedirectNotFoundEntriesMessageListener"
+	)
+	private MessageListener _checkRedirectNotFoundEntriesMessageListener;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private final Set<RedirectNotFoundEntry> _redirectNotFoundEntries =
 		new HashSet<>();
-
-	@Inject(filter = "component.name=*.RedirectNotFoundEntriesMessageListener")
-	private MessageListener _redirectNotFoundEntriesMessageListener;
 
 	@Inject
 	private RedirectNotFoundEntryLocalService

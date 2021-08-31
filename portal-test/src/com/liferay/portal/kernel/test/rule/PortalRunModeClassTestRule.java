@@ -29,7 +29,12 @@ public class PortalRunModeClassTestRule extends ClassTestRule<String> {
 
 	@Override
 	protected void afterClass(Description description, String liferayMode) {
-		SystemProperties.set("liferay.mode", liferayMode);
+		if (liferayMode == null) {
+			SystemProperties.clear("liferay.mode");
+		}
+		else {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
 	}
 
 	@Override

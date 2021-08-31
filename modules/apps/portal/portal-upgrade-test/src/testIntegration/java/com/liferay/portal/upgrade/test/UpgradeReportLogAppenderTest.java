@@ -176,8 +176,8 @@ public class UpgradeReportLogAppenderTest {
 
 		release = _releaseLocalService.getRelease(1);
 
-		release.setBuildNumber(ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 		release.setSchemaVersion("1.0.0");
+		release.setBuildNumber(ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 
 		_releaseLocalService.updateRelease(release);
 
@@ -185,8 +185,8 @@ public class UpgradeReportLogAppenderTest {
 
 		release = _releaseLocalService.getRelease(1);
 
-		release.setBuildNumber(initialBuildNumber);
 		release.setSchemaVersion(initialSchemaVersion);
+		release.setBuildNumber(initialBuildNumber);
 
 		_releaseLocalService.updateRelease(release);
 

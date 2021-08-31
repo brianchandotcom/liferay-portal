@@ -44,6 +44,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
@@ -56,7 +57,6 @@ import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -342,15 +342,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 			previousButtonTag.setCssClass(
 				"font-weight-semi-bold mr-3 previous text-secondary");
-			previousButtonTag.setAdditionalProps(
-				HashMapBuilder.<String, Object>put(
-					"disabled",
-					Objects.equals(
-						renderCollectionLayoutStructureItemDisplayContext.
-							getActivePage(),
-						1)
-				).build());
 			previousButtonTag.setDisplayType("unstyled");
+			previousButtonTag.setDynamicAttribute(
+				StringPool.BLANK, "disabled",
+				Objects.equals(
+					renderCollectionLayoutStructureItemDisplayContext.
+						getActivePage(),
+					1));
 			previousButtonTag.setId(
 				"paginationPreviousButton_" +
 					collectionStyledLayoutStructureItem.getItemId());
@@ -363,16 +361,14 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 			nextButtonTag.setCssClass(
 				"font-weight-semi-bold ml-3 next text-secondary");
-			nextButtonTag.setAdditionalProps(
-				HashMapBuilder.<String, Object>put(
-					"disabled",
-					Objects.equals(
-						renderCollectionLayoutStructureItemDisplayContext.
-							getActivePage(),
-						renderCollectionLayoutStructureItemDisplayContext.
-							getNumberOfPages())
-				).build());
 			nextButtonTag.setDisplayType("unstyled");
+			nextButtonTag.setDynamicAttribute(
+				StringPool.BLANK, "disabled",
+				Objects.equals(
+					renderCollectionLayoutStructureItemDisplayContext.
+						getActivePage(),
+					renderCollectionLayoutStructureItemDisplayContext.
+						getNumberOfPages()));
 			nextButtonTag.setId(
 				"paginationNextButton_" +
 					collectionStyledLayoutStructureItem.getItemId());

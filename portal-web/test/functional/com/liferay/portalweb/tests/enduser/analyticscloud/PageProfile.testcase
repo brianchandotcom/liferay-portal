@@ -47,12 +47,63 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8112 | Test Summary: Assert clicking on a page in the pages lists navigates to the page profile"
-	@ignore = "true"
 	@priority = "5"
 	test ClickOnPageInPagesListsNavigatesToPageProfile {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8112 ClickOnPageInPagesListsNavigatesToPageProfile pending implementation
+		// AC Refactor: the issue is due to data not appearing on time
+		// AC Refactor ticket: LRAC-8990
 
+		task ("Connect DXP to Analytics Cloud and get the property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View the blog") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Navigate to AC workspace") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Pages tab in Sites") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Set time filter use 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to page report entry") {
+			ACNavigation.openItem(itemName = "AC Page - Site Name - Liferay DXP");
+
+			// Unable to perform the declaration because the data does not appear at the time
+
+		}
+
+		task ("Assert Page Profile") {
+			ACUtils.assertPageTitle(pageTitle = "AC Page - Site Name - Liferay DXP");
+
+			for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology,Displayed Assets") {
+				ACCards.viewCards(cardTitle = "${cardTitle}");
+			}
+		}
 	}
 
 }

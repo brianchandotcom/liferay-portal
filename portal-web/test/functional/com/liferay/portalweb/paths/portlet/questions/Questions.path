@@ -262,7 +262,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_UNSUBSCRIBE</td>
-	<td>//button[@type='button' and @*='Unsubscribe']</td>
+	<td>//button[contains(@class,'btn-primary')][*[name()='svg'][contains(@class,'lexicon-icon-bell-on')]]</td>
 	<td></td>
 </tr>
 <tr>

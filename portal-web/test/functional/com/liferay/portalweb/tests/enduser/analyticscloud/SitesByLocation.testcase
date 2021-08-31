@@ -16,6 +16,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -26,17 +28,67 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: LRAC-6637 | Automation ID: LRAC-8309 | Test Summary: Private IPs reported as Local Network"
-	@ignore = "true"
 	@priority = "4"
 	test CanprivateIpsReportedAsLocalNetwork {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8309 CanprivateIpsReportedAsLocalNetwork
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9011
 
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Create a blog and add to page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
+
+		task ("View the page and blog") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the sites overview") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Overview");
+		}
+
+		task ("View the Sessions by Location card and filter the time") {
+			ACCards.viewCards(cardTitle = "Sessions by Location");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Sessions by Location");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert location") {
+			ACCards.viewGeomapTableText(
+				cardTitle = "Sessions by Location",
+				leftText = "Local Network",
+				rightText = "1 100%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8308 | Test Summary: Top 5 locations by session"

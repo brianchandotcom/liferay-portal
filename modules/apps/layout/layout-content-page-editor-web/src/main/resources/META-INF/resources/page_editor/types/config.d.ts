@@ -187,6 +187,7 @@ export interface Config {
 
 	unmarkItemForDeletionURL: string;
 	updateConfigurationValuesURL: string;
+	updateCollectionDisplayConfigURL: string;
 	updateItemConfigURL: string;
 	updateLayoutPageTemplateDataURL: string;
 	updateRowColumnsURL: string;

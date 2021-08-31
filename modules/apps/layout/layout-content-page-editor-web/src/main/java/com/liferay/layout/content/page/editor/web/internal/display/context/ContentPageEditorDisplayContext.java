@@ -566,6 +566,11 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/unmark_item_for_deletion")
 			).put(
+				"updateCollectionDisplayConfigURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor" +
+						"/update_collection_display_config")
+			).put(
 				"updateConfigurationValuesURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_configuration_values")

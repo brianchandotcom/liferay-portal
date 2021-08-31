@@ -212,6 +212,37 @@ export default {
 	 * Updates a config into an item
 	 * @param {object} options
 	 * @param {object} options.itemConfig Updated item config
+	 * @param {string} options.itemId id of the collection display to be updated
+	 * @param {string} options.languageId Language id
+	 * @param {string} options.segmentsExperienceId Segments experience id
+	 * @param {function} options.onNetworkStatus
+	 * @return {Promise<void>}
+	 */
+	updateCollectionDisplayConfig({
+		itemConfig,
+		itemId,
+		languageId,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}) {
+		return layoutServiceFetch(
+			config.updateCollectionDisplayConfigURL,
+			{
+				body: {
+					itemConfig: JSON.stringify(itemConfig),
+					itemId,
+					languageId,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
+	 * Updates a config into an item
+	 * @param {object} options
+	 * @param {object} options.itemConfig Updated item config
 	 * @param {string} options.itemId id of the item to be updated
 	 * @param {string} options.segmentsExperienceId Segments experience id
 	 * @param {function} options.onNetworkStatus

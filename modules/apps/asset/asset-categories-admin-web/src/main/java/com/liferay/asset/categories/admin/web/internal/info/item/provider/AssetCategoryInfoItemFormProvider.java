@@ -57,7 +57,7 @@ public class AssetCategoryInfoItemFormProvider
 			_getBasicInformationInfoFieldSet()
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				AssetCategory.class.getName(), "0")
+				AssetCategory.class.getName())
 		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
 		).infoFieldSetEntry(

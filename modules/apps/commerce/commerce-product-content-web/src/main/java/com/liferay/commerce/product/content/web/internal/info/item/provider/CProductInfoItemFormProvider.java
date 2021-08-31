@@ -62,7 +62,7 @@ public class CProductInfoItemFormProvider
 			_getBasicInformationInfoFieldSet()
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				CProduct.class.getName(), "0")
+				CProduct.class.getName())
 		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
 		).labelInfoLocalizedValue(

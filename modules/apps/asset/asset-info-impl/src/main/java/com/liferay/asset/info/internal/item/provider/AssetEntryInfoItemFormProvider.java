@@ -59,7 +59,7 @@ public class AssetEntryInfoItemFormProvider
 			_getAssetEntryFieldSetEntries()
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				AssetEntry.class.getName(), "0")
+				AssetEntry.class.getName())
 		).infoFieldSetEntry(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetEntry.class.getName())

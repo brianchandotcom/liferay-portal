@@ -159,7 +159,7 @@ public class BlogsEntryInfoItemFormProvider
 				BlogsEntry.class.getName())
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName(), "0")
+				BlogsEntry.class.getName())
 		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
 		).infoFieldSetEntry(

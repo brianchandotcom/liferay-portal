@@ -131,7 +131,7 @@ public class CommercePricingClassDiscountsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/pricing_class/discounts.jsp");
+			"/commerce_pricing_class/discounts.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -42,7 +42,7 @@ public class AddCommercePricingClassMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/pricing_class/add_commerce_pricing_class.jsp";
+		return "/commerce_pricing_class/add_commerce_pricing_class.jsp";
 	}
 
 }

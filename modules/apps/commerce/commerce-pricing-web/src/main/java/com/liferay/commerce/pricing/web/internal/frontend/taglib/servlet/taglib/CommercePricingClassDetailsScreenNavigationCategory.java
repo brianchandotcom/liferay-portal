@@ -130,7 +130,7 @@ public class CommercePricingClassDetailsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/pricing_class/details.jsp");
+			"/commerce_pricing_class/details.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

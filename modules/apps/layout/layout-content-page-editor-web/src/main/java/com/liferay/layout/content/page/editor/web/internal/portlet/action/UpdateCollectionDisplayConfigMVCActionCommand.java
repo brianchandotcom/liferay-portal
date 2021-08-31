@@ -23,6 +23,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -110,27 +110,23 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 				continue;
 			}
 
-			JSONArray targetCollectionsJSONArray =
-				configurationJSONObject.getJSONArray("targetCollections");
+			List<String> targetCollections = JSONUtil.toStringList(
+				configurationJSONObject.getJSONArray("targetCollections"));
 
-			if (!JSONUtil.hasValue(targetCollectionsJSONArray, itemId)) {
+			if (!targetCollections.contains(itemId)) {
 				continue;
 			}
 
-			JSONArray newTargetCollectionsJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			for (Object targetCollection : targetCollectionsJSONArray) {
-				if (!Objects.equals(targetCollection, itemId)) {
-					newTargetCollectionsJSONArray.put(targetCollection);
-				}
-			}
+			targetCollections.remove(itemId);
 
 			configurationJSONObject.put(
-				"targetCollections", newTargetCollectionsJSONArray);
+				"targetCollections",
+				JSONUtil.toJSONArray(
+					targetCollections,
+					targetCollectionItemId -> targetCollectionItemId));
 
-			if (newTargetCollectionsJSONArray.length() == 0) {
-				configurationJSONObject.put("filterKey", "");
+			if (targetCollections.isEmpty()) {
+				configurationJSONObject.put("filterKey", StringPool.BLANK);
 			}
 
 			editableValuesJSONObject.put(

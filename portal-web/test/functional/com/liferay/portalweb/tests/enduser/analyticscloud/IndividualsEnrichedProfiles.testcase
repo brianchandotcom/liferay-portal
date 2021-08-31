@@ -1,0 +1,144 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8911 | Test Summary: Enriched profiles increases by 1 when an anonymous individual converted to a known individual"
+	@priority = "5"
+	test IncreaseByOneWhenAnonymousIndividualConvertedToKnownIndividual {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sign out") {
+			UserBar.signOut();
+		}
+
+		task ("View the site page as guest") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending request") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the number of Total Individuals, Known, Anonymous and Enriched Profiles") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Known",
+				count = "0");
+
+			ACCards.viewTotalCount(
+				cardName = "Anonymous",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Enriched Profiles",
+				count = "0 Profiles");
+		}
+
+		task ("Sign in as Test Test") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${portalURL}/web/site-name/ac-page",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Wait for sending request") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the number of Total Individuals, Known and Anonymous") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Known",
+				count = "1");
+
+			ACCards.viewTotalCount(
+				cardName = "Anonymous",
+				count = "0");
+
+			ACCards.viewTotalCount(
+				cardName = "Enriched Profiles",
+				count = "1 Profiles");
+		}
+	}
+
+}

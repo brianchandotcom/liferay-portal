@@ -22,6 +22,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import TranslationAdminModal from './TranslationAdminModal';
 
+// These variables are defined here, out of the component, to avoid
+// unexpected re-renders
+
 const emptyArray = [];
 const noop = () => {};
 

@@ -80,7 +80,7 @@ public class CommerceShippingMethodDetailsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/shipping_method/details.jsp");
+			"/commerce_shipping_method/details.jsp");
 	}
 
 	@Reference

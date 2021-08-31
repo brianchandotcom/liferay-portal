@@ -99,7 +99,7 @@ public class CommerceChannelShippingRestrictionsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/shipping_method/restrictions.jsp");
+			"/commerce_shipping_method/restrictions.jsp");
 	}
 
 	@Reference

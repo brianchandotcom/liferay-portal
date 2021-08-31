@@ -46,6 +46,7 @@ definition {
 	@priority = "5"
 	test EnableSearchFieldInDropdownList {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CollectionFilter#EnableSearchFieldInDropdownList";
 
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Warehouse") {
@@ -361,6 +362,7 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories";
 
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
@@ -665,6 +667,7 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1010,6 +1013,7 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionBySingleCategory {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnDynamicCollectionBySingleCategory";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1227,6 +1231,8 @@ definition {
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting multiple categories in multiple filters."
 	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAllCategories {
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAllCategories";
+
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
 				JSONCategory.addVocabulary(
@@ -1554,6 +1560,7 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAnyCategories {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAnyCategories";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1891,6 +1898,7 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySingleCategory {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionBySingleCategory";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -2132,6 +2140,8 @@ definition {
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection with via selecting subcategories from Global site."
 	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite {
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite";
+
 		task ("Add a category in Topic from Global site") {
 			var categoryId = JSONCategory.addCategory(
 				groupName = "Global",
@@ -2380,6 +2390,7 @@ definition {
 	@priority = "5"
 	test ShowLabelOfSelectedSource {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CollectionFilter#ShowLabelOfSelectedSource";
 
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Color") {

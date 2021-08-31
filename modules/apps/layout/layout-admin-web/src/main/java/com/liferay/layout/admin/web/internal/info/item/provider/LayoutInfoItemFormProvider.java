@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.info.item.provider;
 
+import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.form.InfoForm;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -85,11 +87,14 @@ public class LayoutInfoItemFormProvider
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 
 		InfoFieldUtil.forEachInfoField(
-			layout,
+			_fragmentRendererController, layout,
 			(name, infoField, unsafeSupplier) -> infoFieldSetEntries.add(
 				infoField));
 
 		return infoFieldSetEntries;
 	}
+
+	@Reference
+	private FragmentRendererController _fragmentRendererController;
 
 }

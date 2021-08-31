@@ -14,8 +14,11 @@
 
 package com.liferay.layout.admin.web.internal.util;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -27,11 +30,18 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
@@ -39,6 +49,7 @@ import java.util.regex.Pattern;
 public class InfoFieldUtil {
 
 	public static <E extends Throwable> void forEachInfoField(
+			FragmentRendererController fragmentRendererController,
 			Layout layout,
 			UnsafeTriConsumer
 				<String, InfoField<TextInfoFieldType>,
@@ -56,7 +67,7 @@ public class InfoFieldUtil {
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			Map<String, String> editableTypes =
 				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					_getHtml(fragmentEntryLink));
+					_getHtml(fragmentEntryLink, fragmentRendererController));
 
 			for (Map.Entry<String, String> entry : editableTypes.entrySet()) {
 				String type = entry.getValue();
@@ -76,10 +87,42 @@ public class InfoFieldUtil {
 		}
 	}
 
-	private static String _getHtml(FragmentEntryLink fragmentEntryLink) {
-		Matcher matcher = _pattern.matcher(fragmentEntryLink.getHtml());
+	private static String _getHtml(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentRendererController fragmentRendererController) {
 
-		return matcher.replaceAll("element");
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return _renderHtml(fragmentEntryLink);
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return _renderHtml(fragmentEntryLink);
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return _renderHtml(fragmentEntryLink);
+		}
+
+		DefaultFragmentRendererContext fragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		fragmentRendererContext.setLocale(themeDisplay.getLocale());
+		fragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
+		fragmentRendererContext.setSegmentsExperienceIds(
+			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+
+		return fragmentRendererController.render(
+			fragmentRendererContext, httpServletRequest,
+			serviceContext.getResponse());
 	}
 
 	private static InfoField<TextInfoFieldType> _getInfoField(
@@ -115,6 +158,12 @@ public class InfoFieldUtil {
 		}
 
 		return false;
+	}
+
+	private static String _renderHtml(FragmentEntryLink fragmentEntryLink) {
+		Matcher matcher = _pattern.matcher(fragmentEntryLink.getHtml());
+
+		return matcher.replaceAll("element");
 	}
 
 	private static final Pattern _pattern = Pattern.compile("\\$\\{[^}]*\\}");

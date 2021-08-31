@@ -495,8 +495,6 @@ definition {
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"
 	@priority = "4"
 	test CannotMapWithDifferentFieldTypes {
-		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotMapWithDifferentFieldTypes";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -529,8 +527,6 @@ definition {
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type in a Field Group"
 	@priority = "4"
 	test CannotMapWithDifferentFieldTypesForFieldGroup {
-		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotMapWithDifferentFieldTypesForFieldGroup";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -570,7 +566,6 @@ definition {
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMapped {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotPublishWhenRequiredFieldNotMapped";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -626,7 +621,6 @@ definition {
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotPublishWhenRequiredFieldNotMappedForFieldGroup";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -699,7 +693,6 @@ definition {
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMapped {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotSaveOrPublishWhenAddedFieldNotMapped";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -739,7 +732,6 @@ definition {
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

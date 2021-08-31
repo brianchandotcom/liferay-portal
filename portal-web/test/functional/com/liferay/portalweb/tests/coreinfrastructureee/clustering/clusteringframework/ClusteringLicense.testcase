@@ -95,44 +95,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
-	@priority = "3"
-	test LimitCommerceToLessThanNodeLimit {
-		property commerce.enabled = "true";
-		property commerce.license.file = "commerce-license-virtual-cluster.xml";
-		property dxp.license.file = "dxp-license-virtual-cluster-extra-node.xml";
-		property skip.start.app.server.index = "2";
-		property test.name.skip.portal.instance = "ClusteringLicense#LimitCommerceToLessThanNodeLimit";
-
-		User.firstLoginPG();
-
-		CommerceLicense.viewCommerceAvailable();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		CommerceLicense.viewCommerceAvailable();
-
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "true",
-			nodePort = "10080");
-
-		Pause(locator1 = "300000");
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "licensed for this cluster has been exceeded",
-			nodePort = "10080");
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:10080",
-			userEmailAddress = "test@liferay.com");
-
-		CommerceLicense.viewCommerceMissing();
-	}
-
 	@priority = "4"
 	test LimitPreviouslyValidatedClusterNodes {
 		property commerce.enabled = "false";
@@ -215,73 +177,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test LimitPreviouslyValidatedClusterNodesWithCommerce {
-		property commerce.enabled = "true";
-		property commerce.license.file = "commerce-license-virtual-cluster.xml";
-		property dxp.license.file = "dxp-license-virtual-cluster.xml";
-		property skip.start.app.server.index = "2";
-		property test.name.skip.portal.instance = "ClusteringLicense#LimitPreviouslyValidatedClusterNodesWithCommerce";
-
-		User.firstLoginPG();
-
-		CommerceLicense.viewCommerceAvailable();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		CommerceLicense.viewCommerceAvailable();
-
-		Clustering.shutdownSpecificServer(nodePort = "9080");
-
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "true",
-			nodePort = "10080");
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:10080",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.openSpecificURL(url = "http://localhost:10080");
-
-		CommerceLicense.viewCommerceAvailable();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:8080",
-			userEmailAddress = "test@liferay.com");
-
-		CommerceLicense.viewCommerceAvailable();
-
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "false",
-			nodePort = "9080");
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		CommerceLicense.viewCommerceAvailable();
-
-		Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
-		Alert.viewErrorMessage(errorMessage = "grace period");
-		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
-
-		Clustering.waitForNodeShutdown(nodePort = "9080");
-
-		for (var nodeNumber : list "8,10") {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
-				userEmailAddress = "test@liferay.com");
-
-			CommerceLicense.viewCommerceAvailable();
-		}
-	}
 
 	@priority = "4"
 	test LimitPreviouslyValidatedClusterNodesWithManualRecovery {
@@ -420,59 +315,6 @@ definition {
 				userEmailAddress = "test@liferay.com");
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
-		}
-	}
-
-	@description = "Longer version of ViewNodeLimit that includes Commerce"
-	@priority = "4"
-	test ViewNodeLimitWithCommerce {
-		property commerce.enabled = "true";
-		property commerce.license.file = "commerce-license-virtual-cluster.xml";
-		property dxp.license.file = "dxp-license-virtual-cluster.xml";
-		property skip.start.app.server.index = "2";
-		property test.name.skip.portal.instance = "ClusteringLicense#ViewNodeLimitWithCommerce";
-
-		Clustering.viewClusterStatusInConsole();
-
-		User.firstLoginPG();
-
-		Page.assertNodePortPG(nodePort = "8080");
-
-		CommerceLicense.viewCommerceAvailable();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = "9080");
-
-		CommerceLicense.viewCommerceAvailable();
-
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "true",
-			nodePort = "10080");
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:10080",
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = "10080");
-
-		Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
-		Alert.viewErrorMessage(errorMessage = "grace period");
-		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
-
-		Clustering.waitForNodeShutdown(nodePort = "10080");
-
-		for (var nodeNumber : list "8,9") {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
-				userEmailAddress = "test@liferay.com");
-
-			CommerceLicense.viewCommerceAvailable();
 		}
 	}
 

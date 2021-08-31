@@ -90,14 +90,14 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				String typePrefix = "buyer-order-approval";
 				%>
 
-				<%@ include file="/channel/workflow_definition.jspf" %>
+				<%@ include file="/commerce_channel/workflow_definition.jspf" %>
 
 				<%
 				typePK = CommerceOrderConstants.TYPE_PK_FULFILLMENT;
 				typePrefix = "seller-order-acceptance";
 				%>
 
-				<%@ include file="/channel/workflow_definition.jspf" %>
+				<%@ include file="/commerce_channel/workflow_definition.jspf" %>
 
 				<aui:input checked="<%= commerceChannelDisplayContext.isShowPurchaseOrderNumber() %>" helpMessage="configures-whether-purchase-order-number-is-shown-or-hidden-in-placed-and-pending-order-details" label="purchase-order-number" labelOff="hide" labelOn="show" name="settings--showPurchaseOrderNumber--" type="toggle-switch" />
 

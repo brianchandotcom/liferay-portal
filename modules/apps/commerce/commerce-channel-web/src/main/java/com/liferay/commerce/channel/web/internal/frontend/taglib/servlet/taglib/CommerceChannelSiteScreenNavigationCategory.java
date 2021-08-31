@@ -124,7 +124,8 @@ public class CommerceChannelSiteScreenNavigationCategory
 			siteCommerceChannelTypeDisplayContext);
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/channel/site.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_channel/site.jsp");
 	}
 
 	@Reference

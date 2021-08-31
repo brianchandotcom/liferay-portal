@@ -22,6 +22,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -86,6 +88,7 @@ public class BundleSiteInitializerTest {
 		_assertObjectDefinitions(group);
 		_assertDDMStructure(group);
 		_assertDDMTemplate(group);
+		_assertFragments(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
@@ -128,6 +131,19 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Revelation"));
 	}
 
+	private void _assertFragments(Group group) {
+		FragmentEntry fragment1 = _fragmentEntryLocalService.fetchFragmentEntry(
+			group.getGroupId(), "fragment1");
+
+		FragmentEntry fragment2 = _fragmentEntryLocalService.fetchFragmentEntry(
+			group.getGroupId(), "fragment2");
+
+		Assert.assertNotNull(fragment1);
+		Assert.assertEquals("fragment1", fragment1.getName());
+		Assert.assertNotNull(fragment2);
+		Assert.assertEquals("fragment2", fragment2.getName());
+	}
+
 	private void _assertObjectDefinitions(Group group) {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -156,6 +172,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

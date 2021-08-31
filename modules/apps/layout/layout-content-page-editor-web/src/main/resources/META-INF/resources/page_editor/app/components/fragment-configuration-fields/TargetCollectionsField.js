@@ -94,6 +94,12 @@ export function TargetCollectionsField({onValueSelect, value}) {
 			<ClayDropDown
 				active={active}
 				id={inputId}
+				menuElementAttrs={{
+					containerProps: {
+						className:
+							'cadmin page-editor__target-collections-field',
+					},
+				}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
@@ -110,6 +116,11 @@ export function TargetCollectionsField({onValueSelect, value}) {
 					</ClayButton>
 				}
 			>
+				<ClayDropDown.Help className="pt-3 px-3">
+					{Liferay.Language.get(
+						'multiple-selection-must-have-at-least-one-filter-in-common'
+					)}
+				</ClayDropDown.Help>
 				{items.map((item) => (
 					<label
 						className="d-flex dropdown-item"

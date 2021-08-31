@@ -496,7 +496,7 @@ public class UpgradeReport {
 		Map<String, Integer> upgradeProcessMap = new HashMap<>();
 
 		for (String entry : upgradeTimes) {
-			int startIndex = entry.indexOf("com");
+			int startIndex = entry.indexOf("com.");
 
 			int endIndex = entry.indexOf(StringPool.SPACE, startIndex);
 

@@ -176,7 +176,9 @@ definition {
 
 		ACNavigation.goToIndividuals();
 
-		ACIndividualsDashboard.viewTotalIndividualsCount(individualCount = "0");
+		ACCards.viewTotalCount(
+			cardName = "Total Individuals",
+			count = "0");
 
 		ACUtils.launchDXP();
 
@@ -198,7 +200,9 @@ definition {
 
 		ACNavigation.goToIndividuals();
 
-		ACIndividualsDashboard.viewTotalIndividualsCount(individualCount = "1");
+		ACCards.viewTotalCount(
+			cardName = "Total Individuals",
+			count = "1");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8907 | Test Summary: Clicking an activity navigates to page in Individuals overview"

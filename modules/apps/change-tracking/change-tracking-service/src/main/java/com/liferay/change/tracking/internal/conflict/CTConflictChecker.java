@@ -142,6 +142,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		_checkAdditions(
 			connection, ctPersistence, conflictInfos, primaryKeyName);
 
+		_checkDeletions(
+			connection, ctPersistence, conflictInfos, primaryKeyName);
+
 		if (_modificationCTEntries != null) {
 			_checkModifications(
 				connection, ctPersistence, conflictInfos, primaryKeyName);
@@ -289,6 +292,35 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				new ConstraintResolverConflictInfo(
 					constraintResolver, false, currentPrimaryKeys.getKey(),
 					currentPrimaryKeys.getValue()));
+		}
+	}
+
+	private void _checkDeletions(
+		Connection connection, CTPersistence<T> ctPersistence,
+		List<ConflictInfo> conflictInfos, String primaryKeyName) {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select publication.", primaryKeyName, " from ",
+					ctPersistence.getTableName(),
+					" publication inner join CTEntry on CTEntry.modelClassPK ",
+					"= publication.", primaryKeyName,
+					" where CTEntry.ctCollectionId = ", _sourceCTCollectionId,
+					" and CTEntry.modelClassNameId = ", _modelClassNameId,
+					" and CTEntry.changeType = ",
+					CTConstants.CT_CHANGE_TYPE_DELETION,
+					" and publication.ctCollectionId = ", _targetCTCollectionId,
+					" and CTEntry.modelMvccVersion != ",
+					"publication.mvccVersion"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				conflictInfos.add(
+					new ModificationDeletionConflictInfo(resultSet.getLong(1)));
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new ORMException(sqlException);
 		}
 	}
 

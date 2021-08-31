@@ -186,7 +186,7 @@ definition {
 	}
 
 	macro editWidgetTemplate {
-		SiteAdmin.viewPortletTitle(portletTitle = "${oldWidgetTemplateName}");
+		SiteAdmin.viewPortletTitle(portletTitle = "Edit ${oldWidgetTemplateName}");
 
 		if (isSet(newWidgetTemplateName)) {
 			PortletEntry.inputName(name = "${newWidgetTemplateName}");

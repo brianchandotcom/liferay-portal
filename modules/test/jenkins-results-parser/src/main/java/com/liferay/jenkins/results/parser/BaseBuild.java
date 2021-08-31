@@ -645,12 +645,14 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public List<Build> getDownstreamBuilds(String result, String status) {
-		if ((result == null) && (status == null)) {
-			return downstreamBuilds;
-		}
-
 		List<Build> filteredDownstreamBuilds = Collections.synchronizedList(
 			new ArrayList<Build>());
+
+		if ((result == null) && (status == null)) {
+			filteredDownstreamBuilds.addAll(downstreamBuilds);
+
+			return filteredDownstreamBuilds;
+		}
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (((status == null) ||

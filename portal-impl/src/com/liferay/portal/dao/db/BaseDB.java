@@ -926,8 +926,8 @@ public abstract class BaseDB implements DB {
 
 								indexMetadatas.add(
 									new IndexMetadata(
-										indexName, normalizedTableName, unique,
-										columnNames));
+										previousIndexName, normalizedTableName,
+										unique, columnNames));
 							}
 
 							columnNames = new String[0];

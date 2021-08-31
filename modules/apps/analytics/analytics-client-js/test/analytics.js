@@ -29,8 +29,8 @@ const FLUSH_INTERVAL = 100;
 const INITIAL_CONFIG = {
 	channelId: '4321',
 	dataSourceId: '1234',
-	delay: FLUSH_INTERVAL,
 	endpointUrl: ENDPOINT_URL,
+	flushInterval: FLUSH_INTERVAL,
 };
 
 describe('Analytics', () => {

@@ -423,7 +423,7 @@ AUI.add(
 					var props = {
 						activeLanguageIds: instance.get('activeLanguageIds'),
 						availableLocales,
-						defaultLocaleId: instance.get('defaultLanguageId'),
+						defaultLanguageId: instance.get('defaultLanguageId'),
 						onClose(newActiveLanguageIds) {
 							instance._State.writeAtom(
 								instance._activeLanguageIdsAtom,

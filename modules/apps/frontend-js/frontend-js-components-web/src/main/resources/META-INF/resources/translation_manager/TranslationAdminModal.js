@@ -30,7 +30,7 @@ const TranslationAdminModal = ({
 		untranslated: Liferay.Language.get('untranslated'),
 	},
 	availableLocales = emptyArray,
-	defaultLocaleId,
+	defaultLanguageId,
 	onClose = noop,
 	translations,
 	visible: initialVisible,
@@ -38,7 +38,7 @@ const TranslationAdminModal = ({
 	const [activeLanguageIds, setActiveLanguageIds] = useState(
 		initialActiveLanguageIds
 	);
-	const [lastDeletedLocaleId, setLastDeletedLocaleId] = useState(null);
+	const [lastDeletedLanguageId, setLastDeletedLanguageId] = useState(null);
 	const [visible, setVisible] = useState(initialVisible);
 
 	const {observer} = useModal({
@@ -50,23 +50,23 @@ const TranslationAdminModal = ({
 
 	const handleAddLocale = (localeId) => {
 		setActiveLanguageIds([...activeLanguageIds, localeId]);
-		setLastDeletedLocaleId(null);
+		setLastDeletedLanguageId(null);
 	};
 
 	const handleClearRestoreLocale = () => {
-		setLastDeletedLocaleId(null);
+		setLastDeletedLanguageId(null);
 	};
 
 	const handleRemoveLocale = (localeId) => {
 		const newActiveLanguageIds = [...activeLanguageIds];
 		newActiveLanguageIds.splice(activeLanguageIds.indexOf(localeId), 1);
 		setActiveLanguageIds(newActiveLanguageIds);
-		setLastDeletedLocaleId(localeId);
+		setLastDeletedLanguageId(localeId);
 	};
 
 	const handleRestoreLocale = () => {
-		handleAddLocale(lastDeletedLocaleId);
-		setLastDeletedLocaleId(null);
+		handleAddLocale(lastDeletedLanguageId);
+		setLastDeletedLanguageId(null);
 	};
 
 	useEffect(() => {
@@ -85,8 +85,8 @@ const TranslationAdminModal = ({
 						activeLanguageIds={activeLanguageIds}
 						ariaLabels={ariaLabels}
 						availableLocales={availableLocales}
-						defaultLocaleId={defaultLocaleId}
-						lastDeletedLocaleId={lastDeletedLocaleId}
+						defaultLanguageId={defaultLanguageId}
+						lastDeletedLanguageId={lastDeletedLanguageId}
 						onAddLocale={handleAddLocale}
 						onClearRestoreLocale={handleClearRestoreLocale}
 						onRemoveLocale={handleRemoveLocale}
@@ -109,7 +109,7 @@ TranslationAdminModal.propTypes = {
 		untranslated: PropTypes.string,
 	}),
 	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
-	defaultLocaleId: PropTypes.string.isRequired,
+	defaultLanguageId: PropTypes.string.isRequired,
 	onActiveLanguageIdsChange: PropTypes.func,
 	translations: PropTypes.object,
 	visible: PropTypes.bool,

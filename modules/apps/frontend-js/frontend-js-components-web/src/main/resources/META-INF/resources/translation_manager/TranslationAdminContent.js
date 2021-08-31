@@ -38,7 +38,7 @@ const TranslationAdminContent = ({
 	},
 	activeLanguageIds: initialActiveLanguageIds = emptyArray,
 	availableLocales: initialAvailableLocales = emptyArray,
-	defaultLocaleId,
+	defaultLanguageId,
 	lastDeletedLocaleId,
 	onAddLocale = noop,
 	onClearRestoreLocale = noop,
@@ -188,7 +188,7 @@ const TranslationAdminContent = ({
 							const label = activeLocale.label;
 
 							const isDefaultLocale =
-								activeLocale.id === defaultLocaleId;
+								activeLocale.id === defaultLanguageId;
 							const localeValue = translations[label];
 
 							return (
@@ -258,7 +258,7 @@ TranslationAdminContent.propTypes = {
 		untranslated: PropTypes.string,
 	}),
 	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
-	defaultLocaleId: PropTypes.string.isRequired,
+	defaultLanguageId: PropTypes.string.isRequired,
 	lastDeletedLocale: PropTypes.object,
 	translations: PropTypes.object,
 };

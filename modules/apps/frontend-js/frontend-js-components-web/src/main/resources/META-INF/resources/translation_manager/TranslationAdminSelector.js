@@ -38,7 +38,7 @@ const TranslationAdminSelector = ({
 		untranslated: Liferay.Language.get('untranslated'),
 	},
 	availableLocales = emptyArray,
-	defaultLocaleId,
+	defaultLanguageId,
 	onActiveLanguageIdsChange = noop,
 	onSelectedLanguageIdChange = noop,
 	selectedLanguageId: initialSelectedLanguageId,
@@ -71,12 +71,12 @@ const TranslationAdminSelector = ({
 	);
 
 	const selectedLocale = useMemo(() => {
-		const id = selectedLanguageId ?? defaultLocaleId;
+		const id = selectedLanguageId ?? defaultLanguageId;
 
 		return availableLocales.find(
 			(availableLocale) => availableLocale.id === id
 		);
-	}, [availableLocales, defaultLocaleId, selectedLanguageId]);
+	}, [availableLocales, defaultLanguageId, selectedLanguageId]);
 
 	useEffect(() => {
 		onActiveLanguageIdsChange(activeLanguageIds);
@@ -100,7 +100,7 @@ const TranslationAdminSelector = ({
 				activeLanguageIds={activeLanguageIds}
 				ariaLabels={ariaLabels}
 				availableLocales={availableLocales}
-				defaultLocaleId={defaultLocaleId}
+				defaultLanguageId={defaultLanguageId}
 				onClose={handleCloseTranslationModal}
 				translations={translations}
 				visible={translationModalVisible}
@@ -132,7 +132,7 @@ const TranslationAdminSelector = ({
 						const label = activeLocale.label;
 
 						const isDefaultLocale =
-							activeLocale.id === defaultLocaleId;
+							activeLocale.id === defaultLanguageId;
 
 						const localeValue = translations[label];
 
@@ -225,7 +225,7 @@ TranslationAdminSelector.propTypes = {
 		untranslated: PropTypes.string,
 	}),
 	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
-	defaultLocaleId: PropTypes.string.isRequired,
+	defaultLanguageId: PropTypes.string.isRequired,
 	showOnlyFlags: PropTypes.bool,
 	small: PropTypes.bool,
 	translations: PropTypes.object,

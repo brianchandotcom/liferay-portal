@@ -80,7 +80,7 @@ public class CommercePaymentMethodGroupRelDetailsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/payment_method/details.jsp");
+			"/commerce_payment_method/details.jsp");
 	}
 
 	@Reference

@@ -97,7 +97,7 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/payment_method/restrictions.jsp");
+			"/commerce_payment_method/restrictions.jsp");
 	}
 
 	@Reference

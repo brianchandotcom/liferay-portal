@@ -300,7 +300,6 @@ const Diagram = ({
 					setZoomOutHandler={setZoomOutHandler}
 				/>
 			</ClayIconSpriteContext.Provider>
-			<div id="culo"></div>
 		</div>
 	) : (
 		<div className="border-0 pt-0 sheet taglib-empty-result-message">

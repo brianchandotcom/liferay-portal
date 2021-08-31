@@ -1,10 +1,10 @@
-email,givenName,familyName,country
-user1@liferay.com,user1,user1,China
-user2@liferay.com,user2,user2,USA
-user3@liferay.com,user3,user3,French
-user4@liferay.com,user4,user4,Spain
-user5@liferay.com,user5,user5,USA
-user6@liferay.com,user6,user6,China
-user7@liferay.com,user7,user7,Japan
-user8@liferay.com,user8,user8,Brazil
-user9@liferay.com,user9,user9,South Korea
+email,givenName,familyName,country,department
+user1@liferay.com,user1,user1,China,Finance
+user2@liferay.com,user2,user2,USA,Sales
+user3@liferay.com,user3,user3,French,Human Resource
+user4@liferay.com,user4,user4,Spain,Purchase
+user5@liferay.com,user5,user5,USA,Marketing
+user6@liferay.com,user6,user6,China,Operations
+user7@liferay.com,user7,user7,Japan,Sales
+user8@liferay.com,user8,user8,Brazil,Marketing
+user9@liferay.com,user9,user9,South Korea,Operations

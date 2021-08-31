@@ -39,6 +39,27 @@ definition {
 		CommerceLicense.viewCommerceAvailable();
 	}
 
+	@priority = "3"
+	test DeactivateCommerce {
+		property commerce.enabled = "true";
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		CommerceLicense.viewCommerceAvailable();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dupdate.properties.original=enterprise.product.commerce.enabled=true -Dupdate.properties=enterprise.product.commerce.enabled=false");
+
+		Portlet.startServer(commerceEnabled = "false");
+
+		User.firstLoginPG();
+
+		CommerceLicense.viewCommerceMissing();
+	}
+
 	@priority = "4"
 	test DeleteEnterpriseLicenseModule {
 		property commerce.enabled = "true";
@@ -83,27 +104,6 @@ definition {
 		Navigator.openURL();
 
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
-	}
-
-	@priority = "3"
-	test DeactivateCommerce {
-		property commerce.enabled = "true";
-
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		CommerceLicense.viewCommerceAvailable();
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=enterprise.product.commerce.enabled=true -Dupdate.properties=enterprise.product.commerce.enabled=false");
-
-		Portlet.startServer(commerceEnabled = "false");
-
-		User.firstLoginPG();
-
-		CommerceLicense.viewCommerceMissing();
 	}
 
 	@priority = "5"

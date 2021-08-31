@@ -177,7 +177,6 @@ definition {
 		}
 	}
 
-
 	@priority = "4"
 	test LimitPreviouslyValidatedClusterNodesWithManualRecovery {
 		property commerce.enabled = "false";

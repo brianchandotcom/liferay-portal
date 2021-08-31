@@ -174,7 +174,6 @@ public class
 
 							dropdownItem.setHref(
 								getPortletURL(), "itemType", itemType);
-
 							dropdownItem.setLabel(
 								ResourceActionsUtil.getModelResource(
 									_themeDisplay.getLocale(), itemType));

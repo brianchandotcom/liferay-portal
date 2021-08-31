@@ -560,6 +560,17 @@ export default withRouter(
 								/>
 							)}
 						</PaginatedList>
+						<ClayButton
+							className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
+							displayType="primary"
+							onClick={navigateToNewQuestion}
+						>
+							<ClayIcon symbol="pencil" />
+
+							<span className="sr-only">
+								{Liferay.Language.get('ask-question')}
+							</span>
+						</ClayButton>
 
 						<Alert info={error} />
 					</div>
@@ -720,20 +731,6 @@ export default withRouter(
 												{Liferay.Language.get(
 													'ask-question'
 												)}
-											</ClayButton>
-
-											<ClayButton
-												className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
-												displayType="primary"
-												onClick={navigateToNewQuestion}
-											>
-												<ClayIcon symbol="pencil" />
-
-												<span className="sr-only">
-													{Liferay.Language.get(
-														'ask-question'
-													)}
-												</span>
 											</ClayButton>
 										</ClayInput.GroupItem>
 									)}

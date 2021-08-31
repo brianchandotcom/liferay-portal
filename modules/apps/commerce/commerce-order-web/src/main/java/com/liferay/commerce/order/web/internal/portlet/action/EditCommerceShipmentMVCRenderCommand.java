@@ -83,7 +83,7 @@ public class EditCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(exception);
 		}
 
-		return "/order/add_shipment.jsp";
+		return "/commerce_order/add_shipment.jsp";
 	}
 
 	@Reference

@@ -84,7 +84,7 @@ public class EditCommerceOrderPrintedNoteMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order/printed_note.jsp";
+		return "/commerce_order/printed_note.jsp";
 	}
 
 	@Reference

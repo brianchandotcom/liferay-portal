@@ -84,7 +84,7 @@ public class EditCommerceOrderExternalReferenceCodeMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order/external_reference_code.jsp";
+		return "/commerce_order/external_reference_code.jsp";
 	}
 
 	@Reference

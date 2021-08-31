@@ -84,7 +84,7 @@ public class EditCommerceOrderPurchaseOrderNumberMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order/purchase_order_number.jsp";
+		return "/commerce_order/purchase_order_number.jsp";
 	}
 
 	@Reference

@@ -84,7 +84,7 @@ public class EditCommerceOrderSummaryMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order/order_summary.jsp";
+		return "/commerce_order/order_summary.jsp";
 	}
 
 	@Reference

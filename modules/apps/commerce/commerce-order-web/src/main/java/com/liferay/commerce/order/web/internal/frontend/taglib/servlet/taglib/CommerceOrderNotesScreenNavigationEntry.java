@@ -77,7 +77,8 @@ public class CommerceOrderNotesScreenNavigationEntry
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/order/notes.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_order/notes.jsp");
 	}
 
 	@Reference

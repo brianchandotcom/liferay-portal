@@ -79,7 +79,8 @@ public class CommerceOrderShipmentsScreenNavigationCategory
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/order/shipments.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_order/shipments.jsp");
 	}
 
 	@Reference

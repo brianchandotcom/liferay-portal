@@ -84,7 +84,7 @@ public class EditCommerceOrderBillingAddressMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order/edit_billing_address.jsp";
+		return "/commerce_order/edit_billing_address.jsp";
 	}
 
 	@Reference

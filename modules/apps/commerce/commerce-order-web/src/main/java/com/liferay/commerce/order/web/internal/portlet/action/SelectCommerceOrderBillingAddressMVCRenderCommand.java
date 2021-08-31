@@ -84,7 +84,7 @@ public class SelectCommerceOrderBillingAddressMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order/billing_address.jsp";
+		return "/commerce_order/billing_address.jsp";
 	}
 
 	@Reference

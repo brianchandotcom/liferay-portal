@@ -84,7 +84,7 @@ public class EditCommerceOrderRequestedDeliveryDateMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/order/requested_delivery_date.jsp";
+		return "/commerce_order/requested_delivery_date.jsp";
 	}
 
 	@Reference

@@ -77,11 +77,9 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			"numberOfColumns", _numberOfColumns
 		).put(
 			"reverseOrder", _reverseOrder
+		).put(
+			"verticalAlignment", _verticalAlignment
 		);
-
-		if (Validator.isNotNull(_verticalAlignment)) {
-			jsonObject.put("verticalAlignment", _verticalAlignment);
-		}
 
 		for (ViewportSize viewportSize : ViewportSize.values()) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
@@ -107,15 +105,10 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			).put(
 				"reverseOrder",
 				viewportConfigurationJSONObject.get("reverseOrder")
+			).put(
+				"verticalAlignment",
+				viewportConfigurationJSONObject.get("verticalAlignment")
 			);
-
-			if (Validator.isNotNull(
-					viewportConfigurationJSONObject.get("verticalAlignment"))) {
-
-				currentViewportConfigurationJSONObject.put(
-					"verticalAlignment",
-					viewportConfigurationJSONObject.get("verticalAlignment"));
-			}
 
 			jsonObject.put(
 				viewportSize.getViewportSizeId(),
@@ -286,7 +279,7 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	private Integer _modulesPerRow;
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
-	private String _verticalAlignment;
+	private String _verticalAlignment = "top";
 	private final Map<String, JSONObject> _viewportConfigurations =
 		new HashMap<>();
 

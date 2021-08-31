@@ -88,17 +88,9 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					themeDisplay.getScopeGroupId(), segmentsExperienceId,
-					themeDisplay.getPlid());
+					themeDisplay.getPlid(), _KEY_FILTER_FRAGMENT_RENDERER);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			if (!Objects.equals(
-					fragmentEntryLink.getRendererKey(),
-					_KEY_FILTER_FRAGMENT_RENDERER) ||
-				!JSONUtil.isValid(fragmentEntryLink.getEditableValues())) {
-
-				continue;
-			}
-
 			JSONObject editableValuesJSONObject =
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues());

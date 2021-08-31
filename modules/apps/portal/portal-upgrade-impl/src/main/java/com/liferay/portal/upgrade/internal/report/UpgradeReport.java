@@ -502,6 +502,10 @@ public class UpgradeReport {
 
 			String className = entry.substring(startIndex, endIndex);
 
+			if (className.equals(PortalUpgradeProcess.class.getName())) {
+				continue;
+			}
+
 			startIndex = entry.indexOf(StringPool.SPACE, endIndex + 1);
 
 			endIndex = entry.indexOf(StringPool.SPACE, startIndex + 1);

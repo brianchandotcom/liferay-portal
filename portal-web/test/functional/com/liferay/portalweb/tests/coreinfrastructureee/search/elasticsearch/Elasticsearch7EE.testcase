@@ -163,6 +163,7 @@ definition {
 	test PortalClusterSmokeTest {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
+		property minimum.slave.ram = "24";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#PortalClusterSmokeTest";

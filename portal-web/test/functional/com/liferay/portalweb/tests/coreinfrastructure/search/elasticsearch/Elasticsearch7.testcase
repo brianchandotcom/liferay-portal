@@ -253,6 +253,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property embedded.elasticsearch.only = "true";
+		property minimum.slave.ram = "24";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#AssertSidecarDoesNotCluster";
 
@@ -354,6 +355,7 @@ definition {
 	@priority = "5"
 	test ElasticsearchClusteringSmokeTest {
 		property elasticsearch.cluster.size = "2";
+		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";

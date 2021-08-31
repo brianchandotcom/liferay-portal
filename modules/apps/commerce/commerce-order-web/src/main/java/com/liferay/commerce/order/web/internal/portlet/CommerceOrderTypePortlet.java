@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Order Types",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/order_type/view.jsp",
+		"javax.portlet.init-param.view-template=/commerce_order_type/view.jsp",
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER_TYPE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

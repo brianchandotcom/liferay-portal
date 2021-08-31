@@ -41,7 +41,7 @@ public class AddCommerceOrderTypeMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/order_type/add_commerce_order_type.jsp";
+		return "/commerce_order_type/add_commerce_order_type.jsp";
 	}
 
 }

@@ -121,7 +121,8 @@ public class CommerceOrderTypeDetailsScreenNavigationCategory
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceOrderTypeDisplayContext);
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/order_type/details.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_order_type/details.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

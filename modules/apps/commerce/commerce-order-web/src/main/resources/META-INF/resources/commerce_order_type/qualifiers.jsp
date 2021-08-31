@@ -52,7 +52,7 @@ boolean hasPermission = commerceOrderTypeQualifiersDisplayContext.hasPermission(
 	</commerce-ui:panel>
 
 	<c:if test='<%= Objects.equals(channelQualifiers, "channels") %>'>
-		<%@ include file="/order_type/qualifier/channels.jspf" %>
+		<%@ include file="/commerce_order_type/qualifier/channels.jspf" %>
 	</c:if>
 </aui:form>
 

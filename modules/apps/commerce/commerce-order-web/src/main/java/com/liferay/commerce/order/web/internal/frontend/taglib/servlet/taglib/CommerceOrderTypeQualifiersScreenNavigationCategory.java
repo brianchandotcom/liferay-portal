@@ -127,7 +127,7 @@ public class CommerceOrderTypeQualifiersScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/order_type/qualifiers.jsp");
+			"/commerce_order_type/qualifiers.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

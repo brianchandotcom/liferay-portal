@@ -18,6 +18,7 @@ import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
@@ -58,10 +59,16 @@ public class CommerceWorkflowedModelHelperImpl
 			boolean searchByUserRoles)
 		throws PortalException {
 
+		String[] assetTypes = null;
+
+		if (Validator.isNotNull(className)) {
+			assetTypes = new String[] {className};
+		}
+
 		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
-			companyId, userId, null, className, new Long[] {classPK}, null,
-			null, false, searchByUserRoles, true, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			companyId, userId, null, null, assetTypes, new Long[] {classPK},
+			null, null, null, null, false, searchByUserRoles, null, null, true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (WorkflowTask workflowTask : workflowTasks) {
 			long workflowTaskId = workflowTask.getWorkflowTaskId();

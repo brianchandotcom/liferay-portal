@@ -20,6 +20,7 @@ import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
@@ -42,10 +43,16 @@ public class HeaderHelperImpl implements HeaderHelper {
 			long companyId, long userId, long beanId, String className)
 		throws PortalException {
 
+		String[] assetTypes = null;
+
+		if (Validator.isNotNull(className)) {
+			assetTypes = new String[] {className};
+		}
+
 		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
-			companyId, userId, "review", className, new Long[] {beanId}, null,
-			null, false, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			companyId, userId, null, new String[] {"review"}, assetTypes,
+			new Long[] {beanId}, null, null, null, null, false, null, null,
+			null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (workflowTasks.size() == 1) {
 			return workflowTasks.get(0);

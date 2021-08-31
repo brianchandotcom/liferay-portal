@@ -467,18 +467,18 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
 			configurationName = "Time Zone",
 			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.configureTimeZone(timeZone = "(UTC +02:00) Central European Summer Time");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

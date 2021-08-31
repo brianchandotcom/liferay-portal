@@ -14,7 +14,6 @@
 
 package com.liferay.account.admin.web.internal.servlet.taglib.util;
 
-import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -40,11 +39,11 @@ import javax.servlet.http.HttpServletRequest;
 public class AccountUserActionDropdownItemsProvider {
 
 	public AccountUserActionDropdownItemsProvider(
-		AccountEntryDisplay accountEntryDisplay, long accountUserId,
+		long accountEntryId, long accountUserId,
 		PermissionChecker permissionChecker, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_accountEntryDisplay = accountEntryDisplay;
+		_accountEntryId = accountEntryId;
 		_accountUserId = accountUserId;
 		_permissionChecker = permissionChecker;
 		_renderResponse = renderResponse;
@@ -58,8 +57,7 @@ public class AccountUserActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return DropdownItemListBuilder.add(
 			() -> AccountEntryPermission.contains(
-				_permissionChecker, _accountEntryDisplay.getAccountEntryId(),
-				ActionKeys.MANAGE_USERS),
+				_permissionChecker, _accountEntryId, ActionKeys.MANAGE_USERS),
 			dropdownItem -> {
 				dropdownItem.putData("action", "assignRoleAccountUsers");
 				dropdownItem.putData(
@@ -71,8 +69,7 @@ public class AccountUserActionDropdownItemsProvider {
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"accountEntryId",
-						_accountEntryDisplay.getAccountEntryId()
+						"accountEntryId", _accountEntryId
 					).setParameter(
 						"accountUserIds", _accountUserId
 					).setWindowState(
@@ -87,8 +84,7 @@ public class AccountUserActionDropdownItemsProvider {
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"accountEntryId",
-						_accountEntryDisplay.getAccountEntryId()
+						"accountEntryId", _accountEntryId
 					).setParameter(
 						"accountUserIds", _accountUserId
 					).buildString());
@@ -97,8 +93,7 @@ public class AccountUserActionDropdownItemsProvider {
 			}
 		).add(
 			() -> AccountEntryPermission.contains(
-				_permissionChecker, _accountEntryDisplay.getAccountEntryId(),
-				ActionKeys.MANAGE_USERS),
+				_permissionChecker, _accountEntryId, ActionKeys.MANAGE_USERS),
 			dropdownItem -> {
 				dropdownItem.putData("action", "removeAccountUsers");
 				dropdownItem.putData(
@@ -110,8 +105,7 @@ public class AccountUserActionDropdownItemsProvider {
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"accountEntryId",
-						_accountEntryDisplay.getAccountEntryId()
+						"accountEntryId", _accountEntryId
 					).setParameter(
 						"accountUserIds", _accountUserId
 					).buildString());
@@ -121,7 +115,7 @@ public class AccountUserActionDropdownItemsProvider {
 		).build();
 	}
 
-	private final AccountEntryDisplay _accountEntryDisplay;
+	private final long _accountEntryId;
 	private final long _accountUserId;
 	private final HttpServletRequest _httpServletRequest;
 	private final PermissionChecker _permissionChecker;

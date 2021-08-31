@@ -29,7 +29,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. The user could enable search field in dropdown list of Collection Filter."
-	@ignore = "true"
 	@priority = "5"
 	test EnableSearchFieldInDropdownList {
 		task ("Add two vocabularies") {
@@ -343,7 +342,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple categories in multiple filters."
-	@ignore = "true"
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {
 		property portal.acceptance = "true";
@@ -648,7 +646,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple subcategories in one filter."
-	@ignore = "true"
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories {
 		property portal.acceptance = "true";
@@ -994,7 +991,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting single category."
-	@ignore = "true"
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionBySingleCategory {
 		property portal.acceptance = "true";
@@ -1213,7 +1209,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting multiple categories in multiple filters."
-	@ignore = "true"
 	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAllCategories {
 		task ("Add two vocabularies") {
@@ -1540,7 +1535,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting multiple categories in one filter."
-	@ignore = "true"
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAnyCategories {
 		property portal.acceptance = "true";
@@ -1878,7 +1872,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting single category."
-	@ignore = "true"
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySingleCategory {
 		property portal.acceptance = "true";
@@ -2121,7 +2114,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection with via selecting subcategories from Global site."
-	@ignore = "true"
 	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite {
 		task ("Add a category in Topic from Global site") {
@@ -2369,7 +2361,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. The user could show the label of selected vocabulary or category in Collection Filter."
-	@ignore = "true"
 	@priority = "5"
 	test ShowLabelOfSelectedSource {
 		task ("Add two vocabularies") {

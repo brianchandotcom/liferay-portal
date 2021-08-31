@@ -26,6 +26,7 @@ definition {
 	@priority = "5"
 	test ObjectDisplayedForPageTemplate {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "VisualizeObjectDisplayPageTemplate#ObjectDisplayedForPageTemplate";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -49,6 +50,7 @@ definition {
 	@priority = "5"
 	test ObjectEntriesAreRendered {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "VisualizeObjectDisplayPageTemplate#ObjectEntriesAreRendered";
 
 		// TODO LPS-137101 ObjectEntriesAreRendered pending implementation
 
@@ -59,6 +61,7 @@ definition {
 	@priority = "5"
 	test ObjectMappedURL {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "VisualizeObjectDisplayPageTemplate#ObjectMappedURL";
 
 		// TODO LPS-137103 ObjectMappedURL pending implementation
 

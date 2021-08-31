@@ -26,6 +26,7 @@ definition {
 	@priority = "4"
 	test FieldWithCapitalizedLetters {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectsPopulating#FieldWithCapitalizedLetters";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

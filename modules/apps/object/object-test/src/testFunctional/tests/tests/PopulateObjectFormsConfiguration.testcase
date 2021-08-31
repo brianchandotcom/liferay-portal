@@ -25,6 +25,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field and view its entries in a Field Group"
 	@priority = "4"
 	test CanMapAndViewEntriesForFieldGroup {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapAndViewEntriesForFieldGroup";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -110,6 +112,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of BigDecimal type and view its entries"
 	@priority = "4"
 	test CanMapBigDecimalTypeAndViewEntries {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapBigDecimalTypeAndViewEntries";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -172,6 +176,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapBlobTypeAndViewEntries {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapBlobTypeAndViewEntries";
 
 		// TODO LPS-138053 CanMapBlobTypeAndViewEntries pending implementation
 
@@ -181,6 +186,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapBooleanTypeAndViewEntries {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapBooleanTypeAndViewEntries";
 
 		// TODO LPS-138047 CanMapBooleanTypeAndViewEntries pending implementation
 
@@ -189,6 +195,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Date type and view its entries"
 	@priority = "4"
 	test CanMapDateTypeAndViewEntries {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapDateTypeAndViewEntries";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -246,6 +254,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Double type and view its entries"
 	@priority = "4"
 	test CanMapDoubleTypeAndViewEntries {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapDoubleTypeAndViewEntries";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -307,6 +317,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Integer type and view its entries"
 	@priority = "4"
 	test CanMapIntegerTypeAndViewEntries {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapIntegerTypeAndViewEntries";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -364,6 +376,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Long type and view its entries"
 	@priority = "4"
 	test CanMapLongTypeAndViewEntries {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapLongTypeAndViewEntries";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -422,6 +436,7 @@ definition {
 	@priority = "5"
 	test CanMapStringTypeAndViewEntries {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapStringTypeAndViewEntries";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -480,6 +495,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"
 	@priority = "4"
 	test CannotMapWithDifferentFieldTypes {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotMapWithDifferentFieldTypes";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -512,6 +529,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type in a Field Group"
 	@priority = "4"
 	test CannotMapWithDifferentFieldTypesForFieldGroup {
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotMapWithDifferentFieldTypesForFieldGroup";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -551,6 +570,7 @@ definition {
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMapped {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotPublishWhenRequiredFieldNotMapped";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -606,6 +626,7 @@ definition {
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotPublishWhenRequiredFieldNotMappedForFieldGroup";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -678,6 +699,7 @@ definition {
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMapped {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotSaveOrPublishWhenAddedFieldNotMapped";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -717,6 +739,7 @@ definition {
 	@priority = "4"
 	test CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CannotSaveOrPublishWhenAddedFieldNotMappedForFieldGroup";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

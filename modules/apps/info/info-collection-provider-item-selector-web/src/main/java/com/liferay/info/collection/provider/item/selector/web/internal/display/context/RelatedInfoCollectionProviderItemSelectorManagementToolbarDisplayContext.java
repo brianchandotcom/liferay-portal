@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -154,8 +155,7 @@ public class
 			relatedInfoItemCollectionProviders.stream();
 
 		List<String> itemTypes = stream.map(
-			relatedInfoItemCollectionProvider ->
-				relatedInfoItemCollectionProvider.getCollectionItemClassName()
+			InfoCollectionProvider::getCollectionItemClassName
 		).distinct(
 		).collect(
 			Collectors.toList()

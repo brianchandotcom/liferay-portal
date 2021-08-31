@@ -157,4 +157,11 @@ definition {
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}
 
+	macro viewTotalCount {
+		AssertTextEquals(
+			key_cardTitle = "${cardName}",
+			locator1 = "ACCards#TOTAL_COUNT",
+			value1 = "${count}");
+	}
+
 }

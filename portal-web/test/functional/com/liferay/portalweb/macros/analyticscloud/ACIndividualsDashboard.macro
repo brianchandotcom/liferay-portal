@@ -210,12 +210,4 @@ definition {
 			value1 = "${activitiesNumber}");
 	}
 
-	macro viewTotalIndividualsCount {
-		var key_individualCount = "${individualCount}";
-
-		AssertTextEquals(
-			locator1 = "ACIndividualsDashboard#TOTAL_INDIVIDUALS",
-			value1 = "${individualCount}");
-	}
-
 }

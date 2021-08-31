@@ -228,7 +228,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			batchPlannerMapping -> batchPlannerMapping.getInternalFieldName());
 
 		ExportTask exportTask = _exportTaskResource.postExportTask(
-			batchPlannerPlan.getInternalClassName(), null, null,
+			batchPlannerPlan.getInternalClassName(),
+			batchPlannerPlan.getExternalType(), null,
 			StringUtil.merge(headerNames, StringPool.COMMA), null);
 
 		_batchPlannerLogLocalService.addBatchPlannerLog(

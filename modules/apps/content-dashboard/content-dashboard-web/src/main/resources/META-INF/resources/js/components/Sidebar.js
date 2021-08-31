@@ -42,7 +42,7 @@ const SidebarHeader = ({title}) => {
 
 				<ClayLayout.ContentCol>
 					<ClayButtonWithIcon
-						autoFocus
+						aria-label="Close"
 						className="text-secondary"
 						displayType="unstyled"
 						onClick={onClose}

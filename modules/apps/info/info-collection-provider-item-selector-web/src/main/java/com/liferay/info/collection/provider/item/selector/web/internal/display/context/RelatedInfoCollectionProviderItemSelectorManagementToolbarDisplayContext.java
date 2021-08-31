@@ -112,7 +112,7 @@ public class
 						"itemType", (String)null
 					).buildString());
 
-				labelItem.setCloseable(true);
+				labelItem.setDismissible(true);
 
 				String modelResource = ResourceActionsUtil.getModelResource(
 					_themeDisplay.getLocale(), _getSelectedItemType());

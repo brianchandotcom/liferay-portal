@@ -314,9 +314,10 @@ public class PortalRelease {
 			"\\.zip)\\\"");
 	private static final Pattern _glassFishFileNamePattern = Pattern.compile(
 		"href=\\\"(?<fileName>liferay-[^\\\"]+-glassfish-[^\\\"]+" +
-			"\\.(7z|zip))\\\"");
+			"\\.(7z|tar.gz|zip))\\\"");
 	private static final Pattern _jbossFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-jboss-[^\\\"]+\\.(7z|zip))\\\"");
+		"href=\\\"(?<fileName>liferay-[^\\\"]+-jboss-[^\\\"]+" +
+			"\\.(7z|tar.gz|zip))\\\"");
 	private static final Pattern _osgiFileNamePattern = Pattern.compile(
 		"href=\\\"(?<fileName>liferay-[^\\\"]+-osgi-[^\\\"]+\\.zip)\\\"");
 	private static final Pattern _portalWarFileNamePattern = Pattern.compile(
@@ -325,12 +326,12 @@ public class PortalRelease {
 		"href=\\\"(?<fileName>liferay-[^\\\"]+-sql-[^\\\"]+\\.zip)\\\"");
 	private static final Pattern _tomcatFileNamePattern = Pattern.compile(
 		"href=\\\"(?<fileName>liferay-[^\\\"]+-tomcat-[^\\\"]+" +
-			"\\.(7z|zip))\\\"");
+			"\\.(7z|tar.gz|zip))\\\"");
 	private static final Pattern _toolsFileNamePattern = Pattern.compile(
 		"href=\\\"(?<fileName>liferay-[^\\\"]+-tools-[^\\\"]+\\.zip)\\\"");
 	private static final Pattern _wildFlyFileNamePattern = Pattern.compile(
 		"href=\\\"(?<fileName>liferay-[^\\\"]+-wildfly-[^\\\"]+" +
-			"\\.(7z|zip))\\\"");
+			"\\.(7z|tar.gz|zip))\\\"");
 
 	private final String _bundlesBaseURLContent;
 	private final String _bundlesBaseURLString;

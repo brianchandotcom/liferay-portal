@@ -49,7 +49,6 @@ const MODULES_PER_ROW_OPTIONS_WITH_CUSTOM = MODULES_PER_ROW_OPTIONS.map(
 );
 
 const VERTICAL_ALIGNMENT_OPTIONS = [
-	{label: Liferay.Language.get('default'), value: ''},
 	{label: Liferay.Language.get('top'), value: 'top'},
 	{label: Liferay.Language.get('middle'), value: 'middle'},
 	{label: Liferay.Language.get('bottom'), value: 'bottom'},

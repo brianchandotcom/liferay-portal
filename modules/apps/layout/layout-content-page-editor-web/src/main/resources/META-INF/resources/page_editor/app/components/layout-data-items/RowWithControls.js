@@ -74,7 +74,6 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 				className={classNames({
 					'align-bottom': verticalAlignment === 'bottom',
 					'align-middle': verticalAlignment === 'middle',
-					'align-top': verticalAlignment === 'top',
 					empty:
 						isSomeRowEmpty(
 							item,

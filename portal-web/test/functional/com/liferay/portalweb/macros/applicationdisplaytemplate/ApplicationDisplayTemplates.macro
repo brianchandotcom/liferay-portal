@@ -50,8 +50,11 @@ definition {
 				value1 = "${templateScript}");
 		}
 		else {
-			UploadCommonFile(
-				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				inputFieldId = "importScript",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${adtFile}");
 		}
 
@@ -132,8 +135,11 @@ definition {
 
 		PortletEntry.inputName(name = "${adtType} Test ADT");
 
-		UploadCommonFile(
-			locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
+		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			inputFieldId = "importScript",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${adtFile}");
 
 		PortletEntry.save();
@@ -187,8 +193,11 @@ definition {
 		}
 
 		if (isSet(adtFile)) {
-			UploadCommonFile(
-				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				inputFieldId = "importScript",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${adtFile}");
 		}
 

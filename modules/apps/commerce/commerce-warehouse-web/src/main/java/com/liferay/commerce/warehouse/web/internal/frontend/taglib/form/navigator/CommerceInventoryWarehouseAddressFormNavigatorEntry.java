@@ -70,7 +70,7 @@ public class CommerceInventoryWarehouseAddressFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/warehouse/address.jsp";
+		return "/commerce_warehouse/address.jsp";
 	}
 
 }

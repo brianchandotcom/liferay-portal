@@ -21,7 +21,7 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,8 +31,6 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,45 +86,17 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return Collections.emptyList();
 		}
 
-		try {
-			List<DDMTemplate> allVariationTemplates =
-				_ddmTemplateLocalService.getTemplates(
-					serviceContext.getScopeGroupId(),
-					_portal.getClassNameId(itemClassName),
-					GetterUtil.getLong(itemVariationKey), true);
-
-			Stream<DDMTemplate> allVariationTemplatesStream =
-				allVariationTemplates.stream();
-
-			return allVariationTemplatesStream.filter(
-				ddmTemplate ->
-					ddmTemplate.getResourceClassNameId() ==
-						_getInfoItemFormProviderClassNameId()
-			).collect(
-				Collectors.toList()
-			);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(
-				"Caught unexpected exception", portalException);
-		}
-	}
-
-	private long _getInfoItemFormProviderClassNameId() {
-		if (_infoItemFormProviderClassNameId != null) {
-			return _infoItemFormProviderClassNameId;
-		}
-
-		_infoItemFormProviderClassNameId = _portal.getClassNameId(
-			InfoItemFormProvider.class.getName());
-
-		return _infoItemFormProviderClassNameId;
+		return _ddmTemplateLocalService.getTemplates(
+			serviceContext.getCompanyId(),
+			_portal.getAncestorSiteGroupIds(serviceContext.getScopeGroupId()),
+			new long[] {_portal.getClassNameId(itemClassName)},
+			new long[] {GetterUtil.getLong(itemVariationKey)},
+			_portal.getClassNameId(InfoItemFormProvider.class.getName()),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	private Long _infoItemFormProviderClassNameId;
 
 	@Reference
 	private Portal _portal;

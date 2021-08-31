@@ -86,10 +86,6 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	@Override
 	public Region deleteRegion(Region region) {
 
-		// Region Localizations
-
-		regionLocalizationPersistence.removeByRegionId(region.getRegionId());
-
 		// Region
 
 		regionPersistence.remove(region);

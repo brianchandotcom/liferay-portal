@@ -803,11 +803,6 @@ public class CPDefinitionLocalServiceImpl
 			cProductLocalService.deleteCProduct(cpDefinition.getCProductId());
 		}
 
-		// Commerce product definition localization
-
-		cpDefinitionLocalizationPersistence.removeByCPDefinitionId(
-			cpDefinition.getCPDefinitionId());
-
 		// Commerce product definition specification option values
 
 		cpDefinitionSpecificationOptionValueLocalService.

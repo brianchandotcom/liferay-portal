@@ -186,18 +186,22 @@ definition {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "6.5 inch,7 inch,7.5 inch,8 inch,8.5 inch,9 inch,9.5 inch,10 inch",
 				columnNumber = "1",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				includeSearchField = "true",
+				targetCollection = "Manual Collection",
 				vocabularyName = "Size");
 		}
 
-		task ("Select the Warehouse vocabulary, Single Selection and Include Search Field in first Collection Filter") {
+		task ("Select the Warehouse vocabulary, Single Selection and Include Search Field in second Collection Filter") {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Brazil,Canada,China,England,France,Japan,Spain,United States",
 				columnNumber = "2",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				includeSearchField = "true",
 				singleSelection = "true",
+				targetCollection = "Manual Collection",
 				vocabularyName = "Warehouse");
 		}
 
@@ -471,8 +475,10 @@ definition {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Category A",
 				columnNumber = "1",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Vocabulary A");
 
 			AssertTextEquals.assertPartialText(
@@ -487,7 +493,9 @@ definition {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Category B",
 				columnNumber = "2",
+				filter = "Category",
 				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Vocabulary B");
 
 			AssertTextEquals.assertPartialText(
@@ -776,8 +784,10 @@ definition {
 			PageEditor.editCollectionFilter(
 				categoryName = "Category Name",
 				categoryNameList = "Category Name",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				subcategoryNameList = "Subcategory A,Subcategory B,Subcategory C",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -1087,8 +1097,10 @@ definition {
 		task ("Select the vocabulary in Collection Filter") {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Category Name",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -1355,8 +1367,10 @@ definition {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Category A",
 				columnNumber = "1",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Vocabulary A");
 
 			AssertTextEquals.assertPartialText(
@@ -1371,7 +1385,9 @@ definition {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Category B",
 				columnNumber = "2",
+				filter = "Category",
 				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Vocabulary B");
 
 			AssertTextEquals.assertPartialText(
@@ -1661,7 +1677,9 @@ definition {
 		task ("Select the Vocabulary Name in Collection Filter and choose Multiple Selection") {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Category A,Category B,Category C",
+				filter = "Category",
 				fragmentName = "Collection Filter",
+				targetCollection = "Manual Collection",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -1987,8 +2005,10 @@ definition {
 		task ("Select the Vocabulary Name in Collection Filter") {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Category Name",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
+				targetCollection = "Manual Collection",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -2232,9 +2252,11 @@ definition {
 			PageEditor.editCollectionFilter(
 				categoryName = "Category Name",
 				categoryNameList = "Category Name",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
 				subcategoryNameList = "Subcategory Name",
+				targetCollection = "Manual Collection",
 				vocabularyName = "Topic");
 		}
 
@@ -2483,7 +2505,10 @@ definition {
 		}
 
 		task ("Check the Show Label in Collection Filter") {
-			PageEditor.gotoConfiguration(fragmentName = "Collection Filter");
+			PageEditor.editCollectionFilter(
+				filter = "Category",
+				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection");
 
 			Check.checkNotVisible(
 				checkboxName = "Show Label",
@@ -2532,9 +2557,11 @@ definition {
 				categoryName = "Pure Color",
 				categoryNameList = "Pure Color",
 				columnNumber = "2",
+				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
 				subcategoryNameList = "Blue,Red,Green",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Color");
 
 			AssertTextEquals.assertPartialText(

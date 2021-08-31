@@ -60,7 +60,7 @@ public class EditCommerceShipmentItemMVCRenderCommand
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			commerceShipmentItemDisplayContext);
 
-		return "/shipment_item/edit_commerce_shipment_item.jsp";
+		return "/commerce_shipment_item/edit_commerce_shipment_item.jsp";
 	}
 
 	@Reference

@@ -44,6 +44,7 @@ export const mockedProps = {
 	subType: 'Basic Web Content',
 	tags: ['tag1', 'tag2'],
 	title: 'Basic Web Content Title',
+	type: 'Web Content Article',
 	user: {
 		name: 'Kate Williams',
 		url: '',
@@ -114,6 +115,7 @@ export const mockedImageDocumentProps = {
 		viewURL: 'mocked/view/url/in/portal',
 	},
 	subType: 'Basic Document',
+	type: 'Document',
 };
 
 export const mockedVideoShortcutDocumentProps = {
@@ -127,6 +129,7 @@ export const mockedVideoShortcutDocumentProps = {
 		viewURL: 'mocked/view/url/in/portal',
 	},
 	subType: 'External Video Shortcut',
+	type: 'Document',
 };
 
 export const mockedFileDocumentProps = {
@@ -140,4 +143,5 @@ export const mockedFileDocumentProps = {
 		viewURL: 'mocked/view/url/in/portal',
 	},
 	subType: 'Basic Document',
+	type: 'Document',
 };

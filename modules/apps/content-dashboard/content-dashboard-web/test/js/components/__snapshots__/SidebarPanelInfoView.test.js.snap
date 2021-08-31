@@ -24,6 +24,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
           class="autofit-col"
         >
           <button
+            aria-label="Close"
             class="text-secondary btn btn-monospaced btn-unstyled"
             type="button"
           >
@@ -246,7 +247,9 @@ exports[`SidebarPanelInfoView renders 1`] = `
         >
           display-date
         </h5>
-        <p>
+        <p
+          class="text-secondary"
+        >
           Jul 27, 2020, 10:53 AM
         </p>
       </div>
@@ -258,7 +261,9 @@ exports[`SidebarPanelInfoView renders 1`] = `
         >
           creation-date
         </h5>
-        <p>
+        <p
+          class="text-secondary"
+        >
           Jul 27, 2020, 10:50 AM
         </p>
       </div>
@@ -270,7 +275,9 @@ exports[`SidebarPanelInfoView renders 1`] = `
         >
           modified-date
         </h5>
-        <p>
+        <p
+          class="text-secondary"
+        >
           Jul 27, 2020, 10:56 AM
         </p>
       </div>
@@ -282,7 +289,9 @@ exports[`SidebarPanelInfoView renders 1`] = `
         >
           expiration-date
         </h5>
-        <p>
+        <p
+          class="text-secondary"
+        >
           Jul 28, 2020, 10:00 AM
         </p>
       </div>
@@ -294,7 +303,9 @@ exports[`SidebarPanelInfoView renders 1`] = `
         >
           review-date
         </h5>
-        <p>
+        <p
+          class="text-secondary"
+        >
           Jul 27, 2020, 2:14 PM
         </p>
       </div>
@@ -306,7 +317,9 @@ exports[`SidebarPanelInfoView renders 1`] = `
         >
           id
         </h5>
-        <p>
+        <p
+          class="text-secondary"
+        >
           38070
         </p>
       </div>

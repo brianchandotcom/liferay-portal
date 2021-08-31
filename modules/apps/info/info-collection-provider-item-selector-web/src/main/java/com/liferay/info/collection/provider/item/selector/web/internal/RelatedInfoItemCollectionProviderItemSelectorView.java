@@ -92,9 +92,8 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 			InfoCollectionProviderItemSelectorWebKeys.
 				RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			new RelatedInfoCollectionProviderItemSelectorDisplayContext(
-				(HttpServletRequest)servletRequest, _infoItemServiceTracker,
-				itemSelectedEventName, _language, portletURL,
-				relatedInfoItemCollectionProviders));
+				(HttpServletRequest)servletRequest, itemSelectedEventName,
+				_language, portletURL, relatedInfoItemCollectionProviders));
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(

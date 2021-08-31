@@ -15,7 +15,6 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.display.context;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -47,13 +46,11 @@ public class RelatedInfoCollectionProviderItemSelectorDisplayContext {
 
 	public RelatedInfoCollectionProviderItemSelectorDisplayContext(
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceTracker infoItemServiceTracker,
 		String itemSelectedEventName, Language language, PortletURL portletURL,
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders) {
 
 		_httpServletRequest = httpServletRequest;
-		_infoItemServiceTracker = infoItemServiceTracker;
 		_itemSelectedEventName = itemSelectedEventName;
 		_language = language;
 		_portletURL = portletURL;
@@ -201,7 +198,6 @@ public class RelatedInfoCollectionProviderItemSelectorDisplayContext {
 
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final String _itemSelectedEventName;
 	private final Language _language;
 	private final PortletURL _portletURL;

@@ -30,6 +30,7 @@ page import="com.liferay.batch.planner.service.BatchPlannerPolicyServiceUtil" %>
 page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanDisplayContext" %><%@
 page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanManagementToolbarDisplayContext" %><%@
 page import="com.liferay.batch.planner.web.internal.display.context.EditBatchPlannerPlanDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.petra.string.StringUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -43,6 +44,9 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.text.Format" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 

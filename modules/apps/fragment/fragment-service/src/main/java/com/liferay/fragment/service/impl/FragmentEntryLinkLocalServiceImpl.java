@@ -411,6 +411,15 @@ public class FragmentEntryLinkLocalServiceImpl
 			groupId, segmentsExperienceId, classNameId, classPK);
 	}
 
+	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
+		long groupId, long segmentsExperienceId, long plid,
+		String rendererKey) {
+
+		return fragmentEntryLinkPersistence.findByG_S_P_R(
+			groupId, segmentsExperienceId, plid, rendererKey);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getAllFragmentEntryLinksCountByFragmentEntryId(long, long)}

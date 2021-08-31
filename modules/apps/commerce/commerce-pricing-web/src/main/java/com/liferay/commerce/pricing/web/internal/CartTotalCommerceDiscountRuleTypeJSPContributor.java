@@ -59,7 +59,7 @@ public class CartTotalCommerceDiscountRuleTypeJSPContributor
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/discount/rule/type/cart_total.jsp");
+			"/commerce_discounts/rule/type/cart_total.jsp");
 	}
 
 	@Reference

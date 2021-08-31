@@ -140,7 +140,7 @@ public class CommerceDiscountQualifiersScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/discount/qualifiers.jsp");
+			"/commerce_discounts/qualifiers.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

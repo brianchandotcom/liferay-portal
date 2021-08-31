@@ -64,7 +64,7 @@ public class EditCommerceDiscountRuleMVCRenderCommand
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			commerceDiscountRuleDisplayContext);
 
-		return "/discount/rule/edit_commerce_discount_rule.jsp";
+		return "/commerce_discounts/rule/edit_commerce_discount_rule.jsp";
 	}
 
 	@Reference

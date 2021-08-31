@@ -130,7 +130,8 @@ public class CommerceDiscountDetailsScreenNavigationCategory
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceDiscountDisplayContext);
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/discount/details.jsp");
+			httpServletRequest, httpServletResponse,
+			"/commerce_discounts/details.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

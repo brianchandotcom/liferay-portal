@@ -24,4 +24,8 @@ public interface TemplateInfoItemFieldSetProvider {
 	public InfoFieldSet getInfoFieldSet(
 		String itemClassName, String itemVariationKey);
 
+	public default InfoFieldSet getInfoFieldSet(String itemClassName) {
+		return getInfoFieldSet(itemClassName, "0");
+	}
+
 }

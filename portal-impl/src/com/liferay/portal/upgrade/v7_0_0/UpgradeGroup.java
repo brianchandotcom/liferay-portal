@@ -37,6 +37,8 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		dropIndexes("Group_", "name");
+
 		alterColumnType("Group_", "name", "STRING null");
 
 		try (SafeCloseable safeCloseable = addTempIndex(

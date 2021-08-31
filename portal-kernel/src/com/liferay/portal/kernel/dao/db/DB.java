@@ -71,6 +71,10 @@ public interface DB {
 
 	public String buildSQL(String template) throws IOException, SQLException;
 
+	public List<IndexMetadata> dropIndexes(
+			Connection connection, String tableName, String columnName)
+		throws IOException, SQLException;
+
 	public DBType getDBType();
 
 	public List<Index> getIndexes(Connection connection) throws SQLException;
@@ -89,11 +93,11 @@ public interface DB {
 	public String getPopulateSQL(String databaseName, String sqlContent);
 
 	public String[] getPrimaryKeyColumnNames(
-		Connection connection, String tableName)
+			Connection connection, String tableName)
 		throws SQLException;
 
 	public ResultSet getPrimaryKeysResultSet(
-		Connection connection, String tableName)
+			Connection connection, String tableName)
 		throws SQLException;
 
 	public String getRecreateSQL(String databaseName);

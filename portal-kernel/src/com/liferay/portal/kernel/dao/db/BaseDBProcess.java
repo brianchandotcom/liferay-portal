@@ -228,6 +228,15 @@ public abstract class BaseDBProcess implements DBProcess {
 		return dbInspector.hasTable(tableName, true);
 	}
 
+	protected List<IndexMetadata> dropIndexes(
+			String tableName, String columnName)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		return db.dropIndexes(connection, tableName, columnName);
+	}
+
 	protected String[] getPrimaryKeyColumnNames(
 			Connection connection, String tableName)
 		throws SQLException {

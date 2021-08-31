@@ -558,7 +558,7 @@ definition {
 		task ("View the title of assets are shown in the second module") {
 			var n = "1";
 
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+			for (var title : list "Web Content Title,Document Title,Blogs Entry Title") {
 				AssertVisible(
 					id = "link",
 					key_position = "${n}",

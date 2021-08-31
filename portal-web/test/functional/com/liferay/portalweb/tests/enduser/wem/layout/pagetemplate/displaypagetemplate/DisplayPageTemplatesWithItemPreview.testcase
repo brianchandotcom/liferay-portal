@@ -639,7 +639,7 @@ definition {
 		task ("View the title of collection items are shown as Bulleted List") {
 			var n = "1";
 
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
@@ -681,7 +681,7 @@ definition {
 
 			var n = "1";
 
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",

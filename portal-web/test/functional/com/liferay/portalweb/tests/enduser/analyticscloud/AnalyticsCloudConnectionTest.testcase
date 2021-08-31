@@ -115,11 +115,44 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8836 | Test Summary: Cancel Creating a DXP Data Source"
-	@ignore = "true"
 	@priority = "3"
 	test CancelCreatingDxpDataSource {
 
-		// TODO LRAC-8836 CancelCreatingDxpDataSource
+		task ("Access the data sources, select Liferay DXP and click the cancel button") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			var entries = selenium.getText(locator1 = "ACUtils#RESULT_MESSAGE");
+
+	
+
+			ACSettings.clickGenericAddOrConfirmationButton();
+
+			Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
+
+			ACNavigation.clickCancelButton();
+
+
+
+
+
+			
+
+		}
+
+		task ("Assert the data source list if a new data source has not been created") {
+
+			ACSettings.goToDataSources();
+
+			AssertTextEquals(
+				locator1 = "ACUtils#RESULT_MESSAGE",
+				value1 = "${entries}");
+
+			
+		}
 
 	}
 

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
@@ -65,15 +66,21 @@ public class InfoFieldUtil {
 				layout.getGroupId(), layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			String defaultElementName =
+				"defaultElementName" + StringUtil.randomId();
+
 			Map<String, String> editableTypes =
 				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					_getHtml(fragmentEntryLink, fragmentRendererController));
+					_getHtml(
+						fragmentEntryLink, fragmentRendererController,
+						defaultElementName));
 
 			for (Map.Entry<String, String> entry : editableTypes.entrySet()) {
+				String name = entry.getKey();
 				String type = entry.getValue();
 
-				if (_isTextFieldType(type)) {
-					String name = entry.getKey();
+				if (!name.equals(defaultElementName) &&
+					_isTextFieldType(type)) {
 
 					consumer.accept(
 						name,
@@ -89,19 +96,20 @@ public class InfoFieldUtil {
 
 	private static String _getHtml(
 		FragmentEntryLink fragmentEntryLink,
-		FragmentRendererController fragmentRendererController) {
+		FragmentRendererController fragmentRendererController,
+		String defaultElementName) {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
-			return _renderHtml(fragmentEntryLink);
+			return _renderHtml(fragmentEntryLink, defaultElementName);
 		}
 
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
 		if (httpServletRequest == null) {
-			return _renderHtml(fragmentEntryLink);
+			return _renderHtml(fragmentEntryLink, defaultElementName);
 		}
 
 		ThemeDisplay themeDisplay =
@@ -109,7 +117,7 @@ public class InfoFieldUtil {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay == null) {
-			return _renderHtml(fragmentEntryLink);
+			return _renderHtml(fragmentEntryLink, defaultElementName);
 		}
 
 		DefaultFragmentRendererContext fragmentRendererContext =
@@ -160,10 +168,12 @@ public class InfoFieldUtil {
 		return false;
 	}
 
-	private static String _renderHtml(FragmentEntryLink fragmentEntryLink) {
+	private static String _renderHtml(
+		FragmentEntryLink fragmentEntryLink, String defaultElementName) {
+
 		Matcher matcher = _pattern.matcher(fragmentEntryLink.getHtml());
 
-		return matcher.replaceAll("element");
+		return matcher.replaceAll(defaultElementName);
 	}
 
 	private static final Pattern _pattern = Pattern.compile("\\$\\{[^}]*\\}");

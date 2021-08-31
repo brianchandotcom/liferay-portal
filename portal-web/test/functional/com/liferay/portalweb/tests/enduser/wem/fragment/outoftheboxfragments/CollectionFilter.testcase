@@ -12,6 +12,14 @@ definition {
 			User.firstLoginPG();
 		}
 
+		task ("Enable the Collection Filter feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
@@ -25,6 +33,12 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer");
+
+			GogoShell.viewOutput(outputContent = "true");
 		}
 	}
 

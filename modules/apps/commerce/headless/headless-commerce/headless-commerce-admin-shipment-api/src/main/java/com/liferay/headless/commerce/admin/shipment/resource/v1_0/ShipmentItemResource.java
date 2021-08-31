@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.shipment.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -23,7 +24,9 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -100,6 +103,12 @@ public interface ShipmentItemResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
+
+	public default Filter toFilter(
+		String filterString, Map<String, List<String>> multivaluedMap) {
+
+		return null;
+	}
 
 	public static class FactoryHolder {
 

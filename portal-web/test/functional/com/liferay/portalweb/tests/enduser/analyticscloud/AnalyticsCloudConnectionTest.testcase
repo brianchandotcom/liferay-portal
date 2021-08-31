@@ -263,12 +263,53 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
-	@ignore = "true"
 	@priority = "5"
 	test ViewPageAddedByDXPDataSource {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8127 ViewPageAddedByDXPDataSource
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9013
 
+		task ("Connect DXP to AC") {
+			ACUtils.addSiteAndPage();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to page and get data") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close all sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Go to AC and assert and switch property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Pages tab in Sites") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Set time filter use 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		// Couldn't assert the list due to missing data.
+
+		task ("Assert that the page list is beeing showed") {
+			ACUtils.assertItemsName(itemList = "AC Page");
+		}
 	}
 
 }

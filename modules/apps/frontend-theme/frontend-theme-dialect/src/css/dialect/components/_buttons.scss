@@ -336,15 +336,15 @@
 	border-radius: $rounded-pill;
 
 	&.btn-variant-primary {
-		box-shadow: $elevation-tight-4 $action-primary-disabled;
+		box-shadow: var(--elevation-tight-4) $action-primary-disabled;
 	}
 
 	&.btn-variant-secondary {
-		box-shadow: $elevation-tight-4 $action-secondary-disabled;
+		box-shadow: var(--elevation-tight-4) $action-secondary-disabled;
 	}
 
 	&.btn-variant-neutral {
-		box-shadow: $elevation-tight-4 $action-neutral-disabled;
+		box-shadow: var(--elevation-tight-4) $action-neutral-disabled;
 	}
 }
 

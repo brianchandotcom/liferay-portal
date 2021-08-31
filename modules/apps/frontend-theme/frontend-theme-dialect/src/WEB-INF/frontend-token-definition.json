@@ -1278,6 +1278,210 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "0 1px 3px",
+							"label": "elevation-tight-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-1"
+								}
+							],
+							"name": "elevationTight1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 1.25px 4px",
+							"label": "elevation-tight-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-2"
+								}
+							],
+							"name": "elevationTight2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 2px 6px",
+							"label": "elevation-tight-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-3"
+								}
+							],
+							"name": "elevationTight3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 2px 7px",
+							"label": "elevation-tight-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-4"
+								}
+							],
+							"name": "elevationTight4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 3px 12px",
+							"label": "elevation-tight-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-5"
+								}
+							],
+							"name": "elevationTight5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 3.5px 14px",
+							"label": "elevation-tight-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-6"
+								}
+							],
+							"name": "elevationTight6",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 7px 18px",
+							"label": "elevation-tight-7",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-7"
+								}
+							],
+							"name": "elevationTight7",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 12px 28px",
+							"label": "elevation-tight-8",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-8"
+								}
+							],
+							"name": "elevationTight8",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 13px 36px",
+							"label": "elevation-tight-9",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-tight-9"
+								}
+							],
+							"name": "elevationTight9",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 5px 15px",
+							"label": "elevation-fluffy-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-1"
+								}
+							],
+							"name": "elevationFluffy1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 6.25px 20px",
+							"label": "elevation-fluffy-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-2"
+								}
+							],
+							"name": "elevationFluffy2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 10px 30px",
+							"label": "elevation-fluffy-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-3"
+								}
+							],
+							"name": "elevationFluffy3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 10px 35px",
+							"label": "elevation-fluffy-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-4"
+								}
+							],
+							"name": "elevationFluffy4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 15px 60px",
+							"label": "elevation-fluffy-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-5"
+								}
+							],
+							"name": "elevationFluffy5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 17.5px 70px",
+							"label": "elevation-fluffy-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-6"
+								}
+							],
+							"name": "elevationFluffy6",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0 35px 90px",
+							"label": "elevation-fluffy-7",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "elevation-fluffy-7"
+								}
+							],
+							"name": "elevationFluffy7",
+							"type": "String"
+						}
+					],
+					"label": "elevations",
+					"name": "elevations"
+				}
+			],
+			"label": "dialect-general",
+			"name": "dialectGeneral"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "100%",
 							"label": "nav-link-horizontal-active-indicator-length",
 							"mappings": [

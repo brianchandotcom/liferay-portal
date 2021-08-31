@@ -165,7 +165,7 @@ definition {
 			locator1 = "Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS",
 			value1 = "Notifications");
 
-		FormFields.enableSwitcher(fieldName = "sendEmailNotification");
+		FormFields.enableSwitch(fieldName = "sendEmailNotification");
 
 		FormFields.editText(
 			fieldName = "emailFromName",
@@ -197,13 +197,13 @@ definition {
 	}
 
 	macro configureRequireAuthentication {
-		FormFields.enableSwitcher(fieldName = "requireAuthentication");
+		FormFields.enableSwitch(fieldName = "requireAuthentication");
 
 		Button.clickDone();
 	}
 
 	macro configureRequireCaptcha {
-		FormFields.enableSwitcher(fieldName = "requireCaptcha");
+		FormFields.enableSwitch(fieldName = "requireCaptcha");
 
 		Button.clickDone();
 	}
@@ -284,11 +284,11 @@ definition {
 	}
 
 	macro disableAutocompleteConfiguration {
-		FormFields.disableSwitcher(fieldName = "Autocomplete");
+		FormFields.disableSwitch(fieldName = "Autocomplete");
 	}
 
-	macro disableAutocompleteSwitcherTextField {
-		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
+	macro disableAutocompleteSwitchTextField {
+		Click(locator1 = "FormFields#SWITCH_TEXTFIELD");
 	}
 
 	macro duplicate {
@@ -470,7 +470,7 @@ definition {
 	}
 
 	macro enableAutocompleteConfiguration {
-		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
+		Click(locator1 = "FormFields#SWITCH_TEXTFIELD");
 	}
 
 	macro getPublishedFormPublicURL {

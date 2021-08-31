@@ -772,24 +772,24 @@
 	<td>//label[text()='${key_fieldLabel}']/following-sibling::div[contains(@class,'separator')]</td>
 	<td></td>
 </tr>
-<!--SWITCHER-->
+<!--SWITCH-->
 <tr>
-	<td>SWITCHER</td>
+	<td>SWITCH</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //span[contains(text(),'${key_fieldName}')]/preceding-sibling::span[@class='toggle-switch-handle'] | //span[contains(text(),'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SWITCHER_OPTION</td>
-	<td>//input[contains(@value,'${key_switcherOption}')]</td>
+	<td>SWITCH_OPTION</td>
+	<td>//input[contains(@value,'${key_switchOption}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SWITCHER_OPTION_IN_FIELD</td>
+	<td>SWITCH_OPTION_IN_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar']//..//span[text()='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SWITCHER_TEXTFIELD</td>
+	<td>SWITCH_TEXTFIELD</td>
 	<td>//span[contains(text(),'Autocomplete')]/preceding-sibling::span[@class='toggle-switch-handle']</td>
 	<td></td>
 </tr>

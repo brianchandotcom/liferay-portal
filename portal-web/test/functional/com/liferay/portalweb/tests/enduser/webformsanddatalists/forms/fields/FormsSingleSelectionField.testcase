@@ -202,7 +202,7 @@ definition {
 
 		var fieldSingleSelectionField = FormFields.getFieldName();
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitch(fieldName = "Required Field");
 
 		Form.save();
 
@@ -252,7 +252,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormViewBuilder.checkSwitcher(propertyName = "repeatable");
+		FormViewBuilder.checkSwitch(propertyName = "repeatable");
 
 		Form.save();
 
@@ -624,7 +624,7 @@ definition {
 
 		Click(
 			key_fieldName = "Inline",
-			locator1 = "FormFields#SWITCHER");
+			locator1 = "FormFields#SWITCH");
 
 		AssertElementNotPresent(locator1 = "FormFields#SELECT_OPTIONS_INLINE_IDENTIFIER");
 

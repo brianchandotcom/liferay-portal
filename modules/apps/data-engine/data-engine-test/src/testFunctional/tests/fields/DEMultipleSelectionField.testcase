@@ -515,7 +515,7 @@ definition {
 
 	@description = "This is a test for LRQA-68572. This test verifies that is possible to change inline layout setting."
 	@priority = "3"
-	test CanShowAsSwitcher {
+	test CanShowAsSwitch {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -528,17 +528,17 @@ definition {
 			fieldLabel = "Multiple Selection",
 			optionValueList = "Option 1,Option 2,Option 3");
 
-		DataEngine.toggleShowAsSwitcher(fieldLabel = "Multiple Selection");
+		DataEngine.toggleShowAsSwitch(fieldLabel = "Multiple Selection");
 
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		DataEngine.assertSwitcherOptions(
+		DataEngine.assertSwitchOptions(
 			fieldLabel = "Multiple Selection",
 			optionLabelList = "Option 1,Option 2,Option 3");
 
-		DataEngine.toggleShowAsSwitcher(fieldLabel = "Multiple Selection");
+		DataEngine.toggleShowAsSwitch(fieldLabel = "Multiple Selection");
 
 		WebContentStructures.saveCP();
 

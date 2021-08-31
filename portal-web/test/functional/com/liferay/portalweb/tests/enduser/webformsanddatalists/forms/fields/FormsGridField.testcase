@@ -376,7 +376,7 @@ definition {
 			optionValue = "Option 4",
 			rowNumber = "2");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitch(fieldName = "Required Field");
 
 		Form.save();
 

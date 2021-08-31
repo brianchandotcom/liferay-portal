@@ -153,10 +153,10 @@ definition {
 		FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
 	}
 
-	macro disableSwitcher {
+	macro disableSwitch {
 		Click(
 			key_fieldName = "${fieldName}",
-			locator1 = "FormFields#SWITCHER");
+			locator1 = "FormFields#SWITCH");
 
 		FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
 	}
@@ -643,12 +643,12 @@ definition {
 			locator1 = "FormFields#SELECT_SINGLE_SELECTION_ROW_OPTION_INPUT");
 	}
 
-	macro enableSwitcher {
+	macro enableSwitch {
 		Pause(locator1 = "2000");
 
 		Click(
 			key_fieldName = "${fieldName}",
-			locator1 = "FormFields#SWITCHER");
+			locator1 = "FormFields#SWITCH");
 
 		Pause(locator1 = "2000");
 	}
@@ -964,12 +964,12 @@ definition {
 		Click(locator1 = "FormFields#SELECT_FIELD");
 	}
 
-	macro selectSwitcherOption {
+	macro selectSwitchOption {
 		var key_fieldName = "${fieldName}";
-		var key_switcherOption = "${switcherOption}";
-		var key_switcherOption = StringUtil.replace("${switcherOption}", " ", "");
+		var key_switchOption = "${switchOption}";
+		var key_switchOption = StringUtil.replace("${switchOption}", " ", "");
 
-		Click(locator1 = "FormFields#SWITCHER");
+		Click(locator1 = "FormFields#SWITCH");
 	}
 
 	macro selectTextFieldLineOption {
@@ -1873,17 +1873,17 @@ definition {
 		AssertElementPresent(locator1 = "FormFields#ANY_SOURCE_ELEMENT");
 	}
 
-	macro viewSwitcher {
+	macro viewSwitch {
 		var key_fieldName = "${fieldName}";
 
-		AssertElementPresent(locator1 = "FormFields#SWITCHER");
+		AssertElementPresent(locator1 = "FormFields#SWITCH");
 	}
 
-	macro viewSwitcherChecked {
+	macro viewSwitchChecked {
 		FormFields.viewCheckboxChecked(fieldName = "${fieldName}");
 	}
 
-	macro viewSwitcherLabel {
+	macro viewSwitchLabel {
 		AssertTextEquals.assertText(
 			key_fieldLabel = "${fieldLabel}",
 			key_fieldName = "${fieldName}",
@@ -1891,7 +1891,7 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
-	macro viewSwitcherLabelNotPresent {
+	macro viewSwitchLabelNotPresent {
 		var key_fieldName = "${fieldName}";
 
 		AssertTextNotPresent(
@@ -1900,11 +1900,11 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
-	macro viewSwitcherOption {
+	macro viewSwitchOption {
 		var key_fieldName = "${fieldName}";
 		var key_optionValue = "${optionValue}";
 
-		AssertElementPresent(locator1 = "FormFields#SWITCHER_OPTION_IN_FIELD");
+		AssertElementPresent(locator1 = "FormFields#SWITCH_OPTION_IN_FIELD");
 	}
 
 	macro viewTableNotPresent {

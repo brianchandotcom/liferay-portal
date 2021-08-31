@@ -152,7 +152,7 @@ definition {
 			key_radioOption = "From Data Provider",
 			locator1 = "FormFields#RADIO_OPTION_LABEL");
 
-		Form.disableAutocompleteSwitcherTextField();
+		Form.disableAutocompleteSwitchTextField();
 
 		AssertNotVisible(
 			key_fieldName = "dataSourceType",
@@ -341,7 +341,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.save();
 
@@ -399,11 +399,11 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Repeatable");
+		FormFields.enableSwitch(fieldName = "Repeatable");
 
 		Form.save();
 
@@ -458,7 +458,7 @@ definition {
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.save();
 
@@ -514,7 +514,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormViewBuilder.checkSwitcher(propertyName = "Validation");
+		FormViewBuilder.checkSwitch(propertyName = "Validation");
 
 		FormFields.selectSelectOption(
 			fieldName = "If Input",
@@ -578,7 +578,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Validation");
+		FormFields.enableSwitch(fieldName = "Validation");
 
 		FormFields.editValidation(
 			validationArgument = "Contains",
@@ -632,7 +632,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Validation");
+		FormFields.enableSwitch(fieldName = "Validation");
 
 		FormFields.editValidation(
 			validationArgument = "Matches",
@@ -796,7 +796,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Require Confirmation");
+		FormFields.enableSwitch(fieldName = "Require Confirmation");
 
 		Form.save();
 
@@ -854,9 +854,9 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Require Confirmation");
+		FormFields.enableSwitch(fieldName = "Require Confirmation");
 
-		FormFields.enableSwitcher(fieldName = "Validation");
+		FormFields.enableSwitch(fieldName = "Validation");
 
 		FormFields.editValidation(
 			validationArgument = "Contains",
@@ -914,9 +914,9 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Require Confirmation");
+		FormFields.enableSwitch(fieldName = "Require Confirmation");
 
-		FormFields.enableSwitcher(fieldName = "Validation");
+		FormFields.enableSwitch(fieldName = "Validation");
 
 		FormFields.editValidation(
 			validationArgument = "Contains",
@@ -975,11 +975,11 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Require Confirmation");
+		FormFields.enableSwitch(fieldName = "Require Confirmation");
 
 		FormFields.editRequireConfirmationField(confirmationErrorMessage = "Confirm Text Error");
 
-		FormFields.enableSwitcher(fieldName = "Validation");
+		FormFields.enableSwitch(fieldName = "Validation");
 
 		FormFields.editValidation(
 			validationArgument = "Contains",
@@ -1025,13 +1025,13 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Require Confirmation");
+		FormFields.enableSwitch(fieldName = "Require Confirmation");
 
 		FormFields.editRequireConfirmationField(confirmationLabel = "Confirm Test");
 
 		FormFields.viewTextLabel(fieldLabel = "Confirm Test Text");
 
-		FormFields.enableSwitcher(fieldName = "Validation");
+		FormFields.enableSwitch(fieldName = "Validation");
 
 		FormFields.editValidation(
 			validationArgument = "Contains",

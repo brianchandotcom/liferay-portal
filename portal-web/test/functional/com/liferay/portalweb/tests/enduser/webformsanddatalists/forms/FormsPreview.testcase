@@ -261,7 +261,7 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "0");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.addPage(formAddNewPageNumber = "1");
 

@@ -197,7 +197,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
 
-		FormFields.enableSwitcher(fieldName = "required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		Form.save();
 
@@ -471,7 +471,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.disableSwitcher(fieldName = "Show Label");
+		FormFields.disableSwitch(fieldName = "Show Label");
 
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
 
@@ -484,10 +484,10 @@ definition {
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
 	}
 
-	@description = "LPS-66513 - Verify that the Field Label can be hidden when options are displayed as switchers"
+	@description = "LPS-66513 - Verify that the Field Label can be hidden when options are displayed as switches"
 	@priority = "3"
-	test LabelCanBeHiddenWithSwitcherEnabled {
-		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHiddenWithSwitcherEnabled";
+	test LabelCanBeHiddenWithSwitchEnabled {
+		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHiddenWithSwitchEnabled";
 
 		FormsAdmin.addForm();
 
@@ -497,20 +497,20 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
 
-		FormFields.enableSwitcher(fieldName = "Show as a Switch");
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
 
 		FormFields.editOptionsRow(
-			optionName = "Switcher1",
-			optionValue = "Switcher 1",
+			optionName = "Switch1",
+			optionValue = "Switch 1",
 			rowNumber = "1");
 
-		FormFields.viewSwitcherOption(
+		FormFields.viewSwitchOption(
 			fieldName = "MultipleSelection",
-			optionValue = "Switcher 1");
+			optionValue = "Switch 1");
 
 		Form.gotoAdvancedTab();
 
-		FormFields.disableSwitcher(fieldName = "Show Label");
+		FormFields.disableSwitch(fieldName = "Show Label");
 
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
 
@@ -522,9 +522,9 @@ definition {
 
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
 
-		FormFields.viewSwitcherOption(
+		FormFields.viewSwitchOption(
 			fieldName = "MultipleSelection",
-			optionValue = "Switcher 1");
+			optionValue = "Switch 1");
 	}
 
 	@description = "Verify that options can be added"
@@ -621,10 +621,10 @@ definition {
 			rowNumber = "2");
 	}
 
-	@description = "Verify that options can be displayed as switchers"
+	@description = "Verify that options can be displayed as switches"
 	@priority = "5"
-	test OptionsCanBeDisplayedAsSwitchers {
-		property test.name.skip.portal.instance = "FormsMultipleSelectionField#OptionsCanBeDisplayedAsSwitchers";
+	test OptionsCanBeDisplayedAsSwitches {
+		property test.name.skip.portal.instance = "FormsMultipleSelectionField#OptionsCanBeDisplayedAsSwitches";
 
 		FormsAdmin.addForm();
 
@@ -634,16 +634,16 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
 
-		FormFields.enableSwitcher(fieldName = "Show as a Switch");
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
 
 		FormFields.editOptionsRow(
-			optionName = "Switcher1",
-			optionValue = "Switcher 1",
+			optionName = "Switch1",
+			optionValue = "Switch 1",
 			rowNumber = "1");
 
-		FormFields.viewSwitcherOption(
+		FormFields.viewSwitchOption(
 			fieldName = "MultipleSelection",
-			optionValue = "Switcher 1");
+			optionValue = "Switch 1");
 
 		Form.save();
 
@@ -651,9 +651,9 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewSwitcherOption(
+		FormFields.viewSwitchOption(
 			fieldName = "MultipleSelection",
-			optionValue = "Switcher 1");
+			optionValue = "Switch 1");
 	}
 
 	@description = "Verify that options can be displayed both inline and as a list"
@@ -688,7 +688,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Inline");
+		FormFields.enableSwitch(fieldName = "Inline");
 
 		FormViewBuilder.validateInlineOptionIsSetOn();
 

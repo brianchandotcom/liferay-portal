@@ -202,10 +202,10 @@ definition {
 		Click(locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
 	}
 
-	macro checkSwitcher {
+	macro checkSwitch {
 		Check.checkToggleSwitch(
-			key_switcherOption = "${propertyName}",
-			locator1 = "FormViewBuilder#SWITCHER_OPTION");
+			key_switchOption = "${propertyName}",
+			locator1 = "FormViewBuilder#SWITCH_OPTION");
 	}
 
 	macro clickActionMenuFieldset {
@@ -256,8 +256,8 @@ definition {
 		Click(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
 	}
 
-	macro clickShowAsSwitcher {
-		Click(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCHER");
+	macro clickShowAsSwitch {
+		Click(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCH");
 	}
 
 	macro clickShowLabel {
@@ -715,11 +715,11 @@ definition {
 	}
 
 	macro setFieldRepeatable {
-		FormViewBuilder.checkSwitcher(propertyName = "repeatable");
+		FormViewBuilder.checkSwitch(propertyName = "repeatable");
 	}
 
 	macro setFieldRequired {
-		FormViewBuilder.checkSwitcher(propertyName = "required");
+		FormViewBuilder.checkSwitch(propertyName = "required");
 	}
 
 	macro setName {
@@ -1047,12 +1047,12 @@ definition {
 			value1 = "${optionValue}");
 	}
 
-	macro validateShowAsSwitcherIsOFF {
-		IsNotChecked(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCHER");
+	macro validateShowAsSwitchIsOFF {
+		IsNotChecked(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCH");
 	}
 
-	macro validateShowAsSwitcherIsON {
-		IsChecked(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCHER");
+	macro validateShowAsSwitchIsON {
+		IsChecked(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCH");
 	}
 
 	macro validateShowLabelIsOff {

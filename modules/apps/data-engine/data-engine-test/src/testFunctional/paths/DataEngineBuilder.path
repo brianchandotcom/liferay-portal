@@ -101,7 +101,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_SWITCHER_INDEXED</td>
+	<td>OPTIONS_SWITCH_INDEXED</td>
 	<td>xpath=(((//label[normalize-space(text())='${key_fieldLabel}'] | //legend[normalize-space(text())='${key_fieldLabel}'])[${fieldIndex}])//following-sibling::div//div[contains(@class,'lfr-ddm-form-field-checkbox-switch')]//label[.='${key_optionLabel}'])[${optionIndex}]</td>
 	<td></td>
 </tr>

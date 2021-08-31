@@ -64,7 +64,7 @@ definition {
 			fieldHelpText = "Help Text",
 			fieldName = "tip");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -2343,7 +2343,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Option1",
@@ -2411,10 +2411,10 @@ definition {
 
 	@description = "This is a use case for LPS-59351."
 	@priority = "4"
-	test SubmitFormWithSwitcherCheckboxField {
+	test SubmitFormWithSwitchCheckboxField {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithSwitcherCheckboxField";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithSwitchCheckboxField";
 
 		FormsAdmin.addForm();
 
@@ -2430,16 +2430,16 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitcher(fieldName = "Show as a Switch");
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
 
 		FormFields.editOptionsRow(
-			optionName = "Switcher1",
-			optionValue = "Switcher 1",
+			optionName = "Switch1",
+			optionValue = "Switch 1",
 			rowNumber = "1");
 
 		FormFields.editOptionsRow(
-			optionName = "Switcher2",
-			optionValue = "Switcher 2",
+			optionName = "Switch2",
+			optionValue = "Switch 2",
 			rowNumber = "2");
 
 		Form.closeSidebar();
@@ -2468,13 +2468,13 @@ definition {
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
-		FormFields.viewSwitcherLabel(
+		FormFields.viewSwitchLabel(
 			fieldLabel = "Checkbox Field",
 			fieldName = "${fieldMultipleSelectionField}");
 
-		FormFields.selectSwitcherOption(
+		FormFields.selectSwitchOption(
 			fieldName = "${fieldMultipleSelectionField}",
-			switcherOption = "Switcher 1");
+			switchOption = "Switch 1");
 
 		FormPortlet.clickSubmit();
 
@@ -2490,13 +2490,13 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Checkbox Field",
-			fieldValue = "Switcher 1");
+			fieldValue = "Switch 1");
 
 		FormsAdminNavigator.gotoView();
 
 		FormsAdmin.viewCheckboxEntry(
 			fieldName = "${fieldMultipleSelectionField}",
-			fieldValue = "Switcher 1");
+			fieldValue = "Switch 1");
 	}
 
 	@description = "This is a use case for LPS-64305."
@@ -2583,7 +2583,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Multiple");
+		FormFields.enableSwitch(fieldName = "Multiple");
 
 		Form.publishForm();
 

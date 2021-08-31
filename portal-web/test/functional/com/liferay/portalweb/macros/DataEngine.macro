@@ -681,7 +681,7 @@ definition {
 			locator1 = "DataEngineRenderer#WEB_CONTENT_DISABLED_FIELD");
 	}
 
-	macro assertSwitcherOptions {
+	macro assertSwitchOptions {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = "1";
 		}
@@ -695,7 +695,7 @@ definition {
 				fieldIndex = "${fieldIndex}",
 				key_fieldLabel = "${fieldLabel}",
 				key_optionLabel = "${optionLabel}",
-				locator1 = "DataEngineBuilder#OPTIONS_SWITCHER_INDEXED",
+				locator1 = "DataEngineBuilder#OPTIONS_SWITCH_INDEXED",
 				optionIndex = "${optionIndex}");
 		}
 	}
@@ -1380,7 +1380,7 @@ definition {
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
-	macro toggleShowAsSwitcher {
+	macro toggleShowAsSwitch {
 		if (!(isSet(index))) {
 			var index = "1";
 		}

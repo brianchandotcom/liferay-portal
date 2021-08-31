@@ -46,7 +46,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "repeatable");
+		FormFields.enableSwitch(fieldName = "repeatable");
 
 		FormFields.viewRepeatableFieldDuplicateVisible();
 
@@ -367,7 +367,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Repeatable");
+		FormFields.enableSwitch(fieldName = "Repeatable");
 
 		FormFields.viewFieldRepeatableButton(
 			fieldName = "Upload",
@@ -576,7 +576,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Upload Field");
 
-		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+		FormFields.enableSwitch(fieldName = "Allow Guest Users to Send Files");
 
 		Form.publishForm();
 
@@ -665,7 +665,7 @@ definition {
 
 		var uploadFieldName = FormFields.getFieldName();
 
-		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+		FormFields.enableSwitch(fieldName = "Allow Guest Users to Send Files");
 
 		Form.publishForm();
 
@@ -771,7 +771,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Guest Upload");
 
-		FormFields.enableSwitcher(fieldName = "allowGuestUsers");
+		FormFields.enableSwitch(fieldName = "allowGuestUsers");
 
 		FormViewBuilder.closeSidebar();
 
@@ -935,7 +935,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Upload");
 
-		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+		FormFields.enableSwitch(fieldName = "Allow Guest Users to Send Files");
 
 		Form.save();
 

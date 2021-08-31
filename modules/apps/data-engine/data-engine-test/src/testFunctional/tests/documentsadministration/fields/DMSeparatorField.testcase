@@ -190,7 +190,7 @@ definition {
 
 		FormViewBuilder.switchToAdvancedTab();
 
-		FormFields.viewSwitcherLabel(
+		FormFields.viewSwitchLabel(
 			fieldLabel = "Separator",
 			fieldName = "Separator");
 
@@ -198,7 +198,7 @@ definition {
 			checkboxName = "Show Label",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		FormFields.viewSwitcherLabelNotPresent(
+		FormFields.viewSwitchLabelNotPresent(
 			fieldLabel = "Separator Label",
 			fieldName = "Separator");
 

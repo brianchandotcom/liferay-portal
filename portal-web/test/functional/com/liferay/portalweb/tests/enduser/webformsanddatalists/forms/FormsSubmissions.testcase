@@ -44,7 +44,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Text");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitch(fieldName = "Required Field");
 
 		Form.closeSidebar();
 
@@ -225,7 +225,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -346,7 +346,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",

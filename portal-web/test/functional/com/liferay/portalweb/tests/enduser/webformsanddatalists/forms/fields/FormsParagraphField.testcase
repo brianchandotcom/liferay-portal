@@ -78,7 +78,7 @@ definition {
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -120,7 +120,7 @@ definition {
 			optionValue = "Option 2",
 			rowNumber = "2");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -152,7 +152,7 @@ definition {
 			optionValue = "Checkbox 2",
 			rowNumber = "2");
 
-		FormFields.enableSwitcher(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.closeSidebar();
 

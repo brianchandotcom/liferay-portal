@@ -59,7 +59,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Multiple");
+		FormFields.enableSwitch(fieldName = "Multiple");
 
 		Form.closeSidebar();
 
@@ -271,7 +271,7 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitch(fieldName = "Required Field");
 
 		Form.save();
 
@@ -314,7 +314,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitcher(fieldName = "Repeatable");
+		FormFields.enableSwitch(fieldName = "Repeatable");
 
 		Form.save();
 
@@ -861,7 +861,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormViewBuilder.checkSwitcher(propertyName = "alphabeticalOrder");
+		FormViewBuilder.checkSwitch(propertyName = "alphabeticalOrder");
 
 		Form.save();
 

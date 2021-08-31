@@ -110,8 +110,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SWITCHER_OPTION</td>
-	<td>//div[contains(@data-field-name,'${key_switcherOption}')]//input[@class='toggle-switch-check']</td>
+	<td>SWITCH_OPTION</td>
+	<td>//div[contains(@data-field-name,'${key_switchOption}')]//input[@class='toggle-switch-check']</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SIDEBAR_BASIC_SHOW_AS_SWITCHER</td>
+	<td>SIDEBAR_BASIC_SHOW_AS_SWITCH</td>
 	<td>//div[contains(@data-field-name,'showAsSwitcher')]</td>
 	<td></td>
 </tr>

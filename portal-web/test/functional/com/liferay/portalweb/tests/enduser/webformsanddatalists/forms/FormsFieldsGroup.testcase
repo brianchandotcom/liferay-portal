@@ -55,7 +55,7 @@ definition {
 			key_fieldLabel = "Fields Group",
 			locator1 = "FormFields#LABEL");
 
-		FormFields.enableSwitcher(fieldName = "Collapsible");
+		FormFields.enableSwitch(fieldName = "Collapsible");
 
 		Form.save();
 
@@ -289,7 +289,7 @@ definition {
 
 		Form.gotoFieldContainer(fieldName = "Fields Group");
 
-		FormFields.enableSwitcher(fieldName = "Repeatable");
+		FormFields.enableSwitch(fieldName = "Repeatable");
 
 		Form.save();
 
@@ -408,7 +408,7 @@ definition {
 
 		Form.gotoFieldContainer(fieldName = "Fields Group");
 
-		FormFields.disableSwitcher(fieldName = "Show Label");
+		FormFields.disableSwitch(fieldName = "Show Label");
 
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Fields Group");
 

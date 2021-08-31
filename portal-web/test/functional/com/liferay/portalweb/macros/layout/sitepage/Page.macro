@@ -129,6 +129,15 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
 
+	macro assertDefaultAlternateURL {
+		var HTML = '''<link data-senna-track="temporary" href="''';
+		var HTML2 = '''" hreflang="x-default" rel="alternate">''';
+
+		var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}","");
+
+		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
+	}
+
 	macro assertNodePortPG {
 		var key_nodePort = "${nodePort}";
 

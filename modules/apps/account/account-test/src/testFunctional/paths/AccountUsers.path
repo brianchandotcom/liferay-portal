@@ -28,6 +28,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_AN_ACCOUNT_CHOOSE_BUTTON_DISABLED</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_accountName}')]//button[@disabled][contains(@class,'btn')][normalize-space()='Choose']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -1045,7 +1045,9 @@ definition {
 			productName = "Orange",
 			productType = "Simple");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/guest/p/orange");
+		var baseURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${baseURL}/web/guest/p/orange");
 
 		AssertTextEquals(
 			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",

@@ -47,11 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "assign-roles"));
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="name"
 					value="<%= accountRole.getName(locale) %>"
-				>
-					<aui:a cssClass="selector-button" data='<%= HashMapBuilder.<String, Object>put("id", accountRole.getRoleId()).build() %>' href="javascript:;">
-						<%= HtmlUtil.escape(accountRole.getName(locale)) %>
-					</aui:a>
-				</liferay-ui:search-container-column-text>
+				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"

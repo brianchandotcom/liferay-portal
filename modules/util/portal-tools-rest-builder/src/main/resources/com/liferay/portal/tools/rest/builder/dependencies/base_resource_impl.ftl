@@ -597,6 +597,14 @@ public abstract class Base${schemaName}ResourceImpl
 		this.contextUser = contextUser;
 	}
 
+	public void setExpressionConvert(ExpressionConvert<Filter> expressionConvert) {
+		this.expressionConvert = expressionConvert;
+	}
+
+	public void setFilterParserProvider(FilterParserProvider filterParserProvider) {
+		this.filterParserProvider = filterParserProvider;
+	}
+
 	public void setGroupLocalService(GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
 	}

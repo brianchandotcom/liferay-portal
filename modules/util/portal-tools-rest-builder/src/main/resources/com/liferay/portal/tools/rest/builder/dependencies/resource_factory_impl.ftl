@@ -4,6 +4,7 @@ import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Reso
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -18,6 +19,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -139,6 +142,8 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 		${schemaVarName}Resource.setContextHttpServletRequest(httpServletRequest);
 		${schemaVarName}Resource.setContextHttpServletResponse(httpServletResponse);
 		${schemaVarName}Resource.setContextUser(user);
+		${schemaVarName}Resource.setExpressionConvert(_expressionConvert);
+		${schemaVarName}Resource.setFilterParserProvider(_filterParserProvider);
 		${schemaVarName}Resource.setGroupLocalService(_groupLocalService);
 		${schemaVarName}Resource.setResourceActionLocalService(_resourceActionLocalService);
 		${schemaVarName}Resource.setResourcePermissionLocalService(_resourcePermissionLocalService);
@@ -167,6 +172,12 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
+
+	@Reference
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

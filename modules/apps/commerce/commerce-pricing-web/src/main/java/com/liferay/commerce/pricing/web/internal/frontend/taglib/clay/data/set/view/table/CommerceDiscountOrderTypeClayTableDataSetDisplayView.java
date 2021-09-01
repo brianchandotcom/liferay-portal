@@ -43,7 +43,7 @@ public class CommerceDiscountOrderTypeClayTableDataSetDisplayView
 
 		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				"orderType.name", "name");
+				"orderType.name.LANG", "name");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
 

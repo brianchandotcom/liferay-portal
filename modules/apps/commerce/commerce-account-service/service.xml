@@ -104,7 +104,7 @@
 		<reference entity="AccountGroup" package-path="com.liferay.account" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceAccountGroupCommerceAccountRel" remote-service="true" table="CAccountGroupCAccountRel">
+	<entity external-reference-code="true" local-service="true" name="CommerceAccountGroupCommerceAccountRel" persistence="false" remote-service="true" table="CAccountGroupCAccountRel">
 
 		<!-- PK fields -->
 
@@ -135,6 +135,10 @@
 			<finder-column name="commerceAccountGroupId" />
 			<finder-column name="commerceAccountId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="AccountGroupRel" package-path="com.liferay.account" />
 	</entity>
 	<entity local-service="true" name="CommerceAccountGroupRel" persistence="false" remote-service="true">
 

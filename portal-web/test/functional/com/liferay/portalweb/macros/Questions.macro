@@ -472,6 +472,27 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro enableAnonymousRead {
+		Questions.openToConfigInSystemSettings(portlet = "Questions");
+
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "enableAnonymousRead")) {
+			Check.checkNotVisible(
+				key_fieldName = "enableAnonymousRead",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		FormFields.viewCheckboxChecked(fieldName = "enableAnonymousRead");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Button.clickUpdate();
+		}
+		else {
+			Button.clickSave();
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro enableRedirectToLogin {
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 

@@ -191,6 +191,7 @@ const TranslationAdminSelector = ({
 						<>
 							<ClayDropDown.Divider />
 							<ClayDropDown.Item
+								data-testid="translation-modal-trigger"
 								onClick={() => setTranslationModalVisible(true)}
 							>
 								<ClayLayout.ContentRow containerElement="span">

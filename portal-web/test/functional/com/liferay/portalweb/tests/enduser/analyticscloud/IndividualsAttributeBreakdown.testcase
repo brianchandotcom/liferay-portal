@@ -120,6 +120,78 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8997 | Test Summary: Distribution page can be filtered by a specific string"
+	@priority = "5"
+	test BreakdownByAttributeOnDistributionPage {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the site page as Test Test") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Country",
+				sourceFileName = "contacts_country.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Navigate to the Distribution tab of Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Distribution");
+		}
+
+		task ("Select the country in Breakdown by field") {
+			ACIndividualsDashboard.selectAttribute(
+				attribute = "country",
+				fieldLabel = "Breakdown By");
+		}
+
+		task ("View the individual in chart") {
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				tick = "china - 50.0%");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8658 | Test Summary: Delete a new breakdown"
 	@priority = "5"
 	test DeleteNewBreakdown {

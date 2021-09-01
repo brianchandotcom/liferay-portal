@@ -4,6 +4,26 @@ definition {
 		AssertElementPresent(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE");
 	}
 
+	macro assignSiteToExistingProperty {
+		Search.searchCP(searchTerm = "${assignedPropertyName}");
+
+		LexiconTable.clickTableEntryColumnLink(
+			columnName = "properties",
+			tableEntry = "${assignedPropertyName}");
+
+		var siteName = "${siteName}";
+
+		if (isSet(siteName)) {
+			ACDXPSettings.searchACItem(searchItem = "${siteName}");
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro connectAnalyticsCloud {
 		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
 

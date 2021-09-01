@@ -171,7 +171,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create-organization-role-user-account-association",
 			addAction(
-				ActionKeys.UPDATE, roleId,
+				ActionKeys.ASSIGN_MEMBERS, roleId,
 				"postOrganizationRoleUserAccountAssociation",
 				_roleModelResourcePermission)
 		).put(
@@ -182,12 +182,13 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		).put(
 			"create-site-role-user-account-association",
 			addAction(
-				ActionKeys.UPDATE, roleId, "postSiteRoleUserAccountAssociation",
+				ActionKeys.ASSIGN_MEMBERS, roleId,
+				"postSiteRoleUserAccountAssociation",
 				_roleModelResourcePermission)
 		).put(
 			"delete-organization-role-user-account-association",
 			addAction(
-				ActionKeys.DELETE, roleId,
+				ActionKeys.ASSIGN_MEMBERS, roleId,
 				"deleteOrganizationRoleUserAccountAssociation",
 				_roleModelResourcePermission)
 		).put(
@@ -199,7 +200,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		).put(
 			"delete-site-role-user-account-association",
 			addAction(
-				ActionKeys.DELETE, roleId,
+				ActionKeys.ASSIGN_MEMBERS, roleId,
 				"deleteSiteRoleUserAccountAssociation",
 				_roleModelResourcePermission)
 		).put(

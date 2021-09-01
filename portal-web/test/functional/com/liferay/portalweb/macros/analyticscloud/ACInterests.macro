@@ -130,6 +130,14 @@ definition {
 		}
 	}
 
+	macro viewInterestPageViaPosition {
+		var key_positionValue = "${positionValue}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#PAGE_NAME_VIA_POSITION",
+			value1 = "${pageName}");
+	}
+
 	macro viewInterests {
 		var key_interestName = "${interestName}";
 
@@ -156,6 +164,22 @@ definition {
 				locator1 = "ACInterests#USER_ACCOUNT",
 				value1 = "${userAccount}");
 		}
+	}
+
+	macro viewInterestUserViaPosition {
+		var key_positionValue = "${positionValue}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#USER_NAME_VIA_POSITION",
+			value1 = "${userName}");
+	}
+
+	macro viewInterestViaPosition {
+		var key_positionValue = "${positionValue}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#INTEREST_TOPIC_VIA_POSITION",
+			value1 = "${interestTopic}");
 	}
 
 	macro viewNoInterestResults {

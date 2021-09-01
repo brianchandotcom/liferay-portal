@@ -48,6 +48,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INTEREST_TOPIC_VIA_POSITION</td>
+	<td>xpath=(//tr/td[@class='name-cell-root']//a)[${key_positionValue}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INTEREST_SEGMENT_MEMBERS_BAR</td>
 	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='table-cell-expand relative-metric-bar-root']//div[@class='bar bar-lg']</td>
 	<td></td>
@@ -94,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_NAME_VIA_POSITION</td>
+	<td>xpath=(//tr/td[1]//a)[${key_positionValue}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_EMAIL_ADDRESS</td>
 	<td>//tr[contains(.,'${key_userName}')]/td[2]</td>
 	<td></td>
@@ -106,6 +116,11 @@
 <tr>
 	<td>PAGE_NAME</td>
 	<td>//tr[contains(.,'${key_pageName}')]/td[1]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_NAME_VIA_POSITION</td>
+	<td>xpath=(//tr/td[1]//a)[${key_positionValue}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -31,6 +30,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -153,29 +154,39 @@ public class
 		Stream<RelatedInfoItemCollectionProvider<?, ?>> stream =
 			relatedInfoItemCollectionProviders.stream();
 
-		List<String> itemTypes = stream.map(
-			InfoCollectionProvider::getCollectionItemClassName
+		List<KeyValuePair> itemTypes = stream.map(
+			relatedInfoItemCollectionProvider -> {
+				String collectionItemClassName =
+					relatedInfoItemCollectionProvider.
+						getCollectionItemClassName();
+
+				return new KeyValuePair(
+					collectionItemClassName,
+					ResourceActionsUtil.getModelResource(
+						_themeDisplay.getLocale(), collectionItemClassName));
+			}
 		).distinct(
+		).sorted(
+			new KeyValuePairComparator(false, true)
 		).collect(
 			Collectors.toList()
 		);
 
 		return new DropdownItemList() {
 			{
-				for (String itemType : itemTypes) {
+				for (KeyValuePair itemType : itemTypes) {
 					add(
 						dropdownItem -> {
 							if (Objects.equals(
-									itemType, _getSelectedItemType())) {
+									itemType.getKey(),
+									_getSelectedItemType())) {
 
 								dropdownItem.setActive(true);
 							}
 
 							dropdownItem.setHref(
-								getPortletURL(), "itemType", itemType);
-							dropdownItem.setLabel(
-								ResourceActionsUtil.getModelResource(
-									_themeDisplay.getLocale(), itemType));
+								getPortletURL(), "itemType", itemType.getKey());
+							dropdownItem.setLabel(itemType.getValue());
 						});
 				}
 			}

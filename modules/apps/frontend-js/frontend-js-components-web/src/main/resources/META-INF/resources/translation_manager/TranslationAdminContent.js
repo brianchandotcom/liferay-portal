@@ -34,7 +34,7 @@ const TranslationAdminContent = ({
 		manageTranslations: Liferay.Language.get('manage-translations'),
 		managementToolbar: Liferay.Language.get('management-toolbar'),
 		translated: Liferay.Language.get('translated'),
-		untranslated: Liferay.Language.get('untranslated'),
+		untranslated: Liferay.Language.get('not-translated'),
 	},
 	activeLanguageIds: initialActiveLanguageIds = emptyArray,
 	availableLocales: initialAvailableLocales = emptyArray,

@@ -27,7 +27,7 @@ const TranslationAdminModal = ({
 		default: Liferay.Language.get('default'),
 		manageTranslations: Liferay.Language.get('manage-translations'),
 		translated: Liferay.Language.get('translated'),
-		untranslated: Liferay.Language.get('untranslated'),
+		untranslated: Liferay.Language.get('not-translated'),
 	},
 	availableLocales = emptyArray,
 	defaultLanguageId,

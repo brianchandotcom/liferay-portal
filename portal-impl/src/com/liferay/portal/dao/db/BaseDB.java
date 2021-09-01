@@ -48,6 +48,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,14 +91,14 @@ public abstract class BaseDB implements DB {
 						dbInspector.getCatalog(), dbInspector.getSchema(),
 						normalizedTabledName, null)) {
 
-					Integer varcharSQLType = getSQLType("VARCHAR");
-
 					Map<String, Integer> columnSizes = new HashMap<>();
 
 					while (resultSet.next()) {
 						int columnType = resultSet.getInt("DATA_TYPE");
 
-						if (!varcharSQLType.equals(columnType)) {
+						if (!ArrayUtil.contains(
+								SQL_VARCHAR_TYPES, columnType)) {
+
 							continue;
 						}
 
@@ -122,11 +123,17 @@ public abstract class BaseDB implements DB {
 					0);
 			}
 
-			runSQL(indexMetadata.getCreateSQL(columnSizes));
+			runSQL(
+				_applyMaxStringIndexLengthLimitation(
+					indexMetadata.getCreateSQL(columnSizes)));
 		}
 	}
 
-	@Override
+	/**
+	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #addIndexes(Connection, List)}
+	 */
+	@Deprecated
 	public void addIndexes(
 			Connection connection, String indexesSQL,
 			Set<String> validIndexNames)
@@ -1034,11 +1041,18 @@ public abstract class BaseDB implements DB {
 		"@table@", "@old-column@", "@new-column@", "@type@", "@nullable@"
 	};
 
+	protected static final int[] SQL_VARCHAR_TYPES = {
+		Types.LONGNVARCHAR, Types.LONGVARCHAR, Types.NVARCHAR, Types.VARCHAR
+	};
+
 	protected static final String[] TEMPLATE = {
 		"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP", " BLOB",
 		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
 		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
 	};
+
+	protected static final Pattern columnTypePattern = Pattern.compile(
+		"(^\\w+)", Pattern.CASE_INSENSITIVE);
 
 	private String _applyMaxStringIndexLengthLimitation(String template) {
 		if (!template.contains("[$COLUMN_LENGTH:")) {

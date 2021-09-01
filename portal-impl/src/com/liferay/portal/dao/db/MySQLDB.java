@@ -18,8 +18,10 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -34,6 +36,7 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * @author Alexander Chow
@@ -44,6 +47,30 @@ public class MySQLDB extends BaseDB {
 
 	public MySQLDB(int majorVersion, int minorVersion) {
 		super(DBType.MYSQL, majorVersion, minorVersion);
+	}
+
+	@Override
+	public void alterColumnType(
+			Connection connection, String tableName, String columnName,
+			String newColumnType)
+		throws Exception {
+
+		List<IndexMetadata> indexMetadatas = new ArrayList<>();
+
+		Matcher matcher = columnTypePattern.matcher(newColumnType);
+
+		if (matcher.lookingAt() &&
+			ArrayUtil.contains(
+				SQL_VARCHAR_TYPES, getSQLType(matcher.group(1)))) {
+
+			indexMetadatas = dropIndexes(connection, tableName, columnName);
+		}
+
+		super.alterColumnType(connection, tableName, columnName, newColumnType);
+
+		if (!indexMetadatas.isEmpty()) {
+			addIndexes(connection, indexMetadatas);
+		}
 	}
 
 	@Override

@@ -272,23 +272,7 @@ definition {
 
 		Questions.enableRedirectToLogin();
 
-		ServiceAccessPolicy.openToServiceAccessPolicy(
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		ServiceAccessPolicy.addServiceAccessPolicy(
-			defaultSwitch = "true",
-			enabled = "true",
-			policyName = "QUESTIONS",
-			title = "QUESTIONS");
-
-		ServiceAccessPolicy.editServiceAccessPolicy(
-			allowedServiceSignature = '''com.liferay.expando.kernel.service.ExpandoValueService#getData
-com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
-com.liferay.message.boards.service.MBCategoryService#getCategory
-com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
-com.liferay.message.boards.service.MBMessageService#getMessage''',
-			policyName = "QUESTIONS");
+		Questions.enableAnonymousRead();
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -760,7 +744,7 @@ com.liferay.message.boards.service.MBMessageService#getMessage''',
 		Questions.viewSubscriptionStatusFromDetails(noSubscribedQuestion = "Questions Title");
 	}
 
-	@description = "Validate if the guest can check the canonical URL."
+	@description = "Validate if the guest can check the canonical URL, also covers LPS-137636."
 	@priority = "4"
 	test CanViewCanonicalURL {
 		property test.name.skip.portal.instance = "QuestionsWidgetActions#CanViewCanonicalURL";
@@ -775,27 +759,7 @@ com.liferay.message.boards.service.MBMessageService#getMessage''',
 
 		SystemSettings.saveConfiguration();
 
-		ServiceAccessPolicy.openToServiceAccessPolicy(
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		ServiceAccessPolicy.addServiceAccessPolicy(
-			defaultSwitch = "true",
-			enabled = "true",
-			policyName = "QUESTIONS",
-			title = "QUESTIONS");
-
-		ServiceAccessPolicy.editServiceAccessPolicy(
-			allowedServiceSignature = '''com.liferay.expando.kernel.service.ExpandoValueService#getData
-com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
-com.liferay.message.boards.service.MBCategoryService#getCategory
-com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
-com.liferay.message.boards.service.MBMessageService#getChildMessages
-com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
-com.liferay.message.boards.service.MBMessageService#getMessage
-com.liferay.message.boards.service.MBThreadService#getThreads
-com.liferay.message.boards.service.MBThreadService#getThreadsCount''',
-			policyName = "QUESTIONS");
+		Questions.enableAnonymousRead();
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -808,9 +772,15 @@ com.liferay.message.boards.service.MBThreadService#getThreadsCount''',
 			groupName = "Guest",
 			titleField = "Question");
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page/questions/category/question");
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question");
 
 		Questions.assertCanonicalURL(
 			category = "category",

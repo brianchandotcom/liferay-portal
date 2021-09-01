@@ -116,7 +116,7 @@ public interface SearchLocationDDMFormFieldTypeSettings
 		dataType = "",
 		ddmFormFieldProperties = {
 			@DDMFormFieldProperty(
-				name = "buttonLabel", value = "%third-party-applications"
+				name = "buttonLabel", value = "%google-places"
 			),
 			@DDMFormFieldProperty(
 				name = "messageArguments", value = {"<strong>", "</strong>"}

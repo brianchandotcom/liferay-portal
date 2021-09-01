@@ -70,11 +70,7 @@ public class OrderTypeSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(orderType.getName()));
-
-			sb.append("\"");
+			sb.append(_toJSON(orderType.getName()));
 		}
 
 		sb.append("}");
@@ -136,7 +132,9 @@ public class OrderTypeSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					orderType.setName((String)jsonParserFieldValue);
+					orderType.setName(
+						(Map)OrderTypeSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

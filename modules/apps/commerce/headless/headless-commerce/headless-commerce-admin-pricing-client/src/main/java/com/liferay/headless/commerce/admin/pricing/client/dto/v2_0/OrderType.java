@@ -19,6 +19,7 @@ import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.OrderTypeS
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -53,15 +54,17 @@ public class OrderType implements Cloneable, Serializable {
 
 	protected Long id;
 
-	public String getName() {
+	public Map<String, String> getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(Map<String, String> name) {
 		this.name = name;
 	}
 
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setName(
+		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
+
 		try {
 			name = nameUnsafeSupplier.get();
 		}
@@ -70,7 +73,7 @@ public class OrderType implements Cloneable, Serializable {
 		}
 	}
 
-	protected String name;
+	protected Map<String, String> name;
 
 	@Override
 	public OrderType clone() throws CloneNotSupportedException {

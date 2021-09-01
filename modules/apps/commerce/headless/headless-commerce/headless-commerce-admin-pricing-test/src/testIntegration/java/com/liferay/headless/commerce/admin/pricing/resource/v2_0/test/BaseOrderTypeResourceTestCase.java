@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -178,15 +177,11 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		OrderType orderType = randomOrderType();
 
-		orderType.setName(regex);
-
 		String json = OrderTypeSerDes.toJSON(orderType);
 
 		Assert.assertFalse(json.contains(regex));
 
 		orderType = OrderTypeSerDes.toDTO(json);
-
-		Assert.assertEquals(regex, orderType.getName());
 	}
 
 	@Test
@@ -491,8 +486,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						orderType1.getName(), orderType2.getName())) {
+				if (!equals(
+						(Map)orderType1.getName(), (Map)orderType2.getName())) {
 
 					return false;
 				}
@@ -601,11 +596,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(orderType.getName()));
-			sb.append("'");
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -653,7 +645,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 		return new OrderType() {
 			{
 				id = RandomTestUtil.randomLong();
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

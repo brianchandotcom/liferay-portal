@@ -21,7 +21,6 @@ definition {
 
 	@priority = "4"
 	test ClusterCanRecoverByShuttingDownAnyNodeWithManualRecovery {
-		property commerce.enabled = "false";
 		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.name.skip.portal.instance = "ClusteringLicense#ClusterCanRecoverByShuttingDownAnyNodeWithManualRecovery";
@@ -61,7 +60,6 @@ definition {
 	@priority = "3"
 	test ExceedDoubleNodeLimit {
 		property app.server.bundles.size = "4";
-		property commerce.enabled = "false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.name.skip.portal.instance = "ClusteringLicense#ExceedDoubleNodeLimit";
 
@@ -97,7 +95,6 @@ definition {
 
 	@priority = "4"
 	test LimitPreviouslyValidatedClusterNodes {
-		property commerce.enabled = "false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property skip.start.app.server.index = "2";
 		property test.name.skip.portal.instance = "ClusteringLicense#LimitPreviouslyValidatedClusterNodes";
@@ -179,7 +176,6 @@ definition {
 
 	@priority = "4"
 	test LimitPreviouslyValidatedClusterNodesWithManualRecovery {
-		property commerce.enabled = "false";
 		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property skip.start.app.server.index = "2";
@@ -233,7 +229,6 @@ definition {
 
 	@priority = "5"
 	test ViewNodeLimit {
-		property commerce.enabled = "false";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.name.skip.portal.instance = "ClusteringLicense#ViewNodeLimit";
@@ -319,7 +314,6 @@ definition {
 
 	@priority = "5"
 	test ViewNodeLimitWithManualRecovery {
-		property commerce.enabled = "false";
 		property custom.properties = "license.cluster.overload.node.auto.shut.down=false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.name.skip.portal.instance = "ClusteringLicense#ViewNodeLimitWithManualRecovery";

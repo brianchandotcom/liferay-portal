@@ -112,6 +112,8 @@ definition {
 
 		CommerceLicense.viewCommerceMissing();
 
+		Portlet.shutdownServer();
+
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=enterprise.product.commerce.enabled=true");

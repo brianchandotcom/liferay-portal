@@ -1,18 +1,5 @@
 definition {
 
-	@summary = "Assert Commerce license is deployed after portal is started"
-	macro deployCommerceLicense {
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-commerce-license-xml -Dliferay.home=${liferayHome}");
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "wait-for-license-activation");
-	}
-
 	@summary = "Assert Commerce basic functionality is working after activating with licensing"
 	macro executeSmoke {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -45,15 +32,6 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
-	@summary = "Assert Commerce UI is unusable from the platform when expired"
-	macro viewCommerceExpired {
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		AssertElementNotPresent(locator1 = "ItemSelector#ADD_BUTTON");
-	}
-
 	@summary = "Assert Commerce UI is missing from the platform when not activated"
 	macro viewCommerceMissing {
 		ApplicationsMenuHelper.openApplicationsMenu();
@@ -65,16 +43,6 @@ definition {
 		AssertElementNotPresent(
 			key_panel = "Commerce",
 			locator1 = "ApplicationsMenu#PANEL");
-	}
-
-	@summary = "Assert expiration date warning for Liferay Commerce Subscription"
-	macro viewWarningExpirationDate {
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Catalogs");
-
-		Alert.viewErrorMessage(errorMessage = "Update your activation key for Liferay Commerce Subscription Development");
-		Alert.viewErrorMessage(errorMessage = "expire");
 	}
 
 }

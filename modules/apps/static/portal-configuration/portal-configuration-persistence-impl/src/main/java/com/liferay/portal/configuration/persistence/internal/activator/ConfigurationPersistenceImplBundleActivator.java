@@ -107,11 +107,14 @@ public class ConfigurationPersistenceImplBundleActivator
 	}
 
 	private void _cleanUpConfiguratorState(BundleContext bundleContext) {
+		if (!StartupHelperUtil.isDBNew()) {
+			return;
+		}
+
 		for (Bundle bundle : bundleContext.getBundles()) {
 			if (Objects.equals(
 					bundle.getSymbolicName(),
-					"org.apache.felix.configurator") &&
-				StartupHelperUtil.isDBNew()) {
+					"org.apache.felix.configurator")) {
 
 				File stateFile = bundle.getDataFile("state.ser");
 

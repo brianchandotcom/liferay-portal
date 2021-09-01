@@ -109,6 +109,74 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9020 | Test Summary: Search associated segment will not return results in the individual List"
+	@priority = "3"
+	test AssertNoIndividualsAssociatedSegmentsResults {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Segments and add a new segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "New Segment Test");
+
+			ACSegments.addStaticMember(tableMember = "ac ac");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Navigate to Individule Segments") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+
+			ACNavigation.switchTab(tabName = "Segments");
+		}
+
+		task ("Search non-existent segment") {
+			ACUtils.searchBar(searchItem = "dynamic");
+		}
+
+		task ("Assert there are no segments found") {
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Associated Segments found.");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9019 | Test Summary: Search an Individual's Interest List with a query that won't return results"
 	@priority = "3"
 	test AssertNoIndividualsInterestsResults {

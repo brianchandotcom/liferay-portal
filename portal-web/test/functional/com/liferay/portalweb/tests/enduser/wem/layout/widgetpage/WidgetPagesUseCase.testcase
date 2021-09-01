@@ -341,7 +341,7 @@ definition {
 
 	@priority = "3"
 	test ViewSecureContentAndPageAsGuest {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#ViewSecureContentAndPageAsGuest";
 		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Message Boards,Site Pages Administration";

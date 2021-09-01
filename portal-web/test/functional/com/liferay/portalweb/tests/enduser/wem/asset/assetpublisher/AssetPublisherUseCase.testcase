@@ -42,7 +42,7 @@ definition {
 	@description = "Add and edit web content via Asset Publisher in organization site with virtual host."
 	@priority = "4"
 	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property custom.properties = "auth.login.prompt.enabled=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
 
 		task ("Add an organization with site") {

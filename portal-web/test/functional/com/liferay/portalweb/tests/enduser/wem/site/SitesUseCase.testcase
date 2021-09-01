@@ -401,7 +401,7 @@ definition {
 
 	@priority = "4"
 	test PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -756,7 +756,7 @@ definition {
 
 	@priority = "4"
 	test SitesDemoSiteManagement {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.release = "true";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
 		property testray.component.names = "Site Administration,Site Pages Administration";

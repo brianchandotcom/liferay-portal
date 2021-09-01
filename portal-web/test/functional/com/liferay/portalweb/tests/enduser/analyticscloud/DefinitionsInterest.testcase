@@ -350,12 +350,10 @@ definition {
 			ACDefinitions.goToDefinitionType(definitionType = "Interests");
 		}
 
-		task ("Add three keywords") {
-			for (var n : list "${keywords}") {
-				ACSettings.addKeywords(keyword = "${n}");
+		task ("Add three keywords and assert them") {
+			ACSettings.addMultiplesKeywords(keywordList = "${keywords}");
 
-				ACSettings.assertKeywords(keyword = "${n}");
-			}
+			ACSettings.assertKeywords(keyword = "${keywords}");
 		}
 
 		task ("Search the test interest keyword and assert how shoud and shoudn't be there") {

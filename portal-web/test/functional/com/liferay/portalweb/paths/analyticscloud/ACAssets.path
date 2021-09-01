@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>NO_RESULTS_CONTENT_MESSAGE</td>
-	<td>//div[contains(@class,'no-results-content')]//h4[text()='${key_noResultMessage}']</td>
+	<td>//*//div[contains(@class,'no-results-content')]//h4[text()='${key_noResultMessage}']</td>
 	<td></td>
 </tr>
 <!-- ASSET APPEARS ON -->

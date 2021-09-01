@@ -383,6 +383,11 @@
 	<td>//tr[contains(@class,'disabled')]//div[text()='${key_memberName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REMOVE_MEMBERS_BUTTON</td>
+	<td>//button[contains(text(),'Remove Members')]</td>
+	<td></td>
+</tr>
 <!-- Segments List -->
 <tr>
 	<td>FILTER_AND_ORDER_BUTTON</td>

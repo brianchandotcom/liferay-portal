@@ -203,21 +203,21 @@ definition {
 
 			var screenWidth	= selenium.getElementWidth("//body");
 
-			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]");
+			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]");
 
 			TestUtils.assertNotEquals(
 				actual = "${containerWidth}",
 				expected = "${screenWidth}");
 
-			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]");
+			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]",
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]",
 				locator2 = "background-color",
 				value1 = "rgba(40, 125, 60, 1)");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]",
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]",
 				locator2 = "max-width",
 				value1 = "${containerWidth}px");
 

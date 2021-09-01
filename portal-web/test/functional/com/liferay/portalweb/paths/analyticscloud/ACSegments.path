@@ -333,6 +333,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_MEMBERSHIP_CHART_HOVER</td>
+	<td>//table[contains(@class,'analytics-tooltip-chart')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE</td>
+	<td>//tr[@class='analytics-tooltip-chart-row']//div[text()='${key_membershipType}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_MEMBERSHIP_LEGEND</td>
 	<td>//span[contains(@class,'recharts-legend-item-text')]//span[text()='${key_memberType}']//b</td>
 	<td></td>

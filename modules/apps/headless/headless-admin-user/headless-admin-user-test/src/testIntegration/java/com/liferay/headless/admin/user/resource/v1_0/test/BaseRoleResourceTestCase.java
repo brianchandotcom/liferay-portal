@@ -531,6 +531,14 @@ public abstract class BaseRoleResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (role.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {
 
@@ -677,6 +685,14 @@ public abstract class BaseRoleResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals((Map)role1.getActions(), (Map)role2.getActions())) {
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {
@@ -872,6 +888,11 @@ public abstract class BaseRoleResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("availableLanguages")) {
 			throw new IllegalArgumentException(

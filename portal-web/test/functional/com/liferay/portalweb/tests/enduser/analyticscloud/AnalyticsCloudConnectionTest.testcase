@@ -362,8 +362,6 @@ definition {
 	@description = "Automation ID: LRAC-8839 | Test Summary: Preview the number of Organization contacts to sync"
 	@priority = "3"
 	test OrganizationContactSyncPreview {
-		
-
 		task ("Create a new user, a new organization and assign the organization for the created user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -463,17 +461,9 @@ definition {
 
 			var newEntrieOrg = StringUtil.add("${newNumberOrg}", " Organizations Selected", "");
 
-
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW",
 				value1 = "${newEntrieOrg}");
-
-
-
-
-
-
-
 		}
 	}
 
@@ -489,8 +479,6 @@ definition {
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
 	@priority = "4"
 	test SyncDataSourceContactsByGroups {
-		
-
 		task ("Add user, group and assign user to group") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -555,8 +543,6 @@ definition {
 	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"
 	@priority = "4"
 	test SyncDataSourceContactsByOrganizations {
-		
-
 		task ("Create a new user, a new organization and assign the organization for the created user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

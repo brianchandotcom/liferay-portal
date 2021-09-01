@@ -54,7 +54,7 @@ public class ObjectFieldUtil {
 			objectFieldLocalService.createObjectField(0L);
 
 		serviceBuilderObjectField.setListTypeDefinitionId(
-			objectField.getListTypeDefinitionId());
+			GetterUtil.getLong(objectField.getListTypeDefinitionId()));
 		serviceBuilderObjectField.setIndexed(
 			GetterUtil.getBoolean(objectField.getIndexed()));
 		serviceBuilderObjectField.setIndexedAsKeyword(

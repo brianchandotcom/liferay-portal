@@ -2,6 +2,7 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="ContractionsCheck" files="lang-builder/src/main/java/com/liferay/lang/builder/LangBuilder\.java" />
 		<suppress checks="VariableNameCheck" files="portal-tools-bundle-support/src/main/java/com/liferay/portal/tools/bundle/support/maven/CreateTokenMojo\.java" />
 	</checkstyle>
 	<source-check>

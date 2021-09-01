@@ -9,15 +9,21 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 
-		ACUtils.addSiteAndPage();
+		task ("Add a new site and widget page") {
+			ACUtils.addSiteAndPage();
+		}
 	}
 
 	tearDown {
@@ -295,6 +301,72 @@ definition {
 			ACUtils.orderArrow(type = "ascending");
 
 			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "liferay dxp,movies,site,sports,technology");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8983 | Test Summary: Individuals Interest list has pagination"
+	@priority = "3"
+	test PaginateIndividualsInterestsList {
+		task ("Add specific pages and web contents to Site as interest topics") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			for (var layoutName : list "Movies,Music,Science,Sports,Technology") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${layoutName}");
+
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content Title ${layoutName}");
+			}
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Individule Interests") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Change pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View technology interest topic should be in next page") {
+			ACInterests.viewInterest(interestTopic = "technology");
 		}
 	}
 

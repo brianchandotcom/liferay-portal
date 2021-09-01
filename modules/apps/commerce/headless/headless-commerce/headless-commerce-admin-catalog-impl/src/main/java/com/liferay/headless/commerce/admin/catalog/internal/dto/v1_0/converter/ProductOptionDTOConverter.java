@@ -18,9 +18,9 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,13 +53,13 @@ public class ProductOptionDTOConverter
 
 		return new ProductOption() {
 			{
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinitionOptionRel.getDescriptionMap());
 				facetable = cpDefinitionOptionRel.isFacetable();
 				fieldType = cpDefinitionOptionRel.getDDMFormFieldTypeName();
 				id = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 				key = cpOption.getKey();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinitionOptionRel.getNameMap());
 				optionId = cpOption.getCPOptionId();
 				required = cpDefinitionOptionRel.isRequired();

@@ -20,10 +20,10 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,7 +90,7 @@ public class OrderItemDTOConverter
 				finalPriceWithTaxAmount =
 					commerceOrderItem.getFinalPriceWithTaxAmount();
 				id = commerceOrderItem.getCommerceOrderItemId();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					commerceOrderItem.getNameMap());
 				orderExternalReferenceCode =
 					commerceOrder.getExternalReferenceCode();

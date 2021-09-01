@@ -24,7 +24,6 @@ import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderTypeSerDes;
 import com.liferay.headless.commerce.core.util.DateConfig;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
@@ -142,14 +141,14 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		return new OrderType() {
 			{
 				active = RandomTestUtil.randomBoolean();
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
 				displayDate = RandomTestUtil.nextDate();
 				displayOrder = RandomTestUtil.nextInt();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = RandomTestUtil.randomString();
 				id = RandomTestUtil.nextLong();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
 			}
 		};
@@ -269,7 +268,7 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		return new OrderType() {
 			{
 				active = commerceOrderType.isActive();
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					commerceOrderType.getDescriptionMap());
 				displayDate = commerceOrderType.getDisplayDate();
 				displayOrder = commerceOrderType.getDisplayOrder();
@@ -277,7 +276,7 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 				externalReferenceCode =
 					commerceOrderType.getExternalReferenceCode();
 				id = commerceOrderType.getCommerceOrderTypeId();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					commerceOrderType.getNameMap());
 			}
 		};

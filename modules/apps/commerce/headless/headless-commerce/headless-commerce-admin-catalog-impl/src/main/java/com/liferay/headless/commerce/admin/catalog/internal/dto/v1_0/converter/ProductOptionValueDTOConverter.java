@@ -17,9 +17,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +54,7 @@ public class ProductOptionValueDTOConverter
 					cpDefinitionOptionValueRel.
 						getCPDefinitionOptionValueRelId();
 				key = cpDefinitionOptionValueRel.getKey();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinitionOptionValueRel.getNameMap());
 				priority = cpDefinitionOptionValueRel.getPriority();
 			}

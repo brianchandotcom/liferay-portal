@@ -21,9 +21,9 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountSku;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,7 +68,7 @@ public class DiscountSkuDTOConverter
 				discountId = commerceDiscount.getCommerceDiscountId();
 				discountSkuId = commerceDiscountRel.getCommerceDiscountRelId();
 				productId = cpDefinition.getCPDefinitionId();
-				productName = LanguageUtils.getLanguageIdMap(
+				productName = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getNameMap());
 				skuExternalReferenceCode =
 					cpInstance.getExternalReferenceCode();

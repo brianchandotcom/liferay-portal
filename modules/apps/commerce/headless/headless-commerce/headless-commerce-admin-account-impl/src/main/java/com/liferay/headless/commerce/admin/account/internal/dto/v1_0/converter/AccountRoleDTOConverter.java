@@ -15,12 +15,12 @@
 package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountRole;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,11 +53,11 @@ public class AccountRoleDTOConverter
 
 		return new AccountRole() {
 			{
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					role.getDescriptionMap());
 				name = role.getName();
 				roleId = role.getRoleId();
-				title = LanguageUtils.getLanguageIdMap(role.getTitleMap());
+				title = LocalizedMapUtil.getLanguageIdMap(role.getTitleMap());
 			}
 		};
 	}

@@ -18,9 +18,9 @@ import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.ProductGroup;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +54,7 @@ public class ProductGroupDTOConverter
 				id = commercePricingClass.getCommercePricingClassId();
 				productsCount = _getProductsCount(
 					commercePricingClass.getCommercePricingClassId());
-				title = LanguageUtils.getLanguageIdMap(
+				title = LocalizedMapUtil.getLanguageIdMap(
 					commercePricingClass.getTitleMap());
 			}
 		};

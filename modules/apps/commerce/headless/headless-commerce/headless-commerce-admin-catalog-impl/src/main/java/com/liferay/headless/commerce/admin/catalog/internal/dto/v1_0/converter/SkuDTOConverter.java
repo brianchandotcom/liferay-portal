@@ -20,9 +20,9 @@ import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +67,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				options = _getOptions(cpInstance);
 				price = cpInstance.getPrice();
 				productId = cpDefinition.getCProductId();
-				productName = LanguageUtils.getLanguageIdMap(
+				productName = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getNameMap());
 				promoPrice = cpInstance.getPromoPrice();
 				published = cpInstance.isPublished();

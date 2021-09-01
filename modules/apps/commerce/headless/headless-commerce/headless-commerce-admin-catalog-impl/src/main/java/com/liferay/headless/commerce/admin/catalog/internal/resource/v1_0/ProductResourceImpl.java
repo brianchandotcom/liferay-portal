@@ -85,7 +85,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -430,20 +429,21 @@ public class ProductResourceImpl
 		Map<String, String> nameMap = product.getName();
 
 		if ((cpDefinition != null) && (nameMap == null)) {
-			nameMap = LanguageUtils.getLanguageIdMap(cpDefinition.getNameMap());
+			nameMap = LocalizedMapUtil.getLanguageIdMap(
+				cpDefinition.getNameMap());
 		}
 
 		Map<String, String> shortDescriptionMap = product.getShortDescription();
 
 		if ((cpDefinition != null) && (shortDescriptionMap == null)) {
-			shortDescriptionMap = LanguageUtils.getLanguageIdMap(
+			shortDescriptionMap = LocalizedMapUtil.getLanguageIdMap(
 				cpDefinition.getShortDescriptionMap());
 		}
 
 		Map<String, String> descriptionMap = product.getDescription();
 
 		if ((cpDefinition != null) && (descriptionMap == null)) {
-			descriptionMap = LanguageUtils.getLanguageIdMap(
+			descriptionMap = LocalizedMapUtil.getLanguageIdMap(
 				cpDefinition.getDescriptionMap());
 		}
 
@@ -1030,20 +1030,21 @@ public class ProductResourceImpl
 		Map<String, String> nameMap = product.getName();
 
 		if ((cpDefinition != null) && (nameMap == null)) {
-			nameMap = LanguageUtils.getLanguageIdMap(cpDefinition.getNameMap());
+			nameMap = LocalizedMapUtil.getLanguageIdMap(
+				cpDefinition.getNameMap());
 		}
 
 		Map<String, String> shortDescriptionMap = product.getShortDescription();
 
 		if ((cpDefinition != null) && (shortDescriptionMap == null)) {
-			shortDescriptionMap = LanguageUtils.getLanguageIdMap(
+			shortDescriptionMap = LocalizedMapUtil.getLanguageIdMap(
 				cpDefinition.getShortDescriptionMap());
 		}
 
 		Map<String, String> descriptionMap = product.getDescription();
 
 		if ((cpDefinition != null) && (descriptionMap == null)) {
-			descriptionMap = LanguageUtils.getLanguageIdMap(
+			descriptionMap = LocalizedMapUtil.getLanguageIdMap(
 				cpDefinition.getDescriptionMap());
 		}
 

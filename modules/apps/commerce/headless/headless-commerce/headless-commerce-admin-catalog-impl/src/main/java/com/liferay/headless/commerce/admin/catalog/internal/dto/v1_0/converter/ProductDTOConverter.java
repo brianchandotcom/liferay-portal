@@ -32,13 +32,13 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
@@ -108,21 +108,21 @@ public class ProductDTOConverter
 					cpDefinition.getCPDefinitionId(),
 					cpDefinition.getCompanyId(),
 					dtoConverterContext.getLocale());
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getDescriptionMap());
 				displayDate = cpDefinition.getDisplayDate();
 				expando = expandoBridge.getAttributes();
 				expirationDate = cpDefinition.getExpirationDate();
 				externalReferenceCode = cProduct.getExternalReferenceCode();
 				id = cpDefinition.getCPDefinitionId();
-				metaDescription = LanguageUtils.getLanguageIdMap(
+				metaDescription = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getMetaDescriptionMap());
-				metaKeyword = LanguageUtils.getLanguageIdMap(
+				metaKeyword = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getMetaKeywordsMap());
-				metaTitle = LanguageUtils.getLanguageIdMap(
+				metaTitle = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getMetaTitleMap());
 				modifiedDate = cpDefinition.getModifiedDate();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getNameMap());
 				productAccountGroupFilter =
 					cpDefinition.isAccountGroupFilterEnabled();
@@ -131,13 +131,13 @@ public class ProductDTOConverter
 				productStatus = cpDefinition.getStatus();
 				productType = cpType.getName();
 				productTypeI18n = cpType.getLabel(locale);
-				shortDescription = LanguageUtils.getLanguageIdMap(
+				shortDescription = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getShortDescriptionMap());
 				skuFormatted = _getSku(
 					cpDefinition, dtoConverterContext.getLocale());
 				tags = _getTags(cpDefinition);
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc();
-				urls = LanguageUtils.getLanguageIdMap(
+				urls = LocalizedMapUtil.getLanguageIdMap(
 					_cpDefinitionService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));
 				workflowStatusInfo = _toStatus(

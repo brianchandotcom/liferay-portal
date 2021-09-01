@@ -30,7 +30,6 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Settings;
@@ -39,6 +38,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.math.BigDecimal;
 
@@ -93,7 +93,7 @@ public class CartItemDTOConverter
 					commerceOrderItem.getParentCommerceOrderItemId();
 				price = _getPrice(commerceOrderItem, locale);
 				productId = commerceOrderItem.getCProductId();
-				productURLs = LanguageUtils.getLanguageIdMap(
+				productURLs = LocalizedMapUtil.getLanguageIdMap(
 					_cpDefinitionLocalService.getUrlTitleMap(
 						commerceOrderItem.getCPDefinitionId()));
 				quantity = commerceOrderItem.getQuantity();

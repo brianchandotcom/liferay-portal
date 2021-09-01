@@ -17,9 +17,9 @@ package com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.OrderType;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +51,7 @@ public class OrderTypeDTOConverter
 		return new OrderType() {
 			{
 				id = commerceOrderType.getCommerceOrderTypeId();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					commerceOrderType.getNameMap());
 			}
 		};

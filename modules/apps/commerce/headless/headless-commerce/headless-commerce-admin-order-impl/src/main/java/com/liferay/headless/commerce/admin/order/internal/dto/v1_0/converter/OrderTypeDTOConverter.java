@@ -19,12 +19,12 @@ import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,7 +60,7 @@ public class OrderTypeDTOConverter
 				actions = dtoConverterContext.getActions();
 				active = commerceOrderType.isActive();
 				customFields = expandoBridge.getAttributes();
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					commerceOrderType.getDescriptionMap());
 				displayDate = commerceOrderType.getDisplayDate();
 				displayOrder = commerceOrderType.getDisplayOrder();
@@ -68,7 +68,7 @@ public class OrderTypeDTOConverter
 				externalReferenceCode =
 					commerceOrderType.getExternalReferenceCode();
 				id = commerceOrderType.getCommerceOrderTypeId();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					commerceOrderType.getNameMap());
 				workflowStatusInfo = _toStatus(
 					WorkflowConstants.getStatusLabel(

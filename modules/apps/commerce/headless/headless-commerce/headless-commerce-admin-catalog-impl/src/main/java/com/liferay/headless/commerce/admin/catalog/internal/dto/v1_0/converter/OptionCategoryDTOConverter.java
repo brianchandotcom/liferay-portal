@@ -17,9 +17,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,12 +50,12 @@ public class OptionCategoryDTOConverter
 
 		return new OptionCategory() {
 			{
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					cpOptionCategory.getDescriptionMap());
 				id = cpOptionCategory.getCPOptionCategoryId();
 				key = cpOptionCategory.getKey();
 				priority = cpOptionCategory.getPriority();
-				title = LanguageUtils.getLanguageIdMap(
+				title = LocalizedMapUtil.getLanguageIdMap(
 					cpOptionCategory.getTitleMap());
 			}
 		};

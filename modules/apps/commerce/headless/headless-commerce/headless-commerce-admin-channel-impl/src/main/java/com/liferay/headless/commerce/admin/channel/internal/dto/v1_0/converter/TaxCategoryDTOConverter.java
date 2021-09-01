@@ -18,9 +18,9 @@ import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.TaxCategory;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,10 +50,10 @@ public class TaxCategoryDTOConverter
 
 		return new TaxCategory() {
 			{
-				description = LanguageUtils.getLanguageIdMap(
+				description = LocalizedMapUtil.getLanguageIdMap(
 					cpTaxCategory.getDescriptionMap());
 				id = cpTaxCategory.getCPTaxCategoryId();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					cpTaxCategory.getNameMap());
 			}
 		};

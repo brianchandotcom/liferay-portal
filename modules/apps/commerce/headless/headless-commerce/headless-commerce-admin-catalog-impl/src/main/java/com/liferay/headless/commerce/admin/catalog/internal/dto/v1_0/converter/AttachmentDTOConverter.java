@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class AttachmentDTOConverter
 				options = _getAttachmentOptions(cpAttachmentFileEntry);
 				priority = cpAttachmentFileEntry.getPriority();
 				src = portalURL + downloadURL;
-				title = LanguageUtils.getLanguageIdMap(
+				title = LocalizedMapUtil.getLanguageIdMap(
 					cpAttachmentFileEntry.getTitleMap());
 				type = cpAttachmentFileEntry.getType();
 			}

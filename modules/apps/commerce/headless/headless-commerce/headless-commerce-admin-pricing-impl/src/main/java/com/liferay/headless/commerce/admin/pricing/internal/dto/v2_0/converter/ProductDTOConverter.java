@@ -18,11 +18,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Product;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +56,7 @@ public class ProductDTOConverter
 		return new Product() {
 			{
 				id = cpDefinition.getCPDefinitionId();
-				name = LanguageUtils.getLanguageIdMap(
+				name = LocalizedMapUtil.getLanguageIdMap(
 					cpDefinition.getNameMap());
 				sku = _getSku(cpDefinition, dtoConverterContext.getLocale());
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc();

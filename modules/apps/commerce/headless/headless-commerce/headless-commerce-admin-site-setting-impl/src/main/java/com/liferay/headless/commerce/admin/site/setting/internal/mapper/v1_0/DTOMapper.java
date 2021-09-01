@@ -22,7 +22,7 @@ import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEst
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -47,7 +47,7 @@ public class DTOMapper {
 		availabilityEstimate.setPriority(
 			commerceAvailabilityEstimate.getPriority());
 		availabilityEstimate.setTitle(
-			LanguageUtils.getLanguageIdMap(
+			LocalizedMapUtil.getLanguageIdMap(
 				commerceAvailabilityEstimate.getTitleMap()));
 
 		return availabilityEstimate;
@@ -89,7 +89,7 @@ public class DTOMapper {
 		measurementUnit.setId(cpMeasurementUnit.getCPMeasurementUnitId());
 		measurementUnit.setKey(cpMeasurementUnit.getKey());
 		measurementUnit.setName(
-			LanguageUtils.getLanguageIdMap(cpMeasurementUnit.getNameMap()));
+			LocalizedMapUtil.getLanguageIdMap(cpMeasurementUnit.getNameMap()));
 		measurementUnit.setPrimary(cpMeasurementUnit.isPrimary());
 		measurementUnit.setPriority(cpMeasurementUnit.getPriority());
 		measurementUnit.setRate(cpMeasurementUnit.getRate());
@@ -106,10 +106,11 @@ public class DTOMapper {
 		}
 
 		taxCategory.setDescription(
-			LanguageUtils.getLanguageIdMap(cpTaxCategory.getDescriptionMap()));
+			LocalizedMapUtil.getLanguageIdMap(
+				cpTaxCategory.getDescriptionMap()));
 		taxCategory.setId(cpTaxCategory.getCPTaxCategoryId());
 		taxCategory.setName(
-			LanguageUtils.getLanguageIdMap(cpTaxCategory.getNameMap()));
+			LocalizedMapUtil.getLanguageIdMap(cpTaxCategory.getNameMap()));
 
 		return taxCategory;
 	}

@@ -20,12 +20,10 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.template.web.internal.info.item.field.reader.TemplateInfoItemFieldReader;
@@ -74,22 +72,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return null;
 		}
 
+		TemplateInfoItemFieldReader templateInfoItemFieldReader =
+			new TemplateInfoItemFieldReader(ddmTemplate);
+
 		return new InfoFieldValue<>(
-			InfoField.builder(
-			).infoFieldType(
-				TextInfoFieldType.INSTANCE
-			).name(
-				"informationTemplate_" + ddmTemplate.getTemplateId()
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.<String>builder(
-				).value(
-					LocaleUtil.getDefault(),
-					ddmTemplate.getName(LocaleUtil.getDefault())
-				).defaultLocale(
-					LocaleUtil.getDefault()
-				).build()
-			).build(),
-			StringPool.BLANK);
+			templateInfoItemFieldReader.getInfoField(),
+			templateInfoItemFieldReader.getValue(itemObject));
 	}
 
 	private List<TemplateInfoItemFieldReader> _getTemplateInfoItemFieldReaders(

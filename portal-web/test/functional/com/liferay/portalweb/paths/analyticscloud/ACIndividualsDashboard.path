@@ -68,6 +68,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BREAKDOWN_SELECT_INPUT_FIELD</td>
+	<td>//label[normalize-space()='${fieldLabel}']//following-sibling::div//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BREAKDOWN_BUTTON</td>
 	<td>//div[@class='form-navigation']/button[text()='Save']</td>
 	<td></td>

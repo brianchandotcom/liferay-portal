@@ -59,6 +59,10 @@ public class UpgradeReportLogAppenderTest {
 
 	@After
 	public void tearDown() {
+		_appender.stop();
+
+		_reportContent = null;
+
 		File reportsDir = new File(".", "reports");
 
 		if ((reportsDir != null) && reportsDir.exists()) {
@@ -73,6 +77,34 @@ public class UpgradeReportLogAppenderTest {
 	}
 
 	@Test
+	public void testInfoEventsInOrder() throws Exception {
+		_appender.start();
+
+		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
+
+		String fasterUpgradeProcessName =
+			"com.liferay.portal.FasterUpgradeTest";
+		String slowerUpgradeProcessName =
+			"com.liferay.portal.SlowerUpgradeTest";
+
+		log.info(
+			"Completed upgrade process " + fasterUpgradeProcessName +
+				" in 10 ms");
+
+		log.info(
+			"Completed upgrade process " + slowerUpgradeProcessName +
+				" in 20401 ms");
+
+		_appender.stop();
+
+		String reportContent = _getReportContent();
+
+		Assert.assertTrue(
+			reportContent.indexOf(slowerUpgradeProcessName) <
+				reportContent.indexOf(fasterUpgradeProcessName));
+	}
+
+	@Test
 	public void testLogEvents() throws Exception {
 		_appender.start();
 
@@ -84,16 +116,15 @@ public class UpgradeReportLogAppenderTest {
 		log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
 		log.info(
-			"Completed upgrade process " +
-				"com.liferay.portal.upgrade.PortalUpgradeProcess in 20401 ms");
+			"Completed upgrade process com.liferay.portal.UpgradeTest in " +
+				"20401 ms");
 
 		_appender.stop();
 
-		_testReport("2 occurrences of the following warnings: Warning");
+		_assertReport("2 occurrences of the following warnings: Warning");
 
-		_testReport(
-			"com.liferay.portal.upgrade.PortalUpgradeProcess took 20401 ms " +
-				"to complete");
+		_assertReport(
+			"com.liferay.portal.UpgradeTest took 20401 ms to complete");
 	}
 
 	@Test
@@ -102,11 +133,11 @@ public class UpgradeReportLogAppenderTest {
 
 		_appender.stop();
 
-		_testReport("Unable to get upgrade process times");
+		_assertReport("No upgrade processes registered");
 
-		_testReport("No errors thrown during upgrade.");
+		_assertReport("No errors thrown during upgrade");
 
-		_testReport("No warnings thrown during upgrade.");
+		_assertReport("No warnings thrown during upgrade");
 	}
 
 	@Test
@@ -133,7 +164,7 @@ public class UpgradeReportLogAppenderTest {
 
 		_appender.stop();
 
-		_testReport(sb.toString());
+		_assertReport(sb.toString());
 	}
 
 	@Test
@@ -174,10 +205,19 @@ public class UpgradeReportLogAppenderTest {
 			StringPool.NEW_LINE, "Expected portal schema version: ",
 			latestSchemaVersion.toString(), StringPool.NEW_LINE);
 
-		_testReport(testString);
+		_assertReport(testString);
 	}
 
-	private void _testReport(String testString) throws Exception {
+	private void _assertReport(String testString) throws Exception {
+		if (_reportContent == null) {
+			_reportContent = _getReportContent();
+		}
+
+		Assert.assertTrue(
+			StringUtil.contains(_reportContent, testString, StringPool.BLANK));
+	}
+
+	private String _getReportContent() throws Exception {
 		File reportsDir = new File(".", "reports");
 
 		Assert.assertTrue(reportsDir.exists());
@@ -186,10 +226,7 @@ public class UpgradeReportLogAppenderTest {
 
 		Assert.assertTrue(reportFile.exists());
 
-		String report = FileUtil.read(reportFile);
-
-		Assert.assertTrue(
-			StringUtil.contains(report, testString, StringPool.BLANK));
+		return FileUtil.read(reportFile);
 	}
 
 	@Inject
@@ -197,5 +234,7 @@ public class UpgradeReportLogAppenderTest {
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
+
+	private String _reportContent;
 
 }

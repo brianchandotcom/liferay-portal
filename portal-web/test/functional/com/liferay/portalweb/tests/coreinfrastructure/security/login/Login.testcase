@@ -9,49 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 	}
 
-	@description = "This is a use case for LRQA-52860."
-	@priority = "5"
-	test CASSSOSmoke {
-		property cas.enabled = "true";
-		property dummy.socket.proxy.disabled = "true";
-		property osgi.app.includes = "portal-security-sso-cas";
-		property test.name.skip.portal.instance = "Login#CASSSOSmoke";
-
-		User.firstLoginPG();
-
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var fileContent = FileUtil.read("${liferayHome}/tomcat-9.0.43/bin/cas.log");
-
-		if (contains("${fileContent}", "org.jasig.cas")) {
-			echo("CAS server started.");
-		}
-		else {
-			fail("FAIL! CAS server didn't start.");
-		}
-
-		PortalSettings.gotoConfiguration(
-			baseURL = "http://localhost:8080",
-			configurationCategory = "SSO",
-			configurationName = "CAS Server",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.editConfigurationAuthenticationCAS();
-
-		PortalSettings.gotoConfiguration(
-			baseURL = "http://localhost:8080",
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By Screen Name");
-
-		User.logoutPG();
-
-		User.loginUserWithCASEnabledPG(
-			userPassword = "test",
-			userScreenName = "test");
-	}
-
 	@description = "This is a use case for LRQA-48218."
 	@priority = "5"
 	test DefaultPortalLandingPage {
@@ -639,8 +596,6 @@ definition {
 		PortalSettings.viewAuthenticationLDAPCP();
 
 		PortalSettings.viewAuthenticationOpenSSOCP();
-
-		PortalSettings.viewAuthenticationCASCP();
 	}
 
 }

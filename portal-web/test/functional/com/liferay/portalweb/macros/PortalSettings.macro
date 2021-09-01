@@ -290,42 +290,6 @@ definition {
 		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
 	}
 
-	macro editConfigurationAuthenticationCAS {
-		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX");
-
-		FormFields.editText(
-			fieldName = "loginURL",
-			fieldValue = "http://localhost:8080/cas-web/login");
-
-		FormFields.editText(
-			fieldName = "logoutURL",
-			fieldValue = "http://localhost:8080/cas-web/logout");
-
-		FormFields.editText(
-			fieldName = "serverName",
-			fieldValue = "http://localhost:8080");
-
-		FormFields.editText(
-			fieldName = "serverURL",
-			fieldValue = "http://localhost:8080/cas-web");
-
-		FormFields.editText(
-			fieldName = "serviceURL",
-			fieldValue = "http://localhost:8080/c/portal/login");
-
-		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
-
-		AssertClick(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON",
-			value1 = "Test CAS Configuration");
-
-		AssertElementNotPresent(locator1 = "//span[.='Unreachable']");
-
-		Click(locator1 = "Icon#CLOSE");
-
-		PortletEntry.save();
-	}
-
 	macro editConfigurationAuthenticationFacebook {
 		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX");
 
@@ -710,27 +674,6 @@ definition {
 			value1 = "By Email Address");
 
 		PortletEntry.save();
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "SSO",
-			configurationName = "CAS Server",
-			configurationScope = "Virtual Instance Scope");
-
-		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX");
-
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/login");
-
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/logout");
-
-		Type(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web");
-
-		PortletEntry.save();
 	}
 
 	macro tearDownCP {
@@ -827,69 +770,6 @@ definition {
 		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 
 		PortletEntry.save();
-	}
-
-	macro viewAuthenticationCASCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "SSO",
-			configurationName = "CAS Server",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX");
-
-		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_HEADER",
-			value1 = "Login URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/login");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_HEADER",
-			value1 = "Logout URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web/logout");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_HEADER",
-			value1 = "Server Name");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_FIELD",
-			value1 = "http://localhost:8080");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_HEADER",
-			value1 = "Server URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD",
-			value1 = "https://localhost:8443/cas-web");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_HEADER",
-			value1 = "Service URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD",
-			value1 = "");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER",
-			value1 = "No Such User Redirect URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD",
-			value1 = "http://localhost:8080");
-
-		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
-
-		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON");
 	}
 
 	macro viewAuthenticationGeneralCP {

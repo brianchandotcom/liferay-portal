@@ -1385,7 +1385,7 @@ definition {
 				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
-				targetCollection = "Dynamic Collection",
+				targetCollection = "Manual Collection",
 				vocabularyName = "Vocabulary A");
 
 			AssertTextEquals.assertPartialText(
@@ -1402,7 +1402,7 @@ definition {
 				columnNumber = "2",
 				filter = "Category",
 				fragmentName = "Collection Filter",
-				targetCollection = "Dynamic Collection",
+				targetCollection = "Manual Collection",
 				vocabularyName = "Vocabulary B");
 
 			AssertTextEquals.assertPartialText(

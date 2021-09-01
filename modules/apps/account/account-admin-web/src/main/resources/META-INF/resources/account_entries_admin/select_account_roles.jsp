@@ -22,8 +22,6 @@ SearchContainer<AccountRoleDisplay> accountRoleDisplaySearchContainer = AccountR
 accountRoleDisplaySearchContainer.setRowChecker(new SelectAccountUserAccountRoleRowChecker(liferayPortletResponse, ParamUtil.getLong(liferayPortletRequest, "accountEntryId"), ParamUtil.getLong(liferayPortletRequest, "accountUserIds")));
 
 ViewAccountUserRolesManagementToolbarDisplayContext viewAccountUserRolesManagementToolbarDisplayContext = new ViewAccountUserRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleDisplaySearchContainer);
-
-renderResponse.setTitle(LanguageUtil.get(request, "assign-roles"));
 %>
 
 <clay:management-toolbar

@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.blogs">
 	<namespace>Blogs</namespace>
-	<entity external-reference-code="group" local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="group" local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -23,12 +23,12 @@
 
 		<!-- Other fields -->
 
-		<column name="title" type="String" uad-nonanonymizable="true" />
-		<column name="subtitle" type="String" uad-nonanonymizable="true" />
-		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
-		<column name="description" type="String" uad-nonanonymizable="true" />
-		<column name="content" type="String" uad-nonanonymizable="true" />
-		<column name="displayDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="title" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="subtitle" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="urlTitle" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="description" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="content" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="displayDate" type="Date" />
 		<column name="allowPingbacks" type="boolean" />
 		<column name="allowTrackbacks" type="boolean" />
 		<column name="trackbacks" type="String" />

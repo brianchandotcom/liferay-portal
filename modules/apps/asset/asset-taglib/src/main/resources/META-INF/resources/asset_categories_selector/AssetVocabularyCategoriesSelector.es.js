@@ -143,6 +143,7 @@ function AssetVocabulariesCategoriesSelector({
 
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItems) => {
 				if (selectedItems) {

@@ -224,6 +224,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8489 | Test Summary: Points on membership card can be hovered for more details"
 	@priority = "4"
 	test ViewMembershipCardHoverDetails {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: timing issue for membership card
+		// AC Refactor ticket: LRAC-9130
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Switch to new property in AC") {
@@ -298,12 +303,16 @@ definition {
 				totalNumber = "1");
 		}
 
-		task ("View membership card when hovering") {
-			ACSegments.viewSegmentMembershipChartNumbers(
-				addedMember = "1",
-				netChange = "0",
-				removedMember = "0");
-		}
+		// Timing issue will cause this test to fail
+		// The graph shows yesterdays date and would require a full day before you can actually see when member was added
+
+		//task ("View membership card when hovering") {
+		//	ACSegments.viewSegmentMembershipChartNumbers(
+		//		addedMember = "1",
+		//		netChange = "0",
+		//		removedMember = "0");
+		//}
+
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8488 | Test Summary: Membership card shows anonymous users"

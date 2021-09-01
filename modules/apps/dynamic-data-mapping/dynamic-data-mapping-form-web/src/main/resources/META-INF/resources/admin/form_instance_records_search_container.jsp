@@ -127,7 +127,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 							<c:choose>
 								<c:when test='<%= StringUtil.equals(ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), StringPool.BLANK, ddmFormFieldValuesMap.get(ddmFormField.getName())), LanguageUtil.get(ddmFormViewFormInstanceRecordsDisplayContext.getDefaultLocale(formInstanceRecord), "true")) %>'>
 									<liferay-ui:search-container-column-icon
-										cssClass="table-cell-expand"
+										cssClass="ddm-icon-check table-cell-expand"
 										icon="check"
 										name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
 									/>

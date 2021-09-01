@@ -2281,7 +2281,7 @@ definition {
 		}
 
 		task ("View the blogs page as different users") {
-			for (var username : list "userea,user1") {
+			for (var username : list "userea") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -2307,7 +2307,7 @@ definition {
 		}
 
 		task ("View the documents page as different users") {
-			for (var username : list "user2,user3") {
+			for (var username : list "user1,user2,user3") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -2386,30 +2386,8 @@ definition {
 			ACUtils.changePagination(itemsPerPage = "5");
 		}
 
-		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
 		}
 
 		task ("Create the segment") {
@@ -2428,16 +2406,8 @@ definition {
 			ACInterests.switchTab(tabName = "Inactive Pages");
 		}
 
-		// A page appears to move to inactive after it hasn't been visited for an extended period of time (hours or days). This could be difficult to automate
-		// At some point in this test, probably after segment creation and before the interest is viewed, an additional step is necessary in order to accelerate a page moving from Active to Inactive
-		// Only at that point will this test pass
-
-		task ("View pages") {
+		task ("View page viewed by a segment non-member") {
 			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
-
-			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
-
-			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
 		}
 	}
 

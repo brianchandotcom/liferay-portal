@@ -1709,7 +1709,6 @@ public class CommerceDiscountLocalServiceImpl
 				CommerceDiscountAccountRelTable.INSTANCE,
 				CommerceDiscountAccountRelTable.INSTANCE.commerceDiscountId.eq(
 					CommerceDiscountTable.INSTANCE.commerceDiscountId));
-
 			predicate = predicate.and(
 				CommerceDiscountAccountRelTable.INSTANCE.commerceAccountId.eq(
 					commerceAccountId));
@@ -1719,7 +1718,6 @@ public class CommerceDiscountLocalServiceImpl
 				CommerceDiscountAccountRelTable.INSTANCE,
 				CommerceDiscountAccountRelTable.INSTANCE.commerceDiscountId.eq(
 					CommerceDiscountTable.INSTANCE.commerceDiscountId));
-
 			predicate = predicate.and(
 				CommerceDiscountAccountRelTable.INSTANCE.
 					commerceDiscountAccountRelId.isNull());

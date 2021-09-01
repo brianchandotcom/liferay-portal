@@ -188,7 +188,6 @@ public class CommerceCountryManagerImpl implements CommerceCountryManager {
 					channelFilterPredicate);
 
 				predicate = predicate.and(groupFilterPredicate);
-
 				predicate = predicate.and(
 					CountryTable.INSTANCE.billingAllowed.eq(billingAllowed));
 				predicate = predicate.and(

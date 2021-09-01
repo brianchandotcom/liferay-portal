@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-frontend:screen-navigation
-	containerWrapperCssClass="container"
 	key="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECTS %>"
 	portletURL="<%= currentURLObj %>"
 />

@@ -50,6 +50,38 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 	}
 
+	@description = "Duplicate External Reference Codes should not be allowed for multiple accounts in the same company. If a duplicate ERC is submitted, the form will not be saved and an error message will inform the user that the ERC belongs to another account."
+	@priority = "4"
+	test AccountWithDuplicateExternalReferenceCodeIsNotSaved {
+		Accounts.openAccountsAdmin();
+
+		Accounts.addBusinessAccount(
+			accountName = "Business Account Name",
+			externalReferenceCode = "AAA-0100");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Another Account");
+
+		PortletEntry.inputText(
+			fieldLabel = "External Reference Code",
+			text = "AAA-0100");
+
+		Button.clickSave();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "The given external reference code belongs to another account.");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.viewEntryName(rowEntry = "Business Account Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Another Account");
+	}
+
 	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
 	@priority = "4"
 	test AddingSecondUserToPersonAccountWillReplaceFirstUser {

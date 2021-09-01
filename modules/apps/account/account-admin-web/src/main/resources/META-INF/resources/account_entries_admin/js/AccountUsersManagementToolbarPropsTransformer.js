@@ -23,35 +23,6 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
-	const selectRole = (itemData) => {
-		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('done'),
-			multiple: true,
-			onSelect: (selectedItems) => {
-				if (selectedItems.length) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
-
-					if (!form) {
-						return;
-					}
-
-					const input = document.createElement('input');
-
-					input.name = `${portletNamespace}rowIdsRole`;
-					input.value = selectedItems.map((item) => item.value);
-
-					form.appendChild(input);
-
-					submitForm(form, itemData?.editUsersRolesURL);
-				}
-			},
-			title: Liferay.Language.get('assign-roles'),
-			url: itemData?.selectRoleURL,
-		});
-	};
-
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
@@ -83,9 +54,6 @@ export default function propsTransformer({
 						});
 					}
 				}
-			}
-			else if (action === 'selectRole') {
-				selectRole(data);
 			}
 		},
 		onCreateButtonClick: () => {

@@ -109,6 +109,11 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		}
 
 		return Page.of(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getRolesPage", Role.class.getName(), 0L)
+			).build(),
 			transform(
 				_roleService.search(
 					contextCompany.getCompanyId(), null, types, null,
@@ -207,11 +212,6 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 			"get",
 			addAction(
 				ActionKeys.VIEW, roleId, "getRole",
-				_roleModelResourcePermission)
-		).put(
-			"get-page",
-			addAction(
-				ActionKeys.VIEW, roleId, "getRolesPage",
 				_roleModelResourcePermission)
 		).build();
 	}

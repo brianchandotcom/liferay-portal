@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
@@ -129,6 +129,13 @@ const Main = ({
 }) => {
 	const Toggle = showAsSwitcher ? Switcher : Checkbox;
 
+	const checked = !!(
+		value ??
+		(predefinedValue.length
+			? predefinedValue[0] === 'true'
+			: predefinedValue)
+	);
+
 	return (
 		<FieldBase
 			name={name}
@@ -137,14 +144,7 @@ const Main = ({
 			{...otherProps}
 		>
 			<Toggle
-				checked={
-					!!(
-						value ??
-						(predefinedValue.length
-							? predefinedValue[0] === 'true'
-							: predefinedValue)
-					)
-				}
+				checked={checked}
 				disabled={readOnly}
 				label={label}
 				name={name}
@@ -156,6 +156,7 @@ const Main = ({
 				systemSettingsURL={systemSettingsURL}
 				visible={visible}
 			/>
+			<ClayInput name={name} type="hidden" value={checked} />
 		</FieldBase>
 	);
 };

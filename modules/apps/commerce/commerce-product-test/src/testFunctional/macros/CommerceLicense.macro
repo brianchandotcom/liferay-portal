@@ -4,15 +4,13 @@ definition {
 	macro executeSmoke {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
-		// Temp Workaround LPS-137317
-
-		/*CommerceNavigator.gotoPortlet(
+		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
 
-		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");*/
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell");
 

@@ -17,6 +17,7 @@ import {isEdge, isNode} from 'react-flow-renderer';
 
 import TaskNode from '../components/nodes/TaskNode';
 import ConditionNode from '../components/nodes/hexagon-nodes/ConditionNode';
+import ForkNode from '../components/nodes/hexagon-nodes/ForkNode';
 import JoinNode from '../components/nodes/hexagon-nodes/JoinNode';
 import BorderStateNode from '../components/nodes/state-node/BorderStateNode';
 import StateNode from '../components/nodes/state-node/StateNode';
@@ -151,17 +152,19 @@ const getLayoutedElements = (elements) => {
 
 const getNodeType = (type) => {
 	switch (type) {
-		case 'TASK':
-			return 'task';
-		case 'STATE':
-			return 'state';
+		case 'CONDITION':
+			return 'condition';
+		case 'FORK':
+			return 'fork';
+		case 'JOIN':
+			return 'join';
 		case 'INITIAL_STATE':
 		case 'TERMINAL_STATE':
 			return 'borderState';
-		case 'CONDITION':
-			return 'condition';
-		case 'JOIN':
-			return 'join';
+		case 'STATE':
+			return 'state';
+		case 'TASK':
+			return 'task';
 		default:
 			return 'task';
 	}
@@ -178,6 +181,7 @@ const isVisited = (visitedNodes = [], node) => {
 const nodeTypes = {
 	borderState: BorderStateNode,
 	condition: ConditionNode,
+	fork: ForkNode,
 	join: JoinNode,
 	state: StateNode,
 	task: TaskNode,

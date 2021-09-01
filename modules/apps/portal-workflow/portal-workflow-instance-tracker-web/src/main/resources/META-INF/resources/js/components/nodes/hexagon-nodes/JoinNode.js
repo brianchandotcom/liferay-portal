@@ -17,9 +17,14 @@ import React from 'react';
 
 import HexagonNode from './HexagonNode';
 
-export default function JoinNode({data: {done = false, label}}) {
+export default function JoinNode({
+	data: {done = false, label, notifyVisibilityChange},
+}) {
 	return (
-		<HexagonNode title={label}>
+		<HexagonNode
+			notifyVisibilityChange={notifyVisibilityChange}
+			title={label}
+		>
 			<ClayIcon className="mr-2" symbol="arrow-join" />
 			<span>{label}</span>
 			{done && (

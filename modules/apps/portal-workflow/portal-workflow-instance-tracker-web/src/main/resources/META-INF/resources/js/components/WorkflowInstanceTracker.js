@@ -17,7 +17,9 @@ import ReactFlow, {Controls, ReactFlowProvider} from 'react-flow-renderer';
 
 import '../../css/main.scss';
 import {useFetch} from '../hooks/useFetch';
+import EventObserver from '../util/EventObserver';
 import {
+	edgeTypes,
 	getLayoutedElements,
 	getNodeType,
 	isCurrent,
@@ -25,6 +27,8 @@ import {
 	nodeTypes,
 } from '../util/util';
 import CurrentNodes from './CurrentNodes';
+
+const eventObserver = new EventObserver();
 
 export default function WorkflowInstanceTracker({workflowInstanceId}) {
 	const [currentNodes, setCurrentNodes] = useState([]);
@@ -82,6 +86,9 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 						done: isVisited(visitedNodes, node),
 						initial: node.type == 'INITIAL_STATE',
 						label: node.label,
+						notifyVisibilityChange: (visible) => () => {
+							eventObserver.notify(node.name, () => visible);
+						},
 					},
 					id: node.name,
 					position,
@@ -94,10 +101,14 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 			const transitions = transitionElements.map((transition) => {
 				return {
 					arrowHeadType: 'arrowclosed',
+					data: {
+						eventObserver,
+						text: transition.label,
+					},
 					id: transition.name,
 					source: transition.sourceNodeName,
 					target: transition.targetNodeName,
-					type: 'smoothstep',
+					type: 'transition',
 				};
 			});
 
@@ -120,6 +131,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 			{layoutedElements.length && (
 				<ReactFlowProvider>
 					<ReactFlow
+						edgeTypes={edgeTypes}
 						elements={layoutedElements}
 						minZoom="0.1"
 						nodeTypes={nodeTypes}

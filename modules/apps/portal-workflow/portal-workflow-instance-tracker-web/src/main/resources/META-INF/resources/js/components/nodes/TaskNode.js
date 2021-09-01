@@ -21,7 +21,7 @@ import '../../../css/main.scss';
 import {nodeHandles} from '../../util/nodeHandles';
 
 export default function TaskNode({
-	data: {current = false, done = false, label},
+	data: {current = false, done = false, label, notifyVisibilityChange},
 }) {
 	return (
 		<>
@@ -40,6 +40,8 @@ export default function TaskNode({
 					'node task-node',
 					current ? 'current-task text-white' : 'text-secondary'
 				)}
+				onMouseEnter={notifyVisibilityChange(true)}
+				onMouseLeave={notifyVisibilityChange(false)}
 			>
 				<span>{label}</span>
 

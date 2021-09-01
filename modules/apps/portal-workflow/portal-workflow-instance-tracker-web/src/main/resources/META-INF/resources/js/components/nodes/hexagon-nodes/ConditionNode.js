@@ -17,9 +17,14 @@ import React from 'react';
 
 import HexagonNode from './HexagonNode';
 
-export default function ConditionNode({data: {done = false, label}}) {
+export default function ConditionNode({
+	data: {done = false, label, notifyVisibilityChange},
+}) {
 	return (
-		<HexagonNode title={label}>
+		<HexagonNode
+			notifyVisibilityChange={notifyVisibilityChange}
+			title={label}
+		>
 			<ClayIcon className="mr-2" symbol="bolt" />
 			<span>{label}</span>
 			{done && (

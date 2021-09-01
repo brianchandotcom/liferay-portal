@@ -20,7 +20,7 @@ import {hexagonNodeHandles} from '../../../util/nodeHandles';
 
 import '../../../../css/main.scss';
 
-export default function HexagonNode({children, title}) {
+export default function HexagonNode({children, notifyVisibilityChange, title}) {
 	return (
 		<>
 			{hexagonNodeHandles.map((handle, index) => (
@@ -34,7 +34,11 @@ export default function HexagonNode({children, title}) {
 			))}
 
 			<ClayTooltipProvider>
-				<div className="hexagon-node node text-secondary">
+				<div
+					className="hexagon-node node text-secondary"
+					onMouseEnter={notifyVisibilityChange(true)}
+					onMouseLeave={notifyVisibilityChange(false)}
+				>
 					<div
 						className="truncate-container"
 						data-tooltip-align="top"

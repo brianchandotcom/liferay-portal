@@ -18,7 +18,9 @@ import {Handle} from 'react-flow-renderer';
 
 import '../../../../css/main.scss';
 
-export default function BorderStateNode({data: {initial = true, label}}) {
+export default function BorderStateNode({
+	data: {initial = true, label, notifyVisibilityChange},
+}) {
 	return (
 		<>
 			{initial ? (
@@ -32,6 +34,8 @@ export default function BorderStateNode({data: {initial = true, label}}) {
 					'border-state-node node text-white',
 					initial ? 'start-state' : 'end-state'
 				)}
+				onMouseEnter={notifyVisibilityChange(true)}
+				onMouseLeave={notifyVisibilityChange(false)}
 			>
 				<span>{Liferay.Language.get(label)}</span>
 			</div>

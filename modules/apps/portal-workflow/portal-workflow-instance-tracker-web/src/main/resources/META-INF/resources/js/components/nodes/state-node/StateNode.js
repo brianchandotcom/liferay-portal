@@ -21,7 +21,7 @@ import '../../../../css/main.scss';
 import {nodeHandles} from '../../../util/nodeHandles';
 
 export default function StateNode({
-	data: {current = false, done = false, label},
+	data: {current = false, done = false, label, notifyVisibilityChange},
 }) {
 	return (
 		<>
@@ -40,6 +40,8 @@ export default function StateNode({
 					'node state-node',
 					current ? 'current-state text-white' : 'text-secondary'
 				)}
+				onMouseEnter={notifyVisibilityChange(true)}
+				onMouseLeave={notifyVisibilityChange(false)}
 			>
 				<span>{label}</span>
 

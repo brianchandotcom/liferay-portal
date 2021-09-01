@@ -16,10 +16,8 @@ package com.liferay.template.web.internal.info.item.provider;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
@@ -30,9 +28,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+import com.liferay.template.web.internal.info.item.field.reader.TemplateInfoItemFieldReader;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,24 +50,10 @@ public class TemplateInfoItemFieldSetProviderImpl
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			consumer -> {
-				for (DDMTemplate ddmTemplate :
-						_getDDMTemplates(className, classPK)) {
+				for (TemplateInfoItemFieldReader templateInfoItemFieldReader :
+						_getTemplateInfoItemFieldReaders(className, classPK)) {
 
-					consumer.accept(
-						InfoField.builder(
-						).infoFieldType(
-							TextInfoFieldType.INSTANCE
-						).name(
-							"informationTemplate_" + ddmTemplate.getTemplateId()
-						).labelInfoLocalizedValue(
-							InfoLocalizedValue.<String>builder(
-							).value(
-								LocaleUtil.getDefault(),
-								ddmTemplate.getName(LocaleUtil.getDefault())
-							).defaultLocale(
-								LocaleUtil.getDefault()
-							).build()
-						).build());
+					consumer.accept(templateInfoItemFieldReader.getInfoField());
 				}
 			}
 		).labelInfoLocalizedValue(
@@ -105,7 +92,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 			StringPool.BLANK);
 	}
 
-	private List<DDMTemplate> _getDDMTemplates(String className, long classPK) {
+	private List<TemplateInfoItemFieldReader> _getTemplateInfoItemFieldReaders(
+		String className, long classPK) {
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -113,7 +102,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return Collections.emptyList();
 		}
 
-		return _ddmTemplateLocalService.getTemplates(
+		List<DDMTemplate> templates = _ddmTemplateLocalService.getTemplates(
 			serviceContext.getCompanyId(),
 			ArrayUtil.append(
 				_portal.getAncestorSiteGroupIds(
@@ -123,6 +112,14 @@ public class TemplateInfoItemFieldSetProviderImpl
 			new long[] {classPK},
 			_portal.getClassNameId(InfoItemFormProvider.class.getName()),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Stream<DDMTemplate> templatesStream = templates.stream();
+
+		return templatesStream.map(
+			ddmTemplate -> new TemplateInfoItemFieldReader(ddmTemplate)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Reference

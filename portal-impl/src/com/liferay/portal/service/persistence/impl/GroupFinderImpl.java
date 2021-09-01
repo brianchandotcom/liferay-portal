@@ -1192,14 +1192,24 @@ public class GroupFinderImpl
 			if (key.equals("actionId")) {
 				Long companyId = CompanyThreadLocal.getCompanyId();
 
+				Role admin = RoleLocalServiceUtil.fetchRole(
+					companyId, RoleConstants.ADMINISTRATOR);
 				Role siteAdmin = RoleLocalServiceUtil.fetchRole(
 					companyId, RoleConstants.SITE_ADMINISTRATOR);
 				Role siteOwner = RoleLocalServiceUtil.fetchRole(
 					companyId, RoleConstants.SITE_OWNER);
 
+				Long userId = (Long)params.get("userId");
+
+				boolean isAdmin = RoleLocalServiceUtil.hasUserRole(
+					userId, admin.getRoleId());
+
 				ResourceAction resourceAction =
 					ResourceActionLocalServiceUtil.getResourceAction(
 						Group.class.getName(), (String)entry.getValue());
+
+				queryPos.add(isAdmin);
+				queryPos.add(userId);
 
 				queryPos.add(siteAdmin.getRoleId());
 				queryPos.add(siteOwner.getRoleId());
@@ -1278,16 +1288,6 @@ public class GroupFinderImpl
 				queryPos.add(roleId);
 			}
 			else if (key.equals("userId")) {
-				Role admin = RoleLocalServiceUtil.fetchRole(
-					CompanyThreadLocal.getCompanyId(),
-					RoleConstants.ADMINISTRATOR);
-
-				boolean isAdmin = RoleLocalServiceUtil.hasUserRole(
-					(Long)entry.getValue(), admin.getRoleId());
-
-				queryPos.add(isAdmin);
-
-				queryPos.add(entry.getValue());
 			}
 			else {
 				Object value = entry.getValue();

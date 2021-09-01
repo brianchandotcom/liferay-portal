@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -670,6 +673,8 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 				updateLayoutRevisions(
 					oldRootPortletId, newRootPortletId, false);
 				updateLayouts(oldRootPortletId, newRootPortletId, false);
+
+				_updateFragmentEntryLinks(oldRootPortletId, newRootPortletId);
 			}
 		}
 	}
@@ -714,6 +719,62 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		}
 
 		return StagingConstants.STAGED_PORTLET.concat(portletId);
+	}
+
+	private void _updateFragmentEntryLinks(
+			String oldRootPortletId, String newRootPortletId)
+		throws Exception {
+
+		if (!hasTable("FragmentEntryLink")) {
+			return;
+		}
+
+		String sql1 = StringBundler.concat(
+			"select fragmentEntryLinkId, editableValues from ",
+			"FragmentEntryLink where editableValues like '%", oldRootPortletId,
+			"%'");
+
+		String sql2 =
+			"update FragmentEntryLink set editableValues = ? where " +
+				"fragmentEntryLinkId = ?";
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				sql1);
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection, sql2);
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				String editableValues = resultSet.getString("editableValues");
+
+				try {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						editableValues);
+
+					String portletId = jsonObject.getString("portletId");
+
+					if (Objects.equals(portletId, oldRootPortletId)) {
+						jsonObject.put("portletId", newRootPortletId);
+
+						preparedStatement2.setString(1, jsonObject.toString());
+
+						preparedStatement2.setLong(
+							2, resultSet.getLong("fragmentEntryLinkId"));
+
+						preparedStatement2.addBatch();
+					}
+				}
+				catch (JSONException jsonException) {
+					_log.error(
+						"Unable to create a JSON object from: " +
+							editableValues,
+						jsonException);
+				}
+			}
+
+			preparedStatement2.executeBatch();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

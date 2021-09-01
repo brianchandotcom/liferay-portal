@@ -34,7 +34,7 @@ import org.json.JSONObject;
  */
 public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
-	public static final Integer SLAVE_RAM_DEFAULT = 16;
+	public static final Integer SLAVE_RAM_DEFAULT = 12;
 
 	public static final Integer SLAVES_PER_HOST_DEFAULT = 2;
 

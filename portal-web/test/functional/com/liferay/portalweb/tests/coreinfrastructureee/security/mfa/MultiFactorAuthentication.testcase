@@ -273,7 +273,7 @@ definition {
 	@description = "This is a use case for LPS-112805"
 	@priority = "5"
 	test DisabledBasicAuthenticationOnInstanceLevel {
-		property custom.properties = "json.service.serialize.throwable=true";
+		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisabledBasicAuthenticationOnInstanceLevel";
 
 		ApplicationsMenu.gotoPortlet(

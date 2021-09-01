@@ -27,8 +27,7 @@ definition {
 	@description = "This is a use case for LRQA-42767."
 	@priority = "5"
 	test ServiceAccessPolicySmoke {
-		property custom.properties = "json.service.auth.token.hosts.allowed=";
-		property custom.properties = "json.service.serialize.throwable=true";
+		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.auth.token.hosts.allowed=${line.separator}json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "ServiceAccessPolicy#ServiceAccessPolicySmoke";
 
 		var companyId = JSONCompany.getCompanyId();

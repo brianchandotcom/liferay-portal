@@ -1,0 +1,64 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9125 | Test Summary: Property with its name edited"
+    @ignore = "true"
+    @priority = "5"
+    test CanEditedPropertyName {
+
+        // TODO LRAC-9125 CanEditedPropertyName pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9126 | Test Summary: [AC] It is not allowed create a property with its name in blank or null"
+    @ignore = "true"
+    @priority = "3"
+    test CantCreateAPropertyWithNameInBlankOrNull {
+
+        // TODO LRAC-9126 CantCreateAPropertyWithNameInBlankOrNull pending implementation
+
+    }
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9127 | Test Summary: [AC] Creating a property successfully - Fill out the property name according to the expected when no site is synced yet"
+    @ignore = "true"
+    @priority = "3"
+    test CanCreateAPropertySuccessfully {
+
+        // TODO LRAC-9127 CanCreateAPropertySuccessfully pending implementation
+
+    }
+
+
+
+	
+
+}

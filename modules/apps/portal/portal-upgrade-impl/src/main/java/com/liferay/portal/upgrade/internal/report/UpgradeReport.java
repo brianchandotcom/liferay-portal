@@ -146,7 +146,7 @@ public class UpgradeReport {
 
 	private String _getDLSize() {
 		if (_dlStore.equals("com.liferay.portal.store.db.DBStore")) {
-			return StringPool.BLANK;
+			return "Check your DBStore to know the size of your database";
 		}
 		else if (_dlStore.contains("FileSystemStore")) {
 			if ((_rootDir == null) &&
@@ -154,26 +154,24 @@ public class UpgradeReport {
 					"com.liferay.portal.store.file.system." +
 						"AdvancedFileSystemStore")) {
 
-				return StringBundler.concat(
-					"\"rootDir\" was not set, unable to determine the size of ",
-					"the document library", StringPool.NEW_LINE);
+				return "\"rootDir\" was not set, unable to determine the " +
+					"size of the document library\n";
 			}
-
-			long length = 0;
 
 			String dlPath = PropsValues.LIFERAY_HOME + "/data/document_library";
 
 			if (_rootDir != null) {
-				docLibPath = _rootDir;
+				dlPath = _rootDir;
 			}
 
-			File docLibDir = new File(docLibPath);
+			double bytes = 0;
 
-			if (docLibDir.exists()) {
-				length = FileUtils.sizeOfDirectory(new File(docLibPath));
+			try {
+				bytes = FileUtils.sizeOfDirectory(new File(dlPath));
 			}
-
-			double bytes = length;
+			catch (Exception exception) {
+				return exception.getMessage();
+			}
 
 			String[] dictionary = {"bytes", "KB", "MB", "GB", "TB", "PB"};
 
@@ -209,14 +207,13 @@ public class UpgradeReport {
 		}
 
 		if (entrySet.isEmpty()) {
-			return StringBundler.concat("No ", type, " thrown during upgrade.");
+			return StringBundler.concat("No ", type, " thrown during upgrade");
 		}
 
 		StringBundler sb = new StringBundler();
 
 		sb.append(StringUtil.upperCaseFirstLetter(type));
-		sb.append(" thrown during upgrade process");
-		sb.append(StringPool.NEW_LINE);
+		sb.append(" thrown during upgrade process\n");
 
 		Stream<Map.Entry<String, Map<String, Integer>>> entrySetStream =
 			entrySet.stream();
@@ -247,7 +244,7 @@ public class UpgradeReport {
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);
 
-			Map<String, Integer> submapSorted = _sortmap(entry.getValue());
+			Map<String, Integer> submapSorted = _sortByValue(entry.getValue());
 
 			for (Map.Entry<String, Integer> valueEntry :
 					submapSorted.entrySet()) {
@@ -429,12 +426,13 @@ public class UpgradeReport {
 			UpgradeProcess.class.getName());
 
 		if (_eventMessages.size() == 0) {
-			return "Unable to get upgrade process times";
+			return "No upgrade processes registered";
 		}
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("20 longest running upgrade processes:\n");
+		sb.append(_UPGRADE_PROCESS_TIMES_MAX);
+		sb.append(" longest running upgrade processes:\n");
 
 		Map<String, Integer> upgradeProcessMap = new HashMap<>();
 
@@ -453,13 +451,12 @@ public class UpgradeReport {
 
 			endIndex = entry.indexOf(StringPool.SPACE, startIndex + 1);
 
-			int upgradeTime = GetterUtil.getInteger(
-				entry.substring(startIndex, endIndex));
-
-			upgradeProcessMap.put(className, upgradeTime);
+			upgradeProcessMap.put(
+				className,
+				GetterUtil.getInteger(entry.substring(startIndex, endIndex)));
 		}
 
-		upgradeProcessMap = _sortmap(upgradeProcessMap);
+		upgradeProcessMap = _sortByValue(upgradeProcessMap);
 
 		int upgradeProcessesPrinted = 0;
 
@@ -472,7 +469,7 @@ public class UpgradeReport {
 
 			upgradeProcessesPrinted++;
 
-			if (upgradeProcessesPrinted >= 20) {
+			if (upgradeProcessesPrinted >= _UPGRADE_PROCESS_TIMES_MAX) {
 				break;
 			}
 		}
@@ -480,7 +477,7 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private Map<String, Integer> _sortmap(Map<String, Integer> map) {
+	private Map<String, Integer> _sortByValue(Map<String, Integer> map) {
 		Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
 
 		Stream<Map.Entry<String, Integer>> entrySetStream = entrySet.stream();
@@ -510,6 +507,8 @@ public class UpgradeReport {
 	private static final String _CONFIGURATION_PID_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemStoreConfiguration";
+
+	private static final int _UPGRADE_PROCESS_TIMES_MAX = 20;
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 

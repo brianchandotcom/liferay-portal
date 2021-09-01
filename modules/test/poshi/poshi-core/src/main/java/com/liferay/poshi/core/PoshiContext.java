@@ -1540,7 +1540,8 @@ public class PoshiContext {
 		_exceptions.add(
 			new Exception(
 				StringUtil.combine(
-					filePath, " for \"", classCommandName, "\" the properties \"",
+					filePath, " for \"", classCommandName,
+					"\" the properties \"",
 					StringUtil.join(propertyNames.toArray(new String[0]), ","),
 					"\" cannot be set as they are set in \"", propertyGroup,
 					"\"")));

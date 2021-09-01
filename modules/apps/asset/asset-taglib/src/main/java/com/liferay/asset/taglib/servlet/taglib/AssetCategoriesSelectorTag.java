@@ -197,24 +197,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			categoryIds = _categoryIds;
 		}
 
-		if (Validator.isNull(_className)) {
-			if (!_ignoreRequestValue) {
-				String categoryIdsParam = httpServletRequest.getParameter(
-					_hiddenInput);
-
-				if (categoryIdsParam != null) {
-					categoryIds = categoryIdsParam;
-				}
-			}
-
-			String[] categoryIdsTitle = AssetCategoryUtil.getCategoryIdsTitles(
-				categoryIds, StringPool.BLANK, 0, themeDisplay);
-
-			categoryIdsTitles.add(categoryIdsTitle);
-
-			return categoryIdsTitles;
-		}
-
 		try {
 			for (AssetVocabulary vocabulary : _getVocabularies()) {
 				String categoryNames = StringPool.BLANK;
@@ -231,14 +213,24 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				}
 
 				if (!_ignoreRequestValue) {
-					String[] categoryIdsParam =
-						httpServletRequest.getParameterValues(
-							_hiddenInput + StringPool.UNDERLINE +
-								vocabulary.getVocabularyId());
+					if (Validator.isNotNull(_className)) {
+						String[] categoryIdsParam =
+							httpServletRequest.getParameterValues(
+								_hiddenInput + StringPool.UNDERLINE +
+									vocabulary.getVocabularyId());
 
-					if (categoryIdsParam != null) {
-						categoryIds = StringUtil.merge(
-							categoryIdsParam, StringPool.COMMA);
+						if (categoryIdsParam != null) {
+							categoryIds = StringUtil.merge(
+								categoryIdsParam, StringPool.COMMA);
+						}
+					}
+					else {
+						String categoryIdsParam =
+							httpServletRequest.getParameter(_hiddenInput);
+
+						if (categoryIdsParam != null) {
+							categoryIds = categoryIdsParam;
+						}
 					}
 				}
 
@@ -351,10 +343,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			}
 
 			int index = i;
-
-			if (Validator.isNull(_className)) {
-				index = 0;
-			}
 
 			String selectedCategoryIds = categoryIdsTitles.get(index)[0];
 			String selectedCategoryIdTitles = categoryIdsTitles.get(index)[1];

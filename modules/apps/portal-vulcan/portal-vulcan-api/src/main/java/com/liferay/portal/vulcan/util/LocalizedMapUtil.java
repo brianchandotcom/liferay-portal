@@ -56,6 +56,21 @@ public class LocalizedMapUtil {
 		return getI18nMap(true, localizedMap);
 	}
 
+	public static Map<String, String> getLanguageIdMap(
+		Map<Locale, String> localizedMap) {
+
+		Map<String, String> languageIdMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : localizedMap.entrySet()) {
+			Locale locale = entry.getKey();
+
+			languageIdMap.put(
+				LocaleUtil.toLanguageId(locale), entry.getValue());
+		}
+
+		return languageIdMap;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getI18nMap(boolean, Map)}

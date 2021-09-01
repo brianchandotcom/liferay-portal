@@ -47,20 +47,20 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 
 	private long _getLayoutPageTemplateEntryId(long layoutPrototypeId) {
 		try (Statement s = connection.createStatement();
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select layoutPageTemplateEntryId from ",
 					"LayoutPageTemplateEntry where layoutPrototypeId = ? ",
 					"order by name asc limit 1"))) {
 
-			preparedStatement1.setLong(1, layoutPrototypeId);
+			preparedStatement.setLong(1, layoutPrototypeId);
 
-			try (ResultSet resultSet2 = preparedStatement1.executeQuery()) {
-				if (!resultSet2.next()) {
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
 					return 0;
 				}
 
-				return resultSet2.getLong("layoutPageTemplateEntryId");
+				return resultSet.getLong("layoutPageTemplateEntryId");
 			}
 		}
 		catch (Exception exception) {

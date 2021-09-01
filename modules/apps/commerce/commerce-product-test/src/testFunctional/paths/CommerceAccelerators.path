@@ -222,7 +222,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_ADD_TO_WISH_LIST</td>
-	<td>//div[contains(@class,'product-detail')]//div[@class='add-to-wish-list']//button</td>
+	<td>//div[contains(@class,'product-detail')]//div[contains(@class,'add-to-wish-list')]//button</td>
 	<td></td>
 </tr>
 <tr>

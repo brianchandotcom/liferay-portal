@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.internal.apache.logging.log4j.core;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
 
 import java.io.Serializable;
@@ -115,7 +116,8 @@ public class UpgradeReportLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		_upgradeReport = new UpgradeReport(_persistenceManager);
+		_upgradeReport = new UpgradeReport(
+			_persistenceManager, _releaseManagerOSGiCommands);
 
 		_rootLogger.addAppender(this);
 	}
@@ -136,6 +138,9 @@ public class UpgradeReportLogAppender implements Appender {
 
 	@Reference
 	private PersistenceManager _persistenceManager;
+
+	@Reference
+	private ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
 
 	private volatile boolean _started;
 	private volatile UpgradeReport _upgradeReport;

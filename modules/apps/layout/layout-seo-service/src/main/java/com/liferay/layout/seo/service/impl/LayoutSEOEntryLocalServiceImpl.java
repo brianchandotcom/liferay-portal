@@ -57,6 +57,39 @@ public class LayoutSEOEntryLocalServiceImpl
 	extends LayoutSEOEntryLocalServiceBaseImpl {
 
 	@Override
+	public LayoutSEOEntry copyLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			long copyDDMStorageId, boolean canonicalURLEnabled,
+			Map<Locale, String> canonicalURLMap,
+			boolean openGraphDescriptionEnabled,
+			Map<Locale, String> openGraphDescriptionMap,
+			Map<Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (layoutSEOEntry == null) {
+			return _addLayoutSEOEntry(
+				userId, groupId, privateLayout, layoutId, copyDDMStorageId,
+				canonicalURLEnabled, canonicalURLMap,
+				openGraphDescriptionEnabled, openGraphDescriptionMap,
+				openGraphImageAltMap, openGraphImageFileEntryId,
+				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+		}
+
+		return updateLayoutSEOEntry(
+			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
+			canonicalURLMap, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
+	}
+
+	@Override
 	public void deleteLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId)
 		throws NoSuchEntryException {
@@ -312,7 +345,6 @@ public class LayoutSEOEntryLocalServiceImpl
 				LayoutSEOEntry.class.getName()),
 			"custom-meta-tags");
 	}
-
 
 	private long _updateDDMStorage(
 			long companyId, long ddmStorageId, long copyDDMStorageId,

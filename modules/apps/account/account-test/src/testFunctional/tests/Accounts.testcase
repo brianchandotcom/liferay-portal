@@ -79,9 +79,13 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.viewEntryAccounts(accountName = "Person Account");
+		AccountUsers.viewEntryAccounts(
+			accountName = "Person Account",
+			accountUserName = "userfn2 userln2");
 
-		AccountUsers.viewEntryAccounts(accountName = "No Assigned Account");
+		AccountUsers.viewEntryAccounts(
+			accountName = "No Assigned Account",
+			accountUserName = "userfn1 userln1");
 	}
 
 	@description = "This test adds an address to account and asserts this address is not shared across accounts"
@@ -627,7 +631,7 @@ definition {
 			addressCountry = "Brazil",
 			addressName = "Latin America Ltda",
 			addressPostalCode = "2480",
-			addressRegion = "São Paulo",
+			addressRegion = "SÃ£o Paulo",
 			addressStreet1 = "Alameda Santos",
 			addressStreet2 = "7 andar",
 			addressType = "Billing",

@@ -128,7 +128,7 @@ definition {
 	macro viewEntryAccounts {
 		AssertElementPresent(
 			key_columnName = "lfr-accounts-column",
-			key_rowEntry = "${accountName}",
+			key_rowEntry = "${accountUserName}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 			value1 = "${accountName}");
 	}

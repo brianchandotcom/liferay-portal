@@ -359,6 +359,124 @@ definition {
 
 	}
 
+	@description = "Automation ID: LRAC-8839 | Test Summary: Preview the number of Organization contacts to sync"
+	@priority = "3"
+	test OrganizationContactSyncPreview {
+		
+
+		task ("Create a new user, a new organization and assign the organization for the created user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			Organization.addCP(
+				orgName = "Organization Name 1",
+				orgType = "Organization");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name 1",
+				userEmailAddress = "userea@liferay.com");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UsersAndOrganizationsNavigator.gotoOrganizations();
+
+			Organization.gotoCP(
+				orgName = "Organization Name 1",
+				searchToken = "Organization Name 1");
+
+			Organization.viewAssignMemberCP(userName = "userfn userln");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(orgName = "Organization Name 1");
+		}
+
+		task ("Assert preview the number of Organization contacts to sync") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+			var entrieOrg = selenium.getText(locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW");
+
+			var numberOrg = StringUtil.extractDigits("${entrieOrg}");
+
+			AssertTextEquals(
+				locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW",
+				value1 = "${entrieOrg}");
+		}
+
+		task ("Create a new organization and assign the organization for the created user") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			Organization.addCP(
+				orgName = "Organization Name 2",
+				orgType = "Organization");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name 2",
+				userEmailAddress = "userea@liferay.com");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UsersAndOrganizationsNavigator.gotoOrganizations();
+
+			Organization.gotoCP(
+				orgName = "Organization Name 2",
+				searchToken = "Organization Name 2");
+
+			Organization.viewAssignMemberCP(userName = "userfn userln");
+		}
+
+		task ("Connect to AC") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			ACDXPSettings.syncByOrganizations(
+				index = "2",
+				orgName = "Organization Name 2");
+		}
+
+		task ("Assert preview the number of Organization contacts to sync") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+			var newNumberOrg = ${numberOrg} + 1;
+
+			var newEntrieOrg = StringUtil.add("${newNumberOrg}", " Organizations Selected", "");
+
+
+			AssertTextEquals(
+				locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW",
+				value1 = "${newEntrieOrg}");
+
+
+
+
+
+
+
+		}
+	}
+
 	@description = "Automation ID: LRAC-8833 | Test Summary: Preview number of contacts to be added when configuring contacts"
 	@ignore = "true"
 	@priority = "5"
@@ -369,21 +487,149 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
-	@ignore = "true"
 	@priority = "4"
 	test SyncDataSourceContactsByGroups {
+		
 
-		// TODO LRAC-8822 SyncDataSourceContactsByGroups
+		task ("Add user, group and assign user to group") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			JSONUserGroup.addUserGroup(
+				userGroupDescription = "User Group Description",
+				userGroupName = "User Group Name");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			User.assignUserGroupCP(userGroupName = "User Group Name");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(userGroup = "User Group Name");
+		}
+		task ("Login as another user and visit DXP") {
+			Navigator.openURL();
+
+			Pause(locator1 = "5000");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Go to Known Individuals tab") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Assert that the new user is present") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
+
+			ACNavigation.switchTab(tabName = "Details");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userea@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"
-	@ignore = "true"
 	@priority = "4"
 	test SyncDataSourceContactsByOrganizations {
+		
 
-		// TODO LRAC-8823 SyncDataSourceContactsByOrganizations
+		task ("Create a new user, a new organization and assign the organization for the created user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			Organization.addCP(
+				orgName = "Organization Name",
+				orgType = "Organization");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "userea@liferay.com");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UsersAndOrganizationsNavigator.gotoOrganizations();
+
+			Organization.gotoCP(
+				orgName = "Organization Name",
+				searchToken = "Organization Name");
+
+			Organization.viewAssignMemberCP(userName = "userfn userln");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(orgName = "Organization Name");
+		}
+
+		task ("Login as another user and visit DXP") {
+			Navigator.openURL();
+
+			Pause(locator1 = "5000");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Go to Known Individuals tab") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Assert that the new user is present") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
+
+			ACNavigation.switchTab(tabName = "Details");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userea@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8824 | Test Summary: Preview the number of User Group contacts to sync"

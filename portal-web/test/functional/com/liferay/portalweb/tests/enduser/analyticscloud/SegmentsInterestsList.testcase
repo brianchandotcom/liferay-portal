@@ -9,13 +9,72 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
+
+		ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents Page",
+			siteName = "Site Name");
+
+		ACUtils.createDMAndAddToPage(layoutName = "Documents Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Web Content Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Site Name");
+
+		ACUtils.createWCAndAddToPage(layoutName = "Web Content Page");
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
 	}
 
 	tearDown {
@@ -26,116 +85,2732 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
-	@ignore = "true"
 	@priority = "3"
 	test AssertNoInterestFoundInSegment {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8613 AssertNoInterestFoundInSegment pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Search Interests tab") {
+			ACUtils.searchBar(searchItem = "nothing");
+		}
+
+		task ("View no interest results") {
+			ACInterests.viewNoInterestResults();
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8614 | Test Summary: Assert top interest shown in segment profile"
-	@ignore = "true"
 	@priority = "3"
 	test AssertTopInterestShownInSegmentProfile {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8614 AssertTopInterestShownInSegmentProfile pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View top interests card") {
+			ACSegments.viewSegmentProfileTopInterestCard();
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8605 | Test Summary: The top interests list is searchable"
-	@ignore = "true"
-	@priority = "5"
 	test CanSearchTopInterestsListSegments {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8605 CanSearchTopInterestsListSegments pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Search Interests tab") {
+			ACUtils.searchBar(searchItem = "ac");
+		}
+
+		task ("View various segment interests under the interests tab") {
+			ACInterests.viewInterest(interestTopic = "ac");
+
+			ACInterests.viewInterest(interestTopic = "ac title");
+
+			ACInterests.viewInterest(interestTopic = "blogs ac title");
+		}
+
+		task ("Search Interests tab") {
+			ACUtils.searchBar(searchItem = "liferay dxp");
+		}
+
+		task ("View various segment interests under the interests tab") {
+			ACInterests.viewInterest(interestTopic = "liferay dxp");
+		}
+
+		task ("Search Interests tab") {
+			ACUtils.searchBar(searchItem = "documents page");
+		}
+
+		task ("View various segment interests under the interests tab") {
+			ACInterests.viewInterest(interestTopic = "documents page");
+		}
+
+		task ("Search Interests tab") {
+			ACUtils.searchBar(searchItem = "site");
+		}
+
+		task ("View various segment interests under the interests tab") {
+			ACInterests.viewInterest(interestTopic = "site");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8606 | Test Summary: Order the Details of a Segment's Interest"
-	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentInterestDetails {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Second Page");
 
-		// TODO LRAC-8606 OrderSegmentInterestDetails pending implementation
+		Navigator.gotoSitePage(
+			pageName = "Blogs Second Page",
+			siteName = "Site Name");
 
+		ACUtils.createBlogsAndAddToPage(
+			entryTitle = "Blogs AC Second Title",
+			layoutName = "Blogs Second Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents Second Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents Second Page",
+			siteName = "Site Name");
+
+		ACUtils.createDMAndAddToPage(
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "DM AC Second Title",
+			layoutName = "Documents Second Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Web Content Second Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Second Page",
+			siteName = "Site Name");
+
+		ACUtils.createWCAndAddToPage(
+			layoutName = "Web Content Second Page",
+			webContentContent = "This is the second web content test for AC",
+			webContentTitle = "Web Content AC Second Title");
+
+		task ("Add 11 more new users") {
+			for (var n : list "1,2,3,4,5,6,7,8,9,a,b") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the second blogs page as different users") {
+			for (var username : list "user6,user7") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Second Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Second Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the second documents page as different users") {
+			for (var username : list "user8,user9") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Second Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Second Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the second web content page as different users") {
+			for (var username : list "usera,userb") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Second Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "20");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,user6 user6,user7 user7,user8 user8,user9 user9,usera usera,userb userb");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Search Interests tab") {
+			ACUtils.searchBar(searchItem = "liferay dxp");
+		}
+
+		task ("Go to a segment interest details page") {
+			ACInterests.clickInterest(interestTopic = "liferay dxp");
+		}
+
+		task ("Change pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Order list by Name") {
+			ACInterests.clickOrderInterestDetailsByNameLink();
+		}
+
+		task ("View individuals on page 1") {
+			ACInterests.viewInterestUser(userName = "user1 user1");
+
+			ACInterests.viewInterestUser(userName = "user2 user2");
+
+			ACInterests.viewInterestUser(userName = "user3 user3");
+
+			ACInterests.viewInterestUser(userName = "user6 user6");
+
+			ACInterests.viewInterestUser(userName = "user7 user7");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View individuals on page 2") {
+			ACInterests.viewInterestUser(userName = "user8 user8");
+
+			ACInterests.viewInterestUser(userName = "user9 user9");
+
+			ACInterests.viewInterestUser(userName = "usera usera");
+
+			ACInterests.viewInterestUser(userName = "userb userb");
+
+			ACInterests.viewInterestUser(userName = "userfn userln");
+		}
+
+		task ("Switch to Active Pages tab") {
+			ACInterests.switchTab(tabName = "Active Pages");
+		}
+
+		task ("Change pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Order list by Page Title") {
+			ACInterests.clickOrderInterestDetailsByPageTitlesLink();
+		}
+
+		task ("View pages on page 1") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Second Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs Second Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View pages on page 2") {
+			ACInterests.viewInterestPage(pageName = "Documents Second Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Web Content Second Page - Site Name - Liferay DXP");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8616 | Test Summary: Order the Segment Profile Engagement List"
-	@ignore = "true"
 	@priority = "4"
 	test OrderSegmentProfileEngagementScoreList {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8616 OrderSegmentProfileEngagementScoreList pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Change pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Click Order by Topics link") {
+			ACInterests.clickOrderInterestsBySegmentMembersLink();
+		}
+
+		task ("View various segment interests on page 1") {
+			ACInterests.viewInterest(interestTopic = "liferay dxp");
+
+			ACInterests.viewInterest(interestTopic = "site");
+
+			ACInterests.viewInterest(interestTopic = "ac");
+
+			ACInterests.viewInterest(interestTopic = "ac title");
+
+			ACInterests.viewInterest(interestTopic = "blogs test");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View various segment interests on page 2") {
+			ACInterests.viewInterest(interestTopic = "blogs");
+
+			ACInterests.viewInterest(interestTopic = "blogs ac title");
+
+			ACInterests.viewInterest(interestTopic = "documents");
+
+			ACInterests.viewInterest(interestTopic = "documents page");
+
+			ACInterests.viewInterest(interestTopic = "page");
+		}
+
+		task ("Click previous page") {
+			ACUtils.checkPreviousNextButton(previousButton = "true");
+		}
+
+		task ("Click Order by Topics link") {
+			ACInterests.clickOrderInterestsByTopicsLink();
+		}
+
+		task ("View various segment interests on page 1") {
+			ACInterests.viewInterest(interestTopic = "blogs");
+
+			ACInterests.viewInterest(interestTopic = "blogs ac title");
+
+			ACInterests.viewInterest(interestTopic = "documents");
+
+			ACInterests.viewInterest(interestTopic = "documents page");
+
+			ACInterests.viewInterest(interestTopic = "page");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View various segment interests on page 2") {
+			ACInterests.viewInterest(interestTopic = "liferay dxp");
+
+			ACInterests.viewInterest(interestTopic = "site");
+
+			ACInterests.viewInterest(interestTopic = "ac");
+
+			ACInterests.viewInterest(interestTopic = "ac title");
+
+			ACInterests.viewInterest(interestTopic = "blogs test");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8607 | Test Summary: Order a Segment Profile's Interest"
-	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentProfileInterests {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8607 OrderSegmentProfileInterests pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Change pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Click Order by Topics link") {
+			ACInterests.clickOrderInterestsByTopicsLink();
+		}
+
+		task ("View various segment interests on page 1") {
+			ACInterests.viewInterest(interestTopic = "ac");
+
+			ACInterests.viewInterest(interestTopic = "ac title");
+
+			ACInterests.viewInterest(interestTopic = "blogs test");
+
+			ACInterests.viewInterest(interestTopic = "blogs");
+
+			ACInterests.viewInterest(interestTopic = "blogs ac title");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View various segment interests on page 2") {
+			ACInterests.viewInterest(interestTopic = "documents");
+
+			ACInterests.viewInterest(interestTopic = "documents page");
+
+			ACInterests.viewInterest(interestTopic = "liferay dxp");
+
+			ACInterests.viewInterest(interestTopic = "page");
+
+			ACInterests.viewInterest(interestTopic = "site");
+		}
+
+		task ("Click previous page") {
+			ACUtils.checkPreviousNextButton(previousButton = "true");
+		}
+
+		task ("Click Order by Topics link") {
+			ACInterests.clickOrderInterestsByTopicsLink();
+		}
+
+		task ("View various segment interests on page 1") {
+			ACInterests.viewInterest(interestTopic = "documents");
+
+			ACInterests.viewInterest(interestTopic = "documents page");
+
+			ACInterests.viewInterest(interestTopic = "liferay dxp");
+
+			ACInterests.viewInterest(interestTopic = "page");
+
+			ACInterests.viewInterest(interestTopic = "site");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View various segment interests on page 2") {
+			ACInterests.viewInterest(interestTopic = "ac");
+
+			ACInterests.viewInterest(interestTopic = "ac title");
+
+			ACInterests.viewInterest(interestTopic = "blogs test");
+
+			ACInterests.viewInterest(interestTopic = "blogs");
+
+			ACInterests.viewInterest(interestTopic = "blogs ac title");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8608 | Test Summary: Paginate Segment Profile in an Interest detail"
-	@ignore = "true"
 	@priority = "3"
 	test PaginateSegmentProfileInterestDetail {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Second Page");
 
-		// TODO LRAC-8608 PaginateSegmentProfileInterestDetail pending implementation
+		Navigator.gotoSitePage(
+			pageName = "Blogs Second Page",
+			siteName = "Site Name");
 
+		ACUtils.createBlogsAndAddToPage(
+			entryTitle = "Blogs AC Second Title",
+			layoutName = "Blogs Second Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents Second Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents Second Page",
+			siteName = "Site Name");
+
+		ACUtils.createDMAndAddToPage(
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "DM AC Second Title",
+			layoutName = "Documents Second Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Web Content Second Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Second Page",
+			siteName = "Site Name");
+
+		ACUtils.createWCAndAddToPage(
+			layoutName = "Web Content Second Page",
+			webContentContent = "This is the second web content test for AC",
+			webContentTitle = "Web Content AC Second Title");
+
+		task ("Add 11 more new users") {
+			for (var n : list "1,2,3,4,5,6,7,8,9,a,b") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the second blogs page as different users") {
+			for (var username : list "user6,user7") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Second Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Second Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the second documents page as different users") {
+			for (var username : list "user8,user9") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Second Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Second Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the second web content page as different users") {
+			for (var username : list "usera,userb") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Second Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "20");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,user6 user6,user7 user7,user8 user8,user9 user9,usera usera,userb userb");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Search Interests tab") {
+			ACUtils.searchBar(searchItem = "liferay dxp");
+		}
+
+		task ("Go to a segment interest details page") {
+			ACInterests.clickInterest(interestTopic = "liferay dxp");
+		}
+
+		task ("Change pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Order list by Name") {
+			ACInterests.clickOrderInterestDetailsByNameLink();
+		}
+
+		task ("View individuals on page 1") {
+			ACInterests.viewInterestUser(userName = "user1 user1");
+
+			ACInterests.viewInterestUser(userName = "user2 user2");
+
+			ACInterests.viewInterestUser(userName = "user3 user3");
+
+			ACInterests.viewInterestUser(userName = "user6 user6");
+
+			ACInterests.viewInterestUser(userName = "user7 user7");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View individuals on page 2") {
+			ACInterests.viewInterestUser(userName = "user8 user8");
+
+			ACInterests.viewInterestUser(userName = "user9 user9");
+
+			ACInterests.viewInterestUser(userName = "usera usera");
+
+			ACInterests.viewInterestUser(userName = "userb userb");
+
+			ACInterests.viewInterestUser(userName = "userfn userln");
+		}
+
+		task ("Click previous page") {
+			ACUtils.checkPreviousNextButton(previousButton = "true");
+		}
+
+		task ("View individuals on page 1") {
+			ACInterests.viewInterestUser(userName = "user1 user1");
+
+			ACInterests.viewInterestUser(userName = "user2 user2");
+
+			ACInterests.viewInterestUser(userName = "user3 user3");
+
+			ACInterests.viewInterestUser(userName = "user6 user6");
+
+			ACInterests.viewInterestUser(userName = "user7 user7");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View individuals on page 2") {
+			ACInterests.viewInterestUser(userName = "user8 user8");
+
+			ACInterests.viewInterestUser(userName = "user9 user9");
+
+			ACInterests.viewInterestUser(userName = "usera usera");
+
+			ACInterests.viewInterestUser(userName = "userb userb");
+
+			ACInterests.viewInterestUser(userName = "userfn userln");
+		}
+
+		task ("Navigate to page 1") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View individuals on page 1") {
+			ACInterests.viewInterestUser(userName = "user1 user1");
+
+			ACInterests.viewInterestUser(userName = "user2 user2");
+
+			ACInterests.viewInterestUser(userName = "user3 user3");
+
+			ACInterests.viewInterestUser(userName = "user6 user6");
+
+			ACInterests.viewInterestUser(userName = "user7 user7");
+		}
+
+		task ("Switch to Active Pages tab") {
+			ACInterests.switchTab(tabName = "Active Pages");
+		}
+
+		task ("Change pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Order list by Page Title") {
+			ACInterests.clickOrderInterestDetailsByPageTitlesLink();
+		}
+
+		task ("View pages on page 1") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Second Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs Second Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("View pages on page 2") {
+			ACInterests.viewInterestPage(pageName = "Documents Second Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Web Content Second Page - Site Name - Liferay DXP");
+		}
+
+		task ("Click previous page") {
+			ACUtils.checkPreviousNextButton(previousButton = "true");
+		}
+
+		task ("View pages on page 1") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Second Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs Second Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View pages on page 2") {
+			ACInterests.viewInterestPage(pageName = "Documents Second Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Web Content Second Page - Site Name - Liferay DXP");
+		}
+
+		task ("Navigate to page 1") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View pages on page 1") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Second Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Blogs Second Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8609 | Test Summary: Search a Segment Profile's Interest"
-	@ignore = "true"
 	@priority = "3"
 	test SearchSegmentProfilesInterest {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8609 SearchSegmentProfilesInterest pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Go to a segment interest details page") {
+			ACInterests.clickInterest(interestTopic = "liferay dxp");
+		}
+
+		task ("Switch to Individuals tab") {
+			ACUtils.searchBar(searchItem = "user");
+		}
+
+		task ("View individuals") {
+			ACInterests.viewInterestUser(userName = "userfn userln");
+
+			ACInterests.viewInterestUser(userName = "user1 user1");
+
+			ACInterests.viewInterestUser(userName = "user2 user2");
+
+			ACInterests.viewInterestUser(userName = "user3 user3");
+		}
+
+		task ("Switch to Active Pages tab") {
+			ACInterests.switchTab(tabName = "Active Pages");
+		}
+
+		task ("Search Active Pages tab") {
+			ACUtils.searchBar(searchItem = "DXP");
+		}
+
+		task ("View pages") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8610 | Test Summary: Segment interest details has a tab that shows active pages"
-	@ignore = "true"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsActivePages {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8610 SegmentInterestDetailsTabShowsActivePages pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Go to a segment interest details page") {
+			ACInterests.clickInterest(interestTopic = "liferay dxp");
+		}
+
+		task ("Switch to Active Pages tab") {
+			ACInterests.switchTab(tabName = "Active Pages");
+		}
+
+		task ("View pages") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8612 | Test Summary: Segment interest details has a tab that shows inactive pages"
-	@ignore = "true"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsInactivePages {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8612 SegmentInterestDetailsTabShowsInactivePages pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Go to a segment interest details page") {
+			ACInterests.clickInterest(interestTopic = "liferay dxp");
+		}
+
+		task ("Switch to Inactive Pages tab") {
+			ACInterests.switchTab(tabName = "Inactive Pages");
+		}
+
+		// A page appears to move to inactive after it hasn't been visited for an extended period of time (hours or days). This could be difficult to automate
+		// At some point in this test, probably after segment creation and before the interest is viewed, an additional step is necessary in order to accelerate a page moving from Active to Inactive
+		// Only at that point will this test pass
+
+		task ("View pages") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8611 | Test Summary: Interest details are shown"
-	@ignore = "true"
 	@priority = "3"
 	test ViewInterestDetails {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8611 ViewInterestDetails pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Go to a segment interest details page") {
+			ACInterests.clickInterest(interestTopic = "liferay dxp");
+		}
+
+		task ("View interest header") {
+			ACInterests.viewInterestHeader(interestTopic = "liferay dxp");
+		}
+
+		task ("View individuals") {
+			ACInterests.viewInterestUser(userName = "userfn userln");
+
+			ACInterests.viewInterestUser(userName = "user1 user1");
+
+			ACInterests.viewInterestUser(userName = "user2 user2");
+
+			ACInterests.viewInterestUser(userName = "user3 user3");
+		}
+
+		task ("Switch to Active Pages tab") {
+			ACInterests.switchTab(tabName = "Active Pages");
+		}
+
+		task ("View pages") {
+			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+
+			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8604 | Test Summary: Top interests for the workspace are shown in a list"
-	@ignore = "true"
 	@priority = "5"
 	test ViewSegmentsTopInterestsList {
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-		// TODO LRAC-8604 ViewSegmentsTopInterestsList pending implementation
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Add the user1 user1 as member") {
+			Click(
+				key_TableMember = "user1 user1",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Select the 5 items in Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Navigate to page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("Add the userfn userln as member") {
+			Click(
+				key_TableMember = "userfn userln",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+
+			Click(locator1 = "ACSegments#ADD_BUTTON");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View various segment interests under the top interests card") {
+			ACInterests.viewInterest(interestTopic = "liferay dxp");
+
+			ACInterests.viewInterest(interestTopic = "site");
+
+			ACInterests.viewInterest(interestTopic = "ac");
+
+			ACInterests.viewInterest(interestTopic = "ac title");
+
+			ACInterests.viewInterest(interestTopic = "blog test");
+		}
 	}
 
 }

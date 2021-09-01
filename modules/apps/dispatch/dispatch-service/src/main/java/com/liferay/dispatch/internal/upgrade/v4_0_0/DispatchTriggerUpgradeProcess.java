@@ -28,10 +28,10 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 			"dispatchTaskClusterMode INTEGER null");
 		alterColumnName(
 			"DispatchTrigger", "taskExecutorType",
-			"dispatchTaskExecutorType STRING null");
+			"dispatchTaskExecutorType VARCHAR(75) null");
 		alterColumnName(
 			"DispatchTrigger", "taskSettings",
-			"dispatchTaskSettings LONGTEXT null");
+			"dispatchTaskSettings TEXT null");
 	}
 
 }

@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.DTOMapper;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +67,8 @@ public class TaxCategoryHelper {
 
 		CPTaxCategory cpTaxCategory = _cpTaxCategoryService.addCPTaxCategory(
 			StringPool.BLANK,
-			LanguageUtils.getLocalizedMap(taxCategory.getName()),
-			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(taxCategory.getName()),
+			LocalizedMapUtil.getLocalizedMap(taxCategory.getDescription()),
 			serviceContext);
 
 		return _dtoMapper.modelToDTO(cpTaxCategory);
@@ -112,8 +112,8 @@ public class TaxCategoryHelper {
 		return _cpTaxCategoryService.updateCPTaxCategory(
 			cpTaxCategory.getExternalReferenceCode(),
 			cpTaxCategory.getCPTaxCategoryId(),
-			LanguageUtils.getLocalizedMap(taxCategory.getName()),
-			LanguageUtils.getLocalizedMap(taxCategory.getDescription()));
+			LocalizedMapUtil.getLocalizedMap(taxCategory.getName()),
+			LocalizedMapUtil.getLocalizedMap(taxCategory.getDescription()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

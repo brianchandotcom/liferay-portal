@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductOptionDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductOptionUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionResource;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -36,6 +35,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -262,8 +262,9 @@ public class ProductOptionResourceImpl
 			_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 				productOption.getOptionId(),
-				LanguageUtils.getLocalizedMap(productOption.getName()),
-				LanguageUtils.getLocalizedMap(productOption.getDescription()),
+				LocalizedMapUtil.getLocalizedMap(productOption.getName()),
+				LocalizedMapUtil.getLocalizedMap(
+					productOption.getDescription()),
 				GetterUtil.get(
 					productOption.getFieldType(),
 					cpDefinitionOptionRel.getDDMFormFieldTypeName()),

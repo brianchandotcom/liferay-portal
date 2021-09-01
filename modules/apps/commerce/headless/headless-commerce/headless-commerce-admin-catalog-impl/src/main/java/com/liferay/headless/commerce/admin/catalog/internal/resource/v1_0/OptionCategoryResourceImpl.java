@@ -20,7 +20,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.OptionCategoryDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.OptionCategoryEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -34,6 +33,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -141,8 +141,8 @@ public class OptionCategoryResourceImpl
 		throws Exception {
 
 		return _cpOptionCategoryService.addCPOptionCategory(
-			LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
-			LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(optionCategory.getTitle()),
+			LocalizedMapUtil.getLocalizedMap(optionCategory.getDescription()),
 			GetterUtil.get(optionCategory.getPriority(), 0D),
 			optionCategory.getKey(),
 			_serviceContextHelper.getServiceContext(contextUser));
@@ -166,8 +166,8 @@ public class OptionCategoryResourceImpl
 
 		return _cpOptionCategoryService.updateCPOptionCategory(
 			cpOptionCategory.getCPOptionCategoryId(),
-			LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
-			LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(optionCategory.getTitle()),
+			LocalizedMapUtil.getLocalizedMap(optionCategory.getDescription()),
 			GetterUtil.get(
 				optionCategory.getPriority(), cpOptionCategory.getPriority()),
 			optionCategory.getKey());

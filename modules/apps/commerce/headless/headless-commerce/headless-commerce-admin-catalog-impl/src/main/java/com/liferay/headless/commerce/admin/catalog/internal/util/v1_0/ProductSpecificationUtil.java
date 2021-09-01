@@ -19,11 +19,11 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -46,7 +46,8 @@ public class ProductSpecificationUtil {
 					cpSpecificationOptionService, productSpecification,
 					serviceContext.getCompanyId(), serviceContext),
 				getCPOptionCategoryId(productSpecification),
-				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
+				LocalizedMapUtil.getLocalizedMap(
+					productSpecification.getValue()),
 				GetterUtil.get(productSpecification.getPriority(), 0D),
 				serviceContext);
 	}
@@ -78,9 +79,9 @@ public class ProductSpecificationUtil {
 			cpSpecificationOption =
 				cpSpecificationOptionService.addCPSpecificationOption(
 					getCPOptionCategoryId(productSpecification),
-					LanguageUtils.getLocalizedMap(
+					LocalizedMapUtil.getLocalizedMap(
 						productSpecification.getLabel()),
-					LanguageUtils.getLocalizedMap(
+					LocalizedMapUtil.getLocalizedMap(
 						productSpecification.getLabel()),
 					false, specificationKey, serviceContext);
 		}
@@ -103,7 +104,8 @@ public class ProductSpecificationUtil {
 				cpDefinitionSpecificationOptionValue.
 					getCPDefinitionSpecificationOptionValueId(),
 				getCPOptionCategoryId(productSpecification),
-				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
+				LocalizedMapUtil.getLocalizedMap(
+					productSpecification.getValue()),
 				GetterUtil.get(
 					productSpecification.getPriority(),
 					cpDefinitionSpecificationOptionValue.getPriority()),

@@ -22,7 +22,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.File;
@@ -294,7 +294,7 @@ public class AttachmentUtil {
 		throws PortalException {
 
 		if (titleMap != null) {
-			return LanguageUtils.getLocalizedMap(titleMap);
+			return LocalizedMapUtil.getLocalizedMap(titleMap);
 		}
 
 		if (cpAttachmentFileEntry == null) {

@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit;
 import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.DTOMapper;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public class MeasurementUnitHelper {
 
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitService.addCPMeasurementUnit(
-				LanguageUtils.getLocalizedMap(measurementUnit.getName()),
+				LocalizedMapUtil.getLocalizedMap(measurementUnit.getName()),
 				measurementUnit.getKey(),
 				GetterUtil.get(measurementUnit.getRate(), 0D),
 				GetterUtil.get(measurementUnit.getPrimary(), false),
@@ -137,7 +137,7 @@ public class MeasurementUnitHelper {
 
 		return _cpMeasurementUnitService.updateCPMeasurementUnit(
 			cpMeasurementUnit.getCPMeasurementUnitId(),
-			LanguageUtils.getLocalizedMap(measurementUnit.getName()),
+			LocalizedMapUtil.getLocalizedMap(measurementUnit.getName()),
 			measurementUnit.getKey(),
 			GetterUtil.get(
 				measurementUnit.getRate(), cpMeasurementUnit.getRate()),

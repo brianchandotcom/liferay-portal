@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -224,8 +225,8 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		CommerceOrderType commerceOrderType =
 			_commerceOrderTypeLocalService.addCommerceOrderType(
 				orderType.getExternalReferenceCode(), _user.getUserId(),
-				LanguageUtils.getLocalizedMap(orderType.getName()),
-				LanguageUtils.getLocalizedMap(orderType.getDescription()),
+				LocalizedMapUtil.getLocalizedMap(orderType.getName()),
+				LocalizedMapUtil.getLocalizedMap(orderType.getDescription()),
 				GetterUtil.getBoolean(orderType.getActive()),
 				displayDateConfig.getMonth(), displayDateConfig.getDay(),
 				displayDateConfig.getYear(), displayDateConfig.getHour(),

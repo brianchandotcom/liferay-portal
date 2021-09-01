@@ -17,10 +17,10 @@ package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -43,7 +43,8 @@ public class ProductOptionValueUtil {
 			cpDefinitionOptionValueRel =
 				cpDefinitionOptionValueRelService.addCPDefinitionOptionValueRel(
 					cpDefinitionOptionRelId,
-					LanguageUtils.getLocalizedMap(productOptionValue.getName()),
+					LocalizedMapUtil.getLocalizedMap(
+						productOptionValue.getName()),
 					GetterUtil.get(productOptionValue.getPriority(), 0D),
 					productOptionValue.getKey(), serviceContext);
 		}
@@ -52,7 +53,7 @@ public class ProductOptionValueUtil {
 				cpDefinitionOptionValueRelService.
 					updateCPDefinitionOptionValueRel(
 						cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
-						LanguageUtils.getLocalizedMap(
+						LocalizedMapUtil.getLocalizedMap(
 							productOptionValue.getName()),
 						GetterUtil.get(
 							productOptionValue.getPriority(),

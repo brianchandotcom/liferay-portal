@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.Orde
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.Field;
@@ -45,6 +44,7 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Map;
@@ -206,8 +206,8 @@ public class OrderTypeResourceImpl
 
 		return _commerceOrderTypeService.addCommerceOrderType(
 			orderType.getExternalReferenceCode(),
-			LanguageUtils.getLocalizedMap(orderType.getName()),
-			LanguageUtils.getLocalizedMap(orderType.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(orderType.getName()),
+			LocalizedMapUtil.getLocalizedMap(orderType.getDescription()),
 			GetterUtil.getBoolean(orderType.getActive()),
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
@@ -282,8 +282,8 @@ public class OrderTypeResourceImpl
 				orderType.getExternalReferenceCode(),
 				commerceOrderType.getExternalReferenceCode()),
 			commerceOrderType.getCommerceOrderTypeId(),
-			LanguageUtils.getLocalizedMap(orderType.getName()),
-			LanguageUtils.getLocalizedMap(orderType.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(orderType.getName()),
+			LocalizedMapUtil.getLocalizedMap(orderType.getDescription()),
 			GetterUtil.get(orderType.getActive(), commerceOrderType.isActive()),
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),

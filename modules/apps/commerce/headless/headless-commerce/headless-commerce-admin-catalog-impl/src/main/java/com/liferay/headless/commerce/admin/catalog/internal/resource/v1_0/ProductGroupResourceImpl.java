@@ -29,7 +29,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.Pr
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductGroupProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupResource;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.Field;
@@ -42,6 +41,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Map;
@@ -196,8 +196,8 @@ public class ProductGroupResourceImpl
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassService.addOrUpdateCommercePricingClass(
 				productGroup.getExternalReferenceCode(), 0L,
-				LanguageUtils.getLocalizedMap(productGroup.getTitle()),
-				LanguageUtils.getLocalizedMap(productGroup.getDescription()),
+				LocalizedMapUtil.getLocalizedMap(productGroup.getTitle()),
+				LocalizedMapUtil.getLocalizedMap(productGroup.getDescription()),
 				_serviceContextHelper.getServiceContext());
 
 		// Update nested resources
@@ -279,8 +279,8 @@ public class ProductGroupResourceImpl
 		commercePricingClass =
 			_commercePricingClassService.updateCommercePricingClass(
 				commercePricingClass.getCommercePricingClassId(),
-				LanguageUtils.getLocalizedMap(productGroup.getTitle()),
-				LanguageUtils.getLocalizedMap(productGroup.getDescription()),
+				LocalizedMapUtil.getLocalizedMap(productGroup.getTitle()),
+				LocalizedMapUtil.getLocalizedMap(productGroup.getDescription()),
 				_serviceContextHelper.getServiceContext());
 
 		// Expando

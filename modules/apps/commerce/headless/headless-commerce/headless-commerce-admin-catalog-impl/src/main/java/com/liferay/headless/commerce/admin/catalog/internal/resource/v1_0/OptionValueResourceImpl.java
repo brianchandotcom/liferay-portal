@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.OptionValueDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -39,6 +38,7 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -276,7 +276,7 @@ public class OptionValueResourceImpl
 			_cpOptionValueService.addOrUpdateCPOptionValue(
 				optionValue.getExternalReferenceCode(),
 				cpOption.getCPOptionId(),
-				LanguageUtils.getLocalizedMap(optionValue.getName()),
+				LocalizedMapUtil.getLocalizedMap(optionValue.getName()),
 				GetterUtil.get(optionValue.getPriority(), 0D),
 				optionValue.getKey(),
 				_serviceContextHelper.getServiceContext());

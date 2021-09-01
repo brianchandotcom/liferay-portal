@@ -23,7 +23,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.O
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.OptionEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.Field;
@@ -41,6 +40,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -183,8 +183,8 @@ public class OptionResourceImpl
 
 		CPOption cpOption = _cpOptionService.addOrUpdateCPOption(
 			option.getExternalReferenceCode(),
-			LanguageUtils.getLocalizedMap(option.getName()),
-			LanguageUtils.getLocalizedMap(option.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(option.getName()),
+			LocalizedMapUtil.getLocalizedMap(option.getDescription()),
 			fieldType.getValue(), GetterUtil.get(option.getFacetable(), false),
 			GetterUtil.get(option.getRequired(), false),
 			GetterUtil.get(option.getSkuContributor(), false), option.getKey(),
@@ -246,8 +246,8 @@ public class OptionResourceImpl
 
 		cpOption = _cpOptionService.updateCPOption(
 			cpOption.getCPOptionId(),
-			LanguageUtils.getLocalizedMap(option.getName()),
-			LanguageUtils.getLocalizedMap(option.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(option.getName()),
+			LocalizedMapUtil.getLocalizedMap(option.getDescription()),
 			fieldType.getValue(),
 			GetterUtil.get(option.getFacetable(), cpOption.isFacetable()),
 			GetterUtil.get(option.getRequired(), cpOption.isRequired()),

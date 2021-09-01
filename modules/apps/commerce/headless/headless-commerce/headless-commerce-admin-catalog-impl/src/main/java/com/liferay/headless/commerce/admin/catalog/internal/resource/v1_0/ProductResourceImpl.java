@@ -108,6 +108,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
@@ -454,12 +455,12 @@ public class ProductResourceImpl
 
 		cpDefinition = _cpDefinitionService.addOrUpdateCPDefinition(
 			product.getExternalReferenceCode(), commerceCatalog.getGroupId(),
-			LanguageUtils.getLocalizedMap(nameMap),
-			LanguageUtils.getLocalizedMap(shortDescriptionMap),
-			LanguageUtils.getLocalizedMap(descriptionMap), null,
-			LanguageUtils.getLocalizedMap(product.getMetaTitle()),
-			LanguageUtils.getLocalizedMap(product.getMetaDescription()),
-			LanguageUtils.getLocalizedMap(product.getMetaKeyword()),
+			LocalizedMapUtil.getLocalizedMap(nameMap),
+			LocalizedMapUtil.getLocalizedMap(shortDescriptionMap),
+			LocalizedMapUtil.getLocalizedMap(descriptionMap), null,
+			LocalizedMapUtil.getLocalizedMap(product.getMetaTitle()),
+			LocalizedMapUtil.getLocalizedMap(product.getMetaDescription()),
+			LocalizedMapUtil.getLocalizedMap(product.getMetaKeyword()),
 			product.getProductType(), ignoreSKUCombinations,
 			GetterUtil.getBoolean(shippingConfiguration.getShippable(), true),
 			GetterUtil.getBoolean(
@@ -1048,9 +1049,9 @@ public class ProductResourceImpl
 
 		cpDefinition = _cpDefinitionService.updateCPDefinition(
 			cpDefinition.getCPDefinitionId(),
-			LanguageUtils.getLocalizedMap(nameMap),
-			LanguageUtils.getLocalizedMap(shortDescriptionMap),
-			LanguageUtils.getLocalizedMap(descriptionMap),
+			LocalizedMapUtil.getLocalizedMap(nameMap),
+			LocalizedMapUtil.getLocalizedMap(shortDescriptionMap),
+			LocalizedMapUtil.getLocalizedMap(descriptionMap),
 			cpDefinition.getUrlTitleMap(), cpDefinition.getMetaTitleMap(),
 			cpDefinition.getMetaDescriptionMap(),
 			cpDefinition.getMetaKeywordsMap(),

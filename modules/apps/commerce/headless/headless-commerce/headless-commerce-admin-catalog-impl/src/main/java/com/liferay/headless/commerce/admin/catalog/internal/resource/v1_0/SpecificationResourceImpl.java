@@ -22,7 +22,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SpecificationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.SpecificationEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationResource;
-import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,6 +37,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
@@ -153,8 +153,9 @@ public class SpecificationResourceImpl
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.addCPSpecificationOption(
 				_getCPOptionCategoryId(specification),
-				LanguageUtils.getLocalizedMap(specification.getTitle()),
-				LanguageUtils.getLocalizedMap(specification.getDescription()),
+				LocalizedMapUtil.getLocalizedMap(specification.getTitle()),
+				LocalizedMapUtil.getLocalizedMap(
+					specification.getDescription()),
 				_isFacetable(specification), specification.getKey(),
 				_serviceContextHelper.getServiceContext());
 
@@ -201,8 +202,8 @@ public class SpecificationResourceImpl
 		return _cpSpecificationOptionService.updateCPSpecificationOption(
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			_getCPOptionCategoryId(specification),
-			LanguageUtils.getLocalizedMap(specification.getTitle()),
-			LanguageUtils.getLocalizedMap(specification.getDescription()),
+			LocalizedMapUtil.getLocalizedMap(specification.getTitle()),
+			LocalizedMapUtil.getLocalizedMap(specification.getDescription()),
 			_isFacetable(specification), specification.getKey(),
 			_serviceContextHelper.getServiceContext());
 	}

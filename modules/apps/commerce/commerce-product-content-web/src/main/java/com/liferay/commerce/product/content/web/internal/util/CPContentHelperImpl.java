@@ -19,7 +19,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
-import com.liferay.commerce.media.CommerceMediaHttpHelper;
+import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPMedia;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -321,7 +321,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
 
-		FileEntry fileEntry = _commerceMediaHttpHelper.getDefaultImageFileEntry(
+		FileEntry fileEntry = _commerceMediaProvider.getDefaultImageFileEntry(
 			_portal.getCompanyId(httpServletRequest),
 			cpDefinition.getGroupId());
 
@@ -717,7 +717,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		_commerceInventoryChecker;
 
 	@Reference
-	private CommerceMediaHttpHelper _commerceMediaHttpHelper;
+	private CommerceMediaProvider _commerceMediaProvider;
 
 	@Reference
 	private CommerceWishListItemService _commerceWishListItemService;

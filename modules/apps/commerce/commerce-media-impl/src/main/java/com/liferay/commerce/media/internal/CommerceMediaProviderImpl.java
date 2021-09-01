@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.media.internal;
 
-import com.liferay.commerce.media.CommerceMediaHttpHelper;
+import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.media.internal.configuration.CommerceMediaDefaultImageConfiguration;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(enabled = false, service = CommerceMediaHttpHelper.class)
-public class CommerceMediaHttpHelperImpl implements CommerceMediaHttpHelper {
+@Component(enabled = false, service = CommerceMediaProvider.class)
+public class CommerceMediaProviderImpl implements CommerceMediaProvider {
 
 	@Override
 	public FileEntry getDefaultImageFileEntry(long companyId, long groupId)
@@ -70,7 +70,7 @@ public class CommerceMediaHttpHelperImpl implements CommerceMediaHttpHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceMediaHttpHelperImpl.class);
+		CommerceMediaProviderImpl.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -16,7 +16,7 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
-import com.liferay.commerce.media.CommerceMediaHttpHelper;
+import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -406,7 +406,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				cpInstance.getCPDefinitionId());
 
 			FileEntry fileEntry =
-				_commerceMediaHttpHelper.getDefaultImageFileEntry(
+				_commerceMediaProvider.getDefaultImageFileEntry(
 					companyId, cpDefinition.getGroupId());
 
 			return fileEntry.getFileVersion();
@@ -688,7 +688,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceMediaHttpHelper _commerceMediaHttpHelper;
+	private CommerceMediaProvider _commerceMediaProvider;
 
 	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;

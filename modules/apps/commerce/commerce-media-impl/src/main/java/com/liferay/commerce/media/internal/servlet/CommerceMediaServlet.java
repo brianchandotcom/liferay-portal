@@ -16,7 +16,7 @@ package com.liferay.commerce.media.internal.servlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.commerce.media.CommerceMediaHttpHelper;
+import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -210,7 +210,7 @@ public class CommerceMediaServlet extends HttpServlet {
 
 		try {
 			FileEntry fileEntry =
-				_commerceMediaHttpHelper.getDefaultImageFileEntry(
+				_commerceMediaProvider.getDefaultImageFileEntry(
 					_portal.getCompanyId(httpServletRequest), groupId);
 
 			ServletResponseUtil.sendFile(
@@ -302,7 +302,7 @@ public class CommerceMediaServlet extends HttpServlet {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
-	private CommerceMediaHttpHelper _commerceMediaHttpHelper;
+	private CommerceMediaProvider _commerceMediaProvider;
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;

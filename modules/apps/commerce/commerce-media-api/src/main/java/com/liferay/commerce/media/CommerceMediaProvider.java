@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 /**
  * @author Alec Sloan
  */
-public interface CommerceMediaHttpHelper {
+public interface CommerceMediaProvider {
 
 	public FileEntry getDefaultImageFileEntry(long companyId, long groupId)
 		throws Exception;

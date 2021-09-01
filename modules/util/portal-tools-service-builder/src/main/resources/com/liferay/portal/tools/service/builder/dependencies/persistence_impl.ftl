@@ -180,13 +180,9 @@ import org.osgi.service.component.annotations.Reference;
 </#list>
 
 <#if entity.localizedEntity??>
-	<#assign
-		referenceEntity = serviceBuilder.getEntity(entity.localizedEntity.name)
-	/>
+	<#assign localizedEntity = entity.localizedEntity />
 
-	<#if referenceEntity.hasPersistence()>
-		import ${referenceEntity.apiPackagePath}.service.persistence.${referenceEntity.name}Persistence;
-	</#if>
+	import ${apiPackagePath}.service.persistence.${localizedEntity.name}Persistence;
 </#if>
 
 /**
@@ -2884,21 +2880,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#list>
 
 	<#if entity.localizedEntity??>
-		<#assign
-			referenceEntity = serviceBuilder.getEntity(entity.localizedEntity.name)
-		/>
+		<#assign localizedEntity = entity.localizedEntity />
 
-		<#if !dependencyInjectorDS || (referenceEntity.apiPackagePath == apiPackagePath)>
-			<#if dependencyInjectorDS>
-				@Reference
-			<#elseif osgiModule && (referenceEntity.apiPackagePath != apiPackagePath)>
-				@ServiceReference(type = ${referenceEntity.name}Persistence.class)
-			<#else>
-				@BeanReference(type = ${referenceEntity.name}Persistence.class)
-			</#if>
-
-			protected ${referenceEntity.name}Persistence ${referenceEntity.variableName}Persistence;
+		<#if dependencyInjectorDS>
+			@Reference
+		<#else>
+			@BeanReference(type = ${localizedEntity.name}Persistence.class)
 		</#if>
+
+		protected ${localizedEntity.name}Persistence ${localizedEntity.variableName}Persistence;
 	</#if>
 
 	<#if entity.isHierarchicalTree()>

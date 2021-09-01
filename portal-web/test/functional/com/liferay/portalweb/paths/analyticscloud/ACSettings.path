@@ -272,6 +272,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_LIST_BY_EMAIL</td>
+	<td>//td[contains(text(),'${userEmail}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVITE_USERS_BUTTON</td>
 	<td>//button[text()='Invite Users']</td>
 	<td></td>

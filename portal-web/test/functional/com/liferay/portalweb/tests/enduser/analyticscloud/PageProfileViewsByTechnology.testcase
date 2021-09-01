@@ -2,6 +2,7 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property minimum.slave.ram = "24";
 	property portal.release = "false";
 	property portal.upstream = "true";

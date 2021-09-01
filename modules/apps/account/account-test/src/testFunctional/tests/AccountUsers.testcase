@@ -48,6 +48,59 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test adds an account user to an account via Edit User page"
+	@priority = "4"
+	test CanAddUserToAccountViaEditUser {
+		for (var accountNumber : list "1,2") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name ${accountNumber}",
+				accountEntryType = "Business");
+		}
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.addUser(
+			accountName = "Accounts Name 1",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "userfn userln");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit User userfn userln");
+
+		Navigator.gotoNavNested(navNested = "Accounts");
+
+		AssertClick(
+			key_text = "Select",
+			locator1 = "Button#ANY",
+			value1 = "Select");
+
+		SelectFrame(
+			key_title = "Select Account",
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertClick(
+			key_accountName = "Accounts Name 2",
+			locator1 = "AccountUsers#SELECT_AN_ACCOUNT_CHOOSE_BUTTON",
+			value1 = "Choose");
+
+		Button.clickSave();
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.viewEntryAccounts(
+			accountName = "Accounts Name 1, Accounts Name 2",
+			accountUserName = "userfn userln");
+	}
+
 	@description = "This test adds more than 4 account users and asserts correct pagination."
 	@priority = "3"
 	test CanChangePaginationInAccountUsersList {

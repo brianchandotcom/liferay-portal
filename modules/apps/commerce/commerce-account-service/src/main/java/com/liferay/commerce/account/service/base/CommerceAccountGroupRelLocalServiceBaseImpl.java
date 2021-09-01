@@ -18,7 +18,6 @@ import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalServiceUtil;
-import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
@@ -120,30 +119,6 @@ public abstract class CommerceAccountGroupRelLocalServiceBaseImpl
 
 		this.commerceAccountGroupCommerceAccountRelLocalService =
 			commerceAccountGroupCommerceAccountRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce account group commerce account rel persistence.
-	 *
-	 * @return the commerce account group commerce account rel persistence
-	 */
-	public CommerceAccountGroupCommerceAccountRelPersistence
-		getCommerceAccountGroupCommerceAccountRelPersistence() {
-
-		return commerceAccountGroupCommerceAccountRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce account group commerce account rel persistence.
-	 *
-	 * @param commerceAccountGroupCommerceAccountRelPersistence the commerce account group commerce account rel persistence
-	 */
-	public void setCommerceAccountGroupCommerceAccountRelPersistence(
-		CommerceAccountGroupCommerceAccountRelPersistence
-			commerceAccountGroupCommerceAccountRelPersistence) {
-
-		this.commerceAccountGroupCommerceAccountRelPersistence =
-			commerceAccountGroupCommerceAccountRelPersistence;
 	}
 
 	/**
@@ -456,12 +431,6 @@ public abstract class CommerceAccountGroupRelLocalServiceBaseImpl
 	protected com.liferay.commerce.account.service.
 		CommerceAccountGroupCommerceAccountRelLocalService
 			commerceAccountGroupCommerceAccountRelLocalService;
-
-	@BeanReference(
-		type = CommerceAccountGroupCommerceAccountRelPersistence.class
-	)
-	protected CommerceAccountGroupCommerceAccountRelPersistence
-		commerceAccountGroupCommerceAccountRelPersistence;
 
 	@BeanReference(type = CommerceAccountGroupRelLocalService.class)
 	protected CommerceAccountGroupRelLocalService

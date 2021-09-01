@@ -244,11 +244,6 @@ public class CommerceAccountGroupCommerceAccountRelWrapper
 		return model.getUserUuid();
 	}
 
-	@Override
-	public void persist() {
-		model.persist();
-	}
-
 	/**
 	 * Sets the commerce account group commerce account rel ID of this commerce account group commerce account rel.
 	 *

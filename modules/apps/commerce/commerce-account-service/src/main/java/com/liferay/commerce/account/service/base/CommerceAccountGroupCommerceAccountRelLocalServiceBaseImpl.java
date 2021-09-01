@@ -14,45 +14,18 @@
 
 package com.liferay.commerce.account.service.base;
 
+import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalServiceUtil;
-import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.io.Serializable;
-
 import java.lang.reflect.Field;
-
-import java.util.List;
-
-import javax.sql.DataSource;
 
 /**
  * Provides the base implementation for the commerce account group commerce account rel local service.
@@ -75,404 +48,6 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAccountGroupCommerceAccountRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAccountGroupCommerceAccountRelLocalServiceUtil</code>.
 	 */
-
-	/**
-	 * Adds the commerce account group commerce account rel to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupCommerceAccountRel the commerce account group commerce account rel
-	 * @return the commerce account group commerce account rel that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-		addCommerceAccountGroupCommerceAccountRel(
-			CommerceAccountGroupCommerceAccountRel
-				commerceAccountGroupCommerceAccountRel) {
-
-		commerceAccountGroupCommerceAccountRel.setNew(true);
-
-		return commerceAccountGroupCommerceAccountRelPersistence.update(
-			commerceAccountGroupCommerceAccountRel);
-	}
-
-	/**
-	 * Creates a new commerce account group commerce account rel with the primary key. Does not add the commerce account group commerce account rel to the database.
-	 *
-	 * @param commerceAccountGroupCommerceAccountRelId the primary key for the new commerce account group commerce account rel
-	 * @return the new commerce account group commerce account rel
-	 */
-	@Override
-	@Transactional(enabled = false)
-	public CommerceAccountGroupCommerceAccountRel
-		createCommerceAccountGroupCommerceAccountRel(
-			long commerceAccountGroupCommerceAccountRelId) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.create(
-			commerceAccountGroupCommerceAccountRelId);
-	}
-
-	/**
-	 * Deletes the commerce account group commerce account rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupCommerceAccountRelId the primary key of the commerce account group commerce account rel
-	 * @return the commerce account group commerce account rel that was removed
-	 * @throws PortalException if a commerce account group commerce account rel with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-			deleteCommerceAccountGroupCommerceAccountRel(
-				long commerceAccountGroupCommerceAccountRelId)
-		throws PortalException {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.remove(
-			commerceAccountGroupCommerceAccountRelId);
-	}
-
-	/**
-	 * Deletes the commerce account group commerce account rel from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupCommerceAccountRel the commerce account group commerce account rel
-	 * @return the commerce account group commerce account rel that was removed
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-		deleteCommerceAccountGroupCommerceAccountRel(
-			CommerceAccountGroupCommerceAccountRel
-				commerceAccountGroupCommerceAccountRel) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.remove(
-			commerceAccountGroupCommerceAccountRel);
-	}
-
-	@Override
-	public <T> T dslQuery(DSLQuery dslQuery) {
-		return commerceAccountGroupCommerceAccountRelPersistence.dslQuery(
-			dslQuery);
-	}
-
-	@Override
-	public int dslQueryCount(DSLQuery dslQuery) {
-		Long count = dslQuery(dslQuery);
-
-		return count.intValue();
-	}
-
-	@Override
-	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(
-			CommerceAccountGroupCommerceAccountRel.class,
-			clazz.getClassLoader());
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
-	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			findWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
-	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			findWithDynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
-	@Override
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			findWithDynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			countWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Override
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			countWithDynamicQuery(dynamicQuery, projection);
-	}
-
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-		fetchCommerceAccountGroupCommerceAccountRel(
-			long commerceAccountGroupCommerceAccountRelId) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			fetchByPrimaryKey(commerceAccountGroupCommerceAccountRelId);
-	}
-
-	/**
-	 * Returns the commerce account group commerce account rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce account group commerce account rel's external reference code
-	 * @return the matching commerce account group commerce account rel, or <code>null</code> if a matching commerce account group commerce account rel could not be found
-	 */
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-		fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-		fetchCommerceAccountGroupCommerceAccountRelByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the commerce account group commerce account rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce account group commerce account rel's external reference code
-	 * @return the matching commerce account group commerce account rel
-	 * @throws PortalException if a matching commerce account group commerce account rel could not be found
-	 */
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-			getCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the commerce account group commerce account rel with the primary key.
-	 *
-	 * @param commerceAccountGroupCommerceAccountRelId the primary key of the commerce account group commerce account rel
-	 * @return the commerce account group commerce account rel
-	 * @throws PortalException if a commerce account group commerce account rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-			getCommerceAccountGroupCommerceAccountRel(
-				long commerceAccountGroupCommerceAccountRelId)
-		throws PortalException {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			findByPrimaryKey(commerceAccountGroupCommerceAccountRelId);
-	}
-
-	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new DefaultActionableDynamicQuery();
-
-		actionableDynamicQuery.setBaseLocalService(
-			commerceAccountGroupCommerceAccountRelLocalService);
-		actionableDynamicQuery.setClassLoader(getClassLoader());
-		actionableDynamicQuery.setModelClass(
-			CommerceAccountGroupCommerceAccountRel.class);
-
-		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"commerceAccountGroupCommerceAccountRelId");
-
-		return actionableDynamicQuery;
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			new IndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setBaseLocalService(
-			commerceAccountGroupCommerceAccountRelLocalService);
-		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(
-			CommerceAccountGroupCommerceAccountRel.class);
-
-		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"commerceAccountGroupCommerceAccountRelId");
-
-		return indexableActionableDynamicQuery;
-	}
-
-	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery) {
-
-		actionableDynamicQuery.setBaseLocalService(
-			commerceAccountGroupCommerceAccountRelLocalService);
-		actionableDynamicQuery.setClassLoader(getClassLoader());
-		actionableDynamicQuery.setModelClass(
-			CommerceAccountGroupCommerceAccountRel.class);
-
-		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"commerceAccountGroupCommerceAccountRelId");
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.create(
-			((Long)primaryKeyObj).longValue());
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException {
-
-		return commerceAccountGroupCommerceAccountRelLocalService.
-			deleteCommerceAccountGroupCommerceAccountRel(
-				(CommerceAccountGroupCommerceAccountRel)persistedModel);
-	}
-
-	@Override
-	public BasePersistence<CommerceAccountGroupCommerceAccountRel>
-		getBasePersistence() {
-
-		return commerceAccountGroupCommerceAccountRelPersistence;
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			findByPrimaryKey(primaryKeyObj);
-	}
-
-	/**
-	 * Returns a range of all the commerce account group commerce account rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce account group commerce account rels
-	 * @param end the upper bound of the range of commerce account group commerce account rels (not inclusive)
-	 * @return the range of commerce account group commerce account rels
-	 */
-	@Override
-	public List<CommerceAccountGroupCommerceAccountRel>
-		getCommerceAccountGroupCommerceAccountRels(int start, int end) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.findAll(
-			start, end);
-	}
-
-	/**
-	 * Returns the number of commerce account group commerce account rels.
-	 *
-	 * @return the number of commerce account group commerce account rels
-	 */
-	@Override
-	public int getCommerceAccountGroupCommerceAccountRelsCount() {
-		return commerceAccountGroupCommerceAccountRelPersistence.countAll();
-	}
-
-	/**
-	 * Updates the commerce account group commerce account rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupCommerceAccountRel the commerce account group commerce account rel
-	 * @return the commerce account group commerce account rel that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceAccountGroupCommerceAccountRel
-		updateCommerceAccountGroupCommerceAccountRel(
-			CommerceAccountGroupCommerceAccountRel
-				commerceAccountGroupCommerceAccountRel) {
-
-		return commerceAccountGroupCommerceAccountRelPersistence.update(
-			commerceAccountGroupCommerceAccountRel);
-	}
 
 	/**
 	 * Returns the commerce account local service.
@@ -543,30 +118,6 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 
 		this.commerceAccountGroupCommerceAccountRelLocalService =
 			commerceAccountGroupCommerceAccountRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce account group commerce account rel persistence.
-	 *
-	 * @return the commerce account group commerce account rel persistence
-	 */
-	public CommerceAccountGroupCommerceAccountRelPersistence
-		getCommerceAccountGroupCommerceAccountRelPersistence() {
-
-		return commerceAccountGroupCommerceAccountRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce account group commerce account rel persistence.
-	 *
-	 * @param commerceAccountGroupCommerceAccountRelPersistence the commerce account group commerce account rel persistence
-	 */
-	public void setCommerceAccountGroupCommerceAccountRelPersistence(
-		CommerceAccountGroupCommerceAccountRelPersistence
-			commerceAccountGroupCommerceAccountRelPersistence) {
-
-		this.commerceAccountGroupCommerceAccountRelPersistence =
-			commerceAccountGroupCommerceAccountRelPersistence;
 	}
 
 	/**
@@ -643,6 +194,49 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 
 		this.commerceAccountUserRelLocalService =
 			commerceAccountUserRelLocalService;
+	}
+
+	/**
+	 * Returns the account group rel local service.
+	 *
+	 * @return the account group rel local service
+	 */
+	public com.liferay.account.service.AccountGroupRelLocalService
+		getAccountGroupRelLocalService() {
+
+		return accountGroupRelLocalService;
+	}
+
+	/**
+	 * Sets the account group rel local service.
+	 *
+	 * @param accountGroupRelLocalService the account group rel local service
+	 */
+	public void setAccountGroupRelLocalService(
+		com.liferay.account.service.AccountGroupRelLocalService
+			accountGroupRelLocalService) {
+
+		this.accountGroupRelLocalService = accountGroupRelLocalService;
+	}
+
+	/**
+	 * Returns the account group rel persistence.
+	 *
+	 * @return the account group rel persistence
+	 */
+	public AccountGroupRelPersistence getAccountGroupRelPersistence() {
+		return accountGroupRelPersistence;
+	}
+
+	/**
+	 * Sets the account group rel persistence.
+	 *
+	 * @param accountGroupRelPersistence the account group rel persistence
+	 */
+	public void setAccountGroupRelPersistence(
+		AccountGroupRelPersistence accountGroupRelPersistence) {
+
+		this.accountGroupRelPersistence = accountGroupRelPersistence;
 	}
 
 	/**
@@ -775,18 +369,11 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel",
-			commerceAccountGroupCommerceAccountRelLocalService);
-
 		_setLocalServiceUtilService(
 			commerceAccountGroupCommerceAccountRelLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel");
-
 		_setLocalServiceUtilService(null);
 	}
 
@@ -807,32 +394,6 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 
 	protected String getModelClassName() {
 		return CommerceAccountGroupCommerceAccountRel.class.getName();
-	}
-
-	/**
-	 * Performs a SQL query.
-	 *
-	 * @param sql the sql query
-	 */
-	protected void runSQL(String sql) {
-		try {
-			DataSource dataSource =
-				commerceAccountGroupCommerceAccountRelPersistence.
-					getDataSource();
-
-			DB db = DBManagerUtil.getDB();
-
-			sql = db.buildSQL(sql);
-			sql = PortalUtil.transformSQL(sql);
-
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
-
-			sqlUpdate.update();
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
 	}
 
 	private void _setLocalServiceUtilService(
@@ -873,12 +434,6 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 		commerceAccountGroupCommerceAccountRelLocalService;
 
 	@BeanReference(
-		type = CommerceAccountGroupCommerceAccountRelPersistence.class
-	)
-	protected CommerceAccountGroupCommerceAccountRelPersistence
-		commerceAccountGroupCommerceAccountRelPersistence;
-
-	@BeanReference(
 		type = com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService.class
 	)
 	protected
@@ -898,6 +453,15 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 	protected
 		com.liferay.commerce.account.service.CommerceAccountUserRelLocalService
 			commerceAccountUserRelLocalService;
+
+	@ServiceReference(
+		type = com.liferay.account.service.AccountGroupRelLocalService.class
+	)
+	protected com.liferay.account.service.AccountGroupRelLocalService
+		accountGroupRelLocalService;
+
+	@ServiceReference(type = AccountGroupRelPersistence.class)
+	protected AccountGroupRelPersistence accountGroupRelPersistence;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
@@ -928,9 +492,5 @@ public abstract class CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

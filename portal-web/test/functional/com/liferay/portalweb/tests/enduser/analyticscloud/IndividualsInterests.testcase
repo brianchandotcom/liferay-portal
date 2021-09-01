@@ -67,12 +67,14 @@ definition {
 			}
 		}
 
-		task ("Add a new user and sync the Contact Data") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
+		task ("Add new users and sync the Contact Data") {
+			for (var name : list "ac,usera") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
 
 			ACDXPSettings.syncNewContactData();
 		}
@@ -81,6 +83,18 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
+
+			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("View new pages in site as another new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "usera@liferay.com",
+				userLoginFullName = "usera usera");
 
 			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
 				Navigator.gotoSitePage(

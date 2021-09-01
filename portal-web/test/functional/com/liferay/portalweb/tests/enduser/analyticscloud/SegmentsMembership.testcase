@@ -1,0 +1,132 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8523 | Test Summary: Assert segment membership list shows all known individuals"
+	@ignore = "true"
+	@priority = "4"
+	test AssertSegmentMembershipListShowsAllKnownIndividuals {
+
+		// TODO LRAC-8523 AssertSegmentMembershipListShowsAllKnownIndividuals pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8512 | Test Summary: Segment membership list is searchable"
+	@ignore = "true"
+	@priority = "5"
+	test CanSearchMembershipList {
+
+		// TODO LRAC-8512 CanSearchMembershipList pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8524 | Test Summary: No change on segment profile selected point"
+	@ignore = "true"
+	@priority = "3"
+	test NoChangeOnSegmentProfileSelectedPoint {
+
+		// TODO LRAC-8524 NoChangeOnSegmentProfileSelectedPoint pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8513 | Test Summary: Order the Segment Profile Membership List"
+	@ignore = "true"
+	@priority = "3"
+	test OrderSegmentProfileMembershipList {
+
+		// TODO LRAC-8513 OrderSegmentProfileMembershipList pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8519 | Test Summary: Search a Dynamic Segment's Membership Preview Modal"
+	@ignore = "true"
+	@priority = "3"
+	test SearchDynamicSegmentsMembershipPreviewModal {
+
+		// TODO LRAC-8519 SearchDynamicSegmentsMembershipPreviewModal pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8520 | Test Summary: Search the Segment Profile Membership List"
+	@ignore = "true"
+	@priority = "3"
+	test SearchTheSegmentProfileMembershipList {
+
+		// TODO LRAC-8520 SearchTheSegmentProfileMembershipList pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8522 | Test Summary: Segment Membership graph exist and shows members"
+	@ignore = "true"
+	@priority = "4"
+	test SegmentMembershipGraphExistAndShowsMembers {
+
+		// TODO LRAC-8522 SegmentMembershipGraphExistAndShowsMembers pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8521 | Test Summary: Selected segment membership point can clear date selection"
+	@ignore = "true"
+	@priority = "3"
+	test SelectedSegmentMembershipPointCanClearDateSelection {
+
+		// TODO LRAC-8521 SelectedSegmentMembershipPointCanClearDateSelection pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8525 | Test Summary: Select point on membership shows individuals added/removed"
+	@ignore = "true"
+	@priority = "3"
+	test SelectPointOnMembershipShowsIndividualsAddedOrRemoved {
+
+		// TODO LRAC-8525 SelectPointOnMembershipShowsIndividualsAddedOrRemoved pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8511 | Test Summary: Segment membership graph shows historical increase or decrease in members"
+	@ignore = "true"
+	@priority = "5"
+	test ViewMembershipGraphShowsIncreaseOrDecreaseMembers {
+
+		// TODO LRAC-8511 ViewMembershipGraphShowsIncreaseOrDecreaseMembers pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8510 | Test Summary: Segment membership shows known, anonymous, and total members"
+	@ignore = "true"
+	@priority = "5"
+	test ViewMembershipShowsKnownAnonymousTotalMembers {
+
+		// TODO LRAC-8510 ViewMembershipShowsKnownAnonymousTotalMembers pending implementation
+
+	}
+
+}

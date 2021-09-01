@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -87,7 +87,7 @@ describe('SelectFileExtension', () => {
 		});
 	});
 
-	it('renders a Treeview with parent nodes and only first node expanded', () => {
+	it('renders a TreeFilter with parent nodes indicating the number of children', () => {
 		const {getByRole, getByText, queryByText} = render(
 			<SelectFileExtension {...mockProps} />
 		);
@@ -95,26 +95,13 @@ describe('SelectFileExtension', () => {
 		const {className} = getByRole('tree');
 		expect(className).toContain('lfr-treeview-node-list');
 
-		expect(getByText('Audio', {exact: false})).toBeInTheDocument();
-		expect(getByText('Image', {exact: false})).toBeInTheDocument();
+		expect(
+			getByText('Audio (5 items)', {exact: false})
+		).toBeInTheDocument();
+		expect(
+			getByText('Image (4 items)', {exact: false})
+		).toBeInTheDocument();
 		expect(getByText('mp3')).toBeInTheDocument();
 		expect(queryByText('gif')).not.toBeInTheDocument();
-	});
-
-	it('renders a Treeview with filtered nodes if query is set', () => {
-		const {getByPlaceholderText, getByText, queryByText} = render(
-			<SelectFileExtension {...mockProps} />
-		);
-
-		const input = getByPlaceholderText('search');
-		fireEvent.change(input, {target: {value: 'jpe'}});
-		expect(getByText('jpeg')).toBeInTheDocument();
-		expect(queryByText('Audio')).not.toBeInTheDocument();
-	});
-
-	it('renders a Treeview with a selected node if selected is true', () => {
-		const {container} = render(<SelectFileExtension {...mockProps} />);
-
-		expect(container.getElementsByClassName('selected').length).toBe(1);
 	});
 });

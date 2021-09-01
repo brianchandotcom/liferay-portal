@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -42,14 +42,14 @@ const mockProps = {
 						'com.liferay.document.library.kernel.model.DLFileEntryType',
 					classPK: '0',
 					label: 'Basic Document',
-					selected: true,
+					selected: false,
 				},
 				{
 					className:
 						'com.liferay.document.library.kernel.model.DLFileEntryType',
 					classPK: '40709',
 					label: 'External Video Shortcut',
-					selected: true,
+					selected: false,
 				},
 				{
 					className:
@@ -80,8 +80,8 @@ describe('SelectTypeAndSubtype', () => {
 		});
 	});
 
-	it('renders a Treeview with parent nodes and one child expanded', () => {
-		const {getByRole, getByText} = render(
+	it('renders a TreeFilter with parent nodes indicating the number of children', () => {
+		const {getByRole, getByText, queryByText} = render(
 			<SelectTypeAndSubtype {...mockProps} />
 		);
 
@@ -89,28 +89,12 @@ describe('SelectTypeAndSubtype', () => {
 		expect(className).toContain('lfr-treeview-node-list');
 
 		expect(
-			getByText('Web Content Article', {exact: false})
+			getByText('Document (3 items)', {exact: false})
 		).toBeInTheDocument();
-		expect(getByText('Document (3 items)')).toBeInTheDocument();
-		expect(getByText('Basic Web Content')).toBeInTheDocument();
-	});
-
-	it('renders a Treeview with filtered nodes if query is set', () => {
-		const {getByPlaceholderText, getByText, queryByText} = render(
-			<SelectTypeAndSubtype {...mockProps} />
-		);
-
-		const input = getByPlaceholderText('search');
-		fireEvent.change(input, {target: {value: 'external'}});
-		expect(getByText('External Video Shortcut')).toBeInTheDocument();
 		expect(
-			queryByText('Web Content Article', {exact: false})
-		).not.toBeInTheDocument();
-	});
-
-	it('renders a Treeview with a selected nodes if selected is true', () => {
-		const {container} = render(<SelectTypeAndSubtype {...mockProps} />);
-
-		expect(container.getElementsByClassName('selected').length).toBe(2);
+			getByText('Web Content Article (1 item)', {exact: false})
+		).toBeInTheDocument();
+		expect(getByText('Basic Web Content')).toBeInTheDocument();
+		expect(queryByText('External Video Shortcut')).not.toBeInTheDocument();
 	});
 });

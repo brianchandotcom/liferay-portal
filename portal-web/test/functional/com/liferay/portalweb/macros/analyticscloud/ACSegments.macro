@@ -489,6 +489,14 @@ definition {
 		Click(locator1 = "Icon#EYE_PREVIEW");
 	}
 
+	macro removeStaticMember {
+		var key_TableMember = "${tableMember}";
+
+		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
+
+		Click(locator1 = "ACSegments#REMOVE_MEMBERS_BUTTON");
+	}
+
 	macro saveSegment {
 		Click(locator1 = "ACSegments#SAVE_SEGMENT");
 

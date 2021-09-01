@@ -483,6 +483,7 @@ const ApplicationsMenu = ({
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
 				data-title-set-as-html
+				data-tooltip-align="bottom"
 				displayType="unstyled"
 				onClick={handleTriggerButtonClick}
 				onFocus={fetchCategories}

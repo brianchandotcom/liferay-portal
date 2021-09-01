@@ -203,20 +203,32 @@
 				Users_Groups ON
 					Users_Groups.groupId = Group_.groupId
 			LEFT JOIN
-				(SELECT roleId, userId FROM UserGroupRole UNION ALL SELECT roleId, userid FROM Users_Roles) Roles ON
-					Users_Groups.userId = Roles.userId
+				(
+					SELECT
+						roleId, userId
+					FROM
+						UserGroupRole
+					UNION ALL
+					SELECT
+						roleId, userid
+					FROM
+						Users_Roles
+				) Roles
+			ON
+				Users_Groups.userId = Roles.userId
 			LEFT JOIN
 				ResourcePermission ON
 					ResourcePermission.roleId = Roles.roleId
 			WHERE
+			(? = true) OR
 			(
-				(? = true) OR
+				(Roles.userId = ?) AND
 				(
-					Roles.userId = ? AND
 					(
-						(Roles.roleId=? OR Roles.roleId= ?) OR
-						(BITAND(CAST_LONG(ResourcePermission.actionIds), ?) != 0)
-					)
+						(Roles.roleId = ?) OR
+						(Roles.roleId = ?)
+					) OR
+					(BITAND(CAST_LONG(ResourcePermission.actionIds), ?) != 0)
 				)
 			)
 		]]>

@@ -28,6 +28,8 @@ public class MFAFIDO2CredentialUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		dropIndexes("MFAFIDO2CredentialEntry", "credentialKey");
+
 		if (hasColumn("MFAFIDO2CredentialEntry", "credentialKey")) {
 			alterColumnType(
 				"MFAFIDO2CredentialEntry", "credentialKey", "TEXT null");

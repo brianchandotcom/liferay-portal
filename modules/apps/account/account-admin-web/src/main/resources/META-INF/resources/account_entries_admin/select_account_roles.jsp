@@ -32,33 +32,29 @@ renderResponse.setTitle(LanguageUtil.get(request, "assign-roles"));
 />
 
 <clay:container-fluid>
-	<aui:form method="post" name="fm">
-		<aui:input name="accountRoleIds" type="hidden" />
-
-		<liferay-ui:search-container
-			searchContainer="<%= accountRoleDisplaySearchContainer %>"
+	<liferay-ui:search-container
+		searchContainer="<%= accountRoleDisplaySearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.account.admin.web.internal.display.AccountRoleDisplay"
+			keyProperty="accountRoleId"
+			modelVar="accountRole"
 		>
-			<liferay-ui:search-container-row
-				className="com.liferay.account.admin.web.internal.display.AccountRoleDisplay"
-				keyProperty="accountRoleId"
-				modelVar="accountRole"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-small table-cell-minw-150"
-					name="name"
-					value="<%= accountRole.getName(locale) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-small table-cell-minw-150"
-					name="description"
-					value="<%= accountRole.getDescription(locale) %>"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-small table-cell-minw-150"
+				name="name"
+				value="<%= accountRole.getName(locale) %>"
 			/>
-		</liferay-ui:search-container>
-	</aui:form>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-small table-cell-minw-150"
+				name="description"
+				value="<%= accountRole.getDescription(locale) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
 </clay:container-fluid>

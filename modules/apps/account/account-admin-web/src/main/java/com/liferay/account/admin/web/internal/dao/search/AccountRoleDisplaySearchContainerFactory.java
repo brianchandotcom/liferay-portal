@@ -88,7 +88,8 @@ public class AccountRoleDisplaySearchContainerFactory {
 			});
 
 		searchContainer.setResults(accountRoleDisplays);
-		searchContainer.setTotal(accountRoleDisplays.size());
+
+		searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return searchContainer;
 	}

@@ -135,11 +135,8 @@ definition {
 
 		PortletEntry.inputName(name = "${adtType} Test ADT");
 
-		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			inputFieldId = "importScript",
-			locator1 = "TextInput#INPUT_ID",
+		UploadCommonFile(
+			locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
 			value1 = "${adtFile}");
 
 		PortletEntry.save();

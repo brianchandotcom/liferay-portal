@@ -231,8 +231,9 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		List<CommerceAccountGroupCommerceAccountRel>
 			commerceAccountGroupCommerceAccountRels =
-				commerceAccountGroupCommerceAccountRelPersistence.
-					findByCommerceAccountId(commerceAccountId);
+				commerceAccountGroupCommerceAccountRelLocalService.
+					getCommerceAccountGroupCommerceAccountRels(
+						commerceAccountId);
 
 		if (commerceAccountGroupCommerceAccountRels.isEmpty()) {
 			return new ArrayList<>();

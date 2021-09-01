@@ -14,13 +14,16 @@
 
 package com.liferay.commerce.account.service.impl;
 
+import com.liferay.account.exception.DuplicateAccountGroupRelException;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.exception.DuplicateCommerceAccountGroupCommerceAccountRelException;
+import com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountRelException;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
+import com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelImpl;
 import com.liferay.commerce.account.service.base.CommerceAccountGroupCommerceAccountRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 
@@ -38,10 +41,25 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 				ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCommerceAccountGroupCommerceAccountRel(
-			commerceAccountGroupId, commerceAccountId, null, serviceContext);
+		try {
+			return CommerceAccountGroupCommerceAccountRelImpl.
+				fromAccountGroupRel(
+					accountGroupRelLocalService.addAccountGroupRel(
+						commerceAccountGroupId, AccountEntry.class.getName(),
+						commerceAccountId));
+		}
+		catch (DuplicateAccountGroupRelException
+					duplicateAccountGroupRelException) {
+
+			throw new DuplicateCommerceAccountGroupCommerceAccountRelException(
+				duplicateAccountGroupRelException);
+		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public CommerceAccountGroupCommerceAccountRel
 			addCommerceAccountGroupCommerceAccountRel(
@@ -49,51 +67,32 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 				String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
-
-		CommerceAccountGroupCommerceAccountRel
-			commerceAccountGroupCommerceAccountRel =
-				commerceAccountGroupCommerceAccountRelPersistence.fetchByC_C(
-					commerceAccountGroupId, commerceAccountId);
-
-		if (commerceAccountGroupCommerceAccountRel != null) {
-			throw new DuplicateCommerceAccountGroupCommerceAccountRelException(
-				"Account already associated to AccountGroup");
-		}
-
-		User user = userLocalService.getUser(serviceContext.getUserId());
-
-		long commerceAccountGroupCommerceAccountRelId =
-			counterLocalService.increment();
-
-		commerceAccountGroupCommerceAccountRel =
-			commerceAccountGroupCommerceAccountRelPersistence.create(
-				commerceAccountGroupCommerceAccountRelId);
-
-		commerceAccountGroupCommerceAccountRel.setCompanyId(
-			user.getCompanyId());
-		commerceAccountGroupCommerceAccountRel.setUserId(user.getUserId());
-		commerceAccountGroupCommerceAccountRel.setUserName(user.getFullName());
-
-		commerceAccountGroupCommerceAccountRel.setCommerceAccountGroupId(
-			commerceAccountGroupId);
-		commerceAccountGroupCommerceAccountRel.setCommerceAccountId(
-			commerceAccountId);
-		commerceAccountGroupCommerceAccountRel.setExternalReferenceCode(
-			externalReferenceCode);
-
-		return commerceAccountGroupCommerceAccountRelPersistence.update(
-			commerceAccountGroupCommerceAccountRel);
+		return addCommerceAccountGroupCommerceAccountRel(
+			commerceAccountGroupId, commerceAccountId, serviceContext);
 	}
 
+	@Override
+	public CommerceAccountGroupCommerceAccountRel
+			deleteCommerceAccountGroupCommerceAccountRel(
+				CommerceAccountGroupCommerceAccountRel
+					commerceAccountGroupCommerceAccountRel)
+		throws PortalException {
+
+		return CommerceAccountGroupCommerceAccountRelImpl.fromAccountGroupRel(
+			accountGroupRelLocalService.deleteAccountGroupRel(
+				commerceAccountGroupCommerceAccountRel.
+					getCommerceAccountGroupCommerceAccountRelId()));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public void deleteCommerceAccountGroupCommerceAccountRelByCAccountGroupId(
 		long commerceAccountGroupId) {
 
-		commerceAccountGroupCommerceAccountRelPersistence.
-			removeByCommerceAccountGroupId(commerceAccountGroupId);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -101,8 +100,21 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 		fetchCommerceAccountGroupCommerceAccountRel(
 			long commerceAccountGroupId, long commerceAccountId) {
 
-		return commerceAccountGroupCommerceAccountRelPersistence.fetchByC_C(
-			commerceAccountGroupId, commerceAccountId);
+		return CommerceAccountGroupCommerceAccountRelImpl.fromAccountGroupRel(
+			accountGroupRelLocalService.fetchAccountGroupRel(
+				commerceAccountGroupId, AccountEntry.class.getName(),
+				commerceAccountId));
+	}
+
+	@Override
+	public CommerceAccountGroupCommerceAccountRel
+			getCommerceAccountGroupCommerceAccountRel(
+				long commerceAccountGroupCommerceAccountRelId)
+		throws PortalException {
+
+		return CommerceAccountGroupCommerceAccountRelImpl.fromAccountGroupRel(
+			accountGroupRelLocalService.getAccountGroupRel(
+				commerceAccountGroupCommerceAccountRelId));
 	}
 
 	@Override
@@ -111,8 +123,26 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 				long commerceAccountGroupId, long commerceAccountId)
 		throws PortalException {
 
-		return commerceAccountGroupCommerceAccountRelPersistence.findByC_C(
-			commerceAccountGroupId, commerceAccountId);
+		CommerceAccountGroupCommerceAccountRel
+			commerceAccountGroupCommerceAccountRel =
+				fetchCommerceAccountGroupCommerceAccountRel(
+					commerceAccountGroupId, commerceAccountId);
+
+		if (commerceAccountGroupCommerceAccountRel == null) {
+			throw new NoSuchAccountGroupCommerceAccountRelException();
+		}
+
+		return commerceAccountGroupCommerceAccountRel;
+	}
+
+	@Override
+	public List<CommerceAccountGroupCommerceAccountRel>
+		getCommerceAccountGroupCommerceAccountRels(long commerceAccountId) {
+
+		return TransformUtil.transform(
+			accountGroupRelLocalService.getAccountGroupRels(
+				AccountEntry.class.getName(), commerceAccountId),
+			CommerceAccountGroupCommerceAccountRelImpl::fromAccountGroupRel);
 	}
 
 	@Override
@@ -120,16 +150,22 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 		getCommerceAccountGroupCommerceAccountRels(
 			long commerceAccountGroupId, int start, int end) {
 
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			findByCommerceAccountGroupId(commerceAccountGroupId, start, end);
+		return TransformUtil.transform(
+			accountGroupRelLocalService.getAccountGroupRelsByAccountGroupId(
+				commerceAccountGroupId, start, end, null),
+			CommerceAccountGroupCommerceAccountRelImpl::fromAccountGroupRel);
 	}
 
 	@Override
 	public int getCommerceAccountGroupCommerceAccountRelsCount(
 		long commerceAccountGroupId) {
 
-		return commerceAccountGroupCommerceAccountRelPersistence.
-			countByCommerceAccountGroupId(commerceAccountGroupId);
+		long accountGroupRelsCountByAccountGroupId =
+			accountGroupRelLocalService.
+				getAccountGroupRelsCountByAccountGroupId(
+					commerceAccountGroupId);
+
+		return (int)accountGroupRelsCountByAccountGroupId;
 	}
 
 }

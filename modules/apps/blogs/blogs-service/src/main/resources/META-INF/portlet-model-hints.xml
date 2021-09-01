@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.blogs.model.BlogsEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="entryId" type="long" />

@@ -35,6 +35,8 @@ public class BlogsEntryTable extends BaseTable<BlogsEntryTable> {
 
 	public final Column<BlogsEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<BlogsEntryTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<BlogsEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<BlogsEntryTable, String> externalReferenceCode =

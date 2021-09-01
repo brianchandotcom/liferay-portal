@@ -17,6 +17,7 @@ package com.liferay.blogs.service.persistence;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
+public interface BlogsEntryPersistence
+	extends BasePersistence<BlogsEntry>, CTPersistence<BlogsEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

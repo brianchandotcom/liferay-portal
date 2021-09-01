@@ -126,6 +126,8 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newBlogsEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newBlogsEntry.setUuid(RandomTestUtil.randomString());
 
 		newBlogsEntry.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -192,6 +194,9 @@ public class BlogsEntryPersistenceTest {
 		Assert.assertEquals(
 			existingBlogsEntry.getMvccVersion(),
 			newBlogsEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingBlogsEntry.getCtCollectionId(),
+			newBlogsEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingBlogsEntry.getUuid(), newBlogsEntry.getUuid());
 		Assert.assertEquals(
@@ -549,11 +554,11 @@ public class BlogsEntryPersistenceTest {
 
 	protected OrderByComparator<BlogsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BlogsEntry", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "entryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "title", true, "subtitle", true,
-			"urlTitle", true, "description", true, "displayDate", true,
+			"BlogsEntry", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "externalReferenceCode", true, "entryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "title", true, "subtitle",
+			true, "urlTitle", true, "description", true, "displayDate", true,
 			"allowPingbacks", true, "allowTrackbacks", true,
 			"coverImageCaption", true, "coverImageFileEntryId", true,
 			"coverImageURL", true, "smallImage", true, "smallImageFileEntryId",
@@ -856,6 +861,8 @@ public class BlogsEntryPersistenceTest {
 		BlogsEntry blogsEntry = _persistence.create(pk);
 
 		blogsEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		blogsEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		blogsEntry.setUuid(RandomTestUtil.randomString());
 

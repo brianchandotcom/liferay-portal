@@ -77,10 +77,12 @@ public class BlogsEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(65);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -151,6 +153,7 @@ public class BlogsEntryCacheModel
 		BlogsEntryImpl blogsEntryImpl = new BlogsEntryImpl();
 
 		blogsEntryImpl.setMvccVersion(mvccVersion);
+		blogsEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			blogsEntryImpl.setUuid("");
@@ -305,6 +308,8 @@ public class BlogsEntryCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -352,6 +357,8 @@ public class BlogsEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -479,6 +486,7 @@ public class BlogsEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long entryId;

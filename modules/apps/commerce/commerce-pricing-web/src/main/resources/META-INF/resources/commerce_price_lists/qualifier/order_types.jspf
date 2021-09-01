@@ -17,7 +17,7 @@
 <c:if test="<%= hasPermission %>">
 	<div class="row">
 		<div class="col-12">
-			<div id="item-finder-root"></div>
+			<div id="item-finder-root-order-types"></div>
 
 			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
 				var CommercePriceListOrderTypesResource = ServiceProvider.default.AdminPricingAPI(
@@ -55,8 +55,8 @@
 					return Promise.resolve([]);
 				}
 
-				itemFinder.default('itemFinder', 'item-finder-root', {
-					apiUrl: '/o/headless-commerce-admin-account/v1.0/orderTypes/',
+				itemFinder.default('itemFinder', 'item-finder-root-order-types', {
+					apiUrl: '/o/headless-commerce-admin-order/v1.0/order-types/',
 					getSelectedItems: getSelectedItems,
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-an-order-type") %>',
 					itemSelectedMessage:
@@ -72,7 +72,7 @@
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: 'name',
+							fieldName: ['name', 'LANG'],
 						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',

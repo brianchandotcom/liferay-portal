@@ -22,6 +22,11 @@ import JoinNode from '../components/nodes/hexagon-nodes/JoinNode';
 import JoinXorNode from '../components/nodes/hexagon-nodes/JoinXorNode';
 import BorderStateNode from '../components/nodes/state-node/BorderStateNode';
 import StateNode from '../components/nodes/state-node/StateNode';
+import Edge from '../components/transitions/Edge';
+
+const edgeTypes = {
+	transition: Edge,
+};
 
 const getLayoutedElements = (elements) => {
 	const dagreGraph = new dagre.graphlib.Graph();
@@ -193,4 +198,11 @@ const nodeTypes = {
 	task: TaskNode,
 };
 
-export {getLayoutedElements, getNodeType, isCurrent, isVisited, nodeTypes};
+export {
+	edgeTypes,
+	getLayoutedElements,
+	getNodeType,
+	isCurrent,
+	isVisited,
+	nodeTypes,
+};

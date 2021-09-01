@@ -128,6 +128,33 @@ public class UpgradeReportLogAppenderTest {
 	}
 
 	@Test
+	public void testModuleUpgrades() throws Exception {
+		String bundleSymbolicName = "com.liferay.asset.service";
+
+		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+
+		String initialSchemaVersion = release.getSchemaVersion();
+
+		release.setSchemaVersion("0.0.1");
+
+		_releaseLocalService.updateRelease(release);
+
+		_appender.start();
+
+		_appender.stop();
+
+		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+
+		release.setSchemaVersion(initialSchemaVersion);
+
+		_releaseLocalService.updateRelease(release);
+
+		_assertReport(
+			"There are upgrade processes available for " +
+				"com.liferay.asset.service from 0.0.1 to 2.1.0");
+	}
+
+	@Test
 	public void testNoLogEvents() throws Exception {
 		_appender.start();
 

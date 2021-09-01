@@ -22,16 +22,21 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -162,11 +167,60 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		}
 	}
 
+	private Map<String, Map<String, String>> _getActions(Long roleId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create-role-user-account-association",
+			addAction(
+				ActionKeys.ASSIGN_MEMBERS, roleId,
+				"postRoleUserAccountAssociation", _roleModelResourcePermission)
+		).put(
+			"delete-organization-role-user-account-association",
+			addAction(
+				ActionKeys.DELETE, roleId,
+				"deleteOrganizationRoleUserAccountAssociation",
+				_roleModelResourcePermission)
+		).put(
+			"delete-role-user-account-association",
+			addAction(
+				ActionKeys.ASSIGN_MEMBERS, roleId,
+				"deleteRoleUserAccountAssociation",
+				_roleModelResourcePermission)
+		).put(
+			"delete-site-role-user-account-association",
+			addAction(
+				ActionKeys.DELETE, roleId,
+				"deleteSiteRoleUserAccountAssociation",
+				_roleModelResourcePermission)
+		).put(
+			"get-role",
+			addAction(
+				ActionKeys.VIEW, roleId, "getRole",
+				_roleModelResourcePermission)
+		).put(
+			"get-roles-page",
+			addAction(
+				ActionKeys.VIEW, roleId, "getRolesPage",
+				_roleModelResourcePermission)
+		).put(
+			"replace-organization-role-user-account-association",
+			addAction(
+				ActionKeys.UPDATE, roleId,
+				"postOrganizationRoleUserAccountAssociation",
+				_roleModelResourcePermission)
+		).put(
+			"replace-site-role-user-account-association",
+			addAction(
+				ActionKeys.UPDATE, roleId, "postSiteRoleUserAccountAssociation",
+				_roleModelResourcePermission)
+		).build();
+	}
+
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
 		throws Exception {
 
 		return new Role() {
 			{
+				actions = _getActions(role.getRoleId());
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					role.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
@@ -194,6 +248,12 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Role)"
+	)
+	private ModelResourcePermission<com.liferay.portal.kernel.model.Role>
+		_roleModelResourcePermission;
 
 	@Reference
 	private RoleService _roleService;

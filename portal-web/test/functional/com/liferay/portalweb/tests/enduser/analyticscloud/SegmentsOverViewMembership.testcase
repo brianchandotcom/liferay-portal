@@ -222,12 +222,88 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8489 | Test Summary: Points on membership card can be hovered for more details"
-	@ignore = "true"
 	@priority = "4"
 	test ViewMembershipCardHoverDetails {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		// TODO LRAC-8489 PENDING IMPLEMENTATION
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "givenName");
+
+			ACSegments.selectOperator(operator = "contains");
+
+			ACSegments.editTextCriterion(textInput = "user");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Add a new user in DXP") {
+			ACUtils.launchDXP();
+
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in as new user and view the site page") {
+			for (var n : list "1,2") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "user1@liferay.com",
+					userLoginFullName = "user1 user1");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("View members") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "0",
+				knownNumber = "1",
+				totalNumber = "1");
+		}
+
+		task ("View membership card when hovering") {
+			ACSegments.viewSegmentMembershipChartNumbers(
+				addedMember = "1",
+				netChange = "0",
+				removedMember = "0");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8488 | Test Summary: Membership card shows anonymous users"

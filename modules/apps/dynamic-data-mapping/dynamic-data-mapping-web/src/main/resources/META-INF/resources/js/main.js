@@ -1265,9 +1265,9 @@ AUI.add(
 					type: 'text',
 				},
 				{
-					fieldLabel: Liferay.Language.get('text-area'),
+					fieldLabel: Liferay.Language.get('text-area-html'),
 					iconClass: 'textbox',
-					label: Liferay.Language.get('text-area'),
+					label: Liferay.Language.get('text-area-html'),
 					type: 'textarea',
 				},
 				{

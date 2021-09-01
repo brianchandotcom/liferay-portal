@@ -16,7 +16,6 @@ package com.liferay.template.web.internal.portlet.template;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.templateparser.Transformer;
 
 /**
@@ -28,7 +27,7 @@ public class TemplateDisplayTemplateTransformer {
 		_ddmTemplate = ddmTemplate;
 	}
 
-	public String transform()  {
+	public String transform() {
 		return StringPool.BLANK;
 	}
 
@@ -41,7 +40,17 @@ public class TemplateDisplayTemplateTransformer {
 		}
 
 		private static final Transformer _transformer = new Transformer(
-			PropsKeys.PORTLET_DISPLAY_TEMPLATES_ERROR, true);
+			StringPool.BLANK, true) {
+
+			@Override
+			protected String getErrorTemplateId(
+				String errorTemplatePropertyKey, String langType) {
+
+				return "com/liferay/template/web/internal/portlet/template" +
+					"/dependencies/error.ftl";
+			}
+
+		};
 
 	}
 

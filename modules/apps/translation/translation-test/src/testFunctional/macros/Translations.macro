@@ -155,8 +155,6 @@ definition {
 
 		Button.clickSave();
 
-		Alert.closeMessage(messageType = "ERROR_REQUEST_FAILED");
-
 		Alert.viewErrorMessage(errorMessage = " The service account private key must be in JSON format.");
 	}
 

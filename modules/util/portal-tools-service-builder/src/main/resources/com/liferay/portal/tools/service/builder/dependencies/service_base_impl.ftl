@@ -2202,18 +2202,14 @@ import org.osgi.service.component.annotations.Reference;
 
 			@Override
 			public void afterDelete(${entity.name} published${entity.name}) throws PortalException {
-				${localizedEntity.variableName}Persistence.removeBy${pkEntityMethod}(published${entity.name}.getPrimaryKey());
-				${localizedVersionEntity.variableName}Persistence.removeBy${pkEntityMethod}(published${entity.name}.getPrimaryKey());
 			}
 
 			@Override
 			public void afterDeleteDraft(${entity.name} draft${entity.name}) throws PortalException {
-				${localizedEntity.variableName}Persistence.removeBy${pkEntityMethod}(draft${entity.name}.getPrimaryKey());
 			}
 
 			@Override
 			public void afterDeleteVersion(${versionEntity.name} ${versionEntity.variableName}) throws PortalException {
-				${localizedVersionEntity.variableName}Persistence.removeBy${pkEntityMethod}_Version(${versionEntity.variableName}.getVersionedModelId(), ${versionEntity.variableName}.getVersion());
 			}
 
 			@Override

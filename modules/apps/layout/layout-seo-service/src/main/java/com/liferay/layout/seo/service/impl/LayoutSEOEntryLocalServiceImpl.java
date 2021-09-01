@@ -123,12 +123,58 @@ public class LayoutSEOEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateLayoutSEOEntry(
+			userId, groupId, privateLayout, layoutId, 0, canonicalURLEnabled,
+			canonicalURLMap, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
+	}
+
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
 			groupId, privateLayout, layoutId);
 
 		if (layoutSEOEntry == null) {
 			return _addLayoutSEOEntry(
 				userId, groupId, privateLayout, layoutId, 0,
+				canonicalURLEnabled, canonicalURLMap, false,
+				Collections.emptyMap(), Collections.emptyMap(), 0, false,
+				Collections.emptyMap(), serviceContext);
+		}
+
+		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
+		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
+		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+
+		return layoutSEOEntryPersistence.update(layoutSEOEntry);
+	}
+
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			long copyDDMStorageId, boolean canonicalURLEnabled,
+			Map<Locale, String> canonicalURLMap,
+			boolean openGraphDescriptionEnabled,
+			Map<Locale, String> openGraphDescriptionMap,
+			Map<Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (layoutSEOEntry == null) {
+			return _addLayoutSEOEntry(
+				userId, groupId, privateLayout, layoutId, copyDDMStorageId,
 				canonicalURLEnabled, canonicalURLMap,
 				openGraphDescriptionEnabled, openGraphDescriptionMap,
 				openGraphImageAltMap, openGraphImageFileEntryId,
@@ -153,31 +199,6 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
-
-		return layoutSEOEntryPersistence.update(layoutSEOEntry);
-	}
-
-	@Override
-	public LayoutSEOEntry updateLayoutSEOEntry(
-			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
-			groupId, privateLayout, layoutId);
-
-		if (layoutSEOEntry == null) {
-			return _addLayoutSEOEntry(
-				userId, groupId, privateLayout, layoutId, 0,
-				canonicalURLEnabled, canonicalURLMap, false,
-				Collections.emptyMap(), Collections.emptyMap(), 0, false,
-				Collections.emptyMap(), serviceContext);
-		}
-
-		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
-		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
-		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
@@ -312,7 +333,6 @@ public class LayoutSEOEntryLocalServiceImpl
 				LayoutSEOEntry.class.getName()),
 			"custom-meta-tags");
 	}
-
 
 	private long _updateDDMStorage(
 			long companyId, long ddmStorageId, long copyDDMStorageId,

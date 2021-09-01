@@ -1085,6 +1085,7 @@ definition {
 	}
 
 	@description = "This test ensures that the MB widget follows W3C accessibility standards"
+	@ignore = "true"
 	@priority = "4"
 	test WidgetFollowsAccessibilityStandards {
 		Navigator.openSitePage(

@@ -233,6 +233,7 @@ definition {
 	}
 
 	@description = "This test ensures that the wiki widget follows W3C accessibility standards."
+	@ignore = "true"
 	@priority = "4"
 	test WidgetFollowsAccessibilityStandards {
 		JSONLayout.addWidgetToPublicLayout(

@@ -600,6 +600,7 @@ definition {
 	}
 
 	@description = "This test ensures that the blogs widgets follow W3C accessibility standards."
+	@ignore = "true"
 	@priority = "4"
 	test WidgetsFollowAccessibilityStandards {
 		JSONLayout.addPublicLayout(

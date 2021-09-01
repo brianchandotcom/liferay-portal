@@ -48,6 +48,54 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test adds more than 4 account users and asserts correct pagination."
+	@priority = "3"
+	test CanChangePaginationInAccountUsersList {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business");
+
+		for (var accountUser : list "1,2,3,4,5,6") {
+			AccountUsers.openAccountUsersAdmin();
+
+			AccountUsers.addUser(
+				accountName = "Account Name",
+				userEmailAddress = "userea${accountUser}@liferay.com",
+				userFirstName = "userfn${accountUser}",
+				userLastName = "userln${accountUser}",
+				userScreenName = "usersn${accountUser}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		for (var accountUser : list "1,2,3,4") {
+			LexiconEntry.viewEntryName(rowEntry = "userfn${accountUser} userln${accountUser}");
+		}
+
+		for (var accountUser : list "5,6") {
+			LexiconEntry.viewNoEntry(rowEntry = "userfn${accountUser} userln${accountUser}");
+		}
+
+		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		for (var accountUser : list "5,6") {
+			LexiconEntry.viewEntryName(rowEntry = "userfn${accountUser} userln${accountUser}");
+		}
+
+		for (var accountUser : list "1,2,3,4") {
+			LexiconEntry.viewNoEntry(rowEntry = "userfn${accountUser} userln${accountUser}");
+		}
+
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+	}
+
 	@description = "This test deactivates an active user"
 	@priority = "4"
 	test CanDeactivateUser {

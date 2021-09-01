@@ -76,13 +76,13 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_5.txt",
+			dmDocumentTitle = "Document_3.txt",
 			groupName = "Guest",
 			mimeType = "text/plain",
-			sourceFileName = "Document_5.txt");
+			sourceFileName = "Document_3.txt");
 
 		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Document_5.txt",
+			dmDocumentTitle = "Document_3.txt",
 			groupName = "Guest",
 			siteURLKey = "guest");
 
@@ -100,7 +100,7 @@ definition {
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
-			dmDocumentTitle = "Document_5.txt");
+			dmDocumentTitle = "Document_3.txt");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 

@@ -564,6 +564,25 @@ definition {
 		}
 	}
 
+	macro viewSegmentMembershipChartNumbers {
+		MouseOver(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER");
+
+		AssertTextEquals(
+			key_memberType = "Added",
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE",
+			value1 = "${addedMember}");
+
+		AssertTextEquals(
+			key_memberType = "Removed",
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE",
+			value1 = "${removedMember}");
+
+		AssertTextEquals(
+			key_memberType = "Net Change",
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE",
+			value1 = "${netChange}");
+	}
+
 	macro viewSegmentMembershipLegendNumbers {
 		AssertTextEquals(
 			key_memberType = "Known Members:",

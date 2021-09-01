@@ -527,6 +527,74 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9044 | Test Summary: Users list can be ordered"
+	@priority = "3"
+	test UsersListCanBeOrdered {
+		task ("Go to User Management") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Change the order to desc") {
+			ACUtils.orderArrow(type = "descending");
+		}
+
+		task ("Assert that the first item on the list was changed") {
+			AssertElementPresent(
+				key_index = "1",
+				key_KeywordName = "test test",
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+		}
+
+		task ("Change the order do asc") {
+			ACUtils.orderArrow(type = "ascending");
+		}
+
+		task ("Assert that the first item on the list was changed") {
+			AssertElementPresent(
+				key_index = "1",
+				key_KeywordName = "bryan cheung",
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9045	 | Test Summary: Users list can be paginated"
+	@priority = "3"
+	test UsersListCanBePaginated {
+		task ("Go to User Management") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Invite user") {
+			ACSettings.addUser(userInvite = "ac@liferay.com");
+		}
+
+		task ("Select the 5 Items in Pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("View only 5 users are shown in page 1") {
+			for (var emailList : list "bryan.cheung@faro.io,corbin.murakami@faro.io,michelle.hoshi@faro.io,test@faro.io,ac@liferay.com") {
+				ACSettings.assertUsersListByEmail(userEmail = "${emailList}");
+			}
+
+			AssertElementNotPresent(
+				locator1 = "ACSettings#USER_LIST_BY_EMAIL",
+				userEmail = "test@liferay.com");
+		}
+
+		task ("Navigate to the page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View the test@liferay.com is shown in page 2") {
+			ACSettings.assertUsersListByEmail(userEmail = "test@liferay.com");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8142 | Test Summary: Users list can be searched"
 	@priority = "5"
 	test UsersListCanBeSearched {
@@ -609,39 +677,4 @@ definition {
 			value1 = "user2@liferay.com");
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9044 | Test Summary: Users list can be ordered"
-	@priority = "3"
-	test UsersListCanBeOrdered {
-		task ("Go to User Management") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUserManagement();
-		}
-
-		task ("Change the order to desc") {
-			Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC");
-
-			AssertElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES");
-		}
-
-		task ("Assert that the first item on the list was changed") {
-			AssertElementPresent(
-				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
-				key_KeywordName = "test test",
-				key_index = "1");
-		}
-
-		task ("Change the order do asc") {
-			Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES");
-
-			AssertElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC");
-		}
-
-		task ("Assert that the first item on the list was changed") {
-			AssertElementPresent(
-				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
-				key_KeywordName = "bryan cheung",
-				key_index = "1");
-		}
-	}
 }

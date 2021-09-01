@@ -153,6 +153,7 @@ export interface Config {
 	publishURL: string;
 	redirectURL: string;
 	renderFragmentEntryURL: string;
+	restoreCollectionDisplayConfigURL: string;
 	searchContainerPageMaxDelta: number;
 	selectedSegmentsEntryId: string;
 

@@ -188,6 +188,39 @@ export default {
 	},
 
 	/**
+	 * Updates a config into an item
+	 * @param {object} options
+	 * @param {Array<{fragmentEntryLinkId: string, editableValues: object}>} filterFragmentEntryLinks
+	 * @param {object} options.itemConfig Updated item config
+	 * @param {string} options.itemId id of the collection display to be updated
+	 * @param {string} options.segmentsExperienceId Language id
+	 * @param {function} options.onNetworkStatus
+	 * @return {Promise<void>}
+	 */
+	restoreCollectionDisplayConfig({
+		filterFragmentEntryLinks,
+		itemConfig,
+		itemId,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}) {
+		return layoutServiceFetch(
+			config.restoreCollectionDisplayConfigURL,
+			{
+				body: {
+					filterFragmentEntryLinks: JSON.stringify(
+						filterFragmentEntryLinks
+					),
+					itemConfig: JSON.stringify(itemConfig),
+					itemId,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
 	 * Unmarks an item for deletion
 	 * @param {object} options
 	 * @param {string} options.itemId id of the item to be updated

@@ -45,6 +45,15 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro searchMember {
+		var searchTerm = "${findMember}";
+		
+		Type(
+			locator1 = "ACSegments#SEARCH_MEMBER",
+			value1 = "${searchTerm}");
+
+		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
+	}
 	macro addStaticMultiMember {
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 

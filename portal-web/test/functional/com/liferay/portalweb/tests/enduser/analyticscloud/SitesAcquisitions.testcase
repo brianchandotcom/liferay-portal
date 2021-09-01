@@ -51,12 +51,179 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8344 | Test Summary: Site overview acquisition card shows which channels individuals are coming from"
-	@ignore = "true"
 	@priority = "5"
 	test AssertShowsChannelsIndividualsComingFrom {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8344 AssertShowsChannelsIndividualsComingFrom
+		task ("Sign out then sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
 
+		task ("Navigate to the site page directly") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Close session") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Sign out then sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Navigate to the site page via social channel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page?utm_medium=social");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Close session") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Sign out then sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Navigate to the site page via paid search channel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page?utm_medium=paidsearch");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Close session") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Sign out then sign in as Test Test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Navigate to the site page via organic channel") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page?utm_medium=organic");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("Close session") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Overview in Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("Select the Last 24 hours in Acquisitions report") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Acquisitions");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to Channels tab in Acquisitions report") {
+			ACNavigation.switchTabInCard(tabName = "Channels");
+		}
+
+		task ("View the session entries in Channels tab") {
+			ACCards.viewMetricBarStyle(
+				backgroundColor = "rgba(80, 210, 160, 1)",
+				cardTitle = "Acquisitions",
+				entryName = "direct",
+				style = "width: 83%;");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "cell-expand",
+				entryInfo = "1",
+				entryName = "direct");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "column-text-end",
+				entryInfo = "25.00%",
+				entryName = "direct");
+
+			ACCards.viewMetricBarStyle(
+				backgroundColor = "rgba(80, 210, 160, 1)",
+				cardTitle = "Acquisitions",
+				entryName = "social",
+				style = "width: 83%;");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "cell-expand",
+				entryInfo = "1",
+				entryName = "social");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "column-text-end",
+				entryInfo = "25.00%",
+				entryName = "social");
+
+			ACCards.viewMetricBarStyle(
+				backgroundColor = "rgba(80, 210, 160, 1)",
+				cardTitle = "Acquisitions",
+				entryName = "organic",
+				style = "width: 83%;");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "cell-expand",
+				entryInfo = "1",
+				entryName = "organic");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "column-text-end",
+				entryInfo = "25.00%",
+				entryName = "organic");
+
+			ACCards.viewMetricBarStyle(
+				backgroundColor = "rgba(80, 210, 160, 1)",
+				cardTitle = "Acquisitions",
+				entryName = "paid search",
+				style = "width: 83%;");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "cell-expand",
+				entryInfo = "1",
+				entryName = "paid search");
+
+			ACCards.viewTableEntryInfo(
+				cardTitle = "Acquisitions",
+				column = "column-text-end",
+				entryInfo = "25.00%",
+				entryName = "paid search");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8346 | Test Summary: Assert Sites Acquisition card Channels highest session"

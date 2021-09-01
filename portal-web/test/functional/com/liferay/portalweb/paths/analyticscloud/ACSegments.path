@@ -126,7 +126,6 @@
 	<td>//div[@class='input-group search']//input[@type='text'and @placeholder='Search'and not(@disabled)]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>NAME_FIELD</td>
 	<td>//input[@name='name']</td>

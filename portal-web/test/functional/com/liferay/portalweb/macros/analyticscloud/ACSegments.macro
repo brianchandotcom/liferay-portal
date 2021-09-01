@@ -45,24 +45,6 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
-	macro searchMember {
-		var searchTerm = "${findMember}";
-		
-		Type(
-			locator1 = "ACSegments#SEARCH_MEMBER",
-			value1 = "${searchTerm}");
-
-		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
-	}
-
-	macro clickMemberButton {
-		var key_TableMember = "${memberName}";
-		
-		var key_ButtonName = "${buttonName}";
-
-		Click(locator1 = "ACSegments#MEMBER_GENERIC_BUTTON");
-	}
-
 	macro addStaticMultiMember {
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
@@ -95,6 +77,14 @@ definition {
 
 	macro cancelSegment {
 		Click(locator1 = "ACSegments#CANCEL_SEGMENT");
+	}
+
+	macro clickMemberButton {
+		var key_TableMember = "${memberName}";
+
+		var key_ButtonName = "${buttonName}";
+
+		Click(locator1 = "ACSegments#MEMBER_GENERIC_BUTTON");
 	}
 
 	macro createDynamicSegment {
@@ -367,6 +357,16 @@ definition {
 		Click(locator1 = "ACSegments#SAVE_SEGMENT");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro searchMember {
+		var searchTerm = "${findMember}";
+
+		Type(
+			locator1 = "ACSegments#SEARCH_MEMBER",
+			value1 = "${searchTerm}");
+
+		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
 
 	macro searchSegment {

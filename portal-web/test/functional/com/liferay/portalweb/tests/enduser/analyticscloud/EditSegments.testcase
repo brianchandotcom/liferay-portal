@@ -492,12 +492,97 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8593 | Test Summary: Undo Deleting a Segment Member in the Edit Modal"
-	@ignore = "true"
 	@priority = "4"
 	test UndoDeletingASegmentMemberInTheEditModal {
+		var users = "ac,liferay";
 
-		// TODO LRAC-8593 UndoDeletingASegmentMemberInTheEditModal pending implementation
+		task ("Create two new users") {
+			for (var name : list "${users}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+		}
 
+		task ("Connect AC to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Login with the users and see page") {
+			for (var name : list "${users}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Close all sessions, launch AC, change the property and go to segments") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create a static segment, add two static members and save segment") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			for (var name : list "${users}") {
+				ACSegments.addStaticMember(tableMember = "${name} ${name}");
+			}
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to segments and assert the static members") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Static Segment Test");
+
+			for (var name : list "${users}") {
+				AssertElementPresent(
+					key_TableMember = "${name} ${name}",
+					locator1 = "ACSegments#TABLE_CHECKBOX");
+			}
+		}
+
+		task ("Search the member, remove, undo and save") {
+			ACSegments.searchMember(findMember = "ac ac");
+
+			ACSegments.clickMemberButton(
+				buttonName = "Remove",
+				memberName = "ac ac");
+
+			ACSegments.clickMemberButton(
+				buttonName = "Undo",
+				memberName = "ac ac");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to segments and assert if the member is still there") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Static Segment Test");
+
+			ACSegments.searchMember(findMember = "ac ac");
+
+			AssertElementPresent(
+				key_TableMember = "ac ac",
+				locator1 = "ACSegments#TABLE_CHECKBOX");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8596 | Test Summary: Undo one static member from being added"

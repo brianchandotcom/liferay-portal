@@ -157,8 +157,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 						).name(
 							objectField.getName()
 						).labelInfoLocalizedValue(
-							InfoLocalizedValue.localize(
-								getClass(), objectField.getName())
+							InfoLocalizedValue.<String>builder(
+							).values(
+								objectField.getLabelMap()
+							).build()
 						).build(),
 						_getValue(objectField, values))));
 

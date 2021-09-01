@@ -60,7 +60,8 @@ public class ObjectsDataProvider implements DDMDataProvider {
 					new KeyValuePair(
 						String.valueOf(
 							objectDefinition.getObjectDefinitionId()),
-						objectDefinition.getName()));
+						objectDefinition.getLabel(
+							ddmDataProviderRequest.getLocale())));
 			}
 
 			builder.withOutput("Default-Output", keyValuePairs);

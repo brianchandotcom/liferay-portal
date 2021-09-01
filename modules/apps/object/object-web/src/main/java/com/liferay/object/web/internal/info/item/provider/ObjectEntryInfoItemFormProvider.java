@@ -207,8 +207,10 @@ public class ObjectEntryInfoItemFormProvider
 						).name(
 							objectField.getName()
 						).labelInfoLocalizedValue(
-							InfoLocalizedValue.singleValue(
-								objectField.getName())
+							InfoLocalizedValue.<String>builder(
+							).values(
+								objectField.getLabelMap()
+							).build()
 						).build());
 				}
 			}
@@ -216,7 +218,10 @@ public class ObjectEntryInfoItemFormProvider
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				ObjectEntry.class.getName(), objectDefinitionId)
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.singleValue(objectDefinition.getName())
+			InfoLocalizedValue.<String>builder(
+			).values(
+				objectDefinition.getLabelMap()
+			).build()
 		).name(
 			objectDefinition.getName()
 		).build();

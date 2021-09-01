@@ -72,7 +72,7 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _objectDefinition.getName();
+		return _objectDefinition.getLabel(locale);
 	}
 
 	@Override

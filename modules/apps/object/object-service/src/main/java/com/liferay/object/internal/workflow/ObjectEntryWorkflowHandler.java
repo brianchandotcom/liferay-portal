@@ -50,7 +50,7 @@ public class ObjectEntryWorkflowHandler
 
 	@Override
 	public String getType(Locale locale) {
-		return _objectDefinition.getName();
+		return _objectDefinition.getLabel(locale);
 	}
 
 	@Override

@@ -84,7 +84,7 @@ public class ObjectEntryTableInfoListRenderer
 				ListUtil.toList(
 					_objectFieldLocalService.getObjectFields(
 						objectEntry.getObjectDefinitionId()),
-					ObjectField::getName));
+					ObjectField::getLabel));
 		}
 
 		infoListBasicTableTag.setInfoListObjects(objectEntries);

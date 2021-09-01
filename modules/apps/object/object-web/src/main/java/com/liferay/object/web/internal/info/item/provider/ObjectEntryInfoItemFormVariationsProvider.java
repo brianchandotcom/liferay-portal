@@ -46,9 +46,10 @@ public class ObjectEntryInfoItemFormVariationsProvider
 
 		return new InfoItemFormVariation(
 			groupId, String.valueOf(objectDefinition.getObjectDefinitionId()),
-			InfoLocalizedValue.localize(
-				ObjectEntryInfoItemFormVariationsProvider.class,
-				objectDefinition.getName()));
+			InfoLocalizedValue.<String>builder(
+			).values(
+				objectDefinition.getLabelMap()
+			).build());
 	}
 
 	@Override
@@ -61,9 +62,10 @@ public class ObjectEntryInfoItemFormVariationsProvider
 			objectDefinition -> new InfoItemFormVariation(
 				groupId,
 				String.valueOf(objectDefinition.getObjectDefinitionId()),
-				InfoLocalizedValue.localize(
-					ObjectEntryInfoItemFormVariationsProvider.class,
-					objectDefinition.getName())));
+				InfoLocalizedValue.<String>builder(
+				).values(
+					objectDefinition.getLabelMap()
+				).build()));
 	}
 
 	@Reference

@@ -34,8 +34,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -96,7 +98,7 @@ public class ObjectEntryItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _objectDefinition.getLabel(locale);
+		return _objectDefinition.getPluralLabel(locale);
 	}
 
 	@Override
@@ -133,6 +135,7 @@ public class ObjectEntryItemSelectorView
 			ObjectEntry objectEntry, HttpServletRequest httpServletRequest) {
 
 			_objectEntry = objectEntry;
+			_httpServletRequest = httpServletRequest;
 
 			try {
 				_objectDefinition =
@@ -161,6 +164,10 @@ public class ObjectEntryItemSelectorView
 
 		@Override
 		public String getPayload() {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			return JSONUtil.put(
 				"className", ObjectEntry.class.getName()
 			).put(
@@ -171,18 +178,18 @@ public class ObjectEntryItemSelectorView
 			).put(
 				"classTypeId", _objectEntry.getObjectDefinitionId()
 			).put(
-				"subtype", _objectDefinition.getName()
+				"subtype", _objectDefinition.getLabel(themeDisplay.getLocale())
 			).put(
 				"title",
 				StringBundler.concat(
-					_objectDefinition.getName(), StringPool.SPACE,
-					_objectEntry.getObjectEntryId())
+					_objectDefinition.getLabel(themeDisplay.getLocale()),
+					StringPool.SPACE, _objectEntry.getObjectEntryId())
 			).toString();
 		}
 
 		@Override
 		public String getSubtitle(Locale locale) {
-			return _objectDefinition.getName();
+			return _objectDefinition.getLabel(locale);
 		}
 
 		@Override
@@ -200,6 +207,7 @@ public class ObjectEntryItemSelectorView
 			return _objectEntry.getUserName();
 		}
 
+		private HttpServletRequest _httpServletRequest;
 		private final ObjectDefinition _objectDefinition;
 		private final ObjectEntry _objectEntry;
 

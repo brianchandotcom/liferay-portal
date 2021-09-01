@@ -2146,8 +2146,8 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
 
 		FormsAdmin.addForm();

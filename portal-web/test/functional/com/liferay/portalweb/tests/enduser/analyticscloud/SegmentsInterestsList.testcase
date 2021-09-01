@@ -678,7 +678,7 @@ definition {
 			webContentTitle = "Web Content AC Second Title");
 
 		task ("Add 11 more new users") {
-			for (var n : list "1,2,3,4,5,6,7,8,9,a,b") {
+			for (var n : list "a,b,c,d,e,f,g,h,i,j,k") {
 				JSONUser.addUser(
 					userEmailAddress = "user${n}@liferay.com",
 					userFirstName = "user${n}",
@@ -701,7 +701,7 @@ definition {
 		}
 
 		task ("View the blogs page as different users") {
-			for (var username : list "userea,user1") {
+			for (var username : list "userea,usera") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -727,7 +727,7 @@ definition {
 		}
 
 		task ("View the documents page as different users") {
-			for (var username : list "user2,user3") {
+			for (var username : list "userb,userc") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -753,7 +753,7 @@ definition {
 		}
 
 		task ("View the web content page as different users") {
-			for (var username : list "user4,user5") {
+			for (var username : list "userd,usere") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -777,7 +777,7 @@ definition {
 		}
 
 		task ("View the second blogs page as different users") {
-			for (var username : list "user6,user7") {
+			for (var username : list "userf,userg") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -803,7 +803,7 @@ definition {
 		}
 
 		task ("View the second documents page as different users") {
-			for (var username : list "user8,user9") {
+			for (var username : list "userh,useri") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -829,7 +829,7 @@ definition {
 		}
 
 		task ("View the second web content page as different users") {
-			for (var username : list "usera,userb") {
+			for (var username : list "userj,userk") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -883,7 +883,7 @@ definition {
 		}
 
 		task ("Add multiple members") {
-			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,user6 user6,user7 user7,user8 user8,user9 user9,usera usera,userb userb");
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,usera usera,userb userb,userc userc,userd userd,usere usere,userf userf,userg userg,userh userh,useri useri,userj userj,userk userk");
 		}
 
 		task ("Create the segment") {
@@ -903,39 +903,115 @@ definition {
 		}
 
 		task ("Change pagination") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = "20");
 		}
 
 		task ("Order list by Name") {
 			ACInterests.clickOrderInterestDetailsByNameLink();
 		}
 
-		task ("View individuals on page 1") {
-			ACInterests.viewInterestUser(userName = "user1 user1");
+		task ("View individuals in order") {
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "1",
+				userName = "usera usera");
 
-			ACInterests.viewInterestUser(userName = "user2 user2");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "2",
+				userName = "userb userb");
 
-			ACInterests.viewInterestUser(userName = "user3 user3");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "3",
+				userName = "userc userc");
 
-			ACInterests.viewInterestUser(userName = "user6 user6");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "4",
+				userName = "userd userd");
 
-			ACInterests.viewInterestUser(userName = "user7 user7");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "5",
+				userName = "usere usere");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "6",
+				userName = "userf userf");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "7",
+				userName = "userfn userln");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "8",
+				userName = "userg userg");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "9",
+				userName = "userh userh");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "10",
+				userName = "useri useri");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "11",
+				userName = "userj userj");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "12",
+				userName = "userk userk");
 		}
 
-		task ("Click next page") {
-			ACUtils.checkPreviousNextButton(nextButton = "true");
+		task ("Order list by Name") {
+			ACInterests.clickOrderInterestDetailsByNameLink();
 		}
 
-		task ("View individuals on page 2") {
-			ACInterests.viewInterestUser(userName = "user8 user8");
+		task ("View individuals in order") {
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "1",
+				userName = "userk userk");
 
-			ACInterests.viewInterestUser(userName = "user9 user9");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "2",
+				userName = "userj userj");
 
-			ACInterests.viewInterestUser(userName = "usera usera");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "3",
+				userName = "useri useri");
 
-			ACInterests.viewInterestUser(userName = "userb userb");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "4",
+				userName = "userh userh");
 
-			ACInterests.viewInterestUser(userName = "userfn userln");
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "5",
+				userName = "userg userg");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "6",
+				userName = "userfn userln");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "7",
+				userName = "userf userf");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "8",
+				userName = "usere usere");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "9",
+				userName = "userd userd");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "10",
+				userName = "userc userc");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "11",
+				userName = "userb userb");
+
+			ACInterests.viewInterestUserViaPosition(
+				positionValue = "12",
+				userName = "usera usera");
 		}
 
 		task ("Switch to Active Pages tab") {
@@ -943,31 +1019,67 @@ definition {
 		}
 
 		task ("Change pagination") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = "20");
 		}
 
 		task ("Order list by Page Title") {
 			ACInterests.clickOrderInterestDetailsByPageTitlesLink();
 		}
 
-		task ("View pages on page 1") {
-			ACInterests.viewInterestPage(pageName = "Blogs AC Second Title - Site Name - Liferay DXP");
+		task ("View pages in order") {
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Blogs AC Second Title - Site Name - Liferay DXP",
+				positionValue = "1");
 
-			ACInterests.viewInterestPage(pageName = "Blogs AC Title - Site Name - Liferay DXP");
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Blogs AC Title - Site Name - Liferay DXP",
+				positionValue = "2");
 
-			ACInterests.viewInterestPage(pageName = "Blogs Second Page - Site Name - Liferay DXP");
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Blogs Second Page - Site Name - Liferay DXP",
+				positionValue = "3");
 
-			ACInterests.viewInterestPage(pageName = "Documents Page - Site Name - Liferay DXP");
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Documents Page - Site Name - Liferay DXP",
+				positionValue = "4");
+
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Documents Second Page - Site Name - Liferay DXP",
+				positionValue = "5");
+
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Web Content Second Page - Site Name - Liferay DXP",
+				positionValue = "6");
 		}
 
-		task ("Click next page") {
-			ACUtils.checkPreviousNextButton(nextButton = "true");
+		task ("Order list by Page Title") {
+			ACInterests.clickOrderInterestDetailsByPageTitlesLink();
 		}
 
-		task ("View pages on page 2") {
-			ACInterests.viewInterestPage(pageName = "Documents Second Page - Site Name - Liferay DXP");
+		task ("View pages in order") {
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Web Content Second Page - Site Name - Liferay DXP",
+				positionValue = "1");
 
-			ACInterests.viewInterestPage(pageName = "Web Content Second Page - Site Name - Liferay DXP");
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Documents Second Page - Site Name - Liferay DXP",
+				positionValue = "2");
+
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Documents Page - Site Name - Liferay DXP",
+				positionValue = "3");
+
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Blogs Second Page - Site Name - Liferay DXP",
+				positionValue = "4");
+
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Blogs AC Title - Site Name - Liferay DXP",
+				positionValue = "5");
+
+			ACInterests.viewInterestPageViaPosition(
+				pageName = "Blogs AC Second Title - Site Name - Liferay DXP",
+				positionValue = "6");
 		}
 	}
 
@@ -1138,75 +1250,99 @@ definition {
 		}
 
 		task ("Change pagination") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = "20");
 		}
 
 		task ("Click Order by Topics link") {
 			ACInterests.clickOrderInterestsBySegmentMembersLink();
 		}
 
-		task ("View various segment interests on page 1") {
-			ACInterests.viewInterest(interestTopic = "liferay dxp");
+		task ("View order of segment interests") {
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "liferay dxp",
+				positionValue = "1");
 
-			ACInterests.viewInterest(interestTopic = "site");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "site",
+				positionValue = "2");
 
-			ACInterests.viewInterest(interestTopic = "ac");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac",
+				positionValue = "3");
 
-			ACInterests.viewInterest(interestTopic = "ac title");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac title",
+				positionValue = "4");
 
-			ACInterests.viewInterest(interestTopic = "blogs test");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blog test",
+				positionValue = "5");
 
-		task ("Click next page") {
-			ACUtils.checkPreviousNextButton(nextButton = "true");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs",
+				positionValue = "6");
 
-		task ("View various segment interests on page 2") {
-			ACInterests.viewInterest(interestTopic = "blogs");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs ac title",
+				positionValue = "7");
 
-			ACInterests.viewInterest(interestTopic = "blogs ac title");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents",
+				positionValue = "8");
 
-			ACInterests.viewInterest(interestTopic = "documents");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents page",
+				positionValue = "9");
 
-			ACInterests.viewInterest(interestTopic = "documents page");
-
-			ACInterests.viewInterest(interestTopic = "page");
-		}
-
-		task ("Click previous page") {
-			ACUtils.checkPreviousNextButton(previousButton = "true");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "page",
+				positionValue = "10");
 		}
 
 		task ("Click Order by Topics link") {
-			ACInterests.clickOrderInterestsByTopicsLink();
+			ACInterests.clickOrderInterestsBySegmentMembersLink();
 		}
 
-		task ("View various segment interests on page 1") {
-			ACInterests.viewInterest(interestTopic = "blogs");
+		task ("View order of segment interests") {
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "page",
+				positionValue = "1");
 
-			ACInterests.viewInterest(interestTopic = "blogs ac title");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents page",
+				positionValue = "2");
 
-			ACInterests.viewInterest(interestTopic = "documents");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents",
+				positionValue = "3");
 
-			ACInterests.viewInterest(interestTopic = "documents page");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs ac title",
+				positionValue = "4");
 
-			ACInterests.viewInterest(interestTopic = "page");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs",
+				positionValue = "5");
 
-		task ("Click next page") {
-			ACUtils.checkPreviousNextButton(nextButton = "true");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blog test",
+				positionValue = "6");
 
-		task ("View various segment interests on page 2") {
-			ACInterests.viewInterest(interestTopic = "liferay dxp");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac title",
+				positionValue = "7");
 
-			ACInterests.viewInterest(interestTopic = "site");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac",
+				positionValue = "8");
 
-			ACInterests.viewInterest(interestTopic = "ac");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "site",
+				positionValue = "9");
 
-			ACInterests.viewInterest(interestTopic = "ac title");
-
-			ACInterests.viewInterest(interestTopic = "blogs test");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "liferay dxp",
+				positionValue = "10");
 		}
 	}
 
@@ -1377,75 +1513,99 @@ definition {
 		}
 
 		task ("Change pagination") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = "20");
 		}
 
 		task ("Click Order by Topics link") {
 			ACInterests.clickOrderInterestsByTopicsLink();
 		}
 
-		task ("View various segment interests on page 1") {
-			ACInterests.viewInterest(interestTopic = "ac");
+		task ("View order of segment interests") {
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac",
+				positionValue = "1");
 
-			ACInterests.viewInterest(interestTopic = "ac title");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac title",
+				positionValue = "2");
 
-			ACInterests.viewInterest(interestTopic = "blogs test");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blog test",
+				positionValue = "3");
 
-			ACInterests.viewInterest(interestTopic = "blogs");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs",
+				positionValue = "4");
 
-			ACInterests.viewInterest(interestTopic = "blogs ac title");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs ac title",
+				positionValue = "5");
 
-		task ("Click next page") {
-			ACUtils.checkPreviousNextButton(nextButton = "true");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents",
+				positionValue = "6");
 
-		task ("View various segment interests on page 2") {
-			ACInterests.viewInterest(interestTopic = "documents");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents page",
+				positionValue = "7");
 
-			ACInterests.viewInterest(interestTopic = "documents page");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "liferay dxp",
+				positionValue = "8");
 
-			ACInterests.viewInterest(interestTopic = "liferay dxp");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "page",
+				positionValue = "9");
 
-			ACInterests.viewInterest(interestTopic = "page");
-
-			ACInterests.viewInterest(interestTopic = "site");
-		}
-
-		task ("Click previous page") {
-			ACUtils.checkPreviousNextButton(previousButton = "true");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "site",
+				positionValue = "10");
 		}
 
 		task ("Click Order by Topics link") {
 			ACInterests.clickOrderInterestsByTopicsLink();
 		}
 
-		task ("View various segment interests on page 1") {
-			ACInterests.viewInterest(interestTopic = "documents");
+		task ("View order of segment interests") {
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "site",
+				positionValue = "1");
 
-			ACInterests.viewInterest(interestTopic = "documents page");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "page",
+				positionValue = "2");
 
-			ACInterests.viewInterest(interestTopic = "liferay dxp");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "liferay dxp",
+				positionValue = "3");
 
-			ACInterests.viewInterest(interestTopic = "page");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents page",
+				positionValue = "4");
 
-			ACInterests.viewInterest(interestTopic = "site");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "documents",
+				positionValue = "5");
 
-		task ("Click next page") {
-			ACUtils.checkPreviousNextButton(nextButton = "true");
-		}
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs ac title",
+				positionValue = "6");
 
-		task ("View various segment interests on page 2") {
-			ACInterests.viewInterest(interestTopic = "ac");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blogs",
+				positionValue = "7");
 
-			ACInterests.viewInterest(interestTopic = "ac title");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "blog test",
+				positionValue = "8");
 
-			ACInterests.viewInterest(interestTopic = "blogs test");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac title",
+				positionValue = "9");
 
-			ACInterests.viewInterest(interestTopic = "blogs");
-
-			ACInterests.viewInterest(interestTopic = "blogs ac title");
+			ACInterests.viewInterestViaPosition(
+				interestTopic = "ac",
+				positionValue = "10");
 		}
 	}
 

@@ -250,12 +250,12 @@ definition {
 				attribute1 = "value",
 				key_mappedField = "Title",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "title");
+				value1 = "${title}");
 
 			AssertTextEquals(
 				key_mappedField = "Description",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "description");
+				value1 = "${description}");
 
 			AssertAttributeValue(
 				attribute1 = "value",

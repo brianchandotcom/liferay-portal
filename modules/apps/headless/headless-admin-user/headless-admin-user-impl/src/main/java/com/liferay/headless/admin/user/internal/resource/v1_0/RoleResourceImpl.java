@@ -169,10 +169,21 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	private Map<String, Map<String, String>> _getActions(Long roleId) {
 		return HashMapBuilder.<String, Map<String, String>>put(
+			"create-organization-role-user-account-association",
+			addAction(
+				ActionKeys.UPDATE, roleId,
+				"postOrganizationRoleUserAccountAssociation",
+				_roleModelResourcePermission)
+		).put(
 			"create-role-user-account-association",
 			addAction(
 				ActionKeys.ASSIGN_MEMBERS, roleId,
 				"postRoleUserAccountAssociation", _roleModelResourcePermission)
+		).put(
+			"create-site-role-user-account-association",
+			addAction(
+				ActionKeys.UPDATE, roleId, "postSiteRoleUserAccountAssociation",
+				_roleModelResourcePermission)
 		).put(
 			"delete-organization-role-user-account-association",
 			addAction(
@@ -192,25 +203,14 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				"deleteSiteRoleUserAccountAssociation",
 				_roleModelResourcePermission)
 		).put(
-			"get-role",
+			"get",
 			addAction(
 				ActionKeys.VIEW, roleId, "getRole",
 				_roleModelResourcePermission)
 		).put(
-			"get-roles-page",
+			"get-page",
 			addAction(
 				ActionKeys.VIEW, roleId, "getRolesPage",
-				_roleModelResourcePermission)
-		).put(
-			"replace-organization-role-user-account-association",
-			addAction(
-				ActionKeys.UPDATE, roleId,
-				"postOrganizationRoleUserAccountAssociation",
-				_roleModelResourcePermission)
-		).put(
-			"replace-site-role-user-account-association",
-			addAction(
-				ActionKeys.UPDATE, roleId, "postSiteRoleUserAccountAssociation",
 				_roleModelResourcePermission)
 		).build();
 	}

@@ -31,7 +31,6 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -301,18 +300,13 @@ public class CommerceAccountsImporter {
 									serviceContext);
 					}
 
-					String relExternalReferenceCode = StringBundler.concat(
-						FriendlyURLNormalizerUtil.normalize(accountGroupName),
-						"_",
-						FriendlyURLNormalizerUtil.normalize(
-							commerceAccount.getName()));
-
 					CommerceAccountGroupCommerceAccountRel
 						commerceAccountGroupCommerceAccountRel =
 							_commerceAccountGroupCommerceAccountRelLocalService.
-								fetchCommerceAccountGroupCommerceAccountRelByReferenceCode(
-									serviceContext.getCompanyId(),
-									relExternalReferenceCode);
+								fetchCommerceAccountGroupCommerceAccountRel(
+									commerceAccountGroup.
+										getCommerceAccountGroupId(),
+									commerceAccount.getCommerceAccountId());
 
 					if (commerceAccountGroupCommerceAccountRel == null) {
 						_commerceAccountGroupCommerceAccountRelLocalService.
@@ -320,7 +314,7 @@ public class CommerceAccountsImporter {
 								commerceAccountGroup.
 									getCommerceAccountGroupId(),
 								commerceAccount.getCommerceAccountId(),
-								relExternalReferenceCode, serviceContext);
+								serviceContext);
 					}
 				}
 				catch (NoSuchAccountGroupException

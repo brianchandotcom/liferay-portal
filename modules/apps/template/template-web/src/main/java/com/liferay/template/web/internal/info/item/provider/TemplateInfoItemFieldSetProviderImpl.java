@@ -18,9 +18,11 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -72,6 +74,35 @@ public class TemplateInfoItemFieldSetProviderImpl
 		).name(
 			"information-templates"
 		).build();
+	}
+
+	@Override
+	public InfoFieldValue<Object> getInfoFieldValue(
+		DDMTemplate ddmTemplate, Object itemObject) {
+
+		if ((ddmTemplate == null) ||
+			(ddmTemplate.getResourceClassNameId() != _portal.getClassNameId(
+				InfoItemFormProvider.class.getName()))) {
+
+			return null;
+		}
+
+		return new InfoFieldValue<>(
+			InfoField.builder(
+			).infoFieldType(
+				TextInfoFieldType.INSTANCE
+			).name(
+				"informationTemplate_" + ddmTemplate.getTemplateId()
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.<String>builder(
+				).value(
+					LocaleUtil.getDefault(),
+					ddmTemplate.getName(LocaleUtil.getDefault())
+				).defaultLocale(
+					LocaleUtil.getDefault()
+				).build()
+			).build(),
+			StringPool.BLANK);
 	}
 
 	private List<DDMTemplate> _getDDMTemplates(String className, long classPK) {

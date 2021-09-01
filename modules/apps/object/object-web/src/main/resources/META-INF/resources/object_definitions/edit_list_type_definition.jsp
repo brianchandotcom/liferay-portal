@@ -33,6 +33,8 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 						<liferay-ui:message key="basic-info" />
 					</h2>
 
+					<aui:model-context bean="<%= listTypeDefinition %>" model="<%= ListTypeDefinition.class %>" />
+
 					<aui:input name="name" required="<%= true %>" value="<%= listTypeDefinition.getName(themeDisplay.getLocale()) %>" />
 				</div>
 
@@ -78,6 +80,72 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 </div>
 
 <script>
+	function <portlet:namespace />saveListTypeDefinition() {
+		const inputName = document.querySelector('#<portlet:namespace />name');
+
+		const localizedInputs = document.querySelectorAll(
+			"input[id^='<portlet:namespace />'][type='hidden']"
+		);
+		const localizedNames = Array(...localizedInputs).reduce(
+			(prev, cur, index) => {
+				if (cur.value) {
+					const language = cur.id.replace(
+						'<portlet:namespace />name_',
+						''
+					);
+					const formattedLanguage = language.replace('_', '-');
+
+					prev[formattedLanguage] = cur.value;
+				}
+
+				return prev;
+			},
+			{}
+		);
+
+		Liferay.Util.fetch(
+			'/o/headless-admin-list-type/v1.0/list-type-definitions/<%= listTypeDefinition.getListTypeDefinitionId() %>',
+			{
+				body: JSON.stringify({
+					name_i18n: localizedNames,
+				}),
+				headers: new Headers({
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				}),
+				method: 'PUT',
+			}
+		)
+			.then((response) => {
+				if (response.status === 401) {
+					window.location.reload();
+				}
+				else if (response.ok) {
+					Liferay.Util.openToast({
+						message:
+							'<%= LanguageUtil.get(request, "the-picklist-was-updated-successfully") %>',
+						type: 'success',
+					});
+
+					setTimeout(() => {
+						const parentWindow = Liferay.Util.getOpener();
+						parentWindow.Liferay.fire('close-side-panel');
+					}, 1500);
+				}
+				else {
+					return response.json();
+				}
+			})
+			.then((response) => {
+				if (response && response.title) {
+					Liferay.Util.openToast({
+						message: title,
+						type: 'danger',
+					});
+				}
+			});
+	}
+
 	function handleDestroyPortlet() {
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

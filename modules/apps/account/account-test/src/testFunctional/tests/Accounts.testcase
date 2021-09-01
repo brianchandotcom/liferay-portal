@@ -576,6 +576,115 @@ definition {
 		}
 	}
 
+	@description = "This test adds more than 4 addresses to an account and asserts correct pagination in the address list."
+	@priority = "3"
+	test CanChangePaginationInAddressesList {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Chicago",
+			addressCountry = "United States",
+			addressName = "Chicago",
+			addressPostalCode = "60606",
+			addressRegion = "Illinois",
+			addressStreet1 = "205 W. Wacker Dr",
+			addressStreet2 = "Suite 720",
+			addressType = "Billing",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.addAddress(
+			addressCity = "Hamilton",
+			addressCountry = "United States",
+			addressName = "Hamilton",
+			addressPostalCode = "45011",
+			addressRegion = "Ohio",
+			addressStreet1 = "10 Journal Square",
+			addressStreet2 = "Suite 200",
+			addressType = "Billing",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.addAddress(
+			addressCity = "Shibuya-ku",
+			addressCountry = "Japan",
+			addressName = "Japan K. K.",
+			addressPostalCode = "150-0021",
+			addressRegion = "Tokyo",
+			addressStreet1 = "1F Faveur Ebisu,",
+			addressStreet2 = "1-26-7 Ebisu Nishi",
+			addressType = "Shipping",
+			phoneNumber = "+81 3-5456-5796");
+
+		Accounts.addAddress(
+			addressCity = "Recife",
+			addressCountry = "Brazil",
+			addressName = "Latin America Ltda",
+			addressPostalCode = "2480",
+			addressRegion = "São Paulo",
+			addressStreet1 = "Alameda Santos",
+			addressStreet2 = "7 andar",
+			addressType = "Billing",
+			phoneNumber = "+55 11 3377-7530");
+
+		Accounts.addAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Los Angeles",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			addressType = "Billing",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.addAddress(
+			addressCity = "Madrid",
+			addressCountry = "Spain",
+			addressName = "Spain and Portugal",
+			addressPostalCode = "28046",
+			addressRegion = "Madrid",
+			addressStreet1 = "Paseo de la Castellana",
+			addressStreet2 = "280 Planta 1. Modulo B",
+			addressType = "Billing",
+			phoneNumber = "+34 91 733 63 43");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		for (var addressName : list "Chicago,Hamilton,Japan K. K.,Latin America Ltda") {
+			LexiconEntry.viewEntryName(rowEntry = "${addressName}");
+		}
+
+		for (var addressName : list "Los Angeles,Spain and Portugal") {
+			LexiconEntry.viewNoEntry(rowEntry = "${addressName}");
+		}
+
+		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		for (var addressName : list "Los Angeles,Spain and Portugal") {
+			LexiconEntry.viewEntryName(rowEntry = "${addressName}");
+		}
+
+		for (var addressName : list "Chicago,Hamilton,Japan K. K.,Latin America Ltda") {
+			LexiconEntry.viewNoEntry(rowEntry = "${addressName}");
+		}
+
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+	}
+
 	@description = "This test deactivates an active account and asserts account displays in correct filter."
 	@priority = "4"
 	test CanDeactivateAccount {

@@ -181,7 +181,7 @@ export default function AddOrganizationModal({
 					selectedValue={newAccountMode}
 				>
 					<ClayRadio
-						label={Liferay.Language.get('select-existing-accounts')}
+						label={Liferay.Language.get('select-accounts')}
 						value={false}
 					/>
 

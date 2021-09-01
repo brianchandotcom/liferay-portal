@@ -39,9 +39,7 @@ export default function AddOrganizationModal({
 		const organizationNames = newOrganizations.map((item) => item.label);
 
 		if (!newOrganizations.length) {
-			setErrors([
-				Liferay.Language.get('organization-name-field-required'),
-			]);
+			setErrors([Liferay.Language.get('a-name-is-required')]);
 
 			return;
 		}

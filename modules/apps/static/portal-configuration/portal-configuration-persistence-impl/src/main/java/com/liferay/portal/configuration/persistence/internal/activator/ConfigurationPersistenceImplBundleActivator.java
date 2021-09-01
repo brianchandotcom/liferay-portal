@@ -18,20 +18,15 @@ import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager
 import com.liferay.portal.configuration.persistence.internal.ConfigurationPersistenceManager;
 import com.liferay.portal.configuration.persistence.internal.upgrade.ConfigurationUpgradeStepFactoryImpl;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-
-import java.io.File;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Objects;
 
 import javax.sql.DataSource;
 
 import org.apache.felix.cm.PersistenceManager;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -59,8 +54,6 @@ public class ConfigurationPersistenceImplBundleActivator
 			serviceReferences.iterator();
 
 		_serviceReference = iterator.next();
-
-		_cleanUpConfiguratorState(bundleContext);
 
 		_configurationPersistenceManager = new ConfigurationPersistenceManager(
 			bundleContext, bundleContext.getService(_serviceReference));
@@ -103,27 +96,6 @@ public class ConfigurationPersistenceImplBundleActivator
 
 		if (_serviceReference != null) {
 			bundleContext.ungetService(_serviceReference);
-		}
-	}
-
-	private void _cleanUpConfiguratorState(BundleContext bundleContext) {
-		if (!StartupHelperUtil.isDBNew()) {
-			return;
-		}
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"org.apache.felix.configurator")) {
-
-				File stateFile = bundle.getDataFile("state.ser");
-
-				if (stateFile.exists()) {
-					stateFile.delete();
-
-					break;
-				}
-			}
 		}
 	}
 

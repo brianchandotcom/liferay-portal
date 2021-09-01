@@ -46,6 +46,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
@@ -58,6 +59,7 @@ import org.apache.felix.cm.NotCachablePersistenceManager;
 import org.apache.felix.cm.PersistenceManager;
 import org.apache.felix.cm.file.ConfigurationHandler;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -195,6 +197,21 @@ public class ConfigurationPersistenceManager
 		}
 		catch (IOException | SQLException exception) {
 			createConfigurationTable();
+
+			for (Bundle bundle : _bundleContext.getBundles()) {
+				if (Objects.equals(
+						bundle.getSymbolicName(),
+						"org.apache.felix.configurator")) {
+
+					File stateFile = bundle.getDataFile("state.ser");
+
+					if (stateFile.exists()) {
+						stateFile.delete();
+
+						break;
+					}
+				}
+			}
 		}
 	}
 

@@ -455,7 +455,8 @@ definition {
 	@description = "This is a test for LRQA-66584. This test validates the duplication of field groups up to 2 levels"
 	@priority = "5"
 	test DuplicateTwoLevelFieldGroups {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text 1",

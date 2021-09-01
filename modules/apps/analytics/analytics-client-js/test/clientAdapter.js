@@ -14,7 +14,7 @@
 
 import fetchMock from 'fetch-mock';
 
-import ClientAdapter from '../src/ClientAdapter';
+import ClientAdapter from '../src/clientAdapter';
 
 const getMockMessageItem = (id = 0, data = {}) => {
 	return {

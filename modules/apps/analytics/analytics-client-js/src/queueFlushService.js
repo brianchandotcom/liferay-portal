@@ -156,7 +156,7 @@ class QueueFlushService {
 					})
 					.catch(() => {
 						this._onFlushFail();
-						queue.onFLushFail();
+						queue.onFlushFail();
 
 						return Promise.reject();
 					});

@@ -15,7 +15,7 @@
 import fetchMock from 'fetch-mock';
 
 import Analytics from '../../src/analytics';
-import BaseSendMessageQueue from '../../src/queues/BaseSendMessageQueue';
+import BaseSendMessageQueue from '../../src/queues/baseSendMessageQueue';
 import {STORAGE_KEY_CONTEXTS} from '../../src/utils/constants';
 import {setItem} from '../../src/utils/storage';
 import {INITIAL_ANALYTICS_CONFIG, getDummyEvent} from '../helpers';

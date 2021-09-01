@@ -14,10 +14,10 @@
 
 import fetchMock from 'fetch-mock';
 
-import QueueFlushService from '../src/QueueFlushService';
 import Analytics from '../src/analytics';
-import EventMessageQueue from '../src/queues/EventMessageQueue';
-import IdentityMessageQueue from '../src/queues/IdentityMessageQueue';
+import QueueFlushService from '../src/queueFlushService';
+import EventMessageQueue from '../src/queues/eventMessageQueue';
+import IdentityMessageQueue from '../src/queues/identityMessageQueue';
 import {INITIAL_ANALYTICS_CONFIG, wait} from './helpers';
 
 // We don't need any of the timing callbacks to run during these tests.

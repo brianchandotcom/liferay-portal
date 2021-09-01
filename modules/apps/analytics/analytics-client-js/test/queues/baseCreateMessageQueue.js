@@ -13,8 +13,8 @@
  */
 
 import Analytics from '../../src/analytics';
-import BaseCreateMessageQueue from '../../src/queues/BaseCreateMessageQueue';
-import BaseQueue from '../../src/queues/BaseQueue';
+import BaseCreateMessageQueue from '../../src/queues/baseCreateMessageQueue';
+import BaseQueue from '../../src/queues/baseQueue';
 import {STORAGE_KEY_CONTEXTS} from '../../src/utils/constants';
 import {setItem} from '../../src/utils/storage';
 import {INITIAL_ANALYTICS_CONFIG, getDummyEvent} from '../helpers';

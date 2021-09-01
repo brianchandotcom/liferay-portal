@@ -479,7 +479,7 @@ class Analytics {
 	}
 
 	/**
-	 * Create member instance of EventMessageQueue to store identity messages.
+	 * Create member instance of EventMessageQueue to store event messages.
 	 */
 	_initializeEventMessageQueue() {
 		const eventMessageQueue = new EventMessageQueue({
@@ -493,7 +493,7 @@ class Analytics {
 	}
 
 	/**
-	 * Create member instance of EventMessageQueue to store identity messages.
+	 * Create member instance of IdentityMessageQueue to store identity messages.
 	 */
 	_initializeIdentityMessageQueue() {
 		const identityMessageQueue = new IdentityMessageQueue({

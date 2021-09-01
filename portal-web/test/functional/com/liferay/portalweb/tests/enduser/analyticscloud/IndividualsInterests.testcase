@@ -92,9 +92,75 @@ definition {
 
 			Click(locator1 = "ACInterests#VIEW_ALL_INTERESTS_BUTTON");
 
-			for (var interestTopic : list "liferay dxp,site,Movies,Music,Science,Sports,Technology") {
+			for (var interestTopic : list "liferay dxp,site,movies,music,science,sports,technology") {
 				ACInterests.viewInterest(interestTopic = "${interestTopic}");
 			}
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8981| Test Summary: Assert individual interest shows contributing pages"
+	@priority = "3"
+	test AssertIndividualInterestContributingPages {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add page and web content to Site as interest topic") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "AC Page 1");
+
+			ACUtils.createWCAndAddToPage(
+				layoutName = "AC Page 1",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new page in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page 1",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Individual Interests") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("View the Individual Interests contributing page") {
+			ACInterests.viewInterest(interestTopic = "ac page 1");
+
+			ACInterests.viewInterestContributingPage(
+				interestContributingPage = "1 Contributing Pages",
+				interestTopic = "ac page 1");
 		}
 	}
 

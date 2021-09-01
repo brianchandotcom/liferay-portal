@@ -83,6 +83,10 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 				long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(
 					primKeyId);
 
+				if (layoutPageTemplateEntryId == 0) {
+					continue;
+				}
+
 				primKey = String.valueOf(layoutPageTemplateEntryId);
 
 				primKeyId = layoutPageTemplateEntryId;

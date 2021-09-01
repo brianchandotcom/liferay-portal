@@ -1,0 +1,69 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8504 | Test Summary: Segment Overview distribution filtered by boolean"
+	@ignore = "true"
+	@priority = "3"
+	test SegmentOverviewDistributionFilteredByBoolean {
+
+		// TODO LRAC-8504 SegmentOverviewDistributionFilteredByBoolean pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8505 | Test Summary: Segment Overview distribution filtered by date"
+	@ignore = "true"
+	@priority = "3"
+	test SegmentOverviewDistributionFilteredByDate {
+
+		// TODO LRAC-8505 SegmentOverviewDistributionFilteredByDate pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8506 | Test Summary: Segment Overview distribution filtered by number"
+	@ignore = "true"
+	@priority = "3"
+	test SegmentOverviewDistributionFilteredByNumber {
+
+		// TODO LRAC-8506 SegmentOverviewDistributionFilteredByNumber pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8507 | Test Summary: Segment Overview distribution filtered by text"
+	@ignore = "true"
+	@priority = "3"
+	test SegmentOverviewDistributionFilteredByText {
+
+		// TODO LRAC-8507 SegmentOverviewDistributionFilteredByText pending implementation
+
+	}
+
+}

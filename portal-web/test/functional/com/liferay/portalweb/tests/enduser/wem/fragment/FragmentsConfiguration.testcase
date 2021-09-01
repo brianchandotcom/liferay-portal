@@ -477,7 +477,7 @@ main();
 		task ("Configure the new fragment") {
 			PageEditorConfiguration.changeConfigSelection(
 				fragmentName = "Select Fragment Example",
-				optionValue = "dark");
+				optionValue = "Dark");
 
 			PageEditor.clickPublish();
 		}
@@ -541,7 +541,7 @@ main();
 		task ("Configure the new fragment") {
 			PageEditorConfiguration.changeConfigSelection(
 				fragmentName = "Select Fragment Example",
-				optionValue = "dark");
+				optionValue = "Dark");
 
 			PageEditor.clickPublish();
 		}
@@ -598,7 +598,7 @@ main();
 		task ("Configure the new fragment") {
 			PageEditorConfiguration.changeConfigSelection(
 				fragmentName = "Select Fragment Example",
-				optionValue = "dark");
+				optionValue = "Dark");
 
 			PageEditor.clickPublish();
 		}

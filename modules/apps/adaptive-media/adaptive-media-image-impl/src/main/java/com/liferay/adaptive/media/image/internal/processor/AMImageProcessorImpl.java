@@ -98,20 +98,7 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 			fileVersion.getFileVersionId());
 
 		try {
-			FileEntry fileEntry = fileVersion.getFileEntry();
-
-			boolean updateImageEntry = true;
-
-			if (amImageEntry != null) {
-				Date amImageEntryCreationDate = amImageEntry.getCreateDate();
-				Date fileVersionModifiedDate = fileVersion.getModifiedDate();
-
-				updateImageEntry =
-					fileEntry.isCheckedOut() ||
-					amImageEntryCreationDate.before(fileVersionModifiedDate);
-			}
-
-			if (!updateImageEntry) {
+			if (!_isUpdateImageEntry(fileVersion, amImageEntry)) {
 				return;
 			}
 
@@ -144,6 +131,27 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 		catch (IOException ioException) {
 			throw new AMRuntimeException.IOException(ioException);
 		}
+	}
+
+	private boolean _isUpdateImageEntry(
+			FileVersion fileVersion, AMImageEntry amImageEntry)
+		throws PortalException {
+
+		if (amImageEntry == null) {
+			return true;
+		}
+
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		Date amImageEntryCreationDate = amImageEntry.getCreateDate();
+
+		if (fileEntry.isCheckedOut() ||
+			amImageEntryCreationDate.before(fileVersion.getModifiedDate())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

@@ -20,12 +20,10 @@
 SearchContainer<AccountRoleDisplay> accountRoleDisplaySearchContainer = AccountRoleDisplaySearchContainerFactory.create(ParamUtil.getLong(request, "accountEntryId"), liferayPortletRequest, liferayPortletResponse);
 
 accountRoleDisplaySearchContainer.setRowChecker(new SelectAccountUserAccountRoleRowChecker(liferayPortletResponse, ParamUtil.getLong(liferayPortletRequest, "accountEntryId"), ParamUtil.getLong(liferayPortletRequest, "accountUserIds")));
-
-ViewAccountUserRolesManagementToolbarDisplayContext viewAccountUserRolesManagementToolbarDisplayContext = new ViewAccountUserRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= viewAccountUserRolesManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= new ViewAccountUserRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleDisplaySearchContainer) %>"
 	showCreationMenu="<%= false %>"
 />
 

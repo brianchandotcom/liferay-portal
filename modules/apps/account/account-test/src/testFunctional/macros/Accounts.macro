@@ -197,6 +197,12 @@ definition {
 				text = "${accountTaxID}");
 		}
 
+		if (isSet(externalReferenceCode)) {
+			PortletEntry.inputText(
+				fieldLabel = "External Reference Code",
+				text = "${externalReferenceCode}");
+		}
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
